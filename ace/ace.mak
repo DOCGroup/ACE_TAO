@@ -31,9 +31,9 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "ace - Win32 Debug"
+CPP=cl.exe
 MTL=mktyplib.exe
 RSC=rc.exe
-CPP=cl.exe
 
 !IF  "$(CFG)" == "ace - Win32 Release"
 
@@ -54,125 +54,126 @@ ALL : "$(OUTDIR)\ace.dll"
 
 CLEAN : 
 	-@erase ".\ace.dll"
-	-@erase ".\Release\Svc_Conf_y.obj"
-	-@erase ".\Release\Parse_Node.obj"
-	-@erase ".\Release\Memory_Pool.obj"
-	-@erase ".\Release\SV_Semaphore_Simple.obj"
-	-@erase ".\Release\DEV.obj"
-	-@erase ".\Release\Service_Record.obj"
-	-@erase ".\Release\UNIX_Addr.obj"
-	-@erase ".\Release\Time_Value.obj"
-	-@erase ".\Release\Token_Invariants.obj"
-	-@erase ".\Release\FIFO_Recv_Msg.obj"
-	-@erase ".\Release\Handle_Set.obj"
-	-@erase ".\Release\FIFO_Send_Msg.obj"
-	-@erase ".\Release\SOCK_Dgram_Bcast.obj"
-	-@erase ".\Release\SOCK_Stream.obj"
-	-@erase ".\Release\Process.obj"
-	-@erase ".\Release\Shared_Memory_MM.obj"
-	-@erase ".\Release\Service_Config.obj"
-	-@erase ".\Release\FILE_IO.obj"
-	-@erase ".\Release\ReactorEx.obj"
-	-@erase ".\Release\Addr.obj"
-	-@erase ".\Release\SV_Message.obj"
+	-@erase ".\Release\TLI_Acceptor.obj"
+	-@erase ".\Release\DEV_Addr.obj"
+	-@erase ".\Release\SOCK_CODgram.obj"
+	-@erase ".\Release\Activation_Queue.obj"
+	-@erase ".\Release\Service_Object.obj"
+	-@erase ".\Release\Dynamic.obj"
+	-@erase ".\Release\ARGV.obj"
+	-@erase ".\Release\Token.obj"
+	-@erase ".\Release\SOCK_Dgram.obj"
+	-@erase ".\Release\TTY_IO.obj"
+	-@erase ".\Release\Name_Proxy.obj"
 	-@erase ".\Release\OS.obj"
-	-@erase ".\Release\Shared_Object.obj"
+	-@erase ".\Release\System_Time.obj"
+	-@erase ".\Release\Dump.obj"
+	-@erase ".\Release\INET_Addr.obj"
+	-@erase ".\Release\FIFO_Send_Msg.obj"
+	-@erase ".\Release\DEV.obj"
+	-@erase ".\Release\CORBA_Handler.obj"
+	-@erase ".\Release\SPIPE_Addr.obj"
+	-@erase ".\Release\Service_Repository.obj"
 	-@erase ".\Release\Token_Manager.obj"
+	-@erase ".\Release\FILE_Connector.obj"
+	-@erase ".\Release\UPIPE_Connector.obj"
+	-@erase ".\Release\Process.obj"
+	-@erase ".\Release\LSOCK.obj"
+	-@erase ".\Release\FILE_IO.obj"
+	-@erase ".\Release\Log_Record.obj"
+	-@erase ".\Release\Date_Time.obj"
+	-@erase ".\Release\Service_Main.obj"
+	-@erase ".\Release\Synch_Options.obj"
+	-@erase ".\Release\SOCK_Stream.obj"
+	-@erase ".\Release\Service_Record.obj"
+	-@erase ".\Release\SV_Message_Queue.obj"
+	-@erase ".\Release\Get_Opt.obj"
+	-@erase ".\Release\LSOCK_Stream.obj"
+	-@erase ".\Release\Service_Config.obj"
+	-@erase ".\Release\TLI_Stream.obj"
+	-@erase ".\Release\UNIX_Addr.obj"
+	-@erase ".\Release\SOCK.obj"
 	-@erase ".\Release\High_Res_Timer.obj"
 	-@erase ".\Release\SOCK_Connector.obj"
-	-@erase ".\Release\SV_Shared_Memory.obj"
-	-@erase ".\Release\Remote_Name_Space.obj"
-	-@erase ".\Release\Task.obj"
-	-@erase ".\Release\Get_Opt.obj"
-	-@erase ".\Release\Event_Handler.obj"
-	-@erase ".\Release\FIFO.obj"
-	-@erase ".\Release\Synch_Options.obj"
-	-@erase ".\Release\Registry.obj"
-	-@erase ".\Release\Service_Repository.obj"
-	-@erase ".\Release\LSOCK_Dgram.obj"
-	-@erase ".\Release\Trace.obj"
-	-@erase ".\Release\SString.obj"
-	-@erase ".\Release\Local_Name_Space.obj"
-	-@erase ".\Release\FIFO_Recv.obj"
-	-@erase ".\Release\UPIPE_Stream.obj"
-	-@erase ".\Release\Message_Block.obj"
-	-@erase ".\Release\Token_Request_Reply.obj"
-	-@erase ".\Release\Mem_Map.obj"
-	-@erase ".\Release\IO_Cntl_Msg.obj"
-	-@erase ".\Release\Remote_Tokens.obj"
-	-@erase ".\Release\TLI.obj"
-	-@erase ".\Release\Thread.obj"
-	-@erase ".\Release\SOCK_Dgram.obj"
-	-@erase ".\Release\Proactor.obj"
-	-@erase ".\Release\LSOCK_CODgram.obj"
-	-@erase ".\Release\UPIPE_Connector.obj"
-	-@erase ".\Release\Name_Proxy.obj"
-	-@erase ".\Release\Shared_Memory_SV.obj"
-	-@erase ".\Release\Malloc.obj"
-	-@erase ".\Release\SPIPE_Addr.obj"
-	-@erase ".\Release\TTY_IO.obj"
-	-@erase ".\Release\LSOCK_Acceptor.obj"
-	-@erase ".\Release\SOCK_Dgram_Mcast.obj"
-	-@erase ".\Release\Name_Request_Reply.obj"
-	-@erase ".\Release\SOCK.obj"
-	-@erase ".\Release\System_Time.obj"
-	-@erase ".\Release\Log_Record.obj"
-	-@erase ".\Release\Local_Tokens.obj"
-	-@erase ".\Release\DEV_IO.obj"
-	-@erase ".\Release\CORBA_Handler.obj"
-	-@erase ".\Release\DEV_Addr.obj"
-	-@erase ".\Release\Pipe.obj"
-	-@erase ".\Release\ACE.obj"
-	-@erase ".\Release\FILE_Addr.obj"
-	-@erase ".\Release\Method_Object.obj"
-	-@erase ".\Release\Token_Collection.obj"
-	-@erase ".\Release\UPIPE_Acceptor.obj"
-	-@erase ".\Release\SPIPE_Stream.obj"
-	-@erase ".\Release\SPIPE_Acceptor.obj"
-	-@erase ".\Release\TLI_Stream.obj"
-	-@erase ".\Release\Activation_Queue.obj"
-	-@erase ".\Release\LSOCK.obj"
-	-@erase ".\Release\IPC_SAP.obj"
-	-@erase ".\Release\Service_Manager.obj"
-	-@erase ".\Release\Service_Main.obj"
-	-@erase ".\Release\Obstack.obj"
-	-@erase ".\Release\FILE.obj"
-	-@erase ".\Release\Naming_Context.obj"
-	-@erase ".\Release\FIFO_Send.obj"
-	-@erase ".\Release\Multiplexor.obj"
-	-@erase ".\Release\SPIPE.obj"
-	-@erase ".\Release\Signal.obj"
-	-@erase ".\Release\SV_Semaphore_Complex.obj"
-	-@erase ".\Release\LSOCK_Stream.obj"
-	-@erase ".\Release\Thread_Manager.obj"
-	-@erase ".\Release\SOCK_IO.obj"
 	-@erase ".\Release\Read_Buffer.obj"
-	-@erase ".\Release\LSOCK_Connector.obj"
+	-@erase ".\Release\SString.obj"
 	-@erase ".\Release\SOCK_Acceptor.obj"
 	-@erase ".\Release\Profile_Timer.obj"
-	-@erase ".\Release\ARGV.obj"
-	-@erase ".\Release\Timer_Queue.obj"
-	-@erase ".\Release\DEV_Connector.obj"
-	-@erase ".\Release\Service_Object.obj"
-	-@erase ".\Release\Reactor.obj"
-	-@erase ".\Release\INET_Addr.obj"
-	-@erase ".\Release\Dump.obj"
-	-@erase ".\Release\Name_Space.obj"
-	-@erase ".\Release\Time_Request_Reply.obj"
-	-@erase ".\Release\Svc_Conf_l.obj"
+	-@erase ".\Release\Addr.obj"
+	-@erase ".\Release\ReactorEx.obj"
+	-@erase ".\Release\Thread.obj"
+	-@erase ".\Release\LSOCK_Dgram.obj"
+	-@erase ".\Release\Token_Invariants.obj"
 	-@erase ".\Release\Log_Msg.obj"
-	-@erase ".\Release\SPIPE_Connector.obj"
-	-@erase ".\Release\IO_SAP.obj"
-	-@erase ".\Release\TLI_Connector.obj"
-	-@erase ".\Release\Process_Manager.obj"
+	-@erase ".\Release\Mem_Map.obj"
+	-@erase ".\Release\LSOCK_CODgram.obj"
+	-@erase ".\Release\Token_Collection.obj"
+	-@erase ".\Release\Name_Request_Reply.obj"
+	-@erase ".\Release\SOCK_Dgram_Bcast.obj"
 	-@erase ".\Release\Synch.obj"
-	-@erase ".\Release\SV_Message_Queue.obj"
-	-@erase ".\Release\TLI_Acceptor.obj"
-	-@erase ".\Release\Date_Time.obj"
-	-@erase ".\Release\SOCK_CODgram.obj"
-	-@erase ".\Release\Dynamic.obj"
-	-@erase ".\Release\FILE_Connector.obj"
-	-@erase ".\Release\Token.obj"
+	-@erase ".\Release\Shared_Memory_MM.obj"
+	-@erase ".\Release\TLI.obj"
+	-@erase ".\Release\FIFO.obj"
+	-@erase ".\Release\Malloc.obj"
+	-@erase ".\Release\Service_Manager.obj"
+	-@erase ".\Release\IO_Cntl_Msg.obj"
+	-@erase ".\Release\TLI_Connector.obj"
+	-@erase ".\Release\SV_Shared_Memory.obj"
+	-@erase ".\Release\Name_Space.obj"
+	-@erase ".\Release\Svc_Conf_l.obj"
+	-@erase ".\Release\DEV_IO.obj"
+	-@erase ".\Release\FIFO_Recv.obj"
+	-@erase ".\Release\LSOCK_Connector.obj"
+	-@erase ".\Release\SV_Semaphore_Simple.obj"
+	-@erase ".\Release\Memory_Pool.obj"
+	-@erase ".\Release\Local_Tokens.obj"
+	-@erase ".\Release\Local_Name_Space.obj"
+	-@erase ".\Release\FIFO_Recv_Msg.obj"
+	-@erase ".\Release\Method_Object.obj"
+	-@erase ".\Release\Registry.obj"
+	-@erase ".\Release\Svc_Conf_y.obj"
+	-@erase ".\Release\SPIPE_Connector.obj"
+	-@erase ".\Release\Parse_Node.obj"
+	-@erase ".\Release\Process_Manager.obj"
+	-@erase ".\Release\LSOCK_Acceptor.obj"
+	-@erase ".\Release\ACE.obj"
+	-@erase ".\Release\Shared_Object.obj"
+	-@erase ".\Release\SPIPE_Stream.obj"
+	-@erase ".\Release\Time_Value.obj"
+	-@erase ".\Release\Signal.obj"
+	-@erase ".\Release\Handle_Set.obj"
+	-@erase ".\Release\Shared_Memory_SV.obj"
+	-@erase ".\Release\Event_Handler.obj"
+	-@erase ".\Release\Time_Request_Reply.obj"
+	-@erase ".\Release\Remote_Name_Space.obj"
+	-@erase ".\Release\Trace.obj"
+	-@erase ".\Release\IPC_SAP.obj"
+	-@erase ".\Release\Obstack.obj"
+	-@erase ".\Release\SV_Message.obj"
+	-@erase ".\Release\SPIPE.obj"
+	-@erase ".\Release\UPIPE_Stream.obj"
+	-@erase ".\Release\Proactor.obj"
+	-@erase ".\Release\SOCK_Dgram_Mcast.obj"
+	-@erase ".\Release\UPIPE_Acceptor.obj"
+	-@erase ".\Release\Token_Request_Reply.obj"
+	-@erase ".\Release\SPIPE_Acceptor.obj"
+	-@erase ".\Release\DEV_Connector.obj"
+	-@erase ".\Release\Pipe.obj"
+	-@erase ".\Release\Multiplexor.obj"
+	-@erase ".\Release\SOCK_IO.obj"
+	-@erase ".\Release\FILE_Addr.obj"
+	-@erase ".\Release\Message_Block.obj"
+	-@erase ".\Release\IO_SAP.obj"
+	-@erase ".\Release\Naming_Context.obj"
+	-@erase ".\Release\Reactor.obj"
+	-@erase ".\Release\Remote_Tokens.obj"
+	-@erase ".\Release\Timer_Queue.obj"
+	-@erase ".\Release\FILE.obj"
+	-@erase ".\Release\Thread_Manager.obj"
+	-@erase ".\Release\Task.obj"
+	-@erase ".\Release\FIFO_Send.obj"
+	-@erase ".\Release\SV_Semaphore_Complex.obj"
+	-@erase ".\Release\Strategies.obj"
 	-@erase ".\ace.lib"
 	-@erase ".\ace.exp"
 
@@ -204,125 +205,126 @@ LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib\
  /pdb:"$(OUTDIR)/ace.pdb" /machine:I386 /out:"$(OUTDIR)/ace.dll"\
  /implib:"$(OUTDIR)/ace.lib" 
 LINK32_OBJS= \
-	"$(INTDIR)/Svc_Conf_y.obj" \
-	"$(INTDIR)/Parse_Node.obj" \
-	"$(INTDIR)/Memory_Pool.obj" \
-	"$(INTDIR)/SV_Semaphore_Simple.obj" \
-	"$(INTDIR)/DEV.obj" \
-	"$(INTDIR)/Service_Record.obj" \
-	"$(INTDIR)/UNIX_Addr.obj" \
-	"$(INTDIR)/Time_Value.obj" \
-	"$(INTDIR)/Token_Invariants.obj" \
-	"$(INTDIR)/FIFO_Recv_Msg.obj" \
-	"$(INTDIR)/Handle_Set.obj" \
-	"$(INTDIR)/FIFO_Send_Msg.obj" \
-	"$(INTDIR)/SOCK_Dgram_Bcast.obj" \
-	"$(INTDIR)/SOCK_Stream.obj" \
-	"$(INTDIR)/Process.obj" \
-	"$(INTDIR)/Shared_Memory_MM.obj" \
-	"$(INTDIR)/Service_Config.obj" \
-	"$(INTDIR)/FILE_IO.obj" \
-	"$(INTDIR)/ReactorEx.obj" \
-	"$(INTDIR)/Addr.obj" \
-	"$(INTDIR)/SV_Message.obj" \
+	"$(INTDIR)/TLI_Acceptor.obj" \
+	"$(INTDIR)/DEV_Addr.obj" \
+	"$(INTDIR)/SOCK_CODgram.obj" \
+	"$(INTDIR)/Activation_Queue.obj" \
+	"$(INTDIR)/Service_Object.obj" \
+	"$(INTDIR)/Dynamic.obj" \
+	"$(INTDIR)/ARGV.obj" \
+	"$(INTDIR)/Token.obj" \
+	"$(INTDIR)/SOCK_Dgram.obj" \
+	"$(INTDIR)/TTY_IO.obj" \
+	"$(INTDIR)/Name_Proxy.obj" \
 	"$(INTDIR)/OS.obj" \
-	"$(INTDIR)/Shared_Object.obj" \
+	"$(INTDIR)/System_Time.obj" \
+	"$(INTDIR)/Dump.obj" \
+	"$(INTDIR)/INET_Addr.obj" \
+	"$(INTDIR)/FIFO_Send_Msg.obj" \
+	"$(INTDIR)/DEV.obj" \
+	"$(INTDIR)/CORBA_Handler.obj" \
+	"$(INTDIR)/SPIPE_Addr.obj" \
+	"$(INTDIR)/Service_Repository.obj" \
 	"$(INTDIR)/Token_Manager.obj" \
+	"$(INTDIR)/FILE_Connector.obj" \
+	"$(INTDIR)/UPIPE_Connector.obj" \
+	"$(INTDIR)/Process.obj" \
+	"$(INTDIR)/LSOCK.obj" \
+	"$(INTDIR)/FILE_IO.obj" \
+	"$(INTDIR)/Log_Record.obj" \
+	"$(INTDIR)/Date_Time.obj" \
+	"$(INTDIR)/Service_Main.obj" \
+	"$(INTDIR)/Synch_Options.obj" \
+	"$(INTDIR)/SOCK_Stream.obj" \
+	"$(INTDIR)/Service_Record.obj" \
+	"$(INTDIR)/SV_Message_Queue.obj" \
+	"$(INTDIR)/Get_Opt.obj" \
+	"$(INTDIR)/LSOCK_Stream.obj" \
+	"$(INTDIR)/Service_Config.obj" \
+	"$(INTDIR)/TLI_Stream.obj" \
+	"$(INTDIR)/UNIX_Addr.obj" \
+	"$(INTDIR)/SOCK.obj" \
 	"$(INTDIR)/High_Res_Timer.obj" \
 	"$(INTDIR)/SOCK_Connector.obj" \
-	"$(INTDIR)/SV_Shared_Memory.obj" \
-	"$(INTDIR)/Remote_Name_Space.obj" \
-	"$(INTDIR)/Task.obj" \
-	"$(INTDIR)/Get_Opt.obj" \
-	"$(INTDIR)/Event_Handler.obj" \
-	"$(INTDIR)/FIFO.obj" \
-	"$(INTDIR)/Synch_Options.obj" \
-	"$(INTDIR)/Registry.obj" \
-	"$(INTDIR)/Service_Repository.obj" \
-	"$(INTDIR)/LSOCK_Dgram.obj" \
-	"$(INTDIR)/Trace.obj" \
-	"$(INTDIR)/SString.obj" \
-	"$(INTDIR)/Local_Name_Space.obj" \
-	"$(INTDIR)/FIFO_Recv.obj" \
-	"$(INTDIR)/UPIPE_Stream.obj" \
-	"$(INTDIR)/Message_Block.obj" \
-	"$(INTDIR)/Token_Request_Reply.obj" \
-	"$(INTDIR)/Mem_Map.obj" \
-	"$(INTDIR)/IO_Cntl_Msg.obj" \
-	"$(INTDIR)/Remote_Tokens.obj" \
-	"$(INTDIR)/TLI.obj" \
-	"$(INTDIR)/Thread.obj" \
-	"$(INTDIR)/SOCK_Dgram.obj" \
-	"$(INTDIR)/Proactor.obj" \
-	"$(INTDIR)/LSOCK_CODgram.obj" \
-	"$(INTDIR)/UPIPE_Connector.obj" \
-	"$(INTDIR)/Name_Proxy.obj" \
-	"$(INTDIR)/Shared_Memory_SV.obj" \
-	"$(INTDIR)/Malloc.obj" \
-	"$(INTDIR)/SPIPE_Addr.obj" \
-	"$(INTDIR)/TTY_IO.obj" \
-	"$(INTDIR)/LSOCK_Acceptor.obj" \
-	"$(INTDIR)/SOCK_Dgram_Mcast.obj" \
-	"$(INTDIR)/Name_Request_Reply.obj" \
-	"$(INTDIR)/SOCK.obj" \
-	"$(INTDIR)/System_Time.obj" \
-	"$(INTDIR)/Log_Record.obj" \
-	"$(INTDIR)/Local_Tokens.obj" \
-	"$(INTDIR)/DEV_IO.obj" \
-	"$(INTDIR)/CORBA_Handler.obj" \
-	"$(INTDIR)/DEV_Addr.obj" \
-	"$(INTDIR)/Pipe.obj" \
-	"$(INTDIR)/ACE.obj" \
-	"$(INTDIR)/FILE_Addr.obj" \
-	"$(INTDIR)/Method_Object.obj" \
-	"$(INTDIR)/Token_Collection.obj" \
-	"$(INTDIR)/UPIPE_Acceptor.obj" \
-	"$(INTDIR)/SPIPE_Stream.obj" \
-	"$(INTDIR)/SPIPE_Acceptor.obj" \
-	"$(INTDIR)/TLI_Stream.obj" \
-	"$(INTDIR)/Activation_Queue.obj" \
-	"$(INTDIR)/LSOCK.obj" \
-	"$(INTDIR)/IPC_SAP.obj" \
-	"$(INTDIR)/Service_Manager.obj" \
-	"$(INTDIR)/Service_Main.obj" \
-	"$(INTDIR)/Obstack.obj" \
-	"$(INTDIR)/FILE.obj" \
-	"$(INTDIR)/Naming_Context.obj" \
-	"$(INTDIR)/FIFO_Send.obj" \
-	"$(INTDIR)/Multiplexor.obj" \
-	"$(INTDIR)/SPIPE.obj" \
-	"$(INTDIR)/Signal.obj" \
-	"$(INTDIR)/SV_Semaphore_Complex.obj" \
-	"$(INTDIR)/LSOCK_Stream.obj" \
-	"$(INTDIR)/Thread_Manager.obj" \
-	"$(INTDIR)/SOCK_IO.obj" \
 	"$(INTDIR)/Read_Buffer.obj" \
-	"$(INTDIR)/LSOCK_Connector.obj" \
+	"$(INTDIR)/SString.obj" \
 	"$(INTDIR)/SOCK_Acceptor.obj" \
 	"$(INTDIR)/Profile_Timer.obj" \
-	"$(INTDIR)/ARGV.obj" \
-	"$(INTDIR)/Timer_Queue.obj" \
-	"$(INTDIR)/DEV_Connector.obj" \
-	"$(INTDIR)/Service_Object.obj" \
-	"$(INTDIR)/Reactor.obj" \
-	"$(INTDIR)/INET_Addr.obj" \
-	"$(INTDIR)/Dump.obj" \
-	"$(INTDIR)/Name_Space.obj" \
-	"$(INTDIR)/Time_Request_Reply.obj" \
-	"$(INTDIR)/Svc_Conf_l.obj" \
+	"$(INTDIR)/Addr.obj" \
+	"$(INTDIR)/ReactorEx.obj" \
+	"$(INTDIR)/Thread.obj" \
+	"$(INTDIR)/LSOCK_Dgram.obj" \
+	"$(INTDIR)/Token_Invariants.obj" \
 	"$(INTDIR)/Log_Msg.obj" \
-	"$(INTDIR)/SPIPE_Connector.obj" \
-	"$(INTDIR)/IO_SAP.obj" \
-	"$(INTDIR)/TLI_Connector.obj" \
-	"$(INTDIR)/Process_Manager.obj" \
+	"$(INTDIR)/Mem_Map.obj" \
+	"$(INTDIR)/LSOCK_CODgram.obj" \
+	"$(INTDIR)/Token_Collection.obj" \
+	"$(INTDIR)/Name_Request_Reply.obj" \
+	"$(INTDIR)/SOCK_Dgram_Bcast.obj" \
 	"$(INTDIR)/Synch.obj" \
-	"$(INTDIR)/SV_Message_Queue.obj" \
-	"$(INTDIR)/TLI_Acceptor.obj" \
-	"$(INTDIR)/Date_Time.obj" \
-	"$(INTDIR)/SOCK_CODgram.obj" \
-	"$(INTDIR)/Dynamic.obj" \
-	"$(INTDIR)/FILE_Connector.obj" \
-	"$(INTDIR)/Token.obj"
+	"$(INTDIR)/Shared_Memory_MM.obj" \
+	"$(INTDIR)/TLI.obj" \
+	"$(INTDIR)/FIFO.obj" \
+	"$(INTDIR)/Malloc.obj" \
+	"$(INTDIR)/Service_Manager.obj" \
+	"$(INTDIR)/IO_Cntl_Msg.obj" \
+	"$(INTDIR)/TLI_Connector.obj" \
+	"$(INTDIR)/SV_Shared_Memory.obj" \
+	"$(INTDIR)/Name_Space.obj" \
+	"$(INTDIR)/Svc_Conf_l.obj" \
+	"$(INTDIR)/DEV_IO.obj" \
+	"$(INTDIR)/FIFO_Recv.obj" \
+	"$(INTDIR)/LSOCK_Connector.obj" \
+	"$(INTDIR)/SV_Semaphore_Simple.obj" \
+	"$(INTDIR)/Memory_Pool.obj" \
+	"$(INTDIR)/Local_Tokens.obj" \
+	"$(INTDIR)/Local_Name_Space.obj" \
+	"$(INTDIR)/FIFO_Recv_Msg.obj" \
+	"$(INTDIR)/Method_Object.obj" \
+	"$(INTDIR)/Registry.obj" \
+	"$(INTDIR)/Svc_Conf_y.obj" \
+	"$(INTDIR)/SPIPE_Connector.obj" \
+	"$(INTDIR)/Parse_Node.obj" \
+	"$(INTDIR)/Process_Manager.obj" \
+	"$(INTDIR)/LSOCK_Acceptor.obj" \
+	"$(INTDIR)/ACE.obj" \
+	"$(INTDIR)/Shared_Object.obj" \
+	"$(INTDIR)/SPIPE_Stream.obj" \
+	"$(INTDIR)/Time_Value.obj" \
+	"$(INTDIR)/Signal.obj" \
+	"$(INTDIR)/Handle_Set.obj" \
+	"$(INTDIR)/Shared_Memory_SV.obj" \
+	"$(INTDIR)/Event_Handler.obj" \
+	"$(INTDIR)/Time_Request_Reply.obj" \
+	"$(INTDIR)/Remote_Name_Space.obj" \
+	"$(INTDIR)/Trace.obj" \
+	"$(INTDIR)/IPC_SAP.obj" \
+	"$(INTDIR)/Obstack.obj" \
+	"$(INTDIR)/SV_Message.obj" \
+	"$(INTDIR)/SPIPE.obj" \
+	"$(INTDIR)/UPIPE_Stream.obj" \
+	"$(INTDIR)/Proactor.obj" \
+	"$(INTDIR)/SOCK_Dgram_Mcast.obj" \
+	"$(INTDIR)/UPIPE_Acceptor.obj" \
+	"$(INTDIR)/Token_Request_Reply.obj" \
+	"$(INTDIR)/SPIPE_Acceptor.obj" \
+	"$(INTDIR)/DEV_Connector.obj" \
+	"$(INTDIR)/Pipe.obj" \
+	"$(INTDIR)/Multiplexor.obj" \
+	"$(INTDIR)/SOCK_IO.obj" \
+	"$(INTDIR)/FILE_Addr.obj" \
+	"$(INTDIR)/Message_Block.obj" \
+	"$(INTDIR)/IO_SAP.obj" \
+	"$(INTDIR)/Naming_Context.obj" \
+	"$(INTDIR)/Reactor.obj" \
+	"$(INTDIR)/Remote_Tokens.obj" \
+	"$(INTDIR)/Timer_Queue.obj" \
+	"$(INTDIR)/FILE.obj" \
+	"$(INTDIR)/Thread_Manager.obj" \
+	"$(INTDIR)/Task.obj" \
+	"$(INTDIR)/FIFO_Send.obj" \
+	"$(INTDIR)/SV_Semaphore_Complex.obj" \
+	"$(INTDIR)/Strategies.obj"
 
 "$(OUTDIR)\ace.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -350,125 +352,126 @@ CLEAN :
 	-@erase ".\Debug\vc40.pdb"
 	-@erase ".\Debug\vc40.idb"
 	-@erase ".\ace.dll"
-	-@erase ".\Debug\SV_Shared_Memory.obj"
-	-@erase ".\Debug\Name_Space.obj"
-	-@erase ".\Debug\Svc_Conf_l.obj"
-	-@erase ".\Debug\SV_Semaphore_Simple.obj"
-	-@erase ".\Debug\Date_Time.obj"
-	-@erase ".\Debug\UPIPE_Acceptor.obj"
-	-@erase ".\Debug\Token.obj"
-	-@erase ".\Debug\SPIPE_Acceptor.obj"
-	-@erase ".\Debug\DEV_Addr.obj"
-	-@erase ".\Debug\Local_Name_Space.obj"
-	-@erase ".\Debug\LSOCK_Dgram.obj"
-	-@erase ".\Debug\TLI_Acceptor.obj"
-	-@erase ".\Debug\SOCK_CODgram.obj"
-	-@erase ".\Debug\Naming_Context.obj"
+	-@erase ".\Debug\DEV_Connector.obj"
 	-@erase ".\Debug\Svc_Conf_y.obj"
-	-@erase ".\Debug\FIFO_Send_Msg.obj"
-	-@erase ".\Debug\Parse_Node.obj"
-	-@erase ".\Debug\Thread.obj"
-	-@erase ".\Debug\Thread_Manager.obj"
-	-@erase ".\Debug\LSOCK.obj"
-	-@erase ".\Debug\Service_Repository.obj"
-	-@erase ".\Debug\IO_Cntl_Msg.obj"
-	-@erase ".\Debug\Shared_Object.obj"
-	-@erase ".\Debug\Token_Manager.obj"
+	-@erase ".\Debug\SV_Semaphore_Complex.obj"
+	-@erase ".\Debug\Dynamic.obj"
+	-@erase ".\Debug\LSOCK_Stream.obj"
+	-@erase ".\Debug\Malloc.obj"
+	-@erase ".\Debug\Synch.obj"
+	-@erase ".\Debug\SOCK_Dgram_Mcast.obj"
 	-@erase ".\Debug\Time_Value.obj"
+	-@erase ".\Debug\Token_Invariants.obj"
+	-@erase ".\Debug\TLI_Connector.obj"
+	-@erase ".\Debug\DEV_Addr.obj"
 	-@erase ".\Debug\Handle_Set.obj"
-	-@erase ".\Debug\Service_Manager.obj"
+	-@erase ".\Debug\UPIPE_Acceptor.obj"
+	-@erase ".\Debug\Shared_Memory_MM.obj"
+	-@erase ".\Debug\SPIPE_Acceptor.obj"
+	-@erase ".\Debug\Date_Time.obj"
+	-@erase ".\Debug\Token.obj"
+	-@erase ".\Debug\UPIPE_Stream.obj"
+	-@erase ".\Debug\Memory_Pool.obj"
+	-@erase ".\Debug\Time_Request_Reply.obj"
+	-@erase ".\Debug\DEV_IO.obj"
+	-@erase ".\Debug\SV_Message.obj"
+	-@erase ".\Debug\SV_Semaphore_Simple.obj"
+	-@erase ".\Debug\Process.obj"
+	-@erase ".\Debug\SV_Shared_Memory.obj"
+	-@erase ".\Debug\FILE_IO.obj"
+	-@erase ".\Debug\SOCK_Stream.obj"
+	-@erase ".\Debug\Naming_Context.obj"
 	-@erase ".\Debug\ACE.obj"
+	-@erase ".\Debug\FILE.obj"
+	-@erase ".\Debug\FILE_Addr.obj"
+	-@erase ".\Debug\Task.obj"
+	-@erase ".\Debug\Service_Manager.obj"
+	-@erase ".\Debug\Thread_Manager.obj"
+	-@erase ".\Debug\FIFO_Recv_Msg.obj"
+	-@erase ".\Debug\OS.obj"
+	-@erase ".\Debug\Method_Object.obj"
+	-@erase ".\Debug\Get_Opt.obj"
+	-@erase ".\Debug\LSOCK.obj"
+	-@erase ".\Debug\Local_Name_Space.obj"
 	-@erase ".\Debug\Service_Object.obj"
-	-@erase ".\Debug\IO_SAP.obj"
-	-@erase ".\Debug\Shared_Memory_SV.obj"
+	-@erase ".\Debug\Shared_Object.obj"
+	-@erase ".\Debug\Signal.obj"
+	-@erase ".\Debug\LSOCK_Connector.obj"
+	-@erase ".\Debug\FIFO_Send.obj"
+	-@erase ".\Debug\LSOCK_Dgram.obj"
+	-@erase ".\Debug\SString.obj"
+	-@erase ".\Debug\Dump.obj"
+	-@erase ".\Debug\Local_Tokens.obj"
 	-@erase ".\Debug\Event_Handler.obj"
 	-@erase ".\Debug\Synch_Options.obj"
-	-@erase ".\Debug\IPC_SAP.obj"
-	-@erase ".\Debug\FILE.obj"
-	-@erase ".\Debug\SV_Message.obj"
-	-@erase ".\Debug\Obstack.obj"
-	-@erase ".\Debug\Task.obj"
-	-@erase ".\Debug\Memory_Pool.obj"
 	-@erase ".\Debug\Trace.obj"
-	-@erase ".\Debug\LSOCK_Connector.obj"
-	-@erase ".\Debug\DEV_IO.obj"
-	-@erase ".\Debug\ARGV.obj"
-	-@erase ".\Debug\SOCK_IO.obj"
-	-@erase ".\Debug\Message_Block.obj"
-	-@erase ".\Debug\System_Time.obj"
-	-@erase ".\Debug\SPIPE_Stream.obj"
-	-@erase ".\Debug\INET_Addr.obj"
-	-@erase ".\Debug\FILE_Connector.obj"
-	-@erase ".\Debug\FIFO_Recv.obj"
-	-@erase ".\Debug\UPIPE_Connector.obj"
-	-@erase ".\Debug\Dump.obj"
-	-@erase ".\Debug\SOCK_Acceptor.obj"
-	-@erase ".\Debug\Reactor.obj"
-	-@erase ".\Debug\SPIPE_Connector.obj"
-	-@erase ".\Debug\LSOCK_CODgram.obj"
-	-@erase ".\Debug\Token_Collection.obj"
-	-@erase ".\Debug\Service_Record.obj"
-	-@erase ".\Debug\Remote_Name_Space.obj"
-	-@erase ".\Debug\Name_Request_Reply.obj"
-	-@erase ".\Debug\UPIPE_Stream.obj"
-	-@erase ".\Debug\SOCK_Dgram_Bcast.obj"
-	-@erase ".\Debug\Activation_Queue.obj"
-	-@erase ".\Debug\Service_Config.obj"
-	-@erase ".\Debug\Signal.obj"
+	-@erase ".\Debug\Mem_Map.obj"
 	-@erase ".\Debug\SOCK_Dgram.obj"
-	-@erase ".\Debug\Dynamic.obj"
+	-@erase ".\Debug\Name_Proxy.obj"
+	-@erase ".\Debug\FILE_Connector.obj"
+	-@erase ".\Debug\Shared_Memory_SV.obj"
+	-@erase ".\Debug\IO_Cntl_Msg.obj"
+	-@erase ".\Debug\SPIPE_Connector.obj"
+	-@erase ".\Debug\Token_Request_Reply.obj"
+	-@erase ".\Debug\INET_Addr.obj"
+	-@erase ".\Debug\Process_Manager.obj"
+	-@erase ".\Debug\SPIPE_Stream.obj"
+	-@erase ".\Debug\Message_Block.obj"
+	-@erase ".\Debug\IO_SAP.obj"
+	-@erase ".\Debug\SPIPE_Addr.obj"
+	-@erase ".\Debug\Service_Record.obj"
+	-@erase ".\Debug\Service_Repository.obj"
+	-@erase ".\Debug\Service_Main.obj"
+	-@erase ".\Debug\Remote_Tokens.obj"
+	-@erase ".\Debug\Log_Record.obj"
+	-@erase ".\Debug\Service_Config.obj"
+	-@erase ".\Debug\Parse_Node.obj"
+	-@erase ".\Debug\LSOCK_CODgram.obj"
+	-@erase ".\Debug\SOCK.obj"
 	-@erase ".\Debug\High_Res_Timer.obj"
 	-@erase ".\Debug\SOCK_Connector.obj"
-	-@erase ".\Debug\Name_Proxy.obj"
-	-@erase ".\Debug\Multiplexor.obj"
-	-@erase ".\Debug\UNIX_Addr.obj"
-	-@erase ".\Debug\CORBA_Handler.obj"
-	-@erase ".\Debug\OS.obj"
-	-@erase ".\Debug\SPIPE_Addr.obj"
-	-@erase ".\Debug\Read_Buffer.obj"
-	-@erase ".\Debug\SOCK.obj"
-	-@erase ".\Debug\Timer_Queue.obj"
-	-@erase ".\Debug\ReactorEx.obj"
-	-@erase ".\Debug\DEV.obj"
-	-@erase ".\Debug\Process.obj"
-	-@erase ".\Debug\SV_Semaphore_Complex.obj"
+	-@erase ".\Debug\System_Time.obj"
 	-@erase ".\Debug\Addr.obj"
-	-@erase ".\Debug\Log_Record.obj"
-	-@erase ".\Debug\FIFO_Recv_Msg.obj"
-	-@erase ".\Debug\FILE_IO.obj"
-	-@erase ".\Debug\Method_Object.obj"
-	-@erase ".\Debug\FILE_Addr.obj"
-	-@erase ".\Debug\Local_Tokens.obj"
-	-@erase ".\Debug\Pipe.obj"
-	-@erase ".\Debug\Registry.obj"
-	-@erase ".\Debug\SV_Message_Queue.obj"
-	-@erase ".\Debug\FIFO.obj"
-	-@erase ".\Debug\Get_Opt.obj"
-	-@erase ".\Debug\SPIPE.obj"
-	-@erase ".\Debug\TLI_Stream.obj"
-	-@erase ".\Debug\Malloc.obj"
-	-@erase ".\Debug\Time_Request_Reply.obj"
-	-@erase ".\Debug\FIFO_Send.obj"
+	-@erase ".\Debug\Token_Collection.obj"
 	-@erase ".\Debug\TTY_IO.obj"
-	-@erase ".\Debug\SString.obj"
-	-@erase ".\Debug\Profile_Timer.obj"
-	-@erase ".\Debug\Token_Request_Reply.obj"
-	-@erase ".\Debug\Service_Main.obj"
-	-@erase ".\Debug\SOCK_Dgram_Mcast.obj"
-	-@erase ".\Debug\DEV_Connector.obj"
-	-@erase ".\Debug\Token_Invariants.obj"
-	-@erase ".\Debug\Log_Msg.obj"
-	-@erase ".\Debug\Mem_Map.obj"
-	-@erase ".\Debug\LSOCK_Acceptor.obj"
-	-@erase ".\Debug\Process_Manager.obj"
+	-@erase ".\Debug\DEV.obj"
+	-@erase ".\Debug\TLI_Stream.obj"
+	-@erase ".\Debug\SOCK_Dgram_Bcast.obj"
+	-@erase ".\Debug\Remote_Name_Space.obj"
+	-@erase ".\Debug\Pipe.obj"
+	-@erase ".\Debug\UNIX_Addr.obj"
+	-@erase ".\Debug\Activation_Queue.obj"
+	-@erase ".\Debug\FIFO.obj"
+	-@erase ".\Debug\FIFO_Send_Msg.obj"
+	-@erase ".\Debug\Registry.obj"
+	-@erase ".\Debug\ReactorEx.obj"
+	-@erase ".\Debug\CORBA_Handler.obj"
+	-@erase ".\Debug\TLI_Acceptor.obj"
+	-@erase ".\Debug\Token_Manager.obj"
+	-@erase ".\Debug\IPC_SAP.obj"
+	-@erase ".\Debug\SOCK_CODgram.obj"
+	-@erase ".\Debug\Obstack.obj"
+	-@erase ".\Debug\Name_Request_Reply.obj"
+	-@erase ".\Debug\Multiplexor.obj"
+	-@erase ".\Debug\Name_Space.obj"
+	-@erase ".\Debug\SOCK_IO.obj"
+	-@erase ".\Debug\ARGV.obj"
+	-@erase ".\Debug\SPIPE.obj"
+	-@erase ".\Debug\Svc_Conf_l.obj"
+	-@erase ".\Debug\Read_Buffer.obj"
+	-@erase ".\Debug\Timer_Queue.obj"
 	-@erase ".\Debug\Proactor.obj"
-	-@erase ".\Debug\Shared_Memory_MM.obj"
-	-@erase ".\Debug\SOCK_Stream.obj"
-	-@erase ".\Debug\LSOCK_Stream.obj"
-	-@erase ".\Debug\TLI_Connector.obj"
-	-@erase ".\Debug\Remote_Tokens.obj"
+	-@erase ".\Debug\FIFO_Recv.obj"
+	-@erase ".\Debug\Reactor.obj"
+	-@erase ".\Debug\SV_Message_Queue.obj"
+	-@erase ".\Debug\Log_Msg.obj"
+	-@erase ".\Debug\UPIPE_Connector.obj"
+	-@erase ".\Debug\LSOCK_Acceptor.obj"
 	-@erase ".\Debug\TLI.obj"
-	-@erase ".\Debug\Synch.obj"
+	-@erase ".\Debug\SOCK_Acceptor.obj"
+	-@erase ".\Debug\Profile_Timer.obj"
+	-@erase ".\Debug\Thread.obj"
+	-@erase ".\Debug\Strategies.obj"
 	-@erase ".\ace.ilk"
 	-@erase ".\ace.lib"
 	-@erase ".\ace.exp"
@@ -502,125 +505,126 @@ LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib\
  /incremental:yes /pdb:"$(OUTDIR)/ace.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/ace.dll" /implib:"$(OUTDIR)/ace.lib" 
 LINK32_OBJS= \
-	"$(INTDIR)/SV_Shared_Memory.obj" \
-	"$(INTDIR)/Name_Space.obj" \
-	"$(INTDIR)/Svc_Conf_l.obj" \
-	"$(INTDIR)/SV_Semaphore_Simple.obj" \
-	"$(INTDIR)/Date_Time.obj" \
-	"$(INTDIR)/UPIPE_Acceptor.obj" \
-	"$(INTDIR)/Token.obj" \
-	"$(INTDIR)/SPIPE_Acceptor.obj" \
-	"$(INTDIR)/DEV_Addr.obj" \
-	"$(INTDIR)/Local_Name_Space.obj" \
-	"$(INTDIR)/LSOCK_Dgram.obj" \
-	"$(INTDIR)/TLI_Acceptor.obj" \
-	"$(INTDIR)/SOCK_CODgram.obj" \
-	"$(INTDIR)/Naming_Context.obj" \
+	"$(INTDIR)/DEV_Connector.obj" \
 	"$(INTDIR)/Svc_Conf_y.obj" \
-	"$(INTDIR)/FIFO_Send_Msg.obj" \
-	"$(INTDIR)/Parse_Node.obj" \
-	"$(INTDIR)/Thread.obj" \
-	"$(INTDIR)/Thread_Manager.obj" \
-	"$(INTDIR)/LSOCK.obj" \
-	"$(INTDIR)/Service_Repository.obj" \
-	"$(INTDIR)/IO_Cntl_Msg.obj" \
-	"$(INTDIR)/Shared_Object.obj" \
-	"$(INTDIR)/Token_Manager.obj" \
+	"$(INTDIR)/SV_Semaphore_Complex.obj" \
+	"$(INTDIR)/Dynamic.obj" \
+	"$(INTDIR)/LSOCK_Stream.obj" \
+	"$(INTDIR)/Malloc.obj" \
+	"$(INTDIR)/Synch.obj" \
+	"$(INTDIR)/SOCK_Dgram_Mcast.obj" \
 	"$(INTDIR)/Time_Value.obj" \
+	"$(INTDIR)/Token_Invariants.obj" \
+	"$(INTDIR)/TLI_Connector.obj" \
+	"$(INTDIR)/DEV_Addr.obj" \
 	"$(INTDIR)/Handle_Set.obj" \
-	"$(INTDIR)/Service_Manager.obj" \
+	"$(INTDIR)/UPIPE_Acceptor.obj" \
+	"$(INTDIR)/Shared_Memory_MM.obj" \
+	"$(INTDIR)/SPIPE_Acceptor.obj" \
+	"$(INTDIR)/Date_Time.obj" \
+	"$(INTDIR)/Token.obj" \
+	"$(INTDIR)/UPIPE_Stream.obj" \
+	"$(INTDIR)/Memory_Pool.obj" \
+	"$(INTDIR)/Time_Request_Reply.obj" \
+	"$(INTDIR)/DEV_IO.obj" \
+	"$(INTDIR)/SV_Message.obj" \
+	"$(INTDIR)/SV_Semaphore_Simple.obj" \
+	"$(INTDIR)/Process.obj" \
+	"$(INTDIR)/SV_Shared_Memory.obj" \
+	"$(INTDIR)/FILE_IO.obj" \
+	"$(INTDIR)/SOCK_Stream.obj" \
+	"$(INTDIR)/Naming_Context.obj" \
 	"$(INTDIR)/ACE.obj" \
+	"$(INTDIR)/FILE.obj" \
+	"$(INTDIR)/FILE_Addr.obj" \
+	"$(INTDIR)/Task.obj" \
+	"$(INTDIR)/Service_Manager.obj" \
+	"$(INTDIR)/Thread_Manager.obj" \
+	"$(INTDIR)/FIFO_Recv_Msg.obj" \
+	"$(INTDIR)/OS.obj" \
+	"$(INTDIR)/Method_Object.obj" \
+	"$(INTDIR)/Get_Opt.obj" \
+	"$(INTDIR)/LSOCK.obj" \
+	"$(INTDIR)/Local_Name_Space.obj" \
 	"$(INTDIR)/Service_Object.obj" \
-	"$(INTDIR)/IO_SAP.obj" \
-	"$(INTDIR)/Shared_Memory_SV.obj" \
+	"$(INTDIR)/Shared_Object.obj" \
+	"$(INTDIR)/Signal.obj" \
+	"$(INTDIR)/LSOCK_Connector.obj" \
+	"$(INTDIR)/FIFO_Send.obj" \
+	"$(INTDIR)/LSOCK_Dgram.obj" \
+	"$(INTDIR)/SString.obj" \
+	"$(INTDIR)/Dump.obj" \
+	"$(INTDIR)/Local_Tokens.obj" \
 	"$(INTDIR)/Event_Handler.obj" \
 	"$(INTDIR)/Synch_Options.obj" \
-	"$(INTDIR)/IPC_SAP.obj" \
-	"$(INTDIR)/FILE.obj" \
-	"$(INTDIR)/SV_Message.obj" \
-	"$(INTDIR)/Obstack.obj" \
-	"$(INTDIR)/Task.obj" \
-	"$(INTDIR)/Memory_Pool.obj" \
 	"$(INTDIR)/Trace.obj" \
-	"$(INTDIR)/LSOCK_Connector.obj" \
-	"$(INTDIR)/DEV_IO.obj" \
-	"$(INTDIR)/ARGV.obj" \
-	"$(INTDIR)/SOCK_IO.obj" \
-	"$(INTDIR)/Message_Block.obj" \
-	"$(INTDIR)/System_Time.obj" \
-	"$(INTDIR)/SPIPE_Stream.obj" \
-	"$(INTDIR)/INET_Addr.obj" \
-	"$(INTDIR)/FILE_Connector.obj" \
-	"$(INTDIR)/FIFO_Recv.obj" \
-	"$(INTDIR)/UPIPE_Connector.obj" \
-	"$(INTDIR)/Dump.obj" \
-	"$(INTDIR)/SOCK_Acceptor.obj" \
-	"$(INTDIR)/Reactor.obj" \
-	"$(INTDIR)/SPIPE_Connector.obj" \
-	"$(INTDIR)/LSOCK_CODgram.obj" \
-	"$(INTDIR)/Token_Collection.obj" \
-	"$(INTDIR)/Service_Record.obj" \
-	"$(INTDIR)/Remote_Name_Space.obj" \
-	"$(INTDIR)/Name_Request_Reply.obj" \
-	"$(INTDIR)/UPIPE_Stream.obj" \
-	"$(INTDIR)/SOCK_Dgram_Bcast.obj" \
-	"$(INTDIR)/Activation_Queue.obj" \
-	"$(INTDIR)/Service_Config.obj" \
-	"$(INTDIR)/Signal.obj" \
+	"$(INTDIR)/Mem_Map.obj" \
 	"$(INTDIR)/SOCK_Dgram.obj" \
-	"$(INTDIR)/Dynamic.obj" \
+	"$(INTDIR)/Name_Proxy.obj" \
+	"$(INTDIR)/FILE_Connector.obj" \
+	"$(INTDIR)/Shared_Memory_SV.obj" \
+	"$(INTDIR)/IO_Cntl_Msg.obj" \
+	"$(INTDIR)/SPIPE_Connector.obj" \
+	"$(INTDIR)/Token_Request_Reply.obj" \
+	"$(INTDIR)/INET_Addr.obj" \
+	"$(INTDIR)/Process_Manager.obj" \
+	"$(INTDIR)/SPIPE_Stream.obj" \
+	"$(INTDIR)/Message_Block.obj" \
+	"$(INTDIR)/IO_SAP.obj" \
+	"$(INTDIR)/SPIPE_Addr.obj" \
+	"$(INTDIR)/Service_Record.obj" \
+	"$(INTDIR)/Service_Repository.obj" \
+	"$(INTDIR)/Service_Main.obj" \
+	"$(INTDIR)/Remote_Tokens.obj" \
+	"$(INTDIR)/Log_Record.obj" \
+	"$(INTDIR)/Service_Config.obj" \
+	"$(INTDIR)/Parse_Node.obj" \
+	"$(INTDIR)/LSOCK_CODgram.obj" \
+	"$(INTDIR)/SOCK.obj" \
 	"$(INTDIR)/High_Res_Timer.obj" \
 	"$(INTDIR)/SOCK_Connector.obj" \
-	"$(INTDIR)/Name_Proxy.obj" \
-	"$(INTDIR)/Multiplexor.obj" \
-	"$(INTDIR)/UNIX_Addr.obj" \
-	"$(INTDIR)/CORBA_Handler.obj" \
-	"$(INTDIR)/OS.obj" \
-	"$(INTDIR)/SPIPE_Addr.obj" \
-	"$(INTDIR)/Read_Buffer.obj" \
-	"$(INTDIR)/SOCK.obj" \
-	"$(INTDIR)/Timer_Queue.obj" \
-	"$(INTDIR)/ReactorEx.obj" \
-	"$(INTDIR)/DEV.obj" \
-	"$(INTDIR)/Process.obj" \
-	"$(INTDIR)/SV_Semaphore_Complex.obj" \
+	"$(INTDIR)/System_Time.obj" \
 	"$(INTDIR)/Addr.obj" \
-	"$(INTDIR)/Log_Record.obj" \
-	"$(INTDIR)/FIFO_Recv_Msg.obj" \
-	"$(INTDIR)/FILE_IO.obj" \
-	"$(INTDIR)/Method_Object.obj" \
-	"$(INTDIR)/FILE_Addr.obj" \
-	"$(INTDIR)/Local_Tokens.obj" \
-	"$(INTDIR)/Pipe.obj" \
-	"$(INTDIR)/Registry.obj" \
-	"$(INTDIR)/SV_Message_Queue.obj" \
-	"$(INTDIR)/FIFO.obj" \
-	"$(INTDIR)/Get_Opt.obj" \
-	"$(INTDIR)/SPIPE.obj" \
-	"$(INTDIR)/TLI_Stream.obj" \
-	"$(INTDIR)/Malloc.obj" \
-	"$(INTDIR)/Time_Request_Reply.obj" \
-	"$(INTDIR)/FIFO_Send.obj" \
+	"$(INTDIR)/Token_Collection.obj" \
 	"$(INTDIR)/TTY_IO.obj" \
-	"$(INTDIR)/SString.obj" \
-	"$(INTDIR)/Profile_Timer.obj" \
-	"$(INTDIR)/Token_Request_Reply.obj" \
-	"$(INTDIR)/Service_Main.obj" \
-	"$(INTDIR)/SOCK_Dgram_Mcast.obj" \
-	"$(INTDIR)/DEV_Connector.obj" \
-	"$(INTDIR)/Token_Invariants.obj" \
-	"$(INTDIR)/Log_Msg.obj" \
-	"$(INTDIR)/Mem_Map.obj" \
-	"$(INTDIR)/LSOCK_Acceptor.obj" \
-	"$(INTDIR)/Process_Manager.obj" \
+	"$(INTDIR)/DEV.obj" \
+	"$(INTDIR)/TLI_Stream.obj" \
+	"$(INTDIR)/SOCK_Dgram_Bcast.obj" \
+	"$(INTDIR)/Remote_Name_Space.obj" \
+	"$(INTDIR)/Pipe.obj" \
+	"$(INTDIR)/UNIX_Addr.obj" \
+	"$(INTDIR)/Activation_Queue.obj" \
+	"$(INTDIR)/FIFO.obj" \
+	"$(INTDIR)/FIFO_Send_Msg.obj" \
+	"$(INTDIR)/Registry.obj" \
+	"$(INTDIR)/ReactorEx.obj" \
+	"$(INTDIR)/CORBA_Handler.obj" \
+	"$(INTDIR)/TLI_Acceptor.obj" \
+	"$(INTDIR)/Token_Manager.obj" \
+	"$(INTDIR)/IPC_SAP.obj" \
+	"$(INTDIR)/SOCK_CODgram.obj" \
+	"$(INTDIR)/Obstack.obj" \
+	"$(INTDIR)/Name_Request_Reply.obj" \
+	"$(INTDIR)/Multiplexor.obj" \
+	"$(INTDIR)/Name_Space.obj" \
+	"$(INTDIR)/SOCK_IO.obj" \
+	"$(INTDIR)/ARGV.obj" \
+	"$(INTDIR)/SPIPE.obj" \
+	"$(INTDIR)/Svc_Conf_l.obj" \
+	"$(INTDIR)/Read_Buffer.obj" \
+	"$(INTDIR)/Timer_Queue.obj" \
 	"$(INTDIR)/Proactor.obj" \
-	"$(INTDIR)/Shared_Memory_MM.obj" \
-	"$(INTDIR)/SOCK_Stream.obj" \
-	"$(INTDIR)/LSOCK_Stream.obj" \
-	"$(INTDIR)/TLI_Connector.obj" \
-	"$(INTDIR)/Remote_Tokens.obj" \
+	"$(INTDIR)/FIFO_Recv.obj" \
+	"$(INTDIR)/Reactor.obj" \
+	"$(INTDIR)/SV_Message_Queue.obj" \
+	"$(INTDIR)/Log_Msg.obj" \
+	"$(INTDIR)/UPIPE_Connector.obj" \
+	"$(INTDIR)/LSOCK_Acceptor.obj" \
 	"$(INTDIR)/TLI.obj" \
-	"$(INTDIR)/Synch.obj"
+	"$(INTDIR)/SOCK_Acceptor.obj" \
+	"$(INTDIR)/Profile_Timer.obj" \
+	"$(INTDIR)/Thread.obj" \
+	"$(INTDIR)/Strategies.obj"
 
 "$(OUTDIR)\ace.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -681,10 +685,11 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -773,8 +778,11 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\SPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\SPIPE.i"\
 	{$(INCLUDE)}"\.\SPIPE_Addr.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	
 
 "$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
@@ -806,10 +814,11 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -897,8 +906,11 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\SPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\SPIPE.i"\
 	{$(INCLUDE)}"\.\SPIPE_Addr.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.i"\
 	
@@ -913,7 +925,6 @@ DEP_CPP_UPIPE_=\
 SOURCE=.\UPIPE_Acceptor.cpp
 DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\UPIPE_Acceptor.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\SPIPE_Acceptor.h"\
@@ -934,9 +945,14 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
@@ -1019,15 +1035,15 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\SPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\SPIPE.i"\
 	{$(INCLUDE)}"\.\SPIPE_Addr.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.i"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
@@ -1048,11 +1064,12 @@ DEP_CPP_UNIX_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1076,6 +1093,7 @@ DEP_CPP_TRACE=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
@@ -1092,30 +1110,30 @@ DEP_CPP_TRACE=\
 
 SOURCE=.\Token_Request_Reply.cpp
 DEP_CPP_TOKEN=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
 	{$(INCLUDE)}"\.\Map_Manager.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
@@ -1160,8 +1178,15 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
@@ -1180,6 +1205,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
 	
 
 "$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -1191,27 +1217,28 @@ DEP_CPP_TOKEN=\
 
 SOURCE=.\Token_Manager.cpp
 DEP_CPP_TOKEN_=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Map_Manager.h"\
-	{$(INCLUDE)}"\.\Local_Tokens.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
@@ -1254,8 +1281,15 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
@@ -1291,7 +1325,6 @@ DEP_CPP_TOKEN_=\
 SOURCE=.\Token_Collection.cpp
 DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Token_Collection.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Token_Collection.i"\
 	{$(INCLUDE)}"\.\Map_Manager.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
@@ -1303,10 +1336,15 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
@@ -1351,8 +1389,15 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
@@ -1377,9 +1422,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Stack.i"\
 	{$(INCLUDE)}"\.\Stack.cpp"\
 	{$(INCLUDE)}"\.\SString.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
@@ -1400,10 +1442,11 @@ DEP_CPP_TOKEN_CP=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1431,7 +1474,6 @@ DEP_CPP_TOKEN_CP=\
 SOURCE=.\TLI_Stream.cpp
 DEP_CPP_TLI_S=\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\TLI.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
@@ -1444,15 +1486,17 @@ DEP_CPP_TLI_S=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
-	{$(INCLUDE)}"\.\INET_Addr.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
 	
 
 "$(INTDIR)\TLI_Stream.obj" : $(SOURCE) $(DEP_CPP_TLI_S) "$(INTDIR)"
@@ -1472,10 +1516,11 @@ DEP_CPP_TLI_C=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1503,7 +1548,6 @@ DEP_CPP_TLI_C=\
 SOURCE=.\TLI_Acceptor.cpp
 DEP_CPP_TLI_A=\
 	{$(INCLUDE)}"\.\TLI_Acceptor.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\TLI.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
@@ -1516,17 +1560,19 @@ DEP_CPP_TLI_A=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\TLI_Acceptor.obj" : $(SOURCE) $(DEP_CPP_TLI_A) "$(INTDIR)"
@@ -1539,7 +1585,6 @@ DEP_CPP_TLI_A=\
 SOURCE=.\TLI.cpp
 DEP_CPP_TLI_CP=\
 	{$(INCLUDE)}"\.\TLI.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\TLI.i"\
@@ -1549,14 +1594,16 @@ DEP_CPP_TLI_CP=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	
 
 "$(INTDIR)\TLI.obj" : $(SOURCE) $(DEP_CPP_TLI_CP) "$(INTDIR)"
@@ -1578,10 +1625,11 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1613,10 +1661,11 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1631,22 +1680,23 @@ DEP_CPP_TIME_=\
 
 SOURCE=.\Time_Request_Reply.cpp
 DEP_CPP_TIME_R=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Time_Request_Reply.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\Time_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TIME_R) "$(INTDIR)"
@@ -1660,22 +1710,23 @@ SOURCE=.\Thread_Manager.cpp
 DEP_CPP_THREA=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
@@ -1704,11 +1755,12 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1731,11 +1783,12 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
@@ -1781,11 +1834,12 @@ DEP_CPP_SYNCH=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1802,7 +1856,6 @@ SOURCE=.\Synch.cpp
 DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
@@ -1810,9 +1863,14 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
@@ -1822,9 +1880,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
 	
 
@@ -1847,11 +1902,12 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -1901,9 +1957,16 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -1938,12 +2001,8 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Module.cpp"\
 	{$(INCLUDE)}"\.\Task.i"\
 	{$(INCLUDE)}"\.\Task_T.h"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
-	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\.\Message_Queue.i"\
-	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
 	{$(INCLUDE)}"\.\Stream_Modules.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
@@ -1966,13 +2025,14 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Obstack.h"\
@@ -2020,9 +2080,16 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -2053,7 +2120,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Parse_Node.i"\
 	{$(INCLUDE)}"\.\Stream.h"\
 	{$(INCLUDE)}"\.\Service_Record.i"\
-	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\.\Module.h"\
 	{$(INCLUDE)}"\.\Stream.i"\
 	{$(INCLUDE)}"\.\Stream.cpp"\
@@ -2062,11 +2128,8 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Module.cpp"\
 	{$(INCLUDE)}"\.\Task.i"\
 	{$(INCLUDE)}"\.\Task_T.h"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.i"\
-	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
 	{$(INCLUDE)}"\.\Stream_Modules.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
@@ -2082,14 +2145,15 @@ DEP_CPP_SVC_CO=\
 SOURCE=.\SV_Shared_Memory.cpp
 DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
@@ -2107,21 +2171,22 @@ DEP_CPP_SV_SH=\
 
 SOURCE=.\SV_Semaphore_Simple.cpp
 DEP_CPP_SV_SE=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\SV_Semaphore_Simple.obj" : $(SOURCE) $(DEP_CPP_SV_SE) "$(INTDIR)"
@@ -2133,23 +2198,24 @@ DEP_CPP_SV_SE=\
 
 SOURCE=.\SV_Semaphore_Complex.cpp
 DEP_CPP_SV_SEM=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\SV_Semaphore_Complex.obj" : $(SOURCE) $(DEP_CPP_SV_SEM) "$(INTDIR)"
@@ -2162,7 +2228,6 @@ DEP_CPP_SV_SEM=\
 SOURCE=.\SV_Message_Queue.cpp
 DEP_CPP_SV_ME=\
 	{$(INCLUDE)}"\.\SV_Message_Queue.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\SV_Message.h"\
 	{$(INCLUDE)}"\.\SV_Message_Queue.i"\
@@ -2170,14 +2235,16 @@ DEP_CPP_SV_ME=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\SV_Message.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Message.i"\
 	
 
 "$(INTDIR)\SV_Message_Queue.obj" : $(SOURCE) $(DEP_CPP_SV_ME) "$(INTDIR)"
@@ -2196,11 +2263,12 @@ DEP_CPP_SV_MES=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2229,11 +2297,12 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2274,9 +2343,16 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -2326,11 +2402,12 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2362,11 +2439,12 @@ DEP_CPP_SPIPE_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2393,11 +2471,12 @@ DEP_CPP_SPIPE_A=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2413,7 +2492,6 @@ DEP_CPP_SPIPE_A=\
 SOURCE=.\SPIPE_Acceptor.cpp
 DEP_CPP_SPIPE_AC=\
 	{$(INCLUDE)}"\.\SPIPE_Acceptor.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\SPIPE.h"\
 	{$(INCLUDE)}"\.\SPIPE_Addr.h"\
@@ -2426,16 +2504,18 @@ DEP_CPP_SPIPE_AC=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.h"\
-	{$(INCLUDE)}"\.\SPIPE_Addr.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\SPIPE_Addr.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	
 
 "$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SPIPE_AC) "$(INTDIR)"
@@ -2457,11 +2537,12 @@ DEP_CPP_SPIPE_C=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2493,11 +2574,12 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2526,11 +2608,12 @@ DEP_CPP_SOCK_I=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2561,11 +2644,12 @@ DEP_CPP_SOCK_D=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2584,7 +2668,6 @@ DEP_CPP_SOCK_D=\
 SOURCE=.\SOCK_Dgram_Bcast.cpp
 DEP_CPP_SOCK_DG=\
 	{$(INCLUDE)}"\.\SOCK_Dgram_Bcast.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\SOCK_Dgram.h"\
 	{$(INCLUDE)}"\.\SOCK_Dgram_Bcast.i"\
@@ -2595,19 +2678,21 @@ DEP_CPP_SOCK_DG=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK_Dgram.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\SOCK_Dgram_Bcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_DG) "$(INTDIR)"
@@ -2620,7 +2705,6 @@ DEP_CPP_SOCK_DG=\
 SOURCE=.\SOCK_Dgram.cpp
 DEP_CPP_SOCK_DGR=\
 	{$(INCLUDE)}"\.\SOCK_Dgram.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\SOCK_Dgram.i"\
@@ -2631,15 +2715,17 @@ DEP_CPP_SOCK_DGR=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\IPC_SAP.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	
 
 "$(INTDIR)\SOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_DGR) "$(INTDIR)"
@@ -2668,10 +2754,11 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2690,9 +2777,20 @@ DEP_CPP_SOCK_C=\
 # Begin Source File
 
 SOURCE=.\SOCK_CODgram.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
 DEP_CPP_SOCK_CO=\
 	{$(INCLUDE)}"\.\SOCK_CODgram.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
+	
+
+"$(INTDIR)\SOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_CO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
+DEP_CPP_SOCK_CO=\
+	{$(INCLUDE)}"\.\SOCK_CODgram.h"\
 	{$(INCLUDE)}"\.\SOCK_IO.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\SOCK_CODgram.i"\
@@ -2705,19 +2803,23 @@ DEP_CPP_SOCK_CO=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\IPC_SAP.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	
 
 "$(INTDIR)\SOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_CO) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 ################################################################################
@@ -2726,7 +2828,6 @@ DEP_CPP_SOCK_CO=\
 SOURCE=.\SOCK_Acceptor.cpp
 DEP_CPP_SOCK_A=\
 	{$(INCLUDE)}"\.\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SOCK_Acceptor.i"\
 	{$(INCLUDE)}"\.\SOCK_Stream.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
@@ -2742,16 +2843,18 @@ DEP_CPP_SOCK_A=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\SOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SOCK_A) "$(INTDIR)"
@@ -2763,27 +2866,28 @@ DEP_CPP_SOCK_A=\
 
 SOURCE=.\Signal.cpp
 DEP_CPP_SIGNA=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Set.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Set.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
@@ -2812,11 +2916,12 @@ DEP_CPP_SHARE=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2840,11 +2945,12 @@ DEP_CPP_SHARED=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2869,11 +2975,12 @@ DEP_CPP_SHARED_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -2898,7 +3005,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Service_Record.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
@@ -2906,14 +3012,16 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
@@ -2954,9 +3062,12 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\ReactorEx.h"\
 	{$(INCLUDE)}"\.\Service_Config.i"\
@@ -3015,7 +3126,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Stream.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
@@ -3023,14 +3133,16 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
@@ -3071,9 +3183,12 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\ReactorEx.h"\
 	{$(INCLUDE)}"\.\Service_Config.i"\
@@ -3129,21 +3244,22 @@ DEP_CPP_SERVICE=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
 	
 
 "$(INTDIR)\Service_Object.obj" : $(SOURCE) $(DEP_CPP_SERVICE) "$(INTDIR)"
@@ -3167,11 +3283,12 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -3226,8 +3343,11 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
 	{$(INCLUDE)}"\.\Stream_Modules.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
@@ -3291,7 +3411,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
@@ -3299,14 +3418,16 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
@@ -3337,9 +3458,16 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -3395,11 +3523,12 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -3467,8 +3596,11 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
 	{$(INCLUDE)}"\.\Stream_Modules.i"\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
@@ -3511,22 +3643,9 @@ DEP_CPP_SERVICE_C=\
 
 SOURCE=.\Remote_Tokens.cpp
 DEP_CPP_REMOT=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Remote_Tokens.h"\
 	{$(INCLUDE)}"\.\Singleton.h"\
 	{$(INCLUDE)}"\.\Remote_Tokens.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\SOCK_Connector.h"\
 	{$(INCLUDE)}"\.\SOCK_Stream.h"\
@@ -3534,8 +3653,22 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\SOCK_Connector.i"\
 	{$(INCLUDE)}"\.\SOCK_IO.h"\
@@ -3594,8 +3727,15 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
@@ -3617,24 +3757,25 @@ DEP_CPP_REMOT=\
 
 SOURCE=.\Remote_Name_Space.cpp
 DEP_CPP_REMOTE=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Remote_Name_Space.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\Set.h"\
 	{$(INCLUDE)}"\.\Name_Proxy.h"\
 	{$(INCLUDE)}"\.\Name_Space.h"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\Set.i"\
 	{$(INCLUDE)}"\.\Set.cpp"\
@@ -3695,9 +3836,16 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Map_Manager.h"\
@@ -3731,11 +3879,12 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -3781,9 +3930,16 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -3821,28 +3977,29 @@ DEP_CPP_READ_=\
 
 SOURCE=.\Reactor.cpp
 DEP_CPP_REACT=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\SOCK_Acceptor.h"\
 	{$(INCLUDE)}"\.\SOCK_Connector.h"\
 	{$(INCLUDE)}"\.\Reactor.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Synch.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
@@ -3910,7 +4067,14 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Message_Block.h"\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	
 
 "$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
@@ -3929,10 +4093,11 @@ DEP_CPP_PROFI=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -3950,23 +4115,24 @@ SOURCE=.\Process_Manager.cpp
 DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Process_Manager.h"\
 	{$(INCLUDE)}"\.\Process_Manager.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
@@ -3987,35 +4153,36 @@ DEP_CPP_PROCE=\
 
 SOURCE=.\Pipe.cpp
 DEP_CPP_PIPE_=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SOCK_Acceptor.h"\
 	{$(INCLUDE)}"\.\SOCK_Connector.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\SOCK_Acceptor.i"\
 	{$(INCLUDE)}"\.\SOCK_IO.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\SOCK_Stream.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\SOCK_Connector.i"\
 	{$(INCLUDE)}"\.\Pipe.i"\
 	
@@ -4044,7 +4211,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
@@ -4052,14 +4218,16 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
@@ -4090,9 +4258,16 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -4123,7 +4298,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Service_Repository.i"\
 	{$(INCLUDE)}"\.\Stream.h"\
 	{$(INCLUDE)}"\.\Service_Record.i"\
-	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\.\Module.h"\
 	{$(INCLUDE)}"\.\Stream.i"\
 	{$(INCLUDE)}"\.\Stream.cpp"\
@@ -4134,11 +4308,8 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\.\Task.i"\
 	{$(INCLUDE)}"\.\Task_T.h"\
-	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
-	{$(INCLUDE)}"\.\Message_Queue.i"\
-	{$(INCLUDE)}"\.\Message_Queue.cpp"\
 	
 
 "$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
@@ -4151,19 +4322,20 @@ DEP_CPP_PARSE=\
 SOURCE=.\OS.cpp
 DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\ARGV.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Set.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.i"\
@@ -4198,11 +4370,12 @@ DEP_CPP_OBSTA=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -4217,24 +4390,25 @@ DEP_CPP_OBSTA=\
 
 SOURCE=.\Naming_Context.cpp
 DEP_CPP_NAMIN=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Get_Opt.h"\
 	{$(INCLUDE)}"\.\Naming_Context.h"\
 	{$(INCLUDE)}"\.\Remote_Name_Space.h"\
 	{$(INCLUDE)}"\.\Local_Name_Space.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Get_Opt.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Get_Opt.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\Set.h"\
 	{$(INCLUDE)}"\.\Service_Object.h"\
@@ -4299,9 +4473,16 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Map_Manager.h"\
@@ -4337,11 +4518,12 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -4405,9 +4587,16 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Map_Manager.h"\
@@ -4432,22 +4621,23 @@ DEP_CPP_NAME_=\
 
 SOURCE=.\Name_Request_Reply.cpp
 DEP_CPP_NAME_R=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Name_Request_Reply.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\Name_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_NAME_R) "$(INTDIR)"
@@ -4459,28 +4649,29 @@ DEP_CPP_NAME_R=\
 
 SOURCE=.\Name_Proxy.cpp
 DEP_CPP_NAME_P=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Name_Proxy.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\SOCK_Connector.h"\
 	{$(INCLUDE)}"\.\SOCK_Stream.h"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
 	{$(INCLUDE)}"\.\Name_Request_Reply.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\SOCK_Connector.i"\
 	{$(INCLUDE)}"\.\SOCK_IO.h"\
@@ -4533,9 +4724,16 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Map_Manager.h"\
@@ -4574,11 +4772,12 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -4607,6 +4806,7 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
@@ -4625,7 +4825,9 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Set.i"\
 	{$(INCLUDE)}"\.\Set.cpp"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Proactor.h"\
 	{$(INCLUDE)}"\.\ReactorEx.h"\
 	{$(INCLUDE)}"\.\Service_Config.i"\
@@ -4676,22 +4878,23 @@ DEP_CPP_MULTI=\
 
 SOURCE=.\Message_Block.cpp
 DEP_CPP_MESSA=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Message_Block.h"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Malloc.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\Malloc.i"\
@@ -4729,25 +4932,26 @@ DEP_CPP_MESSA=\
 
 SOURCE=.\Memory_Pool.cpp
 DEP_CPP_MEMOR=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Memory_Pool.h"\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Mem_Map.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Set.h"\
@@ -4782,11 +4986,12 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -4812,11 +5017,12 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -4852,20 +5058,7 @@ DEP_CPP_MALLO=\
 
 SOURCE=.\LSOCK_Stream.cpp
 DEP_CPP_LSOCK=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\LSOCK_Stream.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\SOCK_Stream.h"\
 	{$(INCLUDE)}"\.\LSOCK.h"\
 	{$(INCLUDE)}"\.\LSOCK_Stream.i"\
@@ -4874,9 +5067,23 @@ DEP_CPP_LSOCK=\
 	{$(INCLUDE)}"\.\SOCK_Stream.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -4893,7 +5100,6 @@ DEP_CPP_LSOCK=\
 SOURCE=.\LSOCK_Dgram.cpp
 DEP_CPP_LSOCK_=\
 	{$(INCLUDE)}"\.\LSOCK_Dgram.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SOCK_Dgram.h"\
 	{$(INCLUDE)}"\.\LSOCK.h"\
 	{$(INCLUDE)}"\.\LSOCK_Dgram.i"\
@@ -4907,16 +5113,18 @@ DEP_CPP_LSOCK_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\IPC_SAP.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
-	{$(INCLUDE)}"\.\LSOCK.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\LSOCK.i"\
 	
 
 "$(INTDIR)\LSOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_) "$(INTDIR)"
@@ -4948,10 +5156,11 @@ DEP_CPP_LSOCK_C=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -4973,9 +5182,11 @@ DEP_CPP_LSOCK_C=\
 # Begin Source File
 
 SOURCE=.\LSOCK_CODgram.cpp
+
+!IF  "$(CFG)" == "ace - Win32 Release"
+
 DEP_CPP_LSOCK_CO=\
 	{$(INCLUDE)}"\.\LSOCK_CODgram.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\LSOCK.h"\
 	{$(INCLUDE)}"\.\SOCK_CODgram.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -4989,22 +5200,59 @@ DEP_CPP_LSOCK_CO=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	
+
+"$(INTDIR)\LSOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ace - Win32 Debug"
+
+DEP_CPP_LSOCK_CO=\
+	{$(INCLUDE)}"\.\LSOCK_CODgram.h"\
+	{$(INCLUDE)}"\.\LSOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_CODgram.h"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\LSOCK_CODgram.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\LSOCK.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\SOCK_IO.h"\
 	{$(INCLUDE)}"\.\SOCK_CODgram.i"\
 	{$(INCLUDE)}"\.\SOCK_IO.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\LSOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CO) "$(INTDIR)"
 
+
+!ENDIF 
 
 # End Source File
 ################################################################################
@@ -5012,37 +5260,38 @@ DEP_CPP_LSOCK_CO=\
 
 SOURCE=.\LSOCK_Acceptor.cpp
 DEP_CPP_LSOCK_A=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\LSOCK_Acceptor.h"\
 	{$(INCLUDE)}"\.\LSOCK_Acceptor.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\SOCK_Acceptor.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\LSOCK_Stream.h"\
 	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\SOCK_Acceptor.i"\
 	{$(INCLUDE)}"\.\SOCK_IO.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\SOCK_Stream.i"\
 	{$(INCLUDE)}"\.\SOCK.h"\
 	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
 	{$(INCLUDE)}"\.\LSOCK.h"\
 	{$(INCLUDE)}"\.\LSOCK_Stream.i"\
@@ -5058,25 +5307,26 @@ DEP_CPP_LSOCK_A=\
 
 SOURCE=.\LSOCK.cpp
 DEP_CPP_LSOCK_CP=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\LSOCK.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\LSOCK.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\SOCK.h"\
-	{$(INCLUDE)}"\.\LSOCK.i"\
-	{$(INCLUDE)}"\.\Addr.h"\
-	{$(INCLUDE)}"\.\IPC_SAP.h"\
-	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	
@@ -5090,16 +5340,17 @@ DEP_CPP_LSOCK_CP=\
 
 SOURCE=.\Log_Record.cpp
 DEP_CPP_LOG_R=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
@@ -5118,16 +5369,20 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\SPIPE_Connector.h"\
 	{$(INCLUDE)}"\.\FIFO_Send_Msg.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Synch.i"\
@@ -5139,9 +5394,6 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\SPIPE_Connector.i"\
 	{$(INCLUDE)}"\.\SPIPE.h"\
@@ -5169,24 +5421,25 @@ DEP_CPP_LOG_M=\
 
 SOURCE=.\Local_Tokens.cpp
 DEP_CPP_LOCAL=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -5236,8 +5489,15 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
@@ -5268,20 +5528,21 @@ DEP_CPP_LOCAL=\
 
 SOURCE=.\Local_Name_Space.cpp
 DEP_CPP_LOCAL_=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Local_Name_Space.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Map_Manager.h"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
 	{$(INCLUDE)}"\.\SString.h"\
@@ -5311,9 +5572,16 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -5376,21 +5644,22 @@ DEP_CPP_LOCAL_=\
 
 SOURCE=.\IPC_SAP.cpp
 DEP_CPP_IPC_S=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\IPC_SAP.obj" : $(SOURCE) $(DEP_CPP_IPC_S) "$(INTDIR)"
@@ -5402,21 +5671,22 @@ DEP_CPP_IPC_S=\
 
 SOURCE=.\IO_SAP.cpp
 DEP_CPP_IO_SA=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\IO_SAP.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\IO_SAP.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\IO_SAP.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\IO_SAP.obj" : $(SOURCE) $(DEP_CPP_IO_SA) "$(INTDIR)"
@@ -5445,11 +5715,12 @@ DEP_CPP_INET_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -5465,21 +5736,22 @@ DEP_CPP_INET_=\
 
 SOURCE=.\High_Res_Timer.cpp
 DEP_CPP_HIGH_=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\High_Res_Timer.obj" : $(SOURCE) $(DEP_CPP_HIGH_) "$(INTDIR)"
@@ -5491,21 +5763,22 @@ DEP_CPP_HIGH_=\
 
 SOURCE=.\Handle_Set.cpp
 DEP_CPP_HANDL=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\Handle_Set.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
@@ -5517,21 +5790,22 @@ DEP_CPP_HANDL=\
 
 SOURCE=.\Get_Opt.cpp
 DEP_CPP_GET_O=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Get_Opt.h"\
 	{$(INCLUDE)}"\.\Get_Opt.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\Get_Opt.obj" : $(SOURCE) $(DEP_CPP_GET_O) "$(INTDIR)"
@@ -5544,7 +5818,6 @@ DEP_CPP_GET_O=\
 SOURCE=.\FILE_IO.cpp
 DEP_CPP_FILE_=\
 	{$(INCLUDE)}"\.\FILE_IO.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\FILE.h"\
 	{$(INCLUDE)}"\.\FILE_Addr.h"\
 	{$(INCLUDE)}"\.\FILE_IO.i"\
@@ -5556,16 +5829,18 @@ DEP_CPP_FILE_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.h"\
-	{$(INCLUDE)}"\.\FILE_Addr.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\FILE_Addr.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	
 
 "$(INTDIR)\FILE_IO.obj" : $(SOURCE) $(DEP_CPP_FILE_) "$(INTDIR)"
@@ -5591,11 +5866,12 @@ DEP_CPP_FILE_C=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -5613,23 +5889,24 @@ DEP_CPP_FILE_C=\
 
 SOURCE=.\FILE_Addr.cpp
 DEP_CPP_FILE_A=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\FILE_Addr.h"\
 	{$(INCLUDE)}"\.\FILE_Addr.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.h"\
-	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\FILE_Addr.obj" : $(SOURCE) $(DEP_CPP_FILE_A) "$(INTDIR)"
@@ -5651,11 +5928,12 @@ DEP_CPP_FILE_CP=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -5674,7 +5952,6 @@ DEP_CPP_FILE_CP=\
 SOURCE=.\FIFO_Send_Msg.cpp
 DEP_CPP_FIFO_=\
 	{$(INCLUDE)}"\.\FIFO_Send_Msg.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\FIFO_Send.h"\
 	{$(INCLUDE)}"\.\FIFO_Send_Msg.i"\
 	{$(INCLUDE)}"\.\FIFO.h"\
@@ -5687,7 +5964,9 @@ DEP_CPP_FIFO_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
@@ -5706,7 +5985,6 @@ DEP_CPP_FIFO_=\
 SOURCE=.\FIFO_Send.cpp
 DEP_CPP_FIFO_S=\
 	{$(INCLUDE)}"\.\FIFO_Send.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO_Send.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
@@ -5717,7 +5995,9 @@ DEP_CPP_FIFO_S=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
@@ -5736,7 +6016,6 @@ DEP_CPP_FIFO_S=\
 SOURCE=.\FIFO_Recv_Msg.cpp
 DEP_CPP_FIFO_R=\
 	{$(INCLUDE)}"\.\FIFO_Recv_Msg.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\FIFO_Recv.h"\
 	{$(INCLUDE)}"\.\FIFO_Recv_Msg.i"\
 	{$(INCLUDE)}"\.\FIFO.h"\
@@ -5749,7 +6028,9 @@ DEP_CPP_FIFO_R=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
@@ -5768,7 +6049,6 @@ DEP_CPP_FIFO_R=\
 SOURCE=.\FIFO_Recv.cpp
 DEP_CPP_FIFO_RE=\
 	{$(INCLUDE)}"\.\FIFO_Recv.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO_Recv.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
@@ -5779,7 +6059,9 @@ DEP_CPP_FIFO_RE=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
@@ -5805,11 +6087,12 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -5857,11 +6140,12 @@ DEP_CPP_DYNAM=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -5887,11 +6171,12 @@ DEP_CPP_DUMP_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -5917,7 +6202,6 @@ DEP_CPP_DUMP_=\
 SOURCE=.\DEV_IO.cpp
 DEP_CPP_DEV_I=\
 	{$(INCLUDE)}"\.\DEV_IO.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.h"\
 	{$(INCLUDE)}"\.\DEV_IO.i"\
@@ -5929,16 +6213,18 @@ DEP_CPP_DEV_I=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.h"\
-	{$(INCLUDE)}"\.\DEV_Addr.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\DEV_Addr.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	
 
 "$(INTDIR)\DEV_IO.obj" : $(SOURCE) $(DEP_CPP_DEV_I) "$(INTDIR)"
@@ -5964,11 +6250,12 @@ DEP_CPP_DEV_C=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -5986,23 +6273,24 @@ DEP_CPP_DEV_C=\
 
 SOURCE=.\DEV_Addr.cpp
 DEP_CPP_DEV_A=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.h"\
-	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\DEV_Addr.obj" : $(SOURCE) $(DEP_CPP_DEV_A) "$(INTDIR)"
@@ -6024,11 +6312,12 @@ DEP_CPP_DEV_CP=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -6053,11 +6342,12 @@ DEP_CPP_DATE_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -6072,21 +6362,8 @@ DEP_CPP_DATE_=\
 
 SOURCE=.\CORBA_Handler.cpp
 DEP_CPP_CORBA=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\CORBA_Handler.h"\
 	{$(INCLUDE)}"\.\CORBA_Handler.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Time_Value.h"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
 	{$(INCLUDE)}"\.\Service_Config.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
 	{$(INCLUDE)}"\.\Service_Object.h"\
@@ -6100,7 +6377,21 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
@@ -6132,9 +6423,16 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Stack.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
@@ -6171,21 +6469,22 @@ DEP_CPP_CORBA=\
 
 SOURCE=.\ARGV.cpp
 DEP_CPP_ARGV_=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\ARGV.h"\
 	{$(INCLUDE)}"\.\ARGV.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\ARGV.obj" : $(SOURCE) $(DEP_CPP_ARGV_) "$(INTDIR)"
@@ -6197,21 +6496,22 @@ DEP_CPP_ARGV_=\
 
 SOURCE=.\Addr.cpp
 DEP_CPP_ADDR_=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\Addr.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	
 
 "$(INTDIR)\Addr.obj" : $(SOURCE) $(DEP_CPP_ADDR_) "$(INTDIR)"
@@ -6237,8 +6537,9 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -6308,7 +6609,14 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Message_Block.h"\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	
 
 "$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
@@ -6321,7 +6629,6 @@ DEP_CPP_ACE_C=\
 SOURCE=.\SOCK.cpp
 DEP_CPP_SOCK_CP=\
 	{$(INCLUDE)}"\.\SOCK.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
@@ -6330,15 +6637,17 @@ DEP_CPP_SOCK_CP=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Addr.i"\
-	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	
 
 "$(INTDIR)\SOCK.obj" : $(SOURCE) $(DEP_CPP_SOCK_CP) "$(INTDIR)"
@@ -6359,11 +6668,12 @@ DEP_CPP_FIFO_C=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -6386,14 +6696,15 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Malloc.h"\
@@ -6437,60 +6748,58 @@ SOURCE=.\ReactorEx.cpp
 DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\ReactorEx.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
-	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
-	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Synch_T.cpp"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
-	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Token.i"\
-	{$(INCLUDE)}"\.\Stack.h"\
-	{$(INCLUDE)}"\.\Synch_Options.h"\
-	{$(INCLUDE)}"\.\Map_Manager.h"\
-	{$(INCLUDE)}"\.\Local_Tokens.i"\
-	{$(INCLUDE)}"\.\Stack.i"\
-	{$(INCLUDE)}"\.\Stack.cpp"\
-	{$(INCLUDE)}"\.\Map_Manager.i"\
-	{$(INCLUDE)}"\.\Map_Manager.cpp"\
-	{$(INCLUDE)}"\.\Malloc.h"\
-	{$(INCLUDE)}"\.\Service_Config.h"\
-	{$(INCLUDE)}"\.\Malloc.i"\
-	{$(INCLUDE)}"\.\Malloc_T.h"\
-	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\.\Malloc_T.i"\
 	{$(INCLUDE)}"\.\Malloc_T.cpp"\
 	{$(INCLUDE)}"\.\Signal.h"\
 	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\Set.h"\
 	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\Set.i"\
 	{$(INCLUDE)}"\.\Set.cpp"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Service_Object.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Proactor.h"\
@@ -6501,9 +6810,9 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
-	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
 	{$(INCLUDE)}"\.\Proactor.i"\
-	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
 	{$(INCLUDE)}"\.\SOCK_Stream.h"\
@@ -6521,6 +6830,16 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Addr.i"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
 	
 
 "$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
@@ -6532,27 +6851,28 @@ DEP_CPP_REACTO=\
 
 SOURCE=.\Token_Invariants.cpp
 DEP_CPP_TOKEN_I=\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Token_Invariants.h"\
 	{$(INCLUDE)}"\.\Token_Invariants.i"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Map_Manager.h"\
-	{$(INCLUDE)}"\.\Local_Tokens.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
@@ -6595,8 +6915,15 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Proactor.i"\
 	{$(INCLUDE)}"\.\Message_Block.i"\
 	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Pipe.h"\
@@ -6637,14 +6964,15 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.i"\
@@ -6660,22 +6988,23 @@ DEP_CPP_PROCES=\
 SOURCE=.\TTY_IO.cpp
 DEP_CPP_TTY_I=\
 	{$(INCLUDE)}"\.\TTY_IO.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.h"\
 	{$(INCLUDE)}"\.\DEV_Connector.h"\
 	{$(INCLUDE)}"\.\DEV_IO.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.i"\
 	{$(INCLUDE)}"\.\Addr.i"\
@@ -6708,11 +7037,12 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
@@ -6726,6 +7056,7 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
@@ -6744,6 +7075,52 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Set.i"\
 	{$(INCLUDE)}"\.\Set.cpp"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Proactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Proactor.i"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
 	
 
 "$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
@@ -6759,14 +7136,15 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	
@@ -6785,14 +7163,15 @@ DEP_CPP_REGIS=\
 	".\..\STL\bstring.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	
@@ -6818,7 +7197,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Task_T.h"\
 	{$(INCLUDE)}"\.\Shared_Object.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Service_Object.i"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\Shared_Object.i"\
@@ -6826,14 +7204,16 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\OS.i"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Time_Value.i"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Synch.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
@@ -6850,6 +7230,7 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Task_T.i"\
 	{$(INCLUDE)}"\.\Task_T.cpp"\
 	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\Strategies.h"\
 	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\.\Message_Queue.i"\
 	{$(INCLUDE)}"\.\Message_Queue.cpp"\
@@ -6868,6 +7249,8 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Set.i"\
 	{$(INCLUDE)}"\.\Set.cpp"\
 	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
 	{$(INCLUDE)}"\.\Module.i"\
 	{$(INCLUDE)}"\.\Module.cpp"\
 	{$(INCLUDE)}"\.\Stream_Modules.h"\
@@ -6913,6 +7296,109 @@ DEP_CPP_TASK_=\
 	
 
 "$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\Strategies.cpp
+DEP_CPP_STRAT=\
+	{$(INCLUDE)}"\.\Reactor.h"\
+	{$(INCLUDE)}"\.\ReactorEx.h"\
+	{$(INCLUDE)}"\.\Strategies.h"\
+	{$(INCLUDE)}"\.\Handle_Set.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.h"\
+	{$(INCLUDE)}"\.\Signal.h"\
+	{$(INCLUDE)}"\.\Thread.h"\
+	{$(INCLUDE)}"\.\Token.h"\
+	{$(INCLUDE)}"\.\Pipe.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.h"\
+	{$(INCLUDE)}"\.\Reactor.i"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\Handle_Set.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Time_Value.h"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Time_Value.i"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\Event_Handler.h"\
+	{$(INCLUDE)}"\.\Synch.h"\
+	{$(INCLUDE)}"\.\Timer_Queue.i"\
+	{$(INCLUDE)}"\.\Event_Handler.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\.\Synch.i"\
+	{$(INCLUDE)}"\.\Synch_T.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\.\Synch_T.i"\
+	{$(INCLUDE)}"\.\Synch_T.cpp"\
+	{$(INCLUDE)}"\.\Set.h"\
+	{$(INCLUDE)}"\.\Signal.i"\
+	{$(INCLUDE)}"\.\Set.i"\
+	{$(INCLUDE)}"\.\Set.cpp"\
+	{$(INCLUDE)}"\.\Thread.i"\
+	{$(INCLUDE)}"\.\Token.i"\
+	{$(INCLUDE)}"\.\Pipe.i"\
+	{$(INCLUDE)}"\.\SOCK_IO.h"\
+	{$(INCLUDE)}"\.\INET_Addr.h"\
+	{$(INCLUDE)}"\.\SOCK_Stream.i"\
+	{$(INCLUDE)}"\.\SOCK.h"\
+	{$(INCLUDE)}"\.\SOCK_IO.i"\
+	{$(INCLUDE)}"\.\Addr.h"\
+	{$(INCLUDE)}"\.\IPC_SAP.h"\
+	{$(INCLUDE)}"\.\SOCK.i"\
+	{$(INCLUDE)}"\.\Addr.i"\
+	{$(INCLUDE)}"\.\IPC_SAP.i"\
+	{$(INCLUDE)}"\.\INET_Addr.i"\
+	{$(INCLUDE)}"\.\Stack.h"\
+	{$(INCLUDE)}"\.\Synch_Options.h"\
+	{$(INCLUDE)}"\.\Map_Manager.h"\
+	{$(INCLUDE)}"\.\Local_Tokens.i"\
+	{$(INCLUDE)}"\.\Stack.i"\
+	{$(INCLUDE)}"\.\Stack.cpp"\
+	{$(INCLUDE)}"\.\Map_Manager.i"\
+	{$(INCLUDE)}"\.\Map_Manager.cpp"\
+	{$(INCLUDE)}"\.\Malloc.h"\
+	{$(INCLUDE)}"\.\Service_Config.h"\
+	{$(INCLUDE)}"\.\Malloc.i"\
+	{$(INCLUDE)}"\.\Malloc_T.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.h"\
+	{$(INCLUDE)}"\.\Malloc_T.i"\
+	{$(INCLUDE)}"\.\Malloc_T.cpp"\
+	{$(INCLUDE)}"\.\Mem_Map.h"\
+	{$(INCLUDE)}"\.\Memory_Pool.i"\
+	{$(INCLUDE)}"\.\Mem_Map.i"\
+	{$(INCLUDE)}"\.\Service_Object.h"\
+	{$(INCLUDE)}"\.\Thread_Manager.h"\
+	{$(INCLUDE)}"\.\Service_Config.i"\
+	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\.\Shared_Object.h"\
+	{$(INCLUDE)}"\.\Service_Object.i"\
+	{$(INCLUDE)}"\.\Shared_Object.i"\
+	{$(INCLUDE)}"\.\Thread_Manager.i"\
+	{$(INCLUDE)}"\.\Message_Queue.h"\
+	{$(INCLUDE)}"\.\ReactorEx.i"\
+	{$(INCLUDE)}"\.\Message_Block.h"\
+	{$(INCLUDE)}"\.\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\.\Message_Queue.i"\
+	{$(INCLUDE)}"\.\Message_Queue.cpp"\
+	{$(INCLUDE)}"\.\Message_Block.i"\
+	{$(INCLUDE)}"\.\Strategies_T.h"\
+	{$(INCLUDE)}"\.\Strategies_T.cpp"\
+	
+
+"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
 
 
 # End Source File
