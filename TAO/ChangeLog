@@ -1,3 +1,10 @@
+Mon Apr 19 13:04:27 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/POA/TIE/POA_TIE.mpc:
+        * performance-tests/Sequence_Latency/AMI/ami.mpc:
+
+          Removed unnecessary subtraction of -Sc from idlflags.
+
 Mon Apr 19 16:57:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
