@@ -18,7 +18,7 @@ Roundtrip::test_method (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG, "Test_Method called\n"));
-  _tao_rh->test_method (send_time);
+  _tao_rh->test_method (send_time ACE_ENV_ARG_PARAMETER);
   //ACE_DEBUG ((LM_DEBUG, "RH completed\n"));
 }
 
@@ -28,6 +28,6 @@ Roundtrip::shutdown (
        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  _tao_rh->shutdown ();
+  _tao_rh->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
