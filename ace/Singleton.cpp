@@ -94,6 +94,7 @@ template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 {
   delete this;
+  ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -186,6 +187,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
   ACE_TRACE ("ACE_TSS_Singleton::cleanup");
 
   delete this;
+  ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
