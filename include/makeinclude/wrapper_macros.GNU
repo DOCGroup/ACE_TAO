@@ -18,7 +18,8 @@
 #  ----             -----------
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 #  exceptions       Enable exception handling (not supported by all platforms).
-#  minimum_corba    Enable minimumCORBA support.
+#  minimum_corba    Enable minimumCORBA support.  (Documented here, but
+#                     implemented in TAO/rules.TAO.GNU.)
 #  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                     default, others do not.
@@ -318,12 +319,6 @@ else  # ! exceptions
     CCFLAGS += -fno-exceptions
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! exceptions
-
-ifeq ($(minimum_corba),1)
-  CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA  
-else
-  override minimum_corba =
-endif # minimum_corba
 
 ifeq ($(profile),0)
   override profile =
