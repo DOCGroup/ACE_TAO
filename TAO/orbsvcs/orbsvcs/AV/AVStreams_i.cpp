@@ -679,7 +679,7 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester,
                                    CORBA::Environment &env)
 {
   ACE_ERROR_RETURN ((LM_ERROR, 
-                     "(%P|%t) Cannot create a A device on the server side!\n"),
+                     "(%P|%t) Cannot create a A device!\n"),
                     0);
 }
 
@@ -694,7 +694,7 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
                         CORBA::Environment &env)
 {
   ACE_ERROR_RETURN ((LM_ERROR, 
-                     "(%P|%t) Cannot create a B device on the client side!\n"),
+                     "(%P|%t) Cannot create a B device!\n"),
                     0);
 }
 
@@ -732,89 +732,89 @@ TAO_MMDevice::~TAO_MMDevice (void)
 {
 }
 
-template <class T>
-TAO_Client_MMDevice <T>::TAO_Client_MMDevice ()
-{
-}
-
-// We have been asked to create a new stream_endpoint and a vdev.
-template <class T>
-AVStreams::StreamEndPoint_A_ptr  
-TAO_Client_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                                   AVStreams::VDev_out the_vdev, 
-                                   AVStreams::streamQoS &the_qos, 
-                                   CORBA::Boolean_out met_qos, 
-                                   char *&named_vdev, 
-                                   const AVStreams::flowSpec &the_spec,  
-                                   CORBA::Environment &env)
-{
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) TAO_MMDevice::create_A: called\n"));
-
-  TAO_VDev *vdev = new TAO_VDev;
-  the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
-
-  TAO_Client_StreamEndPoint *stream_endpoint_a = 
-    new T;
-  return AVStreams::StreamEndPoint_A::_duplicate 
-    (stream_endpoint_a->_this (env));
-}
-
-template <class T>
-AVStreams::StreamEndPoint_B_ptr  
-TAO_Client_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                                   AVStreams::VDev_out the_vdev, 
-                                   AVStreams::streamQoS &the_qos, 
-                                   CORBA::Boolean_out met_qos, 
-                                   char *&named_vdev, 
-                                   const AVStreams::flowSpec &the_spec,  
-                                   CORBA::Environment &env)
-{
-  ACE_ERROR_RETURN ((LM_ERROR, 
-                     "(%P|%t) Cannot create a B device on the client side!\n"),
-                    0);
-}
-
-template <class T>
-TAO_Server_MMDevice <T>::TAO_Server_MMDevice ()
-{
-}
-
-template <class T>
-AVStreams::StreamEndPoint_A_ptr  
-TAO_Server_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                                   AVStreams::VDev_out the_vdev, 
-                                   AVStreams::streamQoS &the_qos, 
-                                   CORBA::Boolean_out met_qos, 
-                                   char *&named_vdev, 
-                                   const AVStreams::flowSpec &the_spec,  
-                                   CORBA::Environment &env)
-{
-  ACE_ERROR_RETURN ((LM_ERROR, 
-                     "(%P|%t) Cannot create a A device on the server side!\n"),
-                    0);
-}
-
-// We have been asked to create a new stream_endpoint and a vdev.
-template <class T>
-AVStreams::StreamEndPoint_B_ptr  
-TAO_Server_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                                   AVStreams::VDev_out the_vdev, 
-                                   AVStreams::streamQoS &the_qos, 
-                                   CORBA::Boolean_out met_qos, 
-                                   char *&named_vdev, 
-                                   const AVStreams::flowSpec &the_spec,  
-                                   CORBA::Environment &env)
-{
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) TAO_MMDevice::create_B: called\n"));
-
-  TAO_VDev *vdev = new TAO_VDev;
-  the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
-
-  TAO_Server_StreamEndPoint *stream_endpoint_b = 
-    new T;
-  return AVStreams::StreamEndPoint_B::_duplicate 
-    (stream_endpoint_b->_this (env));
-}
+// template <class T>
+// TAO_Client_MMDevice <T>::TAO_Client_MMDevice ()
+// {
+// }
+//  
+// // We have been asked to create a new stream_endpoint and a vdev.
+// template <class T>
+// AVStreams::StreamEndPoint_A_ptr  
+// TAO_Client_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
+//                                    AVStreams::VDev_out the_vdev, 
+//                                    AVStreams::streamQoS &the_qos, 
+//                                    CORBA::Boolean_out met_qos, 
+//                                    char *&named_vdev, 
+//                                    const AVStreams::flowSpec &the_spec,  
+//                                    CORBA::Environment &env)
+// {
+//   ACE_DEBUG ((LM_DEBUG, 
+//               "(%P|%t) TAO_MMDevice::create_A: called\n"));
+//  
+//   TAO_VDev *vdev = new TAO_VDev;
+//   the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
+//  
+//   TAO_Client_StreamEndPoint *stream_endpoint_a = 
+//     new T;
+//   return AVStreams::StreamEndPoint_A::_duplicate 
+//     (stream_endpoint_a->_this (env));
+// }
+//  
+// template <class T>
+// AVStreams::StreamEndPoint_B_ptr  
+// TAO_Client_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
+//                                    AVStreams::VDev_out the_vdev, 
+//                                    AVStreams::streamQoS &the_qos, 
+//                                    CORBA::Boolean_out met_qos, 
+//                                    char *&named_vdev, 
+//                                    const AVStreams::flowSpec &the_spec,  
+//                                    CORBA::Environment &env)
+// {
+//   ACE_ERROR_RETURN ((LM_ERROR, 
+//                      "(%P|%t) Cannot create a B device on the client side!\n"),
+//                     0);
+// }
+//  
+// template <class T>
+// TAO_Server_MMDevice <T>::TAO_Server_MMDevice ()
+// {
+// }
+//  
+// template <class T>
+// AVStreams::StreamEndPoint_A_ptr  
+// TAO_Server_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
+//                                    AVStreams::VDev_out the_vdev, 
+//                                    AVStreams::streamQoS &the_qos, 
+//                                    CORBA::Boolean_out met_qos, 
+//                                    char *&named_vdev, 
+//                                    const AVStreams::flowSpec &the_spec,  
+//                                    CORBA::Environment &env)
+// {
+//   ACE_ERROR_RETURN ((LM_ERROR, 
+//                      "(%P|%t) Cannot create a A device on the server side!\n"),
+//                     0);
+// }
+//  
+// // We have been asked to create a new stream_endpoint and a vdev.
+// template <class T>
+// AVStreams::StreamEndPoint_B_ptr  
+// TAO_Server_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
+//                                    AVStreams::VDev_out the_vdev, 
+//                                    AVStreams::streamQoS &the_qos, 
+//                                    CORBA::Boolean_out met_qos, 
+//                                    char *&named_vdev, 
+//                                    const AVStreams::flowSpec &the_spec,  
+//                                    CORBA::Environment &env)
+// {
+//   ACE_DEBUG ((LM_DEBUG, 
+//               "(%P|%t) TAO_MMDevice::create_B: called\n"));
+//  
+//   TAO_VDev *vdev = new TAO_VDev;
+//   the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
+//  
+//   TAO_Server_StreamEndPoint *stream_endpoint_b = 
+//     new T;
+//   return AVStreams::StreamEndPoint_B::_duplicate 
+//     (stream_endpoint_b->_this (env));
+// }
 
