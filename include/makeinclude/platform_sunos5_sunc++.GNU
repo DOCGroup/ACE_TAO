@@ -163,7 +163,6 @@ endif # ! 4.2
 
 # If no option has been specified, try to enable templates based on the
 # version of the compiler.
-#
 ifeq ($(templates),)
   ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
     templates = explicit
@@ -171,15 +170,13 @@ ifeq ($(templates),)
     ifeq (C++ 5.3,$(findstring C++ 5.3,$(CC_VERSION)))
       # Set this to automatic if automatic template instantiation works for you.
       templates = explicit
-    else
-      ifeq (C++ 5.5,$(findstring C++ 5.5,$(CC_VERSION)))
-        # SunForte8 has no problems using implicit templates
-        templates = implicit
-      else
-        templates = explicit
-      endif
     endif
   endif
+endif
+
+# If templates is not set by the rules above, we default to implicit
+ifeq ($(templates),)
+  templates = implicit
 endif
 
 # Turn on the proper flags for explicit template instantiation.
