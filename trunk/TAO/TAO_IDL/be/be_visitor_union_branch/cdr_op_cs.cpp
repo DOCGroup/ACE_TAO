@@ -549,14 +549,20 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_pseudo)
         {
-          *os << "CORBA::TypeCode_var _tao_union_tmp;" << be_nl;
-
-          //@@TODO - case for ValueBase.
-
-          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
+          *os << "CORBA::TypeCode_var _tao_union_tmp;" << be_nl
+              << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
+
+        }
+      else if (pt == AST_PredefinedType::PT_value)
+        {
+          *os << "CORBA::ValueBase * _tao_union_tmp;" << be_nl
+              << "result = strm >> _tao_union_tmp;" << be_nl << be_nl
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union." << f->local_name () << " (_tao_union_tmp);";
 
         }
       else if (pt == AST_PredefinedType::PT_char)

@@ -360,6 +360,10 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
     {
       *os << bt->name () << "_var";
     }
+  else if (node->pt () == AST_PredefinedType::PT_value)
+    {
+      *os << bt->name () << " *";
+    }
   else if (node->pt () == AST_PredefinedType::PT_pseudo)
     {
       // This was a typedefed array.

@@ -359,6 +359,11 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
       *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
           << "_;";
     }
+  else if (node->pt () == AST_PredefinedType::PT_value)
+    {
+      *os << bt->nested_type_name (bu, " *") << " " << ub->local_name ()
+          << "_;";
+    }
   else if (node->pt () == AST_PredefinedType::PT_any)
     {
       // Cannot have an object inside of a union. In addition, an Any is a

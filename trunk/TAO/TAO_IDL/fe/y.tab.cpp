@@ -6660,25 +6660,31 @@ tao_yyreduce:
             {
               AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                                I_TRUE);
-
               if (d == 0)
                 {
                   idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
+                  break;
                 }
               else if (d->node_type () != AST_Decl::NT_interface)
                 {
-                  idl_global->err ()->interface_expected (d);
+                  // Nothing else but CORBA::Object can have 
+                  // this identifier.
+                  if (ACE_OS::strcmp (d->local_name ()->get_string (), 
+                                      "Object")
+                        != 0)
+                    {
+                      idl_global->err ()->interface_expected (d);
+                      break;
+                    }
                 }
-              else
-                {
-                  AST_Type *interface_type =
-                    AST_Interface::narrow_from_decl (d);
+                
+              AST_Type *interface_type =
+                AST_Type::narrow_from_decl (d);
 
-                  AST_Component::port_description pd;
-                  pd.id = tao_yyvsp[0].idval;
-                  pd.impl = interface_type;
-                  c->provides ().enqueue_tail (pd);
-                }
+              AST_Component::port_description pd;
+              pd.id = tao_yyvsp[0].idval;
+              pd.impl = interface_type;
+              c->provides ().enqueue_tail (pd);
             }
         }
     break;
@@ -6740,31 +6746,36 @@ tao_yyreduce:
           if (d == 0)
             {
               idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
+              break;
             }
           else if (d->node_type () != AST_Decl::NT_interface)
             {
-              idl_global->err ()->interface_expected (d);
-            }
-          else
-            {
-              AST_Type *interface_type = AST_Type::narrow_from_decl (d);
-              AST_Component *c = AST_Component::narrow_from_scope (s);
-
-              if (c != 0)
+              if (ACE_OS::strcmp (d->local_name ()->get_string (), 
+                                  "Object")
+                    != 0)
                 {
-                  AST_Component::port_description ud;
-                  ud.id = tao_yyvsp[0].idval;
-                  ud.impl = interface_type;
-                  ud.is_multiple = tao_yyvsp[-2].bval;
-                  c->uses ().enqueue_tail (ud);
-                  
-                  if (ud.is_multiple == I_TRUE)
-                    {
-                      // These datatypes must be created in the
-                      // front end so they can be looked up
-                      // when compiling the generated executor IDL.
-                      idl_global->create_uses_multiple_stuff (c, ud);
-                    }
+                  idl_global->err ()->interface_expected (d);
+                  break;
+                }
+            }
+            
+          AST_Type *interface_type = AST_Type::narrow_from_decl (d);
+          AST_Component *c = AST_Component::narrow_from_scope (s);
+
+          if (c != 0)
+            {
+              AST_Component::port_description ud;
+              ud.id = tao_yyvsp[0].idval;
+              ud.impl = interface_type;
+              ud.is_multiple = tao_yyvsp[-2].bval;
+              c->uses ().enqueue_tail (ud);
+              
+              if (ud.is_multiple == I_TRUE)
+                {
+                  // These datatypes must be created in the
+                  // front end so they can be looked up
+                  // when compiling the generated executor IDL.
+                  idl_global->create_uses_multiple_stuff (c, ud);
                 }
             }
         }
