@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -49,62 +51,42 @@ do_priority_inversion_test (Task_State &ts)
   ACE_Sched_Priority priority = 
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO, 
                                     ACE_SCOPE_THREAD);
-      
+
   // First activate the Utilization thread.  It will wait until all
   // threads have finished binding.
   util_thread.activate (THR_BOUND,
                         1,
                         0,
                         priority);
-  
-  
-  // Now activate the high priority client.
 
-  // @@ The ifdef here is temporarily placed here until
-  // I figure out how to map NT's thread priorities
-  // into pthread's priorities.
-#if defined (ACE_THR_PRI_FIFO_DEF)  
+  // Now activate the high priority client.
   priority = ACE_THR_PRI_FIFO_DEF;
-#else
-  priority = ACE_DEFAULT_THREAD_PRIORITY;
-#endif
-  
+
   if (high_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
                                      1,
                                      0,
                                      priority) == -1)
-    
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "activate failed"));
   
-  // @@ Sumedh, can you please document why we need this VxWorks
-  // #ifdef?  Is there a way to make this more general so we don't
-  // need the #ifdef?  In other words, please check with David or
-  // Brian about this.
-  
-#if !defined (VXWORKS)
-  priority = 
-    ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO, 
-                                         priority,
-                                         ACE_SCOPE_THREAD);
-#else
-  priority = 65;
-#endif /* !defined (VXWORKS) */
-  
+  // Drop the priority, so that the priority of clients will increase
+  // with increasing client number.
+  for (int i = 0; i < ts.thread_count_; i++)
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
+
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d clients with low priority\n", 
-              ts.thread_count_ - 1));
-  
+              "Creating %d clients with low priority of %d\n",
+              ts.thread_count_ - 1,
+              priority));
+
   for (u_int i = 0; i < ts.thread_count_ - 1; i++)
     {
       // The first thread starts at min + 1, since the minimum
       // priority thread is the utilization thread.
       
-      // get the next higher priority
-      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                      priority,
-                                                      ACE_SCOPE_THREAD);
       if (low_priority_client.activate (THR_BOUND,
                                         1,
                                         1,
@@ -112,11 +94,63 @@ do_priority_inversion_test (Task_State &ts)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "activate failed"));
+
+      // get the next higher priority
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+						  priority,
+						  ACE_SCOPE_THREAD);
     }
     // Wait for all the threads to exit.
     ACE_Thread_Manager::instance ()->wait ();
 
-#if !defined (VXWORKS)
+#if defined (VXWORKS)
+  ACE_OS::printf ("Test done.\n"
+		  "High priority client latency : %d usec\n"
+		  "Low priority client latency : %d usec\n",
+		  high_client.get_high_priority_latency (),
+		  low_client.get_low_priority_latency ());
+#elif defined (CHORUS)
+  ACE_OS::printf ("Test done.\n"
+                  "High priority client latency : %u usec\n"
+                  "Low priority client latency : %u usec\n",
+                  high_priority_client.get_high_priority_latency (),
+                  low_priority_client.get_low_priority_latency ());
+
+  // output the latency values to a file, tab separated, to import it
+  // to Excel to calculate jitter, in the mean time we come up with
+  // the sqrt() function.
+  FILE *latency_file_handle = 0;
+  char latency_file[BUFSIZ];
+  char buffer[BUFSIZ];
+  
+  ACE_OS::sprintf (latency_file, 
+		   "cb__%d.txt", 
+		   ts.thread_count_);
+
+  ACE_OS::fprintf(stderr, 
+		  "--->Output file for latency data is \"%s\"\n",
+		  latency_file);
+  
+  latency_file_handle = ACE_OS::fopen (latency_file, "w");
+  
+  for (u_int j = 0; j < ts.start_count_; j ++)
+    {
+      ACE_OS::sprintf(buffer, 
+		      "%s #%d", 
+		      j==0? "High Priority": "Low Priority", 
+		      j);
+      for (u_int i = 0; i < ts.loop_count_; i ++)
+	{
+	  ACE_OS::sprintf(buffer+strlen(buffer), 
+			  "\t%u\n", 
+			  ts.global_jitter_array_[j][i]);
+	  fputs (buffer, latency_file_handle);
+	  buffer[0]=0;
+	}
+    }
+  
+  ACE_OS::fclose (latency_file_handle);
+#else 
     ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                 "High priority client latency : %f msec, jitter: %f msec\n"
                 "Low priority client latency : %f msec, jitter: %f msec\n",
@@ -124,20 +158,24 @@ do_priority_inversion_test (Task_State &ts)
                 high_priority_client.get_high_priority_jitter (),
                 low_priority_client.get_low_priority_latency (),
                 low_priority_client.get_low_priority_jitter ()));
+#endif /* !defined (CHORUS) && !defined (VXWORKS) */
+
+    // signal the utilization thread to finish with its work..
+    util_thread.done_ = 1;
+    
+    // This will wait for the utilization thread to finish.
+    thr_mgr.wait ();
+    
+#if defined (ACE_LACKS_FLOATING_POINT)
+    ACE_DEBUG ((LM_DEBUG,
+		"(%t) utilization task performed %u computations\n",
+		util_thread.get_number_of_computations ()));
 #else
-    ACE_OS::printf ("Test done.\n"
-                    "High priority client latency : %d usec\n"
-                    "Low priority client latency : %d usec\n",
-                    high_client.get_high_priority_latency (),
-                    low_client.get_low_priority_latency ());
-#endif /* !defined (VXWORKS) */
- util_thread.done_ = 1;
- thr_mgr.wait ();
- cerr << "utilization task performed " 
-      << util_thread.get_number_of_computations ()
-      << " computations" 
-      << endl;
- 
+    ACE_DEBUG ((LM_DEBUG,
+		"(%t) utilization task performed %g computations\n",
+		util_thread.get_number_of_computations ()));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
+    
  return 0;
     
 }
@@ -191,7 +229,7 @@ do_thread_per_rate_test (Task_State &ts)
                     CB_20Hz_client.get_latency (1),
                     CB_10Hz_client.get_latency (2),
                     CB_5Hz_client.get_latency (3),
-                 CB_1Hz_client.get_latency (4));
+		    CB_1Hz_client.get_latency (4));
     return 0;
 }
 
@@ -216,9 +254,32 @@ main (int argc, char *argv [])
 #endif   /* defined (FORCE_ARGS) */
 
   Task_State ts (argc, argv);
+
+#if defined (CHORUS)
+  // start the pccTimer for chorus classix
+  int pTime;
+
+  // Initialize the PCC timer Chip
+  pccTimerInit();
+
+  if(pccTimer(PCC2_TIMER1_START,&pTime) !=K_OK) 
+    { 
+      printf("pccTimer has a pending bench mark\n"); 
+    } 
+#endif
+
   if (ts.thread_per_rate_ == 0)
     do_priority_inversion_test (ts);
   else
     do_thread_per_rate_test (ts);
+
+#if defined (CHORUS)
+  // stop the pccTimer for chorus ClassiX
+  if(pccTimer(PCC2_TIMER1_STOP,&pTime) !=K_OK) 
+    { 
+      printf("pccTimer has a pending benchmark\n"); 
+    } 
+#endif
+
   return 0;
 }

@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -14,19 +16,40 @@
 #if !defined (TASK_CLIENT_H)
 #define TASK_CLIENT_H
 
+#include <corba/cool.H>
+#include "api/api.H"
+#include "cubit.H"
+
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 #include <math.h>
-#include "api/api.H"
 
-#include "cubit.H"
+#if defined (CHORUS)
+#include "pccTimer.h"
+#endif /* CHORUS */
+
+// @@ Should we put this into a more general file, e.g., OS.h?
+//
+// I will integrate this, together with the sqrt() function when
+// the implementation is complete.  --Sergio.
+#if defined (ACE_LACKS_FLOATING_POINT)
+#define double ACE_UINT32
+#define fabs(X) ((X) >= 0 ? (X) : -(X))
+// the following is just temporary, until we finish the sqrt()
+// implementation.
+#define sqrt(X) (1)
+#endif /* ACE_LACKS_FLOATING_POINT */
 
 // Arbitrary generator used by the client to create the numbers to be
 // cubed.
-inline int func (unsigned i) { return i - 117; }
+inline int 
+func (unsigned i) 
+{ 
+  return i - 117; 
+}
 
 // The various datatypes which the client and the server can exchange. 
 enum Cubit_Datatypes 
@@ -59,8 +82,6 @@ class Task_State
   // = DESCRIPTION
   //     This class maintains state which is common to the potentially
   //     multiple concurrent clients. 
-
-
 {
 public:
   ACE_Barrier *barrier_;
@@ -93,9 +114,6 @@ public:
   // Array to store the latency for every client, indexed by
   // thread-id.
 
-  int *ave_latency_;
-  // Int array to store the latencies
-
   Cubit_Datatypes datatype_;
   // Which datatype to use to make the calls
 
@@ -113,6 +131,19 @@ public:
   // this array stores the latency seen by each client for each
   // request, to be used later to compute jitter
 
+  u_int use_chorus_ipc_;
+  // flag that indicates that we are going to use Chorus IPC
+  // communication mechanism, instead of the TCP/IP protocol stack.
+  // This only applies to the CHORUS ClassiX OS.
+
+  char * ior_header_;
+  // pointer to the ior part where you specify the type of transport
+  // for COOL (i.e. ipc or tcp)
+
+  u_int grain_;
+  // this is the granularity of the timing of the CORBA requests. A
+  // value of 5 represents that we will take time every 5 requests,
+  // instead of the default of every request (1).
 };
 
 class Client : public ACE_Task<ACE_MT_SYNCH>
@@ -147,9 +178,6 @@ private:
                     double latency, 
                     unsigned int);
   // Records the latencies in the Task_State
-
-  void put_ave_latency (int latency, unsigned int);
-  // Records the latencies in the Task_State 
 
   int parse_args (int, char **);
   // parses the arguments
