@@ -1,17 +1,20 @@
-// $Id$
-
 #include "ace/OS.h"
+
 #if !defined (__ACE_INLINE__)
 # include "ace/Basic_Types.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, Basic_Types, "$Id$")
+
+ACE_RCSID (ace,
+           Basic_Types,
+           "$Id$")
+
 
 #if defined (ACE_LACKS_LONGLONG_T)
-#include "ace/Log_Msg.h"
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-# include "ace/streams.h"
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+# include "ace/Log_Msg.h"
+# if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#  include "ace/streams.h"
+# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 void
 ACE_U_LongLong::output (FILE *file) const
@@ -104,7 +107,7 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
 }
 
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+# if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ostream&
 operator<< (ostream& os, const ACE_U_LongLong& ll)
 {
@@ -119,7 +122,7 @@ operator<< (ostream& os, const ACE_U_LongLong& ll)
     os << ll.as_string (buffer);
   return os;
 }
-#endif
+# endif
 
 
 #endif /* ACE_LACKS_LONGLONG_T */
