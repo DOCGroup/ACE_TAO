@@ -1204,9 +1204,9 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
                   upcase);
 
   string guard =
-      "CIAO_"
-      + regex::perl_s (uc_file_name,
-                       "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
+    "CIAO_"
+    + regex::perl_s (uc_file_name,
+                       "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
 
   // Replace any remaining '.' with '_'.
   guard = regex::perl_s (guard, "/\\./_/");
@@ -1218,18 +1218,23 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
   string file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
                                       "_svnt.h");
 
-  file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl|cdl))?$/"
-                             + file_suffix
-                             + "/");
+  string svnt_file_name = regex::perl_s (file_name,
+                                         "/(\\.(idl|cidl|cdl))?$/"
+                                         + file_suffix
+                                         + "/");
 
-  os << "#include \"" << file_name << "\"" << endl << endl;
+  os << "#include \"" << svnt_file_name << "\"" << endl << endl;
 
   os << "#if !defined (ACE_LACKS_PRAGMA_ONCE)" << endl
      << "# pragma once" << endl
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */" << endl << endl;
+     
+  string default_export_include =
+    regex::perl_s (file_name,
+                   "/(\\.(idl|cidl|cdl))?$/_exec_export.h/");
 
-  string export_include = cl_.get_value ("exec-export-include", "");
+  string export_include = cl_.get_value ("exec-export-include",
+                                         default_export_include);
 
   if (!export_include.empty ())
   {
