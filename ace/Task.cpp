@@ -123,6 +123,14 @@ ACE_Task_Base::cleanup (void *object, void *)
   t->close ();
 }
 
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Task_Base_cleanup (void *object, void *)
+{
+  ACE_Task_Base::cleanup (object);
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
+
 void *
 ACE_Task_Base::svc_run (void *args)
 {
@@ -133,7 +141,12 @@ ACE_Task_Base::svc_run (void *args)
   // Register ourself with our <Thread_Manager>'s thread exit hook
   // mechanism so that our close() hook will be sure to get invoked
   // when this thread exits.
+
+#if defined ACE_HAS_SIG_C_FUNC                                          
+  t->thr_mgr ()->at_exit (t, ACE_Task_Base_cleanup, 0);                 
+#else                                                                   
   t->thr_mgr ()->at_exit (t, ACE_Task_Base::cleanup, 0);
+#endif /* ACE_HAS_SIG_C_FUNC */                                         
 
   // Call the Task's svc() hook method.
   return (void *) t->svc ();
