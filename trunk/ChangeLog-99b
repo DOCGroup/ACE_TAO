@@ -1,8 +1,13 @@
-Fri Jul 09 12:45:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Jul 09 13:11:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Conn_Test.cpp (spawn_threads): ACE_OS::perror takes a
+	  wchar_t string on CE.
 
 	* tests/test_config.h (set_output): We should use non-unicode
 	  version of ACE_OS::getenv to initialize test_dir on "regular"
 	  UNICODE compilation.  Thanks to Steve for reporting this.
+
+	  Added more WinCE/UNICODE fixes.
 
 Fri Jul  9 12:43:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
