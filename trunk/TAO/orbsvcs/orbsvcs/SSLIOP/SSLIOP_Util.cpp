@@ -50,7 +50,7 @@ TAO::SSLIOP::Util::current (
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (0);
 
   return 0;
 }

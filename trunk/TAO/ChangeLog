@@ -1,3 +1,10 @@
+Wed Oct 20 10:28:52 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
+
+          Return zero from the ACE_CHECK_RETURN.  The method returns a
+          pointer and should return zero for a failure.
+
 Wed Oct 20 10:23:49 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
