@@ -806,14 +806,13 @@ get_config_infos (RtecScheduler::Config_Info_Set_out configs
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
   // Check schedule stability flags.
   if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
       && this->enforce_schedule_stability_)
     {
-      ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED (),
-                        (RtecScheduler::Preemption_Priority_t) -1);
+      ACE_THROW (RtecScheduler::NOT_SCHEDULED ());
     }
 
   // return the set of Config_Infos
