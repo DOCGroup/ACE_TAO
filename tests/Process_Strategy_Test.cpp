@@ -630,6 +630,7 @@ template class ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
 template class ACE_Creation_Strategy<Counting_Service>;
 template class ACE_Concurrency_Strategy<Counting_Service>;
 template class ACE_Guard<ACE_File_Lock>;
+template class ACE_Singleton<Options, ACE_Null_Mutex>;
 template class ACE_Message_Queue<ACE_NULL_SYNCH>;
 template class ACE_Module<ACE_NULL_SYNCH>;
 template class ACE_Process_Strategy<Counting_Service>;
