@@ -111,6 +111,13 @@ public:
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
 
+  // = Collocation strategies.
+  enum {
+    ORB_CONTROL,                // Indicate object should refer to ORB for either one of the following strategies.
+    THRU_POA,                   // Collocated calls will go thru POA.
+    DIRECT                      // Collocated calls invoke operation on Servant directly.
+  };
+
   // = Get the default codeset translators.
   //   In most configurations these are just <nil> objects, but they
   //   can be set to something different if the native character sets
@@ -151,12 +158,10 @@ public:
   void optimize_collocation_objects (CORBA::Boolean opt);
   CORBA::Boolean optimize_collocation_objects (void) const;
 
-  // just an alias for the previous two methods, should be removed.
-  void using_collocation (CORBA::Boolean opt);
-  CORBA::Boolean using_collocation (void) const;
-
   void use_global_collocation (CORBA::Boolean opt);
   CORBA::Boolean use_global_collocation (void) const;
+
+  CORBA::ULong get_collocation_strategy (void) const;
 
   TAO_Object_Adapter *object_adapter (void);
   // Get <Object Adapter>.
@@ -385,6 +390,9 @@ protected:
   CORBA::Boolean use_global_collocation_;
   // TRUE if we want to consider all ORBs in this address space
   // collocated.
+
+  CORBA::ULong collocation_strategy_;
+  // Default collocation policy.  This should never be ORB_CONTROL.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
   TAO_Policy_Manager policy_manager_;

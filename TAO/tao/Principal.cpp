@@ -22,19 +22,6 @@ CORBA_Principal::~CORBA_Principal (void)
 }
 
 CORBA::Boolean
-CORBA::is_nil (CORBA::Principal_ptr principal)
-{
-  return (CORBA::Boolean) (principal == 0);
-}
-
-void
-CORBA::release (CORBA::Principal_ptr principal)
-{
-  if (principal)
-    principal->_decr_refcnt ();
-}
-
-CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, CORBA_Principal* x)
 {
   if (x != 0)

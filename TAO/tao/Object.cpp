@@ -23,19 +23,6 @@
 
 ACE_RCSID(tao, Object, "$Id$")
 
-void
-CORBA::release (CORBA_Object_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  return obj == 0;
-}
-
 CORBA_Object::~CORBA_Object (void)
 {
   this->protocol_proxy_->_decr_refcnt ();

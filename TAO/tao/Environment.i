@@ -1,6 +1,19 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Environment_ptr env)
+{
+  return env == 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::Environment_ptr env)
+{
+  if (env)
+    env->_decr_refcnt ();
+}
+
 ACE_INLINE CORBA_Exception*
 CORBA_Environment::exception (void) const
 {

@@ -26,20 +26,6 @@
 
 ACE_RCSID(tao, Typecode, "$Id$")
 
-void
-CORBA::release (CORBA::TypeCode_ptr tc)
-{
-  if (tc)
-    tc->_decr_refcnt ();
-}
-
-// returns true if the typecode is NULL
-CORBA::Boolean
-CORBA::is_nil (CORBA::TypeCode_ptr tc)
-{
-  return tc == 0;
-}
-
 CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException (CORBA::TypeCode::_tc_Bounds)
 {

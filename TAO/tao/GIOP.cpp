@@ -994,7 +994,7 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
       if (response_required)
         {
           CORBA::UNKNOWN exception
-            (CORBA::SystemException::minor_code_tao_
+            (CORBA::SystemException::_tao_minor_code
              (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
              CORBA::COMPLETED_MAYBE);
 

@@ -185,7 +185,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       // fails then we must raise the TRANSIENT exception.
       if (this->stub_->next_profile_retry () == 0)
         ACE_THROW (CORBA::TRANSIENT (
-          CORBA_SystemException::minor_code_tao_ (
+          CORBA_SystemException::_tao_minor_code (
             TAO_INVOCATION_CONNECT_MINOR_CODE,
             errno),
           CORBA::COMPLETED_NO));
@@ -437,7 +437,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   if (this->stub_->next_profile () == 0)
     ACE_THROW_RETURN (CORBA::TRANSIENT (
-      CORBA_SystemException::minor_code_tao_ (
+      CORBA_SystemException::_tao_minor_code (
         TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
         errno),
       CORBA::COMPLETED_NO),
@@ -682,7 +682,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     {
       this->close_connection ();
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-        CORBA_SystemException::minor_code_tao_ (
+        CORBA_SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
         CORBA::COMPLETED_MAYBE),
@@ -815,7 +815,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       //    should decide?  Remember that LocateRequests are part of
       //    the strategy to establish a connection.
       ACE_THROW_RETURN (CORBA::TRANSIENT (
-        CORBA_SystemException::minor_code_tao_ (
+        CORBA_SystemException::_tao_minor_code (
           TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
           errno),
         CORBA::COMPLETED_MAYBE),

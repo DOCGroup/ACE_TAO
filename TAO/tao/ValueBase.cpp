@@ -27,20 +27,6 @@
 
 ACE_RCSID(tao, ValueBase, "$Id$")
 
-void
-CORBA::add_ref (CORBA::ValueBase *val)
-{
-  if (val)
-    val->_add_ref ();
-}
-
-void
-CORBA::remove_ref (CORBA::ValueBase *val)
-{
-  if (val)
-    val->_remove_ref ();
-}
-
 // destructor
 CORBA_ValueBase::~CORBA_ValueBase (void)
 {

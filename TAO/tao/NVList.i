@@ -1,6 +1,19 @@
 // $Id$
 // This may look like C, but it's really -*- C++ -*-
 
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::NamedValue_ptr nv)
+{
+  return nv == 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::NamedValue_ptr nv)
+{
+  if (nv)
+    nv->_decr_refcnt ();
+}
+
 // constructor
 ACE_INLINE
 CORBA_NamedValue::CORBA_NamedValue (void)
@@ -48,6 +61,19 @@ CORBA_NamedValue::_nil (void)
 // *************************************************************
 // Inline operations for class CORBA_NamedValue_var
 // *************************************************************
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::NVList_ptr nvl)
+{
+  return (CORBA::Boolean) (nvl == 0);
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::NVList_ptr nvl)
+{
+  if (nvl)
+    nvl->_decr_refcnt ();
+}
 
 ACE_INLINE
 CORBA_NamedValue_var::CORBA_NamedValue_var (void)

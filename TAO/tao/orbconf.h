@@ -172,6 +172,12 @@
 #define TAO_NAMESPACE_DEFINE(TYPE,NAME,RHS) NAME = RHS;
 #endif /* ACE_HAS_USING_KEYWORD */
 
+# if defined (_MSC_VER) && defined (__ACE_INLINE__)
+#   define TAO_NAMESPACE_INLINE_FUNCTION inline
+# else
+#   define TAO_NAMESPACE_INLINE_FUNCTION TAO_NAMESPACE_STORAGE_CLASS
+# endif
+
 // Instead of replacing this with the ACE macro
 // in 20+ files, define it conditionally.
 // The TAO_OutputCDR class uses the ACE macro, which

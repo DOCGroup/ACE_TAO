@@ -18,19 +18,6 @@ ACE_RCSID(tao, NVList, "$Id$")
 
 // Reference counting for DII Request object
 
-void
-CORBA::release (CORBA::NamedValue_ptr nv)
-{
-  if (nv)
-    nv->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::NamedValue_ptr nv)
-{
-  return nv == 0;
-}
-
 CORBA::ULong
 CORBA_NamedValue::_incr_refcnt (void)
 {
@@ -63,19 +50,6 @@ CORBA_NamedValue::~CORBA_NamedValue (void)
 }
 
 // ****************************************************************
-
-void
-CORBA::release (CORBA::NVList_ptr nvl)
-{
-  if (nvl)
-    nvl->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::NVList_ptr nvl)
-{
-  return (CORBA::Boolean) (nvl == 0);
-}
 
 CORBA::ULong
 CORBA_NVList::_incr_refcnt (void)

@@ -405,9 +405,9 @@ TAO_NAMESPACE CORBA
   typedef Char *String;
 
   // = String memory management.
-  TAO_NAMESPACE_STORAGE_CLASS Char* string_alloc (ULong len);
+  TAO_NAMESPACE_INLINE_FUNCTION Char* string_alloc (ULong len);
   TAO_NAMESPACE_STORAGE_CLASS Char* string_dup (const Char *);
-  TAO_NAMESPACE_STORAGE_CLASS void string_free (Char *);
+  TAO_NAMESPACE_INLINE_FUNCTION void string_free (Char *);
 
   // This is a TAO extension and must go away....
   TAO_NAMESPACE_STORAGE_CLASS Char* string_copy (const Char *);
@@ -422,9 +422,9 @@ TAO_NAMESPACE CORBA
   // Out type for WChar.
 
   // = String memory management routines.
-  TAO_NAMESPACE_STORAGE_CLASS WChar* wstring_alloc (ULong len);
+  TAO_NAMESPACE_INLINE_FUNCTION WChar* wstring_alloc (ULong len);
   TAO_NAMESPACE_STORAGE_CLASS WChar* wstring_dup (const WChar *const);
-  TAO_NAMESPACE_STORAGE_CLASS void wstring_free (WChar *const);
+  TAO_NAMESPACE_INLINE_FUNCTION void wstring_free (WChar *const);
 
   typedef CORBA_WString_var WString_var;
   typedef CORBA_WString_out WString_out;
@@ -528,8 +528,8 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ValueFactoryBase *ValueFactory_ptr;
   // own invention, more readable
   typedef CORBA_DefaultValueRefCountBase  DefaultValueRefCountBase;
-  TAO_NAMESPACE_STORAGE_CLASS void add_ref (ValueBase *);
-  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (ValueBase *);
+  TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
+  TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
 #endif /* TAO_HAS_VALUETYPE */
 
   // enum values defined in nvlist.hh, bitwise ORed.
@@ -564,36 +564,36 @@ TAO_NAMESPACE CORBA
     typedef CORBA_UnknownUserException UnknownUserException;
 
   // = all the CORBA::is_nil methods.
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Object_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Environment_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (TypeCode_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ORB_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Principal_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ServerRequest_ptr req);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Object_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ServerRequest_ptr req);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Request_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (NamedValue_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (NVList_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Context_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Request_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // = all the CORBA release methods.
-  TAO_NAMESPACE_STORAGE_CLASS void release (Object_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (Environment_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (Principal_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (TypeCode_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (ORB_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (ServerRequest_ptr req);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Object_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (ServerRequest_ptr req);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  TAO_NAMESPACE_STORAGE_CLASS void release (Request_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (NamedValue_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (NVList_ptr);
-  TAO_NAMESPACE_STORAGE_CLASS void release (Context_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Request_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -892,7 +892,7 @@ TAO_NAMESPACE CORBA
 
   // = TAO extensions...
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA_Environment& default_environment (void);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA_Environment& default_environment (void);
 
   // Obtain the thread-specific default environment.
   // This is obsolete and only left here for backwards compatibility.

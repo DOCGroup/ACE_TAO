@@ -79,19 +79,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-void
-CORBA::release (CORBA::ORB_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::ORB_ptr obj)
-{
-  return obj == 0;
-}
-
 // = Static initialization.
 
 // Count of the number of ORBs.
@@ -1463,8 +1450,8 @@ CORBA_ORB::string_to_object (const char *str,
       TAO_MProfile mprofile (0);
       // It is safe to declare this on the stack since the contents of
       // mprofile get copied.  No memory is allocated for profile storage
-      // here.  The Connector Registry will determine the exact number 
-      // of profiles and tell the MProfile object to allocate enough memory 
+      // here.  The Connector Registry will determine the exact number
+      // of profiles and tell the MProfile object to allocate enough memory
       // to hold them all.
 
       if (this->orb_core_->connector_registry ()->make_mprofile (str,

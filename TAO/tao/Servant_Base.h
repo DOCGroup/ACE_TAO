@@ -1,4 +1,3 @@
-
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
@@ -91,8 +90,11 @@ protected:
   virtual const char *_interface_repository_id (void) const = 0;
   // Get this interface's repository id (TAO specific).
 
-  // = Should be protected/private, but a nested class needs it.
+  virtual CORBA::Object_ptr _create_collocated_objref (CORBA::ULong type = 0,
+                                                       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Collocated object factory.
 
+  // = Should be protected/private, but a nested class needs it.
 public:
   ACE_SYNCH_MUTEX &_single_threaded_poa_lock (void);
   // Access to the single threaded poa lock.
