@@ -531,125 +531,125 @@ TC_Private_State::~TC_Private_State (void)
   // determine what kind of children we may have and free the space accordingly
   switch (this->tc_kind_)
     {
-    case CORBA::tk_enum:
-        // free up the member name list
-        if (this->tc_member_name_list_known_)
-          {
-            for (CORBA::ULong i = 0;
-                 i < this->tc_member_count_;
-                 i++)
-	      {
-		CORBA::string_free (this->tc_member_name_list_ [i]);
-		this->tc_member_name_list_ [i] = 0;
-	      }
+      case CORBA::tk_enum:
+          // free up the member name list
+          if (this->tc_member_name_list_known_)
+            {
+              for (CORBA::ULong i = 0;
+                   i < this->tc_member_count_;
+                   i++)
+	              {
+		              CORBA::string_free (this->tc_member_name_list_ [i]);
+		              this->tc_member_name_list_ [i] = 0;
+	              }
 
-            delete [] this->tc_member_name_list_;
-	    this->tc_member_name_list_ = 0;
-          }
+              delete [] this->tc_member_name_list_;
+	            this->tc_member_name_list_ = 0;
+            }
+          break;
+
+      case CORBA::tk_struct:
+      case CORBA::tk_except:
+        {
+          // free up the member name list
+          if (this->tc_member_name_list_known_)
+            {
+              for (CORBA::ULong i = 0;
+                   i < this->tc_member_count_;
+                   i++)
+	              {
+		              CORBA::string_free (this->tc_member_name_list_ [i]);
+		              this->tc_member_name_list_ [i] = 0;
+	              }
+
+              delete [] this->tc_member_name_list_;
+	            this->tc_member_name_list_ = 0;
+            }
+
+          // free up member type list
+          if (this->tc_member_type_list_known_)
+            {
+              for (CORBA::ULong i = 0;
+                   i < this->tc_member_count_;
+                   i++)
+	              {
+		              CORBA::release (this->tc_member_type_list_[i]);
+	              }
+
+              // Now free up the array.
+              delete [] this->tc_member_type_list_;
+	            this->tc_member_type_list_ = 0;
+            }
+          this->tc_member_count_ = 0;
+        }
         break;
 
-    case CORBA::tk_struct:
-    case CORBA::tk_except:
-      {
-        // free up the member name list
-        if (this->tc_member_name_list_known_)
-          {
-            for (CORBA::ULong i = 0;
-                 i < this->tc_member_count_;
-                 i++)
-	      {
-		CORBA::string_free (this->tc_member_name_list_ [i]);
-		this->tc_member_name_list_ [i] = 0;
-	      }
+      case CORBA::tk_sequence:
+      case CORBA::tk_array:
+      case CORBA::tk_alias:
+        // Delete the content type only if it has a parent i.e., if it
+        // is not acquired from the pool of constant or predefined
+        // typecodes.
+        if (this->tc_content_type_known_ && this->tc_content_type_ != 0)
+	        {
+	          CORBA::release (this->tc_content_type_);
+	          this->tc_content_type_ = 0;
+	        }
+        break;
 
-            delete [] this->tc_member_name_list_;
-	    this->tc_member_name_list_ = 0;
-          }
+      case CORBA::tk_union:
+        {
+          // free up the member name list
+          if (this->tc_member_name_list_known_)
+            {
+              for (CORBA::ULong i = 0;
+                   i < this->tc_member_count_;
+                   i++)
+	              {
+		              CORBA::string_free (this->tc_member_name_list_ [i]);
+		              this->tc_member_name_list_ [i] = 0;
+	              }
 
-        // free up member type list
-        if (this->tc_member_type_list_known_)
-          {
-            for (CORBA::ULong i = 0;
-                 i < this->tc_member_count_;
-                 i++)
-	      {
-		CORBA::release (this->tc_member_type_list_[i]);
-	      }
+              delete [] this->tc_member_name_list_;
+            }
 
-            // Now free up the array.
-            delete [] this->tc_member_type_list_;
-	    this->tc_member_type_list_ = 0;
-          }
-        this->tc_member_count_ = 0;
-      }
-      break;
+          // Free up type list, label list, and finally the discriminator
+          if (this->tc_member_type_list_known_)
+            {
+              for (CORBA::ULong i = 0;
+                   i < this->tc_member_count_;
+                   i++)
+	              {
+                  CORBA::release (this->tc_member_type_list_[i]);
+	              }
 
-    case CORBA::tk_sequence:
-    case CORBA::tk_array:
-    case CORBA::tk_alias:
-      // Delete the content type only if it has a parent i.e., if it
-      // is not acquired from the pool of constant or predefined
-      // typecodes.
-      if (this->tc_content_type_known_ && this->tc_content_type_ != 0)
-	{
-	  CORBA::release (this->tc_content_type_);
-	  this->tc_content_type_ = 0;
-	}
-      break;
+              // Now free up the array.
+              delete [] this->tc_member_type_list_;
+	            this->tc_member_type_list_ = 0;
+            }
+          if (this->tc_member_label_list_known_)
+            {
+              for (CORBA::ULong i = 0;
+                   i < this->tc_member_count_;
+                   i++)
+                // Free up the label (Any_ptr).
+                delete this->tc_member_label_list_[i];
 
-    case CORBA::tk_union:
-      {
-        // free up the member name list
-        if (this->tc_member_name_list_known_)
-          {
-            for (CORBA::ULong i = 0;
-                 i < this->tc_member_count_;
-                 i++)
-	      {
-		CORBA::string_free (this->tc_member_name_list_ [i]);
-		this->tc_member_name_list_ [i] = 0;
-	      }
+              delete [] this->tc_member_label_list_;
+	            this->tc_member_label_list_ = 0;
+            }
+          this->tc_member_count_ = 0;
 
-            delete [] this->tc_member_name_list_;
-          }
+          // Discriminator must come last b/c it will be inside the Any
+          // in each element of the label list.
+          CORBA::release (this->tc_discriminator_type_);
+	        this->tc_discriminator_type_ = 0;
+        }
+        break;
 
-        // Free up type list, label list, and finally the discriminator
-        if (this->tc_member_type_list_known_)
-          {
-            for (CORBA::ULong i = 0;
-                 i < this->tc_member_count_;
-                 i++)
-	      {
-                CORBA::release (this->tc_member_type_list_[i]);
-	      }
-
-            // Now free up the array.
-            delete [] this->tc_member_type_list_;
-	    this->tc_member_type_list_ = 0;
-          }
-        if (this->tc_member_label_list_known_)
-          {
-            for (CORBA::ULong i = 0;
-                 i < this->tc_member_count_;
-                 i++)
-              // Free up the label (Any_ptr).
-              delete this->tc_member_label_list_[i];
-
-            delete [] this->tc_member_label_list_;
-	    this->tc_member_label_list_ = 0;
-          }
-        this->tc_member_count_ = 0;
-
-        // Discriminator must come last b/c it will be inside the Any
-        // in each element of the label list.
-        CORBA::release (this->tc_discriminator_type_);
-	this->tc_discriminator_type_ = 0;
-      }
-      break;
-
-    default:
-      // nothing to do
-      break;
+      default:
+        // nothing to do
+        break;
     }
 }
 
