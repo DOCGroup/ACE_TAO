@@ -1,3 +1,9 @@
+Mon Jan 12 11:55:53 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.cpp (resolve_poa): Added skeletal code to create root
+ 	POAs using the resolve_initial_references() interface.  Irfan will
+ 	fill in the correct code for actually creating the POA.
+
 Sun Jan 11 14:09:48 1998    <coryan@MILONGA>
 
 	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp: 

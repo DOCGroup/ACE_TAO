@@ -295,7 +295,17 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa (void)
 {
-  ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
+  if (TAO_ORB_Core_instance()->root_poa() == 0)
+    {
+      // Construct a new POA
+      // Irfan fill this in properly
+      POA* newpoa = new POA ();
+
+      // set the poa in the orbcore instance
+      TAO_ORB_Core_instance()->resource_factory()->set_root_poa (newpoa);
+    }
+  
+  return TAO_ORB_Core_instance()->root_poa();
 }
 
 CORBA_Object_ptr
