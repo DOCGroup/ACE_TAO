@@ -381,6 +381,9 @@ ACE_Filecache::create (const char *filename, int size)
 ACE_Filecache_Object *
 ACE_Filecache::finish (ACE_Filecache_Object *&file)
 {
+  if (file == 0)
+    return file;
+
   int result;
 
   u_long loc = ACE::hash_pjw (file->filename_) % this->size_;

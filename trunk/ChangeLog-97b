@@ -1,3 +1,10 @@
+Wed Sep 17 15:17:38 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/Filecache.cpp: ACE_Filecache::finish should check to see if
+	  the file passed in is NULL before attempting to grab the
+	  associated hash lock.  Reported by Samuel Melamed
+	  <sam@vdo.net>.
+
 Wed Sep 17 13:40:16 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Async_Timer_Queue_Test.cpp: If you want to print a '\',
