@@ -3,7 +3,7 @@ Mon Oct 28 22:11:12 2002  Ossama Othman  <ossama@uci.edu>
 	* tao/TAO_Singleton_Manager.cpp:
 
 	  Do not pull the std::unexpected() function into the global
-	  namespace through a "using" clause do avoid a conflict with some
+	  namespace through a "using" clause to avoid a conflict with some
 	  STL implementations (e.g. STLPort) that already do that.
 
 	  (init, _set_unexpected):
