@@ -84,7 +84,8 @@ CORBA_ORB::CORBA_ORB (void)
     should_shutdown_(CORBA::B_FALSE),
     name_service_ (CORBA_Object::_nil ()),
     schedule_service_ (CORBA_Object::_nil ()),
-    event_service_ (CORBA_Object::_nil ())
+    event_service_ (CORBA_Object::_nil ()),
+    trading_service_ (CORBA_Object::_nil ())
 {
 }
 
