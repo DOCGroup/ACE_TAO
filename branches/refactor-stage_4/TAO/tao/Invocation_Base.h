@@ -106,9 +106,5 @@ namespace TAO
 } // End namespace TAO
 
 
-#if defined (__ACE_INLINE__)
-# include "Invocation_Base.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/post.h"
 #endif /*TAO_INVOCATION_BASE_H*/
