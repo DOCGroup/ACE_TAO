@@ -1,3 +1,9 @@
+Fri Dec 21 14:39:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Map_Manager/Map_Manager.dsw:
+	* examples/Map_Manager/test_hash_map_manager.dsp:
+	  Add missing project file and workspace.
+
 Fri Dec 21 16:22:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.icc: Corrected entries for String_Base_Const.(h cpp).
