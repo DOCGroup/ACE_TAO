@@ -1,3 +1,14 @@
+Wed Dec 02 14:21:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (fstat): This function needs to close down the c handle
+	  opened by _open_osfhandle to avoid resource leaks.  Thanks to
+	  Christian Korn <korn@gate.qaqa.com> for reporting this.
+
+Tue Dec 01 13:48:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Added ACE_HAS_SIGWAIT.  Also added
+	  ifdef section to prevent threaded ACE from compiling on FreeBSD
+	  under 3.0 (excluded.)
 Tue Dec  1 22:22:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch.h: Added a comment to clarify the semantics of
