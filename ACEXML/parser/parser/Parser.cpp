@@ -126,7 +126,15 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
       this->parse_xml_prolog (xmlenv);
       ACEXML_CHECK;
     }
-  // @@ Should startDocument come before or after parsing the DTD definition?
+  // The nesting of events reported should be as follows:
+  //    startDocument
+  //       startDTD
+  //       ....
+  //       endDTD
+  //       startElement
+  //         ....
+  //       endElement
+  //    endDocument
   this->content_handler_->startDocument (xmlenv);
   ACEXML_CHECK;
 
