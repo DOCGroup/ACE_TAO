@@ -34,6 +34,9 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 	  so we can see why it failed.  (svc): added printout with thread ID.
 	  (main): deleted reactor at end of test to prevent leak.
 
+	* tests/SPIPE_Test (client): increased sleep time to 10 sec,
+	  because a long delay is needed with Purify.
+
 	* include/makeinclude/wrapper_macros.GNU: added -max_threads=100 to
 	  Quantify options.
 
