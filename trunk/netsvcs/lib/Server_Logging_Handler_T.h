@@ -24,9 +24,9 @@
 #include "ace/SString.h"
 #include "Base_Optimizer.h"
 
-#if !defined (DONT_HANDLE_BASE_OPTIMIZER)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "Base_Optimizer.h"
-#endif /* DONT_HANDLE_BASE_OPTIMIZER */
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>
@@ -62,22 +62,18 @@ protected:
   // Count the number of logging records that arrive.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-#if !defined(DONT_HANDLE_BASE_OPTIMIZER)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
   Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString> receiver_;
   // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
-  // in a optimized fashion. The LOG_MESSAGE_RECEIVER class is often a
-  // class with no instance data.
-
-  const char *host_name (void) { return receiver_.m_.fast_rep (); }
-  // Name of the host we are connected to.
-  
+  // in a optimized fashion.  The LOG_MESSAGE_RECEIVER class is often
+  // a class with no instance data.
 #else
   LOG_MESSAGE_RECEIVER receiver_;
   ACE_CString host_name_;
-
-  const char *host_name (void) { return host_name_.fast_rep (); }
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */  
+  const char *host_name (void);
   // Name of the host we are connected to.
-#endif /* DONT_HANDLE_BASE_OPTIMIZER */  
+  
   LOG_MESSAGE_RECEIVER &receiver (void){ return receiver_; }
   // The receiver of log records
 };
@@ -125,16 +121,21 @@ private:
   // to a <LOG_MESSAGE_RECEIVER>. This makes it possible
   // to change how <LOG_MESSAGE_RECEIVER> are created without chaning the
   // ACE_Server_Logging_Acceptor_T code.
-  
+
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
   Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY> receiver_;
-  // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute
-  // together in a optimized fashion. The LOG_MESSAGE_RECEIVER class 
-  // is often a class with no instance data.
-  
-  SCHEDULE_STRATEGY& scheduling_strategy (void){ return receiver_.m_; }
+  // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
+  // in a optimized fashion. The LOG_MESSAGE_RECEIVER class is often a
+  // class with no instance data.
+#else
+  LOG_MESSAGE_RECEIVER receiver_;
+  SCHEDULE_STRATEGY schedule_strategy_;
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
+
+  SCHEDULE_STRATEGY &scheduling_strategy (void);
   // The scheduling strategy for the service.
   
-  LOG_MESSAGE_RECEIVER &receiver (void) { return receiver_; }
+  LOG_MESSAGE_RECEIVER &receiver (void);
   // The receiver of log records
 };
 
