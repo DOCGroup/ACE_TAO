@@ -5806,9 +5806,9 @@ public:
   // or SIO_GET_QOS.
   static int isastream (ACE_HANDLE handle);
   static int isatty (int handle);
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   static int isatty (ACE_HANDLE handle);
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
   static off_t lseek (ACE_HANDLE handle,
                       off_t offset,
                       int whence);
@@ -6326,10 +6326,8 @@ public:
   static double strtod (const wchar_t *s, wchar_t **endptr);
 #endif /* ACE_HAS_WCHAR */
 
-  static int ace_isspace (const char s);
-#if defined (ACE_HAS_WCHAR)
-  static int ace_isspace (wchar_t c);
-#endif /* ACE_HAS_WCHAR */
+  static int ace_isspace (const ACE_TCHAR s);
+  static int ace_isprint (const ACE_TCHAR s);
 
   // @@ UNICODE: (brunsch) Can this be handled better?
   // The following WChar typedef and functions are used by TAO.  TAO

@@ -3,19 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ace_ce_dll"=.\ace_ce_dll.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ace_wce_dll"=.\ace_wce_dll.dsp - Package Owner=<4>
+Project: "ace_dll_ce"=.\ace_dll_ce.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

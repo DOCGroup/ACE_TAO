@@ -69,7 +69,8 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sp, char parameters[])
 ACE_INLINE int
 ACE_Service_Config::initialize (const char svc_name[], char parameters[])
 {
-  return ACE_Service_Config::initialize (svc_name, ACE_WIDE_STRING (parameters));
+  return ACE_Service_Config::initialize (ACE_TEXT_CHAR_TO_TCHAR (svc_name), 
+                                         ACE_TEXT_CHAR_TO_TCHAR (parameters));
 }
 
 ACE_INLINE int

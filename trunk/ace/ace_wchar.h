@@ -48,6 +48,7 @@
 #   define ASYS_ONLY_WIDE_STRING(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # endif /* ACE_USES_WCHAR */
 
+# define ACE_TEXT_STRING ACE_TString
 
 # if !defined (ACE_WIN32)
 #   if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
@@ -95,11 +96,6 @@ typedef char ACE_TCHAR;
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) STRING
 #endif /* ACE_USES_WCHAR */
 
-// Because we use the CharToOem and OemToChar functions, we need user32.lib
-# if defined (_MSC_VER)
-#  pragma comment(lib, "user32.lib")
-# endif /* _MSC_VER */
-
 #if defined ACE_HAS_WCHAR
 class ACE_Wide_To_Ascii
 {
@@ -123,10 +119,17 @@ public:
   static char *convert (const wchar_t *wstr)
   // Converts an wchar_t string to ascii and returns a new string.
   {
-    size_t len = wcslen (wstr);
-    char *str = new char[len + 1];
 # if defined (ACE_WIN32)
-    ::CharToOemW (wstr, str);
+    size_t len = ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, 
+                                        NULL, 0, NULL, NULL);
+# else
+    size_t len = ::wcslen (wstr) + 1;
+# endif
+
+    char *str = new char[len];
+
+# if defined (ACE_WIN32)
+    ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, str, len, NULL, NULL);
 # else /* ACE_WIN32 */
     for (size_t i = 0; i < len; i++)
       {
@@ -169,10 +172,16 @@ public:
   static wchar_t *convert (const char *str)
   // Converts an char string to unicode/wide and returns a new string.
   {
-    size_t len = strlen (str);
-    wchar_t *wstr = new wchar_t[len + 1];
 # if defined (ACE_WIN32)
-    ::OemToCharW (str, wstr);
+    size_t len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, NULL, 0);
+# else /* ACE_WIN32 */
+    size_t len = strlen (str) + 1;
+# endif /* ACE_WIN32 */
+    
+    wchar_t *wstr = new wchar_t[len];
+
+# if defined (ACE_WIN32)
+    ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, wstr, len);
 # else /* ACE_WIN32 */
     for (size_t i = 0; i < len; i++)
       {
