@@ -5,7 +5,7 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Bcast.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Get_Opt.h"
 
 /* Name of the program. */

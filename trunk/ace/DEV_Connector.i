@@ -3,8 +3,6 @@
 
 // DEV_Connector.i
 
-#include "ace/Log_Msg.h"
-
 // Creates a Local ACE_DEV. 
 
 inline

@@ -2,7 +2,6 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Name_Proxy.h"
 
 void

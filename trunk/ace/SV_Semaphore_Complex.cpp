@@ -4,7 +4,6 @@
 /* -*- C++ -*- */
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/SV_Semaphore_Complex.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Semaphore_Complex)

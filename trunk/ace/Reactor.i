@@ -3,8 +3,6 @@
 
 // Reactor.i
 
-#include "ace/Log_Msg.h"
-
 inline int
 ACE_Reactor::resume_handler (ACE_Event_Handler *h)
 {

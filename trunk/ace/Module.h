@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -46,6 +45,9 @@ public:
   // = Initialization and termination methods.
   ACE_Module (void);
   // Create an empty Module.
+
+  ~ACE_Module (void);		
+  // Shutdown the Module.
 
   ACE_Module (const char *module_name, 
 	      ACE_Task<ACE_SYNCH_2> *writer = 0, 
@@ -108,9 +110,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ~ACE_Module (void);		
-  // *Must* use dynamic allocation.
-
   ACE_Task<ACE_SYNCH_2> *q_pair_[2];   
   // Pair of Tasks that form the "read-side" and "write-side" of the
   // ACE_Module partitioning.

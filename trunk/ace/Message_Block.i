@@ -3,8 +3,6 @@
 
 // Message_Block.i
 
-#include "ace/Log_Msg.h"
-
 ACE_INLINE ACE_Message_Block::Message_Flags 
 ACE_Message_Block::set_flags (ACE_Message_Block::Message_Flags more_flags)
 {						

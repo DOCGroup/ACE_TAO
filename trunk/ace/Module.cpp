@@ -109,8 +109,10 @@ template <ACE_SYNCH_1> ACE_INLINE
 ACE_Module<ACE_SYNCH_2>::~ACE_Module (void)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::~ACE_Module");
-  ACE_ERROR ((LM_ERROR, "destructor for %s should never be called!\n", 
-	     this->name ()));
+
+  // Only close down if we haven't already done so.
+  if (this->reader () != 0 || this->writer () != 0)
+    this->close ();
 }
 
 template <ACE_SYNCH_1> ACE_INLINE
@@ -154,14 +156,14 @@ ACE_Module<ACE_SYNCH_2>::close (u_long flags)
       // running in them.
       if (reader_q->thr_count () == 0)
 	delete reader_q;
-      this->reader (0);
-
       if (writer_q->thr_count () == 0)
 	delete writer_q;
-      this->writer (0);
-
-      delete (void *) this; // Darn well better be allocated dynamically!!!
     }
+
+  // Set the reader and writers to NULL so that we don't try to close()
+  // this object again if the destructor gets called.
+  this->reader (0);
+  this->writer (0);
   return result;
 }
 

@@ -18,7 +18,7 @@
 // 
 // ============================================================================
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"

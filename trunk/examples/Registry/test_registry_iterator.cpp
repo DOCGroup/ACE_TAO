@@ -7,7 +7,7 @@
 
 
 #include "ace/Registry.h"
-#include "ace/Log_Msg.h"
+
 
 // Indentation while printing names
 static const u_long INDENTATION_LEVEL = 3;

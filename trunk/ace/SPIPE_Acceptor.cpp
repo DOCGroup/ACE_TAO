@@ -3,7 +3,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/SPIPE_Acceptor.h"
-#include "ace/Log_Msg.h"
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
 {

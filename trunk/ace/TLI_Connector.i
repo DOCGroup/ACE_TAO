@@ -3,8 +3,6 @@
 
 // TLI_Connector.i
 
-#include "ace/Log_Msg.h"
-
 inline
 ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream, 
 				      const ACE_Addr &remote_sap, 

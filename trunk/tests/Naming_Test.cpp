@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -99,10 +99,13 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
       ACE_WString val (temp_val);
       
       ACE_ASSERT (ns_context->resolve (w_name, w_value, type_out) == result);
+
       if (w_value.char_rep ())
 	{
 	  ACE_ASSERT (w_value == val);
-	  cerr << "Name: " << name << "\tValue: " << w_value.char_rep () << "\tType: " << type_out << endl;
+	  ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
+		      name, w_value.char_rep (), type_out));
+
 	  if (type_out)
 	    {
 	      ACE_ASSERT (::strcmp (type_out, temp_type) == 0);
@@ -128,13 +131,17 @@ main (int argc, char *argv[])
   
   // Remove the temporary file (if it exists)
   char temp_file [BUFSIZ];
-  ACE_OS::strcpy (temp_file, name_options->namespace_dir ());
-  ACE_OS::strcat (temp_file, ACE_DIRECTORY_SEPARATOR_STR);
-  ACE_OS::strcat (temp_file, name_options->database ());
-  ACE_OS::unlink (temp_file);  // No need to check return value here
 
-  if (ns_context->open (ACE_Naming_Context::PROC_LOCAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
+  ::sprintf (temp_file, "%s%s%s",
+             name_options->namespace_dir (),
+	     ACE_DIRECTORY_SEPARATOR_STR,
+	     name_options->database ());
+
+  // Remove any existing files.  No need to check return value here
+  // since we don't care if the file doesn't exist.
+  ACE_OS::unlink (temp_file);  
+
+  ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL) != -1);
 
   // Add some bindings to the database
   bind (ns_context, 0);

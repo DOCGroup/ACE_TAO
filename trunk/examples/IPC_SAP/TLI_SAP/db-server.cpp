@@ -1,7 +1,7 @@
 /* Simple multi-threaded database server example. */
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
 

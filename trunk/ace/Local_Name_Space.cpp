@@ -5,7 +5,6 @@
 #define ACE_LOCAL_NAME_SPACE_C
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
 

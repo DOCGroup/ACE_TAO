@@ -1,12 +1,11 @@
 // TLI.cpp
 // $Id$
 
-/* Defines the member functions for the base class of the ACE_TLI
-   abstraction. */ 
+// Defines the member functions for the base class of the ACE_TLI
+// abstraction.
 
 #define ACE_BUILD_DLL
 #include "ace/TLI.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_TLI)
 

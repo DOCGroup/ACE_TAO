@@ -4,7 +4,7 @@
 
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Dgram.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
 

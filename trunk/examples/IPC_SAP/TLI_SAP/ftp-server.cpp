@@ -1,7 +1,7 @@
 /* Simple file transfer example */
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Thread_Manager.h"
 #include "ace/TLI_Acceptor.h"
 

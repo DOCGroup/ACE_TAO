@@ -5,7 +5,7 @@
 
 #include "ace/Mem_Map.h"
 #include "ace/FIFO_Send_Msg.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Get_Opt.h"
 
 static const BUF_LEN = 256;

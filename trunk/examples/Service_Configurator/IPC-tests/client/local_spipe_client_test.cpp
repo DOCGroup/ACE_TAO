@@ -5,7 +5,7 @@
 
 #include "ace/Mem_Map.h"
 #include "ace/SPIPE_Connector.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Get_Opt.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)

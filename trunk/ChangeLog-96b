@@ -1,9 +1,90 @@
+Fri Nov 29 12:54:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Stream.cpp (open): Changed tail->close() and head->close()
+ 	  to delete tail and delete head now that we've got our new
+ 	  changes.
+
+	* ace/Module: Moved the destructor from the private part of the
+ 	  class to the public part and changed things so that close() no
+ 	  longer "deletes this."  This is too confusing and error-prone.
+  	  In addition, changed the Module destructor so that it will try
+ 	  to call close() only if close hasn't already been called.
+
+	* ace/Synch.h: Moved ACE_Process_Semaphore out of the
+ 	  ACE_HAS_THREADS section since this is available on platforms
+ 	  that don't have threads.
+
+	* Now that Log_Msg.h is being #included in OS.h, I removed all
+	  other #includes of Log_Msg.h throughout the rest of ACE.
+
+	* ace/OS.h: Rearranged the definition of the ACE_NEW and
+ 	  ACE_NEW_RETURN macros so that they come at the end of OS.h.
+  	  This enables us to #include "ace/Log_Msg.h" here, as well, so
+ 	  that we can make use of the ACE_LOG_MSG macro in the definition
+ 	  of ACE_NEW and ACE_NEW_RETURN.
+
+	* ace/Singleton.cpp (instance): Updated the ACE_Singleton
+ 	  implementation to use the new ACE_NEW and ACE_NEW_RETURN macros.
+
+	* ace/OS.h: Revised the ACE_NEW and ACE_NEW_RETURN macros so that
+ 	  they check to see if the constructor of the newly allocated
+ 	  object failed (i.e., by checking the ACE_LOG_MSG->op_status()
+ 	  value).
+
+	* tests/Reactors_Test.cpp: Added an ACE_ASSERT() after each
+ 	  Reactor we create in order to make sure it worked.
+
+	* tests/Reactors_Test.cpp: Added an ACE_Service_Config daemon
+ 	  instance within main() in order to ensure that the Reactor is
+ 	  cleaned up appropriately.  This avoids problems with NT 4.0,
+ 	  where there seems to be a bug if you don't shut down sockets
+ 	  explicitly when the process exits.
+
+	* tests/Pipe_Test.cpp (main): Improved the pipe test so that it
+ 	  automatically iterates multiple times in order to test whether
+ 	  there are problems with rapidly opening and closing NT socket
+ 	  handles...
+
+Fri Nov 29 12:23:45 1996  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* tests/Naming_Test.cpp (main): Added code that removes the
+	  backing store every time the test is run.
+
 Thu Nov 28 03:07:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* tests/Pipe_Test.cpp: Add more instances of ACE_Pipes to the test
  	  and also added an option to close down the pipe.
 
 Thu Nov 28 00:53:16 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace/config-sunos4-g++.h:  This config file contained two
+	  exclusive definitions
+
+	  #define ACE_HAS_SVR4_SIGNAL_T
+
+	  and
+
+	  #define ACE_HAS_SUNOS4_SIGNAL_T
+
+	  The first one was moved out.  Thanks to Alexandre Karev
+	  <akg@na47sun05.cern.ch> for reporting this.
+
+	* ace/OS.h:
+
+	  #elif defined (ACE_HAS_SUNOS4_SIGNAL_T)
+
+	  was changed from
+
+	  typedef void (*ACE_SignalHandler)(void);
+	  typedef void (*ACE_SignalHandlerV)(void);
+
+	  to
+
+	  typedef void (*ACE_SignalHandler)(...);
+	  typedef void (*ACE_SignalHandlerV)(...);
+
+	  to make gcc happy.  The first one was moved out.  Thanks to
+	  Alexandre Karev <akg@na47sun05.cern.ch> for reporting this.
 
 	* ace/Pipe.cpp (close): Arrgh!  Fixed a total braino where we
  	  weren't using ACE_OS::closesocket() to close down the Win32

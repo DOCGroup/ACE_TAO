@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "ace/SV_Shared_Memory.h"
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/Signal.h"

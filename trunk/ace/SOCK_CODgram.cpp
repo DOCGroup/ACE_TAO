@@ -1,12 +1,8 @@
 // SOCK_CODgram.cpp
 // $Id$
 
-/* Contains the definitions for the ACE_SOCK connection-oriented 
-   datagram abstraction. */
-
 #define ACE_BUILD_DLL
 #include "ace/SOCK_CODgram.h"
-#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_CODgram)
 
@@ -16,7 +12,7 @@ ACE_SOCK_CODgram::dump (void) const
   ACE_TRACE ("ACE_SOCK_CODgram::dump");
 }
 
-/* Here's the general-purpose constructor. */
+// Here's the general-purpose constructor.
 
 ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote, const ACE_Addr &local, 
 				    int protocol_family, int protocol)
@@ -60,28 +56,28 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
 
       if (&local == &ACE_Addr::sap_any && &remote == &ACE_Addr::sap_any)
 	{
-	  /* Assign an arbitrary port number from the transient range!! */
+	  // Assign an arbitrary port number from the transient range!!
 
 	  if (protocol_family == PF_INET 
 	      && ACE::bind_port (this->get_handle ()) == -1)
 	    error = 1;
 	}
-      /* We are binding just the local address. */
+      // We are binding just the local address. 
       else if (&local != &ACE_Addr::sap_any && &remote == &ACE_Addr::sap_any)
 	{
 	  if (ACE_OS::bind (this->get_handle (), (sockaddr *) local.get_addr (), 
 		      local.get_size ()) == -1)
 	    error = 1;
 	}
-      /* We are connecting to the remote address. */
+      // We are connecting to the remote address. 
       else if (&local == &ACE_Addr::sap_any && &remote != &ACE_Addr::sap_any)
 	{
 	  if (ACE_OS::connect (this->get_handle (), (sockaddr *) remote.get_addr (), 
 			 remote.get_size ()) == -1)
 	    error = 1;
 	}
-      /* We are binding to the local address and connecting to the
-	 remote addresses. */ 
+      // We are binding to the local address and connecting to the
+      // remote addresses.
       else
 	{
 	  if (ACE_OS::bind (this->get_handle (), (sockaddr *) local.get_addr (), 

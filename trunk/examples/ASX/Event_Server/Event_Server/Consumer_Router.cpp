@@ -1,4 +1,4 @@
-#include "ace/Log_Msg.h"
+
 // $Id$
 
 #include "Consumer_Router.h"

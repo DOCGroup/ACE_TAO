@@ -3,8 +3,6 @@
 
 // Thread_Manager.i
 
-#include "ace/Log_Msg.h"
-
 // Unique thread id.  
 ACE_INLINE ACE_thread_t 
 ACE_Thread_Descriptor::self (void)

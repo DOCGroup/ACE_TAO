@@ -5,7 +5,6 @@
 #define ACE_SYNCH_T_C
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Time_Value.h"
 #include "ace/Synch_T.h"
@@ -41,7 +40,7 @@ ACE_Test_and_Set<LOCK, TYPE>::set (TYPE status)
 }
 
 template <class LOCK, class TYPE> int 
-ACE_Test_and_Set<LOCK, TYPE>::handle_signal (int signum, siginfo_t *, ucontext_t *)
+ACE_Test_and_Set<LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   this->set (1);
   return 0;

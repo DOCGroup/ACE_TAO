@@ -3,8 +3,6 @@
 
 // SOCK_Connector.i
 
-#include "ace/Log_Msg.h"
-
 // This constructor is used by a client when it wants to connect to
 // the specified REMOTE_SAP address using a blocking open.
 

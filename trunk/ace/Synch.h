@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -104,6 +103,50 @@ protected:
   // = Prevent assignment and initialization.
   void operator= (const ACE_File_Lock &) {}
   ACE_File_Lock (const ACE_File_Lock &) {}
+};
+
+class ACE_Export ACE_Process_Semaphore
+  // = TITLE
+  //     Wrapper for Dijkstra style general semaphores that work
+  //     across processes.
+{
+public:
+  ACE_Process_Semaphore (u_int count, LPCTSTR name = 0, 
+			 void * = 0, int max = 0x7FFFFFFF);
+  // Initialize the semaphore, with an initial value of <count> and a
+  // maximum value of <max>.
+
+  ~ACE_Process_Semaphore (void);       
+  // Implicitly destroy the semaphore.
+
+  int remove (void);
+  // Explicitly destroy the semaphore.
+
+  int acquire (void);
+  // Block the thread until the semaphore count becomes
+  // greater than 0, then decrement it.
+
+  int tryacquire (void);
+  // Conditionally decrement the semaphore if count is greater 
+  // than 0 (i.e., won't block).
+
+  int release (void);
+  // Increment the semaphore, potentially unblocking
+  // a waiting thread.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+  ACE_Semaphore lock_;
+#else
+  ACE_SV_Semaphore_Complex lock_;
+  // We need this to get the right semantics...
+#endif /* ACE_WIN32 */
 };
 
 #if defined (ACE_HAS_THREADS) // ACE platform supports some form of threading.
@@ -677,50 +720,6 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
-};
-
-class ACE_Export ACE_Process_Semaphore
-  // = TITLE
-  //     Wrapper for Dijkstra style general semaphores that work
-  //     across processes.
-{
-public:
-  ACE_Process_Semaphore (u_int count, LPCTSTR name = 0, 
-			 void * = 0, int max = 0x7FFFFFFF);
-  // Initialize the semaphore, with an initial value of <count> and a
-  // maximum value of <max>.
-
-  ~ACE_Process_Semaphore (void);       
-  // Implicitly destroy the semaphore.
-
-  int remove (void);
-  // Explicitly destroy the semaphore.
-
-  int acquire (void);
-  // Block the thread until the semaphore count becomes
-  // greater than 0, then decrement it.
-
-  int tryacquire (void);
-  // Conditionally decrement the semaphore if count is greater 
-  // than 0 (i.e., won't block).
-
-  int release (void);
-  // Increment the semaphore, potentially unblocking
-  // a waiting thread.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  ACE_Semaphore lock_;
-#else
-  ACE_SV_Semaphore_Complex lock_;
-  // We need this to get the right semantics...
-#endif /* ACE_WIN32 */
 };
 
 struct ACE_Export ACE_Sub_Barrier 

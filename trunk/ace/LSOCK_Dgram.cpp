@@ -1,12 +1,8 @@
 // LSOCK_Dgram.cpp
 // $Id$
 
-/* Defines the member functions for the Local ACE_SOCK datagram
-   abstraction. */
-
 #define ACE_BUILD_DLL
 #include "ace/LSOCK_Dgram.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 

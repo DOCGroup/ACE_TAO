@@ -168,7 +168,6 @@ extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #endif /* VXWORKS */
 
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
-#include "ace/Log_Msg.h"
 // The following two macros ensure that system calls are properly
 // restarted (if necessary) when interrupts occur.
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
@@ -995,40 +994,6 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 }
 
 ACE_INLINE int 
-ACE_OS::cond_broadcast (ACE_cond_t *cv)
-{
-// ACE_TRACE ("ACE_OS::cond_broadcast");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_broadcast (cv), 
-				       ace_result_), 
-		     int, -1);
-#elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_broadcast (cv), 
-				       ace_result_), 
-		     int, -1);
-#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-  int result = 0;
-  int error = 0;
-
-  for (int i = cv->waiters_; i > 0; i--)
-    if (ACE_OS::sema_post (&cv->sema_) != 0)
-      {
-	error = errno;
-	result = -1;
-	break;
-      }
-
-  errno = error;
-  return result;
-#endif /* ACE_HAS_STHREADS */
-#else
-  cv = cv;
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */		     
-}
-
-ACE_INLINE int 
 ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
 // ACE_TRACE ("ACE_OS::cond_destroy");
@@ -1124,6 +1089,107 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 }
 
 ACE_INLINE int 
+ACE_OS::cond_broadcast (ACE_cond_t *cv)
+{
+// ACE_TRACE ("ACE_OS::cond_broadcast");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_broadcast (cv), 
+				       ace_result_), 
+		     int, -1);
+#elif defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_broadcast (cv), 
+				       ace_result_), 
+		     int, -1);
+#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
+  // The <external_mutex> must be locked before this call is made.
+
+  int result = 0;
+  int error = 0;
+
+  // Keep track of the number of waiters.
+  // cv->signaled_waiters_ = cv->waiters_;
+  // ACE_OS::sema_init (cv->signaled_counter_, cv->signaled_waiters_);
+
+  // Wake up all the waiters.
+
+  for (int i = cv->waiters_; i > 0; i--)
+    if (ACE_OS::sema_post (&cv->sema_) != 0)
+      {
+	error = errno;
+	result = -1;
+	break;
+      }
+
+  // Wait for all the awakened threads to acquire their part of the
+  // counting semaphore. 
+  // ::WaitForSingleObject (cv->waiters_done_, INFINITE);
+  // ACE_OS::sema_destroy (cv->signaled_counter_);
+  errno = error;
+  return result;
+#endif /* ACE_HAS_STHREADS */
+#else
+  cv = cv;
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::cond_wait (ACE_cond_t *cv, 
+		   ACE_mutex_t *external_mutex)
+{
+// ACE_TRACE ("ACE_OS::cond_wait");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_wait (cv, external_mutex), ace_result_), 
+		     int, -1);
+#elif defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), ace_result_), 
+		     int, -1);
+#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
+  // It's ok to increment this because the <external_mutex> is locked.
+  cv->waiters_++;
+
+  if (ACE_OS::mutex_unlock (external_mutex) != 0)
+    return -1;
+
+  int result = 0;
+  int error = 0;
+
+  // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
+  if (ACE_OS::sema_wait (&cv->sema_) != 0)
+    {
+      result = -1;
+      error = errno;
+    }
+
+  // ACE_OS::sema_wait (cv->signaled_counter_);
+  // ACE_OS::mutex_lock (cv->internal_mutex_);
+  // cv->signaled_waiters_--;
+  // Release the signaler.
+  // if (cv->signaled_waiters_ == 0)
+  //   ::SetEvent (cv->waiters_done_);
+  // ACE_OS::mutex_unlock (cv->internal_mutex_);
+
+  // We must always regain the mutex, even when errors occur so that
+  // we can atomically decrement the count of the waiters.
+  ACE_OS::mutex_lock (external_mutex);
+
+  // By making the waiter responsible for decrementing its count we
+  // don't have to worry about having an internal mutex.  Thanks to
+  // Karlheinz for recognizing this optimization.
+  cv->waiters_--;
+
+  // Reset errno in case mutex_lock() also fails...
+  errno = error;
+  return result;
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
 ACE_OS::cond_timedwait (ACE_cond_t *cv, 
 			ACE_mutex_t *external_mutex, 
 			ACE_Time_Value *timeout)
@@ -1208,53 +1274,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   cv = cv;
   external_mutex = external_mutex;
   timeout = timeout;
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */		     
-}
-
-ACE_INLINE int 
-ACE_OS::cond_wait (ACE_cond_t *cv, 
-		   ACE_mutex_t *external_mutex)
-{
-// ACE_TRACE ("ACE_OS::cond_wait");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_wait (cv, external_mutex), ace_result_), 
-		     int, -1);
-#elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), ace_result_), 
-		     int, -1);
-#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-  // Note that it is ok to increment this because the <external_mutex>
-  // is locked.
-  cv->waiters_++;
-
-  if (ACE_OS::mutex_unlock (external_mutex) != 0)
-    return -1;
-
-  int result = 0;
-  int error = 0;
-
-  if (ACE_OS::sema_wait (&cv->sema_) != 0)
-    {
-      result = -1;
-      error = errno;
-    }
-
-  // We must always regain the mutex, even when errors occur so that
-  // we can atomically decrement the count of the waiters.
-  ACE_OS::mutex_lock (external_mutex);
-
-  // By making the waiter responsible for decrementing its count we
-  // don't have to worry about having an internal mutex.  Thanks to
-  // Karlheinz for recognizing this optimization.
-  cv->waiters_--;
-
-  // Reset errno in case mutex_lock() also fails...
-  errno = error;
-  return result;
-#endif /* ACE_HAS_STHREADS */
-#else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }

@@ -3,7 +3,7 @@
 
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Get_Opt.h"
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)

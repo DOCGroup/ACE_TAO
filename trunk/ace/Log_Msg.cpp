@@ -23,7 +23,6 @@
 
 #include "ace/Thread.h"
 #include "ace/Synch.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)

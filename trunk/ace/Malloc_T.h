@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -19,7 +18,6 @@
 #define ACE_MALLOC_T_H
 
 #include "ace/ACE.h"
-#include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 

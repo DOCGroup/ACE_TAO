@@ -15,6 +15,7 @@
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
+#if defined (ACE_HAS_THREADS)
 static ACE_Atomic_Op <ACE_Thread_Mutex, u_long> amount_of_work = (u_long) 0;
 
 class Pseudo_Barrier
@@ -97,3 +98,11 @@ main (int argc, char **argv)
 
   return 0;
 }
+#else
+int 
+main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */

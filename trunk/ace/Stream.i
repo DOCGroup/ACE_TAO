@@ -3,8 +3,6 @@
 
 // Stream.i
 
-#include "ace/Log_Msg.h"
-
 template <ACE_SYNCH_1> ACE_INLINE ACE_Module<ACE_SYNCH_2> *
 ACE_Stream<ACE_SYNCH_2>::head (void)
 {

@@ -7,7 +7,7 @@
 // Authors: Gerhard Lenzer and Prashant Jain.
 
 #include <fstream.h>
-#include "ace/Log_Msg.h"
+
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "auto_builtin_ptr.h"

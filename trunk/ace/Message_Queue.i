@@ -3,8 +3,6 @@
 
 // Message_Queue.i
 
-#include "ace/Log_Msg.h"
-
 // Check if queue is empty (does not hold locks). 
 
 template <ACE_SYNCH_1> ACE_INLINE int

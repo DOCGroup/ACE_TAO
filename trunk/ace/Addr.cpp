@@ -2,7 +2,6 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/Addr.h"
 
 // This is a static class variable. 

@@ -7,7 +7,7 @@
 
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
 #include "Log_Wrapper.h"

@@ -5,7 +5,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/FIFO_Recv.h"
-#include "ace/Log_Msg.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Recv)
 

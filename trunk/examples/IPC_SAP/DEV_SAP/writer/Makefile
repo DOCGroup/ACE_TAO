@@ -46,23 +46,24 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 .obj/writer.o .shobj/writer.so: writer.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/DEV_Addr.h \
- $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/DEV_Connector.h \
  $(WRAPPER_ROOT)/ace/DEV_IO.h \
  $(WRAPPER_ROOT)/ace/DEV.h \
  $(WRAPPER_ROOT)/ace/IO_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i \
+ $(WRAPPER_ROOT)/ace/DEV_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/DEV.i \
  $(WRAPPER_ROOT)/ace/DEV_IO.i \
  $(WRAPPER_ROOT)/ace/DEV_Connector.i \

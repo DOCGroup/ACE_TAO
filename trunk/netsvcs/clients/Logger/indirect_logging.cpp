@@ -5,7 +5,7 @@
 // them to the Server Logging Daemon.  If there is no Server Logging
 // Daemon, the logging records will be written to stderr.
 
-#include "ace/Log_Msg.h"
+
 
 int 
 main (int argc, char *argv[])

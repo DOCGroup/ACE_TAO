@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "ace/ACE.h"
-#include "ace/Log_Msg.h"
+
 #include "test_config.h"
 
 int

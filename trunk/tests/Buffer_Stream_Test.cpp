@@ -21,7 +21,6 @@
 // 
 // ============================================================================
 
-#include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 #include "ace/Stream.h"

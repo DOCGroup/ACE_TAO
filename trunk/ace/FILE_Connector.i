@@ -3,8 +3,6 @@
 
 // FILE_Connector.i
 
-#include "ace/Log_Msg.h"
-
 // Creates a Local ACE_FILE. 
 
 inline

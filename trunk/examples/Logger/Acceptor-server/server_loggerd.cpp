@@ -7,7 +7,7 @@
 // components.
 
 #include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"

@@ -5,7 +5,7 @@
 #include "iostream.h"
 #include "fstream.h"
 #include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Service_Object.h"
 #include "Logging_Strategy.h"
 

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -18,7 +17,6 @@
 #if !defined (ACE_THREAD_MANAGER_H)
 #define ACE_THREAD_MANAGER_H
 
-#include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Synch.h"
 

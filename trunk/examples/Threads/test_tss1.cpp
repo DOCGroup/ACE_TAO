@@ -22,9 +22,9 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
-#include "ace/Log_Msg.h"
 #include "ace/Task.h"
-#include "test_config.h"
+
+#if defined (ACE_HAS_THREADS)
 
 static int iterations = 100;
 
@@ -101,22 +101,21 @@ public:
   virtual int svc (void);
 };
 
-template <ACE_SYNCH_1>
-int Tester<ACE_SYNCH_2>::open (void *)
+template <ACE_SYNCH_1> int 
+Tester<ACE_SYNCH_2>::open (void *)
 {
-  this->activate ();
-  return 0;
+  return this->activate ();
 }
 
 template <ACE_SYNCH_1>
 int Tester<ACE_SYNCH_2>::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, close running\n!));
+  ACE_DEBUG ((LM_DEBUG, "close running\n!"));
   close_started = 1;
   ACE_OS::sleep (2);
-  ACE_DEBUG ((LM_DEBUG, "close: trying to log error code 7!"\n));
+  ACE_DEBUG ((LM_DEBUG, "close: trying to log error code 7!\n"));
   TSS_Error->error (7);
-  ACE_DEBUG ((LM_DEBUG, "close: logging succeeded!"\n));
+  ACE_DEBUG ((LM_DEBUG, "close: logging succeeded!\n"));
   return 0;
 }
 
@@ -133,7 +132,7 @@ Tester<ACE_SYNCH_2>::svc (void)
 }
 
 int 
-main (int argc, char *argv[])
+main (int, char *[])
 {
   Tester<ACE_MT_SYNCH> tester;
 
@@ -142,14 +141,24 @@ main (int argc, char *argv[])
   while (!close_started)
     continue;
 
-  ACE_DEBUG ((LM_DEBUG, "main: trying to log error code 7!"\n));
+  ACE_DEBUG ((LM_DEBUG, "main: trying to log error code 7!\n"));
 
   TSS_Error->error (3);
 
-  ACE_DEBUG ((LM_DEBUG, "main: logging succeeded!"\n));
+  ACE_DEBUG ((LM_DEBUG, "main: logging succeeded!\n"));
   return 0;
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_TSS<Errno>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#else
+int 
+main (void)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+		     "ACE doesn't support support threads on this platform (yet)\n"),
+		    -1);
+}
+#endif /* ACE_HAS_THREADS */
