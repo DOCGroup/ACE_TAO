@@ -116,7 +116,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
       TAO_CHECK_ENV;
 
       server_ =
-        RtecScheduler::Scheduler::_narrow(objref, TAO_TRY_ENV);
+        RtecScheduler::Scheduler::_narrow(objref.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY

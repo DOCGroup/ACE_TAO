@@ -13,6 +13,11 @@ Wed Apr 29 14:06:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	of static Param_Data tables for the _is_a_skel from the outer
 	global scope to inside the skeleton for _is_a_skel.
 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: On line 119 to the call
+	to _narrow, we were passing the Object_var. g++ did not like
+	it. Hence we take the in () of the var object and pass it to
+	_narrow.
+
 Wed Apr 29 12:26:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/Makefile:
@@ -50,7 +55,7 @@ Wed Apr 29 12:26:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
 	  Fixed some memory managment problems, but the whole class has to
-	  be revised to be more complaint.
+	  be revised to be more compliant.
 
 Wed Apr 29 07:08:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
