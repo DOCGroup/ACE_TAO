@@ -159,6 +159,15 @@
 #define ACE_DEFAULT_TIME_SERVER_STR "ACE_TS_TIME"
 #endif /* ACE_DEFAULT_TIME_SERVER_STR */
 
+// Used by the FIFO tests and the Client_Logging_Handler netsvc.
+#if !defined (ACE_DEFAULT_RENDEZVOUS)
+#if defined (ACE_LACKS_FIFO)
+#define ACE_DEFAULT_RENDEZVOUS "localhost:10012"
+#else
+#define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
+#endif /* ACE_LACKS_FIFO */
+#endif /* ACE_DEFAULT_RENDEZVOUS */
+
 #if !defined (ACE_DEFAULT_SERVER_HOST)
 #define ACE_DEFAULT_SERVER_HOST "localhost"
 #endif /* ACE_DEFAULT_SERVER_HOST */
@@ -178,11 +187,6 @@
 #if !defined (ACE_DEFAULT_MAX_SEGMENTS)
 #define ACE_DEFAULT_MAX_SEGMENTS 6
 #endif /* ACE_DEFAULT_MAX_SEGMENTS */
-
-// Used by the FIFO tests.
-#if !defined (ACE_DEFAULT_RENDEZVOUS)
-#define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
-#endif /* ACE_DEFAULT_RENDEZVOUS */
 
 // Name of the map that's stored in shared memory.
 #if !defined (ACE_NAME_SERVER_MAP)

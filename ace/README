@@ -115,6 +115,7 @@ ACE_HAS_PTHREAD_T			Platform has pthread_t defined.
 ACE_HAS_PTHREAD_YIELD_VOIDPTR		pthread_yield() takes a void pointer arg.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	Platform will recurse infinitely on thread exits from TSS cleanup routines (e.g., AIX).  
 ACE_HAS_REENTRANT_FUNCTIONS		Platform supports reentrant functions (i.e., all the POSIX *_r functions).
+ACE_LACKS_FIFO				Platform lacks UNIX FIFOs (e.g., Win32)
 ACE_LACKS_NETDB_REENTRANT_FUNCTIONS	Platform does not support reentrant netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r, gethostbyname_r, getservbyname_r).
 ACE_HAS_REGEX				Platform supports the POSIX regular expression library
 ACE_HAS_SELECT_H			Platform has special header for select().

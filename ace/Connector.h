@@ -127,7 +127,7 @@ public:
   virtual ~ACE_Connector (void);
   // Shutdown a connector and release resources.
 
-  // = Connection establishment method
+  // = Connection establishment methods.
 
   virtual int connect (SVC_HANDLER *&svc_handler,
 		       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
@@ -137,13 +137,21 @@ public:
 		       int reuse_addr = 0,
 		       int flags = O_RDWR,
 		       int perms = 0);
-  // Initiate connection to <peer> at <remote_addr> using
-  // <synch_options>.  If the caller wants to designate the selected
-  // <local_addr> they can (and can also insist that the <local_addr>
-  // be reused by passing a value <reuse_addr> == 1). <flags> and
-  // <perms> can be used to pass any flags that are needed to perform
-  // specific operations such as opening a file within connect with
-  // certain permissions.
+  // Initiate connection of <svc_handler> to peer at <remote_addr>
+  // using <synch_options>.  If the caller wants to designate the
+  // selected <local_addr> they can (and can also insist that the
+  // <local_addr> be reused by passing a value <reuse_addr> ==
+  // 1). <flags> and <perms> can be used to pass any flags that are
+  // needed to perform specific operations such as opening a file
+  // within connect with certain permissions.
+
+  virtual int connect_n (size_t n,
+			 SVC_HANDLER *svc_handlers[],
+			 ACE_PEER_CONNECTOR_ADDR remote_addrs[],
+			 const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults);
+  // Initiate connection of <n> <svc_handlers> to peers at
+  // <remote_addrs> using <synch_options>.  Returns -1 if failure
+  // occurs, otherwise returns the number of handlers connected.
 
   virtual int cancel (SVC_HANDLER *svc_handler);
   // Cancel a <svc_handler> that was started asynchronously. Note that
