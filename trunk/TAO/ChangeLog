@@ -1,7 +1,20 @@
+Sun Dec 28 09:55:44 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+          Fix Bugzilla 1667: LOCATION_FORWARD from Portable Interceptor
+          results in SEGV if method has complex out parameters or return.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+          First pass at fixing build problems with Exceptions=0.
+
 Sun Dec 28 11:35:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/PortableServer/TAO_PortableServer_Static.dsp:
-	  Fixed this msvc6 project
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+          Fixed this msvc6 project
 
 Sun Dec 28 11:27:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -10,10 +23,10 @@ Sun Dec 28 11:27:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 28 11:18:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FT_ClientORB.bor:
-	* orbsvcs/orbsvcs/FT_ServerORB.bor:
-	* orbsvcs/orbsvcs/PortableGroup.bor:
-	  Fixed these BCB makefiles.
+        * orbsvcs/orbsvcs/FT_ClientORB.bor:
+        * orbsvcs/orbsvcs/FT_ServerORB.bor:
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+          Fixed these BCB makefiles.
 
 Sun Dec 28 11:01:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -26,117 +39,117 @@ Sun Dec 28 11:01:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 28 10:49:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/PortableGroup.bor:
-	  Add PortableGroup_Simple_DSC to the list of object files so that
-	  the corresponding idl file is compiled. Make sure this file is
-	  build first, because other files use the generated files.
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+          Add PortableGroup_Simple_DSC to the list of object files so that
+          the corresponding idl file is compiled. Make sure this file is
+          build first, because other files use the generated files.
 
 Sat Dec 27 23:40:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FT_ClientORB.bor:
-	* orbsvcs/orbsvcs/FT_ServerORB.bor:
-	* orbsvcs/orbsvcs/Makefile.bor:
-	* orbsvcs/orbsvcs/PortableGroup.bor:
+        * orbsvcs/orbsvcs/FT_ClientORB.bor:
+        * orbsvcs/orbsvcs/FT_ServerORB.bor:
+        * orbsvcs/orbsvcs/Makefile.bor:
+        * orbsvcs/orbsvcs/PortableGroup.bor:
 
-	  Blind folded effort to fix some of the problems in the daily
-	  builds with borland.
+          Blind folded effort to fix some of the problems in the daily
+          builds with borland.
 
 Sat Dec 27 16:15:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Added generation of orbconf.h include and redefintion of the
-	  export macro to the anyop header file (when using the -GA
-	  option).
+          Added generation of orbconf.h include and redefintion of the
+          export macro to the anyop header file (when using the -GA
+          option).
 
-	* tao/Typecode.cpp:
-	* tao/Typecode.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
 
-	  Added spec-defined fixed_digits() and fixed_scale() methods,
-	  which just throw CORBA::NO_IMPLEMENT, since TAO doesn't support
-	  IDL fixed types. Thanks to Irfan Pyarali <irfan@oomworks.com>
-	  for reporting the missing methods. This closes [BUGID:1643].
+          Added spec-defined fixed_digits() and fixed_scale() methods,
+          which just throw CORBA::NO_IMPLEMENT, since TAO doesn't support
+          IDL fixed types. Thanks to Irfan Pyarali <irfan@oomworks.com>
+          for reporting the missing methods. This closes [BUGID:1643].
 
 Sat Dec 27 12:43:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAOACE.dsw:
-	* orbsvcs/orbsvcs/FaultTolerance.dsp:
+        * TAOACE.dsw:
+        * orbsvcs/orbsvcs/FaultTolerance.dsp:
 
-	  Fixed some of the link errors that show up in the daily
-	  builds. It doesn't make me too proud on how this is
-	  structured. We need to rip this apart after x.4.
+          Fixed some of the link errors that show up in the daily
+          builds. It doesn't make me too proud on how this is
+          structured. We need to rip this apart after x.4.
 
 Sat Dec 27 12:03:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
 
-	  Fixed a compilation error with g++.
+          Fixed a compilation error with g++.
 
 Sat Dec 27 10:14:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
 
-	  Dealt with VC6 idiosyncracies. VC6 never scopes variables inside
-	  for loops.
+          Dealt with VC6 idiosyncracies. VC6 never scopes variables inside
+          for loops.
 
 Sat Dec 27 10:08:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
 
-	  Cosmetic fixes to align with coding standards. I have not done
-	  the entire file. I am gettingtired of doing this.
+          Cosmetic fixes to align with coding standards. I have not done
+          the entire file. I am gettingtired of doing this.
 
 Sat Dec 27 09:59:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/CONV_FRAMEA.h:
-	* tao/CurrentA.h:
-	* tao/IIOPA.h:
-	* tao/IIOP_EndpointsA.h:
-	* tao/IOP_IORA.h:
+        * tao/CONV_FRAMEA.h:
+        * tao/CurrentA.h:
+        * tao/IIOPA.h:
+        * tao/IIOP_EndpointsA.h:
+        * tao/IOP_IORA.h:
 
-	  Some pieces that should have been generated that were missing.
+          Some pieces that should have been generated that were missing.
 
 Sat Dec 27 09:17:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
 
-	  Fixed warnings with g++.
+          Fixed warnings with g++.
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile:
 
-	  Needed IORManip library.
+          Needed IORManip library.
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.mpc:
-	  Fixed  a typo in the MPC file.
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.mpc:
+          Fixed  a typo in the MPC file.
 
 Sat Dec 27 09:13:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.bor:
-	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
-	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile.bor:
-	* orbsvcs/tests/Miop/McastHello/Makefile:
-	* orbsvcs/tests/Miop/McastHello/server.bor:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.bor:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile.bor:
+        * orbsvcs/tests/Miop/McastHello/Makefile:
+        * orbsvcs/tests/Miop/McastHello/server.bor:
 
-	  They need the IORManipulation library to be linked in.
+          They need the IORManipulation library to be linked in.
 
 Sat Dec 27 09:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/LoadBalancer/LoadManager.bor:
-	* orbsvcs/LoadBalancer/LoadMonitor.bor:
-	* orbsvcs/LoadBalancer/Makefile.LoadManager:
-	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+        * orbsvcs/LoadBalancer/LoadManager.bor:
+        * orbsvcs/LoadBalancer/LoadMonitor.bor:
+        * orbsvcs/LoadBalancer/Makefile.LoadManager:
+        * orbsvcs/LoadBalancer/Makefile.LoadMonitor:
 
-	  They need the IORManipulation library to be linked in.
+          They need the IORManipulation library to be linked in.
 
 Sat Dec 27 08:51:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/IDL_Test/Makefile:
+        * tests/IDL_Test/Makefile:
 
-	  Libraries on the link line were not ordered properly which
-	  vasued problems for static builds.
+          Libraries on the link line were not ordered properly which
+          vasued problems for static builds.
 
 Sat Dec 27 13:21:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -156,10 +169,10 @@ Fri Dec 26 22:39:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
           Made changes to the remove_member () methos to delete the object
           group entry from the location_map When a member of the object
-	  group is removed.
+          group is removed.
 
-	  Thanks to Stephen Procter <stephen.procter@rd.bbc.co.uk> for
-	  letting us know about the problem through the PRF.
+          Thanks to Stephen Procter <stephen.procter@rd.bbc.co.uk> for
+          letting us know about the problem through the PRF.
 
 Fri Dec 26 22:32:25 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -179,119 +192,119 @@ Fri Dec 26 22:32:25 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Test.idl:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
 
-	  Added a new test to check the add_member () and remove_member ()
-	  functionality on the object group manager.
+          Added a new test to check the add_member () and remove_member ()
+          functionality on the object group manager.
 
 Fri Dec 26 17:35:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
 
-	  Some fixes that were obvious when exceptions were turned
-	  off. But there are *lots* more that need attention. Dale is
-	  being sent an email.
+          Some fixes that were obvious when exceptions were turned
+          off. But there are *lots* more that need attention. Dale is
+          being sent an email.
 
 Fri Dec 26 16:46:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
 
-	  New files that never founds its way into the Makefile.
+          New files that never founds its way into the Makefile.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
 
-	  Fixed some obvious abuse of ACE_ENV macros.
+          Fixed some obvious abuse of ACE_ENV macros.
 
 Fri Dec 26 14:29:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
 
-	  When using dynamic_hash or other techniques the generated code
-	  was not initilaizing the hash_map with the right members. This
-	  lead to operation name registration failures. This fix corrects
-	  that problem. Atleast a couple of simple tests pass with this
-	  fix. Time for a new build with this option.
+          When using dynamic_hash or other techniques the generated code
+          was not initilaizing the hash_map with the right members. This
+          lead to operation name registration failures. This fix corrects
+          that problem. Atleast a couple of simple tests pass with this
+          fix. Time for a new build with this option.
 
 Fri Dec 26 13:16:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup.dsp:
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
 
-	  Fixed the command line option to compile
-	  PortableGroup_Simple_DS.idl.
+          Fixed the command line option to compile
+          PortableGroup_Simple_DS.idl.
 
 Fri Dec 26 12:52:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
-	  #included tao/IOP_IORC.h.
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+          #included tao/IOP_IORC.h.
 
 Fri Dec 26 12:47:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/IDL_Test/Makefile:
+        * tests/IDL_Test/Makefile:
 
-	  Cosmetic fix to get it working in builds where Messaging is
-	  turned off.
+          Cosmetic fix to get it working in builds where Messaging is
+          turned off.
 
 Fri Dec 26 00:43:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/GIOP.pidl:
+        * tao/GIOP.pidl:
 
-	  The pragms prefix in this file was throwing up strange errors
-	  under stramge circumstances. Jeff needs to look into this. Till
-	  then we will keep things moving along.
+          The pragms prefix in this file was throwing up strange errors
+          under stramge circumstances. Jeff needs to look into this. Till
+          then we will keep things moving along.
 
 Fri Dec 26 00:15:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
 
-	  Do not build if minimum_corba is enabled.
+          Do not build if minimum_corba is enabled.
 
 Thu Dec 25 23:55:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FTORB_Utils.bor:
-	* orbsvcs/orbsvcs/FT_ClientORB.bor:
-	* orbsvcs/orbsvcs/FT_ServerORB.bor:
+        * orbsvcs/orbsvcs/FTORB_Utils.bor:
+        * orbsvcs/orbsvcs/FT_ClientORB.bor:
+        * orbsvcs/orbsvcs/FT_ServerORB.bor:
 
-	  Fixed the borland files after the last change. I am sure they
-	  are not perfect. Need to wait for the builds to make the next
-	  round of fixes.
+          Fixed the borland files after the last change. I am sure they
+          are not perfect. Need to wait for the builds to make the next
+          round of fixes.
 
 Thu Dec 25 23:41:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
 
-	  Fixed a small error in the MPC file.
+          Fixed a small error in the MPC file.
 
 Thu Dec 25 23:20:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
 
-	  Fixed the dependeancies.
+          Fixed the dependeancies.
 
 Thu Dec 25 23:06:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAOACE.dsw:
- 	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
-	* orbsvcs/orbsvcs/FT_ClientORB.dsp:
-	* orbsvcs/orbsvcs/FT_ServerORB.dsp:
-	* orbsvcs/orbsvcs/PortableGroup.dsp:
+        * TAOACE.dsw:
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/orbsvcs/FT_ClientORB.dsp:
+        * orbsvcs/orbsvcs/FT_ServerORB.dsp:
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
 
-	  Changes that needed to be done from the change "Thu Dec 25
-	  17:41:44 2003 Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>". Removed unnecessray dependancies
-	  that were added. We now include the stub from
-	  PortableGroup_Simple_DS.idl in every project with any export
-	  definitions. This was easier and far better than having multiple
-	  libraries.
+          Changes that needed to be done from the change "Thu Dec 25
+          17:41:44 2003 Balachandran Natarajan
+          <bala@dre.vanderbilt.edu>". Removed unnecessray dependancies
+          that were added. We now include the stub from
+          PortableGroup_Simple_DS.idl in every project with any export
+          definitions. This was easier and far better than having multiple
+          libraries.
 
 Thu Dec 25 18:56:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FTORB.mpc:
-	* orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
 
-	  Set right the dependancies in the MPC files.
+          Set right the dependancies in the MPC files.
 
-	The remainder of this checkin is for an optimization. The point is
+        The remainder of this checkin is for an optimization. The point is
         to cache the hash value of the endpoints. I am sure there are
         people who believe that with latest versions of the kernels,
         stacks and quantum computing these optimizations are a
@@ -299,191 +312,191 @@ Thu Dec 25 18:56:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         trying to calculate hash values in every call path. Hence the
         decision to cache the value.
 
-	* tao/Endpoint.h:
-	* tao/Endpoint.i:
+        * tao/Endpoint.h:
+        * tao/Endpoint.i:
 
-	  Added a varaible to hold the cached hash value.
+          Added a varaible to hold the cached hash value.
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
 
-	* tao/IIOP_Endpoint.cpp:
-	* tao/IIOP_Endpoint.h:
-	* tao/Strategies/DIOP_Endpoint.cpp:
-	* tao/Strategies/SCIOP_Endpoint.cpp:
-	* tao/Strategies/SCIOP_Endpoint.h:
-	* tao/Strategies/SHMIOP_Endpoint.cpp:
-	* tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.h:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/UIOP_Endpoint.cpp:
 
-	  Double checked locking optimizations to cache the hash value.
+          Double checked locking optimizations to cache the hash value.
 
-	* tests/MT_Client/client.global.conf:
+        * tests/MT_Client/client.global.conf:
 
-	  Removed a svc.conf option that has long been retired.
+          Removed a svc.conf option that has long been retired.
 
 Thu Dec 25 17:41:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup_Simple_DS.idl:
+        * orbsvcs/orbsvcs/PortableGroup_Simple_DS.idl:
 
-	  Moved some of the typedefs and data structures that are used by
-	  other services into this file. For example FT_CORBA_ORB.idl just
-	  includes 3 typedefs and a struct in PortableGroup.idl which it
-	  was doing by including PortableGroup.idl. This lead to
-	  dependancy between FT_CORBA_ORB and PortableGroup. This also
-	  dependancy also lead to teh dependancies of PortableGroup being
-	  imposed on FT_CORBA_ORB, which were all nasty in the first
-	  place. This seperate IDL file will clean a bunch of things up.
+          Moved some of the typedefs and data structures that are used by
+          other services into this file. For example FT_CORBA_ORB.idl just
+          includes 3 typedefs and a struct in PortableGroup.idl which it
+          was doing by including PortableGroup.idl. This lead to
+          dependancy between FT_CORBA_ORB and PortableGroup. This also
+          dependancy also lead to teh dependancies of PortableGroup being
+          imposed on FT_CORBA_ORB, which were all nasty in the first
+          place. This seperate IDL file will clean a bunch of things up.
 
-	* orbsvcs/orbsvcs/PortableGroup.idl:
-	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
 
-	  These IDL files include only the above IDL file.
+          These IDL files include only the above IDL file.
 
-	* orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
 
-	  Removed the dependancy of PortableGroup on FTORB. There is no
-	  need for this. Further cleaned up the dependancy on
-	  Notification and Naming. The whole idea of splitting the
-	  FT_CORBA IDL into two pieces months before was to avoid this
-	  dependancy. Adding this dependancy defeats the purpose. A
-	  dependancy has been setup between PortableGroup and FTORB. This
-	  is just for the generated code and not a library dependancy.
+          Removed the dependancy of PortableGroup on FTORB. There is no
+          need for this. Further cleaned up the dependancy on
+          Notification and Naming. The whole idea of splitting the
+          FT_CORBA IDL into two pieces months before was to avoid this
+          dependancy. Adding this dependancy defeats the purpose. A
+          dependancy has been setup between PortableGroup and FTORB. This
+          is just for the generated code and not a library dependancy.
 
-	* orbsvcs/orbsvcs/Makefile.FTORB:
+        * orbsvcs/orbsvcs/Makefile.FTORB:
 
-	  Added the PortableGroup_Simple_DS.idl for compilation.
+          Added the PortableGroup_Simple_DS.idl for compilation.
 
-	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
 
-	  Added the generated code from PortableGroup_Simple_DS.idl for
-	  cmpilation and linking.
+          Added the generated code from PortableGroup_Simple_DS.idl for
+          cmpilation and linking.
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
 
-	  Does not link in Messaging library.
+          Does not link in Messaging library.
 
 Thu Dec 25 11:09:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
-	* orbsvcs/orbsvcs/FT_ClientORB.dsp:
-	* orbsvcs/orbsvcs/FT_ServerORB.dsp:
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/orbsvcs/FT_ClientORB.dsp:
+        * orbsvcs/orbsvcs/FT_ServerORB.dsp:
 
-	  They needed more massaging. They now depend on portable group
-	  and CosNaming. This is not fun. If I were doing things, I would
-	  have split the required definitions into a seperate IDL file and
-	  include the generated code in both the projects. This is simply
-	  not right!
+          They needed more massaging. They now depend on portable group
+          and CosNaming. This is not fun. If I were doing things, I would
+          have split the required definitions into a seperate IDL file and
+          include the generated code in both the projects. This is simply
+          not right!
 
 Wed Dec 24 20:06:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
-	* orbsvcs/orbsvcs/FT_ClientORB.dsp:
-	* orbsvcs/orbsvcs/FT_ServerORB.dsp:
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/orbsvcs/FT_ClientORB.dsp:
+        * orbsvcs/orbsvcs/FT_ServerORB.dsp:
 
-	  All of them needed Messaging libraries in both debug and release
-	  builds.
+          All of them needed Messaging libraries in both debug and release
+          builds.
 
 Wed Dec 24 19:41:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
 
-	  Needed extra libraries to link fine on static builds.
+          Needed extra libraries to link fine on static builds.
 
 Wed Dec 24 14:29:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/IOP_Codec.pidl:
-	* tao/IOP_CodecA.cpp:
-	* tao/IOP_CodecA.h:
-	* tao/IOP_CodecC.cpp:
-	* tao/IOP_CodecC.h:
-	* tao/diffs/IOP_Codec.diff:
+        * tao/IOP_Codec.pidl:
+        * tao/IOP_CodecA.cpp:
+        * tao/IOP_CodecA.h:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/diffs/IOP_Codec.diff:
 
-	  Reverting the change "Wed Dec 24 14:15:24 2003  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>", since it had the reverse
-	  effect. The executable started linking in *A.* files since the
-	  typecodes for exceptions were placed in these files.
+          Reverting the change "Wed Dec 24 14:15:24 2003  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>", since it had the reverse
+          effect. The executable started linking in *A.* files since the
+          typecodes for exceptions were placed in these files.
 
 Wed Dec 24 14:15:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_Codec.pidl:
-	* tao/IOP_CodecA.cpp:
-	* tao/IOP_CodecA.h:
-	* tao/IOP_CodecC.cpp:
-	* tao/IOP_CodecC.h:
-	* tao/diffs/IOP_Codec.diff:
+        * tao/IOP_Codec.pidl:
+        * tao/IOP_CodecA.cpp:
+        * tao/IOP_CodecA.h:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/diffs/IOP_Codec.diff:
 
-	  Updates for the above file, which primarily consists of moving
-	  the typecodes from *C.* files to *A.* files.
+          Updates for the above file, which primarily consists of moving
+          the typecodes from *C.* files to *A.* files.
 
 Wed Dec 24 13:33:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 
-	* tao/IIOP_EndpointsA.cpp:
-	* tao/IIOP_EndpointsA.h:
-	* tao/IIOP_EndpointsC.cpp:
-	* tao/IIOP_EndpointsC.h:
-	* tao/IOP_IORA.cpp:
-	* tao/IOP_IORA.h:
-	* tao/IOP_IORC.cpp:
-	* tao/IOP_IORC.h:
+        * tao/IIOP_EndpointsA.cpp:
+        * tao/IIOP_EndpointsA.h:
+        * tao/IIOP_EndpointsC.cpp:
+        * tao/IIOP_EndpointsC.h:
+        * tao/IOP_IORA.cpp:
+        * tao/IOP_IORA.h:
+        * tao/IOP_IORC.cpp:
+        * tao/IOP_IORC.h:
 
-	  More painful code hacking. Maintenance is harder, but we don't
-	  have a choice right away. Moved all the typecodes from *C.* to
-	  *A.* files.
+          More painful code hacking. Maintenance is harder, but we don't
+          have a choice right away. Moved all the typecodes from *C.* to
+          *A.* files.
 
-	* tao/IIOP_Endpoints.pidl:
-	* tao/IOP_IOR.pidl:
-	* tao/Policy.pidl:
+        * tao/IIOP_Endpoints.pidl:
+        * tao/IOP_IOR.pidl:
+        * tao/Policy.pidl:
 
-	  Updated documentation.
+          Updated documentation.
 
-	* tao/diffs/IIOP_Endpoints.diff:
-	* tao/diffs/IOP_IOR.diff:
+        * tao/diffs/IIOP_Endpoints.diff:
+        * tao/diffs/IOP_IOR.diff:
 
-	  Updated diff files.
+          Updated diff files.
 
 Wed Dec 24 12:54:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/CONV_FRAME.pidl:
-	* tao/IIOP.pidl:
-	* tao/Current.pidl:
+        * tao/CONV_FRAME.pidl:
+        * tao/IIOP.pidl:
+        * tao/Current.pidl:
 
-	  Improved  documentation
+          Improved  documentation
 
-	* tao/CONV_FRAMEA.cpp:
-	* tao/CONV_FRAMEA.h:
-	* tao/CONV_FRAMEC.cpp:
-	* tao/CONV_FRAMEC.h:
-	* tao/CurrentA.cpp:
-	* tao/CurrentA.h:
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/IIOPA.cpp:
-	* tao/IIOPA.h:
-	* tao/IIOPC.cpp:
-	* tao/IIOPC.h:
+        * tao/CONV_FRAMEA.cpp:
+        * tao/CONV_FRAMEA.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CurrentA.cpp:
+        * tao/CurrentA.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/IIOPA.cpp:
+        * tao/IIOPA.h:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
 
-	  Painful code movements. Moved all the typecode declarations
-	  from *C.* files to *A.* files. This is maintenance hard, but no
-	  gains without pains. Sorry we have to do this to get the
-	  footprint reductions.
+          Painful code movements. Moved all the typecode declarations
+          from *C.* files to *A.* files. This is maintenance hard, but no
+          gains without pains. Sorry we have to do this to get the
+          footprint reductions.
 
-	* tao/diffs/Current.diff:
-	* tao/diffs/CONV_FRAME.diff:
-	* tao/diffs/IIOP.diff:
+        * tao/diffs/Current.diff:
+        * tao/diffs/CONV_FRAME.diff:
+        * tao/diffs/IIOP.diff:
 
-	  Regenerated diffs with the above changes.
+          Regenerated diffs with the above changes.
 
 Wed Dec 24 11:58:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Buffered_AMI/client.cpp:
-	* examples/Buffered_Oneways/client.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* tests/AMI_Buffering/client.cpp:
-	* tests/Oneway_Buffering/client.cpp:
-	* tests/Policies/Manipulation.cpp:
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_Oneways/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * tests/AMI_Buffering/client.cpp:
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Policies/Manipulation.cpp:
 
           All of the above needed a #include of TAOA.h.
 
@@ -505,22 +518,22 @@ Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Dec 24 08:29:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Valuetype/AbstractBase_T.cpp:
+        * tao/Valuetype/AbstractBase_T.cpp:
 
-	  Fixed a compilation errors in builds where exceptions are turned
-	  off.
+          Fixed a compilation errors in builds where exceptions are turned
+          off.
 
 Wed Dec 24 08:24:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptor.pidl:
 
-	  Added an extra include IOP_IOR.pidl
+          Added an extra include IOP_IOR.pidl
 
-	* tests/Timed_Buffered_Oneways/client.pp:
+        * tests/Timed_Buffered_Oneways/client.pp:
 
-	  #included tao/TAOA.h.
+          #included tao/TAOA.h.
 
-	  They should fix compile errors in a number of g++ builds.
+          They should fix compile errors in a number of g++ builds.
 
 Wed Dec 24 13:44:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -549,25 +562,25 @@ Wed Dec 24 13:28:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 24 12:41:05 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
-	  Fixed incorrect filename
+        * docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+          Fixed incorrect filename
 
-	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
-	  Build after and link with the Quoter_Idl_Lib
+        * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+          Build after and link with the Quoter_Idl_Lib
 
 Wed Dec 24 11:52:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.bor:
-	  Added missing libraries
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.bor:
+          Added missing libraries
 
 Wed Dec 24 11:42:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FaultTolerance.bor:
-	* orbsvcs/orbsvcs/FT_ClientORB.bor:
-	* orbsvcs/orbsvcs/FT_ServerORB.bor:
-	* orbsvcs/orbsvcs/FTORB_Utils.bor:
-	  Added missing libraries
+        * orbsvcs/orbsvcs/FaultTolerance.bor:
+        * orbsvcs/orbsvcs/FT_ClientORB.bor:
+        * orbsvcs/orbsvcs/FT_ServerORB.bor:
+        * orbsvcs/orbsvcs/FTORB_Utils.bor:
+          Added missing libraries
 
 Wed Dec 24 11:18:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -588,234 +601,234 @@ Wed Dec 24 08:55:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 23 22:39:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.h:
 
-	  Fixed some more warnings.
+          Fixed some more warnings.
 
-	* tao/TimeBaseC.h:
+        * tao/TimeBaseC.h:
 
-	  Added the Any operator descaration so that the generated code in
-	  $TAO_ROOT/orbsvcs/orbsvcs can use this declaration.
+          Added the Any operator descaration so that the generated code in
+          $TAO_ROOT/orbsvcs/orbsvcs can use this declaration.
 
 Tue Dec 23 22:31:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableInterce
+        * tao/PortableInterce
 
 Tue Dec 23 22:02:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.h:
 
-	  Fixed unused variable warnings.
+          Fixed unused variable warnings.
 
 Tue Dec 23 21:35:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/diffs/PortableInterceptor.diff;
-	* tao/diffs/Policy.diff:
+        * tao/diffs/PortableInterceptor.diff;
+        * tao/diffs/Policy.diff:
 
-	  Updated diffs.
+          Updated diffs.
 
 Tue Dec 23 21:24:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_Codec.pidl:
-	* tao/IOP_CodecA.cpp:
-	* tao/IOP_CodecA.h:
-	* tao/IOP_CodecC.cpp:
-	* tao/IOP_CodecC.h:
-	* tao/IOP_CodecC.i:
-	* tao/PolicyA.cpp:
-	* tao/PolicyA.h:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/PolicyC.i:
-	* tao/Pollable.pidl:
-	* tao/PollableC.cpp:
-	* tao/PollableC.h:
-	* tao/PollableC.i:
-	* tao/PortableInterceptor.pidl:
-	* tao/PortableInterceptorA.cpp:
-	* tao/PortableInterceptorA.h:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.h:
-	* tao/PortableInterceptorC.i:
+        * tao/IOP_Codec.pidl:
+        * tao/IOP_CodecA.cpp:
+        * tao/IOP_CodecA.h:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/IOP_CodecC.i:
+        * tao/PolicyA.cpp:
+        * tao/PolicyA.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/Pollable.pidl:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorA.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
 
-	  Regenerated these files. By this we have completed almost all
-	  the files that *need* regeneration in $TAO_ROOT/tao. We go to
-	  the next from here.
+          Regenerated these files. By this we have completed almost all
+          the files that *need* regeneration in $TAO_ROOT/tao. We go to
+          the next from here.
 
-	* tao/TimeBase.pidl:
-	* tao/TimeBaseC.cpp:
-	* tao/TimeBaseC.h:
-	* tao/TimeBaseC.i:
+        * tao/TimeBase.pidl:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
 
-	  Regenerated the files with the documentation.
+          Regenerated the files with the documentation.
 
-	* tao/TimeBaseA.cpp:
-	* tao/TimeBaseA.h:
+        * tao/TimeBaseA.cpp:
+        * tao/TimeBaseA.h:
 
-	  New files added with Any operators in it.
+          New files added with Any operators in it.
 
-	* tao/tao.mpc:
-	* tao/Makefile.bor:
-	* tao/Makefile.tao:
-	* tao/TAO.dsp:
+        * tao/tao.mpc:
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+        * tao/TAO.dsp:
 
-	  Added the new files into the various projects.
+          Added the new files into the various projects.
 
 Tue Dec 23 20:44:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	  New files from the last change.
+          New files from the last change.
 
 Tue Dec 23 20:35:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Buffering_Constraint_Policy.cpp:
+        * tao/Buffering_Constraint_Policy.cpp:
 
-	  Added a new header.
+          Added a new header.
 
-	* tao/Messaging_PolicyValue.pidl:
-	* tao/Messaging_PolicyValueA.cpp:
-	* tao/Messaging_PolicyValueA.h:
-	* tao/Messaging_PolicyValueC.cpp:
-	* tao/Messaging_PolicyValueC.h:
-	* tao/Messaging_PolicyValueC.i:
-	* tao/TAOA.cpp:
-	* tao/TAOA.h:
-	* tao/TAOC.cpp:
-	* tao/TAOC.h:
-	* tao/TAOC.i:
-	* tao/WrongTransaction.pidl:
-	* tao/WrongTransactionA.cpp:
-	* tao/WrongTransactionA.h:
-	* tao/WrongTransactionC.cpp:
-	* tao/WrongTransactionC.h:
-	* tao/WrongTransactionC.i:
+        * tao/Messaging_PolicyValue.pidl:
+        * tao/Messaging_PolicyValueA.cpp:
+        * tao/Messaging_PolicyValueA.h:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Messaging_PolicyValueC.i:
+        * tao/TAOA.cpp:
+        * tao/TAOA.h:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+        * tao/WrongTransaction.pidl:
+        * tao/WrongTransactionA.cpp:
+        * tao/WrongTransactionA.h:
+        * tao/WrongTransactionC.cpp:
+        * tao/WrongTransactionC.h:
+        * tao/WrongTransactionC.i:
 
-	  Regenerated all these files and added TAOA* and
-	  WrongTransactionA*.
+          Regenerated all these files and added TAOA* and
+          WrongTransactionA*.
 
-	* tao/Makefile.tao:
-	* tao/Makefile.bor:
-	* tao/tao.mpc: Added new files.
+        * tao/Makefile.tao:
+        * tao/Makefile.bor:
+        * tao/tao.mpc: Added new files.
 
 
 Tue Dec 23 20:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Bounds.pidl:
-	* tao/CONV_FRAME.pidl:
-	* tao/Current.pidl:
-	* tao/Domain.pidl:
-	* tao/Dynamic_Parameter.pidl:
+        * tao/Bounds.pidl:
+        * tao/CONV_FRAME.pidl:
+        * tao/Current.pidl:
+        * tao/Domain.pidl:
+        * tao/Dynamic_Parameter.pidl:
 
-	  Updated the documentaion.
+          Updated the documentaion.
 
-	* tao/DomainC.cpp:
+        * tao/DomainC.cpp:
 
-	  Regenerated the file again.
+          Regenerated the file again.
 
 Tue Dec 23 19:56:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	  Updated the dsp files with the new *A.* files.
+          Updated the dsp files with the new *A.* files.
 
 Tue Dec 23 19:35:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Makefile.bor:
+        * tao/Makefile.bor:
 
-	  Updated with new files.
+          Updated with new files.
 
 Tue Dec 23 19:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/BoundsA.cpp:
-	* tao/BoundsA.h:
-	* tao/CONV_FRAMEA.cpp:
-	* tao/CONV_FRAMEA.h:
-	* tao/CurrentA.cpp:
-	* tao/CurrentA.h:
-	* tao/DomainA.cpp:
-	* tao/DomainA.h:
-	* tao/Dynamic_ParameterA.cpp:
-	* tao/Dynamic_ParameterA.h:
-	* tao/GIOPA.cpp:
-	* tao/GIOPA.h:
-	* tao/IIOPA.h:
-	* tao/IIOPA.cpp:
-	* tao/IIOP_EndpointsA.cpp:
-	* tao/IIOP_EndpointsA.h:
+        * tao/BoundsA.cpp:
+        * tao/BoundsA.h:
+        * tao/CONV_FRAMEA.cpp:
+        * tao/CONV_FRAMEA.h:
+        * tao/CurrentA.cpp:
+        * tao/CurrentA.h:
+        * tao/DomainA.cpp:
+        * tao/DomainA.h:
+        * tao/Dynamic_ParameterA.cpp:
+        * tao/Dynamic_ParameterA.h:
+        * tao/GIOPA.cpp:
+        * tao/GIOPA.h:
+        * tao/IIOPA.h:
+        * tao/IIOPA.cpp:
+        * tao/IIOP_EndpointsA.cpp:
+        * tao/IIOP_EndpointsA.h:
 
-	  Added the generated Any files into the repository. These were
-	  not in the repository before. This was due to a bug in the IDL
-	  compiler which was fixed in "Thu Nov 20 20:12:37 2003  Jeff
-	  Parsons <j.parsons@vanderbilt.edu>". We never updated the
-	  repository after this change.
+          Added the generated Any files into the repository. These were
+          not in the repository before. This was due to a bug in the IDL
+          compiler which was fixed in "Thu Nov 20 20:12:37 2003  Jeff
+          Parsons <j.parsons@vanderbilt.edu>". We never updated the
+          repository after this change.
 
-	* tao/DynamicA.cpp:
-	* tao/DynamicA.h:
+        * tao/DynamicA.cpp:
+        * tao/DynamicA.h:
 
-	* tao/tao.mpc:
-	* tao/Makefile.tao:
+        * tao/tao.mpc:
+        * tao/Makefile.tao:
 
-	  Updated the files with the new files that were missing in the
-	  first place.
+          Updated the files with the new files that were missing in the
+          first place.
 
 Tue Dec 23 19:04:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/BoundsC.cpp:
-	* tao/BoundsC.h:
-	* tao/BoundsC.i:
-	* tao/CONV_FRAMEC.cpp:
-	* tao/CONV_FRAMEC.h:
-	* tao/CONV_FRAMEC.i:
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/CurrentC.i:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainC.i:
-	* tao/DynamicC.cpp:
-	* tao/DynamicC.h:
-	* tao/DynamicC.i:
-	* tao/Dynamic_ParameterC.cpp:
-	* tao/Dynamic_ParameterC.h:
-	* tao/GIOPC.cpp:
-	* tao/GIOPC.h:
-	* tao/GIOPC.i:
-	* tao/IIOPC.cpp:
-	* tao/IIOPC.h:
-	* tao/IIOPC.i:
-	* tao/IIOP_EndpointsC.cpp:
-	* tao/IIOP_EndpointsC.h:
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/BoundsC.i:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMEC.i:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/DynamicC.i:
+        * tao/Dynamic_ParameterC.cpp:
+        * tao/Dynamic_ParameterC.h:
+        * tao/GIOPC.cpp:
+        * tao/GIOPC.h:
+        * tao/GIOPC.i:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOPC.i:
+        * tao/IIOP_EndpointsC.cpp:
+        * tao/IIOP_EndpointsC.h:
 
-	  First set of regenerated code. They had to be regenerated since
-	  the interfaces needed to have a _unchecked_narrow ().
+          First set of regenerated code. They had to be regenerated since
+          the interfaces needed to have a _unchecked_narrow ().
 
 Dec 23 18:17:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Object_T.cpp:
+        * tao/Object_T.cpp:
 
-	  Fixed a compilation error in builds where exceptions have been
-	  turned off.
+          Fixed a compilation error in builds where exceptions have been
+          turned off.
 
 Tue Dec 23 17:47:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
-	* TAO_IDL/be_include/be_visitor_interface/interface_ch.h:
-	* TAO_IDL/be_include/be_visitor_interface/interface_cs.h:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_cs.h:
 
-	  Added code generation for _unchecked_narrow (). Thanks to Jon
-	  Biggar and Milan Cvetkovic for motivating this.
+          Added code generation for _unchecked_narrow (). Thanks to Jon
+          Biggar and Milan Cvetkovic for motivating this.
 
-	* tao/Object_T.cpp:
-	* tao/Object_T.h:
-	* tao/Valuetype/AbstractBase_T.cpp:
-	* tao/Valuetype/AbstractBase_T.h:
+        * tao/Object_T.cpp:
+        * tao/Object_T.h:
+        * tao/Valuetype/AbstractBase_T.cpp:
+        * tao/Valuetype/AbstractBase_T.h:
 
-	  Provided interfaces that can be called by the generated
-	  code. The implementation of _unchecked_narrow () for interfaces
-	  and abstract interfaces stay within the ORB.
+          Provided interfaces that can be called by the generated
+          code. The implementation of _unchecked_narrow () for interfaces
+          and abstract interfaces stay within the ORB.
 
 Tue Dec 23 21:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -829,13 +842,13 @@ Tue Dec 23 21:01:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Dec 23 14:51:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
 
-	  Fixed compile errors and that were showing up in my workspace with
-	  g++.
+          Fixed compile errors and that were showing up in my workspace with
+          g++.
 
 Tue Dec 23 20:14:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -845,71 +858,71 @@ Tue Dec 23 20:14:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Dec 23 11:52:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
 
-	  Changes to get the generated code to compile if gperf is not
-	  available. There have been questiosn from users in the past
-	  whether they can avoid using gperf genereated code. To prevent
-	  suprises for those users we have to get the generated code
-	  compiling for every strategy that we support or remove those
-	  strategies which we can't maintain ;).
+          Changes to get the generated code to compile if gperf is not
+          available. There have been questiosn from users in the past
+          whether they can avoid using gperf genereated code. To prevent
+          suprises for those users we have to get the generated code
+          compiling for every strategy that we support or remove those
+          strategies which we can't maintain ;).
 
 Tue Dec 23 11:04:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableInterceptorC.h:
-	* tao/PortableServer/Object_Adapter.cpp:
-	* tao/PortableServer/ServerInterceptorAdapter.cpp:
-	* tao/PortableServer/ServerInterceptorAdapter.h:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/ServerInterceptorAdapter.cpp:
+        * tao/PortableServer/ServerInterceptorAdapter.h:
 
-	  Added an #define TAO_HAS_EXTENDED_FT_INTERCEPTORS, to protect
-	  the extended interceptor call. The extended call is only for our
-	  FT capabilities and is proprietary. A compliant implementation
-	  of an application level PortableInterceptor will start running
-	  into trouble without this #define. This change is to protect
-	  compliant implementations of application intereceptors from
-	  having any surprises.
+          Added an #define TAO_HAS_EXTENDED_FT_INTERCEPTORS, to protect
+          the extended interceptor call. The extended call is only for our
+          FT capabilities and is proprietary. A compliant implementation
+          of an application level PortableInterceptor will start running
+          into trouble without this #define. This change is to protect
+          compliant implementations of application intereceptors from
+          having any surprises.
 
 Tue Dec 23 09:48:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/IDL_Test/Makefile:
-	* tests/IDL_Test/keywords.idl:
+        * tests/IDL_Test/Makefile:
+        * tests/IDL_Test/keywords.idl:
 
-	  Added a test case for the bug report from Cyrille. The fix went
-	  in this change "Tue Dec 23 09:47:27 2003  Jeff Parsons
-	  <j.parsons@vanderbilt.edu>". The IDL file has the exact
-	  construction that Cyrille reported. We now by default generate
-	  AMI code if ami==1 in the IDL_Test. Therefore we link in the
-	  Messaging library too.
+          Added a test case for the bug report from Cyrille. The fix went
+          in this change "Tue Dec 23 09:47:27 2003  Jeff Parsons
+          <j.parsons@vanderbilt.edu>". The IDL file has the exact
+          construction that Cyrille reported. We now by default generate
+          AMI code if ami==1 in the IDL_Test. Therefore we link in the
+          Messaging library too.
 
 Tue Dec 23 09:47:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-	* TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
 
-	  Fixed incorrect dropping of _cxx_ prefix in parameter name (if
-	  it clashes with a C++ keyword) of AMI sendc_* operation. Thanks
-	  to  Cyrille Chépélov <cyrille@softek.fr> for reporting the bug.
+          Fixed incorrect dropping of _cxx_ prefix in parameter name (if
+          it clashes with a C++ keyword) of AMI sendc_* operation. Thanks
+          to  Cyrille Chépélov <cyrille@softek.fr> for reporting the bug.
 
 Tue Dec 23 12:53:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
-	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
-	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+        * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+        * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
 
-	  Because these tutorials using orbsvcs, base the projects on
+          Because these tutorials using orbsvcs, base the projects on
           orbsvcsexe instead of taoexe because with taoexe we lack the
-	  $(TAO_ROOT)/orbsvcs include path
+          $(TAO_ROOT)/orbsvcs include path
 
 Tue Dec 23 12:42:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
-	  Removed not existing cpp file in the client part of this MPC file.
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+          Removed not existing cpp file in the client part of this MPC file.
 
 Tue Dec 23 11:29:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* Makefile.bor:
-	  When everything is build, also build Kokyu
+        * Makefile.bor:
+          When everything is build, also build Kokyu
 
 Tue Dec 23 10:22:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

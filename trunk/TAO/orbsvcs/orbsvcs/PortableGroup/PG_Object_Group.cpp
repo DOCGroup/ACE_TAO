@@ -356,25 +356,24 @@ PortableGroup::ObjectGroupId TAO::PG_Object_Group::get_object_group_id () const
 
 void TAO::PG_Object_Group::set_properties_dynamically (
     const PortableGroup::Properties & overrides
-    ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
   InternalGuard guard (this->internals_);
 
-  this->properties_.decode (overrides);
+  this->properties_.decode (overrides ACE_ENV_ARG_PARAMETER);
 
   //@@ int todo_override_rather_than_replace?
 }
 
-void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result
-                                           ACE_ENV_ARG_DECL) const
+void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result) const
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // const cast to simulate mutable
   InternalGuard guard (ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
-  this->properties_.export_properties(*result ACE_ENV_ARG_PARAMETER);
+  this->properties_.export_properties(*result);
 }
 
 
@@ -413,7 +412,7 @@ int TAO::PG_Object_Group::increment_version ()
 
 //////////////////
 // Internal method
-void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_ARG_DECL)
+void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
 {
   // assume internals is locked
   CORBA::String_var iogr = this->orb_->object_to_string (this->reference_.in() ACE_ENV_ARG_PARAMETER);
@@ -748,7 +747,7 @@ void TAO::PG_Object_Group::initial_populate (ACE_ENV_SINGLE_ARG_DECL)
     PortableGroup::InitialNumberMembersValue initial_number_members = this->get_initial_number_members ();
     if (members_.current_size () < initial_number_members)
     {
-      this->create_members (initial_number_members);
+      this->create_members (initial_number_members ACE_ENV_ARG_PARAMETER);
     }
   }
 }
@@ -761,7 +760,7 @@ void TAO::PG_Object_Group::minimum_populate (ACE_ENV_SINGLE_ARG_DECL)
     PortableGroup::MinimumNumberMembersValue minimum_number_members = this->get_minimum_number_members ();
     if (members_.current_size () < minimum_number_members)
     {
-      this->create_members (minimum_number_members);
+      this->create_members (minimum_number_members ACE_ENV_ARG_PARAMETER);
     }
   }
 }

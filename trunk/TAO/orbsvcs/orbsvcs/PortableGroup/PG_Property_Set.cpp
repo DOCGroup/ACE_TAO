@@ -34,9 +34,7 @@ TAO::PG_Property_Set::PG_Property_Set (
   ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (0)
 {
-  this->decode (property_set
-                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->decode (property_set ACE_ENV_ARG_PARAMETER);
 }
 
 TAO::PG_Property_Set::PG_Property_Set (
@@ -75,7 +73,7 @@ void TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_se
     // @@ TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
 
-    this->set_property (ACE_static_cast (const char *, nc.id), property.val ACE_ENV_ARG_PARAMETER)
+    this->set_property (ACE_static_cast (const char *, nc.id), property.val ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
 #if 0
@@ -112,18 +110,10 @@ void TAO::PG_Property_Set::clear ()
 {
   InternalGuard guard(this->internals_);
   for (ValueMapIterator it = this->values_.begin ();
-        it != this->values_.end ();
-        ++it)
+       it != this->values_.end ();
+       ++it)
   {
-    ACE_TRY_NEW_ENV
-    {
-      delete (*it).int_id_;
-    }
-    ACE_CATCHANY
-    {
-      // ignore this (we might log it?)
-    }
-    ACE_ENDTRY;
+    delete (*it).int_id_;
   }
   this->values_.unbind_all ();
 }
