@@ -25,6 +25,7 @@
 #include "Types.h"
 #include "QoSProperties.h"
 #include "AdminProperties.h"
+#include "Refcountable.h"
 
 class TAO_NS_POA_Helper;
 class TAO_NS_Worker_Task;
@@ -45,7 +46,7 @@ typedef CORBA::Long TAO_NS_Object_Id;
  * @brief Base Object for RT_Notify's CORBA Objects.
  *
  */
-class TAO_Notify_Export TAO_NS_Object
+class TAO_Notify_Export TAO_NS_Object : public TAO_NS_Refcountable
 {
   friend class TAO_NS_Builder;
 
@@ -67,9 +68,6 @@ public:
 
   /// Deactivate
   void deactivate (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Have we been shutdown. returns 1 if shutdown.
-  int has_shutdown (void);
 
   /// Get CORBA Ref.
   CORBA::Object_ptr ref (ACE_ENV_SINGLE_ARG_DECL);
@@ -96,7 +94,10 @@ public:
   CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL);
 
   /// shutdown
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Have we been shutdown. returns 1 if shutdown.
+  int has_shutdown (void);
 
   /// Set the QoS Properties.
   virtual void set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL);

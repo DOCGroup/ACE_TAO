@@ -51,7 +51,7 @@ public:
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Shutdown  (TAO_NS_Container_T method)
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Start event propagation.
   virtual void push (TAO_NS_Event_var &event);

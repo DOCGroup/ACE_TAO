@@ -11,3 +11,15 @@ TAO_NS_Event_Map_Entry_T<PROXY>::count (void)
 {
   return this->count_;
 }
+
+template <class PROXY> ACE_INLINE CORBA::ULong
+TAO_NS_Event_Map_Entry_T<PROXY>::_incr_refcnt (void)
+{
+  return ++this->usage_count_;
+}
+
+template <class PROXY> ACE_INLINE CORBA::ULong
+TAO_NS_Event_Map_Entry_T<PROXY>::_decr_refcnt (void)
+{
+  return --this->usage_count_;
+}

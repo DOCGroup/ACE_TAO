@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Object.h"
-#include "Refcountable.h"
 
 /**
  * @class TAO_NS_Object_T
@@ -29,7 +28,7 @@
  *
  */
 template <class TYPE, class PARENT>
-class TAO_NS_Object_T : public virtual TAO_NS_Object, public TAO_NS_Refcountable
+class TAO_NS_Object_T : public virtual TAO_NS_Object
 {
 public:
   /// Constuctor
@@ -38,17 +37,14 @@ public:
   /// Destructor
   virtual ~TAO_NS_Object_T ();
 
-  /// destroy <type>
-  void destroy (TYPE* type ACE_ENV_ARG_DECL);
+  /// destroy <type>. returns 1 if already run destroy.
+  int destroy (TYPE* type ACE_ENV_ARG_DECL);
 
 protected:
   /// = Data Members
 
   /// Parent
   PARENT* parent_;
-
-  /// Are we shutdown (i,e. scheduled for destroy).
-  int shutdown_;
 };
 
 #if defined (__ACE_INLINE__)

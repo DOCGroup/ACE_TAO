@@ -21,27 +21,22 @@ TAO_NS_Object_T<TYPE, PARENT>::TAO_NS_Object_T (void)
 template <class TYPE, class PARENT>
 TAO_NS_Object_T<TYPE, PARENT>::~TAO_NS_Object_T ()
 {
+  if (parent_)
+    this->parent_-> _decr_refcnt ();
 }
 
-template <class TYPE, class PARENT> void
+template <class TYPE, class PARENT> int
 TAO_NS_Object_T<TYPE, PARENT>::destroy (TYPE *type ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Refcountable_Guard ref_guard(*this); // Protect this object from being destroyed in the middle of its shutdown sequence.
+  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+    return 1;
 
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-
-    if (this->shutdown_ == 1)
-      return; // Another thread has already run shutdown.
-
-    this->shutdown_ = 1;
-  }
-
-  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
   if (parent_)
-    parent_->remove (type ACE_ENV_ARG_PARAMETER);
+    this->parent_->remove (type ACE_ENV_ARG_PARAMETER);
+
+  return 0;
 }
 
 #endif /* TAO_NS_OBJECT_T_CPP */

@@ -48,13 +48,24 @@ TAO_NS_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
   poa_->deactivate (id_ ACE_ENV_ARG_PARAMETER);
 }
 
-void
+int
 TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
+
+    if (this->shutdown_ == 1)
+      return 1; // Another thread has already run shutdown.
+
+    this->shutdown_ = 1;
+  }
+
   this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   this->shutdown_worker_task ();
   this->shutdown_proxy_poa ();
+
+  return 0;
 }
 
 CORBA::Object_ptr
@@ -158,6 +169,9 @@ TAO_NS_Object::apply_reactive_concurrency (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
+  worker_task->init (this->admin_properties_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   this->worker_task_own (worker_task);
 }
 
@@ -172,6 +186,7 @@ TAO_NS_Object::apply_thread_pool_concurrency (const NotifyExt::ThreadPoolParams&
   ACE_CHECK;
 
   worker_task->init (tp_params, this->admin_properties_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->worker_task_own (worker_task);
 }
