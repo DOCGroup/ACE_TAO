@@ -128,8 +128,10 @@ run Priority_Buffer_Test                # tests ACE_Service_Config, ACE_Message_
 run Dynamic_Priority_Test               # tests ACE_ACE_Message_Queue, ACE_Dynamic_Message_Queue
 run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursive_Thread_Mutex
 
-test $chorus || test $LynxOS || run Time_Service_Test # tests libnetsvcs
-test $chorus || test $LynxOS || run Tokens_Test       # tests ACE_Token
+if [ -f ../netsvcs/server/main ]; then
+  test $chorus || test $LynxOS || run Time_Service_Test # tests libnetsvcs
+fi
+test $chorus || test $LynxOS || run Tokens_Test # tests ACE_Token
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Message_Queue_Notifications_Test    # tests ACE_Message_Queue + ACE_Reactor
