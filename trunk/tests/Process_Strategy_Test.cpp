@@ -46,7 +46,8 @@
 #include "ace/Singleton.h"
 #include "Process_Strategy_Test.h"	// Counting_Service and Options in here
 
-u_int shutting_down = 0;
+// Use this to show down the process gracefully.
+static u_int shutting_down = 0;
 
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
@@ -54,7 +55,7 @@ u_int shutting_down = 0;
 typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR>
 	ACCEPTOR;
 
-// Create an options Singleton.
+// Create an Options Singleton.
 typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 
 ACE_File_Lock &
@@ -77,13 +78,14 @@ Options::filename (void)
 
 Options::Options (void)
   :
+  // Choose to use processes by default.  
 #if !defined (ACE_LACKS_FORK)
     concurrency_type_ (PROCESS)
 #elif defined (ACE_HAS_THREADS)
     concurrency_type_ (THREAD)
 #else
     concurrency_type_ (REACTIVE)
-#endif /* !ACE_LACKS_EXEC */
+#endif /* !ACE_LACKS_FORK */
 {
 }
 
@@ -106,10 +108,10 @@ Options::parse_args (int argc, char *argv[])
       case 'c':
 	if (ACE_OS::strcmp (get_opt.optarg, "REACTIVE") == 0)
 	  OPTIONS::instance ()->concurrency_type (Options::REACTIVE);
-#if !defined (ACE_LACKS_EXEC)
+#if !defined (ACE_LACKS_FORK)
 	else if (ACE_OS::strcmp (get_opt.optarg, "PROCESS") == 0)
 	  OPTIONS::instance ()->concurrency_type (Options::PROCESS);
-#endif /* !ACE_LACKS_EXEC */
+#endif /* !ACE_LACKS_FORK */
 #if defined (ACE_HAS_THREADS)
 	else if (ACE_OS::strcmp (get_opt.optarg, "THREAD") == 0)
 	  OPTIONS::instance ()->concurrency_type (Options::THREAD);
@@ -124,13 +126,12 @@ Options::parse_args (int argc, char *argv[])
 	/* NOTREACHED */
       }
 
-  // Initialize the file lock.
+  // Initialize the file lock.  Note that this object lives beyond the
+  // lifetime of the Acceptor.
   if (this->file_lock_.open (ACE_WIDE_STRING (this->filename_),
 			     O_RDWR | O_CREAT,
 			     ACE_DEFAULT_FILE_PERMS) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-
-  // Note that this object lives beyond the lifetime of the Acceptor.
 
   ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) opening %s on handle %d.\n",
@@ -148,7 +149,7 @@ Options::parse_args (int argc, char *argv[])
   switch (this->concurrency_type_)
     {
     case Options::PROCESS:
-#if !defined (ACE_LACKS_EXEC)
+#if !defined (ACE_LACKS_FORK)
       ACE_NEW_RETURN (this->concurrency_strategy_,
 		      ACE_Process_Strategy<Counting_Service>
 		      (1, this, ACE_Reactor::instance()),
@@ -156,7 +157,7 @@ Options::parse_args (int argc, char *argv[])
       break;
 #else
       ACE_ASSERT (!"PROCESS invalid on this platform");
-#endif /* !defined (ACE_LACKS_EXEC) */
+#endif /* !defined (ACE_LACKS_FORK) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
       ACE_NEW_RETURN (this->concurrency_strategy_,
@@ -179,10 +180,10 @@ Options::parse_args (int argc, char *argv[])
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
   // Register to handle <SIGCHLD> when a child exits.
-  if (ACE_Reactor::instance()->register_handler (SIGCHLD, this) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGCHLD, this) == -1)
     return -1;
 #endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
-  if (ACE_Reactor::instance()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
     return -1;
   return 0;
 }
@@ -204,18 +205,13 @@ Options::concurrency_type (Options::Concurrency_Type cs)
 int
 Options::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  if (! shutting_down)
-    // Don't risk using ACE_Log_Msg while it's being deleted.
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) signal %S\n", signum));
-
   switch (signum)
     {
     case SIGCHLD:
       pid_t pid;
 
       while ((pid = ACE_OS::waitpid (-1, 0, WNOHANG)) > 0)
-        if (! shutting_down)
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping child %d\n", pid));
+	continue;
       break;
 
     case SIGINT:

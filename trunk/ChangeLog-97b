@@ -1,3 +1,11 @@
+Mon Oct 13 23:07:15 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Process_Strategy_Test.cpp (handle_signal): Removed the
+ 	  ACE_DEBUG calls in the child reader signal handler.  This was
+ 	  causing all sorts of random problems due to the asynchronous
+ 	  nature of signals.  Thanks to David Levine for pointing this
+ 	  out.
+
 Mon Oct 13 16:27:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Priority_Reactor_Test.h: 

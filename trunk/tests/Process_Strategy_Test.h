@@ -6,26 +6,26 @@
 //    Process_Strategy_Test.h
 //
 // = DESCRIPTION
-//    This file contains the definition of Counting_Service and Options.
-//    Some compilers need it in a .h file for template instantiation
-//    (such as AIX C Set ++)
+//    This file contains the definition of Counting_Service and
+//    Options.  Some compilers need it in a .h file for template
+//    instantiation (such as AIX C Set ++).
 //
 // = AUTHOR
 //    Doug Schmidt and Kevin Boyle <kboyle@sanwafp.com>
 // 
 // ============================================================================
 
-#ifndef PROCESS_STRATEGY_TEST_H
+#if !defined (PROCESS_STRATEGY_TEST_H)
 #define PROCESS_STRATEGY_TEST_H
 
 #include "ace/Event_Handler.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
+
+// Forward decl.
 class ACE_Thread_Manager;
 
-typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
-
-class Counting_Service : public SVC_HANDLER
+class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
   // = TITLE
   //     Reads and increments the count in a shared file.
   //
@@ -61,8 +61,6 @@ protected:
   // Hook called by the <Reactor> when data arrives from the client.
 };
 
-
-
 class Options : public ACE_Event_Handler
   // = TITLE
   //     Maintains the options for this program.
@@ -75,12 +73,13 @@ public:
   // Destructor.
 
   int parse_args (int argc, char *argv[]);
+  // Read command-line arguments and initialize options.
 
   enum Concurrency_Type
   {
-    PROCESS,
-    REACTIVE,
-    THREAD
+    PROCESS,  // Run the test in separate processes.
+    REACTIVE, // Run the test reactively in one thread.
+    THREAD    // Run the test as in separate threads.
   };
 
   // = Get/set concurrency type.
@@ -91,7 +90,7 @@ public:
   // Returns the file lock.
 
   const char *filename (void);
-  // Returns the filename.
+  // Returns the filename that we're using as the lock.
 
   ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy (void);
   // Returns the concurrency strategy.
@@ -113,6 +112,5 @@ private:
   const char *filename_;
   // Name of the counting file.
 };
-
 
 #endif /* PROCESS_STRATEGY_TEST_H */
