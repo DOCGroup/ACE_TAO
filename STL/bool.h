@@ -5,7 +5,7 @@
 
 // Define bool out of the std namespace.
 #if (_MSC_VER > 1010)
-#include <yvals.h>
+#include /**/ <yvals.h>
 #else
 #if !defined (bool)
 #define bool int
