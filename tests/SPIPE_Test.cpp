@@ -140,7 +140,7 @@ main (int, char *[])
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS)
   spawn ();
 #else
-  ACE_ERROR ((LM_ERROR, 
+  ACE_DEBUG ((LM_DEBUG, 
 	      "SPIPE is not supported on this platform\n"));
 #endif /* defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS) */
   ACE_END_TEST;
