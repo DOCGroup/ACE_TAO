@@ -422,7 +422,7 @@ protected:
    * before any events occur, return 0. Return 1 if a completion
    * dispatched. Return -1 on errors.
    */
-  virtual int handle_events (u_long milli_seconds);
+  int handle_events_i (u_long milli_seconds);
 
   /// Start deferred AIO if necessary
   int start_deferred_aio (void);
@@ -440,7 +440,7 @@ protected:
   virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
 
   /// Initiate an aio operation.
-  int start_aio_i (ACE_POSIX_Asynch_Result *result);
+  virtual int start_aio_i (ACE_POSIX_Asynch_Result *result);
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
   /// called from post_completion method

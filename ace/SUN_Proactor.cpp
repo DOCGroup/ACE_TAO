@@ -38,13 +38,13 @@ ACE_SUN_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
   ACE_Countdown_Time countdown (&wait_time);
-  return this->handle_events (wait_time.msec ());
+  return this->handle_events_i (&wait_time);
 }
 
 int
 ACE_SUN_Proactor::handle_events (void)
 {
-  return this->handle_events (ACE_INFINITE);
+  return this->handle_events_i (0);
 }
 
 int ACE_SUN_Proactor::wait_for_start (ACE_Time_Value * abstime)
@@ -53,10 +53,10 @@ int ACE_SUN_Proactor::wait_for_start (ACE_Time_Value * abstime)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
-  if (num_started_aio_ != 0)  // double check
+  if (this->num_started_aio_ != 0)  // double check
     return 0;
 
-  return condition_.wait (abstime) ;
+  return this->condition_.wait (abstime);
 
 #else
 
@@ -66,33 +66,31 @@ int ACE_SUN_Proactor::wait_for_start (ACE_Time_Value * abstime)
 }
 
 int
-ACE_SUN_Proactor::handle_events (u_long milli_seconds)
+ACE_SUN_Proactor::handle_events_i (ACE_Time_Value *delta)
 {
   int retval = 0;
   aio_result_t *result = 0;
 
-  if (milli_seconds == ACE_INFINITE)
+  if (0 == delta)
     {
-      if (num_started_aio_ == 0)
-        wait_for_start (0);
+      if (this->num_started_aio_ == 0)
+        this->wait_for_start (0);
 
       result = aiowait (0);
     }
   else
     {
-      struct timeval timeout;
-      timeout.tv_sec = milli_seconds / 1000;
-      timeout.tv_usec = (milli_seconds - (timeout.tv_sec * 1000)) * 1000;
-
-      if (num_started_aio_ == 0)
+      if (this->num_started_aio_ == 0)
         {
-          ACE_Time_Value tv (timeout);
-
+          // Decrement delta with the amount of time spent waiting
+          ACE_Countdown_Time countdown (delta);
+          ACE_Time_Value tv (*delta);
           tv += ACE_OS::gettimeofday ();
-         
-          wait_for_start (&tv);
+          if (this->wait_for_start (&tv) == -1)
+            return -1;
         }
-      result = aiowait (&timeout);
+      struct timeval delta_tv = *delta;
+      result = aiowait (&delta_tv);
     }
 
   if (result == 0)
@@ -165,21 +163,8 @@ ACE_SUN_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
    if (error_status == EINPROGRESS || op_return == AIO_INPROGRESS)
      return 0;  // not completed
 
-   if (error_status == -1)   // should never be
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("%N:%l:(%P | %t)::%p\n"),
-                  ACE_LIB_TEXT ("ACE_SUN_Proactor::get_result_status:")
-                  ACE_LIB_TEXT ("<aio_errno> has failed\n")));
-
    if (op_return < 0)
-    {
-      transfer_count = 0; // zero bytes transferred
-      if (error_status == 0)  // nonsense
-        ACE_ERROR ((LM_ERROR,   
-                    "%N:%l:(%P | %t)::%p\n",
-                    "ACE_SUN_Proactor::get_result_status:"
-                    "<aio_return> failed\n"));
-    }
+     transfer_count = 0; // zero bytes transferred
    else
      transfer_count = ACE_static_cast (size_t, op_return);
 
@@ -233,15 +218,15 @@ ACE_SUN_Proactor::find_completed_aio (aio_result_t *result,
   return asynch_result;
 }
 
-// start_aio has new return codes  
+// start_aio_i has new return codes
 // 0  successful start
 // 1  try later, OS queue overflow
 // -1 invalid request and other errors
 
 int
-ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
+ACE_SUN_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
 {
-  ACE_TRACE ("ACE_SUN_Proactor::start_aio");
+  ACE_TRACE ("ACE_SUN_Proactor::start_aio_i");
 
   int ret_val;
   const ACE_TCHAR *ptype;
@@ -286,19 +271,19 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
 
   if (ret_val == 0)
     {
-      num_started_aio_++;
-      if (num_started_aio_ == 1)  // wake up condition
-        condition_.broadcast ();
+      this->num_started_aio_++;
+      if (this->num_started_aio_ == 1)  // wake up condition
+        this->condition_.broadcast ();
     }
   else // if (ret_val == -1)
     {
-      if (errno == EAGAIN)  //try later, it will be deferred AIO
-         ret_val = 1;
+      if (errno == EAGAIN || errno == ENOMEM) // Defer - retry this later.
+        ret_val = 1;
       else
-         ACE_ERROR ((LM_ERROR,
-                     ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio: aio%s %p\n"),
-                     ptype,
-                     ACE_LIB_TEXT ("queueing failed\n")));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio: aio%s %p\n"),
+                    ptype,
+                    ACE_LIB_TEXT ("queueing failed\n")));
     }
 
   return ret_val;
@@ -308,75 +293,21 @@ int
 ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
 {
   ACE_TRACE ("ACE_SUN_Proactor::cancel_aiocb");
-  int rc = ::aiocancel (& result->aio_resultp);
-  
+  int rc = ::aiocancel (&result->aio_resultp);
   if (rc == 0)    //  AIO_CANCELED
-     return 0;
+    {
+      // after aiocancel Sun does not notify us
+      // so we should send notification  
+      // to save POSIX behavoir.
+      // Also we should do this for deffered aio's
+
+      result->set_error (ECANCELED);
+      result->set_bytes_transferred (0);
+      this->putq_result (result);
+      return 0;
+    }
 
   return 2;
-}
-
-int
-ACE_SUN_Proactor::cancel_aio (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_SUN_Proactor::cancel_aio");
-
-  int    num_total     = 0;
-  int    num_cancelled = 0;
-
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
-          
-    size_t ai = 0;
-
-    for (ai = 0; ai < aiocb_list_max_size_; ai++)
-      {
-        if (result_list_[ai] == 0)    //skip empty slot
-          continue ;
-
-        if (result_list_[ai]->aio_fildes != handle)  //skip not our slot
-          continue ;
-
-        num_total++ ;  
-
-        ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
-
-        int rc_cancel = 0 ;   // let assume canceled 
-      
-        if (aiocb_list_ [ai] == 0)  //deferred aio
-          num_deferred_aiocb_--;
-        else      //cancel started aio
-          rc_cancel = this->cancel_aiocb (asynch_result);
-
-        if (rc_cancel == 0)
-          {  
-            num_cancelled ++ ;   
-
-            aiocb_list_[ai] = 0;
-            result_list_[ai] = 0;
-            aiocb_list_cur_size_--;
-
-            // after aiocancel Sun does not notify us
-            // so we should send notification  
-            // to save POSIX behavoir.
-            // Also we should do this for deffered aio's
-
-            asynch_result->set_error (ECANCELED);
-            asynch_result->set_bytes_transferred (0);
-            this->putq_result (asynch_result);
-          }
-      }
-
-  } // release mutex_ 
-
-
-  if (num_total == 0)
-    return 1;  // ALLDONE
-
-  if (num_cancelled == num_total)
-    return 0;  // CANCELLED
-
-  return 2; // NOT CANCELLED
 }
 
 #endif /* ACE_HAS_AIO_CALLS && sun */
