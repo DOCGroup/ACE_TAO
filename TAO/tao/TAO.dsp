@@ -898,25 +898,6 @@ SOURCE=.\FILE_Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FT_CORBAC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Accept_State.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2361,7 +2342,45 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Service_Callbacks.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Services.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Services_Activate.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3326,18 +3345,6 @@ SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FT_CORBAC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ftcorbafwd.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ftpoafwd.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -3626,7 +3633,15 @@ SOURCE=.\Server_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Service_Callbacks.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Services.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Services_Activate.h
 # End Source File
 # Begin Source File
 
@@ -3918,14 +3933,6 @@ SOURCE=.\FILE_Parser.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\FT_CORBAC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\FT_CORBAS.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\giop.i
 # End Source File
 # Begin Source File
@@ -4159,6 +4166,10 @@ SOURCE=.\Sequence_T.i
 # Begin Source File
 
 SOURCE=.\Server_Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Callbacks.i
 # End Source File
 # Begin Source File
 
