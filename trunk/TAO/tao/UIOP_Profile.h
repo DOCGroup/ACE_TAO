@@ -66,7 +66,7 @@ public:
 
   TAO_UIOP_Profile (const char *string,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV);
+                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Create object using a string ior.
 
   TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile);
@@ -82,10 +82,10 @@ public:
   // Destructor is to be called only through <_decr_refcnt>.
 
   int parse_string (const char *string,
-                    CORBA::Environment &ACE_TRY_ENV);
+                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Initialize this object using the given input string.
 
-  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
+  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Return a string representation for this profile.
   // client must deallocate memory.
 
@@ -94,7 +94,6 @@ public:
 
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
-  // FIXME:  NO MARSHALING for Unix Domain Sockets is needing
 
   const TAO_ObjectKey &object_key (void) const;
   // @@ deprecated, return a reference to the Object Key.
@@ -111,7 +110,7 @@ public:
   // and version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Return a hash value for this object.
 
   int addr_to_string (char *buffer, size_t length);
