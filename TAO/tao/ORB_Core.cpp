@@ -2407,15 +2407,19 @@ TAO_ORB_Core::resolve_rir (const char *name,
   if (ACE_OS::strlen (default_init_ref.in ()) != 0)
     {
       static const char corbaloc_prefix[] = "corbaloc:";
+      static const char mcast_prefix[] = "mcast:";
       char object_key_delimiter = 0;
 
       ACE_CString list_of_profiles (default_init_ref.in ());
 
-      // Check if the protocol is corbaloc:.
+      // Check if the protocol is corbaloc: or mcast:.
       // If it is, set the object_key_delimiter.
-      if (ACE_OS::strncmp (default_init_ref.in (),
-                           corbaloc_prefix,
-                           sizeof corbaloc_prefix -1) == 0)
+      if ((ACE_OS::strncmp (default_init_ref.in (),
+                            corbaloc_prefix,
+                            sizeof corbaloc_prefix -1) == 0) ||
+          (ACE_OS::strncmp (default_init_ref.in (),
+                            mcast_prefix,
+                            sizeof mcast_prefix -1) == 0))
         {
           object_key_delimiter = '/';
         }

@@ -54,7 +54,7 @@
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
 #   if !defined (_MSC_VER) && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-                                      (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0) 
+                                      (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
 using std::set_unexpected;
 #   endif /* !_MSC_VER */
 #  else
@@ -959,30 +959,6 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
     "InterfaceRepoServiceIOR"
   };
 
-  const char * env_service_port [] =
-  {
-    "NameServicePort",
-    "TradingServicePort",
-    "ImplRepoServicePort",
-    "InterfaceRepoServicePort"
-  };
-
- u_short default_service_port [] =
- {
-   TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
-   TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
-   TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT,
-   TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT
- };
-
- const char * service_objid [] =
- {
-   TAO_OBJID_NAMESERVICE,
-   TAO_OBJID_TRADINGSERVICE,
-   TAO_OBJID_IMPLREPOSERVICE,
-   TAO_OBJID_INTERFACEREP
- };
-
  CORBA_Object_var return_value = CORBA_Object::_nil ();
 
  // By now, the table filled in with -ORBInitRef arguments has been
@@ -992,269 +968,13 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
  // Check to see if the user has an environment variable.
  ACE_CString service_ior = ACE_OS::getenv (env_service_ior[mcast_service_id]);
 
- if (service_ior.length () != 0)
-   {
-     return_value =
-       this->string_to_object (service_ior.c_str (),
-                               ACE_TRY_ENV);
-     ACE_CHECK_RETURN (CORBA_Object::_nil ());
-   }
- else
-   {
-     // First, determine if the port was supplied on the command line
-     u_short port =
-       this->orb_core_->orb_params ()->service_port (mcast_service_id);
-
-     if (port == 0)
-       {
-         // Look for the port among our environment variables.
-         const char *port_number =
-           ACE_OS::getenv (env_service_port[mcast_service_id]);
-
-         if (port_number != 0)
-           port = (u_short) ACE_OS::atoi (port_number);
-         else
-           port = default_service_port[mcast_service_id];
-       }
-
-     return_value =
-       this->multicast_to_service (service_objid[mcast_service_id],
-                                   port,
-                                   timeout,
-                                   ACE_TRY_ENV);
-     ACE_CHECK_RETURN (CORBA_Object::_nil ());
-   }
-
+ return_value =
+   this->string_to_object (service_ior.c_str (),
+                           ACE_TRY_ENV);
+ ACE_CHECK_RETURN (CORBA_Object::_nil ());
+ 
  // Return ior.
  return return_value._retn ();
-}
-
-int
-CORBA_ORB::multicast_query (char *&buf,
-                            const char *service_name,
-                            u_short port,
-                            ACE_Time_Value *timeout)
-{
-  ACE_INET_Addr my_addr;
-  ACE_SOCK_Acceptor acceptor;
-  ACE_SOCK_Stream stream;
-  ACE_SOCK_Dgram dgram;
-
-  ssize_t result = 0;
-
-  // Bind listener to any port and then find out what the port was.
-  if (acceptor.open (ACE_Addr::sap_any) == -1
-      || acceptor.get_local_addr (my_addr) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("acceptor.open () || ")
-                  ACE_TEXT ("acceptor.get_local_addr () failed")));
-      result = -1;
-    }
-  else
-    {
-      ACE_INET_Addr multicast_addr (port,
-                                    ACE_DEFAULT_MULTICAST_ADDR);
-      // Set the address if multicast_discovery_endpoint option
-      // is specified for the Naming Service.
-      ACE_CString mde (this->orb_core_->orb_params ()
-                       ->mcast_discovery_endpoint ());
-
-      if (ACE_OS::strcasecmp (service_name,
-                              "NameService") == 0
-          && mde.length () != 0)
-        if (multicast_addr.set (mde.c_str()) == -1)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT("ORB.cpp: Multicast address setting failed\n")));
-            stream.close ();
-            dgram.close ();
-            acceptor.close ();
-            return -1;
-          }
-
-      // Open the datagram.
-      if (dgram.open (ACE_Addr::sap_any) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Unable to open the Datagram!\n")));
-          result = -1;
-        }
-      else
-        {
-          // Convert the acceptor port into network byte order.
-          ACE_UINT16 response_port =
-            (ACE_UINT16) ACE_HTONS (my_addr.get_port_number ());
-
-          // Length of service name we will send.
-          CORBA::Short data_len =
-            (CORBA::Short) ACE_HTONS (ACE_OS::strlen (service_name) + 1);
-
-          // Vector we will send.  It contains: 1) length of service
-          // name string, 2)port on which we are listening for
-          // replies, and 3) name of service we are looking for.
-          const int iovcnt = 3;
-          iovec iovp[iovcnt];
-
-          // The length of service name string.
-          iovp[0].iov_base = (char *) &data_len;
-          iovp[0].iov_len  = sizeof (CORBA::Short);
-
-          // The port at which we are listening.
-          iovp[1].iov_base = (char *) &response_port;
-          iovp[1].iov_len  = sizeof (ACE_UINT16);
-
-          // The service name string.
-          iovp[2].iov_base = (char *) service_name;
-          iovp[2].iov_len  = ACE_OS::strlen (service_name) + 1;
-
-          // Send the multicast.
-          result = dgram.send (iovp,
-                               iovcnt,
-                               multicast_addr);
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\nsent multicast request.")));
-
-          // Check for errors.
-          if (result == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("error sending IIOP multicast")));
-          else
-            {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("\n%s; Sent multicast.")
-                            ACE_TEXT ("# of bytes sent is %d.\n"),
-                            __FILE__,
-                            result));
-              // Wait for response until timeout.
-              ACE_Time_Value tv (
-                timeout == 0
-                ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-                : *timeout);
-
-              // Accept reply connection from server.
-              if (acceptor.accept (stream,
-                                   0,
-                                   &tv) == -1)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("%p\n"),
-                              ACE_TEXT ("multicast_query: unable to accept")));
-                  result = -1;
-                }
-              else
-                {
-                  // Receive the IOR.
-
-                  // IOR length.
-                  CORBA::Short ior_len;
-                  result = stream.recv_n (&ior_len,
-                                          sizeof ior_len,
-                                          0,
-                                          &tv);
-                  if (result != sizeof (ior_len))
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                                  ACE_TEXT ("%p\n"),
-                                  ACE_TEXT ("multicast_query: unable to receive ")
-                                  ACE_TEXT ("ior length")));
-                      result = -1;
-                    }
-                  else
-                    {
-                      // Allocate more space for the ior if we don't
-                      // have enough.
-                      ior_len = (CORBA::Short) ACE_NTOHS (ior_len);
-                      if (ior_len > TAO_DEFAULT_IOR_SIZE)
-                        {
-                          buf = CORBA::string_alloc (ior_len);
-                          if (buf == 0)
-                            {
-                              ACE_ERROR ((LM_ERROR,
-                                          ACE_TEXT ("%p\n"),
-                                          ACE_TEXT ("multicast_query: unable to ")
-                                          ACE_TEXT ("allocate memory")));
-                              result = -1;
-                            }
-                        }
-
-                      if (result != -1)
-                        {
-                          // Receive the ior.
-                          result = stream.recv_n (buf,
-                                                  ior_len,
-                                                  0,
-                                                  &tv);
-                          if (result == -1)
-                            ACE_ERROR ((LM_ERROR,
-                                        ACE_TEXT ( "%p\n"),
-                                        ACE_TEXT ("error reading ior")));
-                          else if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG,
-                                        ACE_TEXT ("%s: service resolved to IOR <%s>\n"),
-                                        __FILE__,
-                                        buf));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-  // Clean up.
-  stream.close ();
-  dgram.close ();
-  acceptor.close ();
-
-  return result == -1 ? -1 : 0;
-}
-// @@ This will have to be sanitized of transport specific calls
-//    in order to support pluggable protocols!  But, it does use
-//    UDP and multicast.  Not all transport protocols may support
-//    this, connectionless and multicast. fredk
- // @@ FRED: Should define a flag, something like Protocol_Has_Multicast
-//    If there is no multicast, then this functionality is not available
-//    and we return NULL.
-
-CORBA_Object_ptr
-CORBA_ORB::multicast_to_service (const char *service_name,
-                                 u_short port,
-                                 ACE_Time_Value *timeout,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  char buf[TAO_DEFAULT_IOR_SIZE];
-  char *ior = buf;
-  CORBA::String_var cleaner;
-
-  CORBA_Object_var return_value =
-    CORBA_Object::_nil ();
-
-  // Use UDP multicast to locate the  service.
-  int result = this->multicast_query (ior,
-                                      service_name,
-                                      port,
-                                      timeout);
-
-  // If the IOR didn't fit into <buf>, memory for it was dynamically
-  // allocated - make sure it gets deallocated.
-  if (ior != buf)
-    cleaner = ior;
-
-  if (result == 0)
-    {
-      // Convert IOR to an object reference.
-      return_value =
-        this->string_to_object (ior,
-                                ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Object::_nil ());
-    }
-
-  // Return object reference.
-  return return_value._retn ();
 }
 
 CORBA_Object_ptr
@@ -1544,6 +1264,7 @@ CORBA::ORB_init (int &argc,
                  const char *orbid,
                  CORBA_Environment &ACE_TRY_ENV)
 {
+  
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,

@@ -36,7 +36,8 @@ typedef enum
   TAO_SERVICEID_NAMESERVICE,
   TAO_SERVICEID_TRADINGSERVICE,
   TAO_SERVICEID_IMPLREPOSERVICE,
-  TAO_SERVICEID_INTERFACEREPOSERVICE
+  TAO_SERVICEID_INTERFACEREPOSERVICE,
+  TAO_SERVICEID_MCASTSERVER
 } TAO_Service_ID;
 
 /// Forward declarations.
@@ -551,20 +552,6 @@ private:
   CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id,
                                     ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV);
-
-  int multicast_query (char* &buf,
-                       const char *service_name,
-                       u_short port,
-                       ACE_Time_Value *timeout);
-
-  // returns and IOR string, the client is responsible for freeing
-  // memory!
-
-  /// Resolve the reference of a service of type <name>.
-  CORBA_Object_ptr multicast_to_service (const char *service_name,
-                                         u_short port,
-                                         ACE_Time_Value *timeout,
-                                         CORBA::Environment& ACE_TRY_ENV);
 
   /// Convert an OMG IOR into an object reference.
   CORBA::Object_ptr ior_string_to_object (const char* ior,

@@ -1,3 +1,53 @@
+Wed Sep  5 12:10:40 2001  Priyanka Gontla  <gontla_p@ociweb.com>
+
+	This set of changes are for bug 977.
+
+	* tao/MCAST_Parser.i:
+	* tao/MCAST_Parser.h:
+	* tao/MCAST_Parser.cpp:
+
+		The Parser for the new IP multicast format. The multicast
+	format is  mcast://mcast_address:mcast_port:nic_address:ttl.
+	All the multicast requests are now dealt via this parser. The default
+	multicast address is 224.9.9.2. The default multicast port is
+	10013 ( the same port that we used for NameService .. no big
+	reason .. just a simple choice), default nic is eth0 and default
+	TTL value is 1.
+
+	* tao/TAO_Internal.cpp:
+	  Add MCAST protocol to the list of services that have to be
+	  initiated.
+
+	* tao/ORB.h :
+	* tao/ORB.cpp :
+	  Moved the multicast_to_service and multicast_query methods to
+	  MCAST_Parser. Modified ::resolve_service accordingly.
+
+	* tao/ORB_Core.cpp :
+	  Check for mcast: format when ORBDefaultInitRef option is used
+	  and set the object delimiter to '/' if it is mcast protocol.
+
+	* tao/default_resource.cpp:
+	  Modify the total no. of parsers to check for: from 4 to 5.
+	  and dynamically load the MCAST_Parser too.
+
+	* tao/Makefile:
+	  Added MCAST_Parser
+
+	* orbsvcs/tests/IOR_MCast/README :
+	* orbsvcs/tests/IOR_MCast/Makefile :
+	* orbsvcs/tests/IOR_MCast/MCast.idl :
+	* orbsvcs/tests/IOR_MCast/MCast_Server_i.h :
+	* orbsvcs/tests/IOR_MCast/MCast_Server_i.cpp :
+	* orbsvcs/tests/IOR_MCast/client.cpp :
+	* orbsvcs/tests/IOR_MCast/ior_mcast_client_i.h :
+	* orbsvcs/tests/IOR_MCast/ior_mcast_client_i.cpp :
+	* orbsvcs/tests/IOR_MCast/server.cpp :
+	* orbsvcs/tests/IOR_MCast/server_i.h :
+	* orbsvcs/tests/IOR_MCast/server_i.cpp :
+	
+	  Simple test to test the new MCAST_Parser. 
+	
 Wed Sep  5 12:35:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Endpoint.h: Added a lock that is used to lock when a thread

@@ -386,7 +386,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
     }
 
   // OK fallback on the hardcoded ones....
-  this->parser_names_count_ = 4; // HOW MANY DO WE HAVE?
+  this->parser_names_count_ = 5; // HOW MANY DO WE HAVE?
 
   this->parser_names_ = new char *[this->parser_names_count_];
 
@@ -479,7 +479,28 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
         }
     }
 
-  this->parser_names_[index] = CORBA::string_dup ("CORBANAME_Parser");
+  this->parser_names_[index] = CORBA::string_dup ("CORBALOC_Parser");
+  index++;
+
+  // MCAST_Parser
+  tmp =
+    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("MCAST_Parser");
+
+  if (tmp == 0)
+    {
+      int r = ACE_Service_Config::process_directive
+        (
+         "dynamic MCAST_Parser Service_Object * TAO :_make_TAO_MCAST_Parser()"
+         );
+
+      if (r != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Configuring MCAST Parser\n"), -1);
+        }
+    }
+
+  this->parser_names_[index] = CORBA::string_dup ("MCAST_Parser");
   index++;
 
   names = this->parser_names_;
