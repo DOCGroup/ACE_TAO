@@ -27,7 +27,10 @@
 # include "Transport.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Transport, "$Id$")
+ACE_RCSID (tao,
+           Transport,
+           "$Id$")
+
 
 TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
   : ACE_Refcountable (refcount)
@@ -994,16 +997,34 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   ACE_CDR::grow (&incoming,
                  payload);
 
-  // .. do a read on the socket again.
-  ssize_t n = this->recv (incoming.wr_ptr (),
-                          missing_data,
-                          max_wait_time);
+  ssize_t n = 0;
 
-  if (TAO_debug_level > 6)
+  // As this used for transports where things are available in one
+  // shot this looping should not create any problems.
+  for (ssize_t bytes = missing_data;
+       bytes != 0;
+       bytes -= n)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Read [%d] bytes on attempt \n",
-                  n));
+      // .. do a read on the socket again.
+      n = this->recv (incoming.wr_ptr (),
+                      bytes,
+                      max_wait_time);
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Read [%d] bytes on attempt \n",
+                      n));
+        }
+
+      if (n == 0 ||
+          n == -1)
+        {
+          break;
+        }
+
+      incoming.wr_ptr (n);
+      missing_data -= n;
     }
 
   // If we got an error..
@@ -1019,15 +1040,9 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       return -1;
     }
 
-  // If we had gooten a EWOULDBLOCK n would be equal to zero. But we
+  // If we had gotten a EWOULDBLOCK n would be equal to zero. But we
   // have to put the message in the queue anyway. So let us proceed
   // to do that and return...
-
-  // Move the write pointer
-  incoming.wr_ptr (n);
-
-  // ..Decrement
-  missing_data -= n;
 
   // Check to see if we have messages in queue or if we have missing
   // data . AT this point we cannot have have semi-complete messages

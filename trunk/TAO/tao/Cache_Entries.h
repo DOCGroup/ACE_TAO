@@ -6,6 +6,7 @@
  *
  *  $Id$
  *
+ *
  *  @author Bala Natarajan  <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -106,7 +107,7 @@ private:
  * <value> for a <key> in a hash table holding the state of the
  * Transport Cache.
  */
-class TAO_Cache_ExtId
+class TAO_Export TAO_Cache_ExtId
 {
 public:
 
@@ -146,6 +147,9 @@ public:
   /// Set the index value. This calls should not be used by any users
   /// but for the TAO_Transport_Cache_Manager class.
   void index (CORBA::ULong index);
+
+  /// Increment the index value
+  void incr_index (void);
 
   // = Accessors
   /// Get the underlying the property pointer

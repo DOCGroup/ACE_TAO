@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "Invocation.h"
 #include "Stub.h"
 #include "Profile.h"
@@ -564,8 +565,8 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
   // preallocated reply dispatcher.
 
   // Bind.
-
-  TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
+  TAO_Transport_Mux_Strategy *tms =
+    this->transport_->tms ();
 
   TAO_Bind_Dispatcher_Guard dispatch_guard (
     this->op_details_.request_id (),
@@ -1103,4 +1104,3 @@ template class auto_ptr<CORBA::Exception>;
 #pragma instantiate auto_ptr<CORBA::Exception>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -180,6 +180,12 @@ TAO_Cache_ExtId::index (CORBA::ULong index)
   this->index_ = index;
 }
 
+ACE_INLINE void
+TAO_Cache_ExtId::incr_index (void)
+{
+  ++this->index_;
+}
+
 ACE_INLINE TAO_Transport_Descriptor_Interface *
 TAO_Cache_ExtId::property (void) const
 {

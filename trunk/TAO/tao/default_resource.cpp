@@ -40,6 +40,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
     cache_maximum_ (TAO_CONNECTION_CACHE_MAXIMUM),
     purge_percentage_ (TAO_PURGE_PERCENT),
+    max_muxed_connections_ (0),
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
     options_processed_ (0),
@@ -350,7 +351,20 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               this->report_option_value_error (ACE_LIB_TEXT("-ORBFlushingStrategy"), name);
           }
       }
-    else if (ACE_OS::strncmp (argv[curarg], ACE_LIB_TEXT("-ORB"), 4) == 0)
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_LIB_TEXT ("-ORBMuxedConnectionMax")) == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+            this->max_muxed_connections_ =
+              ACE_OS::atoi (argv[curarg]);
+        else
+          this->report_option_value_error ("-ORBMuxedConnectionMax",
+                                           argv[curarg]);
+      }
+    else if (ACE_OS::strncmp (argv[curarg],
+                              ACE_LIB_TEXT ("-ORB"),
+                              4) == 0)
       {
         // Can we assume there is an argument after the option?
         // curarg++;
@@ -552,7 +566,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
                              ACE_LIB_TEXT ("protocol <%s>, %p\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()), 
+                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()),
                              ACE_LIB_TEXT ("")),
                             -1);
         }
@@ -739,6 +753,13 @@ TAO_Default_Resource_Factory::purge_percentage (void) const
   return this->purge_percentage_;
 }
 
+int
+TAO_Default_Resource_Factory::max_muxed_connections (void) const
+{
+  return this->max_muxed_connections_;
+}
+
+
 ACE_Lock *
 TAO_Default_Resource_Factory::create_cached_connection_lock (void)
 {
@@ -755,6 +776,16 @@ TAO_Default_Resource_Factory::create_cached_connection_lock (void)
 
   return the_lock;
 }
+
+int
+TAO_Default_Resource_Factory::locked_transport_cache (void)
+{
+  if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
+    return 0;
+
+  return 1;
+}
+
 
 TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy (void)
