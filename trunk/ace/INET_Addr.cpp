@@ -206,7 +206,6 @@ ACE_INET_Addr::set (u_short port_number,
   this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
                          this->inet_addr_);
-  const char *hostname_ch = ASYS_ONLY_MULTIBYTE_STRING (host_name);
 
   // Yow, someone gave us a NULL host_name!
   if (host_name == 0)
@@ -214,7 +213,7 @@ ACE_INET_Addr::set (u_short port_number,
       errno = EINVAL;
       return -1;
     }
-  else if (ACE_OS::inet_aton (hostname_ch, (struct in_addr *) &addr) == 1)
+  else if (ACE_OS::inet_aton (ASYS_ONLY_MULTIBYTE_STRING (host_name), (struct in_addr *) &addr) == 1)
     return this->set (port_number, encode ? ntohl (addr) : addr, encode);
 
   else
@@ -226,7 +225,7 @@ ACE_INET_Addr::set (u_short port_number,
       ACE_HOSTENT_DATA buf;
       int error;
 
-      hostent *hp = ACE_OS::gethostbyname_r (hostname_ch, &hentry,
+      hostent *hp = ACE_OS::gethostbyname_r (ASYS_ONLY_MULTIBYTE_STRING (host_name), &hentry,
                                              buf, &error);
 #endif /* VXWORKS */
 

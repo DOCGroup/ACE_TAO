@@ -58,16 +58,13 @@ ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
 ACE_INLINE int
 ACE_Service_Config::initialize (const ACE_Service_Type *sp, char parameters[])
 {
-  wchar_t *wparameters = ACE_const_cast (wchar_t *, ACE_WIDE_STRING (parameters));
-  return ACE_Service_Config::initialize (sp, wparameters);
+  return ACE_Service_Config::initialize (sp, ACE_WIDE_STRING (parameters));
 }
 
 ACE_INLINE int
 ACE_Service_Config::initialize (const char svc_name[], char parameters[])
 {
-  const wchar_t *wsvc_name = ACE_WIDE_STRING (svc_name);
-  wchar_t *wparameters = ACE_const_cast (wchar_t *, ACE_WIDE_STRING (parameters));
-  return ACE_Service_Config::initialize (wsvc_name, wparameters);
+  return ACE_Service_Config::initialize (ACE_WIDE_STRING (svc_name), ACE_WIDE_STRING (parameters));
 }
 
 ACE_INLINE int
