@@ -277,7 +277,7 @@ DRV_cpp_init (void)
 #endif  /* TAO_IDL_INCLUDE_DIR */
 
       DRV_cpp_putarg (option);
-      idl_global->add_include_path (ACE::strnew (option + 2));
+      idl_global->add_include_path (ACE_CString (option + 2).c_str ());
       idl_global->tao_root (option + 2);
     }
 
@@ -919,4 +919,3 @@ DRV_pre_proc (const char *myfile)
       ACE_OS::exit (0);
     }
 }
-
