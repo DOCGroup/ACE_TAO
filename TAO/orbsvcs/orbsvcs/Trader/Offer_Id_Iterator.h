@@ -17,10 +17,7 @@
 #ifndef TAO_OFFER_ID_ITERATOR_H
 #define TAO_OFFER_ID_ITERATOR_H
 
-#include <deque>
-#include <queue>
-#include <string>
-
+#include "stl.h"
 #include "orbsvcs/CosTradingS.h"
 
 class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator

@@ -19,7 +19,7 @@
 #define TAO_REGISTER_OFFER_ITERATOR_H
     
 #include "Offer_Iterator.h"
-#include <deque>
+#include "stl.h"
 
 template <class TRADER>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator

@@ -17,7 +17,7 @@
 #ifndef TAO_PREFERENCE_INTERPRETER_H
 #define TAO_PREFERENCE_INTERPRETER_H
 
-#include <map>
+#include "stl.h"
 #include "Interpreter.h"
 #include "Constraint_Evaluator.h"
 #include "Constraint_Validator.h"

@@ -19,7 +19,7 @@
 #define TAO_QUERY_ONLY_OFFER_ITERATOR_H
     
 #include "Offer_Iterator.h"
-#include <deque>
+#include "stl.h"
 
 class TAO_Export TAO_Query_Only_Offer_Iterator : public TAO_Offer_Iterator
   // = TITLE
