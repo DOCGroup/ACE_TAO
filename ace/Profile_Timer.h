@@ -124,11 +124,11 @@ public:
   struct ACE_Elapsed_Time
     {
 #if defined (ACE_LACKS_FLOATING_POINT)
-      ACE_UINT64 real_time;
-      ACE_UINT64 user_time;
-      ACE_UINT64 system_time;
+      ACE_UINT32 real_time;    // units of microseconds!
+      ACE_UINT32 user_time;
+      ACE_UINT32 system_time;
 #else  /* ! ACE_LACKS_FLOATING_POINT */
-      double real_time;
+      double real_time;        // units of seconds
       double user_time;
       double system_time;
 #endif /* ! ACE_LACKS_FLOATING_POINT */
