@@ -10,7 +10,7 @@ Fri Sep 17 11:53:10 2004  Chad Elliott  <elliott_c@ociweb.com>
           Template instantiations for the ACE_Hash<ACE_TString> and
           ACE_Equal_To<ACE_TString> were conflicting with template
           specialization of the same on VxWorks.  I'm not sure if they are
-          required for any compiler, but I wanted to be safe and eclused
+          required for any compiler, but I wanted to be safe and exclude
           them in a #if !defined (VXWORKS).
 
         * ace/Proactor.cpp:
