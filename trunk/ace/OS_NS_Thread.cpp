@@ -3495,7 +3495,6 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 # else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (dest);
-  ACE_UNUSED_ARG (inst);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
 }
