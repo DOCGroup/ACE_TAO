@@ -116,6 +116,9 @@ public:
   virtual long compare (UTL_String *s);
   // Compare two String *
 
+  virtual long compare_quiet (UTL_String *s);
+  // Like the above but without error or warning message output.
+
 private:
   // Data
   char          *p_str;
