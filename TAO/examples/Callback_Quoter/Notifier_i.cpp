@@ -242,14 +242,6 @@ Notifier_i::Consumer_Data::operator== (const Consumer_Data &rhs)
   return this->consumer_->_is_equivalent (rhs.consumer_.in ());
 }
 
-/*CONSUMER_MAP*
-Notifier_i::get_consumer_map_ptr ()
-{
-return (&consumer_map_);
-}
-*/
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<Notifier_i::Consumer_Data>;
