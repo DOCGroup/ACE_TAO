@@ -1,3 +1,11 @@
+Thu Oct 31 10:50:16 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+
+          Restored const version of ValueBase_var operator that casts to
+          ValueBase*.
+
 Thu Oct 31 00:46:22 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/tests/Notify/Makefile: 
