@@ -1,3 +1,9 @@
+Sun Jun 10 16:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Stub_Factory.cpp: Enclosed a debug statement within if
+	  statment. 
+	  
+
 Sat Jun 09 21:03:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
