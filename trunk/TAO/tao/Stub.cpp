@@ -89,6 +89,10 @@ TAO_Stub::TAO_Stub (char *repository_id,
       this->orb_core_ = TAO_ORB_Core_instance ();
     }
 
+  // Duplicate the ORB. This will help us keep the ORB around until
+  // the CORBA::Object we represent dies.
+  this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
+
   this->profile_lock_ptr_ =
     this->orb_core_->client_factory ()->create_iiop_profile_lock ();
 

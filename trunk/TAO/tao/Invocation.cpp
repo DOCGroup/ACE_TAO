@@ -233,8 +233,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 
   if (result == -1)
     {
-      // send_request () closed the connection, we just have to forget
-      // about the hint.
+      this->transport_->close_connection ();
       this->transport_ = 0;
 
       this->profile_->reset_hint ();
@@ -778,8 +777,9 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   if (result == -1)
     {
-      // send_request () closed the connection; we just set the
-      // handler to 0 here.
+      this->transport_->close_connection ();
+      this->transport_ = 0;
+
       this->profile_->reset_hint ();
 
       // @@ This code abort if the connection for the currenct profile
