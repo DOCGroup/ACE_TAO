@@ -7,12 +7,19 @@
 #include "ace/High_Res_Timer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Stats.h"
+
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 
 // For Intel platforms, a scale factor is required for
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
-#if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_PENTIUM)
+
+# include "ace/Object_Manager.h"
+# include "ace/Synch.h"
+
+# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 u_long
 ACE_High_Res_Timer::get_registry_scale_factor (void)
@@ -49,8 +56,16 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
 }
 
 /* static */
-ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = ACE_High_Res_Timer::get_registry_scale_factor ();
-
+  // Initialize the global_scale_factor_ to 1.  The first
+  // ACE_High_Res_Timer instance construction will override this
+  // value.
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1;
+# elif defined (ghs) || defined (__GNUG__)
+  // Initialize the global_scale_factor_ to 1.  The first
+  // ACE_High_Res_Timer instance construction will override this
+  // value.
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1;
+# endif /* ! ACE_WIN32 && ! ghs && ! __GNUG__ */
 #elif defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
   defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS) || \
   defined (CHORUS) || defined (linux)
@@ -63,6 +78,74 @@ ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = ACE_High_Res_Timer::get_re
   // override this using a call to global_scale_factor ().
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1;
 #endif /* ACE_WIN32 */
+
+ACE_High_Res_Timer::ACE_High_Res_Timer (void)
+{
+  ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");
+
+  this->reset ();
+
+#if defined (ACE_HAS_PENTIUM) && \
+    ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
+     defined (ghs) || defined (__GNUG__))
+  // Check if the global scale factor needs to be set, and do if so.
+  if (ACE_High_Res_Timer::global_scale_factor_ == 1)
+    {
+      // Grab ACE's static object lock.  This doesn't have anything to
+      // do with static objects; it's just a convenient lock to use.
+      ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
+                         *ACE_Static_Object_Lock::instance ()));
+
+      // Double check
+      if (ACE_High_Res_Timer::global_scale_factor_ == 1)
+        {
+#         if defined (ACE_WIN32)
+            ACE_High_Res_Timer::global_scale_factor (
+              ACE_High_Res_Timer::get_registry_scale_factor ());
+#         else  /* ! ACE_WIN32 */
+            ACE_High_Res_Timer::calibrate ();
+#         endif /* ! ACE_WIN32 */
+        }
+    }
+#endif /* ACE_HAS_PENTIUM && ((WIN32 && ! WINCE) || ghs || __GNUG__) */
+}
+
+ACE_UINT32
+ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
+                               const u_int iterations)
+{
+  const ACE_Time_Value sleep_time (0, usec);
+  ACE_Stats delta_hrtime;
+  ACE_Stats actual_sleeps; /* In units of 100 usec, to avoid overflow. */
+
+  for (u_int i = 0; i < iterations; ++i)
+    {
+      const ACE_Time_Value actual_start = ACE_OS::gettimeofday ();
+      const ACE_hrtime_t start = ACE_OS::gethrtime ();
+      ACE_OS::sleep (sleep_time);
+      const ACE_hrtime_t stop = ACE_OS::gethrtime ();
+      const ACE_Time_Value actual_delta =
+        ACE_OS::gettimeofday () - actual_start;
+
+      // Store the sample.
+      delta_hrtime.sample ((stop - start) / ACE_static_cast (ACE_UINT32, 1u));
+      actual_sleeps.sample (actual_delta.msec () * 100u);
+    }
+
+  // Calculate the mean value of the samples, with no fractional
+  // precision.  Use it for the global scale factor.
+  ACE_Stats_Value ticks (0);
+  delta_hrtime.mean (ticks);
+
+  ACE_Stats_Value actual_sleep (0);
+  actual_sleeps.mean (actual_sleep);
+
+  const ACE_UINT32 scale_factor = ticks.whole () / actual_sleep.whole () /
+    10u /* usec/100 usec */;
+  ACE_High_Res_Timer::global_scale_factor (scale_factor);
+
+  return scale_factor;
+}
 
 void
 ACE_High_Res_Timer::dump (void) const

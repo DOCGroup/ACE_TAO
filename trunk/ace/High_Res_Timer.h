@@ -83,6 +83,17 @@ public:
   // This is basically a no-op on CE because there is no concept of
   // environment variable on CE.
 
+  static ACE_UINT32 calibrate (const ACE_UINT32 usec = 500000,
+                               const u_int iterations = 10);
+  // Set (and return, for info) the global scale factor by sleeping
+  // for <usec> and counting the number of intervening clock cycles.
+  // Average over <iterations> of <usec> each.  On some platforms,
+  // such as Pentiums, this is called automatically during the first
+  // ACE_High_Res_Timer construction with the default parameter
+  // values.  An application can override that by calling calibrate
+  // with any desired parameter values _prior_ to constructing the
+  // first ACE_High_Res_Timer instance.
+
   ACE_High_Res_Timer (void);
   // Initialize the timer.
 

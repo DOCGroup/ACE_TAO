@@ -61,14 +61,6 @@ ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
 }
 
 ACE_INLINE
-ACE_High_Res_Timer::ACE_High_Res_Timer (void)
-{
-  ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");
-
-  this->reset ();
-}
-
-ACE_INLINE
 ACE_High_Res_Timer::~ACE_High_Res_Timer (void)
 {
 }
