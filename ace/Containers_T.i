@@ -316,7 +316,7 @@ ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
 // ****************************************************************
 
 template <class T> ACE_INLINE void
-ACE_DLList<T>::operator= (ACE_DLList<T> &l)
+ACE_DLList<T>::operator= (const ACE_DLList<T> &l)
 {
   *(ACE_DLList_Base *) this = l;
 }
@@ -354,7 +354,7 @@ ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc )
 }
 
 template <class T> ACE_INLINE
-ACE_DLList<T>::ACE_DLList (ACE_DLList<T> &l)
+ACE_DLList<T>::ACE_DLList (const ACE_DLList<T> &l)
   : ACE_DLList_Base ((ACE_DLList<T> &) l)
 {
 }

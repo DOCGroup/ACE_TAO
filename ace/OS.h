@@ -1064,12 +1064,12 @@ typedef struct timespec
 typedef struct timespec timespec_t;
 # endif /* ACE_LACKS_TIMESPEC_T */
 
-# if !defined (ACE_HAS_CLOCK_GETTIME) && !defined (_CLOCKID_T)
+# if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
 typedef int clockid_t;
 #   if !defined (CLOCK_REALTIME)
 #     define CLOCK_REALTIME 0
 #   endif /* CLOCK_REALTIME */
-# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
+# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
 
 // -------------------------------------------------------------------
 // These forward declarations are only used to circumvent a bug in
