@@ -1,29 +1,40 @@
+Wed Nov  8 10:00:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/IDL_Test/Makefile:
+          I think I finally nailed the dependencies for the magic IDL
+          files in this directory.  At least it compiles correctly in our
+          4-way box, where it used to fail all the time.
+
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+          Fixed warnings about unused variables, also fixed a couple of
+          memory leaks, and unchecked exceptions.
+
 Wed Nov  8 11:44:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
 
-	  Removed unused args from create_object method.
+          Removed unused args from create_object method.
 
-	* orbsvcs/IFR_Service/TypeCodeFactoryC.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactoryC.cpp:
 
-	  Added missing 'CORBA_' to constructor and destructor
-	  declarations.
+          Added missing 'CORBA_' to constructor and destructor
+          declarations.
 
 Wed Nov  8 06:48:08 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/RTCORBA/README: Updated the information to point to
-	  the appropriate documentation.  Thanks to Michael Hampel
- 	  <michael.hampel@fhs-hagenberg.ac.at> for motivating this.
+        * tests/RTCORBA/README: Updated the information to point to
+          the appropriate documentation.  Thanks to Michael Hampel
+          <michael.hampel@fhs-hagenberg.ac.at> for motivating this.
 
 Tue Nov  7 21:46:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_type.cpp:
-	* TAO_IDL/include/ast_type.h:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/include/ast_type.h:
 
-	  Added flag to indicate whether the node has been added
-	  to the Interface Repository. Used for types that can
-	  be forward declared, which right now is only interfaces,
-	  but will eventually include other types as well.
+          Added flag to indicate whether the node has been added
+          to the Interface Repository. Used for types that can
+          be forward declared, which right now is only interfaces,
+          but will eventually include other types as well.
 
 Tue Nov 07 16:38:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
