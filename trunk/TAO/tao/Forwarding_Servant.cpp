@@ -24,15 +24,17 @@ TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
 {
   ACE_UNUSED_ARG (request);
 
-  // Throw forward exception
+  // Throw forward exception @@ Irfan, shouldn't we check for "new"
+  // failure here via ACE_NEW?
   CORBA::Exception *exception
     = new PortableServer::ForwardRequest (this->forward_to_.in ());
 
-  CORBA::Any any (exception->_type (), exception, 1);
+  CORBA::Any any (exception->_type (),
+                  exception,
+                  1);
 
-  request->set_exception (any, env);
-
-  return;
+  request->set_exception (any,
+                          env);
 }
 
 CORBA::RepositoryId

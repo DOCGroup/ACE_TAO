@@ -29,19 +29,19 @@ CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : type_ (CORBA::TypeCode::_duplicate (tc)),
     refcount_ (0)
 {
-  assert (this->type_ != 0);
+  ACE_ASSERT (this->type_ != 0);
 }
 
 CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
   : type_ (CORBA::TypeCode::_duplicate (src.type_)),
     refcount_ (0)
 {
-  assert (this->type_ != 0);
+  ACE_ASSERT (this->type_ != 0);
 }
 
-// NOTE:  It's this code, not anything defined in a subclass, which
-// is responsible for releasing any storage owned by the exception.
-// It can do this because it's got the typecode.
+// NOTE: It's this code, not anything defined in a subclass, which is
+// responsible for releasing any storage owned by the exception.  It
+// can do this because it's got the typecode.
 
 CORBA_Exception::CORBA_Exception (void)
   :  type_ (0),
@@ -51,8 +51,8 @@ CORBA_Exception::CORBA_Exception (void)
 
 CORBA_Exception::~CORBA_Exception (void)
 {
-  assert (this->refcount_ == 0);
-  assert (this->type_ != 0);
+  ACE_ASSERT (this->refcount_ == 0);
+  ACE_ASSERT (this->type_ != 0);
 }
 
 CORBA_Exception &
@@ -61,7 +61,7 @@ CORBA_Exception::operator= (const CORBA_Exception &src)
   if (this->type_)
     CORBA::release (this->type_);
   this->type_ = CORBA::TypeCode::_duplicate (src.type_);
-  assert (this->type_ != 0);
+  ACE_ASSERT (this->type_ != 0);
 
   return *this;
 }
@@ -86,7 +86,8 @@ CORBA_Exception::_type (void) const
 int
 CORBA_Exception::_is_a (const char* repository_id) const
 {
-  return (ACE_OS::strcmp (repository_id, "IDL:omg.org/CORBA/Exception:1.0")==0);
+  return ACE_OS::strcmp (repository_id,
+                         "IDL:omg.org/CORBA/Exception:1.0") == 0;
 }
 
 void
@@ -95,15 +96,16 @@ CORBA_Exception::print_exception (const char *info,
 {
   const char *id = this->_id ();
 
-  ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
+  ACE_DEBUG ((LM_ERROR, 
+              "(%P|%t) EXCEPTION, %s\n",
+              info));
 
   CORBA::SystemException *x2 =
-    CORBA_SystemException::_narrow (ACE_const_cast (CORBA_Exception *,this));
+    CORBA_SystemException::_narrow (ACE_const_cast (CORBA_Exception *,
+                                                    this));
 
   if (x2 != 0)
-    {
-      x2->print_exception_tao_ ();
-    }
+    x2->print_exception_tao_ ();
   else
     // @@ we can use the exception's typecode to dump all the data
     // held within it ...
@@ -170,11 +172,10 @@ CORBA_UserException*
 CORBA_UserException::_narrow (CORBA_Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
-    return ACE_dynamic_cast (CORBA_UserException *, exception);
+    return ACE_dynamic_cast (CORBA_UserException *,
+                             exception);
   return 0;
 }
-
-// ****************************************************************
 
 CORBA_SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
                                               CORBA::ULong code,
@@ -219,105 +220,119 @@ CORBA_SystemException*
 CORBA_SystemException::_narrow (CORBA_Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
-    return ACE_dynamic_cast (CORBA_SystemException*,exception);
+    return ACE_dynamic_cast (CORBA_SystemException *,
+                             exception);
   return 0;
 }
 
 void
 CORBA_SystemException::_raise (void)
 {
-  TAO_RAISE(*this);
+  TAO_RAISE (*this);
 }
 
 CORBA::ULong
 CORBA_SystemException::errno_tao_ (int errno_value)
 {
-  switch (errno_value) {
-    case 0 : return TAO_UNSPECIFIED_MINOR_CODE;
-    case ETIMEDOUT : return TAO_ETIMEDOUT_MINOR_CODE;
-    case ENFILE : return TAO_ENFILE_MINOR_CODE;
-    case EMFILE : return TAO_EMFILE_MINOR_CODE;
-    case EPIPE : return TAO_EPIPE_MINOR_CODE;
-    case ECONNREFUSED : return TAO_ECONNREFUSED_MINOR_CODE;
-    default : return TAO_UNKNOWN_MINOR_CODE;
-  }
+  switch (errno_value) 
+    {
+    case 0:
+      return TAO_UNSPECIFIED_MINOR_CODE;
+    case ETIMEDOUT:
+      return TAO_ETIMEDOUT_MINOR_CODE;
+    case ENFILE:
+      return TAO_ENFILE_MINOR_CODE;
+    case EMFILE:
+      return TAO_EMFILE_MINOR_CODE;
+    case EPIPE:
+      return TAO_EPIPE_MINOR_CODE;
+    case ECONNREFUSED:
+      return TAO_ECONNREFUSED_MINOR_CODE;
+    default:
+      return TAO_UNKNOWN_MINOR_CODE;
+    }
 }
 
 CORBA::ULong
-CORBA_SystemException::minor_code_tao_ (u_int location, int errno_value)
+CORBA_SystemException::minor_code_tao_ (u_int location,
+                                        int errno_value)
 {
-  return TAO_DEFAULT_MINOR_CODE  |
-         location  |
-         errno_tao_ (errno_value);
+  return
+    TAO_DEFAULT_MINOR_CODE  
+    | location  
+    | errno_tao_ (errno_value);
 }
 
 void
 CORBA_SystemException::print_exception_tao_ (FILE *) const
 {
-  // @@ there are a other few "user exceptions" in the CORBA
-  // scope, they're not all standard/system exceptions ... really
-  // need to either compare exhaustively against all those IDs
-  // (yeech) or (preferably) to represent the exception type
-  // directly in the exception value so it can be queried.
+  // @@ there are a other few "user exceptions" in the CORBA scope,
+  // they're not all standard/system exceptions ... really need to
+  // either compare exhaustively against all those IDs (yeech) or
+  // (preferably) to represent the exception type directly in the
+  // exception value so it can be queried.
 
   ACE_DEBUG ((LM_ERROR,
               "(%P|%t) system exception, ID '%s'\n",
               _id ()));
 
-  CORBA::ULong VMCID = this->minor () & 0xFFFFF000u;
+  CORBA::ULong VMCID = 
+    this->minor () & 0xFFFFF000u;
 
   if (VMCID == TAO_DEFAULT_MINOR_CODE)
     {
       const char *location;
-      switch (this->minor () & 0x00000FF0u) {
-      case TAO_INVOCATION_CONNECT_MINOR_CODE :
-        location = "invocation connect failed";
-        break;
-      case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE :
-        location = "location forward failed";
-        break;
-      case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE :
-        location = "send request failed";
-        break;
-      case TAO_POA_DISCARDING :
-        location = "poa in discarding state";
-        break;
-      case TAO_POA_HOLDING :
-        location = "poa in holding state";
-        break;
-      case TAO_UNHANDLED_SERVER_CXX_EXCEPTION :
-        location = "unhandled c++ exception in server side";
-        break;
-      case TAO_INVOCATION_RECV_REQUEST_MINOR_CODE :
-        location = "failed to recv request response";
-        break;
-      default :
-        location = "unknown location";
-      }
+      switch (this->minor () & 0x00000FF0u) 
+        {
+        case TAO_INVOCATION_CONNECT_MINOR_CODE :
+          location = "invocation connect failed";
+          break;
+        case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE :
+          location = "location forward failed";
+          break;
+        case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE :
+          location = "send request failed";
+          break;
+        case TAO_POA_DISCARDING :
+          location = "poa in discarding state";
+          break;
+        case TAO_POA_HOLDING :
+          location = "poa in holding state";
+          break;
+        case TAO_UNHANDLED_SERVER_CXX_EXCEPTION :
+          location = "unhandled c++ exception in server side";
+          break;
+        case TAO_INVOCATION_RECV_REQUEST_MINOR_CODE :
+          location = "failed to recv request response";
+          break;
+        default :
+          location = "unknown location";
+        }
 
       const char *errno_indication;
-      switch (this->minor () & 0x0000000Fu) {
-      case TAO_UNSPECIFIED_MINOR_CODE :
-        errno_indication = "unspecified errno";
-        break;
-      case TAO_ETIMEDOUT_MINOR_CODE :
-        errno_indication = "ETIMEOUT";
-        break;
-      case TAO_ENFILE_MINOR_CODE :
-        errno_indication = "ENFILE";
-        break;
-      case TAO_EMFILE_MINOR_CODE :
-        errno_indication = "EMFILE";
-        break;
-      case TAO_EPIPE_MINOR_CODE :
-        errno_indication = "EPIPE";
-        break;
-      case TAO_ECONNREFUSED_MINOR_CODE :
-        errno_indication = "ECONNREFUSED";
-        break;
-      default :
-        errno_indication = "unknown errno";
-      }
+      switch (this->minor () & 0x0000000Fu) 
+        {
+        case TAO_UNSPECIFIED_MINOR_CODE :
+          errno_indication = "unspecified errno";
+          break;
+        case TAO_ETIMEDOUT_MINOR_CODE :
+          errno_indication = "ETIMEOUT";
+          break;
+        case TAO_ENFILE_MINOR_CODE :
+          errno_indication = "ENFILE";
+          break;
+        case TAO_EMFILE_MINOR_CODE :
+          errno_indication = "EMFILE";
+          break;
+        case TAO_EPIPE_MINOR_CODE :
+          errno_indication = "EPIPE";
+          break;
+        case TAO_ECONNREFUSED_MINOR_CODE :
+          errno_indication = "ECONNREFUSED";
+          break;
+        default :
+          errno_indication = "unknown errno";
+        }
 
       ACE_DEBUG ((LM_ERROR,
                   "(%P|%t) TAO exception, "
@@ -342,9 +357,6 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
     }
 }
 
-
-// ****************************************************************
-
 CORBA_UnknownUserException::CORBA_UnknownUserException (void)
   : CORBA_UserException (CORBA::_tc_UnknownUserException),
     exception_ (0)
@@ -353,6 +365,8 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (void)
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
 {
+  // @@ Nanbor, shouldn't we be checking for "new" failure here with
+  // ACE_NEW?
   this->exception_ = new CORBA_Any (ex);
 }
 
@@ -362,14 +376,14 @@ CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
     delete this->exception_;
 }
 
-CORBA_Any&
+CORBA_Any &
 CORBA_UnknownUserException::exception (void)
 {
   return *this->exception_;
 }
 
 int
-CORBA_UnknownUserException::_is_a (const char* interface_id) const
+CORBA_UnknownUserException::_is_a (const char *interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
                            "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
@@ -380,14 +394,15 @@ CORBA_UnknownUserException*
 CORBA_UnknownUserException::_narrow (CORBA_Exception *ex)
 {
   if (ex->_is_a ("IDL:omg.org/CORBA/UnknownUserException:1.0"))
-    return ACE_dynamic_cast (CORBA_UnknownUserException*, ex);
+    return ACE_dynamic_cast (CORBA_UnknownUserException *,
+                             ex);
   return 0;
 }
 
 void
 CORBA_UnknownUserException::_raise (void)
 {
-  TAO_RAISE(*this);
+  TAO_RAISE (*this);
 }
 
 // Note that "buffer" holds the (unscoped) name originally, and is
@@ -397,12 +412,13 @@ void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                                             CORBA::Environment &TAO_IN_ENV)
 {
-  // Create the TypeCode for the CORBA_UnknownUserException
+  // Create the TypeCode for the CORBA_UnknownUserException.
 
 #if defined(ACE_MVS)
   // @@ We need to use a translator to make sure that all TypeCodes
-  //    are stored in ISO8859 form, the problem is that this hack does
-  //    not scale as more native sets have to be supported
+  // are stored in ISO8859 form, the problem is that this hack does
+  // not scale as more native sets have to be supported
+
   ACE_Codeset_IBM1047_ISO8859 translator;
   TAO_OutputCDR stream (0,
                         ACE_CDR_BYTE_ORDER,
@@ -418,10 +434,10 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
 #endif /* ACE_MVS */
 
-  const char* interface_id =
+  const char *interface_id =
     "IDL:omg.org/CORBA/UnknownUserException:1.0";
-  const char* name = "UnknownUserException";
-  const char* field_name = "exception";
+  const char *name = "UnknownUserException";
+  const char *field_name = "exception";
 
   if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
       || stream.write_string (interface_id) == 0
@@ -433,6 +449,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                         TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     TAO_THROW (CORBA_INITIALIZE ());
 
+  // @@ Nanbor, shouldn't we be checking for "new" failure here?
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
                              stream.buffer (),
@@ -458,8 +475,9 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 
 #if defined(ACE_MVS)
   // @@ We need to use a translator to make sure that all TypeCodes
-  //    are stored in ISO8859 form, the problem is that this hack does
-  //    not scale as more native sets have to be supported
+  // are stored in ISO8859 form, the problem is that this hack does
+  // not scale as more native sets have to be supported
+
   ACE_Codeset_IBM1047_ISO8859 translator;
   TAO_OutputCDR stream (buffer, buflen,
                         ACE_CDR_BYTE_ORDER,
@@ -484,10 +502,10 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 
   const char prefix[] = "IDL:omg.org/CORBA/";
   const char suffix[] = ":1.0";
-  char* full_id =
-    CORBA::string_alloc (sizeof(prefix)
+  char *full_id =
+    CORBA::string_alloc (sizeof prefix
                          + ACE_OS::strlen (name)
-                         + sizeof(suffix));
+                         + sizeof suffix);
 
   ACE_OS::strcpy (full_id, prefix);
   ACE_OS::strcat (full_id, name);
@@ -506,8 +524,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                         &TC_completion_status, 0,
                         ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     ACE_THROW (CORBA::INITIALIZE ());
-  // @@ It is possible to throw an exception at this point?
-  //    What if the exception typecode has not been initialized yet?
+  // @@ It is possible to throw an exception at this point?  What if
+  // the exception typecode has not been initialized yet?
 
   CORBA::string_free (full_id);
 
@@ -516,6 +534,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
+  // @@ Nanbor, shouldn't we check for "new" failure here?
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
                              stream.buffer (),
@@ -597,10 +616,12 @@ TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
 {
   // This routine should only be called once.
   // Initialize the start up allocator.
-  ACE_NEW (TAO_Exceptions::global_allocator_, ACE_New_Allocator);
+  ACE_NEW (TAO_Exceptions::global_allocator_,
+           ACE_New_Allocator);
 
   // Initialize the list of system exceptions, used when unmarshaling.
-  ACE_NEW (TAO_Exceptions::system_exceptions, CORBA::ExceptionList);
+  ACE_NEW (TAO_Exceptions::system_exceptions,
+           CORBA::ExceptionList);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, \
@@ -616,9 +637,9 @@ TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
                                               ACE_TRY_ENV);
 }
 
-CORBA_Exception*
-TAO_Exceptions::create_system_exception (const char* id,
-                                         CORBA::Environment& ACE_TRY_ENV)
+CORBA_Exception *
+TAO_Exceptions::create_system_exception (const char *id,
+                                         CORBA::Environment &ACE_TRY_ENV)
 {
 #define TAO_SYSTEM_EXCEPTION(name) \
   { \
@@ -693,17 +714,23 @@ CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
                                           CORBA::TypeCode_ptr *tc_list)
   : ref_count_ (1)
 {
-  for (CORBA::ULong i=0; i < len; i++)
+  for (CORBA::ULong i = 0;
+       i < len;
+       i++)
     this->add (tc_list [i]);
 }
 
 CORBA_ExceptionList::~CORBA_ExceptionList (void)
 {
-  for (CORBA::ULong i = 0; i < this->count (); ++i)
+  for (CORBA::ULong i = 0;
+       i < this->count ();
+       ++i)
     {
       CORBA::TypeCode_ptr *tc;
+
       if (this->tc_list_.get (tc, i) == -1)
         return;
+
       CORBA::release (*tc);
     }
 }
@@ -725,13 +752,15 @@ CORBA_ExceptionList::item (CORBA::ULong slot,
                            CORBA::Environment &TAO_IN_ENV)
 {
   CORBA::TypeCode_ptr *tc;
+
   TAO_IN_ENV.clear ();
-  if (this->tc_list_.get (tc, slot) == -1)
-    TAO_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+
+  if (this->tc_list_.get (tc,
+                          slot) == -1)
+    TAO_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      0);
   else
-    {
-      return CORBA::TypeCode::_duplicate (*tc);
-    }
+    return CORBA::TypeCode::_duplicate (*tc);
 }
 
 void
@@ -752,12 +781,13 @@ void
 CORBA_ExceptionList::_destroy (void)
 {
   CORBA::ULong current = --this->ref_count_;
+
   if (current == 0)
     delete this;
 }
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
-TAO_DONT_CATCH::TAO_DONT_CATCH ()
+TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 {}
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 

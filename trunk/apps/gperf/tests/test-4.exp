@@ -113,20 +113,20 @@ in_word_set (str, len)
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
-          int index = lookup[key];
+          int slot = lookup[key];
 
-          if (index >= 0 && index < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < MAX_HASH_VALUE)
             {
-              char *s = wordlist[index].name;
+              char *s = wordlist[slot].name;
 
               if (*str == *s && !strcmp (str + 1, s + 1))
-                return &wordlist[index];
+                return &wordlist[slot];
             }
-          else if (index < 0 && index >= -MAX_HASH_VALUE)
+          else if (slot < 0 && slot >= -MAX_HASH_VALUE)
             return 0;
           else
             {
-              unsigned int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
               struct resword  *base = &wordlist[-lookup[offset]];
               struct resword  *ptr = base + -lookup[offset + 1];
 
