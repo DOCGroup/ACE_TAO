@@ -1,9 +1,25 @@
+Sun Aug 13 09:07:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/IOR_LookupTable.h (TAO_IOR_LookupTable):
+	          Added the function del_ior () to remove the object name
+	from the table.
+
 Sat Aug 12 10:26:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.h:
-          Remove unused argc_ and argv_ fields.  The argv_ declaration was
-          baking builds on NT.
+	          Remove unused argc_ and argv_ fields.  The argv_
+	declaration was baking builds on NT.
 
+Sat Aug 12 10:21:09 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+        * tao/Object_Loader.h (TAO_Object_Loader): Changed the
+	signature of create_object so that argc and argv can also be passed.
+
+Sat Aug 12 09:34:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+        * tao/ORB.h (CORBA_ORB):
+	        Added the signature of _tao_del_from_IOR_table.
+	
 Fri Aug 11 12:03:41 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.CosNaming :

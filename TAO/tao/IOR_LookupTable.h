@@ -65,11 +65,16 @@ public:
   // new IOR is bound successfully, returns 1 if an attempt is made
   // to bind an existing object_name, and returns -1 if failures occur.
 
+  int del_ior (const ACE_CString &object_name);
+  // Remove <object_name> from the table.
+  // Returns 0 is the operation is succesful, -1 otherwise.
+
   int find_ior (const ACE_CString &object_name,
                 ACE_CString &ior);
   // Locate <object_name> and pass out parameter via <ior>.  If the IOR is
   // found, return 0. Return -1 if not found.
 
+  
   void register_callback (TAO_IOR_LookupTable_Callback *callback, 
                           int delete_callback = 0);
   // Registers a callback class with the lookup table.
