@@ -1,3 +1,9 @@
+Tue May 02 13:51:21 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/create_ace_build: updated comments at top to reflect
+          the fact that dead symlinks are removed when run on an
+          existing build tree.
+
 Tue May  2 10:24:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_compile_win32.pl:
@@ -25,9 +31,9 @@ Tue May  2 09:34:31 2000  Steve Huston  <shuston@riverace.com>
 
 Mon May  1 16:51:07 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin/msvc_auto_compile.pl: 
-          
-          Now gets the current directory for the default of ACE_ROOT 
+        * bin/msvc_auto_compile.pl:
+
+          Now gets the current directory for the default of ACE_ROOT
           instead of using ".".  Also only tries compiling files ending
           with dsp, not just ones with .dsp in their name (like *.dsp.bak).
           Finally, added a print_status options (-s) that will output
@@ -36,9 +42,9 @@ Mon May  1 16:51:07 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon May 01 12:41:39 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.cpp (close_i): Restored freeing of the
-	  table memory which had been mistakenly removed.  Thanks to David
-	  for pointing this out.
+        * ace/Hash_Map_Manager_T.cpp (close_i): Restored freeing of the
+          table memory which had been mistakenly removed.  Thanks to David
+          for pointing this out.
 
 Mon May  1 10:27:48 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -50,20 +56,20 @@ Mon May  1 10:27:48 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon May 01 02:06:02 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.cpp (avail_chunks): Changed to use do-while loop to
-	  go over all freelist when calculating the avail_chunks to make
-	  sure all nodes in the freelist are accounted for.  <freep_>
-	  doesn't always point to the anchoring Malloc_Header in the
-	  control block.  Thanks to Ivan Murphy
-	  <Ivan.Murphy@med.siemens.de> for reporting the problem.
+        * ace/Malloc_T.cpp (avail_chunks): Changed to use do-while loop to
+          go over all freelist when calculating the avail_chunks to make
+          sure all nodes in the freelist are accounted for.  <freep_>
+          doesn't always point to the anchoring Malloc_Header in the
+          control block.  Thanks to Ivan Murphy
+          <Ivan.Murphy@med.siemens.de> for reporting the problem.
 
-	  Also we must reduce the header size count by one when
-	  calculating the avail_chunks because each returning allocated
-	  memory chunk takes at least two Malloc_Header's.  This change
-	  made the result of <avail_chunks> more realistic.
+          Also we must reduce the header size count by one when
+          calculating the avail_chunks because each returning allocated
+          memory chunk takes at least two Malloc_Header's.  This change
+          made the result of <avail_chunks> more realistic.
 
-	* ace/Malloc.h: Added more documentation explaining how Malloc_T
-	  works.
+        * ace/Malloc.h: Added more documentation explaining how Malloc_T
+          works.
 
 Sun Apr 30 23:20:00 2000  Darrell Brunsch  <brunsch@uci.edu>
 
@@ -80,60 +86,60 @@ Sun Apr 30 23:20:00 2000  Darrell Brunsch  <brunsch@uci.edu>
 
 Sat Apr 29 20:02:39 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/autoconf_compile (BUILD_LIST):
+        * bin/autoconf_compile (BUILD_LIST):
 
-	  Remove TAO from the build list.  It's autoconf support hasn't
-	  been fully integrated yet.
+          Remove TAO from the build list.  It's autoconf support hasn't
+          been fully integrated yet.
 
 Sat Apr 29 19:45:41 2000  Ossama Othman  <ossama@uci.edu>
 
-	* netsvcs/lib/Log_Message_Receiver.cpp (attach, detach):
+        * netsvcs/lib/Log_Message_Receiver.cpp (attach, detach):
 
-	  Fixed warning that occured when
-	  ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES was not defined.
+          Fixed warning that occured when
+          ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES was not defined.
 
-	  Use ACE_GUARD{_RETURN} macro instead of naked ACE_Guard.
+          Use ACE_GUARD{_RETURN} macro instead of naked ACE_Guard.
 
 Sat Apr 29 19:17:25 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace-dll.icc:
-	* ace_dll.dsp:
-	* ace_lib.dsp:
+        * ace-dll.icc:
+        * ace_dll.dsp:
+        * ace_lib.dsp:
 
-	  These files still referred to the deprecated `inc_user_config.h'
-	  header.  The header is now called `config-all.h'.
+          These files still referred to the deprecated `inc_user_config.h'
+          header.  The header is now called `config-all.h'.
 
 Sat Apr 29 19:09:00 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/QoS_Manager.h:
+        * ace/QoS_Manager.h:
 
-	  Moved inclusion of one of the ACE headers prior to the check for
-	  ACE_LACKS_PRAGMA_ONCE.  The definition of ACE_LACKS_PRAGMA_ONCE
-	  wasn't pulled before the check, so it ended up being defined
-	  twice.
+          Moved inclusion of one of the ACE headers prior to the check for
+          ACE_LACKS_PRAGMA_ONCE.  The definition of ACE_LACKS_PRAGMA_ONCE
+          wasn't pulled before the check, so it ended up being defined
+          twice.
 
 Sat Apr 29 16:15:29 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/autoconf_compile:
-	* bin/autoconf_compile_wrapper:
+        * bin/autoconf_compile:
+        * bin/autoconf_compile_wrapper:
 
-	  The ACE+autoconf counterparts to the auto_compile* scripts.
-	  These scripts are used to run automatic builds of the ACE's
-	  autoconf support.
+          The ACE+autoconf counterparts to the auto_compile* scripts.
+          These scripts are used to run automatic builds of the ACE's
+          autoconf support.
 
 Sat Apr 29 15:59:53 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Makefile.am (HEADER_FILES):
+        * ace/Makefile.am (HEADER_FILES):
 
-	  Removed `inc_user_config.h' from the list of headers.  It no
-	  longer exists.
+          Removed `inc_user_config.h' from the list of headers.  It no
+          longer exists.
 
-	  Added `config-all.h', `ACE_export.h' and `svc_export.h' to the
-	  list of headers.
+          Added `config-all.h', `ACE_export.h' and `svc_export.h' to the
+          list of headers.
 
 Sat Apr 29 17:13:55 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/Makefile.am: Added the SOCK_Dgram_Mcast_QoS.{cpp,h,i}
+        * ace/Makefile.am: Added the SOCK_Dgram_Mcast_QoS.{cpp,h,i}
 
 Sat Apr 29 14:49:13 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -223,22 +229,22 @@ Fri Apr 28 21:11:32 2000  Darrell Brunsch  <brunsch@uci.edu>
 
 Fri Apr 28 13:11:20 2000  Ossama Othman  <ossama@uci.edu>
 
-	* include/makeinclude/platform_linux_lxpthread.GNU:
-	* include/makeinclude/platform_linux_lxpthreads.GNU:
+        * include/makeinclude/platform_linux_lxpthread.GNU:
+        * include/makeinclude/platform_linux_lxpthreads.GNU:
 
-	  Renamed `platform_linux_lxpthread.GNU' to
- 	  platform_linux_lxpthreads.GNU to be consistent with the name of
- 	  its corresponding config header `config-linux-lxpthreads.h'.
-  	  Thanks to Ken Weinert <kenw@ihs.com> for reporting this.
+          Renamed `platform_linux_lxpthread.GNU' to
+          platform_linux_lxpthreads.GNU to be consistent with the name of
+          its corresponding config header `config-linux-lxpthreads.h'.
+          Thanks to Ken Weinert <kenw@ihs.com> for reporting this.
 
-	  `platform_linux_lxpthread.GNU' now includes the newly renamed
-	  file for backward compatibility.
+          `platform_linux_lxpthread.GNU' now includes the newly renamed
+          file for backward compatibility.
 
 Fri Apr 28 11:54:21 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SString.cpp: Fixed the delimiter_replace() method so that
-	  it actually does what it's comment implies...  Thanks to Martin
- 	  Krumpolec <krumpo@pobox.sk> for reporting this.
+        * ace/SString.cpp: Fixed the delimiter_replace() method so that
+          it actually does what it's comment implies...  Thanks to Martin
+          Krumpolec <krumpo@pobox.sk> for reporting this.
 
 Thu Apr 27 18:19:19 2000  James Hu  <jxh@entera.com>
 
@@ -247,12 +253,12 @@ Thu Apr 27 18:19:19 2000  James Hu  <jxh@entera.com>
 
 Thu Apr 27 16:53:49 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.cpp (unbind_all_i): Added new method
-	  unbind_all() for removing all the entries in one shot.  Thanks
-	  to Boris Sukholitko <boris@WebGlide.com> for providing this
-	  enhancement.
+        * ace/Hash_Map_Manager_T.cpp (unbind_all_i): Added new method
+          unbind_all() for removing all the entries in one shot.  Thanks
+          to Boris Sukholitko <boris@WebGlide.com> for providing this
+          enhancement.
 
-	* tests/Hash_Map_Manager_Test.cpp: Added test for unbind_all().
+        * tests/Hash_Map_Manager_Test.cpp: Added test for unbind_all().
 
 Thu Apr 27 14:17:52 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -300,8 +306,8 @@ Thu Apr 27 13:08:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Apr 27 14:32:45 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ACE-INSTALL (make): Updated the documentation.  Thanks to
-	  Ken Weinert <kenw@ihs.com> for reporting this.
+        * ACE-INSTALL (make): Updated the documentation.  Thanks to
+          Ken Weinert <kenw@ihs.com> for reporting this.
 
 Thu Apr 27 12:41:42 2000  James C. Hu  <jxh@entera.com>
 
@@ -410,9 +416,9 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
           sema_init (): Needed to cast an void *arg to ACE_mutexattr_t.
 
           dlsym (): Changed the way ACE declares symbolname so it uses the
- 	  right one on Win32 (WinNT always uses char *, CE always uses
- 	  wchar_t *).  The function still takes in ACE_TCHAR * though.
-  	  Thanks to Jeff Greif <jmg@trivida.com> for reporting this.
+          right one on Win32 (WinNT always uses char *, CE always uses
+          wchar_t *).  The function still takes in ACE_TCHAR * though.
+          Thanks to Jeff Greif <jmg@trivida.com> for reporting this.
 
           Removed a few global function definitions that were just for
           CE (like fwrite, fread, getc, etc.).  These are either supported
@@ -450,20 +456,20 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Apr 27 11:49:52 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.i (memchr): Do not cast away constness when emulating
-	  memchr().  Thanks to Rick Ohnemus <rjohnemus@systemware-inc.com>
- 	  for reporting this.
+        * ace/OS.i (memchr): Do not cast away constness when emulating
+          memchr().  Thanks to Rick Ohnemus <rjohnemus@systemware-inc.com>
+          for reporting this.
 
-	* ace/Select_Reactor_Base.cpp (open): The notification pipe handlers
-	  created by the ACE_Select_Reactor_Notify::open were being left
- 	  open after fork() and exec().  Thanks to Rick Ohnemus
- 	  <rjohnemus@systemware-inc.com> for reporting this.
+        * ace/Select_Reactor_Base.cpp (open): The notification pipe handlers
+          created by the ACE_Select_Reactor_Notify::open were being left
+          open after fork() and exec().  Thanks to Rick Ohnemus
+          <rjohnemus@systemware-inc.com> for reporting this.
 
 Wed Apr 26 23:47:31 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp (open): Make sure that the dummy I/O
-	  handle is not inherited by child processes.  Thanks to Rick
- 	  Ohnemus <rjohnemus@systemware-inc.com> for reporting this.
+        * ace/Process_Manager.cpp (open): Make sure that the dummy I/O
+          handle is not inherited by child processes.  Thanks to Rick
+          Ohnemus <rjohnemus@systemware-inc.com> for reporting this.
 
 Wed Apr 26 20:32:59 2000  James C. Hu  <jxh@entera.com>
 
@@ -471,10 +477,10 @@ Wed Apr 26 20:32:59 2000  James C. Hu  <jxh@entera.com>
         * ace/OS.i:
         * ace/README:
         * ace/config-freebsd-pthread.h:
-	  Added a new define ACE_HAS_TIME_R.  FreeBSD supports
-	  *time_r() calls, but not gethostbyname_r, so a new feature
-	  specification was needed to get these functions into
-	  ACE_OS.
+          Added a new define ACE_HAS_TIME_R.  FreeBSD supports
+          *time_r() calls, but not gethostbyname_r, so a new feature
+          specification was needed to get these functions into
+          ACE_OS.
 
 Wed Apr 26 12:21:16 2000  Steve Huston  <shuston@riverace.com>
 
