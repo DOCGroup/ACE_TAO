@@ -41,30 +41,35 @@ if ($^O eq "hpux") {
 $SV = new PerlACE::Process ("server", $server_args);
 $CL = new PerlACE::Process ("client");
 
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) {
+$SV->Spawn();
+$server = $SV->TimedWait(10);
+if ($server == 2) {
+  print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
+  # Mark as no longer running to avoid errors on exit.
+  $SV->{RUNNING} = 0;
+} else {
+  if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
     $SV->Kill ();
     exit 1;
-}
-
-$client = $CL->SpawnWaitKill (60);
-
-if ($client != 0) {
+  }
+  
+  $client = $CL->SpawnWaitKill (60);
+  
+  if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
-}
+  }
 
-$server = $SV->WaitKill (30);
-
-if ($server != 0) {
+  $server = $SV->WaitKill (30);
+  
+  if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
+  }
+  unlink $iorfile1;
+  unlink $iorfile2;
 }
-
-unlink $iorfile1;
-unlink $iorfile2;
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");

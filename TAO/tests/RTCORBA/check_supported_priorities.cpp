@@ -16,7 +16,7 @@ check_supported_priorities (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Not enough priority levels on this platform"
-                  "to run the test, aborting\n"));
-      ACE_OS::exit (0);
+                  " to run the test, aborting\n"));
+      ACE_OS::exit (2);
     }
 }
