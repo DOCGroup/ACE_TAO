@@ -1,7 +1,12 @@
 Sun Feb 09 21:44:34 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/{OS.cpp,Thread_Priority.cpp}: added comment about thread
+	  priorities only being tested for 1003.1C version of Pthreads.
+	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
+	  for suggesting this.
+
 	* tests/IOStream_Test.cpp,Makefile: added IOStream_Test,
-	  complements of James CE Johnson <jcej@lads.com>.
+	  complements of James CE Johnson <jcej@lads.com>.  Very cool!
 
 	* examples/IPC_SAP/UPIPE_SAP/ex1.cpp (peer1, peer2): removed
 	  unused variables c_addr and serv_addr: they were replaced by
