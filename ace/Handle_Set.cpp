@@ -26,15 +26,15 @@ ACE_Handle_Set::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize_ = %d"), this->size_));  
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmax_handle_ = %d"), this->max_handle_));  
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize_ = %d"), this->size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmax_handle_ = %d"), this->max_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n[ ")));
 
 #if defined (ACE_WIN32)
-  for (size_t i = 0; i < (size_t) this->mask_.fd_count + 1; i++) 
+  for (size_t i = 0; i < (size_t) this->mask_.fd_count + 1; i++)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" %x "), this->mask_.fd_array[i]));
 #else /* !ACE_WIN32 */
-  for (ACE_HANDLE i = 0; i < this->max_handle_ + 1; i++) 
+  for (ACE_HANDLE i = 0; i < this->max_handle_ + 1; i++)
     if (this->is_set (i))
       ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" %d "), i));
 #endif /* ACE_WIN32 */
@@ -45,7 +45,7 @@ ACE_Handle_Set::dump (void) const
 
 // Table that maps bytes to counts of the enabled bits in each value
 // from 0 to 255,
-// 
+//
 // nbits_[0] == 0
 //
 // because there are no bits enabled for the value 0.
@@ -55,7 +55,7 @@ ACE_Handle_Set::dump (void) const
 // because there are 2 bits enabled in the value 5, i.e., it's
 // 101 in binary.
 
-const char ACE_Handle_Set::nbits_[256] = 
+const char ACE_Handle_Set::nbits_[256] =
 {
   0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
   1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
@@ -87,8 +87,8 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
   ACE_OS::memcpy ((void *) &this->mask_,
-		  (void *) &fd_mask, 
-		  sizeof this->mask_);  
+                  (void *) &fd_mask,
+                  sizeof this->mask_);
 #if !defined (ACE_WIN32)
   this->sync (ACE_Handle_Set::MAXSIZE);
 #if defined (ACE_HAS_BIG_FD_SET)
@@ -118,10 +118,10 @@ ACE_Handle_Set::count_bits (u_long n)
 
   return rval;
 #else
-   return (ACE_Handle_Set::nbits_[n & 0xff] 
- 	  + ACE_Handle_Set::nbits_[(n >> 8) & 0xff] 
- 	  + ACE_Handle_Set::nbits_[(n >> 16) & 0xff] 
-  	  + ACE_Handle_Set::nbits_[(n >> 24) & 0xff]);
+   return (ACE_Handle_Set::nbits_[n & 0xff]
+          + ACE_Handle_Set::nbits_[(n >> 8) & 0xff]
+          + ACE_Handle_Set::nbits_[(n >> 16) & 0xff]
+          + ACE_Handle_Set::nbits_[(n >> 24) & 0xff]);
 #endif /* ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT */
 }
 
@@ -129,7 +129,7 @@ ACE_Handle_Set::count_bits (u_long n)
 // Find the bit position counting from right to left worst case
 // (1<<31) is 8.
 
-int 
+int
 ACE_Handle_Set::bitpos (u_long bit)
 {
   register int l = 0;
@@ -137,21 +137,21 @@ ACE_Handle_Set::bitpos (u_long bit)
 
   // This is a fast count method when have the most significative bit.
 
-  while (n >> 8) 
+  while (n >> 8)
     {
       n >>= 8;
       l += 8;
     }
 
   // Is greater than 15?
-  if (n & 16) 
+  if (n & 16)
     {
       n >>= 4;
       l += 4;
     }
 
   // Count number remaining bits.
-  while (n != 0) 
+  while (n != 0)
     {
       n &= n - 1;
       l++;
@@ -167,11 +167,11 @@ ACE_Handle_Set::bitpos (u_long bit)
 // dividing by 3, e.g., dividing by 8 requires shifting right 3 bits.
 // In order to do the shift, we need to calculate the number of bits
 // at some point.
-#define ACE_DIV_BY_WORDSIZE(x) ((x) >> (ACE_Handle_Set::WORDSIZE))
-#define ACE_MULT_BY_WORDSIZE(x) ((x) << (ACE_Handle_Set::WORDSIZE))
+#define ACE_DIV_BY_WORDSIZE(x) ((x) >> ((int) ACE_Handle_Set::WORDSIZE))
+#define ACE_MULT_BY_WORDSIZE(x) ((x) << ((int) ACE_Handle_Set::WORDSIZE))
 #else
-#define ACE_DIV_BY_WORDSIZE(x) ((x) / (ACE_Handle_Set::WORDSIZE))
-#define ACE_MULT_BY_WORDSIZE(x) ((x) * (ACE_Handle_Set::WORDSIZE))
+#define ACE_DIV_BY_WORDSIZE(x) ((x) / ((int) ACE_Handle_Set::WORDSIZE))
+#define ACE_MULT_BY_WORDSIZE(x) ((x) * ((int) ACE_Handle_Set::WORDSIZE))
 #endif /* ACE_USE_SHIFT_FOR_EFFICIENCY */
 
 void
@@ -183,7 +183,7 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
   this->size_ = 0;
 
   for (int i = ACE_DIV_BY_WORDSIZE (max - 1);
-       i >= 0; 
+       i >= 0;
        i--)
     this->size_ += ACE_Handle_Set::count_bits (maskp[i]);
 
@@ -209,9 +209,9 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
       int i;
 
       for (i = ACE_DIV_BY_WORDSIZE(current_max - 1);
-	   maskp[i] == 0; 
-	   i--)
-	continue;
+           maskp[i] == 0;
+           i--)
+        continue;
 
 #if defined (ACE_PSOS)
       this->max_handle_ = ACE_MULT_BY_WORDSIZE(i);
@@ -221,14 +221,14 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
         this->max_handle_++;
 #elif 1 /* !defined(ACE_HAS_BIG_FD_SET) */
       this->max_handle_ = ACE_MULT_BY_WORDSIZE(i);
-      for (fd_mask val = maskp[i]; 
-	   (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
-	   val = (val >> 1) & ACE_MSB_MASK)
-	this->max_handle_++;
+      for (fd_mask val = maskp[i];
+           (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
+           val = (val >> 1) & ACE_MSB_MASK)
+        this->max_handle_++;
 #else
       register u_long val = this->mask_.fds_bits[i];
       this->max_handle_ = ACE_MULT_BY_WORDSIZE(i)
-	+ ACE_Handle_Set::bitpos(val & ~(val - 1));
+        + ACE_Handle_Set::bitpos(val & ~(val - 1));
 #endif /* 1 */
     }
 
@@ -266,7 +266,7 @@ ACE_Handle_Set_Iterator::operator () (void)
   if (this->handle_index_ < this->handles_.mask_.fd_count)
     // Return the handle and advance the iterator.
     return (ACE_HANDLE) this->handles_.mask_.fd_array[this->handle_index_++];
-  else 
+  else
     return ACE_INVALID_HANDLE;
 
 #elif !defined (ACE_HAS_BIG_FD_SET) /* !ACE_WIN32 */
@@ -305,32 +305,32 @@ ACE_Handle_Set_Iterator::operator () (void)
       // If we've examined all the bits in this word, we'll go onto
       // the next word.
 
-      if (this->word_val_ == 0) 
-	{
-	  // Start the handle_index_ at the beginning of the next word
-	  // and then loop until we've found the first non-zero bit or
-	  // we run past the <maxhandlep1> of the bitset.
+      if (this->word_val_ == 0)
+        {
+          // Start the handle_index_ at the beginning of the next word
+          // and then loop until we've found the first non-zero bit or
+          // we run past the <maxhandlep1> of the bitset.
 
-	  for (this->handle_index_ = ACE_MULT_BY_WORDSIZE(++this->word_num_);
-	       this->handle_index_ < maxhandlep1
-		 && maskp[this->word_num_] == 0;
-	       this->word_num_++)
-	    this->handle_index_ += ACE_Handle_Set::WORDSIZE;
-	  
-	  // If the bit index becomes >= the maxhandlep1 that means
-	  // there weren't any more bits set that we want to consider.
-	  // Therefore, we'll just store the maxhandlep1, which will
-	  // cause <operator()> to return <ACE_INVALID_HANDLE>
-	  // immediately next time it's called.
-	  if (this->handle_index_ >= maxhandlep1)
-	    {
-	      this->handle_index_ = maxhandlep1;
-	      return result;
-	    }
-	  else
-	    // Load the bits of the next word.
-	    this->word_val_ = maskp[this->word_num_];
-	}
+          for (this->handle_index_ = ACE_MULT_BY_WORDSIZE(++this->word_num_);
+               this->handle_index_ < maxhandlep1
+                 && maskp[this->word_num_] == 0;
+               this->word_num_++)
+            this->handle_index_ += ACE_Handle_Set::WORDSIZE;
+
+          // If the bit index becomes >= the maxhandlep1 that means
+          // there weren't any more bits set that we want to consider.
+          // Therefore, we'll just store the maxhandlep1, which will
+          // cause <operator()> to return <ACE_INVALID_HANDLE>
+          // immediately next time it's called.
+          if (this->handle_index_ >= maxhandlep1)
+            {
+              this->handle_index_ = maxhandlep1;
+              return result;
+            }
+          else
+            // Load the bits of the next word.
+            this->word_val_ = maskp[this->word_num_];
+        }
 
       // Loop until we get <word_val_> to have its least significant
       // bit enabled, keeping track of which <handle_index> this
@@ -344,9 +344,9 @@ ACE_Handle_Set_Iterator::operator () (void)
         this->handle_index_++;
 #  else
       for (;
-	   ACE_BIT_DISABLED (this->word_val_, 1);
-	   this->handle_index_++)
-	this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
+           ACE_BIT_DISABLED (this->word_val_, 1);
+           this->handle_index_++)
+        this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 #  endif /* ACE_PSOS */
 
       return result;
@@ -358,13 +358,13 @@ ACE_Handle_Set_Iterator::operator () (void)
    if (lsb == 0)
      {
        do
-	 {
-	   // We have exceeded the word count in Handle_Set?
-	   if (++this->word_num_ >= this->word_max_)
-	     return ACE_INVALID_HANDLE;
+         {
+           // We have exceeded the word count in Handle_Set?
+           if (++this->word_num_ >= this->word_max_)
+             return ACE_INVALID_HANDLE;
 
-	   lsb = this->handles_.mask_.fds_bits[this->word_num_];
-	 }
+           lsb = this->handles_.mask_.fds_bits[this->word_num_];
+         }
        while (lsb == 0);
 
        // Set index to word boundary.
@@ -384,27 +384,27 @@ ACE_Handle_Set_Iterator::operator () (void)
 
        // Move index to least significative bit.
        while (lsb >>= 1)
-	 this->handle_index_++;
+         this->handle_index_++;
      }
-    else 
+    else
       {
-	// Find the least significative bit.
-	lsb &= ~(lsb - 1);
+        // Find the least significative bit.
+        lsb &= ~(lsb - 1);
 
-	// Remove least significative bit.
-	this->word_val_ ^= lsb;
+        // Remove least significative bit.
+        this->word_val_ ^= lsb;
 
-	register u_long n = lsb - this->oldlsb_;
+        register u_long n = lsb - this->oldlsb_;
 
-	// Move index to bit distance between new lsb and old lsb.
-	do
-	  {
-	    this->handle_index_++;
-	    n &= n >> 1;
-	  }
-	while (n != 0);
+        // Move index to bit distance between new lsb and old lsb.
+        do
+          {
+            this->handle_index_++;
+            n &= n >> 1;
+          }
+        while (n != 0);
 
-	this->oldlsb_ = lsb;
+        this->oldlsb_ = lsb;
       }
 
    return this->handle_index_;
@@ -420,14 +420,14 @@ ACE_Handle_Set_Iterator::operator++ (void)
 }
 
 ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
-  : handles_ (hs), 
+  : handles_ (hs),
 #if !defined (ACE_HAS_BIG_FD_SET) || defined (ACE_WIN32)
     handle_index_ (0),
     word_num_ (-1)
 #elif defined (ACE_HAS_BIG_FD_SET)
     oldlsb_ (0),
-    word_max_ (hs.max_handle_ == ACE_INVALID_HANDLE 
-	       ? 0 
+    word_max_ (hs.max_handle_ == ACE_INVALID_HANDLE
+               ? 0
                : ((ACE_DIV_BY_WORDSIZE (hs.max_handle_)) + 1))
 #endif /* ACE_HAS_BIG_FD_SET */
 {
@@ -443,7 +443,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.
   while (this->handle_index_ < maxhandlep1
-	 && maskp[++this->word_num_] == 0)
+         && maskp[++this->word_num_] == 0)
     this->handle_index_ += ACE_Handle_Set::WORDSIZE;
 
   // If the bit index becomes >= the maxhandlep1 that means there
@@ -463,22 +463,22 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
       this->handle_index_++;
 #  else
     for (this->word_val_ = maskp[this->word_num_];
-	 ACE_BIT_DISABLED (this->word_val_, 1)
-	   && this->handle_index_ < maxhandlep1;
-	 this->handle_index_++)
+         ACE_BIT_DISABLED (this->word_val_, 1)
+           && this->handle_index_ < maxhandlep1;
+         this->handle_index_++)
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 #  endif /* ACE_PSOS */
 #elif !defined (ACE_WIN32) && defined (ACE_HAS_BIG_FD_SET)
-    if (this->word_max_==0) 
+    if (this->word_max_==0)
       {
-	this->word_num_ = -1;
-	this->word_val_ = 0;
+        this->word_num_ = -1;
+        this->word_val_ = 0;
       }
     else
       {
-	this->word_num_ =
+        this->word_num_ =
           ACE_DIV_BY_WORDSIZE (this->handles_.min_handle_) - 1;
-	this->word_val_ = 0;
+        this->word_val_ = 0;
       }
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 }
