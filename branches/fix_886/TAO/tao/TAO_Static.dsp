@@ -323,14 +323,6 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower_Auto_Adder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\giop.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
@@ -480,6 +472,10 @@ SOURCE=.\LF_Event_Binder.h
 # Begin Source File
 
 SOURCE=.\LF_Event_Loop_Thread_Helper.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.h
 # End Source File
 # Begin Source File
 
@@ -1051,10 +1047,6 @@ SOURCE=.\FILE_Parser.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower_Auto_Adder.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\giop.i
 # End Source File
 # Begin Source File
@@ -1188,6 +1180,10 @@ SOURCE=.\LF_Event_Binder.inl
 # Begin Source File
 
 SOURCE=.\LF_Event_Loop_Thread_Helper.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.inl
 # End Source File
 # Begin Source File
 
@@ -1707,10 +1703,6 @@ SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower_Auto_Adder.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.cpp
 # End Source File
 # Begin Source File
@@ -1848,6 +1840,10 @@ SOURCE=.\LF_Event_Binder.cpp
 # Begin Source File
 
 SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Adder.cpp
 # End Source File
 # Begin Source File
 
