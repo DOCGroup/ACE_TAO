@@ -562,10 +562,11 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
 }
 
 ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
+                            ACE_Message_Block::Message_Flags flag,
                             int byte_order,
                             ACE_CDR::Octet major_version,
                             ACE_CDR::Octet minor_version)
-  : start_ (data),
+  : start_ (data, flag),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     good_bit_ (1),
     char_translator_ (0),
@@ -576,12 +577,13 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
 }
 
 ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
+                            ACE_Message_Block::Message_Flags flag,
                             size_t rd_pos,
                             size_t wr_pos,
                             int byte_order,
                             ACE_CDR::Octet major_version,
                             ACE_CDR::Octet minor_version)
-  : start_ (data),
+  : start_ (data, flag),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     good_bit_ (1),
     char_translator_ (0),
@@ -593,7 +595,8 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
   this->start_.rd_ptr (rd_pos);
 
   // Set the write pointer after doing a sanity check.
-  char* wrpos = this->start_.rd_ptr () + wr_pos;
+  char* wrpos = this->start_.base () + wr_pos;
+
   if (this->start_.end () >= wrpos)
     {
       this->start_.wr_ptr (wr_pos);
@@ -1101,7 +1104,11 @@ ACE_InputCDR::steal_from (ACE_InputCDR &cdr)
 {
   this->do_byte_swap_ = cdr.do_byte_swap_;
   this->start_.data_block (cdr.start_.data_block ()->duplicate ());
+
+  // If the message block had a DONT_DELETE flags, just clear it off..
+  this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
   this->start_.rd_ptr (cdr.start_.rd_ptr ());
+
   this->start_.wr_ptr (cdr.start_.wr_ptr ());
   this->major_version_ = cdr.major_version_;
   this->minor_version_ = cdr.minor_version_;
@@ -1133,6 +1140,12 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
     this->start_.replace_data_block (cdr.start_.data_block ());
   cdr.start_.replace_data_block (dnb);
 
+  // Exchange the flags information..
+  ACE_Message_Block::Message_Flags df = cdr.start_.self_flags ();
+  ACE_Message_Block::Message_Flags sf = this->start_.self_flags ();
+
+  cdr.start_.set_self_flags (sf);
+  this->start_.set_self_flags (df);
 
   // Reset the <cdr> pointers to zero before it is set again.
   cdr.start_.reset ();
@@ -1151,9 +1164,15 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
   if (this->start_.size () >= dwr_pos)
     this->start_.wr_ptr (dwr_pos);
 
-  //Set the GIOP version info
-  this->major_version_ = cdr.major_version_;
-  this->minor_version_ = cdr.minor_version_;
+  CORBA::Octet dmajor = cdr.major_version_;
+  CORBA::Octet dminor = cdr.minor_version_;
+
+  // Exchange the GIOP version info
+  cdr.major_version_ = this->major_version_;
+  cdr.minor_version_ = this->minor_version_;
+
+  this->major_version_ = dmajor;
+  this->minor_version_ = dminor;
 }
 
 
@@ -1163,6 +1182,11 @@ ACE_InputCDR::steal_contents (void)
   ACE_Message_Block* block =
     this->start_.clone ();
   this->start_.data_block (block->data_block ()->clone ());
+
+  // If at all our message had a DONT_DELETE flag set, just clear it
+  // off.
+  this->start_.clr_self_bit (ACE_Message_Block::DONT_DELETE);
+
   ACE_CDR::mb_align (&this->start_);
 
   return block;
@@ -1171,7 +1195,11 @@ ACE_InputCDR::steal_contents (void)
 void
 ACE_InputCDR::reset_contents (void)
 {
-  this->start_.data_block (this->start_.data_block ()->clone_nocopy ());
+  this->start_.data_block (this->start_.data_block ()->clone_nocopy
+                           ());
+
+  // Reset the flags...
+  this->start_.clr_self_bit (ACE_Message_Block::DONT_DELETE);
 }
 
 // --------------------------------------------------------------
