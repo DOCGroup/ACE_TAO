@@ -623,22 +623,6 @@ public:
    */
   int wait_grp (int grp_id);
 
-  // = Accessors for ACE_Thread_Descriptors.
-  /**
-   * Get a pointer to the calling thread's own thread_descriptor.
-   * This must be called from a spawn thread.  This function will
-   * fetch the info from TSS.
-   */
-  ACE_Thread_Descriptor *thread_desc_self (void);
-
-  /// Return a pointer to the thread's Thread_Descriptor,
-  /// 0 if fail.
-  ACE_Thread_Descriptor *thread_descriptor (ACE_thread_t);
-
-  /// Return a pointer to the thread's Thread_Descriptor,
-  /// 0 if fail.
-  ACE_Thread_Descriptor *hthread_descriptor (ACE_hthread_t);
-
   /**
    * Return the "real" handle to the calling thread, caching it if
    * necessary in TSS to speed up subsequent lookups. This is
@@ -932,6 +916,22 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
+  // = Accessors for ACE_Thread_Descriptors.
+  /**
+   * Get a pointer to the calling thread's own thread_descriptor.
+   * This must be called from a spawn thread.  This function will
+   * fetch the info from TSS.
+   */
+  ACE_Thread_Descriptor *thread_desc_self (void);
+
+  /// Return a pointer to the thread's Thread_Descriptor,
+  /// 0 if fail.
+  ACE_Thread_Descriptor *thread_descriptor (ACE_thread_t);
+
+  /// Return a pointer to the thread's Thread_Descriptor,
+  /// 0 if fail.
+  ACE_Thread_Descriptor *hthread_descriptor (ACE_hthread_t);
+
   /// Create a new thread (must be called with locks held).
   virtual int spawn_i (ACE_THR_FUNC func,
                        void *args,
