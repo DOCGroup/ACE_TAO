@@ -1,3 +1,13 @@
+Mon Oct 21 17:26:15 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SPIPE_Acceptor.cpp:   Modified
+	  SPIPE_Acceptor::create_new_instance to manually signal the event
+ 	  used in the ConnectNamedPipe call when an ERROR_PIPE_CONNECTED
+ 	  status is returned.  Also added the handling of the status of
+ 	  ERROR_NO_DATA to the same logic as ERROR_PIPE_CONNECTED.  Thanks
+ 	  to Patrick J. McNerthney <pat@mcnerthney.com> for contributing
+ 	  this.
+
 Tue Oct 22 10:20:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/C++NPv2/Reactor_Logging_Server_T.cpp: Fixed a typo that
