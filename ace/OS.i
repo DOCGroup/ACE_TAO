@@ -6816,9 +6816,9 @@ ACE_INLINE int
 ACE_OS::thr_join (const ACE_Thread_ID &thr_id, void **status)
 {
 #if defined (ACE_WIN32)
-  return ACE_OS::join (thr_id.id (), status);
+  return ACE_OS::thr_join (thr_id.handle (), status);
 #else
-  return ACE_OS::join (thr_id.handle (), status);
+  return ACE_OS::thr_join (thr_id.id (), status);
 #endif /* ACE_WIN32 */
 }
 
