@@ -3083,12 +3083,15 @@ PortableServer::Current_ptr PortableServer::Current::_duplicate (PortableServer:
 
 PortableServer::Current_ptr PortableServer::Current::_narrow (
                                                               CORBA::Object_ptr obj,
-                                                              CORBA::Environment &env
+                                                              CORBA::Environment &ACE_TRY_ENV
                                                               )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::Current::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/Current:1.0", env))
+  CORBA::Boolean check =
+    !obj->_is_a ("IDL:omg.org/PortableServer/Current:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::Current::_nil ());
+  if (check)
     return PortableServer::Current::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();

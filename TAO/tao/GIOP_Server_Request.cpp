@@ -276,17 +276,16 @@ TAO_GIOP_ServerRequest::oa (void)
 
 void
 TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
-                                   CORBA::Environment &env)
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  env.clear ();
-
   // Save params for later use when marshaling the reply.
   this->params_ = list;
 
   // Then unmarshal each "in" and "inout" parameter.
   for (u_int i = 0; i < list->count (); i++)
     {
-      CORBA::NamedValue_ptr nv = list->item (i, env);
+      CORBA::NamedValue_ptr nv = list->item (i, ACE_TRY_ENV);
+      ACE_CHECK;
 
       // check if it is an in or inout parameter
       if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
@@ -304,7 +303,8 @@ TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
       // Skip over the next aregument.
       CORBA::TypeCode::traverse_status status =
-        this->incoming_->skip (tc.in (), env);
+        this->incoming_->skip (tc.in (), ACE_TRY_ENV);
+      ACE_CHECK;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
@@ -335,7 +335,8 @@ TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // Stick it into the Any. It gets duplicated there.
       any->_tao_replace (tc.in (),
                          cdr,
-                         env);
+                         ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Now we can release the original.
       ACE_Message_Block::release (cdr);
@@ -350,7 +351,7 @@ TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       ACE_ERROR ((LM_ERROR,
                   "TAO_GIOP_ServerRequest::arguments - "
                   "%d bytes left in buffer\n", incoming_->length ()));
-      env.exception (new CORBA::BAD_PARAM ());
+      ACE_THROW (CORBA::BAD_PARAM ());
     }
 }
 
@@ -360,14 +361,12 @@ TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
 void
 TAO_GIOP_ServerRequest::set_result (const CORBA::Any &value,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
-  env.clear ();
-
   // setting a result when another result already exists or if an exception
   // exists is an error
   if (this->retval_ || this->exception_)
-    env.exception (new CORBA::BAD_INV_ORDER ());
+    ACE_THROW (CORBA::BAD_INV_ORDER ());
   else
     {
       this->retval_ = new CORBA::Any (value);
@@ -378,10 +377,10 @@ TAO_GIOP_ServerRequest::set_result (const CORBA::Any &value,
 
 void
 TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
-                                       CORBA::Environment &env)
+                                       CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->retval_ || this->exception_)
-    env.exception (new CORBA::BAD_INV_ORDER ());
+    ACE_THROW (CORBA::BAD_INV_ORDER ());
   else
   {
 
@@ -420,7 +419,7 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 // parameters
 
 void
-TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
+TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 {
   // NOTE: if "env" is set, it takes precedence over exceptions
   // reported using the mechanism of the ServerRequest.  Only system
@@ -443,12 +442,14 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
           CORBA::TypeCode_var tc = this->retval_->type ();
                 if (this->retval_->any_owns_data ())
             {
-              (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, env);
+              (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, ACE_TRY_ENV);
+              ACE_CHECK;
             }
           else
             {
               TAO_InputCDR cdr (retval_->_tao_get_cdr ());
-              (void) this->outgoing_->append (tc.in (), &cdr, env);
+              (void) this->outgoing_->append (tc.in (), &cdr, ACE_TRY_ENV);
+              ACE_CHECK;
             }
         }
 
@@ -459,7 +460,8 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
                i < this->params_->count ();
                i++)
             {
-              CORBA::NamedValue_ptr nv = this->params_->item (i, env);
+              CORBA::NamedValue_ptr nv = this->params_->item (i, ACE_TRY_ENV);
+              ACE_CHECK;
               if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
                 continue;
 
@@ -467,12 +469,14 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
               CORBA::TypeCode_var tc = any->type ();
               if (any->any_owns_data ())
                 {
-                  (void) this->outgoing_->encode (tc.in (), any->value (), 0, env);
+                  (void) this->outgoing_->encode (tc.in (), any->value (), 0, ACE_TRY_ENV);
+                  ACE_CHECK;
                 }
               else
                 {
                   TAO_InputCDR cdr (any->_tao_get_cdr ());
-                  (void) this->outgoing_->append (tc.in (), &cdr, env);
+                  (void) this->outgoing_->append (tc.in (), &cdr, ACE_TRY_ENV);
+                  ACE_CHECK;
                 }
             }
         }
@@ -483,7 +487,7 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 
 // Extension
 void
-TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
+TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &ACE_TRY_ENV,
                                    // ORB related exception reporting
                                    const TAO_Call_Data_Skel *info,
                                    // call description
@@ -503,14 +507,20 @@ TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
       if ((pdp->mode == CORBA::ARG_IN)
           || (pdp->mode == CORBA::ARG_INOUT))
         {
-          // Then just unmarshal the value.
-          (void) incoming_->decode (pdp->tc, ptr, 0, orb_env);
-        }
-
-      if (orb_env.exception ())
-        {
-          orb_env.print_exception ("TAO_GIOP_ServerRequest::demarshal - parameter decode failed");
-          return;
+          ACE_TRY
+            {
+              // Then just unmarshal the value.
+              (void) incoming_->decode (pdp->tc, ptr, 0, ACE_TRY_ENV);
+              //ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "TAO_GIOP_ServerRequest::marshal - parameter decode failed");
+              ACE_RETHROW;
+            }
+          ACE_ENDTRY;
+          ACE_CHECK;
         }
     }
   va_end (param_vector);
@@ -603,9 +613,10 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO_GIOP_ServerRequest::marshal - parameter encode failed");
-      return;
+      ACE_RETHROW;
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 
   va_end (param_vector);
 }

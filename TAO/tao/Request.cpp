@@ -49,11 +49,11 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               CORBA::NVList_ptr args,
                               CORBA::NamedValue_ptr result,
                               CORBA::Flags flags,
-                              CORBA::Environment &TAO_IN_ENV)
+                              CORBA::Environment &ACE_TRY_ENV)
   : args_ (args),
     result_ (result),
     flags_ (flags),
-    env_ (TAO_IN_ENV),
+    env_ (ACE_TRY_ENV),
     contexts_ (0),
     ctx_ (0),
     refcount_ (1)
@@ -64,9 +64,9 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               const CORBA::Char *op,
-                              CORBA::Environment &TAO_IN_ENV)
+                              CORBA::Environment &ACE_TRY_ENV)
   : flags_ (0),
-    env_ (TAO_IN_ENV),
+    env_ (ACE_TRY_ENV),
     contexts_ (0),
     ctx_ (0),
     refcount_ (1)

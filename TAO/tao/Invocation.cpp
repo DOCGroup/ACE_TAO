@@ -447,7 +447,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
           // @@ Think about a better way to raise the exception here,
           // maybe we need some more macros?
-          ACE_TRY_ENV.exception (exception);
+          ACE_TRY_ENV.exception (exception);  // We can not use ACE_THROW here.
           return TAO_INVOKE_EXCEPTION;
         }
 
@@ -532,7 +532,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
           // @@ Think about a better way to raise the exception here,
           // maybe we need some more macros?
-          ACE_TRY_ENV.exception (exception);
+          ACE_TRY_ENV.exception (exception); // We can not use ACE_THROW here.
           return TAO_INVOKE_EXCEPTION;
         }
 
@@ -688,7 +688,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
         // @@ There should be a better way to raise this exception!
         //    This code works for both native and emulated exceptions,
         //    but it is ugly.
-        ACE_TRY_ENV.exception (ex);
+        ACE_TRY_ENV.exception (ex); // We can not use ACE_THROW here.
         return TAO_INVOKE_OK;
       }
       // NOTREACHED.

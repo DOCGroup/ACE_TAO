@@ -31,12 +31,12 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 int
 TAO_ORB_Manager::init (int &argc,
                        char **argv,
-                       CORBA::Environment &env)
+                       CORBA::Environment &ACE_TRY_ENV)
 {
   return this->init (argc,
                      argv,
                      0,
-                     env);
+                     ACE_TRY_ENV);
 }
 
 int

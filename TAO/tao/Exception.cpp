@@ -475,15 +475,17 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
   const char *name = "UnknownUserException";
   const char *field_name = "exception";
 
-  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
-      || stream.write_string (interface_id) == 0
-      || stream.write_string (name) == 0
-      || stream.write_ulong (1L) == 0
-      || stream.write_string (field_name) == 0
-      || stream.encode (CORBA::_tc_TypeCode,
-                        &CORBA::_tc_any, 0,
-                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || ACE_TRY_ENV.exception () != 0)
+  CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
+    || stream.write_string (interface_id) == 0
+    || stream.write_string (name) == 0
+    || stream.write_ulong (1L) == 0
+    || stream.write_string (field_name) == 0
+    || stream.encode (CORBA::_tc_TypeCode,
+                      &CORBA::_tc_any, 0,
+                      ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
+  ACE_CHECK;
+
+  if (result)
     ACE_THROW (CORBA_INITIALIZE ());
 
   ACE_NEW_THROW_EX (tcp,
@@ -549,20 +551,23 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   ACE_OS::strcat (full_id, name);
   ACE_OS::strcat (full_id, suffix);
 
-  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
-      || stream.write_string (full_id) == 0
-      || stream.write_string (name) == 0
-      || stream.write_ulong (2L) != 1
-      || stream.write_string (minor) == 0
-      || stream.encode (CORBA::_tc_TypeCode,
-                        &CORBA::_tc_ulong, 0,
-                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || ACE_TRY_ENV.exception () != 0
-      || stream.write_string (completed) == 0
-      || stream.encode (CORBA::_tc_TypeCode,
-                        &TC_completion_status, 0,
-                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || ACE_TRY_ENV.exception () != 0)
+  CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
+    || stream.write_string (full_id) == 0
+    || stream.write_string (name) == 0
+    || stream.write_ulong (2L) != 1
+    || stream.write_string (minor) == 0
+    || stream.encode (CORBA::_tc_TypeCode,
+                      &CORBA::_tc_ulong, 0,
+                      ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
+  ACE_CHECK;
+
+  result = result || stream.write_string (completed) == 0
+    || stream.encode (CORBA::_tc_TypeCode,
+                      &TC_completion_status, 0,
+                      ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
+  ACE_CHECK;
+
+  if (result)
     ACE_THROW (CORBA::INITIALIZE ());
   // @@ It is possible to throw an exception at this point?  What if
   // the exception typecode has not been initialized yet?
