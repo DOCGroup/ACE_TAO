@@ -257,12 +257,12 @@ http://www.cs.wustl.edu/~schmidt/
 
 BUILDING AND INSTALLING ACE
 
-Please refer to the INSTALL file for information on how to build and
-test the ACE wrappers.  The overall ACE release is very large (~1
-Meg).  Therefore, I'm sorry, but I will be unable to distribute the
-ACE wrappers via email.  The BIBLIOGRAPHY file contains information on
-where to obtain articles that describe the ACE wrappers and the
-ADAPTIVE system in more detail.
+Please refer to the ACE-INSTALL.html file for information on how to
+build and test the ACE wrappers.  The overall ACE release is very
+large (~1 Meg).  Therefore, I'm sorry, but I will be unable to
+distribute the ACE wrappers via email.  The BIBLIOGRAPHY file contains
+information on where to obtain articles that describe the ACE wrappers
+and the ADAPTIVE system in more detail.
 
 The current release has been tested extensively on Sun workstations
 running Sun OS 4.1.x and Solaris 2.x (on both SPARC and Intel
