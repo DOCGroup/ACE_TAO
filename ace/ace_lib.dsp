@@ -2082,7 +2082,88 @@ SOURCE=.\Map.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MEM_IO.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Mem_Map.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\MEM_SAP.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\MEM_Stream.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
@@ -5286,7 +5367,19 @@ SOURCE=.\Map_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MEM_IO.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Mem_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MEM_SAP.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MEM_Stream.h
 # End Source File
 # Begin Source File
 
@@ -6114,7 +6207,19 @@ SOURCE=.\Map_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\MEM_IO.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Mem_Map.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MEM_SAP.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MEM_Stream.i
 # End Source File
 # Begin Source File
 
