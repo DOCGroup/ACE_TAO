@@ -35,7 +35,7 @@ print_array_in_reverse (char *array,
 }
 
 int
-main (int argc, char **argv)
+main (int argc, ACE_TCHAR **argv)
 {
   ACE_LOG_MSG->open (argv[0]);
 
@@ -45,9 +45,9 @@ main (int argc, char **argv)
                       -1);
 
   ACE_Mem_Map mmap;
-  
+
   if (mmap.map (argv[1], -1, O_RDWR) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "%n: %p\n",
                        "mmap"),
                       -1);
