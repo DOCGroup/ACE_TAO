@@ -174,7 +174,7 @@ public:
 
   virtual void _raise (void);
 
-#if defined (TAO_USES_FLICK)
+#if !defined (TAO_USES_FLICK)
 private:
 #endif /* TAO_USES_FLICK */
 
