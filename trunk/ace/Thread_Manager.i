@@ -231,6 +231,34 @@ ACE_Thread_Control::thr_mgr (ACE_Thread_Manager *tm)
   return o_tm;
 }
 
+ACE_INLINE ACE_Thread_Descriptor *
+ACE_Thread_Manager::thread_desc_self (void)
+{
+  // This method must be called with lock held.
+
+  // Try to get it from cache.
+  ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
+
+#if 1
+  ACE_ASSERT (desc != 0);
+  // Thread descriptor should always get cached.
+#else
+  if (desc == 0)
+    {
+      ACE_thread_t id = ACE_OS::thr_self ();
+
+      desc = this->find_thread (id);
+
+      // Thread descriptor adapter might not have been put into the
+      // list yet.
+      if (desc != 0)
+        // Update the TSS cache.
+        ACE_LOG_MSG->thr_desc (desc);
+    }
+#endif
+  return desc;
+}
+
 // Return the unique ID of the thread.
 
 ACE_INLINE ACE_thread_t
