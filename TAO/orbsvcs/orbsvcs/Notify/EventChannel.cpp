@@ -43,8 +43,6 @@ TAO_Notify_SupplierAdmin_Find_Worker;
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Seq_Worker;
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Seq_Worker;
 
-using namespace TAO_Notify;
-
 TAO_Notify_EventChannel::TAO_Notify_EventChannel (void)
   : ecf_ (0)
   , ca_container_ (0)
@@ -65,7 +63,8 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            , const CosNotification::AdminProperties & initial_admin
                            ACE_ENV_ARG_DECL)
 {
-  set_parent (ecf ACE_ENV_ARG_PARAMETER);
+  // this-> on the following line confuses VC6
+  initialize (ecf ACE_ENV_ARG_PARAMETER);
 
   this->ecf_ = ecf;
 
@@ -128,10 +127,14 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
 
 void
-TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory * ecf
+TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent * parent
                            ACE_ENV_ARG_DECL)
 {
-  Topology_Object::set_parent (ecf ACE_ENV_ARG_PARAMETER);
+  // this-> on the following line confuses VC6
+  initialize (parent ACE_ENV_ARG_PARAMETER);
+
+  this->ecf_ = dynamic_cast <TAO_Notify_EventChannelFactory*>(parent);
+  ACE_ASSERT (this->ecf_ != 0);
 
   this->ecf_->_incr_refcnt ();
 

@@ -1,3 +1,20 @@
+Tue Dec 14 13:50:14 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+
+          Reverting the change from "Fri Dec  3 11:34:37 2004" as it
+          fundamentally broke the notification service.  I added a simpler
+          fix for vc6 build problems.
+
 Tue Dec 14 19:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/implrepo/index.html:
@@ -29,9 +46,9 @@ Mon Dec 13 18:08:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Dec 13 18:12:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Release:
+        * Release:
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Mon Dec 13 11:58:49 2004  Chad Elliott  <elliott_c@ociweb.com>
 

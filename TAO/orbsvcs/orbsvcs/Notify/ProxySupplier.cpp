@@ -29,9 +29,9 @@ TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
 }
 
 void
-TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin * consumer_admin ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
 {
-  set_parent (consumer_admin ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Proxy::initialize (consumer_admin ACE_ENV_ARG_PARAMETER);
 
   this->consumer_admin_ = consumer_admin;
 

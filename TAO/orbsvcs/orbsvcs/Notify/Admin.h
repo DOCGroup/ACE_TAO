@@ -49,7 +49,7 @@ public:
   ~TAO_Notify_Admin ();
 
   /// Init
-  void init (TAO_Notify_EventChannel * ec ACE_ENV_ARG_DECL);
+  void init (TAO_Notify::Topology_Parent * parent ACE_ENV_ARG_DECL);
 
   /// Insert the proxy in the <proxy_container_>.
   void insert (TAO_Notify_Proxy* proxy ACE_ENV_ARG_DECL);
