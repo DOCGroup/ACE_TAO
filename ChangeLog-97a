@@ -1,5 +1,9 @@
 Wed Jun 18 19:43:35 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/Signal.cpp: 'removed "const" from #define of
+	  ACE_MAX_SIGNAL_HANDLERS because it broke Irix 6.2 build.  Thanks
+	  to Gonzalo A. Diethelm <gonzo@ing.puc.cl> for reporting this.
+
 	* examples/Threads/task_four.cpp (Invoker_Task::svc): fixed typo,
 	  n_tasks instead of ntasks.
 
