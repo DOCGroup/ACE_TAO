@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Exception.h"
 #include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
 
