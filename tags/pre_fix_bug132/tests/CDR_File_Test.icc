@@ -1,0 +1,15 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "CDR_File_Test"
+	{
+	   source type (cpp) "CDR_File_Test.cpp"
+	   source platformLinkLibs
+	}
+    }

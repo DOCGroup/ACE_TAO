@@ -1,0 +1,8 @@
+
+#
+# Makefile for building the Bank example
+# 
+
+MAKEFILES = Bank_Client.bor Bank_Server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
