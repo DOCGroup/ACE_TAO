@@ -761,8 +761,10 @@ TAO_IMR_Op_IOR::run (void)
         this->implrepo_->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      char *pos = ACE_OS::strstr (imr_str.inout (),
-                                  "://");
+      // Search for "corbaloc:" alone, without the protocol.  This code
+      // should be protocol neutral.
+      const char corbaloc[] = "corbaloc:";
+      char *pos = ACE_OS::strstr (imr_str.inout (), corbaloc);
 
       if (pos == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -770,7 +772,8 @@ TAO_IMR_Op_IOR::run (void)
                           -1);
       else
         {
-          pos = ACE_OS::strchr (pos + 3,
+          pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
+          pos = ACE_OS::strchr (pos + 1,
                                 this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
           if (pos)

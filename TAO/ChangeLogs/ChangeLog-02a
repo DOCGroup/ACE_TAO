@@ -1,3 +1,22 @@
+Sat May 12 12:39:47 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/POA.cpp (imr_notify_startup, key_to_object):
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run): 
+
+	  The Implementation Repository code used stringified URL style
+	  IORs to determine which port a given server was running on.  It
+	  expected them to be of the form "iioploc://".  However, TAO no
+	  longer generates IORs of that form.  Instead it generates URL
+	  style IORs of the form defined in the latest Interoperable
+	  Naming Service spec, i.e. "corbaloc:iiop:...".  Updated the
+	  above functions to parse "corbaloc" IORs instead.  This fixes a
+	  segmentation fault occured when "ImR-ifying" IORs.  [Bug 909]
+
+	* orbsvcs/ImplRepo_Service/README.txt:
+
+	  Corrected malformed "corbaloc" URL IORs in this file.
+
 Sat May 12 08:30:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Services_Activate.h: Fixed a compile error in platforms with
