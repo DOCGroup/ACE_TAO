@@ -1,3 +1,8 @@
+Sat Sep  5 15:31:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.h: Added a "no-op" ACE_Barrier for cases where we
+ 	  don't have ACE_HAS_THREADS enabled.
+
 Sat Sep  5 15:25:33 EDT 1998  James CE Johnson  <jcej@lads.com>
 
 	  docs/tutorials/index.html
