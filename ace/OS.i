@@ -4872,6 +4872,27 @@ ACE_OS::accept (ACE_HANDLE handle,
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
+ACE_INLINE int
+ACE_OS::enum_protocols (int *protocols,
+						ACE_Protocol_Info *protocol_buffer,
+						u_long *buffer_length)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+
+ACE_SOCKCALL_RETURN (::WSAEnumProtocols (protocols,
+										 protocol_buffer,
+										 buffer_length),
+					 int,
+					 SOCKET_ERROR);
+
+#else
+  ACE_UNUSED_ARG (protocols);
+  ACE_UNUSED_ARG (protocol_buffer);
+  ACE_UNUSED_ARG (buffer_length);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
 ACE_INLINE ACE_HANDLE
 ACE_OS::join_leaf (ACE_HANDLE socket,
                    const sockaddr *name,
