@@ -1,3 +1,9 @@
+Wed Apr 14 17:28:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
+
+	  Corrected "fuzz" error regarding missing RCS ID.
+
 Wed Apr 14 23:03:20 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* ace/DLL_Manager.cpp: Additional validation in 
