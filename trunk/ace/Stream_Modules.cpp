@@ -99,7 +99,7 @@ ACE_Stream_Head<ACE_SYNCH_USE>::canonical_flush (ACE_Message_Block *mb)
 
 template <ACE_SYNCH_DECL> int 
 ACE_Stream_Head<ACE_SYNCH_USE>::put (ACE_Message_Block *mb, 
-				   ACE_Time_Value *tv)
+				     ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::put");
   int res = 0;
