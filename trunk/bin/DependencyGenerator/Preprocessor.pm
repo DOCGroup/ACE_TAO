@@ -31,35 +31,6 @@ sub new {
 }
 
 
-sub locateFile {
-  my($self) = shift;
-  my($file) = shift;
-  my($loc)  = shift;
-
-  if (exists $self->{'ifound'}->{$file}) {
-    return $self->{'ifound'}->{$file};
-  }
-  else {
-    foreach my $dir (@{$self->{'ipaths'}}) {
-      if (-r "$dir/$file") {
-        $self->{'ifound'}->{$file} = "$dir/$file";
-        return $self->{'ifound'}->{$file};
-      }
-    }
-
-    ## If the file we're currently looking at contains a directory name
-    ## then, we need to look for include files in that directory.
-    if (-r "$loc/$file") {
-      $self->{'ifound'}->{$file} = "$loc/$file";
-      return $self->{'ifound'}->{$file};
-    }
-  }
-
-  $self->{'ifound'}->{$file} = undef;
-  return undef;
-}
-
-
 sub process {
   my($self)     = shift;
   my($file)     = shift;
@@ -103,7 +74,31 @@ sub process {
         }
         elsif (!defined $zero[0] &&
                /#\s*include\s+[<"]([^">]+)[">]/o) {
-          my($inc) = $self->locateFile($1, $dir);
+          ## Locate the include file
+          my($inc) = undef;
+          if (exists $self->{'ifound'}->{$1}) {
+            $inc = $self->{'ifound'}->{$1};
+          }
+          else {
+            foreach my $dirp (@{$self->{'ipaths'}}) {
+              if (-r "$dirp/$1") {
+                $inc = "$dirp/$1";
+                last;
+              }
+            }
+
+            if (!defined $inc) {
+              ## If the file we're currently looking at contains a
+              ## directory name then, we need to look for include
+              ## files in that directory.
+              if (-r "$dir/$1") {
+                $inc = "$dir/$1";
+              }
+            }
+            $self->{'ifound'}->{$1} = $inc;
+          }
+
+          ## If we've found the include file, then process it too.
           if (defined $inc) {
             $inc =~ s/\\/\//go;
             if (!$noinline ||

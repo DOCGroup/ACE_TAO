@@ -25,7 +25,7 @@ sub new {
 sub process {
   #my($self) = shift;
   #my($file) = shift;
-  return ();
+  return [];
 }
 
 
