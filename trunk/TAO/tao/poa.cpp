@@ -2441,7 +2441,6 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
                    this->creation_time_.usec ());
 
   // Calculate the required buffer size.
-  // Note: 1 is for the null terminator
   int buffer_size =
     this->object_key_type ().length () +
     TAO_POA::name_separator_length () +
@@ -2452,7 +2451,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
     this->complete_name_.length () +
     TAO_POA::name_separator_length () +
     id.length () +
-    1;
+    1 /* for the zero terminator that sprintf appends */;
 
   // Create the buffer for the key
   CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
@@ -2474,11 +2473,13 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
                    id_buffer);
 
   // Create the key, giving the ownership of the buffer to the
-  // sequence.
+  // sequence.  Must specify the length as one less than the buffer
+  // size so that the terminating zero from sprintf() doesn't
+  // get used as part of the key.
   return new TAO_ObjectKey (buffer_size,
-                             buffer_size,
-                             buffer,
-                             CORBA::B_TRUE);
+                            buffer_size - 1,
+                            buffer,
+                            CORBA::B_TRUE);
 }
 
 int
@@ -2585,66 +2586,141 @@ TAO_POA::set_complete_name (void)
   this->complete_name_ += this->name_;
 }
 
-char *
+void
+TAO_POA::encode_sequence_to_string (CORBA::String &str,
+                                    const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
+{
+  // We must allocate a buffer which is (gag) 3 times the length
+  // of the sequence, which is the length required in the worst-case
+  // scenario of all non-printable characters.
+  //
+  // There are two strategies here...we could allocate all that space here,
+  // fill it up, then copy-allocate new space of just the right length.
+  // OR, we could just return this space.  The classic time-space tradeoff,
+  // and for now we'll let time win out, which means that we only do the
+  // allocation once.
+  u_int len = 3 * seq.length() + 1 /* for zero termination */;
+  str = CORBA::string_alloc (len);
+  
+  char *cp = str;
+
+  for (u_int i = 0;
+       cp < (cp+len) && i < seq.length();
+       i++)
+    {
+      u_char byte = seq[i];
+      if (isascii (byte) && isprint (byte) && byte != '\\')
+        {
+          *cp++ = (char) byte;
+          continue;
+        }
+
+      *cp++ = '\\';
+      *cp++ = ACE::nibble2hex (byte & 0x0f);
+      *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
+    }
+  // Zero terminate
+  *cp = '\0';
+}
+
+CORBA::String
 TAO_POA::ObjectId_to_string (const PortableServer::ObjectId &id)
 {
-  // This method assumes that the id was initially placed in the octet
-  // sequence as a char string
-
-  // Grab the id buffer
-  CORBA::String id_buffer = (CORBA::String) &id[0];
-
-  // Create space and copy the contents
-  return CORBA::string_dup (id_buffer);
+  CORBA::String s = 0;
+  encode_sequence_to_string (s, id);
+  return s;
 }
 
 const char *
 TAO_POA::ObjectId_to_const_string (const PortableServer::ObjectId &id)
 {
-  // This method assumes that the id was initially placed in the octet
-  // sequence as a char string
-
-  // Grab the id buffer
-  return (CORBA::String) &id[0];
+  return ObjectId_to_string (id);
 }
 
 const char *
 TAO_POA::ObjectKey_to_const_string (const TAO_ObjectKey &key)
 {
-  // Grab the id buffer
-  return (CORBA::String) &key[0];
+  CORBA::String s;
+  encode_sequence_to_string (s, key);
+  return s;
+}
+
+void
+TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+                                    CORBA::String str)
+{
+  if (str == 0)
+    {
+      seq.length (0);
+      return;
+    }
+  
+  u_int length = ACE_OS::strlen (str);
+  char *eos = str + length;
+  char *cp = str;
+
+  // Set the length of the sequence to be as long as
+  // we'll possibly need...we'll reset it to the actual
+  // length later.
+  seq.length (length);
+
+  for (u_int i = 0;
+       cp < eos && i < seq.length ();
+       i++)
+    {
+      if (*cp == '\\')
+        {
+          // This is an escaped non-printable,
+          // so we decode the hex values into
+          // the sequence's octet
+          seq[i] = (u_char) (ACE::hex2byte (cp[1]) << 4);
+          seq[i] |= (u_char) ACE::hex2byte (cp[2]);
+          cp += 3;
+        }
+      else
+        {
+          // Copy it in
+          seq[i] = *cp++;
+        }
+    }
+
+  // Set the length appropriately
+  seq.length (i);
 }
 
 PortableServer::ObjectId *
 TAO_POA::string_to_ObjectId (const char *id)
 {
   // Size of Id
-  CORBA::ULong id_length = ACE_OS::strlen (id) + 1;
+  // We DO NOT include the zero terminator, as this is simply an
+  // artifact of the way strings are stored in C.
+  CORBA::ULong id_length = ACE_OS::strlen (id);
 
-  // Create the buffer for the Id
-  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (id_length);
+  // Create an empty sequence.
+  PortableServer::ObjectId *newid =
+    new PortableServer::ObjectId (id_length);
 
-  // Copy contents
-  ACE_OS::strcpy ((CORBA::String) buffer, id);
+  // Decode the contents
+  decode_string_to_sequence (*newid, (CORBA::String)id);
 
-  // Create a new ID
-  return new PortableServer::ObjectId (id_length,
-                                       id_length,
-                                       buffer,
-                                       CORBA::B_TRUE);
+  // Return the id
+  return newid;
 }
 
 PortableServer::ObjectId *
 TAO_POA::wstring_to_ObjectId (const CORBA::WChar *id)
 {
   // Size of Id
-  CORBA::ULong id_length = ACE_OS::strlen (id) + 1;
-
+  // We DO NOT include the zero terminator, as this is simply an
+  // artifact of the way strings are stored in C.
+  CORBA::ULong id_length = ACE_OS::strlen (id);
+  size_t bufsize = id_length * sizeof(CORBA::WChar);
+  
   // Create the buffer for the Id
-  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (id_length * sizeof (CORBA::WChar));
+  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (bufsize);
 
   // Copy contents
-  ACE_OS::strcpy ((CORBA::WString) buffer, id);
+  ACE_OS::memcpy (buffer, id, bufsize);
 
   // Create a new ID
   return new PortableServer::ObjectId (id_length,

@@ -12,6 +12,7 @@
 #include "tao/corba.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
+#include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "tao/tao_internals.h"
 #include "tao/Timeprobe.h"
