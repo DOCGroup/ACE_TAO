@@ -30693,6 +30693,21 @@ SOURCE=.\ValueFactory_Map.cpp
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\WrongTransactionC.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -31012,6 +31027,10 @@ SOURCE=.\ValueFactory_Map.h
 # Begin Source File
 
 SOURCE=.\varout.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\WrongTransactionC.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"

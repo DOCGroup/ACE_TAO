@@ -71,6 +71,7 @@ ORB_CORE_FILES = \
   CurrentC \
   CurrentS \
   Exception \
+  WrongTransactionC \
   Environment \
   Object \
   ORB \
