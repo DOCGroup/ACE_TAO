@@ -52,9 +52,6 @@
 class TAO_POA;
 class TAO_POA_Manager;
 
-template <class STUB, class IMPLEMENTATION>
-IMPLEMENTATION *stub_to_impl (STUB stub);
-
 class TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
 public:

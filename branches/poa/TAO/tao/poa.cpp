@@ -12,17 +12,6 @@
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
-template <class STUB, class IMPLEMENTATION>
-IMPLEMENTATION *
-stub_to_impl (STUB stub)
-{
-  PortableServer::Servant servant = stub->_servant ();
-  if (servant == 0)
-    return 0;
-
-  return ACE_dynamic_cast (IMPLEMENTATION *, servant);
-}
-
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value)
   : value_ (value)
 {
@@ -627,10 +616,18 @@ TAO_POA::create_POA (const char *adapter_name,
     }
   else
     {
-      poa_manager_impl = stub_to_impl<PortableServer::POAManager_ptr, 
-                                      TAO_POA_Manager> (poa_manager);
-    }
+      PortableServer::Servant servant = poa_manager->_servant ();
+      if (servant == 0)
+        {
+          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
+          env.exception (exception);
+          return PortableServer::POA::_nil ();
 
+        }
+         
+      poa_manager_impl = ACE_dynamic_cast (TAO_POA_Manager *, servant);
+    }
+  
   TAO_POA *result = this->create_POA (adapter_name,
                                       *poa_manager_impl,
                                       tao_policies,
@@ -2231,8 +2228,15 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         const char *name,
                                         CORBA::Environment &env)
 {  
-  TAO_POA *parent_impl = stub_to_impl<PortableServer::POA_ptr, 
-                                      TAO_POA> (parent);
+  PortableServer::Servant servant = parent->_servant ();
+  if (servant == 0)
+    {
+      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
+      env.exception (exception);
+      return CORBA::B_FALSE;
+    }
+         
+  TAO_POA *parent_impl = ACE_dynamic_cast (TAO_POA *, servant);
 
   return this->unknown_adapter_i (parent_impl,
                                   name,
