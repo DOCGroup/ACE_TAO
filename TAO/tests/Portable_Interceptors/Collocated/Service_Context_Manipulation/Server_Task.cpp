@@ -3,7 +3,6 @@
 //
 #include "Server_Task.h"
 #include "test_i.h"
-#include "ace/streams.h"
 
 #include "ace/Manual_Event.h"
 
