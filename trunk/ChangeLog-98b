@@ -1,3 +1,14 @@
+Tue Aug  4 17:39:12 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE_Library.{mak mdp}: Added TP_Reactor.cpp to the project.
+
+	* tests/Aio_Platform_Test.cpp: Don't try to sysconf() for the AIO
+	  values if there's no chance of AIO on the system (_POSIX_ASYNC_IO
+	  not defined at compile time).
+
+	* examples/OS/Process/Process.dsp: Link against ace.lib for Release,
+	  aced.lib for Debug (these were reversed).
+
 Tue Aug  4 12:09:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Clarified the fact that the ACE_DEFAULT_MUITCAST_ADDR
