@@ -1,3 +1,8 @@
+Tue Aug  3 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Updated location of TAO vc6 static project files
+
 Tue Aug  3 06:19:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
