@@ -60,7 +60,7 @@ sub write_comps {
   foreach my $project (@list) {
     ## Convert all /'s to \
     $project =~ s/\//\\/g;
-            
+
     print $fh "..\\$project$crlf";
     if ($gen->exe_target()) {
       print $fh "\tprogram$crlf";
