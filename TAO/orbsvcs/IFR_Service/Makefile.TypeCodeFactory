@@ -186,7 +186,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/Request_Info.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/DynamicC.i \
@@ -217,8 +217,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/StringSeq.h \
- $(TAO_ROOT)/tao/StringSeq.inl \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -327,8 +327,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/PortableInterceptor.h \
- $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -337,12 +335,15 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Service_Callbacks.h \
- $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Parser_Registry.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
@@ -491,7 +492,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/Request_Info.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/DynamicC.i \
@@ -522,10 +523,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/StringSeq.h \
- $(TAO_ROOT)/tao/StringSeq.inl \
- $(TAO_ROOT)/tao/DomainC.i \
- TCF_Export.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/DomainC.i TCF_Export.h \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
@@ -534,8 +534,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/PortableInterceptor.h \
- $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i
 
@@ -650,25 +648,44 @@ realclean: clean
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/PortableInterceptor.h \
- $(TAO_ROOT)/tao/Request_Info.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i TCF_Loader.h \
+ $(TAO_ROOT)/tao/Object_Loader.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(TAO_ROOT)/tao/Object_Loader.i \
+ TCF_Export.h TypeCodeFactory_i.h \
+ $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -677,11 +694,6 @@ realclean: clean
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
@@ -702,25 +714,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- $(TAO_ROOT)/tao/StringSeq.h \
- $(TAO_ROOT)/tao/StringSeq.inl \
- $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
- TCF_Loader.h \
- $(TAO_ROOT)/tao/Object_Loader.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(TAO_ROOT)/tao/Object_Loader.i \
- TCF_Export.h TypeCodeFactory_i.h \
- $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
- $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/DomainC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
