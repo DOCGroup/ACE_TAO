@@ -1,3 +1,88 @@
+Tue Aug  3 14:25:44 2004  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* IDL3/Components/ComplexComponent/Attributes/Attributes.idl:
+	* IDL3/Components/ComplexComponent/Attributes/Attributes.mpc:
+	* IDL3/Components/ComplexComponent/Attributes/AttributesS.cpp:
+	* IDL3/Components/ComplexComponent/Attributes/Attributes_stub_export.h:
+	* IDL3/Components/ComplexComponent/Attributes/Attributes_svnt_export.h:
+	* IDL3/Components/ComplexComponent/EventSink/EventSink.idl:
+	* IDL3/Components/ComplexComponent/EventSink/EventSink.mpc:
+	* IDL3/Components/ComplexComponent/EventSink/EventSinkS.cpp:
+	* IDL3/Components/ComplexComponent/EventSink/EventSink_stub_export.h:
+	* IDL3/Components/ComplexComponent/EventSink/EventSink_svnt_export.h:
+	* IDL3/Components/ComplexComponent/EventSource/EventSource.idl:
+	* IDL3/Components/ComplexComponent/EventSource/EventSource.mpc:
+	* IDL3/Components/ComplexComponent/EventSource/EventSourceS.cpp:
+	* IDL3/Components/ComplexComponent/EventSource/EventSource_stub_export.h:
+	* IDL3/Components/ComplexComponent/EventSource/EventSource_svnt_export.h:
+	* IDL3/Components/ComplexComponent/Facets/Facets.idl:
+	* IDL3/Components/ComplexComponent/Facets/Facets.mpc:
+	* IDL3/Components/ComplexComponent/Facets/FacetsS.cpp:
+	* IDL3/Components/ComplexComponent/Facets/Facets_stub_export.h:
+	* IDL3/Components/ComplexComponent/Facets/Facets_svnt_export.h:
+	* IDL3/Components/ComplexComponent/Receptacles/Receptacles.idl:
+	* IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc:
+	* IDL3/Components/ComplexComponent/Receptacles/ReceptaclesS.cpp:
+	* IDL3/Components/ComplexComponent/Receptacles/Receptacles_stub_export.h:
+	* IDL3/Components/ComplexComponent/Receptacles/Receptacles_svnt_export.h:
+	* IDL3/Components/SimpleComponent/SimpleComponent.idl:
+	* IDL3/Components/SimpleComponent/SimpleComponent.mpc:
+	* IDL3/Components/SimpleComponent/SimpleComponentS.cpp:
+	* IDL3/Components/SimpleComponent/SimpleComponent_exec_export.h:
+	* IDL3/Components/SimpleComponent/SimpleComponent_stub_export.h:
+	* IDL3/Components/SimpleComponent/SimpleComponent_svnt_export.h:
+	* IDL3/Events/Abstract/Abstract.idl:
+	* IDL3/Events/Abstract/Abstract.mpc:
+	* IDL3/Events/Abstract/AbstractS.cpp:
+	* IDL3/Events/Abstract/Abstract_stub_export.h:
+	* IDL3/Events/Abstract/Abstract_svnt_export.h:
+	* IDL3/Events/Regular/Regular.idl:
+	* IDL3/Events/Regular/Regular.mpc:
+	* IDL3/Events/Regular/RegularS.cpp:
+	* IDL3/Events/Regular/Regular_stub_export.h:
+	* IDL3/Events/Regular/Regular_svnt_export.h:
+	* IDL3/Homes/Attributes/HomeAttributes.idl:
+	* IDL3/Homes/Attributes/HomeAttributes.mpc:
+	* IDL3/Homes/Attributes/HomeAttributesS.cpp:
+	* IDL3/Homes/Attributes/HomeAttributes_stub_export.h:
+	* IDL3/Homes/Attributes/HomeAttributes_svnt_export.h:
+	* IDL3/Homes/Basic/Basic.idl:
+	* IDL3/Homes/Basic/Basic.mpc:
+	* IDL3/Homes/Basic/BasicS.cpp:
+	* IDL3/Homes/Basic/Basic_stub_export.h:
+	* IDL3/Homes/Basic/Basic_svnt_export.h:
+	* IDL3/Homes/Factory/Factory.idl:
+	* IDL3/Homes/Factory/Factory.mpc:
+	* IDL3/Homes/Factory/FactoryS.cpp:
+	* IDL3/Homes/Factory/Factory_stub_export.h:
+	* IDL3/Homes/Factory/Factory_svnt_export.h:
+	* IDL3/Homes/Finder/Finder.idl:
+	* IDL3/Homes/Finder/Finder.mpc:
+	* IDL3/Homes/Finder/FinderS.cpp:
+	* IDL3/Homes/Finder/Finder_stub_export.h:
+	* IDL3/Homes/Finder/Finder_svnt_export.h:
+	* IDL3/Homes/Inheritance/Inheritance.idl:
+	* IDL3/Homes/Inheritance/Inheritance.mpc:
+	* IDL3/Homes/Inheritance/InheritanceS.cpp:
+	* IDL3/Homes/Inheritance/Inheritance_stub_export.h:
+	* IDL3/Homes/Inheritance/Inheritance_svnt_export.h:
+	* IDL3/ImpliedIDL/Components/Basic/ICBasic.idl:
+	* IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc:
+	* IDL3/ImpliedIDL/Components/Basic/ICBasicS.cpp:
+	* IDL3/ImpliedIDL/Components/Basic/ICBasic_stub_export.h:
+	* IDL3/ImpliedIDL/Components/Basic/ICBasic_svnt_export.h:
+	* IDL3/ImpliedIDL/Components/EventSink/ICEventSink.idl:
+	* IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc:
+	* IDL3/ImpliedIDL/Components/EventSink/ICEventSinkS.cpp:
+	* IDL3/ImpliedIDL/Components/EventSink/ICEventSink_stub_export.h:
+	* IDL3/ImpliedIDL/Components/EventSink/ICEventSink_svnt_export.h:
+	* IDL3/ImpliedIDL/Components/EventSource/ICEventSource.idl:
+	* IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc:
+	* IDL3/ImpliedIDL/Components/EventSource/ICEventSourceS.cpp:
+	* IDL3/ImpliedIDL/Components:
+
+	  Various tests of compilation for IDL3 constructs.
+	
 Tue Aug  3 18:36:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/schema/README.html:	
