@@ -234,11 +234,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
 
-  
-  ACE_DEBUG ((LM_DEBUG,
-              "CORBA_ORB::run: (%d) Trying to become the leader.\n",
-              ACE_Thread::self ()));
-
   {
     ACE_Guard<ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
     
@@ -252,9 +247,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     TAO_ORB_Core_instance ()->set_leader_thread ();
   }
   
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) CORBA_ORB::run: is the leader.\n"));
-  
+ 
   if (this->shutdown_lock_ == 0)
     this->shutdown_lock_ =
       TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
