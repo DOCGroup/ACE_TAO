@@ -89,6 +89,7 @@ protected:
 
   virtual char object_key_delimiter (void) const;
 
+protected:
   typedef ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
         TAO_NULL_CREATION_STRATEGY;
 

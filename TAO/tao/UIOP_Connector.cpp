@@ -25,6 +25,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 
+ACE_RCSID(tao, UIOP_Connector, "$Id$")
+
 // ****************************************************************
 
 TAO_UIOP_MT_Connect_Creation_Strategy::
@@ -119,7 +121,14 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
 int
 TAO_UIOP_Connector::preconnect (const char *preconnects)
 {
-  char *preconnections = ACE_OS::strdup (preconnects);
+  // Check for the proper protocol prefix.  
+  if (this->check_prefix (preconnects) != 0)
+    return 0; // Failure: zero successful preconnections
+
+  const char *protocol_removed = ACE_OS::strstr (preconnects, "://") + 3;
+  // "+ 3" since strlen of "://" is 3.
+
+  char *preconnections = ACE_OS::strdup (protocol_removed);
 
   int successes = 0;
   if (preconnections)
@@ -134,20 +143,22 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
            where = ACE::strsplit_r (0, ",", nextptr))
         {
           char *rendezvous_point = where;
-          char *sep = ACE_OS::strchr (where, ':');
 
-          if (sep)
-            {
-              *sep = '\0';
+          int version_offset = 0;
+          // Additional offset to remove version from preconnect, if it exists.
 
-              dest.set (rendezvous_point);
-              dests.push (dest);
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Couldn't find a ':' separator in '%s'"
-                        " spec.\n",
-                        where));
+          if (isdigit (rendezvous_point[0]) &&
+              rendezvous_point[1] == '.' &&
+              isdigit (rendezvous_point[2]) &&
+              rendezvous_point[3] == '@')
+            version_offset = 4;
+
+          // @@ For now, we just drop the version prefix.  However, at 
+          //    some point in the future the version may become useful.
+
+          dest.set (rendezvous_point + version_offset);
+
+          dests.push (dest);
         }
 
       // Create an array of addresses from the stack, as well as an

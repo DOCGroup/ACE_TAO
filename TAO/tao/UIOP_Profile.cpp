@@ -261,28 +261,21 @@ TAO_UIOP_Profile::parse_string (const char *string,
   if (!string || !*string)
     return 0;
 
-  // Remove the "N.n//" prefix, and verify the version is one
-  // that we accept
+  // Remove the "N.n@" version prefix, if it exists, and verify the
+  // version is one that we accept.
 
-  if (isdigit (string [0])
-      && isdigit (string [2])
-      && string [1] == '.'
-      && string [3] == '/'
-      && string [4] == '/')
+  // Check for version
+  if (isdigit (string [0]) &&
+      string[1] == '.' &&
+      isdigit (string [2]) &&
+      string[3] == '@')
     {
       // @@ This may fail for non-ascii character sets [but take that
       // with a grain of salt]
       this->version_.set_version ((char) (string [0] - '0'),
                                   (char) (string [2] - '0'));
-      string += 5;
-    }
-  else
-    {
-      // ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
-      // The version is optional so don't throw an exception.
-
-      string += 2;
-      // Skip over the "//"
+      string += 4;
+      // Skip over the "N.n@"
     }
 
   if (this->version_.major != TAO_UIOP_Profile::DEF_UIOP_MAJOR ||
@@ -484,8 +477,11 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                                       this->object_key ());
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
-                  1 /* major # */ + 1 /* minor # */ + 1 /* decimal point */ +
                   2 /* double-slash separator */ +
+                  1 /* major version */ +
+                  1 /* decimal point */ +
+                  1 /* minor version */ +
+                  1 /* `@' character */ +
                   ACE_OS::strlen (this->rendezvous_point_) +
                   1 /* object key separator */ +
                   ACE_OS::strlen (key) +
@@ -496,7 +492,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%s%c.%c//%s%c%s",
+                   "%s//%c.%c@%s%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
