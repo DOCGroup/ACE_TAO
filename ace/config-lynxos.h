@@ -3,6 +3,13 @@
 // The following configuration file is designed to work for LynxOS,
 // version 2.5.0 and later, using the GNU g++ compiler.
 
+// Note on why ACE_HAS_POSIX_SEM is not #defined:
+// ACE_HAS_POSIX_SEM would cause native LynxOS mutexes and condition
+// variables to be used.  But, they don't appear to be intended to be
+// used between processes.  Without ACE_HAS_POSIX_SEM, ACE uses
+// semaphores for all synchronization.  Those can be used between
+// processes
+
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
