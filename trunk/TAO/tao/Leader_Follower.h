@@ -72,7 +72,7 @@ public:
   int elect_new_leader (void);
 
   /// Node structure for the queue of followers
-  struct TAO_Follower_Node
+  struct TAO_Export TAO_Follower_Node
   {
     /// Constructor
     TAO_Follower_Node (TAO_SYNCH_CONDITION* follower_ptr);
@@ -137,7 +137,7 @@ private:
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock_;
 
   /// Queue to store the followers.
-  struct TAO_Follower_Queue
+  struct TAO_Export TAO_Follower_Queue
   {
     /// Constructor
     TAO_Follower_Queue (void);
