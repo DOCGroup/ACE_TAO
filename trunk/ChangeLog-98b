@@ -1,68 +1,74 @@
+Mon May 11 12:27:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU: instead of
+          using GNU ranlib386 after using GHS ax for i386 targets, just
+          use GNU ar386.
+
 Mon May 11 05:14:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-WinCE.h: Added ACE_HAS_NON_STATIC_OBJECT_MANAGER.  CE
-	  console programs have to set this flag because the main
-	  functions is actually renamed and running in a threads.
+        * ace/config-WinCE.h: Added ACE_HAS_NON_STATIC_OBJECT_MANAGER.  CE
+          console programs have to set this flag because the main
+          functions is actually renamed and running in a threads.
 
-	* tests/test_config.h: Excluded class and macros to redirect
-	  debugging messages to files under CE.  This make debugging a bit
-	  easier but we should eventually put them back under CE.
+        * tests/test_config.h: Excluded class and macros to redirect
+          debugging messages to files under CE.  This make debugging a bit
+          easier but we should eventually put them back under CE.
 
-	* tests/Map_Manager_Test.cpp: Made CE friendly.
+        * tests/Map_Manager_Test.cpp: Made CE friendly.
 
-	* ace/Hash_Map_Manager.cpp: Some ACE_ERROR were not CE friendly. 
-	
-	* ace/Profile_Timer.{h,i}:
-	* ace/Synch.{h,i}: Moved inline function definitions to Synch.i
-	  file.  Windows CE can't grok any inline at all.
+        * ace/Hash_Map_Manager.cpp: Some ACE_ERROR were not CE friendly.
+
+        * ace/Profile_Timer.{h,i}:
+        * ace/Synch.{h,i}: Moved inline function definitions to Synch.i
+          file.  Windows CE can't grok any inline at all.
 
 Mon May 11 02:43:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Misc/childbirth_time.cpp (main): Added
-	  a new method for benchmarking ACE_Thread_Manager::spawn_n.
-	  Added other cosmetic changes.
+        * performance-tests/Misc/childbirth_time.cpp (main): Added
+          a new method for benchmarking ACE_Thread_Manager::spawn_n.
+          Added other cosmetic changes.
 
 Sun May 10 23:28:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp(inherit_log_msg):
-	* ace/Log_Msg.cpp (thr_desc): Wait on Thread_Descriptor's lock
-	  instead of the "global" Thread_Manager lock.
+        * ace/OS.cpp(inherit_log_msg):
+        * ace/Log_Msg.cpp (thr_desc): Wait on Thread_Descriptor's lock
+          instead of the "global" Thread_Manager lock.
 
-	* ace/Thread_Manager.cpp: Moved acquire_release() from
-	  ACE_Thread_Manager to ACE_Thread_Descriptor.  This method is
-	  called from ACE_Log_Msg::thr_desc to prevent a thread from using
-	  its thread descriptor before it is fully built.  The change
-	  relieve spwaned threads from waiting for other threads created
-	  in the same spwan_n call to be created before it can start
-	  running.
+        * ace/Thread_Manager.cpp: Moved acquire_release() from
+          ACE_Thread_Manager to ACE_Thread_Descriptor.  This method is
+          called from ACE_Log_Msg::thr_desc to prevent a thread from using
+          its thread descriptor before it is fully built.  The change
+          relieve spwaned threads from waiting for other threads created
+          in the same spwan_n call to be created before it can start
+          running.
 
-	  (insert): Added an extra argument to control whether we want to
-	  insert the newly created thread into ACE_Thread_Manager's thread
-	  table or not.  Notice that it is default to 1 to remain the
-	  original behavior in case anyone is using this class/function
-	  directly in their code.  However, in ACE_Thread_Manager, we
-	  always prevent it from inserting because we always register
-	  thread descriptors from spawn_i.
+          (insert): Added an extra argument to control whether we want to
+          insert the newly created thread into ACE_Thread_Manager's thread
+          table or not.  Notice that it is default to 1 to remain the
+          original behavior in case anyone is using this class/function
+          directly in their code.  However, in ACE_Thread_Manager, we
+          always prevent it from inserting because we always register
+          thread descriptors from spawn_i.
 
 Sun May 10 01:51:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Renamed ACE_OS::Time_To_The_Beginning to
-	  ACE_OS::FILETIME_to_timval_skew.
+        * ace/OS.h: Renamed ACE_OS::Time_To_The_Beginning to
+          ACE_OS::FILETIME_to_timval_skew.
 
-	* ace/OS.cpp: Found the problem in ACE_OS::ctime_r.  An internal
-	  compiler bug (?) caused the bug.  The solution: move the format
-	  string out as a const string instead of putting it in sprintf
-	  directly.  Weird.
+        * ace/OS.cpp: Found the problem in ACE_OS::ctime_r.  An internal
+          compiler bug (?) caused the bug.  The solution: move the format
+          string out as a const string instead of putting it in sprintf
+          directly.  Weird.
 
-	* ace/Log_Record.{h,cpp}: Made priority_name_ and its access
-	  function CE friendly.
+        * ace/Log_Record.{h,cpp}: Made priority_name_ and its access
+          function CE friendly.
 
 Sat May  9 20:09:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.h: Changed the type of lock used by
-	  <thread_desc_freelist_> to ACE_SYNCH_MUTEX.  Or else, it won't
-	  compile on platforms that doesn't support thread.  Thanks to
-	  Woody Zenfell <woody@arl.wustl.edu> for reporting this.
+        * ace/Thread_Manager.h: Changed the type of lock used by
+          <thread_desc_freelist_> to ACE_SYNCH_MUTEX.  Or else, it won't
+          compile on platforms that doesn't support thread.  Thanks to
+          Woody Zenfell <woody@arl.wustl.edu> for reporting this.
 
 Fri May 08 22:29:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -70,9 +76,9 @@ Fri May 08 22:29:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri May  8 14:18:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.h (ACE_Thread_Descriptor): Added ACE_INLINE
-	  to declarations of set_next and get_next to get around a bug in
-	  a version of g++.
+        * ace/Thread_Manager.h (ACE_Thread_Descriptor): Added ACE_INLINE
+          to declarations of set_next and get_next to get around a bug in
+          a version of g++.
 
 Fri May  8 11:57:23 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -153,62 +159,62 @@ Thu May  7 20:32:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed May  6 02:57:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Filecache.h (ACE_Filecache_Handle): Removed
- 	  ACE_EXPORT_DECLARE and specified ACE_Export directly for
- 	  ACE_Filecache_Handle and ACE_Filecache in calss declarations.
+        * ace/Filecache.h (ACE_Filecache_Handle): Removed
+          ACE_EXPORT_DECLARE and specified ACE_Export directly for
+          ACE_Filecache_Handle and ACE_Filecache in calss declarations.
 
-	* ace/Thread_Manager.{h,i,cpp}: A bug was found by Arturo Montes
-	  <mitosys@colomsat.net.co> who noticed that when a thread was
-	  spawned and then exited immediately, its thread descriptor might
-	  get freed before even get registered into the thread table kept
-	  by the Thread_Manager.  Although it doesn't make any sense to
-	  spawn a thread just to let it return immediately, a middleware
-	  shouldn't restrict the way how users want to use it.
+        * ace/Thread_Manager.{h,i,cpp}: A bug was found by Arturo Montes
+          <mitosys@colomsat.net.co> who noticed that when a thread was
+          spawned and then exited immediately, its thread descriptor might
+          get freed before even get registered into the thread table kept
+          by the Thread_Manager.  Although it doesn't make any sense to
+          spawn a thread just to let it return immediately, a middleware
+          shouldn't restrict the way how users want to use it.
 
-	  I got around this problem by adding a lock into
-	  Thread_Descriptor.  Before spawning a thread, the Thread Manager
-	  will first grab the lock.  It won't release the lock until
-	  calling append thread, at which point, the Thread_Descriptor of
-	  the thread has been stashed into the table.  Removing the
-	  Thread_Descriptor also requires to hold this lock and release
-	  the lock before the Thread_Descriptor is "freed."  Therefore,
-	  if a thread exit before its Thread_Manager ever gets a chance to
-	  register it, it will block and waiting.
+          I got around this problem by adding a lock into
+          Thread_Descriptor.  Before spawning a thread, the Thread Manager
+          will first grab the lock.  It won't release the lock until
+          calling append thread, at which point, the Thread_Descriptor of
+          the thread has been stashed into the table.  Removing the
+          Thread_Descriptor also requires to hold this lock and release
+          the lock before the Thread_Descriptor is "freed."  Therefore,
+          if a thread exit before its Thread_Manager ever gets a chance to
+          register it, it will block and waiting.
 
-	  The type of the lock is defined by ACE_DEFAULT_THREAD_MANAGER_LOCK
-	  which, by default, is ACE_Thread_Mutex.  User can change the
-	  definition by defining in their config.h file.  For example, if
-	  you can be sure that all your threads will run for an extended
-	  long time (which, in most case, should be true,) you can disable
-	  this feature by defining this as a ACE_Null_Mutex to speed up
-	  spawning and termination of threads.
+          The type of the lock is defined by ACE_DEFAULT_THREAD_MANAGER_LOCK
+          which, by default, is ACE_Thread_Mutex.  User can change the
+          definition by defining in their config.h file.  For example, if
+          you can be sure that all your threads will run for an extended
+          long time (which, in most case, should be true,) you can disable
+          this feature by defining this as a ACE_Null_Mutex to speed up
+          spawning and termination of threads.
 
-	  (thread_desc_freelist_): Added a free list to Thread_Manager to
-	  recycle Thread_Descriptor.  By default, this free list
-	  pre-allocate 0 Thread_Descriptor and has low-water-mark of 1,
-	  increment count 1 and a huge (25000) high water mark.  That is,
-	  if you use a Thread_Manager for an extended period of time, you
-	  won't have to dynamically allocate memory for Thread_Descriptor
-	  for every thread after your system is stable (the thread count
-	  fluctuates between some certain values.)
+          (thread_desc_freelist_): Added a free list to Thread_Manager to
+          recycle Thread_Descriptor.  By default, this free list
+          pre-allocate 0 Thread_Descriptor and has low-water-mark of 1,
+          increment count 1 and a huge (25000) high water mark.  That is,
+          if you use a Thread_Manager for an extended period of time, you
+          won't have to dynamically allocate memory for Thread_Descriptor
+          for every thread after your system is stable (the thread count
+          fluctuates between some certain values.)
 
-	  There are two ways to change the settings.  First, by defining
-	  ACE_DEFAULT_THREAD_MANAGER_LWM, ACE_DEFAULT_THREAD_MANAGER_HWM,
-	  ACE_DEFAULT_THREAD_MANAGER_INC, and
-	  ACE_DEFAULT_THREAD_MANAGER_PREALLOC in your <config.h> file.
-	  This changes the default setting of your ACE.  (The global
-	  Thread_Manager use this setting.)  Or, you can specify these
-	  values when creating a Thread_Manager.
+          There are two ways to change the settings.  First, by defining
+          ACE_DEFAULT_THREAD_MANAGER_LWM, ACE_DEFAULT_THREAD_MANAGER_HWM,
+          ACE_DEFAULT_THREAD_MANAGER_INC, and
+          ACE_DEFAULT_THREAD_MANAGER_PREALLOC in your <config.h> file.
+          This changes the default setting of your ACE.  (The global
+          Thread_Manager use this setting.)  Or, you can specify these
+          values when creating a Thread_Manager.
 
-	* ace/Free_List.cpp (alloc,dealloc): Don't grab the lock in these
-	  two functions.  They only get called from add() and remove()
-	  which hold the lock before making the call.  Actually, they also
-	  gets called from the constructor and destructor.  But that
-	  shouldn't be a problem.
+        * ace/Free_List.cpp (alloc,dealloc): Don't grab the lock in these
+          two functions.  They only get called from add() and remove()
+          which hold the lock before making the call.  Actually, they also
+          gets called from the constructor and destructor.  But that
+          shouldn't be a problem.
 
-	* tests/Reactor_Notify_Test.cpp (run_test): Moved the #endif of
-	  ACE_HAS_THREADS down to avoid compilation error on non-threaded
-	  platforms.
+        * tests/Reactor_Notify_Test.cpp (run_test): Moved the #endif of
+          ACE_HAS_THREADS down to avoid compilation error on non-threaded
+          platforms.
 
 Thu May 07 19:08:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
