@@ -171,7 +171,7 @@ int Client_Handler::handle_input (ACE_HANDLE _handle)
      is just a simple test app, we'll use a small buffer size. 
    */
   char buf[128];
-  memset (buf, 0, sizeof (buf));
+  ACE_OS::memset (buf, 0, sizeof (buf));
 
   /*
      Invoke the process() method with a pointer to our data area.  We'll let
