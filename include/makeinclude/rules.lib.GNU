@@ -93,7 +93,7 @@ ifdef TEMPINCDIR
 # templates.
 	if test -s ./$(TEMPINCDIR)/*.C; \
 	then \
-		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(LIBS); \
+		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \
 		$(AR) $(ARFLAGS) $@ tempinc/*.o; \
 	fi
@@ -117,7 +117,7 @@ ifdef TEMPINCDIR
 # templates before building the library.
 	if test -s ./$(TEMPINCDIR)/*.C; \
 	then \
-		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(LIBS); \
+		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \
 	fi
 endif
@@ -127,12 +127,12 @@ else
 ifdef TEMPINCDIR
 	if test -s ./$(TEMPINCDIR)/*.o; \
         then \
-       	        $(SOLINK.cc) -o $@ $(VSHOBJS1) $(TEMPINCDIR)/*.o $(LDFLAGS) $(LIBS); \
+       	        $(SOLINK.cc) -o $@ $(VSHOBJS1) $(TEMPINCDIR)/*.o $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
         else \
-		$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS); \
+		$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
 	fi
 else
-	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS)
+	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 endif
 	-chmod a+rx $@
 endif

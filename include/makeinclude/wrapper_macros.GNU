@@ -390,6 +390,7 @@ ifdef shared_libs
 
   ifdef SHLIBA
     LDLIBS := $(LDLIBS:-l%=-l%shr)
+    ACE_SHLIBS := $(ACE_SHLIBS:-l%=-l%shr)
   endif # SHLIBA
 else # ! shared_libs
   ifdef static_libs
