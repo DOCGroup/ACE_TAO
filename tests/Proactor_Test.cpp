@@ -2,7 +2,7 @@
 
 // ============================================================================
 /**
- *  @file Proactor_Test.cpp
+ *  @file Proactor_Test2.cpp
  *
  *  $Id$
  *
@@ -37,6 +37,7 @@ ACE_RCSID (tests,
 
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"
+#include "ace/Asynch_Connector.h"
 #include "ace/Task.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -69,7 +70,7 @@ static const ACE_TCHAR *host = 0;
 
 // number of Senders instances
 static int senders = 1;
-const  int MAX_SENDERS = 100;
+const  int MAX_SENDERS = 1000;
 const  int MAX_RECEIVERS = 1000;
 
 // duplex mode: == 0 half-duplex
@@ -83,6 +84,7 @@ static size_t threads = 1;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // Log options
+static int logflag  = 0; // 0 STDERR, 1 FILE
 static int loglevel = 0; // 0 full , 1 only errors
 
 static const size_t MIN_TIME = 1;    // min 1 sec
@@ -94,7 +96,7 @@ static char data[] =
   "Accept: */*\r\n"
   "Accept-Language: C++\r\n"
   "Accept-Encoding: gzip, deflate\r\n"
-  "User-Agent: Proactor_Test/1.0 (non-compatible)\r\n"
+  "User-Agent: Proactor_Test2/1.0 (non-compatible)\r\n"
   "Connection: Keep-Alive\r\n"
   "\r\n";
 
@@ -372,6 +374,7 @@ private:
   Receiver *list_receivers_[MAX_RECEIVERS];
 };
 
+// *************************************************************
 Acceptor::Acceptor (void)
   : sessions_ (0)
 {
@@ -449,7 +452,7 @@ Acceptor::make_handler (void)
 
   return 0;
 }
-
+// ***************************************************
 Receiver::Receiver (Acceptor * acceptor, int index)
   : acceptor_ (acceptor),
     index_    (index),
@@ -700,19 +703,18 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 //   Sender
 // *******************************************
 
+class Connector;
+
 class Sender : public ACE_Service_Handler
 {
+  friend class Connector;
 public:
-  static int  get_number_sessions (void) { return sessions_; }
-  static void init (void);
-  static int  activate (int num);
-  static void stop (void);
 
-  int open_sender (const ACE_TCHAR *host, u_short port);
+  /// This is called after the new connection has been accepted.
+  virtual void open (ACE_HANDLE handle,
+                     ACE_Message_Block &message_block);
 
-protected:
-  // These methods are called by the freamwork
-  Sender  (int index);
+  Sender  (Connector *connector = 0, int index = -1);
   ~Sender (void);
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
@@ -727,6 +729,7 @@ private:
   int initiate_write_stream (void);
 
   int  index_;
+  Connector * connector_;
 
   char send_buf_[1024];
 
@@ -738,33 +741,120 @@ private:
 
   long io_count_;
 
-  static Sender *list_senders_[MAX_SENDERS];
-
-  static int sessions_;
 };
 
-int Sender::sessions_ = 0;
-Sender * Sender::list_senders_[MAX_SENDERS];
-
-void
-Sender::init (void)
+class Connector : public ACE_Asynch_Connector<Sender>
 {
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
-             monitor,
-             *ACE_Static_Object_Lock::instance ());
+  friend class Sender;
+public:
+  int get_number_sessions (void) { return this->sessions_; }
+
+  Connector (void);
+  virtual ~Connector (void);
+
+  int  start ( const ACE_INET_Addr & addr, int num );
+  void stop (void);
+
+  // Virtual from ACE_Asynch_Connector
+  Sender *make_handler (void);
+
+private:
+  void on_new_sender  (Sender &rcvr);
+  void on_delete_sender (Sender &rcvr);
+
+  ACE_SYNCH_RECURSIVE_MUTEX lock_;
+  int sessions_;
+  Sender *list_senders_[MAX_SENDERS];
+};
+
+// *************************************************************
+
+Connector::Connector (void)
+  : sessions_ (0)
+{
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
 
   for (int i = 0; i < MAX_SENDERS; ++i)
-    list_senders_[i] = 0;
+     this->list_senders_[i] = 0;
 }
 
-int
-Sender::activate (int num)
+Connector::~Connector (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                    monitor,
-                    *ACE_Static_Object_Lock::instance (),
-                    -1);
+  this->stop ();
+}
 
+void
+Connector::stop(void)
+{
+  // This method can be called only after proactor event loop is done
+  // in all threads.
+
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+
+  for (int i = 0; i < MAX_SENDERS; ++i)
+    {
+      delete this->list_senders_[i];
+      this->list_senders_[i] = 0;
+    }
+}
+
+void
+Connector::on_new_sender (Sender & sndr)
+{
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+  this->sessions_++;
+  this->list_senders_[sndr.index_] = &sndr;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Sender::CTOR sessions_ = %d\n"),
+              this->sessions_));
+}
+
+void
+Connector::on_delete_sender (Sender & sndr)
+{
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+
+  this->sessions_--;
+  if (sndr.index_ >= 0
+      && sndr.index_ < MAX_SENDERS
+      && this->list_senders_[sndr.index_] == &sndr)
+    this->list_senders_[sndr.index_] = 0;
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Sender::~DTOR sessions_ = %d\n"),
+              this->sessions_));
+}
+
+Sender *
+Connector::make_handler (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_, 0);
+
+  if (this->sessions_ >= MAX_SENDERS)
+    return 0;
+
+  for (int i = 0; i < MAX_SENDERS; ++i)
+    {
+      if (this->list_senders_ [i] == 0)
+        {
+          ACE_NEW_RETURN (this->list_senders_[i],
+                          Sender (this, i),
+                          0);
+          return this->list_senders_[i];
+        }
+    }
+
+  return 0;
+}
+
+
+int
+Connector::start( const ACE_INET_Addr & addr, int num)
+{
+
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_, 0);
+
+  
   if (num > MAX_SENDERS)
     num = MAX_SENDERS;
 
@@ -773,84 +863,61 @@ Sender::activate (int num)
 
   int rc = 0;
 
-  for (int i = 0; i < MAX_SENDERS && rc < num; ++i)
+
+
+  // int open  ( int pass_addresses = 0,
+  //             ACE_Proactor *proactor = 0,
+  //             int validate_new_connection = 0 );
+
+  if ( this->open ( 1, 0, 1 ) != 0 )
+  {
+     ACE_ERROR ((LM_ERROR,
+                 ACE_LIB_TEXT ("%p\n"),
+                 ACE_LIB_TEXT ("Connector::open failed")
+               ));
+     return rc;
+  }
+
+
+  for ( ; rc < num;  rc++ )
     {
-      if (list_senders_[i] != 0)
-        continue;
-
-      Sender * sender = 0;
-
-      ACE_NEW_RETURN (sender,
-                      Sender (i),
-                      rc);
-
-      if (sender->open_sender (host, port) == 0)
-        rc++;
-      else
-        delete sender;
+      if ( this->connect ( addr ) != 0 )
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("Connector::connect failed")
+                    ));
+          break;
+        }
     }
   return rc;
 }
 
-void
-Sender::stop (void)
+
+Sender::Sender (Connector * connector, int index)
+  : index_     (index),
+    connector_ (connector),
+    handle_    (ACE_INVALID_HANDLE),
+    io_count_  (0)
 {
-  // this function can be called only
-  // after proactor event loop id done
-  // in all threads
-
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
-             monitor,
-             *ACE_Static_Object_Lock::instance ());
-
-  for (int i = 0; i < MAX_SENDERS; ++i)
-    {
-      delete list_senders_[i];
-      list_senders_[i] = 0;
-    }
-}
-
-Sender::Sender (int index)
-  : index_    (index),
-    handle_   (ACE_INVALID_HANDLE),
-    io_count_ (0)
-{
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
-             monitor,
-             *ACE_Static_Object_Lock::instance ());
-
-  this->sessions_++;
-  this->list_senders_[index_] = this;
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::CTOR sessions_ = %d\n"),
-              this->sessions_));
+  if (this->connector_ != 0)
+    this->connector_->on_new_sender (*this);
 
   ACE_OS::sprintf (this->send_buf_, data);
 }
 
 Sender::~Sender (void)
 {
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
-             monitor,
-             *ACE_Static_Object_Lock::instance ());
+  if (this->connector_ != 0)
+    this->connector_->on_delete_sender (*this);
 
   if (this->handle_ != ACE_INVALID_HANDLE)
     {
       ACE_OS::closesocket (this->handle_);
-      this->handle_ = ACE_INVALID_HANDLE;
     }
 
-  this->sessions_--;
-  if (this->index_ >= 0)
-    {
-      this->list_senders_[this->index_] = 0;
-      this->index_ = -1;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::~DTOR sessions_ = %d\n"),
-              this->sessions_));
+  this->index_ = -1;
+  this->handle_= ACE_INVALID_HANDLE;
 }
 
 //  return true if we alive, false  we commited suicide
@@ -868,42 +935,27 @@ Sender::check_destroy (void)
   return 0;
 }
 
-int Sender::open_sender (const ACE_TCHAR *host, u_short port)
+void
+Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 {
-  // Initialize stuff
-  // Connect to remote host
-  ACE_INET_Addr      address (port, host);
-  ACE_SOCK_Stream    tmp_stream;  // needs to connector;
-  ACE_SOCK_Connector connector;
-
-  if (connector.connect (tmp_stream,
-                         address) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("Sender::ACE_SOCK_Connector::connect")),
-                        -1);
-    }
-
-  this->handle_ = tmp_stream.get_handle ();
-  tmp_stream.set_handle (ACE_INVALID_HANDLE);
-
+  this->handle_ = handle;
+  
   // Open ACE_Asynch_Write_Stream
   if (this->ws_.open (*this, this->handle_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Sender::ACE_Asynch_Write_Stream::open")),
-                      -1);
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("Sender::ACE_Asynch_Write_Stream::open")
+              ));
 
   // Open ACE_Asynch_Read_Stream
-  if (this->rs_.open (*this, this->handle_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::open")),
-                      -1);
+  else if (this->rs_.open (*this, this->handle_) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::open")
+              ));
 
 
-  if (this->initiate_write_stream () == 0)
+  else if (this->initiate_write_stream () == 0)
     {
       if (duplex != 0)
       // Start an asynchronous read file
@@ -911,8 +963,6 @@ int Sender::open_sender (const ACE_TCHAR *host, u_short port)
     }
 
   this->check_destroy ();
-
-  return 0;
 }
 
 int
@@ -1182,12 +1232,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #if defined (sun)
       proactor_type = 3;             // Proactor type for SunOS
 #else
-      proactor_type = 0;             // Proactor type = default
+      proactor_type = 1;             // Proactor type = default
 #endif
       threads = 3;            // size of Proactor thread pool
-      senders = 20;           // number of senders
+      senders = 20;            // number of senders
+      logflag = 1;           // log to : 0 STDERR / 1 FILE
       loglevel = 0;           // log level : 0 full/ 1 only errors
-      seconds = 2;            // time to run in seconds
+      seconds = 20;            // time to run in seconds
       return 0;
     }
 
@@ -1199,7 +1250,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':  // time to run
-        seconds = ACE_OS::atoi (get_opt.opt_arg ());
+        seconds = ACE_OS::atoi (get_opt.optarg);
         if ( seconds < MIN_TIME )
 	        seconds = MIN_TIME;
         if ( seconds > MAX_TIME )
@@ -1209,30 +1260,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
         both = 1;
         break;
       case 'v':  // log level
-        loglevel = ACE_OS::atoi (get_opt.opt_arg ());
+        loglevel = ACE_OS::atoi (get_opt.optarg);
         break;
       case 'd':         // duplex
-        duplex = ACE_OS::atoi (get_opt.opt_arg ());
+        duplex = ACE_OS::atoi (get_opt.optarg);
         break;
       case 'h':         // host for sender
-        host = get_opt.opt_arg ();
+        host = get_opt.optarg;
         break;
       case 'p':         // port number
-        port = ACE_OS::atoi (get_opt.opt_arg ());
+        port = ACE_OS::atoi (get_opt.optarg);
         break;
       case 'n':         // thread pool size
-        threads = ACE_OS::atoi (get_opt.opt_arg ());
+        threads = ACE_OS::atoi (get_opt.optarg);
         break;
       case 's':     // number of senders
-        senders = ACE_OS::atoi (get_opt.opt_arg ());
+        senders = ACE_OS::atoi (get_opt.optarg);
         if (senders > MAX_SENDERS)
           senders = MAX_SENDERS;
         break;
       case 'o':     // max number of aio for proactor
-        max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
+        max_aio_operations = ACE_OS::atoi (get_opt.optarg);
         break;
       case 't':    //  Proactor Type
-        if (set_proactor_type (get_opt.opt_arg ()))
+        if (set_proactor_type (get_opt.optarg))
           break;
         return print_usage (argc,argv);
       case 'u':
@@ -1245,9 +1296,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("Proactor_Test2"));
 
   if (::parse_args (argc, argv) == -1)
     return -1;
@@ -1255,10 +1306,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ::disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
   ::disable_signal (SIGPIPE, SIGPIPE);
 
-  MyTask   task1;
-  Acceptor acceptor;
-
-  Sender::init ();
+  MyTask    task1;
+  Acceptor  acceptor;
+  Connector connector;
+  ACE_INET_Addr   addr (port, host);
 
   if ( task1.start ( threads,
                      proactor_type,
@@ -1278,7 +1329,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (host == 0)
             host = ACE_TEXT ("localhost");
 
-          rc += Sender::activate (senders);
+            rc += connector.start ( addr, senders);
         }
 
       if ( rc > 0 )
@@ -1293,12 +1344,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("\nNumber of Receivers objects = %d\n")
               ACE_TEXT ("\nNumber of Sender objects = %d\n"),
               acceptor.get_number_sessions (),
-              Sender::get_number_sessions ()));
+              connector.get_number_sessions ()));
+              acceptor.get_number_sessions (),
 
   // As Proactor event loop now is inactive it is safe to destroy all
   // senders
 
-  Sender::stop ();
+  connector.stop ();
   acceptor.stop ();
 
   ACE_END_TEST;
@@ -1334,21 +1386,27 @@ disable_signal (int sigmin, int sigmax)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Asynch_Acceptor<Receiver>;
+template class ACE_Asynch_Connector<Sender>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Asynch_Acceptor<Receiver>
+#pragma instantiate ACE_Asynch_Connector<Sender>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("Proactor_Test2"));
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Asynchronous IO is unsupported.\n")
-              ACE_TEXT ("Proactor_Test will not be run.")));
+              ACE_TEXT ("Proactor_Test2 will not be run.")));
 
   ACE_END_TEST;
 
