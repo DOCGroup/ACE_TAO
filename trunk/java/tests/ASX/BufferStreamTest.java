@@ -13,8 +13,8 @@
 package tests.ASX;
 
 import java.io.*;
-import ACE.OS.*;
-import ACE.ASX.*;
+import JACE.OS.*;
+import JACE.ASX.*;
 
 // This short program copies stdin to stdout via the use of an ASX
 // STREAM.  It illustrates an implementation of the classic "bounded

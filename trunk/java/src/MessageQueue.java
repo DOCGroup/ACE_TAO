@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.ASX
+ *    JACE.ASX
  *
  * = FILENAME
  *    MessageQueue.java
@@ -9,11 +9,11 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.ASX;
+package JACE.ASX;
 
 import java.util.Date;
-import ACE.OS.*;
-import ACE.Reactor.*;
+import JACE.OS.*;
+import JACE.Reactor.*;
 
 class NotFullCondition extends TimedWait
 {

@@ -4,7 +4,7 @@
 
 import java.io.*;
 import java.net.*;
-import ACE.SOCK_SAP.*;
+import JACE.SOCK_SAP.*;
 import LogRecord;
 import LoggerConstants;
 

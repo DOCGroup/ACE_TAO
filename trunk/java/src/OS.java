@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.OS
+ *    JACE.OS
  *
  * = FILENAME
  *    OS.java
@@ -9,7 +9,7 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.OS;
+package JACE.OS;
 
 import java.util.StringTokenizer;
 

@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Timers
+ *    JACE.Timers
  *
  * = FILENAME
  *    ProfileTimer.java
@@ -9,7 +9,7 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Timers;
+package JACE.Timers;
 
 /**
  * <hr>

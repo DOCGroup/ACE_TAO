@@ -14,8 +14,8 @@ package tests.SOCK_SAP;
 
 import java.io.*;
 import java.net.*;
-import ACE.OS.*;
-import ACE.SOCK_SAP.*;
+import JACE.OS.*;
+import JACE.SOCK_SAP.*;
 
 class TestHandler extends Thread
 {

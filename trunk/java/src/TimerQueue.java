@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Reactor
+ *    JACE.Reactor
  *
  * = FILENAME
  *    TimerQueue.java
@@ -9,10 +9,10 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Reactor;
+package JACE.Reactor;
 
 import java.util.*;
-import ACE.ASX.*;
+import JACE.ASX.*;
 
 class TimerNode
 {

@@ -12,7 +12,7 @@
 
 //package ACE.SimpleLogger;
 
-import ACE.SOCK_SAP.*;
+import JACE.SOCK_SAP.*;
 import java.util.*;
 import java.io.*;
 

@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Concurrency
+ *    JACE.Concurrency
  *
  * = FILENAME
  *    ThreadManager.java
@@ -9,10 +9,10 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Concurrency;
+package JACE.Concurrency;
 
 import java.util.*;
-import ACE.OS.*;
+import JACE.OS.*;
 
 public class ThreadManager
 { 

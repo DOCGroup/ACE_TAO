@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Concurrency
+ *    JACE.Concurrency
  *
  * = FILENAME
  *    Condition.java
@@ -9,10 +9,10 @@
  *@author Irfan Pyarali
  *
  *************************************************/
-package ACE.Concurrency;
+package JACE.Concurrency;
 
-import ACE.ASX.TimeoutException;
-import ACE.ASX.TimeValue;
+import JACE.ASX.TimeoutException;
+import JACE.ASX.TimeValue;
 
 /**
  * <hr>

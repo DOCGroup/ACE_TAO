@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.SOCK_SAP
+ *    JACE.SOCK_SAP
  *
  * = FILENAME
  *    SOCKAcceptor.java
@@ -9,11 +9,11 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.SOCK_SAP;
+package JACE.SOCK_SAP;
 
 import java.io.*;
 import java.net.*;
-import ACE.OS.*;
+import JACE.OS.*;
 
 /**
  * <hr>

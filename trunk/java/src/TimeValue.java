@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Reactor
+ *    JACE.Reactor
  *
  * = FILENAME
  *    TimeValue.java
@@ -9,8 +9,8 @@
  *@author Prashant Jain
  *
  *************************************************/
-//package ACE.Reactor;
-package ACE.ASX;
+//package JACE.Reactor;
+package JACE.ASX;
 
 public class TimeValue
 {

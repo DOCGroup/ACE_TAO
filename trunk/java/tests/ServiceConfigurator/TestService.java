@@ -11,8 +11,8 @@
  *************************************************/
 package tests.ServiceConfigurator;
 
-import ACE.ServiceConfigurator.*;
-import ACE.OS.*;
+import JACE.ServiceConfigurator.*;
+import JACE.OS.*;
 
 public class TestService extends ServiceObject
 {
@@ -27,3 +27,4 @@ public class TestService extends ServiceObject
   }
 
 }
+

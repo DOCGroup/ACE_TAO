@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Reactor
+ *    JACE.Reactor
  *
  * = FILENAME
  *    EventHandler.java
@@ -9,9 +9,9 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Reactor;
+package JACE.Reactor;
 
-import ACE.ASX.TimeValue;
+import JACE.ASX.TimeValue;
 
 /**
  * <hr>
