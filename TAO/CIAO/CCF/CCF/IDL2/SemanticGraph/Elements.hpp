@@ -236,6 +236,10 @@ namespace CCF
 
       class Nameable : public virtual Node
       {
+        typedef
+        std::vector<Names*>
+        Named_;
+
       public:
         virtual SimpleName
         name () const;
@@ -247,6 +251,22 @@ namespace CCF
         defined () const
         {
           return defined_;
+        }
+
+        typedef
+        Named_::const_iterator
+        NamedIterator;
+
+        NamedIterator
+        named_begin () const
+        {
+          return named_.begin ();
+        }
+
+        NamedIterator
+        named_end () const
+        {
+          return named_.end ();
         }
 
       public:
@@ -276,12 +296,7 @@ namespace CCF
         }
 
       private:
-        typedef
-        std::vector<Names*>
-        Named_;
-
         Named_ named_;
-
         bool defined_;
       };
 
@@ -549,7 +564,7 @@ namespace CCF
         {
           return *specialization_;
         }
-        
+
         Type&
         type () const
         {
