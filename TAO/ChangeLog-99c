@@ -1,3 +1,32 @@
+Wed Apr  7 14:05:09 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Naming_Context.{h, cpp}
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
+	Updated to use new exceptions macros.
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Bindings_Map.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Shared_Hash_Map.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
+	* orbsvcs/Naming_Service/Naming_Service.{h,cpp}
+	* orbsvcs/orbsvcs/Makefile
+	Added the files above, to implement persistent naming service.
+
+	The first version of persistent naming service is available.  It
+	uses memory-mapped file to store the persistent state of the
+	naming service.  When starting the Naming Service from
+	orbsvcs/Naming_Service, if -f <file_name> option is provided, the
+	persistent implementation is used, if no -f option is provided, an
+	non-persistent implementation is used.
+
+	I'll be adding comments/documentation for the above shortly.  The
+	class structure for the persistent implementation will also change
+	in the near future, as I'll be merging some of
+	persistent/non-persistent classes.
+
 Wed Apr 07 14:11:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/PolicyS.cpp: CORBA is not a nested class here so we don't
