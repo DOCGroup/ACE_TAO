@@ -330,7 +330,7 @@ Options::load_registry_options ()
     // If there aren't any saved parameters, then that's ok.
     return 0;
   }
-  TCHAR tmpstr[4096];
+  ACE_TCHAR tmpstr[4096];
   DWORD sz = sizeof(tmpstr);
   DWORD type = 0;
   err = ACE_TEXT_RegQueryValueEx(key, "ORBInitOptions", 0, &type,
