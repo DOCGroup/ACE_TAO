@@ -8,6 +8,21 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
+use Cwd;
+
+$cwd = getcwd();
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }  
+}
 
 $T = Process::Create ($EXEPREFIX."Identity".$EXE_EXT);
 

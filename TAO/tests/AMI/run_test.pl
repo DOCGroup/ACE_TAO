@@ -7,24 +7,39 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../bin';
 require ACEutils;
+use Cwd;
 
-$client_conf="muxed.conf";
+$cwd = getcwd();
+$client_conf="$cwd$DIR_SEPARATOR" . "muxed.conf";
 $client_process="simple_client";
 $debug_level='5';
 $threads='2';
 $iterations='1';
 
-foreach $i (@ARGV) {
-  if ($i eq '-mux') {
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+  elsif ($ARGV[$i] eq '-mux') {
     $client_conf = "muxed.conf";
-  } elsif ($i eq '-debug') {
+  }
+  elsif ($ARGV[$i] eq '-debug') {
     $debug_level = '1';
-  } elsif ($i eq '-exclusive') {
+  }
+  elsif ($ARGV[$i] eq '-exclusive') {
     $client_conf = 'exclusive.conf';
   }
 }
 
-$iorfile = "server.ior";
+
+$iorfile = "$cwd$DIR_SEPARATOR" . "server.ior";
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
 			  " -ORBdebuglevel $debug_level"
 			  . "-d -o $iorfile");

@@ -8,8 +8,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../bin";
 require ACEutils;
 require Process;
+use Cwd;
 
+$cwd  = getcwd();
 $type = "";
+
 
 sub run_test
 {
@@ -35,10 +38,20 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
       print "Run_Test Perl script for TAO DynAny Test\n\n";
-      print "run_test [-t type]\n";
+      print "run_test [-chorus <target>] [-t type]\n";
       print "\n";
       print "-t type             -- runs only one type of dynany test\n";
       exit;
+    }
+    if ($ARGV[$i] eq '-chorus') {
+      $i++;
+      if (defined $ARGV[$i]) {
+        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+      }
+      else {
+        print STDERR "The -chorus option requires the hostname of the target\n";
+        exit(1);
+      }
     }
     if ($ARGV[$i] eq "-t")
     {

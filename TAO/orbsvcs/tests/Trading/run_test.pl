@@ -8,16 +8,31 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../bin';
 require ACEutils;
 require Process;
+use Cwd;
 
-$ior = "trading.ior";
-$ready_file = "export_test_ready";
+$cwd = getcwd();
+$ior = "$cwd$DIR_SEPARATOR" . "trading.ior";
+$ready_file = "$cwd$DIR_SEPARATOR" . "export_test_ready";
 $sleeptime = 20;
 $status = 0;
 
 unlink $ior;
 unlink $ready_file;
 
-$TS = Process::Create ("..".$DIR_SEPARATOR.
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }                     
+}
+
+$TS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Trading_Service".$DIR_SEPARATOR.
                        "Trading_Service".$EXE_EXT,

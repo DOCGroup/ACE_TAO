@@ -8,16 +8,31 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../../../bin';
 require Process;
 require ACEutils;
+use Cwd;
 
 # amount of delay between running the servers
 
 $sleeptime = 6;
 $status = 0;
-local $nsior = "ns.ior";
+$cwd = getcwd();
+local $nsior = "$cwd$DIR_SEPARATOR" . "ns.ior";
 
-$name_server_prog = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."Naming_Service".$DIR_SEPARATOR."Naming_Service".$EXE_EXT;
-$server_prog = ".".$DIR_SEPARATOR."server".$EXE_EXT;
-$client_prog = ".".$DIR_SEPARATOR."client".$EXE_EXT;
+for($i = 0; $i <= $#ARGV; $i++) {
+  if ($ARGV[$i] eq '-chorus') {
+    $i++;
+    if (defined $ARGV[$i]) {
+      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+    }
+    else {
+      print STDERR "The -chorus option requires the hostname of the target\n";
+      exit(1);
+    }
+  }
+}
+
+$name_server_prog = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."Naming_Service".$DIR_SEPARATOR."Naming_Service".$EXE_EXT;
+$server_prog = $EXEPREFIX.".".$DIR_SEPARATOR."server".$EXE_EXT;
+$client_prog = $EXEPREFIX.".".$DIR_SEPARATOR."client".$EXE_EXT;
 
 
 # variables for parameters

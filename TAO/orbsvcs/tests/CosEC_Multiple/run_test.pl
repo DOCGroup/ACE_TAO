@@ -8,10 +8,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../bin";
 
 require ACEutils;
+use Cwd;
 
 #event count
 $ev_count = 2;
 $status = 0;
+$port = ACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
 
 # setup CosEC params such that..
 # cos event service name = "cosec1"
@@ -28,44 +30,50 @@ $CosEC2_params = "-n cosec2 -e 20 -o 5 -p \"6 21\"";
 sub cosec_multiple_test1
 {
     # first start the Naming service..
-    $SV1 = Process::Create ("..".$DIR_SEPARATOR
+    $SV1 = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
 			    ."..".$DIR_SEPARATOR
 			    ."Naming_Service".$DIR_SEPARATOR
-			    ."Naming_Service".$EXE_EXT, "");
+			    ."Naming_Service".$EXE_EXT,
+                            "-ORBNameServicePort $port");
 
     sleep 10;
 
     # now start the Rt EC..
-    $SV2 = Process::Create ("..".$DIR_SEPARATOR
+    $SV2 = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
 			    ."..".$DIR_SEPARATOR
 			    ."Event_Service".$DIR_SEPARATOR
-			    ."Event_Service".$EXE_EXT, "-t new");
+			    ."Event_Service".$EXE_EXT,
+			    "-t new -ORBNameServicePort $port");
 
     sleep 10;
 
     # now start the CosEC1..
-    $SV3 = Process::Create ("..".$DIR_SEPARATOR
+    $SV3 = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
 			    ."..".$DIR_SEPARATOR
 			    ."CosEvent_Service".$DIR_SEPARATOR
-			    ."CosEvent_Service".$EXE_EXT, $CosEC1_params);
+			    ."CosEvent_Service".$EXE_EXT,
+			    "-ORBNameServicePort $port $CosEC1_params");
 
     sleep 10;
 
     # now start the CosEC2..
-    $SV4 = Process::Create ("..".$DIR_SEPARATOR
+    $SV4 = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
 			    ."..".$DIR_SEPARATOR
 			    ."CosEvent_Service".$DIR_SEPARATOR
-			    ."CosEvent_Service".$EXE_EXT, $CosEC2_params);
+			    ."CosEvent_Service".$EXE_EXT,
+			    "-ORBNameServicePort $port $CosEC2_params");
 
     sleep 10;
 
     #start 1 consumer that uses CosEC1 to receive events
-    $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT, "-n cosec1 -c $ev_count");
+    $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,
+                             "-ORBNameServicePort $port -n cosec1 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT, "-n cosec2 -c $ev_count");
+    $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,
+                             "-ORBNameServicePort $port -n cosec2 -c $ev_count");
 
     sleep 10;
 
@@ -86,12 +94,14 @@ sub cosec_multiple_test1
 
     #----------
  #start 1 consumer that uses CosEC1 to receive events
-    $CONS2 = Process::Create ($EXEPREFIX."consumer".$EXE_EXT, "-n cosec2 -c $ev_count");
+    $CONS2 = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,
+                              "-ORBNameServicePort $port -n cosec2 -c $ev_count");
 
     sleep 10;
 
     #start 1 supplier  that uses CosEC2 to send events
-    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$EXE_EXT, "-n cosec1 -c $ev_count");
+    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,
+                              "-ORBNameServicePort $port -n cosec1 -c $ev_count");
 
     sleep 10;
 
@@ -142,7 +152,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-        print "usage: run_test.pl -e event_count -h help\n";
+        print "usage: run_test.pl [-chorus <target>] -e event_count -h help\n";
         exit;
     }
     if ($ARGV[$i] eq "-e")
@@ -151,7 +161,19 @@ for ($i = 0; $i <= $#ARGV; $i++)
         $i++;
         last SWITCH;
     }
-}
+    if ($ARGV[$i] eq '-chorus') {
+      $i++;
+      if (defined $ARGV[$i]) {
+        $cwd = getcwd();
+        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
+      }
+      else {
+        print STDERR "The -chorus option requires the hostname of the target\n";
+        exit(1);
+      }
+      last SWITCH;
+    }
+  }
 }
 
 cosec_multiple_test1 ();
