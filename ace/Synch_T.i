@@ -146,7 +146,7 @@ ACE_Condition<MUTEX>::broadcast (void)
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
 template <class TYPE> ACE_INLINE
 ACE_TSS<TYPE>::ACE_TSS (TYPE *type)
-  type_ (type)
+  : type_ (type)
 {
 }
 
