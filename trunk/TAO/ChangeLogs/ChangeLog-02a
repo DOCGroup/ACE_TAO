@@ -1,3 +1,30 @@
+Fri Dec  8 13:06:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Replicated changes
+	  from IIOP.  
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i: New files
+	  for the connection handler.
+
+	* tao/IIOP_Connector.cpp: Fixed some typos in #pragma
+	  instantiation. 
+
 Fri Dec  8 07:48:32 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:

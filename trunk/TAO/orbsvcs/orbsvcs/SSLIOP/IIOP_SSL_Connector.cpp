@@ -16,43 +16,8 @@
 ACE_RCSID(TAO_SSLIOP, IIOP_SSL_Connector, "$Id$")
 
 
-TAO_IIOP_SSL_Connect_Creation_Strategy::
-TAO_IIOP_SSL_Connect_Creation_Strategy (ACE_Thread_Manager* t,
-                                        TAO_ORB_Core *orb_core,
-                                        void *arg,
-                                        CORBA::Boolean flag)
-  : ACE_Creation_Strategy<TAO_IIOP_SSL_Client_Connection_Handler> (t),
-    orb_core_ (orb_core),
-    arg_ (arg),
-    lite_flag_ (flag)
-{
-}
-
-TAO_IIOP_SSL_Connect_Creation_Strategy::
-~TAO_IIOP_SSL_Connect_Creation_Strategy (void)
-{
-}
-
-int
-TAO_IIOP_SSL_Connect_Creation_Strategy::make_svc_handler (
-  TAO_IIOP_SSL_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh,
-                    TAO_IIOP_SSL_Client_Connection_Handler (
-                      this->orb_core_->thr_mgr (),
-                      this->orb_core_,
-                      this->lite_flag_,
-                      this->arg_),
-                    -1);
-  return 0;
-}
-
-// ****************************************************************
-
 TAO_IIOP_SSL_Connector::TAO_IIOP_SSL_Connector (CORBA::Boolean flag)
   : TAO_IIOP_Connector (flag),
-    null_activation_strategy_ (),
     connect_strategy_ (),
     base_connector_ ()
 {
@@ -70,26 +35,36 @@ TAO_IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
   if (this->init_tcp_properties () != 0)
     return -1;
 
-  TAO_IIOP_SSL_Connect_Creation_Strategy *connect_creation_strategy = 0;
+  /// Our connect creation strategy
+  TAO_IIOP_SSL_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
   ACE_NEW_RETURN (connect_creation_strategy,
-                  TAO_IIOP_SSL_Connect_Creation_Strategy (
-                    this->orb_core ()->thr_mgr (),
-                    this->orb_core (),
-                    &(this->tcp_properties_),
-                    this->lite_flag_),
+                  TAO_IIOP_SSL_CONNECT_CREATION_STRATEGY
+                      (orb_core->thr_mgr (),
+                       orb_core,
+                       &(this->tcp_properties_),
+                       this->lite_flag_),
                   -1);
+
+  /// Our activation strategy
+  TAO_IIOP_SSL_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+
+  ACE_NEW_RETURN (concurrency_strategy,
+                  TAO_IIOP_SSL_CONNECT_CONCURRENCY_STRATEGY (orb_core),
+                  -1);
+
 
   return this->base_connector_.open (this->orb_core ()->reactor (),
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
-                                     &this->null_activation_strategy_);
+                                     concurrency_strategy);
 }
 
 int
 TAO_IIOP_SSL_Connector::close (void)
 {
   delete this->base_connector_.creation_strategy ();
+  delete this->base_connector_.concurrency_strategy ();
   return this->base_connector_.close ();
 }
 
@@ -142,7 +117,7 @@ TAO_IIOP_SSL_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
     }
 
   int result = 0;
-  TAO_IIOP_SSL_Client_Connection_Handler *svc_handler = 0;
+  TAO_IIOP_SSL_Connection_Handler *svc_handler = 0;
   TAO_Connection_Handler *conn_handler = 0;
 
   // Check the Cache first for connections
@@ -155,7 +130,7 @@ TAO_IIOP_SSL_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                     ACE_TEXT ("got an existing connection \n")));
       // We have found a connection and a handler
       svc_handler =
-        ACE_dynamic_cast (TAO_IIOP_SSL_Client_Connection_Handler *,
+        ACE_dynamic_cast (TAO_IIOP_SSL_Connection_Handler *,
                           conn_handler);
     }
   else
@@ -240,34 +215,36 @@ TAO_IIOP_SSL_Connector::preconnect (const char *)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_NOOP_Concurrency_Strategy<TAO_IIOP_SSL_Client_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_IIOP_SSL_Client_Connection_Handler>;
-template class ACE_Creation_Strategy<TAO_IIOP_SSL_Client_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_IIOP_SSL_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_IIOP_SSL_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector<TAO_IIOP_SSL_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>;
+template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>;
+template class TAO_Connect_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>;
+template class ACE_Strategy_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>;
 
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>*>;
-template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>*>;
+template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_IIOP_SSL_Client_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_SSL_Client_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_SSL_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_SSL_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>
 
-#pragma instantiate ACE_Connector<TAO_IIOP_SSL_Client_Connection_Handler, ACE_SOCK_Connector>
-#pragma instantiate ACE_Creation_Strategy<TAO_IIOP_SSL_Client_Connection_Handler>
-#pragma instantiate ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>
-#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
+
+#pragma instantiate ACE_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>
+#pragma instantiate ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>
+#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>*>
+#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_SSL_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -31,7 +31,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "IIOP_SSL_Acceptor.h"
-#include "SSLIOP_Connect.h"
+#include "SSLIOP_Connection_Handler.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 #include "orbsvcs/SSLIOPC.h"
 
@@ -54,10 +54,10 @@ public:
   ~TAO_SSLIOP_Acceptor (void);
   // Destructor.
 
-  typedef ACE_Strategy_Acceptor<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_SSLIOP_Server_Connection_Handler> TAO_SSLIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_SSLIOP_Server_Connection_Handler> TAO_SSLIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_ACCEPT_STRATEGY;
+  typedef ACE_Strategy_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_SSLIOP_Connection_Handler> TAO_SSLIOP_CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler> TAO_SSLIOP_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR> TAO_SSLIOP_ACCEPT_STRATEGY;
 
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.

@@ -3,7 +3,7 @@
 // $Id$
 
 #include "SSLIOP_Endpoint.h"
-#include "SSLIOP_Connect.h"
+#include "SSLIOP_Connection_Handler.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/debug.h"
 
@@ -16,7 +16,7 @@ ACE_RCSID(tao, SSLIOP_Endpoint, "$Id$")
 TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
   : TAO_Endpoint (TAO_TAG_IIOP_PROFILE),
-    ssl_hint_ (0),
+    //    ssl_hint_ (0),
     next_ (0),
     iiop_endpoint_ (iiop_endp)
 {
@@ -88,11 +88,11 @@ TAO_SSLIOP_Endpoint::reset_hint (void)
   this->iiop_endpoint_->reset_hint ();
 
   // @@ Who is doing the locking here!
-  if (this->ssl_hint_)
+  /*if (this->ssl_hint_)
     {
       this->ssl_hint_->cleanup_hint ();
       this->ssl_hint_ = 0;
-    }
+      }*/
 }
 
 TAO_Endpoint *
