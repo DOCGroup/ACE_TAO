@@ -1,3 +1,15 @@
+Fri May 14 15:28:56 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.h:
+        * DnC/tests/Config_Handlers/Domain_Handler_Test.cpp:
+
+          Updated Domain_Handler_Test.cpp to use the dump
+          functions within the DnC_Dump.cpp rather than the
+          functions from Domain_Handler.cpp.
+
+          Removed the unnecessary functions from the Domain_Handler.cpp.
+
 Fri May 14 15:13:17 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DnC_Dump.cpp:
