@@ -1,3 +1,10 @@
+Sat Apr 22 01:31:13 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html: Added a reminder for compiling idl files with
+	  -Gd flag if "direct" collocation strategy is to be used on those
+	  interfaces.  Thanks to Klemen Zagar <klemen.zagar@ijs.si> for
+	  uncovering the inadquency.
+
 Fri Apr 21 20:04:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Explicit_Event_Loop/Explicit_Event_Loop.dsw: (added)
@@ -31,7 +38,7 @@ Fri Apr 21 19:41:20 2000  Darrell Brunsch <brunsch@uci.edu>
           not forward the client until after the server responds to a ping
           (or times out).  This prevents annoying race conditions where a
           server can notify the ImR but not be ready for requests yet.
-          Thanks to Steve Totten <totten_s@ociweb.com> and Chanaka 
+          Thanks to Steve Totten <totten_s@ociweb.com> and Chanaka
           Liyanaarachchi <chanaka@ociweb.com> for providing examples and
           info on what was happening.
 
