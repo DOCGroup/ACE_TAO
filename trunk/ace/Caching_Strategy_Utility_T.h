@@ -58,7 +58,7 @@ class ACE_Caching_Strategy_Utility
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES>
+template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Svc_Caching_Strategy_Utility : public ACE_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>
 {
   // = TITLE
@@ -93,7 +93,7 @@ class ACE_Svc_Caching_Strategy_Utility : public ACE_Caching_Strategy_Utility<KEY
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES>
+template <class KEY, class VALUE, class CONTAINER, class ITERATOR,  class ATTRIBUTES>
 class ACE_Handler_Caching_Strategy_Utility : public ACE_Caching_Strategy_Utility <KEY, VALUE, CONTAINER, ATTRIBUTES>
 {
   // = TITLE
@@ -130,7 +130,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES>
+template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES>
 class ACE_Null_Caching_Strategy_Utility : public ACE_Caching_Strategy_Utility <KEY, VALUE, CONTAINER, ATTRIBUTES>
 {
   // = TITLE
