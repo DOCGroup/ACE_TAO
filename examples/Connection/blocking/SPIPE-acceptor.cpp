@@ -49,12 +49,14 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       ACE_DEBUG ((LM_DEBUG,
                   "%s",
                   result.message_block ().rd_ptr ()));
+      // Reset the message block here to make sure multiple writes to
+      // the pipe don't keep appending to the message_block!
+      this->mb_.reset ();
 
-      this->ar_.read (this->mb_,
-                      this->mb_.size ());
+      this->ar_.read (this->mb_, this->mb_.size ());
     }
   else
-    ACE_Proactor::end_event_loop();
+    ACE_Proactor::end_event_loop ();
 }
 
 IPC_Server::IPC_Server (void)
@@ -150,45 +152,54 @@ int
 IPC_Server::svc (void)
 {
   // Performs the iterative server activities.
-  while (ACE_Reactor::event_loop_done() == 0)
+  while (ACE_Proactor::event_loop_done() == 0)
     {
       Svc_Handler sh;
-
+		
       // Create a new SH endpoint, which performs all processing in
       // its open() method (note no automatic restart if errno ==
       // EINTR).
       if (this->accept (&sh, 0) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "accept"),
                           1);
-
+		
       // SH's destructor closes the stream implicitly but the
       // listening endpoint stays open.
       else
-	{
-	  // Run single-threaded.
-	  if (n_threads_ <= 1)
-	    run_reactor_event_loop (0);
-	  else if (ACE_Thread_Manager::instance ()->spawn_n 
+        {
+          // Run single-threaded.
+          if (n_threads_ <= 1)
+            run_reactor_event_loop (0);
+          else if (ACE_Thread_Manager::instance ()->spawn_n 
                    (n_threads_,
                     run_reactor_event_loop,
                     0,
                     THR_NEW_LWP) == -1)
-	    {
-	      ACE_ERROR_RETURN ((LM_ERROR,
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
                                  "%p\n",
                                  "spawn_n"),
                                 1);
-
-	      ACE_Thread_Manager::instance ()->wait ();
-	    }
-
-	  ACE_DEBUG ((LM_DEBUG, 
+				
+              ACE_Thread_Manager::instance ()->wait ();
+            }
+			
+          ACE_DEBUG ((LM_DEBUG, 
                       "(%t) main thread exiting.\n"));
-	}
-    }
 
+          // Reset the Proactor so another accept will work.  
+          ACE_Proactor::reset_event_loop();
+
+          // Must use some other method now to terminate this thing
+          // instead of the ACE_Signal_Adapter just running
+          // ACE_Proactor::end_event_loop()...  Since this is an
+          // ACE_Event_Handler, doesn't it seem possible to implement
+          // a handle_signal() hook, and catch the signal there?
+        }
+    }
+	
   /* NOTREACHED */
   return 0;
 }

@@ -1,3 +1,10 @@
+Tue Jun 26 17:56:05 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/Connection/blocking/SPIPE-acceptor.cpp: Added several
+	  fixes so that this stuff runs correct when called by multiple
+ 	  clients.  Thanks to Rich Newman <RNewman@directv.com> for
+ 	  contributing this.
+
 Tue Jun 26 17:37:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Proactor.h: Fixed a compile error with g++. There were two
