@@ -20,6 +20,7 @@
 #include "testS.h"
 #include "ace/Task.h"
 #include "ace/Auto_Event.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
 class test_i : public virtual PortableServer::RefCountServantBase,
                public virtual POA_test

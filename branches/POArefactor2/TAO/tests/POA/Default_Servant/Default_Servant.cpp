@@ -95,6 +95,8 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
       PortableServer::Servant servant =
         poa->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_UNUSED_ARG (servant);
     }
   ACE_CATCH (PortableServer::POA::NoServant, ex)
     {
