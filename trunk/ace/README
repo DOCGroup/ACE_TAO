@@ -948,6 +948,17 @@ ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate 
                                         then ACE_WString doesn't have a constructor that
                                         understands an ACE_USHORT16 string.  So this 
                                         macro enables one. (mostly used my ACE Name Space).
+
+ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
+					Under QNX/RTP the objects preallocated
+					in ACE_OS_Object_Manager cannot be
+					destroyed after a fork() call.
+					Since these objects are only destroyed
+					at application shutdown we take the
+					simpler approach of not destroying
+					them at all.
+					Both QNX/RTP and LynxOS suffer from
+					this problem.
 ----------------------------------------
 
 The following is a partial list of where some of these macros are used

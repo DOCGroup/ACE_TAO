@@ -162,6 +162,8 @@
 # define ACE_TIMER_SKEW 10 * 1000
 #endif /* ACE_TIMER_SKEW */
 
+#define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
