@@ -336,6 +336,8 @@ ACE_Process_Manager::handle_signal (int,
             ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, lock_, -1));
 
             ssize_t i = this->find_proc (proc);
+            if (i == -1)
+              return -1;
 #if 0
             pid_t pid = i != -1
               ? process_table_[i].process_->getpid ()

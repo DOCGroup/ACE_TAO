@@ -1,3 +1,9 @@
+Wed Jun  5 08:33:25 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Process_Manager.cpp (handle_signal): Added a check for
+	  i == -1.  Thanks to Dimitrije Jankovic <djankov99@yahoo.com>
+	  for reporting this and providing a fix!
+
 Tue Jun 04 16:47:27 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Service_Config.h:
