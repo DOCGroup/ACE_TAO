@@ -60,6 +60,8 @@ public:
 protected:
   virtual int create_name (void);
   // Create a name for us.
+
+  virtual void compute_tc_name (void);
 };
 
 #endif

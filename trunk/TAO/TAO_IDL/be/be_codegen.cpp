@@ -1991,7 +1991,8 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
                                "tao/Objref_TypeCode.h",
                                stream);
 
-  this->gen_cond_file_include (idl_global->seq_seen_,
+  this->gen_cond_file_include (idl_global->seq_seen_
+                               | idl_global->array_seen_,
                                "tao/Sequence_TypeCode.h",
                                stream);
 

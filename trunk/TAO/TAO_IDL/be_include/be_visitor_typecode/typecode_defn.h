@@ -55,7 +55,7 @@ public:
 //   virtual int visit_members (be_valuetype *node);
   // for use with valuetypes.
 
-  virtual int visit_type (be_type *node);
+//   virtual int visit_type (be_type *node);
   // visit a generic be_type node
 
   // =visit methods on all types. They call the generic visit_type
@@ -93,11 +93,11 @@ public:
 //   virtual int visit_union (be_union *node);
   // visit a union
 
-//   virtual int visit_valuetype (be_valuetype *node);
-//   // visit a valuetype
+  virtual int visit_valuetype (be_valuetype * node);
+  // visit a valuetype
 
-//   virtual int visit_eventtype (be_eventtype *node);
-//   // visit a valuetype
+  virtual int visit_eventtype (be_eventtype * node);
+  // visit a valuetype
 
 
   // = visit methods for the scope elements
@@ -121,7 +121,7 @@ public:
 
   // = methods for generating typecodes
 
-  int gen_typecode (be_array *node);
+//   int gen_typecode (be_array *node);
 
 //   int gen_typecode (be_enum *node);
 
@@ -147,7 +147,7 @@ public:
 
   // = methods to generate encapsulations for typecodes
 
-  int gen_encapsulation (be_array *node);
+//   int gen_encapsulation (be_array *node);
 
 //   int gen_encapsulation (be_enum *node);
 
@@ -179,7 +179,7 @@ public:
 
   // = methods for computing typecode sizes
 
-  ACE_CDR::Long compute_tc_size (be_array *node);
+//   ACE_CDR::Long compute_tc_size (be_array *node);
 
 //   ACE_CDR::Long compute_tc_size (be_enum *node);
 
@@ -205,7 +205,7 @@ public:
 
   // methods for computing the encapsulation length
 
-  ACE_CDR::Long compute_encap_length (be_array *node);
+//   ACE_CDR::Long compute_encap_length (be_array *node);
 
 //   ACE_CDR::Long compute_encap_length (be_enum *node);
 
@@ -237,9 +237,9 @@ public:
 
   // helpers to generate the repoID and name
 
-  void gen_repoID (be_decl *node);
+//   void gen_repoID (be_decl *node);
 
-  void gen_name (be_decl *node);
+//   void gen_name (be_decl *node);
 
   // helpers to generate encap len of the repoID and name
 
@@ -249,9 +249,9 @@ public:
 
   // helper to get an array of long from a name
 
-  int tc_name2long (const char *name,
-                    ACE_CDR::ULong *&larr,
-                    ACE_CDR::ULong &arrlen);
+//   int tc_name2long (const char *name,
+//                     ACE_CDR::ULong *&larr,
+//                     ACE_CDR::ULong &arrlen);
 
   // processing for scopes
 
