@@ -476,25 +476,32 @@ public:
   // @@EXC@@ Add the ACE_THROW_SPEC for these functions...
 
   CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
 
   CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
 
   CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
 
   CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
 
   CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
 
   CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
 
   CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV);
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
 
 #if defined (TAO_HAS_INTERFACE_REPOSITORY)
   //Methods added for Philipe Merle for CORBA Script..
