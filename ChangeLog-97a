@@ -1,3 +1,22 @@
+Mon Jun 23 01:13:15 1997    <irfan@TWOSTEP>
+
+	* ace/Auto_Ptr.h: Added support for basic types by seperating the
+ 	  auto_ptr classes into two. One that requires the -> operator
+ 	  support and the other that does not. The former inherits from
+ 	  the latter.
+
+	* ace/{FILE,DEV,SPIPE}_Addr.h: Added support for multibyte and
+ 	  wide character addr_to_string and string_to_addr functionality.
+
+	* ace/Connector.cpp && ace/Acceptor.cpp (info): Fixed sizeof bug.
+
+	* examples/Connection/blocking/SPIPE: Added UNICODE support for
+ 	  this example.
+
+	* ace/OS.h: Added new macro ACE_MULTIBYTE_STRING.
+
+	* ace/ACE.cpp (terminate_process): Fixed unused args errors.
+
 Sun Jun 22 09:58:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Released version 4.2.9 for testing.
