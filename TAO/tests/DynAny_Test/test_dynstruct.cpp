@@ -65,10 +65,13 @@ Test_DynStruct::run_test (void)
         DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (CORBA::is_nil (dynany_factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil dynamic any factory after narrow\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
 
       CORBA::Any in_any1;
       in_any1 <<= ts;
@@ -83,8 +86,12 @@ Test_DynStruct::run_test (void)
       fa1->insert_char (data.m_char1,
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      fa1->next (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       fa1->insert_long (data.m_long1,
                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      fa1->next (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       DynamicAny::DynAny_var cc = fa1->current_component (ACE_TRY_ENV);
@@ -92,28 +99,41 @@ Test_DynStruct::run_test (void)
       cc->insert_float (data.m_float1,
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      cc = fa1->current_component (ACE_TRY_ENV);
+      cc->next (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       cc->insert_short (data.m_short1,
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      cc = fa1->current_component (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       cc->rewind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // To show that calling destroy() on a component does
+      // nothing, as required by the spec.
+      cc->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       fa1->rewind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::Char c = fa1->get_char (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (c != data.m_char1)
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
+
+      fa1->next (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       CORBA::Long l = fa1->get_long (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (l != data.m_long1)
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
+
+      fa1->next (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       cc = fa1->current_component (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -121,16 +141,19 @@ Test_DynStruct::run_test (void)
                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      cc = fa1->current_component (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       CORBA::Short s = cc->get_short (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (s != data.m_short1)
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
+
       if (this->error_count_ == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -146,9 +169,11 @@ Test_DynStruct::run_test (void)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ftc1.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "DynStruct::_narrow() returned nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynStruct::_narrow() returned nil\n"),
+                            -1);
+        }
 
       ts.c = data.m_char1;
       ts.l = data.m_long1;
@@ -163,11 +188,16 @@ Test_DynStruct::run_test (void)
       ACE_TRY_CHECK;
       DynAnyTests::test_struct* ts_out;
       out_any1.in () >>= ts_out;
+
       if (ts_out->es.s == data.m_short1)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: current_member_name/current_member_kind\n"));
@@ -178,15 +208,25 @@ Test_DynStruct::run_test (void)
       DynamicAny::FieldName_var fn =
         ftc1->current_member_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (ACE_OS::strcmp (fn.in (), "es"))
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
+
       CORBA::TCKind tk = ftc1->current_member_kind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (tk != CORBA::tk_struct)
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
+
       if (this->error_count_ == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: get_members/set_members\n"));

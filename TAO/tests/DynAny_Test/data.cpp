@@ -95,8 +95,8 @@ Data::Data (CORBA::ORB_var orb)
 
       // Clean up after the POA
       root_poa->destroy (1,
-                        1,
-                        ACE_TRY_ENV);
+                         1,
+                         ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
     }

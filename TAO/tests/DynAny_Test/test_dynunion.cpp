@@ -65,12 +65,15 @@ Test_DynUnion::run_test (void)
         DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (CORBA::is_nil (dynany_factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil dynamic any factory after narrow\n"),
-                          -1);
 
-      tu._d(DynAnyTests::TE_SECOND);
+      if (CORBA::is_nil (dynany_factory.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
+
+      tu._d (DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
       CORBA_Any in_any1;
       in_any1 <<= tu;
@@ -82,16 +85,24 @@ Test_DynUnion::run_test (void)
         DynamicAny::DynUnion::_narrow (dp1.in (),
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      fa1->seek (1,
+                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       fa1->insert_typecode (data.m_typecode1,
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::TypeCode_var s_out1 = fa1->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (s_out1.in ()->equal (data.m_typecode1))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -109,12 +120,17 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ftc1.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "DynUnion::_narrow() returned nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynUnion::_narrow() returned nil\n"),
+                            -1);
+        }
 
       ftc1->from_any (out_any1.in (),
                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ftc1->seek (1,
+                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::TypeCode_var s_out2 = ftc1->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -129,16 +145,6 @@ Test_DynUnion::run_test (void)
           ++this->error_count_;
         }
 
-      // Not yet implemented.
-#if 0
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: set_to_default_member\n"));
-
-      ftc1->set_to_default_member (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG,
-                  "++ OK ++\n"));
-#endif
       ACE_DEBUG ((LM_DEBUG,
                  "testing:discriminator/discriminator_kind\n"));
 
@@ -148,10 +154,12 @@ Test_DynUnion::run_test (void)
       CORBA::TypeCode_var tc2 = dp2->type (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::TCKind kind = ftc1->discriminator_kind (ACE_TRY_ENV);
+      CORBA::TCKind tc1kind = ftc1->discriminator_kind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      CORBA::TCKind tc2kind = tc2->kind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (tc2->kind () == kind)
+      if (tc2kind == tc1kind)
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
@@ -186,6 +194,31 @@ Test_DynUnion::run_test (void)
         }
 
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: set_to_default_member\n"));
+
+      ftc1->set_to_default_member (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ftc1->seek (1,
+                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ftc1->insert_short (data.m_short1,
+                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      DynamicAny::DynAny_var mem = ftc1->member (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      CORBA::Short out_s = mem->get_short (ACE_TRY_ENV);
+
+      if (out_s == data.m_short1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
