@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*imore) : aceexe {
   exename = imore
   Source_Files {

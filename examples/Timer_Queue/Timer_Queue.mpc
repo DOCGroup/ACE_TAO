@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Library) : acelib {
   sharedname = tqtd
   dynamicflags += ACE_BUILD_SVC_DLL

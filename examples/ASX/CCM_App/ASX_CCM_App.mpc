@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Lib) : acelib {
   sharedname = ccm_app
   Source_Files {

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Lib) : acelib {
   sharedname = IPC_Tests_Server
   dynamicflags += ACE_BUILD_SVC_DLL

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : aceexe {
   after    += Synch_Lib
   libs     += Synch_Lib

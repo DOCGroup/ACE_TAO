@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*multiple_contexts) : aceexe {
   exename = multiple_contexts
   Source_Files {
