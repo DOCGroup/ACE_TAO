@@ -16,6 +16,7 @@ FILES= as las lvs vs Globals Video_Server Video_Control_State
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
+
 LIBS 	+= -lTAO -lACE
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)/include -I$(MPEG_ROOT)/mpeg_shared -I$(MPEG_ROOT)/mpeg_server -I$(MPEG_ROOT)/mpeg_client
@@ -50,7 +51,8 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/as.o .obj/as.so .shobj/as.o .shobj/as.so: as.cpp ../include/common.h \
+.obj/as.o .obj/as.so .shobj/as.o .shobj/as.so: as.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -66,8 +68,9 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- ../mpeg_shared/fileio.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h ../mpeg_shared/com.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
  server_proto.h Globals.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -84,8 +87,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
- ../mpeg_shared/sendpt.h Video_Server.h \
- $(ACE_ROOT)/ace/Reactor.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
+ Video_Server.h $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -232,7 +235,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  Video_Control_State.h
-.obj/las.o .obj/las.so .shobj/las.o .shobj/las.so: las.cpp ../include/common.h \
+.obj/las.o .obj/las.so .shobj/las.o .shobj/las.so: las.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -263,8 +267,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h \
- ../mpeg_shared/fileio.h ../mpeg_shared/com.h ../mpeg_shared/sendpt.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
  Video_Server.h $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
@@ -412,7 +418,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  Video_Control_State.h
-.obj/lvs.o .obj/lvs.so .shobj/lvs.o .shobj/lvs.so: lvs.cpp ../include/common.h \
+.obj/lvs.o .obj/lvs.so .shobj/lvs.o .shobj/lvs.so: lvs.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -428,7 +435,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  server_proto.h Globals.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -445,7 +452,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Singleton.i \
- ../mpeg_shared/fileio.h ../mpeg_shared/com.h ../mpeg_shared/sendpt.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
  Video_Server.h $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
@@ -593,7 +602,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  Video_Control_State.h
-.obj/vs.o .obj/vs.so .shobj/vs.o .shobj/vs.so: vs.cpp ../include/common.h \
+.obj/vs.o .obj/vs.so .shobj/vs.o .shobj/vs.so: vs.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -609,8 +619,10 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h \
- ../mpeg_shared/fileio.h ../mpeg_shared/com.h ../mpeg_shared/sendpt.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
  server_proto.h Globals.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -804,9 +816,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Singleton.i ../include/common.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h \
- ../mpeg_shared/fileio.h ../mpeg_shared/com.h ../mpeg_shared/sendpt.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
  server_proto.h Video_Server.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1132,10 +1147,12 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/singletons.h Globals.h \
- ../include/common.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
- ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h \
- Video_Control_State.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
+ server_proto.h Video_Control_State.h
 .obj/Video_Control_State.o .obj/Video_Control_State.so .shobj/Video_Control_State.o .shobj/Video_Control_State.so: Video_Control_State.cpp Video_Control_State.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1313,8 +1330,11 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/singletons.h Globals.h \
- ../include/common.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
- ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h \
+ server_proto.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
