@@ -31,6 +31,21 @@ Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
           It will only be created when a release is made in
           /project/adaptive/ACE_wrappers, and not put under CVS control.
 
+        * ace/Manager_Object.h: added ACE_INLINE specifier to
+          get_preallocated_object/array declarations.  Thanks to
+          Torbjorn Lindgren <tl@funcom.no> for reporting this.
+
+        * ace/Synch.cpp: removed duplicate
+          ACE_Write_Guard<ACE_RW_Thread_Mutex> instantiation.  Thanks to
+          Torbjorn Lindgren <tl@funcom.no> for reporting this.
+
+        * tests/Conn_Test.cpp: fixed template instantiation pragmas.
+          Thanks to Torbjorn Lindgren <tl@funcom.no>, again.
+
+        * tests/SPIPE_Test.cpp: replaced ACE_UNUSED_ARG of client and server
+          with conditional compilation of those functions.  Thanks to
+          Torbjorn Lindgren <tl@funcom.no> for snagging this.
+
         * ace/OS.{h,cpp},Object_Manager.cpp (tss_open,tss_close): removed
           tss_open () dynamic allocation option because it wasn't used.
           Removed tss_close() because it was a no-op without tss_open ()
