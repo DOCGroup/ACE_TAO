@@ -113,19 +113,12 @@ HTTP_Helper::HTTP_date (void)
     {
       ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> m (HTTP_Helper::mutex_));
 
-      time_t tloc;
-      struct tm tms;
-
       if (HTTP_Helper::date_string_ == 0)
         {
           // 40 bytes is all I need.
-          HTTP_Helper::date_string_ = new char[40];
+          ACE_NEW_RETURN (HTTP_Helper::date_string_, char[40], 0);
 
-          if (ACE_OS::time (&tloc) != (time_t) -1
-              && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
-            ACE_OS::strftime (HTTP_Helper::date_string_, 40,
-                              "%a, %d %b %Y %T GMT", &tms);
-          else
+          if (!HTTP_Helper::HTTP_date (HTTP_Helper::date_string_))
             {
               delete [] HTTP_Helper::date_string_;
               HTTP_Helper::date_string_ = 0;
@@ -139,13 +132,25 @@ HTTP_Helper::HTTP_date (void)
 const char *
 HTTP_Helper::HTTP_date (char *s)
 {
+  // Return the date-string formatted per HTTP standards.  Time must
+  // be in UTC, so using the 'strftime' call (which obeys the locale)
+  // isn't correct.
+  static const char* months[] = {"Jan","Feb","Mar","Apr","May","Jun",
+                                 "Jul","Aug","Sep","Oct","Nov","Dec"};
+  static const char* days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+
   time_t tloc;
   struct tm tms;
   char * date_string = s;
 
   if (ACE_OS::time (&tloc) != (time_t) -1
       && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
-    ACE_OS::strftime (date_string, 40, "%a, %d %b %Y %T GMT", &tms);
+  {
+    ACE_OS::sprintf (date_string,
+                     "%s, %02.2d %s %4.4d %02.2d:%02.2d:%02.2d GMT",
+                     days[tms.tm_wday], tms.tm_mday, months[tms.tm_mon],
+                     tms.tm_year + 1900, tms.tm_hour, tms.tm_min, tms.tm_sec);
+  }
   else
     date_string = 0;
 

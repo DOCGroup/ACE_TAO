@@ -1,3 +1,11 @@
+Mon Jun 12 14:22:35 PDT 2000 James Hu <jxh@entera.com>
+
+        * server/HTTP_Response.cpp: Added content length support.
+          Thanks to Greg Gallant (gcg@micrografx.com) for the fixes!
+
+        * server/HTTP_Helpers.cpp: Fix date handling for NT.
+          Thanks to Greg Gallant (gcg@micrografx.com) for the fixes!
+
 Sun Jun  4 14:57:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * clients/WebSTONE/bin/WebStone-common.pl:
