@@ -1,3 +1,9 @@
+Thu Oct  3 10:56:23 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp (activate):
+
+	  Fixed compile-time error.
+
 Thu Oct  3 07:21:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation/Collocation_Test_Stubs.bor:
