@@ -505,7 +505,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
   if (this->handler_ != 0)
-    handler_->in_use (CORBA::B_FALSE);
+    handler_->idle (1);
 }
 
 // Octet codes for the parameters of the "Opaque" (sequence of octet)
@@ -762,7 +762,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // point in the code however!  Some minor restructuring needs to
       // happen.
       //
-      handler_->in_use (CORBA::B_FALSE);
+      handler_->idle (1);
       handler_ = 0;
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -831,7 +831,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	delete old;
 
         handler_->peer ().close ();
-        handler_->in_use (CORBA::B_FALSE);
+        handler_->idle (1);
         handler_ = 0;
 	return TAO_GIOP_LOCATION_FORWARD;
       }
@@ -1076,7 +1076,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	env.clear ();
 
 	// Make sure a new connection is used next time.
-	handler_->in_use (CORBA::B_FALSE);
+	handler_->idle (1);
 	handler_ = 0; // @@ not sure this is correct!
       }
     break;

@@ -361,13 +361,6 @@ IIOP_ORB::string_to_object (CORBA::String str,
   else if (ACE_OS::strncmp ((char *)str, ior_prefix, sizeof ior_prefix - 1) == 0)
     obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
 
-  // If we got a good object, then let it know who we are, otherwise
-  // set the proper exception.
-  if (obj != 0)
-    obj->orb (this);
-  else
-    env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-
   // Return the object
   return obj;
 }
