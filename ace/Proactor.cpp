@@ -102,27 +102,35 @@ int
 ACE_Proactor_Timer_Handler::svc (void)
 {
   ACE_Time_Value absolute_time;
+  ACE_Time_Value relative_time;
   int empty_flag = 0;
   int result = 0;
 
   while (this->shutting_down_ == 0)
     {
-      // Is the timer queue empty?
-      empty_flag = this->proactor_.timer_queue ()->is_empty ();
-
-      if (!empty_flag)
+      // Check whether the timer queue has any items in it.
+      if (this->proactor_.timer_queue ()->is_empty () == 0)
         {
           // Get the earliest absolute time.
           absolute_time = this->proactor_.timer_queue ()->earliest_time ();
 
-          // Block for absolute time.
-          result = this->timer_event_.wait (&absolute_time);
+          // Get current time from timer queue since we don't know
+          // which <gettimeofday> was used.
+          ACE_Time_Value cur_time = this->proactor_.timer_queue ()->gettimeofday ();
+
+          // Compare absolute time with curent time received from the
+          // timer queue.
+          if (absolute_time > cur_time)
+            relative_time = absolute_time - cur_time;
+          else
+            relative_time = 0;
+
+          // Block for relative time.
+          result = this->timer_event_.wait (&relative_time, 0);
         }
       else
-        {
-          // Wait for ever.
-          result = this->timer_event_.wait ();
-        }
+        // The timer queue has no entries, so wait indefinitely.
+        result = this->timer_event_.wait ();
 
       // Check for timer expiries.
       if (result == -1)
