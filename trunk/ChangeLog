@@ -1,4 +1,9 @@
-Thu May 22 00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+Thu May 22 15:02:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/tests/Signal_Test.cpp:
+          Added include of ace/ACE.h to fix compile problem on AIX.
+
+Thu May 22 13:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Makefile.tests:
           Readded Multihomed_INET_Addr_Test that was mistakenly left out
