@@ -4257,7 +4257,7 @@ Thu Oct  9 17:46:59 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
           Reverted the change that added support for
           pthread_setconcurrency on IRIX, the function was supposed to be
           undocumented, but present on the libraries, I could not find it
-          in any of the SGI machines we have access to.; not even
+          in any of the SGI machines we have access to.
 
         * ace/Thread_Manager.cpp:
           On IRIX/SGIC++ we need to instantiate ACE_Node too.
