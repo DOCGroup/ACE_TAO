@@ -1,3 +1,10 @@
+Mon Jul  1 12:34:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Added some missing switch cases.
+
 Mon Jul  1 12:24:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.yy:
