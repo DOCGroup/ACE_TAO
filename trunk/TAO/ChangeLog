@@ -1,3 +1,10 @@
+Tue Jul 20 15:45:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/corba.h:
+        
+          Added includes of the new sequences stub header files. Thanks
+          again to Frank Pilhofer <fp@mc.com> for the reminder.
+
 Tue Jul 20 15:08:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnySeqC.cpp:
