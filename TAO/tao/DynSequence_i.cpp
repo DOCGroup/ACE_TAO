@@ -64,7 +64,7 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
           for (CORBA::ULong i = 0; i < length; i++)
             {
               // This Any constructor is a TAO extension.
-              CORBA_Any field_any (field_tc,
+              CORBA_Any field_any (field_tc.in (),
                                    0,
                                    cdr.start ());
 
@@ -75,7 +75,7 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
                                               ACE_TRY_ENV);
               ACE_TRY_CHECK;
               // Move to the next field in the CDR stream.
-              cdr.skip (field_tc);
+              cdr.skip (field_tc.in ());
             }
         }
       else
@@ -189,7 +189,7 @@ TAO_DynSequence_i::set_elements (const CORBA_AnySeq& value,
   for (CORBA::ULong i = 0; i < length; i++)
     {
       // Check each arg element for type match.
-      CORBA::Boolean equal = value[i].type ()->equal (element_type,
+      CORBA::Boolean equal = value[i].type ()->equal (element_type.in (),
                                                       ACE_TRY_ENV);
       ACE_CHECK;
 
@@ -314,7 +314,7 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
            i++)
         {
           // This Any constructor is a TAO extension.
-          CORBA_Any field_any (field_tc,
+          CORBA_Any field_any (field_tc.in (),
                                0,
                                cdr.start ());
 
@@ -330,7 +330,7 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
           ACE_CHECK;
 
           // Move to the next field in the CDR stream.
-          cdr.skip (field_tc);
+          cdr.skip (field_tc.in ());
         }
     }
   else
@@ -368,7 +368,7 @@ TAO_DynSequence_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 
       TAO_InputCDR field_cdr (field_mb);
 
-      out_cdr.append (field_tc,
+      out_cdr.append (field_tc.in (),
                       &field_cdr,
                       ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);

@@ -1786,13 +1786,13 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
                          ACE_Allocator::instance (),
                          ACE_Allocator::instance ());
 
-      retval = out.append (tc, &stream, ACE_TRY_ENV);
+      retval = out.append (tc.in (), &stream, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;
 
       ACE_NEW_THROW_EX (label_list[i],
-                        CORBA::Any (tc, 0, out.begin ()),
+                        CORBA::Any (tc.in (), 0, out.begin ()),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
