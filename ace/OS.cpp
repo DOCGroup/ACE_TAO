@@ -12,9 +12,6 @@
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # include "ace/Synch_T.h" /* for ACE_TSS */
-# if defined (ACE_WIN32)
-#   include "ace/Thread_Manager.h"
-# endif /* ACE_WIN32 */
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 ACE_RCSID(ace, OS, "$Id$")
@@ -2175,7 +2172,10 @@ ACE_Thread_Adapter::inherit_log_msg (void)
   // descriptor in.
 
   if (this->thr_desc_ != 0)
-    ACE_LOG_MSG->thr_desc (this->thr_desc_);
+    // This downcast is safe.  We do it to avoid having to #include
+    // ace/Thread_Manager.h.
+    ACE_LOG_MSG->thr_desc (ACE_reinterpret_cast (ACE_Thread_Descriptor *,
+                                                 this->thr_desc_));
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
 
@@ -2225,7 +2225,7 @@ ACE_Thread_Adapter::invoke (void)
                                                      this->user_func_);
   void *arg = this->arg_;
 #if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-  ACE_Thread_Descriptor *thr_desc = this->thr_desc_;
+  ACE_OS_Thread_Descriptor *thr_desc = this->thr_desc_;
 #endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
@@ -2399,7 +2399,9 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
     arg_ (arg),
     entry_point_ (entry_point),
     thr_mgr_ (tm),
-    thr_desc_ (td)
+    // An ACE_Thread_Descriptor really is an ACE_OS_Thread_Descriptor.
+    // But without #including ace/Thread_Manager.h, we don't know that.
+    thr_desc_ (ACE_reinterpret_cast (ACE_OS_Thread_Descriptor *,td))
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
     ,
     ostream_ (0),
@@ -3293,7 +3295,11 @@ ACE_OS::thr_exit (void *status)
 
 #     if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
     int using_afx = -1;
-    ACE_Thread_Descriptor *td = ACE_Log_Msg::instance ()->thr_desc ();
+    // An ACE_Thread_Descriptor really is an ACE_OS_Thread_Descriptor.
+    // But without #including ace/Thread_Manager.h, we don't know that.
+    ACE_OS_Thread_Descriptor *td =
+      ACE_reinterpret_cast (ACE_OS_Thread_Descriptor *,
+                            ACE_Log_Msg::instance ()->thr_desc ());
     if (td)
       using_afx = ACE_BIT_ENABLED (td->flags (), THR_USE_AFX);
 #     endif /* ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
