@@ -1,0 +1,32 @@
+                                     Profile for 10000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           0.04        8.505   3386    0.003    0.349    0.002   0.000
+mutex_unlock         0.04        8.205   3386    0.002    0.127    0.002   0.000
+
+
+                                     Profile for 20000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           0.01        8.875   3386    0.003    0.373    0.002   0.000
+mutex_unlock         0.01        8.353   3386    0.002    0.093    0.002   0.000
+
+                                     Profile for 30000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           0.02        8.979   3386    0.003    0.386    0.002   0.000
+mutex_unlock         0.02        8.465   3386    0.002    0.030    0.002   0.000
+
+                                     Profile for 40000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           0.01        8.849   3388    0.003    0.355    0.002   0.000
+mutex_unlock         0.01        7.937   3388    0.002    0.029    0.002   0.000
