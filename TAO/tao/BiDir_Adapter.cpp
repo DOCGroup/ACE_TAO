@@ -1,7 +1,7 @@
 // @(#) $Id$
 
 #include "tao/BiDir_Adapter.h"
-
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, BiDir_Adapter, "$Id$")
 
