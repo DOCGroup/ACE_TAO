@@ -1,3 +1,21 @@
+Thu May 13 11:26:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Reply/client.cpp:
+          When the client has receivel all replies invoke the shutdown() on
+          the server so that the server stops controlled
+
+        * tests/Big_Reply/Client_Task.cpp:
+          Fixed typos and formatting
+
+        * tests/Big_Reply/server.cpp:
+          Added some extra lines so that we can see that the server starts
+          and stops
+
+        * tests/Big_Reply/run_test.pl:
+          Use WaitKill instead of TerminateWaitKill on the server. Under
+          Windows the TerminateWaitKill just doesn't give any feedback that
+          the server has been killed, WaitKill does give this info correctly
+
 Thu May 13 09:22:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Request_Muxing/client.cpp:
