@@ -1118,21 +1118,17 @@ ACE_OS::strcasecmp (const char *s, const char *t)
   // equal.
   int result = 0;
 
-  if (ACE_OS::strlen (s) != ACE_OS::strlen (t))
-    result = 1;
-   else
-     {
-       for (;
-            *s != '\0' && *t != '\0';
-            ++s, ++t)
-         if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
-           {
-             result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
-             break;
-           }
-     }
+  do
+    {
+      int a = ACE_OS::to_lower (*s);
+      int b = ACE_OS::to_lower (*t);
+      result = ((a < b) ? -1 : (a > b));
+      if (result != 0)
+        break;
+    } while (*s++ != '\0' && *t++ != '\0');
+  //  paranoid termination condition
 
-   return result; // == 0 for match, else 1
+  return result; // == 0 for match, else 1
 #else
   return ::strcasecmp (s, t);
 #endif /* ACE_LACKS_STRCASECMP */
@@ -7536,21 +7532,17 @@ ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
   // equal.
   int result = 0;
 
-  if (ACE_OS::strlen (s) != ACE_OS::strlen (t))
-    result = 1;
-   else
-     {
-       for (;
-            *s != '\0' && *t != '\0';
-            ++s, ++t)
-         if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
-           {
-             result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
-             break;
-           }
-     }
+  do
+    {
+      int a = ACE_OS::to_lower (*s);
+      int b = ACE_OS::to_lower (*t);
+      result = ((a < b) ? -1 : (a > b));
+      if (result != 0)
+        break;
+    } while (*s++ != '\0' && *t++ != '\0');
+  //  paranoid termination condition
 
-   return result; // == 0 for match, else 1
+  return result; // == 0 for match, else 1
 
 #else /* ACE_WIN32 */
   return ::_wcsicmp (s, t);
