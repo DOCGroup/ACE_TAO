@@ -19,17 +19,23 @@ ifneq ($(shell uname -s),LynxOS)
     VERSION=2.5.0
   endif # VERSION
 
+  ifeq (,$(LYNXTARGET))
+    LYNXTARGET = x86
+  endif # LYNXTARGET
+
   ifeq (,$(HOST_OS))
     ifeq (2.5.0,$(VERSION))
       HOST_OS = sunos
     else
-      HOST_OS = sunos-coff
+      ifeq ($(LYNXTARGET),x86)
+        HOST_OS = sunos-coff
+      else
+      ifeq ($(LYNXTARGET),ppc)
+        HOST_OS = sunos-xcoff
+      endif # ppc
+      endif # x86
     endif # VERSION
   endif # HOST_OS
-
-  ifeq (,$(LYNXTARGET))
-    LYNXTARGET = x86
-  endif # LYNXTARGET
 
   ifeq (,$(findstring /usr/lynx/$(VERSION)/$(LYNXTARGET),$(PATH)))
     PATH:=\
