@@ -5,6 +5,8 @@
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
 
+using namespace std;
+
 Stock_Consumer::Stock_Consumer ()
 {
 }
@@ -38,10 +40,10 @@ Stock_Consumer::push (const CORBA::Any& data,
   if ((data >>= event) == 0)
     return; // Invalid event
 
-  std::cout << "The new price for one stock in \""
-            << event->full_name.in ()
-            << "\" (" << event->symbol.in ()
-            << ") is " << event->price << std::endl;
+  cout << "The new price for one stock in \""
+       << event->full_name.in ()
+       << "\" (" << event->symbol.in ()
+       << ") is " << event->price << endl;
 }
 
 void

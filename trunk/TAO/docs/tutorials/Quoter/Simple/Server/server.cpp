@@ -5,6 +5,8 @@
 #include "Stock_Factory_i.h"
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -30,7 +32,7 @@ int main (int argc, char* argv[])
     // Put the object reference as an IOR string
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
     // Print it out!
-    std::cout << ior.in () << std::endl;
+    cout << ior.in () << endl;
 
     orb->run ();
 
@@ -39,7 +41,7 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &) {
-    std::cerr << "CORBA exception raised!" << std::endl;
+    cerr << "CORBA exception raised!" << endl;
   }
   return 0;
 }

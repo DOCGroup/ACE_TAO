@@ -6,6 +6,8 @@
 #include <orbsvcs/CosNamingC.h>
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -77,13 +79,13 @@ int main (int argc, char* argv[])
             Quoter::Modify_Stock::_narrow (stock.in ());
           modify_stock->set_price (price + 1);
 
-          std::cout << "Set the price of "
-                    << full_name.in ()
-                    << " to " << price + 1 << std::endl;
+          cout << "Set the price of "
+               << full_name.in ()
+               << " to " << price + 1 << endl;
         }
         catch (Quoter::Invalid_Stock_Symbol &) {
-          std::cerr << "Invalid stock symbol <"
-                    << argv[i] << ">" << std::endl;
+          cerr << "Invalid stock symbol <"
+               << argv[i] << ">" << endl;
         }
         ACE_Time_Value tv (0, 500000);
         ACE_OS::sleep (tv);
@@ -97,7 +99,7 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &ex) {
-    std::cerr << "CORBA exception raised!" << std::endl;
+    cerr << "CORBA exception raised!" << endl;
   }
   return 0;
 }

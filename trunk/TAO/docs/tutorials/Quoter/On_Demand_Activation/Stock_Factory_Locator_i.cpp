@@ -13,8 +13,8 @@ Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb)
 
 PortableServer::Servant
 Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
-                                           PortableServer::POA_ptr /*poa*/,
-                                           const char * operation,
+                                           PortableServer::POA_ptr,
+                                           const char *,
                                            void * & cookie )
   throw (CORBA::SystemException, PortableServer::ForwardRequest)
 {
@@ -35,19 +35,19 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
 
       return servant;
     }
-    else
-    {
+    else {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
-  }catch (const CORBA::BAD_PARAM &) {
+
+  } catch (const CORBA::BAD_PARAM &) {
     throw CORBA::OBJECT_NOT_EXIST ();
   }
 }
 
 void
-Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId & /*oid*/,
-                                            PortableServer::POA_ptr poa,
-                                            const char * operation,
+Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &,
+                                            PortableServer::POA_ptr,
+                                            const char *,
                                             void * cookie,
                                             PortableServer::Servant servant)
   throw (CORBA::SystemException)

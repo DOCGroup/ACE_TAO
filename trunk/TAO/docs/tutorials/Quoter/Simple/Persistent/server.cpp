@@ -18,6 +18,8 @@
 #include "Stock_Factory_i.h"
 #include <iostream>
 
+using namespace std;
+
 int
 main (int argc, char *argv[])
 {
@@ -85,7 +87,7 @@ main (int argc, char *argv[])
     // Stringify all the object referencs.
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
     // Print them out !
-    std::cout << ior.in () << std::endl;
+    cout << ior.in () << endl;
 
     orb-> run ();
 
@@ -94,7 +96,7 @@ main (int argc, char *argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &) {
-    std::cerr << "CORBA exception raised !" << std::endl;
+    cerr << "CORBA exception raised !" << endl;
   }
   return 0;
 }

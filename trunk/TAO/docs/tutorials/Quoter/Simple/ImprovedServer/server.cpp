@@ -6,6 +6,8 @@
 #include "Stock_i.h"
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -33,22 +35,22 @@ int main (int argc, char* argv[])
       poa->create_POA ("Stock_Factory_POA",
                        poa_manager.in (),
                        policies);
-    
+
     for (CORBA::ULong i = 0; i != policies.length (); ++i) {
       policies[i]->destroy ();
     }
 
-    while (!std::cin.eof () && std::cin.peek () != EOF) {
+    while (!cin.eof () && cin.peek () != EOF) {
       const int max_symbol_length = 8;
       char symbol[max_symbol_length];
       const int max_full_name_length = 64;
       char full_name[max_full_name_length];
       double price;
 
-      std::cin.getline (symbol, max_symbol_length, '\n');
-      std::cin.getline (full_name, max_full_name_length, '\n');
-      std::cin >> price;
-      std::cin.ignore (1, '\n');
+      cin.getline (symbol, max_symbol_length, '\n');
+      cin.getline (full_name, max_full_name_length, '\n');
+      cin >> price;
+      cin.ignore (1, '\n');
 
       PortableServer::ServantBase_var servant =
         new Quoter_Stock_i (symbol, full_name, price);
@@ -70,7 +72,7 @@ int main (int argc, char* argv[])
     // Put the object reference as an IOR string
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
     // Print it out!
-    std::cout << ior.in () << std::endl;
+    cout << ior.in () << endl;
 
     orb->run ();
 
@@ -79,8 +81,8 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &) {
-    std::cerr << "CORBA exception raised!" << std::endl
-              << std::endl;
+    cerr << "CORBA exception raised!" << endl
+         << endl;
   }
   return 0;
 }
