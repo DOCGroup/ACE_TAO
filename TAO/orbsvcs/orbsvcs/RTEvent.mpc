@@ -13,7 +13,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
     RtecUDPAdmin.idl
   }
 
-  // This could be simplified if the cpp files for RTEvent were 
+  // This could be simplified if the cpp files for RTEvent were
   // in their own directory.
   Source_Files(ORBSVCS_COMPONENTS) {
     RTEvent {
@@ -61,6 +61,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       Event/EC_Filter.cpp
       Event/EC_Filter_Builder.cpp
       Event/EC_Gateway.cpp
+      Event/EC_Gateway_IIOP.cpp
       Event/EC_Group_Scheduling.cpp
       Event/EC_Lifetime_Utils.cpp
       Event/EC_Lifetime_Utils_T.cpp

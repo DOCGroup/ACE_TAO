@@ -783,6 +783,10 @@ SOURCE=.\Event\EC_Filter_Builder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Gateway_IIOP.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Gateway.cpp
 # End Source File
 # Begin Source File
@@ -1080,6 +1084,10 @@ SOURCE=.\Event\EC_Filter_Builder.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Gateway_IIOP.h
 # End Source File
 # Begin Source File
 

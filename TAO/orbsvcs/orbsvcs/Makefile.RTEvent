@@ -90,6 +90,7 @@ CPP_SRCS += \
 CPP_SRCS += \
         Event_Utilities \
         Event/EC_Gateway \
+        Event/EC_Gateway_IIOP \
         Event/ECG_UDP_Out_Endpoint \
         Event/ECG_UDP_Sender \
         Event/EC_UDP_Admin \
@@ -103,7 +104,7 @@ CPP_SRCS += \
         Event/ECG_UDP_EH \
         Event/ECG_Mcast_EH \
         Event/ECG_UDP_Receiver \
-        Event/ECG_CDR_Message_Sender 
+        Event/ECG_CDR_Message_Sender
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
