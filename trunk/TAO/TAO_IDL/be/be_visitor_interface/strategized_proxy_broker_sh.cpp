@@ -22,15 +22,15 @@ int
 be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
-  
+
+
   //    os->gen_ifdef_macro (node->local_name (), "STRATEGIZED_PROXY_BROKER_");
   // Generate the class declaration.
   os->indent ();
 
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//               Strategized Proxy Broker Declaration " << be_nl 
+      << "//               Strategized Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
 
   *os << "class " << be_global->skel_export_macro () << " "
@@ -70,24 +70,34 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
       << "ACE_SYNCH_MUTEX mutex_;"
       << be_uidt_nl;
 
-  *os << "};" << be_nl << be_nl;
-
   // Factory Function declaration.
   *os << "// This funxtion is used to get an handle to the unique instance" << be_nl
       << "// of the Strategized Proxy Broker that is available for a given" << be_nl
       << "// interface."
       << be_nl << be_nl;
 
-  *os << node->strategized_proxy_broker_name () << " *the" << node->strategized_proxy_broker_name ()
-      << " (void);" << be_nl;
+  *os << "public:" << be_idt_nl
+      << "static " << node->strategized_proxy_broker_name () << " *the" << node->strategized_proxy_broker_name ()
+      << " (void);" << be_uidt_nl;
 
-  
+  *os << "};" << be_nl << be_nl;
+
+
+  /*
+  if (node->is_nested ())
+    *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+  else
+    *os << "static ";
+    */
+
+
+
     *os << be_nl
       << "//" << be_nl
-      << "//            End Strategized Proxy Broker Declaration " << be_nl 
+      << "//            End Strategized Proxy Broker Declaration " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
-  
+
     // Close #ifdef Guard.
     //  os->gen_endif ();
 

@@ -1596,7 +1596,7 @@ Messaging::_TAO_ReplyHandler_Proxy_Broker::~_TAO_ReplyHandler_Proxy_Broker (void
 }
 
 // Factory function Implementation.
-Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker *Messaging::the_TAO_ReplyHandler_Remote_Proxy_Broker (void)
+Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker *Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::the_TAO_ReplyHandler_Remote_Proxy_Broker (void)
 {
   static ::Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker remote_proxy_broker;
   return &remote_proxy_broker;
@@ -1642,9 +1642,7 @@ Messaging::ReplyHandler::setup_collocation (int collocated)
       Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer (this);
   else
     this->the_TAO_ReplyHandler_Proxy_Broker_ =
-      ::Messaging::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
-
-
+      Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
 }
 
 

@@ -136,7 +136,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "else" << be_idt_nl // idt = 2
           << "this->the" << node->base_proxy_broker_name ()
           << "_ =" << be_idt_nl  // idt = 3
-          << "::" << node->client_enclosing_scope () <<  "the" << node->remote_proxy_broker_name ()
+          << node->full_remote_proxy_broker_name () << "::"
+          << "the" << node->remote_proxy_broker_name ()
+        // << "::" << node->client_enclosing_scope () <<  "the" << node->remote_proxy_broker_name ()
           << " ();" << be_uidt << be_uidt << be_nl << be_nl; // idt = 1
 
       // Now we setup the immediate parents.
@@ -146,8 +148,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
             {
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
-              *os << "ACE_NESTED_CLASS (" << inherited->full_name () << ", "
-                  << inherited->local_name ()<< ")::setup_collocation" << " (collocated);" << be_nl;
+              *os << inherited->local_name ()<< "::setup_collocation" << " (collocated);" << be_nl;
             }
         }
 

@@ -1,9 +1,33 @@
+Wed Nov 22 14:30:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+	  Modified code generated for the proxy broker factory
+	  function. Now the factory is a public static method of the proxy
+	  broker itself.
+
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/PortableServer/MessagingS.cpp:
+	* tao/PortableServer/MessagingS.h:
+
+	  Modified code to reflect the change made in the IDL generated
+	  code.
+
+	  Thanks to Andy <gokhale@research.bell-labs.com> for the support,
+	  and hint.
+
 Wed Nov 22 10:05:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Latency/server.dsp
 	* performance-tests/Latency/client.dsp
 	* performance-tests/Latency/st_client.dsp
-	  
+
 	  Updated the Debug and Release configurations.
 
 Wed Nov 22 09:49:51 2000  Darrell Brunsch <brunsch@uci.edu>
