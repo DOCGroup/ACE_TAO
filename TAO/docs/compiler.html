@@ -709,8 +709,10 @@ also receives other options that are specific to it. <p>
 
     <td>Suppress generation of the TypeCodes</td>
 
-    <td>Also suppresses the generation of the Any operators, since the Any >>= operator needs the
-        associated typecode.</td>
+    <td>Also suppresses the generation of the Any operators, since they need the
+        associated typecode. User exceptions also need the generated typecode, and
+        a user exception in an IDL file compiled with this option will cause a
+        C++ compilation error.</td>
   </tr>
 
   <tr><a name="Sc">
