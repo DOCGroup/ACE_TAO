@@ -3,6 +3,10 @@ Wed Dec 31 21:21:50 1997  David L. Levine  <levine@cs.wustl.edu>
         * examples/Reactor/Dgram/{CO,Dgram.cpp} (handle_close): added
           ACE_UNUSED_ARG (handle).
 
+        * tests/Env_Value_Test.cpp (main): removed unused arg argv and
+          local envargv.  undef'ed ACE_HAS_NONSTATIC_OBJECT_MANAGER because
+          it can't deal with the three arguments to main ().
+
 Wed Dec 31 17:32:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway/Peer/Peer: Moved the Peer_Acceptor into the Peer.h
