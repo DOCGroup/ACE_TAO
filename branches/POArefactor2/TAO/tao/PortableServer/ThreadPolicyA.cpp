@@ -38,21 +38,21 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f54),
-  ACE_NTOHL (0x68726561),
-  ACE_NTOHL (0x64506f6c),
-  ACE_NTOHL (0x6963793a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f54), 
+  ACE_NTOHL (0x68726561), 
+  ACE_NTOHL (0x64506f6c), 
+  ACE_NTOHL (0x6963793a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableServer/ThreadPolicy:1.0
     13,
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164506f),
-  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164506f), 
+  ACE_NTOHL (0x6c696379), 
   ACE_NTOHL (0x0),  // name = ThreadPolicy
   };
 
@@ -153,6 +153,6 @@ operator>>= (
         PortableServer::ThreadPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

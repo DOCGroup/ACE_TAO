@@ -38,22 +38,22 @@ static const CORBA::Long _oc_PortableServer_ServantLocator[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f53),
-  ACE_NTOHL (0x65727661),
-  ACE_NTOHL (0x6e744c6f),
-  ACE_NTOHL (0x6361746f),
-  ACE_NTOHL (0x723a322e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f53), 
+  ACE_NTOHL (0x65727661), 
+  ACE_NTOHL (0x6e744c6f), 
+  ACE_NTOHL (0x6361746f), 
+  ACE_NTOHL (0x723a322e), 
   ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/ServantLocator:2.3
     15,
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x616e744c),
-  ACE_NTOHL (0x6f636174),
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x616e744c), 
+  ACE_NTOHL (0x6f636174), 
   ACE_NTOHL (0x6f720000),  // name = ServantLocator
   };
 
@@ -154,6 +154,6 @@ operator>>= (
         PortableServer::ServantLocator \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

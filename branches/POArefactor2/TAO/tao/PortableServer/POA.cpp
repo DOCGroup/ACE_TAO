@@ -26,6 +26,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
 #include "tao/PortableServer/Policy_Creator_T.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 #include "Non_Servant_Upcall.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/ORB_Core.h"
@@ -2664,98 +2665,10 @@ TAO_POA::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return new CORBA::OctetSeq (this->id_);
 }
 
-TAO_SERVANT_LOCATION
-TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
-                           PortableServer::Servant &servant
-                           ACE_ENV_ARG_DECL)
-{
-  // If the POA has the RETAIN policy, the POA looks in the Active
-  // Object Map to find if there is a servant associated with the
-  // Object Id value from the request. If such a servant exists,
-  // return TAO_SERVANT_FOUND.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      // Find user id from system id.
-      PortableServer::ObjectId user_id;
-      if (this->active_object_map ().
-          find_user_id_using_system_id (system_id,
-                                        user_id) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            TAO_SERVANT_NOT_FOUND);
-        }
-
-      TAO_Active_Object_Map::Map_Entry *entry = 0;
-      int result = this->active_object_map ().
-        find_servant_using_system_id_and_user_id (system_id,
-                                                  user_id,
-                                                  servant,
-                                                  entry);
-      if (result == 0)
-        {
-          // Success
-          return TAO_SERVANT_FOUND;
-        }
-    }
-
-  // If the POA has the NON_RETAIN policy or has the RETAIN policy but
-  // didn't find a servant in the Active Object Map, the POA takes the
-  // following actions:
-
-  // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
-  // the OBJECT_NOT_EXIST system exception.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
-    {
-      return TAO_SERVANT_NOT_FOUND;
-    }
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
-  // has been associated with the POA, return TAO_DEFAULT_SERVANT. If
-  // no servant has been associated with the POA, return
-  // TAO_SERVANT_NOT_FOUND.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_DEFAULT_SERVANT)
-    {
-      if (this->default_servant_.in () == 0)
-        {
-          return TAO_SERVANT_NOT_FOUND;
-        }
-      else
-        {
-          // Success
-          return TAO_DEFAULT_SERVANT;
-        }
-    }
-
-  // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
-  // has been associated with the POA, return
-  // TAO_SERVANT_MANAGER. If no servant manager has been
-  // associated with the POA, return TAO_SERVANT_NOT_FOUND.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER)
-    {
-      if (CORBA::is_nil (this->servant_activator_.in ()) &&
-          CORBA::is_nil (this->servant_locator_.in ()))
-        {
-          return TAO_SERVANT_NOT_FOUND;
-        }
-      else
-        {
-          // Success
-          return TAO_SERVANT_MANAGER;
-        }
-    }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  // Failure
-  return TAO_SERVANT_NOT_FOUND;
-}
-
 PortableServer::Servant
 TAO_POA::locate_servant_i (const char *operation,
                            const PortableServer::ObjectId &system_id,
-                           TAO_Object_Adapter::Servant_Upcall &servant_upcall,
+                           TAO::Portable_Server::Servant_Upcall &servant_upcall,
                            TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL)
@@ -3012,7 +2925,7 @@ TAO_POA::locate_servant_i (const char *operation,
 
           // We have release the object adapater lock.  Record this
           // for later use.
-          servant_upcall.state (TAO_Object_Adapter::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
+          servant_upcall.state (TAO::Portable_Server::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
 
           PortableServer::ServantLocator::Cookie cookie = 0;
           PortableServer::Servant servant =
@@ -3898,6 +3811,96 @@ TAO_POA::client_exposed_policies (CORBA::Short /* object_priority */
 
   return policies._retn ();
 }
+
+TAO_SERVANT_LOCATION
+TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
+                           PortableServer::Servant &servant
+                           ACE_ENV_ARG_DECL)
+{
+  // If the POA has the RETAIN policy, the POA looks in the Active
+  // Object Map to find if there is a servant associated with the
+  // Object Id value from the request. If such a servant exists,
+  // return TAO_SERVANT_FOUND.
+  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
+    {
+      // Find user id from system id.
+      PortableServer::ObjectId user_id;
+      if (this->active_object_map ().
+          find_user_id_using_system_id (system_id,
+                                        user_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            TAO_SERVANT_NOT_FOUND);
+        }
+
+      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      int result = this->active_object_map ().
+        find_servant_using_system_id_and_user_id (system_id,
+                                                  user_id,
+                                                  servant,
+                                                  entry);
+      if (result == 0)
+        {
+          // Success
+          return TAO_SERVANT_FOUND;
+        }
+    }
+
+  // If the POA has the NON_RETAIN policy or has the RETAIN policy but
+  // didn't find a servant in the Active Object Map, the POA takes the
+  // following actions:
+
+  // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
+  // the OBJECT_NOT_EXIST system exception.
+  if (this->cached_policies_.request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
+    {
+      return TAO_SERVANT_NOT_FOUND;
+    }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+  // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
+  // has been associated with the POA, return TAO_DEFAULT_SERVANT. If
+  // no servant has been associated with the POA, return
+  // TAO_SERVANT_NOT_FOUND.
+  if (this->cached_policies_.request_processing () == PortableServer::USE_DEFAULT_SERVANT)
+    {
+      if (this->default_servant_.in () == 0)
+        {
+          return TAO_SERVANT_NOT_FOUND;
+        }
+      else
+        {
+          // Success
+          return TAO_DEFAULT_SERVANT;
+        }
+    }
+
+  // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
+  // has been associated with the POA, return
+  // TAO_SERVANT_MANAGER. If no servant manager has been
+  // associated with the POA, return TAO_SERVANT_NOT_FOUND.
+  if (this->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER)
+    {
+      if (CORBA::is_nil (this->servant_activator_.in ()) &&
+          CORBA::is_nil (this->servant_locator_.in ()))
+        {
+          return TAO_SERVANT_NOT_FOUND;
+        }
+      else
+        {
+          // Success
+          return TAO_SERVANT_MANAGER;
+        }
+    }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+  // Failure
+  return TAO_SERVANT_NOT_FOUND;
+}
+
+
 
 //
 // ImplRepo related.

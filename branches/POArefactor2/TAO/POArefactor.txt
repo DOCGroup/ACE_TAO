@@ -1,3 +1,32 @@
+Mon Oct 11 13:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+        * tests/DSI_Gateway/test_dsi.h:
+          Added includes and changes usage of TAO_POA_Current to the new
+          namespace
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+          Servant_Upcall has moved to its own file and to the
+          TAO::Portable_Server namespace, changes generation in the TAO_IDL
+          compiler to reflect the new name, and no need to include
+          Object_Manager.h, Servant_Upcall.h is enough
+
+       * tao/PortableServer/*C.{h,cpp,inl}:
+         Regenerated with the latest version of the TAO_IDL compiler
+
+       * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+       * tao/PortableServer/Object_Adapter.{h,i}:
+       * tao/PortableServer/Request_Processing_Strategy.h:
+       * tao/PortableServer/Servant_Upcall.inl:
+       * tao/PortableServer/Servant_Base.cpp:
+       * tao/PortableServer/POA.{h,cpp}:
+         Corrected some small errors and reduced header dependencies
+
 Mon Oct 11 09:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Everything has now been moved to the POArefactor2 branch that I

@@ -1,8 +1,9 @@
 // $Id$
 
-#include "Servant_Base.h"
-#include "POA.h"
-#include "Operation_Table.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Operation_Table.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"

@@ -40,6 +40,11 @@ namespace PortableServer
 
   typedef ServantActivator *ServantActivator_ptr;
   typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
+
+  class ServantLocator;
+
+  typedef ServantLocator *ServantLocator_ptr;
+  typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
 }
 
 class TAO_POA;

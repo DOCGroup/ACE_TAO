@@ -42,12 +42,6 @@
 // Policy Set
 #include "POA_Policy_Set.h"
 
-#include "PS_CurrentC.h"
-#include "ServantLocatorC.h"
-
-// @johnny TAO_IDL Compiler should generate this include in the S.cpp files
-#include "Servant_Upcall.h"
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -99,9 +93,6 @@ public:
   typedef PortableServer::ObjectId poa_name;
   typedef PortableServer::ObjectId_var poa_name_var;
   typedef PortableServer::ObjectId_out poa_name_out;
-
-  // @johnny This could be removed when the TAO_IDL is changed
-  typedef TAO::Portable_Server::Servant_Upcall Servant_Upcall;
 
   /// Constructor.
   TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,

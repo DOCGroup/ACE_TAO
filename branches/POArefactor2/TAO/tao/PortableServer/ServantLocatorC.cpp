@@ -26,11 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:303
+// be\be_codegen.cpp:301
 
 
 #include "ServantLocatorC.h"
 #include "tao/CDR.h"
+#include "tao/ORB_Core.h"
 #include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 

@@ -57,9 +57,6 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
-#include "ServantActivatorC.h"
-#include "AdapterActivatorC.h"
-
 #include "ORT_Adapter.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -151,7 +148,22 @@ namespace TAO
   namespace Portable_Server
   {
     class Servant_Retention_Strategy;
+    class Servant_Upcall;
+    class POA_Current_Impl;
   }
+}
+
+namespace PortableServer
+{
+  class ServantActivator;
+
+  typedef ServantActivator *ServantActivator_ptr;
+  typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
+
+  class ServantLocator;
+
+  typedef ServantLocator *ServantLocator_ptr;
+  typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
 }
 
 /**

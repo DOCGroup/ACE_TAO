@@ -1,0 +1,54 @@
+--- orig/ThreadPolicyC.h	2004-10-11 14:54:00.153182400 +0200
++++ ThreadPolicyC.h	2004-10-11 14:54:02.005846400 +0200
+@@ -74,6 +74,8 @@
+ // TAO_IDL - Generated from 
+ // be\be_visitor_root/root_ch.cpp:63
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ namespace TAO
+ {
+   class Collocation_Proxy_Broker;
+@@ -246,6 +248,8 @@
+ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ThreadPolicy_ptr *); // non-copying
+ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ThreadPolicy_ptr &);
+ 
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
++
+ // TAO_IDL - Generated from
+ // be\be_codegen.cpp:958
+ 
+--- orig/ThreadPolicyC.cpp	2004-10-11 14:54:00.153182400 +0200
++++ ThreadPolicyC.cpp	2004-10-11 14:54:02.015860800 +0200
+@@ -45,6 +45,8 @@
+ // TAO_IDL - Generated from
+ // be\be_visitor_arg_traits.cpp:64
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ // Arg traits specializations.
+ namespace TAO
+ {
+@@ -238,3 +240,5 @@
+       >
+ 
+ #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
++
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+--- orig/ThreadPolicyA.cpp	2004-10-11 14:54:00.153182400 +0200
++++ ThreadPolicyA.cpp	2004-10-11 14:54:02.015860800 +0200
+@@ -32,6 +32,8 @@
+ // TAO_IDL - Generated from
+ // be\be_visitor_typecode/typecode_defn.cpp:290
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
+ {
+     TAO_ENCAP_BYTE_ORDER, // byte order
+@@ -152,3 +154,5 @@
+       >
+ 
+ #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
++
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

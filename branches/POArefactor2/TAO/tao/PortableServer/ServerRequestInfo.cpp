@@ -6,8 +6,9 @@ ACE_RCSID (PortableServer,
            ServerRequestInfo,
            "$Id$")
 
-#include "POA.h"
-#include "POA_Policy_Set.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/POA_Policy_Set.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -22,7 +23,7 @@ ACE_RCSID (PortableServer,
 
 TAO_ServerRequestInfo::TAO_ServerRequestInfo (
   TAO_ServerRequest &server_request,
-  TAO_Object_Adapter::Servant_Upcall *servant_upcall)
+  TAO::Portable_Server::Servant_Upcall *servant_upcall)
   : server_request_ (server_request),
     servant_upcall_ (servant_upcall),
     caught_exception_ (0),

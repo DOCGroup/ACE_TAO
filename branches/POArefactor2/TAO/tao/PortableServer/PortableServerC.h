@@ -50,8 +50,6 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
-#include "tao/orb_typesC.h"
-#include "tao/Policy_ForwardC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/PortableServer/PS_ForwardC.h"
 
@@ -68,9 +66,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -209,7 +205,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_THREADPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_THREADPOLICY__VAR_OUT_CH_
@@ -250,7 +246,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_LifespanPolicyValue;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY__VAR_OUT_CH_
@@ -289,7 +285,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdUniquenessPolicyValue;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY__VAR_OUT_CH_
@@ -328,7 +324,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdAssignmentPolicyValue;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY__VAR_OUT_CH_
@@ -369,7 +365,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__VAR_OUT_CH_
@@ -412,7 +408,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY__VAR_OUT_CH_
@@ -456,7 +452,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__VAR_OUT_CH_
@@ -481,7 +477,7 @@ namespace PortableServer
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_POAMANAGER__VAR_OUT_CH_)
 #define _PORTABLESERVER_POAMANAGER__VAR_OUT_CH_
@@ -504,7 +500,7 @@ namespace PortableServer
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__VAR_OUT_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__VAR_OUT_CH_
@@ -527,7 +523,7 @@ namespace PortableServer
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER__VAR_OUT_CH_
@@ -550,7 +546,7 @@ namespace PortableServer
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_POA__VAR_OUT_CH_)
 #define _PORTABLESERVER_POA__VAR_OUT_CH_
@@ -2157,13 +2153,13 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableSer
 
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:964
+// be\be_codegen.cpp:958
 
 #if defined (__ACE_INLINE__)
 #include "PortableServerC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

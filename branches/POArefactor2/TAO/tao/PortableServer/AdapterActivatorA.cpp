@@ -38,23 +38,23 @@ static const CORBA::Long _oc_PortableServer_AdapterActivator[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f41),
-  ACE_NTOHL (0x64617074),
-  ACE_NTOHL (0x65724163),
-  ACE_NTOHL (0x74697661),
-  ACE_NTOHL (0x746f723a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f41), 
+  ACE_NTOHL (0x64617074), 
+  ACE_NTOHL (0x65724163), 
+  ACE_NTOHL (0x74697661), 
+  ACE_NTOHL (0x746f723a), 
   ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/AdapterActivator:2.3
     17,
-  ACE_NTOHL (0x41646170),
-  ACE_NTOHL (0x74657241),
-  ACE_NTOHL (0x63746976),
-  ACE_NTOHL (0x61746f72),
+  ACE_NTOHL (0x41646170), 
+  ACE_NTOHL (0x74657241), 
+  ACE_NTOHL (0x63746976), 
+  ACE_NTOHL (0x61746f72), 
   ACE_NTOHL (0x0),  // name = AdapterActivator
   };
 
@@ -155,6 +155,6 @@ operator>>= (
         PortableServer::AdapterActivator \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

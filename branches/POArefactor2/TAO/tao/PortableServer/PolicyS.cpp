@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:631
+// TAO_IDL - Generated from 
+// be\be_codegen.cpp:605
 
 #ifndef _TAO_IDL_ORIG_POLICYS_CPP_
 #define _TAO_IDL_ORIG_POLICYS_CPP_
 
 
 #include "PolicyS.h"
-#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -44,15 +44,15 @@
 #include "tao/Object_T.h"
 #include "tao/Typecode.h"
 #include "tao/DynamicC.h"
-#include "tao/Basic_Arguments.h"
 #include "tao/CDR.h"
+#include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
 #include "tao/PortableServer/PICurrent_Guard.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "tao/RequestInfo_Util.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
@@ -76,9 +76,9 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_SS_)
 #define _CORBA_POLICY__ARG_TRAITS_SS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
-  class TAO_PortableServer_Export Arg_Traits<CORBA::Policy>
+  class TAO_Export Arg_Traits<CORBA::Policy>
     : public
         Object_Arg_Traits_T<
             CORBA::Policy_ptr,
@@ -94,7 +94,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1534
+// be\be_interface.cpp:1540
 
 class TAO_CORBA_Policy_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -107,7 +107,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\latest\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\POArefactor\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_Policy_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -221,7 +221,7 @@ class TAO_ServerRequestInfo_CORBA_Policy_policy_type_get : public TAO_ServerRequ
 public:
   TAO_ServerRequestInfo_CORBA_Policy_policy_type_get (
       TAO_ServerRequest &_tao_server_request,
-      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      TAO::Portable_Server::Servant_Upcall *tao_servant_upcall,
       POA_CORBA::Policy *tao_impl
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
@@ -274,7 +274,7 @@ private:
 
 TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::TAO_ServerRequestInfo_CORBA_Policy_policy_type_get (
     TAO_ServerRequest &_tao_server_request,
-    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    TAO::Portable_Server::Servant_Upcall *_tao_servant_upcall,
     POA_CORBA::Policy *tao_impl
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -364,7 +364,7 @@ class TAO_ServerRequestInfo_CORBA_Policy_copy : public TAO_ServerRequestInfo
 public:
   TAO_ServerRequestInfo_CORBA_Policy_copy (
       TAO_ServerRequest &_tao_server_request,
-      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      TAO::Portable_Server::Servant_Upcall *tao_servant_upcall,
       POA_CORBA::Policy *tao_impl
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
@@ -417,7 +417,7 @@ private:
 
 TAO_ServerRequestInfo_CORBA_Policy_copy::TAO_ServerRequestInfo_CORBA_Policy_copy (
     TAO_ServerRequest &_tao_server_request,
-    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    TAO::Portable_Server::Servant_Upcall *_tao_servant_upcall,
     POA_CORBA::Policy *tao_impl
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -507,7 +507,7 @@ class TAO_ServerRequestInfo_CORBA_Policy_destroy : public TAO_ServerRequestInfo
 public:
   TAO_ServerRequestInfo_CORBA_Policy_destroy (
       TAO_ServerRequest &_tao_server_request,
-      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      TAO::Portable_Server::Servant_Upcall *tao_servant_upcall,
       POA_CORBA::Policy *tao_impl
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
@@ -557,7 +557,7 @@ private:
 
 TAO_ServerRequestInfo_CORBA_Policy_destroy::TAO_ServerRequestInfo_CORBA_Policy_destroy (
     TAO_ServerRequest &_tao_server_request,
-    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    TAO::Portable_Server::Servant_Upcall *_tao_servant_upcall,
     POA_CORBA::Policy *tao_impl
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -682,7 +682,7 @@ POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::dispatch (
   )
   ACE_THROW_SPEC ((CORBA::Exception))
 {
-  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+  TAO::Portable_Server::Servant_Upcall servant_upcall (
       obj->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   
@@ -752,7 +752,7 @@ POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:631
+// be\be_visitor_interface/interface_ss.cpp:648
 
 TAO::Collocation_Proxy_Broker *
 CORBA__TAO_Policy_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -773,8 +773,8 @@ CORBA__TAO_Policy_Proxy_Broker_Factory_Initializer (size_t)
 static int
 CORBA__TAO_Policy_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   CORBA__TAO_Policy_Proxy_Broker_Factory_Initializer (
-      ACE_reinterpret_cast (
-          size_t,
+      reinterpret_cast<
+          size_t> (
           CORBA__TAO_Policy_Proxy_Broker_Factory_Initializer
         )
     );
@@ -806,9 +806,9 @@ POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::_get_policy_type (
     CORBA::SystemException
   ))
 {
-  ((TAO::Arg_Traits<CORBA::PolicyType>::ret_val *) args[0])->arg () =
-    ACE_reinterpret_cast (
-        POA_CORBA::Policy_ptr,
+  ((TAO::Arg_Traits< CORBA::PolicyType>::ret_val *) args[0])->arg () =
+    reinterpret_cast<
+        POA_CORBA::Policy_ptr> (
         servant->_downcast (
             "IDL:omg.org/CORBA/Policy:1.0"
           )
@@ -832,9 +832,9 @@ POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::copy (
     CORBA::SystemException
   ))
 {
-  ((TAO::Arg_Traits<CORBA::Policy>::ret_val *) args[0])->arg () =
-    ACE_reinterpret_cast (
-        POA_CORBA::Policy_ptr,
+  ((TAO::Arg_Traits< ::CORBA::Policy>::ret_val *) args[0])->arg () =
+    reinterpret_cast<
+        POA_CORBA::Policy_ptr> (
         servant->_downcast (
             "IDL:omg.org/CORBA/Policy:1.0"
           )
@@ -858,8 +858,8 @@ POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::destroy (
     CORBA::SystemException
   ))
 {
-  ACE_reinterpret_cast (
-      POA_CORBA::Policy_ptr,
+  reinterpret_cast<
+      POA_CORBA::Policy_ptr> (
       servant->_downcast (
           "IDL:omg.org/CORBA/Policy:1.0"
         )
@@ -894,9 +894,9 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
     CORBA::SystemException
   ))
 {
-  ((TAO::Arg_Traits<CORBA::PolicyType>::ret_val *) args[0])->arg () =
-    ACE_reinterpret_cast (
-        POA_CORBA::Policy_ptr,
+  ((TAO::Arg_Traits< CORBA::PolicyType>::ret_val *) args[0])->arg () =
+    reinterpret_cast<
+        POA_CORBA::Policy_ptr> (
         servant->_downcast (
             "IDL:omg.org/CORBA/Policy:1.0"
           )
@@ -918,9 +918,9 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
     CORBA::SystemException
   ))
 {
-  ((TAO::Arg_Traits<CORBA::Policy>::ret_val *) args[0])->arg () =
-    ACE_reinterpret_cast (
-        POA_CORBA::Policy_ptr,
+  ((TAO::Arg_Traits< ::CORBA::Policy>::ret_val *) args[0])->arg () =
+    reinterpret_cast<
+        POA_CORBA::Policy_ptr> (
         servant->_downcast (
             "IDL:omg.org/CORBA/Policy:1.0"
           )
@@ -942,8 +942,8 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::destroy (
     CORBA::SystemException
   ))
 {
-  ACE_reinterpret_cast (
-      POA_CORBA::Policy_ptr,
+  reinterpret_cast<
+      POA_CORBA::Policy_ptr> (
       servant->_downcast (
           "IDL:omg.org/CORBA/Policy:1.0"
         )
@@ -986,16 +986,16 @@ void POA_CORBA::Policy::_get_policy_type_skel (
   )
 {
   POA_CORBA::Policy *_tao_impl =
-    ACE_static_cast (
-        POA_CORBA::Policy *,
+    static_cast<
+        POA_CORBA::Policy *> (
         _tao_servant
       );
   CORBA::PolicyType _tao_retval = 0;
   
 #if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+  TAO::Portable_Server::Servant_Upcall *_tao_upcall =
+    static_cast<
+        TAO::Portable_Server::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -1120,16 +1120,16 @@ void POA_CORBA::Policy::copy_skel (
   )
 {
   POA_CORBA::Policy *_tao_impl =
-    ACE_static_cast (
-        POA_CORBA::Policy *,
+    static_cast<
+        POA_CORBA::Policy *> (
         _tao_servant
       );
   ::CORBA::Policy_var _tao_retval;
   
 #if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+  TAO::Portable_Server::Servant_Upcall *_tao_upcall =
+    static_cast<
+        TAO::Portable_Server::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -1255,17 +1255,17 @@ void POA_CORBA::Policy::destroy_skel (
   )
 {
   POA_CORBA::Policy *_tao_impl =
-    ACE_static_cast (
-        POA_CORBA::Policy *,
+    static_cast<
+        POA_CORBA::Policy *> (
         _tao_servant
       );
   _tao_server_request.argument_flag (0);
   
   
 #if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (
-        TAO_Object_Adapter::Servant_Upcall *,
+  TAO::Portable_Server::Servant_Upcall *_tao_upcall =
+    static_cast<
+        TAO::Portable_Server::Servant_Upcall *> (
         _tao_servant_upcall
       );
     
@@ -1513,13 +1513,13 @@ void* POA_CORBA::Policy::_downcast (
   if (ACE_OS::strcmp (logical_type_id,
                       "IDL:omg.org/CORBA/Policy:1.0") == 0)
     {
-      return ACE_static_cast (POA_CORBA::Policy_ptr, this);
+      return static_cast<POA_CORBA::Policy_ptr> (this);
     }
   
   if (ACE_OS::strcmp (logical_type_id,
                       "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
-      return ACE_static_cast (PortableServer::Servant, this);
+      return static_cast<PortableServer::Servant> (this);
     }
   
   return 0;
@@ -1531,7 +1531,7 @@ const char* POA_CORBA::Policy::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:567
+// be\be_visitor_interface/interface_ss.cpp:584
 
 void POA_CORBA::Policy::_dispatch (
     TAO_ServerRequest &req,
@@ -1546,7 +1546,7 @@ void POA_CORBA::Policy::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:509
+// be\be_visitor_interface/interface_ss.cpp:526
 
 CORBA::Policy *
 POA_CORBA::Policy::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -1586,12 +1586,7 @@ POA_CORBA::Policy::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1680
-
-#if 0 
-/* Useful at a later date.
-At present will be commented out */
-
+// be\be_visitor_root/root.cpp:1683
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -1631,14 +1626,7 @@ At present will be commented out */
 
 #endif /* end #if !defined */
 
-# pragma instantiate \
-    TAO::Ret_Object_SArgument_T< \
-        CORBA::Policy_ptr, \
-        CORBA::Policy_var \
-      >
-
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-#endif /*if 0*/ 
-
 
 #endif /* ifndef */
+

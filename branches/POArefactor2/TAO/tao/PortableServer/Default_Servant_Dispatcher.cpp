@@ -44,7 +44,7 @@ void
 TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (TAO_POA &,
                                                            CORBA::Short,
                                                            TAO_ServerRequest &,
-                                                           TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &
+                                                           TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
                                                            ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
@@ -52,14 +52,14 @@ TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (TAO_POA &,
 void
 TAO_Default_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &,
                                                                CORBA::Short,
-                                                               TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &
+                                                               TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
                                                                ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
 TAO_Default_Servant_Dispatcher::post_invoke (TAO_POA &,
-                                             TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &)
+                                             TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 
 {
 }

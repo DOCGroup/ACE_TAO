@@ -1,0 +1,53 @@
+--- orig/ServantManagerC.h	2004-10-11 14:53:59.602390400 +0200
++++ ServantManagerC.h	2004-10-11 14:54:01.895688000 +0200
+@@ -70,6 +70,8 @@
+ // TAO_IDL - Generated from 
+ // be\be_visitor_root/root_ch.cpp:63
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ namespace TAO
+ {
+   class Collocation_Proxy_Broker;
+@@ -282,6 +284,8 @@
+ TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ForwardRequest &);
+ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ForwardRequest &);
+ 
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
++
+ // TAO_IDL - Generated from
+ // be\be_codegen.cpp:958
+ 
+--- orig/ServantManagerC.cpp	2004-10-11 14:53:59.602390400 +0200
++++ ServantManagerC.cpp	2004-10-11 14:54:01.905702400 +0200
+@@ -51,6 +51,7 @@
+ {
+ }
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
+ 
+ // TAO_IDL - Generated from
+ // be\be_visitor_interface/interface_cs.cpp:60
+@@ -406,3 +407,5 @@
+       >
+ 
+ #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
++
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+--- orig/ServantManagerA.cpp	2004-10-11 14:53:59.602390400 +0200
++++ ServantManagerA.cpp	2004-10-11 14:54:01.915716800 +0200
+@@ -30,6 +30,8 @@
+ #include "tao/Any_Impl_T.h"
+ #include "tao/Any_Dual_Impl_T.h"
+ 
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ // TAO_IDL - Generated from
+ // be\be_visitor_typecode/typecode_defn.cpp:290
+ 
+@@ -312,3 +314,5 @@
+       >
+ 
+ #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
++
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

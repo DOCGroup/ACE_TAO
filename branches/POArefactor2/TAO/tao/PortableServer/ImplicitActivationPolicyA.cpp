@@ -38,27 +38,27 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   56,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f49),
-  ACE_NTOHL (0x6d706c69),
-  ACE_NTOHL (0x63697441),
-  ACE_NTOHL (0x63746976),
-  ACE_NTOHL (0x6174696f),
-  ACE_NTOHL (0x6e506f6c),
-  ACE_NTOHL (0x6963793a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f49), 
+  ACE_NTOHL (0x6d706c69), 
+  ACE_NTOHL (0x63697441), 
+  ACE_NTOHL (0x63746976), 
+  ACE_NTOHL (0x6174696f), 
+  ACE_NTOHL (0x6e506f6c), 
+  ACE_NTOHL (0x6963793a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0
     25,
-  ACE_NTOHL (0x496d706c),
-  ACE_NTOHL (0x69636974),
-  ACE_NTOHL (0x41637469),
-  ACE_NTOHL (0x76617469),
-  ACE_NTOHL (0x6f6e506f),
-  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x496d706c), 
+  ACE_NTOHL (0x69636974), 
+  ACE_NTOHL (0x41637469), 
+  ACE_NTOHL (0x76617469), 
+  ACE_NTOHL (0x6f6e506f), 
+  ACE_NTOHL (0x6c696379), 
   ACE_NTOHL (0x0),  // name = ImplicitActivationPolicy
   };
 
@@ -159,6 +159,6 @@ operator>>= (
         PortableServer::ImplicitActivationPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_
@@ -63,43 +63,7 @@ ImplementationRepository::ServerObject::ServerObject (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_
-
-ACE_INLINE
-ImplementationRepository::Administration::Administration (
-    TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS (CORBA, Object) (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
-    the_TAO_Administration_Proxy_Broker_ (0)
-{
-  this->ImplementationRepository_Administration_setup_collocation ();
-}
-
-ACE_INLINE
-ImplementationRepository::Administration::Administration (
-    IOP::IOR *ior,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
-    the_TAO_Administration_Proxy_Broker_ (0)
-{
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_
@@ -134,3 +98,38 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// be\be_visitor_interface/interface_ci.cpp:70
+
+#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_)
+#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_
+
+ACE_INLINE
+ImplementationRepository::Administration::Administration (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant,
+    TAO_ORB_Core *oc
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (
+        objref,
+        _tao_collocated,
+        servant,
+        oc
+      ),
+    the_TAO_Administration_Proxy_Broker_ (0)
+{
+  this->ImplementationRepository_Administration_setup_collocation ();
+}
+
+ACE_INLINE
+ImplementationRepository::Administration::Administration (
+    IOP::IOR *ior,
+    TAO_ORB_Core *oc
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+    the_TAO_Administration_Proxy_Broker_ (0)
+{
+}
+
+#endif /* end #if !defined */

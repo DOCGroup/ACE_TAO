@@ -159,22 +159,3 @@ TAO_Object_Adapter::non_servant_upcall_in_progress (void) const
   return this->non_servant_upcall_in_progress_;
 }
 
-// ****************************************************************
-
-ACE_INLINE CORBA::Short
-TAO_Object_Adapter::Servant_Upcall::priority (void) const
-{
-  return this->current_context_.priority ();
-}
-
-ACE_INLINE TAO_Object_Adapter::Servant_Upcall::State
-TAO_Object_Adapter::Servant_Upcall::state (void) const
-{
-  return this->state_;
-}
-
-ACE_INLINE void
-TAO_Object_Adapter::Servant_Upcall::state (TAO_Object_Adapter::Servant_Upcall::State state)
-{
-  this->state_ = state;
-}

@@ -88,6 +88,24 @@ namespace TAO
     {
       this->using_servant_locator_ = 1;
     }
+
+    ACE_INLINE CORBA::Short
+    Servant_Upcall::priority (void) const
+    {
+      return this->current_context_.priority ();
+    }
+
+    ACE_INLINE Servant_Upcall::State
+    Servant_Upcall::state (void) const
+    {
+      return this->state_;
+    }
+
+    ACE_INLINE void
+    Servant_Upcall::state (Servant_Upcall::State state)
+    {
+      this->state_ = state;
+    }
   }
 }
 

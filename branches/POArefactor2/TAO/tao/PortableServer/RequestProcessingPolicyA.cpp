@@ -38,26 +38,26 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f52),
-  ACE_NTOHL (0x65717565),
-  ACE_NTOHL (0x73745072),
-  ACE_NTOHL (0x6f636573),
-  ACE_NTOHL (0x73696e67),
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63793a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f52), 
+  ACE_NTOHL (0x65717565), 
+  ACE_NTOHL (0x73745072), 
+  ACE_NTOHL (0x6f636573), 
+  ACE_NTOHL (0x73696e67), 
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63793a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0
     24,
-  ACE_NTOHL (0x52657175),
-  ACE_NTOHL (0x65737450),
-  ACE_NTOHL (0x726f6365),
-  ACE_NTOHL (0x7373696e),
-  ACE_NTOHL (0x67506f6c),
+  ACE_NTOHL (0x52657175), 
+  ACE_NTOHL (0x65737450), 
+  ACE_NTOHL (0x726f6365), 
+  ACE_NTOHL (0x7373696e), 
+  ACE_NTOHL (0x67506f6c), 
   ACE_NTOHL (0x69637900),  // name = RequestProcessingPolicy
   };
 
@@ -158,6 +158,6 @@ operator>>= (
         PortableServer::RequestProcessingPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

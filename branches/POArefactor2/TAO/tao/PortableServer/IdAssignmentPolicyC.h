@@ -63,9 +63,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -91,7 +89,7 @@ namespace PortableServer
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:601
+  // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY__VAR_OUT_CH_
@@ -249,13 +247,13 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::IdAssi
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::IdAssignmentPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:964
+// be\be_codegen.cpp:958
 
 #if defined (__ACE_INLINE__)
 #include "IdAssignmentPolicyC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
