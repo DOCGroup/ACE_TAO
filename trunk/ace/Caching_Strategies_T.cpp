@@ -69,7 +69,7 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
       this->cleanup_strategy_ = 0;
       this->delete_cleanup_strategy_ = 0;
     }
-   
+
   if (cleanup_s != 0)
     {
       this->cleanup_strategy_ = cleanup_s;
@@ -95,7 +95,7 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
       this->caching_strategy_utility_ = 0;
       this->delete_caching_strategy_utility_ = 0;
     }
-  
+
   if (utility_s != 0)
     {
       this->caching_strategy_utility_ = utility_s;
@@ -118,8 +118,7 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
 {
   return this->caching_strategy_utility_->clear_cache (container,
                                                        this->cleanup_strategy_,
-                                                       this->purge_percent_,
-                                                       this->entries_);
+                                                       this->purge_percent_);
 }
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
@@ -222,8 +221,7 @@ ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
 {
   return this->caching_strategy_utility_->clear_cache (container,
                                                        this->cleanup_strategy_,
-                                                       this->purge_percent_,
-                                                       this->entries_);
+                                                       this->purge_percent_);
 }
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
@@ -326,8 +324,7 @@ ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UT
 {
   return this->caching_strategy_utility_->clear_cache (container,
                                                        this->cleanup_strategy_,
-                                                       this->purge_percent_,
-                                                       this->entries_);
+                                                       this->purge_percent_);
 }
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
@@ -365,7 +362,7 @@ ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UT
   ACE_UNUSED_ARG (delete_cleanup_strategy);
   ACE_UNUSED_ARG (utility_s);
   ACE_UNUSED_ARG (delete_caching_strategy_utility);
-  
+
   return 0;
 }
 

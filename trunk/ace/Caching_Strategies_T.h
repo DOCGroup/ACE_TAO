@@ -19,7 +19,7 @@
 
 #include "ace/OS.h"
 
-#include "ace/Caching_Strategy_Utility_T.h"
+#include "ace/Caching_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -39,7 +39,7 @@ class ACE_LRU_Caching_Strategy
   //     is updated whenever an item is inserted or looked up in the
   //     container. When the need of purging entries arises, the items
   //     with the lowest timer values are removed.
-  //     
+  //
   //     Explanation of the template parameter list:
   //     CONTAINER is any map with entries of type <KEY, VALUE>.
   //     The ATTRIBUTES are the deciding factor for purging of entries
@@ -47,14 +47,14 @@ class ACE_LRU_Caching_Strategy
   //     doing this are: As being a member of the VALUE or VALUE being
   //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
-  //     to purge. 
+  //     to purge.
 
 public:
 
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
   typedef CONTAINER CACHE;
- 
+
   // = Initialisation and termination.
 
   ACE_LRU_Caching_Strategy (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
@@ -70,7 +70,7 @@ public:
   // in the cache which can be purged automagically and by default is
   // set to 10%. The ultility which helps the caching strategy in the
   // purging of entries needs to be specified. By default a new one
-  // will be created of type CACHING_STRATEGY_UTILITY and 
+  // will be created of type CACHING_STRATEGY_UTILITY and
   // <delete_caching_strategy_utility> decides whether to destroy the
   // utility object or not.
 
@@ -88,9 +88,9 @@ public:
   // Accessor method for the timer attributes.
 
   // = Accessor methods for the percentage of entries to purge.
-  unsigned int purge_percent (void);
-  
-  void purge_percent (unsigned int percentage);
+  double purge_percent (void);
+
+  void purge_percent (double percentage);
 
   // =  Strategy related Operations
 
@@ -124,7 +124,7 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
-  int clear_cache (CONTAINER &container, 
+  int clear_cache (CONTAINER &container,
                    unsigned int &total_container_entries);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove. The <total_container_entries>
@@ -143,12 +143,12 @@ private:
   // This element is the one which is the deciding factor for purging
   // of an ITEM.
 
-  unsigned int purge_percent_;
+  double purge_percent_;
   // The level about which the purging will happen automagically.
 
   unsigned int entries_;
   // The no of entries bound in the cache.
-  
+
   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy_;
   // The cleanup strategy which can be used to destroy the entries of
   // the container.
@@ -160,7 +160,7 @@ private:
   CACHING_STRATEGY_UTILITY *caching_strategy_utility_;
   // This is the helper class which will decide and expunge entries
   // from the cache.
-  
+
   int delete_caching_strategy_utility_;
   // The flag which denotes the ownership of the
   // caching_strategy_utility. If 1 then this class itself will
@@ -190,7 +190,7 @@ class ACE_LFU_Caching_Strategy
   //     doing this are: As being a member of the VALUE or VALUE being
   //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
-  //     to purge. 
+  //     to purge.
 
 public:
 
@@ -231,12 +231,12 @@ public:
   // Access the attributes.
 
   // = Accessor methods for the percentage of entries to purge.
-  unsigned int purge_percent (void);
-  
-  void purge_percent (unsigned int percentage);
+  double purge_percent (void);
+
+  void purge_percent (double percentage);
 
   // =  Strategy related Operations
-  
+
   int notify_bind (int result,
                    const ATTRIBUTES &attr);
   // This method acts as a notification about the CONTAINERs bind
@@ -266,7 +266,7 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
-  int clear_cache (CONTAINER &container, 
+  int clear_cache (CONTAINER &container,
                    unsigned int &total_container_entries);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove. The <total_container_entries>
@@ -280,8 +280,8 @@ public:
 private:
 
   typedef ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
- 
-  unsigned int purge_percent_;
+
+  double purge_percent_;
   // The level about which the purging will happen automagically.
 
   unsigned int entries_;
@@ -325,7 +325,7 @@ class ACE_FIFO_Caching_Strategy
   //     doing this are: As being a member of the VALUE or VALUE being
   //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
-  //     to purge. 
+  //     to purge.
 
 public:
 
@@ -349,8 +349,8 @@ public:
   // purging of entries will be default be the
   // ACE_Caching_Strategy_Utility and the
   // <delete_caching_strategy_utility> decides whether to destroy the
-  // utility or not. 
-  
+  // utility or not.
+
   ~ACE_FIFO_Caching_Strategy (void);
 
   int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
@@ -365,9 +365,9 @@ public:
   // Accessor method.
 
   // = Accessor methods for the percentage of entries to purge.
-  unsigned int purge_percent (void);
-  
-  void purge_percent (unsigned int percentage);
+  double purge_percent (void);
+
+  void purge_percent (double percentage);
 
   // =  Strategy related Operations
 
@@ -398,7 +398,7 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
-  int clear_cache (CONTAINER &container, 
+  int clear_cache (CONTAINER &container,
                    unsigned int &total_container_entries);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove. The <total_container_entries>
@@ -412,17 +412,17 @@ public:
 private:
 
   typedef ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
- 
+
   ATTRIBUTES order_;
   // The order is the deciding factor for the item to be removed from
   // the cache.
 
-  unsigned int purge_percent_;
+  double purge_percent_;
   // The level about which the purging will happen automagically.
 
   unsigned int entries_;
   // The no of entries bound in the cache.
- 
+
   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy_;
   // The cleanup strategy which can be used to destroy the entries of
   // the container.
@@ -481,9 +481,9 @@ public:
   // Accessor method.
 
  // = Accessor methods for the percentage of entries to purge.
-  unsigned int purge_percent (void);
-  
-  void purge_percent (unsigned int percentage);
+  double purge_percent (void);
+
+  void purge_percent (double percentage);
 
   // =  Strategy related Operations
 
@@ -514,7 +514,7 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
-  int clear_cache (CONTAINER &container, 
+  int clear_cache (CONTAINER &container,
                    unsigned int &total_container_entries);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove. The <total_container_entries>
@@ -524,7 +524,7 @@ public:
 
   void dump (void) const;
   // Dumps the state of the object.
-  
+
 };
 
 #if defined (__ACE_INLINE__)
