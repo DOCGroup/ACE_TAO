@@ -300,59 +300,49 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   CORBA::Environment env;
   size_t size;
 
-  type_->AddRef ();
+  this->type_->AddRef ();
 
-  size = type_->size (env);           // XXX check error status
-  value_ = (char *) calloc (1, size);
+  size = this->type_->size (env);           // XXX check error status
+  this->value_ = (char *) calloc (1, size);
 
 #if 0
-  (void) type_->traverse (src.value_,
-			  value_,
-			  (CORBA::TypeCode::VisitRoutine) deep_copy,
-			  0,
-			  env);
+  (void) this->type_->traverse (src.value_,
+                                value_,
+                                (CORBA::TypeCode::VisitRoutine) deep_copy,
+                                0,
+                                env);
 #endif /* replaced by our optimizations */
 
-  (void) DEEP_COPY (type_, src.value_, value_, env);
+  (void) DEEP_COPY (this->type_, src.value_, this->value_, env);
 }
 
 
 //a&a : Added on 14 feb 1998
 CORBA_Any &
 CORBA_Any::operator= (const CORBA_Any &src)
-{  
+{
   if (this == &src)
     {
       this->AddRef ();
       return *this;
     }
 
+  this->Release (); // release any value + typecode we may have
 
-  this->Release ();
+  // now copy the contents of the source to ourselves
+  this->type_ = (src.type_) != 0 ? src.type_ : CORBA::_tc_null;
 
-  type_ = src.type_ != 0 ? src.type_ : CORBA::_tc_null;
-
-  orb_owns_data_ = CORBA::B_TRUE;
-
-  refcount_ = 1;
+  this->orb_owns_data_ = CORBA::B_TRUE;
+  this->refcount_ = 1;
 
   CORBA::Environment env;
   size_t size;
 
-  type_->AddRef ();
+  this->type_->AddRef ();
 
-  size = type_->size (env);           // XXX check error status
-  value_ = (char *) calloc (1, size);
-
-#if 0
-  (void) type_->traverse (src.value_,
-                          value_,
-                          (CORBA::TypeCode::VisitRoutine) deep_copy,
-                          0,
-                          env);
-#endif /* replaced by our optimizations */
-
-  (void) DEEP_COPY (type_, src.value_, value_, env);
+  size = this->type_->size (env);           // XXX check error status
+  this->value_ = (char *) calloc (1, size);
+  (void) DEEP_COPY (this->type_, src.value_, this->value_, env);
   return *this;
 }
 
@@ -501,7 +491,7 @@ CORBA_Any::~CORBA_Any (void)
 {
   CORBA::Environment env;
 
-  // assert (refcount_ == 0);
+  // assert (this->refcount_ == 0);
 
   if (this->orb_owns_data_)
     {
@@ -524,23 +514,249 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 		    CORBA::Boolean orb_owns_data,
 		    CORBA::Environment &env)
 {
-  if (orb_owns_data_)
+  if (this->orb_owns_data_)
     {
       //      (void) deep_free (type_, value_, 0, 0, env);
       if (value_)
-	DEEP_FREE (type_, value_, 0, env);
-      delete value_;
+	DEEP_FREE (this->type_, this->value_, 0, env);
+      delete this->value_;
     }
 
-  if (type_ != 0)
-    type_->Release ();
+  if (this->type_ != 0)
+    this->type_->Release ();
 
   env.clear ();
 
-  type_ = tc;
+  this->type_ = tc;
   tc->AddRef ();
-  value_ = (void *) v;
-  orb_owns_data_ = orb_owns_data;
+  this->value_ = (void *) v;
+  this->orb_owns_data_ = orb_owns_data;
+}
+
+// insertion of from_string
+void
+CORBA_Any::operator<<= (from_string s)
+{
+  // if the inserted string is bounded, we create a typecode.
+  static CORBA::Long _oc_string [] =
+  {	// CDR typecode octets
+    TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
+    0			    // ... unbounded string to start with
+  };
+
+  CORBA::TypeCode_ptr tc;
+  if (s.bound_ > 0)
+    {
+      // bounded string
+      _oc_string [1] = s.bound_;
+      CORBA::TypeCode_ptr tc = new CORBA::TypeCode (CORBA::tk_string,
+                                                    sizeof _oc_string,
+                                                    (u_char *) &_oc_string,
+                                                    CORBA::B_TRUE);
+    }
+  else
+    tc = CORBA::_tc_string; // unbounded
+
+  if (s.nocopy_)
+      this->replace (tc, new char* (s.val_), CORBA::B_TRUE);
+  else // copying
+    this->replace (tc, new char* (CORBA::string_dup (s.val_)),
+                   CORBA::B_TRUE);
+}
+
+// extraction: these are safe and hence we have to check that the typecode of
+// the Any is equal to the one we are trying to extract into
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::Short &s) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_short, env))
+    {
+      s = *(CORBA::Short *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::UShort &s) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_ushort, env))
+    {
+      s = *(CORBA::UShort *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::Long &l) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_long, env))
+    {
+      l = *(CORBA::Long *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::ULong &l) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_ulong, env))
+    {
+      l = *(CORBA::ULong *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::Float &f) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_float, env))
+    {
+      f = *(CORBA::Float *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::Double &d) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_double, env))
+    {
+      d = *(CORBA::Double *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::Any &a) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_any, env))
+    {
+      a = *(CORBA::Any *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (char *&s) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_string, env))
+    {
+      s = *(char **) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+// = extraction into the special types
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_boolean b) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_boolean, env))
+    {
+      b.ref_ = *(CORBA::Boolean *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_octet o) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_octet, env))
+    {
+      o.ref_ = *(CORBA::Octet *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_char c) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_char, env))
+    {
+      c.ref_ = *(CORBA::Char *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_string s) const
+{
+  CORBA::Environment env;
+
+  // the typecode must be equal. Since we do not readily have access to the
+  // typecode of the string into which we want to retrieve, we emulate the
+  // behavior of "equal"
+  if (this->type_->kind (env) == CORBA::tk_string)
+    {
+      CORBA::ULong bound = this->type_->length (env);
+      if (s.bound_ == bound) // bounds are same
+        {
+          s.val_ = *(char **) this->value_;
+          return CORBA::B_TRUE;
+        }
+    }
+
+  // otherwise
+  return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_object obj) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_Object, env))
+    {
+      obj.ref_ = *(CORBA::Object_ptr *) this->value_;
+      return CORBA::B_TRUE;
+    }
+  else
+    return CORBA::B_FALSE;
 }
 
 // For COM -- IUnKnown operations
