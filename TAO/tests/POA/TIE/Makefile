@@ -1,11 +1,11 @@
 #----------------------------------------------------------------------------
 #
-#	$Id$
+#       $Id$
 #
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -14,8 +14,8 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDL_SRC	= FooC.cpp FooS.cpp
-PROG_SRCS =	$(IDL_SRC) server.cpp client.cpp Foo_i.cpp
+IDL_SRC = FooC.cpp FooS.cpp
+PROG_SRCS = $(IDL_SRC) server.cpp client.cpp Foo_i.cpp
 
 LSRC = $(PROG_SRCS)
 
@@ -28,30 +28,20 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-# Since older g++ cannot handle nested classes properly, this test will not
-# build on g++ prior to 2.8.0.
-ifeq ($(findstring g++,$(CXX)),g++)
-  ifeq ($(CXX),g++)
-    #### Determine if the g++ version is <= 2.7.x.
-    OLD_G++ := \
-      $(shell \
-        if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; \
-        then echo 1; fi)
-  # else, CXX is something like g++386.  Assume that it can't handle
-  # the build in this directory.  The shell command above won't
-  # work if CXX isn't on the users PATH.
-  endif # plain g++
-endif # g++
+ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
 
-ifeq ($(OLD_G++),1)
+  # Since older g++ cannot handle nested classes properly, this test
+  # will not build on g++ prior to 2.8.0.
   all clean realclean:
 	@echo POA/TIE is not built with older versions of g++
-else # ! old g++
+
+else # ! ACE_HAS_GNUG_PRE_2_8
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -62,16 +52,16 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: FooC.h FooC.i FooC.cpp FooS.h FooS.i FooS.cpp
 
-server:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
+server: $(addprefix $(VDIR),$(FILE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
+client: $(addprefix $(VDIR),$(FILE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-/bin/rm -rf FooC.* FooS.*
 
-endif # ! old g++
+endif # ! ACE_HAS_GNUG_PRE_2_8
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
