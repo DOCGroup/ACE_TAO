@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_IDL_GLOBAL_HH
 #define _IDL_IDL_GLOBAL_HH
 
+#include "ace/SString.h"
+
 // idl_global.hh
 //
 // Defines a class containing all front end global data.
@@ -357,6 +359,12 @@ public:
   virtual void destroy (void);
   // Cleanup function.
 
+  virtual void append_idl_flag (const char *s);
+  // Save each flag passed to the IDL compiler.
+
+  virtual const char *idl_flags (void) const;
+  // Get a string representation of the flags passed to the idl compiler.
+ 
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -420,6 +428,9 @@ private:
   idl_bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
+
+  ACE_CString idl_flags_;
+  // Concatenation of all the command line options.
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

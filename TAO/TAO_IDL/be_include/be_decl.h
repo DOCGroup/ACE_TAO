@@ -148,7 +148,7 @@ protected:
   virtual void compute_flat_name (void);
   // Compute the flattened fully scoped name.
 
-  virtual void destroy ();
+  virtual void destroy (void);
   // Cleanup function.
 
   // Variables that indicate if the code generation for that node is already
