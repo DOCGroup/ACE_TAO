@@ -1,0 +1,45 @@
+#
+# Makefile for building the Exposed_Policies client
+#
+
+NAME = client
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\CounterC.obj \
+        $(OBJDIR)\client.obj \
+        $(OBJDIR)\Policy_Tester.obj \
+        $(OBJDIR)\Policy_Verifier.obj \
+        $(OBJDIR)\RT_Properties.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_RTCORBA_CFLAGS) \
+        $(TAO_RTPORTABLESERVER_CFLAGS)
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_STRATEGIES_LIB) \
+        $(TAO_RTPORTABLESERVER_LIB) \
+        $(TAO_RTCORBA_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Counter.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\CounterS.cpp $(IDLDIR)\CounterC.cpp: $(IDLDIR)\Counter.idl
+	$(TAO_IDL) $**

@@ -1,0 +1,3 @@
+project(Etherealization): server, minimum_corba {
+  exename = Etherealization
+}
