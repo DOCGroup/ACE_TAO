@@ -224,6 +224,7 @@ main (
   CORBA_Boolean	do_threads = CORBA_B_FALSE;
   CORBA_String	key = (CORBA_String) "key0";
   ACE_INET_Addr svraddr;
+  ROA_Parameters* params = ROA_Parameters::instance();
   char		*oa_name = 0;
   char		*orb_name = "internet";
   int			idle = -1;
@@ -260,8 +261,8 @@ main (
       oa_name = opts.optarg;
       continue;
 	
-    case 't':			// create thread-per-request
-      ACE_ROA::usingThreads(1);
+    case 't':			// create thread-per-connection
+      params->usingThreads(1);
       continue;
 
       // XXX set debug filters ...
@@ -301,7 +302,7 @@ main (
     return 1;
   }
   // Register the OA with ACE_ROA
-  ACE_ROA::oa(oa_ptr);		// Should this be done in TCP_OA's CTOR?
+  params->oa(oa_ptr);		// Should this be done in TCP_OA's CTOR?
 
 #if 0
   // This is the old call and syntax
@@ -406,13 +407,13 @@ main (
   int terminationStatus = 0;
 #if defined(USE_ACE_EVENT_HANDLING)
   // Set the callbacks for our implementation (cheesy!!!)
-  ACE_ROA::upcall(tcpoa_dispatch);
-  ACE_ROA::forwarder(fwd_ref ? tcpoa_forwarder : 0);
-  ACE_ROA::context(&obj_key);
+  params->upcall(tcpoa_dispatch);
+  params->forwarder(fwd_ref ? tcpoa_forwarder : 0);
+  params->context(&obj_key);
 
-  while (ACE_ROA::end_reactor_event_loop_ == 0)
+  while (1)
     {
-      int result = ACE_ROA::reactor()->handle_events ();
+      int result = params->reactor()->handle_events ();
 
       if (result == -1)
 	{
