@@ -34,7 +34,6 @@ ACE_Control_Block::ACE_Malloc_Header::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if !defined (ACE_NDEBUG)
 void
 ACE_Control_Block::print_alignment_info (void)
 {
@@ -68,7 +67,6 @@ ACE_Control_Block::print_alignment_info (void)
               ));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("End <--- ACE_Control_Block::print_alignment_info:\n")));
 }
-#endif /* ACE_NDEBUG */
 
 void
 ACE_Control_Block::dump (void) const
@@ -169,7 +167,6 @@ ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if !defined (ACE_NDEBUG)
 void
 ACE_PI_Control_Block::print_alignment_info (void)
 {
@@ -203,7 +200,6 @@ ACE_PI_Control_Block::print_alignment_info (void)
               ));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("End <--- ACE_PI_Control_Block::print_alignment_info:\n")));
 }
-#endif /* ACE_NDEBUG */
 
 void
 ACE_PI_Control_Block::dump (void) const

@@ -188,7 +188,7 @@ public:
     // Dump the state of the object.
   };
 
-  ACE_DB (static void print_alignment_info (void);)
+  static void print_alignment_info (void);
   // Print out a bunch of size info for debugging.
 
   ACE_Name_Node *name_head_;
@@ -352,7 +352,7 @@ public:
     ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
   };
 
-  ACE_DB (static void print_alignment_info (void);)
+  static void print_alignment_info (void);
   // Print out a bunch of size info for debugging.
 
   NAME_NODE_PTR name_head_;
