@@ -30,7 +30,7 @@ CosNotifyChannelAdmin::ProxyType TAO_Notify_ProxyConsumer_i::MyType (
 
   {
     //Add your implementation here
-    return 0;
+    return (CosNotifyChannelAdmin::ProxyType) 0;
   }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_ProxyConsumer_i::MyAdmin (

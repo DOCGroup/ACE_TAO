@@ -1,3 +1,16 @@
+Sun Dec 19 17:36:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Dispatcher.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp: Added missing
+	  template instantiations. 
+	
+
 Sun Dec 19 10:05:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp (remove_all_constraints):
