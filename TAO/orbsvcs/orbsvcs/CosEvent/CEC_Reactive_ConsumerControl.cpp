@@ -28,6 +28,12 @@ TAO_CEC_Reactive_ConsumerControl::
 {
   this->reactor_ =
     this->orb_->orb_core ()->reactor ();
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+   // Initialise timer_id_ to an invalid timer id, so that in case we don't
+   // schedule a timer, we don't cancel a random timer at shutdown
+   timer_id_ = -1;
+#endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
 TAO_CEC_Reactive_ConsumerControl::~TAO_CEC_Reactive_ConsumerControl (void)
@@ -95,13 +101,6 @@ int
 TAO_CEC_Reactive_ConsumerControl::activate (void)
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-  timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
-                                            0,
-                                            this->rate_,
-                                            this->rate_);
-  if (timer_id_ == -1)
-    return -1;
-
   ACE_TRY_NEW_ENV
     {
       // Get the PolicyCurrent object
@@ -127,6 +126,20 @@ TAO_CEC_Reactive_ConsumerControl::activate (void)
                any
                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Only schedule the timer, when the rate is not zero
+      if (this->rate_ != ACE_Time_Value::zero)
+      {
+        // Schedule the timer after these policies has been set, because the
+        // handle_timeout uses these policies, if done in front, the channel
+        // can crash when the timeout expires before initiazation is ready.
+        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+                                                    0,
+                                                    this->rate_,
+                                                    this->rate_);
+        if (timer_id_ == -1)
+         return -1;
+      }
     }
   ACE_CATCHANY
     {
