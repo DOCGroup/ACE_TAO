@@ -1,3 +1,9 @@
+Thu Aug 10 12:15:16 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Proactor.(h cpp) (ACE_POSIX_AIOCB_Proactor): Surround
+          definition of mutex_ member in ACE_MT_SAFE; use ACE_MT around
+          ACE_GUARD_RETURN macros to build clean without threads.
+
 Thu Aug 10 09:31:51 2000  David L. Levine <levine@cs.wustl.edu>
 
         * ace/config-cxx-common.h: with __USE_STD_IOSTREAM, added
