@@ -51,21 +51,27 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent ();
-  // Generate the stub factory function pointer definition.
-  *os << node->full_name () << "_ptr (*";
+  // There's only one implementation of collocated stub for
+  // locality constraint interface.  Therefore, the collocated
+  // stub factory function pointer is not required.
+  if (!idl_global->gen_locality_constraint ())
+    {
+      os->indent ();
+      // Generate the stub factory function pointer definition.
+      *os << node->full_name () << "_ptr (*";
 
-  *os << "_TAO_collocation_"
-      << node->flat_name () << "_Stub_Factory_function_pointer) ("
-      << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ") = 0;" << be_uidt_nl;
+      *os << "_TAO_collocation_"
+          << node->flat_name () << "_Stub_Factory_function_pointer) ("
+          << be_idt << be_idt_nl
+          << "CORBA::Object_ptr obj" << be_uidt_nl
+          << ") = 0;" << be_uidt_nl;
+    }
 
-  // @@ Michael: This might not be the right place .. 
+  // @@ Michael: This might not be the right place ..
   if (idl_global->ami_call_back () == I_TRUE)
   {
     // AMI Handler stuff
-    be_interface_type_strategy *old_strategy =  
+    be_interface_type_strategy *old_strategy =
       node->set_strategy (new be_interface_ami_handler_strategy (node));
 
     os->indent ();
