@@ -34,6 +34,28 @@ Fri Nov 17 09:21:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
           so that the generated client and server stubs are deleted
           when doing a clean
 
+Thu Nov 16 23:15:41 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Banded_Connections/Makefile:
+
+	  Generated dependencies.
+	
+	* tests/RTCORBA/Banded_Connections/server.cpp:
+	 
+	  Output improvements.
+	
+	* tests/RTCORBA/Banded_Connections/client.conf
+	* tests/RTCORBA/Banded_Connections/server.conf
+	* tests/RTCORBA/Banded_Connections/run_test.pl
+	* tests/RTCORBA/Banded_Connections/bands.unix
+	* tests/RTCORBA/Banded_Connections/bands.nt
+
+	  Updated perl script to work on NT and unix.
+	
+	* tao/PortableServer/Object_Adapter.cpp (pre_invoke):
+
+	  Added debugging message.
+
 Thu Nov 16 23:13:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Param_Test/server.dsp:
