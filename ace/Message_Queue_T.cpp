@@ -80,7 +80,6 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::open (size_t hwm,
   return this->queue_->open ();
 }
 
-
 // Clean up the queue if we have not already done so!
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
@@ -90,7 +89,6 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::close (void)
 
   return this->queue_->close ();
 }
-
 
 // Take a look at the first item without removing it.
 
