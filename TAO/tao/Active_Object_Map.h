@@ -79,10 +79,12 @@ public:
   ~TAO_Active_Object_Map (void);
   // Destructor.
 
-  int is_servant_in_map (PortableServer::Servant servant);
+  int is_servant_in_map (PortableServer::Servant servant,
+                         int &deactivated);
   // Must be used with UNIQUE_ID policy.
 
-  int is_user_id_in_map (const PortableServer::ObjectId &user_id);
+  int is_user_id_in_map (const PortableServer::ObjectId &user_id,
+                         int &deactivated);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
@@ -247,7 +249,8 @@ public:
   virtual ~TAO_Id_Uniqueness_Strategy (void);
   // Virtual destructor.
 
-  virtual int is_servant_in_map (PortableServer::Servant servant) = 0;
+  virtual int is_servant_in_map (PortableServer::Servant servant,
+                                 int &deactivated) = 0;
   // Must be used with UNIQUE_ID policy.
 
   virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id) = 0;
@@ -292,7 +295,8 @@ class TAO_Unique_Id_Strategy : public TAO_Id_Uniqueness_Strategy
   //     Strategy for the UNIQUE_ID policy.
 public:
 
-  virtual int is_servant_in_map (PortableServer::Servant servant);
+  virtual int is_servant_in_map (PortableServer::Servant servant,
+                                 int &deactivated);
   // Must be used with UNIQUE_ID policy.
 
   virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id);
@@ -329,7 +333,8 @@ class TAO_Multiple_Id_Strategy : public TAO_Id_Uniqueness_Strategy
   //     Strategy for the MULTIPLE_ID policy.
 public:
 
-  virtual int is_servant_in_map (PortableServer::Servant servant);
+  virtual int is_servant_in_map (PortableServer::Servant servant,
+                                 int &deactivated);
   // Must be used with UNIQUE_ID policy.
 
   virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id);

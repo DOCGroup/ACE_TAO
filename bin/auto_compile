@@ -62,9 +62,10 @@ $MODULE='ACE_wrappers';
       'TAO/tests/MT_Client , run_test.pl',
       'TAO/tests/MT_Server , run_test.pl',
       'TAO/tests/Faults , run_test.pl',
-      'TAO/tests/NestedUpcall/Reactor , run_test.pl',
+      'TAO/tests/NestedUpcall/Simple , run_test.pl',
       'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
       'TAO/tests/POA/Identity , run_test.pl',
+      'TAO/tests/POA/Deactivation , run_test.pl',
       'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/tests/IORManipulation , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
@@ -131,7 +132,7 @@ sub mywarn {
   print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
   print MAIL "\n";
   local $m;
-  foreach $m (@msg) { 
+  foreach $m (@msg) {
     print MAIL $m, "\n";
   }
   print MAIL "\nPlease check log files for more info\n";
@@ -299,7 +300,7 @@ foreach $i (@RUN_LIST) {
     print LOG "$CMD: $program finished ", $date, "\n";
 
     if ($run_error != 0) {
-	push @failures, 
+	push @failures,
 	    "errors detected while running $program in $directory";
     }
 }

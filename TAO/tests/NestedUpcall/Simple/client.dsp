@@ -1,25 +1,25 @@
-# Microsoft Developer Studio Project File - Name="Nested Upcall Reactor Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Nested Upcall Simple Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Nested Upcall Reactor Server - Win32 Debug
+CFG=Nested Upcall Simple Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
-!MESSAGE NMAKE /f "server.mak".
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "client.mak".
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="Nested Upcall Reactor Server - Win32 Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "client.mak" CFG="Nested Upcall Simple Client - Win32 Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
-!MESSAGE "Nested Upcall Reactor Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Nested Upcall Reactor Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
+!MESSAGE "Nested Upcall Simple Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Nested Upcall Simple Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -28,7 +28,7 @@ CFG=Nested Upcall Reactor Server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Nested Upcall Reactor Server - Win32 Release"
+!IF  "$(CFG)" == "Nested Upcall Simple Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -39,26 +39,24 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\.." /I "..\..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib tao.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 ace.lib tao.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao"
 
-!ELSEIF  "$(CFG)" == "Nested Upcall Reactor Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Nested Upcall Simple Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Output_Dir "client___Win32_Debug"
+# PROP BASE Intermediate_Dir "client___Win32_Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -66,84 +64,75 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD   /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\.." /I "..\..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD   /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 aced.lib taod.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
-# Name "Nested Upcall Reactor Server - Win32 Release"
-# Name "Nested Upcall Reactor Server - Win32 Debug"
+# Name "Nested Upcall Simple Client - Win32 Release"
+# Name "Nested Upcall Simple Client - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ".cpp"
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\reactor_i.cpp
+SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ReactorC.cpp
+SOURCE=.\client_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ReactorS.cpp
+SOURCE=.\testC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\server.cpp
+SOURCE=.\testS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter ".h"
+# PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\reactor_i.h
+SOURCE=.\client_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ReactorC.h
+SOURCE=.\testC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ReactorS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ReactorS_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\server.h
+SOURCE=.\testS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
 
-# PROP Default_Filter ".idl"
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Reactor.idl
+SOURCE=.\test.idl
 
-!IF  "$(CFG)" == "Nested Upcall Reactor Server - Win32 Release"
+!IF  "$(CFG)" == "Nested Upcall Simple Client - Win32 Release"
 
-USERDEP__REACT="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL compiler
-InputPath=.\Reactor.idl
-InputName=Reactor
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\test.idl
+InputName=test
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -173,12 +162,12 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Nested Upcall Reactor Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Nested Upcall Simple Client - Win32 Debug"
 
-USERDEP__REACT="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
-InputPath=.\Reactor.idl
-InputName=Reactor
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\test.idl
+InputName=test
 
 BuildCmds= \
 	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
@@ -211,7 +200,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group

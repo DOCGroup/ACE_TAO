@@ -1,3 +1,61 @@
+Thu Jul 01 22:31:06 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: Made sure that the POA correctly deals with servants
+	  that have been deactivated but are still in the active object
+	  map since there are still some requests running on them.  Also,
+	  reactivation of such servants must wait till the deactivation
+	  completes.
+
+	* tests/POA/Deactivation: This program tests the reactivation of a
+	  servant that has been deactivated but not removed from the
+	  Active Object Map yet.
+
+	* tests/NestedUpcall/Simple:
+
+	  This is a test of the nested upcall feature in TAO.  The client
+	  will start off by calling the server and providing a callback
+	  object and a time-to-live number.  The server will callback the
+	  client (using the callback object) and decrement the
+	  time-to-live number. The client will turn around and call the
+	  server again.
+
+	  The above process of calling each other will continue until the
+	  time-to-live number reaches zero.
+
+	  Both client and server can be run in multi-threaded mode.  A
+	  multi-threaded client can be used to check the client side
+	  leader follower model, while the multi-threaded server can be
+	  used to check the integration of the leader follower model of
+	  the TP reactor and the client side leader follower model in the
+	  ORB.
+
+	  In addition, the server can be used with the
+	  thread-per-connection model.
+
+	* tests/NestedUpcall/MT_Client_Test
+	* tests/NestedUpcall/Triangle_Test
+
+	  Fixed the above two tests. The servant was been killed before
+	  the POA died, without letting the POA know that the servant has
+	  deactivated.
+
+	* tests/NestedUpcall/Reactor: Removed old and complicated test.
+	  Replaced by tests/NestedUpcall/Simple.
+
+	* version_test.dsw: New workspace that contains projects from:
+
+	  - ACE_wrappers/ace
+	  - ACE_wrappers/apps/gperf
+	  - ACE_wrappers/tests
+	  - ACE_wrappers/TAO/tao
+	  - ACE_wrappers/TAO/TAO_IDL
+	  - ACE_wrappers/TAO/orbsvcs
+	  - ACE_wrappers/TAO/orbsvcs/tests
+	  - ACE_wrappers/TAO/orbsvcs/tests/Event
+	  - ACE_wrappers/TAO/examples
+	  - ACE_wrappers/TAO/tests
+	  - ACE_wrappers/TAO/performance-tests
+
 Thu Jul  1 22:29:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/Makefile:
@@ -17,7 +75,7 @@ Thu Jul  1 19:42:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Added check for invalid number of iterations (<=0).
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
 
 	  Added all initializable Cubit_Server members to the
 	  Cubit_Server constructor member initializer list.  This fixes a
@@ -45,7 +103,7 @@ Thu Jul  1 19:42:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  but it was based on old code that needed updating.  Corrected
 	  exceptions that get thrown.  CORBA::string_to_object() is
 	  supposed to throw an INV_OBJREF system exception.  The methods
-	  that were fixed all get called when CORBA::string_to_object() is 
+	  that were fixed all get called when CORBA::string_to_object() is
 	  called.
 
 	* tao/IIOP_Profile.{h,i,cpp}:
@@ -72,7 +130,7 @@ Thu Jul  1 19:42:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  longer appears to be a need to keep this warning disabled since
 	  recent versions of EGCS appear to be better behaved.
 
-	* tao/decode.cpp (decode): 
+	* tao/decode.cpp (decode):
 
 	  Fixed "uninitialized variable" warning.
 
@@ -111,7 +169,7 @@ Thu Jul  1 21:37:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  be_visitor_array files to recognize the case and
 	  call the function.
 
-	  Added comments in the union_branch and exception 
+	  Added comments in the union_branch and exception
 	  cdr_op_ci.cpp files.
 
  	  There was also a problem with an exception containing
@@ -204,7 +262,7 @@ Thu Jul  1 10:45:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* examples/Event_Comm/Event_Comm_i.cpp:
 	* examples/Quoter/Generic_Factory_i.cpp:
 	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
-	  Fixed unreachable statements warnings in DU/CXX, thanks to David 
+	  Fixed unreachable statements warnings in DU/CXX, thanks to David
 	  for reporting this problems.
 
 Thu Jul 01 00:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
@@ -223,7 +281,7 @@ Thu Jul 01 00:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           specifications and replaced TAO try macros with ACE try macros.
           Thanks to Randy Heiland <heiland@ncsa.uiuc.edu> for reporting
           these problems.
-	
+
 Wed Jun 30 21:09:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/Options.cpp:

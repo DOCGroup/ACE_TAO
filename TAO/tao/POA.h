@@ -541,6 +541,10 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+  int is_servant_in_map (PortableServer::Servant servant);
+
+  int is_user_id_in_map (const PortableServer::ObjectId &user_id);
+
   PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
                                                CORBA_Environment &ACE_TRY_ENV);
 
@@ -736,6 +740,10 @@ protected:
   CORBA::Boolean wait_for_completion_pending_;
 
   CORBA::Boolean waiting_destruction_;
+
+  ACE_SYNCH_CONDITION servant_deactivation_condition_;
+
+  CORBA::ULong waiting_servant_deactivation_;
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

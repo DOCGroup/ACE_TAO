@@ -488,7 +488,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (const poa_name &s
     {
       result = this->persistent_poa_system_map_.find (system_name,
                                                       poa);
-      if (result != 0 
+      if (result != 0
           || folded_name != poa->folded_name ())
         {
           result = this->object_adapter_->persistent_poa_name_map_->find (folded_name,
@@ -947,6 +947,12 @@ TAO_Object_Adapter::Servant_Upcall::servant_cleanup (void)
 
       if (new_count == 0)
         {
+          if (this->poa_->waiting_servant_deactivation_ > 0)
+            {
+              // Wakeup all waiting threads.
+              this->poa_->servant_deactivation_condition_.broadcast ();
+            }
+
           ACE_DECLARE_NEW_CORBA_ENV;
           ACE_TRY
             {

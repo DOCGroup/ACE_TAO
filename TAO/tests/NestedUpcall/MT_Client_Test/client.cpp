@@ -327,8 +327,6 @@ main (int argc, char **argv)
 
       delete [] clients;
 
-      //orb_manager.orb ()->shutdown ();
-
       // wait for the server thread to end
       result |= server_thr_mgr.wait ();
 
