@@ -247,6 +247,19 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
 }
 
+// Free internal data.
+void
+CORBA_Any::free_value (CORBA::Environment &env)
+{
+  if (this->any_owns_data_ && this->value_ != 0)
+    {
+      // This is not exception safe.
+      DEEP_FREE (this->type_, this->value_, 0, env);
+      ::operator delete (this->value_);
+    }
+  this->value_ = 0;
+}
+
 // insertion of typecode
 void
 CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
