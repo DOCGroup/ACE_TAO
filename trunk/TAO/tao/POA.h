@@ -621,20 +621,10 @@ protected:
                         CORBA::Boolean &is_system_id,
                         TAO_Temporary_Creation_Time &poa_creation_time);
 
-  // Should really be protected, but some compilers complain
-public:
-  enum LOCATION_RESULT
-  {
-    FOUND,
-    DEFAULT_SERVANT,
-    SERVANT_MANAGER,
-    NOT_FOUND
-  };
-
 protected:
-  LOCATION_RESULT locate_servant_i (const PortableServer::ObjectId &id,
-                                    PortableServer::Servant &servant,
-                                    CORBA_Environment &ACE_TRY_ENV);
+  TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
+                                         PortableServer::Servant &servant,
+                                         CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::Servant locate_servant_i (const char *operation,
                                             const PortableServer::ObjectId &id,

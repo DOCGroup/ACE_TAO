@@ -356,6 +356,14 @@ template <class T,class T_var> class TAO_Unbounded_Object_Sequence;
 // CORBA::default_environment() and others.
 extern TAO_Export CORBA_Environment& TAO_default_environment (void);
 
+enum TAO_SERVANT_LOCATION
+{
+  TAO_SERVANT_FOUND,
+  TAO_DEFAULT_SERVANT,
+  TAO_SERVANT_MANAGER,
+  TAO_SERVANT_NOT_FOUND
+};
+
 TAO_NAMESPACE CORBA
 {
   // = TITLE
