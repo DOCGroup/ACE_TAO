@@ -1,3 +1,13 @@
+Thu Mar  4 16:14:04 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed an infinite loop introduced by the previous change.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added progress indication when writing out workspaces.
+
 Thu Mar  4 13:19:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyEditor.pm:
