@@ -1,3 +1,16 @@
+Thu Mar 15 15:55:37 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.h: Add #include "ace/Message_Queue.h" so
+          IBM Visual Age C++ sees ACE_Message_Queue_Base when instantiating
+          templates.
+
+        * ace/ace-dll.icc: Fixed after being munged in a previous commit.
+          Also, corrected libACE.a generation and cleanup, and incorporated
+          fixes from Steve Ige <steve.ige@reuters.com> and Jerry
+          Odenwelder <jerryo@atl.fundtech.com>.
+
+        * THANKS: Added Steve Ige to the Hall of Fame.
+
 Thu Mar 15 11:26:35 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Acceptor.i (ACE_SSL_SOCK_Acceptor):
