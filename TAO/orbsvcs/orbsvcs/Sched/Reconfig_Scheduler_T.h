@@ -49,6 +49,34 @@ class TAO_Reconfig_Scheduler :
 {
 public:
 
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+	                              RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> RT_INFO_MAP;
+  // Type of map used for O(1) lookup of RT_Infos by their handles.
+
+  typedef ACE_RB_Tree<const char *,
+                      RtecScheduler::RT_Info*,
+                      ACE_Less_Than<const char *>,
+                      ACE_LOCK> RT_INFO_TREE;
+  // Type of tree used for O(log n) lookup of RT_Infos by their names.
+
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::Preemption_Priority_t,
+                                  RtecScheduler::Config_Info*,
+                                  ACE_Hash<RtecScheduler::Preemption_Priority_t>,
+                                  ACE_Equal_To<RtecScheduler::Preemption_Priority_t>,
+                                  ACE_LOCK> CONFIG_INFO_MAP;
+  // Type of map used for O(1) lookup of Config_Infos by their priorities.
+
+  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> DEPENDENCY_SET_MAP;
+  // Type of map used for O(1) lookup of RT_Info
+  // dependency sets by caller or called handle.
+
   TAO_Reconfig_Scheduler (int enforce_schedule_stability = 0);
   // Default constructor.
 
@@ -198,6 +226,39 @@ public:
   // of scheduled priorities.  All scheduled priorities range from 0
   // to the number returned, inclusive.
 
+  // = Accessors that allow controlled relaxations of encapsulation.
+
+  RECONFIG_SCHED_STRATEGY & sched_strategy ();
+  // Accesses scheduling strategy for the reconfig scheduler.
+
+  CONFIG_INFO_MAP & config_info_map ();
+  // Accesses map for O(1) lookup of Config_Infos by priority level.
+
+  long config_info_count ();
+  // Returns the number of config infos, which is also the number of
+  // assigned priority levels.
+
+  RT_INFO_MAP & rt_info_map ();
+  // Accesses map for O(1) lookup of RT_Infos by handle.
+
+  long rt_info_count ();
+  // Returns the number of registered RT_Infos.
+
+  RT_INFO_TREE & rt_info_tree ();
+  // Accesses tree for O(log n) lookup of RT_Infos by name.
+
+  DEPENDENCY_SET_MAP & calling_dependency_set_map ();
+  // Accesses map for O(1) lookup of RT_Info dependency
+  // set by the caller operation's handle.
+
+  DEPENDENCY_SET_MAP & called_dependency_set_map ();
+  // Accesses map for O(1) lookup of RT_Info dependency
+  // set by the called operation's handle.
+
+  int dependency_count ();
+  // Returns the number of dependencies in the dependency lists of all RT_Infos.
+  // This is used when traversing the dependency graph.
+
 protected:
 
   // @@ TO DO: use a memento to save and restore scheduler state without
@@ -228,34 +289,6 @@ protected:
       SCHED_PROPAGATION_NOT_STABLE
   };
   // Flags indicating stability conditions of schedule.
-
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-	                              RtecScheduler::RT_Info*,
-                                  ACE_Hash<RtecScheduler::handle_t>,
-                                  ACE_Equal_To<RtecScheduler::handle_t>,
-                                  ACE_LOCK> RT_INFO_MAP;
-  // Type of map used for O(1) lookup of RT_Infos by their handles.
-
-  typedef ACE_RB_Tree<const char *,
-                      RtecScheduler::RT_Info*,
-                      ACE_Less_Than<const char *>,
-                      ACE_LOCK> RT_INFO_TREE;
-  // Type of tree used for O(log n) lookup of RT_Infos by their names.
-
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::Preemption_Priority_t,
-                                  RtecScheduler::Config_Info*,
-                                  ACE_Hash<RtecScheduler::Preemption_Priority_t>,
-                                  ACE_Equal_To<RtecScheduler::Preemption_Priority_t>,
-                                  ACE_LOCK> CONFIG_INFO_MAP;
-  // Type of map used for O(1) lookup of Config_Infos by their priorities.
-
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-                                  RtecScheduler::Dependency_Set*,
-                                  ACE_Hash<RtecScheduler::handle_t>,
-                                  ACE_Equal_To<RtecScheduler::handle_t>,
-                                  ACE_LOCK> DEPENDENCY_SET_MAP;
-  // Type of map used for O(1) lookup of RT_Info
-  // dependency sets by caller or called handle.
 
   virtual RtecScheduler::RT_Info * create_i (const char * entry_point,
                                              RtecScheduler::handle_t handle,
@@ -359,6 +392,9 @@ protected:
   // Helper method to give an RT_Info some reasonable default values
 
 
+
+  // = Protected class members.
+
   RECONFIG_SCHED_STRATEGY sched_strategy_;
   // Scheduling strategy for the reconfig scheduler.
 
@@ -376,7 +412,7 @@ protected:
   // The number of registered RT_Infos.
 
   RT_INFO_TREE rt_info_tree_;
-  // Map for O(1) lookup of RT_Infos by handle.
+  // Tree for O(log n) lookup of RT_Infos by name.
 
   DEPENDENCY_SET_MAP calling_dependency_set_map_;
   // Map for O(1) lookup of RT_Info dependency
