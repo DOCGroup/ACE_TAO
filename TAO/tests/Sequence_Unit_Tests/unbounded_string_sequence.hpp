@@ -13,6 +13,7 @@
 #include "allocation_traits.hpp"
 #include "string_traits.hpp"
 #include "generic_sequence.hpp"
+#include "string_sequence_element.hpp"
 
 namespace TAO
 {
@@ -23,6 +24,7 @@ public:
   typedef char * value_type;
   typedef details::unbounded_allocation_traits<char*,true> allocation_traits;
   typedef details::string_traits<char,true> element_traits;
+  typedef details::string_sequence_element<char> element_type;
 
   typedef details::generic_sequence<char*, allocation_traits, element_traits> implementation_type;
 
@@ -58,10 +60,10 @@ public:
   inline char const * operator[](CORBA::ULong i) const {
     return impl_[i];
   }
-#if 0
-  inline value_type & operator[](CORBA::ULong i) {
-    return impl_[i];
+  inline element_type operator[](CORBA::ULong i) {
+    return element_type(impl_[i], release());
   }
+#if 0
   inline void replace(
       CORBA::ULong maximum,
       CORBA::ULong length,

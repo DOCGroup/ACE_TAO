@@ -1,3 +1,29 @@
+Wed Sep 22 20:25:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+	  Implement the type returned by the non-const operator[] in
+	  string sequences.  A lot of the evilness of string sequences is
+	  encapsulated here.
+
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	* tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+	  Unit test for the previous class.
+
+	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
+	  Add missing #include for the string manager types.
+
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	  Implement the non-const operator[] to return a
+	  string_sequence_element<charT>.
+
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	  Add more tests for copy constructors.
+	  Test the non-cost operator[] for sequences.
+	  Move the add_all() function to the end, easier to add tests that
+	  way.
+
 Tue Sep 21 22:11:10 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
