@@ -1551,7 +1551,7 @@ namespace
          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::PublisherDescriptions *" << endl
-         << "get_named_publishers(" << endl
+         << "get_named_publishers (" << endl
          << "const " << STRS[COMP_NAMES] << endl
          << STRS[ENV_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
@@ -1564,18 +1564,6 @@ namespace
          << "get_component_def (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "virtual ::Components::CCMHome_ptr" << endl
-         << "get_ccm_home (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "virtual ::Components::PrimaryKeyBase *" << endl
-         << "get_primary_key (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NKA] << "));" << endl << endl;
 
       os << "virtual void" << endl
          << "configuration_complete (" << endl
@@ -1591,40 +1579,7 @@ namespace
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "));" << endl << endl;
 
-      os << "virtual ::Components::ComponentPortDescription *" << endl
-         << "get_all_ports(" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "// Get component implementation." << endl
-         << "virtual CORBA::Object_ptr" << endl
-         << "_get_component (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "// CIAO-specific operations." << endl << endl;
-
-      os << "void" << endl
-         << "ciao_preactivate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "void" << endl
-         << "ciao_activate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "void" << endl
-         << "ciao_postactivate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "/// @@NOTE: The busted operation." << endl;
-
-      os << "void" << endl
-         << "_ciao_passivate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+      os << "private:" << endl << endl;
 
       // Generate protected operations for facets and event sinks.
       {

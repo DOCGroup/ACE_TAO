@@ -1,3 +1,20 @@
+Tue Sep  7 15:48:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_Base.cpp:
+        
+          Cosmetic changes.
+          
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * DAnCE/ciao/Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_T.h:
+        * ciao/Servant_Impl_T.cpp:
+        * ciao/Servant_Impl_T.h:
+        
+          Moved several methods from the generated servant class to the
+          template Servant_Impl base class.
+
 Tue Sep  7 10:44:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/CIDLC.mpc:
