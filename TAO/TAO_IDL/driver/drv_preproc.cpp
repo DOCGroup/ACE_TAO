@@ -81,6 +81,8 @@ ACE_RCSID(driver, drv_preproc, "$Id$")
 static long argcount = 0;
 static long max_argcount = 128;
 static const char *arglist[128];
+static const char *output_arg_format = 0;
+static long output_arg_index = 0;
 
 // Push the new CPP location if we got a -Yp argument
 void
@@ -108,6 +110,29 @@ DRV_cpp_putarg (const char *str)
   arglist[argcount++] = str == 0 ? 0 : ACE::strnew (str);
 }
 
+// Expand the output argument with the given filename.
+void
+DRV_cpp_expand_output_arg (const char *filename)
+{
+  if (output_arg_format != 0)
+    {
+      delete [] ACE_const_cast (char *, arglist[output_arg_index]);
+      arglist[output_arg_index] = 0; 
+
+      char *output_arg = 0;
+      ACE_NEW (output_arg,
+               char [ACE_OS::strlen (output_arg_format)
+                     + ACE_OS::strlen (filename)
+                     + 1]);
+
+      ACE_OS::sprintf (output_arg,
+                       output_arg_format,
+                       filename);
+
+      arglist[output_arg_index] = output_arg;
+    }
+}
+
 // Initialize the cpp argument list
 void
 DRV_cpp_init (void)
@@ -130,7 +155,9 @@ DRV_cpp_init (void)
   else
     {
       // Check for the deprecated CPP_LOCATION environment variable
-      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION", (char *) 0);
+      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION", 
+                                     (char *) 0);
+
       if (cpp_path != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -155,14 +182,17 @@ DRV_cpp_init (void)
   char version_option[128];
   ACE_OS::sprintf (version_option,
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
-                   ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_BETA_VERSION);
+                   ACE_MAJOR_VERSION, 
+                   ACE_MINOR_VERSION, 
+                   ACE_BETA_VERSION);
   DRV_cpp_putarg (version_option);
 
   DRV_cpp_putarg ("-I.");
 
   // Added some customizable preprocessor options
 
-  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS", (char *) 0);
+  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS", 
+                              (char *) 0);
 
   if (args1 != 0)
     {
@@ -171,7 +201,9 @@ DRV_cpp_init (void)
   else
     {
       // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment variable
-      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS", (char *) 0);
+      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS", 
+                                  (char *) 0);
+
       if (args2 != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -207,6 +239,7 @@ DRV_cpp_init (void)
           ACE_OS::strcat (option, TAO_IDL_INCLUDE_DIR);
 #else
           const char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+
           if (TAO_ROOT != 0)
             {
               ACE_OS::strcat (option, TAO_ROOT);
@@ -215,6 +248,7 @@ DRV_cpp_init (void)
           else
             {
               const char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+
               if (ACE_ROOT != 0)
                 {
                   ACE_OS::strcat (option, ACE_ROOT);
@@ -241,9 +275,20 @@ DRV_cpp_init (void)
 
   // Add any flags in cpp_args to cpp's arglist.
   ACE_ARGV arglist (cpp_args);
+
   for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
     {
-      DRV_cpp_putarg (arglist[arg_cnt]);
+      // Check for an argument that specifies the preprocessor's output file.
+      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 && output_arg_format == 0)
+        {
+          output_arg_format = ACE::strnew (arglist[arg_cnt]);
+          output_arg_index = argcount;
+          DRV_cpp_putarg (0);
+        }
+      else
+        {
+          DRV_cpp_putarg (arglist[arg_cnt]);
+        }
     }
 }
 
@@ -469,6 +514,7 @@ DRV_pre_proc (const char *myfile)
   ACE_Process_Options cpp_options (1,       // Inherit environment.
                                    TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
 
+  DRV_cpp_expand_output_arg (tmp_file);
   DRV_cpp_putarg (tmp_ifile);
   DRV_cpp_putarg (0); // Null terminate the arglist.
 
@@ -477,25 +523,30 @@ DRV_pre_proc (const char *myfile)
   /// Remove any existing output file.
   (void) ACE_OS::unlink (tmp_file);
 
-  // If the following open() fails, then we're either being hit with a
-  // symbolic link attack, or another process opened the file before
-  // us.
-  ACE_HANDLE fd = ACE_OS::open (tmp_file,
-                                O_WRONLY | O_CREAT | O_EXCL,
-                                ACE_DEFAULT_FILE_PERMS);
+  ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
-  if (fd == ACE_INVALID_HANDLE)
+  if (output_arg_format == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT (idl_global->prog_name ()),
-                  ACE_TEXT (": cannot open temp file "),
-                  ACE_TEXT (tmp_file),
-                  ACE_TEXT (" for writing\n")));
+      // If the following open() fails, then we're either being hit with a
+      // symbolic link attack, or another process opened the file before
+      // us.
+      fd = ACE_OS::open (tmp_file,
+                         O_WRONLY | O_CREAT | O_EXCL,
+                         ACE_DEFAULT_FILE_PERMS);
 
-      return;
+      if (fd == ACE_INVALID_HANDLE)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (idl_global->prog_name ()),
+                      ACE_TEXT (": cannot open temp file "),
+                      ACE_TEXT (tmp_file),
+                      ACE_TEXT (" for writing\n")));
+
+          return;
+        }
+
+      cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
     }
-
-  cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
 
   if (process.spawn (cpp_options) == ACE_INVALID_PID)
     {
@@ -508,16 +559,19 @@ DRV_pre_proc (const char *myfile)
       return;
     }
 
-  // Close the output file on the parent process.
-  if (ACE_OS::close (fd) == -1)
+  if (fd != ACE_INVALID_HANDLE)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT (idl_global->prog_name ()),
-                  ACE_TEXT (": cannot close temp file"),
-                  ACE_TEXT (tmp_file),
-                  ACE_TEXT (" on parent\n")));
+      // Close the output file on the parent process.
+      if (ACE_OS::close (fd) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (idl_global->prog_name ()),
+                      ACE_TEXT (": cannot close temp file"),
+                      ACE_TEXT (tmp_file),
+                      ACE_TEXT (" on parent\n")));
 
-      return;
+          return;
+        }
     }
 
   // Remove the null termination and the input file from the arglist,
