@@ -1072,7 +1072,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    copy_table = new ACE_Thread_Descriptor [this->thr_list_.size ()];
+    ACE_NEW_RETURN (copy_table, ACE_Thread_Descriptor [this->thr_list_.size ()], -1);
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
 	 !iter.done ();
