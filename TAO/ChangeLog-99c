@@ -1,3 +1,10 @@
+Wed Sep 22 10:30:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	  Replaced CORBA::TypeCode_ptr::_nil() with COORBA::TypeCode::_nil()
+	  in several places. Amazingly, gcc 2.95 compiled this, but
+	  MSVC output an internal compiler error.
+
 Mon Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/ast/ast_operation.cpp,
