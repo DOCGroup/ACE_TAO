@@ -3,7 +3,6 @@
 # QNX 4.25 hosted GNU g++ for Neutrino 2.0
 
 CROSS-COMPILE = 1
-ACE_HAS_GNUG_PRE_2_8 := 0
 static_libs_only = 1
 
 ifeq (,$(debug))

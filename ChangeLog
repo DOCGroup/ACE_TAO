@@ -1,3 +1,13 @@
+Wed Apr  3 00:03:05 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_g++.GNU (exceptions):
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+
+          Removed redefinitions of ACE_HAS_GNUG_PRE_2_8 as they were
+          unnecessary. Some more files also seem to be abusing this flag.
+          But I don't have access to those exotic platforms.
+
 Tue Apr  2 19:36:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_String.inl (strtok_r): Another variant of wcstok()...
