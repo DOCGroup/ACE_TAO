@@ -966,6 +966,11 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
   ACE_ASSERT (this->thr_to_be_removed_.is_empty ()); \
   ACE_FIND (this->find_thread (t_id), ptr); \
+  if (ptr == 0) \
+    { \
+      errno = ENOENT; \
+      return -1; \
+    } \
   int result = OP (ptr); \
   int error = errno; \
   while (! this->thr_to_be_removed_.is_empty ()) { \
@@ -1013,6 +1018,12 @@ ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
   ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
 
   ACE_FIND (this->find_thread (t_id), ptr);
+  if (ptr == 0)
+    {
+      errno = ENOENT;
+      return -1 ;
+    }
+
   int result = this->kill_thr (ptr, signum);
   int error = errno;
   while (! this->thr_to_be_removed_.is_empty ()) {
