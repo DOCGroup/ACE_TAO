@@ -1,3 +1,8 @@
+Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/SString_Test.cpp (main): Removed the "silly" strings from
+ 	  the tests.  They are annoying and cause memory leaks.
+
 Sun Jan 11 22:16:28 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Peer/Peer.{h,cpp} (transmit): Changed the function
