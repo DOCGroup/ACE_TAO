@@ -653,11 +653,12 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
 
   // @@ (JP) Problems with constant instantiations of TAO_Object_Manager, 
   // TAO_Pseudo_Object_Manager, TAO_SeqElem_WString_Manager and
-  // TAO_SeqElem_String_Manager make these impossible right now.
+  // TAO_SeqElem_String_Manager make these impossible right now [BUGID:676].
   if (nt != AST_Decl::NT_string
       && nt != AST_Decl::NT_wstring
       && nt != AST_Decl::NT_interface
       && nt != AST_Decl::NT_interface_fwd
+      && nt != AST_Decl::NT_array
       && pdt != AST_PredefinedType::PT_pseudo)
     {
       *os << "const ";
