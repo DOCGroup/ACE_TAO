@@ -534,9 +534,9 @@ DRV_parse_args (long ac, char **av)
           // If gperf_path is an absolute path, try to call this
           // again with 
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_IDL: warning, GPERF could not be executed\n",
+                      "TAO_IDL: warning, GPERF could not be executed\n"
                       "Perfect Hashing or Binary/Linear Search cannot be done without GPERF\n"
-                      "Now, using Dynamic Hashing..\n",
+                      "Now, using Dynamic Hashing..\n"
                       "To use Perfect Hashing or Binary/Linear Search strategy\n"
                       "\t-Build gperf at $ACE_ROOT/apps/gperf/src\n"
                       "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
