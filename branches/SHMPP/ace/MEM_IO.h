@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_MEM_IO : public ACE_SOCK, ACE_MEM_SAP
+class ACE_Export ACE_MEM_IO : public ACE_SOCK, public ACE_MEM_SAP
 {
   // = TITLE
   //     Defines the methods for the ACE shared memeory wrapper I/O routines
