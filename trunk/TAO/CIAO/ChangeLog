@@ -1,3 +1,11 @@
+Wed Nov 26 22:16:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        
+          Changed generated exception list of disconnect_* operation for
+          an emits declaration to match the correct exception list
+          generated in ServantSourceGenerator.cpp.
+
 Tue Nov 25 19:46:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.hpp:
