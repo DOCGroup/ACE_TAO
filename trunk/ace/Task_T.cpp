@@ -6,9 +6,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Task_T.h"
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Module.h"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
