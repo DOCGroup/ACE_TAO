@@ -38,7 +38,7 @@ class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
 
 
-typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
+typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
 
 // ****************************************************************
