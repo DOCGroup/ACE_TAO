@@ -27,8 +27,6 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 # endif /* __GNUC__ != 2.91 */
 
-# define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
-
   // Some versions of egcs, e.g., egcs-2.90.27 980315 (egcs-1.0.2 release),
   // have bugs with static data members in template classes.
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
@@ -62,6 +60,7 @@
 #endif /* i386 */
 
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #endif /* ACE_GNUG_COMMON_H */
