@@ -1,3 +1,8 @@
+Fri Mar 26 08:39:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_helper.cpp:
+	  Fixed minor syntax error in the be_helper.cpp file.
+
 Fri Mar 26 01:33:05 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Updated the InterOperable Naming Service sections of the 
