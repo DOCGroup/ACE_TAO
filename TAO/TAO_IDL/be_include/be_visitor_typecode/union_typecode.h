@@ -48,7 +48,7 @@ namespace TAO
   private:
 
     /// Generate union branch related TypeCode code.
-    int visit_cases (be_union * node, be_union_branch *& default_case);
+    int visit_cases (be_union * node);
 
   };
 
