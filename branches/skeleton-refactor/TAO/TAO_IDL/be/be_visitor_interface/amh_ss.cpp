@@ -76,7 +76,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
-      
+
   *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
       << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
       << be_nl
@@ -100,7 +100,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "}" << be_uidt_nl << be_nl
       << "CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl << be_nl;
-      
+
   *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
       << "return" << be_idt_nl;
 

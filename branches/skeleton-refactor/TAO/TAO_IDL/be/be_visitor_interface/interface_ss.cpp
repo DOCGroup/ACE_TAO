@@ -179,7 +179,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 //     AST_Argument arg (AST_Argument::dir_in,
 //                       AST_Decl::NT_pre_defined,
 //                       &arg_scoped_name);
-                   
+
 
 //     AST_Type rt (AST_Decl::NT_op, 0);
 //     Identifier op_name (ACE_OS::strdup ("_is_a"));

@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           interface_sh, 
+ACE_RCSID (be_visitor_interface,
+           interface_sh,
            "$Id$")
 
 // ************************************************************
@@ -38,7 +38,7 @@ be_visitor_interface_sh::~be_visitor_interface_sh (void)
 int
 be_visitor_interface_sh::visit_interface (be_interface *node)
 {
-  if (node->srv_hdr_gen () 
+  if (node->srv_hdr_gen ()
       || node->imported ()
       || node->is_abstract ())
     {
@@ -124,7 +124,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   for (int i = 0; i < n_parents; ++i)
     {
       parent = node->inherits ()[i];
-    
+
       if (parent->is_abstract ())
         {
           continue;
@@ -160,11 +160,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "// Useful for template programming." << be_nl
       << "typedef ::" << node->name () << " _stub_type;" << be_nl
       << "typedef ::" << node->name () << "_ptr _stub_ptr_type;" << be_nl
-      << "typedef ::" << node->name () << "_var _stub_var_type;" 
+      << "typedef ::" << node->name () << "_var _stub_var_type;"
       << be_nl << be_nl;
 
   // Copy constructor and destructor.
-  *os << class_name.c_str () << " (const " 
+  *os << class_name.c_str () << " (const "
       << class_name.c_str () << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
 
@@ -238,9 +238,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Generate skeletons for operations of our base classes. These
   // skeletons just cast the pointer to the appropriate type
   // before invoking the call.
-  int status = 
+  int status =
     node->traverse_inheritance_graph (
-              be_interface::gen_skel_helper, 
+              be_interface::gen_skel_helper,
               os
             );
 
@@ -320,7 +320,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_interface_sh::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,

@@ -107,8 +107,6 @@ namespace TAO
   {
   public:
 
-    typedef base_type
-
     Ret_Object_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
