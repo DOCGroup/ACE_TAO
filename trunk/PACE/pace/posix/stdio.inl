@@ -131,17 +131,6 @@ pace_fputc (int c,
                 stream);
 }
 
-int
-pace_fprintf (FILE *fp, const char *format, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  result = vfprintf (fp, format, ap);
-  va_end (ap);
-  return result;
-}
-
 PACE_INLINE
 int
 pace_fputs (const char * s,
@@ -286,17 +275,6 @@ pace_perror (const char * s)
   return;
 }
 
-int
-pace_printf (const char* format, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  result = vprintf (format, ap);
-  va_end (ap);
-  return result;
-}
-
 PACE_INLINE
 int
 pace_putc (int c,
@@ -384,16 +362,6 @@ pace_setvbuf(PACE_FILE * stream,
              int mode, pace_size_t size)
 {
   return setvbuf (stream, buf, mode, size);
-}
-int
-pace_sprintf (char* s, const char* format, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  result = vsprintf (s, format, ap);
-  va_end (ap);
-  return result;
 }
 
 PACE_INLINE

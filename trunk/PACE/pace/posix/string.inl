@@ -44,7 +44,7 @@ pace_memmove (void *s1, const void *s2, pace_size_t n)
   return memmove (s1, s2, n);
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 void *
 pace_memset (void *s, int c, pace_size_t n)
 {
@@ -80,21 +80,21 @@ pace_strrchr (const char * s, int c)
   return strrchr (s, c);
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 int
 pace_strcmp (const char * s1, const char * s2)
 {
   return strcmp (s1, s2);
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 int
 pace_strncmp (const char * s1, const char * s2, size_t n)
 {
   return strncmp (s1, s2, n);
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 char *
 pace_strcpy (char * s1, const char * s2)
 {
@@ -108,7 +108,7 @@ pace_strncpy (char * s1, const char * s2, size_t n)
   return strncpy (s1, s2, n);
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 size_t
 pace_strcspn (const char * s1, const char * s2)
 {
@@ -129,7 +129,7 @@ pace_strlen (const char * s)
   return strlen (s);
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 const char *
 pace_strpbrk (const char * s1, const char * s2)
 {

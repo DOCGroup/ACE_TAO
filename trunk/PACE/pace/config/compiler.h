@@ -34,6 +34,12 @@
 # endif /* ! PACE_HAS_INLINE */
 #endif /* ! __cplusplus */
 
+#if defined (PACE_HAS_INLINE) && defined (__GNUC__) && !(PACE_LYNXOS)
+# define PACE_BROKEN_INLINE inline
+#else
+# define PACE_BROKEN_INLINE
+#endif /* PACE_HAS_INLINE */
+
 /* ============================================================================
  * Compiler Silencing macros
  *

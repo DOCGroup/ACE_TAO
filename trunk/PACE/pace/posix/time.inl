@@ -198,7 +198,11 @@ pace_timer_create (pace_clockid_t clock_id,
                    pace_timer_t *timerid)
 {
 #if PACE_LINUX
-  return pace_emu_timer_create (clock_id, evp, timerid);
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (evp);
+  PACE_UNUSED_ARG (timerid);
+  return -1;
 #else
   return timer_create (clock_id, evp, timerid);
 #endif /* PACE_LINUX */
@@ -209,7 +213,9 @@ int
 pace_timer_delete (pace_timer_t timerid)
 {
 #if PACE_LINUX
-  return pace_emu_timer_delete (timerid);
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (timerid);
+  return -1;
 #else
   return timer_delete (timerid);
 #endif /* PACE_LINUX */
@@ -220,7 +226,9 @@ int
 pace_timer_getoverrun (pace_timer_t timerid)
 {
 #if PACE_LINUX
-  return pace_emu_timer_getoverrun (timerid);
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (timerid);
+  return -1;
 #else
   return timer_getoverrun (timerid);
 #endif /* PACE_LINUX */
