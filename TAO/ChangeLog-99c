@@ -1,3 +1,9 @@
+Wed Jun 30 15:04:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp: Removed
+	  ACE_Equal_To<PortableServer::ObjectId> templates instantiation.
+	  TAO already has it.
+
 Wed Jun 30 14:39:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Logging/Logging_Test_i.cpp:
@@ -5,7 +11,7 @@ Wed Jun 30 14:39:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* examples/Event_Comm/Consumer_Handler.cpp:
 	* examples/Event_Comm/Consumer_Input_Handler.cpp:
 	* examples/Event_Comm/Supplier_Input_Handler.cpp:
-	  Fixed exception handling stuff, thanks to Matt for providing the 
+	  Fixed exception handling stuff, thanks to Matt for providing the
 	  fixes.
 
 Wed Jun 30 14:20:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
@@ -24,7 +30,7 @@ Wed Jun 30 14:03:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/tests/DynAny_Test/test_dynsequence.cpp:
 	* TAO/tests/DynAny_Test/test_dynstruct.cpp:
 	* TAO/tests/DynAny_Test/test_dynunion.cpp:
-	  Substituted ACE_PRINT_EXCEPTION macro where 
+	  Substituted ACE_PRINT_EXCEPTION macro where
 	  needed.
 
 	* TAO/tests/Param_Test/ub_struct_seq.cpp:
@@ -40,13 +46,13 @@ Wed Jun 30 13:43:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Wed Jun 30 13:36:29 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	Fixed the exception warnings for the following:
-	* orbsvcs/tests/Time/Client_i.cpp 
+	* orbsvcs/tests/Time/Client_i.cpp
 	* TAO_ROOT/tests/InterOp-Naming/Server_i.cpp
 	* TAO_ROOT/tests/InterOp-Naming/INS_test_server.cpp
 
 Wed Jun 30 12:03:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Simple/bank/Account_i.cpp: 
+	* examples/Simple/bank/Account_i.cpp:
 	* examples/Simple/bank/AccountManager_i.cpp:
 	  Fixed more exception handling problems.
 
@@ -76,7 +82,7 @@ Wed Jun 30 10:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp: 
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
 	  Use ACE_THROW_SPEC and ACE_THROW instead of TAO_THROW_SPEC or
 	  TAO_THROW.
 
