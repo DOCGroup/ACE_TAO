@@ -1,3 +1,9 @@
+Thu Nov 13 16:18:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Sock_Connect.cpp:
+          Added #include Guard_T.h and Recursive_Thread_Mutex.h when
+          ACE_HAS_IPV6 is defined.
+
 Thu Nov 13 16:10:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * apps/Gateway/Gateway/File_Parser.cpp:

@@ -14,6 +14,11 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/net/os_if.h"
 
+#if defined (ACE_HAS_IPV6)
+#  include "ace/Guard_T.h"
+#  include "ace/Recursive_Thread_Mutex.h"
+#endif /* ACE_HAS_IPV6 */
+
 # if defined (ACE_HAS_GETIFADDRS)
 #   include /**/ <ifaddrs.h>
 # endif /* ACE_HAS_GETIFADDRS */
