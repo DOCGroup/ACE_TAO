@@ -1,3 +1,22 @@
+Wed Jun 25 17:02:03 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO/tests/OBV/Supports/Client.dsp
+        * TAO/tests/OBV/Supports/Makefile
+        * TAO/tests/OBV/Supports/Makefile.bor
+        * TAO/tests/OBV/Supports/README
+        * TAO/tests/OBV/Supports/Server.dsp
+        * TAO/tests/OBV/Supports/Supports_Test.dsw
+        * TAO/tests/OBV/Supports/Supports_Test.idl
+        * TAO/tests/OBV/Supports/Supports_Test_impl.cpp
+        * TAO/tests/OBV/Supports/Supports_Test_impl.h
+        * TAO/tests/OBV/Supports/Client/client.cpp
+        * TAO/tests/OBV/Supports/Client/client.bor
+        * TAO/tests/OBV/Supports/Server/server.cpp
+        * TAO/tests/OBV/Supports/Server/server.bor
+        * TAO/tests/OBV/Supports/Server/svc.conf
+
+        Added new test for valuetypes.
+
 Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
     * tao/IORInterceptor/IORInterceptor.mpc:
