@@ -45,7 +45,8 @@ FP_Segment_Sched_Param_Policy::value (
   this->value_ = value;
 }
 
-CORBA::Policy_ptr FP_Segment_Sched_Param_Policy::copy ()
+CORBA::Policy_ptr 
+FP_Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FP_Segment_Sched_Param_Policy* tmp;
@@ -57,15 +58,17 @@ CORBA::Policy_ptr FP_Segment_Sched_Param_Policy::copy ()
   return tmp;
 }
 
-void FP_Segment_Sched_Param_Policy::destroy ()
+void 
+FP_Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
-Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb,
-                              Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type,
-                              int ace_sched_policy,
-                              int ace_sched_scope)
+Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
+  CORBA::ORB_ptr orb,
+  Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type,
+  int ace_sched_policy,
+  int ace_sched_scope)
   : orb_ (orb),
     disp_impl_type_ (disp_impl_type),
     ace_sched_policy_ (ace_sched_policy),
@@ -94,8 +97,10 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb,
   ACE_CHECK;
 
   IOP::CodecFactory_var codec_factory;
-  CORBA::Object_var obj = orb->resolve_initial_references ("CodecFactory"
-                                                           ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    orb->resolve_initial_references ("CodecFactory"
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   if (CORBA::is_nil(obj.in ()))
     {
