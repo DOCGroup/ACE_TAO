@@ -396,7 +396,7 @@ private:
 
 TestData::TestData ()
 {
-  size_t i;
+  int i;
   for (i = 0; i < MAX_SERVERS; ++i)
     this->server_list_[i] = 0;
   for (i = 0; i < MAX_CLIENTS; ++i)
@@ -519,7 +519,7 @@ TestData::client_done (Client *c)
           if (c->id () != i)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Client %d is pos %d in list\n"),
-                        c->id,
+                        c->id (),
                         i));
           this->client_list_[i] = 0;
           break;
