@@ -1,3 +1,8 @@
+Sun Jul 28 13:36:48 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/tests/Trading/Trading.dsw:
+	  Added dependencies to fix the Win32 errors.
+
 Sun Jul 28 09:43:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp:

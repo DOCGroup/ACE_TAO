@@ -65,6 +65,30 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynamicAny
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
 }}}
 
 ###############################################################################
