@@ -10,6 +10,7 @@ ACE_RCSID(BiDir_GIOP, BiDirGIOP, "$Id$")
 
 // Set the flag to zero to start with
 int TAO_BiDirGIOP_Loader::validator_loaded_ = 0;
+int TAO_BiDirGIOP_Loader::is_activated_ = 0;
 
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
   : validator_ (0)
@@ -29,7 +30,7 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (TAO_DEF_GIOP_MINOR >= 2)
+  if (TAO_BiDirGIOP_Loader::is_activated_ == 0 && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -63,6 +64,8 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
                             CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (-1);
 
+
+      TAO_BiDirGIOP_Loader::is_activated_ = 1;
     }
 
   return 0;
