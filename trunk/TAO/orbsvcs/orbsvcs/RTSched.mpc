@@ -2,7 +2,7 @@ project(RTSched) : orbsvcslib, core, naming, svc_utils, portableserver {
   sharedname   = TAO_RTSched
   idlflags    += -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=Sched/sched_export.h
   dynamicflags = TAO_RTSCHED_BUILD_DLL
-  tagchecks    = Sched
+  tagchecks   += Sched
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 

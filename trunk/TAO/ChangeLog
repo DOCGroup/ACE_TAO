@@ -1,3 +1,35 @@
+Wed Sep 10 10:05:38 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTKokyuEvent.mpc:
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+
+          Add to tagchecks instead of directly assigning to it.
+
 Wed Sep 10 07:48:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/be/be_interface.cpp:

@@ -1,7 +1,7 @@
 project(IFRService) : orbsvcslib, core, typecodefactory, svc_utils, ifr_client, iortable, portableserver {
   sharedname   = TAO_IFRService
   dynamicflags = TAO_IFRSERVICE_BUILD_DLL
-  tagchecks    = IFRService
+  tagchecks   += IFRService
 
   IDL_Files {
   }
