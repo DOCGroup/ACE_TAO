@@ -1,3 +1,15 @@
+Tue Jun 15 23:31:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+	  Changed ACE_HAS_UCONTEXT_T test to include <signal.h> and 
+	  <ucontext.h> (if it exists).
+	  This fixes bugzilla bug 1844.
+
+        * configure.ac:
+          Set ACE_SIG_MACROS if any of sigemptyset, sigdelset, sigaddset,
+          sigdelset, or sigismember are macros.
+	  This fixes bugzilla bug 1836.
+
 Wed Jun 16 06:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TLI.h:
