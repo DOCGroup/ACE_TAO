@@ -3,7 +3,8 @@ Thu Jul 08 21:34:42 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-lynxos.h: on PowerPC, set
           ACE_NEEDS_HUGE_THREAD_STACKSIZE to 32000, instead of
           its apparent default of 15000.  On both x86 and ppc,
-          #define ACE_MAP_FIXED to 0 to try to disable it.
+          #define ACE_MAP_FIXED to 0 and ACE_DEFAULT_BASE_ADDR to
+          0 to try to get the OS to always pick shared memory addresses.
 
         * tests/Recursive_Mutex_Test.cpp (main): removed explicit
           stack size setting, now that we're using
