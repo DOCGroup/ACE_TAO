@@ -1,3 +1,11 @@
+Tue Jul 24 08:38:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test.idl:
+
+          Removed 'void' parameter from two operations. Thanks to 
+          Joachim Tremouroux <joachim.tremouroux@microresearch.be> 
+          for reporting the bug.
+
 Mon Jul 23 22:31:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Client_Task.cpp: Added some debufg
