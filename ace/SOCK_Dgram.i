@@ -59,7 +59,7 @@ ACE_SOCK_Dgram::recv (void *buf,
 }
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram::send (const iovec *buffers,
+ACE_SOCK_Dgram::send (const iovec buffers[],
                       int buffer_count,
                       size_t &number_of_bytes_sent,
                       int flags,
@@ -82,7 +82,7 @@ ACE_SOCK_Dgram::send (const iovec *buffers,
 }
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram::recv (iovec *buffers,
+ACE_SOCK_Dgram::recv (iovec buffers[],
                       int buffer_count,
                       size_t &number_of_bytes_recvd,
                       int &flags,
@@ -105,4 +105,56 @@ ACE_SOCK_Dgram::recv (iovec *buffers,
                                      func);
   addr.set_size (addr_len);
   return status;
+}
+
+// <sendto> an N byte datagram to <addr> (connectionless version).
+
+ASYS_INLINE ssize_t
+ACE_SOCK_Dgram::send (const void *buf, 
+		      size_t n, 
+		      const ACE_Addr &addr, 
+		      int flags,
+                      ACE_OVERLAPPED *overlapped,
+                      ACE_OVERLAPPED_COMPLETION_FUNC func) const
+{
+  ACE_TRACE ("ACE_SOCK_Dgram::send");
+
+  iovec buffer[1];
+  buffer[0].iov_len = n;
+  buffer[0].iov_base = buf;
+  size_t number_of_bytes_sent = 0;
+  return this->send (this->get_handle (),
+                     buffer,
+                     1,
+                     number_of_bytes_sent,
+                     flags,
+                     addr,
+                     overlapped,
+                     func);
+}
+
+// <recvfrom> an n byte datagram (connectionless version).
+
+ASYS_INLINE ssize_t
+ACE_SOCK_Dgram::recv (void *buf, 
+		      size_t n, 
+		      ACE_Addr &addr, 
+		      int flags,
+                      ACE_OVERLAPPED *overlapped,
+                      ACE_OVERLAPPED_COMPLETION_FUNC func) const
+{
+  ACE_TRACE ("ACE_SOCK_Dgram::recv");
+
+  iovec buffer[1];
+  buffer[0].iov_len = n;
+  buffer[0].iov_base = buf;
+  size_t number_of_bytes_recvd = 0;
+  return this->recv (this->get_handle (),
+                     buffer,
+                     1,
+                     number_of_bytes_recvd,
+                     flags,
+                     addr,
+                     overlapped,
+                     func);
 }

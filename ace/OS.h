@@ -1033,9 +1033,8 @@ typedef struct timespec
 class ACE_Export ACE_PSOS_Time_t
 {
 public:
-
-  ACE_PSOS_Time_t ();
-    // default ctor: date, time, and ticks all zeroed
+  ACE_PSOS_Time_t (void);
+    // default ctor: date, time, and ticks all zeroed.
 
   ACE_PSOS_Time_t (const timespec_t& t);
     // ctor from a timespec_t
@@ -1050,17 +1049,13 @@ public:
     // static member function to set current system time
 
 #   if defined (ACE_PSOSIM)
-
-  static u_long init_simulator_time ();
+  static u_long init_simulator_time (void);
     // static member function to initialize system time, using UNIX calls
-
 #   endif /* ACE_PSOSIM */
 
   static const u_long max_ticks;
     // max number of ticks supported in a single system call
-
 private:
-
   // constants for prying info out of the pSOS time encoding
   static const u_long year_mask;
   static const u_long month_mask;
@@ -3160,7 +3155,7 @@ struct iovec
   // WSABUF is a Winsock2-only type.
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   operator WSABUF &(void) { return *((WSABUF *) this); }
-#endif
+#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 };
 
 struct msghdr
@@ -4797,10 +4792,12 @@ typedef u_long ACE_SERVICE_TYPE;
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 typedef GROUP ACE_SOCK_GROUP;
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
+#define ACE_OVERLAPPED_SOCKET_FLAG WSA_FLAG_OVERLAPPED
 #else
 typedef u_long ACE_SERVICE_TYPE;
 typedef u_long ACE_SOCK_GROUP;
 typedef u_long ACE_Protocol_Info;
+#define ACE_OVERLAPPED_SOCKET_FLAG 0
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 
 class ACE_Export ACE_Flow_Spec
