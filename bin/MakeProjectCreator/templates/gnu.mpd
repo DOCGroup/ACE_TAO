@@ -113,6 +113,8 @@ LIBCHECK = $(shell for lib in <%libs%>; do for libpath in <%libpaths%>; do full=
 <%else%>
 LIBCHECK = 1
 <%endif%>
+<%else%>
+LIBCHECK = 1
 <%endif%>
 <%if(!exename)%>
 <%foreach(requires)%>
@@ -293,6 +295,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 <%endif%>
 
+<%if(libpaths)%>
+LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+<%endif%>
 <%if(includes)%>
 CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>
@@ -310,11 +315,6 @@ endif
 ifeq ($(static_libs),1)
   CPPFLAGS +=<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
 endif
-<%endif%>
-
-
-<%if(libpaths)%>
-LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>
 
 #----------------------------------------------------------------------------
@@ -358,7 +358,7 @@ GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_o
 .NOTPARALLEL:
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%> <%custom_type->command%>$(EXEEXT)
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->command%>$(EXEEXT)<%endif%>
 	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
 
 <%endif%>

@@ -4,6 +4,7 @@
 project {
   Define_Custom(IDL) {
     automatic         = 1
+    dependent         = 1
     command           = $(ACE_ROOT)/bin/tao_idl
     libpath           = $(ACE_ROOT)/lib
     inputext          = .idl

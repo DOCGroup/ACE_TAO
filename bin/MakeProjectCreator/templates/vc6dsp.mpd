@@ -195,7 +195,9 @@ SOURCE="<%custom_type->input_file%>"
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%platform%> <%configuration%>"
 
+<%if(custom_type->dependent)%>
 USERDEP__<%basenoextension(custom_type->input_file)%>=<%custom_type->command%>.exe
+<%endif%>
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking <%custom_type->command%> on $(InputPath)
 InputPath=<%custom_type->input_file%>
