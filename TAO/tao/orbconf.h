@@ -113,14 +113,14 @@
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
-// This deals with platforms that support namespaces vs platforms that don't.
+// This deals with platforms that support namespaces vs platforms that
+// don't.
 #if defined (ACE_HAS_USING_KEYWORD)
 #define TAO_NAMESPACE namespace
 #else
 #define TAO_NAMESPACE struct
-#endif
+#endif /* ACE_HAS_USING_KEYWORD */
 
-//
 // In some environments it is useful to swap the bytes on write, for
 // instance: a fast server can be feeding a lot of slow clients that
 // happen to have the wrong byte order.
@@ -128,9 +128,7 @@
 // need a way to activate it on a per-connection basis.
 //
 // #define TAO_ENABLE_SWAP_ON_WRITE
-//
 
-//
 // In some environements we never need to swap bytes when reading, for
 // instance embebbed systems (such as avionics) or homogenous
 // networks.
@@ -138,9 +136,7 @@
 // in the wrong byte order.
 //
 // #define TAO_DISABLE_SWAP_ON_READ
-//
 
-//
 // For some applications it is important to optimize octet sequences
 // and minimize the number of copies made of the sequence buffer.
 // TAO supports this optimizations by sharing the CDR stream buffer
@@ -156,7 +152,7 @@
 
 #if defined (__WIN32__)
 # define _WIN32
-#endif /* BC++ convention */
+#endif /* __WIN32__ */
 
 // Define to `int' if <sys/types.h> doesn't define.
 /* #undef pid_t */

@@ -146,7 +146,7 @@ Handler::open (void *)
               this->peer ().get_handle ()));
 
   if (this->peer ().recv_n ((void *) &this->len_,
-                            sizeof (ACE_UINT32)) != sizeof (ACE_UINT32))
+                            sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "recv_n failed"),

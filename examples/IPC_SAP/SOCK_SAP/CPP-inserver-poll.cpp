@@ -2,7 +2,8 @@
 
 // IPC_SAP/poll server, which illustrates how to integrate the ACE
 // socket wrappers with the SVR4 <poll> system call to create a
-// single-threaded concurrent server.
+// single-threaded concurrent server.  This server program can be
+// driven by the oneway test mode of CPP-inclient.cpp.
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
@@ -46,28 +47,32 @@ init_poll_array (void)
 static int
 init_buffer (size_t index)
 {
-  if (ACE::recv_n (poll_array[index].fd,
-                   (void *) &buffer_array[index].len_,
-                   sizeof (ACE_UINT32)) != sizeof (ACE_UINT32))
+  ACE_INT32 len;
+ 
+ if (ACE::recv_n (poll_array[index].fd,
+                  (void *) &len,
+                  sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "recv_n failed"),
                       0);
   else
     {
-      buffer_array[index].len_ =
-        ntohl (buffer_array[index].len_);
+      len = ntohl (len);
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) reading messages of size %d\n",
-                  buffer_array[index].len_));
+                  "(%P|%t) reading messages of size %d from handle %d\n",
+                  len,
+                  poll_array[index].fd));
+
       ACE_ALLOCATOR_RETURN (buffer_array[index].buf_,
-                            ACE_OS::malloc (buffer_array[index].len_),
+                            ACE_OS::malloc (len),
                             -1);
+      buffer_array[index].len_ = len;
     }
 }
 
 static void
-handle_data (size_t n_handles)
+handle_data (size_t &n_handles)
 {
   // Handle pending logging messages first (s_handle + 1 is guaranteed
   // to be lowest client descriptor).
@@ -76,13 +81,7 @@ handle_data (size_t n_handles)
     {
       if (ACE_BIT_ENABLED (poll_array[index].revents, POLLIN))
         {
-          // Read data from client (terminate on error).
-
-          ACE_DEBUG ((LM_DEBUG, 
-                      "(%P|%t) buf = %d, handle = %d\n",
-                      buffer_array[index].buf_,
-                      poll_array[index].fd));
-          // First time in -- gotta initialize the buffer.
+          // First time in, we need to initialize the buffer.
           if (buffer_array[index].buf_ == 0 
               && init_buffer (index) == -1)
             {
@@ -91,6 +90,8 @@ handle_data (size_t n_handles)
                           "init_buffer"));
               continue;
             }
+
+          // Read data from client (terminate on error).
 
           ssize_t n = ACE::recv (poll_array[index].fd,
                                  buffer_array[index].buf_, 
@@ -126,7 +127,7 @@ handle_data (size_t n_handles)
 
 static void
 handle_connections (ACE_SOCK_Acceptor &peer_acceptor,
-                    ACE_HANDLE &n_handles)
+                    size_t &n_handles)
 {
   if (ACE_BIT_ENABLED (poll_array[0].revents, POLLIN))
     {
@@ -173,7 +174,7 @@ main (int, char *[])
               "(%P|%t) starting oneway server at port %d\n",
               port));
 
-  for (int n_handles = 1;;)
+  for (size_t n_handles = 1;;)
     {
       // Wait for client I/O events (handle interrupts).
       while (ACE_OS::poll (poll_array, n_handles) == -1
