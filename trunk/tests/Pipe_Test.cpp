@@ -47,7 +47,7 @@ main (int, char *argv[])
 {
   ACE_START_TEST ("Pipe_Test.cpp");
 
-  ACE_Pipe a, b, c, d, e, f, g, h, i, j,;
+  ACE_Pipe a, b, c, d, e, f, g, h, i, j;
 
   ::open (a, "a");
   ::open (b, "b");
