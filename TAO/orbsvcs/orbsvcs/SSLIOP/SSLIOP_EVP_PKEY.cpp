@@ -27,7 +27,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
         if (rsa != 0)
           {
             // Not exception safe!
-            ::EVP_PKEY_set1_RSA (p.in (), ::RSAPrivateKey_dup (rsa));
+            ::EVP_PKEY_set1_RSA (p.in (), RSAPrivateKey_dup (rsa));
             ::RSA_free (rsa);
           }
       }

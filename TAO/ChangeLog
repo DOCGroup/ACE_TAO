@@ -1,3 +1,32 @@
+Wed Aug 18 23:09:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl:
+
+	  Due MSVC++ 6's inability correctly deduce the correct function
+	  template specialization to use based on the function argument,
+	  resort to explicitly calling the type-specific
+	  TAO::SSLIOP::OpenSSL trait function instead.  Once we drop
+	  support for MSVC++ 6, we can go back to using the function
+	  templates to so that the code can once again be cleaner.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_SSL.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.h:
+
+	  Added new _duplicate() static trait function.  MSVC++ 6 couldn't
+	  handle the function templates in the TAO::SSLIOP namespace so
+	  resort to reproducing code in each specialization.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp (copy):
+
+	  Not all versions of OpenSSL declare the RSAPrivateKey_dup()
+	  function in the global namespace.  Remove the global "::"
+	  namespace qualifier to fix a compile-time error when using those
+	  versions of OpenSSL.
+
 Wed Aug 18 10:41:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component.cpp:

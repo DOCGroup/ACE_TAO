@@ -34,12 +34,28 @@ namespace TAO
   namespace SSLIOP
   {
     // OpenSSL @c SSL structure traits specialization.
-    template <>
+    
     struct OpenSSL_traits< ::SSL >
     {
       /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
       /// count manipulation function.
       enum { LOCK_ID = CRYPTO_LOCK_SSL };
+
+      /// Increase the reference count on the given OpenSSL structure.
+      /**
+       * @note This used to be in a function template but MSVC++ 6
+       *       can't handle function templates correctly so reproduce
+       *       the code in each specialization.  *sigh*
+       */
+      static ::SSL * _duplicate (::SSL * st)
+      {
+	if (st != 0)
+	  CRYPTO_add (&(st->references),
+		      1,
+		      LOCK_ID);
+
+	return st;
+      }
 
       /// Perform deep copy of the given OpenSSL structure.
       static ::SSL * copy (::SSL const & st)

@@ -14,7 +14,7 @@ TAO::SSLIOP::ClientCredentials::ClientCredentials (
   EVP_PKEY *evp,
   SSL * ssl)
   : SSLIOP_Credentials (cert, evp),
-    ssl_ (TAO::SSLIOP::_duplicate (ssl))
+    ssl_ (TAO::SSLIOP::OpenSSL_traits< ::SSL >::_duplicate (ssl))
 {
 }
 
