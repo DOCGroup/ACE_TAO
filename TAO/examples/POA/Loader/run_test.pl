@@ -74,15 +74,15 @@ if (ACE::waitforfile_timed ($iorfile_2, 5) == -1) {
 
 $CL_1  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
 			 " $extra_args $oneway -i $iterations -f $iorfile_1");
-$CL_2  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
-			  " $extra_args $oneway -i $iterations -f $iorfile_2 -x");
-
 
 $client_1 = $CL_1->TimedWait (60);
 if ($client_1 == -1) {
   print STDERR "ERROR: client 1 timedout\n";
   $CL_1->Kill (); $CL_1->TimedWait (1);
 }
+
+$CL_2  = Process::Create ("../Generic_Servant/client$EXE_EXT ",
+			  " $extra_args $oneway -i $iterations -f $iorfile_2 -x");
 
 $client_2 = $CL_2->TimedWait (60);
 if ($client_2 == -1){
