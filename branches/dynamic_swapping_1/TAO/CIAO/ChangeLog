@@ -1,3 +1,77 @@
+Wed Feb  2 15:07:32 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/ciao/CCM_Core.mpc:
+        * DAnCE/ciao/Container_Base.cpp:
+        * DAnCE/ciao/Container_Base.h:
+        * DAnCE/ciao/Context_Impl_T.cpp:
+        * DAnCE/ciao/Dynamic_Component_Activator.cpp:
+        * DAnCE/ciao/Dynamic_Component_Activator.h:
+        * DAnCE/ciao/Dynamic_Component_Servant_Base.cpp:
+        * DAnCE/ciao/Dynamic_Component_Servant_Base.h:
+        * DAnCE/ciao/Dynamic_Component_Servant_T.cpp:
+        * DAnCE/ciao/Dynamic_Component_Servant_T.h:
+        * DAnCE/ciao/Home_Servant_Impl_Base.h:
+        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Home_Servant_Impl_T.h:
+        * DAnCE/ciao/NodeApplication_Impl.cpp:
+        * DAnCE/ciao/NodeApplication_Impl.h:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        * DAnCE/ciao/Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_T.h:
+        * DAnCE/ciao/SwapExec.idl:
+        * DAnCE/ciao/Swapping_Container.cpp:
+        * DAnCE/ciao/Swapping_Container.h:
+        * DAnCE/ciao/Swapping_Container.inl:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.h:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.h:
+        * DAnCE/examples/Hello/Receiver/Receiver.cidl:
+        * DAnCE/examples/Hello/Receiver/Receiver.idl:
+        * DAnCE/examples/Hello/Receiver/Receiver.mpc:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec.cpp:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec.h:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec_export.h:
+        * DAnCE/examples/Hello/Receiver/Receiver_stub_export.h:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt.cpp.new_impl:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt.cpp.no-connections:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt.cpp.with-connections:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt.h.new_impl:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt.h.no-connections:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt.h.with-connections:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt_export.h:
+        * DAnCE/examples/Hello/Sender/Sender.cidl:
+        * DAnCE/examples/Hello/Sender/Sender.idl:
+        * DAnCE/examples/Hello/Sender/Sender.mpc:
+        * DAnCE/examples/Hello/Sender/SenderE.idl.new_impl:
+        * DAnCE/examples/Hello/Sender/Sender_exec.cpp:
+        * DAnCE/examples/Hello/Sender/Sender_exec.h:
+        * DAnCE/examples/Hello/Sender/Sender_exec_1.cpp:
+        * DAnCE/examples/Hello/Sender/Sender_exec_1.h:
+        * DAnCE/examples/Hello/Sender/Sender_exec_2.cpp:
+        * DAnCE/examples/Hello/Sender/Sender_exec_2.h:
+        * DAnCE/examples/Hello/Sender/Sender_exec_export.h:
+        * DAnCE/examples/Hello/Sender/Sender_stub_export.h:
+        * DAnCE/examples/Hello/Sender/Sender_svnt.cpp.new_impl:
+        * DAnCE/examples/Hello/Sender/Sender_svnt.cpp.no-connections:
+        * DAnCE/examples/Hello/Sender/Sender_svnt.cpp.with-connections:
+        * DAnCE/examples/Hello/Sender/Sender_svnt.h.new_impl:
+        * DAnCE/examples/Hello/Sender/Sender_svnt.h.no-connections:
+        * DAnCE/examples/Hello/Sender/Sender_svnt.h.with-connections:
+        * DAnCE/examples/Hello/Sender/Sender_svnt_export.h:
+        * DAnCE/examples/Hello/Sender/starter.cpp:
+        * DAnCE/examples/Hello/descriptors/hello.dat:
+        * examples/Hello/Sender/New_Sender_svnt.cpp:
+        * examples/Hello/Sender/New_Sender_svnt.h:
+
+        Checking in a first cut version of the CIAO's implementation
+        support for dynamic switching between different component
+        implementations.
+
+        Thanks to Balachandran Natarajan<bala@dre.vanderbilt.edu>,
+        who helped me a lot during this project.
+
 Wed Feb  2 09:39:25 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * CCF/CCF/CIDL/CIDL.mpc:

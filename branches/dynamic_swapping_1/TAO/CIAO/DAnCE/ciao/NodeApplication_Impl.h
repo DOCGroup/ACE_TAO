@@ -46,6 +46,7 @@ using CIAO::Utility::write_IOR;
  * 1. There is only 1 container for all components/homes associating
  *    with 1 NodeApplication
  * 2. Now the implementation is not thread safe.
+
  **/
 
 namespace CIAO
