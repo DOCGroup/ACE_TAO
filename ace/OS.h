@@ -3028,7 +3028,6 @@ extern "C" ssize_t pwrite (int fd,
 extern "C" u_int ualarm (u_int usecs, u_int interval);
 # endif /* ACE_LACKS_UALARM_PROTOTYPE */
 
-
 # if defined (ACE_HAS_BROKEN_SENDMSG)
 typedef struct msghdr ACE_SENDMSG_TYPE;
 # else
