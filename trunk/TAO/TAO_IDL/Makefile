@@ -151,7 +151,7 @@ endif # ! CROSS-COMPILE
 #----------------------------------------------------------------------------
 
 ifdef CROSS-COMPILE
-  default_embedded:
+  all default_embedded:
 	@echo The IDL compiler won\'t run or build on CROSS-COMPILE platforms.
 
   clean realclean:
