@@ -54,9 +54,7 @@ params.cpp
 	C++
 POA.cpp
 	C++
-POAC.cpp
-	C++
-POAS.cpp
+PortableServerC.cpp
 	C++
 Principal.cpp
 	C++

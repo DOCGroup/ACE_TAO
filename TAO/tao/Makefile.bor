@@ -22,7 +22,6 @@ OBJFILES = \
 	$(OBJDIR)\CONV_FRAMES.obj \
 	$(OBJDIR)\corbafwd.obj \
 	$(OBJDIR)\CurrentC.obj \
-	$(OBJDIR)\CurrentS.obj \
 	$(OBJDIR)\debug.obj \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
@@ -96,9 +95,8 @@ OBJFILES = \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
 	$(OBJDIR)\POA.obj \
-	$(OBJDIR)\POAC.obj \
+	$(OBJDIR)\PortableServerC.obj \
 	$(OBJDIR)\POAManager.obj \
-	$(OBJDIR)\POAS.obj \
         $(OBJDIR)\Policy_Factory.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
