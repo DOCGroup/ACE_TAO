@@ -281,7 +281,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
             // Exit with the errno so that the calling process can
             // catch this and figure out what went wrong.
-            ACE_OS::exit (errno);
+            ACE_OS::_exit (errno);
           }
         // ... otherwise, this is never reached.
         return 0;
