@@ -81,19 +81,25 @@ namespace TAO
 
 // ----------------------------------------------------------------
 
-template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
+template <typename DiscriminatorType,
+          typename StringType,
+          typename TypeCodeType>
 bool
-TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
-                                STRING_TYPE>::marshal_label (
+TAO::TypeCode::Non_Default_Case<DiscriminatorType,
+                                StringType,
+                                TypeCodeType>::marshal_label (
   TAO_OutputCDR & cdr) const
 {
   return (cdr << this->label_);
 }
 
-template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
+template <typename DiscriminatorType,
+          typename StringType,
+          typename TypeCodeType>
 bool
-TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
-                                STRING_TYPE>::equal_label (
+TAO::TypeCode::Non_Default_Case<DiscriminatorType,
+                                StringType,
+                                TypeCodeType>::equal_label (
   CORBA::ULong index,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
@@ -107,9 +113,9 @@ TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
   // be any of the following: (1) an integer, (2) a character, (3) a
   // boolean, or (4) an enumeration.
 
-  DISCRIMINATOR_TYPE tc_label;
+  DiscriminatorType tc_label;
   if ((any.in ()
-       >>= TAO::TypeCode::Case_Traits<DISCRIMINATOR_TYPE>::any_to (tc_label))
+       >>= TAO::TypeCode::Case_Traits<DiscriminatorType>::any_to (tc_label))
       && this->label_ == tc_label)
     {
       return true;
@@ -118,9 +124,13 @@ TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
   return false;
 }
 
-template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
+template <typename DiscriminatorType,
+          typename StringType,
+          typename TypeCodeType>
 CORBA::Any *
-TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE, STRING_TYPE>::label (
+TAO::TypeCode::Non_Default_Case<DiscriminatorType,
+                                StringType,
+                                TypeCodeType>::label (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
   CORBA::Any * value;
@@ -133,7 +143,7 @@ TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE, STRING_TYPE>::label (
   CORBA::Any_var safe_value (value);
 
   *value <<=
-    TAO::TypeCode::Case_Traits<DISCRIMINATOR_TYPE>::any_from (this->label_);
+    TAO::TypeCode::Case_Traits<DiscriminatorType>::any_from (this->label_);
 
   return safe_value._retn ();
 }

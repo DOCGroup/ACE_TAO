@@ -30,8 +30,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template<typename StringType> struct Enumerator;
-
     /**
      * @class Enum
      *
@@ -53,7 +51,7 @@ namespace TAO
       /// Constructor.
       Enum (char const * id,
             char const * name,
-            Enumerator<StringType> const * enumerators,
+            EnumeratorArrayType const & enumerators,
             CORBA::ULong nenumerators);
 
       /**
@@ -93,11 +91,6 @@ namespace TAO
       virtual char const * member_name_i (CORBA::ULong index
                                           ACE_ENV_ARG_DECL) const;
       //@}
-
-    private:
-
-      /// Get pointer to the underlying @c Enumerator array.
-      Enumerator<StringType> const * enumerators (void) const;
 
     private:
 

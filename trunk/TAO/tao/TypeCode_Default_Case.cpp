@@ -26,18 +26,25 @@ namespace TAO
 
 // ------------------------------------------------------------
 
-template <typename STRING_TYPE>
+template <typename StringType, typename TypeCodeType>
 bool
-TAO::TypeCode::Default_Case<STRING_TYPE>::marshal_label (
+TAO::TypeCode::Default_Case<StringType, TypeCodeType>::marshal_label (
   TAO_OutputCDR & cdr) const
 {
   // Default case's label is a zero octet.
+
+  /**
+   * @todo This isn't correct.  We should be marshaling any legal
+   *       label value for the given union.  It is only marshaled for
+   *       syntactic correctness, and is ignored otherwise.
+   */
+
   return (cdr << TAO::TypeCode::zero_octet);
 }
 
-template <typename STRING_TYPE>
+template <typename StringType, typename TypeCodeType>
 bool
-TAO::TypeCode::Default_Case<STRING_TYPE>::equal_label (CORBA::ULong index,
+TAO::TypeCode::Default_Case<StringType, TypeCodeType>::equal_label (CORBA::ULong index,
                                                        CORBA::TypeCode_ptr tc
                                                        ACE_ENV_ARG_DECL) const
 {
@@ -59,9 +66,9 @@ TAO::TypeCode::Default_Case<STRING_TYPE>::equal_label (CORBA::ULong index,
   return false;
 }
 
-template <typename STRING_TYPE>
+template <typename StringType, typename TypeCodeType>
 CORBA::Any *
-TAO::TypeCode::Default_Case<STRING_TYPE>::label (
+TAO::TypeCode::Default_Case<StringType, TypeCodeType>::label (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
   CORBA::Any * value;

@@ -36,9 +36,11 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetId (
     "IDL:omg.org/CONV_FRAME/CodeSetId:1.0",
@@ -54,18 +56,19 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CONV_FRAME_CodeSetIdSeq_0 (
         CORBA::tk_sequence,
         &CONV_FRAME::_tc_CodeSetId,
@@ -78,6 +81,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetIdSeq (
     "IDL:omg.org/CONV_FRAME/CodeSetIdSeq:1.0",
@@ -93,19 +98,21 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CONV_FRAME_CodeSetComponent[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CONV_FRAME_CodeSetComponent[] =
   {
     { "native_code_set", &CONV_FRAME::_tc_CodeSetId },
     { "conversion_code_sets", &CONV_FRAME::_tc_CodeSetIdSeq }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetComponent (
+    CORBA::tk_struct,
     "IDL:omg.org/CONV_FRAME/CodeSetComponent:1.0",
     "CodeSetComponent",
     _tao_fields_CONV_FRAME_CodeSetComponent,
@@ -120,19 +127,21 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CONV_FRAME_CodeSetComponentInfo[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CONV_FRAME_CodeSetComponentInfo[] =
   {
     { "ForCharData", &CONV_FRAME::_tc_CodeSetComponent },
     { "ForWcharData", &CONV_FRAME::_tc_CodeSetComponent }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetComponentInfo (
+    CORBA::tk_struct,
     "IDL:omg.org/CONV_FRAME/CodeSetComponentInfo:1.0",
     "CodeSetComponentInfo",
     _tao_fields_CONV_FRAME_CodeSetComponentInfo,
@@ -147,19 +156,21 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CONV_FRAME_CodeSetContext[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CONV_FRAME_CodeSetContext[] =
   {
     { "char_data", &CONV_FRAME::_tc_CodeSetId },
     { "wchar_data", &CONV_FRAME::_tc_CodeSetId }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CONV_FRAME_CodeSetContext (
+    CORBA::tk_struct,
     "IDL:omg.org/CONV_FRAME/CodeSetContext:1.0",
     "CodeSetContext",
     _tao_fields_CONV_FRAME_CodeSetContext,
@@ -174,7 +185,7 @@ namespace CONV_FRAME
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -232,7 +243,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -290,7 +301,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -348,7 +359,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

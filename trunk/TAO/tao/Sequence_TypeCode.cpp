@@ -9,33 +9,10 @@
 # include "tao/Sequence_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "tao/RefCount_Policy_Traits.h"
 
-
-template <class RefCountPolicy>
-TAO::TypeCode::Sequence<RefCountPolicy>::~Sequence (void)
-{
-#if !defined (_MSC_VER) || (_MSC_VER >= 1310)
-
-  if (this->content_type_)
-    TAO::RefCount_Policy_Traits<RefCountPolicy,
-                                CORBA::TypeCode_ptr>::release (
-      *this->content_type_);
-
-#else
-
-  // MSVC++ 6 can't handle partial template specializations.
-
-  if (TAO::RefCount_Policy_Traits<RefCountPolicy>::is_refcounted ()
-      && this->content_type_)
-    CORBA::release (*this->content_type_);
-
-#endif  /* !_MSC_VER ||_MSC_VER >= 1310 */
-}
-
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 bool
-TAO::TypeCode::Sequence<RefCountPolicy>::tao_marshal (
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_marshal (
   TAO_OutputCDR & cdr) const
 {
   // A tk_array or tk_sequence TypeCode has a "complex" parameter list
@@ -46,27 +23,27 @@ TAO::TypeCode::Sequence<RefCountPolicy>::tao_marshal (
   // Create a CDR encapsulation.
   return
     (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << *(this->content_type_))
+    && (cdr << Traits<TypeCodeType>::get_typecode (this->content_type_))
     && (cdr << this->length_);
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 void
-TAO::TypeCode::Sequence<RefCountPolicy>::tao_duplicate (void)
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref ();
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 void
-TAO::TypeCode::Sequence<RefCountPolicy>::tao_release (void)
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref ();
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Sequence<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
                                                ACE_ENV_ARG_DECL) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
@@ -81,13 +58,15 @@ TAO::TypeCode::Sequence<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
     tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return (*this->content_type_)->equal (rhs_content_type.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  return
+    Traits<TypeCodeType>::get_typecode (this->content_type_)->equal (
+      rhs_content_type.in ()
+      ACE_ENV_ARG_PARAMETER);
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Sequence<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
                                                      ACE_ENV_ARG_DECL) const
 {
   // We could refactor this code to the CORBA::TypeCode::equivalent()
@@ -108,47 +87,56 @@ TAO::TypeCode::Sequence<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
     tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return (*this->content_type_)->equivalent (rhs_content_type.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+  return
+    Traits<TypeCodeType>::get_typecode (this->content_type_)->equivalent (
+      rhs_content_type.in ()
+      ACE_ENV_ARG_PARAMETER);
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TCKind
-TAO::TypeCode::Sequence<RefCountPolicy>::kind_i (
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->kind_;
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Sequence<RefCountPolicy>::get_compact_typecode_i (
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Already compact since tk_sequence and tk_array TypeCodes have no
   // name or member names, meaning that we can simply call
   // _duplicate() on this TypeCode.
 
+  // @@ There is a potential problem here if this TypeCode is a static
+  //    and const since it may have been placed in read-only memory by
+  //    the compiler.  A const_cast<> can return undefined results in
+  //    that case.
+
   CORBA::TypeCode_ptr mutable_tc =
-    const_cast<TAO::TypeCode::Sequence<RefCountPolicy> *> (this);
+    const_cast<TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy> *> (this);
 
   return CORBA::TypeCode::_duplicate (mutable_tc);
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 CORBA::ULong
-TAO::TypeCode::Sequence<RefCountPolicy>::length_i (
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::length_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->length_;
 }
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Sequence<RefCountPolicy>::content_type_i (
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::content_type_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return CORBA::TypeCode::_duplicate (*this->content_type_);
+  return
+    CORBA::TypeCode::_duplicate (
+      Traits<TypeCodeType>::get_typecode (this->content_type_));
 }
 
 

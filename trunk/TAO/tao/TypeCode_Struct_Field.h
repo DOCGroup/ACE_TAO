@@ -69,60 +69,20 @@ namespace TAO
      * when creating @c CORBA::tk_struct or @c CORBA::tk_except
      * @c TypeCodes dynamically, such as through the TypeCodeFactory.
      */
-    template <typename STRING_TYPE>
+    template <typename StringType, typename TypeCodeType>
     struct Struct_Field
     {
-      /// Destructor.
-      ~Struct_Field (void);
-
-      /// Return the name of the @c Struct_Field.
-      /**
-       * @note This method unfortunately exists so that we can
-       *       retrieve the underlying string when the @a STRING_TYPE
-       *       is @c CORBA::String_var rather than the
-       *       @c CORBA::String_var itself.  This is necessary to
-       *       silence a warning about better conversion sequences
-       *       exhibited by some C++ compilers.
-       */
-      char const * get_name (void) const;
-
       /// The name of the field.
-      STRING_TYPE name;
+      StringType name;
 
-      /// Pointer to the @c CORBA::TypeCode of the field.
-      /**
-       * A pointer to the @c CORBA::TypeCode_ptr rather than the
-       * @c CORBA::TypeCode_ptr itself is stored since that address is
-       * well-defined.  We may not know the value of the @c
-       * CORBA::TypeCode_ptr when creating this @c Struct_Field
-       * statically at compile-time, hence the indirection.
-       *
-       * @note This @c TypeCode is released upon destruction of this
-       *       @c Struct_Field.
-       */
-      CORBA::TypeCode_ptr const * type;
+      /// The @c CORBA::TypeCode of the field.
+      TypeCodeType type;
 
     };
 
   }  // End namespace TypeCode
 }  // End namespace TAO
 
-// If we didn't have to worry about better conversion sequence
-// warnings, and drop the Struct_Field<>::get_name() method, we could
-// drop the below #include directives and remove the files contained
-// within them altogether.
-
-#ifdef __ACE_INLINE__
-# include "tao/TypeCode_Struct_Field.inl"
-#endif /* __ACE_INLINE__ */
-
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/TypeCode_Struct_Field.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Struct_Field.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

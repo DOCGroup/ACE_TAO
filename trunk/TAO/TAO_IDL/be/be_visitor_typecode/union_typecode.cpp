@@ -47,7 +47,9 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Union<char const *," << be_nl
-    << "                            TAO::TypeCode::Case<char const *>"
+    << "                            CORBA::TypeCode_ptr const *," << be_nl
+    << "                            TAO::TypeCode::Case<char const *," << be_nl
+    << "                                                CORBA::TypeCode_ptr const *>"
     << " const * const *," << be_nl
     << "                            TAO::Null_RefCount_Policy>"
     << be_idt_nl
@@ -130,7 +132,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
           os << "static TAO::TypeCode::Non_Default_Case<"
              << discriminant_type->full_name () << ", "
-             << "char const *> const "
+             << "char const *, CORBA::TypeCode_ptr const *> const "
              << fields_name.c_str () << "_" << i <<" (";
 
           // Generate the label value.  Only the first label value is
@@ -147,7 +149,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
           ACE_ASSERT (branch->label ()->label_kind ()
                       == AST_UnionLabel::UL_default);
 
-          os << "static TAO::TypeCode::Default_Case<char const *> const "
+          os << "static TAO::TypeCode::Default_Case<char const *, CORBA::TypeCode_ptr const *> const "
              << fields_name.c_str () << "_" << i << "(";
         }
 
@@ -158,7 +160,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
   // Now generate the TAO::TypeCode::Case array.
   os << be_nl
-     << "static TAO::TypeCode::Case<char const *> const * const "
+     << "static TAO::TypeCode::Case<char const *, CORBA::TypeCode_ptr const *> const * const "
      << fields_name.c_str ()
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;

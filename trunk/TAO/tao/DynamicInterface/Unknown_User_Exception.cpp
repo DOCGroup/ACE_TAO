@@ -121,15 +121,17 @@ namespace TAO
 {
   namespace TypeCode
   {
-    Struct_Field<char const *> const fields_CORBA_UnknownUserException[] =
+    Struct_Field<char const *, CORBA::TypeCode_ptr const *> const
+    fields_CORBA_UnknownUserException[] =
       {
         { "exception", &CORBA::_tc_any }
       };
 
     Struct<char const *,
-           Struct_Field<char const *> const *,
-           CORBA::tk_except,
+           CORBA::TypeCode_ptr const *,
+           Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
            TAO::Null_RefCount_Policy> tc_UnknownUserException (
+             CORBA::tk_except,
              "IDL:omg.org/CORBA/UnknownUserException:1.0",
              "UnknownUserException",
              TAO::TypeCode::fields_CORBA_UnknownUserException,

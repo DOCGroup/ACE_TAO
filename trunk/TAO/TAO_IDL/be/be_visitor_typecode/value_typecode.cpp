@@ -82,7 +82,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
                                      + node->flat_name ());
 
       // Generate array containing value field characteristics.
-      os << "static TAO::TypeCode::Value_Field<char const *> const ";
+      os << "static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const ";
 
       if (count == 0)
         {
@@ -104,12 +104,16 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
       os << be_nl
          << "static TAO::TypeCode::Value<char const *," << be_nl
-         << "                            TAO::TypeCode::Value_Field<char const *> const *," << be_nl
-         << "                            CORBA::tk_"
-         << (dynamic_cast<be_eventtype *> (node) ? "event" : "value") << "," << be_nl
+         << "                            CORBA::TypeCode_ptr const *," << be_nl
+         << "                            TAO::TypeCode::Value_Field<char const *,"
+         << be_nl
+         << "                                                       CORBA::TypeCode_ptr const *> const *," << be_nl
          << "                            TAO::Null_RefCount_Policy>"
          << be_idt_nl
          << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
+         << "CORBA::tk_"
+         << (dynamic_cast<be_eventtype *> (node) ? "event" : "value")
+         << "," << be_nl
          << "\"" << node->repoID () << "\"," << be_nl
          << "\"" << node->original_local_name () << "\"," << be_nl;
 

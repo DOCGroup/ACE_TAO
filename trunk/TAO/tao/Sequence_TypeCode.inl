@@ -2,11 +2,11 @@
 //
 // $Id$
 
-template <class RefCountPolicy>
+template <typename TypeCodeType, class RefCountPolicy>
 ACE_INLINE
-TAO::TypeCode::Sequence<RefCountPolicy>::Sequence (
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::Sequence (
   CORBA::TCKind kind,
-  CORBA::TypeCode_ptr const * content_type,
+  TypeCodeType const & content_type,
   CORBA::ULong length)
   : kind_ (kind)
   , content_type_ (content_type)

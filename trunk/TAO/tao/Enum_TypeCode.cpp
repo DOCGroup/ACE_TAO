@@ -4,7 +4,7 @@
 #define TAO_ENUM_TYPECODE_CPP
 
 #include "tao/Enum_TypeCode.h"
-#include "tao/TypeCode_Enumerator.h"
+#include "tao/TypeCode_Traits.h"
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/ORB_Core.h"
 
@@ -30,21 +30,22 @@ TAO::TypeCode::Enum<StringType,
   // Create a CDR encapsulation.
   bool const success =
     (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-    && (cdr << this->base_attributes_.id ())
-    && (cdr << this->base_attributes_.name ())
+    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.id (), 0))
+    && (cdr << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
     && (cdr << this->nenumerators_);
 
   if (!success)
     return false;
 
-  Enumerator<StringType> const * const begin = this->enumerators ();
-  Enumerator<StringType> const * const end   = begin + this->nenumerators_;
+  StringType const * const begin = &this->enumerators_[0];
+  StringType const * const end   = begin + this->nenumerators_;
 
-  for (Enumerator<StringType> const * i = begin; i != end; ++i)
+  for (StringType const * i = begin; i != end; ++i)
     {
-      Enumerator<StringType> const & enumerator = *i;
+      StringType const & enumerator = *i;
 
-      if (!(cdr << enumerator.get_name ()))
+      if (!(cdr << TAO_OutputCDR::from_string (
+              Traits<StringType>::get_string (enumerator), 0)))
         return false;
     }
 
@@ -90,9 +91,10 @@ TAO::TypeCode::Enum<StringType,
 
   for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
     {
-      Enumerator<StringType> const & lhs_enumerator = this->enumerators_[i];
+      StringType const & lhs_enumerator = this->enumerators_[i];
 
-      char const * const lhs_name = lhs_enumerator.get_name ();
+      char const * const lhs_name =
+        Traits<StringType>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -173,31 +175,19 @@ TAO::TypeCode::Enum<StringType,
                     RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
-  Enumerator<StringType> * tc_enumerators = 0;
+  ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
-  ACE_Auto_Array_Ptr<Enumerator<StringType> > safe_enumerators;
+  // Dynamically construct a new array of enumerators stripped of
+  // member names.
 
-  if (this->nenumerators_ > 0)
+  static char const empty_name[] = "";
+
+  for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
     {
-      // Dynamically construct a new array of enumerators stripped of
-      // member names.
+      // Member names will be stripped, i.e. not embedded within
+      // the compact TypeCode.
 
-      ACE_NEW_THROW_EX (tc_enumerators,
-                        Enumerator<StringType> [this->nenumerators_],
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      safe_enumerators.reset (tc_enumerators);
-
-      static char const * empty_name = "";
-
-      for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
-        {
-          // Member names will be stripped, i.e. not embedded within
-          // the compact TypeCode.
-
-          tc_enumerators[i].name = empty_name;
-        }
+      tc_enumerators[i] = empty_name;
     }
 
   TAO_TypeCodeFactory_Adapter * adapter =
@@ -210,22 +200,12 @@ TAO::TypeCode::Enum<StringType,
                         CORBA::TypeCode::_nil ());
     }
 
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  CORBA::TypeCode_var tc =
-    adapter->_tao_create_enum_tc (this_kind,
-                                  this->base_attributes_.id (),
-                                  ""  /* empty name */,
-                                  tc_enumerators,
-                                  this->nenumerators_
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  (void) safe_enumerators.release ();
-
-  return tc._retn ();
+  return
+    adapter->create_enum_tc (this->base_attributes_.id (),
+                             ""  /* empty name */,
+                             tc_enumerators,
+                             this->nenumerators_
+                             ACE_ENV_ARG_PARAMETER);
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
@@ -271,7 +251,7 @@ TAO::TypeCode::Enum<StringType,
   if (index >= this->nenumerators_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-  return this->enumerators_[index].get_name ();
+  return Traits<StringType>::get_string (this->enumerators_[index]);
 }
 
 #endif  /* TAO_ENUM_TYPECODE_CPP */

@@ -29,25 +29,24 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/enum_typecode.cpp:34
+// be/be_visitor_typecode/enum_typecode.cpp:34
 
-static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_CORBA_ParameterMode[] =
+static char const * const _tao_enumerators_CORBA_ParameterMode[] =
   {
-    { "PARAM_IN" },
-    { "PARAM_OUT" },
-    { "PARAM_INOUT" }
+    "PARAM_IN",
+    "PARAM_OUT",
+    "PARAM_INOUT"
     
   };
 
 static TAO::TypeCode::Enum<char const *,
-                           TAO::TypeCode::Enumerator<char const *> const *,
+                           char const * const *,
                            TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ParameterMode (
     "IDL:omg.org/CORBA/ParameterMode:1.0",
@@ -64,7 +63,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_cs.cpp:52
+// be/be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -90,3 +89,19 @@ CORBA::Boolean operator>>= (
         _tao_elem 
       );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO::Any_Basic_Impl_T<
+        CORBA::ParameterMode
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        CORBA::ParameterMode \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

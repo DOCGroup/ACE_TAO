@@ -143,7 +143,12 @@ int main (int argc, char* argv[])
          failed = 1 ;
       };
 
-      if( ! nv->value()->type()->equal( CORBA::_tc_char ) )
+      CORBA::Boolan const eq_char =
+        nv->value()->type()->equal (CORBA::_tc_char
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if( !eq_char  )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong type\n"));
          failed = 1 ;
@@ -160,7 +165,13 @@ int main (int argc, char* argv[])
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong name\n"));
          failed = 1 ;
       };
-      if( ! nv->value()->type()->equal( CORBA::_tc_long ) )
+
+      CORBA::Boolan const eq_long =
+        nv->value()->type()->equal (CORBA::_tc_long
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if( !eq_long  )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong type\n"));
          failed = 1 ;
@@ -177,7 +188,13 @@ int main (int argc, char* argv[])
          ACE_DEBUG((LM_DEBUG, "Test failed: param 3 wrong name\n"));
          failed = 1 ;
       };
-      if( ! nv->value()->type()->equal( CORBA::_tc_short ) )
+
+      CORBA::Boolan const eq_short =
+        nv->value()->type()->equal (CORBA::_tc_short
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if( !eq_short  )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 3 wrong type\n"));
          failed = 1 ;

@@ -51,14 +51,14 @@ namespace TAO
      * values into a CDR stream without knowledge of the underlying
      * member label values.
      */
-    template <typename STRING_TYPE>
+    template <typename StringType, typename TypeCodeType>
     class Case
     {
     public:
 
       /// Constructor.
       Case (char const * name,
-            CORBA::TypeCode_ptr const * tc);
+            TypeCodeType const & tc);
 
       /// Destructor.
       virtual ~Case (void);
@@ -122,7 +122,7 @@ namespace TAO
     private:
 
       /// The name of the case.
-      STRING_TYPE const name_;
+      StringType const name_;
 
       /// Pointer to the @c CORBA::TypeCode of the case.
       /**
@@ -135,7 +135,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c Case.
        */
-      CORBA::TypeCode_ptr const * const type_;
+      TypeCodeType const type_;
 
     };
 

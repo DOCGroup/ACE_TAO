@@ -38,14 +38,14 @@ namespace TAO
      * @c case.
      *
      */
-    template <typename STRING_TYPE>
-    class Default_Case : public Case<STRING_TYPE>
+    template <typename StringType, typename TypeCodeType>
+    class Default_Case : public Case<StringType, TypeCodeType>
     {
     public:
 
       /// Constructor.
       Default_Case (char const * member_name,
-                    CORBA::TypeCode_ptr const * member_type);
+                    TypeCodeType member_type);
 
       /**
        * @name @c TAO::TypeCode::Case Methods

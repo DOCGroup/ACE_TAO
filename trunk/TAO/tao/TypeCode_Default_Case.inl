@@ -2,10 +2,10 @@
 //
 // $Id$
 
-template <typename STRING_TYPE>
-TAO::TypeCode::Default_Case<STRING_TYPE>::Default_Case (
+template <typename StringType, typename TypeCodeType>
+TAO::TypeCode::Default_Case<StringType, TypeCodeType>::Default_Case (
   char const * member_name,
-  CORBA::TypeCode_ptr const * member_type)
-  : Case<STRING_TYPE> (member_name, member_type)
+  TypeCodeType member_type)
+  : Case<StringType, TypeCodeType> (member_name, member_type)
 {
 }

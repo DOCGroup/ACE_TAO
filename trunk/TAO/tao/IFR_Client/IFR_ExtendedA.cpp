@@ -59,7 +59,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ValueMember[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ValueMember[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },
@@ -71,10 +71,12 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ValueMember[]
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ValueMember (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/ValueMember:1.0",
     "ValueMember",
     _tao_fields_CORBA_ValueMember,
@@ -94,13 +96,14 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       CORBA_ValueMemberSeq_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_ValueMember,
@@ -113,6 +116,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ValueMemberSeq (
     "IDL:omg.org/CORBA/ValueMemberSeq:1.0",
@@ -148,7 +153,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ValueDef_FullValueDescription[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ValueDef_FullValueDescription[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },
@@ -168,10 +173,12 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ValueDef_Full
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ValueDef_FullValueDescription (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/ValueDef/FullValueDescription:1.0",
     "FullValueDescription",
     _tao_fields_CORBA_ValueDef_FullValueDescription,
@@ -201,7 +208,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ValueDescription[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ValueDescription[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },
@@ -216,10 +223,12 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ValueDescript
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ValueDescription (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/ValueDescription:1.0",
     "ValueDescription",
     _tao_fields_CORBA_ValueDescription,
@@ -236,7 +245,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ExtValueDef_ExtFullValueDescription[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ExtValueDef_ExtFullValueDescription[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },
@@ -256,10 +265,12 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ExtValueDef_E
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_ExtValueDef_ExtFullValueDescription (
+    CORBA::tk_struct,
     "IDL:omg.org/CORBA/ExtValueDef/ExtFullValueDescription:1.0",
     "ExtFullValueDescription",
     _tao_fields_CORBA_ExtValueDef_ExtFullValueDescription,
@@ -314,7 +325,7 @@ TAO::Any_Impl_T<CORBA::FixedDef>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -485,7 +496,7 @@ TAO::Any_Impl_T<CORBA::ValueMemberDef>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -540,7 +551,7 @@ TAO::Any_Impl_T<CORBA::ValueDef>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -711,7 +722,7 @@ TAO::Any_Impl_T<CORBA::ExtValueDef>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -824,7 +835,7 @@ TAO::Any_Impl_T<CORBA::ValueBoxDef>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.

@@ -35,9 +35,11 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_TimeBase_TimeT (
     "IDL:omg.org/TimeBase/TimeT:1.0",
@@ -53,9 +55,11 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_TimeBase_InaccuracyT (
     "IDL:omg.org/TimeBase/InaccuracyT:1.0",
@@ -71,9 +75,11 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_TimeBase_TdfT (
     "IDL:omg.org/TimeBase/TdfT:1.0",
@@ -89,9 +95,9 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TimeBase_UtcT[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_TimeBase_UtcT[] =
   {
     { "time", &TimeBase::_tc_TimeT },
     { "inacclo", &CORBA::_tc_ulong },
@@ -100,10 +106,12 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TimeBase_UtcT
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TimeBase_UtcT (
+    CORBA::tk_struct,
     "IDL:omg.org/TimeBase/UtcT:1.0",
     "UtcT",
     _tao_fields_TimeBase_UtcT,
@@ -118,19 +126,21 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TimeBase_IntervalT[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_TimeBase_IntervalT[] =
   {
     { "lower_bound", &TimeBase::_tc_TimeT },
     { "upper_bound", &TimeBase::_tc_TimeT }
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TimeBase_IntervalT (
+    CORBA::tk_struct,
     "IDL:omg.org/TimeBase/IntervalT:1.0",
     "IntervalT",
     _tao_fields_TimeBase_IntervalT,
@@ -145,7 +155,7 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -203,7 +213,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

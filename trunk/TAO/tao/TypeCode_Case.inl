@@ -5,52 +5,40 @@
 #include "tao/CDR.h"
 
 
-template <typename STRING_TYPE>
+template <typename StringType, typename TypeCodeType>
 ACE_INLINE
-TAO::TypeCode::Case<STRING_TYPE>::Case (
+TAO::TypeCode::Case<StringType, TypeCodeType>::Case (
   char const * member_name,
-  CORBA::TypeCode_ptr const * member_type)
+  TypeCodeType const & member_type)
   : name_ (member_name)
   , type_ (member_type)
 {
 }
 
-template <typename STRING_TYPE>
-ACE_INLINE char const *
-TAO::TypeCode::Case<STRING_TYPE>::name (void) const
-{
-  return this->name_;
-}
-
-template <typename STRING_TYPE>
-ACE_INLINE CORBA::TypeCode_ptr
-TAO::TypeCode::Case<STRING_TYPE>::type (void) const
-{
-  return *this->type_;
-}
-
-template <typename STRING_TYPE>
+template <typename StringType, typename TypeCodeType>
 ACE_INLINE bool
-TAO::TypeCode::Case<STRING_TYPE>::marshal (
+TAO::TypeCode::Case<StringType, TypeCodeType>::marshal (
   TAO_OutputCDR & cdr) const
 {
   return
     this->marshal_label (cdr)
-    && (cdr << this->name ())
-    && (cdr << this->type ());
+    && (cdr << TAO_OutputCDR::from_string (
+         Traits<StringType>::get_string (this->name_), 0))
+    && (cdr << Traits<StringType>::get_typecode (this->type_));
 }
 
-
-// -----------------------------------------------------------------
-// Some compilers exhibit warnings about better conversion sequence
-// from a CORBA::String_var to a char const *.  This member
-// specialization works around them by performing explicit
-// conversions.
-// -----------------------------------------------------------------
-
-template<>
+template <typename StringType, typename TypeCodeType>
 ACE_INLINE char const *
-TAO::TypeCode::Case<CORBA::String_var>::name (void) const
+TAO::TypeCode::Case<StringType, TypeCodeType>::name (void) const
 {
-  return this->name_.in ();
+  return
+    Traits<StringType>::get_string (this->name_);
+}
+
+template <typename StringType, typename TypeCodeType>
+ACE_INLINE CORBA::TypeCode_ptr
+TAO::TypeCode::Case<StringType, TypeCodeType>::type (void) const
+{
+  return
+    Traits<StringType>::get_typecode (this->type_);
 }

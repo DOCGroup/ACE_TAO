@@ -39,7 +39,7 @@ namespace TAO
   {
     template <CORBA::TCKind KIND> struct Objref_Traits;
 
-    template <>
+    template<>
     struct Objref_Traits<CORBA::tk_abstract_interface>
     {
       static
@@ -54,7 +54,7 @@ namespace TAO
       }
     };
 
-    template <>
+    template<>
     struct Objref_Traits<CORBA::tk_component>
     {
       static
@@ -70,7 +70,7 @@ namespace TAO
     };
 
 
-    template <>
+    template<>
     struct Objref_Traits<CORBA::tk_home>
     {
       static
@@ -85,7 +85,7 @@ namespace TAO
       }
     };
 
-    template <>
+    template<>
     struct Objref_Traits<CORBA::tk_local_interface>
     {
       static
@@ -100,7 +100,7 @@ namespace TAO
       }
     };
 
-    template <>
+    template<>
     struct Objref_Traits<CORBA::tk_native>
     {
       static CORBA::TypeCode_ptr
@@ -114,7 +114,7 @@ namespace TAO
       }
     };
 
-    template <>
+    template<>
     struct Objref_Traits<CORBA::tk_objref>
     {
       static

@@ -7,7 +7,6 @@
 #include "TypeCode.h"
 #include "ORB_Constants.h"
 #include "TypeCode_Constants.h"
-#include "TypeCode_Enumerator.h"
 #include "Enum_TypeCode.h"
 #include "TypeCode_Struct_Field.h"
 #include "Struct_TypeCode.h"
@@ -840,15 +839,15 @@ namespace TAO
 {
   namespace TypeCode
   {
-    Enumerator<char const *> const enumerators_CORBA_CompletionStatus[]=
+    char const * const enumerators_CORBA_CompletionStatus[]=
       {
-        { "COMPLETED_YES"   },
-        { "COMPLETED_NO"    },
-        { "COMPLETED_MAYBE" }
+        "COMPLETED_YES",
+        "COMPLETED_NO",
+        "COMPLETED_MAYBE"
       };
 
     Enum<char const *,
-         Enumerator<char const *> const *,
+         char const * const *,
          TAO::Null_RefCount_Policy>
       tc_CompletionStatus ("IDL:omg.org/CORBA/CompletionStatus:1.0",
                            "CompletionStatus",
@@ -868,15 +867,18 @@ namespace TAO
 {
   namespace TypeCode
   {
-    Struct_Field<char const *> const fields_CORBA_SystemException[] =
+    Struct_Field<char const *,
+                 CORBA::TypeCode_ptr const *> const
+    fields_CORBA_SystemException[] =
       {
         { "minor",     &CORBA::_tc_ulong },
         { "completed", &CORBA::_tc_CompletionStatus }
       };
 
     typedef Struct<char const *,
-                   Struct_Field<char const *> const *,
-                   CORBA::tk_except,
+                   CORBA::TypeCode_ptr const *,
+                   Struct_Field<char const *,
+                                CORBA::TypeCode_ptr const *> const *,
                    TAO::Null_RefCount_Policy> tc_SystemException;
   }
 }
@@ -887,6 +889,7 @@ namespace TAO \
   namespace TypeCode \
   { \
     tc_SystemException tc_CORBA_ ## name ( \
+      CORBA::tk_except,     \
       "IDL:omg.org/CORBA/" #name ":1.0", \
       #name, \
       TAO::TypeCode::fields_CORBA_SystemException, \

@@ -40,7 +40,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::tao_release (void)
 template <class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Fixed<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                                ACE_ENV_ARG_DECL) const
+                                               ACE_ENV_ARG_DECL) const
 {
   // The following call won't throw since CORBA::TypeCode::equal() has
   // already established the kind of tc is the same as our kind.
@@ -59,7 +59,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
 template <class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
-                                                     ACE_ENV_ARG_DECL) const
+                                                    ACE_ENV_ARG_DECL) const
 {
   // We could refactor this code to the CORBA::TypeCode::equivalent()
   // method but doing so would force us to determine the unaliased
@@ -85,7 +85,8 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of
   // tk_fixed TypeCodes.
-  return this->equal_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->equal_i (tc
+                        ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class RefCountPolicy>
@@ -104,7 +105,17 @@ TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (
   // Already compact since tk_fixed TypeCodes have no name or member
   // names, meaning that we can simply call _duplicate() on this
   // TypeCode.
-  return CORBA::TypeCode::_duplicate (this);
+
+
+  // @@ There is a potential problem here if this TypeCode is a static
+  //    and const since it may have been placed in read-only memory by
+  //    the compiler.  A const_cast<> can return undefined results in
+  //    that case.
+
+  CORBA::TypeCode_ptr mutable_tc =
+    const_cast<TAO::TypeCode::Fixed<RefCountPolicy> *> (this);
+
+  return CORBA::TypeCode::_duplicate (mutable_tc);
 }
 
 template <class RefCountPolicy>
