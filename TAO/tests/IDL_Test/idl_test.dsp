@@ -1486,10 +1486,20 @@ SOURCE=.\reopen_include1.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+USERDEP__REOPE="..\..\..\bin\release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\reopen_include1.idl
+InputName=reopen_include1
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\release\tao_idl $(InputName).idl
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 USERDEP__REOPE="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopen_include1.idl
 InputName=reopen_include1
 
@@ -1507,10 +1517,20 @@ SOURCE=.\reopen_include2.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+USERDEP__REOPEN="..\..\..\bin\release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\reopen_include2.idl
+InputName=reopen_include2
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\release\tao_idl $(InputName).idl
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 USERDEP__REOPEN="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopen_include2.idl
 InputName=reopen_include2
 
