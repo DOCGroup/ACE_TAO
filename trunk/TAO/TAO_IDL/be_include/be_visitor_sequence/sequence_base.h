@@ -60,6 +60,11 @@ public:
   virtual int visit_sequence (be_sequence *node);
   virtual int visit_typedef (be_typedef *node);
 
+#if defined(IDL_HAS_VALUETYPE)
+  virtual int visit_valuetype (be_valuetype *node);
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+#endif
+
 protected:
   int visit_node (be_type *);
   // helper that does the common job
@@ -71,7 +76,7 @@ class be_visitor_sequence_base_template_args: public be_visitor_sequence_base
   //
   // =TITLE
   // be_visitor_sequnce_base_template_args
-  // 
+  //
   // =Description
   // This is a derived class just used to override the method
   // visit_interface that generates the arguments for the
@@ -81,7 +86,7 @@ class be_visitor_sequence_base_template_args: public be_visitor_sequence_base
 public:
   be_visitor_sequence_base_template_args (be_visitor_context *ctx,
                                           be_sequence *node );
-  
+
   ~be_visitor_sequence_base_template_args (void);
   //Dtor
 

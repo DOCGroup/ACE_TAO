@@ -1,3 +1,12 @@
+Fri Oct  5 14:44:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* be/be_visitor.cpp:
+	* be/be_visitor_sequence/sequence_base.cpp:
+	* be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+	* be_include/be_visitor_sequence/sequence_base.h: Applied patches
+	  provided by Russ Noseworthy to fix problems with generated code
+	  in OBV.
+
 Fri Oct  5 14:31:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h: Added a forward
