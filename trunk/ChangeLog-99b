@@ -1,8 +1,12 @@
+Tue Jul 20 11:15:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated memory requirements discussions.
+
 Tue Jul 20 09:43:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Future_Set.cpp (next_readable):
+        * ace/Future_Set.cpp (next_readable):
 
-	  Fixed unused variable warnings.
+          Fixed unused variable warnings.
 
 Tue Jul 20 09:33:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
