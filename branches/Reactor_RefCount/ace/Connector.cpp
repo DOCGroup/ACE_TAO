@@ -127,7 +127,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
 
 
 template <class SVC_HANDLER> int
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE h)
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
 {
   // Called when a failure occurs during asynchronous connection
   // establishment.

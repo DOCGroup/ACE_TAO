@@ -397,9 +397,9 @@ public:
 
   ACE_Pipe pipe_;
 
-  int close_count_;
-
   int &events_;
+
+  int close_count_;
 
 };
 
@@ -886,7 +886,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting Select Reactor....\n\n"));
 
-      test<ACE_Select_Reactor> test_select_reactor;
+      test<ACE_Select_Reactor> test;
+      ACE_UNUSED_ARG (test);
     }
 
   if (test_tp_reactor)
@@ -894,7 +895,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting TP Reactor....\n\n"));
 
-      test<ACE_TP_Reactor> test_tp_reactor;
+      test<ACE_TP_Reactor> test;
+      ACE_UNUSED_ARG (test);
     }
 
 #if defined (ACE_WIN32)
@@ -904,7 +906,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\n\nTesting WFMO Reactor....\n\n"));
 
-      test<ACE_WFMO_Reactor> test_wfmo_reactor;
+      test<ACE_WFMO_Reactor> test;
+      ACE_UNUSED_ARG (test);
     }
 
 #endif /* ACE_WIN32 */

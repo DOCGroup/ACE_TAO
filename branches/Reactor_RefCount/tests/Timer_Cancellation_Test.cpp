@@ -81,8 +81,8 @@ Event_Handler::Event_Handler (Deadlock &deadlock)
 }
 
 int
-Event_Handler::handle_timeout (const ACE_Time_Value &current_time,
-                               const void *act)
+Event_Handler::handle_timeout (const ACE_Time_Value &,
+                               const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Event_Handler timeout\n"));
@@ -91,8 +91,8 @@ Event_Handler::handle_timeout (const ACE_Time_Value &current_time,
 }
 
 int
-Event_Handler::handle_close (ACE_HANDLE handle,
-                             ACE_Reactor_Mask close_mask)
+Event_Handler::handle_close (ACE_HANDLE,
+                             ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Event_Handler closed\n"));
@@ -134,7 +134,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                           ACE_Time_Value (1));
 
   // Run the event loop for a while.
-  reactor.run_reactor_event_loop (ACE_Time_Value (4));
+  ACE_Time_Value timeout (4);
+  reactor.run_reactor_event_loop (timeout);
 
   ACE_END_TEST;
 
