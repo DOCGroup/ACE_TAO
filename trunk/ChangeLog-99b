@@ -1,3 +1,93 @@
+Fri Jun 25 16:03:59 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Future.cpp: Fixed a couple of places where the set() method
+	  didn't have the new *this parameter added.
+
+	* ace: Added Future_Set.{h,cpp} and Future_Node.{h,cpp}, as well
+	  as the new Future.{h,cpp} files to the ACE release.  Thanks to
+ 	  John Tucker <jtucker@infoglide.com> for contributing these.
+
+	* ace/Synch.h: Added a comment pointing out that Solaris
+	  threads do not support timed acquire().  Thanks to Darren
+ 	  DeRidder <darren.deridder@bridgewatersys.com> for reporting
+ 	  this.
+
+Fri Jun 25 15:07:00 1999  John Tucker <jtucker@infoglide.com>
+  
+        The following describes the changes to ACE_Future_Set:
+
+	* I followed the Observer Pattern where the ACE_Future_Set is the
+	  "Observer" and the ACE_Future_Rep is the "Subject".
+
+	* I created an abstract base class called ACE_Future_Observer<T>
+	  which contains a single pure virtual member function "update()".
+
+	* The ACE_Future_Rep is modified so that it contains a list of
+	  ACE_Future_Observer<T> pointers and an interface for attaching
+ 	  and detaching ACE_Future_Observer<T> Observer objects.  The
+ 	  "attach(...)" member function allows objects which implement the
+ 	  ACE_Future_Observer<T> interface to attach themselves to
+ 	  ACE_Future_Rep<T> objects so that they will be notified of
+ 	  changes to the ACE_Future_Rep<T> Subject.  The "detach(...)"
+ 	  member function allows objects which implement the
+ 	  ACE_Future_Observer<T> interface to detach themselves from
+ 	  ACE_Future_Rep<T> objects so that they will no longer be
+ 	  notified of changes to the ACE_Future_Rep<T> Subject.
+
+	* The ACE_Future_Rep::set() method is modified so that it invokes the 
+	  "update()" method of each ACE_Future_Observer<T> object stored
+ 	  in its list of attached ACE_Future_Observer<T> Observer
+ 	  objects. It also removes each ACE_Future_Observer<T> Observer
+ 	  object from its list.
+
+	* The ACE_Future_Set<T> class derives from the ACE_Future_Observer<T>
+	  class.
+
+        * The ACE_Future_Set<T> class contains its own ACE_Message_Queue
+	  attribute which will be used by writer threads to notify reader
+ 	  threads that an ACE_Future is readable.
+
+        * The ACE_Future_Set<T> class contains a list of ACE_Future<T>
+	  Subject objects which clients in the reader threads insert into
+ 	  it.  When an ACE_Future<T> is inserted into an
+ 	  ACE_Future_Set<T>, the ACE_Future_Set<T> attaches itself to the
+ 	  specified ACE_Future<T>, keeping in mind the ACE_Future_Set<T>
+ 	  implements the ACE_Future_Observer<T> interface, and also
+ 	  inserts the specified ACE_Future<T> object into its list of
+ 	  ACE_Future<T> objects.
+
+        * The ACE_Future_Set<T> class implements its "update()" method to
+	  just enqueue an ACE_Message_Block with Null data onto its
+ 	  ACE_Message_Queue.  Since this "ACE_Future_Set<T>::update()"
+ 	  method will be invoked by the ACE_Future_Rep::set() method in
+ 	  the writer thread, it will allow the ACE_Future_Set<T> in the
+ 	  writer thread to signal itself that an ACE_Future has become
+ 	  readable.
+
+        * The "int ACE_Future_Set<T>::next_readable(ACE_Future<T> &future,
+	  ACE_Time_Value *)" method in the reader thread will block via a
+ 	  call to "dequeue()" on its ACE_Message_Queue until is awakened
+ 	  by a call to "ACE_Future_Set<T>::update()" in the writer thread.
+  	  Once awakened, the ACE_Future_Set<T> object iterates through its
+ 	  list of ACE_Future<T> objects until it encounters a readable
+ 	  one.  This readable ACE_Future<T> will be removed from its list
+ 	  and assigned to the specified "future" parameter".
+
+        * The ACE_Future_Set<T> destructor detaches itself from all
+	  ACE_Future<T> objects remaining in its list.
+
+        * I did not use the ACE_Reactor since I could foresee the
+	  ACE_Future_Set being used by applications which did not run,or
+ 	  want to run, the event loop.	
+  
+Fri Jun 25 14:28:05 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/UNIX_Addr.cpp (ACE_UNIX_Addr): Moved base_set() call in
+	  constructor to member initializer list.  This is cleaner coding
+ 	  style.  The original code, before a bug fix was made, was like
+ 	  that.  I just forgot to put it back in the member initializer
+ 	  list after the fix.
+
 Fri Jun 25 15:15:32 1999  Steve Huston  <shuston@riverace.com>
 
         * performance-tests/Misc/Makefile: set static_libs_only so the library
@@ -10,16 +100,6 @@ Fri Jun 25 15:15:32 1999  Steve Huston  <shuston@riverace.com>
         * ace/Hash_Cache_Map_Manager_T.h: Removed the "ace/" from the
           #pragma implementation line. The compiler remembers the directory
           it came from.
-
-Fri Jun 25 14:28:05 1999  Ossama Othman  <othman@cs.wustl.edu>
-
-	* ace/UNIX_Addr.cpp (ACE_UNIX_Addr): Moved base_set() call in
-	  constructor to member initializer list.  This is cleaner coding
- 	  style.  The original code, before a bug fix was made, was like
- 	  that.  I just forgot to put it back in the member initializer
- 	  list after the fix.
-
-Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/UPIPE_Event_Server/Peer_Router.h:
         * examples/Connection/non_blocking/CPP-connector.h:

@@ -10,9 +10,10 @@
 //    Future.h
 //
 // = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch>, Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu>, and Per Andersson
-//    <Per.Andersson@hfera.ericsson.se>.
+//    Andres Kruse <Andres.Kruse@cern.ch>,
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
+//    Per Andersson <Per.Andersson@hfera.ericsson.se>, and
+//    John Tucker <jtucker@infoglide.com>
 //
 // ============================================================================
 
@@ -20,6 +21,7 @@
 #define ACE_FUTURE_H
 
 #include "ace/Synch.h"
+#include "ace/Containers_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +31,36 @@
 
 // Forward decl.
 template <class T> class ACE_Future;
+template <class T> class ACE_Future_Observer;
+
+template <class T>
+class ACE_Future_Observer
+{
+  // = TITLE
+  //     ACE_Future_Observer<T>
+  //
+  // = DESCRIPTION
+  //     An ACE_Future_Observer<T> object implements an object that is
+  //     subscribed with an ACE_Future<T> object so that it may be
+  //     notified when the value of the ACE_Future<T> object is
+  //     written to by a writer thread.
+  //
+  //     It uses the Observer pattern
+public:
+  // = Destructor
+  virtual ~ACE_Future_Observer (void);
+
+  virtual void update(const ACE_Future<T> &future) = 0;
+  // Called by the ACE_Future<T> in which we are subscribed to when
+  // its value is written to.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+protected:
+
+  // = Constructor
+  ACE_Future_Observer (void);
+};
 
 template <class T>
 class ACE_Future_Rep
@@ -37,10 +69,10 @@ class ACE_Future_Rep
   //     ACE_Future_Rep<T>
   //
   // = DESCRIPTION
-  //     An ACE_Future_Rep<T> object encapsules a pointer to an
-  //     object of class T which is the result of an asynchronous
-  //     method invocation. It is pointed to by ACE_Future<T> object[s]
-  //     and only accessible through them.
+  //     An ACE_Future_Rep<T> object encapsules a pointer to an object
+  //     of class T which is the result of an asynchronous method
+  //     invocation. It is pointed to by ACE_Future<T> object[s] and
+  //     only accessible through them.
 private:
   friend class ACE_Future<T>;
 
@@ -49,32 +81,52 @@ private:
   // instances.
 
   static ACE_Future_Rep<T> *create (void);
-  // Create a ACE_Future_Rep<T> and initialize the reference count
+  // Create a ACE_Future_Rep<T> and initialize the reference count.
 
   static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
-  // Precondition(rep != 0)
-  // Increase the reference count and return argument. Uses
-  // the attribute "value_ready_mutex_" to synchronize reference
-  // count updating
+  // Increase the reference count and return argument. Uses the
+  // attribute "value_ready_mutex_" to synchronize reference count
+  // updating.
+  // 
+  // Precondition(rep != 0).
 
   static void detach (ACE_Future_Rep<T> *&rep);
+  // Decreases the reference count and and deletes rep if there are no
+  // more references to rep.
+  // 
   // Precondition(rep != 0)
-  // Decreases the reference count and and deletes rep if
-  // there are no more references to rep.
 
   static void assign (ACE_Future_Rep<T> *&rep,
                       ACE_Future_Rep<T> *new_rep);
-  // Precondition(rep != 0 && new_rep != 0)
   // Decreases the rep's reference count and and deletes rep if there
-  // are no more references to rep. Then assigns new_rep to rep
+  // are no more references to rep. Then assigns new_rep to rep.
+  // 
+  // Precondition(rep != 0 && new_rep != 0)
 
-  int set (const T &r);
-  // Set the result value.
+  int set (const T &r,
+           ACE_Future<T> &caller);
+  // Set the result value.  The specified <caller> represents the
+  // future that invoked this <set> method, which is used to notify
+  // the list of future observers.
 
   int get (T &value,
            ACE_Time_Value *tv);
   // Wait up to <tv> time to get the <value>.  Note that <tv> must be
   // specified in absolute time rather than relative time.
+
+  void attach (ACE_Future_Observer<T> *observer,
+               ACE_Future<T> &caller);
+  // Attaches the specified observer to a subject (i.e. the
+  // ACE_Future_Rep).  The update method of the specified subject will
+  // be invoked with a copy of the written-to ACE_Future as input when
+  // the result gets set.
+
+  int detach (ACE_Future_Observer<T> *observer);
+  // Detaches the specified observer from a subject (i.e. the
+  // ACE_Future_Rep).  The update method of the specified subject will
+  // not be invoked when the ACE_Future_Reps result gets set.  Returns
+  // 1 if the specified observer was actually attached to the subject
+  // prior to this call and 0 if was not.
 
   operator T ();
   // Type conversion. will block forever until the result is
@@ -103,6 +155,13 @@ private:
 
   int ref_count_;
   // Reference count.
+
+  typedef ACE_Future_Observer<T> OBSERVER;
+  typedef ACE_DLList_Node OBSERVER_NODE;
+  typedef ACE_Double_Linked_List<OBSERVER_NODE> OBSERVER_LIST;
+
+  OBSERVER_LIST observer_list_;
+  // Keep a list of ACE_Future_Observers unread by client's reader thread.
 
   // = Condition variable and mutex that protect the <value_>.
   ACE_Condition_Thread_Mutex value_ready_;
@@ -175,6 +234,21 @@ public:
 
   int ready (void);
   // Check if the result is available.
+
+  void attach (ACE_Future_Observer<T> *observer);
+  // Attaches the specified observer to a subject (i.e. the
+  // ACE_Future).  The update method of the specified subject will be
+  // invoked with a copy of the associated ACE_Future as input when
+  // the result gets set.  If the result is already set when this
+  // method gets invoked, then the update method of the specified
+  // subject will be invoked immediately.
+
+  int detach (ACE_Future_Observer<T> *observer);
+  // Detaches the specified observer from a subject (i.e. the
+  // ACE_Future_Rep).  The update method of the specified subject will
+  // not be invoked when the ACE_Future_Reps result gets set.  Returns
+  // 1 if the specified observer was actually attached to the subject
+  // prior to this call and 0 if was not.
 
   void dump (void) const;
   // Dump the state of an object.
