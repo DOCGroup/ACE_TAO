@@ -1,3 +1,10 @@
+Wed Mar 17 09:58:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.l (yy_delete_parse_buffer): Added a check for NULL
+ 	  to avoid freeing buffers multiple times.  Thanks to Tom Arbuckle
+ 	  <arbuckle@uran.informatik.uni-bonn.de> for this fix and to
+	  Nanbor for noticing the problem in the first place!
+
 Wed Mar 17 08:30:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.29 released.
