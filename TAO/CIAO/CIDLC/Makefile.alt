@@ -10,15 +10,16 @@ $(call include, $(root)/Config.rules)
 
 $(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
 
-#DescriptorGenerator.cpp      \
-#RepositoryIdGenerator.cpp    \
-#SizeTypeCalculator.cpp       \
-#ServantGenerator.cpp         \
-#ServantHeaderGenerator.cpp   \
-#ServantSourceGenerator.cpp   \
-#TypeNameEmitter.cpp          \
+
 
 cxx_translation_units := ExecutorMappingGenerator.cpp \
+                         DescriptorGenerator.cpp      \
+                         RepositoryIdGenerator.cpp    \
+                         SizeTypeCalculator.cpp       \
+                         ServantGenerator.cpp         \
+                         ServantHeaderGenerator.cpp   \
+                         ServantSourceGenerator.cpp   \
+                         TypeNameEmitter.cpp          \
                          cidlc.cpp
 
 module_base           := cidlc
