@@ -1139,7 +1139,7 @@ ACE_OS::srand (u_int seed)
 {
   ACE_TRACE ("ACE_OS::srand");
 #if defined (ACE_HAS_PACE)
-  return pace_srand (seed);
+  pace_srand (seed);
 #else
   ::srand (seed);
 #endif /* ACE_HAS_PACE */
@@ -11309,7 +11309,7 @@ ACE_OS::qsort (void *base,
                ACE_COMPARE_FUNC compar)
 {
 #if defined (ACE_HAS_PACE)
-  return pace_qsort (base, nel, width, compar);
+  pace_qsort (base, nel, width, compar);
 #elif !defined (ACE_LACKS_QSORT)
   ::qsort (base, nel, width, compar);
 #else

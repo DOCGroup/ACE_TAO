@@ -1,3 +1,9 @@
+Fri Jul 14 00:28:07 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS.i
+
+	  Updates to srand and qsort to eliminate return (for pace).
+
 Thu Jul 13 20:25:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Updated this file to reflect current reality
