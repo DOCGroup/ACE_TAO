@@ -83,6 +83,22 @@ TAO_NAMESPACE_BEGIN (TAO_Default_ORT)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ObjectReferenceFactory, &_tc_TAO_tc_TAO_Default_ORT_ObjectReferenceFactory)
 TAO_NAMESPACE_END
 
+void
+tao_TAO_Default_ORT_ObjectReferenceFactory_add_ref (
+    TAO_Default_ORT::ObjectReferenceFactory *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+tao_TAO_Default_ORT_ObjectReferenceFactory_remove_ref (
+    TAO_Default_ORT::ObjectReferenceFactory *p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
 // *************************************************************
 // Operations for class TAO_Default_ORT::ObjectReferenceFactory_var
 // *************************************************************
@@ -180,6 +196,22 @@ TAO_Default_ORT::ObjectReferenceFactory_var::_retn (void)
   ObjectReferenceFactory* tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
+}
+
+void
+TAO_Default_ORT::ObjectReferenceFactory_var::tao_add_ref (
+    ObjectReferenceFactory *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+TAO_Default_ORT::ObjectReferenceFactory_var::tao_remove_ref (
+    ObjectReferenceFactory *p
+  )
+{
+  CORBA::remove_ref (p);
 }
 
 // *************************************************************
@@ -363,6 +395,22 @@ TAO_NAMESPACE_BEGIN (TAO_Default_ORT)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ObjectReferenceTemplate, &_tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate)
 TAO_NAMESPACE_END
 
+void
+tao_TAO_Default_ORT_ObjectReferenceTemplate_add_ref (
+    TAO_Default_ORT::ObjectReferenceTemplate *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+tao_TAO_Default_ORT_ObjectReferenceTemplate_remove_ref (
+    TAO_Default_ORT::ObjectReferenceTemplate *p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
 // *************************************************************
 // Operations for class TAO_Default_ORT::ObjectReferenceTemplate_var
 // *************************************************************
@@ -460,6 +508,22 @@ TAO_Default_ORT::ObjectReferenceTemplate_var::_retn (void)
   ObjectReferenceTemplate* tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
+}
+
+void
+TAO_Default_ORT::ObjectReferenceTemplate_var::tao_add_ref (
+    ObjectReferenceTemplate *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+TAO_Default_ORT::ObjectReferenceTemplate_var::tao_remove_ref (
+    ObjectReferenceTemplate *p
+  )
+{
+  CORBA::remove_ref (p);
 }
 
 // *************************************************************

@@ -93,6 +93,11 @@ TAO_NAMESPACE  TAO_Default_ORT
     ObjectReferenceFactory* _retn (void);
     ObjectReferenceFactory* ptr (void) const;
 
+    // Hooks used by template sequence and valuetype manager classes
+    // for non-defined forward declared valuetypes.
+    static void tao_add_ref (ObjectReferenceFactory *);
+    static void tao_remove_ref (ObjectReferenceFactory *);
+
   private:
     ObjectReferenceFactory* ptr_;
   };
@@ -210,6 +215,11 @@ TAO_NAMESPACE  TAO_Default_ORT
     ObjectReferenceTemplate* &out (void);
     ObjectReferenceTemplate* _retn (void);
     ObjectReferenceTemplate* ptr (void) const;
+
+    // Hooks used by template sequence and valuetype manager classes
+    // for non-defined forward declared valuetypes.
+    static void tao_add_ref (ObjectReferenceTemplate *);
+    static void tao_remove_ref (ObjectReferenceTemplate *);
 
   private:
     ObjectReferenceTemplate* ptr_;
