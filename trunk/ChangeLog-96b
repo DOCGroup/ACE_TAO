@@ -1,3 +1,84 @@
+Thu Oct 31 00:36:38 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-win32-msvc4.0.h: Added Dieter Quehl's great hack to
+ 	  get ACE to compile correctly on Win32 with MFC!
+
+	* ace/Task: I've rearranged the implementation of ACE_Task<> 
+	  in the following way:  
+
+	     1. Defined a non-template class ACE_Task_Base from which the 
+	        ACE_Task<...> inherits (instead of inheriting from
+		Ace_Service_Object, which ACE_Task_Base now inherits from.
+     
+	     2. Move all methods that don't depend on the <ACE_MT_SYNCH> or
+	        <ACE_NULL_SYNCH> modifers from the ACE_Task template to
+		ACE_Task_Base.
+
+	  There are two motivations for making this change:
+
+	     1. It reduces ``template bloat'' by factoring out common
+        	code that can be shared between ACE_Task<ACE_MT_SYNCH>
+		and ACE_Task<ACE_NULL_SYNCH>.
+
+	     2. It makes it possible for the Thread_Manager to use 
+	        ACE_Task_Base *'s for managing groups of ACE_Tasks
+		in a fully polymorphic manner.
+
+	  Note that the new changes don't break any existing code that
+	  uses ACE_Task.  Thanks to Hamutal Yanay
+	  <Hamutal_Yanay@hub.comverse.com> and Ari Erev's
+	  <Ari_Erev@comverse.com> for suggesting these changes.  
+
+	* ace/Thread_Manager: Changed the use of ACE_Task<ACE_SYNCH> to
+	  ACE_Service_Object because this avoids nasty problems with
+	  template type conflicts.  The right solution is probably to
+	  create a new non-template base class for ACE_Task called
+	  ACE_Task_Base and move all the ACE_Task operations into there
+	  that don't involve the Message_Queue directly.  I'll need to
+	  think more about this...
+
+	* ace/SOCK_Stream: Added new timed send_n() and recv_n() methods,
+ 	  which use the underlying timed ACE::send() and ACE::recv()
+ 	  calls.
+
+	* ace/ACE.cpp: Added new timed send_n() and recv_n() methods,
+ 	  which use the underlying timed ACE::send() and ACE::recv()
+ 	  calls.
+
+Wed Oct 30 00:27:21 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Changed MAXHOSTNAMELEN on Win32 from
+	  (MAX_COMPUTERNAME_LENGTH+1) (which is around 16 or so) to 256.
+  	  Thanks to Tilo Christ <christ@swl.fh-heilbronn.de> for this
+ 	  suggestion.
+
+	* ace: Made #define STRICT a compile time option if the
+ 	  ACE_HAS_STRICT flag is enabled.  This prevents ACE from breaking
+ 	  existing application (i.e., non-ACE) code.  Thanks to Karlheinz
+ 	  for pointing this out!
+
+	* ace/Synch_T.cpp: Fixed a typo in ACE_Condition<MUTEX>::wait
+ 	  (void).
+
+	  return ACE_OS::cond_wait (&this->cond_, this->mutex_.lock_);
+
+	  should read 
+
+	  return ACE_OS::cond_wait (&this->cond_, &this->mutex_.lock_);
+
+	  Thanks to Dieter Quehl <dietrich.quehl@med.siemens.de> for
+ 	  reporting this!
+
+	* ace/Svc_Handler.h: Removed the operator ACE_PEER_STREAM &() from
+ 	  the ACE_Svc_Handler class since we don't need it anymore due to
+ 	  the changes below.
+
+	* ace/{Acceptor,Connector}.cpp: Removed the use of operator
+ 	  ACE_PEER_STREAM &() in the Acceptor::accept() and
+ 	  Connector::connect() code and replaced it with
+ 	  svc_handler->peer().  This works much better and is more
+ 	  intuitive.
+
 Wed Oct 30 00:30:00 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* Registry: Added a Name Service implementation to ACE based on
@@ -7,22 +88,45 @@ Wed Oct 30 00:30:00 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
   	  Other than providing an OO wrapper for the Win32 Reg*()
  	  functions, ACE_Registry provides an abstraction for iteration
  	  over the elements of the Registry. This only works on Win32
- 	  platforms.
-
+ 	  platforms (unless you are brave enough to reimplement the
+	  Win32 Registry API on UNIX and link it in underneath ACE!).
 
 	* ace/Local_Name_Space_T.cpp: Moved SEH out of methods of
-	  Name_Space_Map to the methods of Local_Name_Space. Some of the
-	  calls to Local_Name_Space methods used the allocator to either
-	  malloc or find or free shared memory. Adding SEH to these
+	  Name_Space_Map to the methods of Local_Name_Space. Some of
+	  the calls to Local_Name_Space methods used the allocator to
+	  either malloc or find or free shared memory. Adding SEH to these 
 	  methods ensured that any exception raised due to remapping would
 	  be caught and handled appropriately. 
 
-	  Also, to fool the stupid MFC compiler, we added _i methods so
-	  that it stopped bitching about destructors not getting called
+	  Also, to fool the stupid MFC compiler, we added _i methods
+	  so that it stopped bitching about destructors not getting called
 	  correctly. 
 
 	* Added three new tests to /examples/Naming. Thanks to Lothar for
 	  providing these tests.  
+
+Tue Oct 29 18:10:09 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp (send): Integrated a new and simpler version of
+ 	  timed ACE::send().  Thanks to Vital Aza <va3@cs.wustl.edu> for
+ 	  coming up with this.
+
+	* ace/XtReactor.cpp: When the ACE_Reactor is constructed it
+ 	  creates the notify pipe and registers it with the attach()
+ 	  method. The XtReactor overloads this method BUT because the
+ 	  attach occurs when constructing the base class ACE_Reactor, the
+ 	  ACE_Reactor attach() is called not the XtReactor attach().  This
+ 	  means that the notify pipe is registered with the ACE_Reactor
+ 	  event handling code not the XtReactor and so notfications don't
+ 	  work.  To get around this we simply close and re-opened the
+ 	  notification handler in the constructor of the XtReactor.
+  	  Thanks to Rodney Skinner <rods@in.ot.com.au> for this fix.
+
+	* ace/XtReactor.cpp (schedule_timer): The ACE_Reactor returns a
+ 	  timer_id from it's equivalent call but the XtReactor always
+ 	  returns 0.  To fix this we simply replaced the "return 0;" in
+ 	  the function with "return result;" Thanks to Rodney Skinner
+ 	  <rods@in.ot.com.au> for reporting this.
 
 Tue Oct 29 00:02:44 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
@@ -86,9 +190,10 @@ Mon Oct 28 21:35:12 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
  	  ACE_Task_Exit<>::set_task().  Thanks to Hamutal Yanay & Ari Erev
  	  for suggesting this.
 
-	* ace/{Task,Thread_Manager}: Integrated Hamutal Yanay & Ari Erev's
-	  (Ari_Erev@comverse.com) enhancements to add ACE_Task support to
- 	  the ACE_Thread_Manager.  This allows the ACE_Thread_Manager to
+	* ace/{Task,Thread_Manager}: Integrated Hamutal
+	  <Hamutal_Yanay@hub.comverse.com> Yanay & Ari Erev's
+	  <Ari_Erev@comverse.com> enhancements to add ACE_Task support
+	  to the ACE_Thread_Manager.  This allows the ACE_Thread_Manager to
 	  know about ACE_Tasks directly, rather than knowing
 	  indirectly via their lower-level thread IDs.  The changes
 	  are described below:
