@@ -58,7 +58,9 @@ next_n (CORBA::ULong n,
   CORBA::ULong max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n : this->offer_ids_.size ();
 
-  ACE_NEW_RETURN (offers, CosTrading::OfferSeq, 0);
+  ACE_NEW_RETURN (offers,
+                  CosTrading::OfferSeq,
+                  0);
   offers->length (max_possible_offers_in_sequence);
 
   // While there are entries left and we haven't filled <offers>
@@ -72,17 +74,20 @@ next_n (CORBA::ULong n,
       CosTrading::OfferId id;
       this->offer_ids_.dequeue_head (id);
 
-      TAO_TRY
+      ACE_TRY
         {
           CosTrading::OfferId_var offerid_var (id);
-          CosTrading::Offer* offer = this->db_.lookup_offer (id, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          CosTrading::Offer* offer = this->db_.lookup_offer (id, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           if (offer != 0)
-            this->pfilter_.filter_offer (offer, offers[ret_offers++]);
+            this->pfilter_.filter_offer (offer,
+                                         offers[ret_offers++]);
         }
-      TAO_CATCHANY {}
-      TAO_ENDTRY;
+      ACE_CATCHANY 
+        {
+        }
+      ACE_ENDTRY;
     }
 
   // Reset the length to the correct value

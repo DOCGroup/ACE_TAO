@@ -488,12 +488,12 @@ visit_property (TAO_Property_Constraint* literal)
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      CORBA::Environment env;
-      // Retrieve the value of the property from the Property_Evaluator
+      ACE_DECLARE_NEW_CORBA_ENV;  
 
+      // Retrieve the value of the property from the Property_Evaluator
       CORBA::Any* value =
-        this->prop_eval_.property_value (prop_index, env);
-      TAO_CHECK_ENV_RETURN (env, -1);
+        this->prop_eval_.property_value (prop_index, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
 
       if (value != 0)
         {
@@ -535,12 +535,12 @@ sequence_does_contain (CORBA::Any* sequence,
   // wrapper uses the [] operator to locate the target element in the
   // sequence.
 
-  CORBA::Environment env;
+  ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Boolean return_value = 0;
   CORBA::TypeCode_var type = sequence->type ();
   CORBA::TCKind sequence_type =
-    TAO_Sequence_Extracter_Base::sequence_type (type.in (), env);
-  TAO_CHECK_ENV_RETURN (env, return_value);
+    TAO_Sequence_Extracter_Base::sequence_type (type.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (return_value);
 
   if (sequence_type == CORBA::tk_void)
     return return_value;
@@ -610,13 +610,16 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Short element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      CORBA::Short value = dyn_any.get_short (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Short value = dyn_any.get_short (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY 
+    {
+    } 
+  ACE_ENDTRY;
   return return_value;
 }
 
@@ -626,13 +629,16 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::UShort element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      CORBA::UShort value = dyn_any.get_ushort (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::UShort value = dyn_any.get_ushort (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY 
+    {
+    } 
+  ACE_ENDTRY;
   return return_value;
 }
 
@@ -642,13 +648,16 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Long element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      CORBA::Long value = dyn_any.get_long (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Long value = dyn_any.get_long (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY 
+    {
+    } 
+  ACE_ENDTRY;
   return return_value;
 }
 
@@ -658,13 +667,16 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::ULong element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      CORBA::ULong value = dyn_any.get_ulong (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::ULong value = dyn_any.get_ulong (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY 
+    {
+    } 
+  ACE_ENDTRY;
   return return_value;
 }
 
@@ -674,13 +686,13 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Float element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      CORBA::Float value = dyn_any.get_float (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Float value = dyn_any.get_float (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY {} ACE_ENDTRY;
   return return_value;
 }
 
@@ -690,13 +702,13 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Double element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      CORBA::Double value = dyn_any.get_short (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Double value = dyn_any.get_short (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY {} ACE_ENDTRY;
   return return_value;
 }
 
@@ -706,13 +718,13 @@ operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Boolean element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (value == element);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY {} ACE_ENDTRY;
   return return_value;
 }
 
@@ -722,20 +734,15 @@ operator () (TAO_DynSequence_i& dyn_any,
              const char* element) const
 {
   int return_value = 0;
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      const char* value = dyn_any.get_string (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      const char* value = dyn_any.get_string (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return_value = (ACE_OS::strcmp (value, element) == 0);
     }
-  TAO_CATCHANY {} TAO_ENDTRY;
+  ACE_CATCHANY {} ACE_ENDTRY;
   return return_value;
 }
-
-
-// *************************************************************
-// TAO_Constraint_Validator
-// *************************************************************
 
 TAO_Constraint_Validator::
 TAO_Constraint_Validator
@@ -1023,11 +1030,11 @@ visit_in (TAO_Binary_Constraint* binary_in)
 
   if (right_type == TAO_SEQUENCE)
     {
-      CORBA::Environment env;
+      ACE_DECLARE_NEW_CORBA_ENV;  
       CORBA::Boolean types_match = 0;
       CORBA::TCKind seq_type =
-        TAO_Sequence_Extracter_Base::sequence_type (prop_type, env);
-      TAO_CHECK_ENV_RETURN (env, return_value);
+        TAO_Sequence_Extracter_Base::sequence_type (prop_type, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (return_value);
 
       if (seq_type != CORBA::tk_void)
         {

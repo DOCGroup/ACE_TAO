@@ -25,18 +25,19 @@ TAO_Offer_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
-  //
 
   ACE_TRY
     {
-      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-      ACE_CHECK;
+      PortableServer::POA_var poa =
+        this->_default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -108,7 +109,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
       ACE_TRY_NEW_ENV
         {
           offer_iter->destroy (ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
 
           CORBA::release (offer_iter);
         }
@@ -158,7 +159,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
             iter->next_n (offers_left,
                           CosTrading::OfferSeq_out (out_offers.out ()),
                           ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+          ACE_TRY_CHECK_RETURN (0);
 
           // If we've exhausted this iterator, destroy it.
           if (any_left == 0)
@@ -213,10 +214,10 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& ACE_TRY_ENV)
   ACE_TRY
     {
       PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       PortableServer::ObjectId_var id =
         poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       poa->deactivate_object (id.in (), ACE_TRY_ENV);
     }
@@ -275,13 +276,13 @@ TAO_Offer_Id_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
   ACE_TRY
     {
       PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id = poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
