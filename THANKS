@@ -882,11 +882,12 @@ Defang Zhou <dzhou@zoo.uvm.edu>
 Dave Zumbro <zumbro_d@ociweb.com>
 Ted Nolan <ted@ags.ga.erg.sri.com>
 Jianfei Xu <jxu@yahoo.com>
-Alvin C. Shih <acs@ml.com> 
+Alvin C. Shih <acs@ml.com>
 J. Scott Evans <evans@cpi.com>
 Alex Luk <fluk7@ie.cuhk.edu.hk>
 Kenneth Osenbroch <kennetho@stud.cs.uit.no>
 Jason Czavislak <jczavislak@osprey.smcm.edu>
+Alex Chachanashvili <achacha@panix.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
@@ -907,4 +908,3 @@ improvements, suggestions, and or comments, I'd like to hear about it.
 
                 Douglas C. Schmidt
                 schmidt@cs.wustl.edu
-
