@@ -159,8 +159,6 @@ Sender::shut_down (ACE_ENV_SINGLE_ARG_DECL)
                                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      SENDER::instance ()->connection_manager ().destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,9 @@
+Thu May  9 03:33:20 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	  Get rid of call to Connection_Manager::destroy() method.
+
 Wed May  8 22:03:48 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/*:  Memory management

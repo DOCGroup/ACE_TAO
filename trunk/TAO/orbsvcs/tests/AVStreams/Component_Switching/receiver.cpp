@@ -277,8 +277,6 @@ Receiver::shut_down (ACE_ENV_SINGLE_ARG_DECL)
                                                  this->receiver_name_,
                                                  mmdevice_obj.in ());
 
-      this->connection_manager_.destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
