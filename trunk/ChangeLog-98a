@@ -1,3 +1,25 @@
+Tue Dec 16 09:17:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.{h,i}: (ACE_U_LongLong): use ACE_UIN32 instead
+          of u_long for data members, to ensure that its sizeof is 8 bytes.
+
+        * ace/OS.h: except on WIN32 and Solaris (ACE_HAS_HI_RES_TIMER),
+          always typedef ACE_hrtime_t to ACE_UINT64.  This changes removes
+          the dependence on ACE_HAS_64BIT_LONGS.
+
+        * ace/OS.cpp (ACE_TSS_Keys): replaced ACE_HAS_64BIT_LONGS
+          dependence with ACE_SIZEOF_LONG == 8, and similarly for
+          determination of 4-byte longs.
+
+        * tests/TSS_Test.cpp (worker): replaced ACE_HAS_64BIT_LONGS
+          preprocessor logic with a cast of the void * argument to a long.
+          A void * is the same size as a long on all currently supported
+          ACE platforms.  The int cast is also there, to avoid compiler
+          warnings about narrowing.
+
+        * tests/Time_Value_Test.cpp: replaced use of ! ACE_HAS_64BIT_LONGS
+          with ACE_SIZEOF_LONG == 4.
+
 Mon Dec 15 22:47:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.5, released Mon Dec 15 22:47:24 1997.
