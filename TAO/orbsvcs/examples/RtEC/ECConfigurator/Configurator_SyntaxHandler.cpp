@@ -18,6 +18,37 @@
 
 #include <stdlib.h> //for atol
 #include <sstream>  //for istringstream
+#include <pair.h>
+#include <algorithm> //for_each, count_if
+
+struct OutputInserter
+{
+  typedef Gateway_Initializer::FileNameVector FileNameVector;
+  typedef Configurator_SyntaxHandler::ConnectionVector::value_type ECConnection;
+  typedef RemoteEventChannel::CONNECTION ConnType;
+
+  OutputInserter(FileNameVector& fnv) : fnvec(fnv) {}
+
+  void operator() (ECConnection& conn)
+  {
+    ConnType t = conn.first;
+    if (t == RemoteEventChannel::OUTPUT
+        || t == RemoteEventChannel::TWOWAY)
+      {
+        fnvec.push_back(strdup(conn.second));
+      }
+  }
+
+private:
+  FileNameVector& fnvec;
+};
+
+struct InputCounter
+{
+  typedef Configurator_SyntaxHandler::ConnectionVector::value_type Value;
+  bool operator() (Value& v) { return v.first == RemoteEventChannel::INPUT
+                                 || v.first == RemoteEventChannel::TWOWAY; }
+};
 
 Configurator_SyntaxHandler::Configurator_SyntaxHandler (void)
   : root(0)
@@ -100,11 +131,11 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
     }
 
   //remoteecs
-  Gateway_Initializer::FileNameVector remote_ior_files;
+  ConnectionVector connections;
   RemoteECVector::iterator reciter = vs->remoteECs.begin();
   for (; reciter != vs->remoteECs.end(); reciter++)
     {
-      (*reciter)->visit(this,&remote_ior_files);
+      (*reciter)->visit(this,&connections);
     }
 
   // Initialize gateways from local ECs to remote ECs
@@ -114,11 +145,25 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
       KokyuECVector::value_type kokyuEC = *keciter;
       kokyuEC->setEventTypes(ev); //now it owns ev
 
+      // only want Gateway for Output and TwoWay remote ECs, but want
+      // to wait for Input and TwoWay ECs to connect
+
+      Gateway_Initializer::FileNameVector output_ior_files;
+      // insert all Output and TwoWay EC IOR filenames into output_ior_files
+      std::for_each(connections.begin(),connections.end(),
+                    OutputInserter(output_ior_files));
+      // count the number of Input and TwoWay ECs
+      int numInputs = std::count_if(connections.begin(),connections.end(),
+                                    InputCounter());
+
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("num Output connections: %d, num Input connections: %d\n"),output_ior_files.size(),numInputs));
+
       Gateway_Initializer *ginit;
       ACE_NEW_RETURN(ginit,
                      Gateway_Initializer(),-1);
+      // ginit takes ownership of strings copied by OutputInserter
       ginit->init(this->orb,this->poa,kokyuEC,this->driver,
-                  kokyuEC->get_name(),remote_ior_files);
+                  kokyuEC->get_name(),output_ior_files,numInputs);
       ACE_Time_Value gateway_delay(5,000000);
       long timer_id = this->driver->reactor()->schedule_timer(ginit,0,gateway_delay);
       if (timer_id < 0)
@@ -129,6 +174,11 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
         }
       this->ginitv.push_back(ginit);
     }
+
+  // delete name strings in connections
+  ConnectionVector::iterator citer = connections.begin();
+  for (; citer != connections.end(); ++citer)
+    delete (*citer).second;
 
   // DEBUG -- print name table
   NameTable::iterator ntiter = this->nametable.begin();
@@ -272,6 +322,7 @@ Configurator_SyntaxHandler::parseLocalEventChannel (LocalEventChannel* vs, void*
   Kokyu_EC *local_ec;
   ACE_NEW_RETURN(local_ec,
                  Kokyu_EC(),-1);
+  local_ec->set_name(vs->name.c_str()); //copied by local_ec
 
   if (local_ec->init(this->driver->get_time_master(),
                      sched_type.c_str(), this->poa.in(),
@@ -293,7 +344,7 @@ Configurator_SyntaxHandler::parseLocalEventChannel (LocalEventChannel* vs, void*
   if (ior_output_file == 0)
     {
       ACE_CString error("Unable to open ");
-      error += vs->name;
+      error += ior_output_filename;
       error += " for writing.";
       ACEXML_THROW (ACEXML_SAXException (error.c_str()));
     }
@@ -302,7 +353,6 @@ Configurator_SyntaxHandler::parseLocalEventChannel (LocalEventChannel* vs, void*
   ACE_OS::fclose(ior_output_file);
 
   this->kokyuECs.push_back(local_ec);
-  this->localECs.push_back(localEC);
 
   // visit localEC children
   // suppliers go first because consumers might need them as dependants
@@ -310,7 +360,6 @@ Configurator_SyntaxHandler::parseLocalEventChannel (LocalEventChannel* vs, void*
   SupplierVector::iterator siter = vs->suppliers.begin();
   for (; siter != vs->suppliers.end(); siter++)
     {
-      //(*siter)->visit(this,localEC.in());
       (*siter)->visit(this,local_ec);
     }
 
@@ -318,7 +367,6 @@ Configurator_SyntaxHandler::parseLocalEventChannel (LocalEventChannel* vs, void*
   ConsumerVector::iterator citer = vs->consumers.begin();
   for (; citer != vs->consumers.end(); citer++)
     {
-      //(*citer)->visit(this,localEC.in());
       (*citer)->visit(this,local_ec);
     }
 
@@ -335,10 +383,10 @@ Configurator_SyntaxHandler::parseRemoteEventChannel (RemoteEventChannel* vs, voi
 
   // get IOR filename
   ACE_CString iorfilename(vs->iorfile->str);
-  Gateway_Initializer::FileNameVector *remote_ior_filenames =
-    static_cast<Gateway_Initializer::FileNameVector*> (arg);
-  ACE_ASSERT(remote_ior_filenames);
-  remote_ior_filenames->push_back(iorfilename.rep()); //copies string
+  ConnectionVector *connections =
+    static_cast<ConnectionVector*> (arg);
+  ACE_ASSERT(connections);
+  connections->push_back(make_pair(vs->conn,iorfilename.rep())); //copies string
   /* TODO: for now, don't allow consumers and suppliers on remote EC
   // Set up remote EC
   RtEventChannelAdmin::RtSchedEventChannel_var remoteEC;
@@ -502,9 +550,7 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
 
   if (!vs->publications)
     {
-      ACE_CString error("Supplier has missing child: ");
-      error += vs->publications ? "Triggers" : "Publications";
-      ACEXML_THROW (ACEXML_SAXException (error.c_str()));
+      ACEXML_THROW (ACEXML_SAXException ("Supplier has missing Publications child"));
     }
 
   // visit Supplier children

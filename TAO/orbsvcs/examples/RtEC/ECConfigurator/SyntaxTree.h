@@ -349,6 +349,10 @@ public:
   SupplierVector suppliers;
 
   // Attributes
+  typedef enum { INPUT,
+                 OUTPUT,
+                 TWOWAY } CONNECTION;
+  CONNECTION conn;
   ACE_CString name;
 };
 

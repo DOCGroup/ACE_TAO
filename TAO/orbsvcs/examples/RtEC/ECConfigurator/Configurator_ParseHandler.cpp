@@ -641,7 +641,31 @@ Configurator_ParseHandler::parseRemoteEventChannel (RemoteEventChannel* vs, void
     }
   else
     {
-      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid attributes for LocalEventChannel")));
+      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid name attribute for LocalEventChannel")));
+    }
+  val = alist->getValue(ACE_TEXT("connection"));
+  if (val != 0)
+    {
+      if (ACE_OS_String::strcmp(val,ACE_TEXT("Input")) == 0)
+        {
+          vs->conn = RemoteEventChannel::INPUT;
+        }
+      else if (ACE_OS_String::strcmp(val,ACE_TEXT("Output")) == 0)
+        {
+          vs->conn = RemoteEventChannel::OUTPUT;
+        }
+      else if (ACE_OS_String::strcmp(val,ACE_TEXT("TwoWay")) == 0)
+        {
+          vs->conn = RemoteEventChannel::TWOWAY;
+        }
+      else
+        {
+          ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid connection attribute value for RemoteEventChannel")));
+        }
+    }
+  else
+    {
+      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Invalid connection attribute for RemoteEventChannel")));
     }
 
   ECConfiguration *parent = dynamic_cast<ECConfiguration*> (this->scope_.top());

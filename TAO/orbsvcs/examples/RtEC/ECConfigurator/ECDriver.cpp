@@ -30,6 +30,7 @@ ECDriver::run (int argc, char *argv[])
 }
 
 ECTestDriver::ECTestDriver (void)
+  : time_master(false)
 {
 }
 
@@ -95,8 +96,10 @@ ECTestDriver::wait_for_start(Kokyu_EC* ec)
   if (this->time_master)
     {
       //set start time for all other ECs
+      // only support DELAYAFTERCONNECT, so no need to check type
       RtEventChannelAdmin::Time st;
-      ACE_Time_Value start_time(30,0);
+      ACE_Time_Value start_time;
+      ORBSVCS_Time::TimeT_to_Time_Value(start_time,this->starttime);
       start_time += ACE_OS::gettimeofday(); //now + 30 sec
       ORBSVCS_Time::Time_Value_to_TimeT(st,start_time);
       ec->set_start_time(st); //set start time for this EC

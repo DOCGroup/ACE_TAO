@@ -23,8 +23,11 @@
 </Event>
 
 <!-- Configure the ECs -->
-<RemoteEventChannel name="Client" >
+<RemoteEventChannel name="Client" connection="Output">
   <IORFile>Client.ior</IORFile>
+</RemoteEventChannel>
+<RemoteEventChannel name="Server" connection="Input">
+  <IORFile>Server.ior</IORFile>
 </RemoteEventChannel>
 
 <LocalEventChannel name="Middle" >
@@ -47,7 +50,7 @@
 <!-- Configure the driver -->
 <TestDriver>
   <StartCondition type="DelayAfterConnect" >
-    <Time>30000</Time> <!-- in msecs -->
+    <Time>10000</Time> <!-- in msecs -->
   </StartCondition>
   <StopCondition type="Duration" >
     <Value>340000</Value> <!-- duration in msecs -->
