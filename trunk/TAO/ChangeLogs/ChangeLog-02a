@@ -1,3 +1,8 @@
+Wed Mar  6 15:09:17 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/Messaging/diffs/Messaging.diff:
+	  Updated the diffs file with the latest changes in the source files.
+
 Wed Mar  6 14:37:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * examples/Simple/time-date/server.cpp:
