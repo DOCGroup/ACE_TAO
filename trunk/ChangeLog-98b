@@ -64,7 +64,7 @@ Fri Nov 06 08:57:49 1998  David L. Levine  <levine@cs.wustl.edu>
           and without ACE_HAS_INLINE.
 
         * VERSION: added reference to BUG-REPORT-FORM.  Thanks to
-          Peter Nordlund <petern@nada.kth.se> for provided the new
+          Peter Nordlund <petern@nada.kth.se> for providing the new
           text.
 
         * ace/SOCK_Dgram_Mcast.cpp (unsubscribe): fixed ACE_TRACE
