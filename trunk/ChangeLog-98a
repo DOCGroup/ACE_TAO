@@ -1,3 +1,8 @@
+Fri Mar 27 13:55:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/High_Res_Timer.i (gettime): ACE_OS::gettimeofday doesn't
+ 	  take any argument.
+
 Fri Mar 27 09:50:52 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Strategies_T.cpp: Added #include "ace/Service_Repository.h" for
