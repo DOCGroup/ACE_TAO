@@ -355,16 +355,11 @@
 	    <code>ORB::work_pending</code> so that <code>ORB::run</code>
 	    <em>could</em> be implemented in terms of them.</li>
 
-	  <LI>Integrate the <A HREF="index.html#poa">POA</A> implementation.</LI>
-
 	  <li>Improve the <code>Service Configurator</code> service
 	    entry faking on VxWorks.</li>
 
 	  <li>Integrate with realtime upcalls (RTUs).</li>
 
-	  <LI>Remove the CORBA_SEQUENCE structure which is not a true C++
-	    mapping of sequences. This will affect the code that uses
-	    OctetSequences and TC_opaque. </LI>
 	</ol>
       </li>
 
@@ -372,8 +367,16 @@
 	<ol>
       <li>Remove <code>_FAR</code> from all code.</li>
 
-      <li>Rework underlayment so eliminate <code>IUnknown</code> class.</li>
+      <li>Rework underlayment to eliminate <code>IUnknown</code> class.</li>
 
+	  <li>Create some sort of internal "request" object which
+	  carries enough context to suport deferred method invocation
+	  such as one might find in the thread-pool approach or
+	  wherever queuing might occur.</li>
+
+	  <li>Rethink the entire memory allocation model used by the
+	  ORB.  The current one from SSIIOP may no longer be suitable
+	  for our purposes.</li>
 	</ol>
       </li>
 
