@@ -1,3 +1,35 @@
+Sun Nov  9 16:32:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Kokyu_dsrt_schedulers/Makefile:
+          Added subdirectory targets since the DIRS variable doesn't work
+          when the targets are explicitely redefined.
+
+        * examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_client:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_server:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_client:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_server:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.muf_client:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.muf_server:
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/orbsvcs/Makefile.RT_Notification:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Client:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Server:
+        * orbsvcs/tests/Notify/Destroy/Makefile:
+        * orbsvcs/tests/Notify/Driver/Makefile:
+        * orbsvcs/tests/Notify/RT_lib/Makefile:
+        * orbsvcs/tests/Notify/Test_Filter/Makefile:
+        * tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Client:
+        * tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Server:
+          Removed DEPENDENCY_FILE variable and updated dependencies.
+
+        * orbsvcs/orbsvcs/Makefile.*
+        * orbsvcs/tests/Notify/*:
+          Udpated dependencies.
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.cpp:
+          Added #include OS_NS_string.h.
+
 Sun Nov  9 11:19:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor/IORInterceptor.mpc:
