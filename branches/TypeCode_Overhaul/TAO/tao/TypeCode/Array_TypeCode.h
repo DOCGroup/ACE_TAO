@@ -95,10 +95,6 @@ namespace TAO
        */
       CORBA::TCKind const kind_;
 
-      /// Length of the @c array.  A length of zero indicates an
-      /// unbounded @c array.
-      CORBA::ULong const length_;
-
       /// Element type of the array.
       /**
        * A pointer to the @c CORBA::TypeCode_ptr rather than the
@@ -111,6 +107,10 @@ namespace TAO
        *       @c TypeCode::Array.
        */
       CORBA::TypeCode_ptr * content_type_;
+
+      /// Length of the @c array.  A length of zero indicates an
+      /// unbounded @c array.
+      CORBA::ULong const length_;
 
     };
 

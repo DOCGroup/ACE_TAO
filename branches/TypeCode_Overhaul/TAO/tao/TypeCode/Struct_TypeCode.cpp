@@ -4,7 +4,7 @@
 #define TAO_STRUCT_TYPECODE_CPP
 
 #include "tao/Struct_TypeCode.h"
-#include "tao/TypeCode_Fields.h"
+#include "tao/TypeCode_Field.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Struct_TypeCode.inl"

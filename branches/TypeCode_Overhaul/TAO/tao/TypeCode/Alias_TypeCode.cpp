@@ -32,9 +32,6 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::tao_marshal (
     (cdr << TAO_ENCAP_BYTE_ORDER)
     && (cdr << this->attributes_.id ())
     && (cdr << this->attributes_.name ())
-
-    // @@ Is recursion an issue for typedefs/aliases?
-
     && (cdr << *(this->content_type_.in ()));
 }
 

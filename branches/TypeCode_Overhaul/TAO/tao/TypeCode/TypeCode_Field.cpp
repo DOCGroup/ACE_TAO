@@ -11,7 +11,7 @@
 
 
 template <typename STRING_TYPE>
-ACE_INLINE char const *
+char const *
 TAO::TypeCode::Field<STRING_TYPE>::~Field (void)
 {
   if (this->type)
