@@ -55,8 +55,8 @@
 
 #include "ace/SOCK_CODgram.h"
 #include "ace/SOCK_Dgram_Mcast.h"
-#include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/RtecUDPAdminS.h"
 #include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushConsumer
@@ -69,6 +69,8 @@ class TAO_ORBSVCS_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushCons
   //   This class connect as a consumer to an EventChannel
   //   and it sends the events using UDP, the UDP address can be a
   //   normal IP address or it can be a multicast group.
+  //   The UDP address is obtained from a RtecUDPAdmin::AddrServer
+  //   class.
   //   It marshalls the events using TAO CDR classes.
   //   No provisions are taken for message fragmentation.
   //
@@ -81,7 +83,8 @@ public:
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecScheduler::Scheduler_ptr lcl_sched,
              const char* lcl_name,
-             const ACE_INET_Addr& ipaddr,
+	     RtecUDPAdmin::AddrServer_ptr addr_server,
+	     ACE_SOCK_Dgram* dgram,
              CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
@@ -118,8 +121,12 @@ private:
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a consumer) using this proxy.
 
-  ACE_SOCK_CODgram dgram_;
-  // The datagram used to send the data.
+  RtecUDPAdmin::AddrServer_var addr_server_;
+  // We query this object to determine where are the events sent.
+
+  ACE_SOCK_Dgram *dgram_;
+  // The datagram used to sendto(), this object is *not* owned by the
+  // UDP_Sender.
 };
 
 class TAO_ORBSVCS_Export TAO_ECG_UDP_Receiver : public POA_RtecEventComm::PushSupplier
@@ -226,13 +233,17 @@ class TAO_ORBSVCS_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
 public:
   TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv);
 
-  int open (const ACE_INET_Addr& mcast_group);
+  int open (void);
   // Open the datagram (join the mcast group) and register with
   // this->reactor()
 
   int close (void);
   // Close the datagram (leave the mcast group) and unregister with
   // the reactor.
+
+  int subscribe (const ACE_INET_Addr &mcast_addr);
+  int unsubscribe (const ACE_INET_Addr &mcast_addr);
+  // Control the multicast group subscriptions
 
   // Reactor callbacks
   virtual int handle_input (ACE_HANDLE fd);

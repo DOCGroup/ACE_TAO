@@ -23,10 +23,9 @@ ACE_ConsumerQOS_Factory::start_conjunction_group (void)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
-  qos_.dependencies[l].event.type_ = ACE_ES_CONJUNCTION_DESIGNATOR;
+  qos_.dependencies[l].event.header.type = ACE_ES_CONJUNCTION_DESIGNATOR;
   qos_.dependencies[l].rt_info = 0;
-  // TODO: qos_.dependencies[l].event.data_.lval (0);
-  designator_set_ = 1;
+  this->designator_set_ = 1;
   return 0;
 }
 
@@ -35,10 +34,9 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (void)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
-  qos_.dependencies[l].event.type_ = ACE_ES_DISJUNCTION_DESIGNATOR;
+  qos_.dependencies[l].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   qos_.dependencies[l].rt_info = 0;
-  // TODO: qos_.dependencies[l].event.data_.lval (0);
-  designator_set_ = 1;
+  this->designator_set_ = 1;
   return 0;
 }
 
@@ -52,16 +50,14 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
       int l = qos_.dependencies.length ();
       qos_.dependencies.length (l + 1);
       qos_.dependencies[l].rt_info = 0;
-      qos_.dependencies[l].event.type_ = ACE_ES_GLOBAL_DESIGNATOR;
+      qos_.dependencies[l].event.header.type = ACE_ES_GLOBAL_DESIGNATOR;
 
-      // TODO: IDL union qos_.dependencies[l].event.data_.lval (0);
       this->designator_set_ = 1;
     }
 
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   qos_.dependencies[l] = subscribe;
-  // TODO: IDL union qos_.dependencies[l].event.data_.lval (0);
   return 0;
 }
 
@@ -72,8 +68,8 @@ void event_debug (const char* p,
   ACE_DEBUG ((LM_DEBUG,
 	      "%*.*s - event.source: %d\n"
 	      "%*.*s   event.type: %d\n",
-	      l, l, p, event.source_,
-	      l, l, p, event.type_));
+	      l, l, p, event.header.source,
+	      l, l, p, event.header.type));
 }
 
 void
@@ -107,8 +103,8 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
 {
   int l = qos_.publications.length ();
   qos_.publications.length (l + 1);
-  qos_.publications[l].event.source_ = sid;
-  qos_.publications[l].event.type_ = type;
+  qos_.publications[l].event.header.source = sid;
+  qos_.publications[l].event.header.type = type;
   // TODO: IDL union qos_.publications[l].event.data_.lval (0);
   qos_.publications[l].dependency_info.rt_info = rt_info;
   qos_.publications[l].dependency_info.number_of_calls = ncalls;

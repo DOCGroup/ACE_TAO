@@ -37,6 +37,7 @@ IDL_SRCS= \
 	RtecEventComm \
 	RtecScheduler \
 	RtecEventChannelAdmin \
+	RtecUDPAdmin \
 	LifeCycleService \
 	CosTrading \
 	AVStreams \
@@ -69,6 +70,7 @@ FILES= $(IDL_FILES) \
 	Event/Task_Manager \
 	Event/EC_Gateway \
 	Event/EC_Gateway_UDP \
+	Event/EC_UDP_Admin \
 	Event/Module_Factory \
 	\
 	Sched/Config_Scheduler \
@@ -138,6 +140,7 @@ IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
 #
 # Extra dependencies not catched by make depend.
 #
+$(foreach ext, $(IDL_EXT), RtecUDPAdmin(ext)): RtecEventComm.idl
 $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): CosTimeBase.idl
 $(foreach ext, $(IDL_EXT), RtecEventComm$(ext)): CosTimeBase.idl
 $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): CosTimeBase.idl

@@ -72,8 +72,8 @@ ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consu
   single_event_ (),
   event_set_ ()
 {
-  single_event_.creation_time_ = time;
-  single_event_.type_ = ACE_ES_EVENT_TIMEOUT;
+  single_event_.header.creation_time = time;
+  single_event_.header.type = ACE_ES_EVENT_TIMEOUT;
 }
 
 ACE_INLINE void

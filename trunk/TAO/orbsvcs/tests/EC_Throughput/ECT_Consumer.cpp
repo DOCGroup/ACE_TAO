@@ -213,7 +213,7 @@ Driver::push_consumer (void* consumer_cookie,
     {
       const RtecEventComm::Event& e = events[i];
 
-      if (e.data_.payload.mb () == 0)
+      if (e.data.payload.mb () == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
           continue;

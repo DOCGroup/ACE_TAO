@@ -8,11 +8,11 @@ ACE_ConsumerQOS_Factory::insert (RtecEventComm::EventSourceID source,
 				 RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  dependency.event.source_ = source;
-  dependency.event.type_ = type;
-  //dependency.event.creation_time_ = 0;
-  //dependency.event.ec_recv_time_ = 0;
-  //dependency.event.ec_send_time_ = 0;
+  dependency.event.header.source = source;
+  dependency.event.header.type = type;
+  //dependency.event.header.creation_time = 0;
+  //dependency.event.header.ec_recv_time = 0;
+  //dependency.event.header.ec_send_time = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -22,11 +22,11 @@ ACE_ConsumerQOS_Factory::insert_type (RtecEventComm::EventType type,
 				      RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  dependency.event.source_ = 0;
-  dependency.event.type_ = type;
-  //dependency.event.creation_time_ = 0;
-  //dependency.event.ec_recv_time_ = 0;
-  //dependency.event.ec_send_time_ = 0;
+  dependency.event.header.source = 0;
+  dependency.event.header.type = type;
+  //dependency.event.header.creation_time = 0;
+  //dependency.event.header.ec_recv_time = 0;
+  //dependency.event.header.ec_send_time = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -36,11 +36,11 @@ ACE_ConsumerQOS_Factory::insert_source (RtecEventComm::EventSourceID source,
 					RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  dependency.event.source_ = source;
-  dependency.event.type_ = ACE_ES_EVENT_ANY;
-  //dependency.event.creation_time_ = 0;
-  //dependency.event.ec_recv_time_ = 0;
-  //dependency.event.ec_send_time_ = 0;
+  dependency.event.header.source = source;
+  dependency.event.header.type = ACE_ES_EVENT_ANY;
+  //dependency.event.header.creation_time = 0;
+  //dependency.event.header.ec_recv_time = 0;
+  //dependency.event.header.ec_send_time = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -51,11 +51,11 @@ ACE_ConsumerQOS_Factory::insert_time (RtecEventComm::EventType type,
 				      RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  dependency.event.source_ = 0;
-  dependency.event.type_ = type;
-  dependency.event.creation_time_ = interval;
-  //dependency.event.ec_recv_time_ = 0;
-  //dependency.event.ec_send_time_ = 0;
+  dependency.event.header.source = 0;
+  dependency.event.header.type = type;
+  dependency.event.header.creation_time = interval;
+  //dependency.event.header.ec_recv_time = 0;
+  //dependency.event.header.ec_send_time = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -64,12 +64,12 @@ ACE_INLINE int
 ACE_ConsumerQOS_Factory::insert_act (RtecEventComm::EventData act)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  dependency.event.source_ = 0;
-  dependency.event.type_ = ACE_ES_EVENT_ACT;
-  //dependency.event.creation_time_ = 0;
-  //dependency.event.ec_recv_time_ = 0;
-  //dependency.event.ec_send_time_ = 0;
-  dependency.event.data_ = act;
+  dependency.event.header.source = 0;
+  dependency.event.header.type = ACE_ES_EVENT_ACT;
+  //dependency.event.header.creation_time = 0;
+  //dependency.event.header.ec_recv_time = 0;
+  //dependency.event.header.ec_send_time = 0;
+  dependency.event.data = act;
   return this->insert (dependency);
 }
 

@@ -189,7 +189,7 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
-      if (events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
+      if (events[i].header.type == ACE_ES_EVENT_SHUTDOWN)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Latency Consumer: received shutdown event\n"));
@@ -201,15 +201,15 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
             {
               ACE_hrtime_t creation;
               ORBSVCS_Time::TimeT_to_hrtime (creation,
-                                             events[i].creation_time_);
+                                             events[i].header.creation_time);
 
               ACE_hrtime_t ec_recv;
               ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
-                                             events[i].ec_recv_time_);
+                                             events[i].header.ec_recv_time);
 
               ACE_hrtime_t ec_send;
               ORBSVCS_Time::TimeT_to_hrtime (ec_send,
-                                             events[i].ec_send_time_);
+                                             events[i].header.ec_send_time);
 
               const ACE_hrtime_t now = ACE_OS::gethrtime ();
               const ACE_hrtime_t elapsed = now - creation;
@@ -553,24 +553,25 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
-      if (!master_ && events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
+      if (!master_ && events[i].header.type == ACE_ES_EVENT_SHUTDOWN)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Latency Supplier: received shutdown event\n"));
           this->shutdown ();
         }
-      else if (events[i].type_ == ACE_ES_EVENT_INTERVAL_TIMEOUT)
+      else if (events[i].header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT)
         {
           // Create the event to send.
           RtecEventComm::Event event;
-          event.source_ = supplier_id_;
-          event.type_ = ACE_ES_EVENT_NOTIFICATION;
+          event.header.source = this->supplier_id_;
+          event.header.type = ACE_ES_EVENT_NOTIFICATION;
           ++total_sent_;
 
-          if (timestamp_)
+          if (this->timestamp_)
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
-              ORBSVCS_Time::hrtime_to_TimeT (event.creation_time_, now);
+              ORBSVCS_Time::hrtime_to_TimeT (event.header.creation_time,
+					     now);
             }
 
           // @@ ACE_TIMEPROBE_RESET;
@@ -665,8 +666,8 @@ Latency_Supplier::shutdown (void)
         {
           // Create the shutdown message.
           RtecEventComm::Event event;
-          event.source_ = supplier_id_;
-          event.type_ = ACE_ES_EVENT_SHUTDOWN;
+          event.header.source = this->supplier_id_;
+          event.header.type = ACE_ES_EVENT_SHUTDOWN;
 
           // Push the shutdown event.
           RtecEventComm::EventSet events (1);

@@ -226,12 +226,12 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
   for (u_int i = 0; i < events.length (); ++i)
     {
       //ACE_DEBUG ((LM_DEBUG, "type = %d ", events[i].type_));
-      if (events[i].ttl_ > 0)
+      if (events[i].header.ttl > 0)
         {
           count++;
           out.length (count);
           out[count - 1] = events[i];
-          out[count - 1].ttl_--;
+          out[count - 1].header.ttl--;
         }
     }
   //ACE_DEBUG ((LM_DEBUG, "count = %d\n", count));
