@@ -1,3 +1,15 @@
+Tue Feb 25 08:09:13 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Atomic_Op_T.h (mutex_):
+
+	  Removed "mutable" keyword from this reference member.  IBM's
+	  Visual Age C++ considers mutable reference members invalid.
+
+	* ace/Atomic_Op_T.i:
+
+	  Go back to casting away the const-ness of the above mutex
+	  reference member in const methods.
+
 Tue Feb 25 09:57:07 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
