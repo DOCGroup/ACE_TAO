@@ -1,3 +1,11 @@
+Mon Jan 14 10:32:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+	  
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp: Fixed the
+	  libraries that are linked to.
+
 Mon Jan 14 10:25:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp (RSC): Added the right
