@@ -15,20 +15,20 @@ TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory (void)
 TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory (void)
 {
   TAO_AV_TransportFactorySetItor t_end = TAO_AV_CORE::instance ()->transport_factories ()->end (); 
-  for (TAO_AV_TransportFactorySetItor iterator =
+  for (TAO_AV_TransportFactorySetItor tfiterator =
          TAO_AV_CORE::instance ()->transport_factories ()->begin ();
-       iterator != t_end;
-       ++iterator)
-    delete *iterator;
+       tfiterator != t_end;
+       ++tfiterator)
+    delete *tfiterator;
   
   TAO_AV_CORE::instance ()->transport_factories ()->reset ();
 
   TAO_AV_Flow_ProtocolFactorySetItor fp_end = TAO_AV_CORE::instance ()->flow_protocol_factories ()->end (); 
-  for (TAO_AV_Flow_ProtocolFactorySetItor iterator =
+  for (TAO_AV_Flow_ProtocolFactorySetItor pfiterator =
          TAO_AV_CORE::instance ()->flow_protocol_factories ()->begin ();
-       iterator != fp_end;
-       ++iterator)
-    delete *iterator;
+       pfiterator != fp_end;
+       ++pfiterator)
+    delete *pfiterator;
   
   TAO_AV_CORE::instance ()->flow_protocol_factories ()->reset ();
 
