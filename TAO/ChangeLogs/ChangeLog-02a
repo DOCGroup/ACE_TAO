@@ -1,3 +1,13 @@
+Thu May  4 13:59:58 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/AV_export.h:
+
+          Needed to create a TAO_AV_SINGLETON_DECLARE macro and use
+          it for TAO_AV_CORE since TAO_AV_SINGLETON_DECLARATION ()
+          was having too many problems with the fact that it was being
+          used with a template class with two template parameters.
+
 Thu May  4 14:57:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Exception.h:

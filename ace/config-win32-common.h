@@ -84,6 +84,8 @@
 #define ACE_Proper_Import_Flag __declspec (dllimport)
 #define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
 #define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
+#define ACE_EXPORT_SINGLETON_DECLARE  template class __declspec (dllexport)
+#define ACE_IMPORT_SINGLETON_DECLARE  extern template class
 
 // Define ACE_HAS_WINSOCK2 to 0 in your config.h file if you do *not*
 // want to compile with WinSock 2.0.
