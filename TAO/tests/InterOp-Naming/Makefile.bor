@@ -1,9 +1,0 @@
-#
-# Makefile for building the InterOp-Naming test executables
-#
-
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
-all:
-	$(MAKE) -f server.bor $(MAKE_FLAGS)
-	$(MAKE) -f client.bor $(MAKE_FLAGS)
