@@ -14,11 +14,11 @@ IDL_FILES = test
 IDL_SRC = testC
 BIN = client
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC))
+SRC = $(addsuffix .cpp, $(IDL_SRC) $(BIN))
 
 CLIENT_OBJS = \
-  client.o \
-  testC.o
+  testC.o \
+  client.o
 
 TAO_IDLFLAGS += -Ge 1
 
