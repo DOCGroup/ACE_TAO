@@ -21,6 +21,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/XML_Svc_Conf.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_sys_stat.h"
 
 ACE_RCSID (ace,
            Service_Config,
@@ -424,7 +425,19 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
                     ACE_LIB_TEXT ("%p\n"),
                     file));
 
-      errno = ENOENT;
+      // Use stat to find out if the file exists.  I didn't use access()
+      // because stat is better supported on most non-unix platforms.
+      ACE_stat exists;
+      if (ACE_OS::stat (file, &exists) == 0)
+        {
+          // If it exists, but we couldn't open it for reading then
+          // we must not have permission to read it.
+          errno = EPERM;
+        }
+      else
+       {
+          errno = ENOENT;
+       }
       result = -1;
     }
   else
