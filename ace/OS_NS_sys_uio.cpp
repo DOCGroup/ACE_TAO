@@ -25,6 +25,10 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::readv_emulation");
 
+  // In case there's a single element, skip the memcpy.
+  if (1 == n)
+    return ACE_OS::read (handle, iov[0].iov_base, iov[0].iov_len);
+
   ssize_t length = 0;
   int i;
 
@@ -80,6 +84,10 @@ int
 ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
   ACE_OS_TRACE ("ACE_OS::writev_emulation");
+
+  // In case there's a single element, skip the memcpy.
+  if (1 == n)
+    return ACE_OS::write (handle, iov[0].iov_base, iov[0].iov_len);
 
   size_t length = 0;
   int i;

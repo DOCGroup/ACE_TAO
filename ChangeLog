@@ -1,3 +1,10 @@
+Thu Nov 20 07:51:59 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS_NS_sys_uio.cpp: "Short-circuit the readv_emulation() and
+	  writev_emulation() for the case where there's just a single
+	  element in the iovec.  Thanks to Edan Ayal <edanayal@yahoo.com>
+	  for contributing this.
+
 Wed Nov 19 11:55:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Mem_Map.i (map): Reverted the change from
