@@ -1,3 +1,16 @@
+Tue Jul 18 07:58:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp (consolidate_message): Fixed a subtle that
+	  hardly showed up.  The problem stemmed from the fact we were
+	  trying to queue up messages if we had a partial read. The
+	  Message blocks were duplicated but not the underlying data
+	  blocks. Fixed them by doing a proper copying onto the message
+	  queue.
+
+	* tao/Sequence.i:
+	* tao/Sequence.cpp: Used the self_flags () instead of flags () to
+	  check on the origin of the data block.
+
 Tue Jul 17 21:13:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Protocol/run_test.pl: Updated and fixed
@@ -9,7 +22,7 @@ Tue Jul 17 16:24:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * orbsvcs/tests/AVStreams/Component_Switching/svc.conf: (removed)
         * orbsvcs/tests/AVStreams/Component_Switching/components_svc.conf: (added)
           Renamed svc.conf to components_svc.conf to fix problems
-          in statically compiled builds. 
+          in statically compiled builds.
 
 Tue Jul 17 14:09:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -24,7 +37,7 @@ Tue Jul 17 14:09:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Jul 17 13:48:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/UIOP_Transport.cpp: Fixed a warning.
-	
+
 Tue Jul 17 13:44:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/POA/Demux/Makefile: Updated dependencies. This
@@ -39,11 +52,11 @@ Tue Jul 17 11:54:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul 16 22:24:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/SimplePerformance/run_test.pl: 
+	* examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
 	* examples/PluggableUDP/tests/Basic/run_test.pl: Fixed the run
 	  test scripts to make sure that a DIOP endpoint is specified when
 	  the server is invoked. This would fix the errors seen in our
-	  builds. 
+	  builds.
 
 	* examples/PluggableUDP/tests/Basicsvc.conf: Just removed the file
 	  from the repository. Looks like it was not needed and confused

@@ -996,8 +996,11 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   size_t payload = missing_data + incoming.length ();
 
   // Grow the buffer to the size of the message
-  ACE_CDR::grow (&incoming,
-                 payload);
+  if (ACE_CDR::grow (&incoming,
+                     payload) == 0)
+    {
+      cout << "Amba Gosh " <<endl;
+    };
 
   // .. do a read on the socket again.
   ssize_t n = this->recv (incoming.wr_ptr (),
@@ -1027,13 +1030,19 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   // ..Decrement
   missing_data -= n;
 
-  if (missing_data > 0)
+  // Check to see if we have messages in queue or if we have missing
+  // data . AT this point we cannot have have semi-complete messages
+  // in the queue as they would have been taken care before. Put
+  // ourselves in the queue and  then try processing one of the
+  // messages..
+  if (missing_data > 0 ||
+      this->incoming_message_queue_.queue_length ())
     {
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Transport[%d]::consolidate_message \n"
-                      "insufficient read, queueing up the message \n",
+                      "queueing up the message \n",
                       this->id ()));
         }
       // Get an instance of TAO_Queued_Data
@@ -1042,49 +1051,36 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       // Add the missing data to the queue
       qd->missing_data_ = missing_data;
 
-      // Duplicate the data block before putting it in the queue.
-      qd->msg_block_ = incoming.duplicate ();
+      // Get the flag for the details of the data block...
+      ACE_Message_Block::Message_Flags flg = incoming.self_flags ();
+
+      if (ACE_BIT_DISABLED (flg,
+                            ACE_Message_Block::DONT_DELETE))
+        {
+          // Duplicate the data block before putting it in the queue.
+          qd->msg_block_ = ACE_Message_Block::duplicate (&incoming);
+        }
+      else
+        {
+          // As we are in CORBA mode, all the data blocks would be aligned
+          // on an 8 byte boundary
+          ACE_Message_Block msgb (incoming,
+                                  ACE_CDR::MAX_ALIGNMENT);
+
+          qd->msg_block_ = ACE_Message_Block::duplicate (&msgb);
+        }
 
       // Get the rest of the messaging data
       this->messaging_object ()->get_message_data (qd);
 
       // Add it to the tail of the queue..
       this->incoming_message_queue_.enqueue_tail (qd);
+
+      if (this->incoming_message_queue_.is_head_complete ())
+        return this->process_queue_head (rh);
 
       return 0;
     }
-
-  // Check to see if we have messages in queue. AT this point we
-  // cannot have have semi-complete messages in the queue as they
-  // would have been taken care before
-  if (this->incoming_message_queue_.queue_length ())
-    {
-      // If we have messages in the queue, put the <incoming> in the
-      // queue
-      if (TAO_debug_level > 4)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - TAO_Transport[%d]::consolidate_message \n"
-                      " queueing up the message \n",
-                      this->id ()));
-        }
-
-      // Get an instance of TAO_Queued_Data
-      TAO_Queued_Data *qd = TAO_Queued_Data::get_queued_data ();
-
-      // Duplicate the data block before putting it in the queue.
-      qd->msg_block_ = incoming.duplicate ();
-
-      // Get the rest of the messaging data
-      this->messaging_object ()->get_message_data (qd);
-
-      // Add it to the tail of the queue..
-      this->incoming_message_queue_.enqueue_tail (qd);
-
-      // Process one on the head of the queue and return
-      return this->process_queue_head (rh);
-    }
-
 
   // We dont have any missing data. Just make a queued_data node with
   // the existing message block and send it to the higher layers of
