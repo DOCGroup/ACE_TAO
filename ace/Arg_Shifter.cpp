@@ -58,11 +58,11 @@ ACE_Arg_Shifter::get_current (void) const
   return retval;
 }
 
-char*
-ACE_Arg_Shifter::is_or_contains_ignore_case(const char* flag)
+int
+ACE_Arg_Shifter::cur_arg_strncasecmp (const char* flag)
 {
   // Check for a current argument
-  if (this->get_current())
+  if (this->is_anything_left())
     {
       unsigned int flag_length = ACE_OS::strlen(flag);
 
@@ -71,26 +71,21 @@ ACE_Arg_Shifter::is_or_contains_ignore_case(const char* flag)
 			      flag,
 			      flag_length) == 0)
 	{
-	  // Check for the 'value' parameter
 	  if (ACE_OS::strlen(temp_[current_index_]) ==
 	      flag_length)
 	    {
-	      this->consume_arg();
-	      if (this->is_parameter_next())
-		{
-		  // return next arg
-		  return this->get_current();
-		}
+	      // match and lengths are equal
+	      return 0;
 	    }
 	  else
 	    {
-	      // return tail end of current arg
-	      return temp_[current_index_] + flag_length;
+	      // match but more info passed in
+	      return flag_length;
 	    }
 	}
     }
   // failure
-  return 0;
+  return -1;
 }
 
 int
