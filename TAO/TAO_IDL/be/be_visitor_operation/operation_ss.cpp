@@ -126,7 +126,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{\n" << be_idt;
+  *os << "{" << be_idt_nl;
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -137,8 +137,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                          "gen_pre_skel_info failed\n"),
                         -1);
     }
-
-  os->indent ();
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl =" << be_idt_nl
@@ -197,102 +195,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Fish out the interceptors.
-  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
-
-  // Cast the Servant_Upcall pointer.
-  *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
-      << "ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, "
-      << "_tao_servant_upcall);"
-      << be_uidt_nl << be_nl;
-
-  *os << "TAO_ServerRequestInterceptor_Adapter _tao_vfr ("
-      << be_idt << be_idt_nl
-      << "_tao_server_request.orb_core ()->server_request_interceptors (),"
-      << be_nl
-      << "_tao_server_request.interceptor_count ()" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
-  *os << "TAO_ServerRequestInfo_" << node->flat_name ();
-
-  // We need the interface node in which this operation was defined. However,
-  // if this operation node was an attribute node in disguise, we get this
-  // information from the context and add a "_get"/"_set" to the flat
-  // name to get around the problem of overloaded methods which are
-  // generated for attributes.
-  if (this->ctx_->attribute ())
-    {
-      bt = be_type::narrow_from_decl (node->return_type ());
-      if (!bt)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interceptors_ch::"
-                             "visit_operation - "
-                             "Bad return type\n"),
-                            -1);
-        }
-
-      // Grab the right visitor to generate the return type if its not
-      // void it means it is not the accessor.
-      if (!this->void_return_type (bt))
-        {
-          *os << "_get";
-        }
-      else
-        {
-          *os << "_set";
-        }
-    }
-
-  *os << " _tao_ri (" << be_idt << be_idt_nl
-      << "_tao_server_request," << be_nl
-      << "_tao_upcall," << be_nl
-      << "_tao_impl";
-
-  // Generate the formal argument fields which are passed to the
-  // RequestInfo object.
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS);
-  be_visitor_operation_interceptors_arglist oiia_visitor (&ctx);
-
-  if (node->accept (&oiia_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for arglist failed\n"),
-                        -1);
-    }
-
-  *os << be_uidt_nl << ");" << be_uidt_nl << be_nl;
-
-  *os << "ACE_TRY" << be_idt_nl
-      << "{" << be_idt_nl;
-
-  // Create a new scope.  The receive_request() interception point and
-  // the upcall will occur within this scope.
-  *os << "{" << be_idt_nl;
-
-  // Copy the thread scope current (TSC) to the request scope current
-  // (RSC) upon leaving this scope, i.e. just after the upcall
-  // completes.  A "guard" is used to make the copy also occur if an
-  // exception is thrown.
-  *os << "TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),"
-      << be_nl
-      << "                                   1  /* Copy TSC to RSC */);"
-      << be_nl << be_nl;
-
-  // Invoke the receive_request() interception point.
-  *os << "_tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);" << be_nl
-      << "ACE_TRY_CHECK;" << be_nl;
-
-  // Check if a PortableInterceptor::ForwardRequest was raised by
-  // ServerRequestInterceptor::receive_request().
-  *os << be_nl
-      << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
-      << "{" << be_idt_nl;
-
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n";
+  *os << be_nl << be_nl;
 
   // Make the upcall and assign to the return val.
   ctx = *this->ctx_;
@@ -331,6 +234,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       *os << "TAO_INTERCEPTOR_CHECK;";
     }
 
+  *os << be_nl << be_nl;
+
   // Update the result.
   bt = be_type::narrow_from_decl (node->return_type ());
 
@@ -342,156 +247,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
     }
-
-  // Invoke the send_reply() or send_other() interception point, and
-  // check for exception.
-  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
-
-  // Close scope for "if (!_tao_vfr.location_forwarded ()"
-  *os << be_uidt_nl
-      << "}" << be_uidt;
-
-  // Close the TAO_PICurrent_Guard scope
-  *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  // Set reply status only if no PortableInterceptor::ForwardRequest
-  // was raised by ServerRequestInterceptor::receive_request().  We
-  // have to make this check a second time because the scope of the
-  // first check overlaps with the scope of TAO_PICurrent_Guard.
-  *os << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
-      << "{" << be_idt_nl;
-
-  // Grab the right visitor to generate the return type accessor if
-  // it's not void since we can't have a private member to be of void
-  // type.
-  if (!this->void_return_type (bt))
-    {
-      // Here's what we are going to do to have a uniform way of
-      // getting the return value updated for the Request Info:
-      // declare a operation_retval type object and assign the
-      // _tao_retval._retn() to it.  We pass this to the result
-      // updation method (note: it hasn't been destroyed).  We then
-      // put it back into the original _tao_retval object.  And
-      // finally the _retn() is returned from the operation without
-      // causing any problems.
-      // Generate the return type mapping (same as in the header file)
-      ctx = *this->ctx_;
-      be_visitor_operation_rettype oro_visitor (&ctx);
-
-      if (bt->accept (&oro_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for return type failed\n"),
-                            -1);
-        }
-
-      if (bt->size_type () == AST_Type::VARIABLE
-          || bt->node_type () == AST_Decl::NT_array)
-        {
-          *os << " _tao_retval_info = _tao_retval._retn ();" << be_nl
-              << "_tao_ri.result (_tao_retval_info);" << be_nl
-              << "_tao_retval = _tao_retval_info;" << be_nl;
-        }
-      else
-        {
-          *os << " _tao_retval_info = _tao_retval;" << be_nl
-              << "_tao_ri.result (_tao_retval_info);" << be_nl;
-        }
-    }
-
-  *os << "_tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);" << be_nl
-      << "_tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);"<< be_nl
-          << "ACE_TRY_CHECK;" << be_uidt_nl;
-
-  // Close scope of the "if (!_tao_vfr.location_forwarded()"
-  // conditional block.
-  *os << be_uidt << "}" << be_uidt_nl;
-
-  *os << "}" << be_uidt_nl
-      << "ACE_CATCHANY" << be_idt_nl
-      << "{" << be_idt_nl;
-  // Update the ServerRequestInfo exception attribute.
-  *os << "_tao_ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl
-      << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
-      << "&_tao_ri" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl;
-
-  // The send_exception() interception point may have transformed the
-  // caught exception.  In that event, we must not re-throw the caught
-  // exception.
-  *os << be_nl
-      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
-      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl;
-
-  *os << be_nl
-      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
-      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"
-      << be_idt_nl
-      << "{" << be_idt_nl;
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << "throw;";
-    }
-  else
-    {
-      *os << "ACE_RE_THROW;";
-    }
-
-  *os << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl;
-
-  // Convert non-CORBA C++ exceptions to CORBA::UNKNOWN.
-  *os << "\n# if defined (ACE_HAS_EXCEPTIONS) \\\n"
-      << "     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)" << be_nl
-      << "ACE_CATCHALL" << be_idt_nl
-      << "{" << be_idt_nl
-      << "CORBA::UNKNOWN ex;" << be_nl
-      << be_nl
-      << "_tao_ri.exception (&ex);"<< be_nl
-      << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
-      << "&_tao_ri" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl;
-
-  // The receive_exception() interception point may have thrown a
-  // PortableInterceptor::ForwardRequest exception.  In that event,
-  // the connection retry loop must be restarted so do not throw the
-  // CORBA::UNKNOWN exception to convert the unhandled C++ exception.
-  *os << be_nl
-      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
-      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl;
-
-  *os << be_nl
-      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)"
-      << be_idt_nl;
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << "throw ";
-    }
-  else
-    {
-      *os << "ACE_TRY_THROW ";
-    }
-
-  *os << "(ex);"  << be_uidt << be_uidt_nl
-      << "}" << be_uidt
-      << "\n# endif  /* ACE_HAS_EXCEPTIONS"
-      << " && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */" << be_nl << be_nl;
-
-  *os << "ACE_ENDTRY;" << be_nl;
-  *os << "ACE_CHECK;\n"
-      << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
 
   // Check if we are oneway in which case, we are done.
   if (node->flags () == AST_Operation::OP_oneway)
@@ -515,7 +270,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// In case _tao_servant_upcall is not used in this function"
+  *os << be_nl << be_nl 
+      << "// In case _tao_servant_upcall is not used in this function"
       << be_nl
       << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_uidt_nl
       << "}";;

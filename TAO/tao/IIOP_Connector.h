@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_CONNECTOR_H
 #define TAO_IIOP_CONNECTOR_H
 #include /**/ "ace/pre.h"
@@ -88,6 +87,10 @@ protected:
   int make_connection (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc,
                        ACE_Time_Value *timeout = 0);
+
+  TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface &desc,
+                                  ACE_Time_Value *timeout = 0);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h

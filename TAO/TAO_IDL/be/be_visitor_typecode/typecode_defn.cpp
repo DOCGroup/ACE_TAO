@@ -230,8 +230,8 @@ be_visitor_typecode_defn::gen_nested_namespace_begin (be_module *node)
       if (ACE_OS::strcmp (item_name, "") != 0)
         {
           // Leave the outermost root scope.
-          *os << "TAO_NAMESPACE_BEGIN (" << item_name
-              << ")" << be_nl;
+          *os << "namespace " << item_name << be_nl
+              << "{" << be_idt_nl;
         }
     }
 
@@ -250,7 +250,7 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
       if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
           // Leave the outermost root scope.
-          *os << be_nl << "TAO_NAMESPACE_END";
+          *os << be_nl << "}";
         }
     }
 
@@ -383,7 +383,6 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      *os << "TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)" << be_nl;
       be_module *module = be_module::narrow_from_scope (node->defined_in ());
 
       if (!module || (this->gen_nested_namespace_begin (module) == -1))
@@ -394,20 +393,12 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                             -1);
         }
 
-      *os << "TAO_NAMESPACE_DEFINE (" << be_idt << be_idt_nl
-          << "::CORBA::TypeCode_ptr," << be_nl
-          << "_tc_";
-
-      // Local name generation.
-      *os << node->local_name ();
-
-      *os << "," << be_nl
-          << "&_tc_TAO_tc_";
-
-      // Flat name generation.
-      *os << node->flat_name ();
-
-      *os << be_uidt_nl << ")" << be_uidt;
+      *os << "::CORBA::TypeCode_ptr _tc_"
+          << node->local_name ()
+          << " =" << be_idt_nl
+          << "&_tc_TAO_tc_"
+          << node->flat_name () << ";"
+          << be_uidt << be_uidt;
 
       if (this->gen_nested_namespace_end (module) == -1)
         {

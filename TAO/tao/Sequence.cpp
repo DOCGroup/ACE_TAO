@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/Sequence.h"
+#include "tao/CORBA_String.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence.i"

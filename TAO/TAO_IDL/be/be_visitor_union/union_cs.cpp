@@ -292,10 +292,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
         }
     }
 
-  // Generate conditional explicit template instantiations for our
-  // _var and/or _out classes.
-  node->gen_common_tmplinst (os);
-
   node->cli_stub_gen (I_TRUE);
   return 0;
 }

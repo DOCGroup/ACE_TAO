@@ -31,20 +31,6 @@ CORBA::remove_ref (CORBA::ValueFactoryBase *val)
 
 // ===========================================================
 
-void
-CORBA::tao_ValueFactoryBase_life::tao_add_ref (ValueFactoryBase *p)
-{
-  CORBA::add_ref (p);
-}
-
-void
-CORBA::tao_ValueFactoryBase_life::tao_remove_ref (ValueFactoryBase *p)
-{
-  CORBA::remove_ref (p);
-}
-
-// ===========================================================
-
 CORBA::ValueFactoryBase::ValueFactoryBase (void)
   : _tao_reference_count_ (1)
 {

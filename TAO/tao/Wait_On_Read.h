@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_WAIT_ON_READ_H
 #define TAO_WAIT_ON_READ_H
 #include /**/ "ace/pre.h"

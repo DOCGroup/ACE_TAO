@@ -54,58 +54,6 @@
 
 int PortableInterceptor::Interceptor::_tao_class_id = 0;
 
-PortableInterceptor::Interceptor_ptr
-PortableInterceptor::tao_Interceptor_life::tao_duplicate (
-    Interceptor_ptr p
-  )
-{
-  return Interceptor::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_Interceptor_life::tao_release (
-    Interceptor_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::Interceptor_ptr
-PortableInterceptor::tao_Interceptor_life::tao_nil (
-    void
-  )
-{
-  return Interceptor::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_Interceptor_life::tao_marshal (
-    Interceptor_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::Interceptor_ptr
-PortableInterceptor::tao_Interceptor_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Interceptor::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_Interceptor_cast::tao_upcast (
-    void *src
-  )
-{
-  Interceptor **tmp =
-    ACE_static_cast (Interceptor **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -708,58 +656,6 @@ TAO_NAMESPACE_END
 
 int PortableInterceptor::Current::_tao_class_id = 0;
 
-PortableInterceptor::Current_ptr
-PortableInterceptor::tao_Current_life::tao_duplicate (
-    Current_ptr p
-  )
-{
-  return Current::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_Current_life::tao_release (
-    Current_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::Current_ptr
-PortableInterceptor::tao_Current_life::tao_nil (
-    void
-  )
-{
-  return Current::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_Current_life::tao_marshal (
-    Current_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::Current_ptr
-PortableInterceptor::tao_Current_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_Current_cast::tao_upcast (
-    void *src
-  )
-{
-  Current **tmp =
-    ACE_static_cast (Current **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -944,58 +840,6 @@ TAO_NAMESPACE_END
 
 int PortableInterceptor::RequestInfo::_tao_class_id = 0;
 
-PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::tao_RequestInfo_life::tao_duplicate (
-    RequestInfo_ptr p
-  )
-{
-  return RequestInfo::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_RequestInfo_life::tao_release (
-    RequestInfo_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::tao_RequestInfo_life::tao_nil (
-    void
-  )
-{
-  return RequestInfo::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_RequestInfo_life::tao_marshal (
-    RequestInfo_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::RequestInfo_ptr
-PortableInterceptor::tao_RequestInfo_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return RequestInfo::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_RequestInfo_cast::tao_upcast (
-    void *src
-  )
-{
-  RequestInfo **tmp =
-    ACE_static_cast (RequestInfo **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -1167,58 +1011,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:63
 
 int PortableInterceptor::ClientRequestInfo::_tao_class_id = 0;
-
-PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::tao_ClientRequestInfo_life::tao_duplicate (
-    ClientRequestInfo_ptr p
-  )
-{
-  return ClientRequestInfo::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_ClientRequestInfo_life::tao_release (
-    ClientRequestInfo_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::tao_ClientRequestInfo_life::tao_nil (
-    void
-  )
-{
-  return ClientRequestInfo::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_ClientRequestInfo_life::tao_marshal (
-    ClientRequestInfo_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::ClientRequestInfo_ptr
-PortableInterceptor::tao_ClientRequestInfo_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ClientRequestInfo::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_ClientRequestInfo_cast::tao_upcast (
-    void *src
-  )
-{
-  ClientRequestInfo **tmp =
-    ACE_static_cast (ClientRequestInfo **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -1410,58 +1202,6 @@ TAO_NAMESPACE_END
 
 int PortableInterceptor::ServerRequestInfo::_tao_class_id = 0;
 
-PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::tao_ServerRequestInfo_life::tao_duplicate (
-    ServerRequestInfo_ptr p
-  )
-{
-  return ServerRequestInfo::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_ServerRequestInfo_life::tao_release (
-    ServerRequestInfo_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::tao_ServerRequestInfo_life::tao_nil (
-    void
-  )
-{
-  return ServerRequestInfo::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_ServerRequestInfo_life::tao_marshal (
-    ServerRequestInfo_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::ServerRequestInfo_ptr
-PortableInterceptor::tao_ServerRequestInfo_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ServerRequestInfo::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_ServerRequestInfo_cast::tao_upcast (
-    void *src
-  )
-{
-  ServerRequestInfo **tmp =
-    ACE_static_cast (ServerRequestInfo **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -1651,58 +1391,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:63
 
 int PortableInterceptor::ClientRequestInterceptor::_tao_class_id = 0;
-
-PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::tao_ClientRequestInterceptor_life::tao_duplicate (
-    ClientRequestInterceptor_ptr p
-  )
-{
-  return ClientRequestInterceptor::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_ClientRequestInterceptor_life::tao_release (
-    ClientRequestInterceptor_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::tao_ClientRequestInterceptor_life::tao_nil (
-    void
-  )
-{
-  return ClientRequestInterceptor::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_ClientRequestInterceptor_life::tao_marshal (
-    ClientRequestInterceptor_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::ClientRequestInterceptor_ptr
-PortableInterceptor::tao_ClientRequestInterceptor_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ClientRequestInterceptor::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_ClientRequestInterceptor_cast::tao_upcast (
-    void *src
-  )
-{
-  ClientRequestInterceptor **tmp =
-    ACE_static_cast (ClientRequestInterceptor **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -1898,58 +1586,6 @@ TAO_NAMESPACE_END
 
 int PortableInterceptor::ServerRequestInterceptor::_tao_class_id = 0;
 
-PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::tao_ServerRequestInterceptor_life::tao_duplicate (
-    ServerRequestInterceptor_ptr p
-  )
-{
-  return ServerRequestInterceptor::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_ServerRequestInterceptor_life::tao_release (
-    ServerRequestInterceptor_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::tao_ServerRequestInterceptor_life::tao_nil (
-    void
-  )
-{
-  return ServerRequestInterceptor::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_ServerRequestInterceptor_life::tao_marshal (
-    ServerRequestInterceptor_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::ServerRequestInterceptor_ptr
-PortableInterceptor::tao_ServerRequestInterceptor_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ServerRequestInterceptor::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_ServerRequestInterceptor_cast::tao_upcast (
-    void *src
-  )
-{
-  ServerRequestInterceptor **tmp =
-    ACE_static_cast (ServerRequestInterceptor **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2144,58 +1780,6 @@ TAO_NAMESPACE_END
 
 int PortableInterceptor::PolicyFactory::_tao_class_id = 0;
 
-PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::tao_PolicyFactory_life::tao_duplicate (
-    PolicyFactory_ptr p
-  )
-{
-  return PolicyFactory::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_PolicyFactory_life::tao_release (
-    PolicyFactory_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::tao_PolicyFactory_life::tao_nil (
-    void
-  )
-{
-  return PolicyFactory::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_PolicyFactory_life::tao_marshal (
-    PolicyFactory_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::PolicyFactory_ptr
-PortableInterceptor::tao_PolicyFactory_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PolicyFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_PolicyFactory_cast::tao_upcast (
-    void *src
-  )
-{
-  PolicyFactory **tmp =
-    ACE_static_cast (PolicyFactory **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2381,58 +1965,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:63
 
 int PortableInterceptor::ORBInitInfo::_tao_class_id = 0;
-
-PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::tao_ORBInitInfo_life::tao_duplicate (
-    ORBInitInfo_ptr p
-  )
-{
-  return ORBInitInfo::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_ORBInitInfo_life::tao_release (
-    ORBInitInfo_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::tao_ORBInitInfo_life::tao_nil (
-    void
-  )
-{
-  return ORBInitInfo::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_ORBInitInfo_life::tao_marshal (
-    ORBInitInfo_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::ORBInitInfo_ptr
-PortableInterceptor::tao_ORBInitInfo_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ORBInitInfo::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_ORBInitInfo_cast::tao_upcast (
-    void *src
-  )
-{
-  ORBInitInfo **tmp =
-    ACE_static_cast (ORBInitInfo **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -2940,58 +2472,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:63
 
 int PortableInterceptor::ORBInitializer::_tao_class_id = 0;
-
-PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::tao_ORBInitializer_life::tao_duplicate (
-    ORBInitializer_ptr p
-  )
-{
-  return ORBInitializer::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_ORBInitializer_life::tao_release (
-    ORBInitializer_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::tao_ORBInitializer_life::tao_nil (
-    void
-  )
-{
-  return ORBInitializer::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_ORBInitializer_life::tao_marshal (
-    ORBInitializer_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::ORBInitializer_ptr
-PortableInterceptor::tao_ORBInitializer_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ORBInitializer::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_ORBInitializer_cast::tao_upcast (
-    void *src
-  )
-{
-  ORBInitializer **tmp =
-    ACE_static_cast (ORBInitializer **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class

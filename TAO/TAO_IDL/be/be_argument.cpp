@@ -20,10 +20,12 @@
 // ============================================================================
 
 #include "be_argument.h"
+#include "be_type.h"
 #include "be_visitor.h"
+#include "nr_extern.h"
 
-ACE_RCSID (be, 
-           be_argument, 
+ACE_RCSID (be,
+           be_argument,
            "$Id$")
 
 be_argument::be_argument (void)
@@ -50,6 +52,12 @@ be_argument::be_argument (AST_Argument::Direction d,
     be_decl (AST_Decl::NT_argument,
              n)
 {
+  if (!ScopeAsDecl (this->defined_in ())->imported ())
+    {
+      be_type *bt = be_type::narrow_from_decl (ft);
+      bt->seen_in_operation (I_TRUE);
+      this->set_arg_seen_bit (bt);
+    }
 }
 
 

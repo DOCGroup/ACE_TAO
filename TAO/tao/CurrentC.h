@@ -68,29 +68,8 @@ TAO_NAMESPACE  CORBA
 
   class Current;
   typedef Current *Current_ptr;
-  struct tao_Current_life;
-  typedef TAO_Objref_Var_T<Current, tao_Current_life> Current_var;
-  typedef TAO_Objref_Out_T<Current, tao_Current_life> Current_out;
-
-  struct TAO_Export tao_Current_life
-  {
-    static Current_ptr tao_duplicate (Current_ptr);
-    static void tao_release (Current_ptr);
-    static Current_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Current_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Export tao_Current_cast
-  {
-    static Current_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<Current> Current_var;
+  typedef TAO_Objref_Out_T<Current> Current_out;
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54

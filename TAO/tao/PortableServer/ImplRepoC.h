@@ -83,41 +83,18 @@ TAO_NAMESPACE  ImplementationRepository
 
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
-  struct tao_ServerObject_life;
 
   typedef
     TAO_Objref_Var_T<
-        ServerObject,
-        tao_ServerObject_life
+        ServerObject
       >
     ServerObject_var;
 
   typedef
     TAO_Objref_Out_T<
-        ServerObject,
-        tao_ServerObject_life
+        ServerObject
       >
     ServerObject_out;
-
-  struct TAO_PortableServer_Export tao_ServerObject_life
-  {
-    static ServerObject_ptr tao_duplicate (ServerObject_ptr);
-    static void tao_release (ServerObject_ptr);
-    static ServerObject_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServerObject_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ServerObject_cast
-  {
-    static ServerObject_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -792,41 +769,18 @@ TAO_NAMESPACE  ImplementationRepository
 
   class ServerInformationIterator;
   typedef ServerInformationIterator *ServerInformationIterator_ptr;
-  struct tao_ServerInformationIterator_life;
 
   typedef
     TAO_Objref_Var_T<
-        ServerInformationIterator,
-        tao_ServerInformationIterator_life
+        ServerInformationIterator
       >
     ServerInformationIterator_var;
 
   typedef
     TAO_Objref_Out_T<
-        ServerInformationIterator,
-        tao_ServerInformationIterator_life
+        ServerInformationIterator
       >
     ServerInformationIterator_out;
-
-  struct TAO_PortableServer_Export tao_ServerInformationIterator_life
-  {
-    static ServerInformationIterator_ptr tao_duplicate (ServerInformationIterator_ptr);
-    static void tao_release (ServerInformationIterator_ptr);
-    static ServerInformationIterator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServerInformationIterator_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ServerInformationIterator_cast
-  {
-    static ServerInformationIterator_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -838,41 +792,18 @@ TAO_NAMESPACE  ImplementationRepository
 
   class Administration;
   typedef Administration *Administration_ptr;
-  struct tao_Administration_life;
 
   typedef
     TAO_Objref_Var_T<
-        Administration,
-        tao_Administration_life
+        Administration
       >
     Administration_var;
 
   typedef
     TAO_Objref_Out_T<
-        Administration,
-        tao_Administration_life
+        Administration
       >
     Administration_out;
-
-  struct TAO_PortableServer_Export tao_Administration_life
-  {
-    static Administration_ptr tao_duplicate (Administration_ptr);
-    static void tao_release (Administration_ptr);
-    static Administration_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Administration_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_Administration_cast
-  {
-    static Administration_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 

@@ -322,58 +322,6 @@ Messaging::ExceptionHolder_init::create_for_unmarshal (void)
 
 int Messaging::ReplyHandler::_tao_class_id = 0;
 
-Messaging::ReplyHandler_ptr
-Messaging::tao_ReplyHandler_life::tao_duplicate (
-    Messaging::ReplyHandler_ptr p
-  )
-{
-  return Messaging::ReplyHandler::_duplicate (p);
-}
-
-void
-Messaging::tao_ReplyHandler_life::tao_release (
-    Messaging::ReplyHandler_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::ReplyHandler_ptr
-Messaging::tao_ReplyHandler_life::tao_nil (
-    void
-  )
-{
-  return Messaging::ReplyHandler::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_ReplyHandler_life::tao_marshal (
-    Messaging::ReplyHandler_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::ReplyHandler_ptr
-Messaging::tao_ReplyHandler_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::ReplyHandler::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_ReplyHandler_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::ReplyHandler **tmp =
-    ACE_static_cast (Messaging::ReplyHandler **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<

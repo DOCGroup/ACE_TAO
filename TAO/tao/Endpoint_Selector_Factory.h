@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_ENDPOINT_SELECTOR_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -27,7 +26,6 @@
 
 #include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
-
 
 class TAO_GIOP_Invocation;
 class TAO_Invocation_Endpoint_Selector;
@@ -62,6 +60,11 @@ public:
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
                              TAO_GIOP_Invocation *invocation
                              ACE_ENV_ARG_DECL) = 0;
+
+  virtual TAO_Invocation_Endpoint_Selector *get_selector (
+              ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+
 };
 
 #include /**/ "ace/post.h"

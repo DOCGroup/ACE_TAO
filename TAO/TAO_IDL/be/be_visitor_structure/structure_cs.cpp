@@ -88,10 +88,6 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
                         -1);
     }
 
-  // Generate the conditional explicit template instantiations for our
-  // _var and/or _out clases.
-  node->gen_common_tmplinst (os);
-
   node->cli_stub_gen (I_TRUE);
   return 0;
 }

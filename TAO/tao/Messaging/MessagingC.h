@@ -32,7 +32,6 @@
 #error "You should not include MessagingC.h directly, use Messaging.h"
 #endif /* !TAO_MESSAGING_SAFE_INCLUDE */
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -82,15 +81,13 @@ TAO_NAMESPACE  Messaging
   
   typedef
     TAO_Value_Var_T<
-        ExceptionHolder,
-        tao_ExceptionHolder_life
+        ExceptionHolder
       >
     ExceptionHolder_var;
   
   typedef
     TAO_Value_Out_T<
-        ExceptionHolder,
-        tao_ExceptionHolder_life
+        ExceptionHolder
       >
     ExceptionHolder_out;
   
@@ -205,38 +202,16 @@ TAO_NAMESPACE  Messaging
   
   typedef
     TAO_Objref_Var_T<
-        ReplyHandler,
-        tao_ReplyHandler_life
+        ReplyHandler
       >
     ReplyHandler_var;
   
   typedef
     TAO_Objref_Out_T<
-        ReplyHandler,
-        tao_ReplyHandler_life
+        ReplyHandler
       >
     ReplyHandler_out;
   
-  struct TAO_Messaging_Export tao_ReplyHandler_life
-  {
-    static ReplyHandler_ptr tao_duplicate (ReplyHandler_ptr);
-    static void tao_release (ReplyHandler_ptr);
-    static ReplyHandler_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ReplyHandler_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Messaging_Export tao_ReplyHandler_cast
-  {
-    static ReplyHandler_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from

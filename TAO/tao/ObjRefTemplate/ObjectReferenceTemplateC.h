@@ -89,24 +89,16 @@ TAO_NAMESPACE  PortableInterceptor
   
   typedef
     TAO_Value_Var_T<
-        ObjectReferenceFactory,
-        tao_ObjectReferenceFactory_life
+        ObjectReferenceFactory
       >
     ObjectReferenceFactory_var;
   
   typedef
     TAO_Value_Out_T<
-        ObjectReferenceFactory,
-        tao_ObjectReferenceFactory_life
+        ObjectReferenceFactory
       >
     ObjectReferenceFactory_out;
   
-  struct TAO_ORT_Export tao_ObjectReferenceFactory_life
-  {
-    static void tao_add_ref (ObjectReferenceFactory *);
-    static void tao_remove_ref (ObjectReferenceFactory *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -178,23 +170,16 @@ TAO_NAMESPACE  PortableInterceptor
   
   typedef
     TAO_Value_Var_T<
-        ObjectReferenceTemplate,
-        tao_ObjectReferenceTemplate_life
+        ObjectReferenceTemplate
       >
     ObjectReferenceTemplate_var;
   
   typedef
     TAO_Value_Out_T<
-        ObjectReferenceTemplate,
-        tao_ObjectReferenceTemplate_life
+        ObjectReferenceTemplate
       >
     ObjectReferenceTemplate_out;
   
-  struct TAO_ORT_Export tao_ObjectReferenceTemplate_life
-  {
-    static void tao_add_ref (ObjectReferenceTemplate *);
-    static void tao_remove_ref (ObjectReferenceTemplate *);
-  };
 
 #endif /* end #if !defined */
   
@@ -281,8 +266,7 @@ TAO_NAMESPACE  PortableInterceptor
         ObjectReferenceTemplateSeq,
         TAO_Valuetype_Manager<
             ObjectReferenceTemplate,
-            ObjectReferenceTemplate_var,
-            PortableInterceptor::tao_ObjectReferenceTemplate_life
+            ObjectReferenceTemplate_var
           >
       >
     ObjectReferenceTemplateSeq_var;
@@ -293,8 +277,7 @@ TAO_NAMESPACE  PortableInterceptor
         ObjectReferenceTemplateSeq_var,
         TAO_Valuetype_Manager<
             ObjectReferenceTemplate,
-            ObjectReferenceTemplate_var,
-            PortableInterceptor::tao_ObjectReferenceTemplate_life
+            ObjectReferenceTemplate_var
           >
       >
     ObjectReferenceTemplateSeq_out;
@@ -303,8 +286,7 @@ TAO_NAMESPACE  PortableInterceptor
     : public
         TAO_Unbounded_Valuetype_Sequence<
             ObjectReferenceTemplate,
-            ObjectReferenceTemplate_var,
-            tao_ObjectReferenceTemplate_life
+            ObjectReferenceTemplate_var
           >
   {
   public:

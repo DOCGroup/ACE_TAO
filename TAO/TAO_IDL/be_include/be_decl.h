@@ -26,6 +26,7 @@
 
 class be_scope;
 class be_visitor;
+class be_type;
 
 class be_decl : public virtual AST_Decl
 {
@@ -85,6 +86,27 @@ public:
   idl_bool cli_stub_cdr_op_gen (void);
   idl_bool cli_inline_cdr_op_gen (void);
   idl_bool cli_inline_cdr_decl_gen (void);
+  idl_bool cli_traits_gen (void);
+  idl_bool cli_tmpl_class_gen (void);
+  idl_bool cli_pragma_inst_gen (void);
+  idl_bool cli_inarg_tmpl_class_gen (void);
+  idl_bool cli_inarg_pragma_inst_gen (void);
+  idl_bool cli_inoutarg_tmpl_class_gen (void);
+  idl_bool cli_inoutarg_pragma_inst_gen (void);
+  idl_bool cli_outarg_tmpl_class_gen (void);
+  idl_bool cli_outarg_pragma_inst_gen (void);
+  idl_bool cli_retarg_tmpl_class_gen (void);
+  idl_bool cli_retarg_pragma_inst_gen (void);
+  idl_bool srv_tmpl_class_gen (void);
+  idl_bool srv_pragma_inst_gen (void);
+  idl_bool srv_inarg_tmpl_class_gen (void);
+  idl_bool srv_inarg_pragma_inst_gen (void);
+  idl_bool srv_inoutarg_tmpl_class_gen (void);
+  idl_bool srv_inoutarg_pragma_inst_gen (void);
+  idl_bool srv_outarg_tmpl_class_gen (void);
+  idl_bool srv_outarg_pragma_inst_gen (void);
+  idl_bool srv_retarg_tmpl_class_gen (void);
+  idl_bool srv_retarg_pragma_inst_gen (void);
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (idl_bool);
@@ -101,10 +123,35 @@ public:
   void cli_stub_cdr_op_gen (idl_bool);
   void cli_inline_cdr_op_gen (idl_bool);
   void cli_inline_cdr_decl_gen (idl_bool);
+  void cli_traits_gen (idl_bool);
+  void cli_tmpl_class_gen (idl_bool);
+  void cli_pragma_inst_gen (idl_bool);
+  void cli_inarg_tmpl_class_gen (idl_bool);
+  void cli_inarg_pragma_inst_gen (idl_bool);
+  void cli_inoutarg_tmpl_class_gen (idl_bool);
+  void cli_inoutarg_pragma_inst_gen (idl_bool);
+  void cli_outarg_tmpl_class_gen (idl_bool);
+  void cli_outarg_pragma_inst_gen (idl_bool);
+  void cli_retarg_tmpl_class_gen (idl_bool);
+  void cli_retarg_pragma_inst_gen (idl_bool);
+  void srv_tmpl_class_gen (idl_bool);
+  void srv_pragma_inst_gen (idl_bool);
+  void srv_inarg_tmpl_class_gen (idl_bool);
+  void srv_inarg_pragma_inst_gen (idl_bool);
+  void srv_inoutarg_tmpl_class_gen (idl_bool);
+  void srv_inoutarg_pragma_inst_gen (idl_bool);
+  void srv_outarg_tmpl_class_gen (idl_bool);
+  void srv_outarg_pragma_inst_gen (idl_bool);
+  void srv_retarg_tmpl_class_gen (idl_bool);
+  void srv_retarg_pragma_inst_gen (idl_bool);
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);
   DEF_NARROW_FROM_DECL (be_decl);
+
+protected:
+  // Called by be_operation (for the return type) and be_argument.
+  void set_arg_seen_bit (be_type *);
 
 private:
   // Variables that indicate if the code generation for that node is already
@@ -123,7 +170,27 @@ private:
   idl_bool cli_stub_cdr_op_gen_;
   idl_bool cli_inline_cdr_op_gen_;
   idl_bool cli_inline_cdr_decl_gen_;
-
+  idl_bool cli_traits_gen_;
+  idl_bool cli_tmpl_class_gen_;
+  idl_bool cli_pragma_inst_gen_;
+  idl_bool cli_inarg_tmpl_class_gen_;
+  idl_bool cli_inarg_pragma_inst_gen_;
+  idl_bool cli_inoutarg_tmpl_class_gen_;
+  idl_bool cli_inoutarg_pragma_inst_gen_;
+  idl_bool cli_outarg_tmpl_class_gen_;
+  idl_bool cli_outarg_pragma_inst_gen_;
+  idl_bool cli_retarg_tmpl_class_gen_;
+  idl_bool cli_retarg_pragma_inst_gen_;
+  idl_bool srv_tmpl_class_gen_;
+  idl_bool srv_pragma_inst_gen_;
+  idl_bool srv_inarg_tmpl_class_gen_;
+  idl_bool srv_inarg_pragma_inst_gen_;
+  idl_bool srv_inoutarg_tmpl_class_gen_;
+  idl_bool srv_inoutarg_pragma_inst_gen_;
+  idl_bool srv_outarg_tmpl_class_gen_;
+  idl_bool srv_outarg_pragma_inst_gen_;
+  idl_bool srv_retarg_tmpl_class_gen_;
+  idl_bool srv_retarg_pragma_inst_gen_;
 };
 
 #endif // if !defined

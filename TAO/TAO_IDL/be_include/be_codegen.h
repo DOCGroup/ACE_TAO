@@ -400,6 +400,11 @@ private:
   void gen_standard_include (TAO_OutStream *stream,
                              const char *included_file);
 
+  // Utility methods for generating ORB file includes.
+  void gen_stub_hdr_includes (void);
+  void gen_stub_src_includes (void);
+  void gen_arg_file_include (ACE_UINT64, const char *);
+
 private:
   TAO_OutStream *client_header_;
   // Client header stream.

@@ -10,18 +10,20 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TYPECODEFACTORY_ADAPTER_H
 #define TAO_TYPECODEFACTORY_ADAPTER_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/Exception.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
+#include "tao/Exception.h"
+#include "tao/OBV_Constants.h"
+#include "tao/corbafwd.h"
 
 namespace CORBA
 {

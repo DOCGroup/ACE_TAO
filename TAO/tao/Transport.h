@@ -15,6 +15,7 @@
 
 #ifndef TAO_TRANSPORT_H
 #define TAO_TRANSPORT_H
+
 #include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
@@ -417,6 +418,10 @@ public:
   ACE_Event_Handler::Reference_Count add_reference (void);
   ACE_Event_Handler::Reference_Count remove_reference (void);
 
+  /// Return the messaging object that is used to format the data that
+  /// needs to be sent.
+  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
+
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -446,10 +451,6 @@ public:
 protected:
 
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
-
-  /// Return the messaging object that is used to format the data that
-  /// needs to be sent.
-  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
 
 public:
 

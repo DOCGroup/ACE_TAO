@@ -21,7 +21,6 @@
 # include "IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
@@ -29,12 +28,21 @@ ACE_RCSID (tao,
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag)
+                                        CORBA::Boolean )
   : TAO_Transport (IOP::TAG_INTERNET_IOP,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+  if (connection_handler_ != 0)
+    {
+      // REFCNT: Matches one of
+      // TAO_Transport::connection_handler_close() or
+      // TAO_Transport::close_connection_shared.
+      this->connection_handler_->incr_refcount();
+    }
+#if 0
+  // First step in deprecating this. No one seems using it.
   if (flag)
     {
       // Use the lite version of the protocol
@@ -42,6 +50,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                TAO_GIOP_Message_Lite (orb_core));
     }
   else
+#endif /*if 0*/
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,

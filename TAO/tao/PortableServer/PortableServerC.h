@@ -90,29 +90,8 @@ TAO_NAMESPACE  PortableServer
 
   class POA;
   typedef POA *POA_ptr;
-  struct tao_POA_life;
-  typedef TAO_Objref_Var_T<POA, tao_POA_life> POA_var;
-  typedef TAO_Objref_Out_T<POA, tao_POA_life> POA_out;
-
-  struct TAO_PortableServer_Export tao_POA_life
-  {
-    static POA_ptr tao_duplicate (POA_ptr);
-    static void tao_release (POA_ptr);
-    static POA_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        POA_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_POA_cast
-  {
-    static POA_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<POA> POA_var;
+  typedef TAO_Objref_Out_T<POA> POA_out;
 
 #endif /* end #if !defined */
 
@@ -126,8 +105,7 @@ TAO_NAMESPACE  PortableServer
         POAList,
         TAO_Object_Manager<
             PortableServer::POA,
-            PortableServer::POA_var,
-            PortableServer::tao_POA_life
+            PortableServer::POA_var
           >
       >
     POAList_var;
@@ -138,8 +116,7 @@ TAO_NAMESPACE  PortableServer
         POAList_var,
         TAO_Object_Manager<
             PortableServer::POA,
-            PortableServer::POA_var,
-            PortableServer::tao_POA_life
+            PortableServer::POA_var
           >
       >
     POAList_out;
@@ -148,9 +125,7 @@ TAO_NAMESPACE  PortableServer
     : public
         TAO_Unbounded_Object_Sequence<
             PortableServer::POA,
-            PortableServer::POA_var,
-            PortableServer::tao_POA_life,
-            PortableServer::tao_POA_cast
+            PortableServer::POA_var
           >
   {
   public:
@@ -408,29 +383,8 @@ TAO_NAMESPACE  PortableServer
 
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
-  struct tao_ThreadPolicy_life;
-  typedef TAO_Objref_Var_T<ThreadPolicy, tao_ThreadPolicy_life> ThreadPolicy_var;
-  typedef TAO_Objref_Out_T<ThreadPolicy, tao_ThreadPolicy_life> ThreadPolicy_out;
-
-  struct TAO_PortableServer_Export tao_ThreadPolicy_life
-  {
-    static ThreadPolicy_ptr tao_duplicate (ThreadPolicy_ptr);
-    static void tao_release (ThreadPolicy_ptr);
-    static ThreadPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ThreadPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ThreadPolicy_cast
-  {
-    static ThreadPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<ThreadPolicy> ThreadPolicy_var;
+  typedef TAO_Objref_Out_T<ThreadPolicy> ThreadPolicy_out;
 
 #endif /* end #if !defined */
 
@@ -528,29 +482,8 @@ TAO_NAMESPACE  PortableServer
 
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
-  struct tao_LifespanPolicy_life;
-  typedef TAO_Objref_Var_T<LifespanPolicy, tao_LifespanPolicy_life> LifespanPolicy_var;
-  typedef TAO_Objref_Out_T<LifespanPolicy, tao_LifespanPolicy_life> LifespanPolicy_out;
-
-  struct TAO_PortableServer_Export tao_LifespanPolicy_life
-  {
-    static LifespanPolicy_ptr tao_duplicate (LifespanPolicy_ptr);
-    static void tao_release (LifespanPolicy_ptr);
-    static LifespanPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        LifespanPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_LifespanPolicy_cast
-  {
-    static LifespanPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<LifespanPolicy> LifespanPolicy_var;
+  typedef TAO_Objref_Out_T<LifespanPolicy> LifespanPolicy_out;
 
 #endif /* end #if !defined */
 
@@ -646,29 +579,8 @@ TAO_NAMESPACE  PortableServer
 
   class IdUniquenessPolicy;
   typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
-  struct tao_IdUniquenessPolicy_life;
-  typedef TAO_Objref_Var_T<IdUniquenessPolicy, tao_IdUniquenessPolicy_life> IdUniquenessPolicy_var;
-  typedef TAO_Objref_Out_T<IdUniquenessPolicy, tao_IdUniquenessPolicy_life> IdUniquenessPolicy_out;
-
-  struct TAO_PortableServer_Export tao_IdUniquenessPolicy_life
-  {
-    static IdUniquenessPolicy_ptr tao_duplicate (IdUniquenessPolicy_ptr);
-    static void tao_release (IdUniquenessPolicy_ptr);
-    static IdUniquenessPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        IdUniquenessPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_IdUniquenessPolicy_cast
-  {
-    static IdUniquenessPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<IdUniquenessPolicy> IdUniquenessPolicy_var;
+  typedef TAO_Objref_Out_T<IdUniquenessPolicy> IdUniquenessPolicy_out;
 
 #endif /* end #if !defined */
 
@@ -764,29 +676,8 @@ TAO_NAMESPACE  PortableServer
 
   class IdAssignmentPolicy;
   typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
-  struct tao_IdAssignmentPolicy_life;
-  typedef TAO_Objref_Var_T<IdAssignmentPolicy, tao_IdAssignmentPolicy_life> IdAssignmentPolicy_var;
-  typedef TAO_Objref_Out_T<IdAssignmentPolicy, tao_IdAssignmentPolicy_life> IdAssignmentPolicy_out;
-
-  struct TAO_PortableServer_Export tao_IdAssignmentPolicy_life
-  {
-    static IdAssignmentPolicy_ptr tao_duplicate (IdAssignmentPolicy_ptr);
-    static void tao_release (IdAssignmentPolicy_ptr);
-    static IdAssignmentPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        IdAssignmentPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_IdAssignmentPolicy_cast
-  {
-    static IdAssignmentPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<IdAssignmentPolicy> IdAssignmentPolicy_var;
+  typedef TAO_Objref_Out_T<IdAssignmentPolicy> IdAssignmentPolicy_out;
 
 #endif /* end #if !defined */
 
@@ -884,29 +775,8 @@ TAO_NAMESPACE  PortableServer
 
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
-  struct tao_ImplicitActivationPolicy_life;
-  typedef TAO_Objref_Var_T<ImplicitActivationPolicy, tao_ImplicitActivationPolicy_life> ImplicitActivationPolicy_var;
-  typedef TAO_Objref_Out_T<ImplicitActivationPolicy, tao_ImplicitActivationPolicy_life> ImplicitActivationPolicy_out;
-
-  struct TAO_PortableServer_Export tao_ImplicitActivationPolicy_life
-  {
-    static ImplicitActivationPolicy_ptr tao_duplicate (ImplicitActivationPolicy_ptr);
-    static void tao_release (ImplicitActivationPolicy_ptr);
-    static ImplicitActivationPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ImplicitActivationPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ImplicitActivationPolicy_cast
-  {
-    static ImplicitActivationPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<ImplicitActivationPolicy> ImplicitActivationPolicy_var;
+  typedef TAO_Objref_Out_T<ImplicitActivationPolicy> ImplicitActivationPolicy_out;
 
 #endif /* end #if !defined */
 
@@ -1006,29 +876,8 @@ TAO_NAMESPACE  PortableServer
 
   class ServantRetentionPolicy;
   typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
-  struct tao_ServantRetentionPolicy_life;
-  typedef TAO_Objref_Var_T<ServantRetentionPolicy, tao_ServantRetentionPolicy_life> ServantRetentionPolicy_var;
-  typedef TAO_Objref_Out_T<ServantRetentionPolicy, tao_ServantRetentionPolicy_life> ServantRetentionPolicy_out;
-
-  struct TAO_PortableServer_Export tao_ServantRetentionPolicy_life
-  {
-    static ServantRetentionPolicy_ptr tao_duplicate (ServantRetentionPolicy_ptr);
-    static void tao_release (ServantRetentionPolicy_ptr);
-    static ServantRetentionPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServantRetentionPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ServantRetentionPolicy_cast
-  {
-    static ServantRetentionPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<ServantRetentionPolicy> ServantRetentionPolicy_var;
+  typedef TAO_Objref_Out_T<ServantRetentionPolicy> ServantRetentionPolicy_out;
 
 #endif /* end #if !defined */
 
@@ -1129,29 +978,8 @@ TAO_NAMESPACE  PortableServer
 
   class RequestProcessingPolicy;
   typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
-  struct tao_RequestProcessingPolicy_life;
-  typedef TAO_Objref_Var_T<RequestProcessingPolicy, tao_RequestProcessingPolicy_life> RequestProcessingPolicy_var;
-  typedef TAO_Objref_Out_T<RequestProcessingPolicy, tao_RequestProcessingPolicy_life> RequestProcessingPolicy_out;
-
-  struct TAO_PortableServer_Export tao_RequestProcessingPolicy_life
-  {
-    static RequestProcessingPolicy_ptr tao_duplicate (RequestProcessingPolicy_ptr);
-    static void tao_release (RequestProcessingPolicy_ptr);
-    static RequestProcessingPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RequestProcessingPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_RequestProcessingPolicy_cast
-  {
-    static RequestProcessingPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<RequestProcessingPolicy> RequestProcessingPolicy_var;
+  typedef TAO_Objref_Out_T<RequestProcessingPolicy> RequestProcessingPolicy_out;
 
 #endif /* end #if !defined */
 
@@ -1233,29 +1061,8 @@ TAO_NAMESPACE  PortableServer
 
   class POAManager;
   typedef POAManager *POAManager_ptr;
-  struct tao_POAManager_life;
-  typedef TAO_Objref_Var_T<POAManager, tao_POAManager_life> POAManager_var;
-  typedef TAO_Objref_Out_T<POAManager, tao_POAManager_life> POAManager_out;
-
-  struct TAO_PortableServer_Export tao_POAManager_life
-  {
-    static POAManager_ptr tao_duplicate (POAManager_ptr);
-    static void tao_release (POAManager_ptr);
-    static POAManager_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        POAManager_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_POAManager_cast
-  {
-    static POAManager_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<POAManager> POAManager_var;
+  typedef TAO_Objref_Out_T<POAManager> POAManager_out;
 
 #endif /* end #if !defined */
 
@@ -1455,29 +1262,8 @@ TAO_NAMESPACE  PortableServer
 
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
-  struct tao_AdapterActivator_life;
-  typedef TAO_Objref_Var_T<AdapterActivator, tao_AdapterActivator_life> AdapterActivator_var;
-  typedef TAO_Objref_Out_T<AdapterActivator, tao_AdapterActivator_life> AdapterActivator_out;
-
-  struct TAO_PortableServer_Export tao_AdapterActivator_life
-  {
-    static AdapterActivator_ptr tao_duplicate (AdapterActivator_ptr);
-    static void tao_release (AdapterActivator_ptr);
-    static AdapterActivator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        AdapterActivator_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_AdapterActivator_cast
-  {
-    static AdapterActivator_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<AdapterActivator> AdapterActivator_var;
+  typedef TAO_Objref_Out_T<AdapterActivator> AdapterActivator_out;
 
 #endif /* end #if !defined */
 
@@ -1559,29 +1345,8 @@ TAO_NAMESPACE  PortableServer
 
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
-  struct tao_ServantManager_life;
-  typedef TAO_Objref_Var_T<ServantManager, tao_ServantManager_life> ServantManager_var;
-  typedef TAO_Objref_Out_T<ServantManager, tao_ServantManager_life> ServantManager_out;
-
-  struct TAO_PortableServer_Export tao_ServantManager_life
-  {
-    static ServantManager_ptr tao_duplicate (ServantManager_ptr);
-    static void tao_release (ServantManager_ptr);
-    static ServantManager_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServantManager_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ServantManager_cast
-  {
-    static ServantManager_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<ServantManager> ServantManager_var;
+  typedef TAO_Objref_Out_T<ServantManager> ServantManager_out;
 
 #endif /* end #if !defined */
 
@@ -1651,29 +1416,8 @@ TAO_NAMESPACE  PortableServer
 
   class ServantActivator;
   typedef ServantActivator *ServantActivator_ptr;
-  struct tao_ServantActivator_life;
-  typedef TAO_Objref_Var_T<ServantActivator, tao_ServantActivator_life> ServantActivator_var;
-  typedef TAO_Objref_Out_T<ServantActivator, tao_ServantActivator_life> ServantActivator_out;
-
-  struct TAO_PortableServer_Export tao_ServantActivator_life
-  {
-    static ServantActivator_ptr tao_duplicate (ServantActivator_ptr);
-    static void tao_release (ServantActivator_ptr);
-    static ServantActivator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServantActivator_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ServantActivator_cast
-  {
-    static ServantActivator_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
+  typedef TAO_Objref_Out_T<ServantActivator> ServantActivator_out;
 
 #endif /* end #if !defined */
 
@@ -1777,29 +1521,8 @@ TAO_NAMESPACE  PortableServer
 
   class ServantLocator;
   typedef ServantLocator *ServantLocator_ptr;
-  struct tao_ServantLocator_life;
-  typedef TAO_Objref_Var_T<ServantLocator, tao_ServantLocator_life> ServantLocator_var;
-  typedef TAO_Objref_Out_T<ServantLocator, tao_ServantLocator_life> ServantLocator_out;
-
-  struct TAO_PortableServer_Export tao_ServantLocator_life
-  {
-    static ServantLocator_ptr tao_duplicate (ServantLocator_ptr);
-    static void tao_release (ServantLocator_ptr);
-    static ServantLocator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServantLocator_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_ServantLocator_cast
-  {
-    static ServantLocator_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
+  typedef TAO_Objref_Out_T<ServantLocator> ServantLocator_out;
 
 #endif /* end #if !defined */
 
@@ -2910,29 +2633,8 @@ TAO_NAMESPACE  PortableServer
 
   class Current;
   typedef Current *Current_ptr;
-  struct tao_Current_life;
-  typedef TAO_Objref_Var_T<Current, tao_Current_life> Current_var;
-  typedef TAO_Objref_Out_T<Current, tao_Current_life> Current_out;
-
-  struct TAO_PortableServer_Export tao_Current_life
-  {
-    static Current_ptr tao_duplicate (Current_ptr);
-    static void tao_release (Current_ptr);
-    static Current_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Current_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_Current_cast
-  {
-    static Current_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<Current> Current_var;
+  typedef TAO_Objref_Out_T<Current> Current_out;
 
 #endif /* end #if !defined */
 

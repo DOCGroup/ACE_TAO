@@ -91,60 +91,30 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  const char *fhname = node->fwd_helper_name ();
-
-  if (ACE_OS::strcmp (fhname, "") == 0)
+  if (node->is_defined ())
     {
-      node->gen_fwd_helper_name ();
-      fhname = node->fwd_helper_name ();
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref (" 
+          << be_idt << be_idt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "CORBA::add_ref (p);" << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Value_Traits<" << node->name () << ">::tao_remove_ref ("
+          << be_idt << be_idt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "CORBA::remove_ref (p);" << be_uidt_nl
+          << "}";
     }
-
-  // Helper functions to allow non-defined forward declared valuetypes
-  // access to some methods in the full definition.
-  *os << "void" << be_nl
-      << fhname << "_life::tao_add_ref (" 
-      << be_idt << be_idt_nl
-      << node->full_name () << " * p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::add_ref (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << "void" << be_nl
-      << fhname << "_life::tao_remove_ref (" 
-      << be_idt << be_idt_nl
-       << node->full_name () << " * p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::remove_ref (p);" << be_uidt_nl
-      << "}";
-
-  *os << be_nl
-      << "\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
-      << "template class" << be_idt_nl
-      << "TAO_Value_Var_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
-      << fhname << "_life" << be_uidt_nl
-      << ">;" << be_uidt << be_uidt_nl
-      << "template class" << be_idt_nl
-      << "TAO_Value_Out_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
-      << fhname << "_life" << be_uidt_nl
-      << ">;" << be_uidt << be_uidt << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate \\" << be_idt << be_idt_nl
-      << "TAO_Value_Var_T< \\" << be_idt << be_idt_nl
-      << node->name () << ", \\" << be_nl
-      << fhname << "_life \\" << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt_nl
-      << "# pragma instantiate \\" << be_idt << be_idt_nl
-      << "TAO_Value_Out_T< \\" << be_idt << be_idt_nl
-      << node->name () << ", \\" << be_nl
-      << fhname << "_life \\" << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
   // The _downcast method    // %! use ACE_xxx_cast here ?
   *os << be_nl << be_nl

@@ -86,9 +86,7 @@ CORBA::PolicyList::PolicyList (void)
 CORBA::PolicyList::PolicyList (CORBA::ULong max)
   : TAO_Unbounded_Object_Sequence<
         CORBA::Policy,
-        CORBA::Policy_var,
-        CORBA::tao_Policy_life,
-        CORBA::tao_Policy_cast
+        CORBA::Policy_var
       >
     (max)
 {}
@@ -101,9 +99,7 @@ CORBA::PolicyList::PolicyList (
   )
   : TAO_Unbounded_Object_Sequence<
         CORBA::Policy,
-        CORBA::Policy_var,
-        CORBA::tao_Policy_life,
-        CORBA::tao_Policy_cast
+        CORBA::Policy_var
       >
     (max, length, buffer, release)
 {}
@@ -111,9 +107,7 @@ CORBA::PolicyList::PolicyList (
 CORBA::PolicyList::PolicyList (const PolicyList &seq)
   : TAO_Unbounded_Object_Sequence<
         CORBA::Policy,
-        CORBA::Policy_var,
-        CORBA::tao_Policy_life,
-        CORBA::tao_Policy_cast
+        CORBA::Policy_var
       >
     (seq)
 {}
@@ -173,12 +167,12 @@ template class TAO_Unbounded_Object_Sequence<CORBA::Policy,
           > \
       >
 
-#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy,
+# pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy,
                                                   TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>,
                                                   CORBA::tao_Policy_life,
                                                   CORBA::tao_Policy_cast>
 
-#pragms instantiate TAO_Seq_Var_Base_T<CORBA::PolicyList,
+# pragma instantiate TAO_Seq_Var_Base_T<CORBA::PolicyList,
                                        TAO_Object_Manager<CORBA::Policy,
                                                           TAO_Objref_Var_T<CORBA::Policy,
                                                                            CORBA::tao_Policy_life>,
@@ -608,7 +602,10 @@ CORBA::Boolean operator>>= (
         for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
           {
             _tao_marshal_flag =
-              CORBA::tao_Policy_life::tao_marshal (_tao_sequence[i].in (), strm);
+              TAO::Objref_Traits<CORBA::Policy>::tao_marshal (
+                  _tao_sequence[i].in (), 
+                  strm
+                );
           }
 
         return _tao_marshal_flag;

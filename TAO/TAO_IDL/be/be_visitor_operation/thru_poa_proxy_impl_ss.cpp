@@ -48,94 +48,44 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       );
     }
 
-  // retrieve the operation return type
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
-
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-          "visit_operation - "
-          "Bad return type\n"
-        ),
-        -1
-      );
-    }
-
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // STEP 2: generate the return type mapping (same as in the header file)
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_operation_rettype oro_visitor (&ctx);
+  *os << "void" << be_nl
+      << intf->full_thru_poa_proxy_impl_name () << "::";
 
-  if (bt->accept (&oro_visitor) == -1)
+  // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
     {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-          "visit_operation - "
-          "codegen for return type failed\n"
-        ),
-        -1
-      );
-    }
-
-  *os << " " << intf->full_thru_poa_proxy_impl_name () << "::";
-  *os << node->local_name ();
-
-  // STEP 4: generate the argument list with the appropriate mapping (same as
-  // in the header file)
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS);
-  be_visitor_operation_arglist oapi_visitor (&ctx);
-
-  if (node->accept (&oapi_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
-                         "visit_operation - "
-                         "codegen for argument list failed\n"),
-                        -1);
-    }
-
-  *os << be_nl << "{" << be_idt << be_nl;
-
-  if (!be_global->exception_support ())
-    {
-      // Declare a return type
-      ctx = *this->ctx_;
-      be_visitor_operation_rettype_vardecl_ss ord_visitor (&ctx);
-
-      if (bt->accept (&ord_visitor) == -1)
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
         {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-              "visit_operation - "
-              "codegen for return var decl failed\n"
-            ),
-            -1
-          );
+          *os << "_set_";
         }
-
-      if (!this->void_return_type (bt))
+      else
         {
-          *os << be_nl << "ACE_UNUSED_ARG (_tao_retval);";
+          *os << "_get_";
         }
     }
+
+  *os << node->local_name () << " (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj," << be_nl
+      << "CORBA::Object_out forward," << be_nl
+      << "TAO::Argument ** args," << be_nl
+      << "int num_args" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
 
   *os << be_nl
       << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
-      << "_collocated_tao_target_->_stubobj ()"
+      << "obj->_stubobj ()"
       << "->servant_orb_var ()->orb_core ()"
       << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "CORBA::Object_var forward_to;" << be_nl
+      << ");" << be_uidt_nl << be_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
-      << "_collocated_tao_target_->_stubobj ()->object_key ()," << be_nl
+      << "obj->_stubobj ()->object_key ()," << be_nl
       << "\"";
 
   // Check if we are an attribute node in disguise.
@@ -153,7 +103,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     }
 
   *os << node->original_local_name () << "\"," << be_nl
-      << "forward_to.out ()";
+      << "forward";
 
   if (!be_global->exception_support ())
     {
@@ -169,20 +119,10 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
   // Check if there is an exception.
   if (!be_global->exception_support ())
     {
-      if (this->gen_check_exception (bt) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-              "visit_operation - "
-              "codegen for checking exception failed\n"
-            ),
-            -1
-          );
-        }
+      *os << "ACE_CHECK;";
     }
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "servant_upcall.pre_invoke_collocated_request (";
 
   if (!be_global->exception_support ())
@@ -196,25 +136,22 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       *os << ");" << be_nl;
     }
 
-  // check if there is an exception
+  // Check if there is an exception.
   if (!be_global->exception_support ())
     {
-      if (this->gen_check_exception (bt) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_thru_"
-                             " poa_collocated_ss::"
-                             "visit_operation - "
-                             "codegen for checking exception failed\n"),
-                            -1);
-        }
+      *os << "ACE_CHECK;";
     }
 
-  *os << be_nl;
+  *os << be_nl << be_nl;
 
-  if (!this->void_return_type (bt))
+  if (!node->void_return_type ())
     {
-      *os << "return ";
+      *os << "((TAO::Arg_Traits<";
+
+      this->gen_arg_template_param_name (node->return_type (),
+                                         os);
+
+      *os << ">::stub_ret_val *) args[0])->arg () =" << be_idt_nl;
     }
 
   *os << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
@@ -224,12 +161,21 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt;
 
+  be_visitor_context ctx;
+
   if (this->gen_invoke (ctx, node) == -1)
     {
       return -1;
     }
 
-  *os << "}";
+  if (!node->void_return_type ())
+    {
+      *os << be_uidt;
+    }
+
+  *os << be_uidt << be_uidt_nl
+      << "ACE_CHECK;" << be_uidt_nl
+      << "}";
 
   return 0;
 }
@@ -237,36 +183,63 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
 
 int
 be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
-    be_visitor_context &ctx,
+    be_visitor_context &,
     be_operation *node
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "->" << node->local_name () << " ("
-      << be_idt << be_idt << be_idt_nl;
+      << be_idt << be_idt << be_idt;
 
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
-  be_visitor_operation_argument visitor (&ctx);
+  UTL_ScopeActiveIterator si (node,
+                              UTL_Scope::IK_decls);
 
-  if (node->accept (&visitor) == -1)
+  if (si.is_done ())
     {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-          "gen_invoke - "
-          "codegen for making upcall failed\n"
-        ),
-        -1
-      );
+      *os << be_nl
+          << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
+          << ");";
+
+      return 0;
+    }
+
+  AST_Argument *arg = 0;
+  int index = 1;
+
+  for (; !si.is_done (); si.next (), ++index)
+    {
+      arg = AST_Argument::narrow_from_decl (si.item ());
+
+      *os << (index == 1 ? "" : ",") << be_nl
+          << "((TAO::Arg_Traits<";
+
+      this->gen_arg_template_param_name (arg->field_type (), 
+                                         os);
+
+      *os << ">::";
+
+      switch (arg->direction ())
+        {
+          case AST_Argument::dir_IN:
+            *os << "in";
+            break;
+          case AST_Argument::dir_INOUT:
+            *os << "inout";
+            break;
+          case AST_Argument::dir_OUT:
+            *os << "out";
+          default:
+            break;
+        }
+
+      *os << "_arg_val *) args[" << index << "])->arg ()";
     }
 
   // End the upcall
-  *os << be_uidt_nl
+  *os << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");";
-
-  *os << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;
 }

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
 #define TAO_TRANSPORT_MUX_STRATEGY_H
 #include /**/ "ace/pre.h"

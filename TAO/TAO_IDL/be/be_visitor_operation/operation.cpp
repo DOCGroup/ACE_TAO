@@ -381,64 +381,23 @@ be_visitor_operation::gen_stub_operation_body (
     be_type *return_type
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor_context ctx;
-  const char *target = "_collocated_tao_target_";
+  be_interface *intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
 
-  if (node->defined_in ()->is_abstract ())
-    {
-      target = "this";
-    }
-
-  *os << be_nl << "{" << be_idt_nl;
-
-  const char *env = this->gen_environment_var ();
-
-  if (ACE_OS::strcmp ("", env) != 0)
-    {
-      *os << env << be_nl;
-    }
-
-  // Generate the actual code for the stub. However, if any of the argument
-  // types is "native", we flag a MARSHAL exception.
-  // last argument - is always ACE_ENV_ARG_PARAMETER
-  if (!node->has_native ())
-    {
-      // native type does not exist.
-
-      // Generate any "pre" stub information such as tables or declarations
-      // This is a template method and the actual work will be done by the
-      // derived class
-      if (this->gen_pre_stub_info (node) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "gen_pre_stub_info failed\n"
-            ),
-            -1
-          );
-        }
-    }
-
-  // Declare return type.
-  ctx = *this->ctx_;
-  be_visitor_operation_rettype_vardecl_cs rd_visitor (&ctx);
-
-  if (return_type->accept (&rd_visitor) == -1)
+  if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
                          "visit_operation - "
-                         "codegen for return var decl failed\n"),
+                         "bad interface scope\n"),
                         -1);
     }
 
-  if (node->void_return_type () == 0)
-    {
-      *os << be_nl;
-    }
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_visitor_context ctx;
+
+  *os << be_nl << "{" << be_idt_nl;
 
   if (node->has_native ()) // native exists => no stub
     {
@@ -448,112 +407,176 @@ be_visitor_operation::gen_stub_operation_body (
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+              "(%N:%l) be_visitor_operation_cs::"
               "visit_operation - "
-              "codegen for return var failed\n"
+              "codegen for native exception failed\n"
             ),
             -1
           );
         }
+
+      *os << be_uidt_nl << "}";
+
+      return 0;
+    }
+
+  if (!node->is_abstract ())
+    {
+      // If the object is lazily evaluated the proxy brker might well
+      // be null.  Initialize it now.
+      *os << "if (!this->is_evaluated ())" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);"
+          << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
+          << be_idt_nl
+          << "{" << be_idt_nl
+          << intf->flat_name () << "_setup_collocation (" 
+          << be_idt << be_idt_nl
+          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
+          << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+    }
+
+  const char *env = this->gen_environment_var ();
+
+  if (ACE_OS::strcmp ("", env) != 0)
+    {
+      *os << env << be_nl;
+    }
+
+  // Declare return type helper class.
+
+  *os << "TAO::Arg_Traits<";
+
+  this->gen_arg_template_param_name (return_type, 
+                                     os);
+
+  *os << ">::stub_ret_val _tao_retval;";
+
+  // Declare the argument helper classes.
+
+  AST_Argument *arg = 0;
+
+  for (UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
+       ! arg_decl_iter.is_done ();
+       arg_decl_iter.next ())
+    {
+      arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+
+      *os << be_nl
+          << "TAO::Arg_Traits<";
+
+      this->gen_arg_template_param_name (arg->field_type (), 
+                                         os);
+
+      *os << ">::";
+
+      switch (arg->direction ())
+        {
+          case AST_Argument::dir_IN:
+            *os << "in";
+            break;
+          case AST_Argument::dir_INOUT:
+            *os << "inout";
+            break;
+          case AST_Argument::dir_OUT:
+            *os << "out";
+          default:
+            break;
+        }
+
+      *os << "_arg_val _tao_" << arg->local_name () << " ("
+          << arg->local_name () << ");";
+    }
+
+  *os << be_nl << be_nl
+      << "TAO::Argument *_tao_signature [] =" << be_idt_nl
+      << "{" << be_idt_nl
+      << "&_tao_retval";
+
+  for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
+       ! arg_list_iter.is_done ();
+       arg_list_iter.next ())
+    {
+      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+
+      *os << "," << be_nl
+          << "&_tao_" << arg->local_name ();
+    }
+
+  *os << be_uidt_nl
+      << "};" << be_uidt;
+
+  if (this->gen_pre_stub_info (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for exceptiondata failed\n"),
+                        -1);
+    }
+
+  *os << be_nl << be_nl
+      << "TAO::Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
+      << "this," << be_nl
+      << "_tao_signature," << be_nl
+      << node->argument_count () + 1 << "," << be_nl
+      << "\"" << node->local_name () << "\"," << be_nl
+      << ACE_OS::strlen (node->local_name ()->get_string ()) << "," << be_nl
+      << "this->the" << intf->base_proxy_broker_name () << "_";
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    {
+      *os << "," << be_nl
+          << "TAO::TAO_ONEWAY_INVOCATION";
+    }
+
+  if (be_global->ami_call_back ())
+    {
+      *os << "," << be_nl
+          << "TAO::TAO_ASYNCHRONOUS_CALLBACK_INVOCATION";
+    }
+
+  *os << be_uidt_nl
+      << ");" << be_uidt;
+
+  *os << be_nl << be_nl;
+
+  // Since oneways cannot raise user exceptions, we have that
+  // case covered as well.
+  if (node->exceptions ())
+    {
+      *os << "_tao_call.invoke (" << be_idt << be_idt_nl
+          << "_tao_" << node->flat_name ()
+          << "_exceptiondata," << be_nl
+          << node->exceptions ()->length () << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt;
     }
   else
     {
-      // Generate code that retrieves the underlying stub object and then
-      // invokes do_static_call on it.
-      *os << "TAO_Stub *istub = " << target << "->_stubobj ();"
-          << be_nl << be_nl
-          << "if (istub == 0)" << be_idt_nl
-          << "{" << be_idt_nl;
+      *os << "_tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);";
+    }
 
-      // If the stub object was bad, then we raise a system exception.
-      if (this->gen_raise_exception (return_type, "CORBA::INTERNAL", "") == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for checking exception failed\n"
-            ),
-            -1
-          );
-        }
+  *os << be_nl;
 
-      *os << be_uidt_nl << "}" << be_uidt_nl;
+  if (this->void_return_type (return_type))
+    {
+      *os << "ACE_CHECK;";
+    }
+  else
+    {
+      *os << "ACE_CHECK_RETURN (_tao_retval.excp ());";
+    }
 
-      // Do any pre marshal and invoke processing with return type. This
-      // includes allocating memory, initialization.
-      ctx = *this->ctx_;
-      be_visitor_operation_rettype_pre_invoke_cs rpi_visitor (&ctx);
-
-      if (return_type->accept (&rpi_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for retval pre invoke failed\n"
-            ),
-            -1
-          );
-        }
-
-      // Do any pre marshal and invoke stuff with arguments.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_PRE_INVOKE_CS);
-      be_visitor_operation_argument api_visitor (&ctx);
-
-      if (node->accept (&api_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for argument pre invoke failed\n"
-            ),
-            -1
-          );
-        }
-
-      // Generate the code for marshaling in the parameters and transmitting
-      // them.
-      if (this->gen_marshal_and_invoke (node, return_type) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for marshal and invoke failed\n"
-            ),
-            -1
-          );
-
-        }
-
-      if (!this->void_return_type (return_type))
-        {
-          AST_Decl::NodeType nt = return_type->node_type ();
-
-          if (nt == AST_Decl::NT_typedef)
-            {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (return_type);
-              AST_Type *t = td->primitive_base_type ();
-              nt = t->node_type ();
-            }
-
-          *os << be_nl << be_nl;
-
-          // Now generate the normal successful return statement.
-          if (return_type->size_type () == AST_Type::VARIABLE
-              || nt == AST_Decl::NT_array)
-            {
-              *os << "return _tao_retval._retn ();";
-            }
-          else
-            {
-              *os << "return _tao_retval;";
-            }
-        }
-    } // end of if (!native)
+  if (!this->void_return_type (return_type))
+    {
+      *os << be_nl << be_nl
+          << "return _tao_retval.retn ();";
+    }
 
   *os << be_uidt_nl << "}";
 
@@ -1278,7 +1301,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   *os << be_nl
       << "if (_invoke_status != TAO_INVOKE_RESTART)" << be_idt_nl
       << "break;" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_uidt;
+      << "}" << be_uidt;
 
   return 0;
 }
@@ -1376,4 +1399,59 @@ be_visitor_operation::compute_operation_name (
     }
 
   return this->operation_name_;
+}
+
+void
+be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
+                                                   TAO_OutStream *os)
+{
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      this->ctx_->alias (td);
+      this->gen_arg_template_param_name (td->primitive_base_type (),
+                                         os);
+      this->ctx_->alias (0);
+      return;
+    }
+
+  if (nt == AST_Decl::NT_string)
+    {
+      AST_String *s = AST_String::narrow_from_decl (bt);
+      unsigned long bound = s->max_size ()->ev ()->u.ulval;
+      AST_Typedef *alias = this->ctx_->alias ();
+
+      if (bound > 0)
+        {
+          *os << "TAO::" << alias->local_name () << "_" << bound;
+          return;
+        }
+    }
+
+  if (nt == AST_Decl::NT_pre_defined)
+    {
+      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+
+      switch (pdt->pt ())
+        {
+          case AST_PredefinedType::PT_boolean:
+            *os << "ACE_InputCDR::to_boolean";
+            return;
+          case AST_PredefinedType::PT_octet:
+            *os << "ACE_InputCDR::to_octet";
+            return;
+          case AST_PredefinedType::PT_char:
+            *os << "ACE_InputCDR::to_char";
+            return;
+          case AST_PredefinedType::PT_wchar:
+            *os << "ACE_InputCDR::to_wchar";
+            return;
+          default:
+            break;
+        }
+    }
+
+  *os << bt->name ();
 }

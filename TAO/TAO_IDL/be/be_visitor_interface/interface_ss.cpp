@@ -563,53 +563,40 @@ int
 be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  be_visitor_context ctx;
 
   // Strategized Proxy Broker Implementation.
-  be_visitor_context ctx = *this->ctx_;
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
-  be_visitor_interface_interceptors_ss ii_visitor (&ctx);
-
-  if (node->accept (&ii_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_cs::"
-                         "generate_proxy_classes - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
-      ctx =  (*this->ctx_);
+      ctx = *this->ctx_;
       be_visitor_interface_strategized_proxy_broker_ss ispb_visitor (&ctx);
 
       if (node->accept (&ispb_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
+                             "be_visitor_interface_ss::"
                              "generate_proxy_classes - "
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
 
       *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__;
 
-      // Proxy Broker  Factory Function.
-      *os << be_nl
-          << node->full_base_proxy_broker_name () << " *" << be_nl
+      // Proxy Broker Factory Function.
+      *os << be_nl << be_nl
+          << "TAO::Collocation_Proxy_Broker *" << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
+          << "_Factory_function (CORBA::Object_ptr)" << be_nl
           << "{" << be_idt_nl
-          << "ACE_UNUSED_ARG (obj);" << be_nl
-          << "return ::"
+          << "return" << be_idt_nl 
+          << "::"
           << node->full_strategized_proxy_broker_name ()
           << "::" <<"the"
           << node->strategized_proxy_broker_name ()
-          << "();" << be_uidt_nl
+          << "();" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // Proxy Broker Function Pointer Initializer.
@@ -630,17 +617,20 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << "return 0;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-
-      *os << "static int " <<  node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
+      *os << "static int" << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (ACE_reinterpret_cast (size_t, "
+          << "_Stub_Factory_Initializer_Scarecrow =" << be_idt_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_Initializer));"
-          << be_uidt_nl << be_nl;
+          << "_Factory_Initializer (" << be_idt << be_idt_nl
+          << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+          << "size_t," << be_nl
+          << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_Initializer" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl << be_nl;
     }
 
 

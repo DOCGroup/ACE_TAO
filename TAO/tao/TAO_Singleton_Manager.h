@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SINGLETON_MANAGER_H
 #define TAO_SINGLETON_MANAGER_H
 

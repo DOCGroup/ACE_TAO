@@ -55,16 +55,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Now the interface definition itself.
   os->gen_ifdef_macro (node->flat_name ());
 
-  if (!node->is_local () && !node->is_abstract ())
-    {
-      // Forward class declarations.
-      *os << be_nl << be_nl
-          << "class " << node->base_proxy_impl_name () << ";" << be_nl
-          << "class " << node->remote_proxy_impl_name () << ";" << be_nl
-          << "class " << node->base_proxy_broker_name () << ";" << be_nl
-          << "class " << node->remote_proxy_broker_name () << ";";
-    }
-
   // Now generate the class definition.
   *os << be_nl << be_nl
       << "class " << be_global->stub_export_macro ()
@@ -256,7 +246,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Add the Proxy Broker member variable.
       *os << be_uidt_nl
           << "private:" << be_idt_nl
-          << node->base_proxy_broker_name () << " *"
+          << "TAO::Collocation_Proxy_Broker *"
           << "the" << node->base_proxy_broker_name ()
           << "_;";
     }
@@ -313,17 +303,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Protected destructor.
   *os << "virtual ~" << node->local_name () << " (void);";
 
-  if (! node->is_abstract () && ! node->is_local ())
-    {
-      // Friends declarations.
-      *os << be_nl << be_nl
-          << "friend class " << node->remote_proxy_impl_name () << ";"
-          << be_nl
-          << "friend class " << node->thru_poa_proxy_impl_name () << ";"
-          << be_nl
-          << "friend class " << node->direct_proxy_impl_name () << ";";
-    }
-
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
   *os << be_uidt_nl << be_nl
@@ -349,47 +328,28 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Don't support smart proxies for local interfaces.
   // @@@ (JP) This is TODO for abstract interfaces.
-  if (! node->is_local () && ! node->is_abstract ())
+  if (! node->is_local () 
+      && ! node->is_abstract ())
     {
-      *os << be_nl << be_nl;
+      // List that generates proxy broker factory function pointer.
+      be_global->non_local_interfaces.enqueue_tail (node);
 
-      // Smart Proxy related classes.
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
-      be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);
-
-      if (node->accept (&sp_visitor) == -1)
+      if (be_global->gen_smart_proxies ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for smart proxy classes failed\n"),
-                            -1);
-        }
+          *os << be_nl << be_nl;
 
-      // Proxy Implementation Declaration.
-      ctx = *this->ctx_;
-      be_visitor_interface_proxy_impls_ch spi_visitor (&ctx);
+          // Smart Proxy related classes.
+          ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
+          be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);
 
-      if (node->accept (&spi_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for Proxy Broker classes failed\n"),
-                            -1);
-        }
-
-      // Proxy Broker Declaration.
-      ctx = *this->ctx_;
-      be_visitor_interface_proxy_brokers_ch pb_visitor (&ctx);
-
-      if (node->accept (&pb_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for Proxy Broker classes failed\n"),
-                            -1);
+          if (node->accept (&sp_visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "codegen for smart proxy classes failed\n"),
+                                -1);
+            }
         }
     }
 

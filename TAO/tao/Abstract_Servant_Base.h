@@ -15,22 +15,34 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ABSTRACT_SERVANT_BASE_H_
 #define TAO_ABSTRACT_SERVANT_BASE_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
+
 
 class TAO_ServerRequest;
 class TAO_Stub;
+
+namespace CORBA
+{
+  class InterfaceDef;
+  typedef InterfaceDef *InterfaceDef_ptr;
+
+  class Environment;
+
+  class Object;
+  typedef Object *Object_ptr;
+};
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
@@ -40,12 +52,6 @@ typedef void (*TAO_Skeleton)(
     , CORBA::Environment &
 #endif
   );
-
-namespace CORBA
-{
-  class InterfaceDef;
-  typedef InterfaceDef *InterfaceDef_ptr;
-};
 
 class TAO_Export TAO_Abstract_ServantBase
 {

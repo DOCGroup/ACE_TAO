@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H
 #define TAO_REMOTE_OBJECT_PROXY_BROKER_H
 

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ACCEPTOR_IMPL_H
 #define TAO_ACCEPTOR_IMPL_H
 #include /**/ "ace/pre.h"
@@ -22,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
 
 // Forward declarations.
 class TAO_ORB_Core;

@@ -13,6 +13,7 @@
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
+
 #include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
@@ -276,6 +277,9 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
+  static TAO::Collocation_Strategy collocation_strategy_new (CORBA::Object_ptr object
+                                                             ACE_ENV_ARG_DECL);
+
   static int collocation_strategy (CORBA::Object_ptr object
                                    ACE_ENV_ARG_DECL);
   //@}
@@ -576,13 +580,13 @@ public:
    * thread and current ORB.
    */
   void call_timeout_hook (TAO_Stub *stub,
-                          int &has_timeout,
+                          bool &has_timeout,
                           ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
   typedef void (*Timeout_Hook) (TAO_ORB_Core *,
                                 TAO_Stub *,
-                                int&,
+                                bool&,
                                 ACE_Time_Value&);
 
   static void set_timeout_hook (Timeout_Hook hook);
@@ -603,7 +607,7 @@ public:
    * thread and current ORB.
    */
   void connection_timeout (TAO_Stub *stub,
-                           int &has_timeout,
+                           bool &has_timeout,
                            ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
