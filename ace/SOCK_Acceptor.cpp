@@ -271,8 +271,8 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
                                                  local_sap.get_addr ());
       if (local_inet_addr.sin_port == 0)
         {
-          if (ACE::bind_port (this->get_handle ()
-                              ACE_NTOHL (ACE_UINT32 (local_inet_addr.sin_addr.s_addr)))) == -1)
+          if (ACE::bind_port (this->get_handle (),
+                              ACE_NTOHL (ACE_UINT32 (local_inet_addr.sin_addr.s_addr))) == -1)
             error = 1;
         }
       else if (ACE_OS::bind (this->get_handle (),
