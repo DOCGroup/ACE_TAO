@@ -203,6 +203,10 @@ public:
   virtual int status (void);
   virtual void idle (void);
 
+  virtual void acquire (void);
+  virtual void release (void);
+  virtual int count (void);
+
   virtual void task (JAWS_Pipeline_Handler *ph);
   virtual JAWS_Pipeline_Handler *task (void);
 
@@ -229,6 +233,8 @@ protected:
 
   JAWS_IO_Handler_Factory *factory_;
   // The reference to the handler's factory.
+
+  int count_;
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   JAWS_Asynch_Handler *handler_;

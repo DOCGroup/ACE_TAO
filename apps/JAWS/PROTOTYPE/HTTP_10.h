@@ -49,6 +49,19 @@ public:
 private:
 };
 
+// Done
+
+class JAWS_HTTP_10_Done_Task : public JAWS_Pipeline_Handler
+{
+public:
+  JAWS_HTTP_10_Done_Task (void);
+  virtual ~JAWS_HTTP_10_Done_Task (void);
+
+  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+
+private:
+};
+
 // Helpers
 
 class JAWS_HTTP_10_Helper

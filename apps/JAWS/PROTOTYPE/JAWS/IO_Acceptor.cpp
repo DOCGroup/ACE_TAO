@@ -50,9 +50,9 @@ JAWS_IO_Acceptor::get_handle (void)
 }
 
 int
-JAWS_IO_Synch_Acceptor::open (const ACE_INET_Addr &local_sap, int)
+JAWS_IO_Synch_Acceptor::open (const ACE_INET_Addr &local_sap, int backlog)
 {
-  return this->acceptor_.open (local_sap);
+  return this->acceptor_.open (local_sap, 1, PF_INET, backlog);
 }
 
 int
