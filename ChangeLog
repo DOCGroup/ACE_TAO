@@ -211,7 +211,8 @@ Wed May 29 12:35:21 2002  Ossama Othman  <ossama@uci.edu>
 	  If ACE_HAS_WCHAR is defined define the ACE_OS::WChar type to be
 	  of type wchar_t.  Otherwise, define it to be ACE_UINT16 (the
 	  previous default).  Addresses some wide character CDR and CORBA
-	  C++ mapping issues.
+	  C++ mapping issues.  Thanks to David Smith
+	  <dts@prismtechnologies.com> for reporting this.
 
 Wed May 29 09:46:56 2002  Ossama Othman  <ossama@uci.edu>
 
