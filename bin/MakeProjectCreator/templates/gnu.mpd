@@ -350,9 +350,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ifeq ($(VXWORKSLINK),true)
 include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
 endif
-<%if(tao)%>
-include $(TAO_ROOT)/taoconfig.mk
-<%endif%>
 
 <%if(libpaths)%>
 ifeq ($(VXWORKSLINK),true)
