@@ -123,4 +123,6 @@ module CosEventComm
     };
 };
 
+#pragma prefix ""
+
 #endif /* TAO_EVENTCOMM_IDL */
