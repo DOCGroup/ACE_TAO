@@ -213,6 +213,7 @@
 // send email to ace-users@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
+#  define ACE_LACKS_SETSCHED
 #endif /* ACE_AIX_MINOR_VERS >= 3 */
 
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
