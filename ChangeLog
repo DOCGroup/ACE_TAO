@@ -1,3 +1,8 @@
+Mon Dec 06 10:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-interix.h:
+          Fixed fuzz errors
+
 Mon Dec 06 09:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_signal.h:
