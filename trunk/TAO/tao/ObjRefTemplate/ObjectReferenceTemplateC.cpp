@@ -55,7 +55,7 @@ namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRINGSEQ__ARG_TRAITS_CS_
@@ -78,7 +78,6 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::add_ref (
     PortableInterceptor::ObjectReferenceFactory * p
@@ -87,7 +86,6 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::remove_ref (
     PortableInterceptor::ObjectReferenceFactory * p
@@ -96,7 +94,6 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::release (
     PortableInterceptor::ObjectReferenceFactory * p
@@ -121,10 +118,7 @@ void
 PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectReferenceFactory *_tao_tmp_pointer =
-    static_cast<
-        ObjectReferenceFactory *> (
-        _tao_void_pointer
-      );
+    static_cast<ObjectReferenceFactory *> (_tao_void_pointer);
   CORBA::remove_ref (_tao_tmp_pointer);
 }
 
@@ -174,7 +168,6 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::add_ref (
     PortableInterceptor::ObjectReferenceTemplate * p
@@ -183,7 +176,6 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::remove_ref (
     PortableInterceptor::ObjectReferenceTemplate * p
@@ -192,7 +184,6 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::release (
     PortableInterceptor::ObjectReferenceTemplate * p
@@ -217,10 +208,7 @@ void
 PortableInterceptor::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectReferenceTemplate *_tao_tmp_pointer =
-    static_cast<
-        ObjectReferenceTemplate *> (
-        _tao_void_pointer
-      );
+    static_cast<ObjectReferenceTemplate *> (_tao_void_pointer);
   CORBA::remove_ref (_tao_tmp_pointer);
 }
 
@@ -356,7 +344,7 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        const_cast<PortableInterceptor::ObjectReferenceFactory *> (_tao_valuetype),
+        _tao_valuetype,
         reinterpret_cast<ptrdiff_t> (&PortableInterceptor::ObjectReferenceFactory::_downcast)
       );
 }
@@ -405,7 +393,7 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        const_cast<PortableInterceptor::ObjectReferenceTemplate *> (_tao_valuetype),
+        _tao_valuetype,
         reinterpret_cast<ptrdiff_t> (&PortableInterceptor::ObjectReferenceTemplate::_downcast)
       );
 }
@@ -494,7 +482,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1620
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -134,7 +134,7 @@ namespace TAO_Default_ORT
     
     virtual ~ObjectReferenceTemplate (void);
     
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     
   private:
@@ -143,7 +143,7 @@ namespace TAO_Default_ORT
     
   protected:
     virtual CORBA::Boolean
-    _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) = 0;
+    _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) const = 0;
     
     virtual CORBA::Boolean
     _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &) = 0;
@@ -185,12 +185,12 @@ namespace OBV_TAO_Default_ORT
     
   protected:
     virtual CORBA::Boolean
-    _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &);
+    _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) const;
     
     virtual CORBA::Boolean
     _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &);
     
-    CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
+    CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &) const;
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
   
   private:
