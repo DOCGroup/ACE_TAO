@@ -19,6 +19,8 @@
 #include "ace/Synch_T.h"
 #include "ace/Containers.h"
 
+#include "ace/streams.h"
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #include "ace/Object_Manager.h"
 
@@ -83,6 +85,27 @@ ACE_Time_Value::operator FILETIME () const
 }
 
 #endif
+
+ACE_Cleanup_Info::ACE_Cleanup_Info (void)
+  : object_ (0),
+    cleanup_hook_ (0),
+    param_ (0)
+{
+}
+
+int
+ACE_Cleanup_Info::operator== (const struct ACE_Cleanup_Info &o) const
+{
+  return o.object_ == this->object_
+    && o.cleanup_hook_ == this->cleanup_hook_
+    && o.param_ == this->param_;
+}
+
+int
+ACE_Cleanup_Info::operator!= (const struct ACE_Cleanup_Info &o) const
+{
+  return !(*this == o);
+}
 
 void
 ACE_Time_Value::dump (void) const
@@ -179,17 +202,6 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
-#if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
-void
-ACE_U_LongLong::output (FILE *file) const
-{
-  if (hi_ > 0)
-    ACE_OS::fprintf (file, "0x%lx%0*lx", hi_, 2 * sizeof lo_, lo_);
-  else
-    ACE_OS::fprintf (file, "0x%lx", lo_);
-}
-#endif /* !ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
-
 #if defined (ACE_HAS_POWERPC) && defined (ghs)
 void
 ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
@@ -248,7 +260,12 @@ ACE_OS::uname (struct utsname *name)
     char processor[10] = "Unknown";
     char subtype[10] = "Unknown";
 
-    switch (sinfo.wProcessorArchitecture)
+#if defined (__BORLANDC__)
+    // Some changes should be made in winbase.h...
+    switch (sinfo.s.wProcessorArchitecture)
+#else
+      switch (sinfo.wProcessorArchitecture)
+#endif /* __BORLAND__ */
     {
     case PROCESSOR_ARCHITECTURE_INTEL:
       ACE_OS::strcpy (processor, "Intel");
@@ -335,51 +352,169 @@ ACE_OS::uname (struct utsname *name)
 #endif /* ACE_WIN32 || VXWORKS */
 
 
+#if defined (VXWORKS)
 struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
   // ACE_TRACE ("ACE_OS::gethostbyname");
-#if defined (VXWORKS)
+
   // not thread safe!
   static hostent ret;
-  static int first_addr = ::hostGetByName ((char *) name);
+  static int first_addr;
   static char *hostaddr[2];
+  static char *aliases[1];
 
+  ACE_OSCALL (::hostGetByName ((char *) name), int, -1, first_addr);
   if (first_addr == -1)
     return 0;
 
   hostaddr[0] = (char *) &first_addr;
   hostaddr[1] = 0;
+  aliases[0] = 0;
 
-  // might not be official: just echo input arg.
+  // Might not be official: just echo input arg.
   ret.h_name = (char *) name;
   ret.h_addrtype = AF_INET;
   ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
   ret.h_addr_list = hostaddr;
+  ret.h_aliases = aliases;
 
   return &ret;
-#elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
-#else
-  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
-#endif /* ACE_HAS_NONCONST_GETBY */
 }
 
-#if defined (VXWORKS)
-// not inline because it has the static char array
-char *
-ACE_OS::inet_ntoa (const struct in_addr addr)
+struct hostent *
+ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
-  // ACE_TRACE ("ACE_OS::inet_ntoa");
+  // ACE_TRACE ("ACE_OS::gethostbyaddr");
 
-  // the following storage is not thread-specific!
-  static char buf[32];
-  // assumes that addr is already in network byte order
-  ACE_OS::sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
-                   addr.s_addr / (256*256) & 255,
-                   addr.s_addr / 256 & 255,
-                   addr.s_addr & 255);
-  return buf;
+  if (length != 4 || type != AF_INET)
+    {
+      errno = EINVAL;
+      return 0;
+    }
+
+  // not thread safe!
+  static hostent ret;
+  static char name [MAXNAMELEN + 1];
+  static char *hostaddr[2];
+  static char *aliases[1];
+
+  if (::hostGetByAddr (*(int *) addr, name) != 0)
+    {
+      // errno will have been set to S_hostLib_UNKNOWN_HOST.
+      return 0;
+    }
+
+  // Might not be official: just echo input arg.
+  hostaddr[0] = (char *) addr;
+  hostaddr[1] = 0;
+  aliases[0] = 0;
+
+  ret.h_name = name;
+  ret.h_addrtype = AF_INET;
+  ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
+  ret.h_addr_list = hostaddr;
+  ret.h_aliases = aliases;
+
+  return &ret;
+}
+
+struct hostent *
+ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
+                         hostent *result, ACE_HOSTENT_DATA buffer,
+                         int *h_errnop)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyaddr_r");
+  if (length != 4 || type != AF_INET)
+    {
+      errno = EINVAL;
+      return 0;
+    }
+
+  if (ACE_OS::netdb_acquire ())
+    return 0;
+  else
+    {
+      // buffer layout:
+      // buffer[0-3]: h_addr_list[0], the first (and only) addr.
+      // buffer[4-7]: h_addr_list[1], the null terminator for the h_addr_list.
+      // buffer[8]: the name of the host, null terminated.
+
+      // Call ::hostGetByAddr (), which puts the (one) hostname into
+      // buffer.
+      if (::hostGetByAddr (*(int *) addr, &buffer[8]) == 0)
+        {
+          // Store the return values in result.
+          result->h_name = &buffer[8];  // null-terminated host name
+          result->h_addrtype = AF_INET;
+          result->h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN.
+
+          result->h_addr_list = (char **) buffer;
+          // Might not be official: just echo input arg.
+          result->h_addr_list[0] = (char *) addr;
+          // Null-terminate the list of addresses.
+          result->h_addr_list[1] = 0;
+          // And no aliases, so null-terminate h_aliases.
+          result->h_aliases = &result->h_addr_list[1];
+        }
+      else
+        {
+          // errno will have been set to S_hostLib_UNKNOWN_HOST.
+          result = 0;
+        }
+    }
+
+  ACE_OS::netdb_release ();
+  *h_errnop = errno;
+  return result;
+}
+
+struct hostent *
+ACE_OS::gethostbyname_r (const char *name, hostent *result,
+                         ACE_HOSTENT_DATA buffer,
+                         int *h_errnop)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyname_r");
+
+  if (ACE_OS::netdb_acquire ())
+    return 0;
+  else
+    {
+      int addr;
+      ACE_OSCALL (::hostGetByName ((char *) name), int, -1, addr);
+
+      if (addr == -1)
+        {
+          // errno will have been set to S_hostLib_UNKNOWN_HOST
+          result = 0;
+        }
+      else
+        {
+          // Might not be official: just echo input arg.
+          result->h_name = (char *) name;
+          result->h_addrtype = AF_INET;
+          result->h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
+
+          // buffer layout:
+          // buffer[0-3]: h_addr_list[0], pointer to the addr.
+          // buffer[4-7]: h_addr_list[1], null terminator for the h_addr_list.
+          // buffer[8-11]: the first (and only) addr.
+
+          // Store the address list in buffer.
+          result->h_addr_list = (char **) buffer;
+          // Store the actual address _after_ the address list.
+          result->h_addr_list[0] = (char *) &result->h_addr_list[2];
+          result->h_addr_list[2] = (char *) addr;
+          // Null-terminate the list of addresses.
+          result->h_addr_list[1] = 0;
+          // And no aliases, so null-terminate h_aliases.
+          result->h_aliases = &result->h_addr_list[1];
+        }
+    }
+
+  ACE_OS::netdb_release ();
+  *h_errnop = errno;
+  return result;
 }
 #endif /* VXWORKS */
 
@@ -762,11 +897,6 @@ ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
 ACE_thread_key_t ACE_OS::NULL_key;
 
-ACE_OS::ACE_OS (void)
-{
-// ACE_TRACE ("ACE_OS::ACE_OS");
-}
-
 #if defined (ACE_WIN32)
 
 // = Static initialization.
@@ -976,9 +1106,9 @@ private:
 
   enum
     {
-#if defined (ACE_HAS_64BIT_LONGS)
+#if ACE_SIZEOF_LONG == 8
       ACE_BITS_PER_WORD = 64,
-#elif ULONG_MAX == 4294967295UL
+#elif ACE_SIZEOF_LONG == 4
       ACE_BITS_PER_WORD = 32,
 #else
 #error ACE_TSS_Keys only supports 32 or 64 bit longs.
@@ -1442,19 +1572,20 @@ template class ACE_TSS<ACE_TSS_Keys>;
 void
 ACE_OS::cleanup_tss (const u_int main_thread)
 {
-#if defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32)
   // Call TSS destructors for current thread.
   ACE_TSS_Cleanup::instance ()->exit (0);
-#endif /* ACE_HAS_TSS_EMULATION */
+#endif /* ACE_HAS_TSS_EMULATION || ACE_WIN32 */
 
   if (main_thread)
     {
-#if !defined (ACE_HAS_TSS_EMULATION)
-  // Just close the ACE_Log_Msg for the current (which should be main) thread.
-  // We don't have TSS emulation; if there's native TSS, it should call its
-  // destructors when the main thread exits.
+#if ! defined (ACE_HAS_TSS_EMULATION)
+      // Just close the ACE_Log_Msg for the current (which should be
+      // main) thread.  We don't have TSS emulation; if there's native
+      // TSS, it should call its destructors when the main thread
+      // exits.
       ACE_Log_Msg::close ();
-#endif /* ! ACE_HAS_TSS_EMULATION */
+#endif /* ! ACE_HAS_TSS_EMULATION || ACE_WIN32 */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
       // Remove all TSS_Info table entries.
@@ -1464,10 +1595,6 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       delete ACE_TSS_Cleanup::instance ();
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
     }
-#if defined (ACE_WIN32)
-  else
-    ACE_TSS_Cleanup::instance ()->exit (0);
-#endif /* ACE_WIN32 */
 }
 
 void
@@ -1517,6 +1644,9 @@ ACE_Thread_Adapter::invoke (void)
 
   void *status = 0;
 
+#if 0
+  status = (void*) (*func) (arg);  // Call thread entry point.
+#else
   ACE_SEH_TRY {
     status = (void*) (*func) (arg);  // Call thread entry point.
   }
@@ -1527,6 +1657,7 @@ ACE_Thread_Adapter::invoke (void)
     // so that we can make sure to clean up correctly when the thread
     // exits.
   }
+#endif /* 0 */
 
   // Call the Task->close () hook.
   if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
@@ -1700,13 +1831,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // being we are all non-super actors.  Should be fixed to take care
   // of super actors!!!
   if (stacksize == 0)
-    stacksize = 2 * ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN);
-  else
-    {
-      size_t _s = 2 * ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN);
-      if (stacksize < _s)
-        stacksize = _s;
-    }
+    stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
+  else if (stacksize < ACE_CHORUS_DEFAULT_MIN_STACK_SIZE)
+    stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
 #     endif /*CHORUS */
 
   if (stacksize != 0)
@@ -2207,7 +2334,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 #    if 0
   *thr_handle = ::CreateThread
-    (0, 
+    (0,
      stacksize,
      LPTHREAD_START_ROUTINE (ACE_THREAD_FUNCTION),
      ACE_THREAD_ARGUMENT,
@@ -2413,7 +2540,11 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
       }
 # elif defined (ACE_HAS_DCETHREADS)
     ACE_UNUSED_ARG (inst);
-    ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#   if defined (ACE_HAS_STDARG_THR_DEST)
+      ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
+#   else
+      ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#   endif /* ACE_HAS_STDARG_THR_DEST */
 # elif defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
@@ -2891,18 +3022,19 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs)
 int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
-  long ip_addr = ACE_OS::inet_addr (host_name);
-  if (ip_addr == (long) htonl ((ACE_UINT32) ~0)
+  ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
+
+  if (ip_addr == (ACE_UINT32) htonl ((ACE_UINT32) ~0)
       // Broadcast addresses are weird...
       && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
     return 0;
-  else if (addr != 0)
+  else if (addr == 0)
+    return 0;
+  else
     {
       ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
       return 1;
     }
-  else
-    return 1;
 }
 
 ssize_t
@@ -2934,7 +3066,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 #else
   return ::pread (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */
-#elif defined (ACE_HAS_THREADS)
+#else
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
@@ -2944,12 +3076,6 @@ ACE_OS::pread (ACE_HANDLE handle,
     return -1;
   else
     return ACE_OS::read (handle, buf, nbytes);
-#else
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (nbytes);
-  ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
@@ -2982,7 +3108,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #else
   return ::pwrite (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */
-#elif defined (ACE_HAS_THREADS)
+#else
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
@@ -2992,12 +3118,6 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     return -1;
   else
     return ACE_OS::write (handle, buf, nbytes);
-#else
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (nbytes);
-  ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
@@ -3078,6 +3198,197 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 #endif /* ACE_HAS_THREADS */
 }
 #endif /* ! ACE_HAS_THREADS || ! ACE_HAS_STHREADS */
+
+#if defined (ACE_PSOS)
+
+// bit masks and shifts for prying info out of the pSOS time encoding
+const u_long ACE_PSOS_Time_t::year_mask     = 0x0000FFFFul;
+const u_long ACE_PSOS_Time_t::month_mask    = 0x000000FFul;
+const u_long ACE_PSOS_Time_t::day_mask      = 0x000000FFul;
+const u_long ACE_PSOS_Time_t::hour_mask     = 0x0000FFFFul;
+const u_long ACE_PSOS_Time_t::minute_mask   = 0x000000FFul;
+const u_long ACE_PSOS_Time_t::second_mask   = 0x000000FFul;
+const int ACE_PSOS_Time_t::year_shift   = 16;
+const int ACE_PSOS_Time_t::month_shift  = 8;
+const int ACE_PSOS_Time_t::hour_shift   = 16;
+const int ACE_PSOS_Time_t::minute_shift = 8;
+const int ACE_PSOS_Time_t::year_origin = 1900;
+const int ACE_PSOS_Time_t::month_origin = 1;
+
+// maximum number of clock ticks supported
+const u_long ACE_PSOS_Time_t::max_ticks = ~0UL;
+
+
+ACE_PSOS_Time_t::ACE_PSOS_Time_t ()
+  : date_ (0), time_ (0), ticks_ (0)
+{
+}
+  // default ctor: date, time, and ticks all zeroed
+
+ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
+{
+  struct tm* tm_struct = ACE_OS::gmtime (&(t.tv_sec));
+
+  // encode date values from tm struct into pSOS date bit array
+
+  date_  = (ACE_PSOS_Time_t::year_mask & 
+            ACE_static_cast (u_long, 
+                             tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
+           ACE_PSOS_Time_t::year_shift;
+
+  date_ |= (ACE_PSOS_Time_t::month_mask & 
+            ACE_static_cast (u_long, 
+                             tm_struct->tm_mon + ACE_PSOS_Time_t::month_origin)) <<
+           ACE_PSOS_Time_t::month_shift;
+
+  date_ |= ACE_PSOS_Time_t::day_mask & 
+           ACE_static_cast (u_long, tm_struct->tm_mday);
+
+
+  // encode time values from tm struct into pSOS time bit array
+
+  time_  = (ACE_PSOS_Time_t::hour_mask  & 
+            ACE_static_cast (u_long, tm_struct->tm_hour)) <<
+           ACE_PSOS_Time_t::hour_shift;
+
+  time_ |= (ACE_PSOS_Time_t::minute_mask & 
+            ACE_static_cast (u_long, tm_struct->tm_min)) << 
+           ACE_PSOS_Time_t::minute_shift;
+
+  time_ |= ACE_PSOS_Time_t::second_mask & 
+           ACE_static_cast (u_int, tm_struct->tm_sec);
+
+  // encode nanoseconds as system clock ticks
+  ticks_ = ACE_static_cast (u_long, 
+                            ((ACE_static_cast (double, t.tv_nsec) * 
+                              ACE_static_cast (double, KC_TICKS2SEC)) /
+                             ACE_static_cast (double, 1000000000)));
+  
+}
+  // ctor from a timespec_t
+
+
+ACE_PSOS_Time_t::operator timespec_t ()
+{
+  struct tm tm_struct;
+  
+  // decode date and time bit arrays and fill in fields of tm_struct
+
+  tm_struct.tm_year = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::year_mask & 
+                           (date_ >> ACE_PSOS_Time_t::year_shift))) -
+    ACE_PSOS_Time_t::year_origin;
+
+  tm_struct.tm_mon = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::month_mask & 
+                           (date_ >> ACE_PSOS_Time_t::month_shift))) -
+    ACE_PSOS_Time_t::month_origin;
+
+  tm_struct.tm_mday = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::day_mask & date_));
+
+  tm_struct.tm_hour = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::hour_mask & 
+                           (time_ >> ACE_PSOS_Time_t::hour_shift)));
+
+  tm_struct.tm_min = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::minute_mask & 
+                           (time_ >> ACE_PSOS_Time_t::minute_shift)));
+
+  tm_struct.tm_sec = 
+    ACE_static_cast (int, (ACE_PSOS_Time_t::second_mask & time_));
+
+  // indicate values we don't know as negative numbers
+  tm_struct.tm_wday  = -1;
+  tm_struct.tm_yday  = -1;
+  tm_struct.tm_isdst = -1;
+
+  timespec_t t;
+
+  // convert calendar time to time struct
+  t.tv_sec = ACE_OS::mktime (&tm_struct);
+
+  // encode nanoseconds as system clock ticks
+  t.tv_nsec = ACE_static_cast (long, 
+                               ((ACE_static_cast (double, ticks_) * 
+                                 ACE_static_cast (double, 1000000000)) /
+                                ACE_static_cast (double, KC_TICKS2SEC)));
+
+  return t;
+}
+  // type cast operator (to a timespec_t)
+
+ACE_INLINE u_long 
+ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
+{
+  u_long ret_val = 0;
+
+#if defined (ACE_PSOSIM) /* system time is broken in simulator */
+
+  timeval tv;
+  int result = 0;
+  ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
+  if (result == -1)
+  {
+    return 1;
+  }
+
+  ACE_Time_Value atv (tv);
+  timespec ts = atv;
+  ACE_PSOS_Time_t pt (ts);
+  t.date_ = pt.date_;
+  t.time_ = pt.time_;
+  t.ticks_ = pt.ticks_;
+
+#else
+
+  ret_val = tm_get (&(t.date_), &(t.time_), &(t.ticks_));
+
+#endif  /* ACE_PSOSIM */
+
+  return ret_val;
+}
+  // static member function to get current system time
+
+ACE_INLINE u_long 
+ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
+{
+  u_long ret_val = tm_set (t.date_, t.time_, t.ticks_);
+  return ret_val;
+}
+  // static member function to set current system time
+
+#if defined (ACE_PSOSIM)
+
+ACE_INLINE u_long
+ACE_PSOS_Time_t::init_simulator_time ()
+{
+  // This is a hack using a direct UNIX system call, because the appropriate
+  // ACE_OS method ultimately uses the pSOS tm_get function, which would fail
+  // because the simulator's system time is uninitialized (chicken and egg).
+  timeval t;
+  int result = 0;
+  ACE_OSCALL (::gettimeofday (&t, 0), int, -1, result);
+  if (result == -1)
+  {
+    return 1;
+  }
+  else 
+  {
+    ACE_Time_Value tv (t);
+    timespec ts = tv;
+    ACE_PSOS_Time_t pt (ts);
+    u_long ret_val = ACE_PSOS_Time_t::set_system_time (pt);
+    return ret_val;
+
+  }
+}
+  // static member function to initialize system time, using UNIX calls
+
+#endif /* ACE_PSOSIM */
+
+
+#endif  /* ACE_PSOS */
 
 #if defined (CHORUS)
 extern "C"

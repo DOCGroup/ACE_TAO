@@ -20,7 +20,20 @@
 
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
-#include "ace/config.h"
+#include "ace/inc_user_config.h"
+
+
+#if defined (ACE_HAS_ANSI_CASTS)
+# define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
+# define ACE_const_cast(TYPE, EXPR)        const_cast<TYPE> (EXPR)
+# define ACE_reinterpret_cast(TYPE, EXPR)  reinterpret_cast<TYPE> (EXPR)
+# define ACE_dynamic_cast(TYPE, EXPR)      dynamic_cast<TYPE> (EXPR)
+#else
+# define ACE_static_cast(TYPE, EXPR)       (TYPE) (EXPR)
+# define ACE_const_cast(TYPE, EXPR)        (TYPE) (EXPR)
+# define ACE_reinterpret_cast(TYPE, EXPR)  (TYPE) (EXPR)
+# define ACE_dynamic_cast(TYPE, EXPR)      (TYPE) (EXPR)
+#endif /* ACE_HAS_ANSI_CASTS */
 
 // Deal with MSVC++ insanity for CORBA...
 #if defined (ACE_WIN32) && !defined (ACE_ORBIX_HAS_NAMESPACES)
@@ -45,6 +58,10 @@
   // internally within ACE by undefining __ACE_INLINE__.
 # undef __ACE_INLINE__
 #endif /* ! ACE_NO_INLINE */
+
+#if !defined (ACE_DEFAULT_CLOSE_ALL_HANDLES)
+#define ACE_DEFAULT_CLOSE_ALL_HANDLES 1
+#endif /* ACE_DEFAULT_CLOSE_ALL_HANDLES */
 
 // The maximum length for a fully qualified Internet name.
 #if !defined(ACE_MAX_FULLY_QUALIFIED_NAME_LEN)
@@ -195,10 +212,17 @@
 #endif /* ACE_LACKS_FIFO */
 #endif /* ACE_DEFAULT_RENDEZVOUS */
 
-// The default starting port number for TAO servers.
-#if !defined (TAO_DEFAULT_SERVER_PORT)
-#define TAO_DEFAULT_SERVER_PORT 10013
-#endif /* TAO_DEFAULT_SERVER_PORT */
+#if !defined (ACE_DEFAULT_LOGGER_KEY)
+#if defined (ACE_WIN32)
+#define ACE_DEFAULT_LOGGER_KEY __TEXT ("\\temp\\server_daemon")
+#else
+#if defined (ACE_HAS_STREAM_PIPES)
+#define ACE_DEFAULT_LOGGER_KEY "/tmp/server_daemon"
+#else
+#define ACE_DEFAULT_LOGGER_KEY "localhost:10013"
+#endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_WIN32 */
+#endif /* ACE_DEFAULT_LOGGER_KEY */
 
 #if !defined (ACE_DEFAULT_SERVER_HOST)
 #define ACE_DEFAULT_SERVER_HOST "localhost"
@@ -342,6 +366,7 @@ private:
 #endif /* ACE_WIN32 */
 
 // Increase the range of "address families".
+#define AF_ANY (-1)
 #define AF_SPIPE (AF_MAX + 1)
 #define AF_FILE (AF_MAX + 2)
 #define AF_DEV (AF_MAX + 3)
@@ -386,8 +411,8 @@ private:
 #endif
 
 #if defined (ACE_REQUIRES_FUNC_DEFINITIONS)
-  // Provide a null definition for the function.  Not pleasant.
-# define ACE_UNIMPLEMENTED_FUNC(f) f {}
+// It just evaporated ;-) Not pleasant.
+# define ACE_UNIMPLEMENTED_FUNC(f)
 #else
 # define ACE_UNIMPLEMENTED_FUNC(f) f;
 #endif /* ACE_REQUIRES_FUNC_DEFINITIONS */
@@ -396,8 +421,8 @@ private:
 // Insures that g++ "friendship" anamolies are properly handled.
 #define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
 private: \
-ACE_UNIMPLEMENTED_FUNC (CLASSNAME (void)) \
-ACE_UNIMPLEMENTED_FUNC (CLASSNAME (const CLASSNAME&)) \
+CLASSNAME (void); \
+CLASSNAME (const CLASSNAME&); \
 friend class ace_dewarn_gplusplus
 
 // These hooks enable ACE to have all dynamic memory management
@@ -450,6 +475,336 @@ typedef int key_t;
 //                                       //
 ///////////////////////////////////////////
 
+#if defined (ACE_PSOS)
+
+    #include <ace/sys_conf.h> /* system configuration file */
+    #include <psos.h>         /* pSOS+ system calls                */
+    #include <pna.h>          /* pNA+ TCP/IP Network Manager calls */
+
+
+  #if defined (ACE_PSOSIM)
+
+    /* In the *simulator* environment, use unsigned int for size_t */
+    #define size_t  unsigned int
+
+//    #include <prepc.h>    /* pREPC+ ANSI C Standard Library calls */
+
+    /*  #include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */ 
+    /*                         are not supported by pSOSim                 */
+	 /*                                                                     */
+    /*  #include <phile.h>     pHILE+ file system calls are not supported  */ 
+    /*                         by pSOSim *so*, for the time being, we make */ 
+    /*                         use of UNIX file system headers and then    */ 
+    /*                         when we have time, we wrap UNIX file system */ 
+    /*                         calls w/ pHILE+ wrappers, and modify ACE to */ 
+    /*                         use the wrappers under pSOSim               */
+
+    /* put includes for necessary UNIX file system calls here */
+    #include <sys/stat.h>
+    #include <sys/ioctl.h>
+    #include <sys/sockio.h>
+    #include <netinet/tcp.h>
+
+    // remap missing error numbers for system functions
+    #define EPERM        1        /* Not super-user                        */
+    #define ENOENT	    2        /* No such file or directory             */
+    #define ESRCH        3        /* No such process                       */
+    #define EINTR        4        /* interrupted system call               */
+    #define EBADF        9        /* Bad file number                       */
+    #define EAGAIN       11       /* Resource temporarily unavailable      */
+    #define EWOULDBLOCK	 EAGAIN   /* Blocking resource request would block */
+    #define ENOMEM       12		 /* Not enough core			               */
+    #define EACCES       13       /* Permission denied                     */
+    #define EEXIST       17       /* File exists                           */
+    #define ENOSPC       28       /* No space left on device               */
+    #define EPIPE        32       /* Broken pipe                           */
+    #define ETIME        62       /* timer expired                         */
+    #define ENAMETOOLONG 78       /* path name is too long                 */
+    #define ENOSYS       89       /* Unsupported file system operation     */
+    #define EADDRINUSE   125      /* Address already in use                */
+    #define ENETUNREACH  128      /* Network is unreachable                */
+    #define EISCONN      133      /* Socket is already connected           */
+    #define ESHUTDOWN    143      /* Can't send after socket shutdown      */
+    #define ECONNREFUSED 146	    /* Connection refused                    */
+    #define EINPROGRESS  150      /* operation now in progress             */
+    #define ERRMAX		 151      /* Last error number                     */
+
+    #define TCP_
+    #if ! defined (BUFSIZ)
+      #define BUFSIZ 1024
+    #endif  /* ! defined (BUFSIZ) */
+  
+
+  #else
+
+    #include <rpc.h>       /* pRPC+ Remote Procedure Call Library calls */ 
+    #include <phile.h>     /* pHILE+ file system calls                  */ 
+
+
+  #endif /* defined (ACE_PSOSIM) */
+
+
+
+
+// For general purpose portability
+
+// Use pSOS semaphores, wrapped . . .
+typedef struct
+{
+  u_long sema_;
+  // Semaphore handle.  This is allocated by pSOS.
+
+  char name_[4];
+  // Name of the semaphore: really a 32 bit number to pSOS
+} ACE_sema_t;
+
+// Used for ACE_MMAP_Memory_Pool
+#if !defined (ACE_DEFAULT_BACKING_STORE)
+#define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX"
+#endif /* ACE_DEFAULT_BACKING_STORE */
+
+// Used for logging
+#if !defined (ACE_DEFAULT_LOGFILE)
+#define ACE_DEFAULT_LOGFILE "/tmp/logfile"
+#endif /* ACE_DEFAULT_LOGFILE */
+
+// Used for dynamic linking.
+#if !defined (ACE_DEFAULT_SVC_CONF)
+#define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#endif /* ACE_DEFAULT_SVC_CONF */
+
+#if !defined (ACE_DEFAULT_SEM_KEY)
+#define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+#endif /* ACE_DEFAULT_SEM_KEY */
+
+#define ACE_STDIN 0
+#define ACE_STDOUT 1
+#define ACE_STDERR 2
+
+#define ACE_DIRECTORY_SEPARATOR_STR_A "/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+
+#define ACE_DLL_SUFFIX ".so"
+#define ACE_DLL_PREFIX "lib"
+#define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
+#define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
+#define ACE_LOGGER_KEY "/tmp/server_daemon"
+
+#define ACE_PLATFORM_A "pSOS"
+#define ACE_PLATFORM_EXE_SUFFIX_A ""
+
+#if defined (ACE_HAS_UNICODE)
+#define ACE_DIRECTORY_SEPARATOR_STR_W L"/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_W L'/'
+#define ACE_PLATFORM_W L"pSOS"
+#define ACE_PLATFORM_EXE_SUFFIX_W L""
+#else
+#define ACE_DIRECTORY_SEPARATOR_STR_W "/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_W '/'
+#define ACE_PLATFORM_W "pSOS"
+#define ACE_PLATFORM_EXE_SUFFIX_W ""
+#endif /* ACE_HAS_UNICODE */
+
+
+#define ACE_MAX_DEFAULT_PORT 65535
+
+#if ! defined(MAXPATHLEN)
+#define MAXPATHLEN  1024
+#endif /* MAXPATHLEN */
+
+#if ! defined(MAXNAMLEN)
+#define MAXNAMLEN   255
+#endif /* MAXNAMLEN */
+
+#if ! defined(MAXHOSTNAMELEN)
+#define MAXHOSTNAMELEN  256
+#endif /* MAXHOSTNAMELEN */
+
+#if defined (ACE_LACKS_MMAP)
+#define PROT_READ 0
+#define PROT_WRITE 0
+#define PROT_EXEC 0
+#define PROT_NONE 0
+#define PROT_RDWR 0
+#define MAP_PRIVATE 0
+#define MAP_SHARED 0
+#define MAP_FIXED 0
+#endif /* ACE_LACKS_MMAP */
+
+// The following 3 defines are used by the ACE Name Server...
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
+#define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
+
+#if !defined (ACE_DEFAULT_LOCALNAME_A)
+#define ACE_DEFAULT_LOCALNAME_A "/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_A */
+
+#if !defined (ACE_DEFAULT_GLOBALNAME_A)
+#define ACE_DEFAULT_GLOBALNAME_A "/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_A */
+
+#if defined (ACE_HAS_UNICODE)
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
+#define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
+#if !defined (ACE_DEFAULT_LOCALNAME_W)
+#define ACE_DEFAULT_LOCALNAME_W L"/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_W */
+#if !defined (ACE_DEFAULT_GLOBALNAME_W)
+#define ACE_DEFAULT_GLOBALNAME_W L"/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_W */
+#else
+#if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
+#define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
+#endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
+#if !defined (ACE_DEFAULT_LOCALNAME_W)
+#define ACE_DEFAULT_LOCALNAME_W "/localnames"
+#endif /* ACE_DEFAULT_LOCALNAME_W */
+#if !defined (ACE_DEFAULT_GLOBALNAME_W)
+#define ACE_DEFAULT_GLOBALNAME_W "/globalnames"
+#endif /* ACE_DEFAULT_GLOBALNAME_W */
+#endif /* ACE_HAS_UNICODE */
+
+#if !defined (__TEXT)
+#if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
+#define __TEXT(STRING) L##STRING
+#else
+#define __TEXT(STRING) STRING
+#endif /* UNICODE && ACE_HAS_UNICODE */
+#endif /* !defined __TEXT */
+
+typedef int ACE_HANDLE;
+typedef ACE_HANDLE ACE_SOCKET;
+#define ACE_INVALID_HANDLE -1
+
+typedef ACE_HANDLE ACE_SHLIB_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = 0;
+
+#define ACE_INVALID_SEM_KEY -1
+
+struct  hostent {
+  char    *h_name;        /* official name of host */
+  char    **h_aliases;    /* alias list */
+  int     h_addrtype;     /* host address type */
+  int     h_length;       /* address length */
+  char    **h_addr_list;  /* (first, only) address from name server */
+#define h_addr h_addr_list[0]   /* the first address */
+};
+
+struct  servent {
+  char     *s_name;    /* official service name */
+  char    **s_aliases; /* alias list */
+  int       s_port;    /* port # */
+  char     *s_proto;   /* protocol to use */
+};
+
+// For Win32 compatibility.
+
+typedef const char *LPCTSTR;
+typedef char *LPTSTR;
+typedef char TCHAR;
+
+#define ACE_SEH_TRY if (1)
+#define ACE_SEH_EXCEPT(X) while (0)
+#define ACE_SEH_FINALLY while (0)
+
+#if !defined (LPSECURITY_ATTRIBUTES)
+#define LPSECURITY_ATTRIBUTES int
+#endif /* !defined LPSECURITY_ATTRIBUTES */
+#if !defined (GENERIC_READ)
+#define GENERIC_READ 0
+#endif /* !defined GENERIC_READ */
+#if !defined (FILE_SHARE_READ)
+#define FILE_SHARE_READ 0
+#endif /* !defined FILE_SHARE_READ */
+#if !defined (OPEN_EXISTING)
+#define OPEN_EXISTING 0
+#endif /* !defined OPEN_EXISTING */
+#if !defined (FILE_ATTRIBUTE_NORMAL)
+#define FILE_ATTRIBUTE_NORMAL 0
+#endif /* !defined FILE_ATTRIBUTE_NORMAL */
+#if !defined (MAXIMUM_WAIT_OBJECTS)
+#define MAXIMUM_WAIT_OBJECTS 0
+#endif /* !defined MAXIMUM_WAIT_OBJECTS */
+#if !defined (FILE_FLAG_OVERLAPPED)
+#define FILE_FLAG_OVERLAPPED 0
+#endif /* !defined FILE_FLAG_OVERLAPPED */
+
+struct ACE_OVERLAPPED
+{
+  u_long Internal;
+  u_long InternalHigh;
+  u_long Offset;
+  u_long OffsetHigh;
+  ACE_HANDLE hEvent;
+};
+
+// Use pSOS time, wrapped . . .
+class ACE_PSOS_Time_t
+{
+public:
+
+  ACE_PSOS_Time_t ();
+    // default ctor: date, time, and ticks all zeroed
+
+  ACE_PSOS_Time_t (const timespec_t& t);
+    // ctor from a timespec_t
+
+  operator timespec_t ();
+    // type cast operator (to a timespec_t)
+
+  static u_long get_system_time (ACE_PSOS_Time_t& t);
+    // static member function to get current system time
+
+  static u_long set_system_time (const ACE_PSOS_Time_t& t);
+    // static member function to set current system time
+
+#if defined (ACE_PSOSIM)
+
+  static u_long init_simulator_time ();
+    // static member function to initialize system time, using UNIX calls
+
+#endif /* ACE_PSOSIM */
+
+  static const u_long max_ticks;
+    // max number of ticks supported in a single system call
+
+private:
+  
+  // constants for prying info out of the pSOS time encoding
+  static const u_long year_mask;
+  static const u_long month_mask;
+  static const u_long day_mask;
+  static const u_long hour_mask;
+  static const u_long minute_mask;
+  static const u_long second_mask;
+  static const int year_shift;
+  static const int month_shift;
+  static const int hour_shift;
+  static const int minute_shift;
+  static const int year_origin;
+  static const int month_origin;
+
+  // error codes
+  static const u_long err_notime;   // system time not set
+  static const u_long err_illdate;  // date out of range
+  static const u_long err_illtime;  // time out of range
+  static const u_long err_illticks; // ticks out of range
+
+   u_long date_;
+  // date : year in bits 31-16, month in bits 15-8, day in bits 7-0
+
+  u_long time_;
+  // time : hour in bits 31-16, minutes in bits 15-8, seconds in bits 7-0
+
+  u_long ticks_;
+  // ticks: number of system clock ticks (KC_TICKS2SEC-1 max)
+} ;
+
+#endif /* defined (ACE_PSOS) */
+
+
 
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
@@ -483,65 +838,64 @@ typedef int key_t;
 // use these macros so that we don't end up with ACE software
 // hard-coded to Microsoft proprietary extensions to C++.
 
+// First, we define how to properly export/import objects.
+#if defined (ACE_WIN32)         // Only Win32 needs special treatment.
+#  if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
+#    define ACE_Proper_Export_Flag _export
+#    define ACE_Proper_Import_Flag _import
+//   @@ Don't know how to handle this when using Borland's compilers.
+#    define ACE_EXPORT_SINGLETON_DECLARATION(T)
+#    define ACE_IMPORT_SINGLETON_DECLARATION(T)
+#    define ACE_PROPER_SINGLETON_INSTANTIATION(T)
+#  else /* Microsoft: */
+#    define ACE_Proper_Export_Flag __declspec (dllexport)
+#    define ACE_Proper_Import_Flag __declspec (dllimport)
+#    define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
+#    define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
+#    define ACE_PROPER_SINGLETON_INSTANTIATION(T) template class T
+#  endif /* !_MSC_VER */
+#else  /* ! ACE_WIN32 */
+#  define ACE_Proper_Export_Flag
+#  define ACE_Proper_Import_Flag
+#  define ACE_EXPORT_SINGLETON_DECLARATION(T)
+#  define ACE_IMPORT_SINGLETON_DECLARATION(T)
+#  define ACE_PROPER_SINGLETONE_INSTANTIATION(T)
+#endif /* ACE_WIN32 */
+
+// Here are definition for ACE library.
 #if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1)
 #  if defined (ACE_BUILD_DLL)
-#    if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
-#      define ACE_Export _export
-//     @@ Don't know how to handle this when using Borland's compilers.
-#      define ACE_SINGLETON_DECLARATION (T)
-#      define ACE_SINGLETON_INSTANTIATION (T)
-#    else /* Microsoft: */
-#      define ACE_Export __declspec (dllexport)
-#      define ACE_SINGLETON_DECLATATION (T)  template class ACE_Export T
-#      define ACE_SINGLETON_INSTANTIATION (T) template class T
-#    endif /* !_MSC_VER */
-#  else /* Using the DLL. */
-#    define ACE_SINGLETON_INSTANTIATION (T)
-#    if !defined _MSC_VER
-#      define ACE_Export _import
-//     @@ Don't know how to handle this when using Borland's compilers.
-#      define ACE_SINGLETON_DECLARATION (T)
-#    else
-#      define ACE_Export  __declspec (dllimport)
-#      define ACE_SINGLETON_DECLARATION (T)  extern template class T
-#    endif /* !_MSC_VER */
+#    define ACE_Export ACE_Proper_Export_Flag
+#    define ACE_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#    define ACE_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
+#  else
+#    define ACE_Export ACE_Proper_Import_Flag
+#    define ACE_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#    define ACE_SINGLETON_INSTANTIATION(T)
 #  endif /* ACE_BUILD_DLL */
-
-#else /* We're not building a DLL! */
+#else /* ! ACE_HAS_DLL */
 #  define ACE_Export
-#  define ACE_SINGLETON_DECLARATION (T)
-#  define ACE_SINGLETON_INSTANTIATION (T)
+#  define ACE_SINGLETON_DECLARATION(T)
+#  define ACE_SINGLETON_INSTANTIATION(T)
 #endif /* ACE_HAS_DLL */
 
+// Here are definition for ACE_Svc library.
 #if defined (ACE_HAS_SVC_DLL) && (ACE_HAS_SVC_DLL == 1)
 #  if defined (ACE_BUILD_SVC_DLL)
-#    if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
-#      define ACE_Svc_Export _export
-//     @@ Don't know how to handle this when using Borland's compilers.
-#      define ACE_SVC_SINGLETON_DECLARATION (T)
-#      define ACE_SVC_SINGLETON_INSTANTIATION (T)
-#    else /* Microsoft: */
-#      define ACE_Svc_Export __declspec (dllexport)
-#      define ACE_SVC_SINGLETON_DECLARATION (T) template class ACE_Svc_Export T
-#      define ACE_SVC_SINGLETON_INSTANTIATION (T) template class T
-#    endif /* !_MSC_VER */
-#  else /* Using the DLL. */
-#    define ACE_SVC_SINGLETON_INSTANTIATION (T)
-#    if !defined _MSC_VER
-#      define ACE_Svc_Export _import
-//     @@ Don't know how to handle this when using Borland's compilers.
-#      define ACE_SVC_SINGLETON_DECLARATION (T)
-#    else
-#      define ACE_Svc_Export  __declspec (dllimport)
-#      define ACE_SVC_SINGLETON_DECLARATION (T) extern template class T
-#    endif /* !_MSC_VER */
-#  endif /* ACE_BUILD_DLL || ACE_BUILD_SVC_DLL */
-
-#else /* We're not building a DLL! */
+#    define ACE_Svc_Export ACE_Proper_Export_Flag
+#    define ACE_SVC_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#    define ACE_SVC_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
+#  else
+#    define ACE_Svc_Export ACE_Proper_Import_Flag
+#    define ACE_SVC_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#    define ACE_SVC_SINGLETON_INSTANTIATION(T)
+#  endif /* ACE_BUILD_SVC_DLL */
+#else /* ACE_HAS_SVC_DLL */
 #  define ACE_Svc_Export
-#  define ACE_SVC_SINGLETON_DECLARATION (T)
-#  define ACE_SVC_SINGLETON_INSTANTIATION (T)
+#  define ACE_SVC_SINGLETON_DECLARATION(T)
+#  define ACE_SVC_SINGLETON_INSTANTIATION(T)
 #endif /* ACE_HAS_SVC_DLL */
+
 
 // This needs to go here *first* to avoid problems with AIX.
 // Just to be safe we'll do it with pthreads, too -- jwr
@@ -562,6 +916,7 @@ extern "C" pthread_t pthread_self (void);
 #endif /* ACE_NTRACE */
 
 #include /**/ <time.h>
+
 #if defined (ACE_NEEDS_SYSTIME_H)
 // Some platforms may need to include this, but I suspect that most
 // will get it from <time.h>
@@ -797,8 +1152,8 @@ private:
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
 // Handle ACE_Message_Queue.
-#define ACE_SYNCH_1 class _ACE_SYNCH
-#define ACE_SYNCH_2 _ACE_SYNCH
+#define ACE_SYNCH_DECL class _ACE_SYNCH
+#define ACE_SYNCH_USE _ACE_SYNCH
 #define ACE_SYNCH_MUTEX_T ACE_TYPENAME _ACE_SYNCH::MUTEX
 #define ACE_SYNCH_CONDITION_T ACE_TYPENAME _ACE_SYNCH::CONDITION
 #define ACE_SYNCH_SEMAPHORE_T ACE_TYPENAME _ACE_SYNCH::SEMAPHORE
@@ -886,11 +1241,11 @@ private:
 
 // Handle ACE_Message_Queue.
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-#define ACE_SYNCH_1 class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_CONDITION_T, class _ACE_SYNCH_SEMAPHORE_T
-#define ACE_SYNCH_2 _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_CONDITION_T, _ACE_SYNCH_SEMAPHORE_T
+#define ACE_SYNCH_DECL class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_CONDITION_T, class _ACE_SYNCH_SEMAPHORE_T
+#define ACE_SYNCH_USE _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_CONDITION_T, _ACE_SYNCH_SEMAPHORE_T
 #else
-#define ACE_SYNCH_1 class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_CONDITION_T
-#define ACE_SYNCH_2 _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_CONDITION_T
+#define ACE_SYNCH_DECL class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_CONDITION_T
+#define ACE_SYNCH_USE _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_CONDITION_T
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 #define ACE_SYNCH_MUTEX_T _ACE_SYNCH_MUTEX_T
 #define ACE_SYNCH_CONDITION_T _ACE_SYNCH_CONDITION_T
@@ -975,11 +1330,16 @@ public:\
 };\
 static ACE_Static_Svc_##X ace_static_svc_##X;
 
+
+// More generic dynamic/static service macros.
+#define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (void);
+#define ACE_FACTORY_DEFINE(CLS,X) extern "C" ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
+
 // Dynamic/static service macros.
-#define ACE_SVC_FACTORY_DECLARE(X) extern "C" ACE_Svc_Export ACE_Service_Object *_make_##X (void);
+#define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
 #define ACE_SVC_INVOKE(X) _make_##X ()
 #define ACE_SVC_NAME(X) _make_##X
-#define ACE_SVC_FACTORY_DEFINE(X) extern "C" ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
+#define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 # define ACE_TSS_TYPE(T) ACE_TSS< T >
@@ -1045,9 +1405,13 @@ struct strrecvfd {};
 #if defined (ACE_HAS_UNICODE)
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #    include /**/ <cwchar>
-#  else /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#  elif !defined (__BORLANDC__) /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #    include /**/ <wchar.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#    include /**/ <wchar.h>
+#elif defined (ACE_LACKS_WCHAR_T)
+typedef long wchar_t;
 #endif /* ACE_HAS_UNICODE */
 
 #if defined (ACE_HAS_BROKEN_WRITEV)
@@ -1109,18 +1473,24 @@ enum ACE_Thread_State
 
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
-#define ACE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
-#define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
-#define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
 #define ACE_GUARD(MUTEX,OBJ,LOCK) \
   ACE_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) return;
+#define ACE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
+  ACE_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) return RETURN;
+#define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
+  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) return;
+#define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
+  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) return RETURN;
+#define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
+  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) return;
+#define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
+  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) return RETURN;
 
 #if defined (ACE_HAS_POSIX_SEM)
 #include /**/ <semaphore.h>
@@ -1147,7 +1517,20 @@ struct cancel_state
   // e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
 };
 
-#include /**/ <sys/types.h>
+#if defined (ACE_LACKS_SYS_TYPES_H)
+  typedef unsigned char	u_char;
+  typedef unsigned short	u_short;
+  typedef unsigned int	u_int;
+  typedef unsigned long	u_long;
+
+  typedef unsigned char	uchar_t;
+  typedef unsigned short	ushort_t;
+  typedef unsigned int	uint_t;
+  typedef unsigned long	ulong_t;
+#else
+  #include /**/ <sys/types.h>
+#endif  /* ACE_LACKS_SYS_TYPES_H */
+
 #include /**/ <sys/stat.h>
 
 #if defined (ACE_HAS_THREADS)
@@ -1413,6 +1796,83 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #  define THR_SCHED_FIFO          0
 #  define THR_SCHED_RR            0
 #  define THR_SCHED_DEFAULT       0
+
+#elif defined (ACE_PSOS)
+
+// implement ACE_thread_mutex_t and ACE_mutex_t using pSOS semaphores
+typedef u_long ACE_mutex_t;
+typedef u_long ACE_thread_mutex_t;
+typedef long pid_t;
+
+typedef char *ACE_thread_t;
+typedef int ACE_hthread_t;
+
+ 
+// Key type: the ACE TSS emulation requires the key type be unsigned,
+// for efficiency.  (Current POSIX and Solaris TSS implementations also
+// use unsigned int, so the ACE TSS emulation is compatible with them.)
+typedef u_int ACE_thread_key_t;
+
+/* CDG - TBD - revisit these: compare pthreads and pSOS threads */
+#  define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
+#  define THR_CANCEL_ENABLE       0	 /* thread can be cancelled */
+#  define THR_CANCEL_DEFERRED     0	 /* cancellation deferred to cancellation point */
+#  define THR_CANCEL_ASYNCHRONOUS 0	 /* cancellation occurs immediately */
+
+#  define THR_BOUND               0
+#  define THR_NEW_LWP             0
+#  define THR_DETACHED            0
+#  define THR_SUSPENDED           0
+#  define THR_DAEMON              0
+#  define THR_JOINABLE            0
+
+#  define THR_SCHED_FIFO          0
+#  define THR_SCHED_RR            0
+#  define THR_SCHED_DEFAULT       0
+#  define USYNC_THREAD            T_LOCAL
+#  define USYNC_PROCESS           T_GLOBAL
+
+/* from psos.h */
+/* #define T_NOPREEMPT     0x00000001   Not preemptible bit */
+/* #define T_PREEMPT       0x00000000   Preemptible */
+/* #define T_TSLICE        0x00000002   Time-slicing enabled bit */
+/* #define T_NOTSLICE      0x00000000   No Time-slicing */
+/* #define T_NOASR         0x00000004   ASRs disabled bit */
+/* #define T_ASR           0x00000000   ASRs enabled */
+
+/* #define SM_GLOBAL       0x00000001  1 = Global */
+/* #define SM_LOCAL        0x00000000  0 = Local */
+/* #define SM_PRIOR        0x00000002  Queue by priority */
+/* #define SM_FIFO         0x00000000  Queue by FIFO order */
+
+/* #define T_NOFPU         0x00000000   Not using FPU */
+/* #define T_FPU           0x00000002   Using FPU bit */
+
+// pSOS signals are sent via as_send(u_long tid, u_long signals)
+typedef u_long sigset_t;
+
+// Wrapper for NT events on pSOS.
+class ACE_Export ACE_event_t
+{
+  friend class ACE_OS;
+protected:
+  ACE_mutex_t lock_;
+  // Protect critical section.
+
+  ACE_cond_t condition_;
+  // Keeps track of waiters.
+
+  int manual_reset_;
+  // Specifies if this is an auto- or manual-reset event.
+
+  int is_signaled_;
+  // "True" if signaled.
+
+  u_long waiting_threads_;
+  // Number of waiting threads.
+};
+
+
 #elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
@@ -1480,7 +1940,7 @@ typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
-// use unsigned int, so the ACE TSS emulation is compatible with them.)
+// use u_int, so the ACE TSS emulation is compatible with them.)
 typedef u_int ACE_thread_key_t;
 
 #elif defined (ACE_HAS_WTHREADS)
@@ -1541,7 +2001,7 @@ protected:
   ACE_sema_t sema_;
   // Queue up threads waiting for the condition to become signaled.
 
-#if defined (VXWORKS)
+#if (defined (VXWORKS) || defined (ACE_PSOS))
   ACE_sema_t waiters_done_;
   // A semaphore used by the broadcast/signal thread to wait for all
   // the waiting thread(s) to wake up and be released from the
@@ -1552,8 +2012,8 @@ protected:
   // for the waiting thread(s) to wake up and get a chance at the
   // semaphore.
 #else
-#error "SOMEONE FIX ME!"
-#endif /* VXWORKS */
+    #error "SOMEONE FIX ME!"
+#endif /* VXWORKS || ACE_PSOS */
 
   size_t was_broadcast_;
   // Keeps track of whether we were broadcasting or just signaling.
@@ -1624,28 +2084,76 @@ typedef rwlock_t ACE_rwlock_t;
 typedef int ACE_cond_t;
 typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
-#if !defined (ACE_HAS_POSIX_SEM)
+#if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
 typedef int ACE_sema_t;
 #endif /* !ACE_HAS_POSIX_SEM */
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef u_int ACE_thread_key_t;
+
+#if defined (ACE_PSOS)
+
+// Wrapper for NT events on pSOS.
+class ACE_Export ACE_event_t
+{
+  friend class ACE_OS;
+protected:
+  ACE_mutex_t lock_;
+  // Protect critical section.
+
+  ACE_cond_t condition_;
+  // Keeps track of waiters.
+
+  int manual_reset_;
+  // Specifies if this is an auto- or manual-reset event.
+
+  int is_signaled_;
+  // "True" if signaled.
+
+  u_long waiting_threads_;
+  // Number of waiting threads.
+};
+
+#endif /* ACE_PSOS */
+
 #endif /* ACE_HAS_THREADS */
 
-#include "ace/stdcpp.h"
+// Standard C Library includes
+# include /**/ <assert.h>
+# include /**/ <limits.h>
+// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
+# include /**/ <stdarg.h>
+# include /**/ <stdio.h>
+# include /**/ <new.h>
+# include /**/ <ctype.h>
+# include /**/ <signal.h>
+# include /**/ <string.h>
+# include /**/ <errno.h>
+# include /**/ <stdlib.h>
+# include /**/ <fcntl.h>
+# include /**/ <float.h>
 
+// If the user wants minimum IOStream inclusion, we will just include
+// the forward declarations
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-class ostream;
+// Forward declaration for streams
+#include "ace/iosfwd.h"
+#else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+// Else they will get all the stream header files
+#include "ace/streams.h"
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
-#include /**/ <fcntl.h>
 
 // This must come after signal.h is #included.
 #if defined (SCO)
 #define SIGIO SIGPOLL
 #include /**/ <sys/regset.h>
 #endif /* SCO */
+
+#if defined ACE_HAS_BYTESEX_H
+# include <bytesex.h>
+#endif /* ACE_HAS_BYTESEX_H */
+#include "ace/Basic_Types.h"
 
 #if defined (ACE_HAS_SIG_MACROS)
 #undef sigemptyset
@@ -1663,13 +2171,6 @@ class ostream;
 #undef sigfillset
 #endif /* linux && __OPTIMIZE__ */
 
-// sigwait is yet another macro on Digital UNIX 4.0,
-// just causing trouble when introducing member functions with the same name.
-// Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for this fix.
-#if defined (DIGITAL_UNIX)
-#undef sigwait
-#endif /* DIGITAL_UNIX */
-
 #if defined (ACE_HAS_BROKEN_SENDMSG)
 typedef struct msghdr ACE_SENDMSG_TYPE;
 #else
@@ -1678,14 +2179,14 @@ typedef const struct msghdr ACE_SENDMSG_TYPE;
 
 #if defined (ACE_HAS_BROKEN_RANDR)
 // The SunOS 5.x version of rand_r is inconsistent with the header files...
-typedef unsigned int ACE_RANDR_TYPE;
+typedef u_int ACE_RANDR_TYPE;
 extern "C" int rand_r (ACE_RANDR_TYPE seed);
 #else
 # if defined (__hpux)
-// HP-UX's stdlib.h (long *) doesn't match that man page (unsigned int *)
+// HP-UX's stdlib.h (long *) doesn't match that man page (u_int *)
 typedef long *ACE_RANDR_TYPE;
 # else
-typedef unsigned int *ACE_RANDR_TYPE;
+typedef u_int *ACE_RANDR_TYPE;
 # endif /* __hpux */
 #endif /* ACE_HAS_BROKEN_RANDR */
 
@@ -1778,6 +2279,7 @@ struct utsname
 #else
 #include /**/ <sys/utsname.h>
 #endif /* ACE_LACKS_UTSNAME_T */
+
 
 #if defined (ACE_WIN32)
 // Turn off warnings for /W4
@@ -1879,9 +2381,14 @@ struct utsname
 
 #define ACE_INVALID_SEM_KEY 0
 
+#if defined(__BORLANDC__)
+#define ACE_SEH_TRY try
+#define ACE_SEH_FINALLY catch(...)
+#else
 #define ACE_SEH_TRY __try
-#define ACE_SEH_EXCEPT(X) __except(X)
 #define ACE_SEH_FINALLY __finally
+#endif /* __BORLANDC__ */
+#define ACE_SEH_EXCEPT(X) __except(X)
 
 // The "null" device on Win32.
 #define ACE_DEV_NULL "nul"
@@ -1893,7 +2400,6 @@ struct utsname
 #define ACE_DIRECTORY_SEPARATOR_CHAR_W L'\\'
 #define ACE_LD_SEARCH_PATH "PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
-#define ACE_LOGGER_KEY __TEXT ("\\temp\\server_daemon")
 #define ACE_DLL_SUFFIX ".dll"
 #define ACE_DLL_PREFIX ""
 
@@ -1984,34 +2490,51 @@ PAGE_NOCACHE  */
 #include /**/ <process.h>
 #include /**/ <io.h>
 
+#if defined (__BORLANDC__)
+#include <fcntl.h>
+#define _chdir chdir
+#define _ftime ftime
+#define _access access
+#define _getcwd getcwd
+#define _isatty isatty
+#define _umask umask
+#define _fstat fstat
+#define _stat stat
+#define _stricmp stricmp
+#define _strnicmp strnicmp
+
+#define _timeb timeb
+
+#define _O_CREAT O_CREAT
+#define _O_EXCL  O_EXCL
+#define _O_TRUNC O_TRUNC
+#define _O_TEMPORARY 0x0800 // see fcntl.h
+#endif /* __BORLANDC__ */
+
 typedef OVERLAPPED ACE_OVERLAPPED;
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
 typedef long pid_t;
 typedef DWORD ACE_thread_key_t;
+#if !defined (__BORLANDC__)
 typedef DWORD nlink_t;
+#endif /* __BORLANDC__ */
 
-// 64-bit quad-word definitions
-#if !defined (_MSC_VER) /* Borland? */
-typedef uint64 ACE_QWORD;
-typedef ACE_QWORD ACE_hrtime_t;
-inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return uint64 (lo, hi); }
-inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return q.LowPart; }
-inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return q.HighPart; }
-#else
+// 64-bit quad-word definitions.
 typedef unsigned __int64 ACE_QWORD;
-typedef signed __int64 ACE_hrtime_t;  /* VC++ won't convert unsigned __int64 to double */
-// typedef unsigned __int64 ACE_hrtime_t; /* Why do we need this? */
+// VC++ won't convert unsigned __int64 to double.
+typedef signed __int64 ACE_hrtime_t;
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
-#endif /* !defined (_MSC_VER) */
 
 // Win32 dummies to help compilation.
 
+#if !defined (__BORLANDC__)
 typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
+#endif /* __BORLANDC__ */
 typedef char *caddr_t;
 struct rlimit { };
 struct t_call { };
@@ -2062,7 +2585,12 @@ typedef int ACE_pri_t;
 typedef HINSTANCE ACE_SHLIB_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
 
-#else /* !defined (ACE_WIN32) */
+
+#elif defined (ACE_PSOS)
+
+typedef ACE_UINT64 ACE_hrtime_t;
+
+#else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
 typedef const char *LPCTSTR;
 typedef char *LPTSTR;
@@ -2112,7 +2640,7 @@ typedef char TCHAR;
 
 #define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
-#define ACE_LOGGER_KEY "/tmp/server_daemon"
+
 #if defined (__hpux)
 #define ACE_DLL_SUFFIX ".sl"
 #else
@@ -2186,6 +2714,7 @@ typedef char TCHAR;
 
 // The "null" device on UNIX.
 #define ACE_DEV_NULL "/dev/null"
+
 
 // Wrapper for NT events on UNIX.
 class ACE_Export ACE_event_t
@@ -2262,6 +2791,7 @@ extern "C"
 #if defined (VXWORKS)
   struct  hostent {
     char    *h_name;        /* official name of host */
+    char    **h_aliases;    /* aliases:  not used on VxWorks */
     int     h_addrtype;     /* host address type */
     int     h_length;       /* address length */
     char    **h_addr_list;  /* (first, only) address from name server */
@@ -2282,7 +2812,15 @@ extern "C"
 #endif
 
 #include /**/ <netinet/in.h>
+#if defined(VXWORKS) && defined(ghs)
+// Works around a lack of proper prototypes for these functions on VxWorks
+unsigned long inet_addr(const char *);
+char    *inet_ntoa(const struct in_addr);
+struct  in_addr inet_makeaddr(const int, const int);
+unsigned long inet_network(const char *);
+#else
 #include /**/ <arpa/inet.h>
+#endif /* VXWORKS && ghs */
 }
 #if !defined (ACE_LACKS_TCP_H)
 #include /**/ <netinet/tcp.h>
@@ -2309,6 +2847,7 @@ extern_C int      getgid          __((void));
 extern_C int      getuid          __((void));
 extern_C char*    getcwd          __((char* buf, size_t size));
 extern_C int      pipe            __((int* fildes));
+extern_C int      gethostname     __((char*, size_t));
 
 // This must come after limits.h is included
 #define MAXPATHLEN _POSIX_PATH_MAX
@@ -2387,9 +2926,17 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 extern int t_errno;
 #endif /* ACE_LACKS_T_ERRNO */
 
-#if !defined (ACE_HAS_SIGWAIT)
+// sigwait is yet another macro on Digital UNIX 4.0, just causing
+// trouble when introducing member functions with the same name.
+// Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for
+// this fix.
+# undef sigwait
+
+#if defined (DIGITAL_UNIX) && __DECCXX_VER >= 60090006
+extern "C" int __P_C(sigwait) __((const sigset_t *set, int *sig));
+#elif !defined (ACE_HAS_SIGWAIT)
 extern "C" int sigwait (sigset_t *set);
-#endif /* ACE_HAS_SIGWAIT */
+#endif /* ! ACE_HAS_SIGWAIT */
 
 #if defined (ACE_HAS_SELECT_H)
 #include /**/ <sys/select.h>
@@ -2477,13 +3024,13 @@ extern "C"
   int t_open(char *path, int oflag, struct t_info *info);
   int t_optmgmt(int fildes, struct t_optmgmt *req,
                 struct t_optmgmt *ret);
-  int t_rcv(int fildes, char *buf, unsigned nbytes, int *flags);
+  int t_rcv(int fildes, char *buf, u_int nbytes, int *flags);
   int t_rcvconnect(int fildes, struct t_call *call);
   int t_rcvdis(int fildes, struct t_discon *discon);
   int t_rcvrel(int fildes);
   int t_rcvudata(int fildes, struct t_unitdata *unitdata, int *flags);
   int t_rcvuderr(int fildes, struct t_uderr *uderr);
-  int t_snd(int fildes, char *buf, unsigned nbytes, int flags);
+  int t_snd(int fildes, char *buf, u_int nbytes, int flags);
   int t_snddis(int fildes, struct t_call *call);
   int t_sndrel(int fildes);
   int t_sndudata(int fildes, struct t_unitdata *unitdata);
@@ -2549,68 +3096,11 @@ typedef short ACE_pri_t;
 #if defined (ACE_HAS_HI_RES_TIMER)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
   typedef hrtime_t ACE_hrtime_t;
-#elif defined (ACE_HAS_64BIT_LONGS)
-  typedef u_long ACE_hrtime_t;
-#elif defined (ACE_HAS_LONGLONG_T)
-  typedef unsigned long long ACE_hrtime_t;
 #else
-  class ACE_Export ACE_U_LongLong
-    // = TITLE
-    //     Unsigned long long for platforms that don't have one.
-    //
-    // = DESCRIPTION
-    //     Provide our own unsigned long long.  This is intended to be
-    //     use with ACE_High_Res_Timer, so the division operator assumes
-    //     that the quotient fits into a u_long.
-    //     Please note that the constructor takes (optionally) two values.
-    //     The high one contributes 0x100000000 times its value.  So,
-    //     for example, (0, 2) is _not_ 20000000000, but instead
-    //     0x200000000.  To emphasize this, the default values are expressed
-    //     in hex, and dump () outputs the value in hex.
-  {
-  public:
-    // = Initialization and termination methods.
-    ACE_U_LongLong (const u_long lo = 0x0, const u_long hi = 0x0);
-    ACE_U_LongLong (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator= (const ACE_U_LongLong &);
-    ~ACE_U_LongLong (void);
-
-    // = Overloaded relation operators.
-    int operator== (const ACE_U_LongLong &) const;
-    int operator!= (const ACE_U_LongLong &) const;
-    int operator< (const ACE_U_LongLong &) const;
-    int operator<= (const ACE_U_LongLong &) const;
-    int operator> (const ACE_U_LongLong &) const;
-    int operator>= (const ACE_U_LongLong &) const;
-
-    ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
-    ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-    u_long operator/ (const u_long) const;
-
-    ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
-    ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
-
-    // = Helper methods.
-    void output (FILE * = stdout) const;
-    // Outputs the value to the FILE, in hex.
-
-    u_long hi (void) const;
-    u_long lo (void) const;
-
-    void hi (const u_long hi);
-    void lo (const u_long lo);
-
-    ACE_ALLOC_HOOK_DECLARE;
-
-  private:
-    u_long hi_;
-    u_long lo_;
-  };
-
-  typedef ACE_U_LongLong ACE_hrtime_t;
+  typedef ACE_UINT64 ACE_hrtime_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
-#endif /* ACE_WIN32 */
+#endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
 #if defined (ACE_SELECT_USES_INT)
 typedef int ACE_FD_SET_TYPE;
@@ -2627,7 +3117,7 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif /* MAXNAMELEN */
 
 #if defined (ACE_LACKS_SIGSET)
-typedef unsigned int sigset_t;
+typedef u_int sigset_t;
 #endif /* ACE_LACKS_SIGSET */
 
 #if defined (ACE_LACKS_SIGACTION)
@@ -2798,8 +3288,12 @@ struct sigaction
 #define EIDRM 0
 #endif /* !EIDRM */
 
+#if !defined (ENOSYS)
+#define ENOSYS EFAULT /* Operation not supported or unknown error. */
+#endif /* !ENOSYS */
+
 #if !defined (ENOTSUP)
-#define ENOTSUP ENOSYS  /* Operation not supported      . */
+#define ENOTSUP ENOSYS  /* Operation not supported. */
 #endif /* !ENOTSUP */
 
 #if !defined (WNOHANG)
@@ -2834,16 +3328,6 @@ struct sigaction
 
 #define LOCALNAME 0
 #define REMOTENAME 1
-
-#if defined (ACE_HAS_64BIT_LONGS)
-// Necessary to support the Alphas, which have 64 bit longs and 32 bit
-// ints...
-typedef u_int ACE_UINT32;
-typedef int ACE_INT32;
-#else
-typedef u_long ACE_UINT32;
-typedef long ACE_INT32;
-#endif /* ACE_HAS_64BIT_LONGS */
 
 #if !defined (ETIMEDOUT) && defined (ETIME)
 #define ETIMEDOUT ETIME
@@ -2922,11 +3406,7 @@ typedef void *(*ACE_THR_FUNC)(void *);
 extern "C" {
 typedef void (*ACE_THR_C_DEST)(void *);
 }
-#if defined (ACE_HAS_STDARG_THR_DEST)
-typedef void (*ACE_THR_DEST)(...);
-#else
 typedef void (*ACE_THR_DEST)(void *);
-#endif /* ACE_HAS_STDARG_THR_DEST */
 
 extern "C"
 {
@@ -2934,7 +3414,7 @@ extern "C"
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 #else
 typedef void *(*ACE_THR_C_FUNC)(void *);
-#endif /* ACE_WIN32 */
+#endif /* VXWORKS */
 }
 
 #if !defined (MAP_FAILED)
@@ -3029,7 +3509,7 @@ typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontex
 
 #if defined (ACE_REDEFINES_XTI_FUNCTIONS)
 #include /**/ <xti.h>
-#if defined (UNIXWARE)         /* They apparantly forgot one... */
+#if defined (UNIXWARE_2_0)         /* They apparantly forgot one... */
 extern "C" int _xti_error(char *);
 #endif /* UNIXWARE */
 #endif /* ACE_REDEFINES_XTI_FUNCTIONS */
@@ -3091,10 +3571,18 @@ struct ACE_Export ACE_Str_Buf : public strbuf
 };
 
 #if defined (ACE_HAS_BROKEN_BITSHIFT)
-#define ACE_MSB_MASK (~(ACE_UINT32 (1) << ACE_UINT32 (NFDBITS - 1)))
+  // This might not be necessary any more:  it was added prior to the
+  // (fd_mask) cast being added to the version below.  Maybe that cast
+  // will fix the problem on tandems.    Fri Dec 12 1997 David L. Levine
+# define ACE_MSB_MASK (~(ACE_UINT32 (1) << ACE_UINT32 (NFDBITS - 1)))
 #else
-// This needs to go here to avoid overflow problems on some compilers.
-#define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
+  // This needs to go here to avoid overflow problems on some compilers.
+# if defined (ACE_WIN32)
+    //  Does ACE_WIN32 have an fd_mask?
+#   define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
+# else  /* ! ACE_WIN32 */
+#   define ACE_MSB_MASK (~((fd_mask) 1 << (NFDBITS - 1)))
+# endif /* ! ACE_WIN32 */
 #endif /* ACE_HAS_BROKEN_BITSHIFT */
 
 // Signature for registering a cleanup function that is used by the
@@ -3127,8 +3615,14 @@ struct ACE_Cleanup_Info
   // = TITLE
   //     Hold cleanup information for thread/process
 {
-  ACE_Cleanup_Info (void) : object_ (0), cleanup_hook_ (0), param_ (0) {}
+  ACE_Cleanup_Info (void);
   // Default constructor.
+
+  int operator== (const struct ACE_Cleanup_Info &o) const;
+  // Equality operator.
+
+  int operator!= (const struct ACE_Cleanup_Info &o) const;
+  // Inequality operator.
 
   void *object_;
   // Point to object that gets passed into the <cleanup_hook_>.
@@ -3399,6 +3893,7 @@ public:
   // Forks and exec's a process in a manner that works on Solaris and
   // NT.  argv[0] must be the full path name to the executable.
 
+  static int getpagesize (void);
   static gid_t getgid (void);
   static pid_t getpid (void);
   static pid_t getpgid (pid_t pid);
@@ -3896,10 +4391,14 @@ public:
                           size_t len);
   static char *strcat (char *s,
                        const char *t);
-  static char *strchr (const char *s,
+  static char *strchr (char *s,
                        int c);
-  static char *strrchr (const char *s,
+  static char *strrchr (char *s,
                         int c);
+  static const char *strchr (const char *s,
+                             int c);
+  static const char *strrchr (const char *s,
+                              int c);
   static int strcmp (const char *s,
                      const char *t);
   static int strncmp (const char *s,
@@ -3907,12 +4406,16 @@ public:
                       size_t len);
   static char *strcpy (char *s,
                        const char *t);
-  static char *strpbrk (const char *s1,
+  static char *strpbrk (char *s1,
                         const char *s2);
+  static const char *strpbrk (const char *s1,
+                              const char *s2);
   static size_t strspn(const char *s1,
                        const char *s2);
-  static char *strstr (const char *s,
+  static char *strstr (char *s,
                        const char *t);
+  static const char *strstr (const char *s,
+                             const char *t);
   static char *strdup (const char *s);
   static size_t strlen (const char *s);
   static char *strncpy (char *s,
@@ -3926,15 +4429,19 @@ public:
   static char *strtok_r (char *s,
                          const char *tokens,
                          char **lasts);
-  static char *strsplit_r (char *s,
-                           const char *token,
-                           char *&next_start);
   static long strtol (const char *s,
                       char **ptr,
                       int base);
-  static unsigned long strtoul(const char *s,
-                               char **ptr,
-                               int base);
+  static u_long strtoul(const char *s,
+                        char **ptr,
+                        int base);
+
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  // = These go here since they are needed for TAO.
+  static size_t strlen (const wchar_t *s);
+  static wchar_t *strcpy (wchar_t *s,
+                          const wchar_t *t);
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
@@ -3950,8 +4457,6 @@ public:
   static int strncmp (const wchar_t *s,
                       const wchar_t *t,
                       size_t len);
-  static wchar_t *strcpy (wchar_t *s,
-                          const wchar_t *t);
   static int strcasecmp (const wchar_t *s,
                          const wchar_t *t);
   static int strncasecmp (const wchar_t *s,
@@ -3959,7 +4464,6 @@ public:
                           size_t len);
   static wchar_t *strpbrk (const wchar_t *s1,
                            const wchar_t *s2);
-  static size_t strlen (const wchar_t *s);
   static wchar_t *strncpy (wchar_t *s,
                            const wchar_t *t,
                            size_t len);
@@ -4387,6 +4891,40 @@ private:
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
 
+// Some useful abstration for expressions involving
+// ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
+// with ACE_ALLOCATOR* is that they call constructors also.
+
+#define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+#define ACE_ALLOCATOR(POINTER,ALLOCATOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
+
+#define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+#define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+
+#define ACE_DES_NOFREE (POINTER,CLASS) POINTER->CLASS::~CLASS ()
+#define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
+   do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
+#define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
+     POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS ()
+#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+   do { POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
+        DEALLOCATOR (POINTER); \
+      } while (0)
+
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
 // restarted (if necessary) when interrupts occur.
@@ -4455,6 +4993,48 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 // Also, create an ACE_Object_Manager static instance in "main ()".
 #include "ace/Object_Manager.h"
 
+#if defined (ACE_PSOSIM)
+// PSOSIM root lacks the standard argc, argv command line parameters,
+// create dummy argc and argv in the "real" main  and pass to "user" main.
+// NOTE: ACE_MAIN must be defined to give the return type as well as the 
+// name of the entry point.
+#define main \
+ace_main_i (int, char *[]);                /* forward declaration */ \
+ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
+{ \
+  int argc = 1;                            /* dummy arg count */ \
+  char *argv[] = {"psosim"};               /* dummy arg list */ \
+  ACE_Object_Manager ace_object_manager;   /* has program lifetime */ \
+  int ret_val = -1; /* assume the worst */ \
+  if (ACE_PSOS_Time_t::init_simulator_time ()) /* init simulator time */ \
+  { \
+    ACE_ERROR((LM_ERROR, "init_simulator_time failed\n"));  /* report */ \
+  } \
+  else \
+  { \
+    ret_val = ace_main_i (argc, argv);   /* call user main, save result */ \
+  } \
+  ACE_OS::exit (ret_val);                /* pass code to simulator exit */ \
+} \
+int \
+ace_main_i
+#elif defined (ACE_PSOS)
+// PSOS root lacks the standard argc, argv command line parameters,
+// create dummy argc and argv in the "real" main  and pass to "user" main.
+// Ignore return value from user main as well.  NOTE: ACE_MAIN must be 
+// defined to give the return type as well as the name of the entry point
+#define main \
+ace_main_i (int, char *[]);               /* forward declaration */ \
+ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
+{ \
+  int argc = 1;                           /* dummy arg count */ \
+  char *argv[] = {""};                    /* dummy arg list */ \
+  ACE_Object_Manager ace_object_manager;  /* has program lifetime */ \
+  ace_main_i (argc, argv);                /* call user main, ignore result */ \
+} \
+int \
+ace_main_i
+#else
 #define main \
 ace_main_i (int, char *[]);                      /* forward declaration */ \
 int \
@@ -4465,6 +5045,7 @@ ACE_MAIN (int argc, char *argv[])   /* user's entry point, e.g., "main" */ \
 } \
 int \
 ace_main_i
+#endif	 /* ACE_PSOSIM */
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (UNICODE)
