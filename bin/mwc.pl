@@ -25,7 +25,7 @@ require Driver;
 # Data Section
 # ************************************************************
 
-my(@creators) = ('GNUWorkspaceCreator',
+my(@creators) = ('GNUACEWorkspaceCreator',
                  'NMakeWorkspaceCreator',
                  'VC6WorkspaceCreator',
                  'VC7WorkspaceCreator',
