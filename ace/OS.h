@@ -36,6 +36,7 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_poll.h"
 #include "ace/OS_NS_pwd.h"
+#include "ace/OS_NS_regex.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
