@@ -55,9 +55,7 @@ namespace TAO
              CORBA::TypeCode_ptr * discriminant_type,
              case_type const * cases,
              CORBA::ULong ncases,
-             CORBA::Long default_index,
-             char const * default_member_name,
-             CORBA::TypeCode_ptr * default_member_type);
+             CORBA::Long default_index);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
