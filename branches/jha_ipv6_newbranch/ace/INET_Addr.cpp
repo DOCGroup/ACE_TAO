@@ -707,15 +707,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
     addr = htonl(addr);
     return ACE_OS::inet_ntop (AF_INET, (const void*)&addr,dst,size);
   }
-  dst[0] = '[';
-  const char *ch = ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr_.sin6_addr,dst+1,size-1);
-  if(ch == 0) {
-    dst[0] = '\0';
-    return 0;
-  }
-  int end = ACE_OS::strlen(dst);
-  dst[end] = ']';
-  dst[end+1] = '\0';
+  const char *ch = ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr_.sin6_addr,dst,size);
   return dst;
 
 #elif defined (VXWORKS)
