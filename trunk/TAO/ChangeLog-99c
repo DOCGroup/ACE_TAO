@@ -1,3 +1,9 @@
+Thu Jul 29 12:12:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	  Fix to CDR insertion operator for arrays containing typedef'd
+	  array on HP/UX-aCC.
+
 Thu Jul 29 11:21:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/POA/Forwarding/run_test.pl:
