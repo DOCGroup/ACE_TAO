@@ -334,7 +334,11 @@ include $(TAO_ROOT)/taoconfig.mk
 <%endif%>
 
 <%if(libpaths)%>
+ifeq ($(VXWORKSLINK),true)
+LDLIBPATH     =<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+else
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+endif
 <%endif%>
 <%if(includes)%>
 CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
@@ -503,8 +507,13 @@ endif
 <%if(exename)%>
 
 ifndef kylix
+ifeq ($(VXWORKSLINK),true)
+$(BIN): $(addprefix $(VDIR), $(OBJS)) $(DEFAULT_RULE)
+	cp $(DEFAULT_RULE) $@
+else
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+endif
 else
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
