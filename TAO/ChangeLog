@@ -1,3 +1,13 @@
+Mon May 19 13:02:16 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp (main):
+
+	  Destroy the POA prior to exiting on failure the scope containing
+	  the stack instantiated servants used by this test.  Fixes a
+	  segmenation fault caused by the POA being destroyed after the
+	  stack instantiated servants were destroyed.  The POA was
+	  attempting to deactivate servants that no longer existed.
+
 Mon May 19 11:05:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From Knut-Håvard Aksnes <knut@orion.no>

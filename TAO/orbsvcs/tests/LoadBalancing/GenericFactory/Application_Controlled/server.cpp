@@ -31,11 +31,12 @@ main (int argc, char *argv[])
                             lb_server.orb (),
                             location2);
 
-      if (lb_server.register_servant (&basic_servant1, location1) == -1)
-        return 1;
-
-      if (lb_server.register_servant (&basic_servant2, location2) == -1)
-        return 1;
+      if (lb_server.register_servant (&basic_servant1, location1) == -1
+          || lb_server.register_servant (&basic_servant2, location2) == -1)
+        {
+          (void) lb_server.destroy ();
+          return 1;
+        }
 
       lb_server.orb ()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
