@@ -5830,10 +5830,10 @@ public:
   // Mark the key as being in use if the flag is non-zero, or
   // not in use if the flag is 0.
 
-  int operator== (const ACE_TSS_Info &);
+  int operator== (const ACE_TSS_Info &) const;
   // Check for equality.
 
-  int operator!= (const ACE_TSS_Info &);
+  int operator!= (const ACE_TSS_Info &) const;
   // Check for inequality.
 
   void dump (void);

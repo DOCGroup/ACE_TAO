@@ -1272,7 +1272,7 @@ ACE_TSS_Info::ACE_TSS_Info (void)
 
 // Check for equality.
 int
-ACE_TSS_Info::operator== (const ACE_TSS_Info &info)
+ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 {
 // ACE_TRACE ("ACE_TSS_Info::operator==");
 
@@ -1281,7 +1281,7 @@ ACE_TSS_Info::operator== (const ACE_TSS_Info &info)
 
 // Check for inequality.
 int
-ACE_TSS_Info::operator!= (const ACE_TSS_Info &info)
+ACE_TSS_Info::operator!= (const ACE_TSS_Info &info) const
 {
 // ACE_TRACE ("ACE_TSS_Info::operator==");
 
