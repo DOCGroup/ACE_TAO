@@ -95,23 +95,23 @@ collocation_test:
         This test demonstrates how collocation optimization improve
 performance of collocated objects.  Run the test as:
 
-  collocation_test -c "client side argv list" -s "server side argv list"
+  collocation_test [-c "client side auguments"] [-s "server side arguments"]
 
 You can specify any command line options understood by server and
 client in server-side and client-side options string.  The easiest way
 to run the test is:
 
-  collocation_test -c "client -f ior" -s "server -f ior"
+  collocation_test -c
 
 This will start testing the "thru_poa" collocation strategy.  Notice
 that the ior filenames passed to both server side and client side must
 match.  To test the "direct" collocation strategy, run the test as:
 
-  collocation_test -c "client -f ior" -s "server -f ior -ORBCollocationStrategy direct"
+  collocation_test -s "-ORBCollocationStrategy direct"
 
 To disable collocation optimization run the test as:
 
-  collocation_test -c "client -f ior" -s "server -f ior -ORBCollocation no"
+  collocation_test -s "-ORBCollocation no"
 
 run_test.pl:
 ------------
