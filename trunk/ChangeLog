@@ -1,3 +1,13 @@
+Thu Jan 20 22:48:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/ACE-guidelines.html:
+
+	  Removed obsolete ACE cast macro usage recommendations.  They are
+	  deprecated.  Thanks to Olli Savia <ops at iki dot fi> for
+	  pointing out this document needed updating.
+
+	  Updated and removed out-of-date guidelines.
+
 Thu Jan 20 19:07:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/ACE-casts-convert:
