@@ -1,3 +1,40 @@
+Thu May 27 19:16:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/orb.idl:
+	  Removed the empty "interface" definitions. Recognizing certain
+	  scoped names is now handled in the IDL compiler.
+
+	* TAO_IDL/fe/fe_init.cpp:
+	  Removed initialization of predefined types 'TypeCode' and
+	  'ValueBase'. They're now added inside CORBA module, and
+	  must not be used in an IDL file without the CORBA::
+	  scoping.
+
+	* TAO_IDL/be/be_module.cpp:
+	  Added code to call base class (AST_Module) constructor
+	  explicitly, in order to use a private function to add
+	  the above types to the symbol table.
+
+	* TAO_IDL/ast/ast_module.cpp:
+	  If called for 'module CORBA' inside orb.idl, adds
+	  'CORBA::TypeCode' and 'CORBA::ValueBase' to symbol
+	  table.
+
+	* TAO/tests/Param_Test/param_test.idl:
+	  Added '#include <orb.idl>' and scoped all typecode
+	  test parameters with 'CORBA::'.
+
+	* TAO/tests/Param_Test/server.dsp:
+	* TAO/tests/Param_Test/Makefile:
+	  Removed '-Gi' from command line for IDL compiler.
+	  Carlos fixed the problem that made that arg necessary.
+
+	* TAO/orbsvcs/orbsvcs/CosPropertyService.idl:
+	* TAO/orbsvcs/orbsvcs/CosTradingDynamic.idl:
+	* TAO/orbsvcs/orbsvcs/CosTradingRepos.idl:
+	  Added '#include <orb.idl>' and added 'CORBA::' to
+	  all 'TypeCode' parameters.
+
 Thu May 27 18:14:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/Options.html:
