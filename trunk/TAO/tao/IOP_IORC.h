@@ -67,6 +67,12 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+#if defined (HPUX) && defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition.  See IOP_IORC.h. */
+# undef IOR
+#endif /* HPUX && IOR */
+
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
@@ -132,11 +138,6 @@ TAO_NAMESPACE  IOP
   // TAO_IDL - Generated from
   // be/be_type.cpp:249
 
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
   struct IOR;
 
   typedef
