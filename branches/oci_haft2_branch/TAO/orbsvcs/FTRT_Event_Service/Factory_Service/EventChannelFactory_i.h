@@ -21,39 +21,39 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class EventChannelFactory_i : public POA_FT::GenericFactory {
+class EventChannelFactory_i : public POA_PortableGroup::GenericFactory {
 public:
   EventChannelFactory_i(const char* conf_filename, CORBA::ORB_ptr);
 
   virtual CORBA::Object_ptr create_object (
     const char * type_id,
-    const FT::Criteria & the_criteria,
-    FT::GenericFactory::FactoryCreationId_out factory_creation_id
+    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
     ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
     CORBA::SystemException
-    , FT::NoFactory
-    , FT::ObjectNotCreated
-    , FT::InvalidCriteria
-    , FT::InvalidProperty
-    , FT::CannotMeetCriteria
+    , PortableGroup::NoFactory
+    , PortableGroup::ObjectNotCreated
+    , PortableGroup::InvalidCriteria
+    , PortableGroup::InvalidProperty
+    , PortableGroup::CannotMeetCriteria
     )) ;
 
   virtual void delete_object (
-    const FT::GenericFactory::FactoryCreationId & factory_creation_id
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
     ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
     CORBA::SystemException
-    , FT::ObjectNotFound
+    , PortableGroup::ObjectNotFound
     ));
 
 private:
   CORBA::Object_ptr create_process (
     char * process,
-    const FT::Criteria & the_criteria,
-    FT::GenericFactory::FactoryCreationId_out factory_creation_id);
+    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id);
 
   const char* conf_file;
   int id;
