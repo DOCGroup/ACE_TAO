@@ -348,7 +348,6 @@ be_operation::gen_client_stubs (void)
                          "(%N:%l) be_operation::gen_client_stubs\n"
                          "return val return generation failure\n"),
                         -1);
-      return -1;
     }
   cg->pop ();
 
