@@ -1,3 +1,9 @@
+Thu Nov  8 10:43:22 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS.cpp:
+
+          Correct a build problem for GHS on Win32.
+
 Wed Nov 07 13:50:39 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Task_T.h (ACE_Task): Decorated ACE_Task with ACE_Export to
