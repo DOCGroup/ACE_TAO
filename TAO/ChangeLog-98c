@@ -1,3 +1,54 @@
+Sat Sep 19 14:26:54 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* examples/TAO_Examples.dsw:
+	* performance-tests/TAO_Perf_Tests.dsw:
+	* tests/TAO_Tests.dsw:
+	  Split up the workspaces to work with the new structure
+	  of examples, performance-tests, and tests.
+		
+	* TAO_IDL/tao_idl.dsp:
+	* tao/tao.dsp:
+	* examples/POA/Generic_Servant/server.dsp:
+	  Changed behavior of all DLL projects and utilities (like
+	  tao_idl) to put the dll and executables in $ACE_ROOT/bin.
+
+	* examples/POA/DSI/client.dsp:
+	* examples/POA/Forwarding/client.dsp:
+	* examples/POA/Forwarding/server.dsp:
+	* examples/POA/Generic_Servant/client.dsp:
+	* examples/POA/TIE/client.dsp:
+	* examples/POA/TIE/server.dsp:
+	* examples/Quoter/Factory_Finder.dsp:
+	* examples/Quoter/Generic_Factory.dsp:
+	* examples/Quoter/client.dsp:
+	* examples/Quoter/server.dsp:
+	* examples/Simple/time/client.dsp:
+	* examples/Simple/time/server.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+	* performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+	* tests/Multiple_Inheritance/client.dsp:
+	* tests/Multiple_Inheritance/server.dsp:
+	* tests/NestedUpcall/MT_Client_Test/client.dsp:
+	* tests/NestedUpcall/MT_Client_Test/server.dsp:
+	* tests/NestedUpcall/Reactor/client.dsp:
+	* tests/NestedUpcall/Reactor/server.dsp:
+	* tests/NestedUpcall/Triangle_Test/initiator.dsp:
+	* tests/NestedUpcall/Triangle_Test/server_A.dsp:
+	* tests/NestedUpcall/Triangle_Test/server_B.dsp:
+	* tests/OctetSeq/OctetSeq.dsp:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/server.dsp:
+	  Had to update projects that compile IDL files since tao_idl
+	  was moved to $ACE_ROOT/bin.
+
+	* TAO-INSTALL.html
+	  Updated the instructions for all this.
+
 Sat Sep 19 14:03:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Explicit_Activation/alternate.conf: Fixed service
