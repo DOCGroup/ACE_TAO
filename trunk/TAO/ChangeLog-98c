@@ -1,3 +1,11 @@
+Tue Apr  7 18:25:09 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+		* tests/Quoter/quoter.idl: Extended the interface by 
+		  a Factory Finder.
+		  
+		* tests/Quoter/QuoterFactoryFinder.{cpp,h}: Server and Implementation
+		  of the Factory Finder.
+		 
 Tue Apr  7 16:22:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp: 
