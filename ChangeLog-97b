@@ -14,9 +14,29 @@ Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 	  moved -O out of wrapper_macros.GNU and into each platform
 	  file's OC[C]FLAGS to support "optimize" make flag.
 
-	* include/makeinclude/wrapper_macros.GNU: Removed "debug"
-	  disable with "optimize", because some platforms allow both
-	  "debug" and "optimize".
+	  I moved -O and similar compile flags out of CFLAGS and/or
+	  CCFLAGS and into OCFLAGS and/or OCCFLAGS.  This allows the
+	  ACE make system to support the "optimize" flag.  It operates
+	  similar to the "debug" flag, i.e., you can set "optimize=1"
+	  or "optimize=0" in your platform_macros.GNU file to enable
+	  or disable optimization.  You can use the same syntax to
+	  get the same effect from the "make" command line, e.g.,
+	  "make optimize=1 debug=0".
+
+	  I (tried to) add optimize=1 to platform_*.GNU files that
+	  had -O, etc., in their C[C]FLAGS.  Therefore, there should
+	  be no net effect from this change on any platform.
+
+	* include/makeinclude/wrapper_macros.GNU:
+	  I _removed_ the disabling of "debug" when "optimize=1" is
+	  enabled.  This _will_ have a net effect:  if you were relying
+	  on "debug" to be disabled when you enabled "optimize=1",
+	  you'll be surprised.  The change supports platforms that
+	  allow "debug" and "optimize" simultaneously.
+
+	  Because I had added the disabling of "debug" recently,
+	  and because "optimize=1" wasn't supported well, if at all,
+	  I'd be suprised if any is actually affected by this change.
 
 Sat Sep 20 11:47:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
