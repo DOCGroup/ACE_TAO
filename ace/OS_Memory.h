@@ -69,6 +69,13 @@ typedef void *ACE_MALLOC_T;
 // being used).
 // ============================================================================
 
+// If new(std::nothrow) is defined then, by definition, new throws exceptions.
+#if defined (ACE_HAS_NEW_NOTHROW)
+#  if !defined (ACE_NEW_THROWS_EXCEPTIONS)
+#    define ACE_NEW_THROWS_EXCEPTIONS
+#  endif
+#endif
+
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
 
 // Since new() throws exceptions, we need a way to avoid passing

@@ -1,3 +1,11 @@
+Wed Sep 29 17:50:27 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_Memory.h: If ACE_HAS_NEW_NOTHROW is defined, then make sure
+	  that ACE_NEW_THROWS_EXCEPTIONS is defined as well. The configure
+	  script checks for ACE_HAS_NEW_NOTHROW and I believe that all
+	  "up to date" compiler run-times throw an exception on a new()
+	  failure.
+
 Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace/Basic_Stats.{h,inl,cpp}: 
