@@ -1,3 +1,10 @@
+Wed Aug 16 15:44:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher):
+	  Rearranged the order of the data members so they match the order
+ 	  in the class declaration.  Thanks to Priyanka for reporting
+ 	  this.
+
 Wed Aug 16 13:16:18 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosTrading (CPP_SRCS):
