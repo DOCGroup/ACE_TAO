@@ -196,7 +196,7 @@ ACE_Client_Logging_Handler::close (u_long)
   ACE_DEBUG ((LM_DEBUG,
               "shutting down!!!\n"));
 
-  if (this->logging_output_ != ACE_STDOUT)
+  if (this->logging_output_ != ACE_STDERR)
     ACE_OS::closesocket (this->logging_output_);
 
   this->destroy ();
@@ -215,7 +215,7 @@ ACE_Client_Logging_Handler::handle_output (ACE_HANDLE)
 int
 ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 {
-  if (this->logging_output_ == ACE_STDOUT)
+  if (this->logging_output_ == ACE_STDERR)
     {
       log_record.print ("<localhost>", 0, stderr);
       ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
@@ -223,10 +223,6 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
         log_record.print ("<localhost>",
                           0,
                           *orig_ostream);
-      else
-        log_record.print ("<localhost>",
-                          0,
-                          stdout);
     }
   else
     {
@@ -236,11 +232,11 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
       if (ACE::send (this->logging_output_,
 		     (char *) &log_record,
 		     len) == -1)
-	// Switch over to logging to stdout for now.  Eventually,
+	// Switch over to logging to stderr for now.  Eventually,
 	// we'll try to queue up the message, try to reestablish a
 	// connection, and then send the queued data once we've
 	// reconnect to the logging server.
-	this->logging_output_ = ACE_STDOUT;
+	this->logging_output_ = ACE_STDERR;
     }
   return 0;
 }
@@ -375,11 +371,11 @@ ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
                    this->server_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p, using stdout\n",
+                  "%p, using stderr\n",
 		  "can't connect to logging server"));
       // If we can't connect to the server then we'll send the logging
-      // messages to stdout.
-      stream.set_handle (ACE_STDOUT);
+      // messages to stderr.
+      stream.set_handle (ACE_STDERR);
     }
   else
     {

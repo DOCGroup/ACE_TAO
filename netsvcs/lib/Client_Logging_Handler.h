@@ -53,7 +53,7 @@ class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<LOGGING
 public:
   // = Initialization and termination.
 
-  ACE_Client_Logging_Handler (ACE_HANDLE handle = ACE_STDOUT);
+  ACE_Client_Logging_Handler (ACE_HANDLE handle = ACE_STDERR);
   // Default constructor.  <handle> is where the output is sent.
 
   virtual int open (void * = 0);
@@ -89,7 +89,7 @@ private:
 
   ACE_HANDLE logging_output_;
   // This is either a SOCKET (if we're connected to a logging server)
-  // or ACE_STDOUT.
+  // or ACE_STDERR.
 };
 
 ACE_SVC_FACTORY_DECLARE (ACE_Client_Logging_Acceptor)
