@@ -4,13 +4,21 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "NodeManager/NodeDaemonC.h"
+#include "Container_Base.h"
+
+//@@ VS: Currently, the DAM relies on the deployment_config_ to supply
+//it with the NodeManager IOR that the latter obtained from the
+//deployment_file. With static configuration, the NodeManager is
+//created by the DAM, since it is not up and running already. Hence
+//the need to have this dependency on NodeManager implementation.
+#include "NodeManager/NodeDaemon_Impl.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-CIAO::DomainApplicationManager_Impl::
-DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
+CIAO::DomainApplicationManager_Impl_Base::
+DomainApplicationManager_Impl_Base (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
                                const Deployment::DeploymentPlan & plan,
@@ -37,16 +45,16 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   ACE_CHECK;
 }
 
-CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
+CIAO::DomainApplicationManager_Impl_Base::~DomainApplicationManager_Impl_Base ()
 {
   if (CIAO::debug_level () > 1)
     {
-      ACE_DEBUG ((LM_DEBUG, "DomainApplicationManager destroyed\n"));
+      ACE_DEBUG ((LM_DEBUG, "Base_DomainApplicationManager destroyed\n"));
     }
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::ResourceNotAvailable,
@@ -70,8 +78,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
         {
           // Get the NodeManager object reference.
           ::Deployment::NodeManager_var my_node_manager =
-            this->deployment_config_.get_node_manager
-              (this->node_manager_names_[i].c_str ());
+              this->get_node_manager (this->node_manager_names_[i].c_str ());
 
           // Get the child deployment plan reference.
           ACE_Hash_Map_Entry
@@ -106,7 +113,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 
           if (CORBA::is_nil (app_manager.in ()))
             {
-              ACE_DEBUG ((LM_DEBUG, "DomainAppMgr::init () received a nil\
+              ACE_DEBUG ((LM_DEBUG, "Base_DomainAppMgr::init () received a nil\
                                      reference for NodeApplicationManager\n"));
               ACE_THROW (Deployment::StartError ());
             }
@@ -119,7 +126,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DomainApplicationManager_Impl::init\t\n");
+                           "DomainApplicationManager_Impl_Base::init\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -127,11 +134,11 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 get_plan_info (void)
 {
-  if ( this->deployment_config_.init (this->deployment_file_) == -1 )
-    return 0;
+  if (deployment_config_.init (deployment_file_) != 0)
+      return 0;
 
   const CORBA::ULong length = this->plan_.instance.length ();
 
@@ -164,8 +171,7 @@ get_plan_info (void)
           // Check if there is a corresponding NodeManager instance existing
           // If not present return false
           ::Deployment::NodeManager_var mgr =
-              this->deployment_config_.get_node_manager
-               (this->plan_.instance [index].node.in ());
+              this->get_node_manager (this->plan_.instance [index].node.in ());
 
           if (CORBA::is_nil (mgr.in ()))
             return 0; /* Failure */
@@ -188,7 +194,7 @@ get_plan_info (void)
 //@@ We should ask those spec writers to look at the code below, hopefully
 //   They will realize some thing.
 int
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 split_plan (void)
 {
   // Initialize the total number of child deployment plans specified
@@ -218,8 +224,7 @@ split_plan (void)
 
     // Fill in the node_manager_ field.
     artifacts.node_manager_ =
-      this->deployment_config_.get_node_manager
-              (this->node_manager_names_[i].c_str ());
+      this->get_node_manager (this->node_manager_names_[i].c_str ());
 
     this->artifact_map_.bind (node_manager_names_[i], artifacts);
   }
@@ -316,7 +321,7 @@ split_plan (void)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 add_connections (const Deployment::Connections & incoming_conn)
 {
 
@@ -334,7 +339,7 @@ add_connections (const Deployment::Connections & incoming_conn)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 startLaunch (const ::Deployment::Properties & configProperty,
              ::CORBA::Boolean start
              ACE_ENV_ARG_DECL)
@@ -343,6 +348,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::StartError,
                    ::Deployment::InvalidProperty))
 {
+  ACE_DEBUG ((LM_DEBUG, "In DAM::startLaunch, num_child_plans = %d\n", num_child_plans_));
   ACE_UNUSED_ARG (start);
   ACE_TRY
     {
@@ -363,7 +369,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
           if (CORBA::is_nil (my_nam))
             {
-              ACE_DEBUG ((LM_DEBUG, "While starting launch, the DomainApplicationManager\
+              ACE_DEBUG ((LM_DEBUG, "While starting launch, the Base_DomainApplicationManager\
                                      has a nil reference for NodeApplicationManager\n"));
               ACE_THROW (Deployment::StartError ());
             }
@@ -371,12 +377,16 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
           ::Deployment::Connections_var retn_connections;
 
+          ACE_DEBUG ((LM_DEBUG, "before DAM to call NAM %s \n", 
+                      this->node_manager_names_[i].c_str ()));
           // Obtained the returned NodeApplication object reference
           // and the returned Connections variable.
           ::Deployment::Application_var temp_application =
             my_nam->startLaunch (configProperty,
                                  retn_connections.out (),
                                  0);  // This is a mistake. This should never be here.
+          ACE_DEBUG ((LM_DEBUG, "after DAM to call NAM %s \n", 
+                      this->node_manager_names_[i].c_str ()));
 
           // Narrow down to NodeApplication object reference
           ::Deployment::NodeApplication_var my_na =
@@ -386,7 +396,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
           if (CORBA::is_nil (my_na.in ()))
             {
-              ACE_DEBUG ((LM_DEBUG, "The DomainApplicationManager receives a nil\
+              ACE_DEBUG ((LM_DEBUG, "The Base_DomainApplicationManager receives a nil\
                                      reference of NodeApplication after calling\
                                      startLaunch on NodeApplicationManager.\n"));
               ACE_THROW (Deployment::StartError ());
@@ -404,16 +414,17 @@ startLaunch (const ::Deployment::Properties & configProperty,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DomainApplicationManager_Impl::startLaunch\t\n");
+                           "DomainApplicationManager_Impl_Base::startLaunch\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
 
   ACE_CHECK;
+  ACE_DEBUG ((LM_DEBUG, "Exiting DAM::startLaunch, num_child_plans = %d\n", num_child_plans_));
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 finishLaunch (::CORBA::Boolean start
               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -469,7 +480,7 @@ finishLaunch (::CORBA::Boolean start
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DomainApplicationManager_Impl::finishLaunch\t\n");
+                           "DomainApplicationManager_Impl_Base::finishLaunch\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -478,7 +489,7 @@ finishLaunch (::CORBA::Boolean start
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
@@ -508,7 +519,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DomainApplicationManager_Impl::start\t\n");
+                           "DomainApplicationManager_Impl_Base::start\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -517,7 +528,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
@@ -550,7 +561,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DomainApplicationManager_Impl::destroyApplication\t\n");
+                           "DomainApplicationManager_Impl_Base::destroyApplication\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -559,7 +570,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 destroyManager (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
@@ -588,7 +599,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DomainApplicationManager_Impl::destroyManager\t\n");
+                           "DomainApplicationManager_Impl_Base::destroyManager\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -598,7 +609,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
 // Returns the DeploymentPlan associated with this ApplicationManager.
 ::Deployment::DeploymentPlan *
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 getPlan (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -613,7 +624,7 @@ getPlan (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 Deployment::Connections *
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 get_outgoing_connections (const Deployment::DeploymentPlan &plan)
 {
   Deployment::Connections_var connections;
@@ -633,7 +644,7 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan)
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 get_outgoing_connections_i (const char * instname,
                             Deployment::Connections & retv)
 {
@@ -720,7 +731,7 @@ get_outgoing_connections_i (const char * instname,
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_Impl_Base::
 dump_connections (const ::Deployment::Connections & connections)
 {
   const CORBA::ULong conn_len = connections.length ();
@@ -742,3 +753,42 @@ dump_connections (const ::Deployment::Connections & connections)
     ACE_DEBUG ((LM_DEBUG, "endpoint: \n"));
   }
 }
+
+
+CIAO::Static_DomainApplicationManager_Impl::
+Static_DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
+                                      PortableServer::POA_ptr poa,
+                                      Deployment::TargetManager_ptr manager,
+                                      const Deployment::DeploymentPlan & plan,
+                                      const char * deployment_file,
+                                      Static_Config_EntryPoints_Maps* static_config_entrypoints_maps)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+    : DomainApplicationManager_Impl_Base (orb, poa, manager, plan, deployment_file)
+{
+  Static_NodeDaemon_Impl *static_node_daemon_impl;
+  // Create and install the CIAO Daemon servant
+  static_node_daemon_impl =
+                  new CIAO::Static_NodeDaemon_Impl("NodeDaemon",
+                                               orb,
+                                               poa,
+                                               "", //exe location
+                                               0, //spawn delay
+                                               static_config_entrypoints_maps);    
+  // Activate the ourself.
+  PortableServer::ObjectId_var oid
+    = this->poa_->activate_object (static_node_daemon_impl
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (oid.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  
+  // And cache the object reference.
+  this->static_node_manager_ =
+    Deployment::NodeManager::_narrow (obj.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+}
+

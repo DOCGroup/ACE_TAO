@@ -1,9 +1,9 @@
 // $Id$
 
 #include "NodeDaemon_Impl.h"
-#include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
+#include "ciao/Container_Base.h"
 
-CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
+CIAO::NodeDaemon_Impl_Base::NodeDaemon_Impl_Base (const char *name,
                                         CORBA::ORB_ptr orb,
                                         PortableServer::POA_ptr poa,
                                         const char * nodapp_loc,
@@ -36,7 +36,7 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeDaemon_Impl::constructor\t\n");
+                           "NodeDaemon_Impl_Base::constructor\t\n");
       // @@ This is bogus and will not work with emulated exceptions
       // -- Bala
       ACE_RE_THROW;
@@ -45,27 +45,27 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
   ACE_CHECK;
 }
 
-CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
+CIAO::NodeDaemon_Impl_Base::~NodeDaemon_Impl_Base ()
 {
 
 }
 
 PortableServer::POA_ptr
-CIAO::NodeDaemon_Impl::_default_POA (void)
+CIAO::NodeDaemon_Impl_Base::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 
 char *
-CIAO::NodeDaemon_Impl::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeDaemon_Impl_Base::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
-CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeDaemon_Impl_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -73,7 +73,7 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
+CIAO::NodeDaemon_Impl_Base::joinDomain (const Deployment::Domain & ,
                                    Deployment::TargetManager_ptr ,
                                    Deployment::Logger_ptr
                                    ACE_ENV_ARG_DECL)
@@ -83,34 +83,29 @@ CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
 }
 
 void
-CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeDaemon_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Implementation undefined.
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
+CIAO::NodeDaemon_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::PlanError))
 {
+  ACE_DEBUG ((LM_DEBUG, "In NDI:preparePlan\n"));
   // Return cached manager
   ACE_TRY
     {
       if (CORBA::is_nil (this->manager_.in ()))
         {
           //Implementation undefined.
-          CIAO::NodeApplicationManager_Impl *app_mgr;
-          ACE_NEW_THROW_EX (app_mgr,
-                            CIAO::NodeApplicationManager_Impl (
-                              this->orb_.in (),
-                              this->poa_.in ()),
-                            CORBA::NO_MEMORY ());
-          ACE_TRY_CHECK;
+          CIAO::NodeApplicationManager_Impl_Base *app_mgr;
+          app_mgr = create_node_app_manager (this->orb_.in (), this->poa_.in ());
 
           PortableServer::ServantBase_var safe (app_mgr);
 
@@ -138,7 +133,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "NodeDaemon_Impl::preparePlan\t\n");
+                         "NodeDaemon_Impl_Base::preparePlan\t\n");
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
@@ -150,7 +145,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 }
 
 void
-CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
+CIAO::NodeDaemon_Impl_Base::destroyManager (Deployment::NodeApplicationManager_ptr
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
@@ -173,8 +168,10 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeDaemon_Impl::destroyManager\t\n");
+                           "NodeDaemon_Impl_Base::destroyManager\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
+
+

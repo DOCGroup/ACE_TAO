@@ -6,13 +6,13 @@
 # include "NodeApplication_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
+CIAO::NodeApplication_Impl_Base::~NodeApplication_Impl_Base (void)
 {
   delete this->container_;
 }
 
 void
-CIAO::NodeApplication_Impl::finishLaunch (
+CIAO::NodeApplication_Impl_Base::finishLaunch (
     const Deployment::Connections & providedReference,
     CORBA::Boolean start
     ACE_ENV_ARG_DECL)
@@ -98,7 +98,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeApplication_Impl::finishLaunch\t\n");
+                           "NodeApplication_Impl_Base::finishLaunch\t\n");
       ACE_RE_THROW;
     }
 
@@ -106,7 +106,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
 }
 
 void
-CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl_Base::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -125,7 +125,7 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::start_i (Funct_Ptr functor
+CIAO::NodeApplication_Impl_Base::start_i (Funct_Ptr functor
          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
@@ -143,7 +143,7 @@ CIAO::NodeApplication_Impl::start_i (Funct_Ptr functor
 }
 
 Deployment::Properties *
-CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl_Base::properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Deployment::Properties * tmp;
@@ -157,7 +157,7 @@ CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 Deployment::ComponentInfos *
-CIAO::NodeApplication_Impl::install (
+CIAO::NodeApplication_Impl_Base::install (
     const ::Deployment::ImplementationInfos & impl_infos
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -267,7 +267,7 @@ CIAO::NodeApplication_Impl::install (
 //         versions of emulated exception parameters.  Please remove
 //         the "_WITH_DEFAULTS"
 Components::CCMHome_ptr
-CIAO::NodeApplication_Impl::install_home (
+CIAO::NodeApplication_Impl_Base::install_home (
     const ::Deployment::ImplementationInfo & impl_info
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -300,7 +300,7 @@ CIAO::NodeApplication_Impl::install_home (
 }
 
 void
-CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl_Base::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -331,7 +331,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::remove_home (const char * comp_ins_name
+CIAO::NodeApplication_Impl_Base::remove_home (const char * comp_ins_name
                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
@@ -358,7 +358,7 @@ CIAO::NodeApplication_Impl::remove_home (const char * comp_ins_name
 }
 
 Components::CCMHomes *
-CIAO::NodeApplication_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl_Base::get_homes (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::CCMHomes * tmp;
@@ -387,14 +387,10 @@ CIAO::NodeApplication_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Long
-CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Session_Container (this->orb_.in (),
-                                             0,
-                                             0),
-                    CORBA::NO_MEMORY ());
+  this->create_container (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return this->container_->init (0,
@@ -406,7 +402,7 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-CIAO::NodeApplication_Impl::get_node_application_manager (
+CIAO::NodeApplication_Impl_Base::get_node_application_manager (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -415,13 +411,13 @@ CIAO::NodeApplication_Impl::get_node_application_manager (
 
 
 PortableServer::POA_ptr
-CIAO::NodeApplication_Impl::_default_POA (void)
+CIAO::NodeApplication_Impl_Base::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-CIAO::NodeApplication_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl_Base::remove_components (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -450,7 +446,7 @@ CIAO::NodeApplication_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::remove_component (const char * comp_ins_name
+CIAO::NodeApplication_Impl_Base::remove_component (const char * comp_ins_name
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
@@ -489,7 +485,7 @@ CIAO::NodeApplication_Impl::remove_component (const char * comp_ins_name
 // start point for configurations.
 /*
 void
-CIAO::NodeApplication_Impl::
+CIAO::NodeApplication_Impl_Base::
 parse_config_values (const ::Deployment::Properties & properties,
   struct home_installation_info &component_install_info
   ACE_ENV_ARG_DECL)
@@ -538,3 +534,53 @@ parse_config_values (const ::Deployment::Properties & properties,
   // the modeling tool will ensure the complete info to presented in the properties.
 }
 */
+
+CIAO::NodeApplication_Impl::
+NodeApplication_Impl (CORBA::ORB_ptr o,
+                      PortableServer::POA_ptr p)
+  : NodeApplication_Impl_Base (o, p)
+{
+}
+
+CIAO::NodeApplication_Impl::
+~NodeApplication_Impl ()
+{
+}
+
+CIAO::Container* 
+CIAO::NodeApplication_Impl::create_container (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_NEW_THROW_EX (this->container_,
+                    CIAO::Session_Container (this->orb_.in (),
+                                             0,
+                                             0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);  
+}
+
+CIAO::Static_NodeApplication_Impl::
+Static_NodeApplication_Impl (CORBA::ORB_ptr o,
+                             PortableServer::POA_ptr p,
+                             Static_Config_EntryPoints_Maps* static_config_entrypoints_map)
+  : NodeApplication_Impl_Base (o, p),
+    static_config_entrypoints_map_ (static_config_entrypoints_map)
+{
+}
+
+CIAO::Container* 
+CIAO::Static_NodeApplication_Impl::create_container (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_NEW_THROW_EX (this->container_,
+                    CIAO::Session_Container (this->orb_.in (),
+                                             1,
+                                             this->static_config_entrypoints_map_),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);  
+}
+
+CIAO::Static_NodeApplication_Impl::
+~Static_NodeApplication_Impl ()
+{
+}

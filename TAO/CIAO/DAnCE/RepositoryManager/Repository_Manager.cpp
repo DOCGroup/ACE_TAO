@@ -151,7 +151,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       rep_impl->installPackage ("PC", package_url);
       pc = rep_impl->findPackageByName ("PC");
+      //ACE_DEBUG ((LM_DEBUG, "Dumping package configuration===start\n"));
       //Deployment::DnC_Dump::dump (*pc);
+      //ACE_DEBUG ((LM_DEBUG, "Dumping package configuration===end\n"));
 
       CIAO::REF_MAP ref_map;
       CIAO::REF_MAP primary_ref_map;
@@ -160,7 +162,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // update the deployment plan IDL data structure.
       CIAO::traverse_package (pc, plan, ref_map, primary_ref_map);
 
+      //ACE_DEBUG ((LM_DEBUG, "Dumping deployment plan===start\n"));
       //Deployment::DnC_Dump::dump (plan);
+      //ACE_DEBUG ((LM_DEBUG, "Dumping deployment plan===end\n"));
 
       // Pass the parsed plan to the Execution Manager to start the
       // Deployment Process.

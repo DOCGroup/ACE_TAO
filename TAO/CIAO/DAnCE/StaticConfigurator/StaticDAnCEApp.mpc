@@ -1,0 +1,56 @@
+// -*- MPC -*-
+// $Id$
+
+project(StaticDAnCEApp): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc, taoexe, xerces, naming_serv {
+  exename   = StaticDAnCEApp
+  requires += exceptions
+  includes += /usr/include
+  includes += ../NodeApplicationManager ../DomainApplicationManager ../NodeManager
+  libpaths += /usr/lib
+  libs     += Config_Handlers 
+  after    += Config_Handlers
+  libs     += RepositoryManager DomainApplicationManager NodeApplicationManager  Node_Daemon NodeDaemon_stub 
+  after    += RepositoryManager DomainApplicationManager NodeApplicationManager  Node_Daemon NodeDaemon_stub 
+
+  libs     += RobotAssembly_svnt
+  libs     += RobotAssembly_stub
+
+  libs     += HumanMachineInterface_exec 
+  libs     += ManagementWorkInstructions_exec 
+  libs     += PalletConveyorManager_exec
+  libs     += WatchSettingManager_exec
+  libs     += RobotManager_exec
+  libs     += HumanMachineInterface_stub
+  libs     += ManagementWorkInstructions_stub
+  libs     += PalletConveyorManager_stub
+  libs     += WatchSettingManager_stub
+  libs     += RobotManager_stub
+  libs     += HumanMachineInterface_svnt
+  libs     += ManagementWorkInstructions_svnt
+  libs     += PalletConveyorManager_svnt
+  libs     += WatchSettingManager_svnt
+  libs     += RobotManager_svnt
+
+  after     += RobotAssembly_svnt
+  after     += RobotAssembly_stub
+  after     += HumanMachineInterface_exec 
+  after     += ManagementWorkInstructions_exec 
+  after     += PalletConveyorManager_exec
+  after     += WatchSettingManager_exec
+  after     += RobotManager_exec
+  after     += HumanMachineInterface_svnt
+  after     += ManagementWorkInstructions_svnt
+  after     += PalletConveyorManager_svnt
+  after     += WatchSettingManager_svnt
+  after     += RobotManager_svnt
+  after     += HumanMachineInterface_stub
+  after     += ManagementWorkInstructions_stub
+  after     += PalletConveyorManager_stub
+  after     += WatchSettingManager_stub
+  after     += RobotManager_stub
+
+  Source_Files {
+    StaticDAnCEApp.cpp
+  }
+}
+
