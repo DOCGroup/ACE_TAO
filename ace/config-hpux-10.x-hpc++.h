@@ -28,6 +28,9 @@
 
 #  define ACE_HAS_BROKEN_HPUX_TEMPLATES
 
+// Compiler doesn't support the operator placement delete.
+#  define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+
 // Compiler can't handle calls like foo->operator T *()
 #  define ACE_HAS_BROKEN_CONVERSIONS
 
