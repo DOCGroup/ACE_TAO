@@ -299,6 +299,7 @@ VBIN = $(BIN:%=%$(VAR))
 ifdef shared_libs
   ifdef static_libs
     #### Build both shared and static libs.
+    BUILD  = $(VSHLIB) $(SHLIBA) $(VLIB) $(VBIN)
   else # ! static_libs
     #### Build shared libs only.
     ifeq ($(SHLIB),)
