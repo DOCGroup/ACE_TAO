@@ -29,18 +29,15 @@ class ACE_Auto_Basic_Ptr
 {
 public:
   // = Initialization and termination methods
-  ACE_Auto_Basic_Ptr (X *p = 0);
-  ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap);
+  /* explicit */ ACE_Auto_Basic_Ptr (X *p = 0);
+  ACE_Auto_Basic_Ptr (const ACE_Auto_Basic_Ptr<X> &ap);
+  ACE_Auto_Basic_Ptr<X> &operator= (const ACE_Auto_Basic_Ptr<X> &rhs);
   ~ACE_Auto_Basic_Ptr (void);
-  void operator= (ACE_Auto_Basic_Ptr<X> &rhs);
 
   // = Accessor methods.
   X &operator *() const;
   X *get (void) const;
-  X *release (void);
-  X *reset (X *p);
-
-  static void remove (X* &x);
+  X *release (void) const;
 
   void dump (void) const;
   // Dump the state of an object.
@@ -68,7 +65,7 @@ class auto_ptr : public ACE_Auto_Basic_Ptr <X>
 {
 public:
   // = Initialization and termination methods
-  auto_ptr (X *p = 0);
+  /* explicit */ auto_ptr (X *p = 0);
 
   X *operator-> () const;  
 };
@@ -84,20 +81,16 @@ class ACE_Auto_Basic_Array_Ptr
 {
 public:
   // = Initialization and termination methods.
-  ACE_Auto_Basic_Array_Ptr (X *p = 0);
-  ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap);
+  /* explicit */ ACE_Auto_Basic_Array_Ptr (X *p = 0);
+  ACE_Auto_Basic_Array_Ptr (const ACE_Auto_Basic_Array_Ptr<X> &ap);
+  ACE_Auto_Basic_Array_Ptr<X> &operator= (const ACE_Auto_Basic_Array_Ptr<X> &rhs);
   ~ACE_Auto_Basic_Array_Ptr (void);
-  void operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs);
-
+  
   // = Accessor methods.
-  X &operator* ();
-  X &operator[] (int i);
-  X operator[] (int i) const;
+  X &operator* () const;
+  X &operator[] (int i) const;
   X *get (void) const;
-  X *release (void);
-  X *reset (X *p);
-
-  static void remove (X *&x);
+  X *release (void) const;
 
   void dump (void) const;
   // Dump the state of an object.
@@ -117,7 +110,7 @@ class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
 {
 public:
   // = Initialization and termination methods.
-  ACE_Auto_Array_Ptr (X *p = 0);
+  /* explicit */ ACE_Auto_Array_Ptr (X *p = 0);
 
   X *operator-> () const;
 };
