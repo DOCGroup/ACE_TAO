@@ -1,3 +1,9 @@
+Fri Jan 17 14:22:48 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Notify/Properties.cpp: Fixed explicit
+	instantiation to instantiate TAO_Singleton rather than
+	ACE_Singleton.  This fixes the RH71_Explicit_Templates build.
+
 Fri Jan 17 08:34:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: Removed an extra
