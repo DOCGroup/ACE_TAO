@@ -664,13 +664,8 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
 
   // Figure out what port to listen on for server replies, and convert
   // to network byte order.
-  mcast_info[0] =
-    // Make sure not to convert this into network byte order since
-    // it's already in network byte order when it comes back from
-    // <get_local_addr>.
-    response_addr.get_port_number ();
-  mcast_info[1] =
-    ACE_HTONS (service_id);
+  mcast_info[0] = ACE_HTONS (response_addr.get_port_number ());
+  mcast_info[1] = ACE_HTONS (service_id);
 
   // Send multicast info to the server.
   ssize_t n_bytes = multicast.send (mcast_info,
@@ -728,7 +723,9 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
       delete [] buf;
       if (TAO_debug_level > 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error reading IIOP multicast response!\n"),
+                           "Error reading IIOP multicast response!\n"
+                           "Errno: %d \n",
+                           errno),
                           0);
     }
 
