@@ -100,7 +100,7 @@ private:
   void (DII_Cubit_Client::*op_array_[NUMBER_OF_TESTS])(void);
   // Array of pointers to the operation functions.
 
-  static char *stats_messages_[];
+  static const char *stats_messages_[];
   // Array of labels for passing to print_stats.
 
   int argc_;
@@ -172,7 +172,7 @@ DII_Cubit_Client::~DII_Cubit_Client (void)
 
 // An array of messages to pass to print_stats, so we can step through
 // this along with op_array_.
-char *DII_Cubit_Client::stats_messages_[] =
+const char *DII_Cubit_Client::stats_messages_[] =
 {
   "DII cube_short",
   "DII cube_octet",
@@ -223,7 +223,7 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       // make_cubit takes a char* arg that it doesn't use, but we must
       // still include it in the request.
-      CORBA::String dummy = "";
+      const CORBA::String dummy = "";
 
       mc_req->add_in_arg () <<= dummy;
 
