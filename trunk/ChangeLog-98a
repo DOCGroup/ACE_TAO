@@ -1,3 +1,10 @@
+Sun Feb 22 21:37:43 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: updated
+          comments to reflect that WIND_BASE and WIND_HOST_TYPE
+          environment variables must be set.  Thanks to Nanbor for
+          reporting that.  Also, set CROSS-COMPILE flag.
+
 Sun Feb 22 21:26:19 1998  James CE Johnson <jcej@chiroptera.tragus.org>
 
         * tests/IOStream_Test.cpp (server): break out of while loop if
