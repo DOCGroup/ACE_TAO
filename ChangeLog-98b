@@ -1,3 +1,7 @@
+Thu Oct 08 15:22:22 1998  Arturo Montes <mitosys@colomsat.com.co>
+
+	* ace/OS.{i,cpp}: Reverted FSU thread changes for now.
+
 Thu Oct 08 15:11:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ACE-INSTALL.html: Updated document about spawning new thread
