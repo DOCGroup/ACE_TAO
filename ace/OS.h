@@ -4445,9 +4445,6 @@ public:
                         void *buf,
                         size_t nbyte,
                         off_t offset);
-  static ssize_t readv (ACE_HANDLE handle,
-                        struct iovec *iov,
-                        int iovlen);
   static int recvmsg (ACE_HANDLE handle,
                       struct msghdr *msg,
                       int flags);
@@ -4465,9 +4462,21 @@ public:
                          const void *buf,
                          size_t nbyte,
                          off_t offset);
-  static int writev (ACE_HANDLE handle,
-                     const struct iovec *iov,
-                     int iovcnt);
+  static ssize_t readv (ACE_HANDLE handle,
+                        struct iovec *iov,
+                        int iovlen);
+  static ssize_t writev (ACE_HANDLE handle,
+                         const struct iovec *iov,
+                         int iovcnt);
+
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  static ssize_t writev (ACE_HANDLE handle, 
+                         const WSABUF *buffers, 
+                         int n);
+  static ssize_t readv (ACE_HANDLE handle, 
+                        WSABUF *buffers, 
+                        int n);
+#endif /* ACE_HAS_WINSOCK2 */
 
   // = A set of wrappers for event demultiplexing and IPC.
   static int select (int width,
@@ -5194,10 +5203,6 @@ extern "C" ssize_t read_timedwait (ACE_HANDLE handle,
                                    void *buf,
                                    size_t len,
                                    struct timespec *timeout);
-extern "C" ssize_t readv_timedwait (ACE_HANDLE handle,
-                                    struct iovec *iov,
-                                    int iovcnt,
-                                    struct timespec* timeout);
 extern "C" ssize_t sendto_timedwait (ACE_HANDLE handle,
                                      const char *buf,
                                      int len,
@@ -5213,6 +5218,10 @@ extern "C" ssize_t write_timedwait (ACE_HANDLE handle,
                                     const void *buf,
                                     size_t n,
                                     struct timespec *timeout);
+extern "C" ssize_t readv_timedwait (ACE_HANDLE handle,
+                                    struct iovec *iov,
+                                    int iovcnt,
+                                    struct timespec* timeout);
 extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
                                      ACE_WRITEV_TYPE *iov,
                                      int iovcnt,
@@ -5684,6 +5693,20 @@ private:
 #else
 # define ACE_INLINE_FOR_GNUC
 #endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
+
+struct ACE_Export ACE_IO_Vector :
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))  
+  public WSABUF
+#else
+  public iovec
+#endif /* ACE_HAS_WINSOCK2 */
+{
+  ssize_t length (void) const;
+  void length (ssize_t new_length);
+
+  void *buffer (void) const;
+  void buffer (void *new_buffer);  
+};
 
 #include "ace/Trace.h"
 

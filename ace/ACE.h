@@ -257,6 +257,10 @@ public:
                          const struct iovec* iov,
                          int iovcnt,
                          const ACE_Time_Value *timeout);
+  static ssize_t writev (ACE_HANDLE handle, 
+                         const struct ACE_IO_Vector *iov,
+                         int iovcnt,
+                         const ACE_Time_Value *timeout);
   // Send <iovcnt> <iovec> structs to <handle> (uses the
   // <ACE_OS::writev> call).  If <timeout> == 0, the caller will block
   // until action is possible, else will wait until the relative time
@@ -266,6 +270,10 @@ public:
 
   static ssize_t readv (ACE_HANDLE handle,
                         struct iovec *iov,
+                        int iovcnt,
+                        const ACE_Time_Value *timeout);
+  static ssize_t readv (ACE_HANDLE handle,
+                        struct ACE_IO_Vector *iov,
                         int iovcnt,
                         const ACE_Time_Value *timeout);
   // Read <iovcnt> <iovec> structs from <handle> (uses the
