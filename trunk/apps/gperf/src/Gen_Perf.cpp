@@ -48,31 +48,31 @@ Gen_Perf::Gen_Perf (void)
 // times).  Precondition: both set1 and set2 must be
 // ordered. Returns the length of the combined set.
 
-int 
+int
 Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 {
   char *base = set3;
-  
+
   while (*set1 && *set2)
     if (*set1 == *set2)
-      set1++, set2++; 
+      set1++, set2++;
     else
       {
         *set3 = *set1 < *set2 ? *set1++ : *set2++;
-        if (set3 == base || *set3 != *(set3 - 1)) 
+        if (set3 == base || *set3 != *(set3 - 1))
           set3++;
       }
-   
+
   while (*set1)
     {
-      *set3 = *set1++; 
-      if (set3 == base || *set3 != *(set3 - 1)) 
+      *set3 = *set1++;
+      if (set3 == base || *set3 != *(set3 - 1))
         set3++;
     }
-   
+
   while (*set2)
     {
-      *set3 = *set2++; 
+      *set3 = *set2++;
       if (set3 == base || *set3 != *(set3 - 1))
         set3++;
     }
@@ -84,34 +84,34 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 // speeds up later processing since we may assume the resulting set
 // (Set_3, in this case), is ordered. Uses insertion sort, since the
 // UNION_SET is typically short.
-  
-void 
+
+void
 Gen_Perf::sort_set (char *union_set, int len)
 {
   for (int i = 0, j = len - 1; i < j; i++)
     {
       char curr, tmp;
 
-      for (curr = i + 1, tmp = union_set[curr]; 
-           curr > 0 
-           && Vectors::occurrences[tmp] < Vectors::occurrences[union_set[curr-1]]; 
+      for (curr = i + 1, tmp = union_set[curr];
+           curr > 0
+           && Vectors::occurrences[tmp] < Vectors::occurrences[union_set[curr-1]];
            curr--)
         union_set[curr] = union_set[curr - 1];
-      
+
       union_set[curr] = tmp;
     }
 }
 
 // Generate a keysig's hash value.
 
-int 
-Gen_Perf::hash (List_Node *key_node) 
-{                             
+int
+Gen_Perf::hash (List_Node *key_node)
+{
   int sum = option[NOLENGTH] ? 0 : key_node->length;
 
   for (char *ptr = key_node->keysig; *ptr; ptr++)
       sum += Vectors::asso_values[*ptr];
-  
+
   key_node->hash_value = sum;
   return sum;
 }
@@ -123,34 +123,34 @@ Gen_Perf::hash (List_Node *key_node)
 // visited without repetition since Option.Get_Jump was forced to be
 // an odd value!
 
-inline int  
+inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
   int original_char = Vectors::asso_values[c];
   int total_iterations;
-  
+
   if (!option[FAST])
     total_iterations = option.asso_max ();
-  else 
+  else
     {
       total_iterations = option.iterations ();
 
       if (total_iterations == 0)
         total_iterations = this->key_list.keyword_list_length ();
     }
-  
+
   // Try all legal associated values.
 
   for (int i = total_iterations - 1; i >= 0; i--)
-    { 
+    {
       int collisions = 0;
 
-      Vectors::asso_values[c] = Vectors::asso_values[c] + 
+      Vectors::asso_values[c] = Vectors::asso_values[c] +
         (option.jump () ? option.jump () : ACE_OS::rand ()) & option.asso_max () - 1;
 
       // Iteration Number array is a win, O(1) intialization time!
-      this->char_search.reset ();     
-                                         
+      this->char_search.reset ();
+
       // See how this asso_value change affects previous keywords.  If
       // it does better than before we'll take it!
 
@@ -166,13 +166,13 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
                           "- resolved after %d iterations",
                           total_iterations - i));
             return 0;
-          }    
+          }
     }
-  
+
   // Restore original values, no more tries.
-  Vectors::asso_values[c] = original_char; 
+  Vectors::asso_values[c] = original_char;
   // If we're this far it's time to try the next character....
-  return 1; 
+  return 1;
 }
 
 // Change a character value, try least-used characters first.
@@ -181,7 +181,7 @@ int
 Gen_Perf::change (List_Node *prior, List_Node *curr)
 {
   if (option[DEBUG])
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "collision on keyword #%d, prior = \"%s\", curr = \"%s\" hash = %d\n",
                 num_done,
                 prior->key,
@@ -195,13 +195,13 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   // Try changing some values, if change doesn't alter other values
   // continue normal action.
   fewest_collisions++;
-  
+
   for (char *temp = union_set; *temp != '\0'; temp++)
     if (affects_prev (*temp, curr) == 0)
       {
         if (option[DEBUG])
           ACE_DEBUG ((LM_DEBUG,
-                      " by changing asso_value['%c'] (char #%d) to %d\n", 
+                      " by changing asso_value['%c'] (char #%d) to %d\n",
                       *temp,
                       temp - union_set + 1,
                       Vectors::asso_values[*temp]));
@@ -213,12 +213,12 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
        ptr != curr;
        ptr = ptr->next)
     this->hash (ptr);
-  
+
   this->hash (curr);
-  
+
   if (option[DEBUG])
-    ACE_DEBUG ((LM_DEBUG, 
-                "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n", 
+    ACE_DEBUG ((LM_DEBUG,
+                "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n",
                !option[FAST] ? option.asso_max () : option.iterations () ? option.iterations () : this->key_list.keyword_list_length (),
                 fewest_collisions + this->key_list.total_duplicates));
   return 0;
@@ -244,28 +244,28 @@ Gen_Perf::open (void)
     asso_value_max = non_linked_length / -asso_value_max;
 
   option.asso_max (ACE_POW (asso_value_max));
-  
+
   if (option[RANDOM])
     {
       ACE_OS::srand (ACE_OS::time (0));
-      
+
       for (int i = 0; i < Vectors::ALPHA_SIZE; i++)
         Vectors::asso_values[i] = (ACE_OS::rand () & asso_value_max - 1);
     }
   else
     {
       int asso_value = option.initial_value ();
-      
+
       // Initialize array if user requests non-zero default.
-      if (asso_value)           
+      if (asso_value)
         for (int i = Vectors::ALPHA_SIZE - 1; i >= 0; i--)
           Vectors::asso_values[i] = asso_value & option.asso_max () - 1;
     }
 
-  this->max_hash_value = this->key_list.max_key_length () 
-    + option.asso_max () 
+  this->max_hash_value = this->key_list.max_key_length ()
+    + option.asso_max ()
     * option.max_keysig_size ();
-  
+
   ACE_NEW_RETURN (this->union_set,
                   char[2 * option.max_keysig_size () + 1],
                   -1);
@@ -304,17 +304,36 @@ Gen_Perf::compute_binary_search (void)
 {
   // Do a string sort.
   this->key_list.string_sort ();
-  
+
   // Assign hash values.
   List_Node *curr;
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
-       curr != 0; 
+       curr != 0;
        curr = curr->next, hash_value++)
     {
       curr->hash_value = hash_value;
-    } 
-   
+    }
+
+  return 0;
+}
+
+int
+Gen_Perf::compute_linear_search (void)
+{
+  // Convert the list of keys to a linear list without
+  // equivalence classes.
+  this->key_list.string_sort ();
+
+  // Assign hash values.
+  List_Node *curr;
+  int hash_value;
+  for (hash_value = 0, curr = this->key_list.head;
+       curr != 0;
+       curr = curr->next, hash_value++)
+    {
+      curr->hash_value = hash_value;
+    }
   return 0;
 }
 
@@ -323,14 +342,14 @@ Gen_Perf::compute_perfect_hash (void)
 {
   List_Node *curr;
 
-  for (curr = this->key_list.head; 
-       curr != 0; 
+  for (curr = this->key_list.head;
+       curr != 0;
        curr = curr->next)
     {
       this->hash (curr);
-      
-      for (List_Node *ptr = this->key_list.head; 
-	   ptr != curr; 
+
+      for (List_Node *ptr = this->key_list.head;
+	   ptr != curr;
 	   ptr = ptr->next)
         if (ptr->hash_value == curr->hash_value)
           {
@@ -339,23 +358,23 @@ Gen_Perf::compute_perfect_hash (void)
             break;
           }
       num_done++;
-    } 
-  
+    }
+
   // Make one final check, just to make sure nothing weird happened...
-  
+
   this->char_search.reset ();
 
-  for (curr = this->key_list.head; 
-       curr; 
+  for (curr = this->key_list.head;
+       curr;
        curr = curr->next)
     if (this->char_search.find (this->hash (curr)) != 0)
-      if (option[DUP]) 
+      if (option[DUP])
         // Keep track of the number of "dynamic" links (i.e., keys
         // that hash to the same value) so that we can use it later
         // when generating the output.
         this->key_list.total_duplicates++;
-      else 
-        { 
+      else
+        {
           // Yow, big problems.  we're outta here!
           ACE_ERROR ((LM_ERROR,
                       "\nInternal error, duplicate value %d:\n"
@@ -383,24 +402,30 @@ Gen_Perf::run (void)
   if (this->open () == -1)
     return 1;
 
-#if 0
   if (option[BINARYSEARCH])
     {
       if (this->compute_binary_search () == -1)
         return 1;
     }
   else
-#endif 
     {
-      if (this->compute_perfect_hash () == -1)
-        return 1;
+      if (option[LINEARSEARCH])
+	{
+	  if (this->compute_linear_search () == -1)
+	    return 1;
+	}
+      else
+	{
+	  if (this->compute_perfect_hash () == -1)
+	    return 1;
 
-      // Sorts the key word list by hash value, and then outputs the list.
-      // The generated hash table code is only output if the early stage
-      // of processing turned out O.K.
-      this->key_list.sort ();
+	  // Sorts the key word list by hash value, and then outputs the list.
+	  // The generated hash table code is only output if the early stage
+	  // of processing turned out O.K.
+	  this->key_list.sort ();
+	}
     }
-  
+
   this->key_list.output ();
   return 0;
 }
@@ -408,20 +433,20 @@ Gen_Perf::run (void)
 // Prints out some diagnostics upon completion.
 
 Gen_Perf::~Gen_Perf (void)
-{                             
+{
   if (option[DEBUG])
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));
       for (int i = 0; i < Vectors::ALPHA_SIZE; i++)
         if (Vectors::occurrences[i])
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",
                       i,
                       Vectors::asso_values[i],
                       i,
                       Vectors::occurrences[i]));
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "end table dumping\n"));
     }
 

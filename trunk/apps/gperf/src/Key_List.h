@@ -38,17 +38,17 @@ class Duplicate_Entry
   // = DESCRIPTION
   //     This is used for generating code by the <Key_List>.
 public:
-  int hash_value;    
+  int hash_value;
   // Hash value for this particular duplicate set.
 
-  int index;            
+  int index;
   // Index into the main keyword storage array.
 
-  int count;            
+  int count;
   // Number of consecutive duplicates at this index.
 };
 
-class Key_List 
+class Key_List
 {
   // = TITLE
   //   Data and function member declarations for the keyword list class.
@@ -69,15 +69,15 @@ public:
   int read_keys (void);
   int output (void);
 
-  List_Node *head;                                  
-  // Points to the head of the linked list. 
+  List_Node *head;
+  // Points to the head of the linked list.
 
-  int total_duplicates; 
-  // Total number of duplicate hash values. 
+  int total_duplicates;
+  // Total number of duplicate hash values.
 
 private:
   // = Make hash table 10 times larger than # of keyword entries.
-  enum 
+  enum
   {
     TABLE_MULTIPLE = 10
   };
@@ -96,10 +96,11 @@ private:
   void output_hash_function (void);
   void output_lookup_function (void);
   int output_binary_search_function(void);
+  int output_linear_search_function (void);
   int output_lookup_array (void);
-  void output_strcasecmp (void);  
+  void output_strcasecmp (void);
   int output_types (void);
-  void dump (void); 
+  void dump (void);
   char *array_type (void);
   char *save_include_src (void);
   char *special_input (char delimiter);
@@ -111,46 +112,46 @@ private:
                             int i2,
                             Duplicate_Entry *dup_ptr,
                             int value);
-  char *array_type_;		
-  // Pointer to the type for word list. 
+  char *array_type_;
+  // Pointer to the type for word list.
 
-  char *return_type;		
-  // Pointer to return type for lookup function. 
+  char *return_type;
+  // Pointer to return type for lookup function.
 
-  char *struct_tag;		
-  // Shorthand for user-defined struct tag type. 
+  char *struct_tag;
+  // Shorthand for user-defined struct tag type.
 
-  char *include_src;		
-  // C source code to be included verbatim. 
+  char *include_src;
+  // C source code to be included verbatim.
 
-  int max_key_len;		
-  // Maximum length of the longest keyword. 
+  int max_key_len;
+  // Maximum length of the longest keyword.
 
-  int min_key_len;		
-  // Minimum length of the shortest keyword. 
+  int min_key_len;
+  // Minimum length of the shortest keyword.
 
-  int min_hash_value;		
-  // Minimum hash value for all keywords. 
+  int min_hash_value;
+  // Minimum hash value for all keywords.
 
   int max_hash_value;
-  // Maximum hash value for all keywords. 
+  // Maximum hash value for all keywords.
 
-  int occurrence_sort;		
-  // True if sorting by occurrence. 
+  int occurrence_sort;
+  // True if sorting by occurrence.
 
-  int hash_sort;		
-  // True if sorting by hash value. 
+  int hash_sort;
+  // True if sorting by hash value.
 
   int key_sort;
   // True if sorting by key value.
 
-  int additional_code;		
-  // True if any additional C code is included. 
+  int additional_code;
+  // True if any additional C code is included.
 
-  int list_len;			
-  // Length of head's Key_List, not counting duplicates. 
+  int list_len;
+  // Length of head's Key_List, not counting duplicates.
 
-  int total_keys;		
+  int total_keys;
   // Total number of keys, counting duplicates.
 
   static char *const default_array_type;
