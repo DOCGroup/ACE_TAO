@@ -155,7 +155,14 @@ Handle_Events::serve(char *buf)
   ACE_ARGV arguments(buf);
   if(ACE_OS::strcmp(arguments[0],TESTER) == 0)
     {
-      ACE_Process p(arguments.argv(), ACE_INVALID_HANDLE, OUTPUT_FILE, OUTPUT_FILE);
+      ACE_Process_Options po;
+      ACE_Process p;
+
+      po.set_handles (ACE_INVALID_HANDLE, OUTPUT_FILE, OUTPUT_FILE);
+      po.command_line (arguments.argv ());
+
+      p.spawn (po);
+      
       return 0;
     }
   else
