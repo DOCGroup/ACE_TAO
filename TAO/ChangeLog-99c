@@ -1,3 +1,10 @@
+Sun Jul 11 03:25:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp
+	  (assign_priorities_i):
+	  (init): The assignment operator of auto_ptr takes another
+	  auto_ptr, not the pointer itself.
+
 Sat Jul 10 23:46:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/Options.html:
