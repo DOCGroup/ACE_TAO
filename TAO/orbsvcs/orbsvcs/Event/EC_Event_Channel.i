@@ -6,8 +6,8 @@ TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
                                  PortableServer::POA_ptr c_poa)
   :  consumer_reconnect (0),
      supplier_reconnect (0),
-     consumer_admin_busy_hwm (0),
-     consumer_admin_max_write_delay (0),
+     consumer_admin_busy_hwm (1),
+     consumer_admin_max_write_delay (1),
      scheduler (RtecScheduler::Scheduler::_nil ()),
      supplier_poa (s_poa),
      consumer_poa (c_poa)
