@@ -67,7 +67,6 @@ namespace POA_CORBA
   class IRObject;
   typedef IRObject *IRObject_ptr;
   
-  class _TAO_IRObject_Strategized_Proxy_Broker;
   
   class  IRObject
     : public virtual PortableServer::ServantBase
@@ -164,58 +163,12 @@ namespace POA_CORBA
       );
   };
   
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-  
-  class  _TAO_IRObject_Strategized_Proxy_Broker
-    : public virtual TAO::Collocation_Proxy_Broker
-  {
-  public: 
-    _TAO_IRObject_Strategized_Proxy_Broker (void);
-    
-    virtual ~_TAO_IRObject_Strategized_Proxy_Broker (void);
-    
-    TAO::Collocation_Strategy
-    get_strategy (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    
-    void
-    dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
-        TAO::Argument ** args,
-        int num_args,
-        const char * op,
-        size_t op_len,
-        TAO::Collocation_Strategy strategy
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::Exception));
-    
-    static _TAO_IRObject_Strategized_Proxy_Broker *
-    the_TAO_IRObject_Strategized_Proxy_Broker (void);
-  };
-  
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
-  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
   
   class Contained;
   typedef Contained *Contained_ptr;
   
-  class _TAO_Contained_Strategized_Proxy_Broker;
   
   class  Contained
     : public virtual POA_CORBA::IRObject
@@ -479,7 +432,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     destroy_skel (
@@ -490,58 +443,12 @@ namespace POA_CORBA
       );
   };
   
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-  
-  class  _TAO_Contained_Strategized_Proxy_Broker
-    : public virtual TAO::Collocation_Proxy_Broker
-  {
-  public: 
-    _TAO_Contained_Strategized_Proxy_Broker (void);
-    
-    virtual ~_TAO_Contained_Strategized_Proxy_Broker (void);
-    
-    TAO::Collocation_Strategy
-    get_strategy (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    
-    void
-    dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
-        TAO::Argument ** args,
-        int num_args,
-        const char * op,
-        size_t op_len,
-        TAO::Collocation_Strategy strategy
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::Exception));
-    
-    static _TAO_Contained_Strategized_Proxy_Broker *
-    the_TAO_Contained_Strategized_Proxy_Broker (void);
-  };
-  
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
-  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
   
   class Container;
   typedef Container *Container_ptr;
   
-  class _TAO_Container_Strategized_Proxy_Broker;
   
   class  Container
     : public virtual POA_CORBA::IRObject
@@ -996,7 +903,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     destroy_skel (
@@ -1007,58 +914,12 @@ namespace POA_CORBA
       );
   };
   
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-  
-  class  _TAO_Container_Strategized_Proxy_Broker
-    : public virtual TAO::Collocation_Proxy_Broker
-  {
-  public: 
-    _TAO_Container_Strategized_Proxy_Broker (void);
-    
-    virtual ~_TAO_Container_Strategized_Proxy_Broker (void);
-    
-    TAO::Collocation_Strategy
-    get_strategy (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    
-    void
-    dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
-        TAO::Argument ** args,
-        int num_args,
-        const char * op,
-        size_t op_len,
-        TAO::Collocation_Strategy strategy
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::Exception));
-    
-    static _TAO_Container_Strategized_Proxy_Broker *
-    the_TAO_Container_Strategized_Proxy_Broker (void);
-  };
-  
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
-  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
   
   class IDLType;
   typedef IDLType *IDLType_ptr;
   
-  class _TAO_IDLType_Strategized_Proxy_Broker;
   
   class  IDLType
     : public virtual POA_CORBA::IRObject
@@ -1146,7 +1007,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     destroy_skel (
@@ -1157,58 +1018,12 @@ namespace POA_CORBA
       );
   };
   
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-  
-  class  _TAO_IDLType_Strategized_Proxy_Broker
-    : public virtual TAO::Collocation_Proxy_Broker
-  {
-  public: 
-    _TAO_IDLType_Strategized_Proxy_Broker (void);
-    
-    virtual ~_TAO_IDLType_Strategized_Proxy_Broker (void);
-    
-    TAO::Collocation_Strategy
-    get_strategy (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    
-    void
-    dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
-        TAO::Argument ** args,
-        int num_args,
-        const char * op,
-        size_t op_len,
-        TAO::Collocation_Strategy strategy
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::Exception));
-    
-    static _TAO_IDLType_Strategized_Proxy_Broker *
-    the_TAO_IDLType_Strategized_Proxy_Broker (void);
-  };
-  
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
-  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
   
   class TypedefDef;
   typedef TypedefDef *TypedefDef_ptr;
   
-  class _TAO_TypedefDef_Strategized_Proxy_Broker;
   
   class  TypedefDef
     : public virtual POA_CORBA::Contained,
@@ -1280,7 +1095,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     destroy_skel (
@@ -1363,7 +1178,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     describe_skel (
@@ -1374,7 +1189,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1939
+    // be\be_interface.cpp:1859
     
     static void
     move_skel (
@@ -1392,51 +1207,6 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
-  
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-  
-  class  _TAO_TypedefDef_Strategized_Proxy_Broker
-    : public virtual TAO::Collocation_Proxy_Broker
-  {
-  public: 
-    _TAO_TypedefDef_Strategized_Proxy_Broker (void);
-    
-    virtual ~_TAO_TypedefDef_Strategized_Proxy_Broker (void);
-    
-    TAO::Collocation_Strategy
-    get_strategy (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    
-    void
-    dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
-        TAO::Argument ** args,
-        int num_args,
-        const char * op,
-        size_t op_len,
-        TAO::Collocation_Strategy strategy
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::Exception));
-    
-    static _TAO_TypedefDef_Strategized_Proxy_Broker *
-    the_TAO_TypedefDef_Strategized_Proxy_Broker (void);
-  };
-  
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:80
