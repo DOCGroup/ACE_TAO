@@ -1,3 +1,10 @@
+Tue Apr 13 08:21:41 1999  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU
+        * include/makeinclude/platform_sunos5_sunc++_orbix.GNU: Added a make
+          option, mt_orbix, to control whether the MT or non-MT variant of
+          Orbix is used.  Default is MT; to use non-MT, "make mt_orbix=0".
+
 Mon Apr 12 14:24:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU (realclean.local):
