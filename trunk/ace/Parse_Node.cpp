@@ -135,7 +135,7 @@ ACE_Parse_Node::print (void) const
 ACE_Parse_Node::~ACE_Parse_Node (void)
 {
   ACE_TRACE ("ACE_Parse_Node::~ACE_Parse_Node");
-  delete ACE_const_cast (ASYS_TCHAR*, this->name_);
+  delete[] ACE_const_cast (ASYS_TCHAR*, this->name_);
   delete this->next_;
 }
 
@@ -323,7 +323,7 @@ ACE_Static_Node::apply (void)
 ACE_Static_Node::~ACE_Static_Node (void)
 {
   ACE_TRACE ("ACE_Static_Node::~ACE_Static_Node");
-  delete this->parameters_;
+  delete[] this->parameters_;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Location_Node)
@@ -491,7 +491,7 @@ ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
 ACE_Object_Node::~ACE_Object_Node (void)
 {
   ACE_TRACE ("ACE_Object_Node::~ACE_Object_Node");
-  delete ACE_const_cast (ASYS_TCHAR *, this->object_name_);
+  delete[] ACE_const_cast (ASYS_TCHAR *, this->object_name_);
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Function_Node)
@@ -587,7 +587,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 ACE_Function_Node::~ACE_Function_Node (void)
 {
   ACE_TRACE ("ACE_Function_Node::~ACE_Function_Node");
-  delete ACE_const_cast (ASYS_TCHAR *, function_name_);
+  delete[] ACE_const_cast (ASYS_TCHAR *, function_name_);
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Dummy_Node)
@@ -703,7 +703,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 ACE_Static_Function_Node::~ACE_Static_Function_Node (void)
 {
   ACE_TRACE ("ACE_Static_Function_Node::~ACE_Static_Function_Node");
-  delete ACE_const_cast (ASYS_TCHAR *, this->function_name_);
+  delete[] ACE_const_cast (ASYS_TCHAR *, this->function_name_);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
