@@ -191,8 +191,18 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
 void
 CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK;
+  if (this->orb_core () == 0)
+    {
+      // If the ORB_Core pointer is zero, assume that the ORB_Core has
+      // been destroyed.
+
+      // As defined by the CORBA 2.3 specification, throw a
+      // CORBA::OBJECT_NOT_EXIST exception if the ORB has been
+      // destroyed by the time an ORB function is called.
+
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+    }
 
   if (TAO_debug_level >= 3)
     {
@@ -930,8 +940,8 @@ CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
       // been destroyed.
 
       // As defined by the CORBA 2.3 specification, throw a
-      // CORBA::OBJECT_NOT_EXIST exception with minor code 4 if the ORB
-      // has shutdown by the time an ORB function is called.
+      // CORBA::OBJECT_NOT_EXIST exception if the ORB has been
+      // destroyed by the time an ORB function is called.
 
       ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_NO));
