@@ -10309,8 +10309,6 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 #if ACE_SIZEOF_LONG == 8
   /* The native lseek is 64 bit, use it. */
   return ACE_OS::lseek (handle, offset, whence);
-// #elif defined (linux)
-//   ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
 #elif defined (__sgi) || defined (linux)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #else
