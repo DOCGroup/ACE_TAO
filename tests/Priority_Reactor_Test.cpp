@@ -364,6 +364,7 @@ template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Select_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Select_Reactor>;
 template class ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>;
 template class ACE_Svc_Tuple<Write_Handler>;
@@ -376,6 +377,7 @@ template class ACE_Svc_Tuple<Write_Handler>;
 #pragma instantiate auto_ptr<ACE_Select_Reactor>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Select_Reactor>
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>
 #pragma instantiate ACE_Svc_Tuple<Write_Handler>
