@@ -1,3 +1,20 @@
+Wed Jan 17 10:00:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Handle_Ops.cpp: (handle_timed_open)
+
+          Removed the use of ACE_NONBLOCK on Win32.  This use
+          didn't function as expected, since ACE_NONBLOCK would
+          be interpreted as O_WRONLY.  Also, the CreateFile API
+          call doesn't support any nonblocking option, so 
+          redefining ACE_NONBLOCK would not seem to fix anything.
+
+        * bin/PerlACE/Process_Unix.pm:
+
+          Fixed up the use of the RUNNING state, so wait and kill
+          work properly.  Also made Kill automatically use waitpid
+          (since I can't think of any time we'd kill without wanting to
+          clean up the resources).
+
 Wed Jan 17 07:44:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Log_Msg.h (ACE_Log_Msg): Clarified that only the current message 
