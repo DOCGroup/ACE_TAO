@@ -19,15 +19,13 @@ private:
   ACE_Manual_Event quit_seen_;
 
 public:
-  Quit_Handler (ACE_Reactor *r)
-    : ACE_Event_Handler (r) {
+  Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {
     SetConsoleMode (ACE_STDIN, ENABLE_LINE_INPUT
                                | ENABLE_ECHO_INPUT
                                | ENABLE_PROCESSED_INPUT);
     if (reactor ()->register_handler
-        (this, quit_seen_.handle ()) == -1)
-      r->end_reactor_event_loop ();
-    else if (ACE_Event_Handler::register_stdin_handler
+          (this, quit_seen_.handle ()) == -1)
+        || ACE_Event_Handler::register_stdin_handler
              (this, r, ACE_Thread_Manager::instance ()) == -1)
       r->end_reactor_event_loop ();
   }
