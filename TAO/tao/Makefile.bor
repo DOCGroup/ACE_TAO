@@ -150,7 +150,6 @@ OBJFILES = \
 	$(OBJDIR)\Services.obj \
 	$(OBJDIR)\Single_Reactor.obj \
 	$(OBJDIR)\skip.obj \
-	$(OBJDIR)\Smart_Proxies.obj \
 	$(OBJDIR)\Stub.obj \
 	$(OBJDIR)\Sync_Strategies.obj \
 	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
