@@ -28,9 +28,9 @@ XML_ContentHandler::~XML_ContentHandler (void)
 void
 XML_ContentHandler::characters (const ACEXML_Char *cdata,
                                 int /* start */,
-                                int /* end */,
-                                ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                int /* end */
+                                ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (ACE_OS::strcmp (cdata, this->server_name_.c_str ()) == 0)
     {
@@ -70,24 +70,22 @@ XML_ContentHandler::characters (const ACEXML_Char *cdata,
 }
 
 void
-XML_ContentHandler::endDocument (ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+XML_ContentHandler::endDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 }
 
 void
 XML_ContentHandler::endElement (const ACEXML_Char *,
                                 const ACEXML_Char *,
-                                const ACEXML_Char * /* qName */,
-                                ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                const ACEXML_Char * /* qName */ ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 }
 
 void
-XML_ContentHandler::endPrefixMapping (const ACEXML_Char * /* prefix */,
-                                      ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+XML_ContentHandler::endPrefixMapping (const ACEXML_Char * /* prefix */ ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   //  cout << "* Event endPrefixMapping (" << prefix << ") ***************" << endl;
 }
@@ -95,18 +93,16 @@ XML_ContentHandler::endPrefixMapping (const ACEXML_Char * /* prefix */,
 void
 XML_ContentHandler::ignorableWhitespace (const ACEXML_Char *,
                                          int,
-                                         int,
-                                         ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                         int ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   //  cout << "* Event ignorableWhitespace () ***************" << endl;
 }
 
 void
 XML_ContentHandler::processingInstruction (const ACEXML_Char * /* target */,
-                                           const ACEXML_Char * /* data */,
-                                           ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                           const ACEXML_Char * /* data */ ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   //  this->print_indent ();
 //   cout << "<?" << target << " "
@@ -114,23 +110,21 @@ XML_ContentHandler::processingInstruction (const ACEXML_Char * /* target */,
 }
 
 void
-XML_ContentHandler::setDocumentLocator (ACEXML_Locator *,
-                                        ACEXML_Env & /* xmlenv */)
+XML_ContentHandler::setDocumentLocator (ACEXML_Locator *)
 {
   //  cout << "* Event setDocumentLocator () ***************" << endl;
 }
 
 void
-XML_ContentHandler::skippedEntity (const ACEXML_Char * /* name */,
-                                   ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+XML_ContentHandler::skippedEntity (const ACEXML_Char * /* name */ ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   //  cout << "* Event skippedEntity (" << name << ") ***************" << endl;
 }
 
 void
-XML_ContentHandler::startDocument (ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+XML_ContentHandler::startDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   //  cout << "* Event startDocument () ***************" << endl;
 }
@@ -139,9 +133,8 @@ void
 XML_ContentHandler::startElement (const ACEXML_Char *,
                                   const ACEXML_Char *,
                                   const ACEXML_Char *qName,
-                                  ACEXML_Attributes *,
-                                  ACEXML_Env & /* xmlenv */)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                  ACEXML_Attributes * ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->found_server_entry_ == 1)
     {
@@ -174,9 +167,8 @@ XML_ContentHandler::startElement (const ACEXML_Char *,
 
 void
 XML_ContentHandler::startPrefixMapping (const ACEXML_Char *,
-                                        const ACEXML_Char *,
-                                        ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                        const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // No-op.
 }
@@ -186,9 +178,8 @@ XML_ContentHandler::startPrefixMapping (const ACEXML_Char *,
 void
 XML_ContentHandler::notationDecl (const ACEXML_Char *,
                                        const ACEXML_Char *,
-                                       const ACEXML_Char *,
-                                       ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                       const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // No-op.
 }
@@ -197,9 +188,8 @@ void
 XML_ContentHandler::unparsedEntityDecl (const ACEXML_Char *,
                                              const ACEXML_Char *,
                                              const ACEXML_Char *,
-                                             const ACEXML_Char *,
-                                             ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                             const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // No-op.
 }
@@ -208,9 +198,8 @@ XML_ContentHandler::unparsedEntityDecl (const ACEXML_Char *,
 
 ACEXML_InputSource *
 XML_ContentHandler::resolveEntity (const ACEXML_Char *,
-                                   const ACEXML_Char *,
-                                   ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+                                   const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // No-op.
   return 0;
@@ -222,25 +211,22 @@ XML_ContentHandler::resolveEntity (const ACEXML_Char *,
    * Receive notification of a recoverable error.
    */
 void
-XML_ContentHandler::error (ACEXML_SAXParseException &,
-                                ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+XML_ContentHandler::error (ACEXML_SAXParseException & ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // No-op.
 }
 
 void
-XML_ContentHandler::fatalError (ACEXML_SAXParseException &,
-                                     ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+XML_ContentHandler::fatalError (ACEXML_SAXParseException & ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // No-op.
 }
 
 void
-XML_ContentHandler::warning (ACEXML_SAXParseException &,
-                                  ACEXML_Env &)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+XML_ContentHandler::warning (ACEXML_SAXParseException & ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // No-op.
 }
