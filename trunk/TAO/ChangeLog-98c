@@ -1,3 +1,14 @@
+Fri Sep 25 15:31:17 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/CDR/run_test.pl: New script to run all three CDR tests and 
+	  format the output.
+
+	* tests/CDR/growth.cpp: Added ability to set a few basic variables 
+	  from the command line.
+
+	* tests/CDR/basic_types.cpp: Added ability to set a few basic
+	  variables from the command line
+
 Fri Sep 25 07:37:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/echo/Client_i.cpp (Client_i): reordered

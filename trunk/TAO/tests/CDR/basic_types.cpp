@@ -22,7 +22,7 @@
 
 ACE_RCSID(CDR, basic_types, "$Id$")
 
-static const int n = 4096;
+static int n = 4096;
 static int nloops = 100;
 
 struct CDR_Test_Types
@@ -220,6 +220,35 @@ main (int argc, char *argv[])
 					    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      ACE_Get_Opt get_opt (argc, argv, "dn:l:");
+      int opt;
+      
+      while ((opt = get_opt ()) != EOF)
+	{
+	  switch (opt)
+	    {
+	    case 'd':
+	      TAO_debug_level++;
+	      break;
+	    case 'n':
+	      n = ACE_OS::atoi (get_opt.optarg);
+	      break;
+	    case 'l':
+	      nloops = ACE_OS::atoi (get_opt.optarg);
+	      break;
+	    case '?':
+	    default:
+	      ACE_DEBUG ((LM_DEBUG,
+			  "Usage: %s "
+			  "-d debug"
+			  "-n <num> "
+			  "-l <loops> "
+			  "\n",
+			  argv[0]));
+	      return -1;
+	    }
+	}
+  
       for (int i = 0; i < nloops; ++i)
 	{
 	  TAO_OutputCDR output;
@@ -230,12 +259,14 @@ main (int argc, char *argv[])
 	      return 1;
 	    }
 	  TAO_InputCDR input (output);
-#if 0
-	  ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
-	  ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-	  ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
-	  ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-#endif
+	  if (TAO_debug_level > 0)
+	    {
+	      ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
+	      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+	      ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
+	      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+	    }
+
 	  if (test_get (input, test_types) != 0)
 	    {
 	      return 1;
