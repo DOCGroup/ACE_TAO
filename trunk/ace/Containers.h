@@ -28,7 +28,11 @@ template <class T>
 class ACE_Double_Linked_List;
 
 template <class T>
+class ACE_Double_Linked_List_Iterator_Base;
+template <class T>
 class ACE_Double_Linked_List_Iterator;
+template <class T>
+class ACE_Double_Linked_List_Reverse_Iterator;
 
 class ACE_Export ACE_DLList_Node
 {
@@ -37,7 +41,9 @@ class ACE_Export ACE_DLList_Node
   //     ACE_Double_Linked_List.
 public:
   friend class ACE_Double_Linked_List<ACE_DLList_Node>;
+  friend class ACE_Double_Linked_List_Iterator_Base<ACE_DLList_Node>;
   friend class ACE_Double_Linked_List_Iterator<ACE_DLList_Node>;
+  friend class ACE_Double_Linked_List_Reverse_Iterator<ACE_DLList_Node>;
 
   ACE_DLList_Node (void *&i,
                    ACE_DLList_Node *n = 0,

@@ -1,3 +1,22 @@
+Tue Jun 15 22:26:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* tests/DLL_Test.cpp
+	* tests/Upgradable_RW_Test.h,cpp 
+	* ace/Thread_Manager.h,cpp
+	* ace/Template_Instantiations.cpp
+	* ace/Containers_T.h,cpp,i
+	* ace/Containers.h,cpp
+	  Added new classes ACE_Double_Linked_List_Iterator_Base,
+	  ACE_Double_Linked_List_Reverse_Iterator and
+	  ACE_DLList_Reverse_Iterator. I also had to adjust friend
+	  declarations accordingly (as the iterator base and reverse
+	  iterators also needed to be declared friend). This change
+	  involved moving much of the functionality of the iterators into
+	  the base class a la template method. Many thanks to Chris Gill
+	  for help with this (M-x all-hail-chris-gill). I fear what this
+	  may break in spite of all my tests, so I apologise in advance
+	  for any chaos...
+
 Tue Jun 15 17:55:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.i:

@@ -480,9 +480,17 @@ ACE_DLList<T>::~ACE_DLList (void)
   while (this->delete_head ()) ;
 }
 
+template <class T> ACE_INLINE int
+ACE_DLList_Iterator<T>::remove (void)
+{
+  ACE_DLList_Node *temp = this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
+  this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::advance ();
+  return dllist_.remove (temp);
+}
+
 template <class T> ACE_INLINE
 ACE_DLList_Iterator<T>::ACE_DLList_Iterator (ACE_DLList<T> &l)
-  : ACE_DLList_Iterator_Base ((ACE_DLList_Base &)l),
+  : ACE_Double_Linked_List_Iterator <ACE_DLList_Node> ((ACE_DLList_Base &)l),
     list_ (l)
 {
 }
@@ -490,20 +498,54 @@ ACE_DLList_Iterator<T>::ACE_DLList_Iterator (ACE_DLList<T> &l)
 template <class T> ACE_INLINE T *
 ACE_DLList_Iterator<T>::next (void) const
 {
-  ACE_DLList_Node *temp = ACE_DLList_Iterator_Base::next ();
+  ACE_DLList_Node *temp = ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
   return (T *) (temp ? temp->item_ : 0);
 }
 
 template <class T> ACE_INLINE int
-ACE_DLList_Iterator<T>::remove (void)
+ACE_DLList_Iterator<T>::advance (void)
 {
-  ACE_DLList_Node *temp = ACE_DLList_Iterator_Base::next ();
-  ACE_DLList_Iterator_Base::advance ();
-  return this->list_.remove (temp);
+  return this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::advance ();
 }
 
 template <class T> ACE_INLINE void
 ACE_DLList_Iterator<T>::dump (void) const
 {
-  ACE_DLList_Iterator_Base::dump ();
+  ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::dump ();
+}
+
+
+template <class T> ACE_INLINE int
+ACE_DLList_Reverse_Iterator<T>::remove (void)
+{
+  ACE_DLList_Node *temp = ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
+  this->ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::advance ();
+  return dllist_.remove (temp);
+}
+
+template <class T> ACE_INLINE
+ACE_DLList_Reverse_Iterator<T>::ACE_DLList_Reverse_Iterator (ACE_DLList<T> &l)
+  : ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node> ((ACE_DLList_Base &)l),
+    list_ (l)
+{
+}
+
+template <class T> ACE_INLINE int
+ACE_DLList_Reverse_Iterator<T>::advance (void)
+{
+  return ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::advance ();
+}
+
+template <class T> ACE_INLINE T *
+ACE_DLList_Reverse_Iterator<T>::next (void) const
+{
+  ACE_DLList_Node *temp = ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
+  return (T *) (temp ? temp->item_ : 0);
+}
+
+
+template <class T> ACE_INLINE void
+ACE_DLList_Reverse_Iterator<T>::dump (void) const
+{
+  ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::dump ();
 }
