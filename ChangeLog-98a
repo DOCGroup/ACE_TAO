@@ -47,6 +47,8 @@ Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
           test always core dumps if we try to request more keys than it has
           available.
 
+        * tests/run_tests.sh: disabled some tests on LynxOS.
+
 Thu Feb 19 10:41:05 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK.cpp (open): It appears that we don't need to do
