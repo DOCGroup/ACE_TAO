@@ -48,7 +48,7 @@ endif
 
 CC           = cc
 CXX          = KCC
-CCFLAGS     += $(CFLAGS) $(THR_DEFS) -DACE_LACKS_PRAGMA_ONCE
+CCFLAGS     += $(CFLAGS) $(THR_DEFS) -DACE_LACKS_PRAGMA_ONCE --one_instantiation_per_object
 DCFLAGS     += +K0 -g
 DLD          = $(CXX) $(CCFLAGS)
 LD           = $(CXX)
@@ -69,13 +69,16 @@ ARFLAGS     += -Bstatic -o
 # Warning #111 statement is unreachable
 CCFLAGS     += --diag_suppress 111
 
+# KCC always uses the standard cpp library
+CCFLAGS     += -DACE_HAS_STANDARD_CPP_LIBRARY=1
+
 #
 # libpthread is automatically linked in by KCC if we use --thread_safe,
 # therefore we do not need to explicitly supply it.
 # If we link statically and libpthread is supplied with $(LIBS), the
 # program will core dump.
 #
-LIBS        += -Bdynamic -lxti -lrt -ldld
+LIBS        += -Bdynamic -lxti -lrt
 
 ifdef static_libs_only
   ifneq ($(static_libs_only),0)

@@ -64,7 +64,7 @@
 // macro is not set until A.03.13. If it's not set, set it - it won't be an
 // HP-advertised value, but we don't check the value/version - just whether
 // it's set or not.
-#    if !defined (__HP_aCC)
+#    if !defined (__KCC) && !defined (__HP_aCC)
 #      define __HP_aCC
 #    endif /* __HP_aCC */
 

@@ -1,3 +1,23 @@
+Mon Feb 25 14:06:45 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-hpux-11.00.h:
+
+          Do not define __HP_aCC if using KCC.
+
+        * include/makeinclude/platform_hpux_kcc.GNU:
+
+          Add the --one-instantiation-per-object parameter to avoid
+          build problems with KCC.
+
+        * tests/Dirent_Test.cpp:
+
+          Modify this test to work with Chorus (as it does with VxWorks).
+
+        * ace/config-aix-4.x.h:
+
+          Defined ACE_HAS_USING_KEYWORD for AIX 4.x with Visual Age 5 or
+          later.  This change came from Yan Dai <dai_y@ociweb.com>
+
 Tue Mar 12 11:53:53 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/perltest2cpp.pl:
