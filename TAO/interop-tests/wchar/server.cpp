@@ -58,6 +58,21 @@ main( int argc, char *argv[] )
 {
   if (parse_args(argc, argv))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("failed to parse args\n")), 1);
+#if (!defined ACE_HAS_WCHAR) && (!defined ACE_HAS_XPG4_MULTIBYTE_CHAR)
+  // the run_test script looks for the ior file. By touching it here, the
+  // script can run at full speed, rather than timing out waiting for a
+  // file that will never come.
+  FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
+  if (output_file == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("Cannot open output file ")
+                       ACE_TEXT("for writing IOR: %s"),
+                       ior_output_file),
+                      1);
+  ACE_OS::fprintf (output_file, "no ior\n");
+  ACE_OS::fclose (output_file);
+  ACE_ERROR_RETURN ((LM_ERROR,"This test requires wchar support\n"),0);
+#else
   ACE_DECLARE_NEW_ENV;
   ACE_TRY
     {
@@ -96,13 +111,6 @@ main( int argc, char *argv[] )
                                ACE_ENV_ARG_PARAMETER );
       ACE_TRY_CHECK;
 
-      if (parse_args(argc, argv))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("failed to parse args\n")),
-                            1);
-        }
-
       FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -127,4 +135,5 @@ main( int argc, char *argv[] )
   ACE_ENDTRY;
 
     return 0;
+#endif /* ACE_HAS_WCHAR */
 }
