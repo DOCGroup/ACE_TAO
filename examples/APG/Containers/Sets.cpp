@@ -121,14 +121,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<DataElement*>
-;
-template class ACE_Unbounded_Set_Iterator<DataElement*>
-;
-template class ACE_Bounded_Set<DataElement>
-;
+template class ACE_Unbounded_Set<DataElement*>;
+template class ACE_Unbounded_Set_Iterator<DataElement*>;
+template class ACE_Bounded_Set<DataElement>;
+template class ACE_Node<DataElement*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Unbounded_Set<DataElement*>
 #pragma instantitate ACE_Unbounded_Set_Iterator<DataElement*>
-#pragma instantiate ACE_Bounded_Set<DataElement>;
+#pragma instantiate ACE_Bounded_Set<DataElement>
+#pragma instantiate ACE_Node<DataElement*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/os_include/os_netdb.h"
 #include "ClientService.h"
 
 // Listing 1 code/ch07
