@@ -472,38 +472,53 @@ main (int argc, char **argv)
           ACE_OS::atoi (argv[i+1]);
     }
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv);
-
-  CORBA::Object_var obj
-    = orb->resolve_initial_references ("RootPOA");
-
-  PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj.in ());
-
-  //Activate POA Manager
-  PortableServer::POAManager_var mgr
-    = poa->the_POAManager ();
-
-  mgr->activate ();
-
-  for (i = 0; i < GLOBALS::instance ()->thread_count_; i++)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      Client* client;
-      ACE_NEW_RETURN (client,
-                      Client (orb.in (),
-                              poa.in (),
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv);
+
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj.in (),
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      //Activate POA Manager
+      PortableServer::POAManager_var mgr
+        = poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      mgr->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      for (i = 0; i < GLOBALS::instance ()->thread_count_; i++)
+        {
+          Client* client;
+          ACE_NEW_RETURN (client,
+                          Client (orb.in (),
+                                  poa.in (),
                               i),
-                      -1);
-
-      if (client->activate (THR_BOUND) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Error in activate: %p",
-                           "activate"),
                           -1);
-    }
 
-  ACE_Thread_Manager::instance ()->wait ();
+          if (client->activate (THR_BOUND) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%P|%t) Error in activate: %p",
+                               "activate"),
+                              -1);
+        }
+
+      ACE_Thread_Manager::instance ()->wait ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

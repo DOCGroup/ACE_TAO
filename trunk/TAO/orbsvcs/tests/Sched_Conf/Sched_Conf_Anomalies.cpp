@@ -198,7 +198,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil(poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -215,16 +217,16 @@ main (int argc, char *argv[])
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
       if (my_name_client.init (orb.in ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
 
       CosNaming::NamingContext_var context =
         my_name_client.get_context ();
 
       if (ACE_Scheduler_Factory::use_config (context.in (),
-					     service_name) < 0)
+                                             service_name) < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to bind to the scheduling service.\n"),
                           1);

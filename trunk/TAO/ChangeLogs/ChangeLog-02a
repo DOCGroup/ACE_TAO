@@ -1,3 +1,32 @@
+Sat Mar 31 02:23:16 2001  Sharath Cholleti  <sharath@cs.wustl.edu>
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+	* orbsvcs/AV/Endpoint_Strategy.cpp
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp
+	* orbsvcs/tests/AVStreams/Latency/control.cpp
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp
+	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp
+	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp
+	* orbsvcs/tests/Trading/export_test.cpp
+	* orbsvcs/tests/Trading/import_test.cpp
+
+	Fixed fuzz warnings for ACE_TRY_ENV.
+
+=======
 Sat Mar 31 02:06:09 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:

@@ -133,20 +133,20 @@ main (int argc, char **argv)
 
   //TAO_debug_level++;
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv);
-
-  CORBA::Object_var obj
-    = orb->resolve_initial_references ("RootPOA");
-
-  PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj.in ());
-
-  Server server (orb.in (), poa.in ());
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        argv);
+
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj.in ());
+
+      Server server (orb.in (), poa.in ());
 
       if (server.init (argc, argv, ACE_TRY_ENV) == -1)
         return 1;

@@ -79,7 +79,7 @@ Server::Server (void)
   :orb_ (TAO_AV_CORE::instance ()->orb ()),
    poa_ (TAO_AV_CORE::instance ()->poa ())
 {
-  reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (), 
+  reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                            TAO_AV_CORE::instance ()->poa ());
 }
 
@@ -226,19 +226,19 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv);
-
-  CORBA::Object_var obj
-    = orb->resolve_initial_references ("RootPOA");
-
-  PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj.in ());
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        argv);
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj.in ());
+
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);

@@ -500,7 +500,8 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::bind_to_naming_se
   ACE_TRY
     {
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService");
+        this->orb_->resolve_initial_references ("NameService", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Name Service.\n"),
