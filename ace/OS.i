@@ -3353,7 +3353,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_NOTSUP_RETURN (-1);
 #   elif defined (ACE_HAS_PTHREADS)
   int result = 0;
-  int error = 0;
+  ACE_Errno_Guard error (errno, 0);
 
   ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
 
@@ -3390,7 +3390,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   if (result != -1)
     ACE_OS::mutex_unlock (&s->lock_);
   ACE_PTHREAD_CLEANUP_POP (0);
-  errno = error;
   return result < 0 ? -1 : result;
 #   elif defined (ACE_HAS_WTHREADS)
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
@@ -3549,7 +3548,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
 
   if (ACE_OS::mutex_lock (&rw->lock_) != -1)
     {
-      int error = 0;
+      ACE_Errno_Guard error (errno, 0);
 
       if (rw->ref_count_ == -1 || rw->num_waiting_writers_ > 0)
         {
@@ -3563,7 +3562,6 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
         }
 
       ACE_OS::mutex_unlock (&rw->lock_);
-      errno = error;
     }
   return result;
 # endif /* ! ACE_LACKS_RWLOCK_T */
@@ -3591,7 +3589,7 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
 
   if (ACE_OS::mutex_lock (&rw->lock_) != -1)
     {
-      int error = 0;
+      ACE_Errno_Guard error (errno, 0);
 
       if (rw->ref_count_ != 0)
         {
@@ -3605,7 +3603,6 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
         }
 
       ACE_OS::mutex_unlock (&rw->lock_);
-      errno = error;
     }
   return result;
 # endif /* ! ACE_LACKS_RWLOCK_T */
