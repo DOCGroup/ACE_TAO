@@ -15,6 +15,11 @@ Thu Mar 18 14:31:29 1999  Steve Huston  <shuston@riverace.com>
 
         * docs/tutorials/018/Test_T.cpp (open): Fix ACE_UNUSED_ARG(arg).
 
+        * ace/Message_Queue.h (ACE_Message_Queue_Base): Removed "= 0" from
+          ~ACE_Message_Queue_Base.  AIX xlC warns that pure virtual dtor
+          needs an out-of-line definition to be a base of another class.
+          There is already a definition for the dtor in Message_Queue.i.
+
 Thu Mar 18 14:30:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (timezone): Removed the leading '::' to cope with VC
