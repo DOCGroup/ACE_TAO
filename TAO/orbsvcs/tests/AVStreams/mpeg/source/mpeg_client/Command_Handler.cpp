@@ -810,14 +810,11 @@ Command_Handler::step (void)
             return CORBA::B_FALSE;
           }
         TAO_ENDTRY;
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) reached line %d in file %s\n", __LINE__, __FILE__));
      /*
         fprintf(stderr, "CTR: STEP . . . frame-%d\n", para.nextFrame);
     */
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) reached line %d in file %s\n", __LINE__, __FILE__));
     ::wait_display ();
   }
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) reached line %d in file %s\n", __LINE__, __FILE__));
   unsigned char tmp = CmdDONE;
   CmdWrite(&tmp, 1);
   return CORBA::B_TRUE;
@@ -1173,6 +1170,9 @@ Command_Handler::speed (void)
               this->video_control_->speed (para.in (),
                                            TAO_TRY_ENV);
             TAO_CHECK_ENV;
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) CORBA call returned %d\n",
+                        result));
             if (result == (CORBA::B_FALSE))
               // ~~ what about audio if video fails
               // ~~ Eventually audio will have a separate audio command handler and 
