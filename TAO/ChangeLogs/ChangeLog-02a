@@ -1,3 +1,11 @@
+Sun Dec  2 12:38:25 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.h:
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+	  Disable compilation under non-Win32 platforms, that makes this
+	  program more friendly towards samwise.
+	
 Sun Dec  2 10:46:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Callback_Quoter/Consumer.dsp:
