@@ -481,6 +481,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
       if (possible_entry->ext_id_.decrement () == 0)
         {
           // If refcount goes to zero, close down the svc_handler
+          possible_entry->int_id_->recycler (0, 0);
+          this->purge_i (possible_entry);
           possible_entry->int_id_->close ();
         }
 
@@ -762,7 +764,11 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
   // close() on svc_handler.
   if (entry->ext_id_.state () == ACE_Recyclable::CLOSED &&
       refcount == 0)
-    entry->int_id_->close ();
+    {
+      entry->int_id_->recycler (0, 0);
+      this->purge_i (entry);
+      entry->int_id_->close ();
+    }
 
   return 0;
 }

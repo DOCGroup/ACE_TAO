@@ -1,3 +1,16 @@
+Tue Jan 05 22:55:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (cleanup_hint_i and check_hint_i): Since we
+ 	  are holding the connection cache lock in these methods, the
+ 	  Svc_Handler should not call purge().  If it does, a deadlock
+ 	  will occur (unless we have recursive locks) since we are already
+ 	  the connection cache lock.  Therefore, we zero out the recycler
+ 	  before calling svc_handler->close() and purge out the
+ 	  svc_handler entry ourself (through purge_i()).
+
+	  Thanks to Mark L. Boriack <mboriack@std.saic.com> for providing
+ 	  a precise example illustrating this bug.
+
 Tue Jan  5 18:48:47  James CE Johnson  <jcej@lads.com>
 
 	* docs/tutorials/templates.html: 
