@@ -1,3 +1,17 @@
+Wed Mar 21 15:17:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp: 
+	* tao/Transport.h:
+	* tao/Transport.inl:
+	* tao/Transport_Cache_Manager.h:
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/Transport_Cache_Manager.inl: It was observed during testing
+	  that there was a race condition in the code. The race condition
+	  was because of unsynchronized access to the hash_map_entry that
+	  TAO_Transport stores. This is a first attempt to solve the
+	  problem. The problem has been solved by protecting access and
+	  trying to hide the Hash_Map_Entry from direct access.
+
 Wed Mar 21 13:48:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Added the missing default reactor type to the

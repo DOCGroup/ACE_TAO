@@ -100,12 +100,13 @@ TAO_Transport::dequeue_all (void)
     }
 }
 
-ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
+/*ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
 TAO_Transport::cache_map_entry (void)
 {
   return this->cache_map_entry_;
 }
-   
+*/
+
 ACE_INLINE void
 TAO_Transport::cache_map_entry (
     TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry)
