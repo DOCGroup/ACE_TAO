@@ -65,6 +65,33 @@ int be_visitor_root::visit_root (be_root *node)
     }
 
 
+  // If we are generating the client header file, this is the place to
+  // generate the proxy broker factory function pointer declarations.
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CH)
+    {
+      TAO_OutStream *os = this->ctx_->stream ();
+
+      *os << "// Proxy Broker Factory function pointer declarations."
+          << be_nl << be_nl;
+
+      size_t size = be_global->non_local_interfaces.size ();
+
+      for (size_t index = 0; index < size; ++index)
+        {
+          be_interface *i = 0;
+          be_global->non_local_interfaces.dequeue_head (i);
+
+          *os << "extern " << be_global->stub_export_macro () << " "
+              << i->full_base_proxy_broker_name () << " * (*"
+              << i->flat_client_enclosing_scope () 
+              << i->base_proxy_broker_name () 
+              << "_Factory_function_pointer) ("
+              << be_idt << be_idt_nl
+              << "CORBA::Object_ptr obj" << be_uidt_nl
+              << ");" << be_uidt_nl << be_nl;
+        }
+    }
+
   be_visitor *visitor;
   be_visitor_context ctx (*this->ctx_);
 
@@ -113,7 +140,6 @@ int be_visitor_root::visit_root (be_root *node)
       delete visitor;
     }
 #endif /* IDL_HAS_VALUETYPE */
-
 
   // The next thing we need to do is make one more pass thru the entire tree
   // and generate code for all the <<= and >>= operators for all the

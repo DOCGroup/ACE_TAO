@@ -60,20 +60,12 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (be_interface *node)
 
   *os << "};" << be_nl << be_nl;
 
-  // Generate the proxy broker factory function pointer declaration,
-  // if the interface is not locality constrained.
-  *os << "extern " << be_global->stub_export_macro () << " "
-      << node->full_base_proxy_broker_name () << " * (*"
-      << node->flat_client_enclosing_scope () 
-      << node->base_proxy_broker_name () 
-      << "_Factory_function_pointer) ("
-      << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+  be_global->non_local_interfaces.enqueue_tail (node);
 
   *os << "//" << be_nl
       << "//              End Base Proxy Broker Declaration " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
+
   return 0;
 }

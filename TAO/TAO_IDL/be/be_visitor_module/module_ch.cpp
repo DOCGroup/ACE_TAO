@@ -75,5 +75,6 @@ be_visitor_module_ch::visit_module (be_module *node)
           << "}\nTAO_NAMESPACE_CLOSE // module " << node->name () << "\n\n";
 
     }
+
   return 0;
 }
