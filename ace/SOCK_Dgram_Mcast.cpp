@@ -185,7 +185,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 			 net_if,
 			 protocol_family,
 			 protocol) == -1)
-    return -1;
+    return ACE_INVALID_HANDLE;
   
   // Tell network device driver to read datagrams with a
   // <mcast_request_if_> IP interface.
