@@ -1,3 +1,11 @@
+Sun Feb 25 11:28:06 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/run_test.pl:
+
+          When there are errors in the log, print out the entire
+          log.  This should make it much easier to understand
+          problems in the nightly build logs.
+
 Sun Feb 25 09:04:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/DLL_Test.cpp:
