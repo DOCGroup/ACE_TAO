@@ -5438,7 +5438,7 @@ SSLIOP = \
   SSLIOP/SSLIOP_Util.cpp \
   SSLIOP/SSLIOP_X509.cpp \
   SSLIOP/params_dup.c \
-  SSLIOP/ssl_endpoints.cpp \
+  SSLIOP/ssl_endpointsC.cpp \
   SSLIOPC.cpp
 
 lib_LTLIBRARIES += libTAO_SSLIOP.la
@@ -5507,8 +5507,8 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_Util.h \
   SSLIOP/SSLIOP_X509.h \
   SSLIOP/params_dup.h \
-  SSLIOP/ssl_endpoints.h \
-  SSLIOP/ssl_endpoints.i \
+  SSLIOP/ssl_endpointsC.h \
+  SSLIOP/ssl_endpointsC.inl \
   SSLIOPC.h \
   SSLIOPC.inl \
   SSLIOPS.h \
