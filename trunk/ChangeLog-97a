@@ -1,3 +1,38 @@
+Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-vxworks-ghs-1.8.h: added ACE_LACKS_SYS_NERR.
+	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  reporting this.
+
+	* ace/OS.{i,cpp} (uname, hostname): added VxWorks support.
+	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  providing this.  (Also, uninlined ACE_OS::uname on WIN32
+	  and VxWorks because it contains string literals.)
+
+	* ace/High_Res_Timer.{i,cpp}: fixed interpretation of units:
+	  ACE_hrtime_t is in nanoseconds, so it should be divided by
+	  1000000000 to get seconds.  Fixed divs/mods to first divide
+	  by 1000, then div/mod.  Thanks to Luca Priorelli
+	  <lucapri@mbox.vol.it> for identifying this problem.
+
+	  Also, removed some casts that are no longer necessary, and
+	  added some casts of ACE_hrtime_t values to longs to avoid
+	  compiler warnings.  Thanks to Matthias Kerkhoff
+	  <make@cs.tu-berlin.de> for pointing this out.
+
+	* ace/Reactor.cpp (unbind): cast "index" to int to avoid
+	  signed/unsigned comparison.  Thanks to Matthias Kerkhoff
+	  <make@cs.tu-berlin.de> for pointing this out.
+
+	* ace/ReactorEx.cpp (bind): changed type of "current_size" to
+	  size_t to avoid signed/unsigned comparison.  Thanks to Matthias
+	  Kerkhoff <make@cs.tu-berlin.de> for pointing this out.
+
+	* ace/Timer_Heap.cpp (ctor, grow_heap): changed type of loop
+	  index from size_t to int to avoid signed/unsigned comparison.
+	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing
+	  this out.
+
 Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway: Updated the Peer and Gateway applications so that
