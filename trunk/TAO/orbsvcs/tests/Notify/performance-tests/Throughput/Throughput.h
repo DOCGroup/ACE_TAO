@@ -47,6 +47,8 @@ public:
   virtual int svc (void);
   // The thread entry point.
 
+  int done_;
+
 private:
   CORBA::ORB_var orb_;
   // The orb
@@ -144,8 +146,8 @@ public:
   void run_test (TAO_ENV_SINGLE_ARG_DECL);
   // Run the test.
 
-  void end_test (TAO_ENV_SINGLE_ARG_DECL);
-  // End the test.
+  void peer_done (void);
+  // Peers call this when done.
 
   void dump_results (void);
   // check if we got the expected results.
@@ -154,9 +156,6 @@ public:
 protected:
   void create_EC (TAO_ENV_SINGLE_ARG_DECL);
   // Create participants.
-
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // Number of events received so far.
 
   CORBA::Boolean colocated_ec_;
   // is the ec colocated.
@@ -170,13 +169,23 @@ protected:
   int burst_size_;
   // Number of events to send per supplier in every burst
 
+  int payload_size_;
+  // data size to transmit.
+
+  char *payload_;
+  // the payload.
+
   int consumer_count_;
   // Consumer count
 
   int supplier_count_;
   // Supplier count
 
-  int run_timeout_;
+  int perconsumer_count_;
+  // Number of events received that each consumer expects to see.
+
+  ACE_CString ec_name_;
+  // The name of the EC to resolve.
 
   CosNotifyChannelAdmin::EventChannel_var ec_;
   // The one channel that we create using the factory.
@@ -193,12 +202,17 @@ protected:
   Throughput_StructuredPushSupplier** suppliers_;
   // Suppliers
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_consumer_done_count;
-  // consumer count;
-
   int nthreads_;
 
-  int expected_count_;
+  // = Helpers to signal done.
+  int peer_done_count_;
+  // how many peers are done.
+
+  TAO_SYNCH_MUTEX lock_;
+  // The lock to serialize access to members.
+
+  ACE_Condition_Thread_Mutex condition_;
+  // exit wait condition
 private:
   friend class Throughput_StructuredPushSupplier;
   friend class Throughput_StructuredPushConsumer;
@@ -211,3 +225,4 @@ private:
 #endif /* _MSC_VER */
 
 #endif /* NOTIFY_TESTS_EventS_H */
+
