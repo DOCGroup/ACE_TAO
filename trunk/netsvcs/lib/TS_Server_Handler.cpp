@@ -144,7 +144,7 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
-  ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
+  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
 
   ACE_INET_Addr server_addr;
 

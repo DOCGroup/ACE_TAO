@@ -9,7 +9,7 @@ Handle_R_Dgram::Handle_R_Dgram (void)
 {
 }
 
-ACE_INLINE
+ACE_INLINE int
 Handle_R_Dgram::open (const ACE_INET_Addr &r, int async)
 {
   if (this->ACE_SOCK_Dgram::open (r) == -1)

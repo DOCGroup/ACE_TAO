@@ -175,7 +175,7 @@ public:
 };
 
 #if defined (ACE_MALLOC_STATS)
-#include "ace/Sync_T.h"
+#include "ace/Synch_T.h"
 #if defined (ACE_HAS_THREADS)
 #define ACE_PROCESS_MUTEX ACE_Process_Mutex
 #else

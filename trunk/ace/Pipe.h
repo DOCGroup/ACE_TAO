@@ -51,12 +51,12 @@ public:
 
   // = Accessors.
 
-  ACE_HANDLE read_handle (void);
+  ACE_HANDLE read_handle (void) const;
   // This is the "read" side of the pipe.  Note, however, that
   // processes can also write to this handle as well since pipes are
   // bi-directional.
   
-  ACE_HANDLE write_handle (void);
+  ACE_HANDLE write_handle (void) const;
   // This is the "write" side of the pipe.  Note, however, that
   // processes can also read to this handle as well since pipes are
   // bi-directional.

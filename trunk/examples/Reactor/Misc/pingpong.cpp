@@ -64,9 +64,9 @@ private:
 };
 
 Ping_Pong::Ping_Pong (char b[], ACE_HANDLE f)
-  : handle_ (f),
-    buflen_ (ACE_OS::strlen (b) + 1 + (2 * sizeof (int))),
-    pid_ (ACE_OS::getpid ())
+  : buflen_ (ACE_OS::strlen (b) + 1 + (2 * sizeof (int))),
+    pid_ (ACE_OS::getpid ()),
+    handle_ (f)
 {
   *((int *) this->buf_) = (int) this->pid_;
   *((int *) (this->buf_ + sizeof (int))) = 0;

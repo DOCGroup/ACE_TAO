@@ -62,6 +62,7 @@ public:
       ACE_Log_Msg::instance()->msg_ostream (this->output_file_);
       ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
       ACE_Log_Msg::instance()->set_flags (ACE_Log_Msg::OSTREAM);
+      return 0;
     }
 
   ofstream *output_file (void)

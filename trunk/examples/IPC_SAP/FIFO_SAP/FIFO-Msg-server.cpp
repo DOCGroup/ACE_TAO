@@ -20,9 +20,10 @@ main (int, char *[])
       if (msg.len == 0)
 	break;
       else
-	ACE_DEBUG (("%4d (%4d): %*s", msg.len, band, msg.len, msg.buf));
+	ACE_DEBUG ((LM_DEBUG, "%4d (%4d): %*s", 
+		    msg.len, band, msg.len, msg.buf));
       flags = MSG_ANY;
-      band  = 0;
+      band = 0;
     }
 
   if (n == -1)

@@ -27,7 +27,7 @@
 #include "ace/Process.h"
 
 int
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST;
 

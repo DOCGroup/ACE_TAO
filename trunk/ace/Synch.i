@@ -245,7 +245,7 @@ ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m,
   : lock_ (m) 
 { 
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard");
-  this->owner_ == block ? this->lock_.acquire () : this->lock_.tryacquire ();
+  this->owner_ = block ? this->lock_.acquire () : this->lock_.tryacquire ();
 }
 
 // Implicitly release the lock.

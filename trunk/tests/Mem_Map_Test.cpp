@@ -85,7 +85,7 @@ create_test_file ()
 }
 
 int
-main (int argc, char **argv)
+main (int, char **argv)
 {
   ACE_START_TEST;
 

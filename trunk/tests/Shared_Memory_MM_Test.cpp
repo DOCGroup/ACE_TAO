@@ -33,7 +33,7 @@ static char shm_key[] = "/tmp/fooXXXXXX";
 static ACE_Thread_Manager thr_mgr;
 
 static void *
-client (void *dummy)
+client (void *)
 {
 #if defined (ACE_WIN32)
   // Insert thread into thr_mgr
@@ -43,7 +43,8 @@ client (void *dummy)
 
   ACE_OS::sleep (3);
   char t = 'a';
-  ACE_Shared_Memory *shm_client = new ACE_Shared_Memory_MM (shm_key);
+  ACE_Shared_Memory *shm_client;
+  ACE_NEW_RETURN (shm_client, ACE_Shared_Memory_MM (shm_key), 0);
   char *shm = (char *) shm_client->malloc ();
 
   for (char *s = shm; *s != '\0'; s++)
@@ -59,7 +60,7 @@ client (void *dummy)
 }
 
 static void *
-server (void *dummy)
+server (void *)
 {
 #if defined (ACE_WIN32)
   // Insert thread into thr_mgr
@@ -67,9 +68,11 @@ server (void *dummy)
   ACE_NEW_THREAD;
 #endif
 
-  ACE_Shared_Memory *shm_server = new ACE_Shared_Memory_MM (shm_key, SHMSZ);
+  ACE_Shared_Memory *shm_server;
+  ACE_NEW_RETURN (shm_server, ACE_Shared_Memory_MM (shm_key, SHMSZ), 0);
+
   char *shm = (char *) shm_server->malloc ();
-  char *s   = shm;
+  char *s = shm;
 
   for (char c = 'a'; c <= 'z'; c++)
     *s++ = c;
