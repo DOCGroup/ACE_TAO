@@ -913,7 +913,7 @@ ACE_RW_Thread_Mutex::dump (void) const
 #include "ace/Malloc.h"
 
 #if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" static void
+extern "C" void
 ace_static_object_lock_atexit (void)
 {
   ACE_Static_Object_Lock::atexit ();
