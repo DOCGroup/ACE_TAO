@@ -14,11 +14,46 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
 {
 #if defined (ACE_WIN32)
   DIR *dir;
-  ACE_NEW_RETURN (dir, DIR, 0);
+  ACE_TCHAR extra[3] = {0,0,0};
+
+/*  
+  Note: the semantics of the win32 function FindFirstFile take the 
+  basename(filename) as a pattern to be matched within the dirname(filename). 
+  This is contrary to the behavior of the posix function readdir which treats 
+  basename(filename) as a directory to be opened and read. 
+
+  For this reason, the extra trailing "/*" or "\\*" as the case may be is 
+  appended to the supplied filename so the result is that FindFirstFile will
+  do the right thing.
+
+  According to the documentation for FindFirstFile, either a '/' or a '\' may
+  be used as a directory name separator.
+
+  Of course, it is necessary to ensure that this is only done if the trailing
+  filespec is not already there.
+
+  Phil Mesnier
+*/
+
+  size_t lastchar = ACE_OS_String::strlen (filename);
+  if (lastchar > 0) 
+    {
+      if (filename[lastchar-1] != '*') 
+        {
+          if (filename[lastchar-1] != '/' && filename[lastchar-1] != '\\') 
+            ACE_OS_String::strcpy (extra,"/*");
+          else
+            ACE_OS_String::strcpy (extra,"*");
+        }
+    }
+    
+  ACE_NEW_RETURN (dir, DIR, 0);  
   ACE_NEW_RETURN (dir->directory_name_,
-                  ACE_TCHAR[ACE_OS_String::strlen (filename)+1],
+                  ACE_TCHAR[lastchar + ACE_OS_String::strlen (extra) + 1],
                   0);
   ACE_OS_String::strcpy (dir->directory_name_, filename);
+  if (extra[0]) 
+    ACE_OS_String::strcat (dir->directory_name_, extra);
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
   return dir;

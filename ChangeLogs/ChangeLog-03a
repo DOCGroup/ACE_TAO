@@ -1,3 +1,16 @@
+Mon Jan 22 13:51:11 2001  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/OS_Dirent.cpp (opendir_emulation): Added code to make the
+	  emmulation work properly on Win32.  Thanks to Edwin Wrench
+	  <edwin.wrench@itt.com> for finding this.
+
+	* tests/Dirent_Test.cpp:
+	  tests/Makefile:
+	  tests/run_tests.bat:
+	  tests/run_tests.lst: Added test to verify correctness of above 
+	  fix. This test attempts to scan $ACE_ROOT/tests and will fail if
+	  the number of entries is 0 or 1.
+
 Mon Jan 22 10:21:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Map_Manager.h: Clarify that find() returns 0, rather than
