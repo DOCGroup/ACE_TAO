@@ -18,7 +18,6 @@
 #define TAO_PROPERTY_FILTER_H
 
 #include "Trader.h"
-#include "ace/Containers.h"
 
 class TAO_Property_Filter
 // = TITLE

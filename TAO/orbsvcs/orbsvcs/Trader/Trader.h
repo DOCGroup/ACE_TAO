@@ -20,6 +20,7 @@
 #define TAO_TRADER_BASE_H
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Containers.h"
 #include "Attributes.h"
 
 // Forward Declaration.
