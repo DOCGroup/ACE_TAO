@@ -654,7 +654,7 @@ be_union::compute_size_type (void)
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "WARNING (%N:%l) be_structure::compute_size_type - "
+                          "WARNING (%N:%l) be_union::compute_size_type - "
                           "narrow_from_decl returned 0\n"));
             }
           si->next ();
