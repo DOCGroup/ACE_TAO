@@ -348,7 +348,8 @@ ACE_Service_Object_Type::fini (void) const
   ACE_TRACE ("ACE_Service_Object_Type::fini");
   const void *obj = this->object ();
   ACE_Service_Object *so = (ACE_Service_Object *) obj;
-  so->fini ();
+  if (so)
+    so->fini ();
   return ACE_Service_Type::fini ();
 }
 
