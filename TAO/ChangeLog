@@ -127,7 +127,7 @@ Mon Apr 12 23:57:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Asynch_Queued_Message.cpp (TAO_Asynch_Queued_Message):
 
-	  Initialize "size_" member is base member initializer list since
+	  Initialize "size_" member in base member initializer list since
 	  that member is now "const".
 
 	* tao/GIOP_Message_Base.cpp:
