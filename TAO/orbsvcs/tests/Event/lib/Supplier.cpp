@@ -137,7 +137,6 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
 
 void
 EC_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -161,6 +160,7 @@ EC_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
 void
 EC_Supplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->supplier_disconnect (this->cookie_, ACE_TRY_ENV);
   this->consumer_proxy_ =
