@@ -1,3 +1,7 @@
+Thu Jun 15 12:41:05 2000  yamuna  <yamuna@cs.wustl.edu>
+
+        * ACE version 5.1.4 released.
+
 Wed Jun 14 18:15:43 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in (ACE_HAS_UCONTEXT_T):
