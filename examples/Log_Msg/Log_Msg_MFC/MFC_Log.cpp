@@ -17,26 +17,29 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-MFC_Log::MFC_Log()
+MFC_Log::MFC_Log ()
 {
 
 }
 
 void
-MFC_Log::log(ACE_Log_Record& log_record)
+MFC_Log::log (ACE_Log_Record& log_record)
 {
   unsigned long priority = log_record.type();
-  char Message[512];
+  ACE_TCHAR Message[512];
 
-  ACE_OS::sprintf(Message,"%d.%03ld %s", log_record.time_stamp().sec(),
-  log_record.time_stamp().usec()/ 1000, log_record.msg_data());
+  ACE_OS::sprintf (Message,
+                   ACE_TEXT ("%d.%03ld %s"),
+                   log_record.time_stamp().sec(),
+                   log_record.time_stamp().usec()/ 1000,
+                   log_record.msg_data());
 
 #if defined (ACE_WIN32)
   ::OutputDebugString(Message);
 #endif /* ACE_WIN32 */
 }
 
-MFC_Log::~MFC_Log()
+MFC_Log::~MFC_Log ()
 {
 
 }
