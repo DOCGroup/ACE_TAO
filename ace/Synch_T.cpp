@@ -54,10 +54,10 @@ ACE_Test_and_Set<ACE_LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
 }
 
 template <class ACE_LOCK, class TYPE> ACE_LOCK &
-ACE_Atomic_Op<ACE_LOCK, TYPE>::lock (void)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::mutex (void)
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::lock");
-  return this->lock_;
+  return this->mutex_;
 }
 
 template <class ACE_LOCK, class TYPE> void
@@ -66,7 +66,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
+  this->mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -92,7 +92,7 @@ ACE_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "lock_ = %x\n", this->lock_));
+  ACE_DEBUG ((LM_DEBUG, "mutex_ = %x\n", this->mutex_));
   ACE_DEBUG ((LM_DEBUG, "owner_ = %d\n", this->owner_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
