@@ -1,3 +1,9 @@
+Wed Sep  2 19:21:25 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Name_Request_Reply.cpp: Continued to cleanup the residue of
+ 	  the ACE_SUCCESS and ACE_FAILURE changes.  Thanks to David Levine
+	  for reporting this.
+
 Wed Sep 02 19:08:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Template_Instatiations.cpp: commented text following
@@ -5,7 +11,9 @@ Wed Sep 02 19:08:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Sep 02 16:46:45 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-        * ACE version 4.5.35 released.
+        * ACE version 4.5.35 released.  BTW, these releases were aborted
+ 	  due to CVS hiccups.  We've got to figure out a better way to
+ 	  roll this stuff back...
 
 Wed Sep 02 16:33:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
