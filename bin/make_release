@@ -315,6 +315,17 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
         my $minor_v = $2;
         my $beta_v = $3;
 
+        ## There is a small problem here and was reported by Don
+        ## Hinton<don@gmx.net> . The problem is that
+        ## $previous_version = "$major_v.$minor_v.$previous_beta";
+        ## // and hence if $previous_beta == 0 then the current beta
+        ## == 1 and so $previous_version == "X.Y.0"
+        ## &diff ('ACE_wrappers', "ACE-$previous_version", "$ace_tag");
+        ## // so "ACE-$previous_version" == "ACE-X.Y.0"
+        ## Which gets sent to cvs as "ACE-X_Y_0" but since the real
+        ## tag is "ACE-X_Y", rdiff doesn't find anything. This problem
+        ## needs fixing. Will fix this when we get time.
+
         #### $previous_version is used by diff ().
         if ($beta_v > 0) {
           my $previous_beta = $beta_v - 1;
