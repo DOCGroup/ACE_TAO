@@ -119,9 +119,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
           {
             // Send the log record to the log message receiver for
             // processing.
+            if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (),
+                                 ACE_Log_Msg::STDERR))
+                receiver ().log_record (this->host_name (),
+                                        lp);
             ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
-            receiver ().log_record (this->host_name (),
-                                    lp);
             receiver ().log_output (this->host_name (),
                                     lp,
                                     orig_ostream);
