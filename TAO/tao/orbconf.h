@@ -356,11 +356,28 @@ enum MCAST_SERVICEID
 // OBV is in experimental stage
 #define TAO_HAS_VALUETYPE
 
-// UIOP support (GIOP over UNIX domain sockets)
-// #define TAO_HAS_UIOP
-
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
+
+// UIOP support is enabled by default if the platform supports UNIX
+// domain sockets, and TAO is not configured for minimum CORBA.
+// If TAO is configured for minimum CORBA, then UIOP will be disabled
+// by default.
+// To explicitly enable UIOP support uncomment the following
+// #define TAO_HAS_UIOP 1
+// To explicitly disable UIOP support uncomment the following
+// #define TAO_HAS_UIOP 0
+
+// Default UIOP settings
+#if !defined (TAO_HAS_UIOP)
+#  if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#    define TAO_HAS_UIOP 0
+#  elif defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_UIOP 0
+#  else
+#    define TAO_HAS_UIOP 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_UIOP */
 
 // INTERFACE_REPOSITORY
 //#define TAO_HAS_INTERFACE_REPOSITORY
@@ -405,19 +422,6 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #if !defined (TAO_DISABLE_RT_CORBA) && !defined (TAO_HAS_MINIMUM_CORBA)
 #  define TAO_HAS_RT_CORBA
 #endif /* !TAO_HAS_RT_CORBA && !TAO_HAS_MINIMUM_CORBA */
-
-// If the user has not already specified TAO_HAS_UIOP, and the
-// platform supports UNIX domain sockets, and minimum CORBA is not
-// defined, we turn on TAO_HAS_UIOP by default.  Note that even with
-// minimum CORBA, the user can still get UIOP support simply be
-// defining TAO_HAS_UIOP before reaching this code.
-#if !defined (TAO_HAS_UIOP) && \
-    !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && \
-    !defined (TAO_HAS_MINIMUM_CORBA)
-#    define TAO_HAS_UIOP
-#endif /* !TAO_HAS_UIOP &&
-          !ACE_LACKS_UNIX_DOMAIN_SOCKETS &&
-          !TAO_HAS_MINIMUM_CORBA */
 
 // Policies are not locality constraint by default.
 #if !defined (TAO_HAS_REMOTE_POLICIES)

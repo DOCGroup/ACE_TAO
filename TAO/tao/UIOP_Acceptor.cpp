@@ -19,7 +19,7 @@
 
 #include "tao/UIOP_Acceptor.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -387,4 +387,4 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
-#endif  /* TAO_HAS_UIOP */
+#endif  /* TAO_HAS_UIOP == 1 */

@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Profile.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
@@ -393,4 +393,4 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   return 1;
 }
 
-#endif  /* TAO_HAS_UIOP */
+#endif  /* TAO_HAS_UIOP == 1 */
