@@ -1,3 +1,27 @@
+Sat Mar 03 15:28:34 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/Object_Adapter.cpp (open):
+
+	  Fixed broken memory management that I inadvertently introduced.
+	  This brings the code back to what it used to do before my
+	  change, but it uses a POA_Manager_var instead of an auto_ptr.
+	  Using the _var allows us to remove the auto_ptr template
+	  instantiation(s) for the POA_Manager.  We technically shouldn't
+	  be using auto_ptrs on reference counted objects anyway, even
+	  though in this case there was no harm in doing so.
+
+	* tao/PortableServer/POA.cpp:
+
+	  Removed auto_ptr<TAO_POA> and auto_ptr<TAO_POA_Manager> template
+	  instantiations.  They are no longer needed, thus reducing the
+	  POA footprint slightly.
+
+	  (create_POA_i):
+
+	  Use a POA_var instead of an auto_ptr.  The same reasoning from
+	  above applies here as well, i.e. auto_ptrs should not be used on
+	  reference counted objects.
+
 Sat Mar  3 13:12:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/PortableServer/Object_Adapter.cpp:
