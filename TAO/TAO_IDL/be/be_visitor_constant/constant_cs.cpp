@@ -50,8 +50,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->is_nested ()
-      && node->defined_in ()->scope_node_type () != AST_Decl::NT_module)
+  if (node->is_nested ())
     {
       // For those constants not defined in the outermost scope,
       // or in a module, they get assigned to their values in the source file.
