@@ -158,7 +158,10 @@ void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 		       const char *filtering_criteria,
 		       CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   Event_Comm::Notifier::CannotSubscribe
+                   ))
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
@@ -217,7 +220,10 @@ void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 			 const char *filtering_criteria,
 			 CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   Event_Comm::Notifier::CannotUnsubscribe
+                   ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",

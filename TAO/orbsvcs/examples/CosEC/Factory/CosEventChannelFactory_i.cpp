@@ -80,7 +80,8 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
                                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
         CORBA::SystemException,
-        CosEventChannelFactory::DuplicateChannel
+        CosEventChannelFactory::DuplicateChannel,
+        CosEventChannelFactory::BindFailed
       ))
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
