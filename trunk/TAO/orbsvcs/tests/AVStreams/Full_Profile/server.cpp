@@ -75,10 +75,11 @@ FTP_Server_Callback::handle_end_stream (void)
 }
 
 Server::Server (void)
-  :reactive_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
-   orb_ (TAO_AV_CORE::instance ()->orb ()),
+  :orb_ (TAO_AV_CORE::instance ()->orb ()),
    poa_ (TAO_AV_CORE::instance ()->poa ())
 {
+  reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (), 
+                           TAO_AV_CORE::instance ()->poa ());
 }
 
 AVStreams::protocolSpec

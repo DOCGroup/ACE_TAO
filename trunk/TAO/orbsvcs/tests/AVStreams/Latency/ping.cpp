@@ -117,8 +117,9 @@ int main (int argc, char *argv[])
       // Register the video mmdevice object with the ORB
       Reactive_Strategy *reactive_strategy;
       ACE_NEW_RETURN (reactive_strategy,
-                      Reactive_Strategy (orb.in (), poa.in ()),
+                      Reactive_Strategy,
                       1);
+      reactive_strategy->init (orb.in (), poa.in ());
       TAO_MMDevice *mmdevice_impl;
       ACE_NEW_RETURN (mmdevice_impl,
                       TAO_MMDevice (reactive_strategy),
