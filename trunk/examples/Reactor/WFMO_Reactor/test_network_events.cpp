@@ -115,6 +115,8 @@ class Network_Listener : public ACE_Event_Handler
 public:
   Network_Listener (void);
   // Default constructor
+  ~Network_Listener (void);
+  // Default constructor
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
@@ -132,6 +134,13 @@ Network_Listener::Network_Listener (void)
   this->reactor (ACE_Reactor::instance ());
   ACE_ASSERT (this->reactor ()->register_handler (this, 
 						  ACE_Event_Handler::ACCEPT_MASK) == 0);
+}
+
+Network_Listener::~Network_Listener (void)
+{
+  this->reactor ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK ||
+                                          ACE_Event_Handler::DONT_CALL);
+  this->handle_close (this->get_handle (), ACE_Event_Handler::ALL_EVENTS_MASK);
 }
 
 ACE_HANDLE  
