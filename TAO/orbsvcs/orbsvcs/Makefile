@@ -204,6 +204,7 @@ IDL_FILES = \
 FILES = $(IDL_FILES) $(TAO_ORBSVCS_SRCS) tmplinst-orbsvcs
 DEFS  = $(addsuffix .h,$(FILES))
 LSRC  = $(addsuffix .cpp,$(FILES))
+BUILD += ORBSVCS_COMPONENTS
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -247,7 +248,16 @@ clean:
 
 realclean: clean
 	-/bin/rm -rf $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+	@$(ACE_ROOT)/bin/ace_components --orbsvcs --remove
 
+.PHONY: ORBSVCS_COMPONENTS
+ORBSVCS_COMPONENTS:
+	@$(ACE_ROOT)/bin/ace_components --orbsvcs \
+         --set " $(TAO_ORBSVCS) "
+
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
