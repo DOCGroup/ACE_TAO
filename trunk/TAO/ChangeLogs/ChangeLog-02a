@@ -1,3 +1,10 @@
+Thu Sep 27 22:26:23 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html:
+
+	  The Portable Interceptors specification is now part of the CORBA
+	  2.5 specification.  Updated accordingly.
+
 Thu Sep 27 17:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (handle_close): 
