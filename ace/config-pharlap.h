@@ -4,6 +4,9 @@
 // This configuration file is for use with the PharLap Realtime ETS Kernel.
 // It has been tested with PharLap TNT Embedded ToolSuite version 9.1.
 
+#ifndef ACE_CONFIG_H
+#define ACE_CONFIG_H
+
 #define ACE_HAS_PHARLAP
 // Some features are only available with the Realtime edition of ETS.
 // Assume that if using ACE, the realtime version is also being used, but
@@ -16,8 +19,15 @@
 #  endif
 #endif
 
+// Fortunately, PharLap ETS offers much of the Win32 API. But it's still on
+// WinNT 3.5, Winsock 1.1
 #define ACE_HAS_WINNT4 0
 #define ACE_HAS_WINSOCK2 0
+
+// The TSS implementation doesn't pass muster on the TSS_Test, but it works
+// well with ACE's TSS emulation.
+#define ACE_HAS_TSS_EMULATION
+
 #define ACE_LACKS_MMAP
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
@@ -34,4 +44,9 @@
 #define ACE_PAGE_SIZE 4096
 
 #include /**/ "ace/config-win32.h"
-#include <embkern.h>
+#include /**/ <embkern.h>
+#if defined (ACE_HAS_PHARLAP_RT)
+# include /**/ <embtcpip.h>
+#endif /* ACE_HAS_PHARLAP_RT */
+
+#endif /* ACE_CONFIG_H */
