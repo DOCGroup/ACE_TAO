@@ -1015,7 +1015,10 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create the CORBA level proxy
-  CORBA_Object *new_obj = new CORBA_Object (data, servant, collocated);
+  CORBA_Object *new_obj =
+    this->orb_core_->optimize_collocation_objects () ?
+    new_obj = new CORBA_Object (data, servant, collocated) :
+    new CORBA_Object (data, 0, 0);
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj))
@@ -1682,48 +1685,56 @@ TAO_SERVANT_LOCATION
 CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj,
                                     TAO_ServantBase *&servant)
 {
-  if (sobj == 0 || !this->_optimize_collocation_objects ())
+  if (sobj == 0)
     return TAO_SERVANT_NOT_FOUND;
 
   // @@ What about forwarding.  Which this approach we are never forwarded
   //    when we use collocation!
-
   const TAO_MProfile &mprofile = sobj->get_base_profiles ();
 
-  if (this->orb_core_->use_global_collocation ())
+  // We always look for collocation in ourselves first if we support
+  // collocation optimization since single ORB is the most common use
+  // case.
+  if (this->_optimize_collocation_objects ())
     {
-      // @@ Ossama: maybe we need another lock for the table, to
-      //    reduce contention on the Static_Object_Lock below, if so
-      //    then we need to use that lock in the ORB_init() function.
-
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                                *ACE_Static_Object_Lock::instance (), TAO_SERVANT_NOT_FOUND));
-
-      TAO_ORB_Table *table = TAO_ORB_Table::instance ();
-      TAO_ORB_Table::Iterator end = table->end ();
-      for (TAO_ORB_Table::Iterator i = table->begin ();
-           i != end;
-           ++i)
-        {
-          TAO_SERVANT_LOCATION servant_location =
-            this->_find_collocated_servant (sobj,
-                                            (*i).int_id_,
-                                            servant,
-                                            mprofile);
-          if (servant_location != TAO_SERVANT_NOT_FOUND)
-            return servant_location;
-        }
-
-      // If we don't find one by this point, we return 0.
-      return TAO_SERVANT_NOT_FOUND;
+      TAO_SERVANT_LOCATION servant_location =
+        this->_find_collocated_servant (sobj,
+                                        this->orb_core_,
+                                        servant,
+                                        mprofile);
+      if (servant_location != TAO_SERVANT_NOT_FOUND)
+        return servant_location;
     }
-  else
-    {
-      return this->_find_collocated_servant (sobj,
-                                             this->orb_core_,
-                                             servant,
-                                             mprofile);
-    }
+
+  {
+    // @@ Ossama: maybe we need another lock for the table, to
+    //    reduce contention on the Static_Object_Lock below, if so
+    //    then we need to use that lock in the ORB_init() function.
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                              *ACE_Static_Object_Lock::instance (), TAO_SERVANT_NOT_FOUND));
+
+    TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+    TAO_ORB_Table::Iterator end = table->end ();
+    for (TAO_ORB_Table::Iterator i = table->begin ();
+         i != end;
+         ++i)
+      {
+        // Skip ourselve.  This should never happen if this ORB doesn't use
+        // collocation optimization.
+        if ((*i).int_id_ == this->orb_core_)
+          continue;
+
+        TAO_SERVANT_LOCATION servant_location =
+          this->_find_collocated_servant (sobj,
+                                          (*i).int_id_,
+                                          servant,
+                                          mprofile);
+        if (servant_location != TAO_SERVANT_NOT_FOUND)
+          return servant_location;
+      }
+  }
+  // If we don't find one by this point, we return 0.
+  return TAO_SERVANT_NOT_FOUND;
 }
 
 TAO_SERVANT_LOCATION
