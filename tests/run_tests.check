@@ -1,0 +1,33 @@
+#! /bin/sh -f
+# Checks one ore more ACE test log file(s) for expected results.
+
+IFS="|"
+tmp=/tmp
+
+# these patterns should not be included in log file
+ERROR_MSGS="assertion failed|not supported|No such file or directory|Invalid argument|timeout|Bad file number"
+
+# these patterns must be included in log file
+SUCCESS_MSGS="starting|Ending"
+
+status=0
+
+for arg
+do
+  for i in $SUCCESS_MSGS; do
+    grep $i $arg >/dev/null
+    if [ $? -eq 1 ]; then
+      echo Error in log file no line with $i
+      status=1
+    fi
+  done
+
+  for i in $ERROR_MSGS; do
+    grep $i $arg
+    if [ $? -ne 0 ]; then status=1; fi
+  done
+done
+
+exit $status
+
+# EOF
