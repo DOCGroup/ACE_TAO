@@ -1,3 +1,9 @@
+Mon May 03 09:27:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added guideline to put
+          spaces around comment delimiters.  Thanks to Chris
+          Gill for suggesting this.
+
 Sun May 02 14:36:43 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: Added ghs back to the list of compilers for which
