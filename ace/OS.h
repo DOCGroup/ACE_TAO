@@ -5373,6 +5373,7 @@ class ACE_Export ACE_OS
   //     for instructions on porting ACE.  Please see the README file
   //     in this directory for complete information on the meaning of
   //     the various macros.
+
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
 public:
 
