@@ -66,4 +66,30 @@ protected:
 
 };
 
+class be_visitor_sequence_base_template_args: public be_visitor_sequence_base
+{
+  //
+  // =TITLE
+  // be_visitor_sequnce_base_template_args
+  // 
+  // =Description
+  // This is a derived class just used to override the method
+  // visit_interface that generates the arguments for the
+  // templates. This is necessary as the same visitor was being used
+  // by the idl compiler to generate the template arguments and the
+  // return arguments for some of the methods.
+public:
+  be_visitor_sequence_base_template_args (be_visitor_context *ctx,
+                                          be_sequence *node );
+  
+  ~be_visitor_sequence_base_template_args (void);
+  //Dtor
+
+  //= Visit methods
+  virtual int visit_interface (be_interface *node);
+
+  virtual int visit_predefined_type (be_predefined_type *node);
+private:
+  be_sequence *beseq_;
+};
 #endif /* _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_ */
