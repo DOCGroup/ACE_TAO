@@ -1,3 +1,8 @@
+Sun May 11 12:22:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/tutorials/Quoter/*/Makefile: Updated dependencies.
+	* examples/POA/Generic_Servant/Makefile*: Updated dependencies.
+
 Sat May 10 15:21:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Client_Leaks/Makefile:
