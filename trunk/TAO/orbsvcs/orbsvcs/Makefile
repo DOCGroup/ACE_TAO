@@ -230,10 +230,10 @@ ifneq (,$(findstring  SSLIOP, $(TAO_ORBSVCS)))
   MKLIST += Makefile.SSLIOP
 endif
 ifneq (,$(findstring  FTORB, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.FTORB
+  MKLIST += Makefile.FTORB Makefile.PortableGroup
 endif
 ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.FTORB Makefile.FaultTolerance
+  MKLIST += Makefile.FTORB Makefile.FaultTolerance Makefile.PortableGroup
 endif
 ifneq (,$(findstring  PortableGroup, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosNaming Makefile.PortableGroup
@@ -296,7 +296,7 @@ $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosTrading-)): M
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsEventLogAdmin-)): Makefile.DsEventLogAdmin-%: Makefile.DsLogAdmin-% Makefile.CosEvent-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsLogAdmin-)): Makefile.DsLogAdmin-%: Makefile.ETCL-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsNotifyLogAdmin-)): Makefile.DsNotifyLogAdmin-%: Makefile.DsEventLogAdmin-% Makefile.DsLogAdmin-% Makefile.CosNotification-% Makefile.CosNaming-%
-$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.FaultTolerance-)): Makefile.FaultTolerance-%: Makefile.FTORB-% Makefile.CosNaming-% Makefile.CosNotification-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.FaultTolerance-)): Makefile.FaultTolerance-%: Makefile.FTORB-% Makefile.PortableGroup-% Makefile.CosNaming-% Makefile.CosNotification-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.IFRService-)): Makefile.IFRService-%: Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.Metrics-)): Makefile.Metrics-%: Makefile.RTSched-% Makefile.CosTime-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.PortableGroup-)): Makefile.PortableGroup-%: Makefile.CosNaming-%
