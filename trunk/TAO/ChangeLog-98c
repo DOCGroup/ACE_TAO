@@ -7,6 +7,12 @@ Thu Oct 29 07:49:51 1998  David L. Levine  <levine@cs.wustl.edu>
           trailing whitespace.  Thanks to Steve Kay <slk1@icore.ih.lucent.com>
           for providing the test case :-)
 
+        * performance-tests/Cubit/TAO/MT_Cubit/summarize: reverted to
+          prior version, to use microsecond scaling.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/plot: support floating
+          point numbers.
+
 Wed Oct 28 22:22:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context):
