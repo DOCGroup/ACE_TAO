@@ -47,10 +47,16 @@ be_visitor_interface_ami_exception_holder_cs::visit_interface (be_interface *nod
   // @@ Michael:
   // We generate this node tempoarily, after refactoring this will be 
   // different.
-  UTL_ScopedName *inherit_name = new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
+  UTL_ScopedName *inherit_name = new UTL_ScopedName (new Identifier ("Messaging", 
+                                                                     0,
+                                                                     0,
+                                                                     0),
                                                      0);
   
-  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ExceptionHolder", 0,0,0),
+  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ExceptionHolder", 
+                                                           0,
+                                                           0,
+                                                           0),
                                            0));
  
   be_valuetype *inherit_vt = new be_valuetype (inherit_name,
@@ -59,8 +65,11 @@ be_visitor_interface_ami_exception_holder_cs::visit_interface (be_interface *nod
                                                0);
   inherit_vt->set_name (inherit_name);
 
-  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
-                                                            0),
+  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                      0),
                                   0);
  
   inherit_vt->set_defined_in (msg);
@@ -123,7 +132,10 @@ be_visitor_interface_ami_exception_holder_cs::visit_interface (be_interface *nod
               // Create the return type, which is "void"
               be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                                new UTL_ScopedName
-                                                                 (new Identifier ("void", 1, 0, I_FALSE), 
+                                                                 (new Identifier ("void", 
+                                                                                  1, 
+                                                                                  0, 
+                                                                                  I_FALSE), 
                                                                   0),
                                                                0);
 
@@ -140,9 +152,13 @@ be_visitor_interface_ami_exception_holder_cs::visit_interface (be_interface *nod
                                                       new_name,
                                                       0);
 
-              if (((AST_Operation *)op)->exceptions ())
+              AST_Operation *op_base = ACE_reinterpret_cast (AST_Operation *,
+                                                             op);
+
+              // Copy the exceptions.
+              if (op_base->exceptions ())
                 {
-                  UTL_ExceptList *exceptions = (UTL_ExceptList *)((AST_Operation *)op)->exceptions ()->copy ();
+                  UTL_ExceptList *exceptions = (UTL_ExceptList *)op_base->exceptions ()->copy ();
                   op_vt->be_add_exceptions (exceptions);
                 }
 
