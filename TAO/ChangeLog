@@ -1,3 +1,10 @@
+Fri Sep 12 13:36:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/RTKokyuEvent.dsp:
+        * orbsvcs/examples/RtEC/Kokyu/EC_Schedule_Service.dsp:
+
+          Fixed project settings.
+
 Fri Sep 12 10:58:28 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile (SRVR_LIBS):

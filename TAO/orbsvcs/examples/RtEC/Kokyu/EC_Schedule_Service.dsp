@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ../../../../../ace/ACE.lib ../../../../tao/TAO.lib ../../../../tao/PortableServer/TAO_PortableServer.lib ../../../orbsvcs/TAO_CosNaming.lib ../../../orbsvcs/TAO_RTEvent.lib ../../../orbsvcs/TAO_RTSched.lib ../../../orbsvcs/TAO_Svc_Utils.lib ../../../../tao/Messaging/TAO_Messaging.lib /nologo /subsystem:console /machine:I386 /out:"Service.exe"
+# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib TAO_Messaging.lib TAO_CosNaming.lib TAO_RTEvent.lib TAO_RTSched.lib TAO_RTKokyuEvent.lib TAO_Svc_Utils.lib /nologo /subsystem:console /machine:I386 /out:"Service.exe" /libpath:"../../../../../ace" /libpath:"../../../../tao" /libpath:"../../../../tao/PortableServer" /libpath:"../../../../tao/Messaging" /libpath:"../../../orbsvcs"
 
 !ELSEIF  "$(CFG)" == "EC_Schedule_Service - Win32 Debug"
 
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ../../../../../ace/ACEd.lib ../../../../tao/TAOd.lib ../../../../tao/PortableServer/TAO_PortableServerd.lib ../../../orbsvcs/TAO_CosNamingd.lib ../../../orbsvcs/TAO_RTEventd.lib ../../../orbsvcs/TAO_RTSchedd.lib ../../../orbsvcs/TAO_RTKokyuEventd.lib ../../../orbsvcs/TAO_Svc_Utilsd.lib ../../../../tao/Messaging/TAO_Messagingd.lib /nologo /subsystem:console /debug /machine:I386 /out:"Service.exe" /pdbtype:sept
+# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib TAO_Messagingd.lib TAO_CosNamingd.lib TAO_RTEventd.lib TAO_RTSchedd.lib TAO_RTKokyuEventd.lib TAO_Svc_Utilsd.lib /nologo /subsystem:console /debug /machine:I386 /out:"Service.exe" /pdbtype:sept /libpath:"../../../../../ace" /libpath:"../../../../tao" /libpath:"../../../../tao/PortableServer" /libpath:"../../../../tao/Messaging" /libpath:"../../../orbsvcs"
 
 !ENDIF 
 
