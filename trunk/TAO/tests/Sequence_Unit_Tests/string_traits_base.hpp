@@ -12,6 +12,7 @@
  */
 
 #include "tao/CORBA_String.h"
+#include "tao/Managed_Types.h"
 
 namespace TAO
 {
