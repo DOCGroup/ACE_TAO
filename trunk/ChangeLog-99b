@@ -6,7 +6,7 @@ Thu Feb 25 20:10:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	Added an ACE_Null_Semaphore class.  Thanks to Irfan for his guidance
 	on this.  Also fixed ACE_SYNCH_SEMAPHORE to be ACE_Null_Semaphore
-	when is built without thread support.
+	when ACE is built without thread support.
 
 Thu Feb 25 18:37:27 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
