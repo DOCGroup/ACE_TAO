@@ -37,4 +37,3 @@ private:
   int in_use_;
   // Are we currently in use?
 };
-
