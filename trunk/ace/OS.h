@@ -2365,7 +2365,7 @@ typedef rwlock_t ACE_rwlock_t;
 #     endif /* ! ACE_WTHREADS */
 #   endif /* ! ACE_THR_PRI_FIFO_DEF */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
 typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
 #else
 class ACE_recursive_thread_mutex_t
