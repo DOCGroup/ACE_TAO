@@ -66,7 +66,7 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::PolicyError));
   };
 
-  ACE_STATIC_SVC_DECLARE (Loadable_Thread_Policy)
+  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Loadable_Thread_Policy)
   ACE_FACTORY_DECLARE (TAO_PortableServer, Loadable_Thread_Policy)
 }
 

@@ -36,12 +36,31 @@ namespace TAO
         {
           this->value_ =
             ACE_Dynamic_Service<ORB_CTRL_Thread_Policy>::instance ("ORB_CTRL_Thread_Policy");
+
+          if (this->value_ == 0)
+            {
+              ACE_Service_Config::process_directive (
+                TAO::ace_svc_desc_ORB_CTRL_Thread_Policy);
+
+              this->value_ =
+                ACE_Dynamic_Service<ORB_CTRL_Thread_Policy>::instance ("ORB_CTRL_Thread_Policy");
+            }
           break;
         }
       case PortableServer::SINGLE_THREAD_MODEL :
         {
           this->value_ =
             ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>::instance ("SINGLE_THREAD_Thread_Policy");
+
+          if (this->value_ == 0)
+            {
+              ACE_Service_Config::process_directive (
+                TAO::ace_svc_desc_SINGLE_THREAD_Thread_Policy);
+
+              this->value_ =
+                ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>::instance ("SINGLE_THREAD_Thread_Policy");
+            }
+
           break;
         }
       }

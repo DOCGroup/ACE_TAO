@@ -68,21 +68,25 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
     ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
            "Loadable_Thread_Policy");
 
-  // @@ Johnny, you may want to check whether the policy pointer is
-  // valid before you call create.
-
-  // BTW this would work for dynamic libraries. For static libraries
-  // you should probably force load things like this
-  /*
+  // For static libraries force load
   if (policy == 0)
     {
-      ACE_Service_Config::process_directive ("dynamic Loadable_Thread_Policy Service_Object *
-      TAO_PortableServer:_make_TAO_PortableServer_Loadable_Thread_policy()"));
-      }
-      // check the syntax, and I am sure you get what I mean here..
-  */
+      ACE_Service_Config::process_directive (
+        TAO::ace_svc_desc_Loadable_Thread_Policy);
 
-  return policy->create(value);
+      policy =
+        ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
+           "Loadable_Thread_Policy");
+    }
+
+  if (policy == 0)
+    {
+      return PortableServer::ThreadPolicy::_nil();
+    }
+  else
+    {
+      return policy->create(value);
+    }
 /*  TAO_Thread_Policy *thread_policy = 0;
   ACE_NEW_THROW_EX (thread_policy,
                     TAO_Thread_Policy (value),

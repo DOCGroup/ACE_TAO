@@ -1,5 +1,20 @@
 Tue Sep 21 11:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/PortableServer/Loadable_Thread_Policy.{h,cpp}:
+        * tao/PortableServer/POA_Policy.h:
+        * tao/PortableServer/POA_ThreadPolicy.cpp:
+        * tao/PortableServer/Thread_Policy_Value.cpp:
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp:
+          Fixed emulated exception usage and work on Bala's comments
+
+        * tao/PortableServer/Loadable_Thread_Policy.h:
+        * tao/PortableServer/POA_ThreadPolicy.h:
+        * tao/PortableServer/PortableServer.h:
+        * tao/PortableServer/POA.cpp:
+          Changed handling of Loadable_Thread_Policy and the usage of svc conf
+
+Tue Sep 21 11:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tao/PortableServer/Loadable_Thread_Policy.h:
         * tao/PortableServer/POA_Policy.h:
         * tao/PortableServer/POA_ThreadPolicy.{h,cpp}:
