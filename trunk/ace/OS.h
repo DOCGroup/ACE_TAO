@@ -5823,8 +5823,8 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 
 // Byte swapping macros to deal with differences between little endian and big
 // endian machines.
-#define ACE_SWAP_LONG(L) ((SWAP_WORD ((L) & 0xFFFF) << 16) \
-                          | SWAP_WORD(((L) >> 16) & 0xFFFF))
+#define ACE_SWAP_LONG(L) ((ACE_SWAP_WORD ((L) & 0xFFFF) << 16) \
+                          | ACE_SWAP_WORD(((L) >> 16) & 0xFFFF))
 #define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
 
 #if defined (ACE_LITTLE_ENDIAN)
