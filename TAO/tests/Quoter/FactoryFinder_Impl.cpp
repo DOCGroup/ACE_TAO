@@ -16,7 +16,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "FactoryFinder_Impl.h"
+#include "FactoryFinderImpl.h"
 #include "QuoterC.h"
 
 static const char usage [] = 
