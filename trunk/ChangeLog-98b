@@ -1,3 +1,17 @@
+Sat May 16 14:12:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,i,cpp} (class ACE_Thread_Descriptor_Base):
+	  Extract thread handle and thread creation flags out from
+	  Thread_Descriptor into this new class.  This is necessary
+	  because after my last round of changes to improve
+	  ACE_Thread_Manager, I changed the <terminated_queue_> from
+	  holding Thread_Descriptor's to holding pointers to descriptor.
+	  This was a bad move because the address of these pointers had
+	  already been "freed."  The <terminated_queue_> now holds
+	  ACE_Thread_Descriptor_Base which contains only the information
+	  needed for manipulating <terminated_queue_>.  Thanks to Arturo
+	  for noticing this.
+
 Sat May 16 03:23:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Misc/childbirth_time.cpp (main): Added a new
