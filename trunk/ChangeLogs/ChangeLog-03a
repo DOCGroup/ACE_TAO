@@ -1,7 +1,25 @@
+Sat Jul 27 15:50:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/examples/svcconf/main.cpp:
+          Made this file compiling with BCB and Unicode
+
+        * ACEXML/examples/svcconf/Svcconf_Handler.h:
+          Made includes like the other examples so that we can build it with
+          BCB
+
+        * ACEXML/examples/svcconf/Svcconf_Handler.cpp:
+          Fixed unused argument warnings
+
+        * ACEXML/examples/svcconf/Makefile.bor:
+          Added this BCB makefile
+
+        * ACEXML/examples/Makefile.bor
+          Added svcconf directory
+
 Fri Jul 26 21:00:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Fixed a unused variable warning in g++
-	  builds. 
+	  builds.
 
 Fri Jul 26 20:08:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -16,7 +34,7 @@ Fri Jul 26 15:52:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/TP_Reactor.cpp: Fixed a problem with handle_event
 	  (ACE_Time_Value &). It should be calling the TP_Reactor's
 	  handle_event () instead of Select_Reactor's. This should fix
-	  [BUGID 1257]. 
+	  [BUGID 1257].
 
 Fri Jul 26 10:11:41 2002  Chad Elliott  <elliott_c@ociweb.com>
 
