@@ -57,7 +57,7 @@ ACE_RAPI_Session::rsvp_events_handle (void)
 }
 
 // Get the End Point Type (Sender/Receiver/Both).
-ACE_INLINE ACE_End_Point_Type
+ACE_INLINE ACE_QoS_Session::ACE_End_Point_Type
 ACE_RAPI_Session::flags (void) const
 {
   return this->flags_;
