@@ -9,13 +9,17 @@ endif # ! TAO_ROOT
 
 MAKEFILE = Makefile
 
-include $(TAO_ROOT)/rules.tao.GNU
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
 
-default: all
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
 #       Define local macros
-#----------------------------------------------------------------------------
+#---------------------------------------------------------------------------
 
 ifndef TAO_ORBSVCS
   #### Please see docs/configurations.html#orbsvcs for documentation of
@@ -28,7 +32,7 @@ ifndef TAO_ORBSVCS
                 CosEvent \
 		Concurrency
 
-# Old versions of 
+  # Old versions of gcc cannot compile these services
   ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
     TAO_ORBSVCS += Event2 \
           NativeCosEvent
@@ -98,12 +102,6 @@ ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
   MKLIST += Makefile.DsLogAdmin
 endif
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
 #       Local rules
