@@ -368,6 +368,8 @@ Server_i::init (int argc,
       if (this->use_ir_ == 0)
         this->init_naming_service (TAO_TRY_ENV);
 
+      TAO_CHECK_ENV;
+
       // Create the server object.
       this->create_server ();
 
