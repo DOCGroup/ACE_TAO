@@ -1,3 +1,13 @@
+Tue Mar  9 22:48:10 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* docs/static_ciao.html: 
+	* docs/imgs/ciao-static1.jpg: 
+	* docs/imgs/ciao-static2.jpg: 
+	* docs/imgs/ciao-dynamic1.jpg: 
+	* docs/imgs/ciao-dynamic2.jpg: 
+	* docs/imgs/ciao-static-vs-dynamic.jpg: Added documentation for
+	  CIAO static configuration.
+	
 Mon Mar  8 14:57:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
