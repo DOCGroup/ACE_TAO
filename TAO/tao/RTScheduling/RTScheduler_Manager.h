@@ -46,7 +46,8 @@ public:
   TAO_RTScheduler_Manager (TAO_ORB_Core*);
 
   ///
-  void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler);
+  void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   ///
   RTScheduling::Scheduler_ptr rtscheduler (void);
