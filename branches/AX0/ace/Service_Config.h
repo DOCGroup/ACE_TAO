@@ -32,9 +32,9 @@ class ACE_Service_Repository;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 class ACE_Svc_Conf_Param;
-#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF ==1 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 
 extern "C"
 {
@@ -353,7 +353,7 @@ public:
    *        for a list of files and here a list of services.
    */
   static int parse_args (int, ACE_TCHAR *argv[]);
-#if ! defined (ACE_USES_CLASSIC_SVC_CONF) || (ACE_USES_CLASSIC_SVC_CONF == 0)
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
   static ACE_Service_Type *create_service_type  (const ACE_TCHAR *n,
                                                  ACE_Service_Type_Impl *o,
                                                  const ACE_SHLIB_HANDLE handle,
@@ -364,13 +364,13 @@ public:
                                                           void *symbol,
                                                           u_int flags,
                                                           ACE_Service_Object_Exterminator gobbler);
-#endif /* !ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 0 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 protected:
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
 
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// This is the implementation function that process_directives()
   /// and process_directive() both call.  Returns the number of errors
   /// that occurred.
@@ -378,7 +378,7 @@ protected:
 #else
   /// Helper function to dynamically link in the XML Service Configurator parser.
   static ACE_XML_Svc_Conf *get_xml_svc_conf (ACE_DLL &d);
-#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
   /// Become a daemon.
   static int start_daemon (void);
