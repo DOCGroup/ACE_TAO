@@ -44,7 +44,12 @@ HINSTANCE ACE_OS::win32_resource_module_;
 BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
 {
   if (reason == DLL_PROCESS_ATTACH)
-    ACE_OS::set_win32_resource_module(instance);
+    {
+#if defined (ACE_DISABLES_THREAD_LIBRARY_CALLS) && (ACE_DISABLES_THREAD_LIBRARY_CALLS == 1)
+      ::DisableThreadLibraryCalls (instance);
+#endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
+      ACE_OS::set_win32_resource_module(instance);
+    }
   return TRUE;
 }
 #  endif /* ACE_OS_HAS_DLL && ACE_OS_HAS_DLL == 1 */

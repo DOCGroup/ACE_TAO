@@ -512,5 +512,9 @@ typedef unsigned long long ACE_UINT64;
 #  define ACE_MALLOC_ALIGN 8
 #endif /* ACE_WIN64 */
 
+#if !defined (ACE_DISABLES_THREAD_LIBRARY_CALLS)
+# define ACE_DISABLES_THREAD_LIBRARY_CALLS 0
+#endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */
