@@ -1,3 +1,11 @@
+Sat Jul  3 15:57:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp:
+	  Fixed error code return, it should be -1 not ACE_INVALID_HANDLE
+
+	* ace/SOCK_Connector.cpp:
+	  Fixed stray comment characters.
+
 Sat Jul 03 14:04:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: call ace_components via sh, and use single
