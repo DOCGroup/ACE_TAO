@@ -4800,6 +4800,20 @@ TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RebindPolicy,Messaging::RebindPolicy_var>;
@@ -4929,6 +4943,20 @@ TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RequestPriorityPolicy,Messaging::RequestPriorityPolicy_var>;
@@ -4991,6 +5019,20 @@ TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5057,6 +5099,20 @@ TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RequestStartTimePolicy,Messaging::RequestStartTimePolicy_var>;
@@ -5119,6 +5175,20 @@ TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5185,6 +5255,20 @@ TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var>;
@@ -5249,6 +5333,20 @@ TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::ReplyEndTimePolicy,Messaging::ReplyEndTimePolicy_var>;
@@ -5311,6 +5409,20 @@ TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5442,6 +5554,20 @@ TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RoutingPolicy,Messaging::RoutingPolicy_var>;
@@ -5504,6 +5630,20 @@ TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5570,188 +5710,6 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
   return 1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::QueueOrderPolicy,Messaging::QueueOrderPolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::QueueOrderPolicy>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::QueueOrderPolicy, Messaging::QueueOrderPolicy_var>
-# pragma instantiate TAO::Any_Impl_T<Messaging::QueueOrderPolicy>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
 template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
@@ -5765,4 +5723,13 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO_Object_Manager<Messaging::QueueOrderPolicy,Messaging::QueueOrderPolicy_var>;
+  template class TAO::Any_Impl_T<Messaging::QueueOrderPolicy>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO_Object_Manager<Messaging::QueueOrderPolicy, Messaging::QueueOrderPolicy_var>
+# pragma instantiate TAO::Any_Impl_T<Messaging::QueueOrderPolicy>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

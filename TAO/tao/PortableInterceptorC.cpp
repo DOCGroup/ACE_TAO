@@ -5554,6 +5554,20 @@ TAO::Any_Impl_T<PortableInterceptor::Interceptor>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Interceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<PortableInterceptor::Interceptor,PortableInterceptor::Interceptor_var>;
@@ -5748,6 +5762,20 @@ TAO::Any_Impl_T<PortableInterceptor::Current>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Current>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<PortableInterceptor::Current,PortableInterceptor::Current_var>;
@@ -5810,6 +5838,20 @@ TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5876,6 +5918,20 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<PortableInterceptor::ClientRequestInfo,PortableInterceptor::ClientRequestInfo_var>;
@@ -5938,6 +5994,20 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -6004,6 +6074,20 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor,PortableInterceptor::ClientRequestInterceptor_var>;
@@ -6066,6 +6150,20 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -6132,6 +6230,20 @@ TAO::Any_Impl_T<PortableInterceptor::IORInfo>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<PortableInterceptor::IORInfo,PortableInterceptor::IORInfo_var>;
@@ -6194,6 +6306,20 @@ TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -6260,6 +6386,20 @@ TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<PortableInterceptor::PolicyFactory,PortableInterceptor::PolicyFactory_var>;
@@ -6322,6 +6462,20 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -6388,205 +6542,6 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::to_object (
   return 1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<PortableInterceptor::ORBInitializer,PortableInterceptor::ORBInitializer_var>;
-  template class TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitializer, PortableInterceptor::ORBInitializer_var>
-# pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Interceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Current>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
 template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::marshal_value (TAO_OutputCDR &)
@@ -6600,4 +6555,13 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::demarshal_value (TAO_Input
 {
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO_Object_Manager<PortableInterceptor::ORBInitializer,PortableInterceptor::ORBInitializer_var>;
+  template class TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitializer, PortableInterceptor::ORBInitializer_var>
+# pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

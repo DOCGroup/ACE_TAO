@@ -7260,6 +7260,20 @@ TAO::Any_Impl_T<RTCORBA::PriorityModelPolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PriorityModelPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PriorityModelPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::PriorityModelPolicy,RTCORBA::PriorityModelPolicy_var>;
@@ -7312,6 +7326,20 @@ operator>>= (
         RTCORBA::_tc_ThreadpoolPolicy,
         _tao_elem
       );
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -7376,6 +7404,20 @@ TAO::Any_Impl_T<RTCORBA::ProtocolProperties>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ProtocolProperties>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ProtocolProperties>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -7445,6 +7487,20 @@ CORBA::Boolean operator>>= (
       );
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO::Any_Dual_Impl_T<RTCORBA::Protocol>;
@@ -7510,6 +7566,27 @@ CORBA::Boolean operator>>= (
       );
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
 
@@ -7563,6 +7640,20 @@ TAO::Any_Impl_T<RTCORBA::ServerProtocolPolicy>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ServerProtocolPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ServerProtocolPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -7629,6 +7720,20 @@ TAO::Any_Impl_T<RTCORBA::ClientProtocolPolicy>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ClientProtocolPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ClientProtocolPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::ClientProtocolPolicy,RTCORBA::ClientProtocolPolicy_var>;
@@ -7691,6 +7796,20 @@ TAO::Any_Impl_T<RTCORBA::PrivateConnectionPolicy>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PrivateConnectionPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PrivateConnectionPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -7757,6 +7876,20 @@ TAO::Any_Impl_T<RTCORBA::TCPProtocolProperties>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::TCPProtocolProperties>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::TCPProtocolProperties>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::TCPProtocolProperties,RTCORBA::TCPProtocolProperties_var>;
@@ -7821,6 +7954,19 @@ TAO::Any_Impl_T<RTCORBA::GIOPProtocolProperties>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::GIOPProtocolProperties>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::GIOPProtocolProperties>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::GIOPProtocolProperties,RTCORBA::GIOPProtocolProperties_var>;
@@ -7885,6 +8031,20 @@ TAO::Any_Impl_T<RTCORBA::UnixDomainProtocolProperties>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::UnixDomainProtocolProperties>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::UnixDomainProtocolProperties>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::UnixDomainProtocolProperties,RTCORBA::UnixDomainProtocolProperties_var>;
@@ -7947,6 +8107,19 @@ TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -8136,6 +8309,23 @@ TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::to_object (
   return 1;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::PriorityBandedConnectionPolicy,RTCORBA::PriorityBandedConnectionPolicy_var>;
@@ -8198,6 +8388,20 @@ TAO::Any_Impl_T<RTCORBA::Current>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::Current>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::Current>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -8264,6 +8468,20 @@ TAO::Any_Impl_T<RTCORBA::Mutex>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::Mutex>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::Mutex>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<RTCORBA::Mutex,RTCORBA::Mutex_var>;
@@ -8326,6 +8544,20 @@ TAO::Any_Impl_T<RTCORBA::RTORB>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::RTORB>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::RTORB>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -8404,193 +8636,6 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::PriorityModelPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::PriorityModelPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ProtocolProperties>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ProtocolProperties>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:64
-
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ServerProtocolPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ServerProtocolPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ClientProtocolPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::ClientProtocolPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::PrivateConnectionPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::PrivateConnectionPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::TCPProtocolProperties>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::TCPProtocolProperties>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::GIOPProtocolProperties>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::GIOPProtocolProperties>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::UnixDomainProtocolProperties>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::UnixDomainProtocolProperties>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
@@ -8653,74 +8698,6 @@ CORBA::Boolean operator>> (
       return _tao_marshal_flag;
     }
   
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::PriorityBandedConnectionPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::Current>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::Current>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::Mutex>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::Mutex>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::RTORB>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<RTCORBA::RTORB>::demarshal_value (TAO_InputCDR &)
-{
   return 0;
 }
 

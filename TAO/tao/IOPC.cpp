@@ -3694,6 +3694,20 @@ TAO::Any_Impl_T<IOP::Codec>::to_object (
   return 1;
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<IOP::Codec,IOP::Codec_var>;
@@ -3821,6 +3835,20 @@ TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
   return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -4443,40 +4471,6 @@ CORBA::Boolean operator>> (
       return _tao_marshal_flag;
     }
   
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::Codec>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
-{
   return 0;
 }
 

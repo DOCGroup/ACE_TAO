@@ -100,6 +100,37 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
+  // Since we don't generate CDR stream operators for types that
+  // explicitly contain a local interface (at some level), we 
+  // must override these Any template class methods to avoid
+  // calling the non-existent operators. The zero return value
+  // will eventually cause CORBA::MARSHAL to be raised if this
+  // type is inserted into an Any and then marshaled.
+  if (node->is_local ())
+    {
+      *os << be_nl << be_nl
+          << "template<>" << be_nl
+          << "ACE_INLINE" << be_nl
+          << "CORBA::Boolean" << be_nl
+          << "TAO::Any_Array_Impl_T<" << node->name ()
+          << "_slice, " << node->name () 
+          << "_forany>::marshal_value (TAO_OutputCDR &)" << be_nl
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "template<>" << be_nl
+          << "ACE_INLINE" << be_nl
+          << "CORBA::Boolean" << be_nl
+          << "TAO::Any_Array_Impl_T<" << node->name ()
+          << "_slice, " << node->name () 
+          << "_forany>::demarshal_value (TAO_InputCDR &)" << be_nl
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}";
+    }
+
   *os << be_nl << be_nl
       << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
       << be_idt_nl
