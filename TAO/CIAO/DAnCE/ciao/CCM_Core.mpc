@@ -31,7 +31,7 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client, ciaoversion {
+project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client {
   after += CIAO_DnC_Client
   sharedname  = CIAO_DnC_Container
   libs       += CIAO_DnC_Client
@@ -61,7 +61,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
 
 // Valuetype library must be linked for this project.
 // Please don't remove.
-project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciaoversion {
+project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
   sharedname   =  CIAO_Deployment_stub
   after        += CIAO_DnC_Client
 
@@ -93,7 +93,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciaoversion {
 
 // CIAO_DnC_Client library must be linked for this project.
 // Please don't remove.
-project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype,ifr_client, ciaoversion {
+project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_client {
   after        += Deployment_stub
   sharedname   =  CIAO_Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
@@ -117,7 +117,7 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype,ifr_client
 
 }
 
-project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, ifr_client, utils, security, ciaoversion {
+project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, ifr_client, utils, security {
   after        += CIAO_DnC_Container Deployment_svnt
   includes     += $(CIAO_ROOT)/DAnCE
   sharedname   =  CIAO_DnC_Server
