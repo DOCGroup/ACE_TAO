@@ -48,6 +48,20 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  be_type *base_type = be_type::narrow_from_decl (node->base_type ());
+
+  // If our base type is an anonymous sequence, generate code for it here.
+  if (base_type->node_type () == AST_Decl::NT_sequence)
+    {
+      if (base_type->accept (this) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_sequence_cdr_op_ch::visit_sequence -"
+                             "codegen for nested anonymous sequence failed\n"),
+                            -1);
+        }
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_type *bt = be_type::narrow_from_decl (node);

@@ -71,8 +71,24 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
+  // If our base type is an anonymouse sequence, we must create a  name
+  // and generate a class declaration for it as well.
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      if (bt->accept (this) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ch::"
+                             "visit_sequence - "
+                             "codegen for anonymous base type failed\n"), 
+                            -1);
+        }
+    }
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
+
+  os->gen_ifdef_macro (node->flat_name ());
 
   if (this->ctx_->tdef () != 0)
     {
@@ -197,6 +213,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   *os << be_uidt_nl
       << "};";
+
+  os->gen_endif ();
 
   node->cli_hdr_gen (1);
   return 0;

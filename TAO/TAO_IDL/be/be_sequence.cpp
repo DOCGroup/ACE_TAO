@@ -587,41 +587,44 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
 
       break;
     default: // Not a managed type.
-      if (elem->base_node_type () == AST_Decl::NT_array)
+      switch (elem->base_node_type ())
         {
-          if (this->unbounded ())
-            {
-              *os << "TAO_Unbounded_Array_Sequence<"
-                  << be_idt << be_idt_nl
-                  << elem->nested_type_name (elem_scope) << "," << be_nl
-                  << elem->fwd_helper_name () << "_life" << be_uidt_nl
-                  << ">" << be_uidt;
-            }
-          else
-            {
-              *os << "TAO_Bounded_Array_Sequence<"
-                  << be_idt << be_idt_nl
-                  << elem->nested_type_name (elem_scope) << "," << be_nl
-                  << elem->fwd_helper_name () << "_life," << be_nl
-                  << this->max_size ()->ev ()->u.ulval << be_uidt_nl
-                  << ">" << be_uidt;
-            }
-        }
-      else
-        {
-          if (this->unbounded ())
-            {
-              *os << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
-                  << elem->nested_type_name (elem_scope) << be_uidt_nl
-                  << ">" << be_uidt;
-            }
-          else
-            {
-              *os << "TAO_Bounded_Sequence<" << be_idt << be_idt_nl
-                  << elem->nested_type_name (elem_scope) << "," << be_nl
-                  << this->max_size ()->ev ()->u.ulval << be_uidt_nl
-                  << ">" << be_uidt;
-            }
+          case AST_Decl::NT_array:
+            if (this->unbounded ())
+              {
+                *os << "TAO_Unbounded_Array_Sequence<"
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (elem_scope) << "," << be_nl
+                    << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                    << ">" << be_uidt;
+              }
+            else
+              {
+                *os << "TAO_Bounded_Array_Sequence<"
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (elem_scope) << "," << be_nl
+                    << elem->fwd_helper_name () << "_life," << be_nl
+                    << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+                    << ">" << be_uidt;
+              }
+
+            break;
+          default:
+            if (this->unbounded ())
+              {
+                *os << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
+                    << elem->nested_type_name (elem_scope) << be_uidt_nl
+                    << ">" << be_uidt;
+              }
+            else
+              {
+                *os << "TAO_Bounded_Sequence<" << be_idt << be_idt_nl
+                    << elem->nested_type_name (elem_scope) << "," << be_nl
+                    << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+                    << ">" << be_uidt;
+              }
+
+            break;
         }
 
       break;      

@@ -55,15 +55,13 @@ be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
   // generate code for the sequence here.
 
   // Retrieve the base type.
-  AST_Type *base = node->base_type ();
+  be_type *base = be_type::narrow_from_decl(node->base_type ());
   AST_Decl::NodeType nt = base->node_type ();
 
+  // If our base type is an anonymous sequence, generate code for it here.
   if (nt == AST_Decl::NT_sequence && base->anonymous ())
     {
-      be_sequence *bs = be_sequence::narrow_from_decl (base);
-      be_visitor_sequence_cdr_op_ci visitor (this->ctx_);
-
-      if (bs->accept (&visitor) == -1)
+      if (base->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_sequence_cdr_op_ci::"
@@ -73,8 +71,8 @@ be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
         }
     }
 
-  // Sequences are *always* generated in the .cpp file, it doesn't
-  // save all that time to generate them inline and this breaks
+  // Sequence CDR operators are always generated in the .cpp file, it doesn't
+  // save all that much time to generate them inline and this breaks
   // the dependencies for recursive types.
 
   be_type *bt = be_type::narrow_from_decl (node);

@@ -50,10 +50,26 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  // If our base type is an anonymous sequence, generate code for it here.
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      if (bt->accept (this) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cs::"
+                             "visit_sequence - "
+                            "codegen for anonymous base type failed\n"), 
+                           -1);
+        }
+
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// "__FILE__ << ":" << __LINE__;
+
+  os->gen_ifdef_macro (node->flat_name ());
 
   // default constructor
   *os << be_nl << be_nl
@@ -64,9 +80,11 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       *os << be_nl << be_nl
-          << node->name () << "::" << node->local_name ()
-          << " (CORBA::ULong max)" << be_nl
-          << "  : " << be_idt << be_idt;
+          << node->name () << "::" << node->local_name () << " (" 
+          << be_idt << be_idt_nl
+          << "CORBA::ULong max" << be_uidt_nl
+          << ")" << be_nl
+          << ": " << be_idt;
 
       // Pass it to the base constructor.
       if (node->gen_base_class_name (os, idl_global->root ()) == -1)
@@ -74,7 +92,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_cs::"
                              "visit_sequence - "
-                            "codegen for base sequence class\n"), 
+                            "codegen for base sequence class failed\n"), 
                            -1);
         }
 
@@ -109,7 +127,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << "* buffer," << be_nl
+  *os << " * buffer," << be_nl
       << "CORBA::Boolean release" << be_uidt_nl
       << ")" << be_uidt_nl
       << "  : " << be_idt << be_idt;
@@ -137,8 +155,10 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // Copy constructor.
   *os << be_nl << be_nl 
       << node->name () << "::" << node->local_name ()
-      << " (const " << node->local_name ()
-      << " &seq)" << be_nl
+      << " (" << be_idt << be_idt_nl
+      << "const " << node->local_name ()
+      << " &seq" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "  : " << be_idt << be_idt;
 
   // Pass it to the base constructor.
@@ -165,11 +185,15 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     {
       *os << be_nl << be_nl
           << "void "
-          << node->name () << "::_tao_any_destructor (void *_tao_void_pointer)" 
-          << be_nl
+          << node->name () << "::_tao_any_destructor (" << be_idt << be_idt_nl
+          << "void * _tao_void_pointer" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *tmp = ACE_static_cast ("
-          << node->local_name () << "*, _tao_void_pointer);" << be_nl
+          << node->local_name () << " * tmp =" << be_idt_nl
+          << "ACE_static_cast (" << be_idt << be_idt_nl
+          << node->local_name () << " *," << be_nl
+          << "_tao_void_pointer" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "delete tmp;" << be_uidt_nl
           << "}";
     }
@@ -186,6 +210,8 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       this->gen_varout_tmplinst (node,
                                  bt);
     }
+
+  os->gen_endif ();
 
   node->cli_stub_gen (1);
   return 0;
