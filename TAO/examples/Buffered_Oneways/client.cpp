@@ -337,10 +337,7 @@ main (int argc, char **argv)
       // static destructors to flush the queues, it will be too late.
       // Therefore, we use explicit destruction here and flush the
       // queues before main() ends.
-
-      // @@ Ossama, reenable this after you get it to work.
-
-      // orb->destroy (ACE_TRY_ENV);
+      orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
