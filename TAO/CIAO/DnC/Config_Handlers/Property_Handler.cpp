@@ -51,7 +51,8 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
                           value_iter->nextNode ();
 
                           // Process the value node present there
-                          Any_Handler::process_Any (iter, property.value);
+                          Any_Handler::process_Any (value_iter, 
+                                                    property.value);
                         }
                     }
                 }

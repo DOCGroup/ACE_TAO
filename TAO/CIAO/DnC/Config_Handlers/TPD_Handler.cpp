@@ -2,7 +2,6 @@
 
 #include "tao/Exception.h"
 #include "ace/Log_Msg.h"
-
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "CPR_Handler.h"
@@ -11,23 +10,18 @@
 #include "Process_Element.h"
 #include "Process_Basic_Type.h"
 
-#include <iostream>
-
-using std::cerr;
-using std::endl;
-
 BEGIN_DEPLOYMENT_NAMESPACE
 
 /// handle the package configuration and populate it
 ACE_TString TPD_Handler::process_TopLevelPackageDescription()
 {
-  for (DOMNode* node = this->iter_->nextNode();
+  for (DOMNode* node = this->iter_->nextNode ();
        node != 0;
-       node = this->iter_->nextNode())
+       node = this->iter_->nextNode ())
     {
       XStr node_name (node->getNodeName());
       if (node_name == XStr
-          (ACE_TEXT ("Deployment:TopLevelPackageDescription")))
+              (ACE_TEXT ("Deployment:TopLevelPackageDescription")))
         {
         }
       else if (node_name == XStr(ACE_TEXT ("package")))
