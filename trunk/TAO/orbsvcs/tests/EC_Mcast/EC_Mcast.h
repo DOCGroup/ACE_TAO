@@ -7,36 +7,37 @@
 //   This test attempts to communicate several Event Channels UDP
 //   using multicast.
 //   The test reads a configuration file that describe what events are
-//   received by each "VirtualConsumer".   The user must provide, on the
-//   command line, which virtual consumers are present on each process.
-//   The test also creates one supplier for each consumer, the
+//   received by each "Federation".   The user must provide, on the
+//   command line, which federations are present on each process
+//   (these are called the "Local Federations").
+//   The test also creates one supplier for each federation, the
 //   supplier can send an event of any possible type described in the
 //   file.
 
 // = HOW
-//   The test creates a local consumer for each remote consumer, this
-//   is necessary to send the event with the right port number; it
-//   then sends the event using multicast.
+//   The test creates one UDP_Sender for each remote federation,
+//   this is a PushConsumer that sends the events using UDP
+//   multicast.
 //   Notice that there is still a win in using multicast because
-//   multiple copies of the virtual consumer may be available.
-//   To receive the event the test creates one local supplier for each
-//   local "Virtual Consumer".
+//   multiple copies of the federation may be present.
+//   To receive the event the test creates one UDP_Receiver for each
+//   local federation, it joins to the right multicast groups and
+//   pushes the events it receives, acting as a PushSupplier.
+//
+//   The UDP_Receiversfederation suppliers  Mcast packets as local events
+//   could observe the changes in the local subscriptions and use that
+//   to join or leave the multicast groups.
+//   To demostrate this the test will need to reconfigure its
+//   subscription list every so often (a few seconds seems like a good
+//   idea).
 //
 // = TODO
-//   The class names in this test are *way* too artificial, I should
-//   use the RTI names.
 //
 //   It is unfortunate that the test must know before-hand the remote
 //   consumer interests.  It would be really simple to use a better
 //   strategy: the test could "observe" changes in the remote EC
 //   subscription list, it could then modify its local consumers
 //   subscriptions.
-//   Similarly the suppliers that supply Mcast packets as local events
-//   could observe the changes in the local subscriptions and use that
-//   to join or leave the multicast groups.
-//   To demostrate this the test will need to reconfigure its
-//   subscription list every so often (a few seconds seems like a good
-//   idea).
 //
 // ============================================================================
 
@@ -299,9 +300,8 @@ public:
   void dump_results (void) const;
   // Report the results back to the user...
 
-  void subscribed_bit (CORBA::ULong i,
-		       CORBA::Boolean x);
-  CORBA::Boolean subscribed_bit (CORBA::ULong i) const;
+  void subscribed_bit (int i, CORBA::Boolean x);
+  CORBA::Boolean subscribed_bit (int i) const;
   // Set&Get the subscribed bit; this defines the subset of events
   // that we actually publish.
 
