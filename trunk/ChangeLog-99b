@@ -1,3 +1,8 @@
+Thu Nov 04 08:16:25 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * config-linux-common.h: only enabled ACE_HAS_SIGTIMEDWAIT
+          with glibc.  RedHat 5.2 doesn't have sigtimedwait.
+
 Mon Nov 01 14:29:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Filecache.cpp,Capabilities.cpp,Makefile: moved
