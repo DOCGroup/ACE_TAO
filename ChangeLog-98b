@@ -8,6 +8,9 @@ Fri Dec 18 09:30:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.7.h: added this config, for Solaris 7.
 
+        * apps/Gateway/Gateway/Gateway.cpp (handle_signal): added
+          ACE_UNUSED_ARG (signum).
+
 Fri Dec 18 06:08:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/High_Res_Timer: Made several methods const.  Thanks to Ulf
