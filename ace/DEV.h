@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,6 +19,10 @@
 
 #include "ace/IO_SAP.h"
 #include "ace/DEV_Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template

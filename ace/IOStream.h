@@ -19,6 +19,10 @@
 
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #include "ace/INET_Addr.h"
@@ -50,7 +54,6 @@ typedef string ACE_IOStream_String;
 #   include /**/ <stdcomp>
 # endif /* __DECCXX_VER < 50700000 */
 #endif /* __DECCXX_VER */
-
 
 class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
 {

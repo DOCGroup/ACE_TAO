@@ -22,6 +22,9 @@
 #include "ace/Synch.h"
 #endif /* ACE_WIN32 */
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {

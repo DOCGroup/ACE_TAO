@@ -22,6 +22,10 @@
 #include "ace/Message_Queue.h"
 #include "ace/Method_Object.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Activation_Queue
 {
   // = TITLE

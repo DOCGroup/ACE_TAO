@@ -19,6 +19,10 @@
 
 #include "ace/Timer_Queue_T.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward declaration.
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_List_T;

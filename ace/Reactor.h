@@ -35,6 +35,10 @@ class ACE_Reactor_Impl;
 // forward declaration will be useful here
 #include "ace/Signal.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Reactor
 {
   // = TITLE
@@ -141,9 +145,9 @@ public:
   // application wishes to handle events for some fixed amount of
   // time.
   //
-  // Returns the total number of <ACE_Event_Handler>s that were
-  // dispatched, 0 if the <max_wait_time> elapsed without dispatching
-  // any handlers, or -1 if an error occurs.
+  // Returns the total number of timers and I/O <ACE_Event_Handler>s
+  // that were dispatched, 0 if the <max_wait_time> elapsed without
+  // dispatching any handlers, or -1 if an error occurs.
   //
   // The only difference between <alertable_handle_events> and
   // <handle_events> is that in the alertable case, the eventloop will

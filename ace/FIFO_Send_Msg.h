@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -19,6 +18,10 @@
 #define ACE_FIFO_SEND_MSG_H
 
 #include "ace/FIFO_Send.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_FIFO_Send_Msg : public ACE_FIFO_Send
 {

@@ -19,6 +19,10 @@
 
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward declarations.
 class ACE_Object_Manager_Preallocations;
 class ACE_Sig_Adapter;

@@ -21,6 +21,11 @@
 #include "ace/Timer_Hash_T.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_List_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // The following typedef are here for ease of use 
 
 typedef ACE_Timer_Hash_Upcall <ACE_Event_Handler *, 

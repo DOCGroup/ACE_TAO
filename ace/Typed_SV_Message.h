@@ -20,6 +20,10 @@
 
 #include "ace/ACE.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class T>
 class ACE_Typed_SV_Message
 {

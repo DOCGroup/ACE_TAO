@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -17,6 +16,10 @@
 
 #if !defined (ACE_DYNAMIC_SERVICE_H)
 #define ACE_DYNAMIC_SERVICE_H
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class SERVICE>
 class ACE_Dynamic_Service

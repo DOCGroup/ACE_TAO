@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,6 +19,10 @@
 
 #include "ace/SOCK_IO.h"
 #include "ace/Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
 {

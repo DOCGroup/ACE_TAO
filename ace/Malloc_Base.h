@@ -17,6 +17,11 @@
 #if !defined (ACE_MALLOC_BASE_H)
 #define ACE_MALLOC_BASE_H
 
+#include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // The definition of this class is located in Malloc.cpp.
 

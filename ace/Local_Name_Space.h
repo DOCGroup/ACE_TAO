@@ -24,6 +24,10 @@
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_NS_String
 {
   // = TITLE

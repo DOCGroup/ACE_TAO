@@ -21,6 +21,10 @@
 #include "ace/Service_Config.h"
 #include "ace/Pipe.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if (defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)) || (defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0))
 #define EXCEPTIONS
 #define WANT_ORBIX_FDS

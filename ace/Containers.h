@@ -19,6 +19,10 @@
 
 #include "ace/OS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class T> 
 class ACE_Double_Linked_List;
 

@@ -20,6 +20,10 @@
 #include "ace/IPC_SAP.h"
 #include "ace/SPIPE_Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_SPIPE : public ACE_IPC_SAP
 {
   // = TITLE

@@ -25,6 +25,10 @@
 #include "ace/Pipe.h"
 #include "ace/Reactor_Impl.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Add useful typedefs to simplify the following code.
 typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);
 typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);

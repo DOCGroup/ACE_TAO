@@ -22,6 +22,10 @@
 #include "ace/Malloc.h"
 #include "ace/Free_List.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class T>
 class ACE_Cached_Mem_Pool_Node
 {

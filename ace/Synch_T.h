@@ -17,6 +17,10 @@
 #if !defined (ACE_SYNCH_T_H)
 #define ACE_SYNCH_T_H
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Event_Handler.h"
 #include "ace/Synch.h"
 

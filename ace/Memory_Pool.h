@@ -25,6 +25,10 @@
 #include "ace/SV_Semaphore_Complex.h"
 #endif /* !ACE_WIN32 */
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if !defined (ACE_LACKS_SBRK)
 class ACE_Export ACE_Sbrk_Memory_Pool_Options
 {

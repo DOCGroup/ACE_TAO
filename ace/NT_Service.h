@@ -19,6 +19,10 @@
 
 #include "ace/inc_user_config.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0
 
 #include "ace/Service_Object.h"
@@ -129,10 +133,9 @@ protected:
   SERVICE_STATUS         svc_status_;
 };
 
-
-// These macros help to get things set up correctly at compile time and
-// to take most of the grudge work out of creating the proper functions
-// and doing the registrations.
+// These macros help to get things set up correctly at compile time
+// and to take most of the grudge work out of creating the proper
+// functions and doing the registrations.
 //
 // ACE_NT_SERVICE_DEFINE - defines the 'ServiceMain' function which NT will
 //                         call in its own thread when the service control
