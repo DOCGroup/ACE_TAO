@@ -16,6 +16,8 @@ Mon Sep 08 11:49:02 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/run_tests.vxworks: added one-button test for VxWorks.
 	  Check it out, Darrell.
 
+	* ace/Filecache.cpp: commented out unused constants [RW]COPY_FLAGS.
+
 Mon Sep 08 08:26:52 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ACE version 4.3.4, released Mon Sep 08 08:26:52 1997.
