@@ -44,7 +44,7 @@ TAO_Notify_SupplierAdmin_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CosNotifyChannelAdmin::AdminID TAO_Notify_SupplierAdmin_i::MyID (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -70,7 +70,7 @@ TAO_Notify_SupplierAdmin_i::MyChannel (
   }
 
 CosNotifyChannelAdmin::InterFilterGroupOperator TAO_Notify_SupplierAdmin_i::MyOperator (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -81,7 +81,7 @@ CosNotifyChannelAdmin::InterFilterGroupOperator TAO_Notify_SupplierAdmin_i::MyOp
   }
 
 CosNotifyChannelAdmin::ProxyIDSeq * TAO_Notify_SupplierAdmin_i::pull_consumers (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -92,7 +92,7 @@ CosNotifyChannelAdmin::ProxyIDSeq * TAO_Notify_SupplierAdmin_i::pull_consumers (
   }
 
 CosNotifyChannelAdmin::ProxyIDSeq * TAO_Notify_SupplierAdmin_i::push_consumers (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -103,8 +103,8 @@ CosNotifyChannelAdmin::ProxyIDSeq * TAO_Notify_SupplierAdmin_i::push_consumers (
   }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr TAO_Notify_SupplierAdmin_i::get_proxy_consumer (
-    CosNotifyChannelAdmin::ProxyID proxy_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ProxyID /* proxy_id */,
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -116,9 +116,9 @@ CosNotifyChannelAdmin::ProxyConsumer_ptr TAO_Notify_SupplierAdmin_i::get_proxy_c
   }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr TAO_Notify_SupplierAdmin_i::obtain_notification_pull_consumer (
-    CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID_out proxy_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ClientType /* ctype */,
+    CosNotifyChannelAdmin::ProxyID_out /* proxy_id */,
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -194,7 +194,7 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (
 }
 
 void TAO_Notify_SupplierAdmin_i::destroy (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

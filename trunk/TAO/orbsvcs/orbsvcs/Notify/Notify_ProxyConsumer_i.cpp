@@ -17,12 +17,12 @@ TAO_Notify_ProxyConsumer_i::~TAO_Notify_ProxyConsumer_i (void)
 }
 
 void
-TAO_Notify_ProxyConsumer_i::init (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ProxyConsumer_i::init (CORBA::Environment & /* ACE_TRY_ENV */)
 {
 }
 
 CosNotifyChannelAdmin::ProxyType TAO_Notify_ProxyConsumer_i::MyType (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -34,7 +34,7 @@ CosNotifyChannelAdmin::ProxyType TAO_Notify_ProxyConsumer_i::MyType (
   }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_ProxyConsumer_i::MyAdmin (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -46,8 +46,8 @@ CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_ProxyConsumer_i::MyAdmin (
   }
 
 CosNotification::EventTypeSeq * TAO_Notify_ProxyConsumer_i::obtain_subscription_types (
-    CosNotifyChannelAdmin::ObtainInfoMode mode,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ObtainInfoMode /* mode */,
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -59,9 +59,9 @@ CosNotification::EventTypeSeq * TAO_Notify_ProxyConsumer_i::obtain_subscription_
   }
 
 void TAO_Notify_ProxyConsumer_i::validate_event_qos (
-    const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::QoSProperties & /* required_qos */,
+    CosNotification::NamedPropertyRangeSeq_out /* available_qos */,
+    CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

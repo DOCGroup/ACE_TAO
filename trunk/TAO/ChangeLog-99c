@@ -1,3 +1,9 @@
+Wed Dec 29 09:22:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.cpp,
+          Notify_SupplierAdmin_i.cpp: commented out currently
+          unused args to avoid compiler warnings.
+
 Wed Dec 29 07:21:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/fe/lex.yy.cpp,lex.yy.cpp.diff: fixed lex.yy.cpp
