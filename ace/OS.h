@@ -2783,7 +2783,7 @@ typedef unsigned int size_t;
 
 #if !defined (ACE_OSTREAM_TYPE)
 # if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#   define ACE_OSTREAM_TYPE FILE *
+#   define ACE_OSTREAM_TYPE FILE
 # else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 #   define ACE_OSTREAM_TYPE ostream
 # endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
