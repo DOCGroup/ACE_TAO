@@ -61,13 +61,24 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
   if (interface == 0)
     cerr << "Invalid interface";
 
-  // AMI Handler argument.
-  *os << "AMI_"
-      << interface->fullname ()
-      << "_Handler_ptr "
-      << "_tao_ami_handler"
-      << ",\n";
-  // #endif /* TAO_IDL_HAS_AMI */
+  // @@ Michael: This is not very nice, but we do not have 
+  //             a be_interface pointer and therefor no strategy.
+  {
+    char *full_name = 0;
+    
+    interface->compute_full_name ("AMI_", 
+                                  "_Handler",
+                                  full_name);
+    // Genereate scope name.
+    // AMI Handler argument.
+    *os << full_name
+        << "_ptr "
+        << "_tao_ami_handler"
+        << ",\n";
+
+    delete full_name;
+  }
+
 
   // all we do is hand over code generation to our scope
   if (this->visit_scope (node) == -1)

@@ -58,9 +58,9 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   // being declared more than once.
   if (!tdef)
     {
-      *os << "\n#if !defined _TAO_CDR_OP_" 
-          << node->flatname () << "_H_" << be_nl
-          << "#define _TAO_CDR_OP_" << node->flatname () << "_H_\n\n";
+      *os << "\n#if !defined _TAO_CDR_OP_"
+          << node->flat_name () << "_H_" << be_nl
+          << "#define _TAO_CDR_OP_" << node->flat_name () << "_H_\n\n";
     }
 
   *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
@@ -76,8 +76,8 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   if (!tdef)
     {
-      *os << "#endif /* _TAO_CDR_OP_" 
-          << node->flatname () << "_H_ */\n\n";
+      *os << "#endif /* _TAO_CDR_OP_"
+          << node->flat_name () << "_H_ */\n\n";
     }
 
   node->cli_hdr_cdr_op_gen (1);

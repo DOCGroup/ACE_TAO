@@ -169,7 +169,7 @@ be_structure::gen_var_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _var names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_var", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
@@ -452,7 +452,7 @@ be_structure::gen_out_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _out names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_out", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());

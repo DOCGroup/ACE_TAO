@@ -249,7 +249,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // end of instantiation
 
   // generate the ifdefined macro for the sequence type
-  os->gen_ifdef_macro (node->flatname ());
+  os->gen_ifdef_macro (node->flat_name ());
 
   os->indent (); // start with the current indentation level
 
@@ -390,7 +390,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   os->gen_endif (); // endif macro
 
   // generate the ifdefined macro for the var type
-  os->gen_ifdef_macro (node->flatname (), "_var");
+  os->gen_ifdef_macro (node->flat_name (), "_var");
 
   // generate the var and out types
   if (this->gen_var_defn (node) == -1)
@@ -404,7 +404,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   os->gen_endif ();
 
   // generate the ifdefined macro for the _out type
-  os->gen_ifdef_macro (node->flatname (), "_out");
+  os->gen_ifdef_macro (node->flat_name (), "_out");
 
   if (this->gen_out_defn (node) == -1)
     {

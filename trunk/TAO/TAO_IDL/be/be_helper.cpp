@@ -185,13 +185,13 @@ TAO_OutStream::nl (void)
 
 // macro generation
 int
-TAO_OutStream::gen_ifdef_macro (const char *flatname, const char *suffix)
+TAO_OutStream::gen_ifdef_macro (const char *flat_name, const char *suffix)
 {
   static char macro [NAMEBUFSIZE];
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (macro, "_%s_", cg->upcase (flatname));
+  ACE_OS::sprintf (macro, "_%s_", cg->upcase (flat_name));
   if (suffix)
     {
       //ACE_OS::sprintf (macro, "%s_%s_", macro, cg->upcase (suffix));

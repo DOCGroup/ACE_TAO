@@ -62,7 +62,10 @@
 #include "be_visitor_operation/ami_handler_operation_ch.cpp"
 #include "be_visitor_operation/ami_handler_arglist.cpp"
 #include "be_visitor_operation/ami_handler_operation_cs.cpp"
+#include "be_visitor_operation/ami_handler_servant_operation_cs.cpp"
 #include "be_visitor_operation/ami_handler_skeleton_cs.cpp"
 #include "be_visitor_operation/ami_handler_argument_marshal.cpp"
+#include "be_visitor_operation/ami_handler_thru_poa_collocated_ch.cpp"
+#include "be_visitor_operation/ami_handler_thru_poa_collocated_cs.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")

@@ -175,17 +175,17 @@ TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
 
 // Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
-TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_ORB_Core *orb_core)
+TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *transport)
 {
   TAO_Transport_Mux_Strategy *tms = 0;
 
   if (this->transport_mux_strategy_ == TAO_MUXED_TMS)
     ACE_NEW_RETURN (tms,
-                    TAO_Muxed_TMS (orb_core),
+                    TAO_Muxed_TMS (transport),
                     0);
   else
     ACE_NEW_RETURN (tms,
-                    TAO_Exclusive_TMS (orb_core),
+                    TAO_Exclusive_TMS (transport),
                     0);
 
   return tms;
@@ -205,10 +205,19 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
                     TAO_Wait_On_Reactor (transport),
                     0);
   else
-    ACE_NEW_RETURN (ws,
-                    TAO_Wait_On_Leader_Follower (transport),
-                    0);
-
+    {
+      // = Leader follower model.
+      
+      if (this->transport_mux_strategy_ == TAO_EXCLUSIVE_TMS)
+        ACE_NEW_RETURN (ws,
+                        TAO_Exclusive_Wait_On_Leader_Follower (transport),
+                        0);
+      else
+        ACE_NEW_RETURN (ws,
+                        TAO_Muxed_Wait_On_Leader_Follower (transport),
+                        0);
+    }
+      
   return ws;
 }
 

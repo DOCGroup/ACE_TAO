@@ -304,8 +304,9 @@ public:
 
     TAO_AMI_HANDLER_STUB_CS,               // AMI_*_Handler class visitor.
 
-    TAO_AMI_HANDLER_SERVANT_OPERATION_CH,  // Operation in AMI_*_Handler.
-    TAO_AMI_HANDLER_STUB_OPERATION_CH,     // Operation in POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_SERVANT_OPERATION_CS,
+    TAO_AMI_HANDLER_SERVANT_OPERATION_CH,  // Operation in POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_STUB_OPERATION_CH,     // Operation in AMI_*_Handler.
     TAO_AMI_HANDLER_OPERATION_ARGLIST_CH,
     TAO_AMI_HANDLER_OPERATION_ARGLIST_CS,
     TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH,
@@ -314,14 +315,6 @@ public:
     TAO_AMI_HANDLER_OPERATION_RESULT_ARG,
 
     TAO_AMI_HANDLER_TYPECODE_DECL,           // Typecode decl for the AMI_*_Handler.
-
-    TAO_COLLOCATED_AMI_HANDLER_CH,           // Collocated AMI_*_Handler class.
-
-    TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH, // Operation inside the collocated AMI handler.
-
-// @@ Michael    TAO_AMI_HANDLER_ARGUMENT_INVOKE_CS,
-
-// @@ Michael    TAO_AMI_HANDLER_OPERATION_ARG_INVOKE_CS,
 
     TAO_AMI_HANDLER_STUB_OPERATION_CS,
 
@@ -337,7 +330,27 @@ public:
 
     TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS,           // Argument declartion.
 
+    TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CH,
+
+    TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CS,
+
+    TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_CH,
+
+    TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_CS,
+
+    TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_CH,
+
+    TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_CS,
+
+    TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_CH,
+
+    TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_CS,
+
     TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS,             // State derived out of the above
+
+    TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS, // Argument list for the upcall
+
+    TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_CS,   // State derived out of the above
 
     TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS,         // Argument list for the upcall
                                                      // (only out and inout arguments)

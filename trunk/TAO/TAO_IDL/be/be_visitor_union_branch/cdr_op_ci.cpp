@@ -104,18 +104,18 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
         {
           be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+          ACE_OS::sprintf (fname, "_%s", node->full_name ());
         }
     }
   else
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", node->fullname ());
+      ACE_OS::sprintf (fname, "%s", node->full_name ());
     }
 
   // check what is the code generations substate. Are we generating code for

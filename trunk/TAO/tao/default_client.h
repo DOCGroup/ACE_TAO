@@ -50,7 +50,7 @@ public:
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
   ACE_Lock* create_profile_lock (void);
-  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_ORB_Core *orb_core);
+  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual ACE_Lock *create_cached_connector_lock (void);
 

@@ -59,7 +59,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
     {
       be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
       be_decl* parent = scope->decl ();
-      *os << parent->fullname ()
+      *os << parent->full_name ()
           << "::_" << node->local_name ()
           << "_forany &);" << be_nl;
     }
@@ -73,7 +73,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
     {
       be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
       be_decl* parent = scope->decl ();
-      *os << parent->fullname ()
+      *os << parent->full_name ()
           << "::_" << node->local_name ()
           << "_forany &);" << be_nl;
     }

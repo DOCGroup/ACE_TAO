@@ -70,7 +70,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   *os << "{}\n\n";
 
   // generate the ifdefined macro for  the _var type
-  os->gen_ifdef_macro (node->flatname (), "_var");
+  os->gen_ifdef_macro (node->flat_name (), "_var");
   if (node->gen_var_impl () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,7 +81,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   os->gen_endif ();
 
   // generate the ifdefined macro for  the _out type
-  os->gen_ifdef_macro (node->flatname (), "_out");
+  os->gen_ifdef_macro (node->flat_name (), "_out");
   if (node->gen_out_impl () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -105,6 +105,9 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   if (idl_global->ami_call_back () == I_TRUE)
     {
+       be_interface_type_strategy *old_strategy =  
+         node->set_strategy (new be_interface_ami_handler_strategy (node));
+
       // Set the context.
       be_visitor_context ctx (*this->ctx_);
 
@@ -133,6 +136,8 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
                             -1);
         }
       delete visitor;
+
+      delete node->set_strategy (old_strategy);
     }
 
   return 0;

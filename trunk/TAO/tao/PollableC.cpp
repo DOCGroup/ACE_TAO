@@ -34,7 +34,7 @@ ACE_RCSID(tao, PollableC, "$Id$")
 
 CORBA_Pollable_ptr CORBA_Pollable::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
@@ -196,7 +196,7 @@ const char* CORBA_Pollable::_interface_repository_id (void) const
 
 CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
@@ -256,7 +256,7 @@ const char* CORBA::DIIPollable::_interface_repository_id (void) const
 
 CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
