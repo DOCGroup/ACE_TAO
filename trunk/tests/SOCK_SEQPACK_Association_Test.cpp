@@ -88,7 +88,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
 
   // Output char buffer
   const size_t outbuf_size = 1024;
-  char outbuf[outbuf_size];
+  ACE_TCHAR outbuf[outbuf_size];
 
   // Get local addresses of the association
   if (assoc.get_local_addrs(in_out, in_out_size)) {

@@ -36,6 +36,7 @@ vacbld -SEV=E Mem_Map_Test.icc
 vacbld -SEV=E Message_Block_Test.icc
 vacbld -SEV=E Message_Queue_Notifications_Test.icc
 vacbld -SEV=E Message_Queue_Test.icc
+vacbld -SEV=E Multihomed_INET_Addr_Test.icc
 vacbld -SEV=E Naming_Test.icc
 vacbld -SEV=E Notify_Performance_Test.icc
 vacbld -SEV=E Object_Manager_Test.icc

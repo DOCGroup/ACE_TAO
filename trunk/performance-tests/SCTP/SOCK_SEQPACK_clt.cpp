@@ -15,9 +15,11 @@ extern "C" {
 #include <netinet/sctp.h>
 };
 #else
+#ifndef IPPROTO_SCTP
 #define IPPROTO_SCTP 132
+#endif // !IPPROTO_SCTP
 #define SCTP_NODELAY 1
-#endif
+#endif // ACE_HAS_SCTP
 
 // class that manages setting of options
 #include "Options_Manager.h"
