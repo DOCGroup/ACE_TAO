@@ -63,11 +63,57 @@ TAO_Reactor_Per_Priority::reactor (void)
 ACE_Reactor *
 TAO_Reactor_Per_Priority::reactor (TAO_Acceptor *acceptor)
 {
-  CORBA::Short priority =
+  //
+  // Here is the explanation for going from CORBA priority to Native
+  // and back again:
+  //
+  // Suppose the user specifies 20,000 as the (CORBA) priority for a
+  // endpoint.  20,000 will be mapped to the native priority (say 10)
+  // when the thread is created.  When the thread goes to access it's
+  // reactor, the native priority will be converted to the CORBA
+  // priority (say 19,000) which is used to look up the reactor.
+  // There is a loss of precision in this conversion.
+  //
+  // We use the same two step normalization here.  Otherwise, we'll
+  // get a reactor which is different than the one used by the
+  // endpoint thread(s).
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  CORBA::Short user_specified_corba_priority =
     acceptor->priority ();
 
+  CORBA::Object_var obj =
+    this->orb_core ()->priority_mapping_manager ();
+
+  TAO_Priority_Mapping_Manager_var mapping_manager =
+    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  TAO_Priority_Mapping *priority_mapping =
+    mapping_manager.in ()->mapping ();
+
+  CORBA::Short native_priority;
+
+  int result =
+    priority_mapping->to_native (user_specified_corba_priority,
+                                 native_priority);
+
+  if (result == 0)
+    return 0;
+
+  CORBA::Short normalized_corba_priority;
+
+  result =
+    priority_mapping->to_CORBA (native_priority,
+                                normalized_corba_priority);
+
+  if (result == 0)
+    return 0;
+
   TAO_Leader_Follower *leader_follower =
-    this->leader_follower_i (priority);
+    this->leader_follower_i (normalized_corba_priority);
 
   return leader_follower->reactor ();
 }
