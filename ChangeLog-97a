@@ -1,5 +1,8 @@
 Wed Jul 02 10:55:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* tests/test_config.h: dynamically allocate "ace_file_stream" because
+	  it doesn't get initialized on VxWorks 5.3.1 (Tornado 1.0.1)/pc486.
+
 	* tests/SPIPE_Test.cpp,UPIPE_SAP_Test.cpp: tweaked the static
 	  functions a bit to avoid warnings about unused statics on VxWorks.
 
