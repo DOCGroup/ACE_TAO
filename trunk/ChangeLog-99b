@@ -1,3 +1,9 @@
+Fri Apr 16 18:09:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Conn_Test.cpp (server): If we timeout on accept(), it is
+	  not an error, and should not be reported as one. Thanks to
+	  Thomas Mehrkam <Thomas_Mehrkam@i-o.com> for pointing this out.
+
 Fri Apr 16 13:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},ACE.{h,cpp}: (read_n,send_n,write_n): moved

@@ -458,10 +458,20 @@ server (void *arg)
       if (result == -1)
         {
           svc_handler->close ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%P|%t) %p\n"),
-                             ASYS_TEXT ("accept failed, shutting down")),
-                            0);
+
+          if (errno == ETIMEDOUT)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("accept timed out\n")));
+              return 0;
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("(%P|%t) %p\n"),
+                                 ASYS_TEXT ("accept failed, shutting down")),
+                                0);
+            }
         }
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) client %s connected from %d\n"),
