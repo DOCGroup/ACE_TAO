@@ -274,7 +274,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
+                  ASYS_TEXT ("(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n")));
     }
 
   ACE_TRY_NEW_ENV

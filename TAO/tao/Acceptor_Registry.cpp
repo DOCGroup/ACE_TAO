@@ -118,8 +118,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Invalid endpoint specification: "
-                        "<%s>.\n",
+                        ASYS_TEXT ("(%P|%t) Invalid endpoint specification: ")
+                        ASYS_TEXT ("<%s>.\n"),
                         iop.c_str ()));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
@@ -228,8 +228,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
                           if (TAO_debug_level > 0)
                             ACE_ERROR ((LM_ERROR,
-                                        "TAO (%P|%t) unable to open acceptor "
-                                        "for <%s>%p\n",
+                                        ASYS_TEXT ("TAO (%P|%t) unable to open acceptor ")
+                                        ASYS_TEXT ("for <%s>%p\n"),
                                         iop.c_str (),""));
 
                           ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
@@ -242,8 +242,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
                           if (TAO_debug_level > 0)
                             ACE_ERROR ((LM_ERROR,
-                                        "TAO (%P|%t) unable to add <%s> "
-                                        "to acceptor registry.\n",
+                                        ASYS_TEXT ("TAO (%P|%t) unable to add <%s> ")
+                                        ASYS_TEXT ("to acceptor registry.\n"),
                                         address.c_str ()));
 
                           ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
@@ -253,8 +253,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                     {
                       if (TAO_debug_level > 0)
                         ACE_ERROR ((LM_ERROR,
-                                    "TAO (%P|%t) unable to create "
-                                    "an acceptor for <%s>.\n",
+                                    ASYS_TEXT ("TAO (%P|%t) unable to create ")
+                                    ASYS_TEXT ("an acceptor for <%s>.\n"),
                                     iop.c_str ()));
 
                       ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
@@ -268,8 +268,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       if (found == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) no usable transport protocol "
-                      "was found.\n"));
+                      ASYS_TEXT ("TAO (%P|%t) no usable transport protocol ")
+                      ASYS_TEXT ("was found.\n")));
           ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
         }
     }
@@ -324,8 +324,8 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) unable to create "
-                    "an acceptor for <%s>\n",
+                    ASYS_TEXT ("TAO (%P|%t) unable to create ")
+                    ASYS_TEXT ("an acceptor for <%s>\n"),
                     (*factory)->protocol_name ().c_str ()));
 
       return -1;
@@ -338,8 +338,8 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) unable to open "
-                    "default acceptor for <%s>%p\n",
+                    ASYS_TEXT ("TAO (%P|%t) unable to open ")
+                    ASYS_TEXT ("default acceptor for <%s>%p\n"),
                     (*factory)->protocol_name ().c_str (), ""));
 
       return -1;
@@ -351,8 +351,8 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                           "TAO (%P|%t) unable to add <%s> default_acceptor "
-                           "to acceptor registry.\n",
+                           ASYS_TEXT ("TAO (%P|%t) unable to add <%s> default_acceptor ")
+                           ASYS_TEXT ("to acceptor registry.\n"),
                            (*factory)->protocol_name ().c_str ()));
 
       return -1;
