@@ -1,86 +1,84 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
-   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
    <TITLE>Event Service Status</TITLE>
-<!-- $Id$ -->
+    <!-- $Id$ -->
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF">
 
 <H3>TAO's Real-time Event Service</H3>
-Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
-<H4>
-Last Updated: $Date$</H4>
+    Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
+    <H4>Last Updated: $Date$</H4>
 
-<H3>
-New on this release</H3>
+<H3>New on this release</H3>
 
-<UL>
-  <LI><P>Added fragmentation and reassembly support for the multicast
-    gateways</P>
-  </LI>
-</UL>
+    <UL>
+      <LI><P>It has been available for several releases now, but not
+	  well documented. A complete re-implementation of the EC is
+	  available, this implementation provides:
+	</P>
+      </LI>
+      <LI><P>The new EC allows the suppliers and consumers to update
+	  their publications and subscriptions, they can simply call
+	  the corresponding <CODE>connect</CODE> operation.
+	  The default EC configuration disallows this, but it is very
+	  easy to change it.
+	</P>
+      </LI>
+      <LI><P>The new EC uses an asbtract factory to build its
+	  strategies, this factory can be dynamically loaded using the
+	  service configurator.
+	</P>
+      </LI>
+      <LI><P>The new EC can use trivial filters for both consumers and 
+	  suppliers, resulting in optimal performance for broadcasters.
+	</P>
+      </LI>
+      <LI><P>Most of the locks on the new EC are strategized.
+	</P>
+      </LI>
+      <LI><P>The duration of all locks in the EC can be bounded,
+	  resulting in very predictable behavior.
+	</P>
+      </LI>
+      <LI><P>More details can be found on the <CODE>README</CODE> file
+	  in the <CODE>$TAO_ROOT/orbsvcs/orbsvcs/Event</CODE>
+	  directory.
+	</P>
+      </LI>
+    </UL>
 
-<H3>
-Known issues:</H3>
+<H3>Known issues:</H3>
 
-<DL>
-<DT>
-<I>The schedule cannot be downloaded</I></DT>
+    <DL>
+      <DT><I>The new EC does not use the scheduling service</I>
+      </DT>
+      <DD>
+	<P>The new implementation has been designed to simplify its use
+	  in applications that do not require an scheduling service and
+	  to minimize the code footprint when the scheduling service is
+	  only required for dispatching
+	</P>
+	<P>To achieve this goals the EC will able to run without any
+	  scheduling service or only consulting the schedule, but not
+	  updating the dependencies.
+	</P>
+	<P>Using strategies and factories we will be able to
+	  configure the EC to update the schedule only in the
+	  configurations that required.
+	  Unfortunately this features have not been implemented yet.
+	</P>
+      </DD>
 
-<DD>
-The Scheduling Service seems to compute proper schedules, but it is not
-possible to download them, apparently there is a marshalling problem for
-sequences of complex structures.</DD>
+      <DT><I>Further details:</I></DT>
 
-<P>Due to this problem we have been unable to test the run-time scheduler
-and performance it is impossible to complete performance measurements and
-optimizations: the (global) scheduling service latency and overhead is
-at least as large as the EC itself.
-<P><B>Note:</B> This does not seem to be the case anymore, but the comment
-will remain here until I can confirm that the problem dissapeared.
-<DT>
+      <DD><P>Many lower level issues and tasks can be found in the
+	  <A HREF="TODO.html">TODO list</A>.
+	  </P>
+      </DD>
+    </DL>
 
-<P><I>Run-time scheduler requires re-link</I></DT>
-
-<DD>
-During a normal execution of the system there is no need to use the a global
-Real-time Scheduling Service, a faster, collocated implementation for the
-service is available. Obviously the scheduling information is precomputed
-in some config run.</DD>
-
-<P>Unfortunately the current scheme requires a relink of all the involved
-applications against the generated tables for the run-time scheduling service.
-<P>We should be able to download the schedule to the interested parties,
-without need for a separate link phase. This will simplify and speed up
-the developing cycle, but requires a (small and fixed) amount of dynamic
-memory allocation. It could be interesting to "save" the schedule computation
-in some persistent form, so startup cost are lower too.
-<P>The current design contemplates a config run were a global consumer
-accumulates the QoS requirements of all the objects, next an external utility
-is used to force a computation and save of the schedule. In future executions
-the global scheduler pre-loads this schedule and the clients simply download
-the precomputed schedule, and all scheduling queries are to a local scheduling
-service, without any further contact to the global instance.
-<DT>
-<P><I>Users have no control over service collocations</I></DT>
-
-<P>The user should have complete control of services collocation, using
-ACE Service Configurator; currently the services must be explicitly instantiated
-by the user.
-<DT>
-
-<DT>
-<P><I>Further details:</I></DT>
-
-<P>Many lower level issues and tasks can be found in the <A HREF="TODO.html">TODO
-list</A>.
-
-</DL>
-
-<H3>
-Examples</H3>
+<H3>Examples</H3>
 
 
 For general documentation on the Event Service please read <A HREF="http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz">The
@@ -118,6 +116,10 @@ this test can be found in the scripts located in <TT>$TAO_ROOT/orbsvcs/tests/EC_
 Features in previous releases</H3>
 
 <UL>
+
+  <LI><P>Added fragmentation and reassembly support for the multicast
+    gateways</P>
+  </LI>
 
 <LI><P>Continued work on the multicast support for the EC, we added a new
 server that maps the event types (and supplier ids) into the right mcast
