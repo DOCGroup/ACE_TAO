@@ -68,7 +68,7 @@ ACE_Locked_Free_List<T, LOCK>::alloc (size_t n)
       ACE_NEW (temp, T);
       temp->set_next (this->free_list_);
       this->free_list_ = temp;
-      this->size_++
+      this->size_++;
     }
 }
 
