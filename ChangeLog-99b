@@ -1,44 +1,51 @@
+Mon Oct 04 10:33:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.lst: disabled Signal_Test, using DISABLED
+          instead of DISABLE, so it's really disabled :-)  Thanks to
+          Carlos for disagnosing why it was still being run by
+          run_tests.pl. [Bug 309]
+
 Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/INET_Addr.cpp (set):  Added ACE_UNUSED_ARG
-	  so the compiler won't complain about the protocol paraemter in
- 	  parts of the code where it's not used.
+        * ace/INET_Addr.cpp (set):  Added ACE_UNUSED_ARG
+          so the compiler won't complain about the protocol paraemter in
+          parts of the code where it's not used.
 
-	* tests/MM_Shared_Memory_Test.cpp (spawn): Added ACE_UNUSED_ARG
-	  so the compiler won't complain about process_synchronizer in
- 	  parts of the code where it's not used.
+        * tests/MM_Shared_Memory_Test.cpp (spawn): Added ACE_UNUSED_ARG
+          so the compiler won't complain about process_synchronizer in
+          parts of the code where it's not used.
 
 Sun Oct  3 12:47:35 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Process_Mutex_Test.cpp (main): Renamed the confusing "server" stuff
-	  to "parent" where appropriate.
+        * tests/Process_Mutex_Test.cpp (main): Renamed the confusing "server" stuff
+          to "parent" where appropriate.
 
-	* tests/MM_Shared_Memory_Test.cpp: Don't call ACE_OS::exit()
-	  in the child since this won't clean up the Object_Manager
- 	  correctly.  Thanks to David Levine for reporting this.  However,
- 	  we'll still have two "end" statements, but only one begin
- 	  statement, which is confusing.  I'm not sure how to solve this,
- 	  but it won't break anything.
-  
-	* tests/MM_Shared_Memory_Test.cpp: Oops, only do the
-	  acquire()/release() of the Process_Semaphore if we have fork()!
+        * tests/MM_Shared_Memory_Test.cpp: Don't call ACE_OS::exit()
+          in the child since this won't clean up the Object_Manager
+          correctly.  Thanks to David Levine for reporting this.  However,
+          we'll still have two "end" statements, but only one begin
+          statement, which is confusing.  I'm not sure how to solve this,
+          but it won't break anything.
 
-	* tests/MM_Shared_Memory_Test.cpp: Added an ACE_Process_Semaphore
-	  so we no longer need to sleep in order to wait for the server to
- 	  be initialized.
+        * tests/MM_Shared_Memory_Test.cpp: Oops, only do the
+          acquire()/release() of the Process_Semaphore if we have fork()!
 
-	* tests/Process_Strategy_Test.cpp (main): Switched the processes
-	  in which the client and server are run so that the server is now
- 	  run in the parent and the client is run in the child.  This made
- 	  it possible to remove the ACE_OS::sleep(1) call because the
- 	  acceptor is created before the fork, so the client should always
- 	  be able to connect to the server, even if the server isn't
- 	  scheduled to run again before the client.  
+        * tests/MM_Shared_Memory_Test.cpp: Added an ACE_Process_Semaphore
+          so we no longer need to sleep in order to wait for the server to
+          be initialized.
 
-	* tests/Process_Mutex_Test.cpp,
-  	* tests/SV_Shared_Memory_Test.cpp:
-	  Fixed some improper style problems with these tests.
-  
+        * tests/Process_Strategy_Test.cpp (main): Switched the processes
+          in which the client and server are run so that the server is now
+          run in the parent and the client is run in the child.  This made
+          it possible to remove the ACE_OS::sleep(1) call because the
+          acceptor is created before the fork, so the client should always
+          be able to connect to the server, even if the server isn't
+          scheduled to run again before the client.
+
+        * tests/Process_Mutex_Test.cpp,
+        * tests/SV_Shared_Memory_Test.cpp:
+          Fixed some improper style problems with these tests.
+
 Sun Oct 03 10:34:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/SV_Shared_Memory_Test.cpp (main): only delete
