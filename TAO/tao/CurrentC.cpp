@@ -32,19 +32,15 @@ CORBA_Current_ptr CORBA_Current::_narrow (
     return CORBA_Current::_nil ();
   if (!obj->_is_a ("IDL:CORBA/Current:1.0", env))
     return CORBA_Current::_nil ();
+  STUB_Object *stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
          || !obj->_servant()
          || obj->_servant()->_downcast ("IDL:CORBA/Current:1.0") == 0
       )
   {
-    STUB_Object *stub = obj->_stubobj ();
-    stub->_incr_refcnt ();
-    CORBA_Current_ptr new_obj = new CORBA_Current(stub);
-    return new_obj;
-  } // end of if
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-  if (env.exception () != 0)
-    return CORBA_Current::_nil ();
+    return new CORBA_Current(stub);
+  }
   void* servant = obj->_servant ()->_downcast ("IDL:CORBA/Current:1.0");
   return new POA_CORBA::_tao_collocated_Current(
       ACE_reinterpret_cast(POA_CORBA::Current_ptr, servant),
