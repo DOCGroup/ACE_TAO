@@ -17,8 +17,8 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_POA_Timeprobe_Description[] = 
-{ 
+static const char *TAO_POA_Timeprobe_Description[] =
+{
   "POA::locate_poa_i - start",
   "POA::locate_poa_i - end",
 
@@ -38,7 +38,7 @@ static const char *TAO_POA_Timeprobe_Description[] =
   "Servant::_dispatch - end",
 };
 
-enum 
+enum
 {
   TAO_POA_LOCATE_POA_I_START = 200,
   TAO_POA_LOCATE_POA_I_END,
@@ -62,8 +62,8 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description, 
-                                  TAO_POA_LOCATE_POA_I_START);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description,
+                                  TAO_POA_LOCATE_POA_I_START)
 
 // This is the maximum space require to convert the ulong into a
 // string.
@@ -131,7 +131,7 @@ TAO_Thread_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_Thread_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -201,7 +201,7 @@ TAO_Lifespan_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_Lifespan_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -271,7 +271,7 @@ TAO_Id_Uniqueness_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -341,7 +341,7 @@ TAO_Id_Assignment_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -411,7 +411,7 @@ TAO_Implicit_Activation_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_Implicit_Activation_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -481,7 +481,7 @@ TAO_Servant_Retention_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_Servant_Retention_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -551,7 +551,7 @@ TAO_Request_Processing_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_Request_Processing_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -627,7 +627,7 @@ TAO_POA_Locking_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
-CORBA::PolicyType 
+CORBA::PolicyType
 TAO_POA_Locking_Policy::policy_type (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -1903,14 +1903,14 @@ TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
 {
   // First, deactivate the object
   this->deactivate_object_i (oid, env);
-  
-  // If failure 
+
+  // If failure
   if (env.exception () != 0)
     return;
 
   // If success, create a forwarding servant
   TAO_Forwarding_Servant *forwarding_servant
-    = new TAO_Forwarding_Servant (forward_to, 
+    = new TAO_Forwarding_Servant (forward_to,
                                   forward_to->_interface_repository_id ());
 
   // Register the forwarding servant with the same object Id
@@ -2096,7 +2096,7 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
 
       {
         ACE_FUNCTION_TIMEPROBE (TAO_POA_FIND_SERVANT_START);
-        
+
         if (poa_impl->active_object_map ().find (id, servant) != -1)
           // Success
           return servant;
@@ -2287,7 +2287,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   // Setup for upcall
   poa->pre_invoke (key,
                    id,
-		   servant,
+                   servant,
                    &current_context,
                    env);
 
@@ -2314,7 +2314,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
 void
 TAO_POA::pre_invoke (const TAO_ObjectKey &key,
                      const PortableServer::ObjectId &id,
-		     PortableServer::Servant servant,
+                     PortableServer::Servant servant,
                      TAO_POA_Current *poa_current,
                      CORBA::Environment &env)
 {
@@ -3021,7 +3021,7 @@ TAO_POA_Manager::TAO_POA_Manager (void)
     lock_ (0),
     poa_collection_ ()
 {
-  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_poa_mgr_lock ();  
+  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_poa_mgr_lock ();
 }
 
 TAO_POA_Manager::~TAO_POA_Manager (void)

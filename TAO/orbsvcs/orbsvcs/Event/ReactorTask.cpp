@@ -8,13 +8,13 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Reactor_Task_Timeprobe_Description[] = 
-{ 
+static const char *TAO_Reactor_Task_Timeprobe_Description[] =
+{
   "Reactor_Task - waiting for events",
   "Reactor_Task - events handled"
 };
 
-enum 
+enum
 {
   TAO_REACTOR_TASK_WAITING_FOR_EVENTS = 5300,
   TAO_REACTOR_TASK_EVENTS_HANDLED
@@ -23,8 +23,8 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Reactor_Task_Timeprobe_Description, 
-                                  TAO_REACTOR_TASK_WAITING_FOR_EVENTS);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Reactor_Task_Timeprobe_Description,
+                                  TAO_REACTOR_TASK_WAITING_FOR_EVENTS)
 
 
 ACE_ES_Reactor_Task::ACE_ES_Reactor_Task() :
