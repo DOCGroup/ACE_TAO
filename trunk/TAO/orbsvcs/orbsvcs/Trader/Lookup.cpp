@@ -27,9 +27,6 @@
 #include "Offer_Iterator_Collection.h"
 
 template <class TRADER>
-const char* TAO_Lookup<TRADER>::NAME = "Trader: Lookup";
-
-template <class TRADER>
 TAO_Lookup<TRADER>::TAO_Lookup (TRADER &trader)
   : trader_ (trader),
     TAO_Trader_Components<POA_CosTrading::Lookup> (trader.trading_components ()),
@@ -753,6 +750,5 @@ TAO_Lookup<TRADER>
     }
   TAO_ENDTRY;
 }
-
 
 #endif /* TAO_LOOKUP_C */
