@@ -323,7 +323,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   dep.length (headers.current_size () + 1);
 
   dep[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
-  dep[0].event.header.source = 0;
+  dep[0].event.header.source = headers.current_size ();
   dep[0].event.header.creation_time = ORBSVCS_Time::zero ();
   dep[0].rt_info = 0;
 

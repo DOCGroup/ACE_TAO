@@ -44,6 +44,14 @@ if ($T->TimedWait (60) == -1) {
   $T->Kill (); $T->TimedWait (1);
 }
 
+print STDERR "\n\nGateway test\n";
+$T = Process::Create ($prefix . "Gateway".$EXE_EXT,
+                      " -ORBsvcconf observer.conf");
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
 
 print STDERR "\n\nComplex event channel test,",
   "multiple ECs connected through gateways\n";
