@@ -86,4 +86,3 @@ ACE_Service_Object::resume (void)
   ACE_TRACE ("ACE_Service_Object::resume");
   return 0;
 }
-
