@@ -989,11 +989,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // being done at this level.
   this->orb_->_use_omg_ior_format (use_ior);
 
-  // @@ Michael: I don't know if this is the best spot,
-  //    we might have to discuss that.
-  //this->leader_follower_lock_ptr_ =  this->client_factory ()
-  //                                       ->create_leader_follower_lock ();
-
   // Set all kinds of orb parameters whose setting needed to be
   // deferred until after the service config entries had been
   // determined.
