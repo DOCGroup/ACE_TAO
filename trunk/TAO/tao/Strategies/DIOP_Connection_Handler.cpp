@@ -115,10 +115,14 @@ TAO_DIOP_Connection_Handler::open (void*)
 {
   this->udp_socket_.open (this->local_addr_);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Opened connector on %s:%d\n",
-              this->local_addr_.get_host_name (),
-              this->local_addr_.get_port_number ()));
+  if(TAO_debug_level > 5)
+  {
+     ACE_DEBUG ((LM_DEBUG,
+                 ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open -")
+		 ACE_TEXT("listening on: <%s:%u>\n"),
+                 this->local_addr_.get_host_name (),
+                 this->local_addr_.get_port_number ()));
+  }
 
   // Set the id in the transport now that we're active.
   this->transport ()->id ((int) this->get_handle ());
