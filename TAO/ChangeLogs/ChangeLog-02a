@@ -1,3 +1,13 @@
+Wed Mar 22 21:02:07 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Acceptor.cpp (hostname):
+
+	  Fall back on IP address if hostname lookup fails.  This gets
+	  around a system configuration problem on hosts that don't have
+	  the host tables or DNS setup properly.  Thanks to J. Russell
+	  Noseworthy <j.russell.noseworthy@objectsciences.com> for
+	  motivating this feature.  [Bug 503]
+
 Wed Mar 22 16:24:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
