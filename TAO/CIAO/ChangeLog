@@ -1,3 +1,8 @@
+Wed Aug 13 13:25:14 2003  Diego Sevilla  <dsevilla@ditec.um.es>
+
+	* CIDLC/cidlc.mpc: Reordered static library list to suit
+	  dependencies.
+
 Wed Aug 13 12:20:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tools/XML_Helpers/Cascadable_DocHandler.cpp:
@@ -29,11 +34,11 @@ Wed Aug 13 10:42:12 2003  George Edwards <g.edwards@vanderbilt.edu>
           Added /**/ to pre.h and post.h includes.
 
 Tue Aug 12 21:56:42 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
-  
+
         * tools/XML_Helper/Assembly_Spec.h:
-          Fixed compilation error from a missing 
-          #include "ace/Null_Mutex.h". 
-  
+          Fixed compilation error from a missing
+          #include "ace/Null_Mutex.h".
+
 2003-08-12  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CIAO.mwc: Removed CCF MPC files as they still don't work the way
