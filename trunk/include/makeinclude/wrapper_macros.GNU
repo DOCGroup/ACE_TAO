@@ -74,6 +74,7 @@
 #                   variable can also be set to specify the version info
 #                   to append to the name - it should have a leading '.' -
 #                   else it defaults to .ACE_MAJOR.ACE_MINOR.ACE_BETA.
+#  wfmo             Build with wfmo support (Win32 only)
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -901,6 +902,11 @@ endif
 # If not explicitly is set that we don't have rwho, assume we have it.
 ifndef rwho
   rwho = 1
+endif
+
+# If not explicitly is set that we have wfmo, assume we don't have it.
+ifndef wfmo
+  wfmo = 0
 endif
 
 #----------------------------------------------------------------------------
