@@ -69,6 +69,7 @@
 #include "tao/ObjectIdListC.h"
 
 #include "tao/Objref_VarOut_T.h"
+#include "tao/Value_VarOut_T.h"
 #include "tao/Seq_VarOut_T.h"
 
 #include "tao/Remote_Object_Proxy_Impl.h"

@@ -71,8 +71,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  AST_Decl *parent = ScopeAsDecl (bt->defined_in ());
-
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -80,70 +78,58 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   switch (node->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
-      if (node->unbounded ())
-        {
-          *os << "typedef" << be_idt_nl
-              << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
-              << bt->name () << "," << be_nl
-              << bt->name () << "_var," << be_nl;
-          
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
+      {
+        be_interface *elem = be_interface::narrow_from_decl (bt);
 
-          *os << "tao_" << bt->local_name () << "_life," << be_nl;
-          
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
+        if (node->unbounded ())
+          {
+            *os << "typedef" << be_idt_nl
+                << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life," << be_nl
+                << elem->fwd_helper_name () << "_cast" << be_uidt_nl
+                << "> " << node->local_name () << ";" << be_uidt << be_uidt;
+          }
+        else
+          {
+            *os << "typedef" << be_idt_nl
+                << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life," << be_nl
+                << elem->fwd_helper_name () << "_cast," << be_nl
+                << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+                << "> " << node->local_name () << ";" << be_uidt << be_uidt;
+          }
 
-          *os << "tao_" << bt->local_name () << "_cast" << be_uidt_nl
-              << "> " << node->local_name () << ";" << be_uidt << be_uidt;
-        }
-      else
-        {
-        }
+        // Generate the _var and _out types only if we are not anonymous.
+        if (this->ctx_->tdef () != 0)
+          {
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+                << node->local_name () << "," << be_nl
+                << "TAO_Object_Manager<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl
+                << "> " << node->local_name () << "_var;" << be_uidt << be_uidt;
 
-      // Generate the _var and _out types only if we are not anonymous.
-      if (this->ctx_->tdef () != 0)
-        {
-          *os << be_nl << be_nl
-              << "typedef" << be_idt_nl
-              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << "TAO_Object_Manager<" << be_idt << be_idt_nl
-              << bt->name () << "," << be_nl
-              << bt->name () << "_var," << be_nl;
-          
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "tao_" << bt->local_name () << "_life" << be_uidt_nl
-              << ">" << be_uidt << be_uidt_nl
-              << "> " << node->local_name () << "_var;" << be_uidt << be_uidt;
-
-          *os << be_nl << be_nl
-              << "typedef" << be_idt_nl
-              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_var," << be_nl
-              << "TAO_Object_Manager<" << be_idt << be_idt_nl
-              << bt->name () << "," << be_nl
-              << bt->name () << "_var," << be_nl;
-          
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "tao_" << bt->local_name () << "_life" << be_uidt_nl
-              << ">" << be_uidt << be_uidt_nl
-              << "> " << node->local_name () << "_out;" << be_uidt << be_uidt;
-        }
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+                << node->local_name () << "," << be_nl
+                << node->local_name () << "_var," << be_nl
+                << "TAO_Object_Manager<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl
+                << "> " << node->local_name () << "_out;" << be_uidt << be_uidt;
+          }
+      }
 
       break;
     case be_sequence::MNG_ABSTRACT:

@@ -60,20 +60,6 @@ public:
   idl_bool opt_accessor (void);
   // Should generate optimized form?
 
-  virtual int gen_var_defn (char *local_name = 0);
-  // Generate the _var class definition.
-
-  virtual int gen_var_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the implementation for the _var class.
-
-  virtual int gen_out_defn (char *local_name = 0);
-  // Generate the _out class definition.
-
-  virtual int gen_out_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the _out implementation.
-
   virtual int gen_helper_header (char *local_name = 0,
                                  char *full_name = 0);
   // Generate the helper functions definition.
@@ -85,6 +71,10 @@ public:
   virtual int gen_helper_stubs (char *local_name = 0,
                                 char *full_name = 0);
   // Generate the helper functions implementation.
+
+  void gen_var_out_seq_decls (void);
+  // Generate the declarations used by the template _var, _out
+  // classes for valuetypes, and by sequence template classes.
 
   const char *full_obv_skel_name (void);
   // Retrieve the fully scoped skel class name.
@@ -154,11 +144,24 @@ public:
   // Helper method to generate *_skel operations for the concrete
   // interface that we support (if any) and those of its base classes.
 
+  int var_out_seq_decls_gen (void) const;
+  void var_out_seq_decls_gen (int val);
+  // Accessors for the members.
+
+  const char *fwd_helper_name (void) const;
+  // Accessor to the member.
+
 private:
   char *full_obv_skel_name_;
 
   idl_bool supports_abstract_;
   // Do we support at least one abstract interface?
+
+  int var_out_seq_decls_gen_;
+  // Have these been done already?
+
+  ACE_CString fwd_helper_name_;
+  // Calculate this in one place.
 };
 
 #endif  // if !defined

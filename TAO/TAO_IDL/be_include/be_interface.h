@@ -333,9 +333,10 @@ public:
 
   int var_out_seq_decls_gen (void) const;
   void var_out_seq_decls_gen (int val);
-  int var_out_seq_defns_gen (void) const;
-  void var_out_seq_defns_gen (int val);
   // Accessors for the members.
+
+  const char *fwd_helper_name (void) const;
+  // Accessor to the member.
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
@@ -391,8 +392,10 @@ private:
   // Do we have both abstract and concrete parents?
 
   int var_out_seq_decls_gen_;
-  int var_out_seq_defns_gen_;
   // Have these been done already?
+
+  ACE_CString fwd_helper_name_;
+  // Calculate this in one place.
 };
 
 /**

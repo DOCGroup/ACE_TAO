@@ -1001,10 +1001,26 @@ TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::freebuf (T* *buffer)
 }
 
 template<typename T, 
-          typename T_var, 
-          typename T_life, 
-          typename T_cast, 
-          size_t MAX>
+         typename T_var, 
+         typename T_life, 
+         typename T_cast, 
+         size_t MAX> 
+void
+TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  typedef TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX> THIS_SEQ_TYPE;
+  THIS_SEQ_TYPE *tmp = ACE_static_cast (THIS_SEQ_TYPE *,
+                                        _tao_void_pointer);
+  delete tmp;
+}
+
+template<typename T, 
+         typename T_var, 
+         typename T_life, 
+         typename T_cast, 
+         size_t MAX>
 void
 TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_allocate_buffer (
     CORBA::ULong length

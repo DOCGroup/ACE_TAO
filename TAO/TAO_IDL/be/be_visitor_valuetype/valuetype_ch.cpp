@@ -45,58 +45,17 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
+  if (node->var_out_seq_decls_gen () == 0)
+    {
+      node->gen_var_out_seq_decls ();
+      node->var_out_seq_decls_gen (1);
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   int status = 0;
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // == STEP 1: Generate the class name and class names we inherit ==
-
-  // Forward declaration.
-  *os << "class " << node->local_name () << ";";
-
-  os->gen_ifdef_macro (node->flat_name (), "_ptr");
-
-  *os << be_nl << be_nl << "typedef " << node->local_name ()
-      << " *" << node->local_name () << "_ptr;";
-
-  os->gen_endif ();
-
-  // Generate the ifdefined macro for the _var type.
-  os->gen_ifdef_macro (node->flat_name (), "_var");
-
-  // Generate the _var declaration.
-  if (node->gen_var_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "codegen for _var failed\n"),
-                        -1);
-    }
-
-  os->gen_endif ();
-
-    // Generate the ifdef macro for the _out class.
-  os->gen_ifdef_macro (node->flat_name (), 
-                       "_out");
-
-  // Generate the _out declaration.
-  if (node->gen_out_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "codegen for _out failed\n"), 
-                        -1);
-    }
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-
-  // Generate the endif macro.
-  os->gen_endif ();
 
   // Now the valuetype definition itself.
   os->gen_ifdef_macro (node->flat_name ());
