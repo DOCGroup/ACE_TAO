@@ -848,7 +848,7 @@ namespace TAO
       };
 
     Enum<char const *,
-         Enumerator<char const *> const *, 
+         Enumerator<char const *> const *,
          TAO::Null_RefCount_Policy>
       tc_CompletionStatus ("IDL:omg.org/CORBA/CompletionStatus:1.0",
                            "CompletionStatus",
