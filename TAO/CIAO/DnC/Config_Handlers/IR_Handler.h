@@ -39,6 +39,14 @@ namespace CIAO
 {
   namespace Config_Handler
   {
+    class ResourceUsageKind_Handler {
+    public:
+
+      /// Process elements of type ResourceUsageKind definitions in
+      /// the description files.
+      static void process_ResourceUsageKind (DOMNodeIterator *iter,
+					     ::Deployment::ResourceUsageKind &ruq);
+    };
 
     class Req_Handler
     {
