@@ -23,6 +23,7 @@ Sun Apr  6 15:04:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  Also modified Param Test file to use the copying version.
 
         * tests/DynAny_Test/Makefile:
+	* tests/DynAny_Test/Makefile.bor:
 	* tests/DynAny_Test/basic_test.dsp:
 
 	  Removed generated skeleton files from project and makefile.
