@@ -1,3 +1,9 @@
+Sun Apr 26 10:19:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  The print_priority_info() routine is platform specific, but I
+	  did not protect it with the right #ifdef/#endif block.
+
 Sun Apr 26 01:09:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.16 released.
