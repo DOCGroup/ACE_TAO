@@ -20,6 +20,7 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "Direct_Priority_Mapping.h"
 #include "RT_ORB.h"
 #include "RT_Current.h"
+#include "RT_Thread_Lane_Resources_Manager.h"
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -42,26 +43,29 @@ TAO_RT_ORBInitializer::pre_init (
 {
   TAO_ENV_ARG_DEFN;
 
+  //
   // Register all of the RT related services.
+  //
+
+  // Set the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
+  TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Protocols_Hooks);
+
+  // Set the name of the stub factory to be the RT_Stub_Factory.
+  TAO_ORB_Core::set_stub_factory ("RT_Stub_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Stub_Factory);
+
+  // Set the name of the stub factory to be the RT_Stub_Factory.
+  TAO_ORB_Core::set_endpoint_selector_factory ("RT_Endpoint_Selector_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_RT_Endpoint_Selector_Factory);
+
+  // Set the name of the thread lane resources manager to be the RT_Thread_Lane_Resources_Manager.
+  TAO_ORB_Core::set_thread_lane_resources_manager_factory ("RT_Thread_Lane_Resources_Manager_Factory");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Thread_Lane_Resources_Manager_Factory);
 
   // If the application resolves the root POA, make sure we load the RT POA.
   TAO_ORB_Core::set_poa_factory (rt_poa_factory_name,
                                  rt_poa_factory_directive);
-
-//  @@ RTCORBA Subsetting: service gets automatically loaded now by using a static initializer.
-//  ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_ORB_Loader);
-
-  // Set the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
-  TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
-
-  // Set the name of the stub factory to be the RT_Stub_Factory.
-  TAO_ORB_Core::set_stub_factory ("RT_Stub_Factory");
-
-  // Set the name of the stub factory to be the RT_Stub_Factory.
-  TAO_ORB_Core::set_endpoint_selector_factory ("RT_Endpoint_Selector_Factory");
 
   // Sets the client_protocol policy.
   TAO_RT_Protocols_Hooks::set_client_protocols_hook
@@ -70,7 +74,6 @@ TAO_RT_ORBInitializer::pre_init (
   // Sets the server_protocol policy.
   TAO_RT_Protocols_Hooks::set_server_protocols_hook
     (TAO_ServerProtocolPolicy::hook);
-
 
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm;
@@ -137,7 +140,7 @@ TAO_RT_ORBInitializer::pre_init (
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
   CORBA::Object_var safe_rt_orb = rt_orb;
-  
+
   info->register_initial_reference (TAO_OBJID_RTORB,
                                     rt_orb,
                                     ACE_TRY_ENV);
@@ -209,4 +212,3 @@ TAO_RT_ORBInitializer::register_policy_factories (
                                  ACE_TRY_ENV);
   ACE_CHECK;
 }
-

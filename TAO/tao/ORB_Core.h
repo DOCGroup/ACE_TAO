@@ -48,7 +48,6 @@
 // Forward declarations
 class TAO_Acceptor;
 class TAO_Connector;
-class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
 
 class TAO_Resource_Factory;
@@ -57,7 +56,6 @@ class TAO_Server_Strategy_Factory;
 class TAO_Transport_Cache_Manager;
 
 class TAO_TSS_Resources;
-class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_LF_Strategy;
 class TAO_RT_ORB;
@@ -74,9 +72,12 @@ class TAO_BiDir_Adapter;
 
 class TAO_Flushing_Strategy;
 
+class TAO_Thread_Lane_Resources_Manager;
+class TAO_Thread_Lane_Resources;
 class TAO_Stub_Factory;
 class TAO_Endpoint_Selector_Factory;
 class TAO_Service_Context;
+
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -139,11 +140,6 @@ public:
   ACE_Allocator *input_cdr_msgblock_allocator_;
   //@}
 
-  /// This is is just a place holder, in the future the transport
-  /// cache will be separated from the connectors and it will be a
-  /// (potentially) TSS object.
-  TAO_Transport_Cache_Manager *transport_cache_;
-
   /// Counter for how (nested) calls this thread has made to run the
   /// event loop.
   int event_loop_thread_;
@@ -152,12 +148,8 @@ public:
   /// leader.
   int client_leader_thread_;
 
-  /// The Reactor Holder that we should callback when destroying the
-  /// cookie.
-  TAO_Reactor_Registry *reactor_registry_;
-
-  /// A TSS magic cookie used by the Reactor_Registry
-  void *reactor_registry_cookie_;
+  /// Lane for this thread.
+  void *lane_;
 
   /// Generic container for thread-specific objects.
   ACE_Array_Base<void *> ts_objects_;
@@ -241,9 +233,6 @@ public:
   ///Get the connector registry
   TAO_Connector_Registry *connector_registry (void);
 
-  ///Get the acceptor registry
-  TAO_Acceptor_Registry  *acceptor_registry  (void);
-
   ///Get the IOR parser registry
   TAO_Parser_Registry *parser_registry (void);
 
@@ -259,7 +248,6 @@ public:
 
   /// Wrappers that forward the request to the concurrency strategy.
   ACE_Reactor *reactor (void);
-  ACE_Reactor *reactor (TAO_Acceptor *acceptor);
 
   /// Get the ACE_Thread_Manager
   ACE_Thread_Manager *thr_mgr (void);
@@ -397,12 +385,19 @@ public:
   /// Returns pointer to the Protocol_Hooks.
   TAO_Protocols_Hooks *protocols_hooks (void);
 
+  /// Returns a pointer to the Thread Lane Resources Manager.
+  TAO_Thread_Lane_Resources_Manager &thread_lane_resources_manager (void);
+
   /// Returns a pointer to the Stub factory.
   TAO_Stub_Factory *stub_factory (void);
 
   /// Returns a pointer to the endpoint selector factory.
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory (void);
+
   //@}
+
+  /// Sets the value of TAO_ORB_Core::thread_lane_resources_manager_factory_name_
+  static void set_thread_lane_resources_manager_factory (const char *thread_lane_resources_manager_factory_name);
 
   /// Sets the value of TAO_ORB_Core::stub_factory_name_
   static void set_stub_factory (const char *stub_factory_name);
@@ -643,6 +638,9 @@ public:
   /// Get access to the leader follower strategy.
   TAO_LF_Strategy &lf_strategy (void);
 
+  /// Get access to the thread lane resources.
+  TAO_Thread_Lane_Resources &lane_resources (void);
+
   /// Run the event loop.
   int run (ACE_Time_Value *tv,
            int perform_work,
@@ -668,10 +666,9 @@ public:
 
   /// Makes sure that the ORB is open and then creates a TAO_Stub
   /// based on the endpoint.
-  TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
+  TAO_Stub *create_stub_object (TAO_MProfile &mprofile,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
-                                TAO_Acceptor_Filter *filter,
                                 CORBA::Environment &ACE_TRY_ENV);
 
   /// Factory method that create the "right" Stub depending on
@@ -680,7 +677,6 @@ public:
   /// on the fact that RTCORBA is being used or not.
   TAO_Stub *create_stub (const char *repository_id,
                          const TAO_MProfile &profiles,
-                         TAO_ORB_Core *orb_core,
                          CORBA::Environment &ACE_TRY_ENV);
 
 
@@ -860,14 +856,6 @@ public:
   TAO_IORInterceptor_List::TYPE & ior_interceptors (void);
   //@}
 
-  /// Set up the ORB Core's acceptor to listen on the
-  /// previously-specified port for requests.  Returns -1 on failure,
-  /// otherwise 0.
-  int open (CORBA::Environment &ACE_TRY_ENV);
-
-  /// Return the underlying transport cache
-  TAO_Transport_Cache_Manager *transport_cache (void);
-
   /// Call the bidir_giop library to parse the policy.
   int parse_bidir_policy (CORBA::Policy_ptr policy,
                           CORBA::Environment &ACE_TRY_ENV);
@@ -972,9 +960,7 @@ protected:
   /// themselves with.
   TAO_Connector_Registry *connector_registry_;
 
-  /// The registry which maintains a list of acceptor factories for
-  /// each loaded protocol.
-  TAO_Acceptor_Registry *acceptor_registry_;
+  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager_;
 
   TAO_Stub_Factory *stub_factory_;
 
@@ -1050,6 +1036,14 @@ protected:
   // TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
   // called to set the value to be "RT_Endpoint_Selector_Factory".
   static const char *endpoint_selector_factory_name_;
+
+  // Name of the thread lane resources manager that needs to be
+  // instantiated.  The default value is
+  // "Default_Thread_Lane_Resources_Manager_Factory". If TAO_RTCORBA
+  // is linked, the set_thread_lane_resources_manager will be called
+  // to set the value to be
+  // "RT_Thread_Lane_Resources_Manager_Factory".
+  static const char *thread_lane_resources_manager_factory_name_;
 
   // Name of the stub factory that needs to be instantiated.
   // The default value is "Default_Stub_Factory". If TAO_RTCORBA is
@@ -1195,13 +1189,6 @@ protected:
   /// then they are stored here...
   TAO_ORB_Core_TSS_Resources orb_resources_;
 
-  /// The server concurrency strategy.
-  TAO_Reactor_Registry *reactor_registry_;
-
-  /// The reactor used for pure-clients, otherwise it comes from the
-  /// reactor_registry.
-  ACE_Reactor *reactor_;
-
   /// Flag which denotes that the ORB has been shutdown.
   int has_shutdown_;
 
@@ -1210,13 +1197,6 @@ protected:
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
   //@}
-
-
-  /// Mutual exclusion for calling open.
-  TAO_SYNCH_MUTEX open_lock_;
-
-  /// Flag which denotes that the open method was called.
-  int open_called_;
 
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
 
@@ -1250,9 +1230,6 @@ protected:
 
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;
-
-  /// TAO's connection cache
-  TAO_Transport_Cache_Manager* transport_cache_;
 
   /// BiDirectional GIOP factory
   TAO_BiDir_Adapter *bidir_adapter_;

@@ -267,19 +267,11 @@ SOURCE=.\Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connector_Impl.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector_Registry.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\CONV_FRAMEC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMES.cpp
 # End Source File
 # Begin Source File
 
@@ -328,6 +320,10 @@ SOURCE=.\default_server.cpp
 # Begin Source File
 
 SOURCE=.\Default_Stub_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
@@ -384,14 +380,6 @@ SOURCE=.\FILE_Parser.cpp
 # Begin Source File
 
 SOURCE=.\Flushing_Strategy.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
@@ -527,6 +515,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Event.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event_Binder.cpp
 # End Source File
 # Begin Source File
@@ -535,11 +527,23 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Follower_Auto_Adder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower_Auto_Ptr.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.cpp
 # End Source File
 # Begin Source File
 
@@ -715,10 +719,6 @@ SOURCE=.\Reactive_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Remote_Object_Proxy_Broker.cpp
 # End Source File
 # Begin Source File
@@ -764,10 +764,6 @@ SOURCE=.\Services.cpp
 # Begin Source File
 
 SOURCE=.\Services_Activate.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.cpp
 # End Source File
 # Begin Source File
 
@@ -827,11 +823,15 @@ SOURCE=.\target_specification.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TimeBaseC.cpp
+SOURCE=.\Thread_Lane_Resources.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TimeBaseS.cpp
+SOURCE=.\Thread_Lane_Resources_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
 
@@ -1015,23 +1015,11 @@ SOURCE=.\Connection_Purging_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connector_Impl.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\CONV_FRAMEC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMES.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMES_T.h
 # End Source File
 # Begin Source File
 
@@ -1084,6 +1072,10 @@ SOURCE=.\default_server.h
 # Begin Source File
 
 SOURCE=.\Default_Stub_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
@@ -1147,22 +1139,6 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -1215,10 +1191,6 @@ SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOPS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IFR_Client_Adapter.h
 # End Source File
 # Begin Source File
@@ -1267,6 +1239,10 @@ SOURCE=.\Incoming_Message_Queue.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Incoming_Message_Queue.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
@@ -1280,14 +1256,6 @@ SOURCE=.\Invocation_Endpoint_Selectors.h
 # Begin Source File
 
 SOURCE=.\IOPC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPS_T.h
 # End Source File
 # Begin Source File
 
@@ -1315,6 +1283,14 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Event.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event_Binder.h
 # End Source File
 # Begin Source File
@@ -1331,6 +1307,14 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Follower_Auto_Adder.h
 # End Source File
 # Begin Source File
@@ -1339,11 +1323,27 @@ SOURCE=.\LF_Follower_Auto_Adder.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower_Auto_Ptr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Strategy.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\LF_Strategy.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 
@@ -1380,10 +1380,6 @@ SOURCE=.\Messaging_PolicyFactory.h
 # Begin Source File
 
 SOURCE=.\MessagingC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.h
 # End Source File
 # Begin Source File
 
@@ -1440,10 +1436,6 @@ SOURCE=.\orb.h
 # Begin Source File
 
 SOURCE=.\orb_core.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ORB_Strategies_T.h
 # End Source File
 # Begin Source File
 
@@ -1507,14 +1499,6 @@ SOURCE=.\PollableC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PollableS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\PollableS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableInterceptor.h
 # End Source File
 # Begin Source File
@@ -1551,10 +1535,6 @@ SOURCE=.\Reactive_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Remote_Object_Proxy_Broker.h
 # End Source File
 # Begin Source File
@@ -1579,11 +1559,11 @@ SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\sequence.h
+SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Sequence_T.h
+SOURCE=.\sequence.h
 # End Source File
 # Begin Source File
 
@@ -1604,10 +1584,6 @@ SOURCE=.\Services.h
 # Begin Source File
 
 SOURCE=.\Services_Activate.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
 
@@ -1659,10 +1635,6 @@ SOURCE=.\TAO_Server_Request.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TAO_Singleton.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\TAO_Singleton_Manager.h
 # End Source File
 # Begin Source File
@@ -1671,27 +1643,19 @@ SOURCE=.\TAOC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TAOS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Lane_Resources.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources_Manager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TimeBaseS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TimeBaseS_T.h
 # End Source File
 # Begin Source File
 
@@ -1839,14 +1803,6 @@ SOURCE=.\CONV_FRAMEC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\CONV_FRAMES.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CONV_FRAMES_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CORBA_String.inl
 # End Source File
 # Begin Source File
@@ -1880,6 +1836,10 @@ SOURCE=.\default_resource.i
 # Begin Source File
 
 SOURCE=.\default_server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Thread_Lane_Resources_Manager.i
 # End Source File
 # Begin Source File
 
@@ -1955,7 +1915,7 @@ SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_State.inl
+SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
@@ -1968,14 +1928,6 @@ SOURCE=.\GIOP_Utils.i
 # Begin Source File
 
 SOURCE=.\GIOPC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPS_T.i
 # End Source File
 # Begin Source File
 
@@ -2007,10 +1959,6 @@ SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
@@ -2027,43 +1975,11 @@ SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOPS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOPS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOR_Parser.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 
@@ -2088,10 +2004,6 @@ SOURCE=.\Messaging_Policy_i.i
 # Begin Source File
 
 SOURCE=.\MessagingC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.i
 # End Source File
 # Begin Source File
 
@@ -2132,10 +2044,6 @@ SOURCE=.\ORB.i
 # Begin Source File
 
 SOURCE=.\orb_core.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ORB_Strategies_T.i
 # End Source File
 # Begin Source File
 
@@ -2183,14 +2091,6 @@ SOURCE=.\PollableC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PollableS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PollableS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableInterceptor.i
 # End Source File
 # Begin Source File
@@ -2207,23 +2107,11 @@ SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Resume_Handle.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\sequence.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sequence_T.i
 # End Source File
 # Begin Source File
 
@@ -2236,10 +2124,6 @@ SOURCE=.\Service_Context.inl
 # Begin Source File
 
 SOURCE=.\Services.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.i
 # End Source File
 # Begin Source File
 
@@ -2271,10 +2155,6 @@ SOURCE=.\TAO_Server_Request.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\TAO_Singleton.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\TAO_Singleton_Manager.inl
 # End Source File
 # Begin Source File
@@ -2283,27 +2163,19 @@ SOURCE=.\TAOC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\TAOS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\target_specification.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Lane_Resources.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources_Manager.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\TimeBaseS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\TimeBaseS_T.i
 # End Source File
 # Begin Source File
 
@@ -2336,14 +2208,6 @@ SOURCE=.\ValueFactory_Map.i
 # Begin Source File
 
 SOURCE=.\tao.rc
-# End Source File
-# End Group
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\TAO_Singleton.cpp
 # End Source File
 # End Group
 # End Target

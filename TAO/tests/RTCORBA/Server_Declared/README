@@ -8,17 +8,7 @@ Scenario:
 The server creates a POA with RTCORBA::SERVER_DECLARED priority model
 policy.  Two objects are created using this POA, one inherits the POA
 priority and the second one overrides POA priority with its own.
-Server threadpool resources are configured appropriately.  (Once POA
-threadpools are completely supported, this means associating a
-two-lane threadpool with the POA, one lane corresponding to POA
-priority, and another to object priority.  However, currently, while
-RTCORBA POA threadpools are not in place yet, this means emulating POA
-threadpool with TAO's Reactor-per-priority scheme, i.e., ORB-level
-pool with lane for each endpoint priority.)  Finally, the server
-attempts to create a third object, using invalid/not matching the
-resources priority, i.e., priority not matching any of the pool
-lanes.  This attempt should fail, and the server expects to receive
-the appropriate exception.
+Server threadpool resources are configured appropriately.  
 
 The client obtains two object references and invokes a method on each
 several times.  On each invocation, the client passes object's server
@@ -28,103 +18,4 @@ requests.  In particular, servant checks that priority of the thread
 used for servicing the request equals to the server declared priority
 of the object, known from the operation argument.
 
-
-To run (on Unix):
--------
-$./server [-p <ior_output_file1> -o <ior_output_file2> -c <wrong_priority>] 
-           -a <poa_priority> -b <object_priority>
-           -ORBsvcconf server.conf 
-           -ORBendpoint xxxx://targethost:0/priority=<poa_priority>
-           -ORBendpoint xxxx://targethost:0/priority=<object_priority>
-           [more endpoints if desired]
-
-$./client [-p <ior1> -o <ior2>]
-
-
-Options:
---------
-         Server:
-
--p <ior_output_file1>   Default: test1.ior
-                        Filename for output of the first object's IOR
-                        (i.e., object that does not override POA
-                        priority). 
-
--o <ior_output_file2>   Default: test2.ior
-                        Filename for output of the second object's IOR
-                        (i.e., object that overrides POA priority). 
-
--a <poa_priority>       Default: -1, must be overridden
-                        SERVER_DECLARED priority of the poa.
-
--b <object_priority>    Default: -1, must be overridden
-                        SERVER_DECLARED priority of the second object.
-
--c <wrong_priority>     Default: -1 
-                        Invalid/not matching the configuration
-                        priority value, used in an attempt to activate
-                        a third object.  The test checks that such
-                        attempt fails and an appropriate exception is
-                        thrown. 
-
-The following are the required server ORB options for this test.
-These options help set up server resources to emulate a two-lane POA
-threadpool, one lane with <poa_priority>, and one lane
-with <object_priority>.  Once POA threadpools are implemented, these
-options will go away.           
--ORBSvcConf server.conf 
--ORBendpoint xxxx://targethost:0/priority=<poa_priority>
--ORBendpoint xxxx://targethost:0/priority=<object_priority>
-
-         Client:
-
--p <ior1>               Default: file://test1.ior
-                        IOR for the first object (with POA's
-                        priority). 
-
--o <ior2>               Default: file://test2.ior
-                        IOR for the second object.
-
-
-Expected output:
-----------------
-Below is the expected output from run_test.pl on a Windows
-platform. See run_test.pl for command-line options used for client and
-server.  NOTE: expected output differs on unix.
-
-In general, the output must contain "BAD_PARAM exception is caught as
-expected.", and server declared priorities must equal corresponding
-servant thread priorities.
-
-
-********** RTCORBA SERVER_DECLARED Priority Unit Test
-
-
-Activated object one as <IOR:010000000d00000049444c3a546573743a312e3000000000010
-0000000000000b2000000010102cd0a0000006c6f63616c686f7374004b052300000014010f004e5
-354790af039d4650c000100000001000000000000000100000001000000cd0400000000000000080
-0000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000024
-f41541a00000001cdcdcd010000000a0000006c6f63616c686f7374004b050300cdcd020000001a0
-0000001cdcdcd01000000020041540a00000001cdcdcd010000000300>
-
-
-Activated object two as <IOR:010000000d00000049444c3a546573743a312e3000000000010
-0000000000000b2000000010102cd0a0000006c6f63616c686f7374004e052300000014010f004e5
-354790af039d4650c000100000001000000010000000100000002000000cd0400000000000000080
-0000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000024
-f41541a00000001cdcdcd010000000a0000006c6f63616c686f7374004e050500cdcd020000001a0
-0000001cdcdcd01000000020041540a00000001cdcdcd010000000500>
-
-BAD_PARAM exception is caught as expected.
-Server_Declared priority: 3  Servant thread priority: 3
-Server_Declared priority: 5  Servant thread priority: 5
-Server_Declared priority: 3  Servant thread priority: 3
-Server_Declared priority: 5  Servant thread priority: 5
-Server_Declared priority: 3  Servant thread priority: 3
-Server_Declared priority: 5  Servant thread priority: 5
-Server_Declared priority: 3  Servant thread priority: 3
-Server_Declared priority: 5  Servant thread priority: 5
-Server_Declared priority: 3  Servant thread priority: 3
-Server_Declared priority: 5  Servant thread priority: 5
-Server ORB event loop finished
-
+See run_test.pl for instructions on how to run both this test.

@@ -37,10 +37,6 @@ protected:
 
   virtual void register_hooks_impl (TAO_Object_Adapter &object_adapter,
                                     CORBA::Environment &ACE_TRY_ENV);
-
-  void init_rt_default_policies (TAO_POA_Policy_Set &policies,
-                                 TAO_ORB_Core &orb_core,
-                                 CORBA::Environment &ACE_TRY_ENV);
 };
 
 #include "ace/post.h"

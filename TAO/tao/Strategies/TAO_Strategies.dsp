@@ -142,10 +142,6 @@ SOURCE=.\NULL_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Per_Priority.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\SHMIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -258,10 +254,6 @@ SOURCE=.\LF_Strategy_Null.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Per_Priority.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\SHMIOP_Acceptor.h
 # End Source File
 # Begin Source File
@@ -291,10 +283,6 @@ SOURCE=.\SHMIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\SHMIOP_Transport.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
 
@@ -374,10 +362,6 @@ SOURCE=.\DIOP_Transport.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Per_Priority.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\SHMIOP_Acceptor.i
 # End Source File
 # Begin Source File
@@ -399,10 +383,6 @@ SOURCE=.\SHMIOP_Profile.i
 # Begin Source File
 
 SOURCE=.\SHMIOP_Transport.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.i
 # End Source File
 # Begin Source File
 

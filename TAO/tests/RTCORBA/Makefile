@@ -20,6 +20,7 @@ DIRS  = Banded_Connections \
 	Thread_Pool \
 	MT_Client_Protocol_Priority \
         RTMutex \
+	Policy_Combinations \
 	ORB_init
 
 ifndef TAO_ROOT

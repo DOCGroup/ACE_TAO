@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "CORBALOC_Parser.h"
 #include "ORB_Core.h"
 #include "Stub.h"
@@ -307,7 +306,6 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
   // Create a TAO_Stub.
   TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) 0,
                                                   mprofile,
-                                                  orb->orb_core (),
                                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

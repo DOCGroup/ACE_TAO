@@ -123,6 +123,54 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Mutexes Server"=.\RTMutex\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ORB_init"=.\ORB_init\ORB_init.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Policy_Combinations Client"=.\Policy_Combinations\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Policy_Combinations Server"=.\Policy_Combinations\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Private_Connection Client"=.\Private_Connection\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -208,18 +256,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Thread_Pool Server"=.\Thread_Pool\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RTMutex Server"=.\RTMutex\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

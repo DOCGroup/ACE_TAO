@@ -49,12 +49,7 @@ $server_conf = PerlACE::LocalFile ("server.conf");
 
 $server_args =
     "-o $iorfile -ORBdebuglevel 1 -ORBsvcconf $server_conf "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority1 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority2 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority3 "
-    ."-ORBendpoint shmiop://0/priority=$priority1 "
-    ."-ORBendpoint shmiop://0/priority=$priority2 "
-    ."-ORBendpoint shmiop://0/priority=$priority3 ";
+    ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
 
 $client_args =
     "-o file://$iorfile  "

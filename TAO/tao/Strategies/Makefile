@@ -8019,8 +8019,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB_Core.i \
  advanced_resource.i UIOP_Factory.h SHMIOP_Factory.h DIOP_Factory.h \
  Reactor_Per_Priority.h \
- $(TAO_ROOT)/tao/Reactor_Registry.h \
- $(TAO_ROOT)/tao/Reactor_Registry.i \
  Reactor_Per_Priority.i LFU_Connection_Purging_Strategy.h \
  $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
  $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl \
@@ -8029,8 +8027,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LF_Strategy.h \
  $(TAO_ROOT)/tao/LF_Strategy.inl \
  LF_Strategy_Null.inl \
- $(TAO_ROOT)/tao/Single_Reactor.h \
- $(TAO_ROOT)/tao/Single_Reactor.i \
  $(TAO_ROOT)/tao/LRU_Connection_Purging_Strategy.h \
  $(TAO_ROOT)/tao/LF_Strategy_Complete.h \
  $(TAO_ROOT)/tao/LF_Strategy_Complete.inl \
@@ -8097,7 +8093,6 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Reactor_Per_Priority.o .obj/Reactor_Per_Priority.so .shobj/Reactor_Per_Priority.o .shobj/Reactor_Per_Priority.so: Reactor_Per_Priority.cpp \
  Reactor_Per_Priority.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/tao/Reactor_Registry.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8193,7 +8188,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/Reactor_Registry.i \
  strategies_export.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \

@@ -136,9 +136,11 @@ public:
   //@}
 
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
-  /// default RTCORBA policies: ServerProtocolPolicy and
-  /// ClientProtocolPolicy.
+  /// default RTCORBA policies: ClientProtocolPolicy.
   virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV);
+
+  int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
+                                          CORBA::Environment &ACE_TRY_ENV);
 
 protected:
   TAO_ORB_Core *orb_core_;

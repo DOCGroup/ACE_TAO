@@ -14,6 +14,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
@@ -378,11 +380,15 @@ TAO_POA::create_POA_i (const char *adapter_name,
   // default POA policies.
   TAO_POA_Policy_Set tao_policies (this->object_adapter ().default_poa_policies ());
 
+  // Merge policies from the ORB level.
+  this->object_adapter ().validator ().merge_policies (tao_policies.policies (),
+                                                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
   // Merge in any policies that the user may have specified.
   tao_policies.merge_policies (policies,
                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-
 
   // If any of the policy objects specified are not valid for the ORB
   // implementation, if conflicting policy objects are specified, or
@@ -1109,9 +1115,9 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // active in this POA (there is a servant bound to it in the Active
   // Object Map), the ObjectAlreadyActive exception is raised.
   int priorities_match = 1;
-  if (is_user_id_in_map (id,
-                         priority,
-                         priorities_match))
+  if (this->is_user_id_in_map (id,
+                               priority,
+                               priorities_match))
     {
       ACE_THROW (PortableServer::POA::ObjectAlreadyActive ());
     }
@@ -1706,7 +1712,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                             TAO_INVALID_PRIORITY,
+                                                                             this->cached_policies_.server_priority (),
                                                                              user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1869,7 +1875,8 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // reference. The real requirement here is that a reference is
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
-  CORBA::Short priority = TAO_INVALID_PRIORITY;
+  CORBA::Short priority =
+    this->cached_policies_.server_priority ();
   PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
                                                                 priority,
                                                                 ACE_TRY_ENV);
@@ -3236,14 +3243,84 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (0);
 
   TAO_Default_Acceptor_Filter filter;
-  TAO_Stub *data = this->orb_core_.create_stub_object (key,
-                                                       type_id,
-                                                       client_exposed_policies._retn (),
-                                                       &filter,
-                                                       ACE_TRY_ENV);
+  TAO_Stub *data =
+    this->create_stub_object (key,
+                              type_id,
+                              client_exposed_policies._retn (),
+                              &filter,
+                              this->orb_core_.lane_resources ().acceptor_registry (),
+                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   return data;
+}
+
+TAO_Stub *
+TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
+                             const char *type_id,
+                             CORBA::PolicyList *policy_list,
+                             TAO_Acceptor_Filter *filter,
+                             TAO_Acceptor_Registry &acceptor_registry,
+                             CORBA::Environment &ACE_TRY_ENV)
+{
+  int error = 0;
+
+  // Count the number of endpoints.
+  size_t profile_count =
+    acceptor_registry.endpoint_count ();
+
+   // Create a profile container and have acceptor registries populate
+   // it with profiles as appropriate.
+  TAO_MProfile mprofile (0);
+
+  // Allocate space for storing the profiles.  There can never be more
+  // profiles than there are endpoints.  In some cases, there can be
+  // less profiles than endpoints.
+  int result =
+    mprofile.set (profile_count);
+  if (result == -1)
+    error = 1;
+
+  if (!error)
+    {
+      result =
+        filter->fill_profile (object_key,
+                              mprofile,
+                              acceptor_registry.begin (),
+                              acceptor_registry.end ());
+      if (result == -1)
+        error = 1;
+    }
+
+  if (!error)
+    result = filter->encode_endpoints (mprofile);
+  if (result == -1)
+    error = 1;
+
+  if (error)
+    ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_MPROFILE_CREATION_ERROR,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      0);
+
+  // Make sure we have at least one profile.  <mp> may end up being
+  // empty if none of the acceptor endpoints have the right priority
+  // for this object, for example.
+  if (mprofile.profile_count () == 0)
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_MPROFILE_CREATION_ERROR,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      0);
+
+  return
+    this->orb_core_.create_stub_object (mprofile,
+                                        type_id,
+                                        policy_list,
+                                        ACE_TRY_ENV);
 }
 
 CORBA::PolicyList *
@@ -3296,7 +3373,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   // Activate the servant in the root poa.
   PortableServer::ObjectId_var id =
     root_poa->activate_object_i (this->server_object_,
-                                 TAO_INVALID_PRIORITY,
+                                 this->cached_policies_.server_priority (),
                                  ACE_TRY_ENV);
   ACE_CHECK;
 

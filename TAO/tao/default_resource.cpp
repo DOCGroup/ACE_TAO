@@ -8,7 +8,6 @@
 
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
-#include "tao/Single_Reactor.h"
 
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
@@ -663,7 +662,7 @@ TAO_Default_Resource_Factory::get_protocol_factories (void)
   return &protocol_factories_;
 }
 
-TAO_Acceptor_Registry*
+TAO_Acceptor_Registry *
 TAO_Default_Resource_Factory::get_acceptor_registry (void)
 {
   TAO_Acceptor_Registry *ar = 0;
@@ -675,7 +674,7 @@ TAO_Default_Resource_Factory::get_acceptor_registry (void)
   return ar;
 }
 
-TAO_Connector_Registry*
+TAO_Connector_Registry *
 TAO_Default_Resource_Factory::get_connector_registry (void)
 {
   TAO_Connector_Registry *cr = 0;
@@ -685,17 +684,6 @@ TAO_Default_Resource_Factory::get_connector_registry (void)
                  0);
 
   return cr;
-}
-
-TAO_Reactor_Registry *
-TAO_Default_Resource_Factory::get_reactor_registry (void)
-{
-  TAO_Reactor_Registry *reactor_registry = 0;
-
-  ACE_NEW_RETURN (reactor_registry,
-                  TAO_Single_Reactor,
-                  0);
-  return reactor_registry;
 }
 
 ACE_Reactor_Impl*

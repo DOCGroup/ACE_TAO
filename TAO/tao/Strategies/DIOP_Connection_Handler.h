@@ -29,7 +29,6 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "DIOP_Transport.h"
-//#include "tao/DIOPC.h"
 #include "ace/SOCK_Dgram.h"
 #include "strategies_export.h"
 
@@ -69,8 +68,9 @@ public:
  */
 
 
-class TAO_Strategies_Export TAO_DIOP_Connection_Handler : public TAO_DIOP_SVC_HANDLER,
-                                               public TAO_Connection_Handler
+class TAO_Strategies_Export TAO_DIOP_Connection_Handler :
+  public TAO_DIOP_SVC_HANDLER,
+  public TAO_Connection_Handler
 {
 
 public:

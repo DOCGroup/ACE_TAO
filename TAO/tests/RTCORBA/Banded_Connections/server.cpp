@@ -4,22 +4,18 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Pool_Per_Endpoint.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
-
-#include "tao/Strategies/advanced_resource.h"
+#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
-  // = TITLE
-  //   An implementation for the Test interface in test.idl
-  //
 public:
   Test_i (CORBA::ORB_ptr orb,
-          RTCORBA::PriorityBands &bands);
-  // ctor
+          RTCORBA::PriorityBands &bands,
+          CORBA::Environment &ACE_TRY_ENV);
 
-  void test_method (CORBA::Short priority,
+  void test_method (CORBA::Boolean client_propagated,
+                    CORBA::Short priority,
                     CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -28,77 +24,104 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  // The ORB
   RTCORBA::PriorityBands &bands_;
-  // Priority bands.
+  RTCORBA::Current_var rt_current_;
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb,
-                RTCORBA::PriorityBands & bands)
+                RTCORBA::PriorityBands &bands,
+                CORBA::Environment &ACE_TRY_ENV)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
-     bands_ (bands)
+     bands_ (bands),
+     rt_current_ ()
 {
+  // We resolve and store the RT Current for later use.
+  CORBA::Object_var obj =
+    this->orb_->resolve_initial_references ("RTCurrent",
+                                            ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->rt_current_ =
+    RTCORBA::Current::_narrow (obj.in (),
+                               ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
-Test_i::test_method (CORBA::Short priority,
-                     CORBA::Environment& ACE_TRY_ENV)
+Test_i::test_method (CORBA::Boolean client_propagated,
+                     CORBA::Short client_priority,
+                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Use RTCurrent to find out the CORBA priority of the current
-  // thread.
-
-  CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("RTCurrent", ACE_TRY_ENV);
+  // Get the upcall thread's priority.
+  CORBA::Short server_priority =
+    this->rt_current_->the_priority (ACE_TRY_ENV);
   ACE_CHECK;
 
-  RTCORBA::Current_var current =
-    RTCORBA::Current::_narrow (obj.in (), ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (CORBA::is_nil (obj.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
-
-  CORBA::Short servant_thread_priority =
-    current->the_priority (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Print out the info.
-  int index = -1;
-  ACE_DEBUG ((LM_DEBUG,
-              "\nObject bands: \n"));
-  for (CORBA::ULong i = 0; i < this->bands_.length (); ++i)
+  // Check which policy we are dealing with.
+  if (!client_propagated)
     {
+      // With the SERVER_DECLARED priority model, <client_priority> is
+      // simply the priority associated with the priority propagation
+      // policy in the IOR.  This should match the priority we get run
+      // at.
+      ACE_ASSERT (server_priority == client_priority);
+
       ACE_DEBUG ((LM_DEBUG,
-                  "%d) %d  %d\n",
-                  (i + 1), this->bands_[i].low, this->bands_[i].high));
-
-      if (priority <= this->bands_[i].high
-          && priority >= this->bands_[i].low
-          && servant_thread_priority <= this->bands_[i].high
-          && servant_thread_priority >= this->bands_[i].low)
-        index = i + 1;
+                  "Using SERVER_DECLARED policy: request processed at priority %d\n",
+                  server_priority));
     }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Object priority: %d  "
-              "Servant thread priority: %d\n",
-              priority, servant_thread_priority));
-
-  if (index == -1)
-    ACE_DEBUG ((LM_DEBUG,
-                "ERROR: object and thread priorities do not"
-                "match the same band.\n"));
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Band %d was used for this invocation\n", index));
+    {
+      // We are using the CLIENT_DECLARED policy, both the client
+      // priority and the server priority should fall within the
+      // bands.  Note that it may be the case that the server priority
+      // is not exactly the same as the client priority since we are
+      // using thread pools with lanes.
+      //
+      // Print out the bands.
+      int index = -1;
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nPriority Bands: \n"));
+      for (CORBA::ULong i = 0; i < this->bands_.length (); ++i)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%d) %d  %d\n",
+                      (i + 1),
+                      this->bands_[i].low,
+                      this->bands_[i].high));
+
+          // Check which band we are using.
+          if (client_priority <= this->bands_[i].high &&
+              client_priority >= this->bands_[i].low &&
+              server_priority <= this->bands_[i].high &&
+              server_priority >= this->bands_[i].low)
+            index = i + 1;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Client priority: %d  "
+                  "Server processing request at priority: %d\n",
+                  client_priority,
+                  server_priority));
+
+      if (index == -1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "ERROR: object and thread priorities do not"
+                    "match the same band.\n"));
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "Band %d was used for this invocation\n", index));
+    }
 }
 
 void
 Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0,
+                        ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 //*************************************************************************
@@ -106,15 +129,13 @@ Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
 const char *bands_file = "bands";
 const char *ior_output_file1 = "test1.ior";
 const char *ior_output_file2 = "test2.ior";
-CORBA::Short poa_priority = -1;
-CORBA::Short wrong_priority = -1;
 
 // Parse command-line arguments.
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:w:b:o:n:");
-  int c, result;
+  ACE_Get_Opt get_opts (argc, argv, "b:o:n:");
+  int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -131,26 +152,6 @@ parse_args (int argc, char *argv[])
         bands_file = get_opts.optarg;
         break;
 
-      case 'p':
-        result = ::sscanf (get_opts.optarg,
-                           "%hd",
-                           &poa_priority);
-        if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-a> option"),
-                            -1);
-        break;
-
-      case 'w':
-        result = ::sscanf (get_opts.optarg,
-                           "%hd",
-                           &wrong_priority);
-        if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-c> option"),
-                            -1);
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -158,18 +159,10 @@ parse_args (int argc, char *argv[])
                            "-n <iorfile1> "
                            "-o <iorfile2> "
                            "-b <bands_file> "
-                           "-p <poa_priority> "
-                           "-w <wrong_priority> "
                            "\n",
                            argv [0]),
                           -1);
       }
-
-  if (poa_priority < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Valid poa priority must be"
-                       " specified.\nSee README file for more info\n"),
-                      -1);
 
   return 0;
 }
@@ -177,19 +170,25 @@ parse_args (int argc, char *argv[])
 int
 get_priority_bands (RTCORBA::PriorityBands &bands)
 {
-  FILE* file = ACE_OS::fopen (bands_file, "r");
+  //
+  // Read bands from a file.
+  //
+  FILE* file =
+    ACE_OS::fopen (bands_file, "r");
 
   if (file == 0)
     return -1;
 
   ACE_Read_Buffer reader (file, 1);
 
-  char* string = reader.read (EOF, ' ', '\0');
+  char *string =
+    reader.read (EOF, ' ', '\0');
 
   if (string == 0)
     return -1;
 
-  CORBA::ULong bands_length = (reader.replaced () + 1) / 2;
+  CORBA::ULong bands_length =
+    (reader.replaced () + 1) / 2;
   bands.length (bands_length);
 
   int result = 1;
@@ -230,51 +229,43 @@ get_priority_bands (RTCORBA::PriorityBands &bands)
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
-{
-  if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%s> is nil\n",
-                       msg),
-                      -1);
-  else
-    return 0;
-}
-
-int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
                const char *filename,
                CORBA::Environment &ACE_TRY_ENV)
 {
-  // Register with poa.
+  // Register servant with the POA.
   PortableServer::ObjectId_var id;
-
-  id = poa->activate_object (server_impl, ACE_TRY_ENV);
+  id = poa->activate_object (server_impl,
+                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  // Create object reference.
   CORBA::Object_var server =
-    poa->id_to_reference (id.in (), ACE_TRY_ENV);
+    poa->id_to_reference (id.in (),
+                          ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   // Print out the IOR.
   CORBA::String_var ior =
-    orb->object_to_string (server.in (), ACE_TRY_ENV);
+    orb->object_to_string (server.in (),
+                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
-  ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
 
   // Print ior to the file.
   if (filename != 0)
     {
-      FILE *output_file= ACE_OS::fopen (filename, "w");
+      FILE *output_file =
+        ACE_OS::fopen (filename, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            filename),
                           -1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fprintf (output_file,
+                       "%s",
+                       ior.in ());
       ACE_OS::fclose (output_file);
     }
 
@@ -289,27 +280,26 @@ object_activation_exception_test (RTPortableServer::POA_ptr poa,
 {
   ACE_TRY
     {
-      // Register with poa.
+      // Register servant with POA.
       PortableServer::ObjectId_var id =
         poa->activate_object_with_priority (server_impl,
                                             priority,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var server =
-        poa->id_to_reference (id.in (),
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      // This next line of code should not run because an exception
+      // should have been raised.
       ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
   ACE_CATCH (CORBA::BAD_PARAM, ex)
     {
+      // Expected exception.
       ACE_DEBUG ((LM_DEBUG,
                   "BAD_PARAM exception is caught as expected.\n"));
     }
   ACE_CATCHANY
     {
+      // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception caught\n"));
       ACE_RE_THROW;
     }
@@ -325,21 +315,27 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
 {
   ACE_TRY
     {
+      // Create a POA with invalid policies.
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("Child_POA",
                               manager,
                               policies,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      // This next line of code should not run because an exception
+      // should have been raised.
       ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
   ACE_CATCH (PortableServer::POA::InvalidPolicy, ex)
     {
+      // Expected exception.
       ACE_DEBUG ((LM_DEBUG,
                   "InvalidPolicy exception is caught as expected.\n"));
     }
   ACE_CATCHANY
     {
+      // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception\n"));
       ACE_RE_THROW;
     }
@@ -350,38 +346,49 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
-      // ORB.
+      // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc,
+                         argv,
+                         "",
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
-        return 1;
+      int result =
+        parse_args (argc,
+                    argv);
+      if (result != 0)
+        return result;
 
-      // RTORB.
+      // Get the RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTORB",
+                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in (),
-                                                           ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      if (check_for_nil (rt_orb.in (), "RTORB") == -1)
-        return 1;
 
-      // RootPOA.
-      object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      RTCORBA::RTORB_var rt_orb =
+        RTCORBA::RTORB::_narrow (object.in (),
+                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      // Get the RootPOA.
+      object =
+        orb->resolve_initial_references ("RootPOA",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (check_for_nil (root_poa.in (), "RootPOA") == -1)
-        return 1;
 
-      // POAManager.
+      // Get the POA Manager.
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -389,68 +396,100 @@ main (int argc, char *argv[])
       // Obtain priority bands to be used in this test from the file
       // specified by the user.
       RTCORBA::PriorityBands bands;
-      if (get_priority_bands (bands) == -1)
+      result = get_priority_bands (bands);
+      if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Error reading priority bands from file\n"),
-                          1);
+                          result);
 
-      // Servant.
-      Test_i server_impl (orb.in (), bands);
-      Test_i server_impl2 (orb.in (), bands);
+      // Create a thread-pool.
+      CORBA::ULong stacksize = 0;
+      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::ULong max_buffered_requests = 0;
+      CORBA::ULong max_request_buffer_size = 0;
+      CORBA::Boolean allow_borrowing = 0;
+      CORBA::ULong static_threads = 1;
+      CORBA::ULong dynamic_threads = 0;
 
+      // The lanes in the pool should match the bands.
+      RTCORBA::ThreadpoolLanes lanes;
+      lanes.length (bands.length ());
 
-      // Test 1: Attempt to create a POA with priority bands but
-      // without the priority model.  Should get POA::InvalidPolicy
-      // exception.
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n     Test 1\n"));
+      // For each band, setup up a thread lane.
+      for (CORBA::ULong i = 0;
+           i < bands.length ();
+           ++i)
+        {
+          lanes[i].static_threads = static_threads;
+          lanes[i].dynamic_threads = dynamic_threads;
 
-      CORBA::PolicyList poa_policy_list;
-      poa_policy_list.length (1);
-      poa_policy_list[0] =
-        rt_orb->create_priority_banded_connection_policy
-        (bands,
-         ACE_TRY_ENV);
+          // Lane priority is in the middle of the band priorities.
+          lanes[i].lane_priority =
+            (bands[i].low + bands[i].high) / 2;
+        }
+
+      // Create the thread-pool.
+      RTCORBA::ThreadpoolId threadpool_id =
+        rt_orb->create_threadpool_with_lanes (stacksize,
+                                              lanes,
+                                              allow_borrowing,
+                                              allow_request_buffering,
+                                              max_buffered_requests,
+                                              max_request_buffer_size,
+                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      poa_creation_exception_test (root_poa.in (),
-                                   poa_manager.in (),
-                                   poa_policy_list,
-                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Test 2: Attempt to create a POA with priority bands that do
-      // not match the resources (i.e., endpoints/lanes).  Should get
-      // POA::InvalidPolicy exception.
+      // Test: Attempt to create a POA with priority bands that do not
+      // match the lanes.  Should get POA::InvalidPolicy exception.
       ACE_DEBUG ((LM_DEBUG,
-                  "\n     Test 2\n"));
+                  "\n<---Test--->: Bands do not match lanes\n\n"));
 
-      RTCORBA::PriorityBands false_bands;
-      false_bands.length (2);
+      // False bands.
+      RTCORBA::PriorityBands false_bands (bands);
       false_bands[0].low = 10000;
       false_bands[0].high = 10005;
-      false_bands[1].low = 26;
-      false_bands[1].high = 30;
 
+      CORBA::PolicyList poa_policy_list;
+      poa_policy_list.length (2);
+
+      // Create a bands policy.
       poa_policy_list[0] =
-        rt_orb->create_priority_banded_connection_policy
-        (false_bands,
-         ACE_TRY_ENV);
+        rt_orb->create_priority_banded_connection_policy (false_bands,
+                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Create a thread-pool policy.
+      poa_policy_list[1] =
+        rt_orb->create_threadpool_policy (threadpool_id,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Try to create a POA with invalid policies.  Should throw an
+      // exception.
       poa_creation_exception_test (root_poa.in (),
                                    poa_manager.in (),
                                    poa_policy_list,
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Create POA with CLIENT_PROPAGATED priority model, no bands.
+      // Two policies for the next POA.
+      poa_policy_list.length (2);
+
+      // Create a priority model policy.
       poa_policy_list[0] =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                               0,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Create a thread-pool policy.
+      poa_policy_list[1] =
+        rt_orb->create_threadpool_policy (threadpool_id,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Create POA with CLIENT_PROPAGATED priority model, with lanes
+      // but no bands.
       PortableServer::POA_var client_propagated_poa =
         root_poa->create_POA ("client_propagated_poa",
                               poa_manager.in (),
@@ -458,20 +497,34 @@ main (int argc, char *argv[])
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Create POA with SERVER_DECLARED priority model, with bands.
-      poa_policy_list.length (2);
+      // Three policies for the next POA.
+      poa_policy_list.length (3);
+
+      // Default POA priority comes from the 'middle' lane's priority.
+      CORBA::Short poa_priority =
+        lanes[lanes.length () / 2].lane_priority;
+
+      // Create a priority model policy.
       poa_policy_list[0] =
         rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                               poa_priority,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Create a bands policy.
       poa_policy_list[1] =
-        rt_orb->create_priority_banded_connection_policy
-        (bands,
-         ACE_TRY_ENV);
+        rt_orb->create_priority_banded_connection_policy (bands,
+                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Create a thread-pool policy.
+      poa_policy_list[2] =
+        rt_orb->create_threadpool_policy (threadpool_id,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Create POA with SERVER_DECLARED priority model, with bands
+      // and lanes.
       PortableServer::POA_var server_declared_poa =
         root_poa->create_POA ("server_declared_poa",
                               poa_manager.in (),
@@ -479,61 +532,62 @@ main (int argc, char *argv[])
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Test 3: Attempt to register an object with priority that
-      // doesn't match POA resources (i.e., endpoints/lanes).  Should
-      // get BAD_PARAM exception.
+      // Test: Attempt to register an object with priority that
+      // doesn't match lanes.  Should get BAD_PARAM exception.
       ACE_DEBUG ((LM_DEBUG,
-                  "\n     Test 3\n"));
+                  "\n<---Test--->: Servant priority does not match lanes\n\n"));
 
       RTPortableServer::POA_var rt_server_declared_poa =
         RTPortableServer::POA::_narrow (server_declared_poa.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (check_for_nil (rt_server_declared_poa.in (), "RTPOA") == -1)
-        return 1;
 
+      // Activation with incorrect priority should fail.
+      CORBA::Short wrong_priority = 10000;
       object_activation_exception_test (rt_server_declared_poa.in (),
-                                        &server_impl,
+                                        0,
                                         wrong_priority,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-
-      // Create object 1 and register with <client_propagated_poa>.
-      int result;
-      ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
+      // Create first servant and register with <client_propagated_poa>.
+      Test_i server_impl (orb.in (),
+                          bands,
+                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       result = create_object (client_propagated_poa.in (),
                               orb.in (),
                               &server_impl,
                               ior_output_file1,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (result == -1)
-        return 1;
+      if (result != 0)
+        return result;
 
-      // Create object 2 and register with <server_declared_poa>.
-      ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
+      // Create second servant and register with <server_declared_poa>.
+      Test_i server_impl2 (orb.in (),
+                           bands,
+                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       result = create_object (server_declared_poa.in (),
                               orb.in (),
                               &server_impl2,
                               ior_output_file2,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (result == -1)
-        return 1;
+      if (result != 0)
+        return result;
 
       // Activate POA manager.
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Start ORB event loop.
-      // @@ Currently we are using Reactor per priority to emulate
-      // threadpool with lanes.  Once POA threadpools are implemented,
-      // this code should be replaced with standard threadpool apis.
-      TAO_Pool_Per_Endpoint pool (orb.in ());
-      pool.run (ACE_TRY_ENV);
+      // Run ORB.
+      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "\nServer ORB event loop finished\n\n"));
+      // Destroy ORB.
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -545,4 +599,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

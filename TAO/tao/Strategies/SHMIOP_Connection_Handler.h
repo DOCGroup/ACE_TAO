@@ -41,8 +41,9 @@
  */
 
 
-class TAO_Strategies_Export TAO_SHMIOP_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER,
-                                                            public TAO_Connection_Handler
+class TAO_Strategies_Export TAO_SHMIOP_Connection_Handler :
+  public TAO_SHMIOP_SVC_HANDLER,
+  public TAO_Connection_Handler
 {
 
 public:

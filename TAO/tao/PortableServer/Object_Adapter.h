@@ -356,6 +356,8 @@ protected:
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
 
+  void set_default_server_protocol_policy (CORBA::Environment &ACE_TRY_ENV);
+
   static ACE_Lock *create_lock (int enable_locking,
                                 TAO_SYNCH_MUTEX &thread_lock);
 
@@ -675,6 +677,9 @@ public:
 
     void using_servant_locator (void);
     // We are using the servant locator for this upcall.
+
+    CORBA::Short priority (void) const;
+    // Get the priority for the current upcall.
 
   protected:
 
