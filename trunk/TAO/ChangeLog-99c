@@ -1,3 +1,11 @@
+Sun May 30 13:39:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/compiler.html:
+	  Added new IDL compiler options -Cw and -Ce to the
+	  releasenotes, along with an explanation of the
+	  current inconsistency between OMG's identifier
+	  spelling rule and its sfp.idl file.
+
 Sat May 29 20:25:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/UTL_Identifier.h:
