@@ -18,7 +18,10 @@ class Newsweek : public Magazine
   //= DESCRIPTION
   //   Polymoriphism is exploited and an object pointer
   //   of Magazine is bound to the Newsweek object at runtime.
- public:
+public:
+
+  // @@ Kirthika, please put this comment underneath the title()
+  // method.
 
   // This is the abstract class method which describes the magazine.
   void title (void);
