@@ -1,14 +1,19 @@
+Thu Jan 16 13:25:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/rtcorba/features.html: Fixed obsolete references to the
+	  location of various priority mapping source files.
+
 Thu Jan 16 12:29:00 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* COPYING: Extended the validity of the copyright notice from 2002
-	  to 2003. Should have been done yesterday.., anyway, better late 
+	  to 2003. Should have been done yesterday.., anyway, better late
 	  than never.
 
 Thu Jan 16 10:52:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
  	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
- 
+
  	  In the generated TAO_*_Proxy_Factory_Adapter class,
  	  changed signatures of register_proxy_factory() and
  	  unregister_proxy_factory() to return void. Error
@@ -18,7 +23,7 @@ Thu Jan 16 10:52:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
  	  methods that sets the return value to anything other
  	  than 0. Although the methods are public, the class
 	  itself has a protected constructor, and the methods
-	  are intended for TAO internal use only. 
+	  are intended for TAO internal use only.
 	  This closes [BUGID:844].
 
 Wed Jan 15 18:02:49 2003  Bala  <bala@cs.wustl.edu>
@@ -32,7 +37,7 @@ Tue Jan 14 22:11:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tests/MProfile_Connection_Timeout/client.dsp:
 	* tests/MT_Timeout/MT_Timeout_Client.dsp:
 	* tests/MT_Timeout/MT_Timeout_Server.dsp: Fixed the release
-	  configurations. 
+	  configurations.
 
 Tue Jan 14 20:46:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -47,7 +52,7 @@ Tue Jan 14 16:37:15 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Tue Jan 14 16:37:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Crash_Test/run_test.pl: The timeout was
-	  adjusted.   
+	  adjusted.
 
 Tue Jan 14 15:10:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -64,7 +69,7 @@ Tue Jan 14 16:13:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* orbsvcs/IFR_Service/Makefile.IFR_Service: Added a check for
 	  TAO_IFRService library before going head to actually compile
-	  stuff. 
+	  stuff.
 
 Tue Jan 14 07:05:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
