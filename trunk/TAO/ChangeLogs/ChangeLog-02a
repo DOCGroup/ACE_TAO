@@ -1,3 +1,9 @@
+Fri Dec  7 16:38:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/ReleaseNotes/index.html:
+
+          Updated the Future Work subsection of the IDL compiler section.
+
 Fri Dec 07 14:22:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/Logging_Service/Logging_Service.dsp:
