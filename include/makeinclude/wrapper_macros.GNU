@@ -147,6 +147,25 @@ ifeq ($(static_libs),)
   static_libs = 0
 endif # static_libs
 
+#### Defined versioned_so = 1 if your platform requires version number
+#### be appended after so library.
+versioned_so = 0
+
+#### The system has X Windows and we want to include the XtReactor in
+#### the library
+xt_reactor = 0
+
+#### flag to Include/Preclude the RAPI support in ACE
+rapi = 0
+
+ifndef PACE_ROOT
+  PACE_ROOT = $(ACE_ROOT)/PACE
+endif # PACE_ROOT
+
+# Include this before the below variables to make it possible for
+# platform_macros.GNU to set default values for them.
+include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
 ####
 #### Defaults are exceptions off (0), fast off (0), and rtti off (0)
 ####
@@ -163,23 +182,6 @@ endif
 ifndef rtti
   rtti = 0
 endif
-
-#### Defined versioned_so = 1 if your platform requires version number
-#### be appended after so library.
-versioned_so = 0
-
-#### The system has X Windows and we want to include the XtReactor in
-#### the library
-xt_reactor = 0
-
-#### flag to Include/Preclude the RAPI support in ACE
-rapi = 0
-
-ifndef PACE_ROOT
-  PACE_ROOT = $(ACE_ROOT)/PACE
-endif # PACE_ROOT
-
-include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
 #----------------------------------------------------------------------------
 #      Platform-independent macro definitions
