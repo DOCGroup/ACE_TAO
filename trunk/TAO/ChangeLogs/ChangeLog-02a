@@ -1,3 +1,38 @@
+Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Thread_Pool/client.cpp: 
+
+	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
+	    common file parsing code.  This way we can removed the
+	    get_rates() function.
+
+	  - Invocation priorities can either be automatically
+	    calculated (as before) or can be explicitly specified
+	    through the <invocation_priorities_file> option.
+
+	* performance-tests/RTCorba/Thread_Pool/server.cpp: 
+
+	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
+	    common file parsing code.  Auto lane priorities and bands
+	    calculations were moved to readers.cpp.
+
+          - Lane priorities and bands can either be automatically
+	    calculated (as before) or can be explicitly specified
+	    through the <bands_file> and <lanes_file> options.
+
+	* performance-tests/RTCorba/Thread_Pool/empty_file
+	* performance-tests/RTCorba/Thread_Pool/invocation_priorities 
+	* performance-tests/RTCorba/Thread_Pool/lanes 
+	* performance-tests/RTCorba/Thread_Pool/bands
+
+	  New files.
+	
+	* tests/RTCORBA/Linear_Priority/client.cpp (main): Renamed
+	  Priorities to Short_Array.
+
+	* tests/RTCORBA/Linear_Priority/readers.cpp: Generalized some
+	  methods.
+
 Tue Sep 25 17:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/AMI_Buffering/client.cpp (run_buffer_size): 

@@ -175,12 +175,12 @@ main (int argc, char **argv)
                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Priorities priorities;
+      Short_Array priorities;
       result =
-        get_priorities ("client",
-                        invocation_priorities_file,
-                        "invocation priorities",
-                        priorities);
+        get_values ("client",
+                    invocation_priorities_file,
+                    "invocation priorities",
+                    priorities);
       if (result != 0)
         return result;
 
