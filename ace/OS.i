@@ -7572,7 +7572,7 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
         {
           ACE_OS::unlink (lock->lockname_);
           ACE_OS::free (ACE_static_cast (void *,
-                                         ACE_const_cast (char *,
+                                         ACE_const_cast (LPTSTR,
                                                          lock->lockname_)));
           lock->lockname_ = 0;
         }
@@ -9077,7 +9077,7 @@ exit (int status)
 {
   ACE_OS::exit (status);
 }
-  
+
 ACE_INLINE int
 fprintf (FILE *fp, char *format, const char *msg)
 {
