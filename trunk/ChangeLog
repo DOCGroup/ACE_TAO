@@ -1,3 +1,9 @@
+Wed Sep  1 12:40:28 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix-4.x.h: Changed the ACE_HAS_3_PARAM_WCSTOK test to
+	  include _XOPEN_SOURCE >= 500, not == 500. Fixes compile error
+	  on AIX 5.2.
+
 Wed Sep  1 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dump_T.cpp:
