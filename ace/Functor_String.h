@@ -110,7 +110,7 @@ class ACE_Export ACE_Hash<ACE_WString>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const ACE_CString &lhs) const;
+  unsigned long operator () (const ACE_WString &lhs) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
