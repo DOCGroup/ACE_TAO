@@ -8,7 +8,7 @@
         CPP-inclient \
 	CPP-unclient \
 	CPP-inserver \
-#        CPP-inserver-fancy \
+        CPP-inserver-fancy \
 	CPP-inserver-poll \
 	CPP-unserver \
 	FD-unclient \
