@@ -78,7 +78,7 @@ Notifier_i::register_callback (const char *stock_name,
       // the unbounded set entry is created.
       // NOTE:: its pathetic, but to make this macro call its necessary to name
       // your environment variable ACE_TRY_ENV
-      ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY ());
       ACE_CHECK;
 
       // When a new entry is tried to be inserted into the unbounded set and it

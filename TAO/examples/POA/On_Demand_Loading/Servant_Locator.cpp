@@ -58,7 +58,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
       return servant;
     }
   else
-    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (),
                           env,
                           0);
 }

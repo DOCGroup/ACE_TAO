@@ -845,7 +845,7 @@ seen_request_id (TAO_Policies& policies,
     }
 
   if (seq == 0)
-    TAO_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 1);
+    TAO_THROW_RETURN (CORBA::NO_MEMORY (), 1);
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 1);
   for (Request_Ids::ITERATOR riter (this->request_ids_);
@@ -1831,7 +1831,7 @@ export_proxy (CosTrading::Lookup_ptr target,
                   CosTrading::DuplicatePropertyName,
                   CosTrading::DuplicatePolicyName))
 {
-  TAO_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+  TAO_THROW_RETURN (CORBA::UNKNOWN (), 0);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1844,7 +1844,7 @@ withdraw_proxy (const char *id,
                   CosTrading::UnknownOfferId,
                   CosTrading::Proxy::NotProxyOfferId))
 {
-  TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  TAO_THROW (CORBA::UNKNOWN ());
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1857,7 +1857,7 @@ describe_proxy (const char *id,
                   CosTrading::UnknownOfferId,
                   CosTrading::Proxy::NotProxyOfferId))
 {
-  TAO_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+  TAO_THROW_RETURN (CORBA::UNKNOWN (), 0);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1870,7 +1870,7 @@ list_proxies (CORBA::ULong how_many,
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::NotImplemented))
 {
-  TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  TAO_THROW (CORBA::UNKNOWN ());
 }
 
 #endif /* TAO_TRADER_INTERFACES_C */

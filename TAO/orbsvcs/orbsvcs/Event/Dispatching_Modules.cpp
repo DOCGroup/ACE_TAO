@@ -265,7 +265,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
         // Allocate a new dispatch queue.
         queues_[priority] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_);
         if (queues_[priority] == 0)
-          TAO_THROW (CORBA::NO_MEMORY (0, TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO,
+          TAO_THROW (CORBA::NO_MEMORY (0, ,
                                           "ACE_ES_Priority_Dispatching::connected"));
 
         // Initialize the dispatch queue corresponding to the
@@ -281,7 +281,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
         // spawns the threads.
         if (queues_[priority]->open_queue (priority,
                                            threads_per_queue_) == -1)
-          TAO_THROW (DISPATCH_ERROR (0, TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO,
+          TAO_THROW (DISPATCH_ERROR (0, ,
                                      "ACE_ES_Priority_Dispatching::connected:"
                                      "queue open failed.\n"));
 
@@ -382,7 +382,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
                   " dropping event.\n", preemption_priority));
       return;
 #if 0
-      TAO_THROW (SYNC_ERROR (0, TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO, "ACE_ES_Priority_Dispatching::push"));
+      TAO_THROW (SYNC_ERROR (0, , "ACE_ES_Priority_Dispatching::push"));
 #endif /* 0 */
     }
 
@@ -397,9 +397,9 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
                     " release failed.\n"));
       if (errno != EPIPE)
         {
-          TAO_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+          TAO_THROW (CORBA::NO_MEMORY ());
           // @@ Orbix parameters
-          // 0, TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO,
+          // 0, ,
           // "ACE_ES_Priority_Dispatching::push enqueue failed"));
         }
       else

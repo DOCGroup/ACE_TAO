@@ -604,12 +604,12 @@ ACE_EventChannel::destroy (CORBA::Environment &)
   // Flush all messages in the channel.
   Shutdown_Channel *sc = new Shutdown_Channel (this);
   if (sc == 0)
-    TAO_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY ());
 
   // Create a wrapper around the dispatch request.
   Flush_Queue_ACT *act = new Flush_Queue_ACT (sc, dispatching_module_);
   if (act == 0)
-    TAO_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY ());
 
   // Set a 100ns timer.
   if (this->timer_module ()->schedule_timer (0, // no rt-info
@@ -1270,13 +1270,13 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   Shutdown_Consumer *sc =
     new Shutdown_Consumer (this, consumer, scheduler.in ());
   if (sc == 0)
-    TAO_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY ());
 
   // Create a wrapper around the dispatch request.
   Flush_Queue_ACT *act =
     new Flush_Queue_ACT (sc, channel_->dispatching_module_);
   if (act == 0)
-    TAO_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY ());
 
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) initiating consumer disconnect.\n"));
 
@@ -1332,7 +1332,7 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &TAO_IN_ENV)
     {
       ACE_ERROR ((LM_ERROR, "ACE_EventChannel"
                   "::obtain_push_supplier failed.\n"));
-      TAO_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+      TAO_THROW_RETURN (CORBA::NO_MEMORY (), 0);
     }
 
   {
@@ -3199,7 +3199,7 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &TAO_IN_ENV)
   auto_ptr<ACE_Push_Supplier_Proxy> new_supplier (new ACE_Push_Supplier_Proxy (this));
 
   if (new_supplier.get () == 0)
-    TAO_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+    TAO_THROW_RETURN (CORBA::NO_MEMORY (), 0);
 
   {
     TAO_GUARD_THROW_RETURN (ACE_ES_MUTEX, ace_mon, this->lock_, 0, TAO_IN_ENV,
@@ -3223,7 +3223,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
     TAO_EC_Event_Set::_create (event_set);
 
   if (event == 0)
-    TAO_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY ());
 
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) Supplier_Module::push\n"));
   for (CORBA::ULong i = 0; i < event->length (); ++i)

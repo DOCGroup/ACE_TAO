@@ -169,7 +169,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
 	  ACE_NEW_THROW_EX (tio,
 			    TAO_TIO (uto->time (ACE_TRY_ENV),
 				     this->time (ACE_TRY_ENV)),
-			    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+			    CORBA::NO_MEMORY ());
 	  
 	  ACE_TRY_CHECK;
 	}
@@ -178,7 +178,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
 	  ACE_NEW_THROW_EX (tio,
 			    TAO_TIO (this->time (ACE_TRY_ENV),
 				     uto->time (ACE_TRY_ENV)),
-			    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+			    CORBA::NO_MEMORY ());
 	  
 	  ACE_TRY_CHECK;
 	}
@@ -215,7 +215,7 @@ TAO_UTO::interval (CORBA::Environment &ACE_TRY_ENV)
       ACE_NEW_THROW_EX (tio,
 			TAO_TIO (lower,
 				 upper),
-			CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+			CORBA::NO_MEMORY ());
       ACE_TRY_CHECK;      
     }
   ACE_CATCHANY

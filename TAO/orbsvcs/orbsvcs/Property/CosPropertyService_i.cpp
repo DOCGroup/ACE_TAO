@@ -523,7 +523,7 @@ TAO_PropertySetDef::define_property_with_mode (const char *property_name,
 
       // Is the pointer valid.
       if (entry_ptr == 0)
-        TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+        TAO_THROW (CORBA::UNKNOWN ());
 
       // If type is not the same, raise exception.
       if (entry_ptr->int_id_.pvalue_->type () != property_value.type ())
@@ -552,7 +552,7 @@ TAO_PropertySetDef::define_property_with_mode (const char *property_name,
         }
     default:
       // Error. ret is -1 or rebind returned other than 1.
-      TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      TAO_THROW (CORBA::UNKNOWN ());
     }
 
   return;
@@ -802,7 +802,7 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
                                         old_key,
                                         old_value) != 1)
             // Return values 0 and -1 are not possible.
-            TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+            TAO_THROW (CORBA::UNKNOWN ());
           else
             ACE_DEBUG ((LM_DEBUG,
                         "Mode set succesful\n"));
@@ -821,7 +821,7 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
                                             old_key,
                                             old_value) != 1)
                 // Return values 0 and -1 are not possible.
-                TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                TAO_THROW (CORBA::UNKNOWN ());
               else
                 ACE_DEBUG ((LM_DEBUG, "Mode set successful\n"));
             }
@@ -840,7 +840,7 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
                                             hash_key,
                                             hash_value) != 1)
                 // Return values 0 and -1 are not possible.
-                TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                TAO_THROW (CORBA::UNKNOWN ());
               else
                 ACE_DEBUG ((LM_DEBUG, "Mode set successful\n"));
             }
