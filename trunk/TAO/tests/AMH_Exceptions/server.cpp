@@ -19,12 +19,12 @@ class ST_AMH_Servant
 {
 public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);
-  
+
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                     Test::Timestamp send_time
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
 protected:
   CORBA::ORB_ptr orb_;
 };
@@ -55,10 +55,10 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       _tao_rh->test_method_excep (&holder ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCHALL 
+  ACE_CATCHALL
     {}
   ACE_ENDTRY;
-  
+
   ACE_UNUSED_ARG (send_time);
 }
 
@@ -71,33 +71,33 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 /**
  Class that performs all 'dirty' initialisation work that is common to
  all the AMH servers and 'hides' all the common ORB functions.
- */ 
+ */
 class ST_AMH_Server
 {
 public:
   ST_AMH_Server (int *argc, char **argv);
   virtual ~ST_AMH_Server ();
-  
+
   /// ORB inititalisation stuff
   int start_orb_and_poa (void);
-  
+
   /// register the servant with the poa
   virtual void register_servant (ST_AMH_Servant *servant);
-  
+
   /// orb-perform_work () abstraction
   virtual void run_event_loop ();
-  
+
 public:
   /// Accesor method (for servants) to the initialised ORB
   CORBA::ORB_ptr orb () { return this->orb_.in (); }
-  
+
 protected:
   int *argc_;
   char **argv_;
-  char *ior_output_file_;
+  static char *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
-  
+
 private:
   /// Write servant IOR to file specified with the '-o' option
   int write_ior_to_file (CORBA::String_var ior);
@@ -110,10 +110,11 @@ private:
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
+char *ST_AMH_Server::ior_output_file_  = "test.ior";
+
 ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_("test.ior")
 {
 }
 
@@ -123,7 +124,7 @@ ST_AMH_Server::~ST_AMH_Server ()
     {
       this->root_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       this->orb_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -134,36 +135,36 @@ ST_AMH_Server::~ST_AMH_Server ()
   ACE_ENDTRY;
 }
 
-int 
+int
 ST_AMH_Server::start_orb_and_poa (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (*(this->argc_), 
-                                    this->argv_, 
+      this->orb_ = CORBA::ORB_init (*(this->argc_),
+                                    this->argv_,
                                     "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-      
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in () 
+
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
                                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       return 0;
     }
   ACE_CATCHANY
@@ -176,7 +177,7 @@ ST_AMH_Server::start_orb_and_poa (void)
   return 0;
 }
 
-void 
+void
 ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
   ACE_TRY_NEW_ENV
@@ -184,7 +185,7 @@ ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
       Test::Roundtrip_var roundtrip =
         servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       CORBA::String_var ior =
         this->orb_->object_to_string (roundtrip.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -212,24 +213,25 @@ ST_AMH_Server::run_event_loop ()
         }
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY 
-    {} 
+  ACE_CATCHANY
+    {}
   ACE_ENDTRY;
 }
 
-int 
+int
 ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file= ACE_OS::fopen (this->ior_output_file_, "w");
+  FILE *output_file= ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
+                                    "w");
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
-                  this->ior_output_file_));
+                  ST_AMH_Server::ior_output_file_));
       return -1;
     }
-  
+
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
   return 0;
@@ -244,7 +246,7 @@ main (int argc, char *argv[])
   amh_server.start_orb_and_poa ();
 
   ST_AMH_Servant servant (amh_server.orb ());
-  
+
   amh_server.register_servant (&servant);
 
   amh_server.run_event_loop ();
