@@ -27,7 +27,7 @@
 #include "test_config.h"
 
 static void
-randomize_array (int array[], size_t size)
+randomize_array (long array[], size_t size)
 {
   size_t i;
 
@@ -38,7 +38,7 @@ randomize_array (int array[], size_t size)
   for (i = 0; i < size; i++)
     {
       int index = ACE_OS::rand() % size--;
-      int temp = array [index];
+      long temp = array [index];
       array [index] = array [size];
       array [size] = temp;
     }
@@ -48,7 +48,7 @@ randomize_array (int array[], size_t size)
 static int max_iterations = ACE_DEFAULT_TIMERS * 100;
 
 // Keep track of the timer ids that were assigned to us.
-static int *timer_ids = 0;
+static long *timer_ids = 0;
 
 class Example_Handler : public ACE_Event_Handler
 {
@@ -83,7 +83,7 @@ test_functionality (ACE_Timer_Queue *tq)
 
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
-  int timer_id; 
+  long timer_id; 
   
   timer_id = tq->schedule (&eh, (const void *) 1, 
 			   ACE_OS::gettimeofday ());
@@ -308,7 +308,7 @@ main (int argc, char *argv[])
 		  -1);
 
   ACE_NEW_RETURN (timer_ids,
-		  int[max_iterations],
+		  long[max_iterations],
 		  -1);
 
   for (int i = 0; timer_queues[i].name_ != 0; i++)

@@ -95,19 +95,19 @@ ACE_Process_Options::set_thread_attributes (void)
 #else /* !defined (ACE_WIN32) */
 
 ACE_INLINE ACE_HANDLE
-ACE_Process_Options::stdin (void)
+ACE_Process_Options::std_in (void)
 {
   return stdin_;
 }
 
 ACE_INLINE ACE_HANDLE 
-ACE_Process_Options::stdout (void)
+ACE_Process_Options::std_out (void)
 {
   return stdout_;
 }
 
 ACE_INLINE ACE_HANDLE 
-ACE_Process_Options::stderr (void)
+ACE_Process_Options::std_err (void)
 {
   return stderr_;
 }
@@ -147,6 +147,7 @@ ACE_Process_Options::path (LPCTSTR p)
   ACE_OS::strcpy (path_, p);
 }
 
+#if defined (ACE_WIN32)
 ACE_INLINE BOOL
 ACE_Process_Options::handle_inheritence (void)
 {
@@ -158,3 +159,4 @@ ACE_Process_Options::handle_inheritence (BOOL hi)
 {
   handle_inheritence_ = hi;
 }
+#endif /* ACE_WIN32 */
