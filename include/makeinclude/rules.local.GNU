@@ -1,14 +1,19 @@
 #----------------------------------------------------------------------------
 #	$Id$
 #
-#	Local targets 
+#	Local targets
 #	GNU version
 #	Requires GNU make
 #----------------------------------------------------------------------------
 
-ifndef  OBJDIRS
-OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
+ifndef OBJDIRS
+  OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
 endif # OBJDIRS
+
+#### TEMPLATE_REPOSITORY can be set in individual platform files
+#### to create template repository directories.  See
+#### platform_sunos5_sunc++.GNU for an example.
+OBJDIRS += $(TEMPLATE_REPOSITORY)
 
 all.local: build.objdirs build.local install.local
 
@@ -166,7 +171,7 @@ depend.local: $(MAKEFILE)
 		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o $(VSHDIR)\1.$(SOEXT):;" ;\
 		fi \
 	> $(MAKEFILE).new
-	@mv $(MAKEFILE).new $(MAKEFILE) 
+	@mv $(MAKEFILE).new $(MAKEFILE)
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
 	then	echo "Makefile dependencies unchanged." ;\
 	else \
