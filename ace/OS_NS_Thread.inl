@@ -3697,7 +3697,7 @@ ACE_OS::thr_getprio (ACE_hthread_t id, int &priority, int &policy)
 # elif defined (ACE_HAS_STHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (id, &priority), result), int, -1);
-# elif defined (ACE_HAS_WTHREADS)
+# elif defined (ACE_HAS_WTHREADS) && !defined (ACE_HAS_WINCE)
   ACE_Errno_Guard error (errno);
 
   priority = ::GetThreadPriority (id);
