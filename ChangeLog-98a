@@ -1,4 +1,6 @@
-Tue Dec 16 16:55:19 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Tue Dec 16 17:23:49 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* tests/Time_Value_Test.cpp: Removed inclusion of "ace/config.h".
 
 	* ace/inc_user_config.h:  Added this file to prevent multiple
 	  inclusions of config.h file.  Replace `#include "ace/config.h"'
