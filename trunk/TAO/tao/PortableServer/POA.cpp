@@ -2125,16 +2125,39 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 int
 TAO_POA::valid_priority (RTCORBA::Priority priority)
 {
-  // Make sure <priority> matches our resource configuration, i.e., we
-  // have at least one endpoint that can provide service for the
-  // specified <priority>.
-  TAO_Acceptor_Registry *ar =
-    this->orb_core_.acceptor_registry ();
+  // Make sure <priority> matches our resource configuration:
+  // 1. If Priority Banded Connections are set, <priority> must match
+  //    one of the bands.
+  // 2. If no Priority Banded Connections are set, at least one server
+  //    endpoint must provide service at the specified <priority>.
 
-  for (TAO_Acceptor **a = ar->begin (); a != ar->end (); ++a)
+  TAO_PriorityBandedConnectionPolicy *bands_policy =
+    this->policies_.priority_bands ();
+
+  if (bands_policy != 0)
+    // Case 1.
     {
-      if ((*a)->priority () == priority)
-        return 1;
+      RTCORBA::PriorityBands &bands = 
+        bands_policy->priority_bands_rep ();
+
+      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+        {
+          if (priority <= bands[i].high
+              && priority >= bands[i].low)
+            return 1;
+        }
+    }
+  else
+    // Case 2.
+    {
+      TAO_Acceptor_Registry *ar =
+        this->orb_core_.acceptor_registry ();
+
+      for (TAO_Acceptor **a = ar->begin (); a != ar->end (); ++a)
+        {
+          if ((*a)->priority () == priority)
+            return 1;
+        }
     }
 
   return 0;
@@ -3553,40 +3576,16 @@ TAO_POA_Policies::validity_check (CORBA::Environment &ACE_TRY_ENV)
   this->orb_core_.open (ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (this->validate_priority_model () == -1)
-    ACE_THROW (CORBA::BAD_PARAM ());
-
   if (this->validate_server_protocol () == -1)
     ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
-  if (this->validate_priority_bands () == -1)
-    ACE_THROW (PortableServer::POA::InvalidPolicy ());
+  this->validate_priorities (ACE_TRY_ENV);
+  ACE_CHECK;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
 #if (TAO_HAS_RT_CORBA == 1)
-
-int
-TAO_POA_Policies::validate_priority_model (void)
-{
-  if (this->priority_model_ == SERVER_DECLARED)
-    {
-      // Make sure we have at least one endpoint that can provide
-      // service for the specified SERVER_DECLARED priority.
-      TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
-
-      for (TAO_AcceptorSetIterator a = ar->begin (); a != ar->end (); ++a)
-        {
-          if ((*a)->priority () == this->server_priority_)
-            return 0;
-        }
-
-      return -1;
-    }
-
-  return 0;
-}
 
 int
 TAO_POA_Policies::validate_server_protocol (void)
@@ -3612,10 +3611,84 @@ TAO_POA_Policies::validate_server_protocol (void)
   return -1;
 }
 
-int
-TAO_POA_Policies::validate_priority_bands ()
+void
+TAO_POA_Policies::validate_priorities (CORBA::Environment &ACE_TRY_ENV)
 {
-  return 0;
+  // If priority banded connections are set, make sure that:
+  //  0. There is at least one band.
+  //  1. Priority model is also set.
+  //  2. If priority model is SERVER_DECLARED, server_priority must
+  //     match one of the bands.
+  //  3. For each band, there must be at least one endpoint that can
+  //     service it, i.e., whose priority falls into the band's range.
+  if (this->priority_bands_ != 0)
+    {
+      RTCORBA::PriorityBands &bands = 
+        this->priority_bands_->priority_bands_rep ();
+      
+      // Checks 0 and 1.
+      if (bands.length () == 0
+          || this->server_priority_ == TAO_INVALID_PRIORITY)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+        
+      // Check 2.
+      if (this->priority_model_ == SERVER_DECLARED)
+        {
+          int match = 0;
+          for (CORBA::ULong i = 0; i < bands.length (); ++i)
+            {
+              if (this->server_priority_ <= bands[i].high
+                  && this->server_priority_ >= bands[i].low)
+                {
+                  match = 1;
+                  break;
+                }
+            }
+          
+          if (!match)
+            ACE_THROW (PortableServer::POA::InvalidPolicy ());
+        }
+
+      // Check 3.
+      TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
+      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+        {
+          int match = 0;
+          for (TAO_AcceptorSetIterator a = ar->begin (); 
+               a != ar->end (); 
+               ++a)
+            {
+              if ((*a)->priority () <= bands[i].high
+                  && (*a)->priority () >= bands[i].low)
+                {
+                  match = 1;
+                  break;
+                }
+            }
+          if (!match)
+            ACE_THROW (PortableServer::POA::InvalidPolicy ());
+        }
+
+      // Done with checks.
+      return;
+    }
+
+  // If priority banded connections are not set, and the priority
+  // model is SERVER_DECLARED, make sure we have at least one endpoint
+  // that can provide service for the specified SERVER_DECLARED
+  // priority.
+  if (this->priority_model_ == SERVER_DECLARED)
+    {
+      TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
+
+      for (TAO_AcceptorSetIterator a = ar->begin (); a != ar->end (); ++a)
+        {
+          if ((*a)->priority () == this->server_priority_)
+            return;
+        }
+      
+      ACE_THROW (CORBA::BAD_PARAM ());
+    }
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -4052,7 +4125,8 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
   // To preserve correctness with multithreading applications, a
   // separate filter must be used for each object.  Here we allocate a
   // filter of the stack, if necessary.
-  if (this->policies ().priority_model ()
+  if (this->policies ().priority_bands () == 0
+      && this->policies ().priority_model ()
       == TAO_POA_Policies::SERVER_DECLARED
       && this->policies ().server_priority () != priority)
     {

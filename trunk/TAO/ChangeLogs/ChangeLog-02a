@@ -1,3 +1,24 @@
+Tue Nov 14 01:51:49 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Invocation.h
+	* tao/Invocation_Endpoint_Selectors.cpp
+	* tao/Invocation_Endpoint_Selectors.h
+	* tao/Invocation_Endpoint_Selectors.i
+	* tao/ORB_Core.h
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+
+	  Added two new endpoint selector strategies for use when
+	  RTCORBA::PriorityBandedConnection policy is enabled:
+	  TAO_Bands_Endpoint_Selector and TAO_Bands_Protocol_Selector.
+	
+	* tao/PortableServer/POA.cpp
+	* tao/PortableServer/POA.h
+	* tao/PortableServer/POA.i:
+
+	  Added validity checks for RTCORBA::PriorityBandedConnection
+	  policy. 
+
 Mon Nov 13 19:22:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Server_Protocol/server.conf:
