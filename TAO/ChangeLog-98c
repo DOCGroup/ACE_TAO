@@ -1,3 +1,10 @@
+Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * *.h: changed include protection from #if !defined to ifndef.
+          Added #pragma once, if possible, i.e., after #include of
+          an ace/ header.  It can only be done after ace/config.h
+          is included, becase some platforms don't allow #pragma once.
+
 Mon Oct 19 15:37:53 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): Fixed a
