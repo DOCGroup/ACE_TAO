@@ -33,8 +33,8 @@ be_enum::be_enum (void)
     AST_ConcreteType (),
     UTL_Scope (),
     AST_Enum (),
-    be_decl (),
     be_scope (),
+    be_decl (),
     be_type ()
 {
 }
@@ -54,9 +54,9 @@ be_enum::be_enum (UTL_ScopedName *n,
     AST_Enum (n,
               local,
               abstract),
+    be_scope (AST_Decl::NT_enum),
     be_decl (AST_Decl::NT_enum,
              n),
-    be_scope (AST_Decl::NT_enum),
     be_type (AST_Decl::NT_enum,
              n)
 {

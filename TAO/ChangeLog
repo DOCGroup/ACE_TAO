@@ -1,3 +1,14 @@
+Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_eventtype.cpp:
+	* TAO_IDL/be/be_eventtype_fwd.cpp:
+	* TAO_IDL/be/be_union_fwd.cpp:
+
+	  Fixed mistakes in constructor reordering from
+
+	  Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Wed Jun 18 13:53:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTEvent.dsp:
