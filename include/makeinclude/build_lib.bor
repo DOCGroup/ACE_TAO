@@ -56,12 +56,28 @@ INSTALL_TYPES =	lib includes
 
 .path.obj = $(OBJDIR)
 
+!ifdef DEBUG
+!ifndef NO_FULL_PATH
+USE_FULL_PATH = 1
+!endif
+!endif
+
 .cpp.obj:
 	@$(MAKE_OBJDIR)
+!ifdef USE_FULL_PATH
+	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+!else
 	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+!endif
 
 .c.obj:
 	@$(MAKE_OBJDIR)
+!ifdef USE_FULL_PATH
+	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+!else
 	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+!endif
 
 .autodepend
