@@ -98,7 +98,7 @@ TAO_PG_PropertyManager::remove_default_properties (
 
 void
 TAO_PG_PropertyManager::set_type_properties (
-    const PortableGroup::TypeId type_id,
+    const char * type_id,
     const PortableGroup::Properties & overrides
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -127,7 +127,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_type_properties (
-    const PortableGroup::TypeId type_id
+    const char * type_id
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -175,7 +175,7 @@ TAO_PG_PropertyManager::get_type_properties (
 
 void
 TAO_PG_PropertyManager::remove_type_properties (
-    const PortableGroup::TypeId type_id,
+    const char * type_id,
     const PortableGroup::Properties & props
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,

@@ -104,7 +104,6 @@ be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
                              "failed to accept visitor\n"),  
                             -1);
         }
-
       this->ctx_->alias (0); // reset
     }
   else

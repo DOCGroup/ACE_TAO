@@ -140,8 +140,7 @@ Identity_Server::register_groups (ACE_ENV_SINGLE_ARG_DECL)
   // Unbind the previously registered random group.
   ACE_TRY_EX (UNBIND_RANDOM)
     {
-      factory->unbind_random (ACE_const_cast (const Load_Balancer::Group_ID,
-                                              "Random group")
+      factory->unbind_random ("Random group"
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (UNBIND_RANDOM);
     }
@@ -155,8 +154,7 @@ Identity_Server::register_groups (ACE_ENV_SINGLE_ARG_DECL)
   // Unbind the previously registered round robin group
   ACE_TRY_EX (UNBIND_ROUND)
     {
-      factory->unbind_round_robin (ACE_const_cast (const Load_Balancer::Group_ID,
-                                                   "Round Robin group")
+      factory->unbind_round_robin ("Round Robin group"
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (UNBIND_ROUND);
     }
@@ -170,14 +168,12 @@ Identity_Server::register_groups (ACE_ENV_SINGLE_ARG_DECL)
 
   // We want to make two groups Random & Round Robin.
   Load_Balancer::Object_Group_var random_group =
-    factory->make_random (ACE_const_cast (const Load_Balancer::Group_ID,
-                                          "Random group")
+    factory->make_random ("Random group"
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Load_Balancer::Object_Group_var rr_group =
-    factory->make_round_robin (ACE_const_cast (const Load_Balancer::Group_ID,
-                                               "Round Robin group")
+    factory->make_round_robin ("Round Robin group"
                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 

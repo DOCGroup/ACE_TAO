@@ -38,10 +38,10 @@ public:
                     const CORBA::Object_ptr object_ptr);
   // export a specific factory
 
-  CORBA::Object_ptr query (const CosTrading::Constraint constraint);
+  CORBA::Object_ptr query (const char* constraint);
   // query for a specific factory using a constraint
 
-  static const CosTrading::ServiceTypeName GENERIC_FACTORY_INTERFACE_REPOSITORY_ID;
+  static const char * GENERIC_FACTORY_INTERFACE_REPOSITORY_ID;
 private:
   TAO_Service_Type_Repository repository_;
   TAO_Trader_Factory::TAO_TRADER *trader_ptr_;

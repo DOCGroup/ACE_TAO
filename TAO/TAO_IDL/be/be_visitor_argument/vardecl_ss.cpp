@@ -386,20 +386,32 @@ int be_visitor_args_vardecl_ss::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
 
-  if (this->ctx_->alias ())
+  switch (this->direction ())
     {
-      *os << this->type_name (node, "_var ");
-    }
-  else if (node->width () == (long) sizeof (char))
-    {
-      *os << "CORBA::String_var ";
-    }
-  else
-    {
-      *os << "CORBA::WString_var ";
-    }
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      if (node->width () == (long) sizeof (char))
+        {
+          *os << "CORBA::String_var " << arg->local_name () << ";";
+        }
+      else
+        {
+          *os << "CORBA::WString_var " << arg->local_name () << ";";
+        }
 
-  *os << arg->local_name () << ";";
+      break;
+    case AST_Argument::dir_OUT:
+      if (node->width () == (long )sizeof (char))
+        {
+          *os << "CORBA::String_var " << arg->local_name () << ";";
+        }
+      else
+        {
+          *os << "CORBA::WString_var " << arg->local_name () << ";";
+        }
+
+      break;
+    }
 
   return 0;
 }

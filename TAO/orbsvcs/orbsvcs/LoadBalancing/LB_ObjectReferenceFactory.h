@@ -67,7 +67,7 @@ class TAO_LB_ObjectReferenceFactory
    */
   //@{
   virtual CORBA::Object_ptr make_object (
-      const char *repository_id,
+      const char * repository_id,
       const PortableInterceptor::ObjectId & id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -95,7 +95,7 @@ protected:
 
   /// Retrieve the object group reference for objects with the given
   /// RepositoryId.
-  CORBA::Boolean find_object_group (const PortableGroup::TypeId repository_id,
+  CORBA::Boolean find_object_group (const char * repository_id,
                                     CORBA::ULong & index,
                                     PortableGroup::ObjectGroup_out object_group
                                     ACE_ENV_ARG_DECL);

@@ -3013,16 +3013,15 @@ be_visitor_typecode_defn::compute_tc_size (be_typedef *node)
   else
     {
       if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_typecode_defn::"
-                             "compute_tc_size (typedef) - "
-                             "queue insert failed\n"),
-                            -1);
-        }
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_typecode_defn::"
+                           "compute_tc_size (typedef) - "
+                           "queue insert failed\n"),
+                          -1);
+      }
 
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
-
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -3054,7 +3053,6 @@ be_visitor_typecode_defn::compute_encap_length (be_typedef *node)
   // add the encapsulation length of our base type
   bt = be_type::narrow_from_decl (node->base_type ());
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
-
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -3066,6 +3064,7 @@ be_visitor_typecode_defn::compute_encap_length (be_typedef *node)
 
   this->computed_encap_len_ = encap_len + this->computed_tc_size_;
   return this->computed_encap_len_;
+
 }
 
 
@@ -3428,7 +3427,6 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       // size of the repoID field
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
     }
-
   *os << "\n";
 
   return;

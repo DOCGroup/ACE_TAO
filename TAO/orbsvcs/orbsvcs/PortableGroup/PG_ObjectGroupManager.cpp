@@ -46,7 +46,7 @@ PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_member (
     PortableGroup::ObjectGroup_ptr /* object_group */,
     const PortableGroup::Location & /* the_location */,
-    const PortableGroup::TypeId /* type_id */,
+    const char * /* type_id */,
     const PortableGroup::Criteria & /* the_criteria */
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -337,7 +337,7 @@ PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
   CORBA::ULong group_id,
   const PortableServer::ObjectId &oid,
-  const PortableGroup::TypeId type_id,
+  const char * type_id,
   const PortableGroup::Criteria & the_criteria
   ACE_ENV_ARG_DECL)
 {
@@ -404,7 +404,7 @@ TAO_PG_ObjectGroupManager::destroy_object_group (
   delete group_entry;
 }
 
-PortableGroup::TypeId
+char *
 TAO_PG_ObjectGroupManager::type_id (
   PortableGroup::ObjectGroup_ptr object_group
   ACE_ENV_ARG_DECL)

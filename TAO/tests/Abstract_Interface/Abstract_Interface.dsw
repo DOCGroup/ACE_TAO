@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Abstract Interface Client"=".\Abstract_Interface_Client.dsp" - Package Owner=<4>
+Project: "Abstract Interface Client"=".\Abstract Interface Client\Abstract Interface Client.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Abstract Interface Server"=".\Abstract_Interface_Server.dsp" - Package Owner=<4>
+Project: "Abstract Interface Server"=".\Abstract Interface Server\Abstract Interface Server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -38,3 +38,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+

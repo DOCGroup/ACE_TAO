@@ -60,7 +60,7 @@ public:
   virtual PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
-      const PortableGroup::TypeId type_id,
+      const char * type_id,
       const PortableGroup::Criteria & the_criteria
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -140,7 +140,7 @@ public:
   PortableGroup::ObjectGroup_ptr create_object_group (
     CORBA::ULong group_id,
     const PortableServer::ObjectId &oid,
-    const PortableGroup::TypeId type_id,
+    const char * type_id,
     const PortableGroup::Criteria & the_criteria
     ACE_ENV_ARG_DECL);
 
@@ -161,8 +161,8 @@ public:
                      PortableGroup::ObjectGroupNotFound));
 
   /// Return the type_id for the given object group.
-  PortableGroup::TypeId type_id (PortableGroup::ObjectGroup_ptr object_group
-                                 ACE_ENV_ARG_DECL);
+  char * type_id (PortableGroup::ObjectGroup_ptr object_group
+                  ACE_ENV_ARG_DECL);
 
   /// Return the object group associated with the given ObjectId.
   /**
