@@ -1,3 +1,10 @@
+Tue Feb 15 08:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry.cpp:
+          Fixed problem in static template member instantiation, thanks to
+          Werner Buchert <w dot buchert at medat dot de> for reporting
+          this
+
 Mon Feb 14 23:05:55 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_recursive.cpp:
@@ -83,9 +90,9 @@ Mon Feb 14 23:05:55 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  - Fixed bug that aborted the IDL compiler when an eventtype
 	    contained a constant declaration. Thanks to Steven Baker
 	    <Steven_D_Baker@raytheon.com> for reporting the bug.
-	    
+
 	* tests/IDL_Test/interface.idl:
-	
+
 	  Expanded sample IDL file sent in by Don Sharp in the
 	  second list item above and added it to the test suite.
 
