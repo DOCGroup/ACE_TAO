@@ -54,6 +54,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ECT_Throughput"=.\EC_Throughput\ECT_Throughput.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "EC_Mcast"=.\EC_Mcast\EC_Mcast.dsp - Package Owner=<4>
 
 Package=<5>
