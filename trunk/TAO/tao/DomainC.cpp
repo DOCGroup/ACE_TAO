@@ -73,7 +73,7 @@ CORBA_DomainManager_ptr CORBA_DomainManager::_unchecked_narrow (
       ACE_NEW_RETURN (
           retval,
           POA_CORBA::_tao_collocated_DomainManager (
-              ACE_reinterpret_cast (POA_CORBA::DomainManager_ptr, 
+              ACE_reinterpret_cast (POA_CORBA::DomainManager_ptr,
                                     servant),
               stub
             ),
@@ -114,7 +114,10 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
   for (;;)
   {
     _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (_tao_retval);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
@@ -180,7 +183,7 @@ CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/ConstructionPolicy:1.0");
 
-  CORBA::ConstructionPolicy_ptr retval = 
+  CORBA::ConstructionPolicy_ptr retval =
     CORBA::ConstructionPolicy::_nil ();
 
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -200,8 +203,8 @@ CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_ConstructionPolicy (
-          ACE_reinterpret_cast (POA_CORBA::ConstructionPolicy_ptr, 
-                                servant), 
+          ACE_reinterpret_cast (POA_CORBA::ConstructionPolicy_ptr,
+                                servant),
           stub
         ),
       CORBA::ConstructionPolicy::_nil ()
@@ -243,7 +246,10 @@ void CORBA::ConstructionPolicy::make_domain_manager (
   for (;;)
   {
     _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+    ACE_CHECK;
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK;
 
 #if 0
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();

@@ -91,7 +91,7 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
     }
 
   // Here we do not have our overridden be_interface methods,
-  // so the interface type strategy does not work here. 
+  // so the interface type strategy does not work here.
   // We have to go by foot.
   // Genereate scope name.
   *os << parent->compute_name ("AMI_", "_Handler");
@@ -107,7 +107,7 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
         *os << "set_";
       else
         *os << "get_";
-    }  
+    }
   *os << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
@@ -697,7 +697,22 @@ gen_marshal_and_invoke (be_operation *node,
   *os << "ACE_TRY_ENV.clear ();" << be_nl;
   *os << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
   // Check if there is an exception.
-  *os << "ACE_CHECK;";
+  *os << "ACE_CHECK;\n" << be_nl;
+
+  // @@ Put interceptor here????
+
+  // Prepare the request header
+  *os << "_tao_call.prepare_header (";
+  switch (node->flags ())
+    {
+    case AST_Operation::OP_oneway:
+      *os << "0";
+      break;
+    default:
+      *os << "1";
+    }
+  *os << ", ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK;\n" << be_nl;
 
   // Now make sure that we have some AMI result  parameter or OUT or
   // INOUT parameters. Otherwise, there is nothing to be marshaled

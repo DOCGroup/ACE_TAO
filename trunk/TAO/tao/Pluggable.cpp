@@ -181,10 +181,6 @@ TAO_Transport::leader_follower_condition_variable (void)
 void
 TAO_Transport::start_request (TAO_ORB_Core *,
                               const TAO_Profile *,
-                              const char* ,
-                              CORBA::ULong ,
-                              const IOP::ServiceContextList &,
-                              CORBA::Boolean,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))

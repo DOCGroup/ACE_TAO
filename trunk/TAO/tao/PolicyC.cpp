@@ -93,7 +93,7 @@ void CORBA_PolicyError::_raise ()
 CORBA::Exception *CORBA_PolicyError::_alloc (void)
 {
   CORBA::Exception *retval = 0;
-   
+
   ACE_NEW_RETURN (retval,
                   CORBA_PolicyError,
                   0);
@@ -197,7 +197,7 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
   stub->_incr_refcnt ();
   if (servant == 0)
     {
-      CORBA_Policy_ptr rval = 
+      CORBA_Policy_ptr rval =
         CORBA_Policy::_nil ();
 
       ACE_NEW_RETURN (rval,
@@ -209,13 +209,13 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
 
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-  CORBA_Policy_ptr retval = 
+  CORBA_Policy_ptr retval =
     CORBA_Policy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_Policy (
-          ACE_reinterpret_cast (POA_CORBA::Policy_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::Policy_ptr,
                                 servant),
           stub
         ),
@@ -248,6 +248,9 @@ CORBA::PolicyType CORBA_Policy::policy_type (
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -296,6 +299,9 @@ CORBA_Policy_ptr CORBA_Policy::copy (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
@@ -341,6 +347,9 @@ void CORBA_Policy::destroy (
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK;
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -446,13 +455,13 @@ CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
       (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyManager:1.0")) == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_PolicyManager::_nil ());
 
-  CORBA::PolicyManager_ptr retval = 
+  CORBA::PolicyManager_ptr retval =
     CORBA_PolicyManager::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_PolicyManager (
-          ACE_reinterpret_cast (POA_CORBA::PolicyManager_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::PolicyManager_ptr,
                                 servant),
           0
         ),
@@ -519,13 +528,13 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
       (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyCurrent:1.0")) == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_PolicyCurrent::_nil ());
 
-  CORBA_PolicyCurrent_ptr retval = 
+  CORBA_PolicyCurrent_ptr retval =
     CORBA_PolicyCurrent::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_PolicyCurrent (
-          ACE_reinterpret_cast  (POA_CORBA::PolicyCurrent_ptr, 
+          ACE_reinterpret_cast  (POA_CORBA::PolicyCurrent_ptr,
                                  servant),
           0
         ),
