@@ -287,17 +287,18 @@ visit_in (TAO_Binary_Constraint* binary_in)
       
       if (this->expr_returns_number (left_type))
 	{
-	  types_match = prop_type->equal (_tc_ShortSeq, env) ||
-	    prop_type->equal (_tc_UShortSeq, env) ||
-	    prop_type->equal (_tc_LongSeq, env) ||
-	    prop_type->equal (_tc_ULongSeq, env) ||
-	    prop_type->equal (_tc_DoubleSeq, env) ||
-	    prop_type->equal (_tc_FloatSeq, env);
+	  types_match =
+	    prop_type->equal (TAO_Sequences::_tc_ShortSeq, env) ||
+	    prop_type->equal (TAO_Sequences::_tc_UShortSeq, env) ||
+	    prop_type->equal (TAO_Sequences::_tc_LongSeq, env) ||
+	    prop_type->equal (TAO_Sequences::_tc_ULongSeq, env) ||
+	    prop_type->equal (TAO_Sequences::_tc_DoubleSeq, env) ||
+	    prop_type->equal (TAO_Sequences::_tc_FloatSeq, env);
 	}
       else if (this->expr_returns_boolean (left_type))
-	types_match = prop_type->equal (_tc_BooleanSeq, env);
+	types_match = prop_type->equal (TAO_Sequences::_tc_BooleanSeq, env);
       else if (this->expr_returns_string (left_type))
-	types_match = prop_type->equal (_tc_StringSeq, env);
+	types_match = prop_type->equal (TAO_Sequences::_tc_StringSeq, env);
       
       if (types_match)
 	return_value = left->accept(this);

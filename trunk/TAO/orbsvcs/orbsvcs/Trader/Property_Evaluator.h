@@ -39,7 +39,7 @@ class TAO_Property_Evaluator
 {
 public:
   
-  TAO_Property_Evaluator(CosTrading::PropertySeq& properties,
+  TAO_Property_Evaluator(const CosTrading::PropertySeq& properties,
 			 CORBA::Boolean supports_dp = 1);
   
   TAO_Property_Evaluator(CosTrading::Offer& offer,
@@ -75,7 +75,7 @@ protected:
   typedef CosTradingDynamic::DynamicProp DP_Struct;
   typedef CosTradingDynamic::DynamicPropEval DP_Eval;
   
-  CosTrading::PropertySeq& props_;
+  const CosTrading::PropertySeq& props_;
   // The offer from which the TAO_Property_Evaluator extracts property 
   // information.
 
@@ -96,7 +96,7 @@ class TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
 public:
 
-  TAO_Property_Evaluator_By_Name (CosTrading::PropertySeq& properties,
+  TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
 				  CORBA::Environment& _env,
 				  CORBA::Boolean supports_dp = 1)
     TAO_THROW_SPEC ((CosTrading::DuplicatePropertyName,

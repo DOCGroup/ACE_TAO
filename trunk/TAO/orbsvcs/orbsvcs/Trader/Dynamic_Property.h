@@ -46,6 +46,8 @@ class TAO_Dynamic_Property :
 public:
 
   TAO_Dynamic_Property(const char* name = "Dynamic Property");
+
+  ~TAO_Dynamic_Property (void);
   
   CosTradingDynamic::DynamicProp*
     register_handler(const char* name,
@@ -80,5 +82,9 @@ private:
   HANDLER_MAP handlers_;
 
 };
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Dynamic_Property.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_DYNAMIC_PROPERTY_H*/

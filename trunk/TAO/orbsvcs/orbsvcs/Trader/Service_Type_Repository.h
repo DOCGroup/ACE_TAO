@@ -138,8 +138,8 @@ public:
     describe_type (const char * name,
 		   CORBA::Environment& _env) 
     TAO_THROW_SPEC ((CORBA::SystemException,
-		    CosTrading::IllegalServiceType, 
-		    CosTrading::UnknownServiceType));
+		     CosTrading::IllegalServiceType, 
+		     CosTrading::UnknownServiceType));
   // BEGIN SPEC
   // The describe_type operation permits a client to obtain the
   // details for a particular service type. ° If "name" is malformed,
@@ -147,13 +147,13 @@ public:
   // "name" does not exist within the repository, then the
   // CosTrading::UnknownServiceType exception is raised. 
   // END SPEC
-       
+  
   virtual SERVICE_TYPE_REPOS::TypeStruct* 
     fully_describe_type (const char * name,
 			 CORBA::Environment& _env) 
     TAO_THROW_SPEC ((CORBA::SystemException, 
-		    CosTrading::IllegalServiceType, 
-		    CosTrading::UnknownServiceType));
+		     CosTrading::IllegalServiceType, 
+		     CosTrading::UnknownServiceType));
   // BEGIN SPEC
   // The fully_describe_type operation permits a client to obtain the
   // details for a particular service type. The property sequence
@@ -169,9 +169,9 @@ public:
   virtual void mask_type (const char * name,
 			  CORBA::Environment& _env) 
     TAO_THROW_SPEC ((CORBA::SystemException,
-		    CosTrading::IllegalServiceType, 
-		    CosTrading::UnknownServiceType, 
-		    SERVICE_TYPE_REPOS::AlreadyMasked));
+		     CosTrading::IllegalServiceType, 
+		     CosTrading::UnknownServiceType, 
+		     SERVICE_TYPE_REPOS::AlreadyMasked));
   // BEGIN SPEC
   // The mask_type operation permits the deprecation of a particular
   // type (i.e., after being masked, exporters will no longer be able
