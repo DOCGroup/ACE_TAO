@@ -201,22 +201,22 @@ TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , co
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::StructuredProxyPushSupplier_var& proxy, const char * proxy_name ACE_ENV_ARG_DECL)
+TAO_NS_LookupManager::resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, const char *supplier_name ACE_ENV_ARG_DECL)
 {
-  CORBA::Object_var object = this->resolve_object (proxy_name ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var object = this->resolve_object (supplier_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  proxy = CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
+  supplier = CosNotifyComm::StructuredPushSupplier::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::StructuredProxyPushConsumer_var& proxy, const char * proxy_name ACE_ENV_ARG_DECL)
+TAO_NS_LookupManager::resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, const char * consumer_name ACE_ENV_ARG_DECL)
 {
-  CORBA::Object_var object = this->resolve_object (proxy_name ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var object = this->resolve_object (consumer_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  proxy = CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
+  consumer = CosNotifyComm::StructuredPushConsumer::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

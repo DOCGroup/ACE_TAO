@@ -68,16 +68,10 @@ protected:
     DUMP_STATE
   };
 
+  /// My name.
   ACE_CString name_;
 
-  ACE_CString admin_;
-
-  ACE_CString poa_;
-
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop_;
-
-  CosNotifyChannelAdmin::ProxyID id_;
-
+  /// QoS
   CosNotification::QoSProperties qos_;
 
   // Offer change

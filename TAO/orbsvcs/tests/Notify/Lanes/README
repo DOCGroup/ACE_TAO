@@ -32,10 +32,27 @@ An RT POA is created with 4 lanes (identical to the one setup on the
 eventchannel).
 
 3 Periodic consumers and created and activated in the local RT POA.
- 
+
 Expected Result:
 ==============
 if a request reaches a Lane that it was not supposed to, an
 error message is printed. otherwise some housekeeping messages are
-generated when the test runs.  
+generated when the test runs.
 
+
+Running the test on 1 host:
+-------------------------
+$> perl run_test.pl
+
+
+Running the test distributed:
+-------------------------
+
+on Host1:
+$1> perl run_test_notify.pl
+
+on Host2:
+$2> perl run_test_supplier.pl
+
+on Host3:
+$3> perl run_test_consumer.pl
