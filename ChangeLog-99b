@@ -1,3 +1,8 @@
+Tue Jun  8 12:42:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Fixed lots of brokens URL links.  Thanks to Eric S Rosenthal
+	  <esr@netcom.com> for reporting these.
+
 Mon Jun  7 17:09:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * examples/Naming/test_multiple_contexts.cpp (main): Added a cast
