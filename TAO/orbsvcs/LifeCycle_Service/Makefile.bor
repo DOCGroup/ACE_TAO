@@ -1,9 +1,0 @@
-#
-# $Id$
-#
-# Makefile for building the LifeCycle_service executables
-#
-
-MAKEFILES = LifeCycle_Service.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  core = 1
-}
