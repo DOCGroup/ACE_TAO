@@ -56,6 +56,7 @@
 # include /**/ <limits.h>   // Integer limits
 # include /**/ <float.h>    // Floating point limits
 # include /**/ <stdlib.h>   // Other types
+# include /**/ <stddef.h>   // Get ptrdiff_t - see further comments below
 
 # if defined(ACE_LACKS_LONGLONG_T)
 #   include /**/ <stdarg.h> // LynxOS requires this before stdio.h
@@ -260,21 +261,11 @@ typedef unsigned char ACE_Byte;
 // Type for doing arithmetic on pointers ... as elsewhere, we assume
 // that unsigned versions of a type are the same size as the signed
 // version of the same type.
-#if ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT
-# if defined (__SUNPRO_CC)
-    // For unknown reasons, Sun CC 5.0 won't allow a reintepret cast
-    // of a 64-bit pointer to a 64-bit int.
-    typedef unsigned long ptr_arith_t;
-# else  /* ! __SUNPRO_CC */
-    typedef unsigned int ptr_arith_t;
-# endif /* ! __SUNPRO_CC */
-#elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
-  typedef unsigned long ptr_arith_t;
-#elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-  typedef unsigned long long ptr_arith_t;
-#else
-# error "Can't find a suitable type for doing pointer arithmetic."
-#endif /* ACE_SIZEOF_VOID_P */
+// NOTE! ptr_arith_t is an ACE-defined type and should not be used.
+// It has been superseded by the standard type ptrdiff_t. This definition
+// is simply a placeholder til all ptr_arith_t usage can be expunged from
+// ACE and TAO.
+typedef ptrdiff_t ptr_arith_t;
 
 // Byte-order (endian-ness) determination.
 # if defined (BYTE_ORDER)
