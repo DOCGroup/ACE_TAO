@@ -88,17 +88,6 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
       return 0;
     }
 
-  AST_Module *module =
-    AST_Module::narrow_from_scope (node->defined_in ());
-
-  if (module == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_amh_pre_proc::"
-                         "visit_interface - module is null\n"),
-                        -1);
-    }
-
   // Create the exception holder, it needs to go before the response
   // handler, because the response handler uses an exception holder as
   // argument for some of its operations....
@@ -106,6 +95,9 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
     this->create_exception_holder (node);
   excep_holder->set_defined_in (node->defined_in ());
   excep_holder->original_interface (node);
+  
+  AST_Module *module =
+    AST_Module::narrow_from_scope (node->defined_in ());
   module->set_has_nested_valuetype ();
 
   // Create the ResponseHandler class
@@ -191,7 +183,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
 
   this->elem_number_ = 0;
 
-  // initialize an iterator to iterate thru our scope
+  // Initialize an iterator to iterate thru our scope.
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
@@ -202,31 +194,54 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_amh_pre_proc::"
-                             "visit_interface - "
+                             "add_rh_node_members - "
                              "bad node in this scope\n"),
                             0);
         }
 
       AST_Decl::NodeType nt = d->node_type ();
+      int status = 0;
 
       if (nt == AST_Decl::NT_attr)
         {
-          be_attribute *attribute = be_attribute::narrow_from_decl (d);
+          be_attribute *attr = be_attribute::narrow_from_decl (d);
 
-          if (!attribute)
+          if (attr != 0)
             {
-              return 0;
+              status =
+                this->create_response_handler_attribute (attr,
+                                                         response_handler,
+                                                         exception_holder);
+                                                        
+              if (status == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                    "(%N:%l) be_visitor_amh_pre_proc::"
+                                    "add_rh_node_members - "
+                                    "attribute creation failed\n"),
+                                    0);
+                }
             }
         }
       else if (nt == AST_Decl::NT_op)
         {
           be_operation* operation = be_operation::narrow_from_decl (d);
 
-          if (operation)
+          if (operation != 0)
             {
-              this->create_response_handler_operation (operation,
-                                                       response_handler,
-                                                       exception_holder);
+              status =
+                this->create_response_handler_operation (operation,
+                                                         response_handler,
+                                                         exception_holder);
+                                                        
+              if (status == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                    "(%N:%l) be_visitor_amh_pre_proc::"
+                                    "add_rh_node_members - "
+                                    "operation creation failed\n"),
+                                    0);
+                }
             }
         }
       else
@@ -250,15 +265,6 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
       return -1;
     }
 
-  // @@ Mayur, we do want to generate code for oneways!  This is
-  // needed to support reliable oneways with the SYNC_WITH_TARGET
-  // policy.
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      // We do nothing for oneways!
-      return 0;
-    }
-
   if (this->add_normal_reply (node, response_handler) == -1)
     {
       return -1;
@@ -267,6 +273,84 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
   return this->add_exception_reply (node,
                                     response_handler,
                                     exception_holder);
+}
+
+int
+be_visitor_amh_pre_proc::create_response_handler_attribute (
+    be_attribute *node,
+    be_interface *response_handler,
+    be_valuetype *exception_holder
+  )
+{
+  // Temporerily generate the get operation.
+  be_operation *get_operation = this->generate_get_operation (node);
+
+  this->visit_operation (get_operation);
+
+  be_operation_default_strategy *default_strategy = 0;
+  ACE_NEW_RETURN (default_strategy,
+                  be_operation_default_strategy (get_operation),
+                  -1);
+
+  be_operation_strategy *get_operation_strategy =
+    get_operation->set_strategy (default_strategy);
+
+  if (get_operation_strategy)
+    {
+      be_operation_strategy *gos =
+        node->set_get_strategy (get_operation_strategy);
+      delete gos;
+      gos = 0;
+    }
+    
+  int status =
+    this->create_response_handler_operation (get_operation,
+                                             response_handler,
+                                             exception_holder);
+                                             
+  if (status == -1)
+    {
+      return -1;
+    }
+
+  if (node->readonly ())
+    {
+      return 0;
+    }
+    
+  // Temporarily generate the set operation.
+  be_operation *set_operation = this->generate_set_operation (node);
+
+  this->visit_operation (set_operation);
+
+  // Retrieve the strategy set by the visit operation.
+  ACE_NEW_RETURN (default_strategy,
+                  be_operation_default_strategy (set_operation),
+                  -1);
+
+  be_operation_strategy *set_operation_strategy =
+    set_operation->set_strategy (default_strategy);
+
+  // Assign it to the attribute as set_operation strategy.
+  if (set_operation_strategy)
+    {
+      be_operation_strategy *sos =
+        node->set_set_strategy (set_operation_strategy);
+      delete sos;
+      sos = 0;
+    }
+
+  status =
+    this->create_response_handler_operation (set_operation,
+                                             response_handler,
+                                             exception_holder);
+                                             
+  if (status == -1)
+    {
+      return -1;
+    }
+
+  return 0;
 }
 
 int
@@ -420,7 +504,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_amh_pre_proc::"
-                             "create_response_handler_operation - "
+                             "add_normal_reply - "
                              "bad node in this scope\n"),
                             -1);
 
@@ -485,56 +569,8 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
   return 0;
 }
 
-int
-be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
-{
-  // Temporarily generate the set operation.
-  be_operation *set_operation = this->generate_set_operation (node);
-
-  this->visit_operation (set_operation);
-
-  // Retrieve the strategy set by the visit operation.
-  be_operation_default_strategy *default_strategy = 0;
-  ACE_NEW_RETURN (default_strategy,
-                  be_operation_default_strategy (set_operation),
-                  -1);
-
-  be_operation_strategy *set_operation_strategy =
-    set_operation->set_strategy (default_strategy);
-
-  // Assign it to the attribute as set_operation strategy.
-  if (set_operation_strategy)
-    {
-      be_operation_strategy *sos =
-        node->set_set_strategy (set_operation_strategy);
-      delete sos;
-      sos = 0;
-    }
-
-  // Temporerily generate the get operation.
-  be_operation *get_operation = this->generate_get_operation (node);
-
-  this->visit_operation (get_operation);
-
-  ACE_NEW_RETURN (default_strategy,
-                  be_operation_default_strategy (get_operation),
-                  -1);
-
-  be_operation_strategy *get_operation_strategy =
-    get_operation->set_strategy (default_strategy);
-
-  if (get_operation_strategy)
-    {
-      be_operation_strategy *gos =
-        node->set_get_strategy (get_operation_strategy);
-      delete gos;
-      gos = 0;
-    }
-
-
-  return 0;
-}
-
+// @@@ (JP) I think this can be removed. It is doing nothing
+// that the generic visit_scope() is not doing.
 int
 be_visitor_amh_pre_proc::visit_scope (be_scope *node)
 {
@@ -725,18 +761,6 @@ be_visitor_amh_pre_proc::create_raise_operation (
   if (operation_kind == NORMAL)
     {
       orig_op = be_operation::narrow_from_decl (node);
-
-      if (orig_op)
-        {
-          // @@ Mayur, we do want to generate code for oneways!  This is
-          // needed to support reliable oneways with the SYNC_WITH_TARGET
-          // policy, the user can raise system exceptions here.
-          if (orig_op->flags () == AST_Operation::OP_oneway)
-            {
-              // We do nothing for oneways!
-              return 0;
-            }
-        }
     }
 
   // Create the return type, which is "void"
