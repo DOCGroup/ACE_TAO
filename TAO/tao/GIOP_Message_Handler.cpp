@@ -375,7 +375,6 @@ TAO_GIOP_Message_Handler::more_messages (void)
           return this->get_message ();
         }
 
-
     }
 
   return TAO_MESSAGE_BLOCK_COMPLETE;
@@ -437,6 +436,15 @@ TAO_GIOP_Message_Handler::get_message (void)
 
           this->supp_buffer_.rd_ptr (this->message_state_.message_size);
           return this->message_state_.is_complete (this->current_buffer_);
+        }
+      else
+        {
+          // The remaining message in the supp buffer
+          this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
+                                      this->supp_buffer_.length ());
+
+          // Reset the supp buffer now
+          this->supp_buffer_.reset ();
         }
     }
 

@@ -1,3 +1,11 @@
+Fri Feb 16 15:06:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp: Fixed a problem in the case when
+	  multiple one way messages were read from the socket. All the
+	  complete calls got processed correctly. One of the incomplete
+	  calls at the boundary was not processed properly. This should
+	  fix the reliable one way test failures.
+
 Fri Feb 16 11:09:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Makefile:
