@@ -1,3 +1,16 @@
+Sun Dec  7 14:29:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Sequence_Latency/Single_Threaded/client.dsp:
+	* performance-tests/Sequence_Latency/Single_Threaded/server.dsp:
+	* performance-tests/Sequence_Latency/DSI/client.dsp:
+	* performance-tests/Sequence_Latency/DSI/server.dsp:
+	  Fixed release configuration
+
+	* performance-tests/Sequence_Latency/DSI/DSI_Latency.ncb:
+	* performance-tests/Sequence_Latency/DSI/DSI_Latency.opt:
+	  Removed these files from the repo, they are MSVC6 generated and
+	  don't need to be in the repo
+
 Sun Dec  7 14:24:06 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/AMH_Exceptions/server.dsp:
