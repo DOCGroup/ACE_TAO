@@ -18,6 +18,14 @@ Depend : #
 	$(MAKE) -f Makefile.client $@
 
 HTML : #
+	[ -f hdr ] || $(MAKE) UNSHAR
 	perl ../combine *.pre
+	rm -f *.bdy
 
-include .depend
+SHAR : #
+	[ ! -f combine.shar ] || exit 1
+	shar -T hdr links *.pre *.pst > combine.shar
+	rm -f hdr links *.pre *.pst
+
+UNSHAR : #
+	sh combine.shar
