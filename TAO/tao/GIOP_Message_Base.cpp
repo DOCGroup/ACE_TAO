@@ -309,6 +309,7 @@ TAO_GIOP_Message_Base::message_type (
   return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 }
 
+#if 0
 int
 TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
 {
@@ -566,6 +567,7 @@ TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
   // Reset the message_state
   this->message_state_.reset ();
 }
+#endif
 
 int
 TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
@@ -1532,6 +1534,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg)
 }
 
 
+#if 0
 TAO_Queued_Data *
 TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 {
@@ -1567,9 +1570,57 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 
   return qd;
 }
+#endif
+
+
 
 size_t
 TAO_GIOP_Message_Base::header_length (void) const
 {
   return TAO_GIOP_MESSAGE_HEADER_LEN;
+}
+
+void
+TAO_GIOP_Message_Base::set_queued_data_from_message_header (
+  TAO_Queued_Data *qd,
+  const ACE_Message_Block &mb
+  ) const
+{
+  // @@CJC: Try leaving out the declaration for this->message_state_
+  // and see what pukes.  I don't think we need it any more.
+  TAO_GIOP_Message_State state;
+  if (state.take_values_from_message_block (mb) == -1)
+    {
+      // what the heck do we do here?!
+      qd->current_state_ = TAO_Queued_Data::INVALID;
+      return;
+    }
+
+  // It'd be nice to have an abstract base for GIOP_Message_State
+  // so that there could just be a line like:
+  //   qd->take_values_from (state);
+  // Get the message information
+  qd->byte_order_ = state.byte_order ();
+  qd->major_version_ = state.giop_version ().major;
+  qd->minor_version_ = state.giop_version ().minor;
+  qd->more_fragments_ = state.more_fragments () ? 1 : 0;
+  qd->msg_type_= message_type (state);
+  qd->missing_data_bytes_ = state.payload_size ();
+}
+
+int
+TAO_GIOP_Message_Base::check_for_valid_header (
+  const ACE_Message_Block &mb
+  ) const
+{
+  const char* magic_bytes = "GIOP";
+  ACE_ASSERT (ACE_OS::strlen (magic_bytes) < header_length ());
+  if (mb.length () < header_length ())
+    return 0;
+
+  // Is finding that it's the right length and the magic bytes present
+  // enough to declare it a valid header?  I think so...
+  return (ACE_OS::memcmp (mb.rd_ptr (),
+                          magic_bytes,
+                          ACE_OS::strlen (magic_bytes)) == 0);
 }

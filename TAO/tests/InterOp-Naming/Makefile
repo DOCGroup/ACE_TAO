@@ -61,7 +61,7 @@ INS_test_server:$(addprefix $(VDIR),$(SIMPLE_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_IORTable $(TAO_SRVR_LIBS) $(POSTLINK)
 
 INS_test_client:$(addprefix $(VDIR),$(SIMPLE_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_CLNT_LIBS) $(POSTLINK)
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), INS$(ext))
 

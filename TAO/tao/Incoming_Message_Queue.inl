@@ -18,7 +18,7 @@ TAO_Incoming_Message_Queue::is_tail_complete (void)
     return -1;
 
   if (this->size_ &&
-      this->queued_data_->missing_data_ == 0)
+      this->queued_data_->missing_data_bytes_ == 0)
     return 1;
 
   return 0;
@@ -31,7 +31,7 @@ TAO_Incoming_Message_Queue::is_head_complete (void)
     return -1;
 
   if (this->size_  &&
-      this->queued_data_->next_->missing_data_ == 0 &&
+      this->queued_data_->next_->missing_data_bytes_ == 0 &&
       this->queued_data_->next_->more_fragments_ == 0)
     return 1;
 
@@ -55,22 +55,29 @@ ACE_INLINE size_t
 TAO_Incoming_Message_Queue::missing_data_tail (void) const
 {
   if (this->size_ != 0)
-    return this->queued_data_->missing_data_;
+    return this->queued_data_->missing_data_bytes_;
 
   return 0;
 }
 
 
-
+#if 0
 ACE_INLINE TAO_Queued_Data *
 TAO_Incoming_Message_Queue::get_node (void)
 {
   return TAO_Queued_Data::get_queued_data ();
 }
+#endif
 
 /************************************************************************/
 // Methods  for TAO_Queued_Data
 /************************************************************************/
+
+ACE_INLINE void
+TAO_Queued_Data::release (void)
+{
+  TAO_Queued_Data::release (this);
+}
 
 /*static*/
 ACE_INLINE void

@@ -42,11 +42,15 @@ class TAO_Export TAO_GIOP_Message_State
 public:
 
   /// Ctor
-  TAO_GIOP_Message_State (TAO_ORB_Core *orb_core,
-                          TAO_GIOP_Message_Base *base);
+  TAO_GIOP_Message_State (TAO_ORB_Core *orb_core = 0,
+                          TAO_GIOP_Message_Base *base = 0);
 
+  int take_values_from_message_block (const ACE_Message_Block& mb);
+
+#if 0
   /// Parse the message header.
   int parse_message_header (ACE_Message_Block &incoming);
+#endif
 
   /// Return the message size
   CORBA::ULong message_size (void) const;
@@ -54,8 +58,23 @@ public:
   /// Return the message size
   CORBA::ULong payload_size (void) const;
 
-  /// Return the byte order information
+  /*!
+    \brief Return the byte order information.
+    \return 0 big-endian
+    \return 1 little-endian
+  */
   CORBA::Octet byte_order (void) const;
+
+  /*!
+    \brief Return GIOP version information.
+  */
+  const TAO_GIOP_Message_Version &giop_version () const;
+
+  /// (Requests and Replys)
+  CORBA::Octet more_fragments () const;
+
+  /// MsgType above
+  CORBA::Octet message_type () const;
 
   /// Reset the state..
   void reset (void);
@@ -64,25 +83,27 @@ private:
 
   friend class TAO_GIOP_Message_Base;
 
+#if 0
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
 
   /// Checks for the magic word 'GIOP' in the start of the incoing
   /// stream
   int parse_magic_bytes (char *buf);
+#endif
 
   /// Extracts the version information from the incoming
   /// stream. Performs a check for  whether the version information is
   /// right and sets the information in the <state>
-  int get_version_info (char *buf);
+  int set_version_info_from_buffer (const char *buf);
 
   /// Extracts the byte order information from the incoming
   /// stream. Performs a check for  whether the byte order information
   /// right and sets the information in the <state>
-  int get_byte_order_info (char *buf);
+  int set_byte_order_info_from_buffer (const char *buf);
 
   /// Gets the size of the payload and set the size in the <state>
-  void get_payload_size (char *buf);
+  void set_payload_size_from_buffer (const char *buf);
 
   /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
   /// stream.
@@ -91,12 +112,14 @@ private:
 
   /// Read the unsigned long from the buffer. The <buf> should just
   /// point to the next 4 bytes data that represent the ULong
-  CORBA::ULong read_ulong (char *buf);
+  CORBA::ULong read_ulong (const char *buf);
 
 private:
 
+#if 0
   /// The GIOP base class..
   TAO_GIOP_Message_Base *base_;
+#endif
 
   // GIOP version information..
   TAO_GIOP_Message_Version giop_version_;

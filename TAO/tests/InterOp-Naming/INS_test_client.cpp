@@ -2,11 +2,44 @@
 
 
 #include "INSC.h"
+#include <tao/Messaging/Messaging.h>
+#include <tao/TimeBaseC.h>
+
+template <class T>
+void set_timeout_on_objref (CORBA::ORB_ptr orb,
+                            CORBA::PolicyType pt,
+                            const ACE_Time_Value &timeout,
+                            typename T::_var_type &obj,
+                            T*)
+{
+  //  TimeBase::TimeT rrtt = (timeout.msec() * 1000 + timeout.sec()) * 10000000;
+  TimeBase::TimeT rrtt = timeout.msec() * 10000;
+  CORBA::Any rrtt_any;
+  rrtt_any <<= rrtt;
+
+  CORBA::PolicyList pl;
+  pl.length (1);
+  pl[0] = orb->create_policy (pt, rrtt_any);
+
+  try
+    {
+      CORBA::Object_var tmp = obj->_set_policy_overrides (pl, CORBA::SET_OVERRIDE);
+      obj = T::_unchecked_narrow (tmp.in ());
+    }
+  catch (...)
+    {
+      obj = T::_nil ();
+    }
+  
+  pl[0]->destroy ();
+}
 
 int
 main (int argc, char *argv[])
 {
   int i = 0;
+
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -73,14 +106,41 @@ main (int argc, char *argv[])
                                    "given name.\n"),
                                   -1);
 
+              const ACE_Time_Value RTT (20, 500000);
+              CORBA::Object *dummy = 0;
+#if 1
+              set_timeout_on_objref (orb.in (), 
+                                     Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                                     RTT, objref, dummy);
               INS_var server = INS::_narrow (objref.in ()
                                                  ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+#else
+              set_timeout_on_objref (orb.in (), 
+                                     TAO::CONNECTION_TIMEOUT_POLICY_TYPE,
+                                     RTT, objref, dummy);
+
+              INS_var server = INS::_narrow (objref.in ()
+                                                 ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+#endif
+
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) TRYING TO NARROW OBJREF AGAIN.\n"));
+              INS_var server2 = INS::_narrow (objref.in ()
+                                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
                           "Resolved IOR for %s : %s\n",
                           argv[i],
                           orb->object_to_string (server.in ())));
+
+#if 0
+              INS *d2;
+              set_timeout_on_objref (orb.in (),
+                                     Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                                     RTT, server, d2);
+#endif
 
               CORBA::String_var test_ins_result =
                 server->test_ins (ACE_ENV_SINGLE_ARG_PARAMETER);

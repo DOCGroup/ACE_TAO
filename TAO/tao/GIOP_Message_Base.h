@@ -93,6 +93,7 @@ public:
   /// the message.
   virtual int format_message (TAO_OutputCDR &cdr);
 
+#if 0
   /// Parse the incoming messages..
   virtual int parse_incoming_messages (ACE_Message_Block &message_block);
 
@@ -117,11 +118,33 @@ public:
   /// @@Bala:Docu??
   virtual int consolidate_fragments (TAO_Queued_Data *dqd,
                                      const TAO_Queued_Data *sqd);
+#endif
 
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_Queued_Data *qd);
+
+  /*!
+    \brief Inspects the bytes in \param mb to see if they "look like" the beginning of a message.
+
+    Inspects the bytes in \param mb, beginning at \code mb.rd_ptr, to
+    see if they look like the beginning of a message.  Does
+   */
+  virtual int check_for_valid_header (const ACE_Message_Block &mb) const;
+
+  /*!
+    \brief Set fields in \param qd based on values derived from \param mb.
+
+    This function sets fields in \param qd based on values derived
+    from \param mb.  It assumes that if the length of \param mb is
+    enough to hold a header, then the data in there can be trusted to
+    make sense.
+   */
+  virtual void set_queued_data_from_message_header (
+    TAO_Queued_Data *,
+    const ACE_Message_Block &mb) const;
+
 
 
   /// Parse the reply message that we received and return the reply
@@ -172,7 +195,7 @@ protected:
   /// TAO_PLUGGABLE_MESSAGE_REPLY,
   /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  TAO_Pluggable_Message_Type message_type (TAO_GIOP_Message_State &state);
+  static TAO_Pluggable_Message_Type message_type (TAO_GIOP_Message_State &state);
 
 private:
 
