@@ -387,8 +387,11 @@ void CORBA_ConstructionPolicy::make_domain_manager (
     CORBA::SystemException
   ))
 {
-
-
+#if (TAO_HAS_INTERFACE_REPOSITORY == 0)
+  ACE_UNUSED_ARG (object_type);
+  ACE_UNUSED_ARG (constr_policy);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+#else // TAO_HAS_INTERFACE_REPOSITORY
 
 
   TAO_Stub *istub = this->_stubobj ();
@@ -479,6 +482,7 @@ ACE_ENDTRY;
 ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
 
+#endif /* TAO_HAS_INTERFACE_REPOSITORY */
 }
 
 CORBA::Boolean CORBA_ConstructionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
