@@ -25,7 +25,7 @@ TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
 }
 
 int
-TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
+TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -40,7 +40,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
   // Generate array containing struct field characteristics.
   os << "static TAO::TypeCode::Field<char const *> const "
      << fields_name.c_str ()
-     << " =" << be_idt_nl
+     << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
 
   if (this->visit_members (node) != 0)
@@ -54,7 +54,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
     << "static TAO::TypeCode::Struct<char const *," << be_nl
     << "                             TAO::TypeCode::Field<char const *> const *," << be_nl
     << "                             CORBA::tk_"
-    << (this->is_exception_ ? "except" : "struct") << ">," << be_nl
+    << (this->is_exception_ ? "except" : "struct") << be_nl
     << "                             TAO::Null_RefCount_Policy> const"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
@@ -64,11 +64,12 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
     << node->nfields () << ");" << be_uidt_nl
     << be_uidt_nl;
 
-  return this->gen_typecode_ptr (node);
+  return
+    this->gen_typecode_ptr (be_type::narrow_from_decl (node));
 }
 
 int
-TAO::be_visitor_struct_typecode::visit_members (be_structure * node)
+TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
 {
   AST_Field ** member_ptr = 0;
 

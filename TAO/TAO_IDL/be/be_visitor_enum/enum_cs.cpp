@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#include "be_visitor_typecode/typecode_defn.h"
+#include "be_visitor_typecode/enum_typecode.h"
 
 ACE_RCSID (be_visitor_enum, 
            enum_cs, 
@@ -52,10 +52,10 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      be_visitor_typecode_defn visitor (&ctx);
+      // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
+      TAO::be_visitor_enum_typecode visitor (&ctx);
 
-      if (node->accept (&visitor) == -1)
+      if (visitor.visit_enum (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_enum_cs::"
