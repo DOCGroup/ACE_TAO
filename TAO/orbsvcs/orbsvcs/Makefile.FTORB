@@ -85,8 +85,7 @@ realclean: clean
 
 .obj/FT_Service_Callbacks.o .obj/FT_Service_Callbacks.so .shobj/FT_Service_Callbacks.o .shobj/FT_Service_Callbacks.so: FaultTolerance/FT_Service_Callbacks.cpp \
  FaultTolerance/FT_Service_Callbacks.h \
- $(ACE_ROOT)/ace/pre.h \
- FaultTolerance/fault_tol_export.h \
+ $(ACE_ROOT)/ace/pre.h FaultTolerance/fault_tol_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -116,8 +115,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -396,8 +394,7 @@ realclean: clean
 
 .obj/FT_IOGR_Property.o .obj/FT_IOGR_Property.so .shobj/FT_IOGR_Property.o .shobj/FT_IOGR_Property.so: FaultTolerance/FT_IOGR_Property.cpp \
  FaultTolerance/FT_Service_Activate.h \
- $(ACE_ROOT)/ace/pre.h \
- FaultTolerance/fault_tol_export.h \
+ $(ACE_ROOT)/ace/pre.h FaultTolerance/fault_tol_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -426,8 +423,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -701,8 +697,7 @@ realclean: clean
 .obj/FT_Endpoint_Selector_Factory.o .obj/FT_Endpoint_Selector_Factory.so .shobj/FT_Endpoint_Selector_Factory.o .shobj/FT_Endpoint_Selector_Factory.so: \
  FaultTolerance/FT_Endpoint_Selector_Factory.cpp \
  FaultTolerance/FT_Endpoint_Selector_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- FaultTolerance/fault_tol_export.h \
+ $(ACE_ROOT)/ace/pre.h FaultTolerance/fault_tol_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -731,8 +726,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -764,8 +758,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -885,8 +878,7 @@ realclean: clean
 .obj/FT_Invocation_Endpoint_Selectors.o .obj/FT_Invocation_Endpoint_Selectors.so .shobj/FT_Invocation_Endpoint_Selectors.o .shobj/FT_Invocation_Endpoint_Selectors.so: \
  FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp \
  FaultTolerance/FT_Invocation_Endpoint_Selectors.h \
- $(ACE_ROOT)/ace/pre.h \
- FaultTolerance/fault_tol_export.h \
+ $(ACE_ROOT)/ace/pre.h FaultTolerance/fault_tol_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -915,8 +907,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1175,8 +1166,7 @@ realclean: clean
 
 .obj/FT_Service_Activate.o .obj/FT_Service_Activate.so .shobj/FT_Service_Activate.o .shobj/FT_Service_Activate.so: FaultTolerance/FT_Service_Activate.cpp \
  FaultTolerance/FT_Service_Activate.h \
- $(ACE_ROOT)/ace/pre.h \
- FaultTolerance/fault_tol_export.h \
+ $(ACE_ROOT)/ace/pre.h FaultTolerance/fault_tol_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1205,8 +1195,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1475,8 +1464,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/FT_ORBInitializer.o .obj/FT_ORBInitializer.so .shobj/FT_ORBInitializer.o .shobj/FT_ORBInitializer.so: FaultTolerance/FT_ORBInitializer.cpp \
- FaultTolerance/FT_ORBInitializer.h \
- $(ACE_ROOT)/ace/pre.h \
+ FaultTolerance/FT_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1504,8 +1492,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1680,8 +1667,7 @@ realclean: clean
  FT_CORBA_ORBC.i
 
 .obj/FT_PolicyFactory.o .obj/FT_PolicyFactory.so .shobj/FT_PolicyFactory.o .shobj/FT_PolicyFactory.so: FaultTolerance/FT_PolicyFactory.cpp \
- FaultTolerance/FT_PolicyFactory.h \
- $(ACE_ROOT)/ace/pre.h \
+ FaultTolerance/FT_PolicyFactory.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1709,8 +1695,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1916,8 +1901,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2087,8 +2071,7 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/GIOPC.i \
  FT_CORBA_ORBC.i \
- FaultTolerance/FT_Policy_i.i \
- $(TAO_ROOT)/tao/debug.h
+ FaultTolerance/FT_Policy_i.i $(TAO_ROOT)/tao/debug.h
 
 .obj/FT_CORBA_ORBS.o .obj/FT_CORBA_ORBS.so .shobj/FT_CORBA_ORBS.o .shobj/FT_CORBA_ORBS.so: FT_CORBA_ORBS.cpp FT_CORBA_ORBS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2121,8 +2104,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2484,8 +2466,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
