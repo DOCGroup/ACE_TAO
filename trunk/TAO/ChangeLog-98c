@@ -1,6 +1,12 @@
+Thu Jul 17 16:43:23 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/{optable,objtable}.cpp: Updated the explicit template
+ 	instantiations at the end of these files to reflect the changes
+ 	that Andy made.
+
 Thu Jul 17 10:08:45 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
 
-	* align.h: A very subtle error in "align_binary" was corrected. I
+	* tao/align.h: A very subtle error in "align_binary" was corrected. I
  	was assuming that align_binary is always called by
  	"ptr_align_binary". In the original inline function versions of
  	align_binary and ptr_align_binary, the function align_binary would
@@ -13,40 +19,40 @@ Thu Jul 17 10:08:45 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
  	align_binary and ptr_align_binary are now exactly as the original
  	inline functions.
 	
-	* any.{h,cpp}: Added comments. In addition, in the code for
+	* tao/any.{h,cpp}: Added comments. In addition, in the code for
 	Any::replace, we check if "_value" exists before trying to
 	DEEP_FREE it. Otherwise this was resulting in a segmentation fault
 	violation.
 
-	* boa.{h,i}: Added comments and changed "release" to CORBA_release
+	* tao/boa.{h,i}: Added comments and changed "release" to CORBA_release
 
-	* cdr.{h,cpp}: Added some comments and removed some stuff that was
+	* tao/cdr.{h,cpp}: Added some comments and removed some stuff that was
 	under #if 0 .. #endif
 
-	* corbacom.h: Added lots of comments for the CORBA_String_var class
+	* tao/corbacom.h: Added lots of comments for the CORBA_String_var class
 
-	* decode.cpp: Made TAO_Marshal_Union::decode to work, added comments.
+	* tao/decode.cpp: Made TAO_Marshal_Union::decode to work, added comments.
 	
-	* encode.cpp: Made TAO_Marshal_Union::encode to work, added comments.
+	* tao/encode.cpp: Made TAO_Marshal_Union::encode to work, added comments.
 
-	* factories.{h,cpp}: Added lots of comments. Removed "void
+	* tao/factories.{h,cpp}: Added lots of comments. Removed "void
 	object_lookup_strategy" method since we do this in the parameters
 	class. Added code that will use a user defined lookup strategy if
 	the corresponding flag is set. This needs to be tested.
 
-	* iiopobj.{i,cpp}: In the allocation and deallocation of the buffer
+	* tao/iiopobj.{i,cpp}: In the allocation and deallocation of the buffer
 	for object key, we now use "new/delete" instead of "malloc/free".
 
-	* interp.cpp: commented out a line that decremented 4 from the
+	* tao/interp.cpp: commented out a line that decremented 4 from the
 	offset provided for indirected typecodes. I guess this was plain
 	hack to get some broken things to work.
 
-	* objtable.{h,cpp}: Added lots of comments. Added code that will use
+	* tao/objtable.{h,cpp}: Added lots of comments. Added code that will use
 	template specialization for the dynamic hashing case. In addition,
 	improved the destructors of the classes since previously, these
 	were not releasing occupied memory.
 
-	* optable.{h,cpp}: Added lots of comments. Added template
+	* tao/optable.{h,cpp}: Added lots of comments. Added template
 	specialization for dynamic hashing scheme. Made dynamic hashing
 	scheme the default. Added a new definition for "struct
 	TAO_operation_db_entry". The idea is that an IDL compiler will
@@ -56,10 +62,10 @@ Thu Jul 17 10:08:45 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
 	lookup tables can be shared by any number of objects implementing
 	the same interface.
 
-	* params.{h,i,cpp}: Made dynamic hashing the default. Added a hook
+	* tao/params.{h,i,cpp}: Made dynamic hashing the default. Added a hook
 	by which users can supply their lookup strategies. *Needs testing*.
 
-	* typecode.{h,i,cpp}: Added comments and many changes. The private
+	* tao/typecode.{h,i,cpp}: Added comments and many changes. The private
 	state's constructor now takes an argument that is a TCKind
 	representing the TypeCode kind of the object of which we are the
 	private state. Removed "child_free". Instead, we introduced a
