@@ -1,11 +1,18 @@
+Wed Sep 29 13:12:27 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+          
+          There is no specific need for make_secure_profile () 
+          to be virtual.
+
 Wed Sep 29 10:12:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDLbe/be_visitor_interface/interface_ch.cpp:
         * TAO_IDLbe/be_visitor_interface/interface_cs.cpp:
         * TAO_IDLbe_include/be_interface.h:
-        
-          For local interfaces that inherit directly from 
+
+          For local interfaces that inherit directly from
           Components::SessionComponent, added code generation for
           empty implementations of ciao_preactivate() and
           ciao_postactivate(). These operations are pure virtual in
@@ -16,9 +23,9 @@ Wed Sep 29 10:12:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Sep 29 07:31:34 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Updated.
+          Updated.
 
 Wed Sep 29 10:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -33,61 +40,61 @@ Wed Sep 29 07:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Sep 28 20:55:26 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/bounded_reference_allocation_traits.hpp:
-	* tests/Sequence_Unit_Tests/bounded_value_allocation_traits.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_reference_allocation_traits.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_value_allocation_traits.hpp:
-	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
-	  Refactored each allocation trait to its own file.  Also
-	  eliminated some rather convoluted hierarchy between the
-	  reference and value allocation traits.  The code is much easier
-	  to understand now.
+        * tests/Sequence_Unit_Tests/bounded_reference_allocation_traits.hpp:
+        * tests/Sequence_Unit_Tests/bounded_value_allocation_traits.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_reference_allocation_traits.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_allocation_traits.hpp:
+        * tests/Sequence_Unit_Tests/allocation_traits.hpp:
+          Refactored each allocation trait to its own file.  Also
+          eliminated some rather convoluted hierarchy between the
+          reference and value allocation traits.  The code is much easier
+          to understand now.
 
-	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
-	* tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp:
-	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_basic_string_sequence.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
-	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	  Fixed the #includes and the class names.
+        * tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+        * tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_basic_string_sequence.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Fixed the #includes and the class names.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
-	  Fixed the #includes, define all types based on the tested
-	  sequence (do you see the template code asking to be refactored?)
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+          Fixed the #includes, define all types based on the tested
+          sequence (do you see the template code asking to be refactored?)
 
 Tue Sep 28 20:22:16 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_basic_string_sequence.hpp:
-	  Refactored implementation of string sequences to a class
-	  template.  The character type is the template parameter.
+        * tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_basic_string_sequence.hpp:
+          Refactored implementation of string sequences to a class
+          template.  The character type is the template parameter.
 
-	* tests/Sequence_Unit_Tests/string_traits.hpp:
-	  Fixed bug in the implementation of the string traits.  I used
-	  the wrong type, but it was not a problem until the wide-strings
-	  were tested.
+        * tests/Sequence_Unit_Tests/string_traits.hpp:
+          Fixed bug in the implementation of the string traits.  I used
+          the wrong type, but it was not a problem until the wide-strings
+          were tested.
 
-	* tests/Sequence_Unit_Tests/bounded_string_sequence.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	* tests/Sequence_Unit_Tests/bounded_wstring_sequence.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_wstring_sequence.hpp:
-	  Implemented wrappers for the parametric string classes.
+        * tests/Sequence_Unit_Tests/bounded_string_sequence.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+        * tests/Sequence_Unit_Tests/bounded_wstring_sequence.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_wstring_sequence.hpp:
+          Implemented wrappers for the parametric string classes.
 
-	* tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
-	* tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	  Re-write the unit tests as templates so we can test both regular
-	  and wide-character strings in the same code.  The trick was to
-	  provide a helper class to encapsulate comparisons, sample
-	  strings, etc.
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Re-write the unit tests as templates so we can test both regular
+          and wide-character strings in the same code.  The trick was to
+          provide a helper class to encapsulate comparisons, sample
+          strings, etc.
 
 Tue Sep 28 14:15:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
 
-	  Updated out-of-date doxygen documentation.
+          Updated out-of-date doxygen documentation.
 
 Tue Sep 28 15:06:50 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
