@@ -110,13 +110,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
-    default:
-      // error
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_attribute::"
-                         "visit_attribute - "
-                         "bad codegen state\n"),
-                        -1);
     }
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -189,13 +182,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
-    default:
-      // error
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_attribute::"
-                         "visit_attribute - "
-                         "bad codegen state\n"),
-                        -1);
     }
 
   visitor = tao_cg->make_visitor (&ctx);

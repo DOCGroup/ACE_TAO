@@ -39,7 +39,7 @@ CosEC_Multiple::init (int argc, char *argv[])
 int
 CosEC_Multiple::init_ORB  (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV
   ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
@@ -81,13 +81,13 @@ CosEC_Multiple::init_ORB  (int argc, char *argv [])
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 int
 CosEC_Multiple::init_CosEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV
   ACE_TRY
     {
       // Initialization of the naming service.
@@ -126,7 +126,7 @@ CosEC_Multiple::init_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 int
@@ -143,4 +143,6 @@ CosEC_Multiple::shutdown (void)
 {
   if (!this->orb_->_nil ())
     this->orb_->shutdown ();
+
+  //  this->orb_ (CORBA::ORB::_nil ());
 }

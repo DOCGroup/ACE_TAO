@@ -34,9 +34,14 @@ public:
   be_field (void);
   // default constructor
 
-  be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
-                                    Visibility vis = vis_NA);
+  be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
+
+  virtual int gen_encapsulation (void);
+  // generate the typecode
+
+  virtual long tc_encap_len (void);
+  // return the total byte length of ourselves represented as an encapsulation
 
   // Visiting
   virtual int accept (be_visitor *visitor);

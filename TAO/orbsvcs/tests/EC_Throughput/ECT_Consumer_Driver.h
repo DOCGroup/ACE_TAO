@@ -79,9 +79,6 @@ private:
   // We receive the events whose type is in the range
   // [type_start,type_start+type_count)
 
-  int shutdown_event_channel_;
-  // If not zero it will shutdown the event channel upon exit.
-
   const char* pid_file_name_;
   // The name of a file where the process stores its pid
 

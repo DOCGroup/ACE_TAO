@@ -44,8 +44,9 @@ Airplane_Client_i::read_ior (char *filename)
 int
 Airplane_Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:");
   int c;
+  int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -56,16 +57,21 @@ Airplane_Client_i::parse_args (void)
       case 'n':  // loop count
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'k':  // ior provide on command line
-        this->server_key_ = ACE_OS::strdup (get_opts.optarg);
-        break;  
+      case 'f': // read the IOR from the file.
+        result = this->read_ior (get_opts.optarg);
+        if (result < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to read ior from %s : %p\n",
+                             get_opts.optarg),
+                            -1);
+            break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
-                           " [-k server-obj-key]"
+                           " [-f server-obj-ref-key-file]"
                            "\n",
                            this->argv_ [0]),
                           -1);
@@ -82,23 +88,20 @@ Airplane_Client_i::get_planes (size_t count)
 {
   for (size_t i = 0; i < count; i++)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      TAO_TRY
         {
-          ACE_TRY_ENV.clear ();
           CORBA::String_var response =
-            this->server_->get_plane (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          ACE_OS::sleep (1);
+            this->server_->get_plane (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
         }
-      ACE_CATCHANY
+      TAO_CATCHANY
         {
-          ACE_ERROR ((LM_ERROR, "Plane %d exception:\n", i));
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "get_planes");
+          TAO_TRY_ENV.print_exception ("get_planes");
+          return;
         }
-      ACE_ENDTRY;
+      TAO_ENDTRY;
     }
 }
 
@@ -130,15 +133,14 @@ Airplane_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -151,11 +153,11 @@ Airplane_Client_i::init (int argc, char **argv)
                           -1);
 
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (this->server_key_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      this->server_ = Paper_Airplane_Server::_narrow (server_object.in(), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->server_ = Paper_Airplane_Server::_narrow (server_object.in(), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -163,12 +165,12 @@ Airplane_Client_i::init (int argc, char **argv)
                            this->server_key_),
                           -1);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Airplane_Client_i::init");
+      TAO_TRY_ENV.print_exception ("Airplane_Client_i::init");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

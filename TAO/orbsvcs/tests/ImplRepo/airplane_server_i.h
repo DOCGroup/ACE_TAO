@@ -42,10 +42,10 @@ public:
   ~Airplane_Server_i (void);
   // Destructor
 
-  int init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
+  int init (int argc, char **argv, CORBA::Environment& env);
   // Initialize the Server state - parsing arguments and waiting
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (CORBA::Environment& env);
   // Run the orb 
 
 private:

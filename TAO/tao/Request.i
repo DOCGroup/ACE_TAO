@@ -4,6 +4,12 @@
 
 // Return the target of this request.
 
+ACE_INLINE void
+CORBA::release (CORBA::Request_ptr req)
+{
+  if (req)
+    req->_decr_refcnt ();
+}
 
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::Request_ptr req)
@@ -19,53 +25,51 @@ CORBA_Request::_duplicate (CORBA_Request* x)
   return x;
 }
 
+ACE_INLINE CORBA_Request*
+CORBA_Request::_nil (void)
+{
+  return 0;
+}
 
 ACE_INLINE CORBA::Object_ptr 
 CORBA_Request::target (void) const 
 { 
-  return this->target_; 
+  return target_; 
 }
 
 // Return the operation name for the request.
 ACE_INLINE const CORBA::Char *
 CORBA_Request::operation (void) const 
 {
-  return this->opname_; 
+  return opname_; 
 }
 
 // Return the arguments for the request.
 ACE_INLINE CORBA::NVList_ptr 
 CORBA_Request::arguments (void) 
 { 
-  return this->args_; 
+  return args_; 
 }
 
 // Return the result for the request.
 ACE_INLINE CORBA::NamedValue_ptr 
 CORBA_Request::result (void) 
 {
-  return this->result_; 
+  return result_; 
 }
 
 // Return the exceptions resulting from this request.
 ACE_INLINE CORBA::ExceptionList_ptr 
 CORBA_Request::exceptions (void) 
 { 
-  return &this->exceptions_; 
-}
-
-// Return the request's contexts
-ACE_INLINE CORBA::ContextList_ptr
-CORBA_Request::contexts (void)
-{
-  return this->contexts_;
+  return &exceptions_; 
 }
 
 // Return the <Environment> for this request.
 ACE_INLINE CORBA::Environment *
 CORBA_Request::env (void) 
 {
-  return &this->env_; 
+  return &env_; 
 }
 
 // The argument manipulation helper functions
@@ -73,43 +77,37 @@ CORBA_Request::env (void)
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_in_arg (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_IN, ACE_TRY_ENV)->any_;
+  return this->args_->add_element (CORBA::ARG_IN, this->env_)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_in_arg (const CORBA::Char *name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_IN, ACE_TRY_ENV)->any_;
+  return this->args_->add_item (name, CORBA::ARG_IN, this->env_)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_inout_arg (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_INOUT, ACE_TRY_ENV)->any_;
+  return this->args_->add_element (CORBA::ARG_INOUT, this->env_)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_inout_arg (const CORBA::Char *name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_INOUT, ACE_TRY_ENV)->any_;
+  return this->args_->add_item (name, CORBA::ARG_INOUT, this->env_)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_out_arg (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_OUT, ACE_TRY_ENV)->any_;
+  return this->args_->add_element (CORBA::ARG_OUT, this->env_)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_out_arg (const CORBA::Char *name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_OUT, ACE_TRY_ENV)->any_;
+  return this->args_->add_item (name, CORBA::ARG_OUT, this->env_)->any_;
 }
 
 ACE_INLINE void
@@ -125,20 +123,8 @@ CORBA_Request::return_value (void )
   return this->result_->any_;
 }
 
-ACE_INLINE CORBA::Context_ptr
-CORBA_Request::ctx (void) const
-{
-  return this->ctx_;
-}
-
-ACE_INLINE void
-CORBA_Request::ctx (CORBA::Context_ptr ctx)
-{
-  ACE_UNUSED_ARG (ctx);
-}
-
 // *************************************************************
-// Inline operations for class CORBA_Request_var
+// Inline operations for class CORBA_NVList_var
 // *************************************************************
 
 ACE_INLINE
@@ -297,5 +283,3 @@ CORBA_Request_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-

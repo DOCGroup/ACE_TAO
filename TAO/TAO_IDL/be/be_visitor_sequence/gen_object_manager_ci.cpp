@@ -171,16 +171,6 @@ be_visitor_sequence_ci::gen_object_manager (be_sequence *node)
       << "}" << be_nl
       << be_nl;
   
-  // operator -> @@Bala
-  *os << "ACE_INLINE " << be_nl;
-    pt->accept (visitor);
-  *os << "*"<< be_nl
-      << full_object_manager <<"::operator-> (void) const " << be_nl
-      << "{" << be_idt_nl
-      << "return *this->ptr_;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
   //  cast operator
   *os << "ACE_INLINE " << be_nl
       << full_object_manager << "::operator const "; 
@@ -201,8 +191,8 @@ be_visitor_sequence_ci::gen_object_manager (be_sequence *node)
       << "}" << be_nl
       << be_nl;
   
-  // in method @@Bala
-  *os << "ACE_INLINE "; 
+  // in method
+  *os << "ACE_INLINE const "; 
   pt->accept (visitor); 
   *os << " *" << be_nl
       << full_object_manager << "::in (void) const // in " 
@@ -264,6 +254,4 @@ be_visitor_sequence_ci::gen_object_manager (be_sequence *node)
   delete visitor;
   return 0;
 }
-
-
 

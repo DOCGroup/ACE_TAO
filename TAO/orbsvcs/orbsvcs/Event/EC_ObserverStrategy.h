@@ -92,7 +92,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A null observer strategy.
@@ -130,7 +130,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A simple observer strategy.
@@ -191,9 +191,9 @@ public:
     //   + Does it want to receive all changes?
     //
 
-    ACE_INLINE Observer_Entry (void);
-    ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
-                               RtecEventChannelAdmin::Observer_ptr o);
+    Observer_Entry (void);
+    Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
+                    RtecEventChannelAdmin::Observer_ptr o);
 
     RtecEventChannelAdmin::Observer_Handle handle;
     // The handle

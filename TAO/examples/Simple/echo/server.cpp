@@ -12,9 +12,7 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tEcho server\n\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       if (server.init ("Echo",
                        argc,

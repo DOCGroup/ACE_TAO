@@ -60,8 +60,8 @@ CosECConsumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-CosECConsumer::push (const CORBA::Any &,
-                     CORBA::Environment &)
+CosECConsumer::push (const CORBA::Any &data,
+                     CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in CosECConsumer::push\n"));

@@ -18,17 +18,14 @@ CFG=Simple Time Server - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Time Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Console Application")
-!MESSAGE "Simple Time Server - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Console Application")
+!MESSAGE "Simple Time Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "Simple Time Server - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -101,9 +98,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "server"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /I" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD ..\..\..\..\\ /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /I " ..\..\..\..\\ /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /I" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd ..\..\..\..\\ /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /I " ..\..\..\..\\ /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -130,9 +127,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "server"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\ /I" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD ..\..\..\..\\ /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\ /I " ..\..\..\..\\ /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\..\\ /I" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD ..\..\..\..\\ /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\..\\ /I " ..\..\..\..\\ /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -318,6 +315,7 @@ DEP_CPP_SERVE=\
 	"..\..\..\..\ace\WFMO_Reactor.h"\
 	"..\..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\..\ace\ws2tcpip.h"\
+	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Any.h"\
 	"..\..\..\tao\Any.i"\
 	"..\..\..\tao\CDR.h"\
@@ -339,6 +337,9 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
+	"..\..\..\tao\IIOP_Interpreter.h"\
+	"..\..\..\tao\IIOP_Object.h"\
+	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Invocation.h"\
@@ -398,10 +399,6 @@ DEP_CPP_SERVE=\
 	
 NODEP_CPP_SERVE=\
 	"..\..\..\..\ace\sys_conf.h"\
-	"..\..\..\tao\Align.h"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
-	"..\..\..\tao\IIOP_Object.h"\
-	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\Object_Table.h"\
 	".\Server_impl.h"\
 	".\Time_impl.h"\
@@ -597,6 +594,7 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\WFMO_Reactor.h"\
 	"..\..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\..\ace\ws2tcpip.h"\
+	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Any.h"\
 	"..\..\..\tao\Any.i"\
 	"..\..\..\tao\CDR.h"\
@@ -618,6 +616,9 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
+	"..\..\..\tao\IIOP_Interpreter.h"\
+	"..\..\..\tao\IIOP_Object.h"\
+	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Invocation.h"\
@@ -676,10 +677,6 @@ DEP_CPP_TIMEC=\
 	
 NODEP_CPP_TIMEC=\
 	"..\..\..\..\ace\sys_conf.h"\
-	"..\..\..\tao\Align.h"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
-	"..\..\..\tao\IIOP_Object.h"\
-	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\Object_Table.h"\
 	".\TimeC.h"\
 	".\TimeC.i"\
@@ -858,6 +855,7 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\WFMO_Reactor.h"\
 	"..\..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\..\ace\ws2tcpip.h"\
+	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Any.h"\
 	"..\..\..\tao\Any.i"\
 	"..\..\..\tao\CDR.h"\
@@ -879,6 +877,9 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Exception.i"\
 	"..\..\..\tao\GIOP.h"\
 	"..\..\..\tao\GIOP.i"\
+	"..\..\..\tao\IIOP_Interpreter.h"\
+	"..\..\..\tao\IIOP_Object.h"\
+	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Invocation.h"\
@@ -937,10 +938,6 @@ DEP_CPP_TIMES=\
 	
 NODEP_CPP_TIMES=\
 	"..\..\..\..\ace\sys_conf.h"\
-	"..\..\..\tao\Align.h"\
-	"..\..\..\tao\IIOP_Interpreter.h"\
-	"..\..\..\tao\IIOP_Object.h"\
-	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\Object_Table.h"\
 	".\TimeC.h"\
 	".\TimeC.i"\

@@ -1,13 +1,11 @@
+# $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
-# -*- perl -*-
-
 use lib "../../../bin";
 require ACEutils;
-require Process;
 
 $port = 0;
 $iorfile = "server.ior";
@@ -22,20 +20,18 @@ sub run_test
   my $type = shift(@_);
 
   $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
-                         "$debug -ORBport $port -o ".
+                         "$debug -ORBobjrefstyle url -ORBport $port -o ".
                          $iorfile);
-
+  
   ACE::waitforfile ($iorfile);
 
   system ($EXEPREFIX."client $debug -f $iorfile  -i $invocation -t ".
-          "$type -n $num -x");
+          "$type -n $num");
 
   # @@
   # Someday, a better way of doing this should be found.  Or at least
   # something that can tell if a server is still alive.  There is kill -0 on
   # Unix, but on NT ???
-
-  sleep 3;
 
   $SV->Kill (); $SV->Wait ();
   unlink ($iorfile);
@@ -104,7 +100,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
           "ub_short_sequence", "ub_long_sequence",
           "bd_short_sequence", "bd_long_sequence",
           "fixed_array", "var_array", "typecode", "exception",
-	  "big_union", "complex_any");
+	  "big_union");
 
 if ($type ne "")
 {
