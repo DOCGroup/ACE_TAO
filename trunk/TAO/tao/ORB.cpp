@@ -2608,6 +2608,97 @@ CORBA_ORB::lookup_value_factory (const char *repository_id,
 #endif /* TAO_HAS_VALUETYPE */
 
 
+// *************************************************************
+// C++ iostream operators for (W)String_var and (W)String_out
+// *************************************************************
+
+ostream &
+operator<< (ostream &os, const CORBA::String_var &sv)
+{
+  os << sv.in ();
+  return os;
+}
+
+istream &
+operator>> (istream &is, CORBA::String_var &sv)
+{
+  is >> sv.inout ();
+  return is;
+}
+
+ostream &
+operator<< (ostream &os, CORBA::String_out &so)
+{
+  os << so.ptr ();
+  return os;
+}
+
+istream &
+operator>> (istream &is, CORBA::String_out &so)
+{
+  is >> so.ptr ();
+  return is;
+}
+
+// Until we implement WString support for platforms with a
+// 4-byte wchar_t, we just define the following to emit
+// the CORBA::WChars one by one.
+
+ostream &
+operator<< (ostream &os, const CORBA::WString_var &wsv)
+{
+  CORBA::ULong len = ACE_OS::wslen (wsv.in ());
+  for (CORBA::ULong i = 0; i < len; i++)
+    {
+      os << wsv[i];
+    }
+  return os;
+}
+
+istream &
+operator>> (istream &is, CORBA::WString_var &wsv)
+{
+  CORBA::ULong i = 0;
+  CORBA::WChar wc;
+  is >> wc;
+  while (wc)
+    {
+      wsv[i] = wc;
+      i++;
+      is >> wc;
+    }
+  wsv[i] = 0;
+  return is;
+}
+
+ostream &
+operator<< (ostream &os, CORBA::WString_out &wso)
+{
+  CORBA::WChar *tmp = wso.ptr ();
+  CORBA::ULong len = ACE_OS::wslen (tmp);
+  for (CORBA::ULong i = 0; i < len; i++)
+    {
+      os << tmp[i];
+    }
+  return os;
+}
+
+istream &
+operator>> (istream &is, CORBA::WString_out &wso)
+{
+  CORBA::ULong i = 0;
+  CORBA::WChar wc;
+  is >> wc;
+  while (wc)
+    {
+      wso.ptr ()[i] = wc;
+      i++;
+      is >> wc;
+    }
+  wso.ptr ()[i] = 0;
+  return is;
+}
+
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
