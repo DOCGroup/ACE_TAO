@@ -603,6 +603,16 @@ typedef unsigned char ACE_Byte;
 #   else
 #     error: unknown BYTE_ORDER!
 #   endif /* BYTE_ORDER */
+# elif defined (_BYTE_ORDER)
+#   if (_BYTE_ORDER == _LITTLE_ENDIAN)
+#     define ACE_LITTLE_ENDIAN 0x0123
+#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#   elif (_BYTE_ORDER == _BIG_ENDIAN)
+#     define ACE_BIG_ENDIAN 0x3210
+#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#   else
+#     error: unknown _BYTE_ORDER!
+#   endif /* _BYTE_ORDER */
 # elif defined (__BYTE_ORDER)
 #   if (__BYTE_ORDER == __LITTLE_ENDIAN)
 #     define ACE_LITTLE_ENDIAN 0x0123
