@@ -1,5 +1,9 @@
 Sat Jul 17 12:38:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* utils/Makefile: Added nslist to the DIRS built "out-of-the-box".
+	  Thanks to Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+ 	  reporting this.
+
 	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (unmask_type): Changed
 	  the exception from AlreadyMasked to NotMasked since (1) this is
  	  what's in the throw spec and (2) this appears to be the right
