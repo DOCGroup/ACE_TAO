@@ -69,7 +69,7 @@ private:
 
   ~Consumer_Input_Handler ()
    {
-
+     // No-op
     }
 
   Consumer_Handler *consumer_handler_;

@@ -201,48 +201,47 @@ Notifier_i::market_status (const char *stock_name,
 }
 
 void
-Notifier_i::shutdown (CORBA::Environment &)
+Notifier_i::shutdown (CORBA::Environment &env)
 {
-  /* if (this->consumer_map_.current_size () > 0)
-     {*/
-       if ( this->consumer_map_.close () == -1)
-	 ACE_ERROR ((LM_ERROR,
-		     "Consumer_map_close error!\n"));
+  ACE_DEBUG ((LM_DEBUG,
+	      "The Callback Quoter server is shutting down..."));
 
-       // }
+  /* CONSUMERS *consumers;
+  for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
+       iter!= this->consumer_map_.end ();
+       iter ++)
+    {
+      consumers =  (*iter).int_id_;
 
-      /* for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
-	   iter!= this->consumer_map_.end ();
-	   iter ++)
-	{
-	  (*iter).int_id_->reset ();
-	  size_t no= this->consumer_map_.unbind ((*iter).ext_id_,
-			             (*iter).int_id_);
+      for (CONSUMERS::ITERATOR inner_iter= consumers->begin ();
+           inner_iter != consumers->end();
+           inner_iter ++ )
+	 {
+	   ACE_DEBUG ((LM_DEBUG,
+		       " Removing consumer: Stockname %s Threshold %d\n",
+		       (*iter).ext_id_,
+		       (*inner_iter).desired_value_));
 
-
-          if (no == -1)
-	    {
+	  if ( consumers->remove(*inner_iter) == -1)
 	    ACE_ERROR ((LM_ERROR,
-			"error! ACE_Hash_Map_Manager: unbind ()\n" );
+		    "shutdown: remove failed!/n"));;
 
-    		}
+	 }
+      if ( this->consumer_map_.unbind ((*iter).ext_id_,
+				       (*iter).int_id_) == -1)
+	ACE_ERROR ((LM_ERROR,
+		    "shutdown: unbind failed!/n"));
+    }
 
+  ACE_DEBUG ((LM_DEBUG,
+  " All consumers  removed!\n"));*/
 
+  if ( this->consumer_map_.close () == -1)
+    ACE_ERROR ((LM_ERROR,
+		"Consumer_map_close error!\n"));
 
-          this->consumer_map_.close ();
-
-        	}
-        }
-
-        this->consumer_map_.close ();
-
-	}*/
-
-     ACE_DEBUG ((LM_DEBUG,
-		 "The Callback Quoter server is shutting down"));
-
-     // Instruct the ORB to shutdown.
-     this->orb_->shutdown ();
+  // Instruct the ORB to shutdown.
+  this->orb_->shutdown ();
 
 }
 
