@@ -102,7 +102,7 @@ else
   ifeq ($(buildbits),64)
     DLD     += -q64
     CCFLAGS += -q64
-    ARFLAGS += -X 64
+    ARFLAGS := -X64 $(ARFLAGS)
   endif
  else
   CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"

@@ -1,3 +1,10 @@
+Thu Jun 21 09:01:09 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+
+          Fix for 64-bit AIX builds.  The ARFLAGS definition must have -X64
+          before any of the other options.
+
 Thu Jun 21 08:27:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-aix-4.x.h:
