@@ -1,3 +1,7 @@
+Thu Apr  4 13:25:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/Options.html: Added documentation for the new -ORB option. 
+
 Thu Apr  4 13:15:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Makefile: Added the new test to the list tests that are

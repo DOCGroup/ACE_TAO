@@ -519,6 +519,16 @@ would load all the options listed within "".
   </TD>
 </TR>
 <TR>
+  <TD><CODE>-ORBMuxedConnectionMax</CODE> <EM>number</EM></TD>
+  <TD><a name="-ORBMuxedConnectionMax"></a>
+      The transport cache allows only specified number of
+      connections-per-QoS property to be added to connection
+      cache. Threads not getting the connections will wait for the 
+      connections to be released. This options works only for Muxed
+      connection strategy.
+  </TD>
+</TR>
+<TR>
   <TD><CODE>-ORBConnectionCachePurgePercentage</CODE> <EM>percent</EM></TD>
   <TD><a name="-ORBConnectionCachePurgePercentage"></a>
       If the transport cache is purged, the specified percentage (20 by
