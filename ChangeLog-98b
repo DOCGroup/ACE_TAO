@@ -1,3 +1,18 @@
+Mon Aug 10 01:09:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.{h,i}: Added a new function
+	  "default_win32_security_attributes" to return the defualt
+	  security setting of kernel objects.  By default, this function
+	  is a no-op.  You must define
+	  ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES for this function
+	  to return a SECURITY_ATTRIBUTES object that has no access
+	  restriction.
+
+	  Modified all functions that use Win32 kernel objects to invoke
+	  this new function to get the appropriate security attributes.
+	  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
+	  suggesting this.
+
 Sun Aug 09 23:26:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.28 released.
