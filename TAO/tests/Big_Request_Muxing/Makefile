@@ -62,7 +62,8 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Payload_Receiver.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -788,7 +789,8 @@ realclean: clean
 
 .obj/Payload_Receiver.o .obj/Payload_Receiver.so .shobj/Payload_Receiver.o .shobj/Payload_Receiver.so: Payload_Receiver.cpp Payload_Receiver.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \

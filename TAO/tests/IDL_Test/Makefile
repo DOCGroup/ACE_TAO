@@ -5901,7 +5901,8 @@ realclean:	clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  arrayC.i $(TAO_ROOT)/tao/Stub.h \
+  arrayC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -7668,7 +7669,8 @@ realclean:	clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  gperfC.i $(TAO_ROOT)/tao/Stub.h \
+  gperfC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -10027,7 +10029,8 @@ realclean:	clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  unionC.i $(TAO_ROOT)/tao/Stub.h \
+  unionC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \

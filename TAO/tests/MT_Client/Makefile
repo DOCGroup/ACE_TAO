@@ -243,7 +243,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  testC.i $(TAO_ROOT)/tao/debug.h \
+  testC.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/Task.h \
@@ -708,7 +709,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  testC.i $(TAO_ROOT)/tao/debug.h \
+  testC.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/Task.h \

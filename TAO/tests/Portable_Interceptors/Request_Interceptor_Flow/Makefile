@@ -990,7 +990,8 @@ realclean: clean
   Request_Interceptor.h \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
-  testC.h $(TAO_ROOT)/tao/corba.h \
+  testC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -1508,7 +1509,8 @@ realclean: clean
   Request_Interceptor.h \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
-  testC.h $(TAO_ROOT)/tao/corba.h \
+  testC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \

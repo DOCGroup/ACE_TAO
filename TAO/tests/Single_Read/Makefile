@@ -140,7 +140,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
   $(ACE_ROOT)/ace/Read_Buffer.i \
-  testC.h $(TAO_ROOT)/tao/corba.h \
+  testC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Message_Block.h \

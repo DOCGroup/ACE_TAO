@@ -958,8 +958,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IORTable/iortable_export.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.i \
-  $(TAO_ROOT)/tao/debug.h EchoC.h \
-  EchoC.i
+  $(TAO_ROOT)/tao/debug.h \
+  EchoC.h EchoC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -1651,8 +1651,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IORTable/iortable_export.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.i \
-  $(TAO_ROOT)/tao/debug.h EchoC.h \
-  EchoC.i
+  $(TAO_ROOT)/tao/debug.h \
+  EchoC.h EchoC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \

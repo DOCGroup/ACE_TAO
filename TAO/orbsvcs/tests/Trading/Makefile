@@ -1929,7 +1929,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  TTestC.i $(TAO_ROOT)/tao/Stub.h \
+  TTestC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \

@@ -232,7 +232,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
-  testC.h $(TAO_ROOT)/tao/corba.h \
+  testC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \

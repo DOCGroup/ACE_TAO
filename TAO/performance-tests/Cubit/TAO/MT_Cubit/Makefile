@@ -291,7 +291,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  cubitC.i $(TAO_ROOT)/tao/Stub.h \
+  cubitC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -2444,7 +2445,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Sched_Params.i \
-  Globals.h $(ACE_ROOT)/ace/Get_Opt.h \
+  Globals.h \
+  $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -2485,7 +2487,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Managed_Object.i \
   $(ACE_ROOT)/ace/Managed_Object.cpp \
   $(TAO_ROOT)/tao/orbconf.h \
-  Cubit_Task.h $(ACE_ROOT)/ace/Task.h \
+  Cubit_Task.h \
+  $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2641,8 +2644,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
-  $(TAO_ROOT)/tao/ORB.i cubit_i.h \
-  cubitS.h cubitC.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  cubit_i.h cubitS.h cubitC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
