@@ -24,6 +24,7 @@
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_operation.h"
+#include "be_attribute.h"
 #include "be_argument.h"
 #include "be_array.h"
 #include "be_enum.h"
@@ -310,6 +311,49 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
                         -1);
     }
 
+  this->generated (node, I_TRUE);
+  return 0;
+}
+
+int
+be_visitor_arg_traits::visit_attribute (be_attribute *node)
+{
+  if (this->ctx_->alias () != 0 || this->generated (node))
+    {
+      return 0;
+    }
+
+  AST_String *st = AST_String::narrow_from_decl (node->field_type ());
+  
+  if (st == 0)
+    {
+      return 0;
+    }
+    
+  TAO_OutStream *os = this->ctx_->stream ();
+  unsigned long bound = st->max_size ()->ev ()->u.ulval;
+  idl_bool wide = (st->width () != 1);
+
+  // It is legal IDL to declare a bounded (w)string as an operation
+  // parameter type. There could be any number of identical
+  // declarations in the same build, translation unit, or even in
+  // the same operation, so we use the argument's flat name to
+  // declare an empty struct, and use that struct as the template
+  // parameter for Arg_Traits<>.
+  *os << be_nl << be_nl
+      << "struct " << node->flat_name () << " {};"
+      << be_nl << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "class " << be_global->stub_export_macro () << " "
+      << this->S_ << "Arg_Traits<" << node->flat_name ()
+      << ">" << be_idt_nl
+      << ": public" << be_idt << be_idt_nl
+      << "BD_" << (wide ? "W" : "")
+      << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
+      << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_nl
+      << "};";
+      
   this->generated (node, I_TRUE);
   return 0;
 }
