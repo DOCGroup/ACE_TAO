@@ -59,9 +59,9 @@ Thu Jan 20 18:29:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Thu Jan 20 09:54:04 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * examples/OEP/Display/descriptors/NOTE.txt:
-        * examples/OEP/Display/descriptors/NOTE-win.txt: 
+        * examples/OEP/Display/descriptors/NOTE-win.txt:
 
-          Fixed the discrepancy on using Assembly_Deployer. Thanks to 
+          Fixed the discrepancy on using Assembly_Deployer. Thanks to
           Martina Yen <martina_h_yen@raytheon.com> for reporting this.
 
 Wed Jan 19 09:39:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
