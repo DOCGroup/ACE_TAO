@@ -3,6 +3,7 @@
 #include "Default_Protocols_Hooks.h"
 #include "PolicyC.h"
 #include "ace/Dynamic_Service.h"
+#include "tao/Connection_Handler.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Default_Protocols_Hooks.i"
@@ -27,6 +28,7 @@ int
 TAO_Default_Protocols_Hooks::call_client_protocols_hook (int &,
                                                          int &,
                                                          int &,
+							 int &,
                                                          const char *)
 {
   return 0;
@@ -36,6 +38,7 @@ int
 TAO_Default_Protocols_Hooks::call_server_protocols_hook (int &,
                                                          int &,
                                                          int &,
+							 int &,
                                                          const char *)
 {
   return 0;
@@ -120,6 +123,28 @@ TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
                                                  CORBA::Boolean
                                                  ACE_ENV_ARG_DECL_NOT_USED)
 {
+}
+
+int 
+TAO_Default_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *,
+								       TAO_Connection_Handler *,
+								       const char *)
+{
+  return 0;
+}
+  
+int 
+TAO_Default_Protocols_Hooks::update_server_protocol_properties (CORBA::Policy *policy,
+								       TAO_Connection_Handler *,
+								       const char *)
+{
+  return 0;
+}
+
+CORBA::Long 
+TAO_Default_Protocols_Hooks::get_dscp_codepoint (void)
+{
+  return 0;
 }
 
 
