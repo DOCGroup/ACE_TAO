@@ -86,7 +86,7 @@ OBJFILES = \
 	$(OBJDIR)\LSOCK_Stream.obj \
 	$(OBJDIR)\Malloc.obj \
 	$(OBJDIR)\PI_Malloc.obj \
-	$(OBJDIR)\Malloc_Allcator.obj \
+	$(OBJDIR)\Malloc_Allocator.obj \
 	$(OBJDIR)\Map.obj \
 	$(OBJDIR)\MEM_Acceptor.obj \
 	$(OBJDIR)\MEM_Addr.obj \
