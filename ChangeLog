@@ -1,3 +1,29 @@
+Wed Aug 28 23:30:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: Remove addition of SSL
+          compile/link options so that not all parts of ACE, needing SSL or
+          not, get these options.
+
+        * ace/SSL/Makefile:
+        * tests/SSL/Makefile: Added the SSL compile/link options from
+          wrapper_macros.GNU to these files, where they're needed.
+
+        * ace/POSIX_Proactor.cpp (post_wakeup_completions): Use int
+          to count completions, not ssize_t - match the passed-in arg type.
+          Post the completion directly via the proactor, not via the
+          wakeup completion; the dynamic_cast in ACE_POSIX_Asynch_IO::post_
+          completion loses the subclass of ACE_POSIX_AIOCB_Proactor and
+          when using any other subtype of proactor, the notification is
+          queued incorrectly.
+
+          (POSIX_SIG_Proactor::notify_completion()) - always queue the signal.
+          Not doing so leaves a window where MT proactors can lose a signal.
+
+        * tests/Proactor_Test.cpp: Use ACE_Proactor::close_singleton() to
+          delete proactor instance. Just to be sure we try it.
+
+        * ace/SSL/SSL_Asynch_Stream.{h cpp}: u_long->size_t changes.
+
 Wed Aug 28 22:42:41 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/Service_Configurator/Misc/main.cpp:

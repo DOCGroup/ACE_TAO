@@ -36,13 +36,20 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
+ifneq ($(ssl),)
+  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+  LIBS += $(PLATFORM_SSL_LIBS)
+  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
+endif # ssl
+
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-ifeq ($(HPUX_VERS),)
-ACE_SHLIBS = -lACE -lssl -lcrypto
-endif # HPUX_VERS
+# This shouldn't be necessary... -Steve Huston
+#ifeq ($(HPUX_VERS),)
+#ACE_SHLIBS = -lACE -lssl -lcrypto
+#endif # HPUX_VERS
 
 #----------------------------------------------------------------------------
 #       Dependencies

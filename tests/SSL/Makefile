@@ -40,6 +40,12 @@ ifdef TEMPINCDIR
 COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
 endif
 
+ifneq ($(ssl),)
+  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+  LIBS += $(PLATFORM_SSL_LIBS)
+  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
+endif # ssl
+
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------

@@ -21,7 +21,7 @@
 /**
  * @class ACE_POSIX_Wakeup_Completion
  *
- * This is result object is used by the <end_event_loop> of the
+ * This result object is used by the <end_event_loop> of the
  * ACE_Proactor interface to wake up all the threads blocking
  * for completions.
  */
@@ -452,13 +452,12 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
 {
   ACE_POSIX_Wakeup_Completion *wakeup_completion = 0;
 
-  for (ssize_t ci = 0; ci < how_many; ci++)
+  for (int ci = 0; ci < how_many; ci++)
     {
       ACE_NEW_RETURN (wakeup_completion,
                       ACE_POSIX_Wakeup_Completion (this->wakeup_handler_),
                       -1);
-
-      if (wakeup_completion->post_completion (this) == -1)
+      if (this->post_completion (wakeup_completion) == -1)
         return -1;
     }
 
@@ -965,10 +964,7 @@ ACE_POSIX_AIOCB_Proactor::putq_result (ACE_POSIX_Asynch_Result *result)
                        "%N:%l:ACE_POSIX_AIOCB_Proactor::putq_result failed\n"),
                       -1);
 
-  // let try not to overflow signal queue or notification pipe
-
-  if (this->result_queue_.size () == 1)
-    this->notify_completion (sig_num);
+  this->notify_completion (sig_num);
 
   return 0;
 }
@@ -1739,14 +1735,6 @@ ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
   value.sival_int = -1;
 #endif /* __FreeBSD__ */
 
-  // Solaris 8 can "forget" to delivery
-  // two or more signals queued immediately.
-  // Just comment the following "if" statement
-  // and try this->post_completion(2)
-
-  if (os_id_ == OS_SUN_58 && result_queue_.size() > 1)
-    return 0;
-
   // Queue the signal.
   if (sigqueue (pid, sig_num, value) == 0)
     return 0;
@@ -2036,9 +2024,9 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
 
         // Call the application code.
         this->application_specific_code (asynch_result,
-                                     return_status, // Bytes transferred.
-                                     0,             // No completion key.
-                                     error_status); // Error
+                                         return_status, // Bytes transferred.
+                                         0,             // No completion key.
+                                         error_status); // Error
       }
 
   // process post_completed results
@@ -2047,9 +2035,9 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
 
   // Uncomment this  if you want to test
   // and research the behavior of you system
-  // ACE_DEBUG ((LM_DEBUG,
-  //            "(%t) NumAIO=%d NumQueue=%d\n",
-  //             ret_aio, ret_que));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) NumAIO=%d NumQueue=%d\n",
+              ret_aio, ret_que));
 
   return ret_aio + ret_que > 0 ? 1 : 0;
 }

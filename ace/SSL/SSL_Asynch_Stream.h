@@ -95,13 +95,13 @@ public:
              ACE_Message_Block &message_block);
 
   int read (ACE_Message_Block &message_block,
-            u_long num_bytes_to_read,
+            size_t num_bytes_to_read,
             const void *act = 0,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
   int write (ACE_Message_Block &message_block,
-             u_long bytes_to_write,
+             size_t bytes_to_write,
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
