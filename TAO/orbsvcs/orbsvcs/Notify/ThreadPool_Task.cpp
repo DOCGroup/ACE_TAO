@@ -29,7 +29,7 @@ TAO_NS_ThreadPool_Task::init (int argc, char **argv)
   return this->ACE_Task<ACE_SYNCH>::init (argc, argv);
 }
 
-void 
+void
 TAO_NS_ThreadPool_Task::init (TAO_NS_AdminProperties& admin_properties)
 {
   TAO_NS_Worker_Task::init (admin_properties);
@@ -48,7 +48,7 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
                                             tp_params.static_threads,
                                             0,
-                                            tp_params.default_priority) == -1)
+                                            ACE_DEFAULT_THREAD_PRIORITY) == -1)
     {
       if (TAO_debug_level > 0)
         {

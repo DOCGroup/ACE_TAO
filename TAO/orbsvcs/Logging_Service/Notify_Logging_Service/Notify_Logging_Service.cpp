@@ -1,9 +1,11 @@
 #include "Notify_Logging_Service.h"
-#include "tao/debug.h"
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
-#include "tao/IORTable/IORTable.h"
+
+#include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "tao/debug.h"
+#include "tao/IORTable/IORTable.h"
+#include "orbsvcs/Notify/Service.h"
 
 ACE_RCSID (Notify_Logging_Service,
            Notify_Logging_Service,
@@ -74,20 +76,27 @@ Notify_Logging_Service::init (int argc, char *argv[]
   ACE_DEBUG ((LM_DEBUG,
               "\nStarting up the Notification Logging Service...\n"));
 
+  TAO_NS_Service* notify_service = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
+
+  if (notify_service == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Notify Service not found! check conf. file\n"));
+      return -1;
+    }
+
   // Activate the factory
   this->notify_factory_ =
-    TAO_Notify_EventChannelFactory_i::create (this->poa_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+    notify_service->create (this->poa_.in ()
+                            ACE_ENV_ARG_PARAMETER);
 
   ACE_NEW_THROW_EX (this->notify_log_factory_,
                       NotifyLogFactory_i (this->notify_factory_.in ()),
                       CORBA::NO_MEMORY ());
-    
-  DsNotifyLogAdmin::NotifyLogFactory_var obj = 
+
+  DsNotifyLogAdmin::NotifyLogFactory_var obj =
     notify_log_factory_->activate (this->poa_.in () ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
-
 
   // Register the Factory
   ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
@@ -181,4 +190,3 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
 
 /*****************************************************************/
-
