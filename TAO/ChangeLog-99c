@@ -1,3 +1,9 @@
+Mon Aug 30 17:16:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	  Removed unused arg in function
+	  last_inout_or_out_node ().
+
 Mon Aug 30 17:10:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Interceptors/interceptors.cpp: Fixed erronous format
