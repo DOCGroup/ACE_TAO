@@ -242,7 +242,11 @@
 #endif /* DBL_MAX */
 
 // The number of bytes in a long double.
-#if LDBL_MAX_EXP == 128
+#if defined (__sgi)
+  // The Irix 6.x float.h doesn't allow us to distinguish between a
+  // double and a long double.  Gotta hard code this . . .
+# define ACE_SIZEOF_LONG_DOUBLE 16
+#elif LDBL_MAX_EXP == 128
 # define ACE_SIZEOF_LONG_DOUBLE 4
 #elif defined (i386) || defined (__i386__) || defined (_M_IX386) || \
   defined (ACE_NETBSD) || defined (__FreeBSD__)
@@ -253,7 +257,7 @@
 # define ACE_SIZEOF_LONG_DOUBLE 16
 #else
 # error: unsupported double size, must be updated for this platform!
-#endif /* LDBL_MAX */
+#endif /* LDBL_MAX_EXP */
 
 // Byte-order (endian-ness) determination.
 #if defined (BYTE_ORDER)
