@@ -1,3 +1,7 @@
+Thu Sep 16 17:43:02 CDT 1999  Loren Rittle  <rittle@rsch.comm.mot.com>
+
+        * bin/update-ace+tao.sh: Improve portability.
+
 Thu Sep 16 11:08:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Makefile:
