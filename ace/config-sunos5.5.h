@@ -49,6 +49,9 @@
 #    define ACE_NEW_THROWS_EXCEPTIONS
 #  endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
+    /* If you want to disable threading with Sun CC, remove -mt
+       from your CFLAGS, e.g., using make threads=0. */
+
 #elif defined (__GNUG__)
 # include "ace/config-g++-common.h"
 # define ACE_HAS_STRING_CLASS
@@ -59,6 +62,9 @@
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
 #   if !defined (_REENTRANT)
+    /* If you want to disable threading, comment out the following
+       line.  Or, add -DACE_MT_SAFE=0 to your CFLAGS, e.g., using
+       make threads=0. */
 #     define _REENTRANT
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
@@ -186,20 +192,17 @@
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 #if defined (_REENTRANT)
-  /* If you want to disable threading comment out the
-     following defines until you get to the comment:
-     // End of threading #defines. 
-  */
   // Compile using multi-thread libraries.
+# define ACE_HAS_THREADS
+
 # if !defined (ACE_MT_SAFE)
 #   define ACE_MT_SAFE 1
 # endif /* ACE_MT_SAFE */
 
-# define ACE_HAS_THREADS
-
-  // Platform supports POSIX pthreads *and* Solaris threads!  If you
-  // only want to use POSIX pthreads just comment out ACE_HAS_STHREADS.
-  // Or, add -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.
+  // Platform supports POSIX pthreads *and* Solaris threads, by
+  // default!  If you only want to use POSIX pthreads, add
+  // -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.  Or, #define it right
+  // here.
 # if !defined (_POSIX_PTHREAD_SEMANTICS)
 #   define ACE_HAS_STHREADS
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
@@ -222,7 +225,6 @@
 # define ACE_HAS_THR_YIELD
 # define ACE_LACKS_PTHREAD_YIELD
 
-// End of threading #defines.
 #endif /* _REENTRANT */
 
 // Platform supports ACE_TLI timod STREAMS module.
