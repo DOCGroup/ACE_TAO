@@ -20,6 +20,13 @@ the first implementation of the OMG's Portable Object Adapter (POA)
 specification and latest IDL->C++ mappings.  For more information
 about the POA, please see
 
+http://www.cs.wustl.edu/~schmidt/C++-report-col11.ps.gz
+http://www.cs.wustl.edu/~schmidt/C++-report-col12.ps.gz
+
+For more information on TAO, please see
+
+http://www.cs.wustl.edu/~schmidt/TAO.html
+
 TAO has been ported to a range of OS platforms including Windows NT
 4.x using MSVC++ 4.x and 5.x, several versions of UNIX (e.g., Solaris
 2.x, SGI IRIX 6.x, Linux, SCO, NetBSD, and FreeBSD), and Real-Time
