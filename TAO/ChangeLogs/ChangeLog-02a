@@ -1,3 +1,10 @@
+Tue Apr 24 15:00:53 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: 
+
+	  Changed the termination times of the processes so they would
+	  not terminate before time.
+
 Tue Apr 24 15:00:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/IFR_BaseC.h:
