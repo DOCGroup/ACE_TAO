@@ -697,8 +697,8 @@ ACE_Sig_Handlers::register_handler (int signum,
             return ace_sig_adapter->sigkey ();
         }
     }
-  else
-    return -1;
+
+  return -1;
 }
 
 // Remove the ACE_Event_Handler currently associated with <signum>.
