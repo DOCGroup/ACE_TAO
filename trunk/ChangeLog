@@ -1,3 +1,15 @@
+Thu Apr 17 03:54:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/g++_metric.sh:
+
+          Propagate return code and only output compile metrics
+          on successful compilation.
+
+        * bin/generate_compile_stats.sh:
+
+          Improved html pages presentation.  Automatically scale
+          graphs for better readibility, and sort detail section.
+
 Wed Apr 16 13:35:34 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Basic_Types.h (ACE_WINT_T, ACE_WCHAR_T):

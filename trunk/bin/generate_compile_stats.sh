@@ -147,12 +147,12 @@ gen_chart ()
   # low and high aren't being used right now since we don't have
   # a good idea of what to make them yet.  So, we let gnuplot
   # automatically create them
-  #local low=$3
-  #local high=$4
+  local low=$3
+  local high=$4
 
   gnuplot <<EOF
     #set grid
-    set time
+    set time "$DATE"
     set xdata time
     set timefmt "%Y/%m/%d-%H:%M"
     set format x "%Y/%m/%d"
@@ -171,13 +171,6 @@ EOF
   /bin/cp .metrics/images/${object}.png $DEST/images/${object}.png
   /usr/bin/tac .metrics/data/${object}.txt > $DEST/data/${object}.txt
   /usr/bin/tail -5 .metrics/data/${object}.txt > $DEST/data/LAST_${object}.txt
-}
-
-# Make a datafile entry, <date> <milliseconds>
-make_entry ()
-{
-  echo -n $DATE " ";
-  echo $1
 }
 
 # Make sure hidden directory tree exists, and create it if it doesn't
@@ -221,7 +214,7 @@ process_file ()
     #echo "target = $target, object = $CURRENT_OBJECT,  path = $CURRENT_PATH"
     
     let "CURRENT_TIME=($time/1000)+$FUDGE_FACTOR"
-    make_entry $CURRENT_TIME >> .metrics/data/${CURRENT_OBJECT}.txt
+    echo $DATE $CURRENT_TIME >> .metrics/data/${CURRENT_OBJECT}.txt
 
   done # while
 }
@@ -329,22 +322,22 @@ create_images ()
   local HIGH=10000
 
   while read object; do
-    # use a list of objects for various yranges
-    # todo: this is currently turned off, but the idea will be to have a list
-    #       of objects for each scale, and let all the others default to the
-    #       0:10000 (0-10 second) range.
-    if [ "$object" != "${object%libACE*}" ]; then
-      # libraries can take a lot longer, so increase the range for them
-      LOW=0
-      HIGH=600000
-    else
-      # finally, individual object files should be the quickest...
-      LOW=0
-      HIGH=10000
+    if [ -e $object ] && [ `sort -k 2n $object | tail -n 1 | cut -d' ' -f2` ]; then
+      let TMP=`sort -k 2n $object | tail -n 1 | cut -d' ' -f2`
+      #echo $TMP
+      let TMP=$TMP*16/10
+      STEP=1000
+      HIGH=0
+      while [ $HIGH -eq 0 ]; do
+        if [ $TMP -lt $STEP ]; then
+          HIGH=$STEP
+        fi
+        let STEP=$STEP*15/10
+      done
+
+      object="${object%.txt}"
+      gen_chart "${object##*/}" "$DEST" "$LOW" "$HIGH" >/dev/null 2>&1
     fi
-    
-    object="${object%.txt}"
-    gen_chart "${object##*/}" "$DEST" "$LOW" "$HIGH" >/dev/null 2>&1
   done  
 
 }
@@ -356,7 +349,7 @@ create_index_page ()
   echo "<html>"
   echo "<head><title>$TITLE</title></head>"
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
-  echo "<br><center>$TITLE</center><br><hr>"
+  echo "<br><center><h1>$TITLE</h1></center><br><hr>"
   echo '<ul>'
   echo '<li><a href="ace.html">ACE</a>'
   echo '<li><a href="tao.html">TAO</a>'
@@ -369,23 +362,23 @@ create_page ()
   # always strip off "TAO___"
   local BASE=$1
   local BASE_NAME=${BASE#TAO___}
-  #shift
-  #local OBJECTS=$2
   local TITLE="Compilation metrics for ${BASE_NAME//___//}"
 
   # header
   echo "<html>"
   echo "<head><title>$TITLE</title></head>"
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
-  echo "<br><center>$TITLE</center><br>"
+  echo "<br><center><h1>$TITLE</h1></center><br>"
   if [ -e ".metrics/images/$BASE.png" ]; then
     echo '<DIV align="center"><P>'
     echo "<IMG alt=\"$BASE\" border=0 src=\"images/$BASE.png\""
-    echo 'width="640" height="480"></P></DIV><HR>'
+    echo 'width="640" height="480"></P></DIV>'
   fi
 
+  echo "<br><hr><br>"
+  echo "<center><h2>Detail</h2></center>"
+
   echo "<ul>"
-  #for i in $@; do
   while read i; do
     if [ -e ".metrics/${i}.html" ]; then
       # strip off "TAO___" if it exists
@@ -415,9 +408,10 @@ sort_list ()
   for i in $@; do
     echo "$i" >> .metrics/tmp_list
     #echo $i
-  done
-     
-  sort .metrics/tmp_list
+  done 
+
+  # sort eats underscores, soo...
+  sed "s/___/000/" .metrics/tmp_list | sort | sed "s/000/___/"
 }
 
 create_html ()
@@ -480,11 +474,3 @@ ls .metrics/data/*.txt | create_images $DEST
 
 cat .metrics/composites.txt | create_html $DEST
 
-
-# 0) grab the date off the tail of the input file and use it
-#    for the dates in the data files 
-# 0.1) validate input file before starting processing, date and compile times
-# 1) process the objects first
-# 2) then grab all the rollups and add up the objects for each and add
-#    and entry for the rolledup object.
-# 3) then gen all the graphs at once and move them over...
