@@ -330,6 +330,8 @@ ACE::strnew (const char *s)
 ASYS_INLINE wchar_t *
 ACE::strnew (const wchar_t *s)
 {
+  if (s == 0)
+    return 0;
   wchar_t *t = 0;
   ACE_NEW_RETURN (t, 
                   wchar_t[ACE_OS_String::strlen (s) + 1], 
