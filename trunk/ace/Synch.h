@@ -188,19 +188,35 @@ public:
   int acquire (void);
 
   /**
-   * Block the thread until <tv> times out or until the semaphore
-   * count becomes greater than 0 (at which point it is decremented).
-   * Note that <tv> is assumed to be in "absolute" rather than
-   * "relative" time.  The value of <tv> is updated upon return to
-   * show the actual (absolute) acquisition time.
+   * Block the thread until the semaphore count becomes greater than 0
+   * (at which point it is decremented) or until <tv> times out (in
+   * which case -1 is returned and <errno> == <ETIME>).  Note that <tv>
+   * is assumed to be in "absolute" rather than "relative" time.  The
+   * value of <tv> is updated upon return to show the actual
+   * (absolute) acquisition time.
    *
    * NOTE: Solaris threads do not support timed semaphores.
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
-   * -D_POSIX_PTHREAD_SEMANTICS.
-   */
+   * -DACE_HAS_PTHREADS rather than -DACE_HAS_STHREADS.  */
   int acquire (ACE_Time_Value &tv);
+
+  /**
+   * If <tv> == 0 then call <acquire()> directly.  Otherwise, Block
+   * the thread until the semaphore count becomes greater than 0 
+   * (at which point it is decremented) or until <tv> times out (in
+   * which case -1 is returned and <errno> == <ETIME>).  Note that
+   * <*tv> is assumed to be in "absolute" rather than "relative" time.
+   * The value of <*tv> is updated upon return to show the actual
+   * (absolute) acquisition time. 
+   *
+   * NOTE: Solaris threads do not support timed semaphores.
+   * Therefore, if you're running on Solaris you might want to
+   * consider using the ACE POSIX pthreads implementation instead,
+   * which can be enabled by compiling ACE with
+   * -DACE_HAS_PTHREADS rather than -DACE_HAS_STHREADS.  */
+  int acquire (ACE_Time_Value *tv);
 
   /**
    * Conditionally decrement the semaphore if count is greater than 0
@@ -298,17 +314,40 @@ public:
                        void * = 0,
                        int max = 0x7fffffff);
   ~ACE_Null_Semaphore (void);
+  /// Return 0.
   int remove (void);
 
-  int acquire (ACE_Time_Value &);
+  /// Return 0.
   int acquire (void);
+
+  /// Return -1 with <errno> == <ETIME>.
+  int acquire (ACE_Time_Value &);
+
+  /// Return -1 with <errno> == <ETIME>.
+  int acquire (ACE_Time_Value *);
+
+  /// Return 0.
   int tryacquire (void);
+
+  /// Return 0.
   int release (void);
+
+  /// Return 0.
   int release (size_t);
+
+  /// Return 0.
   int acquire_write (void);
+
+  /// Return 0.
   int tryacquire_write (void);
+
+  /// Return 0.
   int tryacquire_write_upgrade (void);
+
+  /// Return 0.
   int acquire_read (void);
+
+  /// Return 0.
   int tryacquire_read (void);
 
   /// Dump the state of an object.
@@ -444,12 +483,22 @@ public:
   int acquire (void);
 
   /**
-   * Block the thread until <tv> times out.  Note that <tv> is assumed
-   * to be in "absolute" rather than "relative" time.  The value of
-   * <tv> is updated upon return to show the actual (absolute)
-   * acquisition time.
+   * Block the thread until the mutex is acquired or <tv> times out,
+   * in which case -1 is returned and <errno> == <ETIME>.  Note that
+   * <tv> is assumed  to be in "absolute" rather than "relative" time.  
+   * The value of <tv> is updated upon return to show the actual 
+   * (absolute) acquisition time.
    */
   int acquire (ACE_Time_Value &tv);
+
+  /**
+   * If <tv> == 0 then call <acquire()> directly.  Otherwise, block
+   * the thread until the mutex is acquired or <tv> times out, in
+   * which case -1 is returned and <errno> == <ETIME>.  Note that
+   * <*tv> is assumed to be in "absolute" rather than "relative" time.
+   * The value of <*tv> is updated upon return to show the actual
+   * (absolute) acquisition time.  */
+  int acquire (ACE_Time_Value *tv);
 
   /**
    * Conditionally acquire lock (i.e., don't wait on queue).  Returns
@@ -582,16 +631,37 @@ class ACE_Export ACE_Null_Mutex
 public:
   ACE_Null_Mutex (const ACE_TCHAR * = 0);
   ~ACE_Null_Mutex (void);
+  /// Return 0.
   int remove (void);
 
+  /// Return 0.
   int acquire (void);
+
+  /// Return -1 with <errno> == <ETIME>.
   int acquire (ACE_Time_Value &timeout);
+
+  /// Return -1 with <errno> == <ETIME>.
+  int acquire (ACE_Time_Value *timeout);
+
+  /// Return 0.
   int tryacquire (void);
+
+  /// Return 0.
   int release (void);
+
+  /// Return 0.
   int acquire_write (void);
+
+  /// Return 0.
   int tryacquire_write (void);
+
+  /// Return 0.
   int tryacquire_write_upgrade (void);
+
+  /// Return 0.
   int acquire_read (void);
+
+  /// Return 0.
   int tryacquire_read (void);
 
   /// Dump the state of an object.
@@ -627,9 +697,17 @@ public:
                       const ACE_TCHAR * = 0,
                       void * = 0);
   ~ACE_Null_Condition (void);
+
+  /// Returns 0.
   int remove (void);
+
+  /// Returns -1 with <errno> == <ETIME>.
   int wait (ACE_Time_Value * = 0);
+
+  /// Returns 0.
   int signal (void);
+
+  /// Returns 0.
   int broadcast (void);
   ACE_Null_Mutex &mutex (void);
 
@@ -941,12 +1019,23 @@ public:
   int acquire (void);
 
   /**
-   * Block the thread until <tv> times out.  Note that <tv> is assumed
-   * to be in "absolute" rather than "relative" time.  The value of
-   * <tv> is updated upon return to show the actual (absolute)
-   * acquisition time.
+   * Block the thread until we acquire the mutex or until <tv> times
+   * out, in which case -1 is returned with <errno> == <ETIME>.  Note
+   * that <tv> is assumed to be in "absolute" rather than "relative"
+   * time.  The value of <tv> is updated upon return to show the
+   * actual (absolute) acquisition time.
    */
   int acquire (ACE_Time_Value &tv);
+
+  /**
+   * If <tv> == 0 the call <acquire()> directly.  Otherwise, Block the
+   * thread until we acquire the mutex or until <tv> times out, in
+   * which case -1 is returned with <errno> == <ETIME>.  Note that
+   * <*tv> is assumed to be in "absolute" rather than "relative" time.
+   * The value of <*tv> is updated upon return to show the actual
+   * (absolute) acquisition time.  
+   */
+  int acquire (ACE_Time_Value *tv);
 
   /**
    * Conditionally acquire lock (i.e., don't wait on queue).  Returns

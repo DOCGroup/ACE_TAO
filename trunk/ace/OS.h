@@ -5933,18 +5933,29 @@ public:
   static int mutex_lock (ACE_mutex_t *m,
                          int &abandoned);
 
-  /// This method attempts to acquire a lock, but gives up if the lock
-  /// has not been acquired by the given time.
   /**
-   * If the lock is not acquired within the given amount of time, then
-   * this method returns with an ETIMEDOUT errno on platforms that
-   * actually support timed mutexes.  The timeout should be an
-   * absolute time.  Note that the mutex should not be a recursive
-   * one, i.e., it should only be a standard mutex or an error
-   * checking mutex.
+   * This method attempts to acquire a lock, but gives up if the lock
+   * has not been acquired by the given time.  If the lock is not
+   * acquired within the given amount of time, then this method
+   * returns -1 with an <ETIME> errno on platforms that actually
+   * support timed mutexes.  The timeout should be an absolute time.
+   * Note that the mutex should not be a recursive one, i.e., it
+   * should only be a standard mutex or an error checking mutex.
    */
   static int mutex_lock (ACE_mutex_t *m,
                          const ACE_Time_Value &timeout);
+
+  /**
+   * If <timeout> == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
+   * this method attempts to acquire a lock, but gives up if the lock
+   * has not been acquired by the given time, in which case it returns
+   * -1 with an <ETIME> errno on platforms that actually support timed
+   * mutexes.  The timeout should be an absolute time.  Note that the
+   * mutex should not be a recursive one, i.e., it should only be a
+   * standard mutex or an error checking mutex.
+   */
+  static int mutex_lock (ACE_mutex_t *m, 
+                         const ACE_Time_Value *timeout);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
@@ -5973,6 +5984,8 @@ public:
   static int thread_mutex_lock (ACE_thread_mutex_t *m);
   static int thread_mutex_lock (ACE_thread_mutex_t *m,
                                 const ACE_Time_Value &timeout);
+  static int thread_mutex_lock (ACE_thread_mutex_t *m,
+                                const ACE_Time_Value *timeout);
   static int thread_mutex_trylock (ACE_thread_mutex_t *m);
   static int thread_mutex_unlock (ACE_thread_mutex_t *m);
   //@}
@@ -6272,6 +6285,8 @@ public:
   static int sema_wait (ACE_sema_t *s);
   static int sema_wait (ACE_sema_t *s,
                         ACE_Time_Value &tv);
+  static int sema_wait (ACE_sema_t *s,
+                        ACE_Time_Value *tv);
   //@}
 
   //@{ @name A set of wrappers for System V semaphores.
