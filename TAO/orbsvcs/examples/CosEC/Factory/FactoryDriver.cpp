@@ -51,14 +51,6 @@ FactoryDriver::parse_args (int argc, char *argv [])
 int
 FactoryDriver::start (int argc, char *argv [])
 {
-  if (this->parse_args (argc, argv) == -1)
-    return -1;
-
-  // Ref counted servants are on the heap..
-  ACE_NEW_RETURN (factory_servant_,
-                  TAO_CosEventChannelFactory_i (),
-                  -1);
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -67,6 +59,14 @@ FactoryDriver::start (int argc, char *argv [])
                               "",
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (this->parse_args (argc, argv) == -1)
+        return -1;
+
+      // Ref counted servants are on the heap..
+      ACE_NEW_RETURN (factory_servant_,
+                      TAO_CosEventChannelFactory_i (),
+                      -1);
 
       CORBA::Object_var poa_object  =
         orb_->resolve_initial_references("RootPOA",
