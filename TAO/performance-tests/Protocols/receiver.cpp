@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 #include "testS.h"
 
-static const char *ior_file = "ior";
+static const char *ior_file = "receiver.ior";
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static ACE_UINT32 gsf = 0;
@@ -376,11 +376,15 @@ main (int argc, char **argv)
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      test_i servant (orb.in (),
-                      root_poa.in ());
+      test_i *servant =
+	new test_i (orb.in (),
+		    root_poa.in ());
+
+      PortableServer::ServantBase_var safe_servant (servant);
+      ACE_UNUSED_ARG (safe_servant);
 
       test_var test =
-        servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =

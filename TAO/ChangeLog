@@ -1,3 +1,14 @@
+Wed Jun 24 18:29:12 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* performance-tests/Protocols:
+
+	  Broke test up into sender, distributor, and receiver components
+	  rather than client and server.  One can still get the old
+	  behavior by going directly from the sender to the receiver. Both
+	  receiver and distributor implement the same
+	  interface. distributor simply forwards all calls to the
+	  receiver.
+
 Thu Jun 24 14:29:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
