@@ -946,9 +946,6 @@ public:
   // ORB will not normally return OBJECT_NOT_EXIST unless the POA
   // reports that fault.
 
-  // Establish connectsion to each of the comma-separated
-  // <{host}>:<{port}> combinations specified in <connections>.
-
   int open (void);
   // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
@@ -1030,6 +1027,12 @@ private:
 
   CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout);
   // Resolve the trading object reference.
+
+  char *multicast_query (TAO_Service_ID service_id,
+                         u_short port,
+                         ACE_Time_Value *timeout);
+  // returns and IOR string, the client is responsible for freeing
+  // memory!
 
   CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,
                                          u_short port,

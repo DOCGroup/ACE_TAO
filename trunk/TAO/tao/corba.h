@@ -203,7 +203,6 @@ operator>> (TAO_InputCDR&, TAO_opaque&);
 #include "tao/NVList.h"
 #include "tao/Principal.h"
 #include "tao/Request.h"
-#include "tao/Stub.h"
 #include "tao/Object.h"
 #include "tao/varout.h"
 #include "tao/Typecode.h"
@@ -218,20 +217,17 @@ operator>> (TAO_InputCDR&, TAO_opaque&);
 #include "tao/POA.h"
 
 // TAO specific includes
-
-
-#include "tao/params.h"
-
-#include "tao/Connect.h"
 // Pluggable Protocol Related Includes first
 #include "tao/Pluggable.h"
+#include "tao/MProfile.h"
+#include "tao/Connect.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Acceptor.h"
 // end pluggable protocols
+#include "tao/params.h"
 #include "tao/ORB_Core.h"
-#include "tao/Active_Object_Map.h"
 #include "tao/Operation_Table.h"
 #include "tao/debug.h"
 
@@ -241,10 +237,11 @@ operator>> (TAO_InputCDR&, TAO_opaque&);
 #include "tao/default_server.h"
 
 // GIOP - IIOP related includes
-#include "tao/IIOP_Object.h"
+#include "tao/Stub.h"
+#include "tao/Active_Object_Map.h"
+#include "tao/GIOP.h"
 #include "tao/IIOP_ORB.h"
 #include "tao/IIOP_Interpreter.h"
-#include "tao/GIOP.h"
 #include "tao/Invocation.h"
 #include "tao/Server_Request.h"
 

@@ -587,6 +587,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
       else
         {
           // First, determine if the port was supplied on the command line
+          // @@ FRED: need a generic rep for this!
           u_short port =
             TAO_ORB_Core_instance ()->orb_params ()->trading_service_port ();
 
@@ -612,11 +613,125 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
   return CORBA_Object::_duplicate (return_value);
 }
 
+char *
+CORBA_ORB::multicast_query (TAO_Service_ID service_id,
+                                     u_short port,
+                                     ACE_Time_Value *timeout)
+{
+    // This is the code that implements the multicast
+  // Naming Service locator.
+  ACE_SOCK_Dgram_Mcast multicast;
+  ACE_INET_Addr remote_addr;
+  // This starts out initialized to all zeros!
+  ACE_INET_Addr multicast_addr (port,
+                                ACE_DEFAULT_MULTICAST_ADDR);
+
+  // Subscribe to multicast address.
+  if (multicast.subscribe (multicast_addr) == -1)
+  {
+    ACE_ERROR ((LM_ERROR, "Unable to perform IIOP multicast!\n"));
+    return 0;
+  }
+
+  // Prepare connection for the reply.
+  ACE_INET_Addr response_addr;
+  ACE_SOCK_Dgram response;
+
+  // Choose any local port, we don't really care.
+  if (response.open (ACE_Addr::sap_any) == -1)
+  {
+    multicast.close ();
+    ACE_ERROR_RETURN ((LM_ERROR, "IIOP Multicast open failed.\n"), 0);
+  }
+
+  if (response.get_local_addr (response_addr) == -1)
+  {
+    multicast.close ();
+    response.close ();
+    ACE_ERROR_RETURN ((LM_ERROR,
+                      "IIOP get_local_addr failed.\n"), 0);
+  }
+    
+  struct
+  {
+    u_short reply_port;
+    CORBA::Short service_id;
+  } mcast_info;
+
+  // Figure out what port to listen on for server replies,
+  // and convert to network byte order.
+  mcast_info.reply_port =
+    ACE_HTONS (response_addr.get_port_number ());
+  mcast_info.service_id =
+    ACE_HTONS (service_id);
+
+  // Send multicast of one byte, enough to wake up server.
+  ssize_t n_bytes = multicast.send (&mcast_info,
+                                    sizeof (mcast_info));
+
+  // close multicast socket now.
+  multicast.close ();
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "sent multicast request."));
+
+  // Check for errors.
+  if (n_bytes == -1)
+  {
+    response.close ();
+    ACE_ERROR_RETURN((LM_ERROR, "Error sending IIOP Multicast!\n"), 0);
+  }
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "%s; Sent multicast.  Reply port is %u."
+                "# of bytes sent is %d.\n",
+                __FILE__,
+                response_addr.get_port_number (),
+                n_bytes));
+
+  // Wait for response until
+  // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
+  ACE_Time_Value tv (timeout == 0
+                     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
+                     : *timeout);
+
+  // receive response message
+  char *buf = new char[ACE_MAX_DGRAM_SIZE + 1]; // add char for '\0'
+
+  n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &tv);
+
+  // Close endpoint for response.
+  int retval = response.close ();
+
+  // Check for errors.
+  if (n_bytes == -1 || retval == -1)
+  {
+    delete [] buf;
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                      "Error reading IIOP multicast response!\n"), 
+                      0);
+  }
+
+  // Null terminate message.
+  buf[n_bytes] = 0;
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "%s; Service resolved to ior: '%s'\n",
+                __FILE__,
+                buf));
+
+  return buf;
+}
 
 // @@ This will have to be sanitized of transport specific calls
 //    in order to support pluggable protocols!  But, it does use
 //    UDP and multicast.  Not all transport protocols may support
 //    this, connectionless and multicast. fredk
+// @@ FRED: Should define a flag, something like Protocol_Has_Multicast
+//    If there is no multicast, then this functionality is not available
+//    and we return NULL.
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
                                  u_short port,
@@ -626,103 +741,17 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   // Use UDP multicast to locate the  service.
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
 
-  // This is the code that implements the multicast
-  // Naming Service locator.
-  ACE_SOCK_Dgram_Mcast multicast;
-  ACE_INET_Addr remote_addr;
-  // This starts out initialized to all zeros!
-  ACE_INET_Addr multicast_addr (port,
-                                ACE_DEFAULT_MULTICAST_ADDR);
+  char *buf = multicast_query (service_id, port, timeout);
 
-  // Subscribe to multicast address.
-  if (multicast.subscribe (multicast_addr) != -1)
-    {
-      // Prepare connection for the reply.
-      ACE_INET_Addr response_addr;
-      ACE_SOCK_Dgram response;
-
-      // Choose any local port, we don't really care.
-      if (response.open (ACE_Addr::sap_any) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "open failed.\n"));
-      else
-        {
-          if (response.get_local_addr (response_addr) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "get_local_addr failed.\n"));
-          else
-            {
-              struct
-              {
-                u_short reply_port;
-                CORBA::Short service_id;
-              } mcast_info;
-
-              // Figure out what port to listen on for server replies,
-              // and convert to network byte order.
-              mcast_info.reply_port =
-                ACE_HTONS (response_addr.get_port_number ());
-              mcast_info.service_id =
-                ACE_HTONS (service_id);
-
-              // Send multicast of one byte, enough to wake up server.
-              ssize_t n_bytes = multicast.send (&mcast_info,
-                                                sizeof (mcast_info));
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "sent multicast request."));
-
-              // Check for errors.
-              if (n_bytes != -1)
-                {
-                  if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                                "%s; Sent multicast.  Reply port is %u."
-                                "# of bytes sent is %d.\n",
-                                __FILE__,
-                                response_addr.get_port_number (),
-                                n_bytes));
-
-                  // Wait for response until
-                  // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
-                  ACE_Time_Value tv (timeout == 0
-                                     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-                                     : *timeout);
-
-                  // receive response message
-                  char buf[ACE_MAX_DGRAM_SIZE];
-                  n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &tv);
-
-                  // Close endpoint for response.
-                  int retval = response.close ();
-
-                  // Check for errors.
-                  if (n_bytes != -1 && retval != -1)
-                    {
-                      // Null terminate message.
-                      buf[n_bytes] = 0;
-
-                      if (TAO_debug_level > 0)
-                        ACE_DEBUG ((LM_DEBUG,
-                                    "%s; Service resolved to ior: '%s'\n",
-                                    __FILE__,
-                                    buf));
-
-                      // Convert ior to an object reference.
-                      CORBA_Object_ptr objectified_ior =
-                        this->string_to_object ((CORBA::String) buf, env);
-
-                      // Check for errors.
-                      if (env.exception () == 0)
-                        return_value = objectified_ior;
-                    }
-                }
-            }
-          response.close ();    // It's okay to close this twice.
-        }
-      multicast.close ();
-    }
-
+  if (buf)
+  {
+    // Convert ior to an object reference.
+    CORBA_Object_ptr objectified_ior = this->string_to_object ((CORBA::String) buf, env);
+  
+    // Check for errors.
+    if (env.exception () == 0)
+      return_value = objectified_ior;
+  }
   // Return ior.
   return return_value;
 }
@@ -790,13 +819,19 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   else
     id = 0;
 
-  // @@ Ugly, should not assume we are an IIOP Object!!
-  //    Will deal with this on the next iteration of pluggable protocols! fredk
-  IIOP_Object *data = 0;
-  // @@ replace IIOP::Profile with something more appropriate!!
-  data = new IIOP_Object (id,
-                          TAO_ORB_Core_instance ()->orb_params ()->addr (),
+  // First we create a profile list, well actually a list
+  // of one!
+  TAO_IIOP_Profile *pfile = 
+    new TAO_IIOP_Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
                           key);
+
+  STUB_Object *data = 0;
+  // @@ replace IIOP::Profile with something more appropriate!!
+  data = new STUB_Object (id, pfile);
+
+  pfile->_decr_refcnt ();
+  // STUB_Object will increment the reference count.
+
   if (data == 0)
     env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 

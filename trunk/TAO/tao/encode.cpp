@@ -250,10 +250,9 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 {
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
-  // Current version:  objref is really an IIOP_Object.
-  //
-  // This will change in the future; STUB_Object knows how to
-  // marshal itself, that will be used.
+  // Current version:  objref is really an STUB_Object.
+  // @@ But, it need not be.  All IIOP specific processing has
+  //    been move to the specific transport profile class!
   //
   // XXX this doesn't actually verify that the stuff got written
   // OK to the "wire" ...
@@ -282,75 +281,23 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       // then asks that surrogate/proxy to marshal itself.
       //
       // For now, the original code is minimally changed.
+      // @@ Need to pass this stuff of to IIOP_Profile and let it
+      //    marshal it's own self.  This will be make_body
 
-      IIOP_Object *iiopobj =
-        ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
+      // @@ FRED: we will only encode he profile_in_use!!
+      // @@ need to add support for multiple profiles.  Move this part
+      // @@ to MProfile!!
 
-      TAO_IIOP_Profile *profile = 
-        ACE_dynamic_cast (TAO_IIOP_Profile *, iiopobj->profile_in_use());
+      STUB_Object *stubobj = obj->_stubobj ();
 
       // STRING, a type ID hint
-      stream->encode (CORBA::_tc_string, &iiopobj->type_id, 0, env);
+      stream->encode (CORBA::_tc_string, &stubobj->type_id, 0, env);
 
       // UNSIGNED LONG, value one, count of the sequence of
       // encapsulated protocol profiles;
       stream->write_ulong (1);
 
-      // UNSIGNED LONG, tag for this protocol profile;
-      stream->write_ulong (TAO_IOP_TAG_INTERNET_IOP);
-
-      // UNSIGNED LONG, number of succeeding bytes in the
-      // encapsulation.  We don't actually need to make the
-      // encapsulation, as nothing needs stronger alignment than
-      // this longword; it guarantees the rest is aligned for us.
-      u_int hostlen;
-
-      hostlen = ACE_OS::strlen ((char *) profile->host ());
-      CORBA::ULong encap_len =
-        1                              // byte order
-        + 1                            // version major
-        + 1                            // version minor
-        + 1                            // pad byte
-        + 4                            // sizeof (strlen)
-        + hostlen + 1                  // strlen + null
-        + (~hostlen & 01)              // optional pad byte
-        + 2                            // port
-        + ( hostlen & 02)              // optional pad short
-        + 4                            // sizeof (key length)
-        + profile->object_key ().length (); // key length.
-      stream->write_ulong (encap_len);
-
-#if 0
-      size_t current_len = stream->length ();
-#endif
-
-      // CHAR describing byte order, starting the encapsulation
-
-      stream->write_octet (TAO_ENCAP_BYTE_ORDER);
-
-      // IIOP::Version, two characters (version 1.0) padding
-      stream->write_char (profile->version()->major);
-      stream->write_char (profile->version()->minor);
-
-      // STRING hostname from profile
-      stream->encode (CORBA::_tc_string, &profile->host_, 0, env);
-
-      // UNSIGNED SHORT port number
-      stream->write_ushort (profile->port_);
-
-      // OCTET SEQUENCE for object key
-      stream->encode (TC_opaque, &profile->object_key (), 0, env);
-
-#if 0
-      // This is good for debugging the computation of the key
-      // length.
-      size_t final_len = stream->length ();
-      ACE_DEBUG ((LM_DEBUG, "ObjRef::encode: "
-                  "stored_len = %d, "
-                  "real_len = %d\n",
-                  encap_len,
-                  final_len - current_len));
-#endif /* 0 */
+      stubobj->profile_in_use ()->encode (stream, env);
 
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }

@@ -31,6 +31,14 @@
 #ifndef TAO_STUB_H
 #  define TAO_STUB_H
 
+#include <tao/Pluggable.h>
+#include <tao/MProfile.h>
+
+class  TAO_GIOP_Invocation;
+class TAO_ORB_Core;
+
+typedef STUB_Object IIOP_Object;
+
 // Descriptions of parameters.
 
 enum TAO_Param_Type
@@ -131,7 +139,7 @@ struct TAO_Call_Data
 
   // When constructing tables of parameters, put them in the same
   // order they appear in the IDL spec: return value, then parameters
-  // left to right.  Other orders may produce illegal IIOP protocol
+  // left to right.  Other orders may produce illegal protocol
   // messages.
 
   u_int param_count;
@@ -199,9 +207,9 @@ class TAO_Export STUB_Object
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
 public:
-  virtual void do_static_call (CORBA_Environment &TAO_IN_ENV,
+  void do_static_call (CORBA_Environment &TAO_IN_ENV,
                                const TAO_Call_Data *info,
-                               void** args) = 0;
+                               void** args);
   // The "stub interpreter" method parameters are:
   //
   //    - TAO_IN_ENV ... used for exception reporting
@@ -219,13 +227,13 @@ public:
   // shuffling.  The stub and "do_static_call" parameters are all but the
   // same, except that their order is different.
 
-  virtual void do_dynamic_call (const char *opname,
+  void do_dynamic_call (const char *opname,
                                 CORBA::Boolean is_roundtrip,
                                 CORBA::NVList_ptr args,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Flags flags,
                                 CORBA::ExceptionList &exceptions,
-                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
   // stub-oriented one, but the data is represented somewhat
@@ -247,19 +255,30 @@ public:
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
 
-  virtual CORBA::ULong hash (CORBA::ULong maximum,
-                             CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+  CORBA::ULong hash (CORBA::ULong maximum,
+          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // All objref representations know how to hash themselves and
   // compare themselves for equivalence to others.  It's easily
   // possible to have two objrefs that are distinct copies of data
   // that refers/points to the same remote object (i.e. are
   // equivalent).
 
-  virtual CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-                                        CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-  // check for equivalence
+  CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
+        CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()); 
+  // XXX All objref representations should know how to marshal
+  // themselves.  That will involve ensuring that the IOR that gets
+  // marshaled talks a specific protocol, otherwise the target of a
+  // message would not be invoke using the objref it receives
+  // (compromising functionality in a very basic and mysterious
+  // mannter).  So for example an objref might need to create a proxy
+  // for itself rather than marshaling its own representation.  [ The
+  // IIOP engine does not need to worry about such issues since it
+  // only supports one protocol -- the problem won't show up.
+  // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
-  STUB_Object (CORBA::String p = 0);
+  // Our Constructors ...
+
+  STUB_Object (char * repository_id);
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
   // marshaled talks a specific protocol, otherwise the target of a
@@ -271,57 +290,164 @@ public:
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
-  // This is profile specific and so should be called throug the profile_in_use
-  // member function.
-  // virtual TAO_ObjectKey *key (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-  // Return the object key as an out parameter.  Caller should release
-  // return value when finished with it.
+  STUB_Object (char *repository_id,
+               TAO_Profile *profile);
+  // degenerate case where only one profile is wanted.  This method
+  // is depricated and is here ONLY for compatibility with multiple
+  // profile unfriendly code!
+
+  STUB_Object (char *repository_id,
+               TAO_MProfile *profiles);
+  // Construct from a repository ID and a list of profiles.
+
+  STUB_Object (char *repository_id,
+               TAO_MProfile &profiles);
+  // Construct from a repository ID and a profile ID.profile ID.
 
   // = Memory management.
-  virtual CORBA::ULong _incr_refcnt (void) = 0;
-  virtual CORBA::ULong _decr_refcnt (void) = 0;
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
-  virtual TAO_Profile *set_profile_in_use (TAO_Profile *pfile) = 0;
+  TAO_Profile *set_profile_in_use_i (TAO_Profile *pfile);
+  // Makes a copy of the profile and frees the existing profile_in_use.
+  // NOT THREAD SAFE
+
+  TAO_Profile *set_profile_in_use (TAO_Profile *pfile);
+  // THREAD SAFE
   // Makes a copy of the profile and frees the existing profile_in_use.
 
-  virtual TAO_Profile *profile_in_use (void) {return 0;};
-  // @@ In order to support pluggable protocols add a method to return
-  //    a reference to a TAO_Profile (hence TAO_Transport) object.  This 
-  //    object will keep a reference to the service handler hint. fredk
+  TAO_Profile *profile_in_use (void) ;
   // returns a pointer to the profile_in_use object.  This object
   // retains ownership of this object.
 
-  virtual TAO_Profile *get_profile(void) {return 0;};
-  // returns null if profile_in_use == null
-  // otherwise return a pointer to a new profile object.
-  // The caller is responsible for freeing this memory!
+  TAO_Profile *set_profiles (TAO_MProfile *mprofiles);
+  // This method *WILL* also set the profile_in_use to reference
+  // the first profile in this list!
+  // client must free this memory when done!
 
-  virtual TAO_Profile *get_fwd_profile (void) {return 0;};
+  TAO_MProfile *get_profiles (void);
+  // Reference to the profile list, reference count is not
+  // incremented.
+
+  TAO_MProfile *copy_profiles (void);
+  // Copy of the profile list, user must free memory when done.
+  // although the user can call get_profiles then reorder
+  // the list and give it back to STUB_Object.
+
+  TAO_Profile *next_profile (void);
+  // this will both set profile_in_use_ to reference the next
+  // profile in the mprofiles list AND it will return a pointer 
+  // to this profile.  This object retains ownership of the profile!
+
+  TAO_Profile *reset_profiles (void);
+  // THREAD SAFE
+  // this method will reset the profile list to reference the first
+  // profile AND it will set profile_in_use to ref this profile.
+
+  void set_fwd_profiles (TAO_MProfile *mprofiles);
+  // THREAD SAFE.
+  // set the prifile list of the current profile_in_use to
+  // mprofiles.  The object profile_in_use will take responsibilty
+  // for the memory and this object (STUB_Obj) will be responsible
+  // for list manipulation!
+
+  TAO_MProfile *get_fwd_profiles (void);
+  // Copy of the fwd profile list, user must free memory when done.
+  // although the user can call get_profiles then reorder
+  // the list and give it back to STUB_Object.
+
+  TAO_Profile *next_fwd_profile (void);
+  // this will both set fwd_profile to reference the next
+  // profile in the profile_in_use's fwd_profiles's list AND it will 
+  // return a pointer to this profile.  This object retains ownership 
+  // of the profile!
+
+  TAO_Profile *get_fwd_profile (void) ;
   // Returns the current forwarding profile.
+  // THREAD-SAFE.  Returns the current forwarding profile.
 
-  virtual TAO_Profile *get_fwd_profile_i (void) {return 0;};
-  // Returns the current forwarding profile.
-
-  virtual TAO_Profile *set_fwd_profile (const TAO_Profile *new_profile) = 0;
-  // Sets forwarding profile and returns the current value.
-
-  virtual ACE_Lock &get_fwd_profile_lock (void) = 0;
-  // Gives reference to the lock guarding the forwarding profile.
-
-  virtual void reset_first_locate_request (void) = 0;
-  // reset the flag telling that the locate request should be used
+  void use_locate_requests (CORBA::Boolean use_it);
+  // set the flags to use locate_requests.
 
 protected:
-  virtual ~STUB_Object (void);
-  // XXX virtual inlines are evil.
+  ACE_Lock &get_profile_lock (void);
+  // Gives reference to the lock guarding the forwarding profile.
 
-  // COM operations ... provided by an implementation class which
-  // inherits from this one.
+  TAO_Profile *get_fwd_profile_i (void) ;
+  // NON-THREAD-SAFE.  Returns the current forwarding profile.
+  // @@ Should this be public
+ 
+  void put_params (CORBA_Environment &TAO_IN_ENV,
+                   const TAO_Call_Data *info,
+                   TAO_GIOP_Invocation &call,
+                   void** args);
+  // Helper method to factor out common code in static oneway
+  // vs. twoway invocations.
+
+  void put_params (TAO_GIOP_Invocation &call,
+                   CORBA::NVList_ptr args,
+                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  // Helper method to factor out common code in dynamic oneway
+  // vs. twoway invocations.
 
 private:
+  void reset_first_locate_request (void);
+  // NON-THREAD-SAFE.
+  // reset the flag telling that the locate request should be used
+
+  TAO_Profile *set_fwd_profile (TAO_Profile *new_profile);
+  // NOT THREAD-SAFE.  Sets a new value for the forwarding profile and
+  // returns the current value.
+ 
+  void reset_fwd_profiles (void);
+  // NOT THREAD-SAFE.
+  // get rid of forwarding for the current profile!
+
+  ~STUB_Object (void);
+  // Destructor is to be called only through _decr_refcnt()
+
+private:
+    // @@ For now, we keep track of transport specific profiles here,
+  //    but in the next iteration this will go away ... only transport
+  //    neutral info is kept here => STUB_Object should also go away!
+  //    fredk
+  TAO_MProfile     base_profiles_;
+  // ordered list of profiles for this object.
+  TAO_MProfile     *fwd_profiles_;
+
+  TAO_Profile *profile_in_use_;
+  // this is the profile that we are currently sending/receiving with
+
+  TAO_Profile *fwd_profile_;
+  // Store the forwarding profile
+
+  ACE_Lock* profile_lock_ptr_;
+  // Mutex to protect access to the forwarding profile
+
+  size_t fwd_profile_success_;
+  // Have we successfully talked to the forward profile yet?
+
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Mutex to protect reference count
+
+  CORBA::ULong refcount_;
+  // Number of outstanding references to this object.
+
+  CORBA::Boolean use_locate_request_;
+  // set if locate request should be used
+
+  CORBA::Boolean first_locate_request_;
+  // distinguishes the first from following calls
+
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (STUB_Object (const STUB_Object &))
   ACE_UNIMPLEMENTED_FUNC (STUB_Object &operator = (const STUB_Object &))
+
+#if defined (__GNUG__)
+  // G++ (even 2.6.3) stupidly thinks instances can't be created.
+  // This de-warns.
+  friend class everyone_needs_a_friend;
+#endif /* __GNUG__ */
 };
 
 #if defined (__ACE_INLINE__)

@@ -68,8 +68,11 @@ TAO_IIOP_Connector::connect(TAO_Profile *profile, CORBA::Environment &env)
 //    }
 //  else
 //#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-  if (base_connector_.connect (iiop_profile->hint (),
-                               iiop_profile->object_addr ()) == -1)
+  // @@ think about making this a friend class!  FRED
+  const ACE_INET_Addr &oa =
+    ACE_dynamic_cast (const ACE_INET_Addr &, iiop_profile->object_addr ());
+
+  if (base_connector_.connect (iiop_profile->hint (), oa) == -1)
   { // Give users a clue to the problem.
     if (TAO_orbdebug)
       ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "

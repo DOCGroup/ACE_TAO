@@ -99,26 +99,18 @@ TAO_Connector_Registry::connect (STUB_Object *&obj,
   TAO_Profile *profile;
   CORBA::ULong req_tag = TAO_IOP_TAG_INTERNET_IOP;
 
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, obj->get_fwd_profile_lock (), 0));
-    if (obj->get_fwd_profile_i () != 0)
-    {
-      profile = obj->get_fwd_profile_i ();
-    }
-    else
-    {
-      profile = obj->profile_in_use ();
-    }
-  }
+  // @@ FRED _ For now still only support ONE profile!
+  if (! (profile = obj->get_fwd_profile ()))
+    profile = obj->profile_in_use ();
 
-  // And the profile selection policy is .... ONLY IIOP, and the
-  // first one found!
+  // @@ And the profile selection policy is .... ONLY IIOP, and the
+  // @@ first one found!
   if (profile->tag () != req_tag)
   {
     TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, 0);
   }
 
-  obj->set_profile_in_use(profile);
+  // obj->set_profile_in_use (profile);
 
   // here is where we get the appropriate connector object
   // but we are the Connector Registry so call get_connector(tag)
