@@ -1,3 +1,13 @@
+Fri Mar 10 11:28:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_static.dsp:
+	  Added BoundsC.cpp to these projects.
+
+	* tao/DynAny_i,cpp:
+	  In get_string() cast away the constness of the internal
+	  char* pointer in the ACE_THROW_RETURN statement.
+
 Thu Mar  9 21:02:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp: 
