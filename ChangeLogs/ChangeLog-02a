@@ -1,3 +1,9 @@
+Fri Feb 22 08:07:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor: Added String_Base.cpp to the list of files that
+          must be installed when doing a make install. Thanks to Cyrille
+          Chépélov <cyrille@softek.fr> for reporting that this file missed.
+
 Thu Feb 21 16:33:11 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/tutorials/007: Rename Thread_Pool::open() to Thread_Pool::start() and
@@ -6,7 +12,7 @@ Thu Feb 21 16:33:11 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  removed the unneeded re-definition of close() (since we are not
  	  shadowing it any more).  Thanks to Peter Heitman
  	  <pheitman@cisco.com> for reporting this.
-	
+
 Thu Feb 21 13:12:44 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/SSL/SSL_Context.* (ACE_SSL_Context): Added new methods to
@@ -30,7 +36,7 @@ Thu Feb 21 13:09:13 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* ace/streams.h: strstream was deprecated in the 1998 ISO C++
 	standard [D.7 depr.str.strstreams], and has been replaced by
 	sstream.  Including <strstream> or <strstream.h> causes annoying
-	warnings with gcc 3.1.  Since strstream and sstream are not used 
+	warnings with gcc 3.1.  Since strstream and sstream are not used
 	internally within ACE or TAO, remove includes for strstream, and
 	let the developer include them in their own code.
 
@@ -52,7 +58,7 @@ Wed Feb 20 15:26:43 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 	New application to assist in production of reduced footprint shared
 	libraries for specific collections of applications. For more details
 	see the enclosed README.
-	
+
 Wed Feb 20 14:18:14 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ace/Process.cpp:
@@ -73,10 +79,10 @@ Wed Feb 20 17:00:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* include/makeinclude/platform_sunos5_sunc++.GNU: Users who use
 	  5.2 and above could use native exceptions with inlining turned
 	  on. Thanks to Ken O'Brien <kmobrien@fedex.com> for reporting
-	  this problem. 
+	  this problem.
 
 	* THANKS: Added  Ken O'Brien <kmobrien@fedex.com> to the hall of
-	  fame. 
+	  fame.
 
 Mon Feb 18 23:17:08 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -93,7 +99,7 @@ Mon Feb 18 23:17:08 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Mon Feb 18 20:16:27 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Acceptor.cpp (make_svc_handler): 
+	* ace/Acceptor.cpp (make_svc_handler):
   	* ace/Connector.cpp (make_svc_handler):  There doesn't seem to be
 	  anypoint in *conditionally* assigning the Acceptor/Connector's
  	  reactor to the Svc_Handler, so we'll just assign it...

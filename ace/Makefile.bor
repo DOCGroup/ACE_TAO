@@ -1,4 +1,4 @@
-# Makefile for building the ACE library with Borland C++Builder 4.x
+# Makefile for building the ACE library with Borland C++ Builder
 
 NAME = ace
 
@@ -265,6 +265,7 @@ INCLUDES = \
 	Singleton.cpp \
 	Stream.cpp \
 	Stream_Modules.cpp \
+        String_Base.cpp \
 	Svc_Handler.cpp \
 	Test_and_Set.cpp \
 	Timer_Queue_Adapters.cpp \
