@@ -203,7 +203,6 @@ TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& _env)
   TAO_TRY
     {
       CORBA::ULong length;
-      CORBA::ULong amount = NUM_OFFERS;
 
       CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids (_env);
       TAO_CHECK_ENV;
@@ -238,8 +237,6 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
   TAO_TRY
     {
       CORBA::ULong length;
-      CORBA::ULong amount = NUM_OFFERS;
-
       CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids (_env);
       TAO_CHECK_ENV;
 
@@ -293,7 +290,6 @@ TAO_Offer_Exporter::modify_offers (CORBA::Environment& _env)
   
   TAO_TRY
     {
-      CORBA::ULong amount = NUM_OFFERS;
       CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids (_env);
       TAO_CHECK_ENV;
 
