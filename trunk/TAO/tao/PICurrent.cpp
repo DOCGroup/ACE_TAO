@@ -15,7 +15,6 @@ ACE_RCSID (tao,
 
 
 #include "ORB_Core.h"
-#include "Stub.h"
 #include "TAO_Server_Request.h"
 #include "debug.h"
 
@@ -68,6 +67,17 @@ TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
       ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                        CORBA::COMPLETED_NO));
     }
+
+  // -------------------------------------------
+  // CLIENT SIDE STUFF
+  // -------------------------------------------
+  // If the TSC was logically copied to the RSC, then deep copy the
+  // contents of the TSC to the RSC before modifying the RSC.  The RSC
+  // should not be altered by modifications to the TSC.
+  TAO_PICurrent_Impl *rsc = impl->pi_peer ();
+  if (rsc != 0)
+    rsc->copy (*impl, 1);  // Deep copy
+  // -------------------------------------------
 
   impl->set_slot (id, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -237,7 +247,7 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 
   if (deep_copy)
     {
-      size_t new_size  = rhs.slot_table ().size ();
+      size_t new_size = rhs.slot_table ().size ();
 
       this->slot_table_.size (new_size);
 
@@ -259,10 +269,13 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
                                  "slot table copy.");
         }
       ACE_ENDTRY;
+      ACE_CHECK;
 
       rhs.dirty (0);
 
-      rhs.pi_peer (0); // Break all ties with the PICurrent peer.
+      // Break all ties with the PICurrent peer.
+      rhs.pi_peer (0);
+      this->lc_slot_table_ = 0;
     }
   else
     {
@@ -273,31 +286,6 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 }
 
 // ------------------------------------------------------------------
-
-TAO_PICurrent_Guard::TAO_PICurrent_Guard (TAO_Stub *stub,
-                                          TAO_PICurrent_Impl &rsc)
-  : src_ (0),
-    dest_ (0)
-{
-  // This constructor is used on the client side.
-
-  // Retrieve the thread scope current (no TSS access incurred yet).
-  TAO_PICurrent *pi_current = stub->orb_core ()->pi_current ();
-
-  // If the slot count is zero, then there is nothing to copy.
-  // Prevent any copying (and hence TSS accesses) from occurring.
-  if (pi_current->slot_count () != 0)
-    {
-      // Retrieve the thread scope current.
-      TAO_PICurrent_Impl *tsc = pi_current->tsc ();
-
-      // Copy the TSC to the RSC.
-      rsc.copy (*tsc, 0);  // Shallow copy
-    }
-
-  // Notice that a TAO_PICurrent_Guard instantiated with this
-  // constructor will basically have a no-op destructor.
-}
 
 TAO_PICurrent_Guard::TAO_PICurrent_Guard (TAO_ServerRequest &server_request,
                                           CORBA::Boolean tsc_to_rsc)

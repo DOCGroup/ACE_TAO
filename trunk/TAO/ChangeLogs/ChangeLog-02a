@@ -1,3 +1,55 @@
+Sat Feb  9 23:27:23 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo_i.cpp (TAO_ClientRequestInfo_i):
+
+	  Logically copy the thread-scope PICurrent (TSC) object to the
+	  request-scope PICurrent (RSC) object.  This corrects the
+	  semantics of RSC on the client side.  The RSC is always
+	  independent of the TSC.  Note that deep copies are automatically
+	  done when necessary when calling set_slot() via the PICurrent
+	  object, so there is no need to worry about that case here.  This
+	  fix is also part of an optimization.  Instead of one TSS access
+	  each time the RSC's get_slot() method is called (can be many
+	  times in a given invocation), only one TSS access now occurs
+	  when setting up the invocation.
+
+	  (get_slot):
+
+	  Retrieve the slot contents from the RSC class member instead of
+	  TSC.  This is the correct behavior, as opposed to the previous
+	  where the slot contents were always retrieved from the TSC.
+	  This also limits the number of PICurrent related TSS accesses
+	  per invocation to one instead of potentially many.  [Bug 1128]
+
+	  (copy):
+
+	  Once a deep copy has been made, reset the pointer to the
+	  logically copied slot table to zero.  At that point, the RSC and
+	  TSC are completely separate entities.
+
+	* tao/PICurrent.h (TAO_PICurrent_Guard):
+	* tao/PICurrent.cpp (TAO_PICurrent_Guard):
+
+	  Removed superfluous constructor.  The above changes obviate it.
+
+	
+	* tests/Portable_Interceptors/PICurrent/ClientORBInitializer.h:
+	* tests/Portable_Interceptors/PICurrent/ClientORBInitializer.cpp:
+	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.h:
+	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
+
+	  New client request interceptor related files that test the
+	  client side RSC/TSC semantics.
+
+	* tests/Portable_Interceptors/PICurrent/client.cpp (main):
+
+	  Insert data into the clients allocated PICurrent slot prior to
+	  invoking the test method, and then retrieve the data after
+	  invoking the test method.  This merely verifies that the data
+	  inserted into TSC within the client request interceptor is
+	  actually available to the calling thread outside of the client
+	  request interceptor.
+
 Sat Feb  9 15:21:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_valuetype.cpp: Added the keywords

@@ -253,15 +253,6 @@ public:
 
   /// Constructor
   /**
-   * This constructor copies data held in a given PICurrent when
-   * transitioning from one PICurrent scope to another immediately
-   * before any starting interception points are invoked (e.g. on the
-   * client side just before send_request() is invoked).
-   */
-  TAO_PICurrent_Guard (TAO_Stub *stub, TAO_PICurrent_Impl &rsc);
-
-  /// Constructor
-  /**
    * This constructor sets up this guard to copy the data held in a
    * given PICurrent when transitioning from that PICurrent's scope to
    * another scope (e.g. request scope to thread scope transition
