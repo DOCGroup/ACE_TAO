@@ -1,3 +1,12 @@
+Mon Dec 23 14:05:21 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32-common.h:
+          When ACE_IOV_MAX is not defined, define it is 64. The Cygwin header
+          files define IOV_MAX as MAX_INT-1 and ACE_IOV_MAX is defined as
+          IOV_MAX by default. Allocating an array of this size on the stack
+          results in compile errors, so we define ACE_IOV_MAX to a smaller and
+          more realistic number.
+
 Mon Dec 23 12:16:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/RMCast/RMCast_IO_UDP.cpp:
