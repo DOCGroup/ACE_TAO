@@ -20,6 +20,13 @@ CIAO::Map_Key_Cookie::Map_Key_Cookie (const ACE_Active_Map_Manager_Key &key)
 // }
 
 int
+CIAO::Map_Key_Cookie::insert (ACE_Active_Map_Manager_Key &key)
+{
+  this->cookieValue ().length (ACE_Active_Map_Manager_Key::size ());
+  key.encode (this->cookieValue ().get_buffer (0));
+}
+
+int
 CIAO::Map_Key_Cookie::extract (ACE_Active_Map_Manager_Key &key)
 {
   if (this->cookieValue ().length () != ACE_Active_Map_Manager_Key::size ())

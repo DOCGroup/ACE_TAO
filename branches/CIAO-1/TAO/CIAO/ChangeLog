@@ -1,3 +1,36 @@
+Mon Jan 13 00:27:03 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Filled in a great
+	  more generated code.  This is almost done, finally.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl: Changed to lead template comments
+	  with '##' instead of # to diffentiate them from preprocessor
+	  directives that we should generate.
+
+	* ciao/HomeRegistrar_i.inl:
+	* ciao/HomeRegistrar_i.cpp: Fixed incorrect uses of exception macros.
+
+	* ciao/Cookies.h:
+	* ciao/Cookies.cpp: Added a new insert method which "encode" an
+	  Active_Objref_Map key into the Cookie.
+
+	* ciao/Container_Base.inl:
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h: Added a new get_objref method which
+	  basically allow us to get the component reference using POA's
+	  servant_to_reference operation.  Added a new inline file and
+	  fixed some incorrect uses of exception macros.
+
+	* ciao/Component_Base.idl:
+	* ciao/CCM_Base.idl: Based on Components 1.1 RTF
+	  Receptacles::disconnect operations now return the disconnected
+	  object reference instead of void.
+
 Fri Jan 10 12:03:00 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* tools/CCIDL:

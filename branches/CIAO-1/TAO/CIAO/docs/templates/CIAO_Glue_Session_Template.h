@@ -5,8 +5,8 @@
 // @file CIAO_Glue_Session_Template.h
 //
 //    This is a pseudo-meta generic servant implementations template
-//    for CCIDL.  It demonstrates how a servant implementation for a
-//    session component should look like.
+//    for CIAO's CIDL compiler.  It demonstrates how a servant
+//    implementation for a session component should look like.
 //
 //    The generated filename for files using this template shoule be
 //       [idl-basename]GS.h         GS --> GlueSession
@@ -30,14 +30,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// @@@ Notice that all component and interface names may need to be
+/// fully qualified as we are creating a new namespace for the CIAO's
+/// container glue code.
 
-#if component is defined withing a [module name]
+
+##if component is defined withing a [module name]
 namespace CIAO_GLUE_[module_name]
 {
-#else
+##else
 namespace CIAO_GLUE
 {
-#endif
+##endif
 
   //////////////////////////////////////////////////////////////////
   // Facet Glue Code implementation
@@ -48,61 +52,33 @@ namespace CIAO_GLUE
   //    some other CIDL generated files to get the glue code
   //    implementation.
 
-#foreach [facet type] in (all facet interface types in the original IDL)
+##foreach [facet type] in (all facet interface types in the original IDL)
   class [SERVANT]_Export [facet type]_Servant :
     : public virtual POA_[facet type], // full skeleton name here
       public virtual PortableServer::RefCountServantBase
   {
   public:
     // Constructor and destructor.
-    [facet type]_Servant (CCM_[facet type]_ptr executor);
+    [facet type]_Servant (CCM_[facet type]_ptr executor,
+                          ::Components::CCMContext_ptr ctx_);
     ~[facet tyep]_Servant ();
 
-# foreach [operation] in (all facet operations)
+##  foreach [operation] in (all facet operations)
     // Generate operation decls.
-# end foreach [operation]
+##  end foreach [operation]
 
-  protected:
-    CCM_[facet type]_var executor_;
-  };
-#end foreach [facet type]
-
-  //////////////////////////////////////////////////////////////////
-  // EventConsumer Glue Code implementation
-  // @@ We are assuming that these consumers are declared under the same
-  //    module as the component (thus, we are placing this glue code
-  //    here under the same namespace.  If they are not, we will
-  //    either be generating them in separate namespaces, or include
-  //    some other CIDL generated files to get the glue code
-  //    implementation.
-
-#foreach [event type] in (all eventtype-s defined in the original IDL)
-  class [SERVANT]_Export [event type]Consumer_Servant :
-    : public virtual POA_[event type]Consumer, // full skeleton name here
-      public virtual PortableServer::RefCountServantBase
-  {
-  public:
-    // Constructor and destructor.
-    [event type]Consumer_Servant (CCM_[event type]Consumer_ptr executor);
-    ~[event type]Consumer_Servant ();
-
-# foreach [type] in ([event type] and all its parent eventtype, if any)
-    void push_[type] ([type]_ptr evt
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    // get_component implementation.
+    virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-# end [type]
-
-    // Inherit from ::Compopnents::EventBConsumerBase
-    void push_event (EventBase_ptr ev
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::BadEventType));
-
 
   protected:
-    CCM_[event type]Consumer_var executor_;
+    // Facet executor.
+    CCM_[facet type]_var executor_;
+
+    // Context object.
+    ::Components::CCMContext_var ctx_;
   };
-#end foreach [event type]
+##end foreach [facet type]
 
 
   //////////////////////////////////////////////////////////////////
@@ -120,7 +96,9 @@ namespace CIAO_GLUE
     friend class [component name]_Servant;
 
     // Ctor.
-    [component name]_Context ();
+    [component name]_Context (::Components::CCMHome_ptr home,
+                              ::CIAO::Session_Container *c,
+                              [component name]_Servant *sv);
 
     // Dtor.
     virtual ~[component name]_Context ();
@@ -136,19 +114,22 @@ namespace CIAO_GLUE
     // Operations for [component name] event source, and
     // receptacles defined in CCM_[component name]_Context.
 
-#foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-# if [receptacle name] is a simplex receptacle ('uses')
-    [uses type]_ptr get_connection_[receptacle name] ();
-# else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+##  if [receptacle name] is a simplex receptacle ('uses')
+    [uses type]_ptr get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_THROW_SPEC ((CORBA::SystemException));
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // [receptacle name]Connections typedef'ed as a sequence of
     // struct [receptacle name]Connection.
-    [receptacle name]Connections *get_connections_[receptacle name] ();
-# endif [receptacle name]
-#end foreach [receptacle name] with [uses type]
+    [receptacle name]Connections *get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_THROW_SPEC ((CORBA::SystemException));
+##  endif [receptacle name]
+##end foreach [receptacle name] with [uses type]
 
-#foreach [event name] with [eventtype] in (list of all event sources) generate:
-    void push_[event name] ([eventtype]_ptr ev);
-#end foreach [event name] with [eventtype]
+##foreach [event name] with [eventtype] in (list of all event sources) generate:
+    void push_[event name] ([eventtype]_ptr ev ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+##end foreach [event name] with [eventtype]
 
     // Operations for ::Components::CCMContext
     virtual ::Components::Principal_ptr get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -176,57 +157,83 @@ namespace CIAO_GLUE
     // We need to generate, in protected section, stuff that manage
     // connections and consumers of this component.
 
-#foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-# if [receptacle name] is a simplex receptacle ('uses')
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+##  if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
-    void connect_[receptacle name] ([uses type]_ptr c)
-      raises (::Components::AlreadyConnected,
-              ::Components::InvalidConnection);
-    [uses type]_ptr disconnect_[receptacle name] ()
-      raises (::Components::NoConnection);
+    void connect_[receptacle name] ([uses type]_ptr c
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SytemException,
+                       ::Components::AlreadyConnected,
+                       ::Components::InvalidConnection));
+    [uses type]_ptr disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SEPC ((CORBA::SystemException,
+                       ::Components::NoConnection));
 
     // Simplex [receptacle name] connection
     [uses type]_var ciao_uses_[receptacle name]_;
 
-# else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
-    ::Components::Cookie_ptr connect_[receptacle name] ([uses type]_ptr c)
-      raises (::Components::ExceedConnectionLimit,
-              ::Components::InvalidConnection);
-    [uses type]_ptr disconnect_[receptacle name] (::Components::Cookie_ptr ck)
-      raises (::Components::InvalidConnection);
+    ::Components::Cookie_ptr connect_[receptacle name] ([uses type]_ptr c
+                                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::ExceedConnectionLimit,
+                       ::Components::InvalidConnection));
+    [uses type]_ptr disconnect_[receptacle name] (::Components::Cookie_ptr ck
+                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::InvalidConnection));
 
     // Multiplex [receptacle name] connections
 
     CIAO::Active_Objref_Map ciao_muses_[receptacle name]_;
-# endif [receptacle name]
-#end foreach [receptacle name] with [uses type]
+##  endif [receptacle name]
+##end foreach [receptacle name] with [uses type]
 
     // Operations for emits interfaces.
-#foreach [emit name] with [eventtype] in (list of all emitters) generate:
-    void connect_[emit name] ([eventtype]Consumer_ptr c)
-      raises (::Components::AlreadyConnected);
+##foreach [emit name] with [eventtype] in (list of all emitters) generate:
+    void connect_[emit name] ([eventtype]Consumer_ptr c
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::AlreadyConnected));
 
-    [eventtype]Consumer_ptr disconnect_[emit name] ()
-      raises (::Components::NoConnection);
+    [eventtype]Consumer_ptr disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::NoConnection));
 
     [eventtype]Consumer_var ciao_emits_[emit name]_consumer_;
-#end foreach [emit name] with [eventtype]
+##end foreach [emit name] with [eventtype]
 
     // Operations for publishes interfaces.
-#foreach [publish name] with [eventtype] in (list of all publishers) generate:
+##foreach [publish name] with [eventtype] in (list of all publishers) generate:
       ::Components::Cookie_ptr
-      subscribe_[publish name] ([eventtype]Consumer_ptr c)
-        raises (::Components::ExceededConnectionLimit);
+      subscribe_[publish name] ([eventtype]Consumer_ptr c
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::ExceededConnectionLimit));
 
       [eventtype]Consumer_ptr
-      unsubscribe_[publish name] (::Components::Cookie_ptr ck)
-        raises (::Components::InvalidConnection);
+      unsubscribe_[publish name] (::Components::Cookie_ptr ck
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::InvalidConnection));
 
     CIAO::Active_Objref_Map ciao_publishes_[publish name]_map_;
-#end foreach [publish name] with [eventtype]
-    // Other CCMContext specific operations seem quite straightforward
-    // to me.  Well, so far.
+##end foreach [publish name] with [eventtype]
+
+  protected:
+    /// Cached component home reference.
+    ::Components::CCMHome_var home_;
+
+    /// session container
+    ::CIAO::Session_Container *container_;
+
+    /// Reference back to owner.
+    [component name]_Servant *servant_;
+
+    /// @@ Cached component reference.
+    [component name]_var component_;
+
   };
 
   //////////////////////////////////////////////////////////////////
@@ -237,68 +244,124 @@ namespace CIAO_GLUE
   {
   public:
     // Ctor.
-    [component name]_Servant (CCM_[component name]_ptr executor);
+    [component name]_Servant (CCM_[component name]_ptr executor,
+                              ::Components::CCMHome_ptr home,
+                              ::CIAO::Session_Container *c);
 
     // Dtor.
     ~[component name]_Servant (void);
 
-#foreach [operation] in all supported interfaces of own component and all inherited components
+##foreach [operation] in all supported interfaces of own component and all inherited components
 
     // Generate the [operation] here.
 
-#end
+##end
 
     // Operations for provides interfaces.
-#foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
-    [facet type]_ptr provide_[facet name] ();
-#end foreach [facet name] with [facet type]
+##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
+    [facet type]_ptr provide_[facet name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+##end foreach [facet name] with [facet type]
 
     // Operations for receptacles interfaces.
 
-#foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
-# if [receptacle name] is a simplex receptacle ('uses')
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+##  if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
-    void connect_[receptacle name] ([uses type]_ptr c)
-      raises (::Components::AlreadyConnected,
-              ::Components::InvalidConnection);
-    [uses type]_ptr disconnect_[receptacle name] ()
-      raises (::Components::NoConnection);
-    [uses type]_ptr get_connection_[receptacle name] ();
-# else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+    void connect_[receptacle name] ([uses type]_ptr c
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::AlreadyConnected,
+                       ::Components::InvalidConnection));
+    [uses type]_ptr disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::NoConnection));
+    [uses type]_ptr get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
-    ::Components::Cookie_ptr connect_[receptacle name] ([uses type]_ptr c)
-      raises (::Components::ExceedConnectionLimit,
-              ::Components::InvalidConnection);
-    [uses type]_ptr disconnect_[receptacle name] (::Components::Cookie_ptr ck)
-      raises (::Components::InvalidConnection);
-    [receptacle name]Connections *get_connections_[receptacle name] ();
-# endif [receptacle name]
-#end foreach [receptacle name] with [uses type]
+    ::Components::Cookie_ptr connect_[receptacle name] ([uses type]_ptr c
+                                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::ExceedConnectionLimit,
+                       ::Components::InvalidConnection));
+    [uses type]_ptr disconnect_[receptacle name] (::Components::Cookie_ptr ck
+                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::InvalidConnection));
+    [receptacle name]Connections *get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+##  endif [receptacle name]
+##end foreach [receptacle name] with [uses type]
 
     // Operations for consumers interfaces.
-#foreach [consumer name] with [eventtype] in (list of all consumers) generate:
-    [eventtype]Consumer_ptr get_consumer_[consumer name] ();
-#end foreach [facet name] with [eventtype]
+##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
+
+    // First we need to generate the event sink specific servant
+    class [SERVANT]_Export [eventtype]Consumer_[consumer name]_Servant :
+      : public virtual POA_[eventtype]Consumer, // full skeleton name here
+        public virtual PortableServer::RefCountServantBase
+    {
+    public:
+      // Constructor and destructor.
+      [event type]Consumer_[consumer name]_Servant (CCM_[component name]_ptr executor,
+                                                    CCM_[component name]_Context_ptr c);
+      ~[event type]Consumer-[consumer name]_Servant ();
+
+##  foreach [type] in ([eventtype] and all its parent eventtype, if any)
+      void push_[type] ([type]_ptr evt
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+##  end [type]
+
+      // Inherit from ::Compopnents::EventBConsumerBase
+      void push_event (EventBase_ptr ev
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         ::Components::BadEventType));
+
+    // get_component implementation.
+      virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+  protected:
+      // Consumer Executor
+      CCM_[component name]_var executor_;
+
+      // Context object.
+      CCM_[component name]_Context_var ctx_;
+    };
+
+    [eventtype]Consumer_ptr get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+##end foreach [consumer name] with [eventtype]
 
     // Operations for emits interfaces.
-#foreach [emit name] with [eventtype] in (list of all emitters) generate:
-    void connect_[emit name] ([eventtype]Consumer_ptr c)
-      raises (::Components::AlreadyConnected);
+##foreach [emit name] with [eventtype] in (list of all emitters) generate:
+    void connect_[emit name] ([eventtype]Consumer_ptr c
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException
+                       ::Components::AlreadyConnected));
 
-    [eventtype]Consumer_ptr disconnect_[emit name] ()
-      raises (::Components::NoConnection);
-#end foreach [emit name] with [eventtype]
+    [eventtype]Consumer_ptr disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::NoConnection));
+##end foreach [emit name] with [eventtype]
 
     // Operations for publishes interfaces.
-#foreach [publish name] with [eventtype] in (list of all publishers) generate:
+##foreach [publish name] with [eventtype] in (list of all publishers) generate:
       ::Components::Cookie_ptr
-      subscribe_[publish name] ([eventtype]Consumer_ptr c)
-        raises (::Components::ExceededConnectionLimit);
+      subscribe_[publish name] ([eventtype]Consumer_ptr c
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::ExceededConnectionLimit));
 
       [eventtype]Consumer_ptr
-      unsubscribe_[publish name] (::Components::Cookie_ptr ck)
-        raises (::Components::InvalidConnection);
-#end foreach [publish name] with [eventtype]
+      unsubscribe_[publish name] (::Components::Cookie_ptr ck
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::InvalidConnection));
+##end foreach [publish name] with [eventtype]
 
     // Operations for Navigation interface
     virtual CORBA::Object_ptr provide_facet (const char * name
@@ -324,9 +387,9 @@ namespace CIAO_GLUE
                        Components::InvalidConnection,
                        Components::AlreadyConnected,
                        Components::ExceededConnectionLimit));
-    virtual void disconnect (const char * name,
-                             Components::Cookie_ptr ck
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Object_ptr disconnect (const char * name,
+                                          Components::Cookie_ptr ck
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::InvalidConnection,
@@ -410,6 +473,16 @@ namespace CIAO_GLUE
     virtual ::Components::ComponentPortDescription * get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // get_component implementation.
+    virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // CIAO specific operations.
+
+    // Activate the object in the container_
+    [component name]_ptr _ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected:
     // My Executor.
     CCM_[component name]_var executor_;
@@ -417,14 +490,17 @@ namespace CIAO_GLUE
     // My Run-time Context.
     CCM_[component name]_Context_var context_;
 
-    // Cached provided interfaces.
-#foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
-    [facet type]_var provide_[facet name]_;
-#end foreach [facet name] with [facet type]
+    // Managing container.
+    ::CIAO::Session_Container *container_;
 
-#foreach [consumer name] with [eventtype] in (list of all consumers) generate:
+    // Cached provided interfaces.
+##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
+    [facet type]_var provide_[facet name]_;
+##end foreach [facet name] with [facet type]
+
+##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
     [eventtype]Consumer_var consumes_[consumer name]_;
-#end foreach [consumer name] with [eventtype]
+##end foreach [consumer name] with [eventtype]
 
 };
 
