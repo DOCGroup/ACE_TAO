@@ -120,31 +120,38 @@ Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
     These files were added as part of the initial check in of
     Replication Manager implementation.
 
-        * orbsvcs/orbsvcs/FT_CORBA.idl:
-        * orbsvcs/orbsvcs/FaultTolerance.mpc:
-        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp:
-        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h:
-        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h:
-        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
-        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
-        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp:
-        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp:
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h:
-        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
-        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
-        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp:
-          These files were modified as part of the initial check in  of
-    Replication Manager implementation.
+        * orbsvcs\orbsvcs\FT_CORBA.idl
+        * orbsvcs\orbsvcs\FaultTolerance.mpc
+        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_Factory_Set.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_Property_Utils.cpp
+             This code was modified in support of the Replication Manager,
+             and contains the following major changes:
+             - The property validator is now settable.
+             - The ObjectGroupId was changed to CORBA:ULongLong to match
+               the spec.
+             - The FactoryCreationId and the ObjectGroupId are now separate
+               entities (they wer assumed to be the same).
+             - GroupEntries are now accessed (keyed) by ObjectGroupId
+               (previously they were accessed by FactoryCreateionId).
 
-        * orbsvcs/tests/FT_App/FT_App.mpc:
-        * orbsvcs/tests/FT_App/FT_Client.cpp:
-        * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
-        * orbsvcs/tests/FT_App/FT_UnitTests.h:
-          These files were added to implement testing of the Replication
-    Manager implementation.
+        * orbsvcs\tests\FT_App\FT_App.mpc
+        * orbsvcs\tests\FT_App\FT_Client.cpp
+        * orbsvcs\tests\FT_App\FT_UnitTests.cpp
+        * orbsvcs\tests\FT_App\FT_UnitTests.h
+             Unit test scaffolding was added for the Replication Manager,
+             and several unit tests were included.
 
           These changes were made in the oci_haft branch.
 
