@@ -35,7 +35,7 @@
 #include "tao/UIOP_Connect.h"
 
 typedef ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
-                               TAO_LSOCK_CONNECTOR> TAO_UIOP_BASE_CONNECTOR;
+                               ACE_LSOCK_CONNECTOR> TAO_UIOP_BASE_CONNECTOR;
 
 // ****************************************************************
 
