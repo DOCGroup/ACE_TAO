@@ -1,5 +1,9 @@
 Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Select_Reactor_T: Updated the various methods so that
+ 	  handle_events() now works as advertised, i.e., it actually
+ 	  returns the number of event handlers it dispatched.
+
         * ace: Added 
 	
 	  #if !defined (ACE_LACKS_PRAGMA_ONCE)

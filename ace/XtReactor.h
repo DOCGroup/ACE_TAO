@@ -103,6 +103,7 @@ protected:
   virtual int XtWaitForMultipleEvents (int,
 				       ACE_Select_Reactor_Handle_Set &,
 				       ACE_Time_Value *);
+  //Wait for Xt events to occur.
 
   XtAppContext context_;
   ACE_XtReactorID *ids_;
