@@ -12,6 +12,9 @@ Wed Dec 24 08:14:32 1997  David L. Levine  <levine@cs.wustl.edu>
           platforms, but some compilers (cxx) warned about the
           unreachable code.  This call is only supported on WIN32 anyways.
 
+        * ace/OS.h: LynxOS has ACE_HAS_PTHREADS_1003_DOT_1C, but not
+          ACE_HAS_PTHREAD_SIGMASK.
+
 Wed Dec 24 04:25:49 1997    <nw1@DINGO>
 
 	* ace/OS.i (sema_init): Added checking for initial semaphore
