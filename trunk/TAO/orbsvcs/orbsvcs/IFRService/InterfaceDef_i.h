@@ -71,13 +71,13 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -95,24 +95,24 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA_InterfaceDefSeq *base_interfaces (
+  virtual CORBA::InterfaceDefSeq *base_interfaces (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_InterfaceDefSeq *base_interfaces_i (
+  CORBA::InterfaceDefSeq *base_interfaces_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_interfaces (
-      const CORBA_InterfaceDefSeq &base_interfaces
+      const CORBA::InterfaceDefSeq &base_interfaces
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void base_interfaces_i (
-      const CORBA_InterfaceDefSeq &base_interfaces
+      const CORBA::InterfaceDefSeq &base_interfaces
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -129,58 +129,58 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_InterfaceDef::FullInterfaceDescription *describe_interface (
+  virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_InterfaceDef::FullInterfaceDescription *describe_interface_i (
+  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_AttributeDef_ptr create_attribute (
+  virtual CORBA::AttributeDef_ptr create_attribute (
       const char *id,
       const char *name,
       const char *version,
-      CORBA_IDLType_ptr type,
+      CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_AttributeDef_ptr create_attribute_i (
+  CORBA::AttributeDef_ptr create_attribute_i (
       const char *id,
       const char *name,
       const char *version,
-      CORBA_IDLType_ptr type,
+      CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_OperationDef_ptr create_operation (
+  virtual CORBA::OperationDef_ptr create_operation (
       const char *id,
       const char *name,
       const char *version,
-      CORBA_IDLType_ptr result,
+      CORBA::IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA_ParDescriptionSeq &params,
-      const CORBA_ExceptionDefSeq &exceptions,
-      const CORBA_ContextIdSeq &contexts
+      const CORBA::ParDescriptionSeq &params,
+      const CORBA::ExceptionDefSeq &exceptions,
+      const CORBA::ContextIdSeq &contexts
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_OperationDef_ptr create_operation_i (
+  CORBA::OperationDef_ptr create_operation_i (
       const char *id,
       const char *name,
       const char *version,
-      CORBA_IDLType_ptr result,
+      CORBA::IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA_ParDescriptionSeq &params,
-      const CORBA_ExceptionDefSeq &exceptions,
-      const CORBA_ContextIdSeq &contexts
+      const CORBA::ParDescriptionSeq &params,
+      const CORBA::ExceptionDefSeq &exceptions,
+      const CORBA::ContextIdSeq &contexts
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -207,7 +207,7 @@ private:
   void create_attr_ops (const char *id,
                         const char *name,
                         const char *version,
-                        CORBA_IDLType_ptr type,
+                        CORBA::IDLType_ptr type,
                         CORBA::AttributeMode mode
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -244,4 +244,3 @@ private:
 #endif /* _MSC_VER */
 
 #endif /* TAO_INTERFACEDEF_I_H */
-

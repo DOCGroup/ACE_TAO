@@ -43,7 +43,7 @@ TAO_HomeDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG
   // TODO
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_HomeDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -52,7 +52,7 @@ TAO_HomeDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_HomeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -183,7 +183,7 @@ IR::PrimaryKeyDef_ptr
 TAO_HomeDef_i::create_primary_key (const char *id,
                                    const char *name,
                                    const char *version,
-                                   CORBA_ValueDef_ptr primary_key
+                                   CORBA::ValueDef_ptr primary_key
                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -200,7 +200,7 @@ IR::PrimaryKeyDef_ptr
 TAO_HomeDef_i::create_primary_key_i (const char * /* id */,
                                      const char * /* name */,
                                      const char * /* version */,
-                                     CORBA_ValueDef_ptr /* primary_key */
+                                     CORBA::ValueDef_ptr /* primary_key */
                                      ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -212,8 +212,8 @@ IR::FactoryDef_ptr
 TAO_HomeDef_i::create_factory (const char *id,
                                const char *name,
                                const char *version,
-                               const CORBA_ParDescriptionSeq &params,
-                               const CORBA_ExceptionDefSeq &exceptions
+                               const CORBA::ParDescriptionSeq &params,
+                               const CORBA::ExceptionDefSeq &exceptions
                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -232,8 +232,8 @@ TAO_HomeDef_i::create_factory_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,
-    const CORBA_ParDescriptionSeq & /* params */,
-    const CORBA_ExceptionDefSeq & /* exceptions */
+    const CORBA::ParDescriptionSeq & /* params */,
+    const CORBA::ExceptionDefSeq & /* exceptions */
     ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -246,8 +246,8 @@ IR::FinderDef_ptr
 TAO_HomeDef_i::create_finder (const char *id,
                               const char *name,
                               const char *version,
-                              const CORBA_ParDescriptionSeq &params,
-                              const CORBA_ExceptionDefSeq &exceptions
+                              const CORBA::ParDescriptionSeq &params,
+                              const CORBA::ExceptionDefSeq &exceptions
                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -266,8 +266,8 @@ TAO_HomeDef_i::create_finder_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,
-    const CORBA_ParDescriptionSeq & /* params */,
-    const CORBA_ExceptionDefSeq & /* exceptions */
+    const CORBA::ParDescriptionSeq & /* params */,
+    const CORBA::ExceptionDefSeq & /* exceptions */
     ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))

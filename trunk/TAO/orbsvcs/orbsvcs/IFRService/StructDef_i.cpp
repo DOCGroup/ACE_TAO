@@ -74,7 +74,7 @@ TAO_StructDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "name",
                                             name);
 
-  CORBA_StructMemberSeq_var members = this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::StructMemberSeq_var members = this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_struct_tc (id.c_str (),
@@ -83,7 +83,7 @@ TAO_StructDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                                        ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA_StructMemberSeq *
+CORBA::StructMemberSeq *
 TAO_StructDef_i::members (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -92,7 +92,7 @@ TAO_StructDef_i::members (ACE_ENV_SINGLE_ARG_DECL)
   return this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_StructMemberSeq *
+CORBA::StructMemberSeq *
 TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -158,15 +158,15 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 
   size_t size = kind_queue.size ();
 
-  CORBA_StructMemberSeq *members = 0;
+  CORBA::StructMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,
-                    CORBA_StructMemberSeq (size),
+                    CORBA::StructMemberSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   members->length (size);
 
-  CORBA_StructMemberSeq_var retval = members;
+  CORBA::StructMemberSeq_var retval = members;
 
   ACE_TString name, path;
   CORBA::DefinitionKind kind = CORBA::dk_none;
@@ -190,7 +190,7 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      retval[k].type_def = CORBA_IDLType::_narrow (obj.in ()
+      retval[k].type_def = CORBA::IDLType::_narrow (obj.in ()
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -214,7 +214,7 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_StructDef_i::members (const CORBA_StructMemberSeq &members
+TAO_StructDef_i::members (const CORBA::StructMemberSeq &members
                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -225,7 +225,7 @@ TAO_StructDef_i::members (const CORBA_StructMemberSeq &members
 }
 
 void
-TAO_StructDef_i::members_i (const CORBA_StructMemberSeq &members
+TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -275,4 +275,3 @@ TAO_StructDef_i::members_i (const CORBA_StructMemberSeq &members
                                              "count",
                                              count);
 }
-
