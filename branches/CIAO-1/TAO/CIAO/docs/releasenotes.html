@@ -33,7 +33,7 @@
     <td>TAO_IDL</td>
     <td>
         TAO_IDL front-end has been extended to handle the keyword
-        extension added by compnent model specification.  The next
+        extension added by component model specification.  The next
         stage will be to start implementing the code for backend code
         generation.  Check out <a
         href="http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/releasenotes/index.html#idl"> TAO IDL compiler</a> for more details.
@@ -43,14 +43,14 @@
   <tr>
     <td>CIAO_CIDL</td>
     <td>
-        CIAO_CIDL is still an unknown at this point.  We do know that
-        we have no plan to support persistentstate service in the near
-        future.  For starter, we will probably only support a simple
-        construct like the followingsee :
+        CIAO_CIDL is still an unknown at this point.  We do not have
+        immediate plan to integrate Persistence State Service with
+        CIDL.  For starter, we will probably only support a simple
+        construct like the following:
 <pre>
         import ::some_idl_module;
 
-        module component_composit_nasee me {
+        module component_composite_name {
           composition session component_home_executor {
             implements component_home;
             manages component_executor;
@@ -119,7 +119,7 @@ certain release together.  All interfaces and types are under
                   interfaces.
             </ul>
         <li><code>HomeExecutorBase</code> interface
-        <li>Support (handcrafted) monolithic executor implementation
+        <li>Support (hand crafted) monolithic executor implementation
         <li>Extension to IDL compiler and Typecode factory.  IDL
             compiler shall recognize all CCM keyword extensions but not
             necessarily generate code for these added keywords.
@@ -127,7 +127,7 @@ certain release together.  All interfaces and types are under
         <li>Partial implementation of <code>Deployment</code> module.
             <!-- support some descriptors -->
       </UL>
-      AT this stange, we only implement "enough" CCM defined interface
+      AT this stage, we only implement "enough" CCM defined interface
       capability to allow manual implementation of components and a
       simple framework that offer some remote installation/composition
       capability.  This will help design how CIDL generated code
@@ -195,7 +195,10 @@ certain release together.  All interfaces and types are under
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Mon Aug 12 10:29:45 Central Daylight Time 2002
+Last modified: Mon Aug 12 11:12:10 Central Daylight Time 2002
 <!-- hhmts end -->
 <address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address>
 </body> </html>
+
+<!--  LocalWords:  TODOs CCM IDL CIDL backend idl
+ -->
