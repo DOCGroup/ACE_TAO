@@ -1,3 +1,13 @@
+Mon Oct 22 14:21:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/orbsvcs/LifeCycle_Service/*.bor
+        * tao/orbsvcs/Makefile.bor
+          Added BCB makefiles for this service
+
+        * tao/examples/Quoter/*.bor
+        * tao/examples/Makefile.bor
+          Added BCB makefiles for this example
+
 Fri Oct 19 13:35:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -5,7 +15,7 @@ Fri Oct 19 13:35:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Added -w-sig to the #pragma options for the Borland compiler
           in generated stub source code. This removes a warning when
           setting the byte order of an AMI exception holder, which
-          involves an implicit conversion from an int to a 
+          involves an implicit conversion from an int to a
           CORBA::Boolean, which other compilers seem to have no
           problem with. Thanks to Albert Wijnja <Albert.Wijnja@meco.nl>
           for finding the problem and the fix.
@@ -17,7 +27,7 @@ Fri Oct 19 13:35:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
           and the discrepancy was causing a problem in the case where
           we have an Any containing a struct containing a sequence of
           an 8-byte type, and then other members. The demarshaling of
-          the subsequent members failed because, when marshaling the 
+          the subsequent members failed because, when marshaling the
           sequence, the stream had been 8-byte aligned, but not when
           demarshaling. Of course, this will work sometimes, if the
           4-byte and 8-byte boundary happen to be the same. Thanks to
@@ -71,11 +81,11 @@ Wed Oct 17 11:01:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Oct 16 11:19:17 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Resource_Factory.h: 
-	* orbsvcs/orbsvcs/AV/default_factory.h: 	
-	* orbsvcs/orbsvcs/AV/default_factory.cpp: 		
-	* orbsvcs/orbsvcs/AV/AV_Core.h: 		
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 			
+	* orbsvcs/orbsvcs/AV/Resource_Factory.h:
+	* orbsvcs/orbsvcs/AV/default_factory.h:
+	* orbsvcs/orbsvcs/AV/default_factory.cpp:
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
 	* orbsvcs/orbsvcs/AV/Makefile.av:
 
 	  Initially the AV Streams framework was pluggable for default
@@ -84,19 +94,19 @@ Tue Oct 16 11:19:17 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	  class and the default_resource factory provide the means to load
 	  pluggable transport and flow protocols through the
 	  -AVTransportFactory and -AVFlowProtocolFactory options
-	  respectively. 
+	  respectively.
 
-	* orbsvcs/orbsvcs/AV/AV_Pluggable_Framework.html: 
+	* orbsvcs/orbsvcs/AV/AV_Pluggable_Framework.html:
 
 	  Added documentation for implementing the AV Streams Pluggable
-	  Protocol. 
-	
-	* orbsvcs/orbsvcs/AV/UDP.cpp: 			
-	* orbsvcs/orbsvcs/AV/TCP.cpp: 				
-	* orbsvcs/orbsvcs/AV/sfp.cpp: 				
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 				
-	* orbsvcs/orbsvcs/AV/RTP.cpp: 				
-	* orbsvcs/orbsvcs/AV/RTCP.cpp: 				
+	  Protocol.
+
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+	* orbsvcs/orbsvcs/AV/RTP.cpp:
+	* orbsvcs/orbsvcs/AV/RTCP.cpp:
 
 	  Changed the lib in ACE_FACTORY_DEFINE to the TAO_AV lib.
 
@@ -118,15 +128,15 @@ Mon Oct 15 22:41:17 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri Oct 12 00:42:42 2001  Craig Rodriguse  <crodrigu@bbn.com>
 
-        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
         * orbsvcs/orbsvcs/AV/AVStreams_i.i:
           Improve debugging statements
 
-        * orbsvcs/orbsvcs/AV/UDP.cpp: 
-        * orbsvcs/orbsvcs/AV/UDP.h: 
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.h:
           For UDP pluggable protocol, add capability to
           set Diffserv Codepoint and Explicit Congestion Notification
-          (ECN) bits in IP TOS (Type of Service) field.     
+          (ECN) bits in IP TOS (Type of Service) field.
 
 Wed Oct 10 17:12:04 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
