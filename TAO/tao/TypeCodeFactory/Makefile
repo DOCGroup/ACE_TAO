@@ -19,11 +19,7 @@ LIBNAME = libTAO_TypeCodeFactory
 LIB = $(LIBNAME).a
 SHLIB = $(LIBNAME).$(SOEXT)
 
-LSRC = \
-	TypeCodeFactoryC.cpp \
-	TypeCodeFactory_i.cpp \
-        TypeCodeFactory_Adapter_Impl.cpp \
-	TypeCodeFactory_Loader.cpp
+
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -31,6 +27,17 @@ LSRC = \
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+
+CPP_SRCS += \
+	TypeCodeFactoryC \
+	TypeCodeFactory_i \
+        TypeCodeFactory_Adapter_Impl \
+	TypeCodeFactory_Loader
+
+FILES = $(CPP_SRCS)
+DEFS  = $(addsuffix .h,$(FILES))
+LSRC  = $(addsuffix .cpp,$(FILES))
+
 include $(TAO_ROOT)/rules.tao.GNU
 include $(TAO_ROOT)/taoconfig.mk
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
