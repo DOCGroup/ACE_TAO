@@ -6,7 +6,7 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, 0, env);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB_init");
@@ -29,10 +29,7 @@ main (int argc, char **argv)
       return -1;
     }
   
-  char *name = poa_name;
-  cout << name << endl;
-
-  CORBA::release (orb);
+  cout << poa_name.in () << endl;
 
   return 0;
 }

@@ -6,7 +6,7 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, 0, env);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB_init");
@@ -65,15 +65,17 @@ main (int argc, char **argv)
       return -1;
     }
   
-  char *name = 0;
+  cout << rootPOA_name.in () << endl;
+  cout << childPOA_name.in () << endl;
 
-  name = rootPOA_name;
-  cout << name << endl;
-
-  name = childPOA_name;
-  cout << name << endl;
-
-  CORBA::release (orb);
+  childPOA->destroy (CORBA::B_TRUE,
+                     CORBA::B_TRUE,
+                     env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::destroy");
+      return -1;
+    }
 
   return 0;
 }

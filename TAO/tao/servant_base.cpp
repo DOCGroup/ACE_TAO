@@ -29,24 +29,13 @@ TAO_ServantBase::_default_POA (CORBA::Environment &env)
 
 CORBA::Boolean 
 TAO_ServantBase::_is_a (const char* logical_type_id,
-			CORBA::Environment &)
+			CORBA::Environment &env)
 {
-  if (ACE_OS::strcmp (logical_type_id, CORBA::_tc_Object->id ()) == 0)
+  if (ACE_OS::strcmp (logical_type_id, CORBA::_tc_Object->id (env)) == 0)
     {
       return CORBA::B_TRUE;
     }
   return CORBA::B_FALSE;
-}
-
-
-void*
-TAO_ServantBase::_downcast (const char* logical_type_id)
-{
-  if (ACE_OS::strcmp (logical_type_id, CORBA::_tc_Object->id ()) == 0)
-    {
-      return this;
-    }
-  return 0;
 }
 
 void

@@ -207,6 +207,7 @@ TAO_Object_Table::end (void) const
 
 
 
+/*
 int
 operator== (const PortableServer::ObjectId &l,
 	    const PortableServer::ObjectId &r)
@@ -223,6 +224,7 @@ operator== (const PortableServer::ObjectId &l,
     }
   return 1;
 }
+*/
 
 // Template specialization....
 u_long

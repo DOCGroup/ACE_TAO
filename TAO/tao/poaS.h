@@ -21,13 +21,18 @@ public:
     CurrentBase (void);
       public:
     virtual ~CurrentBase (void);
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::CurrentBase *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -42,6 +47,10 @@ public:
         STUB_Object *stub
       );
     CurrentBase_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
   
   private:
     CurrentBase_ptr servant_;
@@ -59,19 +68,24 @@ public:
     Policy (void);
       public:
     virtual ~Policy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::Policy_ptr  copy ( CORBA::Environment &env) = 0; // pure virtual
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void destroy ( CORBA::Environment &env) = 0; // pure virtual
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::Policy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -86,6 +100,10 @@ public:
         STUB_Object *stub
       );
     Policy_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
     virtual PortableServer::Policy_ptr copy (
         CORBA::Environment &_tao_environment
       );
@@ -109,10 +127,16 @@ public:
     ThreadPolicy (void);
       public:
     virtual ~ThreadPolicy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::ThreadPolicyValue value (CORBA::Environment &env) = 0;
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -122,7 +146,6 @@ public:
 
     PortableServer::ThreadPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -138,7 +161,13 @@ public:
         STUB_Object *stub
       );
     ThreadPolicy_ptr _get_servant (void) const;
-    virtual PortableServer::ThreadPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
+    virtual PortableServer::ThreadPolicyValue value (
+        CORBA::Environment &env
+      );
   
   private:
     ThreadPolicy_ptr servant_;
@@ -156,10 +185,16 @@ public:
     LifespanPolicy (void);
       public:
     virtual ~LifespanPolicy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::LifespanPolicyValue value (CORBA::Environment &env) = 0;
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -169,7 +204,6 @@ public:
 
     PortableServer::LifespanPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -185,7 +219,13 @@ public:
         STUB_Object *stub
       );
     LifespanPolicy_ptr _get_servant (void) const;
-    virtual PortableServer::LifespanPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
+    virtual PortableServer::LifespanPolicyValue value (
+        CORBA::Environment &env
+      );
   
   private:
     LifespanPolicy_ptr servant_;
@@ -203,10 +243,16 @@ public:
     IdUniquenessPolicy (void);
       public:
     virtual ~IdUniquenessPolicy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::IdUniquenessPolicyValue value (CORBA::Environment &env) = 0;
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -216,7 +262,6 @@ public:
 
     PortableServer::IdUniquenessPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -232,7 +277,13 @@ public:
         STUB_Object *stub
       );
     IdUniquenessPolicy_ptr _get_servant (void) const;
-    virtual PortableServer::IdUniquenessPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
+    virtual PortableServer::IdUniquenessPolicyValue value (
+        CORBA::Environment &env
+      );
   
   private:
     IdUniquenessPolicy_ptr servant_;
@@ -250,10 +301,16 @@ public:
     IdAssignmentPolicy (void);
       public:
     virtual ~IdAssignmentPolicy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::IdAssignmentPolicyValue value (CORBA::Environment &env) = 0;
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -263,7 +320,6 @@ public:
 
     PortableServer::IdAssignmentPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -279,7 +335,13 @@ public:
         STUB_Object *stub
       );
     IdAssignmentPolicy_ptr _get_servant (void) const;
-    virtual PortableServer::IdAssignmentPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
+    virtual PortableServer::IdAssignmentPolicyValue value (
+        CORBA::Environment &env
+      );
   
   private:
     IdAssignmentPolicy_ptr servant_;
@@ -297,10 +359,16 @@ public:
     ImplicitActivationPolicy (void);
       public:
     virtual ~ImplicitActivationPolicy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::ImplicitActivationPolicyValue value (CORBA::Environment &env) = 0;
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -310,7 +378,6 @@ public:
 
     PortableServer::ImplicitActivationPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -326,7 +393,13 @@ public:
         STUB_Object *stub
       );
     ImplicitActivationPolicy_ptr _get_servant (void) const;
-    virtual PortableServer::ImplicitActivationPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
+    virtual PortableServer::ImplicitActivationPolicyValue value (
+        CORBA::Environment &env
+      );
   
   private:
     ImplicitActivationPolicy_ptr servant_;
@@ -344,10 +417,16 @@ public:
     ServantRetentionPolicy (void);
       public:
     virtual ~ServantRetentionPolicy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::ServantRetentionPolicyValue value (CORBA::Environment &env) = 0;
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -357,7 +436,6 @@ public:
 
     PortableServer::ServantRetentionPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -373,7 +451,13 @@ public:
         STUB_Object *stub
       );
     ServantRetentionPolicy_ptr _get_servant (void) const;
-    virtual PortableServer::ServantRetentionPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
+    virtual PortableServer::ServantRetentionPolicyValue value (
+        CORBA::Environment &env
+      );
   
   private:
     ServantRetentionPolicy_ptr servant_;
@@ -391,10 +475,16 @@ public:
     RequestProcessingPolicy (void);
       public:
     virtual ~RequestProcessingPolicy (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::RequestProcessingPolicyValue value (CORBA::Environment &env) = 0;
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -404,7 +494,6 @@ public:
 
     PortableServer::RequestProcessingPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -420,7 +509,13 @@ public:
         STUB_Object *stub
       );
     RequestProcessingPolicy_ptr _get_servant (void) const;
-    virtual PortableServer::RequestProcessingPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
+    virtual PortableServer::RequestProcessingPolicyValue value (
+        CORBA::Environment &env
+      );
   
   private:
     RequestProcessingPolicy_ptr servant_;
@@ -438,6 +533,12 @@ public:
     POAManager (void);
       public:
     virtual ~POAManager (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual void activate ( CORBA::Environment &env) = 0; // pure virtual
     static void activate_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -450,13 +551,12 @@ public:
     virtual void deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion,  CORBA::Environment &env) = 0; // pure virtual
     static void deactivate_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::POAManager *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -471,6 +571,10 @@ public:
         STUB_Object *stub
       );
     POAManager_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
     virtual void activate (
         CORBA::Environment &_tao_environment
       );
@@ -504,16 +608,21 @@ public:
     AdapterActivator (void);
       public:
     virtual ~AdapterActivator (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent, const char *name,  CORBA::Environment &env) = 0; // pure virtual
     static void unknown_adapter_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::AdapterActivator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -528,6 +637,10 @@ public:
         STUB_Object *stub
       );
     AdapterActivator_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
     virtual CORBA::Boolean unknown_adapter (
         PortableServer::POA_ptr  parent,
         const char* name,
@@ -550,13 +663,18 @@ public:
     ServantManager (void);
       public:
     virtual ~ServantManager (void);
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ServantManager *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -571,6 +689,10 @@ public:
         STUB_Object *stub
       );
     ServantManager_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
   
   private:
     ServantManager_ptr servant_;
@@ -588,19 +710,24 @@ public:
     ServantActivator (void);
       public:
     virtual ~ServantActivator (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter,  CORBA::Environment &env) = 0; // pure virtual
     static void incarnate_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void etherealize (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, PortableServer::Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations,  CORBA::Environment &env) = 0; // pure virtual
     static void etherealize_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ServantActivator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -616,6 +743,10 @@ public:
         STUB_Object *stub
       );
     ServantActivator_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
     virtual PortableServer::Servant incarnate (
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr  adapter,
@@ -646,19 +777,24 @@ public:
     ServantLocator (void);
       public:
     virtual ~ServantLocator (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie,  CORBA::Environment &env) = 0; // pure virtual
     static void preinvoke_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void postinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, PortableServer::Servant the_servant,  CORBA::Environment &env) = 0; // pure virtual
     static void postinvoke_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ServantLocator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -674,6 +810,10 @@ public:
         STUB_Object *stub
       );
     ServantLocator_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
     virtual PortableServer::Servant preinvoke (
         const PortableServer::ObjectId & oid,
         PortableServer::POA_ptr  adapter,
@@ -706,6 +846,12 @@ public:
     POA (void);
       public:
     virtual ~POA (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::POA_ptr  create_POA (const char *adapter_name, PortableServer::POAManager_ptr a_POAManager, const PortableServer::PolicyList &policies,  CORBA::Environment &env) = 0; // pure virtual
     static void create_POA_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
@@ -796,13 +942,12 @@ public:
     virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,  CORBA::Environment &env) = 0; // pure virtual
     static void id_to_reference_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::POA *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -817,6 +962,10 @@ public:
         STUB_Object *stub
       );
     POA_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
     virtual PortableServer::POA_ptr create_POA (
         const char* adapter_name,
         PortableServer::POAManager_ptr  a_POAManager,
@@ -861,16 +1010,21 @@ public:
         PortableServer::RequestProcessingPolicyValue value,
         CORBA::Environment &_tao_environment
       );
-    virtual char * the_name (CORBA::Environment &env);
-
-    virtual PortableServer::POA_ptr  the_parent (CORBA::Environment &env);
-
-    virtual PortableServer::POAManager_ptr  the_POAManager (CORBA::Environment &env);
-
-    virtual PortableServer::AdapterActivator_ptr  the_activator (CORBA::Environment &env);
-
-    virtual void the_activator(PortableServer::AdapterActivator_ptr the_activator, CORBA::Environment &env);
-
+    virtual char*  the_name (
+        CORBA::Environment &env
+      );
+    virtual PortableServer::POA_ptr the_parent (
+        CORBA::Environment &env
+      );
+    virtual PortableServer::POAManager_ptr the_POAManager (
+        CORBA::Environment &env
+      );
+    virtual PortableServer::AdapterActivator_ptr the_activator (
+        CORBA::Environment &env
+      );
+    virtual void the_activator (PortableServer::AdapterActivator_ptr  _tao_value,
+        CORBA::Environment &_tao_environment
+      );
     virtual PortableServer::ServantManager_ptr get_servant_manager (
         CORBA::Environment &_tao_environment
       );
@@ -948,19 +1102,24 @@ public:
     Current (void);
       public:
     virtual ~Current (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &_tao_environment);
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
     virtual PortableServer::POA_ptr  get_POA ( CORBA::Environment &env) = 0; // pure virtual
     static void get_POA_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ObjectId * get_object_id ( CORBA::Environment &env) = 0; // pure virtual
     static void get_object_id_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
     virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::Current *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
-    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -976,6 +1135,10 @@ public:
         STUB_Object *stub
       );
     Current_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &_tao_environment
+      );
     virtual PortableServer::POA_ptr get_POA (
         CORBA::Environment &_tao_environment
       );
@@ -995,7 +1158,7 @@ public:
 
 
 #if defined (__ACE_INLINE__)
-#include "POAS.i"
+#include "poaS.i"
 #endif // defined INLINE
 
 

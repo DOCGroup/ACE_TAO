@@ -208,19 +208,15 @@ SOURCE=.\poa.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\POAC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\POAS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\principa.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\request.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\sequence.cpp
 # End Source File
 # Begin Source File
 

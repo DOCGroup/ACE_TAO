@@ -55,7 +55,7 @@ public:
   virtual const char *_interface_repository_id (void) const = 0;
   // Get this interface's repository id
 
-  virtual void *_downcast (const char *repository_id);
+  virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable
 
   virtual STUB_Object *_create_stub (CORBA_Environment &_env);
