@@ -142,7 +142,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
 template<class TQ> 
 ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager *tm)
   : ACE_Task_Base (tm),
-    condition_ (lock_),
+    condition_ (mutex_),
     active_ (1), // Assume that we start in active mode.
     thr_id_ (ACE_OS::NULL_thread)
 {
@@ -161,7 +161,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
      const ACE_Time_Value &delay,
      const ACE_Time_Value &interval)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
   long result = this->timer_queue_.schedule (handler, act, delay, interval);
   this->condition_.signal ();
@@ -172,7 +172,7 @@ template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 					    const void **act)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
   int result = this->timer_queue_.cancel (timer_id, act);
   condition_.signal ();
@@ -182,7 +182,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 template<class TQ> void 
 ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
 
   this->active_ = 0;
   this->condition_.signal ();
@@ -191,7 +191,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 template<class TQ> int 
 ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
   this->thr_id_ = ACE_Thread::self ();
   

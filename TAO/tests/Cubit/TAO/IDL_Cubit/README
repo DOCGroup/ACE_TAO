@@ -3,6 +3,9 @@ the stubs and skeletons. Additional features include presence of a
 factory to create Cubit objects and testing the _bind call to get the
 factory object reference.
 
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
 server:
 -------
 
