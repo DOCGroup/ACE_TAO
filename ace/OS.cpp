@@ -1740,7 +1740,9 @@ ACE_Thread_Adapter::invoke (void)
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-      int using_afx = ACE_BIT_ENABLED (this->thr_desc_->flags (), THR_USE_AFX);
+      int using_afx = -1;
+      if (this->thr_desc_->flags ())
+        using_afx = ACE_BIT_ENABLED (this->thr_desc_->flags (), THR_USE_AFX);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
       // Call TSS destructors.
       ACE_OS::cleanup_tss (0 /* not main thread */);
@@ -1751,11 +1753,25 @@ ACE_Thread_Adapter::invoke (void)
       // _endthreadex will be called from AfxEndThread so don't exit the
       // thread now if we are running an MFC thread.
 #  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-      if (using_afx)
-        ::AfxEndThread ((DWORD)status);
-      else /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
-#  endif
-        ::_endthreadex ((DWORD) status);
+      if (using_afx != -1)
+        {
+          if (using_afx)
+            ::AfxEndThread ((DWORD)status);
+          else
+            ::_endthreadex ((DWORD) status);
+        }
+      else
+#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
+        {
+          // Not spawned by ACE_Thread_Manager, use the old buggy version.
+          // You should seriously consider using ACE_Thread_Manager to spawn threads.
+          // The following code is know to cause some problem.
+          CWinThread *pThread = ::AfxGetThread ();
+          if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
+            ::_endthreadex ((DWORD) status);
+          else
+            ::AfxEndThread ((DWORD)status);
+        }
 # endif /* ACE_WIN32 */
 
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
@@ -2554,10 +2570,41 @@ ACE_OS::thr_exit (void *status)
     // directly by ACE_Thread_Adapter::invoke ().
     //   ACE_TSS_Cleanup::instance ()->exit (status);
 
-    ACE_OS::cleanup_tss (0 /* not main thread */);
-    // @@ How can I tell if this is the main thread or not?
+# if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+    int using_afx = -1;
+    ACE_Thread_Descriptor *td = ACE_Log_Msg::instance ()->thr_desc ();
+    if (td)
+      using_afx = ACE_BIT_ENABLED (td, THR_USE_AFX);
+# endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
-    ::ExitThread ((DWORD) status);
+    // Call TSS destructors.
+    ACE_OS::cleanup_tss (0 /* not main thread */);
+
+    // Exit the thread.
+    // Allow CWinThread-destructor to be invoked from AfxEndThread.
+    // _endthreadex will be called from AfxEndThread so don't exit the
+    // thread now if we are running an MFC thread.
+#  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+    if (using_afx != -1)
+      {
+        if (using_afx)
+          ::AfxEndThread ((DWORD)status);
+        else
+          ::_endthreadex ((DWORD) status);
+      }
+    else
+#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
+      {
+        // Not spawned by ACE_Thread_Manager, use the old buggy version.
+        // You should seriously consider using ACE_Thread_Manager to spawn threads.
+        // The following code is know to cause some problem.
+        CWinThread *pThread = ::AfxGetThread ();
+        if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
+          ::_endthreadex ((DWORD) status);
+        else
+          ::AfxEndThread ((DWORD)status);
+      }
+
 # elif defined (VXWORKS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
