@@ -49,7 +49,7 @@ CORBA_Bounds::operator= (const CORBA_Bounds &_tao_excp)
 
 // narrow
 CORBA_Bounds_ptr
-CORBA_Bounds::_narrow (CORBA_Exception *exc)
+CORBA_Bounds::_downcast (CORBA_Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/Bounds:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (CORBA_Bounds_ptr, exc);

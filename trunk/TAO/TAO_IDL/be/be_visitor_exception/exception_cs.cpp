@@ -142,7 +142,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->indent ();
       *os << "// narrow" << be_nl;
       *os << node->name () << " *" << be_nl;
-      *os << node->name () << "::_narrow (CORBA::Exception *exc)" << be_nl;
+      *os << node->name () << "::_downcast (CORBA::Exception *exc)" << be_nl;
       *os << "{\n";
       os->incr_indent ();
       *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()

@@ -217,7 +217,7 @@ CORBA_PollableSet::NoPossiblePollable::operator= (const ::CORBA_PollableSet::NoP
 
 // narrow
 CORBA_PollableSet::NoPossiblePollable *
-CORBA_PollableSet::NoPossiblePollable::_narrow (CORBA::Exception *exc)
+CORBA_PollableSet::NoPossiblePollable::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (NoPossiblePollable *, exc);
@@ -282,7 +282,7 @@ CORBA_PollableSet::UnknownPollable::operator= (const ::CORBA_PollableSet::Unknow
 
 // narrow
 CORBA_PollableSet::UnknownPollable *
-CORBA_PollableSet::UnknownPollable::_narrow (CORBA::Exception *exc)
+CORBA_PollableSet::UnknownPollable::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (UnknownPollable *, exc);

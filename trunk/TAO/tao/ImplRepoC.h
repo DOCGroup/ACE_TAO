@@ -970,7 +970,7 @@ public:
         TAO_InputCDR &,
         CORBA::Environment &);
 
-    static AlreadyRegistered *_narrow (CORBA::Exception *);
+    static AlreadyRegistered *_downcast (CORBA::Exception *);
 
 
     // = TAO extension
@@ -1008,7 +1008,7 @@ public:
         TAO_InputCDR &,
         CORBA::Environment &);
 
-    static CannotActivate *_narrow (CORBA::Exception *);
+    static CannotActivate *_downcast (CORBA::Exception *);
 
     CannotActivate (
       const char * _tao_reason
@@ -1047,7 +1047,7 @@ public:
         TAO_InputCDR &,
         CORBA::Environment &);
 
-    static NotFound *_narrow (CORBA::Exception *);
+    static NotFound *_downcast (CORBA::Exception *);
 
 
     // = TAO extension

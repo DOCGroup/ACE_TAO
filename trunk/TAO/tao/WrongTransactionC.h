@@ -69,7 +69,7 @@ public:
   virtual void _tao_decode (TAO_InputCDR &cdr,
                             CORBA::Environment &);
 
-  static CORBA_WrongTransaction *_narrow (CORBA::Exception *);
+  static CORBA_WrongTransaction *_downcast (CORBA::Exception *);
 
 
   // = TAO extension

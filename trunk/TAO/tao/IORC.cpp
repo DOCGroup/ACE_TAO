@@ -94,7 +94,7 @@ TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::operator= (const TAO_IOP::TAO_I
 
 // narrow
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList_ptr
-TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_narrow (CORBA::Exception *exc)
+TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/EmptyProfileList:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList_ptr, exc);
@@ -174,7 +174,7 @@ TAO_IOP::TAO_IOR_Manipulation::NotFound::operator= (const TAO_IOP::TAO_IOR_Manip
 
 // narrow
 TAO_IOP::TAO_IOR_Manipulation::NotFound *
-TAO_IOP::TAO_IOR_Manipulation::NotFound::_narrow (CORBA::Exception *exc)
+TAO_IOP::TAO_IOR_Manipulation::NotFound::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::NotFound *, exc);
@@ -254,7 +254,7 @@ TAO_IOP::TAO_IOR_Manipulation::Duplicate::operator= (const TAO_IOP::TAO_IOR_Mani
 
 // narrow
 TAO_IOP::TAO_IOR_Manipulation::Duplicate_ptr
-TAO_IOP::TAO_IOR_Manipulation::Duplicate::_narrow (CORBA::Exception *exc)
+TAO_IOP::TAO_IOR_Manipulation::Duplicate::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/Duplicate:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::Duplicate_ptr, exc);
@@ -334,7 +334,7 @@ TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::operator= (const TAO_IOP::TAO_IOR_Ma
 
 // narrow
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR_ptr
-TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_narrow (CORBA::Exception *exc)
+TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/Invalid_IOR:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR_ptr, exc);

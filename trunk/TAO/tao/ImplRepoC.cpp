@@ -1030,7 +1030,7 @@ ImplementationRepository::Administration::AlreadyRegistered::operator= (const ::
 
 // narrow
 ImplementationRepository::Administration::AlreadyRegistered *
-ImplementationRepository::Administration::AlreadyRegistered::_narrow (CORBA::Exception *exc)
+ImplementationRepository::Administration::AlreadyRegistered::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (AlreadyRegistered *, exc);
@@ -1118,7 +1118,7 @@ ImplementationRepository::Administration::CannotActivate::operator= (const ::Imp
 
 // narrow
 ImplementationRepository::Administration::CannotActivate *
-ImplementationRepository::Administration::CannotActivate::_narrow (CORBA::Exception *exc)
+ImplementationRepository::Administration::CannotActivate::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/CannotActivate:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (CannotActivate *, exc);
@@ -1215,7 +1215,7 @@ ImplementationRepository::Administration::NotFound::operator= (const ::Implement
 
 // narrow
 ImplementationRepository::Administration::NotFound *
-ImplementationRepository::Administration::NotFound::_narrow (CORBA::Exception *exc)
+ImplementationRepository::Administration::NotFound::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/NotFound:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (NotFound *, exc);

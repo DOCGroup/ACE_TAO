@@ -158,7 +158,7 @@ TAO_NAMESPACE  TAO_IOP
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static EmptyProfileList *_narrow (CORBA::Exception *);
+      static EmptyProfileList *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -192,7 +192,7 @@ TAO_NAMESPACE  TAO_IOP
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static NotFound *_narrow (CORBA::Exception *);
+      static NotFound *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
 
@@ -236,7 +236,7 @@ TAO_NAMESPACE  TAO_IOP
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static Duplicate *_narrow (CORBA::Exception *);
+      static Duplicate *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
 
@@ -280,7 +280,7 @@ TAO_NAMESPACE  TAO_IOP
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static Invalid_IOR *_narrow (CORBA::Exception *);
+      static Invalid_IOR *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
 

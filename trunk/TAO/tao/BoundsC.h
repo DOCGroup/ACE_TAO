@@ -58,7 +58,7 @@
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static CORBA_Bounds *_narrow (CORBA::Exception *);
+    static CORBA_Bounds *_downcast (CORBA::Exception *);
     static void _tao_any_destructor (void*);
 
     // = TAO extension

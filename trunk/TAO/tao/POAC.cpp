@@ -125,7 +125,7 @@ void PortableServer::ForwardRequest::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::ForwardRequest *
-PortableServer::ForwardRequest::_narrow (CORBA::Exception *exc)
+PortableServer::ForwardRequest::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/ForwardRequest:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::ForwardRequest *, exc);
@@ -1551,7 +1551,7 @@ void PortableServer::POAManager::AdapterInactive::_tao_decode (TAO_InputCDR &cdr
 
 // narrow
 PortableServer::POAManager::AdapterInactive *
-PortableServer::POAManager::AdapterInactive::_narrow (CORBA::Exception *exc)
+PortableServer::POAManager::AdapterInactive::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POAManager/AdapterInactive:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POAManager::AdapterInactive *, exc);
@@ -2003,7 +2003,7 @@ void PortableServer::POA::AdapterAlreadyExists::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::AdapterAlreadyExists_ptr
-PortableServer::POA::AdapterAlreadyExists::_narrow (CORBA::Exception *exc)
+PortableServer::POA::AdapterAlreadyExists::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::AdapterAlreadyExists_ptr, exc);
@@ -2086,7 +2086,7 @@ void PortableServer::POA::AdapterInactive::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::AdapterInactive *
-PortableServer::POA::AdapterInactive::_narrow (CORBA::Exception *exc)
+PortableServer::POA::AdapterInactive::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterInactive:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::AdapterInactive *, exc);
@@ -2169,7 +2169,7 @@ void PortableServer::POA::AdapterNonExistent::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::AdapterNonExistent *
-PortableServer::POA::AdapterNonExistent::_narrow (CORBA::Exception *exc)
+PortableServer::POA::AdapterNonExistent::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/AdapterNonExistent:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::AdapterNonExistent *, exc);
@@ -2259,7 +2259,7 @@ void PortableServer::POA::InvalidPolicy::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::InvalidPolicy *
-PortableServer::POA::InvalidPolicy::_narrow (CORBA::Exception *exc)
+PortableServer::POA::InvalidPolicy::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/InvalidPolicy:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::InvalidPolicy *, exc);
@@ -2345,7 +2345,7 @@ void PortableServer::POA::NoServant::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::NoServant *
-PortableServer::POA::NoServant::_narrow (CORBA::Exception *exc)
+PortableServer::POA::NoServant::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/NoServant:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::NoServant *, exc);
@@ -2430,7 +2430,7 @@ void PortableServer::POA::ObjectAlreadyActive::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::ObjectAlreadyActive *
-PortableServer::POA::ObjectAlreadyActive::_narrow (CORBA::Exception *exc)
+PortableServer::POA::ObjectAlreadyActive::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::ObjectAlreadyActive *, exc);
@@ -2511,7 +2511,7 @@ void PortableServer::POA::ObjectNotActive::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::ObjectNotActive *
-PortableServer::POA::ObjectNotActive::_narrow (CORBA::Exception *exc)
+PortableServer::POA::ObjectNotActive::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ObjectNotActive:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::ObjectNotActive *, exc);
@@ -2592,7 +2592,7 @@ void PortableServer::POA::ServantAlreadyActive::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::ServantAlreadyActive *
-PortableServer::POA::ServantAlreadyActive::_narrow (CORBA::Exception *exc)
+PortableServer::POA::ServantAlreadyActive::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantAlreadyActive:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::ServantAlreadyActive *, exc);
@@ -2673,7 +2673,7 @@ void PortableServer::POA::ServantNotActive::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::ServantNotActive *
-PortableServer::POA::ServantNotActive::_narrow (CORBA::Exception *exc)
+PortableServer::POA::ServantNotActive::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/ServantNotActive:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::ServantNotActive *, exc);
@@ -2754,7 +2754,7 @@ void PortableServer::POA::WrongAdapter::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::WrongAdapter *
-PortableServer::POA::WrongAdapter::_narrow (CORBA::Exception *exc)
+PortableServer::POA::WrongAdapter::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongAdapter:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::WrongAdapter *, exc);
@@ -2835,7 +2835,7 @@ void PortableServer::POA::WrongPolicy::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::POA::WrongPolicy *
-PortableServer::POA::WrongPolicy::_narrow (CORBA::Exception *exc)
+PortableServer::POA::WrongPolicy::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POA/WrongPolicy:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::POA::WrongPolicy *, exc);
@@ -2989,7 +2989,7 @@ void PortableServer::Current::NoContext::_tao_decode (TAO_InputCDR &cdr,
 
 // narrow
 PortableServer::Current::NoContext *
-PortableServer::Current::NoContext::_narrow (CORBA::Exception *exc)
+PortableServer::Current::NoContext::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/Current/NoContext:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (PortableServer::Current::NoContext *, exc);

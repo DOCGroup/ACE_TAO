@@ -76,7 +76,7 @@ public:
   virtual void _tao_decode (TAO_InputCDR &cdr,
                             CORBA::Environment &);
 
-  static CORBA_ORB_InconsistentTypeCode *_narrow (CORBA::Exception *);
+  static CORBA_ORB_InconsistentTypeCode *_downcast (CORBA::Exception *);
 
   // = TAO extension
   static CORBA::Exception *_alloc (void);

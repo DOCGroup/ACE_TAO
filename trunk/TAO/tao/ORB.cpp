@@ -111,7 +111,7 @@ CORBA::ORB::InvalidName::operator= (const CORBA::ORB::InvalidName &_tao_excp)
 }
 
 CORBA_ORB::InvalidName*
-CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
+CORBA_ORB::InvalidName::_downcast (CORBA_Exception *ex)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0", ex->_id ()))
     return ACE_dynamic_cast (CORBA::ORB::InvalidName*, ex);

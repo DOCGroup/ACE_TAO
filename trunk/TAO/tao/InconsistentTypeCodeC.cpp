@@ -61,7 +61,7 @@ CORBA_ORB_InconsistentTypeCode::operator= (
 
 // narrow
 CORBA_ORB_InconsistentTypeCode*
-CORBA_ORB_InconsistentTypeCode::_narrow (CORBA::Exception *exc)
+CORBA_ORB_InconsistentTypeCode::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0",
                        exc->_id ())) // same type
