@@ -174,8 +174,8 @@ ACE_Process_Manager::open (size_t size,
    if (ACE_OS::setpgid (0, 0) == -1)
      ACE_ERROR ((LM_WARNING,
                  ASYS_TEXT ("%p.\n"),
-                 ASYS_TEXT ("ACE_Process_Manager::open: can't create a "
-                            "process group; some wait functions may fail")));
+                 ASYS_TEXT ("ACE_Process_Manager::open: can't create a ")
+                 ASYS_TEXT ("process group; some wait functions may fail")));
 
   if (r)
     {
@@ -879,7 +879,7 @@ ACE_Process_Manager::wait (pid_t pid,
         }
       else
         ACE_ASSERT (pid == proc->getpid ());
-          
+
       this->notify_proc_handler (idx,
                                  *status);
       this->remove_proc (idx);
