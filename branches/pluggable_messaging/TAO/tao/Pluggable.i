@@ -52,6 +52,45 @@ TAO_Transport::buffering_timeout_value (const ACE_Time_Value &new_value)
   this->buffering_timeout_value_ = new_value;
 }
 
+ACE_INLINE TAO_Transport_Buffering_Queue &
+TAO_Transport::buffering_queue (void)
+{
+  if (this->buffering_queue_ == 0)
+    {
+      // Infinite high water mark: ACE_UINT32_MAX.
+      this->buffering_queue_ =
+        new TAO_Transport_Buffering_Queue (ACE_UINT32_MAX);
+    }
+
+  return *this->buffering_queue_;
+}
+
+ACE_INLINE void
+TAO_Transport::dequeue_head (void)
+{
+  // Remove from the head of the queue.
+  ACE_Message_Block *message_block = 0;
+  int result = this->buffering_queue_->dequeue_head (message_block);
+
+  // @@ What to do here on failures?
+  ACE_ASSERT (result != -1);
+  ACE_UNUSED_ARG (result);
+
+  // Release the memory.
+  message_block->release ();
+}
+
+ACE_INLINE void
+TAO_Transport::dequeue_all (void)
+{
+  // Flush all queued messages.
+  if (this->buffering_queue_)
+    {
+      while (!this->buffering_queue_->is_empty ())
+        this->dequeue_head ();
+    }
+}
+
 // ****************************************************************
 
 ACE_INLINE CORBA::ULong
