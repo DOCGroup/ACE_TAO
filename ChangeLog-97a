@@ -8,6 +8,10 @@ Thu Feb 27 21:36:28 1997  David L. Levine  <levine@cs.wustl.edu>
 	  linux to __GNUC__ with ACE_HAS_PENTIUM; it should work on
 	  platforms such as VxWorks with gcc on Pentiums.
 
+	* ace/config-osf1-4.0-{,g++}.h:  added ACE_HAS_CLOCK_GETTIME.
+	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
+	  for pointing this out.
+
 Thu Feb 27 17:06:12 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/High_Res_Timer.h (get_env_global_scale_factor):  This static
