@@ -105,16 +105,24 @@ Handler::handle_input (ACE_HANDLE fd)
   if (this->shutdown_)
     return 0;
 
-  // Read fixed part of message.
+  // Read fixed parts of message.
   Message message;
-  size_t fixed_size_of_message =
-    sizeof (Message::Type) + sizeof (size_t);
-
   ssize_t result =
     ACE::recv_n (fd,
                  &message.type_,
-                 fixed_size_of_message);
-  ACE_ASSERT (result == ssize_t (fixed_size_of_message));
+                 sizeof (message.type_));
+  if (result != ACE_static_cast (ssize_t, sizeof (message.type_)))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+                result,
+                ACE_TEXT ("recv 1")));
+  result =
+    ACE::recv_n (fd,
+                 &message.size_,
+                 sizeof (message.size_));
+  if (result != ACE_static_cast (ssize_t, sizeof (message.size_)))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+                result,
+                ACE_TEXT ("recv 2")));
 
   // On shutdown message, stop the event loop.
   if (message.type_ == Message::SHUTDOWN)
@@ -134,14 +142,18 @@ Handler::handle_input (ACE_HANDLE fd)
     ACE::recv_n (fd,
                  &message.data_,
                  message.size_);
-  ACE_ASSERT (result == ssize_t (message.size_));
-
-  message.data_[result] = '\0';
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Starting to handle message %d: %s\n"),
-              this->number_of_messages_read_ + 1,
-              message.data_));
+  if (result != ACE_static_cast (ssize_t, message.size_))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+                result,
+                ACE_TEXT ("recv 3")));
+  else
+    {
+      message.data_[result] = '\0';
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Starting to handle message %d: %s\n"),
+                  this->number_of_messages_read_ + 1,
+                  message.data_));
+    }
 
   // Process message (sleep).
   ACE_OS::sleep (ACE_Time_Value (0,
@@ -198,24 +210,31 @@ test_reactor_upcall (ACE_Reactor &reactor)
     ACE_OS_String::strlen (message);
   ACE_OS_String::strcpy (data_message.data_, message);
 
-  // Send in two pieces because the char array may not be aligned
-  // directly after the size.
-  size_t header_size = sizeof (Message::Type) + sizeof (size_t);
+  // Send in three pieces because the struct members may not be adjacent
+  // in memory.
   for (int i = 0;
        i < number_of_messages;
        ++i)
     {
       // This should trigger a call to <handle_input>.
-      result =
+      ssize_t sent =
         ACE::send_n (handler.pipe_.write_handle (),
                      &data_message.type_,
-                     header_size);
-      ACE_ASSERT (result == ssize_t (header_size));
-      result =
+                     sizeof (data_message.type_));
+      if (sent == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 1")));
+      sent =
+        ACE::send_n (handler.pipe_.write_handle (),
+                     &data_message.size_,
+                     sizeof (data_message.size_));
+      if (sent == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 2")));
+      sent =
         ACE::send_n (handler.pipe_.write_handle (),
                      &data_message.data_,
                      data_message.size_);
-      ACE_ASSERT (result == ssize_t (data_message.size_));
+      if (sent == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 3")));
     }
 
   // We are done: send shutdown message.
@@ -225,11 +244,16 @@ test_reactor_upcall (ACE_Reactor &reactor)
   shutdown_message.size_ = 0;
 
   // This should trigger a call to <handle_input>.
-  result =
-    ACE::send_n (handler.pipe_.write_handle (),
-                 &shutdown_message.type_,
-                 header_size);
-  ACE_ASSERT (result == ssize_t (header_size));
+  ssize_t sent = ACE::send_n (handler.pipe_.write_handle (),
+                              &shutdown_message.type_,
+                              sizeof (shutdown_message.type_));
+  if (sent == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 4")));
+  sent = ACE::send_n (handler.pipe_.write_handle (),
+                      &shutdown_message.size_,
+                      sizeof (shutdown_message.size_));
+  if (sent == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): %p\n"), ACE_TEXT ("send 5")));
 
   // Wait for the event loop tasks to exit.
   event_loop_task.wait ();
