@@ -74,7 +74,7 @@ CORBA::string_dup (const CORBA::Char *str)
 
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
-    open_called_(CORBA::B_FALSE),
+    open_called_ (CORBA::B_FALSE),
     shutdown_lock_ (0),
     should_shutdown_(CORBA::B_FALSE),
     name_service_ (CORBA_Object::_nil ()),
@@ -120,8 +120,7 @@ CORBA_ORB::~CORBA_ORB (void)
   if (!CORBA::is_nil (this->trading_service_))
     CORBA::release (this->trading_service_);
 
-  if (this->cond_become_leader_ != 0)
-    delete this->cond_become_leader_;
+  delete this->cond_become_leader_;
 }
 
 // Set up listening endpoints.
@@ -129,7 +128,13 @@ CORBA_ORB::~CORBA_ORB (void)
 int
 CORBA_ORB::open (void)
 {
-  if (this->open_called_ != CORBA::B_FALSE)
+  // Double check pattern
+  if (this->open_called_ == CORBA::B_TRUE)
+    return 1;
+
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
+  
+  if (this->open_called_ == CORBA::B_TRUE)
     return 1;
 
   this->open_called_ = CORBA::B_TRUE;
@@ -230,11 +235,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   }
   
  
-  if (this->shutdown_lock_ == 0)
-    this->shutdown_lock_ =
-      TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
-
-
   if (this->shutdown_lock_ == 0)
     this->shutdown_lock_ =
       TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
@@ -600,40 +600,53 @@ CORBA_ORB::preconnect (CORBA::String connections)
 }
 
 
-// Create an objref
-
-CORBA::Object_ptr
-CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
-                          const char *type_id,
-                          CORBA::Environment &env)
+STUB_Object *
+CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
+                               const char *type_id,
+                               CORBA::Environment &env)
 {
+  if (this->open () == -1)
+    {
+      env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  
   CORBA::String id;
-  IIOP_Object *data;
 
   if (type_id)
     id = CORBA::string_copy (type_id);
   else
     id = 0;
-
+  
+  IIOP_Object *data = 0;
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
                                          key));
-  if (data != 0)
-    env.clear ();
-  else
-    {
-      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-      return 0;
-    }
+  if (data == 0)
+    env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  
+  return data;
+}
+
+// Create an objref
+CORBA::Object_ptr
+CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
+                          const char *type_id,
+                          CORBA::Environment &env)
+{
+  STUB_Object *data = this->create_stub_object (key, type_id, env);
+  if (env.exception () != 0)
+    return CORBA::Object::_nil ();
 
   // Create the CORBA level proxy
   CORBA_Object *new_obj = new CORBA_Object (data);
 
   // Clean up in case of errors.
-  if (new_obj == 0)
+  if (CORBA::is_nil (new_obj))
     {
       data->_decr_refcnt ();
       env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      return CORBA::Object::_nil ();
     }
 
   return new_obj;

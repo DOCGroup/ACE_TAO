@@ -91,9 +91,9 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
       && poa_current->in_upcall ()
       && this == poa_current->servant ())
     {
-      stub = new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
-                              IIOP::Profile (orb_core->orb_params ()->addr (),
-                                             poa_current->object_key ()));
+      stub = orb_core->orb ()->create_stub_object (poa_current->object_key (),
+                                                   this->_interface_repository_id (), 
+                                                   env);
     }
   else
     {
@@ -106,9 +106,9 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
 	return 0;
 
       TAO_ObjectKey_var object_key = object->_key (env);
-      stub = new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
-                              IIOP::Profile (orb_core->orb_params ()->addr (),
-                                             object_key.in ()));
+      stub = orb_core->orb ()->create_stub_object (object_key.in (),
+                                                   this->_interface_repository_id (), 
+                                                   env);
     }
 
   return stub;
@@ -117,10 +117,13 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
 STUB_Object *
 TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
 {
+  PortableServer::ObjectId_var invalid_oid = 
+    PortableServer::string_to_ObjectId ("invalid");
+
   // Note the use of a fake key and no registration with POAs
-  return new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
-                          IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                         "0"));
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (invalid_oid.in (),
+                                                               this->_interface_repository_id (),
+                                                               env);
 }
 
 CORBA::Object_ptr
@@ -183,9 +186,9 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
   if (env.exception () != 0)
     return 0;
 
-  return new IIOP_Object (interface,
-                          IIOP::Profile (orb_core->orb_params ()->addr (),
-                                         poa_current->object_key ()));
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (poa_current->object_key (),
+                                                               interface,
+                                                               env);
 }
 
 void

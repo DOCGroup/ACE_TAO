@@ -1,3 +1,30 @@
+Mon Jul 27 15:23:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp (open): Changed the open_called_ flag from an atomic
+ 	  op to a normal int. Also added the open_lock_ mutex to protect
+ 	  the entire open routine. Now we do a double check instead of
+ 	  checking the simply check the open_called_ atomic op.
+
+	  (create_stub_object): Added a new method to the ORB that makes
+ 	  sure that the open routine has been called before creating any
+ 	  stubs.
+
+	* tao/ORB_Core.cpp (init): There is no need to call ORB::open if
+ 	  the port is 0.  It will automagically be called when the first
+ 	  stub is created.
+
+	* tao/Servant_Base.cpp (_create_stub): Made sure to call the new
+ 	  ORB method when creating stubs.
+
+	* tao/orbconf.h (TAO_DEFAULT_SERVER_PORT): Changed the default
+ 	  port to 0.
+
+	* tests/NestedUpcall/Reactor/client.cpp (run): 
+	* tests/NestedUpcall/MT_Client_Test/local_server.cpp (run_ORB_briefly): 
+	* tests/NestedUpcall/Triangle_Test/initiator.cpp (run): 
+	
+	  No need to call orb->run (ACE_Time_Value::zero)
+
 Mon Jul 27 17:30:53 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* orbsvcs/LifeCycle_Service/Factory_Trader.{h,cpp}: Enabled all

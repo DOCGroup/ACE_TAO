@@ -890,6 +890,12 @@ public:
                                      TAO_Object_Table *active_object_map = 0);
   // Resolve the POA.
 
+  STUB_Object *create_stub_object (const TAO_ObjectKey &key,
+                                   const char *type_id,
+                                   CORBA::Environment &env);
+  // Makes sure that the ORB is open and then creates an IIOP object
+  // based on the endpoint.
+
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::Environment &env);
@@ -969,10 +975,13 @@ private:
   u_int refcount_;
   // maintains a reference count of number of instantiations of the ORB
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int> open_called_;
+  u_int open_called_;
   // Flag which denotes that the open method was called.
 
-  ACE_Lock* shutdown_lock_;
+  ACE_SYNCH_MUTEX open_lock_;
+  // Mutual exclusion for calling open.
+
+  ACE_Lock *shutdown_lock_;
   int should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
   // return.

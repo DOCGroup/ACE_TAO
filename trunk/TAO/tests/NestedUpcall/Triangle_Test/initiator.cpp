@@ -227,22 +227,6 @@ Initiator_Server::run (CORBA::Environment& env)
 {
   TAO_TRY
   {
-
-    // Get into the event loop briefly...just to make sure that the
-    // ORB gets a chance to set things up for us to be a server.
-    // What this really means is that there's a listening port.
-    //
-    // The bad thing is that we have to do something non-standard
-    // such as call orb->run() with a zero timeout.  It would be
-    // nice if the spec gave us a standard way to do this.
-    ACE_Time_Value tv = ACE_Time_Value::zero;
-    if (orb_manager_.run (TAO_TRY_ENV, &tv) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s: %p\n",
-                         argv_[0], "unable to get the ORB Core to listen"),
-                         -1);
-    TAO_CHECK_ENV;
-
     ACE_DEBUG ((LM_DEBUG,
               "Initiator_Server::run: Trying to invoke foo on Object A\n"));
 

@@ -238,11 +238,7 @@ MT_Server::run_ORB_briefly (void)
   if (this->iterations_ > 0)
   {
     CORBA::Environment env;
-    ACE_Time_Value tv = ACE_Time_Value::zero;
-    if (this->orb_manager_ptr_->run (env, &tv) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "MT_Server::run"),
-                        -1);
+
     ACE_DEBUG ((LM_DEBUG, 
                 "(%P|%t) MT_Server::run: "
                 "going to call distant MT Object\n"));
