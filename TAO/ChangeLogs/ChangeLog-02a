@@ -10,7 +10,7 @@ Thu Jul 20 13:37:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/util/utl_global.cpp:
 
 	  The generation of ostream operators for user exceptions
-	  was removed, along with the command line option to
+	  was removed, along with the command line option (-So) to
 	  suppress this generation. The ostream operator in the
 	  base class CORBA::Exception works fine and produces
 	  the same output. Thanks to Hans Utz 
