@@ -123,10 +123,11 @@ my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process (".$build_directory/ft_notifier", "-o $notifier_ior -q -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior");
 my($CL);
-if (simulated) {
+if ($simulated) {
+  print "\nTEST: Preparing Client Mediated Fault Tolerance test.\n" if ($verbose);
   $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 }else{
-  #todo figure out how to get iogr
+  print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
   $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
 }
 

@@ -118,6 +118,7 @@ project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_create
 
   Source_Files {
+    FT_Creator.cpp
     TAO_Object_Group_Creator.cpp
   }
 

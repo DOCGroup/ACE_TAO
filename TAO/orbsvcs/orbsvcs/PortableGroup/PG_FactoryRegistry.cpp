@@ -7,7 +7,7 @@
 #include <ace/Get_Opt.h>
 #include <ace/Vector_T.h>
 #include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
+#include "PG_Operators.h" // operator == on CosNaming::Name
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -604,14 +604,14 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_role);
 
   // allocate stucture to be returned.
-  PortableGroup::FactoryInfos_var result;
+  PortableGroup::FactoryInfos_var result = 0;
   ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(),
     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
-  RoleInfo * role_info;
+  RoleInfo * role_info = 0;
   if (this->registry_.find(role, role_info) == 0)
   {
-    type_id = role_info->type_id_.c_str();
+    type_id =  CORBA::string_dup(role_info->type_id_.c_str());
     (*result) = role_info->infos_;
   }
   else

@@ -6,13 +6,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 # Purpose:
-#       To test the FT_ReplicationManager
+#       To test the FaultNotifier
 #
 # Process being tested:
-#       FT_ReplicationManager
-#           implements the FT::ReplicationManager and
-#           CosNotifyComm::StructuredPushConsumer interfaces.
+#       Fault_Notifier
+#           implements FaultNotifier interface.
 # Processes used in test:
+# TODO: Document adding ReplicationManager
 #       FT_Replica
 #           implements TestReplica interface.
 #           implements PullMonitorable.
@@ -22,9 +22,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       FT_Client
 #           client for TestReplica interface.
 #           client for PullMonitorable.
-#       Fault_Notifier
-#           implements the FaultNotifier interface.
-#           propagates fault reports to the FaultConsumer.
+#       StubAnalyzer
+#           Subscribes to Fault_Notfier
 #
 # Test Scenario (***Test: marks behavior being tested):
 #   Phase 1:
@@ -34,8 +33,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       Fault_Detector writes its IOR (FDF) to a file
 #     Start the Fault_Notifier
 #       Fault_Notifier writes its IOR (FN) to a file.
-#     Start the Fault_Consumer
-#       Subscribes to the Fault_Notifier for fault reports.
 #   Phase 2:
 #     Wait for IORs: FR#1, FR#2, FDF, and FN
 #     Start the StubAnalyzer giving it IORS: FR#1, FR#2 FDF, FN
@@ -114,41 +111,39 @@ if ( $verbose > 1) {
   print "simulated: $simulated\n";
 }
 
-
 #define temp files
+my ($rm_endpoint) = "-ORBEndpoint iiop://localhost:2833";
+my ($rm_initref) = "-ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager";
+my($rm_ior) = PerlACE::LocalFile ("rm.ior");
 my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
 my($factory2_ior) = PerlACE::LocalFile ("factory2.ior");
 my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
 my($replica2_ior) = PerlACE::LocalFile ("replica2.ior");
 my($detector_ior) = PerlACE::LocalFile ("detector.ior");
 my($notifier_ior) = PerlACE::LocalFile ("notifier.ior");
-my($replmgr_ior) = PerlACE::LocalFile ("replmgr.ior");
 my($ready_file) = PerlACE::LocalFile ("ready.file");
 my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
 #discard junk from previous tests
+unlink $rm_ior;
 unlink $factory1_ior;
 unlink $factory2_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
-unlink $replmgr_ior;
 unlink $ready_file;
 unlink $client_data;
 
 my($status) = 0;
 
-# my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
-# my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q -ORBInitRef ReplicationManager=file://$replmgr_ior");
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q -ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q -ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager");
-my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
-my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
-my($CONS) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n file://$notifier_ior -q -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior");
-my($REPLM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $replmgr_ior -f file://$notifier_ior -ORBEndpoint iiop://localhost:2833");
-# my($REPLM_CTRL) = new PerlACE::Process (".$build_directory/replmgr_controller", "-k file://$replmgr_ior -x");
-my($REPLM_CTRL) = new PerlACE::Process (".$build_directory/replmgr_controller", "-ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager -x");
+my($RM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $rm_ior $rm_endpoint");
+my($RMC) = new PerlACE::Process (".$build_directory/replmgr_controller", "$rm_initref -x");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -f none -t $replica1_ior -l loc1 -i type1 -q");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -f none -t $replica2_ior -l loc2 -i type1 -q");
+my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "$rm_initref -o $detector_ior -q");
+my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "$rm_initref -o $notifier_ior -q");
+my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n file://$notifier_ior -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior -q");
 
 my($CL);
 if ($simulated) {
@@ -156,84 +151,101 @@ if ($simulated) {
   $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 }else{
   print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
-  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f  -f file://$replica1_iogr -c testscript");
+  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
 }
 
-print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbose);
-$DET->Spawn ();
+#######################
+# ReplicationManager
 
-print "TEST: waiting for detector's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$detector_ior>\n";
-    $DET->Kill (); $DET->TimedWait(1);
+print "\nTEST: starting ReplicationManager " . $RM->CommandLine . "\n" if ($verbose);
+$RM->Spawn ();
+
+print "TEST: waiting for registry's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$rm_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
     exit 1;
 }
 
+##########
+# Notifier
 print "\nTEST: starting notifier " . $NOT->CommandLine . "\n" if ($verbose);
 $NOT->Spawn ();
 
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$notifier_ior>\n";
-    $DET->Kill (); $DET->TimedWait(1);
+    $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
     exit 1;
 }
 
-print "\nTEST: starting replication manager " . $REPLM->CommandLine . "\n" if ($verbose);
-$REPLM->Spawn ();
+##########
+# Detector
+print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbose);
+$DET->Spawn ();
 
-print "TEST: waiting for Replication Manager's IOR file\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replmgr_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$replmgr_ior>\n";
-    $DET->Kill (); $DET->TimedWait(1);
+print "TEST: waiting for detector's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($detector_ior, 20) == -1) {
+    print STDERR "ERROR: cannot find file <$detector_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
-    $REPLM->Kill (); $REPLM->TimedWait(1);
+    $DET->Kill (); $DET2->TimedWait(1);
     exit 1;
 }
 
-print "TEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
+###########
+# Replica 1
+print "\nTEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
 $REP1->Spawn ();
 
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$replica1_ior>\n";
-    $DET->Kill (); $DET->TimedWait(1);
+    $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
-    $REPLM->Kill (); $REPLM->TimedWait(1);
+    $DET->Kill (); $DET->TimedWait(1);
     $REP1->Kill (); $REP1->TimedWait (1);
     exit 1;
 }
 
+###########
+# Replica 2
 print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
 $REP2->Spawn ();
 
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$replica2_ior>\n";
-    $DET->Kill (); $DET->TimedWait(1);
+    $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
-    $REPLM->Kill (); $REPLM->TimedWait(1);
+    $DET->Kill (); $DET->TimedWait(1);
     $REP1->Kill (); $REP1->TimedWait (1);
     $REP2->Kill (); $REP2->TimedWait (1);
     exit 1;
 }
 
-print "\nTEST: starting fault consumer " . $CONS->CommandLine . "\n" if ($verbose);
-$CONS->Spawn ();
+##########
+# Analyzer
+print "\nTEST: starting analyzer " . $ANA->CommandLine . "\n" if ($verbose);
+$ANA->Spawn ();
 
-print "TEST: waiting for READY.FILE from fault consumer\n" if ($verbose);
+print "TEST: waiting for READY.FILE from analyzer\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
     print STDERR "ERROR: cannot find file <$ready_file>\n";
-    $DET->Kill (); $DET->TimedWait(1);
+    $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
-    $REPLM->Kill (); $REPLM->TimedWait(1);
+    $DET->Kill (); $DET->TimedWait(1);
     $REP1->Kill (); $REP1->TimedWait (1);
     $REP2->Kill (); $REP2->TimedWait (1);
-    $CONS->Kill (); $CONS->TimedWait(1);
+    $DET->Kill (); $DET2->TimedWait(1);
+    $NOT->Kill (); $NOT->TimedWait(1);
+    $ANA->Kill (); $ANA->TimedWait(1);
     exit 1;
 }
 
+########
+# Client
 print "\nTEST: starting client " . $CL->CommandLine . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
 
@@ -263,24 +275,25 @@ if ($detector != 0) {
     $status = 1;
 }
 
-print "\nTEST: wait for fault consumer to leave.\n" if ($verbose);
-$consumer = $CONS->WaitKill (20);
-if ($consumer != 0) {
-    print STDERR "ERROR: fault consumer returned $consumer\n";
+print "\nTEST: wait for analyzer to leave.\n" if ($verbose);
+$analyzer = $ANA->WaitKill (20);
+if ($analyzer != 0) {
+    print STDERR "ERROR: analyzer returned $analyzer\n";
     $status = 1;
 }
 
 print "\nTEST: shutting down the replication manager.\n" if ($verbose);
-$controller = $REPLM_CTRL->SpawnWaitKill (300);
+$controller = $RMC->SpawnWaitKill (300);
 if ($controller != 0) {
     print STDERR "ERROR: replication manager controller returned $controller\n";
     $status = 1;
 }
 
-print "\nTEST: wait for replication manager to leave.\n" if ($verbose);
-$rm = $REPLM->WaitKill (30);
-if ($rm != 0) {
-    print STDERR "ERROR: replication manager returned $rm\n";
+print "\nTEST: wait for ReplicationManager.\n" if ($verbose);
+#$RM->Kill ();
+$repmgr = $RM->WaitKill (30);
+if ($repmgr != 0) {
+    print STDERR "ERROR: ReplicationManager returned $repmgr\n";
     $status = 1;
 }
 
@@ -292,11 +305,11 @@ if ($notifier != 0) {
 }
 
 print "\nTEST: releasing scratch files.\n" if ($verbose);
+unlink $rm_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
-unlink $replmgr_ior;
 unlink $ready_file;
 
 #client's work file

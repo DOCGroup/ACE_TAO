@@ -41,16 +41,28 @@
     return /* value goes here */
 
 
+// todo: find me a home
+static const char * role_name = "FaultDetector";
+
+
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i  Construction/destruction
 
 TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
-  : ior_output_file_(0)
-  , ns_name_(0)
-  , quit_on_idle_(0)
-  , empty_slots_(0)
-  , quit_requested_(0)
+  : ior_output_file_ (0)
+  , ns_name_ (0)
+  , quit_on_idle_ (0)
+  , empty_slots_ (0)
+  , quit_requested_ (0)
+  , domain_ (CORBA::string_dup("default_domain"))
+  , location_ (1)
+  , rm_register_ (1)
+  , replication_manager_ (0)
+  , factory_registry_ (0)
+  , registered_ (0)
 {
+  this->location_.length(1);
+  this->location_[0].id = CORBA::string_dup("default_location");
 }
 
 TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
@@ -108,16 +120,28 @@ int TAO::FT_FaultDetectorFactory_i::write_ior()
 
 int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:q");
+  ACE_Get_Opt get_opts (argc, argv, "d:l:o:q");
   int c;
 
   while ((c = get_opts ()) != -1)
   {
     switch (c)
     {
+      case 'd':
+        this->domain_ = CORBA::string_dup (get_opts.opt_arg ());
+        break;
+      case 'l':
+        this->location_.length(1);
+        this->location_[0].id = CORBA::string_dup(get_opts.opt_arg ());
+        break;
       case 'o':
         this->ior_output_file_ = get_opts.opt_arg ();
         break;
+      case 'r':
+      {
+        this->rm_register_ = ! this->rm_register_;
+        break;
+      }
       case 'q':
       {
         this->quit_on_idle_ = 1;
@@ -129,7 +153,10 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
+                           " -d <FT Domain>"
+                           " -l <FT Location>"
                            " -o <iorfile>"
+                           " -r <disable registering with replication manager>"
                            " -q{uit on idle}"
                            "\n",
                            argv [0]),
@@ -165,22 +192,6 @@ int TAO::FT_FaultDetectorFactory_i::idle (int & result)
   return quit;
 }
 
-
-int TAO::FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
-{
-  if (this->ior_output_file_ != 0)
-  {
-    ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = 0;
-  }
-  if (this->ns_name_ != 0)
-  {
-    this->naming_context_->unbind (this_name_
-                            ACE_ENV_ARG_PARAMETER);
-    this->ns_name_ = 0;
-  }
-  return 0;
-}
 
 int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 {
@@ -235,17 +246,83 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
                                   ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
+  this->identity_ = "FaultDetectorFactory";
+
+  ///////////////////////////////
+  // Register with ReplicationManager
+  if (this->rm_register_)
+  {
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (replication_manager_))
+      {
+        // capture the default notifier
+        this->notifier_ =  this->replication_manager_->get_fault_notifier (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        // register with ReplicationManager::RegistrationFactory
+        PortableGroup::Criteria criteria(0);
+        this->factory_registry_ = this->replication_manager_->get_factory_registry (criteria ACE_ENV_ARG_PARAMETER)
+        ACE_TRY_CHECK;
+
+        if (! CORBA::is_nil(factory_registry_))
+        {
+          PortableGroup::FactoryInfo info;
+          info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj);
+          info.the_location = this->location_;
+          info.the_criteria.length(1);
+          info.the_criteria[0].nam.length(1);
+          info.the_criteria[0].nam[0].id = CORBA::string_dup(PortableGroup::role_criterion);
+          info.the_criteria[0].val <<= CORBA::string_dup(role_name);
+
+          ACE_DEBUG ((LM_DEBUG,
+            "FaultDetector registering with ReplicationManager.\n"
+            ));
+          this->factory_registry_->register_factory(
+            role_name,
+            role_name,
+            info
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          ACE_DEBUG ((LM_DEBUG,
+            "FaultDetector Registration complete.\n"
+            ));
+          this->registered_ = 1;
+        }
+        else
+        {
+          ACE_ERROR ((LM_ERROR,"FaultNotifier: ReplicationManager doesn't have RegistrationFactory.\n" ));
+        }
+      }
+      else
+      {
+        ACE_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
+      }
+    }
+    ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.  Factory will not be registered.\n" );
+    }
+    ACE_ENDTRY;
+  }
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      "FaultNotifier: ReplicationManager registration disabled.\n"
+      ));
+  }
+
   if (this->ior_output_file_ != 0)
   {
     this->identity_ = "file:";
     this->identity_ += this->ior_output_file_;
-    result = write_ior();
-  }
-  else
-  {
-    // if no IOR file specified,
-    // then always try to register with name service
-    this->ns_name_ = "FT_FaultDetectorFactory";
+    write_ior();
   }
 
   if (this->ns_name_ != 0)
@@ -277,6 +354,23 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   return result;
 }
+
+int TAO::FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->ior_output_file_ != 0)
+  {
+    ACE_OS::unlink (this->ior_output_file_);
+    this->ior_output_file_ = 0;
+  }
+  if (this->ns_name_ != 0)
+  {
+    this->naming_context_->unbind (this_name_
+                            ACE_ENV_ARG_PARAMETER);
+    this->ns_name_ = 0;
+  }
+  return 0;
+}
+
 
 CORBA::ULong TAO::FT_FaultDetectorFactory_i::allocate_id()
 {
@@ -417,12 +511,19 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   FT::FaultNotifier_ptr notifier;
   if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
-    ACE_ERROR ((LM_ERROR,
-      "FaultDetectorFactory::create_object: Missing parameter %s\n",
-      ::FT::FT_NOTIFIER
-      ));
-    missingParameter = 1;
-    missingParameterName = ::FT::FT_NOTIFIER;
+    if (! CORBA::is_nil (this->notifier_))
+    {
+      notifier = FT::FaultNotifier::_duplicate (this->notifier_);
+    }
+    else
+    {
+      ACE_ERROR ((LM_ERROR,
+        "FaultDetectorFactory::create_object: Missing parameter %s\n",
+        ::FT::FT_NOTIFIER
+        ));
+      missingParameter = 1;
+      missingParameterName = ::FT::FT_NOTIFIER;
+    }
   }
 
   FT::PullMonitorable_ptr monitorable;
@@ -439,23 +540,27 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   FT::FTDomainId domain_id = 0;
   if (! ::TAO_PG::find (decoder, ::FT::FT_DOMAIN_ID, domain_id) )
   {
-    ACE_ERROR ((LM_ERROR,
-      "FaultDetectorFactory::create_object: Missing parameter %s\n",
-      ::FT::FT_DOMAIN_ID
-      ));
-    missingParameter = 1;
-    missingParameterName = ::FT::FT_DOMAIN_ID;
+    domain_id = this->domain_;
+
+//    ACE_ERROR ((LM_ERROR,
+//      "FaultDetectorFactory::create_object: Missing parameter %s\n",
+//      ::FT::FT_DOMAIN_ID
+//      ));
+//    missingParameter = 1;
+//    missingParameterName = ::FT::FT_DOMAIN_ID;
   }
 
-  FT::Location * object_location;
+  FT::Location * object_location = 0;
   if (! ::TAO_PG::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
-    ACE_ERROR ((LM_ERROR,
-      "FaultDetectorFactory::create_object: Missing parameter %s\n",
-      ::FT::FT_LOCATION
-      ));
-    missingParameter = 1;
-    missingParameterName = ::FT::FT_LOCATION;
+      object_location = & this->location_;
+
+//    ACE_ERROR ((LM_ERROR,
+//      "FaultDetectorFactory::create_object: Missing parameter %s\n",
+//      ::FT::FT_LOCATION
+//      ));
+//    missingParameter = 1;
+//    missingParameterName = ::FT::FT_LOCATION;
   }
 
   FT::TypeId object_type = 0;
@@ -585,4 +690,3 @@ CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL
 # pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
 # pragma instantiate auto_ptr<TAO::Fault_Detector_i>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

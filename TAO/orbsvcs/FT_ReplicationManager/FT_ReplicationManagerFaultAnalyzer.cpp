@@ -160,7 +160,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id (
       -1);
   }
 
-  std::cout << std::endl << std::endl << std::endl 
+  std::cout << std::endl << std::endl << std::endl
             << type_id_value
             << std::endl << std::endl << std::endl;
 
@@ -867,10 +867,15 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
           fake_criteria ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+
+      // @@ DLW SAYS: we need to find out the role played by this object
+      // group so we can use the correct set of factories.
       // Get the list of factories for the type of the failed replica.
+//      PortableGroup::FactoryInfos_var factories_by_type =
+      CORBA::String_var type_id;
       PortableGroup::FactoryInfos_var factories_by_type =
-        factory_registry->list_factories_by_type (
-          fault_event_desc.type_id.in() ACE_ENV_ARG_PARAMETER);
+          factory_registry->list_factories_by_role (
+          fault_event_desc.type_id.in(), type_id ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //
@@ -944,4 +949,3 @@ template class ACE_Unbounded_Set_Iterator<FT::Location>;
 #pragma instantiate ACE_Unbounded_Set_Iterator<FT::Location>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -168,14 +168,6 @@ private:
          TAO_PG_Factory_Set & factory_set
          ACE_ENV_ARG_DECL);
 
-  /// Get a new ObjectId to be used when creating a new ObjectGroup.
-  /**
-   * An ObjectId created by this method will never be reused within
-   * the scope of a given ReplicationManager.  A value suitable for
-   * use in a map association <ext_id> is also returned.
-   */
-  void get_ObjectId (CORBA::ULong fcid,
-                     PortableServer::ObjectId_out oid);
 
   /// Process criteria to be applied to the object group being
   /// created.
@@ -205,7 +197,7 @@ private:
 
   /// The GroupCreationId that will be assigned to the next object
   /// group that is created.
-  PortableGroup::ObjectGroupId next_group_id_;
+//  PortableGroup::ObjectGroupId next_group_id_;
 
   /// Reference to the ObjectGroup map.
   TAO_PG_ObjectGroupManager & object_group_manager_;
@@ -236,6 +228,8 @@ private:
    * Balancer.
    */
   CORBA::ULong next_fcid_;
+
+  const char * domain_id_;
 
   /// Lock used to synchronize access to the factory creation id
   /// index (i.e. next_fcid_).

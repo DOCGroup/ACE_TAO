@@ -19,7 +19,9 @@ TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
     object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     location_map_ (TAO_PG_MAX_LOCATIONS),
     generic_factory_ (0),
-    lock_ ()
+    lock_ (),
+    lock_ogid_ (),
+    next_ogid_ (1)   // don't use ogid 0
 {
 }
 
@@ -499,29 +501,55 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       PortableGroup::ObjectGroup::_nil ());
 
-  return 
+  return
     PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
+}
+
+
+
+void TAO_PG_ObjectGroupManager::allocate_ogid (PortableGroup::ObjectGroupId & ogid)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_ogid_);
+  //@@ NOTE: as always, ACE_GUARD_XXXX does the wrong thing if the lock fails
+
+  // The numerical value used for the ObjectId increases
+  // monotonically.
+
+  ogid = this->next_ogid_;
+  this->next_ogid_ += 1;
+}
+
+PortableServer::ObjectId * TAO_PG_ObjectGroupManager::convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid)
+{
+  // 4294967295 -- Largest 32 bit unsigned integer
+  char oid_str[sizeof("4294967295") + 1];
+  ACE_OS::snprintf (oid_str, sizeof(oid_str) - 1,
+                   "%lu",
+                   ACE_static_cast (ACE_UINT32,ogid));
+  oid_str[sizeof(oid_str) - 1] = '\0';
+
+  return PortableServer::string_to_ObjectId (oid_str);
 }
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
-  PortableGroup::ObjectGroupId group_id,
   const char * type_id,
   const char * domain_id,
-  const PortableGroup::Criteria & the_criteria
+  const PortableGroup::Criteria & the_criteria,
+    PortableGroup::ObjectGroupId & group_id
   ACE_ENV_ARG_DECL)
 {
+   allocate_ogid(group_id);
+   PortableServer::ObjectId_var oid = convert_ogid_to_oid (group_id);
+
   // Create a reference for the ObjectGroup corresponding to the
   // RepositoryId of the object being created.
-  PortableServer::ObjectId_var oid =
-    PortableServer::string_to_ObjectId (type_id);
   CORBA::Object_var object_group =
-    this->poa_->create_reference_with_id (oid,
+    this->poa_->create_reference_with_id (group_id,
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  //  { int _TODO_replace_this_with_commemted_out_version_; }
   PortableGroup::TagGroupTaggedComponent tag_component;
 
   tag_component.group_version.major = (CORBA::Octet) 1;
@@ -608,25 +636,18 @@ TAO_PG_ObjectGroupManager::type_id (
 }
 
 PortableGroup::ObjectGroup_ptr
-TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
+TAO_PG_ObjectGroupManager::object_group (const PortableGroup::ObjectGroupId ogid)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
                     PortableGroup::ObjectGroup::_nil ());
 
-{
-  //TODO -- need to fix this code. The LoadBalancer uses this.
-  //        Need to implement some sort of objectId-to-ObjectGroup nmap.
-  int _todo_fix_temporarily_disabled_code_;
-}
-#if 0
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  if (this->object_group_map_.find (group_id, group_entry) == 0)
+  if (this->object_group_map_.find (ogid, group_entry) == 0)
     return
       PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
   else
-#endif
     return PortableGroup::ObjectGroup::_nil ();
 }
 

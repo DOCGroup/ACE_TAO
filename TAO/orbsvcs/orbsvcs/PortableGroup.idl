@@ -221,12 +221,16 @@ module PortableGroup
   /**
    * Reserved criteria name for specifing role.
    */
-  const string role_criteron = "org.omg.portablegroup.Role";
+  const string role_criterion = "org.omg.portablegroup.Role";
 
   /**
    * Interface to allow generic factories for replicas to register themselves.
    * Factories are distinguished by the role to be played by the created-object (role) and the
    * location at which they create the object (FactoryInfo.the_location)
+   *
+   * Because this is an extension to the FT CORBA specification applications that wish to
+   * adhere to the specification as written should use the type id as the role name when
+   * interacting with the FactoryRegistry.
    */
   interface FactoryRegistry
   {

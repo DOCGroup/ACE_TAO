@@ -315,8 +315,6 @@ int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
   result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->quit_ = 1;
-
   return result;
 }
 
@@ -474,7 +472,7 @@ void TAO::FT_ReplicationManager::shutdown_i (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int result = 0;
-  result = this->fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  quit_ = 1;
   ACE_CHECK;
 
   // this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -606,11 +604,27 @@ TAO::FT_ReplicationManager::set_primary_member (
     , FT::BadReplicationStyle
   ))
 {
-  // Not yet implemented.
+  PortableGroup::ObjectGroup_var member = this->object_group_manager_.get_member_ref (
+    object_group,
+    the_location
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (member) )
   {
-    int _TODO_must_implement_set_primary_;
+    ACE_THROW (PortableGroup::MemberNotFound ());
+    ACE_CHECK;
   }
-  return (FT::ObjectGroup::_nil ());
+  FT::TagFTGroupTaggedComponent ft_tag_component;
+  TAO_FT_IOGR_Property prop (ft_tag_component);
+  if (! iorm_->set_primary (&prop, member, object_group ACE_ENV_ARG_PARAMETER))
+  {
+    ACE_ERROR ((LM_ERROR,
+      "ReplicationManager::set_primary_member: Can't set primary in IOGR .\n"
+      ));
+  }
+  ACE_CHECK;
+  return object_group->_duplicate (object_group);
 }
 
 PortableGroup::ObjectGroup_ptr
@@ -647,11 +661,44 @@ TAO::FT_ReplicationManager::add_member (
                    PortableGroup::MemberAlreadyPresent,
                    PortableGroup::ObjectNotAdded))
 {
-  return
-    this->object_group_manager_.add_member (object_group,
-                                            the_location,
-                                            member
-                                            ACE_ENV_ARG_PARAMETER);
+  /////////////////////////////////////////////
+  // create a list containing the existing ObjectGroup
+  // and the newly added member
+  TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
+  iors.length (2);
+  iors [0] = this->object_group_manager_.add_member (
+      object_group,
+      the_location,
+      member
+      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  iors [1] = member;
+
+  // Now merge the list into one new IOGR
+  PortableGroup::ObjectGroup_var merged =
+  iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  FT::TagFTGroupTaggedComponent ft_tag_component;
+  TAO_FT_IOGR_Property prop (ft_tag_component);
+  if (! iorm_->is_primary_set (&prop, merged.in ()
+         ACE_ENV_ARG_PARAMETER) )
+  {
+#if 10 // DEBUG_DISABLE
+    ACE_CHECK;
+    if (! iorm_->set_primary (&prop, member, merged.in () ACE_ENV_ARG_PARAMETER))
+    {
+      ACE_ERROR ((LM_ERROR,
+        "Can't set primary in IOGR after adding first replica.\n"
+        ));
+    }
+#endif //DEBUG_DISABLE
+  }
+  ACE_CHECK;
+
+  return merged._retn();
+
 }
 
 PortableGroup::ObjectGroup_ptr
@@ -784,4 +831,3 @@ TAO::FT_ReplicationManager::delete_object (
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-

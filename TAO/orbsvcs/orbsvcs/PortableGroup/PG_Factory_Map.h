@@ -31,10 +31,10 @@
 
 /// Factory hash map.
 typedef ACE_Hash_Map_Manager_Ex<
-  ACE_UINT32,
+  PortableGroup::ObjectGroupId,
   TAO_PG_Factory_Set,
-  ACE_Hash<ACE_UINT32>,
-  ACE_Equal_To<ACE_UINT32>,
+  ACE_Hash<PortableGroup::ObjectGroupId>,
+  ACE_Equal_To<PortableGroup::ObjectGroupId>,
   ACE_Null_Mutex> TAO_PG_Factory_Map;
 
 #include /**/ "ace/post.h"

@@ -33,6 +33,7 @@ namespace TAO
 // Includes needed by this header
 #include <ace/Vector_T.h>
 #include <orbsvcs/FT_FaultDetectorFactoryS.h>
+#include <orbsvcs/FT_ReplicationManagerC.h>
 #include <ace/Thread_Manager.h>
 
 /////////////////////
@@ -128,7 +129,7 @@ namespace TAO
     int fini (ACE_ENV_SINGLE_ARG_DECL);
 
     /**
-     * Idle-time activity.  
+     * Idle-time activity.
      *
      * @param result is set to process return code if return value is non-zero.
      * @return zero to continue; nonzero to exit
@@ -236,7 +237,7 @@ namespace TAO
     typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
 
     /**
-     * The orb 
+     * The orb
      */
     CORBA::ORB_var orb_;
 
@@ -276,6 +277,43 @@ namespace TAO
     int quit_on_idle_;
 
     /**
+     * the FT::Domain where we're operating
+     */
+    PortableGroup::GroupDomainId domain_;
+
+    /**
+     * the FT::Location within the domain
+     */
+    PortableGroup::Location location_;
+
+    /**
+     * the notifer to use by default
+     */
+
+    FT::FaultNotifier_var notifier_;
+
+    /**
+     * bool: if true, register with ReplicationManager.
+     * default is true.  -x turns it off.
+     */
+    int rm_register_;
+
+    /**
+     * the replication manager
+     */
+    ::FT::ReplicationManager_var replication_manager_;
+
+    /**
+     * bool: if true the registration with ReplicationManager was successful.
+     */
+    int registered_;
+
+    /**
+     * The factory registry with which to register.
+     */
+    PortableGroup::FactoryRegistry_var factory_registry_;
+
+    /**
      * A human-readable string to distinguish this from other Notifiers.
      */
     ACE_CString identity_;
@@ -287,13 +325,13 @@ namespace TAO
 
     /**
      * A vector of FaultDetectors.  Note that the FaultDetector ID
-     * is an index into this vector.  
+     * is an index into this vector.
      */
     DetectorVec detectors_;
 
     /**
-     * count of empty entries in detectors_ 
-     * Used to determine when the factory is idle, and to avoid 
+     * count of empty entries in detectors_
+     * Used to determine when the factory is idle, and to avoid
      * fruitless searches for empty slots.
      */
     size_t empty_slots_;

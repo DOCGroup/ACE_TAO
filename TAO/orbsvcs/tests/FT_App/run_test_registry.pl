@@ -175,12 +175,13 @@ my($CTR) = new PerlACE::Process (".$build_directory/ft_create", "-ORBInitRef Rep
 my($CL1);
 my($CL2);
 my($CL3);
-if (simulated) {
+if ($simulated) {
+  print "\nTEST: Preparing Client Mediated Fault Tolerance test.\n" if ($verbose);
   $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
   $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica3_ior -f file://$replica4_ior -c testscript");
   $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica5_ior -f file://$replica6_ior -c testscript");
 }else{
-  #todo figure out how to get iogr
+  print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
   $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
   $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica2_iogr -c testscript");
   $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica3_iogr -c testscript");
