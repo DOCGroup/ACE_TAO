@@ -4,8 +4,10 @@
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
 
+namespace ACE_OS {
+
 ACE_INLINE int
-ACE_OS::kill (pid_t pid, int signum)
+kill (pid_t pid, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::kill");
 #if defined (ACE_WIN32) || defined (CHORUS) || defined (ACE_PSOS)
@@ -18,7 +20,7 @@ ACE_OS::kill (pid_t pid, int signum)
 }
 
 ACE_INLINE int
-ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
+pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
   int result;
@@ -35,9 +37,7 @@ ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 }
 
 ACE_INLINE int
-ACE_OS::sigaction (int signum,
-                   const struct sigaction *nsa,
-                   struct sigaction *osa)
+sigaction (int signum, const struct ::sigaction *nsa, struct ::sigaction *osa)
 {
   ACE_OS_TRACE ("ACE_OS::sigaction");
   if (signum == 0)
@@ -72,7 +72,7 @@ ACE_OS::sigaction (int signum,
 }
 
 ACE_INLINE int
-ACE_OS::sigaddset (sigset_t *s, int signum)
+sigaddset (sigset_t *s, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::sigaddset");
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
@@ -103,7 +103,7 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 }
 
 ACE_INLINE int
-ACE_OS::sigdelset (sigset_t *s, int signum)
+sigdelset (sigset_t *s, int signum)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == 0)
@@ -133,7 +133,7 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
 }
 
 ACE_INLINE int
-ACE_OS::sigemptyset (sigset_t *s)
+sigemptyset (sigset_t *s)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == 0)
@@ -154,7 +154,7 @@ ACE_OS::sigemptyset (sigset_t *s)
 }
 
 ACE_INLINE int
-ACE_OS::sigfillset (sigset_t *s)
+sigfillset (sigset_t *s)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == 0)
@@ -175,7 +175,7 @@ ACE_OS::sigfillset (sigset_t *s)
 }
 
 ACE_INLINE int
-ACE_OS::sigismember (sigset_t *s, int signum)
+sigismember (sigset_t *s, int signum)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   if (s == 0)
@@ -211,7 +211,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 }
 
 ACE_INLINE ACE_SignalHandler
-ACE_OS::signal (int signum, ACE_SignalHandler func)
+signal (int signum, ACE_SignalHandler func)
 {
   if (signum == 0)
     return 0;
@@ -240,7 +240,7 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
 }
 
 ACE_INLINE int
-ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
+sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
   ACE_UNUSED_ARG (how);
@@ -253,7 +253,7 @@ ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 }
 
 ACE_INLINE int
-ACE_OS::sigsuspend (const sigset_t *sigset)
+sigsuspend (const sigset_t *sigset)
 {
 #if defined (ACE_HAS_SIGSUSPEND)
   sigset_t s;
@@ -269,3 +269,5 @@ ACE_OS::sigsuspend (const sigset_t *sigset)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SIGSUSPEND */
 }
+
+}  /* end namespace ACE_OS */
