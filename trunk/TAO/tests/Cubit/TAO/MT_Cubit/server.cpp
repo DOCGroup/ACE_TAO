@@ -274,6 +274,8 @@ start_servants ()
   // into pthread's priorities.
 #if defined (ACE_THR_PRI_FIFO_DEF)
   priority = ACE_THR_PRI_FIFO_DEF;
+#else
+  priority = ACE_DEFAULT_THREAD_PRIORITY;
 #endif /* ACE_THR_PRI_FIFO_DEF */
 
   ACE_DEBUG ((LM_DEBUG,

@@ -59,8 +59,15 @@ do_priority_inversion_test (Task_State &ts)
   
   
   // Now activate the high priority client.
-  
+
+  // @@ The ifdef here is temporarily placed here until
+  // I figure out how to map NT's thread priorities
+  // into pthread's priorities.
+#if defined (ACE_THR_PRI_FIFO_DEF)  
   priority = ACE_THR_PRI_FIFO_DEF;
+#else
+  priority = ACE_DEFAULT_THREAD_PRIORITY;
+#endif
   
   if (high_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
                                      1,
@@ -213,4 +220,5 @@ main (int argc, char *argv [])
     do_priority_inversion_test (ts);
   else
     do_thread_per_rate_test (ts);
+  return 0;
 }
