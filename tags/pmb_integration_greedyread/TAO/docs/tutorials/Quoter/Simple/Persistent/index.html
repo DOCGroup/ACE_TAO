@@ -1,0 +1,375 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Persistent Objects</title>
+    <!-- $Id$ -->
+  </head>
+
+  <BODY text = "#000000"
+    link="#000fff"
+    vlink="#ff0f0f"
+    bgcolor="#ffffff">
+
+    <h3>Introduction - Improving the Server</h3>
+    
+    <P>In this section, we will improve the
+      <!-- @@ Priyanka: I think the HTML spec requires you to use
+      quotes for all URLs
+      -->
+      <A HREF="../Server/server.cpp">
+	simple server
+      </A>
+      which we have developed before. We will use POA policies
+      to create an object with a persistent object reference.
+    </P>
+    <P>
+      The characteristics of a POA are controlled via POA policies
+      that are specified when the POA is created.
+      POA policies all have the same form:  their values are specified
+      at creation time using an enumerated type.
+      In our example we will use the <CODE>LifeSpanPolicy</CODE>
+      that controls how the lifetime of object references relates to
+      the lifetime of the POAs that generate the object references
+      and the <CODE>IdAssignmentPolicy</CODE> that controls how
+      object ids are assigned.
+    </P>
+
+    <P>
+      CORBA Objects that can live irrespective of any particular
+      process in which they are created or activated are called
+      <EM>Persistent Objects</EM>.
+      Likewise,
+      shorter-lived objects whose lifetimes are bound to the
+      lifetime of the POA in which they are created are called
+      <EM>Transient Objects</EM>.
+      Notice that this has nothing to do with the state of the object:
+      an application can create transient objects to access some
+      persistent information maintained in a database.
+      For example,
+      such objects can represent a different session or transaction view
+      of the data.
+      Similarly, some persistent object references may have no state
+      or no persistent state.
+      For example, a logging facility is persistent because it is
+      always available, but it may maintain no state or simply cache
+      some state for the current activation.
+      In general, though,
+      objects that have persistent state are accessed throught
+      persistent object references.
+    </P>
+    <P>
+      The standard life span policy for the RootPOA is
+      <CODE>TRANSIENT</CODE>.
+      This means that any application that needs to support persistent
+      objects must create at least another POA with the Persistent
+      life span policy.
+      In our example we will create two policies for this child POA.
+      One policy is the <CODE>LifeSpanPolicy</CODE> which we will set
+      to be <CODE>PERSISTENT</CODE>.
+      Usually applications that create persistent object references
+      also set the <CODE>IdAssignmentPolicy</CODE>,
+      so they can assign the object ids in a predictable way,
+      consistent across server activations.
+      It is possible, but very unusual, to use system ids with
+      persistent object references.
+    </P>
+    <!--
+    <P>A POA identifies its object by an object identifier, specified 
+      using the ObjectId type, defined in the PortableServer module.
+      Within the scope of a POA, all Object IDs must be unique.
+      An application can either supply its own ObjectID or have the
+      POA create object identifiers for it.
+      This Object identification is controlled by the IdAssignmentPolicy. If
+      the policy value is set to be <CODE>USER_ID</CODE>, the application has 
+      the choice. Otherwise, if this policy value is set to be 
+      <CODE>SYSTEM_ID</CODE>, the RootPOA creates the ObjectIDs.
+      Let's give our 
+      application a choice for the creation of its Object's IDs. 
+    </P>
+    -->
+    <P>For more about POA and its policies,
+      please refer to
+      "Advanced CORBA Programming with C++"
+      by Henning and Vinoski.
+      The TAO distribution also includes many examples on how to use
+      the POA and its policies in the 
+      <CODE>$TAO_ROOT/examples/POA</CODE> 
+      directory.
+    </P> 
+
+    <H3>Child POA Creation</H3>
+     
+    <P>
+      As before, we first initialize the ORB,
+      and obtain a reference to the Root POA.
+    </P>
+ <PRE>
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    CORBA::Object_var poa_object = 
+      orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var poa = 
+      PortableServer::POA::_narrow (poa_object.in ());
+ </PRE>    
+
+    <P>
+      Next we get the <CODE>POAManager</CODE> of the <CODE>RootPOA</CODE>
+      and use it to activate the <CODE>RootPOA</CODE>
+    </P>
+ <PRE>
+    PortableServer::POAManager_var poa_manager = 
+      poa->the_POAManager ();
+    
+    poa_manager->activate ();
+ </PRE>
+    
+    <P>
+      Now we create a <CODE>LifeSpanPolicy</CODE>
+      object with the <CODE>PERSISTENT</CODE> value:
+ <PRE>
+    // Create a PERSISTENT LifespanPolicy object
+    PortableServer::LifespanPolicy_var lifespan = 
+      poa->create_lifespan_policy (PortableServer::PERSISTENT);
+</PRE>
+    <P>
+      and next we create an <CODE>IdAssignmentPolicy</CODE> object with
+      the <CODE>USER_ID</CODE> value:
+    </P>
+<PRE>    
+    // Create a USER_ID IdAssignmentPolicy object
+    PortableServer::IdAssignmentPolicy_var idassignment = 
+      poa->create_id_assignment_policy (PortableServer::USER_ID);
+ </PRE>
+    <P>Next we can initialize the sequence of policies:
+    </P>
+ <PRE>
+    CORBA::PolicyList polices (2);
+    policies.length (2);
+    policies[0] =
+      PortableServer::IdAssignmentPolicy::_duplicate (idassignment);
+    policies[1] = 
+      PortableServer::LifespanPolicy::_duplicate (lifespan);
+ </PRE>
+    <!-- @@ Priyanka: I noticed that you used "let's" and "doesn't"
+    several times, I understand that it is not good style for
+    professional looking documents, then again it may be my fault,
+    because I was really loose on the first set of tutorials.
+    -->
+    <P>Child POAs are created using the <CODE>create_POA</CODE>
+      operation on the parent POA.
+    </P>
+ <PRE>
+    PortableServer::POA_var child_poa = 
+      poa->create_POA ("childPOA", 
+                        poa_manager.in (), 
+                        policies);
+ </PRE>
+    <P>The values which we pass to this <CODE>create_POA</CODE> operation are
+      the name of the child POA, the POAManager of the child POA, and the 
+      <CODE>CORBA::PolicyList</CODE>.
+      We can create a child controlled by a new
+      <CODE>POAManager</CODE> by passing
+      a <CODE>nil</CODE> reference,
+      but commonly the <CODE>POAManager</CODE> of the parent is used.
+    </P>
+    <P>Finally, we can now destroy the life span policy and id assignment 
+      policy objects, since they are no longer needed. The 
+      <CODE>create_POA</CODE> operation will make a copy of the objects in the 
+      policy list and the newly created POA will refer to the copies of the 
+      objects passed to the <CODE>create_POA</CODE>.
+    </P>
+ <PRE>
+    idassignment->destroy ();
+    lifespan->destroy ();
+ </PRE>
+
+    <H3>Activating Objects in the child POA </H3>
+
+    <P>Now that we have created a new POA, let's use this POA to activate the
+      stock objects. The first step would be to create an instance of the 
+      stock factory implementation. 
+  <PRE>
+    // Create a servant of class Quoter_Stock_Factory_i
+    Quoter_Stock_Factory_i stock_factory_i;
+  </PRE>
+    <P>
+      Objects can be activated explicitly using the
+      <CODE>activate_object_with_id ()</CODE> 
+      operation.
+      This operation has two input parameters:
+      id of the object and a pointer to the servant that implements
+      it.
+      We create the id using a helper function:
+    </P>
+ <PRE>
+    PortableServer::ObjectId_var oid = 
+      PortableServer::string_to_ObjectId ("Stock_Factory");
+ </PRE>
+    <P>Next, we can activate the "Stock_Factory" object:
+    </P>
+ <PRE>
+    child_poa->activate_object_with_id (oid.in (),
+                                        &stock_factory_i);
+ </PRE>
+    <P>
+      This operation does not return the object reference of the new
+      object,
+      but we can use the <CODE>id_to_reference</CODE> operation
+      to obtain the object reference:
+    </P>
+ <PRE>
+    CORBA::Object_var stock_factory = 
+      child_poa->id_to_reference (oid.in ());
+ </PRE>
+    <P>As before, we convert the object reference into an IOR string
+      so that the client can use it.
+    </P>
+ <PRE>
+    CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
+    std::cout << ior.in () << std::endl;
+ </PRE>
+    <P>As we know already, the final step before a client's request can 
+      get processed would be to run the ORB event loop.  Last, we destroy
+      the POA, waiting until the destruction terminates.
+    </P>
+ <PRE>
+    orb->run ();
+
+    // Destroy the POA
+    poa->destroy (1,1);
+    orb->destroy ();
+ </PRE>
+
+    <H3>Exercise</H3>
+
+    Modify the <a href=../Server/server.cpp>server.cpp</a> in the simple
+    server to  create the persistent child POA.
+    You can use the same 
+    <a href=../Quoter.idl>Quoter.idl</a>
+    <a href=../Server/Stock_i.h>Stock_i.h</a>
+    <a href=../Server/Stock_i.cpp>Stcok_i.cpp</a>
+    <a href=../Server/Stock_Factory_i.h>Stock_Factory_i.h</a>
+    <a href=../Server/Stock_Factory_i.cpp>Stock_Factory_i.cpp</a>
+    You can use this <a href=Makefile>Makefile</a>.
+    <H3>Solution</H3>
+    Compare your server.cpp with
+    <a href="server.cpp">
+      server.cpp
+    </a> file. 
+    
+    <H3>Testing</H3>
+    You can use the <a href=../Client/client.cpp>client.cpp</a> to check
+    the results, as follows:
+ <PRE>
+    $ ./server -ORBEndPoint iiop://localhost:12345 > server.ref &
+ </PRE>
+
+    <P>Normally the ORB selects a listening endpoint at random.
+      This is inadequate for applications with persistent object
+      references because the references will become invalid if the
+      server restarts in a new listening endpoint.
+      In TAO we can control the listening endpont(s) using the
+      <!-- @@ Priyanka: can you add a URL for the document that
+      describes all the ORB options?
+      -->
+      <CODE>-ORBEndPoint</CODE> option.
+      For example, for the IIOP protocol,
+      the endpoint information contains the name or IP address of the
+      host and a free TCP port number.
+      In the next
+      <A HREF="../Impl-Repo/index.html">
+	tutorial
+      </A>
+      we will learn how we can use the
+      <!-- @@ Priyanka: can you add a URL for the document that
+      describes the implementation repository?
+      -->
+      Implementation Repository to work with persistent object
+      references without setting the listening endpoint explicitly.
+    </P>
+    <P> The client is executed as usual:
+    </P>
+ <PRE>
+    $ ./client file://server.ref MSFT RHAT
+ </PRE>
+    <P>For testing the persistency of the POA, let's kill the server. Then 
+      direct the object reference into a new foo.ref.
+    </P>
+ <PRE> 
+    $ kill %1
+    $ ./server -ORBEndPoint iiop://localhost:12345 > foo.ref &
+    [2] 6941
+ </PRE>
+    <P>If we run the client again,  we must get the result from the server 
+      as before. 
+    </P>
+ <PRE>
+    $ ./client file://server.ref MSFT RHAT
+ </PRE>
+    <P>What happens if we don't tell the server to listen from the
+      same port?
+      Let's try to run the new server as usual:
+    </P>
+ <PRE>
+    $ ./server > server.ref &
+        [1] 23897
+    $ ./client file://server.ref MSFT RHAT
+        The price of a stock in "RedHat, Inc." is $210
+        The price of a stock in "Microsoft, Inc." is $91
+    $ kill %1
+    $ ./server > foo.ref &
+        [2] 23908
+    $ ./client file://server.ref MSFT RHAT
+        CORBA exception raised!TRANSIENT (IDL:omg.org/CORBA/TRANSIENT:1.0)
+ </PRE>
+    <!-- @@ Priyanka: check my comments on what a TRANSIENT exception
+    means
+    -->
+    <P>A CORBA TRANSIENT exception is raised.
+      This indicates that some of the resources required to perform
+      the request are not available.
+      In this case the client ORB cannot find the server on the
+      expected port number.
+      Without an Implementation Repository the client ORB cannot
+      locate the server in its new port.
+      It has to assume that the server is temporarly down,
+      and could be restarted in the future,
+      thus the TRANSIENT exception.
+    </P> 
+
+    <H3>More Reading</H3>
+
+    <P>The
+      <A HREF="http://www.triodia.com/staff/michi-henning.html">
+	Henning
+      </A> 
+      and
+      <A HREF="http://www.iona.com/hyplan/vinoski/">
+	Vinoski
+      </A>
+      <A HREF="http://www.iona.com/hyplan/vinoski/#book">
+	CORBA book
+      </A> discusses POA policies in detail.
+      Likewise, the Schmidt and Vinoski 
+      <A HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html">
+	columns
+      </A>
+      in C++ Report also include several articles about the POA.
+      Finally, the
+      <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">
+	TAO
+      </A>
+      distribution includes several
+      <A HREF="../../../../../examples/POA">
+	examples
+      </A>
+      that illustrate how to use the POA policies.
+    </P>
+
+    <hr>
+    <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
+<!-- Created: Wed Mar  1 20:29:59 PST 2000 -->
+<!-- hhmts start -->
+Last modified: Sun Apr  1 18:09:33 PDT 2001
+<!-- hhmts end -->
+  </body>
+</html>
