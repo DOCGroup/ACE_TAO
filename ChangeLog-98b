@@ -33,6 +33,9 @@ Tue Sep 08 07:28:05 1998  David L. Levine  <levine@cs.wustl.edu>
           egcs 1.1b can't handle the FP_RETURN_TYPE typedef.  So,
           use FP::Return_Type with __GNUG__.
 
+        * ace/config-chorus.h: added ACE_HAS_DIRENT and
+          ACE_LACKS_READDIR_R.
+
 Mon Sep  7 22:12:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-freebsd.h: Added ACE_HAS_SIGINFO_T,
