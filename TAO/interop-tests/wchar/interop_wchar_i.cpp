@@ -110,7 +110,7 @@ interop_WChar_Passer_i::wstruct_to_server (const interop::wstruct & test,
 
 interop::wstruct *
 interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   interop::wstruct_var ws = new interop::wstruct ();
@@ -126,13 +126,13 @@ interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key
 CORBA::Boolean
 interop_WChar_Passer_i::wstructseq_to_server (const interop::wstructseq & test,
                                               CORBA::Short key
-                                              ACE_ENV_ARG_DECL_NOT_USED)
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   CORBA::Boolean result = 1;
   for (CORBA::ULong i = 0; result && i < test.length(); i++)
     {
-      result = this->wstruct_to_server(test[i], key);
+      result = this->wstruct_to_server(test[i], key ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   return result;
@@ -140,7 +140,7 @@ interop_WChar_Passer_i::wstructseq_to_server (const interop::wstructseq & test,
 
 interop::wstructseq *
 interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
-                                                ACE_ENV_ARG_DECL_NOT_USED)
+                                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   interop::wstructseq_var wsListI = new interop::wstructseq();
@@ -149,9 +149,9 @@ interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
   for (CORBA::ULong i = 0; i < wsListI->length(); i++)
     {
       wsListI[i].st_char = this->wchar_from_server(key ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (interop::wstructseq->nil());
+      ACE_CHECK_RETURN (0);
       wsListI[i].st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (interop::wstructseq->nil());
+      ACE_CHECK_RETURN (0);
       ref_.assign_warray (key, wsListI[i].st_array);
       wsListI[i].st_any <<= CORBA::wstring_dup(L"");
     }
@@ -161,7 +161,7 @@ interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
 CORBA::Boolean
 interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
                                           CORBA::Short key
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   switch (test._d()) {
@@ -202,7 +202,7 @@ interop_WChar_Passer_i::wunion_from_server (CORBA::Short key,
 CORBA::Boolean
 interop_WChar_Passer_i::any_to_server (const CORBA::Any &test,
                                        CORBA::Short key
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   CORBA::WChar wc;
