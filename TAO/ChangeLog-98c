@@ -1,3 +1,14 @@
+Tue Jun 23 17:30:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Scheduling_Service/Makefile: 
+	  Updated dependencies.
+
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	  Improved a debug message.
+
+	* orbsvcs/Event_Service/svc.conf: 
+	  The options are more realistic now.
+
 Tue Jun 23 16:47:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.{h,cpp} (class TAO_Collocation_Table_Lock): Rename
