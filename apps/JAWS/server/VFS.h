@@ -85,7 +85,7 @@ private:
   int hashfunction (char *key) const;
 
 private:
-  JAWS_VFS_Node_Bucket<ACE_Thread_Mutex> *ht_;
+  JAWS_VFS_Node_Bucket<ACE_SYNCH_MUTEX> *ht_;
 };
 
 class JAWS_VFS
@@ -98,7 +98,7 @@ private:
   JAWS_VFS_Hash_Table hash_;
 };
 
-typedef ACE_Singleton <JAWS_VFS, ACE_Thread_Mutex> VFS;
+typedef ACE_Singleton <JAWS_VFS, ACE_SYNCH_MUTEX> VFS;
 
 #endif /* VFS_H */
 

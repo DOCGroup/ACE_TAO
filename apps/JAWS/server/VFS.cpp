@@ -8,11 +8,6 @@
 #include "JAWS/server/VFS.h"
 #include "JAWS/server/HTTP_Helpers.h"
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class JXH_List<JAWS_VFS_Node *>;
-template class JAWS_VFS_Node_Bucket<ACE_Thread_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
 #if defined (ACE_WIN32)
 static const int READ_FLAGS
   = FILE_FLAG_SEQUENTIAL_SCAN | FILE_FLAG_OVERLAPPED | O_RDONLY;
@@ -279,7 +274,7 @@ JAWS_VFS_Node_List::JAWS_VFS_Node_List (int sz)
 
 JAWS_VFS_Hash_Table::JAWS_VFS_Hash_Table ()
 { 
-  ht_ = new JAWS_VFS_Node_Bucket<ACE_Thread_Mutex>[256]; 
+  ACE_NEW (ht_, JAWS_VFS_Node_Bucket<ACE_SYNCH_MUTEX>[256]);
 }
 
 JAWS_VFS_Hash_Table::~JAWS_VFS_Hash_Table () 
@@ -359,4 +354,9 @@ JAWS_VFS_Node::map_read (void)
   map_state_ = MAPPED_READ;
 }
 #endif /* 0 */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class JXH_List<JAWS_VFS_Node *>;
+template class JAWS_VFS_Node_Bucket<ACE_SYNCH_MUTEX>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 

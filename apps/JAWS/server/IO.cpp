@@ -5,10 +5,6 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Singleton<JAWS_VFS, ACE_Thread_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
 JAWS_IO::JAWS_IO (void)
   : handle_ (ACE_INVALID_HANDLE),
     handler_ (0)
@@ -365,4 +361,8 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
 }
 
 #endif /* ACE_WIN32 */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
