@@ -1,3 +1,7 @@
+Thu Oct 10 16:02:20 2002  Ossama Othman  <othman@cs.wustl.edu>
+
+        * ACE version 5.2.5 released.
+
 Thu Oct 10 13:56:35 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/make_release (check_workspace):
