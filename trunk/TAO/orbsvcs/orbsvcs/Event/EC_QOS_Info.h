@@ -26,12 +26,13 @@
 #define TAO_EC_QOS_INFO_H
 
 #include "orbsvcs/RtecSchedulerC.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_EC_QOS_Info
+class TAO_RTEvent_Export TAO_EC_QOS_Info
 {
   // = TITLE
   //   A representation of QoS information for the event channel

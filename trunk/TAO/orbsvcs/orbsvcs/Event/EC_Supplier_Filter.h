@@ -32,6 +32,7 @@
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "EC_Worker.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,7 +43,7 @@ class TAO_EC_ProxyPushConsumer;
 class TAO_EC_Event_Channel;
 class TAO_EC_QOS_Info;
 
-class TAO_ORBSVCS_Export TAO_EC_Supplier_Filter
+class TAO_RTEvent_Export TAO_EC_Supplier_Filter
 {
   // = TITLE
   //   The strategy to filter close to the supplier.

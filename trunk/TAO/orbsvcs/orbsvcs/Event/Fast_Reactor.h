@@ -29,9 +29,9 @@
 #endif /* ACE_OLD_STYLE_REACTOR */
 //## end module.includes
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
-class TAO_ORBSVCS_Export ACE_ES_Fast_Reactor : public ACE_ES_FAST_REACTOR_BASE
+class TAO_RTEvent_Export ACE_ES_Fast_Reactor : public ACE_ES_FAST_REACTOR_BASE
 {
 public:
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0)

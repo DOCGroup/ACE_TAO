@@ -29,7 +29,7 @@ class TAO_Notify_ConsumerAdmin_i;
 #endif /* _MSC_VER */
 
 template <class SERVANT_TYPE>
-class TAO_ORBSVCS_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERVANT_TYPE>, public TAO_Notify_Event_Listener
+class TAO_Notify_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERVANT_TYPE>, public TAO_Notify_Event_Listener
 {
   // = TITLE
   //   TAO_Notify_ProxySupplier

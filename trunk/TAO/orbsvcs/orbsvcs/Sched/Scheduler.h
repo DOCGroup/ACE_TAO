@@ -35,8 +35,9 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "sched_export.h"
 
-class TAO_ORBSVCS_Export ACE_Scheduler
+class TAO_RTSched_Export ACE_Scheduler
   // = TITLE
   //    Thread scheduler interface.
   //

@@ -15,6 +15,7 @@
 #define ACE_GPlot_File_H
 
 #include "ace/Map_Manager.h"
+#include "orbsvcs/Event/event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +23,7 @@
 
 #include "ace/Synch.h"
 
-class TAO_ORBSVCS_Export ACE_GPlot_File
+class TAO_RTEvent_Export ACE_GPlot_File
 // = TITLE
 //    Reads and writes files in GPlot format.
 //

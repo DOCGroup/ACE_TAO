@@ -35,7 +35,7 @@
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_Prefix_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_RTEvent_Export TAO_EC_Prefix_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   Implement a builder for the fundamental filters.

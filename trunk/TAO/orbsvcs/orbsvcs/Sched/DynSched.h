@@ -32,8 +32,9 @@
 #include "ace/Synch.h"
 #include "ace/SString.h"
 #include "SchedEntry.h"
+#include "sched_export.h"
 
-class TAO_ORBSVCS_Export ACE_DynScheduler
+class TAO_RTSched_Export ACE_DynScheduler
   // = TITLE
   //    Dispatch scheduling interface.
   //

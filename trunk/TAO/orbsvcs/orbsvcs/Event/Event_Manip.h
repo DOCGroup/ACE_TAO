@@ -25,8 +25,9 @@
 #define TAO_EC_EVENT_MANIP_H
 
 #include "orbsvcs/RtecEventCommC.h"
+#include "event_export.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Event_Set
+class TAO_RTEvent_Export TAO_EC_Event_Set
 {
   // = TITLE
   //   A reference counted RtecEventComm::EventSet
@@ -83,7 +84,7 @@ private:
   // The reference count.
 };
 
-class TAO_ORBSVCS_Export TAO_EC_Event
+class TAO_RTEvent_Export TAO_EC_Event
 {
   // = TITLE
   //   A smart event class.

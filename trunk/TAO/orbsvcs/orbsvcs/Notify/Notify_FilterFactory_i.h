@@ -21,6 +21,7 @@
 #define NOTIFY_FILTER_FACTORY_I_H
 
 #include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
+#include "notify_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -29,7 +30,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_FilterFactory_i : public POA_CosNotifyFilter::FilterFactory, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_FilterFactory_i : public POA_CosNotifyFilter::FilterFactory, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //

@@ -34,12 +34,13 @@
 
 #include "EC_Proxy_Collection.h"
 #include "EC_Worker.h"
+#include "event_export.h"
 
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
 
-class TAO_ORBSVCS_Export TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin::SupplierAdmin
+class TAO_RTEvent_Export TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin::SupplierAdmin
 {
   // = TITLE
   //   ProxyPushSupplier

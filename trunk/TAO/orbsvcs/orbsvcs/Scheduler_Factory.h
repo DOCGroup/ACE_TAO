@@ -26,8 +26,9 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/Sched/sched_export.h"
 
-class TAO_ORBSVCS_Export ACE_Scheduler_Factory
+class TAO_RTSched_Export ACE_Scheduler_Factory
 {
   // = TITLE
   //   Factory of scheduler services.

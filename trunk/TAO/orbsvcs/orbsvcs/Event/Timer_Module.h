@@ -18,7 +18,7 @@
 
 class ACE_Command_Base;
 
-class TAO_ORBSVCS_Export TAO_EC_Timer_Module
+class TAO_RTEvent_Export TAO_EC_Timer_Module
 {
   // = TITLE
   //   The timer managment module.
@@ -72,7 +72,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Timeout_Handler : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_EC_Timeout_Handler : public ACE_Event_Handler
 {
   // = TITLE
   //   Event Service Timeout handler.
@@ -93,7 +93,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_ST_Timer_Module : public TAO_EC_Timer_Module
+class TAO_RTEvent_Export TAO_EC_ST_Timer_Module : public TAO_EC_Timer_Module
 {
   // = TITLE
   //   A single threaded implementation for the timer module.
@@ -138,7 +138,7 @@ private:
 
 class ACE_ES_Reactor_Task;
 
-class TAO_ORBSVCS_Export TAO_EC_RPT_Timer_Module : public TAO_EC_Timer_Module
+class TAO_RTEvent_Export TAO_EC_RPT_Timer_Module : public TAO_EC_Timer_Module
 {
   //
   // = TITLE

@@ -24,8 +24,9 @@
 
 // #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlS.h"
+#include "concurrency_export.h"
 
-class TAO_ORBSVCS_Export CC_LockSetFactory : public POA_CosConcurrencyControl::LockSetFactory
+class TAO_Concurrency_Export CC_LockSetFactory : public POA_CosConcurrencyControl::LockSetFactory
 {
   // = TITLE
   //     CC_LockSetFactory

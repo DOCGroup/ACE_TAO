@@ -12,6 +12,7 @@
 
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "sched_export.h"
 
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
@@ -20,7 +21,7 @@
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
 
-class TAO_ORBSVCS_Export ACE_Config_Scheduler
+class TAO_RTSched_Export ACE_Config_Scheduler
 : public POA_RtecScheduler::Scheduler
   // = TITLE
   //   A (local) implementation for the RtecScheduler::Scheduler service.

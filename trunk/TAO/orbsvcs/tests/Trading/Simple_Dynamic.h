@@ -18,6 +18,13 @@
 
 #include "orbsvcs/Trader/Trader_Utils.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 template<class T>
 class TAO_Simple_Dynamic_Property : public TAO_Dynamic_Property
 {
@@ -34,6 +41,10 @@ public:
 private:
   T dp_;
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Simple_Dynamic.cpp"

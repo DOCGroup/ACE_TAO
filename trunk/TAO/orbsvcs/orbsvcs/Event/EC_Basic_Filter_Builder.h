@@ -27,6 +27,7 @@
 #define TAO_EC_BASIC_FILTER_BUILDER_H
 
 #include "EC_Filter_Builder.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +36,7 @@
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_RTEvent_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   Implement a builder for the fundamental filters.

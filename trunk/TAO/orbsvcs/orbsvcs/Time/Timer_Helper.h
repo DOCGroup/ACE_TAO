@@ -27,6 +27,7 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
+#include "time_export.h"
 
 #include "orbsvcs/TimeServiceS.h"
 
@@ -36,7 +37,7 @@
 
 class TAO_Time_Service_Clerk;
 
-class TAO_ORBSVCS_Export Timer_Helper : public ACE_Event_Handler
+class TAO_Time_Export Timer_Helper : public ACE_Event_Handler
 {
   // = TITLE
   //    Timer Helper for the clerk.

@@ -18,7 +18,7 @@
 #include "ace/pre.h"
 #define TAO_CEC_FACTORY_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,7 +48,7 @@ typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullConsumer> TAO_CEC_ProxyPullCons
 typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushSupplier> TAO_CEC_ProxyPushSupplier_Collection;
 typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSupplier_Collection;
 
-class TAO_ORBSVCS_Export TAO_CEC_Factory : public ACE_Service_Object
+class TAO_Event_Export TAO_CEC_Factory : public ACE_Service_Object
 {
   // = TITLE
   //   Abstract factory for the CosEventChannel components.

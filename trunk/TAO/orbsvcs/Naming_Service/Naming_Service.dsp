@@ -8,21 +8,21 @@
 CFG=Naming_Service - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Naming_Service.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Naming_Service.mak" CFG="Naming_Service - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Naming_Service - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Naming_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "Naming_Service - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE "Naming_Service - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 orbsvcs.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO.lib TAO_CosNaming.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib orbsvcsd.lib aced.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_CosNamingd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Debug"
 
@@ -109,8 +109,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 TAOd.lib orbsvcsd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOd.lib orbsvcsd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD BASE LINK32 TAOd.lib TAO_CosNamingd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib TAO_CosNamingd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
 
@@ -139,9 +139,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 orbsvcs.lib TAO.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 orbsvcs.lib TAO.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNaming.lib TAO.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -164,7 +164,7 @@ SOURCE=.\Naming_Server.cpp
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -352,8 +352,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\Environment.i"\
 	"..\..\tao\Exception.h"\
 	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
 	"..\..\tao\marshal.h"\
@@ -417,12 +415,14 @@ DEP_CPP_NAMIN=\
 	"..\orbsvcs\Naming\Naming_Utils.h"\
 	"..\orbsvcs\orbsvcs_export.h"\
 	".\Naming_Service.h"\
-
+	
 NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
 	"..\..\tao\align.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
+	"..\..\tao\giop.h"\
+	"..\..\tao\giop.i"\
 	"..\..\tao\IIOP_Object.h"\
 	"..\..\tao\IIOP_Object.i"\
 	"..\..\tao\IIOP_ORB.h"\
@@ -432,11 +432,11 @@ NODEP_CPP_NAMIN=\
 	"..\..\tao\ORB_Strategies_T.h"\
 	"..\..\tao\ORB_Strategies_T.i"\
 	"..\orbsvcs\Naming\CosNaming_i.h"\
-
+	
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group

@@ -27,13 +27,14 @@
 
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
+#include "sched_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-class TAO_ORBSVCS_Export TAO_Reconfig_Scheduler_Entry
+class TAO_RTSched_Export TAO_Reconfig_Scheduler_Entry
   // = TITLE
   //   An implementation class used to store interim scheduling results
   //   such as DFS finishing order, etc.
@@ -186,7 +187,7 @@ private:
 };
 
 
-class TAO_ORBSVCS_Export TAO_Reconfig_Sched_Entry_Visitor
+class TAO_RTSched_Export TAO_Reconfig_Sched_Entry_Visitor
   // = TITLE
   //   An abstract base class for scheduler entry visitors.
   //
@@ -203,7 +204,7 @@ public:
 };
 
 
-class TAO_ORBSVCS_Export TAO_RSE_Reset_Visitor :
+class TAO_RTSched_Export TAO_RSE_Reset_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor
   // = TITLE
   //   A scheduler entry visitor that resets nodes.
@@ -225,7 +226,7 @@ public:
 
 
 
-class TAO_ORBSVCS_Export TAO_MUF_Reconfig_Sched_Strategy
+class TAO_RTSched_Export TAO_MUF_Reconfig_Sched_Strategy
   // = TITLE
   //   A scheduling strategy that implements the Maximum
   //   Urgency First scheduling algorithm.

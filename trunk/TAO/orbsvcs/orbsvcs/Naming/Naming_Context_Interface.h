@@ -18,6 +18,7 @@
 #define TAO_NAMING_CONTEXT_INTERFACE_H
 
 #include "orbsvcs/CosNamingS.h"
+#include "naming_export.h"
 
 class TAO_Naming_Context_Impl;
 
@@ -26,7 +27,7 @@ class TAO_Naming_Context_Impl;
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Naming_Context :
+class TAO_Naming_Export TAO_Naming_Context :
   public virtual PortableServer::RefCountServantBase,
   public virtual POA_CosNaming::NamingContext
 {
@@ -193,7 +194,7 @@ protected:
   // A concrete implementor of the NamingContext functions.
 };
 
-class TAO_ORBSVCS_Export TAO_Naming_Context_Impl
+class TAO_Naming_Export TAO_Naming_Context_Impl
 {
   // = TITLE
   //   This abstract base class plays a role of the 'Implementor' in the Bridge

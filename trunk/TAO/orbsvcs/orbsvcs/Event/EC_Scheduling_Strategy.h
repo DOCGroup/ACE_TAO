@@ -28,6 +28,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventCommC.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +38,7 @@ class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_QOS_Info;
 
-class TAO_ORBSVCS_Export TAO_EC_Scheduling_Strategy
+class TAO_RTEvent_Export TAO_EC_Scheduling_Strategy
 {
   // = TITLE
   //   Define the interface for the scheduling strategy

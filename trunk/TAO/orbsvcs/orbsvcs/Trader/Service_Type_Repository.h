@@ -22,7 +22,7 @@
 #include "Trader.h"
 #include "ace/Hash_Map_Manager.h"
 
-class TAO_ORBSVCS_Export TAO_Service_Type_Repository : public POA_CosTradingRepos::ServiceTypeRepository
+class TAO_Trading_Export TAO_Service_Type_Repository : public POA_CosTradingRepos::ServiceTypeRepository
 {
   // = TITLE
   //     This class implements CosTradingRepos::ServiceTypeRepository

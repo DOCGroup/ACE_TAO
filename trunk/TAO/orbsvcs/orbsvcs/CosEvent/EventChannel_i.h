@@ -34,7 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_CosEC_EventChannel_i :
+class TAO_Event_Export TAO_CosEC_EventChannel_i :
 public virtual POA_CosEventChannelAdmin::EventChannel,
 public virtual PortableServer::RefCountServantBase
 {

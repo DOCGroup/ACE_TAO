@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_Transient_Bindings_Map : public TAO_Bindings_Map
+class TAO_Naming_Export TAO_Transient_Bindings_Map : public TAO_Bindings_Map
 {
   // = TITLE
   //   Provides hash-table-based transient storage for name to object bindings in a
@@ -106,7 +106,7 @@ private:
   // Hash map used for storage.
 };
 
-class TAO_ORBSVCS_Export TAO_Transient_Naming_Context : public TAO_Hash_Naming_Context
+class TAO_Naming_Export TAO_Transient_Naming_Context : public TAO_Hash_Naming_Context
 {
   // = TITLE
   //     This class plays a role of a 'ConcreteImplementor' in the

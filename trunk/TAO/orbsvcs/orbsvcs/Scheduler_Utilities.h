@@ -25,9 +25,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Sched/sched_export.h"
 
-class TAO_ORBSVCS_Export ACE_RT_Info : public RtecScheduler::RT_Info
+class TAO_RTSched_Export ACE_RT_Info : public RtecScheduler::RT_Info
 {
   // = TITLE
   //   Offers a convenient C++ interface to the IDL RT_Info structure.
