@@ -34,7 +34,7 @@ ACE_ReactorEx_Handler_Repository::handles (void) const
   // waits on the <notify_> handle. This is to ensure that only the
   // <owner_> thread get to expire timers and handle event on the
   // notify pipe.
-  if (ACE_Thread::self () == this->reactorEx_.owner ())
+  if (ACE_Thread::self () == this->reactorEx_.owner_i ())
     return this->current_handles_;
   else
     return this->current_handles_ + 1;
@@ -43,7 +43,7 @@ ACE_ReactorEx_Handler_Repository::handles (void) const
 ACE_INLINE ACE_Event_Handler **
 ACE_ReactorEx_Handler_Repository::event_handlers (void) const
 {
-  if (ACE_Thread::self () == this->reactorEx_.owner ())
+  if (ACE_Thread::self () == this->reactorEx_.owner_i ())
     return this->current_event_handlers_;
   else
     return this->current_event_handlers_ + 1;
@@ -52,7 +52,7 @@ ACE_ReactorEx_Handler_Repository::event_handlers (void) const
 ACE_INLINE size_t
 ACE_ReactorEx_Handler_Repository::max_handlep1 (void) const
 {
-  if (ACE_Thread::self () == this->reactorEx_.owner ())
+  if (ACE_Thread::self () == this->reactorEx_.owner_i ())
     return this->max_handlep1_;
   else
     return this->max_handlep1_ - 1;
@@ -61,7 +61,7 @@ ACE_ReactorEx_Handler_Repository::max_handlep1 (void) const
 ACE_INLINE int
 ACE_ReactorEx_Handler_Repository::scheduled_for_deletion (int index) const
 {
-  if (ACE_Thread::self () == this->reactorEx_.owner ())
+  if (ACE_Thread::self () == this->reactorEx_.owner_i ())
     return this->to_be_deleted_set_[index] == 1;
   else
     return this->to_be_deleted_set_[index + 1] == 1;
@@ -85,8 +85,13 @@ ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
 ACE_INLINE ACE_thread_t 
 ACE_ReactorEx::owner (void)
 {
-  // Since changes to the owner field are very well synchronized, we
-  // do not need to synchronize this accessor
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, ACE_thread_t (0));
+  return this->owner_i ();
+}
+
+ACE_INLINE ACE_thread_t 
+ACE_ReactorEx::owner_i (void)
+{
   return this->owner_;
 }
 
