@@ -2513,15 +2513,16 @@ typedef const struct msghdr ACE_SENDMSG_TYPE;
 # endif /* ACE_HAS_BROKEN_SENDMSG */
 
 # if defined (ACE_HAS_BROKEN_RANDR)
-// The SunOS 5.x version of rand_r is inconsistent with the header files...
+// The SunOS 5.4.X version of rand_r is inconsistent with the header
+// files...
 typedef u_int ACE_RANDR_TYPE;
 extern "C" int rand_r (ACE_RANDR_TYPE seed);
 # else
 #   if defined (HPUX_10)
 // HP-UX 10.x's stdlib.h (long *) doesn't match that man page (u_int *)
-typedef long *ACE_RANDR_TYPE;
+typedef long ACE_RANDR_TYPE;
 #   else
-typedef u_int *ACE_RANDR_TYPE;
+typedef u_int ACE_RANDR_TYPE;
 #   endif /* HPUX_10 */
 # endif /* ACE_HAS_BROKEN_RANDR */
 
@@ -4821,7 +4822,7 @@ public:
 
   // = A set of wrappers for random number operations.
   static int rand (void);
-  static int rand_r (ACE_RANDR_TYPE seed);
+  static int rand_r (ACE_RANDR_TYPE &seed);
   static void srand (u_int seed);
 
   // = A set of wrappers for readers/writer locks.
