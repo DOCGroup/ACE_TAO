@@ -7,8 +7,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 $usage = "run_tests.pl [-l suppress -ORBgioplite] [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
 
-unshift @INC, '../../../../../bin';
-require Process;
+use lib "../../../../../bin";
+require ACEutils;
 
 $iorfile = "mtcubit.ior";
 $sleeptime = 3;
@@ -51,20 +51,40 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
 
 $threads = $low_priority_threads + 1;
 
+# Make sure the file is gone, so we can wait on it.
+unlink $iorfile;
+
 $SV = Process::Create ('.' . $DIR_SEPARATOR . "server" . $Process::EXE_EXT,
                        " $gioplite $thread_per_rate -f $iorfile -t $threads");
 
 sleep $sleeptime;
 
-$status = system ('.' . $DIR_SEPARATOR . "client" . $Process::EXE_EXT .
+if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
+
+$CL = Process::Create ('.' . $DIR_SEPARATOR . "client" . $Process::EXE_EXT .
                   " $gioplite $thread_per_rate " .
                   "-f $iorfile -n $iterations -t $threads");
 
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
 
-# @@ TODO change to Wait() once the -x option works.
-$SV->Kill (); $SV->Wait ();
+$server = $SV->TimedWait (10);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-# @@ Capture any errors from the server too.
-exit $status;
+if ($server != 0 || $client != 0) {
+  exit 1;
+}
+
+exit 0;
