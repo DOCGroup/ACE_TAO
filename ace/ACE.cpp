@@ -366,7 +366,7 @@ ACE::hash_pjw (const ACE_USHORT16 *str, size_t len)
 u_long
 ACE::hash_pjw (const ACE_USHORT16 *str)
 {
-  return ACE::hash_pjw (str, ACE_OS::strlen (str));  
+  return ACE::hash_pjw (str, ACE_WString::strlen (str));  
 }
 
 // The CRC routine was taken from the FreeBSD implementation of cksum,
