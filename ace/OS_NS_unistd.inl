@@ -192,8 +192,6 @@ ACE_OS::rmdir (const char *path)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path, NULL),
                                           ace_result_),
                         int, -1);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wrmdir (path), int, -1);
 #else
   ACE_OSCALL_RETURN (::rmdir (path), int, -1);
 #endif /* ACE_HAS_PACE */
