@@ -15,7 +15,7 @@
 #define ACE_SSL_ASYNCH_STREAM_H
 
 #include "ace/pre.h"
-#include "SSL_Context.h"
+#include "ace/SSL/SSL_Context.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -23,10 +23,10 @@
 
 #if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 
-#include "ace/Asynch_IO_Impl.h"
-#include "ace/Message_Block.h"
+#include "ace/Connection/Asynch_IO_Impl.h"
+#include "ace/Utils/Message_Block.h"
 
-#include "SSL_Asynch_BIO.h"
+#include "ace/SSL/SSL_Asynch_BIO.h"
 
 extern "C"
 {

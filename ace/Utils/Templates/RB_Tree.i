@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Synch.h"
-#include "ace/Malloc.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Memory/Malloc.h"
 
 /////////////////////////////////////////////////////
 // template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //

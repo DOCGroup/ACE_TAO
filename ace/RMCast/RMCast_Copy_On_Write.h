@@ -6,8 +6,8 @@
 #define ACE_RMCAST_COPY_ON_WRITE_H
 #include "ace/pre.h"
 
-#include "RMCast_Worker.h"
-#include "ace/Synch.h"
+#include "ace/RMCast/RMCast_Worker.h"
+#include "ace/Threads/Synch.h"
 
 //! A wrapper to implement reference counted collections
 template<class COLLECTION, class ITERATOR>
@@ -198,11 +198,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Copy_On_Write.i"
+#include "ace/RMCast/RMCast_Copy_On_Write.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "RMCast_Copy_On_Write.cpp"
+#include "ace/RMCast/RMCast_Copy_On_Write.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

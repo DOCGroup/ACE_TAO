@@ -1,9 +1,9 @@
 // $Id$
 
-#include "RMCast_Fork.h"
+#include "ace/RMCast/RMCast_Fork.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Fork.i"
+# include "ace/RMCast/RMCast_Fork.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Fork, "$Id$")

@@ -2,12 +2,15 @@
 // $Id$
 //
 
-#include "RMCast_Receiver_Module.h"
-#include "RMCast_Proxy.h"
-#include "ace/Log_Msg.h"
+#include "ace/RMCast/RMCast_Receiver_Module.h"
+#include "ace/RMCast/RMCast_Proxy.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Receiver_Module.i"
+# include "ace/RMCast/RMCast_Receiver_Module.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Receiver_Module, "$Id$")

@@ -2,11 +2,11 @@
 // $Id$
 //
 
-#include "RMCast_Ack_Worker.h"
-#include "ace/Message_Block.h"
+#include "ace/RMCast/RMCast_Ack_Worker.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Ack_Worker.i"
+# include "ace/RMCast/RMCast_Ack_Worker.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Ack_Worker, "$Id$")

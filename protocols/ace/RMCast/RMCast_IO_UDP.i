@@ -1,7 +1,7 @@
 // $Id$
 
-#include "RMCast_UDP_Proxy.h"
-#include "RMCast_Module_Factory.h"
+#include "ace/RMCast/RMCast_UDP_Proxy.h"
+#include "ace/RMCast/RMCast_Module_Factory.h"
 
 ACE_INLINE
 ACE_RMCast_IO_UDP::

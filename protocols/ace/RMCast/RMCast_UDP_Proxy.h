@@ -18,13 +18,13 @@
 #define ACE_RMCAST_UDP_PROXY_H
 #include "ace/pre.h"
 
-#include "RMCast_Proxy.h"
+#include "ace/RMCast/RMCast_Proxy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 class ACE_RMCast_IO_UDP;
 
@@ -81,7 +81,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_UDP_Proxy.i"
+#include "ace/RMCast/RMCast_UDP_Proxy.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

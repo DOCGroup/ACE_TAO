@@ -18,8 +18,8 @@
 #define ACE_RMCAST_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "RMCast_Export.h"
+#include "ace/OS/OS.h"
+#include "ace/RMCast/RMCast_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -254,7 +254,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast.i"
+#include "ace/RMCast/RMCast.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

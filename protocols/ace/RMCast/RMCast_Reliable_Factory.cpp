@@ -1,12 +1,12 @@
 // $Id$
 
-#include "RMCast_Reliable_Factory.h"
-#include "RMCast_Receiver_Module.h"
-#include "RMCast_Reassembly.h"
-#include "RMCast_Reordering.h"
+#include "ace/RMCast/RMCast_Reliable_Factory.h"
+#include "ace/RMCast/RMCast_Receiver_Module.h"
+#include "ace/RMCast/RMCast_Reassembly.h"
+#include "ace/RMCast/RMCast_Reordering.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Reliable_Factory.i"
+# include "ace/RMCast/RMCast_Reliable_Factory.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Reliable_Factory, "$Id$")

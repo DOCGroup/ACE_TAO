@@ -18,7 +18,7 @@
 #define ACE_RMCAST_MODULE_H
 #include "ace/pre.h"
 
-#include "RMCast.h"
+#include "ace/RMCast/RMCast.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -81,7 +81,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Module.i"
+#include "ace/RMCast/RMCast_Module.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -18,7 +18,7 @@
 #define ACE_RMCAST_RELIABLE_FACTORY_H
 #include "ace/pre.h"
 
-#include "RMCast_Module_Factory.h"
+#include "ace/RMCast/RMCast_Module_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -53,7 +53,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Reliable_Factory.i"
+#include "ace/RMCast/RMCast_Reliable_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

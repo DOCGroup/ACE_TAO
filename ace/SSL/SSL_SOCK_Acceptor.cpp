@@ -3,16 +3,19 @@
 // $Id$
 
 
-#include "SSL_SOCK_Acceptor.h"
+#include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-#include "ace/Handle_Set.h"
-#include "ace/OS_Errno.h"
-#include "ace/Log_Msg.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/OS/OS_Errno.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Acceptor.i"
+#include "ace/SSL/SSL_SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID (ACE_SSL,

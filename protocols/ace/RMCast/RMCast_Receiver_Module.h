@@ -15,7 +15,7 @@
 #define ACE_RMCAST_RECEIVER_MODULE_H
 #include "ace/pre.h"
 
-#include "RMCast_Module.h"
+#include "ace/RMCast/RMCast_Module.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -101,7 +101,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Receiver_Module.i"
+#include "ace/RMCast/RMCast_Receiver_Module.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

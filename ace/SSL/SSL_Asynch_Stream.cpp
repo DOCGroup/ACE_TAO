@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "SSL_Asynch_Stream.h"
+#include "ace/SSL/SSL_Asynch_Stream.h"
 
 ACE_RCSID (ACE_SSL,
            SSL_Asynch_Stream,
@@ -28,11 +28,11 @@ ACE_RCSID (ACE_SSL,
 
 # define ERR_CANCELED ECANCELED
 
-# include "ace/POSIX_Proactor.h"
+# include "ace/Demux/POSIX_Proactor.h"
 
 #endif  /* ACE_WIN32 */
 
-#include "ace/Proactor.h"
+#include "ace/Demux/Proactor.h"
 
 #include <openssl/err.h>
 

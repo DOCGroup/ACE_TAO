@@ -16,15 +16,15 @@
 
 #include "ace/pre.h"
 
-#include "SSL_Export.h"
+#include "ace/SSL/SSL_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Utils/SString.h"
+#include "ace/Utils/Templates/Singleton.h"
+#include "ace/Threads/Synch.h"
 
 #include <openssl/ssl.h>
 

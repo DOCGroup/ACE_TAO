@@ -15,7 +15,7 @@
 #define ACE_DYNAMIC_SERVICE_BASE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 /**
  * @class ACE_Dynamic_Service_Base

@@ -2,14 +2,14 @@
 // $Id$
 //
 
-#include "RMCast_Retransmission.h"
-#include "RMCast_Proxy.h"
-#include "RMCast_Ack_Worker.h"
-#include "RMCast_Resend_Worker.h"
-#include "ace/Message_Block.h"
+#include "ace/RMCast/RMCast_Retransmission.h"
+#include "ace/RMCast/RMCast_Proxy.h"
+#include "ace/RMCast/RMCast_Ack_Worker.h"
+#include "ace/RMCast/RMCast_Resend_Worker.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
-# include "RMCast_Retransmission.i"
+# include "ace/RMCast/RMCast_Retransmission.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, RMCast_Retransmission, "$Id$")

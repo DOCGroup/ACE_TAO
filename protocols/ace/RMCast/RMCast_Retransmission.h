@@ -18,10 +18,10 @@
 #define ACE_RMCAST_RETRANSMISSION_H
 #include "ace/pre.h"
 
-#include "RMCast_Module.h"
-#include "RMCast_Copy_On_Write.h"
-#include "ace/RB_Tree.h"
-#include "ace/Synch.h"
+#include "ace/RMCast/RMCast_Module.h"
+#include "ace/RMCast/RMCast_Copy_On_Write.h"
+#include "ace/Utils/Templates/RB_Tree.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -113,7 +113,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_Retransmission.i"
+#include "ace/RMCast/RMCast_Retransmission.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
