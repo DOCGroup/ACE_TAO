@@ -1,3 +1,13 @@
+Mon Apr 30 16:53:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+
+          Updated the IDL compiler docs to include the handling of
+          undefined forward declared interfaces, and the move of
+          tie class declaration from the *S.h file to the *S_T.h file.
+          This last was necessary to be compatible with SunCC 5.2
+          builds where inlining is disabled.
+
 Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Cache_Entries.h (relinquish_transport):
