@@ -1,0 +1,50 @@
+//$Id$
+// FT.idl
+#ifndef _FT_NOTIFIER_IDL_
+#define _FT_NOTIFIER_IDL_
+
+// The OMG FT file has been split into 
+//      FT_CORBA_ORB.idl -- Interface(s) to be implemented in the orb
+//      FT_CORBA.idl  -- Interface(s) to be implemented by the Replication manager
+//      FT_Notifier.idl -- Interface(s) to be implemented by FaultNotifier
+//      FT_Servant.idl -- Interface(s) to be implemented by the servant
+
+// The next include is TAO specific.
+#include "orbsvcs/FT_CORBA_ORB.idl"
+
+#include "orbsvcs/CosNaming.idl" // 98-10-19.idl
+#include "orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
+
+// added to OMG version:
+#include "orbsvcs/CosNotifyFilter.idl"
+
+#pragma prefix "omg.org"
+
+module FT
+{
+  // Specifications for Fault Management
+  // Specification of FaultNotifier Interface
+  interface FaultNotifier {
+    typedef unsigned long long ConsumerId;
+    void push_structured_fault( in CosNotification::StructuredEvent
+                                event);
+    void push_sequence_fault( in CosNotification::EventBatch events);
+    CosNotifyFilter::Filter create_subscription_filter (in string
+                                                        constraint_grammar)
+      raises (CosNotifyFilter::InvalidGrammar);
+    ConsumerId connect_structured_fault_consumer(in CosNotifyComm::StructuredPushConsumer push_consumer,
+                                                 in CosNotifyFilter::Filter filter) ;
+
+    ConsumerId connect_sequence_fault_consumer(in
+                                               CosNotifyComm::SequencePushConsumer push_consumer,
+                                               in
+                                               CosNotifyFilter::Filter
+                                               filter);
+
+    void disconnect_consumer( in ConsumerId connection)
+    raises(CosEventComm::Disconnected); 
+  };
+};
+
+
+#endif // for #ifndef _FT_NOTIFIER_IDL_

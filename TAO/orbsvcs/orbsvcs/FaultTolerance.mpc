@@ -6,12 +6,21 @@ project(FaultTolerance) : orbsvcslib, core, notification, ftorb {
 
   IDL_Files {
     FT_CORBA.idl
+    FT_Replica.idl
+    FT_Notifier.idl
+    FT_Detector.idl
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
     FaultTolerance {
       FT_CORBAC.cpp
       FT_CORBAS.cpp
+      FT_ReplicaC.cpp
+      FT_ReplicaS.cpp
+      FT_NotifierC.cpp
+      FT_NotifierS.cpp
+      FT_DetectorC.cpp
+      FT_DetectorS.cpp
     }
   }
 }

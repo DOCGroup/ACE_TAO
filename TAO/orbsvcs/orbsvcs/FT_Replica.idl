@@ -1,0 +1,47 @@
+//$Id$
+// FT_replica.idl
+#ifndef _FT_REPLICA_IDL_
+#define _FT_REPLICA_IDL_
+
+// The OMG FT file has been split into sevaral pieces.  This is one of them.
+
+#pragma prefix "omg.org"
+
+module FT
+{
+  // Specification of PullMonitorable Interface
+  // which Application Objects Inherit
+  interface PullMonitorable { 
+    boolean is_alive(); 
+  };
+
+  // Specifications for Logging and Recovery
+  typedef sequence<octet> State;
+
+  exception NoStateAvailable {};
+  exception InvalidState {};
+
+  exception NoUpdateAvailable {};
+  exception InvalidUpdate {};
+
+  // Specification of Checkpointable Interface
+  // which Updateable and Application Objects Inherit
+  interface Checkpointable { 
+    State get_state()
+      raises(NoStateAvailable);
+    void set_state(in State s) 
+      raises(InvalidState); 
+  };
+
+  // Specification of Updateable Interface
+  // which Application Objects Inherit
+  interface Updateable : Checkpointable 
+  { 
+    State get_update()
+      raises(NoUpdateAvailable);
+    void set_update(in State s) 
+      raises(InvalidUpdate);
+  };
+};
+
+#endif // for #ifndef _FT_REPLICA_IDL_
