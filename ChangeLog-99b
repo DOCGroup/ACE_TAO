@@ -1,3 +1,7 @@
+Wed Jan 27 16:31:01 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Makefile: Added LOCK_SOCK_Acceptor to TEMPLATE_FILES list.
+
 Wed Jan 27 14:50:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/main.cpp: Changed to open the
