@@ -60,12 +60,21 @@ public:
   LOCAL_INLINE CORBA::String name_service_ior (void);
   // Get the IOR of our name service.
 
+  LOCAL_INLINE void name_service_port (CORBA::UShort port);
+  // Set the port of our name service.
+
+  LOCAL_INLINE CORBA::UShort name_service_port (void);
+  // Get the port of our name service.
+
 private:
   ACE_INET_Addr addr_;          
   // host + port number we are listening on
 
   CORBA::String name_service_ior_;
   // The IOR of our configured Naming Service.
+
+  CORBA::UShort name_service_port_;
+  // The port number of our configured Naming Service.
 };
 
 typedef enum 
