@@ -1,3 +1,10 @@
+Tue Jun 11 09:42:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SOCK_Dgram_Mcast_T.cpp (make_multicast_ifaddr):
+
+	  Use ACE_HTONL instead of htonl().  The latter causes the
+	  assembler to choke on some Linux installations.
+
 Mon Jun 10 14:50:46 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/DLL/Dll.dsw:
