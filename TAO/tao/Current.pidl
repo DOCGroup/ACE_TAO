@@ -1,5 +1,0 @@
-// $Id$
-module CORBA
-{
-  interface Current {};
-};
