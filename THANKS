@@ -20,7 +20,7 @@ Eric Ding <qnd1@cs.wustl.edu>
 Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 Chris Gill <cdgill@cs.wustl.edu>
 Andrew G. Gilpin  <agg1@cs.wustl.edu>
-Aniruddha Gokhale <gokhale@cs.wustl.edu>
+Aniruddha Gokhale <a.gokhale@vanderbilt.edu>
 Priyanka Gontla <pgontla@ociweb.com>
 Pradeep Gore <pradeep@cs.wustl.edu>
 Matthew P. Hampton <mph2@cs.wustl.edu>
@@ -29,6 +29,7 @@ Tim Harrison <harrison@cs.wustl.edu>
 John Heitmann <jwh1@cs.wustl.edu>
 Joe Hoffert  <joeh@tango.cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
+Huang-Ming Huang <hh1@cs.wustl.edu>
 Frank A. Hunleth <fhunleth@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
 Vishal Kachroo <vishal@cs.wustl.edu>
@@ -37,14 +38,15 @@ Boris Kolpackov <boris@isis-server.isis.vanderbilt.edu>
 Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 Fred Kuhns <fredk@cs.wustl.edu>
 David Levine <levine@cs.wustl.edu>
+Tao Lu <tao.lu@vanderbilt.edu>
 Mike Moran <mm4@cs.wustl.edu>
 Sumedh Mungee <sumedh@cs.wustl.edu>
-Balachandran Natarajan <bala@cs.wustl.edu>
+Balachandran Natarajan <bala@dre.vanderbilt.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
 Krishnakumar Pathayapura <krish@cs.wustl.edu>
 Carlos O'Ryan <coryan@uci.edu>
 Ossama Othman <ossama@uci.edu>
-Jeff Parsons <parsons@cs.wustl.edu>
+Jeff Parsons <j.parsons@vanderbilt.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
 Marina Spivak <marina@cs.wustl.edu>
 Venkita Subramonian  <venkita@cs.wustl.edu>
@@ -52,6 +54,7 @@ Nagarajan Surendran <naga@cs.wustl.edu>
 Nanbor Wang <nanbor@cs.wustl.edu>
 Seth Widoff <sbw1@cs.wustl.edu>
 Torben Worm <tworm@cs.wustl.edu>
+
 
 I would also like to thank all the following people who have also
 contributed to ACE and TAO over the years:
@@ -1690,12 +1693,11 @@ Dave Ryan <djryan7@pacbell.net>
 Zsolt Zsoldos <zsolt.zsoldos@rogers.com> 
 Tongzhe Cui <tonycui@yahoo.com>
 Braden McDaniel <bmcdaniel@objectsciences.com>
-Tao Lu <tao.lu@vanderbilt.edu>
 Richard Woodring <rwoodring@nova-eng.com>
 Andras Lang <lang@isis-server.isis.vanderbilt.edu>
 Scott Gammil <srgammill@sbcglobal.net>
 Nick Lewycky <nicholas@fresco.org>
-Huang-Ming Huang <hh1@cs.wustl.edu>
+Ira Burton<imburton@micron.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
