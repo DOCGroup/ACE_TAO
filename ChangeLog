@@ -165,11 +165,11 @@ Tue Dec  7 18:38:19 2004  Steve Huston  <shuston@riverace.com>
 Tue Dec  7 17:48:21 2004  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/ThreadManagement/Priorities.cpp: Fixed message block
-          handling logic errors. Can't just queue the same block to multiple
-          tasks, especially those in different threads. Now it clones the block
-          for each putq(), and queues a MB_BREAK block when it's done so the
-          service threads know to stop. Thanks to <spo@ngls.net> for reporting
-          this problem.
+          handling logic errors. Can't just queue the same block to
+ 	  multiple tasks, especially those in different threads. Now it
+ 	  clones the block for each putq(), and queues a MB_BREAK block
+ 	  when it's done so the service threads know to stop. Thanks to
+ 	  Steven Patrick <spo@ngls.net> for reporting this problem.
 
           Fixes Bugzilla #2002
           (http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2002)
