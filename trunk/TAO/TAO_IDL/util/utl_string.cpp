@@ -78,6 +78,7 @@ ACE_RCSID(util, utl_string, "$Id$")
 
 UTL_String::UTL_String (void)
   : p_str (NULL),
+    c_str (NULL),
     len (0),
     alloced (0)
 {
@@ -138,6 +139,14 @@ UTL_String::UTL_String (UTL_String *s)
           canonicalize ();
         }
     }
+}
+
+UTL_String::~UTL_String (void)
+{
+  if (p_str)
+    delete [] p_str;
+  if (c_str)
+    delete [] c_str;
 }
 
 /*

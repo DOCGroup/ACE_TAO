@@ -195,6 +195,7 @@ AST_PredefinedType *AST_Module::fe_add_predefined_type(AST_PredefinedType *t)
 AST_Module *AST_Module::fe_add_module (AST_Module *t)
 {
   AST_Decl *d;
+  AST_Module *m = 0;
 
   /*
    * Already defined and cannot be redefined? Or already used?
@@ -233,22 +234,33 @@ AST_Module *AST_Module::fe_add_module (AST_Module *t)
         }
 #endif /* ACE_HAS_USING_KEYWORD */
 
-      if (t->has_ancestor (d)) 
+      m = AST_Module::narrow_from_decl (d);
+
+      // has_ancestor() returns TRUE if both nodes are the same.
+      if (t != m)
         {
-          idl_global->err ()->redefinition_in_scope (t, d);
-          return NULL;
+          if (t->has_ancestor (d)) 
+            {
+              idl_global->err ()->redefinition_in_scope (t, d);
+              return NULL;
+            }
         }
     }
-  /*
-   * Add it to scope
-   */
-  add_to_scope (t);
-  /*
-   * Add it to set of locally referenced symbols
-   */
-  add_to_referenced (t, 
-                     I_FALSE, 
-                     t->local_name ());
+
+  // If this node is not a reopened module, add it to scope and referenced.
+  if (m == 0 || t != m)
+    {
+      /*
+       * Add it to scope
+       */
+      add_to_scope (t);
+      /*
+       * Add it to set of locally referenced symbols
+       */
+      add_to_referenced (t, 
+                         I_FALSE, 
+                         t->local_name ());
+    }
 
   return t;
 }

@@ -109,20 +109,16 @@ is_global_name(Identifier *i)
 // subsequent components of a scoped name.
 static AST_Decl *
 iter_lookup_by_name_local (AST_Decl *d, 
-                           UTL_ScopedName *e,
-                           idl_bool treat_as_ref,
-                           long scope_offset,
-                           UTL_Scope *caller)
+                           UTL_ScopedName *e)
 {
   Identifier *s;
   AST_Typedef *td;
   UTL_IdListActiveIterator *i;
   UTL_Scope *sc;
-  UTL_Scope *t = NULL;
 
   i = new UTL_IdListActiveIterator (e);
 
-  for (i->next(); !(i->is_done ()); ) 
+  for (i->next (); !(i->is_done ());)
     {
       s = i->item ();
 
@@ -130,7 +126,6 @@ iter_lookup_by_name_local (AST_Decl *d,
       // typedef, since we only want to look at the base type if there
       // actually are more components of the name to resolve.
       i->next ();
-      scope_offset--;
 
       // Next component in name was not found
       if (d == NULL) 
@@ -171,46 +166,9 @@ iter_lookup_by_name_local (AST_Decl *d,
           return NULL;
         }
 
-      // Look up the next element
-      t = d->defined_in ();
-
-      d = sc->lookup_by_name_local (s, 
-                                    treat_as_ref, 
-                                    0, 
-                                    scope_offset);
-
-      // If there is a reopened module in a scope somewhat
-      // removed from where we are, we may need to backtrack
-      // to find the subsequent declaration(s) of that 
-      // module's scope.
-      while (d == NULL && t != NULL)
-        {
-          d = t->lookup_by_name ((UTL_ScopedName *) e->tail (), 
-                                 treat_as_ref, 
-                                 1, 
-                                 1,
-                                 scope_offset + 1);
-
-          // If we have a complete match, d can't be NULL
-          // and we're done, no sense in further iteration.
-          caller->matched = t->matched;
-
-          if (caller->matched == I_TRUE)
-            {
-              return d;
-            }
-
-          AST_Decl *tmp = ScopeAsDecl (t);
-
-          t = tmp->defined_in ();
-        }
+      d = sc->lookup_by_name_local (s);
     }
 
-  // OK, done with the loop
-  if (i->is_done () && d != NULL)
-    {
-      caller->matched = I_TRUE;
-    }
   delete i;
   return d;
 }
@@ -312,11 +270,11 @@ AST_Decl * add_type(AST_Type *type)
  * be used only by the CFE add_xxx functions
  */
 AST_Decl *
-UTL_Scope::lookup_for_add(AST_Decl *d, idl_bool treat_as_ref)
+UTL_Scope::lookup_for_add(AST_Decl *d, idl_bool)
 {
   if (d == NULL)
     return NULL;
-  return lookup_by_name_local(d->local_name(), treat_as_ref);
+  return lookup_by_name_local(d->local_name());
 }
 
 /*
@@ -876,23 +834,19 @@ UTL_Scope::look_in_inherited (UTL_ScopedName *e,
 
 // Look up a String * in local scope only
 AST_Decl *
-UTL_Scope::lookup_by_name_local (Identifier *e, 
-                                 idl_bool,
-                                 long index,
-                                 long scope_offset)
+UTL_Scope::lookup_by_name_local (Identifier *e)
 {
   // Temporary hack to disallow 'fixed' without 
   // implementing all the classes for it.
   UTL_String arg (e->get_string ());
-  UTL_String test("fixed");
+  UTL_String test ("fixed");
   if (arg.compare (&test))
-    return 0;
+    return NULL;
 
   UTL_ScopeActiveIterator *i = 
     new UTL_ScopeActiveIterator (this,
                                  UTL_Scope::IK_both);
   AST_Decl *d;
-  AST_InterfaceFwd *fwd;
 
   // Iterate over this scope
   while (!(i->is_done ())) 
@@ -907,55 +861,24 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           continue;
         }
 
-      long equal = 0;
+      if (e->case_compare (item_name)) 
+        {
+          delete i;
 
-      if (scope_offset == 0)
-        {
-          equal = e->case_compare (item_name);
-        }
-      else
-        {
-          // If d is an argument in some other scope,
-          // whether or not it matches e is irrelevant,
-          // and can only cause problems if it does.
-          if (d->node_type () != AST_Decl::NT_argument)
+          // Special case for forward declared interfaces. 
+          // Look through the forward declaration and retrieve 
+          // the full definition.
+          if (d->node_type () == AST_Decl::NT_interface_fwd) 
             {
-              equal = e->compare (item_name);
+              d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
             }
+
+          return d;
         }
 
-      if (equal) 
-        {
-          if (index == 0) 
-            {
-              delete i;
-
-              // Special case for forward declared interfaces. 
-              // Look through the forward declaration and retrieve 
-              // the full definition.
-              if (d->node_type () == AST_Decl::NT_interface_fwd) 
-                {
-                  fwd = AST_InterfaceFwd::narrow_from_decl (d);
-
-                  if (fwd == NULL)
-                    {
-                      d = NULL;
-                    }
-                  else
-                    {
-                      d = fwd->full_definition ();
-                    }
-                }
-
-              return d;
-            }
-          else 
-            {
-              index--;
-            }
-        }
       i->next ();
     }
+
   delete i;
 
   // OK, not found, return NULL
@@ -968,9 +891,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 AST_Decl *
 UTL_Scope::lookup_by_name (UTL_ScopedName *e, 
                            idl_bool treat_as_ref,
-                           idl_bool in_parent,
-                           long start_index,
-                           long scope_offset)
+                           idl_bool in_parent)
 {
   AST_Decl *d;
   this->matched = I_FALSE;
@@ -993,7 +914,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           return NULL;
         }
 
-      t = d->defined_in();
+      t = d->defined_in ();
 
       // If this is the global scope..
       if (t == NULL) 
@@ -1001,9 +922,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           // Look up tail of name starting here
           d = lookup_by_name ((UTL_ScopedName *) e->tail (), 
                               treat_as_ref,
-                              in_parent,
-                              start_index,
-                              scope_offset);
+                              in_parent);
 
           // Now return whatever we have
           return d;
@@ -1012,9 +931,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       // OK, not global scope yet, so simply iterate with parent scope
       d = t->lookup_by_name (e, 
                              treat_as_ref,
-                             in_parent,
-                             start_index,
-                             scope_offset + 1);
+                             in_parent);
 
       // If treat_as_ref is true and d is not NULL, add d to
       // set of nodes referenced here
@@ -1031,69 +948,10 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
   // The name does not start with "::"
   // Is name defined here?
-  long index = start_index;
 
   while (1) 
     {
-      d = lookup_by_name_local (e->head (), 
-                                treat_as_ref, 
-                                index, 
-                                scope_offset);
-
-      // If we have popped up to a parent scope, we
-      // must check the other children, if we haven't 
-      // had any luck so far.
-      if (d == NULL && scope_offset > 0)
-        {
-          UTL_ScopeActiveIterator *iter = 
-            new UTL_ScopeActiveIterator (this,
-                                         UTL_Scope::IK_both);
-
-          while (!iter->is_done ()) 
-            {
-              d = iter->item ();
-              UTL_Scope *t = DeclAsScope (d);
-              if (t == NULL)
-                {
-                  d = NULL;
-                }
-              else
-                {
-                  AST_Interface *i = 
-                    AST_Interface::narrow_from_scope (t);
-                  if (i == NULL || i->is_defined ())
-                    {
-                      d = t->lookup_by_name (e,
-                                             treat_as_ref,
-                                             0,
-                                             0,
-                                             scope_offset - 1);
-                    }
-                  else
-                    {
-                      d = NULL;
-                    }
-
-                  if (d != NULL)
-                    {
-                      this->matched = t->matched;
-
-                      if (this->matched == I_TRUE)
-                        {
-                          return d;
-                        }
-                      else
-                        {
-                          break;
-                        }
-                    }
-                }
-
-              iter->next ();
-            }
-
-          delete iter;
-        }
+      d = lookup_by_name_local (e->head ());
 
       if (d == NULL) 
         {
@@ -1115,7 +973,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
               if (d != NULL) 
                 {
-                  t = d->defined_in();
+                  t = d->defined_in ();
 
                   if (t == NULL)
                     {
@@ -1125,9 +983,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                     {
                       d = t->lookup_by_name (e, 
                                              treat_as_ref, 
-                                             in_parent, 
-                                             0, 
-                                             scope_offset + 1);
+                                             in_parent);
                     }
                 }
             }
@@ -1151,40 +1007,35 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                   id = e->head ();
                 }
 
-              // All the stuff below needs to be done while we are
-              // in the scope we started with.  
-              if (scope_offset == 0)
+              // If we have stripped e to the last component, then
+              // add it - the last component of a scoped name is
+              // the only one that counts as a reference in a scope.
+              if (id == e->last_component ())
                 {
-                  // If we have stripped e to the last component, then
-                  // add it - the last component of a scoped name is
-                  // the only one that counts as a reference in a scope.
-                  if (id == e->last_component ())
+                  add_to_referenced (d, 
+                                     I_FALSE,
+                                     id);
+                }
+
+              AST_Type *t = AST_Type::narrow_from_decl (d);
+
+              // Are we a type, rather than an identifier?
+              if (t != NULL)
+                {
+                  UTL_Scope *s = ScopeAsDecl (this)->defined_in ();
+
+                  if (s != NULL)
                     {
-                      add_to_referenced (d, 
-                                         I_FALSE,
-                                         id);
-                    }
+                      AST_Decl *parent = ScopeAsDecl (s);
 
-                  AST_Type *t = AST_Type::narrow_from_decl (d);
-
-                  // Are we a type, rather than an identifier?
-                  if (t != NULL)
-                    {
-                      UTL_Scope *s = ScopeAsDecl (this)->defined_in ();
-
-                      if (s != NULL)
+                      // If the scope we are defined in is itself inside
+                      // an interface or valuetype, then we should also
+                      // be exported to the interface (or valuetype) scope.
+                      if (parent->node_type () == AST_Decl::NT_interface)
                         {
-                          AST_Decl *parent = ScopeAsDecl (s);
-
-                          // If the scope we are defined in is itself inside
-                          // an interface or valuetype, then we should also
-                          // be exported to the interface (or valuetype) scope.
-                          if (parent->node_type () == AST_Decl::NT_interface)
-                            {
-                              s->add_to_referenced (d,
-                                                    I_FALSE,
-                                                    d->local_name ());
-                            }
+                          s->add_to_referenced (d,
+                                                I_FALSE,
+                                                d->local_name ());
                         }
                     }
                 }
@@ -1196,14 +1047,8 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
       // OK, start of name is defined. Now loop doing local lookups
       // of subsequent elements of the name.
-      if (this->matched == I_FALSE)
-        {
-          d = iter_lookup_by_name_local (d, 
-                                         e, 
-                                         treat_as_ref, 
-                                         scope_offset,
-                                         this);
-        }
+      d = iter_lookup_by_name_local (d, 
+                                     e);
 
       // If treat_as_ref is true and d is not NULL, add d to
       // set of nodes referenced here
@@ -1215,12 +1060,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
 
       // All OK, name fully resolved
-      if ( d != NULL ) 
-        {
-          return d;
-        }
-
-      else index++ ;
+      return d;
     }
 }
 
@@ -1482,7 +1322,7 @@ UTL_Scope::add_to_local_types(AST_Decl *e)
     for (i = 0; i < olocals_allocated; i++)
       tmp[i] = pd_local_types[i];
 
-    delete []pd_local_types;
+    delete [] pd_local_types;
 
     pd_local_types = tmp;
   }

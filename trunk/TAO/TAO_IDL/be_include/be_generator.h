@@ -93,7 +93,9 @@ public:
                             UTL_ScopedName *n,
                             UTL_StrList *p);
 
-  virtual AST_Module    *create_module(UTL_ScopedName *n, UTL_StrList *p);
+  virtual AST_Module    *create_module(UTL_Scope *s,
+                                       UTL_ScopedName *n, 
+                                       UTL_StrList *p);
   virtual AST_Interface *create_interface(UTL_ScopedName *n,
                                           AST_Interface **ih,
                                           long nih,

@@ -96,7 +96,7 @@ public:
   UTL_String (UTL_String *s);
   // construct using a pointer to UTL_String
 
-  virtual ~UTL_String (void) {}
+  virtual ~UTL_String (void);
   // destructor
 
   // =AST Dumping

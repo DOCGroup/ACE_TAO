@@ -214,7 +214,7 @@ AST_Argument *AST_Operation::fe_add_argument(AST_Argument *t)
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_by_name_local(t->local_name(), I_FALSE)) != NULL) {
+  if ((d = lookup_by_name_local(t->local_name())) != NULL) {
     if (!can_be_redefined(d)) {
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
       return NULL;
