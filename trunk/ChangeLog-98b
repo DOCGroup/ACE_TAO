@@ -1,3 +1,11 @@
+1998-11-29  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/007/page09.html: 
+	Added warnings about a possible core dump when an event handler
+	exists in the thread pool's message queue after the handler has
+	been destroyed.  Jeff Donner's <JDonner@schedsys.com> work with
+	Tutorial 007 on Win32 lead to this discovery.
+
 Sat NOv 28 20:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/DLL/Today.cpp:

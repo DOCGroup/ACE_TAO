@@ -53,8 +53,29 @@ to include it here.
 <LI>
 <A HREF="fix.Makefile">fix.Makefile</A></LI>
 </UL>
-&nbsp;
-
+<P>
+<HR WIDTH="100%">
+<P>
+<center><h2>Danger, Warning!</h2></center>
+Now that I've gone through all of this to create a thread pool server, 
+I have to point out that this isn't exactly the best or safest way to
+do so.  The biggest danger we face with this approach is the
+possibility of an event handler existing in the thread pool's message
+queue <i>after</i> it has been deleted.  When the thread's svc()
+method attempts to invoke <i>handle_input()</i> you will get a nasty
+core dump.
+<p>
+The safest way to handle the situation is to use reference-counted
+pointers everywhere a Client_Handler pointer would be used.  That's
+beyond the scope of the tutorial but I encourage you to give it a
+try.  If you want to contribute that back as an enhanced Tutorial,
+I'll be glad to include it.
+<p>
+Another approach that should work quite well is to use the
+ACE_TP_Reactor instead of just ACE_Reactor.  This takes a little more
+setup but results in a cleaner implementation.  Again, I've not had
+time to develop a Tutorial on the TP_Reactor but would welcome any
+contributions.
 <P>
 <HR WIDTH="100%">
 <CENTER>[<A HREF="..">Tutorial
