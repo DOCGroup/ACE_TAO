@@ -2624,9 +2624,9 @@ namespace
 
           Traversal::Defines no_include_inherit_defines;
           event_type_factories.edge_traverser (no_include_inherit_defines);
-//          PrivateExistsEmitter priv_emitter (this);
+          PrivateExistsEmitter priv_emitter (this);
           FactoryExistsEmitter factory_emitter (this);
-//          no_include_inherit_defines.node_traverser (priv_emitter);
+          no_include_inherit_defines.node_traverser (priv_emitter);
           no_include_inherit_defines.node_traverser (factory_emitter);
 
           consumer.traverse (c);
@@ -2711,8 +2711,8 @@ namespace
     private:
       RegisterValueFactoryEmitter* r_;
     };
-/*    
-    struct PrivateExistsEmitter : Traversal::PrivateMember
+    
+    struct PrivateExistsEmitter : Traversal::ValueTypePrivateMember
     {
       PrivateExistsEmitter (RegisterValueFactoryEmitter* r)
         : r_ (r)
@@ -2720,7 +2720,7 @@ namespace
       }
       
       virtual void
-      traverse (SemanticGraph::PrivateMember&)
+      traverse (Type&)
       {
         r_->factory_gen_off ();
       }
@@ -2728,7 +2728,7 @@ namespace
     private:
       RegisterValueFactoryEmitter* r_;
     };
-*/
+
     struct PortTablePopulator : Traversal::ProviderData,
                                 Traversal::UserData,
                                 Traversal::PublisherData,

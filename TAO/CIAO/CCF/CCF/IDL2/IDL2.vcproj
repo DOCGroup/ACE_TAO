@@ -642,6 +642,9 @@
 				<File
 					RelativePath=".\Traversal\ValueType.hpp">
 				</File>
+				<File
+					RelativePath=".\Traversal\ValueTypeMember.hpp">
+				</File>
 			</Filter>
 			<Filter
 				Name="Template Files"
@@ -654,6 +657,9 @@
 				</File>
 				<File
 					RelativePath=".\Traversal\Operation.tpp">
+				</File>
+				<File
+					RelativePath=".\Traversal\ValueTypeMember.tpp">
 				</File>
 			</Filter>
 		</Filter>

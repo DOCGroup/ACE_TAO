@@ -1,3 +1,15 @@
+Wed Mar 23 19:45:32 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/IDL2/IDL2.vcpoj:
+        
+          Added more new files to the project, ValueTypeMember.hpp and
+          ValueTypeMember.tpp in IDL2/Traversal.
+          
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Restored backend code that was commented out until frontend
+          support for traversal of valuetype/eventtype members was added.
+
 Wed Mar 23 13:00:32 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Any_Handler.cpp
