@@ -1,0 +1,44 @@
+Sat Aug  2 12:07:43 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Started to integrate the code into a more ACE-like style, e.g.,
+ 	  added a the "asnmp/" prefix to all the header files so that we
+ 	  don't need to play games with the -I flags and so we can always
+ 	  know where we're getting the headers from.
+
+Sat Jul  5 19:13:30 1997  Mike MacFaden  (mrm@mrm-ss20)
+
+        * unpacked snmp++.tar.Z into ACE_wrappers, remove X11 support. If
+ 	  you need GUI support in a communications package, something's
+ 	  wrong, very wrong....
+
+	* Change HP-UX Makefiles to use ACE makefile system
+
+	* Change includes to use ACE OS Adaption Layer
+
+	* change all OS calls to use ACE_OS:: versions
+
+	* Add ACE_TRACE macros to all functions.
+
+	* clean up the global namespace by puting all global functions
+ 	  into C++ classes as static member functions and make public only
+ 	  those that are used (uxsnmp.cpp, eventlist.cpp)
+
+	* create README from readme.txt, COPYRIGHT files.
+
+	* create tests/ directory rename ConsoleExamples to examples
+
+	* cull out dead code modules and dump them into misc dir:
+ 	  oidname.cpp, ipresolv.cpp
+
+	* ipresolv.cpp had broken hostname buffer size (200), when DNS has
+ 	  aways defined a max FQDN as 256...go figure.
+
+	* add General Error handler since existing ones are not very
+ 	  useful in and of themselves.
+
+	* change all _DEF to DEF_ since _ANYTHING is reserved for compiler
+ 	  writer namespace, NOT app writer
+
+	* convert cmu code to use C++ new/delete from malloc/free so
+ 	  entire library uses C++ new constructor
+
