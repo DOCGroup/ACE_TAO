@@ -75,6 +75,12 @@ TAO_Dynamic_Adapter::create_exception_list (CORBA::ExceptionList_ptr &,
 {
 }
 
+void 
+TAO_Dynamic_Adapter::create_unknown_user_typecode (CORBA::TypeCode_ptr &,
+                                                   CORBA::Environment &)
+{
+}
+
 // ***********************************************************************
 
 // Implementation of the CORBA::is_nil and CORBA::release methods for

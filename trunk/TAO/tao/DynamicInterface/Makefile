@@ -29,7 +29,8 @@ CPP_SRCS += \
 	Dynamic_Implementation \
 	ExceptionList \
 	Request \
-	Server_Request
+	Server_Request \
+        Unknown_User_Exception
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))

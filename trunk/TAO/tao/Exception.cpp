@@ -4,12 +4,15 @@
 // on all of these data structures.
 
 #include "ace/streams.h"
+#include "ace/Dynamic_Service.h"
 #include "tao/Exception.h"
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/Any.h"
 #include "tao/CDR.h"
 #include "tao/ORB.h"
+#include "tao/ORB_Core.h"
+#include "tao/Dynamic_Adapter.h"
 
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
@@ -216,6 +219,15 @@ CORBA_UserException::_info (void) const
   user_exception_info += "'";
   return user_exception_info;
 }
+
+// ****************************************************************
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnknownUserException, 0)
+TAO_NAMESPACE_END
+
+// ****************************************************************
 
 CORBA_SystemException::CORBA_SystemException (void)
 {
@@ -599,82 +611,6 @@ CORBA_SystemException::_info (void) const
   return info;
 }
 
-CORBA_UnknownUserException::CORBA_UnknownUserException (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0"),
-    exception_ (0)
-{
-}
-
-CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
-  : CORBA_UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0")
-{
-  ACE_NEW (this->exception_,
-           CORBA_Any (ex));
-}
-
-CORBA_UnknownUserException::CORBA_UnknownUserException (
-      const CORBA_UnknownUserException& e)
-  : CORBA_UserException (e._id ())
-{
-  ACE_NEW (this->exception_,
-           CORBA_Any (*e.exception_));
-}
-
-CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
-{
-  delete this->exception_;
-}
-
-CORBA_Any &
-CORBA_UnknownUserException::exception (void)
-{
-  return *this->exception_;
-}
-
-int
-CORBA_UnknownUserException::_is_a (const char *interface_id) const
-{
-  return ((ACE_OS_String::strcmp (
-               interface_id,
-               "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
-          || CORBA_UserException::_is_a (interface_id));
-}
-
-CORBA_UnknownUserException*
-CORBA_UnknownUserException::_downcast (CORBA_Exception *ex)
-{
-  if (ex->_is_a ("IDL:omg.org/CORBA/UnknownUserException:1.0"))
-    return ACE_dynamic_cast (CORBA_UnknownUserException *,
-                             ex);
-  return 0;
-}
-
-void
-CORBA_UnknownUserException::_raise (void)
-{
-  TAO_RAISE (*this);
-}
-
-void
-CORBA_UnknownUserException::_tao_encode (TAO_OutputCDR &,
-                                         CORBA::Environment &ACE_TRY_ENV) const
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void
-CORBA_UnknownUserException::_tao_decode (TAO_InputCDR &,
-                                         CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-CORBA::TypeCode_ptr
-CORBA_UnknownUserException::_type (void) const
-{
-  return CORBA::_tc_UnknownUserException;
-}
-
 // Note that "buffer" holds the (unscoped) name originally, and is
 // then overwritten.
 
@@ -682,51 +618,13 @@ void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                                             CORBA::Environment &ACE_TRY_ENV)
 {
-  // Create the TypeCode for the CORBA_UnknownUserException.
+  TAO_Dynamic_Adapter *dynamic_adapter =
+    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
+        TAO_ORB_Core::dynamic_adapter_name ()
+      );
 
-#if defined(ACE_MVS)
-  // @@ We need to use a translator to make sure that all TypeCodes
-  // are stored in ISO8859 form, the problem is that this hack does
-  // not scale as more native sets have to be supported
-
-  ACE_IBM1047_ISO8859 translator;
-  TAO_OutputCDR stream (0,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                        &translator);
-#else
-  TAO_OutputCDR stream (0,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-#endif /* ACE_MVS */
-
-  const char *interface_id =
-    "IDL:omg.org/CORBA/UnknownUserException:1.0";
-  const char *name = "UnknownUserException";
-  const char *field_name = "exception";
-
-  CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
-    || stream.write_string (interface_id) == 0
-    || stream.write_string (name) == 0
-    || stream.write_ulong (1L) == 0
-    || stream.write_string (field_name) == 0;
-  if (result)
-    ACE_THROW (CORBA_INITIALIZE ());
-
-  if (!(stream << CORBA::_tc_any))
-    ACE_THROW (CORBA_INITIALIZE ());
-
-  ACE_NEW_THROW_EX (tcp,
-                    CORBA::TypeCode (CORBA::tk_except,
-                                     stream.length (),
-                                     stream.buffer (),
-                                     1,
-                                     sizeof (CORBA_UserException)),
-                    CORBA_INITIALIZE ());
+  dynamic_adapter->create_unknown_user_typecode (tcp,
+                                                 ACE_TRY_ENV);
 }
 
 void
@@ -880,11 +778,6 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 #undef TAO_TC_BUF_LEN
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnknownUserException, 0)
-TAO_NAMESPACE_END
 
 void
 TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
