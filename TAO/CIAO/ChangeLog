@@ -2,7 +2,8 @@ Fri Jun 18 14:39:39 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc: 
 
-	CIAO_Container is added as an "after" dependency for the NodeAppTest_RoundTrip_stub.
+	CIAO_Container is added as an "after" dependency for the
+	NodeAppTest_RoundTrip_stub.
 
 Fri Jun 18 14:14:12 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
