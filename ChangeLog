@@ -1,3 +1,22 @@
+Tue Feb 15 14:33:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/RMCast/Send_Msg/Makefile.am:
+	* examples/TMCast/Member/Makefile.am:
+
+	  Regenerated.
+
+	* examples/RMCast/Send_Msg/Receiver.cpp:
+	* examples/RMCast/Send_Msg/Sender.cpp:
+	* examples/TMCast/Member/member.cpp:
+
+	  Changed <protocols/ace/*.h> to <ace/*.h> so headers are
+	  #included the same regardless of whether they're in the
+	  source tree or installed.
+
+	* examples/TMCast/Member/Member.mpc:
+
+	  Add exename definition so executable is actually built.
+
 Tue Feb 15 13:34:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:

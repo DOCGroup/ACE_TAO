@@ -10,7 +10,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_string.h"
 
-#include "protocols/ace/TMCast/Group.hpp"
+#include "ace/TMCast/Group.hpp"
 
 class Args {};
 
