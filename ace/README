@@ -139,7 +139,10 @@ ACE_THREAD_MANAGER_USES_SAFE_SPAWN      Disable the "check before lock" feature
 ACE_HAS_GNUG_PRE_2_8                    Compiling with g++ prior to
                                         version 2.8.0.
 ACE_HAS_PRIOCNTL                        OS has priocntl (2).
-ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive (e.g., Win32)
+ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive
+                                        (e.g., Win32)
+ACE_HAS_NONRECURSIVE_MUTEXES            In addition to recursive mutexes,
+                                        platform has non-recursive ones also.   
 ACE_HAS_RECV_TIMEDWAIT                  Platform has the MIT pthreads
                                         APIs for
 ACE_HAS_RECVFROM_TIMEDWAIT              timed send/recv operations
