@@ -61,7 +61,7 @@ endif
 #----------------------------------------------------------------------------
 
 
-libTest_Output.$(SOEXT): Test_Output.cpp test_config.h
+libTest_Output.$(SOEXT): Test_Output.cpp test_$(ACE_PLATFORM_CONFIG)
 	@$(MAKE) -f Makefile.Test_Output
 
 libFramework_Component_DLL.$(SOEXT): Framework_Component_DLL.cpp Framework_Component_DLL.h
