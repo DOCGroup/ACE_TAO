@@ -312,7 +312,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
     }
   TAO_ENDTRY;
 
-  ACE_NOTREACED (return 0);
+  ACE_NOTREACHED (return 0);
 }
 
 // Allows the client to create a new TAO_PropertySetDef with specific
