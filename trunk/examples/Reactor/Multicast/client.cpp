@@ -3,19 +3,19 @@
 // This program reads in messages from stdin and sends them to a
 // Log_Wrapper.
 
-
 #include "ace/Get_Opt.h"
-
 #include "Log_Wrapper.h"
 
-const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
+// Multi-cast address.
+static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 
-const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
+// UDP port.
+static const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
-// maximum message size
-static int max_message_size = BUFSIZ * 20;
+// Maximum message size.
+static int max_message_size = BUFSIZ;
 
-// number of times to send message of max_message_size
+// Number of times to send message of max_message_size.
 static int iterations = 0;
 
 static void
@@ -23,7 +23,8 @@ parse_args (int argc, char *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt getopt (argc, argv, "m:ui:", 1); // Start at argv[1]
+  // Start at argv[1]
+  ACE_Get_Opt getopt (argc, argv, "m:ui:", 1); 
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -37,7 +38,9 @@ parse_args (int argc, char *argv[])
       case 'u':
         // usage fallthrough
       default:
-        ACE_ERROR ((LM_ERROR, "%n: -m max_message_size (in k) -i iterations\n%a", 1));
+        ACE_ERROR ((LM_ERROR, 
+		    "%n: -m max_message_size (in k) -i iterations\n%a", 
+		    1));
         /* NOTREACHED */
       }
 }
@@ -49,57 +52,65 @@ main (int argc, char **argv)
 
   parse_args (argc,argv);
 
-  ACE_DEBUG ((LM_DEBUG, "Max Buffer size = %d\n", max_message_size));
+  ACE_DEBUG ((LM_DEBUG, "max buffer size = %d\n", max_message_size));
 
   // Instantiate a log wrapper for logging
   Log_Wrapper log;
 
-  // make a connection to a logger via orbixd
+  // Make a connection to a logger.
   if (log.open (UDP_PORT, MCAST_ADDR) == -1)
-    ACE_OS::perror ("connect failed"), ACE_OS::exit (1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "open"), -1);
 
   char *buf;
-  
-  ACE_NEW_RETURN (buf, char[::max_message_size], -1);
+  ACE_NEW_RETURN (buf, char[max_message_size], -1);
 
   // If -i has been specified, send max_message_size messages
   // iterations number of times.
   if (iterations)
     {
-      ACE_OS::memset (buf,1,::max_message_size);
+      ACE_OS::memset (buf, 1, max_message_size);
+
       while (iterations--)
         if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
-          perror("log failed."), exit(1);
+	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log"), -1);
     }
 
   // otherwise, a file has been redirected, or give prompts
   else
     {
-      // If a file has been redirected, don't activate user prompts
+      // If a file has been redirected, don't activate user prompts.
       if (ACE_OS::isatty (0))
         user_prompt = 1;
       else
         user_prompt = 0;
       
-      int nbytes;
-      // continually read messages from stdin and log them.
-      while (1) 
+      // Continually read messages from stdin and log them.
+
+      for (int count = 1;;)
         {
           if (user_prompt)
             ACE_DEBUG ((LM_DEBUG, "\nEnter message ('Q':quit):\n"));
+
+	  ssize_t nbytes = ACE_OS::read (ACE_STDIN, buf, max_message_size);
+
+          if (nbytes <= 0)
+            break; // End of file or error.
+          buf[nbytes - 1] = '\0';
           
-          if ((nbytes = read (0, buf, max_message_size)) == 0)
-            break; // end of file
-          buf[nbytes-1] = '\0';
-          
-          // quitting?
-          if (buf[0] == 'Q')
-            break;
-          
-          // send the message to the logger
-          else if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
-            perror("log failed."), exit(1);
-        } // while(1)
+          // Quitting?
+          if (user_prompt)
+	    {
+	      if (buf[0] == 'Q' || buf[0] == 'q')
+		break;
+	    }
+	  else // Keep from overrunning the receiver.
+	    ACE_OS::sleep (1);
+
+          // Send the message to the logger.
+          if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
+	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log_message"), -1);
+	  ACE_DEBUG ((LM_DEBUG, "finished sending message %d\n", count++));
+        } 
     }
 
   ACE_DEBUG ((LM_DEBUG, "Client done.\n"));

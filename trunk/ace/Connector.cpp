@@ -123,6 +123,7 @@ ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *reactor)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::open");
   this->reactor_ = reactor;
+  this->closing_ = 0;
   return 0;
 }
 
@@ -442,9 +443,15 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_close");
 
-  if (this->reactor_ != 0)
+  if (this->reactor_ != 0 && this->closing_ == 0)
     {
-      // Remove all timer objects from the Reactor's Timer_Queue.
+      // We're closing down now, so make sure not to call ourselves
+      // recursively via other calls to handle_close() (e.g., from the
+      // Timer_Queue).
+      this->closing_ = 1;
+
+      // Remove all timer objects associated with <this> object from
+      // the <Reactor>'s Timer_Queue.
       this->reactor_->cancel_timer (this);
 
       MAP_ITERATOR mi (this->handler_map_);

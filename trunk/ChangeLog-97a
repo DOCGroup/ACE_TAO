@@ -1,5 +1,23 @@
 Sat Mar 22 12:06:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/Reactor/Multicast: Improved the multicast client and
+ 	  server programs to work better.
+
+	* ace/Connector.cpp: Modified the ACE_Connector::handle_close()
+ 	  method to prevent recursive calls to itself.  Thanks to Paul Han
+ 	  <phan@CCGATE.HAC.COM> for reporting this.
+
+	* ace/Svc_Handler.cpp: Put the check (closing_ == 0) in the
+ 	  destructor as well as in the destroy() method.  This prevents a
+ 	  possible core dump when the timer exists.  The instruction
+ 	  reactor::remove_handler in the shutdown method currently will be
+ 	  called twice when ACE_Svc_Handler object is being deleted.  Core
+ 	  dump occurs when it tries to execute ACE_Reactor::remove_handler
+ 	  method the second time because the ACE_Svc_Handler object
+ 	  pointer has already been deleted by the previous instruction
+ 	  ACE_Reactor::cancel_timer.  Thanks to Paul Han
+ 	  <phan@CCGATE.HAC.COM> for reporting this.
+
 	* ace/OS.cpp: Added new thread-safe implementations of writev()
  	  and readv() for platforms that lack these functions.
 
