@@ -9,6 +9,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
 const char *ACE_Log_Record::priority_names_[] = 
 {
+  "<none>",
   "LM_SHUTDOWN",
   "LM_TRACE",
   "LM_DEBUG",

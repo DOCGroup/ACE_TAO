@@ -3916,8 +3916,9 @@ private:
 
   ACE_Thread_Descriptor *thr_desc_;
   // Optional thread descriptor.  Passing this pointer in will force
-  // the spawned thread to cache this location in Log_Msg and wait until
-  // Thread_Manager fills in all information in thread descriptor.
+  // the spawned thread to cache this location in <Log_Msg> and wait
+  // until <Thread_Manager> fills in all information in thread
+  // descriptor.
 
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
   ostream *ostream_;

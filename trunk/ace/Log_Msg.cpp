@@ -502,7 +502,10 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
       && ACE_BIT_ENABLED (flags, ACE_Log_Msg::STDERR) == 0)
     ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
 
-  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE))
+  // VERBOSE takes precedence over VERBOSE_LITE...
+  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE_LITE))
+    ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE_LITE);
+  else if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE))
     ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE);
 
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::OSTREAM))

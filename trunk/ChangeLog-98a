@@ -1,5 +1,9 @@
 Mon Apr 13 19:19:13 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.cpp (invoke): We were incorrectly deleting this and then
+ 	  using one of its fields!  Thanks to the ever-vigilant Russ
+ 	  Noseworthy <rnosewor@objectsciences.com> for reporting this.
+
 	* ace/Log_Record.cpp (print): Added VERBOSE_LITE support to the
  	  code so we don't spew out quite so much information.
 

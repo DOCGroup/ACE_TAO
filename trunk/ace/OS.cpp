@@ -1712,67 +1712,75 @@ ACE_Thread_Adapter::invoke (void)
   // Extract the arguments.
   ACE_THR_FUNC func = this->user_func_;
   void *arg = this->arg_;
+  ACE_Thread_Descriptor *thr_desc = this->thr_desc_;
 
-  // Delete ourselves since we don't need <this> anymore.
+  // Delete ourselves since we don't need <this> anymore.  Make sure
+  // not to access <this> anywhere below this point.
   delete this;
 
   void *status = 0;
 
-  ACE_SEH_TRY {
-    ACE_SEH_TRY {
-      status = (void*) (*func) (arg);  // Call thread entry point.
-    }
-
-    ACE_SEH_FINALLY {
-      // Call the Task->close () hook.
-      if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
+  ACE_SEH_TRY 
+    {
+      ACE_SEH_TRY 
         {
-          ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
-          ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
-
-          // This calls the Task->close () hook.
-          task_ptr->cleanup (task_ptr, 0);
-
-          // This prevents a second invocation of the cleanup code (called
-          // later by ACE_Thread_Manager::exit()).
-          thr_mgr_ptr->at_exit (task_ptr, 0, 0);
+          // Call thread entry point.
+          status = (void*) (*func) (arg);  
         }
+
+      ACE_SEH_FINALLY 
+        {
+          // Call the <Task->close> hook.
+          if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
+            {
+              ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
+              ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
+
+              // This calls the Task->close () hook.
+              task_ptr->cleanup (task_ptr, 0);
+
+              // This prevents a second invocation of the cleanup code
+              // (called later by <ACE_Thread_Manager::exit>.
+              thr_mgr_ptr->at_exit (task_ptr, 0, 0);
+            }
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-      int using_afx = -1;
-      if (this->thr_desc_->flags ())
-        using_afx = ACE_BIT_ENABLED (this->thr_desc_->flags (), THR_USE_AFX);
+          int using_afx = -1;
+          if (thr_desc->flags ())
+            using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
-      // Call TSS destructors.
-      ACE_OS::cleanup_tss (0 /* not main thread */);
+          // Call TSS destructors.
+          ACE_OS::cleanup_tss (0 /* not main thread */);
 
 # if defined (ACE_WIN32)
-      // Exit the thread.
-      // Allow CWinThread-destructor to be invoked from AfxEndThread.
-      // _endthreadex will be called from AfxEndThread so don't exit the
-      // thread now if we are running an MFC thread.
+          // Exit the thread.  Allow CWinThread-destructor to be
+          // invoked from AfxEndThread.  _endthreadex will be called
+          // from AfxEndThread so don't exit the thread now if we are
+          // running an MFC thread.
 #  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-      if (using_afx != -1)
-        {
-          if (using_afx)
-            ::AfxEndThread ((DWORD)status);
+          if (using_afx != -1)
+            {
+              if (using_afx)
+                ::AfxEndThread ((DWORD)status);
+              else
+                ::_endthreadex ((DWORD) status);
+            }
           else
-            ::_endthreadex ((DWORD) status);
-        }
-      else
-        {
-          // Not spawned by ACE_Thread_Manager, use the old buggy version.
-          // You should seriously consider using ACE_Thread_Manager to spawn threads.
-          // The following code is know to cause some problem.
-          CWinThread *pThread = ::AfxGetThread ();
-          if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-            ::_endthreadex ((DWORD) status);
-          else
-            ::AfxEndThread ((DWORD)status);
-        }
+            {
+              // Not spawned by ACE_Thread_Manager, use the old buggy
+              // version.  You should seriously consider using
+              // ACE_Thread_Manager to spawn threads.  The following
+              // code is know to cause some problem.
+              CWinThread *pThread = ::AfxGetThread ();
+
+              if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
+                ::_endthreadex ((DWORD) status);
+              else
+                ::AfxEndThread ((DWORD)status);
+            }
 #  else
-      ::_endthreadex ((DWORD) status);
+          ::_endthreadex ((DWORD) status);
 #  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 
@@ -1780,22 +1788,23 @@ ACE_Thread_Adapter::invoke (void)
 
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
-      return status;
+          return status;
+        }
     }
-  }
 #if defined (ACE_WIN32)
-  ACE_SEH_EXCEPT (this->rethrow_w32_structural_exception ()) {
-    // Here's where we might want to provide a hook to report this...
-    // As it stands now, we just rethrow all Win32 structured exceptions
-    // and report the situation.  It is up to application programmers to
-    // determine what to do.
-  }
+  ACE_SEH_EXCEPT (this->rethrow_w32_structural_exception ()) 
+    {
+      // Here's where we might want to provide a hook to report
+      // this...  As it stands now, we just rethrow all Win32
+      // structured exceptions and report the situation.  It is up to
+      // application programmers to determine what to do.
+    }
 #endif /* ACE_WIN32 */
 }
 
 #if defined (ACE_WIN32)
 int
-ACE_Thread_Adapter::rethrow_w32_structural_exception ()
+ACE_Thread_Adapter::rethrow_w32_structural_exception (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) Win32 structured exception exiting thread\n")));
