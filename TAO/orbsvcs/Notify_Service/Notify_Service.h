@@ -18,7 +18,6 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 
 class Notify_Service
 {
@@ -67,7 +66,7 @@ protected:
   const char* notify_factory_name_;
   // The Factory name.
 
-  TAO_Notify_EventChannelFactory_i notify_factory_;
+  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
   // The Factory.
 
   CORBA::ORB_var orb_;
