@@ -15,17 +15,21 @@
 
 # if __GNUC_MINOR__ == 7
     // The g++ that's distributed with LynxOS 3.0.0 needs this.
+    // It won't hurt with 2.5.0.
 #   undef ACE_HAS_TEMPLATE_SPECIALIZATION
+# elif __LYNXOS_SDK_VERSION <= 199603L
+    // If ACE_HAS_STRING_CLASS is used with LynxOS 3.0.0, some
+    // executables, such as IOStream_Test, require linking with
+    // libg++.
+#   define ACE_HAS_STRING_CLASS
 # endif /* __GNUC_MINOR__ == 7 */
 #endif /* __GNUG__ */
 
 #if defined (__x86__)
+  // PowerPC libraries don't seem to have alloca ()
 # define ACE_HAS_ALLOCA
 # define ACE_HAS_ALLOCA_H
-// ppc libraries don't seem to have alloca ()
 #endif /* x86 */
-
-#define ACE_HAS_STRING_CLASS
 
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
