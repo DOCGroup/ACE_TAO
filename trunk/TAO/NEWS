@@ -1,0 +1,65 @@
+USER VISIBLE CHANGES BETWEEN TAO-1.3.6 and TAO-1.4
+==================================================
+
+IDL COMPILER:
+-------------
+. Fixed bug related to the order of #pragma prefix and #include
+  directives
+
+. Fixed bug in generation of copy constructor for AMH interface
+  classes.
+
+. Fixed incorrect handling of a parameter name in an AMI sendc_xxx
+  operation that clashes with a C++ keyword.
+
+. Readded the generation of _unchecked_narrow () back into the stub
+  code since it is required by the latest OMG CORBA specification.
+
+CORE ORB 
+-------
+
+. SCIOP endpoints are not created by default. They need explicit
+  specification of -ORBEndpoint sciop:// at startup.
+
+. Fixed a bug that caused the ORB to dump a core when server side
+  interceptors returns an exception and if the operartion parameters
+  contains a sequence an out parameter. 
+
+. Fixed a bug that caused extraction of basic data types that are
+  aliased from an Any.
+
+. Added a couple of regerssions tests for some of AMH features.
+
+. Lots of other bug fixes (see the bottom of this message for a
+  complete list of bugzilla bugids fixed in this beta).
+
+. Fixed a problem with dynamic loading of the ORB. This was introduced
+  by "magic" static constructors in the TAO PortableServer headers
+  where dynamic loading/unloading of the ORB failed.
+
+. Added an option, -ORBDisableRTCollocation which allows users to
+  disable the RT collocation technique used by TAO and fallback on the
+  default collocation technique used for the vanilla ORB. 
+
+. Prevent the TP_Reactor used within TAO from exiting when it receives
+  a EINTR during select ().
+
+ORB SERVICES
+------------
+
+. Added new security variable so that libTAO_Security could be built
+  independently of libTAO_SSLIOP, and set the default to true. 
+
+. An initial implementation of the FTCORBA spec has been added to
+  TAO. This release features an intial cut of ReplicationManager,
+  FaultNotifier, and a FaultDetector. Please see 
+
+  $TAO_ROOT/orbsvcs/tests/FT_App/README
+
+  for a simple example that uses the different FTCORBA features that
+  have been implemented in TAO. 
+
+. Fixed a bug, in PG_ObjectGroupManager::remove_member () methods
+  which caused the group entry to be available in the location_map
+  when a member of the object group is removed. 
+

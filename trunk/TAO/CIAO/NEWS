@@ -1,0 +1,32 @@
+USER VISIBLE CHANGES BETWEEN CIAO-0.3.6 and CIAO-0.4
+====================================================
+
+. Added Makefiles to build the ciao and tools subdirs by default.
+
+. The suport for the following IDL features have been added to the
+  CIDL since the last beta
+
+  - exception (exception declaration and raises() specification)
+  - valuetype
+  - enum
+  - const declaration
+  - const expression and literals
+  - native
+  - home finder
+  - oneway operation
+  - readonly attribute
+  - type declaration inside interfaces, valuetypes
+  - union
+
+  CIDL doesn't yet support the following features
+
+  - Complete error detection and recovery
+  - Attribute exception specification
+  - Array
+  - Bounded sequence
+  - Fixed type
+  - Floating-point and Fixed-point constant expressions & literal.
+
+  though we plan to add this support over the next several months,
+  depending on user/sponsor needs. 
+
