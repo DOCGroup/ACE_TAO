@@ -1,3 +1,9 @@
+Fri Nov 21 19:59:37 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/IPC_SAP.cpp: 
+	  Added a couple of ACE_NOTREACHED protections. Thanks to Brian
+	  Mendel <bmendel@mdc.com> for reporting this.
+
 Fri Nov 21 17:12:48 1997    <nw1@CHA-CHA>
 
 	* ace/Thread_Manager.cpp (close): Deactivated automatic wait on
