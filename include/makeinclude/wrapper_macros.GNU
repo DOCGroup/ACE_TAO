@@ -161,7 +161,6 @@ endif
 LEX             = flex
 PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
 PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
-RM              = /bin/rm
 VAR             =
 VDIR            = .obj/
 ifndef ACELIB
