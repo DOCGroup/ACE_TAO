@@ -53,6 +53,10 @@ ACE_UNUSED_ARG (VAR);
 } catch (...) {
 #define TAO_ENDTRY }} while (0)
 
+// Use this macro if there's a return statement following TAO_ENDTRY
+// and the statement is the last statement in the function.
+#define TAO_ENDTRY_RETURN(X) TAO_ENDTRY; ACE_NOTREACHED (return X)
+
 // No need to do checking, exception handling does it for us.
 #define TAO_CHECK_ENV
 #define TAO_CHECK_ENV_EX(LABEL)
@@ -152,6 +156,10 @@ if (TAO_TRY_ENV.exception () != 0)
 #define TAO_ENDTRY \
 } while (0); \
 } while (0)
+
+// Use this macro if there's a return statement following TAO_ENDTRY
+// and the statement is the last statement in the function.
+#define TAO_ENDTRY_RETURN(X) TAO_ENDTRY; return X
 
 // If continue is called, control will skip to the next TAO_CATCHANY
 // statement.
