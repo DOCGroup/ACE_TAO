@@ -1,3 +1,11 @@
+Tue Aug 24 21:08:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+	  Had to change the 32-bit enforcing value below to
+	  0x7FFFFFF. Evidently there is at least one version 
+	  of HPUX that doesn't like the 0xFFFFFFFF value. Thanks
+	  to Carlos for pointing this out.
+
 Tue Aug 24 19:09:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Latency/client.cpp:
