@@ -18,37 +18,37 @@ Sun Jun  8 10:10:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sun Jun  8 10:20:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * orbsvcs/orbsvcs/IFRServiceComponentContainer_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceComponentDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceContainer_i.h:
-        * orbsvcs/orbsvcs/IFRServiceEventDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceEventPortDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceExtAbstractInterfaceDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceExtAbstractInterfaceDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceExtAttributeDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceExtAttributeDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceExtInterfaceDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceExtInterfaceDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceExtLocalInterfaceDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceExtLocalInterfaceDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceExtValueDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceExtValueDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceFactoryDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceFactoryDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceFinderDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceFinderDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceHomeDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceHomeDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceIFR_Service_Utils_T.cpp:
-        * orbsvcs/orbsvcs/IFRServiceIFR_Service_Utils_T.h:
-        * orbsvcs/orbsvcs/IFRServiceInterfaceAttrExtension_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceInterfaceAttrExtension_i.h:
-        * orbsvcs/orbsvcs/IFRServiceInterfaceDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceInterfaceDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceOperationDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceOperationDef_i.h:
-        * orbsvcs/orbsvcs/IFRServiceValueDef_i.cpp:
-        * orbsvcs/orbsvcs/IFRServiceValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstractInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FactoryDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/FactoryDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FinderDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/FinderDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
 
 	  Added partial support in the IFR for valuetypes, components, homes
 	  and eventtypes.
