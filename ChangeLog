@@ -1,3 +1,10 @@
+Fri Nov 24 16:58:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/IPC_SAP.cpp:
+
+          WSAEventSelect is not available on Windows CE, so the #ifdefs
+          were changed so it calls ioctl on Windows CE also.
+
 Fri Nov 24 15:43:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* docs/ACE-categories.html:
