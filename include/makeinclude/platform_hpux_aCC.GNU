@@ -95,7 +95,7 @@ else
 endif
 
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W302
+CCFLAGS		+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W302
 
 # If exception support is explicitly disabled, tell the compiler.
 # This is not recommended since the run-time library can throw exceptions.

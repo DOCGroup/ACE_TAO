@@ -2274,7 +2274,7 @@ typedef int ACE_sema_t;
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
-typedef u_int ACE_thread_key_t;
+typedef unsigned int ACE_thread_key_t;
 
 // Ensure that ACE_THR_PRI_FIFO_DEF and ACE_THR_PRI_OTHER_DEF are
 // defined on non-threaded platforms, to support application source
@@ -2550,7 +2550,7 @@ extern "C" int rand_r (ACE_RANDR_TYPE seed);
 // HP-UX 10.x's stdlib.h (long *) doesn't match that man page (u_int *)
 typedef long ACE_RANDR_TYPE;
 #   else
-typedef u_int ACE_RANDR_TYPE;
+typedef unsigned int ACE_RANDR_TYPE;
 #   endif /* HPUX_10 */
 # endif /* ACE_HAS_BROKEN_RANDR */
 
@@ -3087,15 +3087,15 @@ protected:
   int is_signaled_;
 
   /// Number of waiting threads.
-  u_long waiting_threads_;
+  unsigned long waiting_threads_;
 };
 
 struct ACE_OVERLAPPED
 {
-  u_long Internal;
-  u_long InternalHigh;
-  u_long Offset;
-  u_long OffsetHigh;
+  unsigned long Internal;
+  unsigned long InternalHigh;
+  unsigned long Offset;
+  unsigned long OffsetHigh;
   ACE_HANDLE hEvent;
 };
 

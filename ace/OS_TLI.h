@@ -35,7 +35,7 @@ struct t_unitdata { };
 struct t_uderr { };
 struct netbuf { };
 
-# else /* !ACE_WIN32 */
+# else /* !ACE_HAS_TLI */
 
 #   if !defined (ACE_HAS_TLI_PROTOTYPES)
 
