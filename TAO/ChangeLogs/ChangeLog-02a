@@ -1,7 +1,9 @@
 Tue Jun  6 14:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/CurrentC.cpp: Removed smart proxy support since Current is a
-	  local object.
+	* tao/CurrentC.cpp: 
+	* tao/ DomainC.cpp:
+	  Removed smart proxy support since Current and Domain are 
+	  local objects.
 	
 Tue Jun  6 10:19:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
