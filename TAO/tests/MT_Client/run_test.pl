@@ -31,8 +31,7 @@ unlink $iorfile;
 
 $SV = new PerlACE::Process ("server", "-ORBsvcconf $server_conf -ORBdebuglevel $debug_level -o $iorfile");
 $CL = new PerlACE::Process ($client_process, 
-                            "-ORBsvcconf $client_conf "
-                            . "-ORBdebuglevel $debug_level "
+                            "-ORBdebuglevel $debug_level "
                             . "-k file://$iorfile "
                             . "-n $threads -i 1000 -x");
 
