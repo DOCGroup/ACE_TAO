@@ -35,7 +35,7 @@ ACE_Message_Queue_Vx::high_water_mark (void)
 }
 
 ACE_INLINE void
-ACE_Message_Queue_Vx::high_water_mark (size_t hwm)
+ACE_Message_Queue_Vx::high_water_mark (size_t)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::high_water_mark");
   // Don't need to guard, because this is fixed.
@@ -52,7 +52,7 @@ ACE_Message_Queue_Vx::low_water_mark (void)
 }
 
 ACE_INLINE void
-ACE_Message_Queue_Vx::low_water_mark (size_t lwm)
+ACE_Message_Queue_Vx::low_water_mark (size_t)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::low_water_mark");
   // Don't need to guard, because this is fixed.
