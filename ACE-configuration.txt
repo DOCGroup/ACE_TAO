@@ -170,7 +170,7 @@ Contacts
 If you do have problems please e-mail the ACE Configuration Project
 maintainer at:
 
-	Ossama Othman <othman@cs.wustl.edu>
+	Ossama Othman <ossama@uci.edu>
 
 or send mail to the ACE mailing list.
 
