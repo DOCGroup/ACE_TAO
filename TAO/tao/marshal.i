@@ -1,146 +1,146 @@
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Object::TAO_Marshal_Object (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Object::~TAO_Marshal_Object (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Primitive::TAO_Marshal_Primitive (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Primitive::~TAO_Marshal_Primitive (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Any::TAO_Marshal_Any (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Any::~TAO_Marshal_Any (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Principal::TAO_Marshal_Principal (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Principal::~TAO_Marshal_Principal (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_TypeCode::TAO_Marshal_TypeCode (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_TypeCode::~TAO_Marshal_TypeCode (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_ObjRef::TAO_Marshal_ObjRef (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_ObjRef::~TAO_Marshal_ObjRef (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Struct::TAO_Marshal_Struct (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Struct::~TAO_Marshal_Struct (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Union::TAO_Marshal_Union (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Union::~TAO_Marshal_Union (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_String::TAO_Marshal_String (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_String::~TAO_Marshal_String (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Sequence::TAO_Marshal_Sequence (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Sequence::~TAO_Marshal_Sequence (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Array::TAO_Marshal_Array (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Array::~TAO_Marshal_Array (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Alias::TAO_Marshal_Alias (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Alias::~TAO_Marshal_Alias (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Except::TAO_Marshal_Except (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_Except::~TAO_Marshal_Except (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_WString::TAO_Marshal_WString (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Marshal_WString::~TAO_Marshal_WString (void)
 {
 }
 
 // Factory method that returns the appropriate marshal object based on
 // the kind of the typecode.
-ACE_INLINE TAO_Marshal_Object * 
+ACE_INLINE TAO_Marshal_Object *
 TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
                                           CORBA::Environment &env)
 {
@@ -173,7 +173,7 @@ TAO_Marshal_TypeCode::deep_copy (CORBA::TypeCode_ptr,
 				 const void *dest,
 				 CORBA::Environment &)
 {
-  if ((*(CORBA::TypeCode_ptr *) source) != 0) 
+  if ((*(CORBA::TypeCode_ptr *) source) != 0)
     dest = source;
   else
     dest = CORBA::_tc_null;
@@ -190,7 +190,7 @@ TAO_Marshal_ObjRef::deep_copy (CORBA::TypeCode_ptr,
 			       CORBA::Environment &)
 {
   *(CORBA::Object_ptr *) dest = CORBA::Object::_duplicate (*(CORBA::Object_ptr *)
-                                                           source); 
+                                                           source);
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
@@ -236,7 +236,7 @@ TAO_Marshal_TypeCode::deep_free (CORBA::TypeCode_ptr,
                                  const void *,
                                  CORBA::Environment &)
 {
-  if ((*(CORBA::TypeCode_ptr *) source) != 0) 
+  if ((*(CORBA::TypeCode_ptr *) source) != 0)
     (*(CORBA::TypeCode_ptr *) source)->Release ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
@@ -263,7 +263,7 @@ TAO_Marshal_ObjRef::deep_free (CORBA::TypeCode_ptr,
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
-// deep_free for string 
+// deep_free for string
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_String::deep_free (CORBA::TypeCode_ptr,
 			       const void *source,
@@ -271,10 +271,11 @@ TAO_Marshal_String::deep_free (CORBA::TypeCode_ptr,
 			       CORBA::Environment &)
 {
   CORBA::string_free (*(CORBA::String *) source);
+  *(CORBA::String *)source = 0;
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
-// deep_free for wstring 
+// deep_free for wstring
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_WString::deep_free (CORBA::TypeCode_ptr,
 				const void *source,
@@ -282,6 +283,6 @@ TAO_Marshal_WString::deep_free (CORBA::TypeCode_ptr,
 				CORBA::Environment &)
 {
   CORBA::wstring_free (*(CORBA::WString *) source);
+  *(CORBA::WString *)source = 0;
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
-

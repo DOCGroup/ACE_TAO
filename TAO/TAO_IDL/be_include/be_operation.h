@@ -55,14 +55,24 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the operation
 
+  virtual int argument_count (void);
+  // return the count of members
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_operation);
   DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
+  //=helper
   int compute_size_type (void);
   // compute the size type if it is unknown
+
+  int compute_argument_count (void);
+  // count the number of arguments
+
+  int argument_count_;
+  // number of argument
 };
 
 #endif

@@ -28,14 +28,16 @@ public:
   enum TEST_TYPE
   {
     NO_TEST,
-    TEST_SHORT
+    TEST_SHORT,
 #if 0
     TEST_LONG,
     TEST_CHAR,
     TEST_OCTET,
     TEST_FLOAT,
     TEST_DOUBLE,
-    TEST_UNBOUNDED_STRING,
+#endif
+    TEST_UNBOUNDED_STRING
+#if 0
     TEST_BOUNDED_STRING,
     TEST_TYPEDEFED_STRING
 #endif

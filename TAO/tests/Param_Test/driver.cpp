@@ -123,6 +123,7 @@ Driver::run (void)
   // start the test
 
   Options *opt = OPTIONS::instance ();  // get the options object
+  int retstatus = -1;
 
   switch (opt->test_type ())
     {
@@ -133,19 +134,37 @@ Driver::run (void)
                                          this->objref_,
                                          new Test_Short);
         if (opt->invoke_type () == Options::SII)
-          return client->run_sii_test ();
+          retstatus = client->run_sii_test ();
         else
-          return client->run_dii_test ();
+          retstatus = client->run_dii_test ();
+        delete client;
       }
       break;
+    case Options::TEST_UNBOUNDED_STRING:
+      {
+        Param_Test_Client<Test_Unbounded_String> *client = new
+          Param_Test_Client<Test_Unbounded_String> (this->orb_ptr_,
+                                                    this->objref_,
+                                                    new Test_Unbounded_String);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    default:
+      break;
     }
-  return -1; // failure of some kind
+  return retstatus;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class Param_Test_Client<Test_Short>;
+template class Param_Test_Client<Test_Unbounded_String>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
+#pragma instantiate Param_Test_Client<Test_Unbounded_String>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -36,6 +36,12 @@ public:
                                    CORBA::Short_out s3,
                                    CORBA::Environment &env);
   // test for shorts
+
+  virtual char *test_unbounded_string (const char *s1,
+                                       char *&s2,
+                                       CORBA::String_out s3,
+                                       CORBA::Environment &env);
+  // test for unbounded strings
 };
 
 #endif /* if !defined */

@@ -1,3 +1,46 @@
+Wed Dec 24 18:11:08 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_operation, be_state_argument}.cpp: Added
+	"argument_count" method to be_operation which is helpful in
+	creating an NVList of the appropriate size. Previously we were
+	creating an empty list and adding parameters one by one. This was
+	causing a lot of reallocations which were wasteful.
+
+	At this time, we have code base that can successfully send/receive
+	primitive data types as well as strings.
+
+	* TAO_IDL/be_include/be_operation.h : Added a new method called
+	"argument_count" to give us the total number of parameters we
+	have.
+
+	* TAO/tao/{any.cpp, connect.cpp, corbacom.i, decode.cpp,
+	iioporb.cpp, marshal.i, objtable.cpp, optable.cpp, request.cpp}:
+	In all these files, after a call to CORBA::string_free, we made
+	the pointer point to 0. Otherwise, purify was giving us "Free
+	Memory read" errors. Also, this was (by fluke) causing some
+	applications to run successfully.
+
+	* TAO/tao/{nvlist.h, nvlist.cpp, nvlist.i, corba.h}: Added
+	unimplemented methods to NamedValue and NVList. Created a nvlist.i
+	file and updated corba.h
+
+	* TAO/tao/corbacom.cpp: In an assignment operator for Sting_out,
+	we were not checking if the assignment was from ourselves. Also a
+	array was incorrectly being deleted as "delete ..." rather than
+	"delete [] ...".
+
+	* TAO/tao/invoke.cpp: Inside do_call, we were not deleting memory
+	for the "in" part of the inout parameters. Right now we have fixed
+	this problem only for strings. Others will be added as new tests
+	are built. Do_dynamic_call also needs such a fix. NOT DONE in this release.
+
+	* TAO/tao/orb_core.h, orb_core.cpp: ORB_init takes "const char*"
+	orb name as the argument instead of just char*.
+
+	* TAO/tests/Param_Test: Successful in testing
+	"test_unbounded_string". removed a few memory leaks where we were
+	not deleting the client objects.
+
 Tue Dec 23 19:34:40 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.47, released Tue Dec 23 19:34:40 1997.

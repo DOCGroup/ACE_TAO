@@ -428,7 +428,7 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
            i < svr_req.params_->count ();
            i++)
         {
-          CORBA::NamedValue_ptr	nv = svr_req.params_->item (i);
+          CORBA::NamedValue_ptr	nv = svr_req.params_->item (i, env);
           CORBA::Any_ptr any;
 
           if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))

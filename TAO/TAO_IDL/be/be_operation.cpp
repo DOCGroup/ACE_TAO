@@ -25,6 +25,7 @@
  * BE_Operation
  */
 be_operation::be_operation (void)
+  : argument_count_ (-1)
 {
 }
 
@@ -32,9 +33,52 @@ be_operation::be_operation (AST_Type *rt, AST_Operation::Flags fl,
                             UTL_ScopedName *n, UTL_StrList *p)
   : AST_Operation (rt, fl, n, p),
     AST_Decl (AST_Decl::NT_op, n, p),
-    UTL_Scope (AST_Decl::NT_op)
+    UTL_Scope (AST_Decl::NT_op),
+    argument_count_ (-1)
 {
 }
+
+// compute total number of members
+int
+be_operation::compute_argument_count (void)
+{
+  UTL_ScopeActiveIterator *si;  // iterator
+  AST_Decl *d;  // temp node
+
+  this->argument_count_ = 0;
+
+  // if there are elements in this scope
+  if (this->nmembers () > 0)
+    {
+      // instantiate a scope iterator.
+      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+
+      while (!(si->is_done ()))
+        {
+          // get the next AST decl node
+          d = si->item ();
+          if (!d->imported () && d->node_type () == AST_Decl::NT_argument)
+            this->argument_count_++;
+          si->next ();
+        } // end of while
+      delete si; // free the iterator object
+    }
+  return 0;
+}
+
+// return the member count
+int
+be_operation::argument_count (void)
+{
+  if (this->argument_count_ == -1)
+    this->compute_argument_count ();
+
+  return this->argument_count_;
+}
+
+// ----------------------------------------
+//            CODE GENERATION METHODS
+// ----------------------------------------
 
 int
 be_operation::gen_client_header (void)
@@ -552,6 +596,7 @@ be_operation::gen_server_skeletons (void)
       cg->pop ();
     }
 
+#if 0
   // if we have any arguments, get each one of them and allocate an Any and
   // NamedValue for each. In addition, define a variable of that type
   cg->push (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);
@@ -564,17 +609,33 @@ be_operation::gen_server_skeletons (void)
   *ss << "\n";
   cg->pop ();
 
+#endif
+
   // declare an NVList and create one
   ss->indent ();
   *ss << "// create an NV list and populate it with typecodes" << nl;
-  *ss << "_tao_server_request.orb ()->create_list (0, nvlist); // initialize a list" << nl;
+  *ss << "_tao_server_request.orb ()->create_list (" << this->argument_count ()
+      << ", nvlist); // initialize a list" << nl;
 
   // add each argument according to the in, out, inout semantics
-  *ss << "// add each argument according to the in, out, inout semantics" << nl;
   if (this->nmembers () > 0)
     {
-      // if there are elements in this scope
+      *ss << "// add each argument according to the in, out, inout semantics"
+          << nl;
+      // if we have any arguments, insert its typecode and a pointer to storage
+      // for the variable
+      cg->push (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);
+      s = cg->make_state ();
+      if (!s)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_operation::"
+                             "gen_server_skeletons - "
+                             "Bad state\n"),
+                            -1);
+        }
 
+      // if there are elements in this scope
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
@@ -588,8 +649,25 @@ be_operation::gen_server_skeletons (void)
               if (d->node_type () == AST_Decl::NT_argument)
                 {
                   bd = be_argument::narrow_from_decl (d);
+                  if (!bd)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_operation::"
+                                         "gen_server_skeletons - "
+                                         "Bad argument\n"),
+                                        -1);
+                    }
                   bt = be_type::narrow_from_decl (bd->field_type ());
-                  // emit code that adds this argument to the
+                  if (!bt)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_operation::"
+                                         "gen_server_skeletons - "
+                                         "Bad type\n"),
+                                        -1);
+                    }
+                  // emit code that adds this argument to the NVList
+#if 0
                   *ss << "nv_" << bd->local_name () <<
                     " = nvlist->add_value (\"" << bd->local_name () << "\", "
                       << "any_" << bd->local_name () << ", ";
@@ -605,11 +683,21 @@ be_operation::gen_server_skeletons (void)
                       *ss << "CORBA::ARG_OUT, _tao_environment);" << nl;
                       break;
                     }
+#endif
+                  if (s->gen_code (bt, bd) == -1)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_operation::"
+                                         "gen_server_skeletons - "
+                                         "state based code gen failed\n"),
+                                        -1);
+                    }
                 } // end if argument node
             } // end if ! imported
           si->next ();
         } // end of while
       delete si; // free the iterator object
+      cg->pop ();
     } // end of arg list
 
   // parse the arguments
