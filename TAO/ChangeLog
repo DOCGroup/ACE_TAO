@@ -1,3 +1,13 @@
+Fri Nov  5 13:33:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        
+          Added code generation for the override of the const 
+          version of the _downcast() method for user exceptions.
+          Thanks to Simone Viani <sviani@etasistemi.it> for
+          reporting the missing generated method.
+
 Fri Nov  5 10:51:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
