@@ -58,8 +58,7 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -83,8 +82,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -289,8 +287,7 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -314,8 +311,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -561,8 +557,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -731,8 +726,7 @@ realclean: clean
  $(TAO_ROOT)/tao/debug.h
 
 .obj/Client_Worker.o .obj/Client_Worker.so .shobj/Client_Worker.o .shobj/Client_Worker.so: Client_Worker.cpp Client_Worker.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -759,8 +753,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -962,8 +955,7 @@ realclean: clean
  $(TAO_ROOT)/tao/debug.h
 
 .obj/Server_Worker.o .obj/Server_Worker.so .shobj/Server_Worker.o .shobj/Server_Worker.so: Server_Worker.cpp Server_Worker.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -990,8 +982,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1220,8 +1211,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1516,8 +1506,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \

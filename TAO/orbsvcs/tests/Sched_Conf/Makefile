@@ -46,8 +46,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
 .obj/Sched_Conf.o .obj/Sched_Conf.so .shobj/Sched_Conf.o .shobj/Sched_Conf.so: Sched_Conf.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -71,8 +70,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Sched_Params.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -269,8 +267,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \

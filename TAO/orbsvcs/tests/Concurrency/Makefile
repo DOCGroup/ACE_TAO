@@ -106,8 +106,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -131,8 +130,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -298,14 +296,13 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- CC_tests.h CC_naming_service.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i CC_tests.h \
+ CC_naming_service.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -348,8 +345,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/nsconf.h \
- CC_command.h CC_command.tab.h \
- $(TAO_ROOT)/tao/debug.h \
+ CC_command.h CC_command.tab.h $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i
 
@@ -383,8 +379,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -546,8 +541,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -621,8 +615,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -783,8 +776,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -859,8 +851,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1045,8 +1036,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1200,8 +1190,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Concurrency/concurrency_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i
 
-.obj/lex.CC_command.o .obj/lex.CC_command.so .shobj/lex.CC_command.o .shobj/lex.CC_command.so: lex.CC_command.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/lex.CC_command.o .obj/lex.CC_command.so .shobj/lex.CC_command.o .shobj/lex.CC_command.so: lex.CC_command.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1226,8 +1215,8 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i CC_command.h \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ CC_command.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1418,8 +1407,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1580,8 +1568,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -1658,8 +1645,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1820,8 +1806,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \

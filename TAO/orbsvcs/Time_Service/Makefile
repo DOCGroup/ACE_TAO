@@ -77,8 +77,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -102,8 +101,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -276,8 +274,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -358,8 +355,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -383,8 +379,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -557,8 +552,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -635,13 +629,11 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/Timer_Helper.h
 
-.obj/Clerk_i.o .obj/Clerk_i.so .shobj/Clerk_i.o .shobj/Clerk_i.so: Clerk_i.cpp Clerk_i.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/Clerk_i.o .obj/Clerk_i.so .shobj/Clerk_i.o .shobj/Clerk_i.so: Clerk_i.cpp Clerk_i.h $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -665,8 +657,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -839,8 +830,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -927,8 +917,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -952,8 +941,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1126,8 +1114,7 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \

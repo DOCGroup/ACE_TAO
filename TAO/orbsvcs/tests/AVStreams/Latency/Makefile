@@ -52,8 +52,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
 
 .obj/ping.o .obj/ping.so .shobj/ping.o .shobj/ping.so: ping.cpp ping.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -77,12 +76,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -462,8 +459,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
 
 .obj/pong.o .obj/pong.so .shobj/pong.o .shobj/pong.so: pong.cpp pong.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -487,12 +483,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -872,8 +866,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
 
 .obj/control.o .obj/control.so .shobj/control.o .shobj/control.so: control.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -897,12 +890,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
