@@ -47,8 +47,6 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   // ACE_INET_Addr new_address;
   // if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
   //  return 0;
-  ACE_INET_Addr new_address (orb_params->addr ().get_port_number (),
-                             orb_params->host ());
 
   // we only make one
   int count = mprofile->profile_count ();
@@ -59,8 +57,14 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
     }
 
   TAO_IIOP_Profile pfile;
+  // ACE_NEW_RETURN (pfile
+  //                 TAO_IIOP_Profile (new_address, object_key),
+  //                 -1);
   ACE_NEW_RETURN (pfile
-                  TAO_IIOP_Profile (new_address, object_key),
+                  TAO_IIOP_Profile (orb_params->host (),
+                                    orb_params->addr ().get_port_number (),
+                                    key,
+                                    orb_params->addr ()),
                   -1);
 
   if (mprofile->give_profile (pfile) == -1)
