@@ -1,3 +1,15 @@
+Fri Jun 16 10:02:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  
+	  Fixed a couple of missed changes necessitated by the
+	  recent switch of Any.type_ from TypeCode_ptr to
+	  TypeCode_var.
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	   
+	  Removed an unnecessary 'const' from an enum definition.
+
 Thu Jun 15 22:49:21 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp
