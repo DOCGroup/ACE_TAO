@@ -1,3 +1,15 @@
+Fri Aug  3 13:10:59 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-linux-common.h (ACE_UINT64_FORMAT_SPECIFIER,
+	  ACE_SSIZE_T_FORMAT_SPECIFIER, ACE_SIZE_T_FORMAT_SPECIFIER):
+
+	  Removed unnecessary and some incorrect format specifiers for the
+	  32-bit platform case.  In particular, the format specifier for
+	  an unsigned 64-bit integer was incorrectly set to "%Lu."  "%L"
+	  is the format specifier for a "long double," not a "long long"
+	  integer on 32-bit platforms.  "%llu" is the correct format
+	  specifier which `ace/Basic_Types.h' already defines.
+
 Fri Aug  3 09:55:38 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:

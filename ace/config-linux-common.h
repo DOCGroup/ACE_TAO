@@ -256,21 +256,11 @@
 #define ACE_HAS_DIRENT
 
 #if defined (__ia64)
+// On 64 bit platforms, the "long" type is 64-bits.  Override the
+// default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER "%lu"
-#else /* ! __ia64 */
-# define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
-#endif /* __ia64 */
-
-#if defined (__ia64)
 # define ACE_SSIZE_T_FORMAT_SPECIFIER "%ld"
-#else /* ! __ia64 */
-# define ACE_SSIZE_T_FORMAT_SPECIFIER "%d"
-#endif /* __ia64 */
-
-#if defined (__ia64)
 # define ACE_SIZE_T_FORMAT_SPECIFIER "%lu"
-#else /* ! __ia64 */
-# define ACE_SIZE_T_FORMAT_SPECIFIER "%u"
 #endif /* __ia64 */
 
 #if !defined (ACE_TIMER_SKEW)
