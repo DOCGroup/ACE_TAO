@@ -1,3 +1,7 @@
+Wed Jun 24 02:39:35 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.16 released.
+
 Wed Jun 24 00:00:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: Cleaned
