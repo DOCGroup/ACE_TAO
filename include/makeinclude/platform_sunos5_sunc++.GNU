@@ -100,22 +100,12 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
   #### rtti conditions from the 4.2 section, above.
   ifeq ($(compat4),1)
     CCFLAGS += -compat=4 $(CFLAGS) -DACE_LACKS_RTTI -instances=explicit
-  else
-    #### Support RTTI by default.  And, use explicit template instantiation
-    #### because automatic instantiation appears to be broken, at least
-    #### with early releases of CC 5.0.  And, use old iostreams.
-    CCFLAGS += $(CFLAGS) -instances=explicit
-    ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-      CCFLAGS += -library=iostream,no%Cstd
-    else
-      #### SunCC 5.1 seems to need the std cpp lib
-      CCFLAGS += -library=iostream
-    endif # CC 5.0
   endif # compat4 requested
 endif # CC 5.0 or later
 endif # ! 4.2
 
 DCFLAGS         += -g
+DCCFLAGS        += -g
 DLD             = $(CXX)
 
 
@@ -199,5 +189,6 @@ endif # BIN
 ifeq (1,$(fast))
   CFLAGS += -fast
   DCFLAGS =
+  DCCFLAGS =
   LDFLAGS += -fast
 endif # fast

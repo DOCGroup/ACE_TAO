@@ -1,3 +1,18 @@
+Sat Jan 27 01:06:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU: SPRO 5.0
+	  compiler should be able to support automatic template
+	  instantiation.  Also, standard C++ library should be ok.  -g was
+	  added to DCCFLAGS.
+	  
+	* ace/config-sunos5.5.h: Turned off
+	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
+	  ACE_TEMPLATES_REQUIRE_SOURCE and ACE_USES_OLD_IOSTREAMS for the
+	  SPRO 5.0 compiler.
+
+	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+	  for contributing the above patches.
+
 Sat Jan 27 00:37:26 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i:
