@@ -1,3 +1,124 @@
+Mon Jul 09 01:51:27 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+
+	  Added accessors to the transport and max_wait_time members.
+
+	* tao/Invocation.cpp (perform_call):
+
+	  Updated invocation of the connect() method to match the
+	  signature change described below.
+
+	* tao/IIOP_Endpoint.cpp (hash):
+
+	  Invoke the object_addr() accessor instead of directly accessing
+	  the object_addr_ member.  The object_addr() method forces
+	  initialization of the object_addr_ member, thus making sure a
+	  hash is computed using a valid ACE_INET_Addr.
+
+	* tao/Connector_Registry.cpp:
+	* tao/Connector_Registry.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/Pluggable.h:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+
+	  Changed signature of connect() method to accept a pointer to a
+	  TAO_GIOP_Invocation object.  Some pluggable protocols
+	  (e.g. SSLIOP) may need access to some of the information in that
+	  object.
+
+	* orbsvcs/orbsvcs/Security.idl:
+
+	  Corrected spelling of Security::SecFeaturePolicy.  "Feature" not
+	  "Features".
+
+	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
+
+	  Implementation of the Security::QOPPolicy policy.  This policy
+	  is used to set the desired invocation Quality-of-Protection
+	  (QoP).  It can be created using ORB::create_policy(), and used
+	  in conjunction the standard policy manipulation CORBA features
+	  (e.g. PolicyManager, PolicyCurrent), meaning that this policy
+	  can be set on a per-ORB, per-thread or per-object basis.
+
+	  This policy makes it possible to, for example, make both secure
+	  and insecure invocations within the same client process.
+
+	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp:
+	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.h:
+
+	  Security policy factory implementation that is registered with
+	  the ORB's policy factory registry.
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (post_init,
+	  register_policy_factories):
+
+	  Register the supported security policy factories with the ORB.
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.h:
+
+	  Added a shared security policy factory member to this
+	  ORBInitializer.  The factory is reentrant so there is no need
+	  create one for each ORB.  Just share one between all ORBs.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (connect):
+
+	  Moved code that obtained the TAO_IIOP_Endpoint from the
+	  TAO_SSLIOP_Endpoint from this method to the corresponding one in
+	  TAO_SSLIOP_Connector.  This cleans up the code a bit.  It
+	  shouldn't differ all that much from the
+	  IIOP_Connector::connect() implementation.
+	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+
+	  Now that both secure and insecure invocations are supported
+	  within the same client process, an IIOP-only transport
+	  descriptor must be used instead of the one passed to this method
+	  since the latter is used for SSLIOP connections.  Doing so
+	  prevents an IIOP-only cached transport from being associated
+	  with an SSLIOP connection.
+
+	  This fixes a problem that was revealed when support for secure
+	  and insecure invocations within the same client process was
+	  added (i.e. via the Security::QOPPolicy support).  An insecure
+	  cached transport was matched against an SSLIOP connection.
+
+	* tao/IIOP_Endpoint.i:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+
+	  Cosmetic updates.
+
+	* tao/Exception.cpp:
+
+	  Corrected "unknown description" message.
+
+	* tao/Strategies/SHMIOP_Endpoint.h:
+	* tao/Strategies/UIOP_Endpoint.h:
+
+	  Doxygen-ated these headers.
+
+	* orbsvcs/orbsvcs/Makefile.Security:
+	* orbsvcs/orbsvcs/Security.dsp:
+	* orbsvcs/orbsvcs/Security/Security.bor:
+
+	  Added new QOPPolicy and Security_PolicyFactory filenames to
+	  these Makefiles and project files.
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
+
+	  Removed unused "readfromstdin" variable and accompanying
+	  "ACE_UNUSED_ARG" macro.
+
 Mon Jul  9 08:41:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/orbsvcs/tests/AVStreams/Makefile.bor
