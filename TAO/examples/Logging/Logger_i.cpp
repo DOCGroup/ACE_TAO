@@ -189,7 +189,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 void
 Logger_i::verbosity (Logger::Verbosity_Level level,
                      CORBA::Environment &)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->verbosity_level_ = level;
 }

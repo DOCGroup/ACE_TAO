@@ -175,7 +175,7 @@ Session::start (const Test::Session_List &other_sessions,
 }
 
 void
-Session::ping (CORBA::Environment &) ACE_THROW_SPEC (())
+Session::ping (CORBA::Environment &) ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
