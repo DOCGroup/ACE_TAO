@@ -149,19 +149,26 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   // Read and verify major, minor versions, ignoring IIOP
   // profiles whose versions we don't understand.
   //
-  if (!(cdr.read_octet (this->version_.major)
-        && this->version_.major == TAO_DEF_GIOP_MAJOR
-        && cdr.read_octet (this->version_.minor)
-        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
+  CORBA::Octet major, minor;
+  
+  if (!(cdr.read_octet (major)
+        && (major == TAO_DEF_GIOP_MAJOR)
+        && cdr.read_octet (minor)))
   {
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
-                    this->version_.major,
-                    this->version_.minor));
+                    major,
+                    minor));
       }
+    return -1;
   }
+
+  this->version_.major = major;
+  
+  if (minor <= TAO_DEF_GIOP_MINOR)
+    this->version_.minor = minor;
 
   // Get host and port
   if (cdr.read_string (this->host_.out ()) == 0
