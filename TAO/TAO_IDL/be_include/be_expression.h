@@ -42,6 +42,7 @@ public:
   be_expression (long l, AST_Expression::ExprType t);
   be_expression (unsigned long l);
   be_expression (UTL_String *s);
+  be_expression(char *s);
   be_expression (char c);
   be_expression (ACE_OutputCDR::from_wchar wc);
   be_expression (double d);
