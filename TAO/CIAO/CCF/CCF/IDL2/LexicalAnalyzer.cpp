@@ -27,8 +27,10 @@ namespace CCF
       keyword_table_.insert ("abstract"   );
       keyword_table_.insert ("attribute"  );
       keyword_table_.insert ("__binclude" );
+      keyword_table_.insert ("case"       );
       keyword_table_.insert ("const"      );
       keyword_table_.insert ("custom"     );
+      keyword_table_.insert ("default"    );
       keyword_table_.insert ("exception"  );
       keyword_table_.insert ("enum"       );
       keyword_table_.insert ("factory"    );
@@ -48,10 +50,12 @@ namespace CCF
       keyword_table_.insert ("sequence"   );
       keyword_table_.insert ("struct"     );
       keyword_table_.insert ("supports"   );
+      keyword_table_.insert ("switch"     );
       keyword_table_.insert ("truncatable");
       keyword_table_.insert ("typedef"    );
       keyword_table_.insert ("typeid"     );
       keyword_table_.insert ("typeprefix" );
+      keyword_table_.insert ("union"      );
       keyword_table_.insert ("valuetype"  );
 
       // Identifiers (alphabetic order).
@@ -198,7 +202,7 @@ namespace CCF
         if (operator_ (c, token)) return token;
 
         if (punctuation (c, token)) return token;
-        
+
         cerr << c.line () << ": error: unable to derive any token "
              << "from \'" << c << "\'" << endl;
 

@@ -1,11 +1,36 @@
+Thu Jan  8 15:10:24 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Makefile.archive:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction.hpp:
+	* CCF/CCF/IDL2/SemanticGraph.hpp:
+	* CCF/CCF/IDL2/Traversal.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Union.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Union.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticGraph/Union.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Union.hpp:
+	* CCF/CCF/IDL2/Traversal/Struct.hpp:
+	* CCF/CCF/IDL2/Traversal/Union.cpp:
+	* CCF/CCF/IDL2/Traversal/Union.hpp:
+
+	  Added support for union.
+
 Thu Jan  8 14:47:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
-        
+
           Changed default suffix for generating #include of C++ header
           file generated from executor mapping IDL file, similar to the
           change in
-          
+
           Thu Jan  8 12:00:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>.
 
 Thu Jan  8 13:49:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -17,9 +42,9 @@ Thu Jan  8 13:49:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/OEP/Display/GPS/GPS.mpc:
         * examples/OEP/Display/NavDisplay/NavDisplay.mpc:
         * examples/OEP/Display/RateGen/RateGen.mpc:
-        
+
           Reverted the changes in
-          
+
           Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	      since these command line options (include paths) are now part of
@@ -29,12 +54,12 @@ Thu Jan  8 12:00:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
         * CIDLC/ExecutorMappingGenerator.cpp:
-        
+
           Changed default suffix for the generated executor mapping IDL file
           from '_exec.idl' to 'E.idl'.
-          
+
         * ciao/CCM_Core.mpc:
-        
+
           Added header files that are unmatched by a corresponding .cpp file.
 
 Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -46,7 +71,7 @@ Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/OEP/Display/GPS/GPS.mpc:
         * examples/OEP/Display/NavDisplay/NavDisplay.mpc:
         * examples/OEP/Display/RateGen/RateGen.mpc:
-        
+
           Added include path command line options for the CIDL compiler.
 
 Wed Jan  7 09:56:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>

@@ -26,6 +26,7 @@ cxx_translation_units := Attribute.cpp    \
                          Struct.cpp       \
                          Translation.cpp  \
                          TypeId.cpp       \
+                         Union.cpp        \
                          ValueType.cpp
 
 

@@ -35,8 +35,10 @@ namespace CCF
           ABSTRACT    ("abstract"   ),
           ATTRIBUTE   ("attribute"  ),
           BINCLUDE    ("__binclude" ),
+          CASE        ("case"       ),
           CONST       ("const"      ),
           CUSTOM      ("custom"     ),
+          DEFAULT     ("default"    ),
           ENUM        ("enum"       ),
           EXCEPTION   ("exception"  ),
           FACTORY     ("factory"    ),
@@ -56,10 +58,12 @@ namespace CCF
           SEQUENCE    ("sequence"   ),
           STRUCT      ("struct"     ),
           SUPPORTS    ("supports"   ),
+          SWITCH      ("switch"     ),
           TRUNCATABLE ("truncatable"),
           TYPEDEF     ("typedef"    ),
           TYPEID      ("typeid"     ),
           TYPEPREFIX  ("typeprefix" ),
+          UNION       ("union"      ),
           VALUETYPE   ("valuetype"  ),
 
           COLON  (":"),
@@ -290,6 +294,34 @@ namespace CCF
           act_type_prefix_end (f.type_prefix (),
                                &SemanticAction::TypePrefix::end),
 
+          // Union
+          //
+          //
+          act_union_begin_def (
+            f.union_ (), &SemanticAction::Union::begin_def),
+
+          act_union_begin_fwd (
+            f.union_ (), &SemanticAction::Union::begin_fwd),
+
+          act_union_type (
+            f.union_ (), &SemanticAction::Union::type),
+
+          act_union_open_scope (
+            f.union_ (), &SemanticAction::Scope::open_scope),
+
+          act_union_member_type (
+            f.union_ (), &SemanticAction::Union::member_type),
+
+          act_union_member_name (
+            f.union_ (), &SemanticAction::Union::member_name),
+
+          act_union_close_scope (
+            f.union_ (), &SemanticAction::Scope::close_scope),
+
+          act_union_end (
+            f.union_ (), &SemanticAction::Union::end),
+
+
           // ValueType
           //
           //
@@ -374,6 +406,7 @@ namespace CCF
         | native_decl
         | struct_decl
         | typedef_decl
+        | union_decl
         ;
 
       type_id_decl =
@@ -943,6 +976,69 @@ namespace CCF
         | SEQUENCE >> LT >> identifier[act_typedef_begin_seq] >> GT
         ;
 
+      // union
+      //
+      //
+      union_decl =
+        guard
+        (
+             UNION
+          >> (
+                 (
+                      simple_identifier
+                   >> SEMI
+                 )[act_union_begin_fwd][act_union_end]
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> SWITCH
+                      )[act_union_begin_def]
+                   >> union_def_trailer
+                 )
+             )
+        )[error_handler]
+        ;
+
+      union_def_trailer =
+           LPAREN
+        >> identifier[act_union_type]
+        >> RPAREN
+        >> LBRACE[act_union_open_scope]
+        >> union_body
+        >> assertion ("member or \'}\' expected",
+                      f.union_ (),
+                      &SemanticAction::Union::close_scope,
+                      &SemanticAction::Union::end,
+                      RecoveryMethod::STANDARD,
+                      DiagnosticType::BEFORE)
+           (
+             RBRACE[act_union_close_scope]
+           )
+        >> assertion ("\';\' is missing",
+                      f.union_ (),
+                      &SemanticAction::Union::end,
+                      RecoveryMethod::NONE)
+           (
+             SEMI[act_union_end]
+           )
+        ;
+
+
+      union_body =
+        +(
+              +union_case_label
+           >> identifier[act_union_member_type]
+           >> simple_identifier[act_union_member_name]
+           >> SEMI
+        )
+        ;
+
+      union_case_label =
+          (CASE >> const_expr >> COLON)
+        |
+          (DEFAULT >> COLON)
+        ;
 
       // valuetype
       //

@@ -22,6 +22,7 @@
 #include "CCF/IDL2/SemanticGraph/Struct.hpp"
 #include "CCF/IDL2/SemanticGraph/Translation.hpp"
 #include "CCF/IDL2/SemanticGraph/TypeId.hpp"
+#include "CCF/IDL2/SemanticGraph/Union.hpp"
 #include "CCF/IDL2/SemanticGraph/ValueType.hpp"
 
 #endif  // CCF_IDL2_SEMANTIC_GRAPH_HPP
