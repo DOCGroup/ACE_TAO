@@ -21,7 +21,6 @@
 //    Irfan Pyarali
 // ========================================================================
 
-#include "ace/streams.h"
 #include "tao/corba.h"
 
 ACE_RCSID(NewPOA, NewPOA, "$Id$")
