@@ -42,7 +42,7 @@ class ACE_Export ACE_Lib_Find
                      size_t maxlen);
 
   /**
-   * Uses <ldopen> to locate and open the appropriate <filename> and
+   * Uses <ldfind> to locate and open the appropriate <filename> and
    * returns a pointer to the file, else it returns a NULL
    * pointer. <type> specifies how the file should be open.
    */

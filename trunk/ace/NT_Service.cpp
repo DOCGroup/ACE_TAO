@@ -380,8 +380,15 @@ ACE_NT_Service::state (DWORD *pstate,
                        ACE_Time_Value *wait_hint)
 {
   SC_HANDLE svc = this->svc_sc_handle ();
+
   if (svc == 0)
     return -1;
+
+  // Need to create a temporary copy of this variable since the
+  // QueryServiceStatus call will modify the setting depending on the
+  // current state of the Service.  If the service is currently
+  // STOPPED, the value will be cleared.
+  DWORD controls_accepted = svc_status_.dwControlsAccepted;
 
   if (QueryServiceStatus (svc,
                           &this->svc_status_) == 0)
@@ -391,7 +398,7 @@ ACE_NT_Service::state (DWORD *pstate,
     wait_hint->msec (this->svc_status_.dwWaitHint);
 
   *pstate = this->svc_status_.dwCurrentState;
-
+  this->svc_status_.dwControlsAccepted = controls_accepted;
   return 0;
 }
 
