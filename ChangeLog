@@ -1,3 +1,8 @@
+Fri Feb 11 21:33:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Don't perform crlf conversions on a .bz2 file during the release
+
 Fri Feb 11 08:43:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/RMCast/Makefile.am:
