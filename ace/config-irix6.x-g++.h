@@ -25,7 +25,6 @@
 #include "ace/config-irix6.x-common.h"
 
 // Needed for the threading stuff?
-#include /**/ <sched.h>
 #include /**/ <task.h>
 
 #define PTHREAD_MIN_PRIORITY PX_PRIO_MIN

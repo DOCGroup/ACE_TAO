@@ -42,9 +42,6 @@
 // The pthread_cond_timedwait call does not reset the timer.
 #define ACE_LACKS_COND_TIMEDWAIT_RESET 1
 
-// Scheduling functions are declared in <sched.h>
-#define ACE_LACKS_SCHED_H
-
 // When threads are enabled READDIR_R is supported on IRIX.
 #undef ACE_LACKS_READDIR_R
 
