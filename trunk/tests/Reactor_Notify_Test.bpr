@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Reactor_Notify_Test.exe
-OBJFILES = obj\Reactor_Notify_Test.obj
+OBJFILES = objs\Reactor_Notify_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

@@ -10,7 +10,7 @@ DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
 PROJECTS = Aio_Platform_Test Atomic_Op_Test Barrier_Test Basic_Types_Test \
-  Buffer_Stream_Test Conn_Test Enum_Interfaces_Test Env_Value_Test Future_Test \
+  Buffer_Stream_Test Conn_Test Dynamic_Priority_Test Enum_Interfaces_Test Env_Value_Test Future_Test \
   Handle_Set_Test Hash_Map_Manager_Test Map_Manager_Test MM_Shared_Memory_Test \
   MT_Reactor_Timer_Test MT_SOCK_Test Mem_Map_Test Message_Block_Test \
   MsgQueue_Notifications_Test Message_Queue_Test Naming_Test \
@@ -21,8 +21,8 @@ PROJECTS = Aio_Platform_Test Atomic_Op_Test Barrier_Test Basic_Types_Test \
   Recursive_Mutex_Test SOCK_Connector_Test SOCK_Test SPIPE_Test SString_Test \
   SV_Shared_Memory_Test Semaphore_Test Service_Config_Test Sigset_Ops_Test \
   Simple_Message_Block_Test TSS_Test Task_Test Thread_Manager_Test \
-  Thread_Mutex_Test Thread_Pool_Test Time_Service_Test Time_Value_Test \
-  Timer_Queue_Test Tokens_Test UPIPE_SAP_Test
+  Thread_Mutex_Test Thread_Pool_Test Timeprobe_Test Time_Service_Test Time_Value_Test \
+  Timer_Queue_Test Tokens_Test Upgradable_RW_Test UPIPE_SAP_Test XtReactor_Test
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -43,6 +43,9 @@ Buffer_Stream_Test: Buffer_Stream_Test.bpr
   $(MAKE)
 
 Conn_Test: Conn_Test.bpr
+  $(MAKE)
+
+Dynamic_Priority_Test: Dynamic_Priority_Test.bpr
   $(MAKE)
 
 Enum_Interfaces_Test: Enum_Interfaces_Test.bpr
@@ -174,6 +177,9 @@ Thread_Mutex_Test: Thread_Mutex_Test.bpr
 Thread_Pool_Test: Thread_Pool_Test.bpr
   $(MAKE)
 
+Timeprobe_Test: Timeprobe_Test.bpr
+  $(MAKE)
+
 Time_Service_Test: Time_Service_Test.bpr
   $(MAKE)
 
@@ -186,5 +192,11 @@ Timer_Queue_Test: Timer_Queue_Test.bpr
 Tokens_Test: Tokens_Test.bpr
   $(MAKE)
 
+Upgradable_RW_Test: Upgradable_RW_Test.bpr
+  $(MAKE)
+
 UPIPE_SAP_Test: UPIPE_SAP_Test.bpr
+  $(MAKE)
+
+XtReactor_Test: XtReactor_Test.bpr
   $(MAKE)

@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = UPIPE_SAP_Test.exe
-OBJFILES = obj\UPIPE_SAP_Test.obj
+OBJFILES = objs\UPIPE_SAP_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

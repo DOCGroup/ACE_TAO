@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = MM_Shared_Memory_Test.exe
-OBJFILES = obj\MM_Shared_Memory_Test.obj
+OBJFILES = objs\MM_Shared_Memory_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

@@ -327,7 +327,7 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("Future_Test"));
 
 #if defined (ACE_HAS_THREADS)
-  Scheduler *andres = 0, *peter = 0, *helmut = 0, *matias = 0;
+  Scheduler *andres, *peter, *helmut, *matias;
 
   // Create active objects..
   // @@ Should "open" be subsumed within the constructor of

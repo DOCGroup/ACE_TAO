@@ -157,7 +157,7 @@ int
 Consumer::svc (void)
 {
   ACE_Message_Block *mb = 0;
-  int result = 0;
+  int result;
   char *c = ACE_ALPHABET;
   char *output;
 

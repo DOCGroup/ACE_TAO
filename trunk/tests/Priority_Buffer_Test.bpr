@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Priority_Buffer_Test.exe
-OBJFILES = obj\Priority_Buffer_Test.obj
+OBJFILES = objs\Priority_Buffer_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

@@ -13,8 +13,8 @@ BCB = $(MAKEDIR)\..
 
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
-PROJECT = Buffer_Stream_Test.exe
-OBJFILES = objs\Buffer_Stream_Test.obj
+PROJECT = Timeprobe_Test.exe
+OBJFILES = objs\Timeprobe_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

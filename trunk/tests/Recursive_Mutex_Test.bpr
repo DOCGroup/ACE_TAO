@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Recursive_Mutex_Test.exe
-OBJFILES = obj\Recursive_Mutex_Test.obj
+OBJFILES = objs\Recursive_Mutex_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

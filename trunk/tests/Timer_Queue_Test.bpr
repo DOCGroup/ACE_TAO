@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Timer_Queue_Test.exe
-OBJFILES = obj\Timer_Queue_Test.obj
+OBJFILES = objs\Timer_Queue_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

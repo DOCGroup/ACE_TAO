@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Hash_Map_Manager_Test.exe
-OBJFILES = obj\Hash_Map_Manager_Test.obj
+OBJFILES = objs\Hash_Map_Manager_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib
