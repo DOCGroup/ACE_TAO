@@ -53,7 +53,8 @@
 #endif /* __GNUG__ */
 
 #define ACE_HAS_IP_MULTICAST
-
+#define ACE_LACKS_WAIT
+#define ACE_LACKS_WAITPID
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
 // #define ACE_LACKS_U_LONG_LONG
@@ -207,6 +208,7 @@
 #define ACE_LACKS_SYS_MSG_H
 
 #define ACE_LACKS_SYSV_SHMEM
+#define ACE_LACKS_DUP2
 
 #define ACE_LACKS_SYS_NERR
 

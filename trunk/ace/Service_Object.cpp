@@ -79,7 +79,7 @@ int
 ACE_Service_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Service_Type::suspend");
-  ((ACE_Service_Type *) this)->active_ = 0;
+  (const_cast<ACE_Service_Type *> (this))->active_ = 0;
   return this->type_->suspend ();
 }
 
@@ -87,7 +87,7 @@ int
 ACE_Service_Type::resume (void) const
 {
   ACE_TRACE ("ACE_Service_Type::resume");
-  ((ACE_Service_Type *) this)->active_ = 1;
+  (const_cast<ACE_Service_Type *> (this))->active_ = 1;
   return this->type_->resume ();
 }
 

@@ -48,7 +48,7 @@
 #  endif /* ACE_LACKS_SIGINFO_H */
 #endif /* ACE_HAS_SIGINFO_T */
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 #  include /**/ <sigLib.h>
 #endif /* VXWORKS */
 

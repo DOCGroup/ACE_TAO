@@ -19,6 +19,8 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+#define ACE_LACKS_WAIT
+#define ACE_LACKS_WAITPID
 #define ACE_HAS_STRDUP_EMULATION
 
 #define ACE_HAS_IP_MULTICAST
@@ -189,6 +191,7 @@
 #define ACE_PSOS_LACKS_PREPC
 #define ACE_PSOS_CANT_USE_SYS_TYPES
 #define ACE_PSOS_HAS_TIME
+#define ACE_LACKS_DUP2
 
 //#define ACE_PSOS_SNARFS_HEADER_INFO
 

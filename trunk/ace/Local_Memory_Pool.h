@@ -68,14 +68,14 @@ public:
   virtual int release (int destroy = 1);
 
   /**
-   * Sync <len> bytes of the memory region to the backing store
-   * starting at <this->base_addr_>.  If <len> == -1 then sync the
+   * Sync @a len bytes of the memory region to the backing store
+   * starting at <this->base_addr_>.  If @a len == -1 then sync the
    * whole region.
    */
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
-  /// Sync <len> bytes of the memory region to the backing store
-  /// starting at <addr_>.
+  /// Sync @a len bytes of the memory region to the backing store
+  /// starting at @a add_.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**

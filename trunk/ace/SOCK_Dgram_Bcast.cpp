@@ -115,7 +115,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                           SO_BROADCAST,
                           (char *) &one,
                           sizeof one) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                      "ACE_SOCK_Dgram_Bcast::mk_broadcast: setsockopt failed"),
+                      -1);
 
 #if !defined (ACE_WIN32) && !defined(__INTERIX)
   ACE_HANDLE s = this->get_handle ();
@@ -139,7 +141,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 
   struct sockaddr_in host_addr;
 
-  //Get host ip address
+  // Get host ip address
   if (host_name)
     {
       hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
@@ -162,7 +164,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
     }
 
 
-#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
+#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (VXWORKS)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        n--, ifr++)
 #else
@@ -180,9 +182,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
           (nbytes -= sizeof (struct ifreq), ifr++)))
-#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
+#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (VXWORKS) */
     {
-#if defined (__QNX__)
+#if defined (__QNX__) || defined (VXWORKS)
       // Silently skip link interfaces
       if (ifr->ifr_addr.sa_family == AF_LINK)
         continue;
@@ -252,8 +254,8 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 						   flags.ifr_name));
           else
             {
-              ACE_INET_Addr addr (ACE_reinterpret_cast (sockaddr_in *,
-                                                        &if_req.ifr_broadaddr),
+              ACE_INET_Addr addr (reinterpret_cast <sockaddr_in *>
+                                                   (&if_req.ifr_broadaddr),
                                   sizeof if_req.ifr_broadaddr);
               ACE_NEW_RETURN (this->if_list_,
                               ACE_Bcast_Node (addr,

@@ -434,7 +434,7 @@ ACE_Name_Options::ACE_Name_Options (void)
   this->namespace_dir_ = ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR);
 #else /* ACE_DEFAULT_NAMESPACE_DIR */
   size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
-  this->namespace_dir_ = ACE_static_cast (ACE_TCHAR *, ACE_OS::malloc (pathsize));
+  this->namespace_dir_ = static_cast <ACE_TCHAR *> (ACE_OS::malloc (pathsize));
 
   if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
@@ -599,8 +599,15 @@ void
 ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Name_Options::parse_args");
-  ACE_LOG_MSG->open (argv[0]);
-  this->process_name (argv[0]);
+
+  const ACE_TCHAR* program_name = 0;
+
+  // Argc can be 0 on some platforms like VxWorks.
+  if (argc > 0)
+    program_name = argv[0];
+
+  ACE_LOG_MSG->open (program_name);
+  this->process_name (program_name);
 
   // Default is to use the PROC_LOCAL context...
   this->context (ACE_Naming_Context::PROC_LOCAL);

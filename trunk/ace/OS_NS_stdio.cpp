@@ -328,7 +328,7 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
   // -1. This method follows the C99 standard, but needs to guess at the
   // value; uses maxlen + 1.
   if (result == -1)
-    result = ACE_static_cast (int, (maxlen + 1));
+    result = static_cast <int> (maxlen + 1);
   return result;
 
 #else
@@ -368,7 +368,7 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   // -1. This method follows the C99 standard, but needs to guess at the
   // value; uses maxlen + 1.
   if (result == -1)
-    result = ACE_static_cast (int, (maxlen + 1));
+    result = static_cast <int> (maxlen + 1);
   return result;
 
 #else

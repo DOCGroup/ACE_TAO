@@ -114,7 +114,7 @@ protected:
    * application, then the application is responsible for destroying
    * it.)
    */
-  u_int dynamically_allocated_;
+  unsigned int dynamically_allocated_;
 
   /// Link to next Object_Manager, for chaining.
   ACE_Object_Manager_Base *next_;
@@ -237,7 +237,7 @@ public:
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   /// For use by init () and fini (), to consolidate error reporting.
-  static void print_error_message (u_int line_number, const ACE_TCHAR *message);
+  static void print_error_message (unsigned int line_number, const ACE_TCHAR *message);
 
   /// This class is for internal use by ACE_OS, etc., only.
   friend class ACE_Object_Manager;

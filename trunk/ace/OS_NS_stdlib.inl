@@ -247,8 +247,7 @@ ACE_OS::putenv (const char *string)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
-  // VxWorks declares ::putenv with a non-const arg.
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv ((char *) string), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv (const_cast <char *> (string)), int, -1);
 #endif /* ACE_HAS_WINCE */
 }
 

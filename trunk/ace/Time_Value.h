@@ -372,6 +372,10 @@ private:
 
   /// Keeps track of whether we've already been stopped.
   int stopped_;
+
+  // Prevent copying
+  ACE_Countdown_Time (const ACE_Countdown_Time &);
+  ACE_Countdown_Time &operator= (const ACE_Countdown_Time &);
 };
 
 #if defined (__ACE_INLINE__)

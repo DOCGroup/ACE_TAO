@@ -112,18 +112,6 @@ namespace ACE_OS {
   wchar_t *strchr (wchar_t *s, wint_t c);
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_LACKS_STRCHR)
-  /// Emulated strchr (char version) - Finds the first occurance of a
-  /// character in a string.
-  extern ACE_Export
-  char *strchr_emulation (char *s, int c);
-
-  /// Emulated strchr (const char version) - Finds the first occurance of a
-  /// character in a string.
-  extern ACE_Export
-  const char *strchr_emulation (const char *s, int c);
-#endif /* ACE_LACKS_STRCHR */
-
   /// Compares two strings (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   int strcmp (const char *s, const char *t);
@@ -153,12 +141,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strcspn (const wchar_t *s, const wchar_t *reject);
 #endif /* ACE_HAS_WCHAR */
-
-#if defined (ACE_LACKS_STRCSPN)
-  /// Emulated strcspn - Finds a substring in a string.
-  extern ACE_Export
-  size_t strcspn_emulation (const char *s, const char *reject);
-#endif /* ACE_LACKS_STRCSPN */
 
   /// Returns a malloced duplicated string (char version).
   extern ACE_Export
