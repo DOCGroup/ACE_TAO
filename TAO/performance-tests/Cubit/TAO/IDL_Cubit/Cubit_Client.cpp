@@ -1010,7 +1010,6 @@ Cubit_Client::run ()
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_oneway", elapsed_time);
 
-  // This causes a memPartFree on VxWorks.
   this->shutdown_server (this->shutdown_);
 
   return this->error_count_ == 0 ? 0 : 1;
