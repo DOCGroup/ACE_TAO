@@ -9,6 +9,7 @@
 #include "tao/debug.h"
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
+  : connectors_ ()
 {
 }
 
@@ -32,6 +33,7 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
       if ((*connector)->tag () == tag)
         return *connector;
     }
+
   return 0;
 }
 
@@ -54,8 +56,27 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 
       if (connector)
         {
-          connectors_.insert (connector);
-          connector->open (orb_core);
+          if (connector->open (orb_core) != 0)
+            {
+              delete connector;
+
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) unable to open connector for "
+                                 "<%s>.\n",
+                                 (*factory)->protocol_name ().c_str ()),
+                                -1);
+            }
+
+          if (connectors_.insert (connector) == -1)
+            {
+              delete connector;
+
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "TAO (%P|%t) unable to add a <%s> connector "
+                                 "to the connector registry.\n",
+                                 (*factory)->protocol_name ().c_str ()),
+                                -1);
+            }
         }
       else
         return -1;
@@ -121,6 +142,7 @@ TAO_Connector_Registry::connect (TAO_Profile *&profile,
   // Find the appropriate connector object
   TAO_Connector *connector =
     this->get_connector (profile->tag ());
+
   if (connector == 0)
     return -1;
 
@@ -184,7 +206,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
 TAO_Profile *
 TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 {
-  CORBA::ULong tag;
+  CORBA::ULong tag = 0;
 
   // If there is an error we abort.
   if ((cdr >> tag) == 0)
@@ -202,7 +224,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
                       tag));
         }
 
-      TAO_Profile *pfile;
+      TAO_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
                       TAO_Unknown_Profile (tag),
                       0);
@@ -211,16 +233,17 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
           pfile->_decr_refcnt ();
           pfile = 0;
         }
+
       return pfile;
     }
 
-  // OK, we've got known profile.  It's going to be encapsulated
+  // OK, we've got a known profile.  It's going to be encapsulated
   // ProfileData.  Create a new decoding stream and context for it,
   // and skip the data in the parent stream
 
   // ProfileData is encoded as a sequence of octet. So first get the
   // length of the sequence.
-  CORBA::ULong encap_len;
+  CORBA::ULong encap_len = 0;
   if ((cdr >> encap_len) == 0)
     return 0;
 
