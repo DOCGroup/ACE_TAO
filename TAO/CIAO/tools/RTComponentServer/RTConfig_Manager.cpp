@@ -1,5 +1,6 @@
 // $Id$
 
+#include "tao/RTCORBA/RTCORBA.h"
 #include "RTConfig_Manager.h"
 #include "ace/SString.h"
 

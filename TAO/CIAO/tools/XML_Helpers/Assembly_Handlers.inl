@@ -77,7 +77,8 @@ CIAO::Partitioning_Handler::Partitioning_Handler (Assembly_Spec *spec,
       process_collocation_ (0),
       home_placement_ (0),
       comp_instance_ (0),
-      state_ (START)
+      state_ (START),
+      ext_type_ (INVALID_EXT)
 {
 }
 

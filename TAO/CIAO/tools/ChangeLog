@@ -1,0 +1,76 @@
+Sun Aug 10 13:50:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/RTConfiguration.idl:
+	* tools/RTComponentServer/RTConfigurationClient.cpp:
+	* tools/RTComponentServer/RTComponentServer.mpc: Removed
+	  RTConfiguration.idl and the stub wrapper
+	  RTConfigurationClient.cpp.  They have been moved to XML_Helpers
+	  library.
+
+	* tools/RTComponentServer/RTConfig_Manager.h:
+	* tools/RTComponentServer/RTConfig_Manager.cpp: Changed to include
+	  RTConfigurationC.h from XML_Helpers subdir and make sure
+	  RTCORBA.h is included before RTConfigurationC.h.
+
+	* tools/XML_Helpers/XMLHelpers.mpc:
+	* tools/XML_Helpers/RTConfiguration.idl:
+	* tools/XML_Helpers/RTConfiguration_Stubs.cpp: Added
+	  RTConfiguration info and its wrapper cpp file.  This wrapper cpp
+	  file is used to ensure that RTCORBA.h is included before
+	  RTConfigurationC.h.
+
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Handlers.inl:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Assembly_Spec.inl: Extended to parse and store
+	  <extension> information in <processcollocation> and
+	  <homeplacement>.
+
+Wed Aug 06 17:02:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/RTConfig_Manager.h:
+	* tools/RTComponentServer/RTConfig_Manager.cpp: Added support for
+	  keeping PriorityBands information.
+
+Sun Aug  3 23:12:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed mismatched
+	  throw specifications.  Added inclusion of "ace/SString.h" as ACE
+	  now only includes "ace/SStringfwd.h".
+
+Sun Aug 03 00:45:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed some
+	  accidental pastings of code.
+
+Fri Aug 01 13:50:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/RTComponentServer.mpc:
+	* tools/RTComponentServer/RTConfig_Manager.cpp:
+	* tools/RTComponentServer/RTConfig_Manager.h:
+	* tools/RTComponentServer/RTConfig_Manager.inl:
+	* tools/RTComponentServer/RTConfiguration.idl: Added code for
+	  managing named collection of RTCORBA related policies.
+
+Sun Jul 06 21:37:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/ComponentServer_Task.cpp (svc): Changed
+	  to take advantage of CIAO::Activator_Callback interface change
+	  for getting back our own ConfigValues.  We will need to use
+	  these configuration values in the future.
+
+Sun Jul 06 11:50:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/ComponentServer_Task.cpp:
+	* tools/RTComponentServer/ComponentServer_Task.h:
+	* tools/RTComponentServer/ComponentServer_Task.inl:
+	* tools/RTComponentServer/README:
+	* tools/RTComponentServer/RTComponentServer.cpp:
+	* tools/RTComponentServer/RTComponentServer.mpc: Added the
+	  skeleton of RTComponentServer.
+
+Sun Jul 06 11:33:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Added: this temporary ChangeLog file for changes within the
+	  RTComponentServer.

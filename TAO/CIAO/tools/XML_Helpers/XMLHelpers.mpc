@@ -1,8 +1,15 @@
-project(XML_Helpers): acelib, acexml {
+project(XML_Helpers): acelib, acexml, rtcorba {
   sharedname=CIAO_XML_Helpers
+  idlflags  += -Wb,export_include=XML_Helpers_Export.h
+  idlflags  += -Wb,export_macro=CIAO_XML_HELPERS_Export
   dynamicflags += CIAO_XML_HELPERS_BUILD_DLL
 
+  IDL_Files {
+    RTConfiguration.idl
+  }
+
   Source_Files {
+    RTConfiguration_Stubs.cpp
     XML_Utils.cpp
     Softpkg_Handlers.cpp
     Cascadable_DocHandler.cpp

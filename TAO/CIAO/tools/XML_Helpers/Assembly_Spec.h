@@ -204,6 +204,8 @@ namespace CIAO
       /** Accessor/mutator functions  */
       void componentfileref (const char *file);
       const char *componentfileref (void) const;
+      void rtpolicyset_ref (const char *file);
+      const char *rtpolicyset_ref (void) const;
       //@}
 
       ACE_Unbounded_Queue <Register_Info> register_info_;
@@ -211,6 +213,9 @@ namespace CIAO
     protected:
       // idref to component implementation file.
       ACE_CString componentfileref_;
+
+      // idref to the name of RTPolicySet
+      ACE_CString rtpolicyset_ref_;
     };
 
     /**
@@ -233,7 +238,7 @@ namespace CIAO
     };
 
     /**
-     * @class hostcollocation
+     * @class processcollocation
      */
     class CIAO_XML_HELPERS_Export processcollocation
       : public Container
@@ -248,7 +253,21 @@ namespace CIAO
 
       virtual ~processcollocation ();
 
+      //@{
+      /** Accessor/mutator functions  */
+      void rtcad_filename (const char *file);
+      const char *rtcad_filename (void) const;
+      //@}
+
     protected:
+      /**
+       * Filename of CIAO's RT cad extension descriptors.  We are
+       * deferring the parsing of this file until deployment time.
+       * Why?  Because we want to separate the handling of the
+       * extension file from the "standard" feature.  This filename is
+       * specified in the <extension> tag.
+       */
+      ACE_CString rtcad_filename_;
     };
 
     /**
