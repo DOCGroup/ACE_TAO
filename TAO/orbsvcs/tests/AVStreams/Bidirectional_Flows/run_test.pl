@@ -28,7 +28,7 @@ $NS->Spawn ();
 
 if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
-    $NS->Kill (); 
+    $NS->Kill ();
     exit 1;
 }
 
