@@ -440,6 +440,27 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       </p>
   </li>
 
+  <li><p>
+      The Typecode creation functions that were in the ORB have been 
+      moved (in accordance with the new Interface Repository spec in
+      CORBA Components volume III) to a separate interface, 
+      CORBA::TypeCodeFactory. This has been implemented as a DLL in
+      the directory TAO/orbsvcs/IFR_Service (the Typecode factory is
+      used by the Interface Repository, but it can also be used on
+      its own). To make it available, TAO must be compiled either
+      with the compiler option interface_repo=1 or with
+      #define TAO_HAS_INTERFACE_REPOSITORY 1 uncommented in
+      TAO/tao/orbconf.h. Then build the TypeCodeFactory files in
+      the directory mentioned above. In the application, a service
+      config file containing the line
+      'dynamic TypeCodeFactory Service_Object * TypeCodeFactory_DLL:_make_TCF_Loader()'
+      should be in the directory. If it is named svc.conf, it will be loaded 
+      at startup, and if it has another name it can be loaded at the point
+      of your choosing in the application code. A command line option will also be
+      implemented shortly. A call to resolve_initial_references ("TypeCodeFactory")
+      will fetch the object reference, which should then be narrowed from
+      CORBA::Object_ptr.
+
 </ul>
 <!-- --------------------- -->
 <a href="#toc">Back to TOC</a>
