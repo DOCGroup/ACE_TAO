@@ -1,3 +1,11 @@
+Tue Oct  2 12:13:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp: If the read message is less than the
+	  size of the GIOP message, then we make the missing_data as -1 so
+	  that the message would be automatically queued. This should fix
+	  the Blocking_Sync_None tests hanging once in a while on
+	  guajira.cs builds.
+
 Tue Oct  2 11:05:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp: Removed a debug statement that made no
