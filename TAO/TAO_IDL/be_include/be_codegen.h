@@ -228,6 +228,11 @@ public:
       TAO_INTERFACE_FWD_CDR_OP_CS,
       TAO_INTERFACE_FWD_ANY_OP_CH,
 
+      // Emitting code for the AMH ResponseHandlers.
+      TAO_INTERFACE_AMH_RH_CH,
+      TAO_INTERFACE_AMH_RH_SH,
+      TAO_INTERFACE_AMH_RH_SS,
+
       // Emitting code for the valuetype.
       TAO_VALUETYPE_CH,
       TAO_VALUETYPE_CI,
@@ -400,12 +405,6 @@ public:
       TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS,
 
       // AMH next state generation
-      TAO_INTERFACE_AMH_SH,
-      TAO_INTERFACE_AMH_SS,
-      TAO_OPERATION_AMH_SH,     // added 12/11
-      TAO_OPERATION_AMH_SS,
-      TAO_INTERFACE_AMH_RH_SH,  // added 12/19
-      TAO_INTERFACE_AMH_RH_SS,
       TAO_OPERATION_AMH_RH_SH,
       TAO_OPERATION_AMH_RH_SS,
 

@@ -1,3 +1,12 @@
+Wed Jan 16 13:17:04 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_interface/interface.h: 
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
+	  Added method to check if a particular node is an 'AMH'
+	  node that was added during pre-processing.  This check is 
+	  used to dynamically create the amh_rh visitors in 
+	  interface_s{h/s} visitors.
+	
 Wed Jan 16 12:57:56 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
