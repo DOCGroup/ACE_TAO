@@ -1,9 +1,27 @@
+Fri Jan 15 00:35:24 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/tests/Time/run_test.pl : Added this perl script to test
+	run the time service. The script offers options to run the service
+	using either of the following :
+	  - Implementation Repository
+	  - Naming Service
+	  - Files
+	The script runs only a single server because at this time I dont
+	know how to start servers on different machines with the same
+	script. Also the IR doesnt allow to run its multiple copies in
+	the same directory because it writes implrepo.ior to the current
+	directory.
+
+	* orbsvcs/tests/Time/implrepo.conf : Added this file. This doesnt
+	really belong here but anything which needs to run the IR needs
+	this file.
+
 Thu Jan 14 23:50:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/implrepo/usersguide.html:
         * docs/implrepo/index.html:
         * docs/implrepo/status.html:
-          Added and collected most of the information on the 
+          Added and collected most of the information on the
           Implementation Repository.  The main addition was a rough
           User's Guide which should help people use the IR.
 
