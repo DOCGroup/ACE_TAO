@@ -1,10 +1,10 @@
 // $Id$
 
-ACE_RCSID(Reliable, server, "$Id$")
-
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
+
+ACE_RCSID(Reliable, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
 
