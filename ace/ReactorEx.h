@@ -10,7 +10,7 @@
 //    ReactorEx.h
 //
 // = AUTHOR
-//    Tim Harrison and Doug Schmidt
+//    Irfan Pyarali, Tim Harrison, and Doug Schmidt
 // 
 // ============================================================================
 
@@ -368,16 +368,16 @@ public:
 
   // = Notification methods.
 
-  int notify (ACE_Event_Handler * = 0, 
-	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-	      ACE_Time_Value * = 0);
+  virtual int notify (ACE_Event_Handler * = 0, 
+		      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
+		      ACE_Time_Value * = 0);
   // Wakeup one <ACE_ReactorEx> thread if it is currently blocked in
   // <WaitForMultipleObjects>.  The <ACE_Time_Value> indicates how
   // long to blocking trying to notify the <Reactor>.  If <timeout> ==
   // 0, the caller will block until action is possible, else will wait
   // until the relative time specified in <timeout> elapses).
 
-  void max_notify_iterations (int);
+  virtual void max_notify_iterations (int);
   // Set the maximum number of times that the
   // <ACE_ReactorEx_Notify::handle_input> method will iterate and
   // dispatch the <ACE_Event_Handlers> that are passed in via the
@@ -388,30 +388,30 @@ public:
   // prevent starvation) at the expense of slightly higher dispatching
   // overhead.
 
-  int max_notify_iterations (void);
+  virtual int max_notify_iterations (void);
   // Get the maximum number of times that the
   // <ACE_ReactorEx_Notify::handle_input> method will iterate and
   // dispatch the <ACE_Event_Handlers> that are passed in via the
   // notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
 
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_thread_t owner (void);
+  virtual ACE_thread_t owner (void);
   // Return the ID of the "owner" thread.
 
-  void owner (ACE_thread_t new_owner);
+  virtual void owner (ACE_thread_t new_owner);
   // Transfers ownership of the ReactorEx to the <new_owner>. The
   // transfer will not complete until all threads are ready (just like
   // the handle set).
 
-  void wakeup_all_threads (void);
+  virtual void wakeup_all_threads (void);
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+  void dump (void) const;
+  // Dump the state of an object.
 
 protected:
   virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
@@ -425,30 +425,25 @@ protected:
   virtual int dispatch (int wait_status);
   // Dispatches the timers and I/O handlers.
 
-  int dispatch_handles (size_t index);
+  virtual int dispatch_handles (size_t index);
   // Dispatches any active handles from handles_[<index>] to
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
   // through our handle set looking for active handles.
 
-  int dispatch_handler (int index);
+  virtual int dispatch_handler (int index);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
-private:
-  ACE_ReactorEx (const ACE_ReactorEx &);
-  ACE_ReactorEx &operator = (const ACE_ReactorEx &);
-  // Deny access since member-wise won't work...
-
-  int calculate_timeout (ACE_Time_Value *time);
+  virtual int calculate_timeout (ACE_Time_Value *time);
   // Used to caluculate the next timeout
 
-  int update_state (void);
+  virtual int update_state (void);
   // Update the state of the handler repository
 
-  int new_owner (void);
+  virtual int new_owner (void);
   // Check to see if we have a new owner
 
-  int change_owner (void);
+  virtual int change_owner (void);
   // Set owner to new owner
 
   ACE_Timer_Queue *timer_queue_;
@@ -515,6 +510,11 @@ private:
 
   int open_for_business_;
   // This flag is used to keep track of whether we are already closed.
+
+private:
+  ACE_ReactorEx (const ACE_ReactorEx &);
+  ACE_ReactorEx &operator = (const ACE_ReactorEx &);
+  // Deny access since member-wise won't work...
 };
 
 #else /* NOT win32 */
