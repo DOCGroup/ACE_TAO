@@ -1,3 +1,23 @@
+Sat May 24 03:19:38 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* ace/OS.i (sigaddset, sigdelset, sigemptyset, sigfillset,
+	  sigismember): Modified the implementation of these function so
+ 	  as to conform with POSIX standard.  Basically all functions do
+	  the same things they did but more conservative protections are
+	  added.  The modified semantic becomes,
+	  
+	  sigemptyset, sigfillset, sigaddset, sigdelset:  return 0 if
+	    succeed, -1 otherwise. 
+	  sigismember: returns 0 if signum is not in the set, 1 if signum
+	    is in the set, and -1 if error occurs.
+
+	  If error occured, errno will be set to one of the following
+	  value: 
+	    EFAULT:  sigset is not a valid address.
+	    EINVAL:  signum is not a valid signal number.
+
+	  Notice that, so far, this is for NT only.
+
 Sat May 24 01:53:22 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* performance-tests/Misc/test_naming.cpp (do_testing): Thanks to
