@@ -159,9 +159,7 @@ client (void *arg = 0)
   // e.g., g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does
   // work on Linux, so the code seems fine.)  If we manage the storage
   // ourselves, we _will_ destroy it at the end of this function.
-  ACE_SOCK_IOStream *server_p;
-  ACE_NEW_RETURN (server_p, ACE_SOCK_IOStream, 0);
-  ACE_SOCK_IOStream &server = *server_p;
+  ACE_SOCK_IOStream server;
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr addr (remote_addr->get_port_number (),
@@ -232,8 +230,6 @@ client (void *arg = 0)
   // Shut down the test.
   server.close ();
 
-  delete server_p;
-
   return 0;
 }
 
@@ -250,9 +246,7 @@ server (void *arg = 0)
   // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on
   // Linux, so the code seems fine.)  If we manage the
   // storage ourselves, we _will_ destroy it at the end of this function.
-  ACE_SOCK_IOStream *client_handler_p;
-  ACE_NEW_RETURN (client_handler_p, ACE_SOCK_IOStream, 0);
-  ACE_SOCK_IOStream &client_handler = *client_handler_p;
+  ACE_SOCK_IOStream client_handler;
 
   ACE_INET_Addr server_addr;
   ACE_SOCK_Acceptor *acceptor = (ACE_SOCK_Acceptor *) arg;
@@ -333,10 +327,8 @@ server (void *arg = 0)
 
   // check for proper received values
   ACE_ASSERT (i == -1  && (f1 >= -0.13 && f1 <= -0.11)
-v	      && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)
+	      && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)
 	      && (d >= -45e+9 && d <= 47e+9));
-
-  delete client_handler_p;
 
   return 0;
 }
