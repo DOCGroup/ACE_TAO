@@ -184,7 +184,7 @@ int main (int argc, char* argv[])
 
               unsigned int try_count = 0;
               unsigned int try_max = (high - low) * 2;
-              while (client.done () <= 1)
+              while (true)
                 {
                   // See if we can get any more events
                   if (client.done ())
