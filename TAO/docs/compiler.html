@@ -741,6 +741,18 @@ also receives other options that are specific to it. <p>
     <td>&nbsp;</td>
   </tr>
 
+  <tr><a name="Sm">
+    <td><tt>-Sm</tt></td>
+
+    <td>Suppress C++ code generation from CCM 'implied' IDL.</td>
+    <td>This code generation is achieved by default using a 'preprocessing' visitor
+        that modified the AST and is launched just before the code generating
+        visitors. There is a new tool in CIAO that converts the entire IDL file
+        into one containing explicit declarations of the implied IDL types.
+        For such a file, we don't want the preprocessing visitor to bve launched,
+        so this command line option will suppress it.</td>
+  </tr>
+
 </table> <P>
 
 <P><HR><P>
