@@ -18,7 +18,6 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     reply_received_ (0),
     orb_core_ (orb_core),
     wait_strategy_ (0),
-    buf_ (),
     db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,
