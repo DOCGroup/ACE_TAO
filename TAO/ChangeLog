@@ -1,7 +1,16 @@
+Mon Jun 23 12:37:48 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Avoid an infinite loop during 'autostart'.  Once a server list
+          is found to be of zero length, then we leave the while loop.  This
+          would also happen if a 'list' command was issued and there were
+          more than 10 servers registerd with the ImR.
+
 Sun Jun 22 13:58:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
-          Added include of ace/OS.h. 
+          Added include of ace/OS.h.
 
 Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -14,17 +23,17 @@ Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat Jun 21 22:29:16 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/lib/Makefile.bor:
-	  Corrected bad syntax.
+        * orbsvcs/tests/Notify/lib/Makefile.bor:
+          Corrected bad syntax.
 
 Sat Jun 21 11:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h: Changed the constructor to
-	  set buffer sizes for the dgram sockets created. 
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h: Changed the constructor to
+          set buffer sizes for the dgram sockets created.
 
-	  Thanks to J. Russell Noseworthy and Keith Snively for providing
-	  the patches.
+          Thanks to J. Russell Noseworthy and Keith Snively for providing
+          the patches.
 
 Sat Jun 21 19:54:47 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -38,11 +47,11 @@ Sat Jun 21 19:54:47 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat Jun 21 09:34:14 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/BiDir_GIOP/BiDir_Policy_i.cpp (TAO_BidirectionalPolicy):
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp (TAO_BidirectionalPolicy):
 
-	  Corrected base class initialization order in base member
-	  initialization list to match class inheritance order.  Fixes a
-	  warning.
+          Corrected base class initialization order in base member
+          initialization list to match class inheritance order.  Fixes a
+          warning.
 
 Sat Jun 21 14:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -66,45 +75,45 @@ Fri Jun 20 16:42:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
 
-	  Fixed more typos. Thanks to Danta Cannarozzi <djc2@cse.wustl.edu>
-	  for reporting the problem.
+          Fixed more typos. Thanks to Danta Cannarozzi <djc2@cse.wustl.edu>
+          for reporting the problem.
 
 Fri Jun 20 15:42:14 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/Deferred/run_test.pl
+        * performance-tests/Sequence_Latency/Deferred/run_test.pl
 
-	  Added this missing file into the directory.
+          Added this missing file into the directory.
 
 Fri Jun 20 14:48:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-	* orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
 
-	  Added missing explicit instantiations that were causing build
-	  problems on impaired platforms.  Some of the explicit
-	  instantiations probably ought to be handled in generated code or
-	  other places, but that's a bigger issue to bite off.
+          Added missing explicit instantiations that were causing build
+          problems on impaired platforms.  Some of the explicit
+          instantiations probably ought to be handled in generated code or
+          other places, but that's a bigger issue to bite off.
 
 Fri Jun 20 12:56:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.h:
 
-	  Fixed case error in spelling of included file. Thanks to Diego
-	  Sevilla Ruiz <dsevilla@ditec.um.es> for reporting the mistake.
+          Fixed case error in spelling of included file. Thanks to Diego
+          Sevilla Ruiz <dsevilla@ditec.um.es> for reporting the mistake.
 
 Fri Jun 20 10:08:25 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/AMI/Makefile
-	* performance-tests/Sequence_Latency/AMI/Makefile.bor
+        * performance-tests/Sequence_Latency/AMI/Makefile
+        * performance-tests/Sequence_Latency/AMI/Makefile.bor
 
-	  Deleted the old "makefile" and "makefile.bor", which have
-	  wrong lower case file name causing the build error.
-	  Simply changed the file names and fixed the problem.
+          Deleted the old "makefile" and "makefile.bor", which have
+          wrong lower case file name causing the build error.
+          Simply changed the file names and fixed the problem.
 
 Fri Jun 20 10:10:07 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -233,13 +242,13 @@ Thu Jun 19 20:45:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 Thu Jun 19 18:29:28 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/AMH/Single_Threaded/run_test.pl
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/run_test.pl
 
           Fixed some wrong output information.
 
 Thu Jun 19 17:32:38 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/DSI/client.cpp
+        * performance-tests/Sequence_Latency/DSI/client.cpp
 
           Removed an unused dummy variable in the source code.
 
