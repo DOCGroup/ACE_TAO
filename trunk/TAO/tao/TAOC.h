@@ -26,6 +26,8 @@
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 ||
           TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#include "tao/Priority_Mapping_Manager.h"
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -47,6 +49,16 @@
 
 TAO_NAMESPACE  TAO
 {
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  typedef TAO_Priority_Mapping_Manager PriorityMappingManager;
+  typedef TAO_Priority_Mapping_Manager *PriorityMappingManager_ptr;
+  typedef TAO_Priority_Mapping_Manager_var PriorityMappingManager_var;
+  typedef TAO_Priority_Mapping_Manager_out PriorityMappingManager_out;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 

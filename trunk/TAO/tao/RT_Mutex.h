@@ -29,7 +29,8 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "RTCORBAS.h"
+#include "tao/RTCORBAS.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -38,7 +39,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_RT_Mutex : public RTCORBA::Mutex
+class TAO_Export TAO_RT_Mutex :
+  public RTCORBA::Mutex,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::Mutex implementation.
@@ -65,6 +68,15 @@ public:
                                    CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 };
 
 #if defined (__ACE_INLINE__)

@@ -22,12 +22,15 @@
 #if (TAO_HAS_RT_CORBA == 1)
 
 #include "tao/RTCORBAS.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Export TAO_RT_Current : public RTCORBA::Current
+class TAO_Export TAO_RT_Current :
+  public RTCORBA::Current,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::Current interface iplementation.

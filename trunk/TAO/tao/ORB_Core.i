@@ -325,15 +325,6 @@ TAO_ORB_Core::policy_current (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE TAO_Priority_Mapping *
-TAO_ORB_Core::priority_mapping (void)
-{
-  return this->priority_mapping_;
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 ACE_INLINE TAO_POA_Current &
 TAO_ORB_Core::poa_current (void) const
@@ -352,6 +343,29 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
 {
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
+
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+ACE_INLINE TAO_Priority_Mapping_Manager *
+TAO_ORB_Core::priority_mapping_manager (void)
+{
+  return this->priority_mapping_manager_;
+}
+
+ACE_INLINE TAO_RT_ORB *
+TAO_ORB_Core::rt_orb (void)
+{
+  return this->rt_orb_;
+}
+
+ACE_INLINE TAO_RT_Current *
+TAO_ORB_Core::rt_current (void)
+{
+  return this->rt_current_;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
 

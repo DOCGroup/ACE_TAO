@@ -30,8 +30,6 @@
 #include "tao/params.h"
 #include "tao/POAC.h"
 
-
-
 #include "ace/Map_Manager.h"
 #include "ace/Singleton.h"
 
@@ -54,6 +52,9 @@ class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_Priority_Mapping;
+class TAO_Priority_Mapping_Manager;
+class TAO_RT_ORB;
+class TAO_RT_Current;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -374,9 +375,15 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_Priority_Mapping *priority_mapping (void);
-  // Access the priority mapping class, this is a TAO extension but
-  // there is no standard way to get to it either.
+  TAO_RT_ORB *rt_orb (void);
+  // Access the RTORB.
+
+  TAO_RT_Current *rt_current (void);
+  // Access the RTORB.
+
+  TAO_Priority_Mapping_Manager *priority_mapping_manager (void);
+  // Access the priority mapping manager class.  This is a TAO extension but
+  // there is no standard for setting priority mapping either.
 
   // = Methods for obtaining ORB implementation default values for RT
   //   policies.
@@ -656,8 +663,18 @@ protected:
   int open_called_;
   // Flag which denotes that the open method was called.
 
-  TAO_Priority_Mapping *priority_mapping_;
-  // The priority mapping.
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_RT_ORB *rt_orb_;
+  // Implementation of RTCORBA::RTORB interface.
+
+  TAO_RT_Current *rt_current_;
+  // Implementation of RTCORBA::RTCurrent interface.
+
+  TAO_Priority_Mapping_Manager *priority_mapping_manager_;
+  // Manager for setting priority mapping.
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
