@@ -249,21 +249,6 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
   return last_ - 1;
 }
 
-
-ACE_INLINE void
-TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
-{
-  this->policy_list_ = policy_list;
-}
-
-ACE_INLINE CORBA::PolicyList* 
-TAO_MProfile::policy_list (void) 
-{
-  if (policy_list_ == 0)
-    create_policy_list ();
-  return policy_list_;
-}
-
 ACE_INLINE void
 TAO_MProfile::create_policy_list (void)
 {
@@ -279,3 +264,20 @@ TAO_MProfile::create_policy_list (void)
   
   // @@ Marina & Irfan I would raise an exception in this case.
 }
+
+
+ACE_INLINE void
+TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
+{
+  this->policy_list_ = policy_list;
+}
+
+ACE_INLINE CORBA::PolicyList* 
+TAO_MProfile::policy_list (void) 
+{
+  if (policy_list_ == 0)
+    create_policy_list ();
+  return policy_list_;
+}
+
+

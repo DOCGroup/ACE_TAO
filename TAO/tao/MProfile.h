@@ -155,6 +155,14 @@ public:
   // profile and the results are averaged together.
   // NON-THREAD SAFE.
 
+protected:
+
+ void create_policy_list (void);
+  // This method handle the dynamic allocation of the data member
+  // <policy_list_>.
+
+public:
+
   void policy_list (CORBA::PolicyList *policy_list);
   // Sets the policies list associated with the profiles
   // owned by the TAO_MProfile.
@@ -162,12 +170,6 @@ public:
   CORBA::PolicyList * policy_list (void);
   // Gets the policies list associated with the profiles
   // owned by the TAO_MProfile.
-
-protected:
-
- void create_policy_list (void);
-  // This method handle the dynamic allocation of the data member
-  // <policy_list_>.
 
 protected:
 
