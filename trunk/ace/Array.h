@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Array.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_ARRAY_H)
@@ -62,7 +62,7 @@ public:
   // Set an item in the array at location <index>.  Returns
   // -1 if <index> is not in range, else returns 0.
 
-  int get (T &item, size_t index);
+  int get (T &item, size_t index) const;
   // Get an item in the array at location <index>.  Returns -1 if
   // <index> is not in range, else returns 0.
 
@@ -87,7 +87,7 @@ private:
   size_t max_size_;
   // Maximum size of the array, i.e., the total number of <T> elements
   // in <array_>.
-        
+
   size_t cur_size_;
   // Current size of the array.  This starts out being == to
   // <max_size_>.  However, if we are assigned a smaller array, then
