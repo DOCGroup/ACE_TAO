@@ -1,3 +1,9 @@
+Wed Jan 14 15:25:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/releasenotes/index.html: 
+
+	  Added a link to CIDLC from the releasenotes.
+
 Wed Jan 14 14:55:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile:
