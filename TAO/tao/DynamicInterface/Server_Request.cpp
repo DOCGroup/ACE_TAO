@@ -2,19 +2,50 @@
 
 // Implementation of the Dynamic Server Skeleton Interface.
 
-#include "tao/Server_Request.h"
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
+#include "Server_Request.h"
 #include "tao/NVList.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/Marshal.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Server_Request.i"
+# include "Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Server_Request, "$Id$")
+ACE_RCSID(DynamicInterface, Server_Request, "$Id$")
+
+// Reference counting for DSI ServerRequest object.
+
+CORBA::ULong
+CORBA_ServerRequest::_incr_refcnt (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    ace_mon,
+                    this->lock_,
+                    0);
+
+  return this->refcount_++;
+}
+
+CORBA::ULong
+CORBA_ServerRequest::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      0);
+
+    this->refcount_--;
+
+    if (this->refcount_ != 0)
+      {
+        return this->refcount_;
+      }
+  }
+
+  delete this;
+  return 0;
+}
 
 CORBA_ServerRequest::CORBA_ServerRequest (
     TAO_ServerRequest &orb_server_request
@@ -24,6 +55,7 @@ CORBA_ServerRequest::CORBA_ServerRequest (
     params_ (CORBA::NVList::_nil ()),
     retval_ (0),
     exception_ (0),
+    refcount_ (1),
     orb_server_request_ (orb_server_request)
 {
   this->orb_server_request_.is_dsi ();
@@ -171,6 +203,4 @@ CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
         }
     }
 }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 

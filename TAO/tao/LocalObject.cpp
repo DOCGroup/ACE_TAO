@@ -4,7 +4,6 @@
 
 #include "tao/LocalObject.h"
 #include "tao/Stub.h"
-#include "tao/Request.h"
 #include "tao/debug.h"
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
@@ -132,7 +131,7 @@ CORBA::Request_ptr
 CORBA_LocalObject::_request (const CORBA::Char *,
                               CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Request::_nil ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)

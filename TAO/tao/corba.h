@@ -41,11 +41,9 @@
 #include "tao/Any.h"
 #include "tao/NVList.h"
 #include "tao/Principal.h"
-#include "tao/Request.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Object.h"
 #include "tao/LocalObject.h"
-#include "tao/Context.h"
 #include "tao/Typecode.h"
 
 #include "tao/CDR.h"

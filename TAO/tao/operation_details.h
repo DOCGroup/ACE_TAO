@@ -21,7 +21,7 @@
 #include "tao/target_specification.h"
 
 // @@ Bala: Why is this not part of the RequestHeader?!
-class TAO_Operation_Details
+class TAO_Export TAO_Operation_Details
 {
   // = TITLE
   //   Class with operation details

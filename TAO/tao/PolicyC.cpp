@@ -10,7 +10,6 @@
 #include "tao/PolicyC.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
-#include "tao/NVList.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PolicyC.i"

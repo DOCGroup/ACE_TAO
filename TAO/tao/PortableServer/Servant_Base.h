@@ -263,62 +263,6 @@ protected:
   // Throws CORBA::BAD_OPERATION exception.
 };
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-class TAO_PortableServer_Export TAO_DynamicImplementation 
-  : public virtual TAO_ServantBase
-{
-  // = TITLE
-  //   Base class for DSI.
-  //
-  // = DESCRIPTION
-  //   It is expected that the <invoke> and <_primary_interface>
-  //   methods will be only invoked by the POA in the context of
-  //   serving a CORBA request. Invoking this method in other
-  //   circumstances may lead to unpredictable results.
-public:
-  virtual void invoke (CORBA::ServerRequest_ptr request,
-                       CORBA_Environment &ACE_TRY_ENV = 
-                         TAO_default_environment ()) = 0;
-  // The invoke() method receives requests issued to any CORBA object
-  // incarnated by the DSI servant and performs the processing
-  // necessary to execute the request.
-
-  virtual CORBA::RepositoryId _primary_interface (
-      const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa,
-      CORBA_Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    ) = 0;
-  // The _primary_interface() method receives an ObjectId value and a
-  // POA_ptr as input parameters and returns a valid RepositoryId
-  // representing the most-derived interface for that oid.
-
-  CORBA::Object_ptr _this (CORBA_Environment &ACE_TRY_ENV = 
-                             TAO_default_environment ());
-  // Returns a CORBA::Object_ptr for the target object.
-
-protected:
-
-  virtual const char *_interface_repository_id (void) const;
-  // Return 0.  Should never be used.
-
-  virtual void *_downcast (const char *repository_id);
-  // Simply returns "this"
-
-  virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = 
-                                    TAO_default_environment ());
-  // This is an auxiliar method for _this() and _narrow().
-
-  virtual void _dispatch (TAO_ServerRequest &request,
-                          void *context,
-                          CORBA_Environment &ACE_TRY_ENV = 
-                            TAO_default_environment ());
-  // Turns around and calls invoke.
-};
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 #if defined (__ACE_INLINE__)
 # include "Servant_Base.i"
 #endif /* __ACE_INLINE__ */

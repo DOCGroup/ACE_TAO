@@ -422,6 +422,7 @@ void CORBA_ConstructionPolicy::make_domain_manager (
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
       istub->orb_core ()->client_request_interceptors ()
     );
+
   CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager ri (
       "make_domain_manager",
       _tao_call.service_info (),

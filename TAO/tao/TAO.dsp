@@ -537,25 +537,6 @@ SOURCE=.\Connector_Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Context.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\CONV_FRAMEC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -765,44 +746,6 @@ SOURCE=.\default_server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_Invocation.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\DII_Reply_Dispatcher.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Direct_Priority_Mapping.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -861,6 +804,25 @@ SOURCE=.\DLL_Parser.cpp
 # Begin Source File
 
 SOURCE=.\DomainC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_Adapter.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -2418,25 +2380,6 @@ SOURCE=.\Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2628,25 +2571,6 @@ SOURCE=.\RTCORBAS_T.cpp
 # Begin Source File
 
 SOURCE=.\Sequence.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Server_Request.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3645,10 +3569,6 @@ SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Context.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\CONV_FRAMEC.h
 # End Source File
 # Begin Source File
@@ -3697,14 +3617,6 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_Invocation.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DII_Reply_Dispatcher.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
@@ -3718,6 +3630,10 @@ SOURCE=.\DLL_Parser.h
 # Begin Source File
 
 SOURCE=.\DomainC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -3769,6 +3685,10 @@ SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Connectors.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Headers.h
 # End Source File
 # Begin Source File
@@ -3817,6 +3737,10 @@ SOURCE=.\IIOP_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_Lite_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Profile.h
 # End Source File
 # Begin Source File
@@ -3826,10 +3750,6 @@ SOURCE=.\IIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\Interceptor_List.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
 
@@ -3961,10 +3881,6 @@ SOURCE=.\ORBInitializer_Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ORBInitializer_Registry.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\ORBInitInfo.h
 # End Source File
 # Begin Source File
@@ -3978,6 +3894,14 @@ SOURCE=.\Parser_Registry.h
 # Begin Source File
 
 SOURCE=.\Pluggable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging_Utils.h
 # End Source File
 # Begin Source File
 
@@ -4053,10 +3977,6 @@ SOURCE=.\Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\request.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.h
 # End Source File
 # Begin Source File
@@ -4102,10 +4022,6 @@ SOURCE=.\sequence.h
 # Begin Source File
 
 SOURCE=.\Sequence_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Server_Request.h
 # End Source File
 # Begin Source File
 
@@ -4353,10 +4269,6 @@ SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Context.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CONV_FRAMEC.i
 # End Source File
 # Begin Source File
@@ -4497,6 +4409,10 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor_List.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
@@ -4593,6 +4509,10 @@ SOURCE=.\ORB_Table.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORBInitializer_Registry.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\params.i
 # End Source File
 # Begin Source File
@@ -4657,10 +4577,6 @@ SOURCE=.\Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\RT_Current.i
 # End Source File
 # Begin Source File
@@ -4694,10 +4610,6 @@ SOURCE=.\sequence.i
 # Begin Source File
 
 SOURCE=.\Sequence_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Server_Request.i
 # End Source File
 # Begin Source File
 

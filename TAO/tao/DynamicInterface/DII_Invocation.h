@@ -5,14 +5,14 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO
+//    DynamicInterface
 //
 // = DESCRIPTION
-//    Encapsulate the logic for remote Asynchronous Invocations.
+//    The DII invocation classes.
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@cs.wustl.edu> and Alexander Babu Arulanthu
-//   <alex@cs.wustl.edu>
+//    Carlos O'Ryan <coryan@cs.wustl.edu> and Alexander Babu Arulanthu
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -26,20 +26,19 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#include "DII_Reply_Dispatcher.h"
+#include "Request.h"
 
-#include "tao/DII_Reply_Dispatcher.h"
-#include "tao/Request.h"
-
-class TAO_Export TAO_GIOP_DII_Deferred_Invocation : public TAO_GIOP_Invocation
+class TAO_DynamicInterface_Export TAO_GIOP_DII_Deferred_Invocation
+  : public TAO_GIOP_Invocation
 {
   // = TITLE
-  //   Sends a two-way request does not expect the reply.
+  //    Sends a two-way request does not expect the reply.
   //
   // = DESCRIPTION
-  //   This class connects (or lookups a connection from the cache) to
-  //   the remote server, builds the CDR stream for the Request, send
-  //   the CDR stream and returns.
+  //    This class connects (or lookups a connection from the cache) to
+  //    the remote server, builds the CDR stream for the Request, send
+  //    the CDR stream and returns.
   //
 public:
   TAO_GIOP_DII_Deferred_Invocation (TAO_Stub *data,
@@ -58,11 +57,6 @@ public:
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
 
-
-  //   TAO_InputCDR &inp_stream (void);
-  //   // Return the underlying input stream.
-  //
-
   const IOP::ServiceContextList& reply_service_info (void) const;
   // Accessor to the reply ServiceContextList.
 
@@ -72,16 +66,13 @@ private:
   // Implementation of the invoke() methods, handles the basic
   // send/reply code and the system exceptions.
 
-private:
   TAO_DII_Deferred_Reply_Dispatcher *rd_;
   // Reply dispatcher for the current synchronous Asynch_Invocation.
 };
 
 #if defined (__ACE_INLINE__)
-#  include "tao/DII_Invocation.i"
+#  include "tao/DII_Invocation.inl"
 #endif /* __ACE_INLINE__ */
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #include "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

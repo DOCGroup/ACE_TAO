@@ -104,7 +104,6 @@ ORB_CORE_FILES = \
   TimeBaseS.cpp \
   Principal.cpp \
   Sequence.cpp \
-  Server_Request.cpp \
   MProfile.cpp \
   Stub.cpp \
   Typecode.cpp \
@@ -119,7 +118,6 @@ ORB_CORE_FILES = \
   Interceptor.cpp \
   InterceptorC.cpp \
   Asynch_Invocation.cpp \
-  DII_Invocation.cpp \
   operation_details.cpp \
   PortableInterceptor.cpp \
   Request_Info.cpp \
@@ -152,7 +150,7 @@ ORB_CORE_FILES = \
   Reply_Dispatcher.cpp \
   Synch_Reply_Dispatcher.cpp \
   Asynch_Reply_Dispatcher.cpp \
-  DII_Reply_Dispatcher.cpp \
+  Dynamic_Adapter.cpp \
   IOPC.cpp \
   IOPS.cpp \
   PollableC.cpp \
@@ -160,8 +158,6 @@ ORB_CORE_FILES = \
   CONV_FRAMEC.cpp \
   CONV_FRAMES.cpp \
   Tagged_Components.cpp \
-  Context.cpp \
-  Request.cpp \
   Services.cpp \
   NVList.cpp \
   MessagingC.cpp \
@@ -260,7 +256,6 @@ HEADER_FILES = \
   Active_Object_Map.h \
   Any.h \
   Asynch_Invocation.h \
-  DII_Invocation.h \
   BoundsC.h \
   Buffering_Constraint_Policy.h \
   CDR.h \
@@ -271,7 +266,6 @@ HEADER_FILES = \
   Client_Priority_Policy.h \
   Client_Strategy_Factory.h \
   Connector_Registry.h \
-  Context.h \
   CurrentC.h \
   DLL_ORB.h
   Direct_Priority_Mapping.h \
@@ -356,12 +350,10 @@ HEADER_FILES = \
   RT_Current.h \
   Reactor_Per_Priority.h \
   Reactor_Registry.h \
-  Request.h \
   Resource_Factory.h \
   Sequence.h \
   Sequence_T.h \
   Servant_Base.h \
-  Server_Request.h \
   Server_Strategy_Factory.h \
   Services.h \
   Single_Reactor.h \
@@ -399,8 +391,8 @@ HEADER_FILES = \
   Reply_Dispatcher.h \
   Synch_Reply_Dispatcher.h \
   Asynch_Reply_Dispatcher.h \
-  DII_Reply_Dispatcher.h \
   WrongTransactionC.h \
+  Dynamic_Adapter.h \
   corba.h \
   corbafwd.h \
   debug.h \
@@ -421,7 +413,6 @@ INLINE_FILES = \
   Active_Object_Map.i \
   Any.i \
   Asynch_Invocation.i \
-  DII_Invocation.i \
   BoundsC.i \
   Buffering_Constraint_Policy.i \
   CDR.i \
@@ -431,7 +422,6 @@ INLINE_FILES = \
   CORBA_String.inl \
   Client_Priority_Policy.i \
   Connector_Registry.i \
-  Context.i \
   CurrentC.i \
   DLL_ORB.inl \
   Direct_Priority_Mapping.i \
@@ -500,12 +490,9 @@ INLINE_FILES = \
   Reply_Dispatcher.i \
   Synch_Reply_Dispatcher.i \
   Asynch_Reply_Dispatcher.i \
-  DII_Reply_Dispatcher.i \
-  Request.i \
   Sequence.i \
   Sequence_T.i \
   Servant_Base.i \
-  Server_Request.i \
   Services.i \
   Single_Reactor.i \
   Stub.i \

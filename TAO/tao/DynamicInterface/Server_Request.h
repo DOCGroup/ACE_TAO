@@ -28,12 +28,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
+#include "Context.h"
 #include "tao/TAO_Server_Request.h"
-#include "tao/Context.h"
 
-class TAO_Export CORBA_ServerRequest
+class TAO_DynamicInterface_Export CORBA_ServerRequest
 {
   // = TITLE
   //    Class representing the CORBA ServerRequest pseudo-object.
@@ -49,12 +47,6 @@ public:
 
   ~CORBA_ServerRequest (void);
   // Destructor.
-
-  static CORBA_ServerRequest *_duplicate (CORBA_ServerRequest *req);
-  // The duplicate method for Pseudo Objects.
-
-  static CORBA_ServerRequest *_nil (void);
-  // The standard _nil method on pseudo objects.
 
   void arguments (CORBA::NVList_ptr &list,
                   CORBA_Environment &ACE_TRY_ENV =
@@ -103,6 +95,14 @@ public:
   const char *operation (void) const;
   // Get the operation name.
 
+  // Pseudo object methods.
+  static CORBA_ServerRequest_ptr _duplicate (CORBA_ServerRequest_ptr);
+  static CORBA_ServerRequest_ptr _nil (void);
+
+  // = Reference counting.
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
+
   void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag.
 
@@ -127,15 +127,19 @@ private:
   CORBA::Any_ptr exception_;
   // Any exception which might be raised.
 
+  CORBA::ULong refcount_;
+  // Reference counting.
+
+  ACE_SYNCH_MUTEX lock_;
+  // Protect the refcount_ and response_receieved_.
+
   TAO_ServerRequest &orb_server_request_;
   // Request from the ORB.
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Server_Request.i"
+# include "Server_Request.inl"
 #endif /* __ACE_INLINE__ */
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #include "ace/post.h"
 #endif /* TAO_CORBA_SERVER_REQUEST_H */

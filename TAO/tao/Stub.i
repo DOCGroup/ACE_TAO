@@ -25,17 +25,9 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 }
 
 ACE_INLINE void
-TAO_Stub::reset_first_locate_request (void)
-{
-  this->first_locate_request_ = 1;
-}
-
-
-ACE_INLINE void
 TAO_Stub::reset_base (void)
 {
   this->base_profiles_.rewind ();
-  this->reset_first_locate_request ();
   this->profile_success_ = 0;
 
   this->set_profile_in_use_i (base_profiles_.get_next ());
@@ -107,22 +99,6 @@ ACE_INLINE TAO_Profile *
 TAO_Stub::profile_in_use (void)
 {
   return this->profile_in_use_;
-}
-
-ACE_INLINE void
-TAO_Stub::use_locate_requests (CORBA::Boolean use_it)
-{
-  if (use_it)
-    {
-      this->first_locate_request_ = 1;
-      this->use_locate_request_ = 1;
-    }
-  else
-    {
-      // Don't use it.
-      this->first_locate_request_ = 0;
-      this->use_locate_request_ = 0;
-    }
 }
 
 ACE_INLINE TAO_MProfile *

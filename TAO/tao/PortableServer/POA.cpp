@@ -2156,6 +2156,7 @@ TAO_POA::validate_policies (CORBA::Environment &ACE_TRY_ENV)
 
 #endif /* TAO_HAS_RT_CORBA */
 
+
 TAO_SERVANT_LOCATION
 TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                            PortableServer::Servant &servant,

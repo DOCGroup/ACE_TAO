@@ -176,10 +176,6 @@ SOURCE=.\DomainS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Forwarding_Servant.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImplRepoC.cpp
 # End Source File
 # Begin Source File
@@ -273,10 +269,6 @@ SOURCE=.\Direct_Object_Proxy_Impl.h
 # Begin Source File
 
 SOURCE=.\DomainS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Forwarding_Servant.h
 # End Source File
 # Begin Source File
 

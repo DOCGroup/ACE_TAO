@@ -5,6 +5,7 @@
 #include "tao/Stub.h"
 
 #include "tao/Timeprobe.h"
+#include "tao/Dynamic_Adapter.h"
 #include "tao/Object_KeyC.h"
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
@@ -18,6 +19,8 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/ORB_Core.h"
+
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -571,7 +574,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
+  ACE_THROW_SPEC ((CORBA::SystemException, CORBA::UnknownUserException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
@@ -601,55 +604,37 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
                             TAO_INVOKE_EXCEPTION);
         }
 
-      for (CORBA::ULong i = 0;
-           exceptions != 0 && i < exceptions->count ();
-           i++)
+      TAO_Dynamic_Adapter *dynamic_adapter =
+        ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+
+      CORBA_Exception *decoded_exception =
+        dynamic_adapter->decode_user_exception (exceptions,
+                                                this,
+                                                buf.in (),
+                                                ACE_TRY_ENV);
+      ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+      if (decoded_exception != 0)
         {
-          CORBA::TypeCode_ptr tcp =
-            exceptions->item (i, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          const char *xid = tcp->id (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          if (ACE_OS::strcmp (buf.in (), xid) != 0)
-            continue;
-
-          // @@ In the old days the exceptions where catched and the
-          // connection was closed, that doesn't make any sense:
-          // this is a client side problem, for one particular
-          // request.
-          // this->transport_->close_connection ();
-          // ACE_RE_THROW;
-
-          const ACE_Message_Block* cdr =
-            this->inp_stream ().start ();
-          CORBA_Any any (tcp, 0,
-                         this->inp_stream ().byte_order (),
-                         cdr);
-          CORBA_Exception *exception;
-
-          ACE_NEW_THROW_EX (exception,
-                            CORBA_UnknownUserException (any),
-                            CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_YES));
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
           // @@ Think about a better way to raise the exception here,
           //    maybe we need some more macros?
-          ACE_TRY_ENV.exception (exception);  // We can not use ACE_THROW here.
+
+          // We can not use ACE_THROW here.
+          ACE_TRY_ENV.exception (decoded_exception);
           return TAO_INVOKE_EXCEPTION;
         }
+      else
+        {
+          // If we couldn't find the right exception, report it as
+          // CORBA::UNKNOWN.
 
-      // If we couldn't find the right exception, report it as
-      // CORBA::UNKNOWN.
-
-      // @@ It would seem like if the remote exception is a
-      //    UserException we can assume that the request was
-      //    completed.
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_YES),
-                        TAO_INVOKE_EXCEPTION);
+          // @@ It would seem like if the remote exception is a
+          //    UserException we can assume that the request was
+          //    completed.
+          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                            CORBA::COMPLETED_YES),
+                            TAO_INVOKE_EXCEPTION);
+        }
     }
 
   return retval;

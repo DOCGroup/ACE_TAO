@@ -25,7 +25,7 @@
 #include "tao/IOPC.h"
 
 
-class TAO_Target_Specification
+class TAO_Export TAO_Target_Specification
 {
   // = TITLE
   //   A class to encapsulate all the ways of specifying targets.

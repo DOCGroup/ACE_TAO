@@ -5,6 +5,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "testC.h"
+#include "tao/DynamicInterface/Request.h"
 
 ACE_RCSID(Latency, dii_client, "$Id$")
 
