@@ -77,7 +77,7 @@ class Counting_Acceptor : public ACCEPTOR
   // = TITLE
   //     Factory that accepts the connection and creates the
   //     <Counting_Service> handler.  This illustrates both the
-  //     Strategy pattern as a mean to configure the
+  //     Strategy pattern as a means to configure the
   //     <ACE_Strategy_Acceptor> (i.e., via the
   //     <ACE_Process_Strategy>), as well as the Template Method
   //     pattern (via the <make_svc_handler> method).
