@@ -6,15 +6,23 @@ NAME = TAO_Security
 
 TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
 	-I..\..	-Ge 1 -Wb,export_macro=TAO_Security_Export \
-	-Wb,export_include=Security/security_export.h -Wb,pre_include=ace/pre.h	\
+	-Wb,export_include=Security/security_export.h \
+	-Wb,pre_include=ace/pre.h \
 	-Wb,post_include=ace/post.h
 
 IDLFILES = \
-	$(IDLDIR)\Security.idl
+	$(IDLDIR)\Security.idl \
+	$(IDLDIR)\SecurityLevel1.idl \
+	$(IDLDIR)\SecurityLevel2.idl
 
 OBJFILES = \
 	$(OBJDIR)\SecurityC.obj	\
-	$(OBJDIR)\SecurityS.obj
+	$(OBJDIR)\SecurityLevel1C.obj	\
+	$(OBJDIR)\SecurityLevel2C.obj	\
+	$(OBJDIR)\SecurityLevel2S.obj \
+	$(OBJDIR)\Security_Current.obj \
+	$(OBJDIR)\Security_Current_Impl.obj \
+	$(OBJDIR)\Security_ORBInitializer.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
@@ -49,5 +57,14 @@ all: idl_src_files
 
 idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 
-$(IDLDIR)\SecurityC.cpp	$(IDLDIR)\SecurityS.cpp: $(IDLDIR)\Security.idl
+$(IDLDIR)\SecurityC.cpp: $(IDLDIR)\Security.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SecurityLevel1C.cpp: $(IDLDIR)\SecurityLevel1.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SecurityLevel2C.cpp: $(IDLDIR)\SecurityLevel2.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SecurityLevel2S.cpp: $(IDLDIR)\SecurityLevel2.idl
 	$(TAO_IDL) $**

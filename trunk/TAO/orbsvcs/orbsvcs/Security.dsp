@@ -95,11 +95,31 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Security\Security_Current.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\Security_Current_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\Security_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SecurityC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SecurityS.cpp
+SOURCE=.\SecurityLevel1C.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2C.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2S.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -107,7 +127,23 @@ SOURCE=.\SecurityS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Security\Security_Current.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\Security_Current.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\Security_Current_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Security\security_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Security\Security_ORBInitializer.h
 # End Source File
 # Begin Source File
 
@@ -115,7 +151,19 @@ SOURCE=.\SecurityC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SecurityS.h
+SOURCE=.\SecurityLevel1C.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2C.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2S.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2S_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -128,13 +176,17 @@ SOURCE=.\Security.idl
 !IF  "$(CFG)" == "Security - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SECUR="..\..\..\bin\Release\tao_idl.exe"	
+
+!ELSEIF  "$(CFG)" == "Security - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__SECUR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\Security.idl
 InputName=Security
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security\security_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security\security_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -164,13 +216,72 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel1.idl
+
+!IF  "$(CFG)" == "Security - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+
 !ELSEIF  "$(CFG)" == "Security - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SECUR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
-InputPath=.\Security.idl
-InputName=Security
+InputPath=.\SecurityLevel1.idl
+InputName=SecurityLevel1
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security\security_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2.idl
+
+!IF  "$(CFG)" == "Security - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+
+!ELSEIF  "$(CFG)" == "Security - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\SecurityLevel2.idl
+InputName=SecurityLevel2
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security\security_export.h $(InputName).idl
@@ -216,7 +327,19 @@ SOURCE=.\SecurityC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\SecurityS.i
+SOURCE=.\SecurityLevel1C.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2C.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2S.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityLevel2S_T.i
 # End Source File
 # End Group
 # Begin Group "Template Files"
@@ -224,8 +347,7 @@ SOURCE=.\SecurityS.i
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\SecurityS_T.cpp
-# PROP Exclude_From_Build 1
+SOURCE=.\SecurityLevel2S_T.cpp
 # End Source File
 # End Group
 # End Target
