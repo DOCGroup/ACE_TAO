@@ -1,3 +1,15 @@
+Sun Mar  5 12:45:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/MessagingC.h:
+	* tao/MessagingC.cpp:
+	  Removed Any operators for ExceptionHolder, which is a
+	  valuetype, not an interface.
+
+	* POAC.h:
+	  Added #if !defined (TAO_HAS_MINIMUM_CORBA) guards to
+	  declaration of Any operators for ForwardRequest. The
+	  operator bodies are already guarded.
+
 Sat Mar  4 18:11:28 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* Modified the following files:
