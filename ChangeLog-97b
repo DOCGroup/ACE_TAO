@@ -6,6 +6,9 @@ Fri Sep 26 11:55:27 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE.cpp: Fixed the TLI/BSD checks in handle_timed_complete.
 
+	* tests/SOCK_Connector_Test.cpp: Added ENOTCONN as a valid fail
+	  condition (in addition to ECONNREFUSED).
+
 Fri Sep 26 05:11:40 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/SOCK_Acceptor.cpp (shared_accept): Made the newly added
