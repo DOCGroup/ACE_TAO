@@ -216,6 +216,8 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
       if (qop == Security::SecQOPNoProtection)
         no_protection = 1;
+      else if (qop == Security::SecQOPIntegrityAndConfidentiality)
+        no_protection = 0;
     }
 
   // If the SSL port is zero, then no SSLIOP tagged component was
@@ -385,6 +387,14 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
   const ACE_INET_Addr &remote_address =
     ssl_endpoint->object_addr ();
+
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+              "********** SSLIOP_Connector -- port from addr = %u\n"
+              "********** SSLIOP_Connector -- port from ssl  = %u\n",
+              remote_address.get_port_number (),
+              ssl_component.port));
+#endif  /* 0 */
 
   // Verify that the remote ACE_INET_Addr was initialized
   // properly.  Failure can occur if hostname lookup failed when
