@@ -80,10 +80,6 @@ Thu Apr 24 10:17:28 2003  Steve Totten  <totten_s@ociweb.com>
           Added a smart_proxies base project to make it easy to
           build with TAO smart proxies support.
 
-Thu Apr 24 10:20:20 2003  Chad Elliott  <elliott_c@ociweb.com>
-
-        * bin/MakeProjectCreator/config/smart_proxies.mpb:
-
 Thu Apr 24 13:55:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         * README.SCTP
