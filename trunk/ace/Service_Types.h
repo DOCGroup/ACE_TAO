@@ -123,7 +123,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Module_Type *next_; 
+  ACE_Module_Type *link_; 
   // Pointer to the next <ACE_Module_Type> in an <ACE_Stream_Type>.
 };
 
