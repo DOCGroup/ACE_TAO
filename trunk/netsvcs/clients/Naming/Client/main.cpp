@@ -16,7 +16,10 @@ main (int argc, char *argv[])
   if (daemon.open (argc, argv) == -1)
     {
       if (errno != ENOENT)
-	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
+	ACE_ERROR ((LM_ERROR,
+                    "%p\n%a",
+                    "open",
+                    1));
       else // Use static binding.
 	{
 	  char *l_argv[3];
@@ -26,12 +29,18 @@ main (int argc, char *argv[])
 	  ACE_Service_Object *so = ACE_SVC_INVOKE (ACE_Naming_Context);
 
 	  if (so->init (2, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "ACE_Naming_Context", 1));
+	    ACE_ERROR ((LM_ERROR,
+                        "%p\n%a",
+                        "ACE_Naming_Context",
+                        1));
 
 	  so = ACE_SVC_INVOKE (Client_Test);
 
 	  if (so->init (0, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Client_Test", 1));
+	    ACE_ERROR ((LM_ERROR,
+                        "%p\n%a",
+                        "Client_Test",
+                        1));
 	}
     }
 

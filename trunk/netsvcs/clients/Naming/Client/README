@@ -1,9 +1,7 @@
-This directory contains a set of tests for the ACE_Name_Server
-library.  There are two directories -- client and server, which test
-the client and server, respectively.  In addition, these tests
-illustrate how to use the ACE Service_Config mechanism, which enables
-the client and server code to be dynamically linked into the process
-at installation-time or run-time!
+This directory contains a test for the ACE_Name_Server library.  This
+test program also illustrates how to use the ACE Service_Config
+mechanism, which enables the client code to be dynamically linked into
+the process at installation-time or run-time.
 
 The client test is an application that allows the user to vary the
 test parameters through the following menu driven interface:
@@ -72,10 +70,9 @@ types. Note that pattern matching is supported using regular expressions.
 -------------------------
 Running the tests:
 
-Both the client and the server test programs use DLL supported by
-svc.conf which allows them to configure the client-side and the
-server-side (respectively) dynamically. The client test program
-accomplishes this by making use of a Singleton proxy object
+The test program uses a DLL supported by the svc.conf file, which
+allows them to configure the client-side dynamically.  The client test
+program accomplishes this by making use of a Singleton proxy object
 (Name_Service) to provide an interface to the client-side.
 
 The test programs rely on svc.conf to provide the necessary parameters
@@ -119,6 +116,8 @@ database needs to be accessed.  The server test needs to run on the
 machine that contains the net local database.  To execute the server
 test, the user has to specify the port number at which the server will
 be listening in the svc.conf file.  An implementation of a name
-service for ACE is available in the $ACE_ROOT/netsvcs/bin
-directory.  Please see the README file there for an explanation of how
-to run the server.
+service for ACE is available in the $ACE_ROOT/netsvcs/{lib,servers}
+directories.  Please see the README files there for an explanation of
+how to run the server.
+
+

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

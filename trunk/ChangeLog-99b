@@ -1,3 +1,15 @@
+Tue Apr 27 20:59:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/clients/Naming: Moved the README file into the Client/
+ 	  directory since that's what it described.
+
+	* netsvcs/clients/Naming/Client/Client_Test.cpp: Reformatted some
+ 	  code to conform to ACE programming guidelines.
+
+	* ace/Naming_Context.cpp (parse_args): Oops, fixed a braino
+ 	  related to strcmp().  Thanks to Valery Arkhangorodsky
+ 	  <avalery@balisoft.com> for reporting this.
+
 Tue Apr 27 18:00:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp (ACE_OS_CString, ACE_OS_WString): Fixed one-off error
