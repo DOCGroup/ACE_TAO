@@ -2519,36 +2519,6 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 }
 
 ACE_INLINE int
-ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
-                              int &abandoned)
-{
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
-  ACE_UNUSED_ARG (abandoned);
-  return ACE_OS::thread_mutex_lock (m);
-#else
-  // @@ Irfan, can you please fill in here?
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (abandoned);
-  return 0;
-#endif /* ACE_HAS_RECURSIVE_MUTEXES */
-}
-
-ACE_INLINE int
-ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m,
-                                 int &abandoned)
-{
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
-  ACE_UNUSED_ARG (abandoned);
-  return ACE_OS::thread_mutex_trylock (m);
-#else
-  // @@ Irfan, can you please fill in here?
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (abandoned);
-  return 0;
-#endif /* ACE_HAS_RECURSIVE_MUTEXES */
-}
-
-ACE_INLINE int
 ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
