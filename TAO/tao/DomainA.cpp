@@ -26,13 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "DomainC.h"
-#include "DomainA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -87,7 +86,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -141,8 +140,8 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -235,5 +234,5 @@ CORBA::Boolean operator>>= (
         CORBA::DomainManagerList \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

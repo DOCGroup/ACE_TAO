@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_DOMAINMANAGER___CI_)
 #define _CORBA_DOMAINMANAGER___CI_
@@ -63,7 +63,7 @@ CORBA::DomainManager::DomainManager (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___CI_)
 #define _CORBA_CONSTRUCTIONPOLICY___CI_
@@ -97,48 +97,4 @@ CORBA::ConstructionPolicy::ConstructionPolicy (
 }
 
 #endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
-
-TAO_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const CORBA::DomainManager_ptr
-  );
-
-TAO_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::DomainManager_ptr &
-  );
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
-
-TAO_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const CORBA::ConstructionPolicy_ptr
-  );
-
-TAO_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::ConstructionPolicy_ptr &
-  );
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_CORBA_DomainManagerList_I_
-#define _TAO_CDR_OP_CORBA_DomainManagerList_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const CORBA::DomainManagerList &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    CORBA::DomainManagerList &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_DomainManagerList_I_ */
 

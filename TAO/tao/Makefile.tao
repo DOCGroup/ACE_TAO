@@ -10933,7 +10933,7 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h DomainA.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor_T.h \
