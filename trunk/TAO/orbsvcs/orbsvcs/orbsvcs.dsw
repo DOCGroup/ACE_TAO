@@ -141,7 +141,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DSLogAdmin"=.\DSLogAdmin.dsp - Package Owner=<4>
+Project: "DsLogAdmin"=.\DsLogAdmin.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
