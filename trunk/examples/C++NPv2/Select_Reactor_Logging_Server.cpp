@@ -44,10 +44,10 @@ typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
 class Quit_Handler : public ACE_Event_Handler {
   friend class ace_dewarn_gplusplus;
 public:
-  Quit_Handler (ACE_Reactor *r): reactor_ (r) {}
+  Quit_Handler (ACE_Reactor *r) { reactor (r); }
 
   virtual int handle_exception (ACE_HANDLE) {
-    reactor_->end_reactor_event_loop ();
+    reactor ()->end_reactor_event_loop ();
     return -1; // Trigger call to handle_close() method.
   }
 
@@ -55,7 +55,6 @@ public:
   { delete this; return 0; }
 
 private:
-  ACE_Reactor *reactor_;
 
   // Private destructor ensures dynamic allocation.
   virtual ~Quit_Handler () {}

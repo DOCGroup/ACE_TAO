@@ -495,6 +495,13 @@ public:
 		  ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an input stream from an ACE_Message_Block
+  /**
+   * The alignment of the @arg data block is carried into the new
+   * ACE_InputCDR object. This constructor either increments the
+   * @arg data reference count, or copies the data (if it's a compound
+   * message block) so the caller can release the block immediately
+   * upon return.
+   */
   ACE_InputCDR (const ACE_Message_Block *data,
 		int byte_order = ACE_CDR_BYTE_ORDER,
 		ACE_CDR::Octet major_version =

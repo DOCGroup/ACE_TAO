@@ -339,12 +339,15 @@ if ($dont_update == 0) {
   $conflicts = 0;
   while (<CVS>) {
     if (m/^C /) {
-      $conflicts = 1;
+      ($unused, $entry) = split('/');
+      if (($entry ne "ChangeLog\n") && ($entry ne "THANKS\n")) {
+        $conflicts = 1;
+      }
     }
     print LOG $_;
   }
-  close(CVS)
-    || mydie "error while checking out $MODULE";
+  close(CVS);
+#    || mydie "error while checking out $MODULE";
   $date = localtime;
   print LOG "$CMD: checkout finished at ", $date, "\n";
 
