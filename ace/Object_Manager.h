@@ -92,6 +92,16 @@ public:
   // when the current thread exits instead of when the program terminates.
 #endif /* 0 */
 
+  enum Preallocated_Objects
+    {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_MT_CORBA_HANDLER_LOCK,
+      ACE_DUMP_LOCK,
+#endif /* ACE_MT_SAFE */
+
+      ACE_END_OF_PREALLOCATED_OBJECTS  // This enum value must be last!
+    };
+
 private:
   static ACE_Object_Manager *instance_;
   // Singleton pointer.
@@ -189,16 +199,6 @@ public:
   //   ENOMEM if insufficient virtual memory to allocate a new instance, or
   //   ENOSPC if no more table slots are available:  see the
   //      ACE_MAX_MANAGED_OBJECTS config variable.
-
-  enum Preallocated_Objects
-    {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_MT_CORBA_HANDLER_LOCK,
-      ACE_DUMP_LOCK,
-#endif /* ACE_MT_SAFE */
-
-      ACE_END_OF_PREALLOCATED_OBJECTS  // This enum value must be last!
-    };
 
   static TYPE *get_object (u_int &id);
   // Get the object identified by "id".  Returns a pointer to the

@@ -4,6 +4,10 @@
 #define ACE_BUILD_DLL
 #include "ace/CORBA_Handler.h"
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+# include "ace/Object_Manager.h"
+#endif /* ACE_MT_SAFE */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/CORBA_Handler.i"
 #endif /* __ACE_INLINE__ */
@@ -345,7 +349,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_MT_CORBA_Handler)
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Synchronize output operations.
-ACE_Thread_Mutex ACE_MT_CORBA_Handler::ace_mt_corba_handler_lock_;
+u_int ACE_MT_CORBA_Handler::ace_mt_corba_handler_lock_ =
+  ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK;
 #endif /* ACE_MT_SAFE */
 
 void
@@ -359,7 +364,9 @@ ACE_MT_CORBA_Handler::dump (void) const
   this->pipe_.dump ();
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Double-Check lock.
-  ace_mt_corba_handler_lock_.dump ();
+  ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
+    (ace_mt_corba_handler_lock_);
+  if (lock != 0) lock->dump ();
 #endif /* ACE_MT_SAFE */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -376,7 +383,12 @@ ACE_MT_CORBA_Handler::instance (void)
 
   if (ACE_MT_CORBA_Handler::instance_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_MT_CORBA_Handler::ace_mt_corba_handler_lock_, 0);
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
+        (ace_mt_corba_handler_lock_);
+      if (lock == 0) return 0;
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
+#endif /* ACE_MT_SAFE */
 
       if (ACE_MT_CORBA_Handler::instance_ == 0)
 	ACE_NEW_RETURN (ACE_MT_CORBA_Handler::instance_,
@@ -447,10 +459,13 @@ ACE_MT_CORBA_Handler::process_events (void *)
   // the instance must exist.
   if (ACE_MT_CORBA_Handler::instance_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, 
-		        ace_mon, 
-		        ace_mt_corba_handler_lock_,
-			0);
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
+        (ace_mt_corba_handler_lock_);
+      if (lock == 0) return 0;
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0);
+#endif /* ACE_MT_SAFE */
+
       ACE_ASSERT (ACE_MT_CORBA_Handler::instance_ != 0);
     }
 

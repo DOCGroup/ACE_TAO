@@ -4,10 +4,11 @@
 #define ACE_BUILD_DLL
 #include "ace/Synch_T.h"
 #include "ace/Dump.h"
+#include "ace/Object_Manager.h"
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Synchronize output operations.
-ACE_Thread_Mutex ACE_ODB::ace_dump_lock_;
+u_int ACE_ODB::ace_dump_lock_ = ACE_Object_Manager::ACE_DUMP_LOCK;
 #endif /* ACE_MT_SAFE */
 
 // Implementations (very simple for now...)
@@ -59,7 +60,12 @@ ACE_ODB::instance (void)
 
   if (ACE_ODB::instance_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_ODB::ace_dump_lock_, 0));
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
+        (ACE_ODB::ace_dump_lock_);
+      if (lock == 0) return 0;
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
+#endif /* ACE_MT_SAFE */
 
       if (ACE_ODB::instance_ == 0)
 	ACE_NEW_RETURN (ACE_ODB::instance_, ACE_ODB, 0);

@@ -15,6 +15,28 @@
 // Singleton pointer.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
+void *ACE_Object_Manager::managed_object[ACE_MAX_MANAGED_OBJECTS] = { 0 };
+
+u_int ACE_Object_Manager::next_managed_object = 0;
+
+template <class TYPE>
+class ACE_Managed_Cleanup : public ACE_Cleanup
+{
+public:
+  ACE_Managed_Cleanup (TYPE *object) : object_ (object) {}
+  virtual ~ACE_Managed_Cleanup ();
+private:
+  TYPE *object_;
+};
+
+
+template <class TYPE>
+ACE_Managed_Cleanup<TYPE>::~ACE_Managed_Cleanup ()
+{
+  delete (TYPE *) object_;
+}
+
+
 ACE_Object_Manager::ACE_Object_Manager (void)
   : shutting_down_(0)
 {
@@ -27,6 +49,25 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // doesn't allocate a new one when called.
   instance_ = this;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+  // Allocate the preallocated (hard-coded) object instances, and
+  // register them for destruction.
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_Thread_Mutex *mutex;
+  ACE_Managed_Cleanup<ACE_Thread_Mutex> *object;
+
+  ACE_NEW (mutex, ACE_Thread_Mutex);
+  ACE_NEW (object, ACE_Managed_Cleanup<ACE_Thread_Mutex> (mutex));
+  managed_object[ACE_MT_CORBA_HANDLER_LOCK] = object;
+  at_exit (object);
+
+  ACE_NEW (mutex, ACE_Thread_Mutex);
+  ACE_NEW (object, ACE_Managed_Cleanup<ACE_Thread_Mutex> (mutex));
+  managed_object[ACE_DUMP_LOCK] = object;
+  at_exit (object);
+# endif /* ACE_MT_SAFE */
+
+  next_managed_object = ACE_END_OF_PREALLOCATED_OBJECTS;
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // Initialize the main thread's TS storage.
@@ -140,10 +181,6 @@ ACE_Object_Manager::at_exit_i (void *object,
   return registered_objects_->enqueue_head (new_info);
 }
 
-void *ACE_Object_Manager::managed_object[ACE_MAX_MANAGED_OBJECTS] = { 0 };
-
-u_int ACE_Object_Manager::next_managed_object = 0;
-
 template <class TYPE>
 int
 ACE_Managed_Object<TYPE>::get_object (u_int &id, TYPE *&object)
@@ -218,6 +255,7 @@ ACE_Managed_Object<TYPE>::get_object (u_int &id)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     template class ACE_Managed_Object <ACE_Thread_Mutex>;
+    template class ACE_Managed_Cleanup<ACE_Thread_Mutex>;
 # endif /* ACE_MT_SAFE */
 template class ACE_Unbounded_Queue<ACE_Cleanup_Info>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
@@ -225,6 +263,7 @@ template class ACE_Node<ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   pragma instantiate ACE_Managed_Object <ACE_Thread_Mutex>
+#   pragma instantiate ACE_Managed_Cleanup<ACE_Thread_Mutex>
 # endif /* ACE_MT_SAFE */
 #pragma instantiate ACE_Unbounded_Queue<ACE_Cleanup_Info>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>
