@@ -64,7 +64,7 @@ $S = new PerlACE::Process ("ECT_Supplier",
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($ns_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ns_ior, 10) == -1) {
     print STDERR "ERROR: cannot find file <$ns_ior>\n";
     $NS->Kill (); 
     exit 1;
@@ -72,7 +72,7 @@ if (PerlACE::waitforfile_timed ($ns_ior, 5) == -1) {
 
 $ES->Spawn ();
 
-sleep 5;
+sleep 10;
 
 $C->Spawn ();
 $S->Spawn ();

@@ -13,7 +13,7 @@ use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client
 # to allow proper server initialization.
-$sleeptime = 4;
+$sleeptime = 8;
 
 # File used to pass load balancing service ior to its clients.
 $iorfile = PerlACE::LocalFile("lb.ior");

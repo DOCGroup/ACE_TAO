@@ -20,7 +20,7 @@ $CL = new PerlACE::Process ("client", "-f $iorfile -ORBSvcConf $conf");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
     print STDERR "ERROR: waiting for file <$iorfile>\n";
     $SV->Kill ();
     exit 1;

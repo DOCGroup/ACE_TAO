@@ -19,7 +19,7 @@ public:
   CORBA::Double price () throw (CORBA::SystemException);
 
 private:
-#if defined (HPUX)
+#if defined (HPUX) && (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
   string symbol_;
   string full_name_;
 #else

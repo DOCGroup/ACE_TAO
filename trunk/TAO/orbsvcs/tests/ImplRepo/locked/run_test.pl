@@ -36,7 +36,7 @@ unlink $pfile;
 $IMR->Arguments ("-o $imr_ior -d 0 -p $pfile");
 $IMR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
     print STDERR "ERROR: waiting for $imr_ior\n";
     $IMR->Kill ();
     exit 1;
@@ -111,7 +111,7 @@ unlink $imr_ior;
 $IMR->Arguments ("-o $imr_ior -d 0 -l -p $pfile");
 $IMR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
     print STDERR "ERROR: waiting for $imr_ior\n";
     $IMR->Kill ();
     exit 1;
