@@ -3,6 +3,9 @@ Mon Aug 27 07:36:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * tests/Makefile.bor: added new File_IO test
         * examples/simple/time-date/time-date.bor: changed targetdir
           to ./ to that svc.conf can find the dll
+        * orbsvcs/tests/ior_corba_name/*.bor: Added BCB makefiles
+        * orbsvcs/tests/Time/*.bor: Added BCB makefiles
+        * orbsvcs/tests/Makefile.bor: added ior_corbaname and time
 
 Sun Aug 26 08:20:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
