@@ -540,13 +540,10 @@ Cubit_Client::print_stats (const char *call_name,
   if (this->call_count_ > 0 && this->error_count_ == 0)
     {
 #if defined (ACE_LACKS_FLOATING_POINT)
-# if defined (ACE_LACKS_LONGLONG_T)
-      const u_int calls_per_sec = 1000 / elapsed_time.real_time.lo ();
-# else  /* ACE_LACKS_LONGLONG_T */
-      const u_int calls_per_sec = 1000 / elapsed_time.real_time
-# endif /* ACE_LACKS_LONGLONG_T */
+      const u_int calls_per_sec = 1000 / elapsed_time.real_time;
+
       ACE_DEBUG ((LM_DEBUG,
-                  "\treal_time\t= %u sec, \n\t"
+                  "\treal_time\t= %u usec, \n\t"
                   "\t%u calls/second\n",
                   elapsed_time.real_time < 0 ? 0 : elapsed_time.real_time,
                   calls_per_sec));
