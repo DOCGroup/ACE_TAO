@@ -16,14 +16,12 @@
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
     object_table_size_ (SERVER_OBJECT_TABLE_SIZE),
-    concurrency_strategy_ (0),
-    objtable_ (0)
+    concurrency_strategy_ (0)
 {}
 
 TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
 {
   // Perform appropriate cleanup.
-  delete this->objtable_;
 }
 
 TAO_Default_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
@@ -33,9 +31,49 @@ TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
 }
 
 TAO_Object_Table *
-TAO_Default_Server_Strategy_Factory::object_lookup_strategy (void)
+TAO_Default_Server_Strategy_Factory::create_object_table (void)
 {
-  return this->objtable_;
+  // Create the appropriate-sized object table based on passed
+  // arguments.
+  TAO_Object_Table *objtable = 0;
+  
+  switch (this->object_lookup_strategy_)
+    {
+    case TAO_LINEAR:
+      ACE_NEW_RETURN (objtable,
+		      TAO_Linear_ObjTable (this->object_table_size_),
+		      0);
+      break;
+      // Don't do this one right now until we determine how to deal
+      // with its reliance on a global singleton.
+    case TAO_USER_DEFINED:
+      // it is assumed that the user would have used the hooks to
+      // supply a user-defined instance of the object table
+      //
+      // @@ Note that the usage below doesn't really fit very well
+      // now.  We need for the userdef stuff to provide a creation
+      // hook--IF we decide to keep the whole demultiplexing strategy
+      // creation the way it is.  IMHO, the way that userdef stuff
+      // should be done is to create the User_Server_Strategy_Factory
+      // and just link it in.  The default server would only encompass
+      // the strategies that are "shipped", so to speak. --cjc
+      objtable = TAO_ORB_CORE::instance() -> oa_params() -> userdef_lookup_strategy();
+      break;
+    case TAO_ACTIVE_DEMUX:
+      ACE_NEW_RETURN (objtable,
+		      TAO_Active_Demux_ObjTable (this->object_table_size_),
+		      0);
+      break;
+    case TAO_DYNAMIC_HASH:
+    case TAO_NONE:
+    default:
+      ACE_NEW_RETURN (objtable,
+		      TAO_Dynamic_Hash_ObjTable (this->object_table_size_),
+		      0);
+      break;
+    }
+
+  return objtable;
 }
 
 // Evil macros b/c I'm lazy!
@@ -86,8 +124,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
   ACE_Get_Opt get_opt (argc, argv, "t:s:RTL:", 0);
 
-  TAO_Demux_Strategy strat = TAO_NONE;
-
   // @@ Chris, I think this code should use the same option format
   // that is used by CORBA_ORB_init().  Can you please work with Andy
   // on this?
@@ -118,55 +154,23 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           break;
 
         case 'L':
+          // 'L' is for Lookup, the word used for demux throughout the code
           {
             char *name = get_opt.optarg;
 
-	    // @@ Chris, why do we use "L" for "Demuxing strategy?"
-	    // Also, please make sure that you document all of these
-	    // options!
-
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              strat = TAO_DYNAMIC_HASH;
+              this->object_lookup_strategy_ = TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              strat = TAO_LINEAR;
+              this->object_lookup_strategy_ = TAO_LINEAR;
             else if (ACE_OS::strcasecmp (name, "active") == 0)
-              strat = TAO_ACTIVE_DEMUX;
+              this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
             else if (ACE_OS::strcasecmp (name, "user") == 0)
-              strat = TAO_USER_DEFINED;
+              this->object_lookup_strategy_ = TAO_USER_DEFINED;
           }
           break;
         }
     }
 
-  // Create the appropriate-sized object table based on passed
-  // arguments.
-  switch (strat)
-    {
-    case TAO_LINEAR:
-      ACE_NEW_RETURN (this->objtable_,
-		      TAO_Linear_ObjTable (this->object_table_size_),
-		      -1);
-      break;
-      // Don't do this one right now until we determine how to deal
-      // with its reliance on a global singleton.
-    case TAO_USER_DEFINED:
-      // it is assumed that the user would have used the hooks to supply a
-      // user-defined instance of the object table
-      this->objtable_ = TAO_ORB_CORE::instance() -> oa_params() -> userdef_lookup_strategy();
-      break;
-    case TAO_ACTIVE_DEMUX:
-      ACE_NEW_RETURN (this->objtable_,
-		      TAO_Active_Demux_ObjTable (this->object_table_size_),
-		      -1);
-      break;
-    case TAO_DYNAMIC_HASH:
-    case TAO_NONE:
-    default:
-      ACE_NEW_RETURN (this->objtable_,
-		      TAO_Dynamic_Hash_ObjTable (this->object_table_size_),
-		      -1);
-      break;
-    }
   return 0;
 }
 

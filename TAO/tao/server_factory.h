@@ -69,8 +69,8 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual TAO_Object_Table *object_lookup_strategy (void);
-  // Return the concrete object lookup strategy.
+  virtual TAO_Object_Table *create_object_table (void);
+  // Return a new key-->object table
 };
 
 #endif /* TAO_SERVER_FACTORY_H */

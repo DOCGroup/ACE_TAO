@@ -49,7 +49,9 @@ public:
 
   // = Server-side ORB Strategy Factory Methods.
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
-  virtual TAO_Object_Table *object_lookup_strategy( void);
+
+  virtual TAO_Object_Table *create_object_table (void);
+  // Factory method for object tables.
 
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
@@ -64,6 +66,9 @@ private:
   u_long object_table_size_;
   // Default size of object lookup table.
   
+  TAO_Demux_Strategy object_lookup_strategy_;
+  // The type of lookup/demultiplexing strategy being used
+
   // = Strategies Used.
   ACE_Reactive_Strategy<TAO_OA_Connection_Handler> reactive_strategy_;
   // A strategy for passively establishing connections which utilizes
@@ -75,9 +80,6 @@ private:
   
   CONCURRENCY_STRATEGY *concurrency_strategy_;
   // concrete concurrency strategy.
-
-  TAO_Object_Table *objtable_;
-  // instance of object table
 
 #if 0
   // Someday we'll need these!
