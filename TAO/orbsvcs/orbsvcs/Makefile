@@ -34,7 +34,7 @@ FILES= $(IDL_FILES) \
 	Scheduler_Factory \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
-	TAO_IDL_templates \
+	TAO_IDL_templates
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
