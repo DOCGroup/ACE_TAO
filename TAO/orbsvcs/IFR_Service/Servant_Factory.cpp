@@ -12,8 +12,10 @@ IFR_Servant_Factory::IFR_Servant_Factory (TAO_Repository_i *repo)
 }
 
 TAO_IDLType_i *
-IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
-                                     CORBA::Environment &ACE_TRY_ENV)
+IFR_Servant_Factory::create_idltype (
+    ACE_Configuration_Section_Key servant_key,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
   u_int def_kind = 0;
   this->repo_->config ()->get_integer_value (servant_key,
@@ -570,9 +572,11 @@ IFR_Servant_Factory::create_container (
 }
 
 PortableServer::Servant 
-IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
-                                 PortableServer::POA_ptr poa,
-                                 CORBA::Environment &ACE_TRY_ENV)
+IFR_Servant_Factory::create_tie (
+    ACE_Configuration_Section_Key servant_key,
+    PortableServer::POA_ptr poa,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
   u_int def_kind = 0;
   this->repo_->config ()->get_integer_value (servant_key,
@@ -1359,7 +1363,7 @@ IFR_Servant_Factory::create_objref (IR_DefinitionKind def_kind,
   // Can plug in version tricks here.
   repo_id += "1.0";
 
-  return this->repo_->ir_poa ()->create_reference_with_id (oid.in (), 
-                                                           repo_id.c_str (), 
+  return this->repo_->ir_poa ()->create_reference_with_id (oid.in (),
+                                                           repo_id.c_str (),
                                                            ACE_TRY_ENV);
 }

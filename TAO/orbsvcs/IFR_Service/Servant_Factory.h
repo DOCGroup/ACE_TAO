@@ -21,6 +21,11 @@
 #define IFR_SERVANT_FACTORY_H
 
 #include "tao/PortableServer/PortableServerC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/IFR_Client/ifrfwd.h"
 #include "ace/Configuration.h"
 
@@ -28,10 +33,6 @@ class TAO_IDLType_i;
 class TAO_Contained_i;
 class TAO_Container_i;
 class TAO_Repository_i;
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class IFR_Servant_Factory
 {
