@@ -98,6 +98,7 @@ my $gnu2 = '/usr/bin';
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
 my $export_dir = '/project/deuce/ftp/pub/ACE+TAO-distribution';
+my $old_versions_dir = '/project/deuce/ftp/pub/previous_versions';
 my $diffs_dir = "$export_dir/diffs";
 my $exec_prefix = '';
 my $generate_man_pages = 0;
@@ -214,6 +215,7 @@ my $bzip2 = 'bzip2';
 my $make = 'make -s';
 my $mv = 'mv -f';
 my $rm = 'rm -f';
+my $cp = 'cp -f';
 my $md5sum = 'md5sum';
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
@@ -668,6 +670,9 @@ sub create_kit () {
   my $redirect = $install  ?  '>'  :  '\>';
   my $shell_cd = $install  ?  'cd'  :  'echo cd';
 
+  (my $local_ace_tag = $ace_tag) =~ s|_|.|g;
+  (my $local_tao_tag = $tao_tag) =~ s|_|.|g;          
+
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
     "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
@@ -714,7 +719,16 @@ sub create_kit () {
         "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
 	  "ACE.zip ACE-lib.zip ACE-html.zip && " .
         "$dispose ACE.zip ACE-lib.zip ACE-html.zip $dest && " .
-        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 $dest; ";
+        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 $dest && " .
+        "$cp $dest/ACE.zip $old_versions_dir/$local_ace_tag.zip &&".
+        "$cp $dest/ACE-lib.zip $old_versions_dir/$local_ace_tag-lib.zip &&".
+        "$cp $dest/ACE-html.zip $old_versions_dir/$local_ace_tag-html.zip &&".
+        "$cp $dest/ACE.tar.gz $old_versions_dir/$local_ace_tag.tar.gz &&".
+        "$cp $dest/ACE-lib.tar.gz $old_versions_dir/$local_ace_tag-lib.tar.gz &&".
+        "$cp $dest/ACE-html.tar.gz $old_versions_dir/$local_ace_tag-html.tar.gz &&".
+        "$cp $dest/ACE.tar.bz2 $old_versions_dir/$local_ace_tag.tar.bz2 &&".             
+        "$cp $dest/ACE-lib.tar.bz2 $old_versions_dir/$local_ace_tag-lib.tar.bz2 &&".                   
+        "$cp $dest/ACE-html.tar.bz2 $old_versions_dir/$local_ace_tag-html.tar.bz2; ";             
       $archives = " ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ".
 	          "ACE.zip ACE-lib.zip ACE-html.zip ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 ";
     } else {
@@ -727,8 +741,14 @@ sub create_kit () {
 	  "$gzip -9 > ACE-html.tar.gz && ".
         "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz && " .
         "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz && " .
-        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz $dest; ";
-      $archives = " ACE.tar.gz ACE-lib.tar.gz TAO-html.tar.gz ";
+        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz $dest && ".
+        "$cp $dest/ACE.tar.gz $old_versions_dir/$local_ace_tag.tar.gz &&".
+        "$cp $dest/ACE-lib.tar.gz $old_versions_dir/$local_ace_tag-lib.tar.gz &&".
+        "$cp $dest/ACE-html.tar.gz $old_versions_dir/ACE-$local_ace_tag-html.tar.gz &&".
+        "$cp $dest/ACE.tar.bz2 $old_versions_dir/ACE-$local_ace_tag.tar.bz2 &&".             
+        "$cp $dest/ACE-lib.tar.bz2 $old_versions_dir/ACE-$local_ace_tag-lib.tar.bz2 &&".                   
+        "$cp $dest/ACE-html.tar.bz2 $old_versions_dir/ACE-$local_ace_tag-html.tar.bz2; ";            
+      $archives = " ACE.tar.gz ACE.tar.bz2 ACE-lib.tar.gz ACE-html.tar.gz ACE-html.bz2";
     }
   }
 
@@ -748,7 +768,10 @@ sub create_kit () {
           "$bzip2 > ACE+TAO.tar.bz2 && " .
         "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
         "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
-        "$dispose ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 $dest";
+        "$dispose ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 $dest &&" .
+        "$cp $dest/ACE+TAO.zip $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.zip &&".
+        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.gz &&".
+        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.bz2; ";
       $archives .= " ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 ";
     } else {
       $build_command .=
@@ -760,8 +783,9 @@ sub create_kit () {
         "$chmod 664 ACE+TAO.tar.bz2 && " .
         "$chgrp doc ACE+TAO.tar.gz && " .
         "$chgrp doc ACE+TAO.tar.bz2 && " .
-        "$dispose ACE+TAO.tar.gz $dest";
-        "$dispose ACE+TAO.tar.bz2 $dest";
+        "$dispose ACE+TAO.tar.gz ACE+TAO.tar.bz2 $dest &&" .
+        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.gz &&" .
+        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.bz2; ";
       $archives .= " ACE+TAO.tar.gz ACE+TAO.tar.bz2 ";
     }
   }
@@ -810,3 +834,5 @@ sub can_run {
     || return 0;
   return 1;
 }
+
+

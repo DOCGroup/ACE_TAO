@@ -1,3 +1,10 @@
+Sat Sep  7 23:22:20 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* bin/make_release: The tar ball that is put out during the
+	  release, is copied now to the the previous_versions directory 
+	  with the appopriate version information. This shoudl work right
+	  since this was tested against a local repo.
+
 Sat Sep  7 18:03:21 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Proactor.cpp: Removed some ACE_Proactor:: prefixes on member
