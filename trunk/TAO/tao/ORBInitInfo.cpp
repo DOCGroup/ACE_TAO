@@ -90,6 +90,17 @@ TAO_ORBInitInfo::register_initial_reference (
   this->check_validity (ACE_TRY_ENV);
   ACE_CHECK;
 
+  // This method is only valid during pre_init(), i.e. only before
+  // TAO_ORB_Core::init() has been called.  The ORB Core starts out
+  // in the "shutdown" state, so checking if it is in that state
+  // would indicate that the ORB hasn't been initalized yet, at least
+  // partially, meaning that initial reference registration can
+  // proceed.
+  if (!(this->orb_core_->has_shutdown ()))
+    ACE_THROW (CORBA::BAD_INV_ORDER ());  // @@ Throw an exception?
+                                          //    What about the minor
+                                          //    code?
+
   if (id == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
   else if (ACE_OS_String::strlen (id) == 0)
@@ -112,11 +123,11 @@ TAO_ORBInitInfo::resolve_initial_references (
   this->check_validity (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  /// This method is only valid during post_init(), i.e. only after
-  /// TAO_ORB_Core::init() has been called.  The ORB Core starts out
-  /// in the "shutdown" state, so checking if it is in that state
-  /// would indicate that the ORB hasn't been initalized yet, at least
-  /// partially.
+  // This method is only valid during post_init(), i.e. only after
+  // TAO_ORB_Core::init() has been called.  The ORB Core starts out
+  // in the "shutdown" state, so checking if it is in that state
+  // would indicate that the ORB hasn't been initalized yet, at least
+  // partially.
   this->orb_core_->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -307,7 +318,7 @@ TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
 //   if (retv)
 //     this->_add_ref ();
   return retv;

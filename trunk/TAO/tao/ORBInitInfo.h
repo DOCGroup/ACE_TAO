@@ -89,8 +89,11 @@ public:
 
   /// Register a mapping between a string and a corresponding object
   /// reference with the ORB being initialized.  This is particularly
-  /// useful for registering references to local
-  /// (locality constrained) objects.
+  /// useful for registering references to local (locality
+  /// constrained) objects.  Note that this method should be called
+  /// in ORBInitializer::pre_init() so that the registered reference
+  /// will be available to the resolve_initial_references() that may
+  /// be called in the ORBInitializer::post_init() call.
   virtual void register_initial_reference (
       const char * id,
       CORBA::Object_ptr obj,
@@ -220,7 +223,7 @@ private:
   char **argv_;
 
   /// Instance of the IOP::CodecFactory.  Returned by
-  /// ORBInitInfo::codec_factory ().  
+  /// ORBInitInfo::codec_factory ().
   TAO_CodecFactory codec_factory_;
 };
 
