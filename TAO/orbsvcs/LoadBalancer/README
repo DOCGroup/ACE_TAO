@@ -2,3 +2,40 @@
 # $Id$
 #
 
+This directory contains the sources for two binaries:
+
+	1) LoadManager
+	2) LoadMonitor
+
+Descriptions of each follow.
+
+LoadManager
+===========
+The "LoadManager" binary is the stand-alone load balancing/managing
+service.
+
+A listing of available "LoadManager" command line options is available
+by invoking the "LoadManager" binary with the "-h" command line option.
+
+LoadMonitor
+===========
+The "LoadMonitor" binary is a stand-alone load monitoring utility.  It
+can be used to report loads for the standard load monitor types (CPU,
+Disk, Memory and Network), in addition to custom load monitors.
+A custom load monitor is used by passing its IOR to the "LoadMonitor"
+utility through the "-m" command line option.
+
+Both "PUSH" and "PULL" load monitoring styles may be configured.  The
+"PUSH" interval may be configured, as well.
+
+A listing of available "LoadMonitor" command line options is available
+by invoking the "LoadMonitor" binary with the "-h" command line
+option.
+
+The LoadManager object's IOR must be made available to the
+"LoadMonitor" binary.  This can be done using the standard
+Interoperable Naming Service "-ORBInitRef" option.  For example, the
+following will work if LoadManager IOR is available in the file
+`lm.ior' 
+
+	LoadMonitor -ORBInitRef LoadManager=file://lm.ior
