@@ -35,12 +35,16 @@ PLATFORM_X11_LIBS=-lX11
 PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
 
 PLATFORM_GL_CPPFLAGS=-I/usr/X11R6/include
-PLATFORM_GL_LIBS=-lGL
-PLATFORM_GL_LDFLAGS=-L/usr/X11R6/lib
+PLATFORM_GL_LIBS    =-lGL
+PLATFORM_GL_LDFLAGS =-L/usr/X11R6/lib
 
 PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
-PLATFORM_GTK_LIBS=$(shell gtk-config --libs)
+PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
 PLATFORM_GTK_LDFLAGS=
+
+PLATFORM_WX_CPPFLAGS= $(shell wx-config --cflags) $(PLATFORM_GTK_CPPFLAGS)
+PLATFORM_WX_LIBS    = $(shell wx-config --libs)   $(PLATFORM_GTK_LIBS)
+PLATFORM_WX_LDFLAGS =
 
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
