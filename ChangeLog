@@ -1,3 +1,15 @@
+Fri Dec 19 11:57:20 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/Sigset_Ops_Test.cpp: Add an optional can_miss parameter to
+	  the siglistset() function; defaults to 0 (current behavior). Pass
+	  it as 1 when the full (sigfillset) set is being tested because
+	  there's no guarantee that all signals from 1-ACE_NSIG are legit
+	  and set in the sigset. This is true on Red Hat Linux w/ NPTL
+	  (Redhat 9 and Enterprise Linux 3, for example). Thanks to
+	  Roger Beathard (rbeathar@cisco.com) for reporting this issue.
+
+	* tests/Makefile.tests: Added TSS_Static_Test.
+
 Fri Dec 19 08:43:44 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Malloc_T.cpp: Reformatted some of the code to conform to
