@@ -84,7 +84,7 @@
 # undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 # define ACE_STRCASECMP_EQUIVALENT std::strcasecmp
 # define ACE_STRNCASECMP_EQUIVALENT std::strncasecmp
-# define ACE_WCSDUP_EQUIVALENT std::_wcsdup
+# define ACE_LACKS_WCSDUP
 # define ACE_HAS_3_PARAM_WCSTOK
 #else
 # define ACE_WCSDUP_EQUIVALENT ::_wcsdup
