@@ -109,10 +109,11 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      // Test object 1.
+	  // Test object 1.
       CORBA::Object_var object =
         orb->string_to_object (ior1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       Test_var server1 = Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (check_for_nil (server1.in (), "server1") == -1)
@@ -121,7 +122,8 @@ main (int argc, char *argv[])
       // Test object 2.
       object = orb->string_to_object (ior2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      Test_var server2 = Test::_narrow (object.in (), ACE_TRY_ENV);
+
+	  Test_var server2 = Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (check_for_nil (server2.in (), "server2") == -1)
         return 1;
@@ -133,28 +135,32 @@ main (int argc, char *argv[])
       CORBA::Short server1_priority =
         check_policy (server1.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (server1_priority == -1)
+
+	  if (server1_priority == -1)
         return 1;
 
-      // Test object 2.
+	  // Test object 2.
       CORBA::Short server2_priority =
         check_policy (server2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (server2_priority == -1)
         return 1;
 
-      // Testing: make several invocations on test objects.
+	  // Testing: make several invocations on test objects.
       for (int i = 0; i < 5; ++i)
         {
           server1->test_method (server1_priority, ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
           server2->test_method (server2_priority, ACE_TRY_ENV);
           ACE_TRY_CHECK;
-        }
+
+	  }
 
       // Testing over. Shut down Server ORB.
       server1->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {

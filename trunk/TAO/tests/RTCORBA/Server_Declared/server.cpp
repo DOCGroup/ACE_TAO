@@ -341,7 +341,7 @@ main (int argc, char *argv[])
       if (result == -1)
         return 1;
 
-      // Attempt to create object 3, overriding POA's priority with
+	  // Attempt to create object 3, overriding POA's priority with
       // the priority value that does not match server resource
       // configuration.  Should get BAD_PARAM exception.
       exception_test (rt_poa.in (), &server_impl, wrong_priority,
