@@ -26,6 +26,9 @@ Wed Oct 28 09:13:10 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Time_Service_Test.cpp,Tokens_Test.cpp: display
           filename if ACE_Process::spawn () fails.
 
+        * tests/run_tests.sh: only run Time_Service_Test if
+          ../netsvcs/server/main exists.
+
 Tue Oct 27 22:14:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6 released.
