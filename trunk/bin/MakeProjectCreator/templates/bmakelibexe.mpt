@@ -1,0 +1,25 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "bmakecommon"
+
+need_staticflags = 1
+startup_obj      = c0x32$(OBJ_EXT)
+
+Release {
+  optimize         = 1
+  defines          = NDEBUG
+  exeoutputdir     = Release
+  intermediate_dir = Release
+  lib_modifier     = s
+  postlinkrmext    = .tds
+}
+
+Debug {
+  optimize         =
+  defines          = _DEBUG
+  exeoutputdir     = .
+  intermediate_dir = Debug
+  lib_modifier     = sd
+}
+

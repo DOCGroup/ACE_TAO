@@ -99,7 +99,7 @@ sub write_comps {
 
   ## Print out the project_name_list target
   print $fh $crlf . "project_name_list:$crlf";
-  foreach my $project (@list) {
+  foreach my $project (sort @list) {
     print $fh "\t\@echo $$pjs{$project}->[0]$crlf";
   }
 }

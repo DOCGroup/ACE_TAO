@@ -1,3 +1,46 @@
+Thu Feb  5 07:55:10 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+
+          Fixed a bug where Borland projects generated on UNIX would not
+          reflect the correct cppdir value.
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+
+          Sort the projects names so projects are easier to find in large
+          lists.
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Fixed a bug in the usage output.
+
+        * bin/MakeProjectCreator/modules/Version.pm:
+
+          Updated the MPC version number.
+
+        * bin/MakeProjectCreator/USAGE:
+
+          Updated the usage to reflect the new alternative Borland Make
+          project type.
+
+        * bin/MakeProjectCreator/modules/MPC.pm:
+        * bin/MakeProjectCreator/modules/MWC.pm:
+        * bin/MakeProjectCreator/modules/BMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/BMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+        * bin/MakeProjectCreator/templates/bmakecommon.mpt:
+        * bin/MakeProjectCreator/templates/bmakedll.mpt:
+        * bin/MakeProjectCreator/templates/bmakedllexe.mpt:
+        * bin/MakeProjectCreator/templates/bmakelib.mpt:
+        * bin/MakeProjectCreator/templates/bmakelibexe.mpt:
+
+          Added a new alternative Borland Make project type called bmake. 
+          It does not rely on any of the .bor files in
+          ACE_wrappers/include/makeinclude.
+
 Wed Feb  4 21:55:38 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * ace/config-lynxos.h:
@@ -17,7 +60,7 @@ Wed Feb  4 14:21:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * bin/MakeProjectCreator/config/taodefaults.mpb:
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
         * bin/MakeProjectCreator/config/valuetype.mpb:
-        
+
           Removed all path includes except TAO_ROOT and CIAO_ROOT,
           for IDL, CIDL and C++ compilers.
 
@@ -29,37 +72,37 @@ Wed Feb  4 18:15:16 UTC 2004  Craig Rodrigues <crodrigu@bbn.com>
 
 Wed Feb  4 17:41:25 UTC 2004  Craig Rodrigues <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_freebsd.GNU:
-	  Change thread flags to reflect new changes in FreeBSD.
-	  KSE-based -lpthread is now the default library in
-	  FreeBSD-CURRENT.  
+        * include/makeinclude/platform_freebsd.GNU:
+          Change thread flags to reflect new changes in FreeBSD.
+          KSE-based -lpthread is now the default library in
+          FreeBSD-CURRENT.
 
 Tue Feb  3 16:21:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* m4/compiler.m4: If --disable-rtti is specified on AIX, add
-	  -DACE_LACKS_RTTI to CXXFLAGS.
+        * m4/compiler.m4: If --disable-rtti is specified on AIX, add
+          -DACE_LACKS_RTTI to CXXFLAGS.
 
-	* netsvcs/clients/Naming/Client/Makefile.am:
-	* netsvcs/clients/Naming/Dump_Restore/Makefile.am: Removed the
-	  extraneous path prefix for the required same-directory libraries in
-	  main_LDADD to allow the Makefile to see the library and build it
-	  first at make time.
+        * netsvcs/clients/Naming/Client/Makefile.am:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.am: Removed the
+          extraneous path prefix for the required same-directory libraries in
+          main_LDADD to allow the Makefile to see the library and build it
+          first at make time.
 
 Tue Feb  3 14:35:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-win32-msvc-6.h:
-	* ace/config-win32-common.h:	
+        * ace/config-win32-msvc-6.h:
+        * ace/config-win32-common.h:
 
-	  Moved the definition of ACE_HAS_NONCONST_SWAB from VC6 to
-	  win32-common.h.  Thanks to Andrew G. Harvey <agh@cisco.com> 
+          Moved the definition of ACE_HAS_NONCONST_SWAB from VC6 to
+          win32-common.h.  Thanks to Andrew G. Harvey <agh@cisco.com>
           for the suggestion.
 
 Tue Feb  3 11:36:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Reactor/Client.cpp:
-	* examples/APG/ThreadSafety/TSS.cpp: Add template instantiations needed
-	  to correct LynxOS build. Thanks to Olli Savia <ops@iki.fi> for
-	  these fixes.
+        * examples/APG/Reactor/Client.cpp:
+        * examples/APG/ThreadSafety/TSS.cpp: Add template instantiations needed
+          to correct LynxOS build. Thanks to Olli Savia <ops@iki.fi> for
+          these fixes.
 
 Tue Feb  3 07:37:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
