@@ -1,3 +1,10 @@
+Thu Apr 25 17:34:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * bin/auto_compile: When doing 'realclean', do them in reverse
+          order of the builds, else ace/ACE_COMPONENTS.list gets wiped
+          out first, preventing things that examine the components list
+          (like netsvcs) from getting cleaned.
+
 Thu Apr 25 16:20:33 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/TP_Reactor_Logging_Server.{cpp mak}:
