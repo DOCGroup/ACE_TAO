@@ -1,3 +1,8 @@
+Fri Aug  8 07:35:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed a
+	  logical error while comparing profiles. 
+
 Fri Aug  8 09:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
