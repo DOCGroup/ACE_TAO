@@ -75,6 +75,7 @@
 # endif /* !ACE_MT_SAFE */
 
 #elif defined (ghs)
+# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_LACKS_LONGLONG_T /* It really doesn't.  Boo. */
 
   // To avoid warning about inconsistent declaration between Sun's
