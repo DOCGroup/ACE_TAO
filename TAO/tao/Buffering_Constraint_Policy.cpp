@@ -25,18 +25,6 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
 {
 }
 
-TAO::BufferingConstraint
-TAO_Buffering_Constraint_Policy::buffering_constraint (CORBA::Environment &)
-{
-  return this->buffering_constraint_;
-}
-
-TAO::BufferingConstraint
-TAO_Buffering_Constraint_Policy::buffering_constraint (void)
-{
-  return this->buffering_constraint_;
-}
-
 CORBA::PolicyType
 TAO_Buffering_Constraint_Policy::policy_type (CORBA_Environment &)
 {

@@ -219,4 +219,10 @@ TAO::BufferingConstraint POA_TAO::_tao_direct_collocated_BufferingConstraintPoli
 
 }
 
+TAO::BufferingConstraint POA_TAO::_tao_direct_collocated_BufferingConstraintPolicy::buffering_constraint  (void)
+{
+  return this->servant_->buffering_constraint ();
+
+}
+
 #endif /* TAO_HAS_CORBA_MESSAGING */

@@ -144,18 +144,6 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
 {
 }
 
-Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)
-{
-  return this->synchronization_;
-}
-
-Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (void)
-{
-  return this->synchronization_;
-}
-
 CORBA::PolicyType
 TAO_Sync_Scope_Policy::policy_type (CORBA_Environment &)
 {
