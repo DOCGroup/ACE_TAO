@@ -35,7 +35,7 @@ Tue Jul 30 11:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Jul 30 08:56:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/PSS/PSDL_Typecode_Defn.h:
-          Added missing include of äce/post.h to fix fuzz error.
+          Added missing include for ace/post.h to fix fuzz error.
 
 Mon Jul 29 17:34:40 2002  Ossama Othman  <ossama@uci.edu>
 
