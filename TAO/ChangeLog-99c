@@ -1,3 +1,35 @@
+Thu Jul  1 21:37:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+	* TAO_IDL/be/be_visitor_decl.cpp:
+	* TAO_IDL/be_include/be_visitor_decl.h:
+	  Fixed a couple of related bugs - (1) anonymous array
+	  containing an anonymous sequence, contained in
+	  struct, union, or exception and (2) typedef'd
+	  array containing anonymous sequence. Added a helper
+	  method to be_visitor_decl, and code in the
+	  be_visitor_array files to recognize the case and
+	  call the function.
+
+	  Added comments in the union_branch and exception 
+	  cdr_op_ci.cpp files.
+
+ 	  There was also a problem with an exception containing
+	  an array, whether typedef'd or not. The copy constructor,
+	  constructor from arg list, and assignment operator were
+	  all just assigning the arg array to the member array,
+	  which caused C++ compile errors. We now use the
+	  array's *_copy() function for this.
+
 Thu Jul 01 21:14:56 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.4 released.
