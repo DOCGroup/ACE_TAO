@@ -1,84 +1,92 @@
+Wed Jul 25 15:21:22 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/OS.h:
+
+          Fixed the _XOPEN_SOURCE checking to _XOPEN_SOURCE < 500 to fix
+          incorrect declaration of prototype. This fixes the warnings when
+          compiling with gcc-3.0. Thanks to Ossama for suggesting the fix.
+
 Wed Jul 25 08:05:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Resume_Test.h:
-	* tests/Thread_Pool_Reactor_Resume_Test.cpp: Fixed a subtle race
-	  condition. This hardly showed up in many of our daily
-	  builds. The race condition had to be fixed to show the users of
-	  the cautious approach that one needs to take if they are
-	  resuming the handle in the application itself.
+        * tests/Thread_Pool_Reactor_Resume_Test.h:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp: Fixed a subtle race
+          condition. This hardly showed up in many of our daily
+          builds. The race condition had to be fixed to show the users of
+          the cautious approach that one needs to take if they are
+          resuming the handle in the application itself.
 
 Tue Jul 24 16:41:57 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * ace/Thread_Manager.cpp : 
+        * ace/Thread_Manager.cpp :
           Added "&& ! defined (ACE_HAS_PACE)" ifdefs to already existing
           #if defined (VXWORKS) sections of code to get ACE_HAS_PACE to
           compile on VxWorks.
 
-        * ace/OS.i : 
-        * ace/OS.cpp: 
+        * ace/OS.i :
+        * ace/OS.cpp:
           Fixed formatting of some comments and added needed PACE
           calls for ACE_HAS_PACE on VxWorks.
 
-        * ace/OS.h : 
+        * ace/OS.h :
           Put #if !defined guards around the ACE_THR_PRI* macros
           so that we can define them in the config*.h files if
           they need to be corrected. For instance, ACE_THR_PRI_OTHER_MIN
           has a different value on SunOS 5.8 than it does on SunOS 5.7,
           i.e., -20 vs. 0 respectively.
-        
+
           Also, added some needed typedefs and #define for ACE_HAS_PACE
           on VxWorks and updated some comments concerning ACE_OS::thr_create
           flags.
 
-        * ace/Sched_Params.cpp (priority_min, priority_max): 
+        * ace/Sched_Params.cpp (priority_min, priority_max):
           Changed to return correct thread priority min/max for
           Solaris threads. We now use the ACE_PRI_THR* macros
           for these values while still calling ACE_OS::priority_control
           for process and LWP priorities.
 
-        * ace/config-sunos5.8.h: 
+        * ace/config-sunos5.8.h:
           Added setting of ACE_THR_PRI_OTHER_MIN to be correct
           for SunOS 5.8.
 
 Tue Jul 24 13:47:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/SSL/SSL_Asynch_Stream.h (ACE_SSL_Asynch_Stream): 
-	* ace/SSL/SSL_Asynch_Stream.cpp: Added a open () method that
-	  matches the signature of ACE_Service_Handler. This should fix
-	  the warnings in Borland builds that complain about hiding
-	  the virtual functions.
+        * ace/SSL/SSL_Asynch_Stream.h (ACE_SSL_Asynch_Stream):
+        * ace/SSL/SSL_Asynch_Stream.cpp: Added a open () method that
+          matches the signature of ACE_Service_Handler. This should fix
+          the warnings in Borland builds that complain about hiding
+          the virtual functions.
 
 Tue Jul 24 10:56:04 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/generate_doxygen.pl (TAO_DOCS):
+        * bin/generate_doxygen.pl (TAO_DOCS):
 
-	  Added "tao_security" and "tao_ssliop" Doxygen configurations to
-	  the list of documentation to generate.
+          Added "tao_security" and "tao_ssliop" Doxygen configurations to
+          the list of documentation to generate.
 
 Tue Jul 24 07:45:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Containers_T: Fixed some problems with the lack of 
-	  const for the ACE_DLList and ACE_Double_Linked_List classes.
-  	  Thanks to Michael Kircher for reporting this.
+        * ace/Containers_T: Fixed some problems with the lack of
+          const for the ACE_DLList and ACE_Double_Linked_List classes.
+          Thanks to Michael Kircher for reporting this.
 
-	* ace/config-cygwin32-common.h: Removed the ACE_LACKS_FORK
-	  macro since this is apparently working on Cygwin.  Thanks tj
- 	  Stefan Kluehspies <Stefan.Kluehspies@gmx.net> for reporting
- 	  this.
+        * ace/config-cygwin32-common.h: Removed the ACE_LACKS_FORK
+          macro since this is apparently working on Cygwin.  Thanks tj
+          Stefan Kluehspies <Stefan.Kluehspies@gmx.net> for reporting
+          this.
 
-	* ace/config-cygwin32.h: Removed the #define _CLOCKID_T
-	  macro, which should now be handled by the following change.
+        * ace/config-cygwin32.h: Removed the #define _CLOCKID_T
+          macro, which should now be handled by the following change.
 
-	* ace/OS.h: Added a #defined for _CLOCKID_T_.  Thanks to
-	  Stefan Kluehspies <Stefan.Kluehspies@gmx.net> for
-	  reporting this.
+        * ace/OS.h: Added a #defined for _CLOCKID_T_.  Thanks to
+          Stefan Kluehspies <Stefan.Kluehspies@gmx.net> for
+          reporting this.
 
 Tue Jul 24 11:10:59 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Fix the compile errors seen on gcc-3.0 with -pedantic and
-	  -Wno-long-long. This should fix all the errors.
+          Fix the compile errors seen on gcc-3.0 with -pedantic and
+          -Wno-long-long. This should fix all the errors.
 
 Tue Jul 24 10:07:31 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -92,8 +100,8 @@ Tue Jul 24 10:04:52 2001  Chad Elliott  <elliott_c@ociweb.com>
         * ace/INET_Addr.cpp:
 
           Corrected a run-time error on Tru64 with gcc.  Any executable
- 	  that called ACE_INET_Addr::get_host_name() would core dump.
-  	  This was caused by the call to ACE_OS::gethostbyaddr_r().
+          that called ACE_INET_Addr::get_host_name() would core dump.
+          This was caused by the call to ACE_OS::gethostbyaddr_r().
 
 Tue Jul 24 08:20:02 2001  Chad Elliott  <elliott_c@ociweb.com>
 

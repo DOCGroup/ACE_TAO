@@ -3121,18 +3121,20 @@ extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
 # endif
 #endif  /* _LARGEFILE64_SOURCE */
 
-#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) != 500
+#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) < 500
 // _XOPEN_SOURCE == 500    Single Unix conformance
+// It seems that _XOPEN_SOURCE == 500 means that the prototypes are
+// already defined in the system headers.
 extern "C" ssize_t pread (int fd,
                           void *buf,
                           size_t nbytes,
-                          off_t offset) ACE_THROW_SPEC (());
+                          off_t offset);
 
 extern "C" ssize_t pwrite (int fd,
                            const void *buf,
                            size_t n,
-                           off_t offset) ACE_THROW_SPEC (());
-#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) != 500 */
+                           off_t offset);
+#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) < 500 */
 
 # if defined (ACE_LACKS_UALARM_PROTOTYPE)
 extern "C" u_int ualarm (u_int usecs, u_int interval);
