@@ -3225,15 +3225,15 @@ extern "C"
 #     undef queue
 #   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 
-#   if defined (VXWORKS)
+#   if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
       // Work around a lack of ANSI prototypes for these functions on VxWorks.
       unsigned long  inet_addr (const char *);
       char           *inet_ntoa (const struct in_addr);
       struct in_addr inet_makeaddr (const int, const int);
       unsigned long  inet_network (const char *);
-#   else  /* ! VXWORKS */
+#   else  /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
 #     include /**/ <arpa/inet.h>
-#   endif /* ! VXWORKS */
+#   endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
 }
 #   if !defined (ACE_LACKS_TCP_H)
 #     if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
