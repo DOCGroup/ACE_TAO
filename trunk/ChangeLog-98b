@@ -1,3 +1,8 @@
+Fri Jun 26 09:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tests/{tests.dsw, Makefile}: Added the Upgradable RW lock test to the 
+	  workspace.
+
 Fri Jun 26 10:43:02 EET DST 1998 Wei Chiang <wei.chiang@ntc.nokia.com>
 
 	* ace/CLASSIX/CLASSIX_OS.cpp:
