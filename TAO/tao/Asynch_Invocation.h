@@ -72,8 +72,6 @@ protected:
   // Reply dispatcher for the current asynchronous invocation.
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation
@@ -108,6 +106,8 @@ protected:
 };
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #if defined (__ACE_INLINE__)
 #  include "tao/Asynch_Invocation.i"

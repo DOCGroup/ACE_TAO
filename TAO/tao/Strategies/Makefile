@@ -5403,6 +5403,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/FlReactor.h \
+ $(ACE_ROOT)/ace/FlReactor.i \
  $(ACE_ROOT)/ace/TkReactor.h \
  $(ACE_ROOT)/ace/Msg_WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Msg_WFMO_Reactor.i \

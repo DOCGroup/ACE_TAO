@@ -18,21 +18,20 @@
 #define TAO_CORBALOC_PARSER_H
 #include "ace/pre.h"
 
-#include "tao/ORB.h"
-#include "tao/Connector_Registry.h"
 #include "tao/IOR_Parser.h"
 
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-
-#include "tao/PortableServer/POA.h"
+// @@ Priyanka: notice how many includes I was able to remove.  In
+// general you should try to minimize the number of #includes in your
+// .h files.  In fact, I believe that once you remove the orb_ and
+// mprofile_ fields below these two includes can go away too!
+#include "tao/ORB.h"
 #include "tao/MProfile.h"
-
-#include "ior_corbaloc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Service_Config.h"
 
 class TAO_Export TAO_CORBALOC_Parser : public TAO_IOR_Parser
 {
@@ -62,11 +61,18 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Parse the ior-string that is passed.
 
- private:
+private:
 
+  // @@ Priyanka: do you really need this (see next comment)?  BTW, in
+  // general we put private data members *after* private methods.
   CORBA::ORB_var orb_;
   // ORB
 
+  // @@ Priyanka: this makes the class non-reentrant, only one thread
+  //    can parse a string at a time.  The "Right Thing"[tm] is to
+  //    pass the MProfile to whatever helper methods you have, so they
+  //    can add stuff to it.  That way there is no resource
+  //    contention.
   TAO_MProfile mprofile_;
   // One big mprofile which consists the profiles of all the endpoints.
 

@@ -21,11 +21,7 @@ SRC = $(PROG_SRCS)
 SIMPLE_CLT_OBJS = IOGRTest.o
 SIMPLE_SVR_OBJS =
 
-BIN2 = IOGRTest
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-  BIN = $(BIN2)
+BIN_UNCHECKED = IOGRTest
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -34,6 +30,12 @@ BIN2 = IOGRTest
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (FaultTolerance,$(findstring FaultTolerance,$(TAO_ORBSVCS)))
+  BIN = $(BIN_UNCHECKED)
+endif # FaultTolerance
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -16,8 +16,7 @@ Hash_Replica_Impl::Hash_Replica_Impl (Hash_ReplicaControl *control)
 CORBA::ULong
 Hash_Replica_Impl::do_hash (const char *str,
                             CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reject_requests_)
     {

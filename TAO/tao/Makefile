@@ -728,7 +728,8 @@ realclean:
  target_specification.i
 
 .obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp Profile.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -995,7 +996,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
- Stub.i debug.h
+ Stub.i \
+ debug.h
 
 .obj/Endpoint.o .obj/Endpoint.so .shobj/Endpoint.o .shobj/Endpoint.so: Endpoint.cpp \
  Endpoint.h \
@@ -5792,7 +5794,22 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
  Protocol_Factory.h \
- default_resource.i
+ default_resource.i \
+ $(ACE_ROOT)/ace/XtReactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
+ $(ACE_ROOT)/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.i \
+ $(ACE_ROOT)/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Heap.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ xt_resource.i
 
 .obj/qt_resource.o .obj/qt_resource.so .shobj/qt_resource.o .shobj/qt_resource.so: qt_resource.cpp \
  qt_resource.h \
@@ -5975,7 +5992,25 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
  Protocol_Factory.h \
- default_resource.i
+ default_resource.i \
+ $(ACE_ROOT)/ace/QtReactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
+ $(ACE_ROOT)/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.i \
+ $(ACE_ROOT)/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Heap.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ qt_resource.i
 
 .obj/append.o .obj/append.so .shobj/append.o .shobj/append.so: append.cpp \
  Marshal.h \
@@ -9535,15 +9570,26 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Object_Proxy_Impl.h \
- corba.h \
- Environment.h \
- Environment.i \
- ORB.h \
  Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
- Services.h \
+ Any.h \
+ CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ CDR.i \
+ Environment.h \
+ Environment.i \
+ Object.h \
+ Abstract_Servant_Base.h \
+ Object_Proxy_Broker.h \
+ Object.i \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
+ Stub.h \
+ Pluggable.h \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -9551,55 +9597,8 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Abstract_Servant_Base.h \
- Object_Proxy_Broker.h \
- Object.i \
- CurrentC.i \
- Encodable.h \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Typecode.h \
- Typecode.i \
- PolicyC.i \
- ORB.i \
- Any.h \
- Any.i \
- NVList.h \
- NVList.i \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- TAO_Server_Request.h \
- GIOP_Message_Base.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
  IOPC.h \
  IOPC.i \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- GIOP_Message_Base.i \
- Tagged_Profile.h \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
- TAO_Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -9666,10 +9665,29 @@ realclean:
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
  Tagged_Components.i \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ Encodable.h \
+ PolicyC.i \
+ GIOP_Message_State.h \
+ Pluggable_Messaging.h \
+ Pluggable_Messaging_Utils.h \
+ Pluggable_Messaging_Utils.i \
+ Pluggable_Messaging.i \
+ GIOP_Message_State.i \
  Profile.i \
  MProfile.i \
+ ORB.h \
+ Services.h \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ ORB.i \
  ORB_Core.h \
  Policy_Manager.h \
+ LocalObject.h \
+ LocalObject.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9721,9 +9739,6 @@ realclean:
  Interceptor_List.inl \
  ORB_Core.i \
  Stub.i \
- debug.h \
- Client_Strategy_Factory.h \
- Server_Strategy_Factory.h \
  Invocation.h \
  Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
@@ -9738,30 +9753,17 @@ realclean:
  TAOC.i \
  operation_details.h \
  target_specification.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
  target_specification.i \
  operation_details.i \
  Invocation_Endpoint_Selectors.h \
  Invocation_Endpoint_Selectors.i \
- Invocation.i \
- ObjectIDList.h \
- ObjectIDList.i \
- DomainC.h \
- ClientRequestInfo.h \
- StringSeqC.h \
- StringSeqC.i \
- DomainC.i \
- WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
- BoundsC.h \
- BoundsC.i \
- PortableInterceptor.h \
- PortableInterceptor.i \
- PortableServer/ServerRequestInfo.h \
- PortableServer/portableserver_export.h
+ Invocation.i
 
 .obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp DomainC.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10824,7 +10826,8 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- Endpoint.i Stub.h \
+ Endpoint.i \
+ Stub.h \
  Pluggable.h \
  Sequence.h \
  Managed_Types.h \
@@ -10992,8 +10995,8 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
- Stub.i Sequence.h \
- Object.h Invocation.h \
+ Stub.i \
+ Sequence.h Object.h Invocation.h \
  Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
@@ -13672,7 +13675,8 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h Any.h \
+ DynamicC.h \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -13949,7 +13953,8 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- OctetSeqC.i Any.h \
+ OctetSeqC.i \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -14200,7 +14205,8 @@ realclean:
  Smart_Proxies.i
 
 .obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp ORB_Core.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14294,7 +14300,8 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i ORB.h \
+ corbafwd.i \
+ ORB.h \
  corbafwd.h \
  Exception.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -14399,7 +14406,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
  Protocol_Factory.h \
- params.h params.i \
+ params.h \
+ params.i \
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
@@ -14408,9 +14416,10 @@ realclean:
  TAO_Singleton.h \
  TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h Any.h \
- Any.i DynamicC.i \
- MessagingC.h \
+ DynamicC.h \
+ Any.h \
+ Any.i \
+ DynamicC.i MessagingC.h \
  ValueBase.h \
  ValueBase.i \
  ValueFactory.h \
@@ -14469,7 +14478,8 @@ realclean:
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
  Profile.i \
- MProfile.i Stub.h \
+ MProfile.i \
+ Stub.h \
  MProfile.h \
  ORB.h \
  ORB_Core.h \
@@ -16077,16 +16087,10 @@ realclean:
  default_resource.i \
  IIOP_Factory.h \
  CORBANAME_Parser.h \
- Object_Loader.h \
- Object_Loader.i \
- Object.h \
- Abstract_Servant_Base.h \
- Object_Proxy_Broker.h \
- Object_Proxy_Impl.h \
- Object.i \
- corba.h \
- Environment.h \
- Environment.i \
+ IOR_Parser.h \
+ IOR_Parser.i \
+ CORBANAME_Parser.i \
+ CORBALOC_Parser.h \
  ORB.h \
  Services.h \
  Services.i \
@@ -16094,175 +16098,38 @@ realclean:
  CORBA_String.inl \
  PolicyC.h \
  CurrentC.h \
+ Object.h \
+ Abstract_Servant_Base.h \
+ Object_Proxy_Broker.h \
+ Object_Proxy_Impl.h \
+ Object.i \
  CurrentC.i \
  Encodable.h \
+ Environment.h \
+ Environment.i \
  PolicyC.i \
  ORB.i \
- Any.h \
- Any.i \
- NVList.h \
- NVList.i \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- TAO_Server_Request.h \
- GIOP_Message_Base.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- GIOP_Message_Base.i \
- Tagged_Profile.h \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
- TAO_Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
  MProfile.h \
  Profile.h \
  Tagged_Components.h \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
  Tagged_Components.i \
+ GIOP_Message_State.h \
+ Pluggable_Messaging.h \
+ Pluggable_Messaging_Utils.h \
+ Pluggable_Messaging_Utils.i \
+ Pluggable_Messaging.i \
+ GIOP_Message_State.i \
  Profile.i \
  MProfile.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- MessagingC.i \
- PortableInterceptorC.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
- Cache_Entries.h \
- Base_Connection_Property.h \
- Endpoint.h \
- Endpoint.i \
- Base_Connection_Property.inl \
- Cache_Entries.inl \
- Connection_Cache_Manager.inl \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- ORB_Core.i \
- Stub.i \
- debug.h \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- TAOC.h \
- Priority_Mapping_Manager.h \
- Priority_Mapping.h \
- RTCORBAC.h \
- RTCORBAC.i \
- Priority_Mapping.i \
- Priority_Mapping_Manager.i \
- TAOC.i \
- operation_details.h \
- target_specification.h \
- target_specification.i \
- operation_details.i \
- Invocation_Endpoint_Selectors.h \
- Invocation_Endpoint_Selectors.i \
- Invocation.i \
- ObjectIDList.h \
- ObjectIDList.i \
- DomainC.h \
- ClientRequestInfo.h \
- StringSeqC.h \
- StringSeqC.i \
- DomainC.i \
- WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
- BoundsC.h \
- BoundsC.i \
- PortableInterceptor.h \
- PortableInterceptor.i \
- PortableServer/ServerRequestInfo.h \
- PortableServer/portableserver_export.h \
- IOR_Parser.h \
- IOR_Parser.i \
- ior_corbaname_export.h \
- CORBANAME_Parser.i \
- CORBALOC_Parser.h \
- Connector_Registry.h \
- Connector_Registry.i \
- PortableServer/POA.h \
- PortableServer/Object_Adapter.h \
- PortableServer/Key_Adapters.h \
- PortableServer/PortableServerC.h \
- PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- PortableServer/Key_Adapters.i \
- PortableServer/poa_macros.h \
- PortableServer/RTPortableServerC.h \
- PortableServer/RTPortableServerC.i \
- PortableServer/Servant_Base.h \
- PortableServer/Servant_Base.i \
- PortableServer/Active_Object_Map.h \
- PortableServer/Active_Object_Map.i \
- PortableServer/Object_Adapter.i \
- PortableServer/POAManager.h \
- PortableServer/POAManager.i \
- PortableServer/POA.i \
- ior_corbaloc_export.h \
  CORBALOC_Parser.i \
  FILE_Parser.h \
  FILE_Parser.i \
  DLL_Parser.h \
- DLL_Parser.i
+ DLL_Parser.i \
+ Object_Loader.h \
+ Object_Loader.i
 
 .obj/TAO_Server_Request.o .obj/TAO_Server_Request.so .shobj/TAO_Server_Request.o .shobj/TAO_Server_Request.so: TAO_Server_Request.cpp \
  TAO_Server_Request.h \
@@ -19000,7 +18867,8 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- IOPC.i Any.h \
+ IOPC.i \
+ Any.h \
  Environment.h \
  Environment.i \
  Object.h \
@@ -19235,7 +19103,8 @@ realclean:
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i PollableC.i \
+ CDR.i \
+ PollableC.i \
  Stub.h \
  Pluggable.h \
  Sequence.h \
@@ -19523,8 +19392,8 @@ realclean:
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i PollableC.i \
- PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ CDR.i \
+ PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -20274,7 +20143,8 @@ realclean:
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
- GIOPC.i GIOPS_T.h \
+ GIOPC.i \
+ GIOPS_T.h \
  GIOPS_T.i \
  GIOPS_T.cpp \
  GIOPS.i
@@ -20538,7 +20408,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  Priority_Mapping_Manager.i \
- TAOC.i TAOS.h \
+ TAOC.i \
+ TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -22288,7 +22159,7 @@ realclean:
 
 .obj/CORBALOC_Parser.o .obj/CORBALOC_Parser.so .shobj/CORBALOC_Parser.o .shobj/CORBALOC_Parser.so: CORBALOC_Parser.cpp CORBALOC_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- ORB.h \
+ IOR_Parser.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -22388,6 +22259,12 @@ realclean:
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ IOR_Parser.i \
+ ORB.h \
  Services.h \
  Sequence.h \
  Managed_Types.h \
@@ -22418,79 +22295,11 @@ realclean:
  Environment.i \
  PolicyC.i \
  ORB.i \
- Connector_Registry.h \
- Pluggable.h \
- IOPC.h \
- IOPC.i \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- Pluggable.i \
- params.h \
- params.i \
- Connector_Registry.i \
- IOR_Parser.h \
- IOR_Parser.i \
- Stub.h \
  MProfile.h \
  Profile.h \
  Tagged_Components.h \
+ IOPC.h \
+ IOPC.i \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
  Tagged_Components.i \
@@ -22502,102 +22311,11 @@ realclean:
  GIOP_Message_State.i \
  Profile.i \
  MProfile.i \
- ORB_Core.h \
- Policy_Manager.h \
- LocalObject.h \
- LocalObject.i \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Any.i \
- DynamicC.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- MessagingC.i \
- PortableInterceptorC.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
- Cache_Entries.h \
- Base_Connection_Property.h \
- Endpoint.h \
- Endpoint.i \
- Base_Connection_Property.inl \
- Cache_Entries.inl \
- Connection_Cache_Manager.inl \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- ORB_Core.i \
- Stub.i \
- PortableServer/POA.h \
- PortableServer/Object_Adapter.h \
- PortableServer/portableserver_export.h \
- PortableServer/Key_Adapters.h \
- PortableServer/PortableServerC.h \
- PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- PortableServer/Key_Adapters.i \
- PortableServer/poa_macros.h \
- PortableServer/RTPortableServerC.h \
- RTCORBAC.h \
- RTCORBAC.i \
- PortableServer/RTPortableServerC.i \
- PortableServer/Servant_Base.h \
- PortableServer/Servant_Base.i \
- PortableServer/Active_Object_Map.h \
- Server_Strategy_Factory.h \
- PortableServer/Active_Object_Map.i \
- PortableServer/Object_Adapter.i \
- PortableServer/POAManager.h \
- PortableServer/POAManager.i \
- Object_KeyC.h \
- Object_KeyC.i \
- PortableServer/POA.i \
- ior_corbaloc_export.h CORBALOC_Parser.i
+ CORBALOC_Parser.i
 
 .obj/CORBANAME_Parser.o .obj/CORBANAME_Parser.so .shobj/CORBANAME_Parser.o .shobj/CORBANAME_Parser.so: CORBANAME_Parser.cpp CORBANAME_Parser.h \
  $(ACE_ROOT)/ace/pre.h \
- Object_Loader.h \
+ IOR_Parser.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -22693,84 +22411,15 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- Object_Loader.i \
- Object.h \
- Abstract_Servant_Base.h \
- Object_Proxy_Broker.h \
- Object_Proxy_Impl.h \
- Object.i \
- corba.h \
- Environment.h \
- Environment.i \
- ORB.h \
  Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Encodable.h \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Typecode.h \
- Typecode.i \
- PolicyC.i \
- ORB.i \
- Any.h \
- Any.i \
- NVList.h \
- NVList.i \
- Principal.h \
- OctetSeqC.h \
- OctetSeqC.i \
- Principal.i \
- TAO_Server_Request.h \
- GIOP_Message_Base.h \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- IOPC.h \
- IOPC.i \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- GIOP_Message_Base.i \
- Tagged_Profile.h \
- GIOPC.h \
- Object_KeyC.h \
- Object_KeyC.i \
- GIOPC.i \
- Tagged_Profile.i \
- TAO_Server_Request.i \
- LocalObject.h \
- LocalObject.i \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ IOR_Parser.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -22786,142 +22435,174 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- params.h \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- DynamicC.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- MessagingC.i \
- PortableInterceptorC.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
- Cache_Entries.h \
- Base_Connection_Property.h \
- Endpoint.h \
- Endpoint.i \
- Base_Connection_Property.inl \
- Cache_Entries.inl \
- Connection_Cache_Manager.inl \
- Cleanup_Func_Registry.h \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- Interceptor_List.h \
- Interceptor_List.inl \
- ORB_Core.i \
- Stub.i \
- debug.h \
- Client_Strategy_Factory.h \
- Server_Strategy_Factory.h \
- Invocation.h \
+ CORBANAME_Parser.i Invocation.h \
+ CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ CDR.i \
+ Any.h \
+ Environment.h \
+ Environment.i \
+ Object.h \
+ Abstract_Servant_Base.h \
+ Object_Proxy_Broker.h \
+ Object_Proxy_Impl.h \
+ Object.i \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
  Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
+ IOPC.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ IOPC.i \
  Reply_Dispatcher.i \
+ GIOP_Message_State.h \
+ Pluggable_Messaging.h \
+ Pluggable_Messaging_Utils.h \
+ Pluggable_Messaging_Utils.i \
+ Pluggable_Messaging.i \
+ GIOP_Message_State.i \
  TAOC.h \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ Encodable.h \
+ PolicyC.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
  Priority_Mapping_Manager.h \
  Priority_Mapping.h \
  RTCORBAC.h \
  RTCORBAC.i \
  Priority_Mapping.i \
+ LocalObject.h \
+ LocalObject.i \
  Priority_Mapping_Manager.i \
  TAOC.i \
  operation_details.h \
  target_specification.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
  target_specification.i \
  operation_details.i \
  Invocation_Endpoint_Selectors.h \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
  Invocation_Endpoint_Selectors.i \
  Invocation.i \
- ObjectIDList.h \
- ObjectIDList.i \
- DomainC.h \
- ClientRequestInfo.h \
- StringSeqC.h \
- StringSeqC.i \
- DomainC.i \
- WrongTransactionC.h \
- InterfaceC.h \
- ifrfwd.h \
- BoundsC.h \
- BoundsC.i \
- PortableInterceptor.h \
- PortableInterceptor.i \
- PortableServer/ServerRequestInfo.h \
- PortableServer/portableserver_export.h \
- IOR_Parser.h \
- IOR_Parser.i \
- ior_corbaname_export.h CORBANAME_Parser.i
+ Stub.h \
+ Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Process_Mutex.h \
+ $(ACE_ROOT)/ace/Process_Mutex.inl \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ Pluggable.i \
+ ORB.h \
+ Services.h \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ ORB.i \
+ ORB_Core.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
+ Protocol_Factory.h \
+ params.h \
+ params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ Adapter.h \
+ Adapter.i \
+ PolicyFactory_Registry.h \
+ PortableInterceptorC.h \
+ DynamicC.h \
+ DynamicC.i \
+ MessagingC.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
+ PollableC.h \
+ PollableC.i \
+ MessagingC.i \
+ PortableInterceptorC.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ Parser_Registry.h \
+ Parser_Registry.i \
+ Service_Callbacks.h \
+ Service_Callbacks.i \
+ Fault_Tolerance_Service.h \
+ Fault_Tolerance_Service.i \
+ Connection_Cache_Manager.h \
+ Cache_Entries.h \
+ Base_Connection_Property.h \
+ Endpoint.h \
+ Endpoint.i \
+ Base_Connection_Property.inl \
+ Cache_Entries.inl \
+ Connection_Cache_Manager.inl \
+ Cleanup_Func_Registry.h \
+ Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
+ Interceptor_List.h \
+ Interceptor_List.inl \
+ ORB_Core.i \
+ Stub.i
 
 .obj/Bind_Dispatcher_Guard.o .obj/Bind_Dispatcher_Guard.so .shobj/Bind_Dispatcher_Guard.o .shobj/Bind_Dispatcher_Guard.so: Bind_Dispatcher_Guard.cpp \
  Bind_Dispatcher_Guard.h \
@@ -23445,7 +23126,8 @@ realclean:
  CORBA_String.inl
 
 .obj/ORBInitInfo.o .obj/ORBInitInfo.so .shobj/ORBInitInfo.o .shobj/ORBInitInfo.so: ORBInitInfo.cpp ORBInitInfo.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23542,7 +23224,8 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h Any.h \
+ DynamicC.h \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -23658,7 +23341,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
  Protocol_Factory.h \
- params.h params.i \
+ params.h \
+ params.i \
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
@@ -23689,7 +23373,8 @@ realclean:
 
 .obj/ORBInitializer_Registry.o .obj/ORBInitializer_Registry.so .shobj/ORBInitializer_Registry.o .shobj/ORBInitializer_Registry.so: ORBInitializer_Registry.cpp \
  ORBInitializer_Registry.h \
- $(ACE_ROOT)/ace/pre.h TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -23786,7 +23471,8 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h Any.h \
+ DynamicC.h \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -23840,7 +23526,8 @@ realclean:
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  ORBInitializer_Registry.inl \
- ORB.h Services.h \
+ ORB.h \
+ Services.h \
  Services.i \
  CORBA_String.h \
  CORBA_String.inl \
@@ -23849,7 +23536,8 @@ realclean:
 
 .obj/PolicyFactory_Registry.o .obj/PolicyFactory_Registry.so .shobj/PolicyFactory_Registry.o .shobj/PolicyFactory_Registry.so: PolicyFactory_Registry.cpp \
  PolicyFactory_Registry.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23946,7 +23634,8 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h Any.h \
+ DynamicC.h \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -24484,7 +24173,8 @@ realclean:
 
 .obj/Cleanup_Func_Registry.o .obj/Cleanup_Func_Registry.so .shobj/Cleanup_Func_Registry.o .shobj/Cleanup_Func_Registry.so: Cleanup_Func_Registry.cpp \
  Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24582,7 +24272,8 @@ realclean:
  Cleanup_Func_Registry.inl
 
 .obj/IORInfo.o .obj/IORInfo.so .shobj/IORInfo.o .shobj/IORInfo.so: IORInfo.cpp IORInfo.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24679,7 +24370,8 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h Any.h \
+ DynamicC.h \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -24739,7 +24431,8 @@ realclean:
  MProfile.i
 
 .obj/Object_Ref_Table.o .obj/Object_Ref_Table.so .shobj/Object_Ref_Table.o .shobj/Object_Ref_Table.so: Object_Ref_Table.cpp Object_Ref_Table.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24868,7 +24561,14 @@ realclean:
  Abstract_Servant_Base.h \
  Object_Proxy_Broker.h \
  Object_Proxy_Impl.h \
- Object.i
+ Object.i \
+ Exception.h \
+ Exception.i \
+ Environment.h \
+ Environment.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ debug.h
 
 .obj/Services.o .obj/Services.so .shobj/Services.o .shobj/Services.so: Services.cpp \
  Services.h \
@@ -28039,7 +27739,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i corbafwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -28109,7 +27810,8 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i IOPC.h \
+ corbafwd.i \
+ IOPC.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -28122,7 +27824,8 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- IOPC.i PolicyC.h \
+ IOPC.i \
+ PolicyC.h \
  CurrentC.h \
  Object.h \
  Abstract_Servant_Base.h \
@@ -28140,10 +27843,12 @@ realclean:
  Environment.h \
  Environment.i \
  PolicyC.i \
- TimeBaseC.h Any.h \
+ TimeBaseC.h \
+ Any.h \
  Any.i \
  TimeBaseC.i \
- RTCORBAC.i TAOS.h \
+ RTCORBAC.i \
+ TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -28174,8 +27879,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RTCORBAS.h \
- orbconf.h IOPS.h IOPC.h \
+ $(ACE_ROOT)/ace/OS.i \
+ RTCORBAS.h orbconf.h IOPS.h IOPC.h \
  TAO_Export.h \
  CDR.h \
  corbafwd.h \

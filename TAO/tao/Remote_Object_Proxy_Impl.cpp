@@ -1,5 +1,10 @@
+// $Id$
+
 #include "tao/Remote_Object_Proxy_Impl.h"
-#include "tao/corba.h"
+#include "tao/Exception.h"
+#include "tao/Any.h"
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
 
 ACE_RCSID(tao, TAO_Remote_Object_Proxy_Impl, "$Id$")
 

@@ -63,8 +63,6 @@ TAO_GIOP_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   return this->invoke_i	(ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
 // **************************************************************************
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
@@ -107,3 +105,5 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment	&ACE_TRY_ENV)
 }
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

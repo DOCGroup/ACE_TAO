@@ -12,12 +12,12 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_LoadBalancing -lTAO
+LDLIBS = -lTAO_LoadBalancing -lTAO_PortableServer -lTAO
 
 IDLFILES = Hash_ReplicaC Hash_ReplicaS
-BIN = client server
+BIN_UNCHECKED = client server
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) Hash_ReplicaControl Hash_Replica_i)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) $(IDLFILES) Hash_ReplicaControl Hash_Replica_i)
 
 CLIENT_OBJS = client.o Hash_ReplicaC.o
 SERVER_OBJS = server.o Hash_ReplicaControl.o Hash_Replica_i.o $(addsuffix .o, $(IDLFILES))
@@ -31,6 +31,12 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (LoadBalancing,$(findstring LoadBalancing,$(TAO_ORBSVCS)))
+  BIN = $(BIN_UNCHECKED)
+endif # LoadBalancing
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -13,9 +13,9 @@ public:
   corbaname_Status_i (CORBA::Environment & =
                      TAO_default_environment());
 
-  CORBA::Boolean print_status (CORBA::Environment & = TAO_default_environment()) 
-    throw (CORBA::SystemException);
-  
+  CORBA::Boolean print_status (CORBA::Environment & = TAO_default_environment())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 };
 
 #endif /* STATUS_I_H */
