@@ -184,7 +184,7 @@ TEMPLATE_FILES = \
            Cache_Map_Manager_T \
            Cached_Connect_Strategy_T \
            Caching_Strategies_T \
-           Caching_Strategy_Utility_T \
+           Caching_Utility_T \
            Cleanup_Strategies_T \
            Dump_T \
            Dynamic_Service \
