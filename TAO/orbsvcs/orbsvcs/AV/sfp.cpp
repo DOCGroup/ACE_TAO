@@ -610,7 +610,7 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
       *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = total_len;
 #else
-      if (!stream->do_byte_swap ())
+      if (!stream.do_byte_swap ())
         *ACE_reinterpret_cast (CORBA::ULong *,
                                buf + offset) = total_len;
       else
