@@ -11,6 +11,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
     Acceptor_Filter.cpp
     Acceptor_Registry.cpp
     Adapter.cpp
+    Adapter_Factory.cpp
+    Adapter_Registry.cpp
     Any.cpp
     Any_Basic_Impl.cpp
     Any_Impl.cpp

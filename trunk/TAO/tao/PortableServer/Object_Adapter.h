@@ -28,6 +28,7 @@
 #include "Active_Object_Map.h"
 
 #include "tao/Adapter.h"
+#include "tao/Adapter_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
 
 // Local Object

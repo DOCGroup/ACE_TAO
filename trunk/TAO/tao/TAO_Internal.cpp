@@ -11,6 +11,7 @@
 #include "FILE_Parser.h"
 #include "DLL_Parser.h"
 #include "ORB_Core.h"
+#include "Adapter_Factory.h"
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
