@@ -1,3 +1,46 @@
+Mon Mar 21 16:25:07 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeMember.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeMember.hpp:
+
+	Finished "full support" for valuetype members. It also
+	adds "full support" for eventtype members since it just
+	re-uses valuetype's rules.
+
+
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction/ValueTypeFactory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeFactory.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeFactory.hpp:
+	* CCF/CCF/IDL2/SemanticAction.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+
+	Added support for valuetype factories.
+
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/ValueType.hpp:
+	* CCF/CCF/IDL2/Traversal/ValueType.tpp:
+
+	Implemented support for valuetype inheritance and
+	support of interfaces.
+
+
+	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
+	* CCF/CCF/IDL3/Traversal/EventType.tpp:
+
+	Implemented support for eventtype inheritance and
+	support of interfaces.
+
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
+
+	Minor cleanups.
+
 Sun Mar 20 21:35:04 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/examples/Swapping/Sender/Sender.mpc:
@@ -154,6 +197,7 @@ Sat Mar 19 18:19:34 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/XSCRT/XMLSchema.tpp
 
 	Completed the merge of xsc_handler_1 into main.
+
 Sat Mar 19 17:29:50 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
