@@ -11,5 +11,5 @@ interface test
   void forward ()
     raises (Cannot_Forward);
 
-  void shutdown ();
+  oneway void shutdown ();
 };
