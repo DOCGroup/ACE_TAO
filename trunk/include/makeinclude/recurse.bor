@@ -1,8 +1,10 @@
 #
+# $Id$
+#
 # Macros for recursive invocations of make
 #
-# Inputs: 
-# ~~~~~~~ 
+# Inputs:
+# ~~~~~~~
 # DIRS - list of sub-directories to invoke make in
 # MAKEFILES - list of makefiles to be run
 # NAMES - list of names of targets to be built
