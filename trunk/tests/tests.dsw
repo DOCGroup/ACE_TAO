@@ -195,18 +195,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Mutex_Test"=.\Mutex_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Naming_Test"=.\Naming_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -508,6 +496,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Thread_Manager_Test"=.\Thread_Manager_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Thread_Mutex_Test"=.\Thread_Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
