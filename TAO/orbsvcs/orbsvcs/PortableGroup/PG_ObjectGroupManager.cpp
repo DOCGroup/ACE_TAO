@@ -344,7 +344,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
 
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-  locations->length (ACE_static_cast (CORBA::ULong, member_infos.size ()));
+  locations->length (static_cast<CORBA::ULong>(member_infos.size ()));
 
   CORBA::ULong loc = 0;
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
@@ -376,7 +376,7 @@ TAO_PG_ObjectGroupManager::groups_at_location (
   TAO_PG_ObjectGroup_Array * groups;
   if (this->location_map_.find (the_location, groups) == 0)
     {
-      CORBA::ULong len = ACE_static_cast (CORBA::ULong, groups->size ());
+      CORBA::ULong len = static_cast<CORBA::ULong>(groups->size ());
 
       ogs->length (len);
 
@@ -655,7 +655,7 @@ TAO_PG_ObjectGroupManager::member_count (
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return ACE_static_cast (CORBA::ULong, group_entry->member_infos.size ());
+  return static_cast<CORBA::ULong>(group_entry->member_infos.size ());
 }
 
 void

@@ -99,7 +99,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
 
       // Removed the constness of profile.  We're not changing
       // anything, but need to call a nonconst function.
-      TAO_Profile* nc_profile = ACE_const_cast (TAO_Profile *, profile);
+      TAO_Profile* nc_profile = const_cast<TAO_Profile *>(profile);
       nc_profile->endpoint ()->addr_to_string (buffer, MAX_ADDR_LENGTH);
 
       if (acceptor->open (&orb_core,
@@ -178,7 +178,7 @@ TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
       // Since the endpoint routine is nonconst, need to
       // cast away the constness even though we're not
       // changing anything.
-      TAO_Profile *nc_profile = ACE_const_cast (TAO_Profile *,profile);
+      TAO_Profile *nc_profile = const_cast<TAO_Profile *>(profile);
       if (entry->endpoint->is_equivalent (nc_profile->endpoint ()))
         return 1;
 

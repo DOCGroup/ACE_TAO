@@ -83,8 +83,7 @@ TAO_IOR_Multicast::init (const char *ior,
   else
     {
       actual_mcast_addr =
-        CORBA::string_alloc (ACE_static_cast(CORBA::ULong,
-                                             ACE_OS::strlen (mcast_addr)));
+        CORBA::string_alloc (static_cast<CORBA::ULong>(ACE_OS::strlen (mcast_addr)));
 
       actual_mcast_addr = mcast_addr;
     }
@@ -244,7 +243,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   iovp[0].iov_len  = sizeof (CORBA::Short);
 
   // The ior.
-  iovp[1].iov_base = ACE_const_cast (char*, this->ior_.c_str ());
+  iovp[1].iov_base = const_cast<char*>(this->ior_.c_str ());
   iovp[1].iov_len  = ACE_static_cast(u_long, this->ior_.length () + 1);
 
   ssize_t result = stream.sendv_n (iovp, cnt);

@@ -192,7 +192,7 @@ CORBA::Boolean
 TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
   TAO_Endpoint *endpt =
-    ACE_const_cast (TAO_Endpoint *, other_endpoint);
+    const_cast<TAO_Endpoint *>(other_endpoint);
 
   TAO::HTIOP::Endpoint *endpoint =
     ACE_dynamic_cast (TAO::HTIOP::Endpoint *, endpt);

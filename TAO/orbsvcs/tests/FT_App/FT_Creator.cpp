@@ -206,7 +206,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
       FILE * iogr_file = fopen (iogr_filename, "w");
       if (iogr_file != 0)
       {
-        char const * siogr = ACE_static_cast (const char *, iogr.in ());
+        char const * siogr = static_cast<const char *>(iogr.in ());
         fwrite (siogr, 1, strlen(siogr), iogr_file);
         fclose (iogr_file);
       }

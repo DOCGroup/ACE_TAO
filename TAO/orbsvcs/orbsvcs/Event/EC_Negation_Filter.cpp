@@ -19,13 +19,13 @@ TAO_EC_Negation_Filter::~TAO_EC_Negation_Filter (void)
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Negation_Filter::begin (void) const
 {
-  return ACE_const_cast(TAO_EC_Filter**,&this->child_);
+  return const_cast<TAO_EC_Filter**>(&this->child_);
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Negation_Filter::end (void) const
 {
-  return ACE_const_cast(TAO_EC_Filter**,&this->child_) + 1;
+  return const_cast<TAO_EC_Filter**>(&this->child_) + 1;
 }
 
 int

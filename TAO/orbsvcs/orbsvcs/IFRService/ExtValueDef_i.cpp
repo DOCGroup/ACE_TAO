@@ -248,13 +248,11 @@ TAO_ExtValueDef_i::describe_ext_value_i (
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_abstract",
                                              val);
-  fv_desc->is_abstract = ACE_static_cast (CORBA::Boolean, 
-                                          val);
+  fv_desc->is_abstract = static_cast<CORBA::Boolean>(val);
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_custom",
                                              val);
-  fv_desc->is_custom = ACE_static_cast (CORBA::Boolean, 
-                                        val);
+  fv_desc->is_custom = static_cast<CORBA::Boolean>(val);
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
                                             holder);
@@ -323,8 +321,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
           this->repo_->config ()->get_integer_value (op_key,
                                                      "mode",
                                                      val);
-          fv_desc->operations[i].mode = ACE_static_cast (CORBA::OperationMode,
-                                                         val);
+          fv_desc->operations[i].mode = static_cast<CORBA::OperationMode>(val);
           CORBA::TCKind kind = 
             fv_desc->operations[i].result->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
@@ -401,8 +398,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                                              "mode",
                                                              val);
                   fv_desc->operations[i].parameters[j].mode = 
-                    ACE_static_cast (CORBA::ParameterMode, 
-                                     val);
+                    static_cast<CORBA::ParameterMode>(val);
                 }
             }
 
@@ -509,8 +505,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                                      "mode",
                                                      val);
           fv_desc->attributes[i].mode =
-            ACE_static_cast (CORBA::AttributeMode, 
-                             val);
+            static_cast<CORBA::AttributeMode>(val);
           this->repo_->config ()->get_string_value (attr_key,
                                                     "type_path",
                                                     holder);
@@ -595,8 +590,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                                      "access",
                                                      val);
           fv_desc->members[i].access =
-            ACE_static_cast (CORBA::Visibility, 
-                             val);
+            static_cast<CORBA::Visibility>(val);
 
           // Use type path for 'type' and 'type_def',
 
@@ -734,8 +728,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_truncatable",
                                              val);
-  fv_desc->is_truncatable = ACE_static_cast (CORBA::Boolean,
-                                             val);
+  fv_desc->is_truncatable = static_cast<CORBA::Boolean>(val);
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_value",
                                             holder);

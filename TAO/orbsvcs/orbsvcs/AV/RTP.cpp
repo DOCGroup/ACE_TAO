@@ -349,7 +349,7 @@ TAO_AV_RTP_Object::handle_input (void)
   char *data_ptr;
   ACE_UINT16 length;
   RTP_Packet rtp_packet(this->frame_.rd_ptr (),
-                        ACE_static_cast (int,  this->frame_.length ()));
+                        static_cast<int>(this->frame_.length ()));
 
   rtp_packet.get_frame_info (&frame_info);
   rtp_packet.get_payload(&data_ptr, length);
@@ -388,8 +388,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
       if (frame_info->ssrc != 0)
         this->ssrc_ = frame_info->ssrc;
 
-      TAO_AV_RTCP_Object *rtcp_prot_obj = ACE_dynamic_cast (TAO_AV_RTCP_Object*,
-                                                            this->control_object_);
+      TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*>(this->control_object_);
       // set the ssrc on the control object so the RTCP traffic can be matched
       // to the RTP traffic
       rtcp_prot_obj->ssrc(this->ssrc_);
@@ -477,8 +476,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   if (result < 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
 
-  TAO_AV_RTCP_Object *rtcp_prot_obj = ACE_dynamic_cast (TAO_AV_RTCP_Object*,
-                                                        this->control_object_);
+  TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*>(this->control_object_);
   if (rtcp_prot_obj)
     rtcp_prot_obj->handle_control_output (&mb);
 
@@ -512,8 +510,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       if (frame_info->ssrc != 0)
         this->ssrc_ = frame_info->ssrc;
 
-      TAO_AV_RTCP_Object *rtcp_prot_obj = ACE_dynamic_cast (TAO_AV_RTCP_Object*,
-                                                            this->control_object_);
+      TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*>(this->control_object_);
       // set the ssrc on the control object so the RTCP traffic can be matched
       // to the RTP traffic
       rtcp_prot_obj->ssrc(this->ssrc_);
@@ -670,7 +667,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
         case TAO_AV_PAYLOAD_TYPE_POLICY:
           {
             TAO_AV_Payload_Type_Policy *payload_policy =
-              ACE_static_cast (TAO_AV_Payload_Type_Policy *,policy);
+              static_cast<TAO_AV_Payload_Type_Policy *>(policy);
             if (payload_policy == 0)
               ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
             this->format_ = payload_policy->value ();
@@ -679,7 +676,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
         case TAO_AV_SSRC_POLICY:
           {
             TAO_AV_SSRC_Policy *ssrc_policy =
-              ACE_static_cast (TAO_AV_SSRC_Policy *,policy);
+              static_cast<TAO_AV_SSRC_Policy *>(policy);
             if (ssrc_policy == 0)
               ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
             this->ssrc_ = ssrc_policy->value ();;
@@ -697,8 +694,7 @@ void
 TAO_AV_RTP_Object::control_object (TAO_AV_Protocol_Object *object)
 {
   this->control_object_ = object;
-  TAO_AV_RTCP_Object *rtcp_prot_obj = ACE_dynamic_cast (TAO_AV_RTCP_Object*,
-                                                        this->control_object_);
+  TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*>(this->control_object_);
   rtcp_prot_obj->ssrc (this->ssrc_);
   rtcp_prot_obj->ts_offset (this->timestamp_offset_);
 }

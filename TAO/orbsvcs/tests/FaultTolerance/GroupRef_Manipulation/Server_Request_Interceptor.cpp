@@ -77,8 +77,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
       ACE_CHECK;
 
       // extract the group component
-      TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                              svc->context_data.get_buffer ()),
+      TAO_InputCDR cdr (reinterpret_cast<const char*>(svc->context_data.get_buffer ()),
                         svc->context_data.length ());
 
       CORBA::Boolean byte_order;
@@ -88,7 +87,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
           return;
         }
 
-      cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+      cdr.reset_byte_order (static_cast<int>(byte_order));
 
       FT::TagFTGroupTaggedComponent group_component;
 
@@ -136,8 +135,7 @@ Server_Request_Interceptor::receive_request (
       ACE_CHECK;
 
       // extract the group component
-      TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                              svc->context_data.get_buffer ()),
+      TAO_InputCDR cdr (reinterpret_cast<const char*>(svc->context_data.get_buffer ()),
                         svc->context_data.length ());
 
       CORBA::Boolean byte_order;
@@ -147,7 +145,7 @@ Server_Request_Interceptor::receive_request (
           return;
         }
 
-      cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+      cdr.reset_byte_order (static_cast<int>(byte_order));
 
       FT::TagFTGroupTaggedComponent group_component;
 

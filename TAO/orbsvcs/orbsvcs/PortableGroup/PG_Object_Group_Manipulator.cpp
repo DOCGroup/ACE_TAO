@@ -50,7 +50,7 @@ PortableServer::ObjectId * TAO::PG_Object_Group_Manipulator::convert_ogid_to_oid
   char oid_str[11];
   ACE_OS::snprintf (oid_str, sizeof(oid_str),
                    "%lu",
-                   ACE_static_cast (ACE_UINT32,ogid));
+                   static_cast<ACE_UINT32>(ogid));
   oid_str[sizeof(oid_str) - 1] = '\0';
 
   return PortableServer::string_to_ObjectId (oid_str);

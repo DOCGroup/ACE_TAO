@@ -175,7 +175,7 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload subscription %d\n")
-      , ACE_static_cast (int, id)
+      , static_cast<int>(id)
       ));
     // since we initialized our subscribed types to everything
     // in the constructor. we have to clear it out first.
@@ -186,7 +186,7 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Admin reload filter_admin %d\n")
-      , ACE_static_cast (int, id)
+      , static_cast<int>(id)
       ));
     result = & this->filter_admin_;
   }

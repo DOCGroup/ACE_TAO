@@ -67,20 +67,18 @@ ACE_ES_Dispatch_Request::make_copy (RtecEventComm::EventSet &dest) const
       // buffer, without owning it, thus it is not removed!
       // @@ TODO Check what happens in the collocated case.
       dest.replace (1, 1,
-                    ACE_const_cast(RtecEventComm::Event*,
-                                   &this->single_event_.event ()),
+                    const_cast<RtecEventComm::Event*>(&this->single_event_.event ()),
                     0);
     }
   else if (this->event_set_.size () == 1)
     {
       dest.replace (1, 1,
-                    ACE_const_cast(RtecEventComm::Event*,
-                                   &this->event_set_[0].event ()),
+                    const_cast<RtecEventComm::Event*>(&this->event_set_[0].event ()),
                     0);
     }
   else
     {
-      dest.length (ACE_static_cast (CORBA::ULong, this->event_set_.size ()));
+      dest.length (static_cast<CORBA::ULong>(this->event_set_.size ()));
 
       int c = 0;
       for (CORBA::ULong i = 0; i < this->event_set_.size (); ++i)

@@ -258,10 +258,10 @@ void StubFaultConsumer::push_structured_event(
     "FaultConsumer:   Header EventType domain: %s\n"
     "FaultConsumer:   Header EventType type: %s\n"
     "FaultConsumer:   Header EventName: %s\n",
-    ACE_static_cast (unsigned int, this->notifications_),
-    ACE_static_cast (const char *, notification.header.fixed_header.event_type.domain_name),
-    ACE_static_cast (const char *, notification.header.fixed_header.event_type.type_name),
-    ACE_static_cast (const char *, notification.header.fixed_header.event_name)
+    static_cast<unsigned int>(this->notifications_),
+    static_cast<const char *>(notification.header.fixed_header.event_type.domain_name),
+    static_cast<const char *>(notification.header.fixed_header.event_type.type_name),
+    static_cast<const char *>(notification.header.fixed_header.event_name)
     ));
   const CosNotification::FilterableEventBody & filterable = notification.filterable_data;
 
@@ -270,7 +270,7 @@ void StubFaultConsumer::push_structured_event(
   {
     const CosNotification::Property & property = filterable[nProp];
 
-    const char * property_name = ACE_static_cast (const char *, property.name);
+    const char * property_name = static_cast<const char *>(property.name);
     const char * value = "<unknown>";
     if (property.value >>= value )
     {

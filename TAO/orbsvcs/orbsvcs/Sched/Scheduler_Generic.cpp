@@ -228,7 +228,7 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *>
   status_t status = ACE_Scheduler::SUCCEEDED;
 
   // store number of tasks, based on registrations
-  tasks (ACE_static_cast (u_int, task_entries_.size ()));
+  tasks (static_cast<u_int>(task_entries_.size ()));
 
   if (output_level () > 0)
     {

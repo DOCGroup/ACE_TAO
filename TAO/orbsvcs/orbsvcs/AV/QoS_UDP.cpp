@@ -491,7 +491,7 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
   if (TAO_debug_level > 0)
     {
         char buf [BUFSIZ];
-	ACE_INET_Addr *remote_addr = ACE_dynamic_cast (ACE_INET_Addr*, address);
+	ACE_INET_Addr *remote_addr = dynamic_cast<ACE_INET_Addr*>(address);
 	remote_addr->addr_to_string (buf,
 				     BUFSIZ);
 
@@ -502,12 +502,12 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
 
   ACE_INET_Addr *inet_addr =
-    ACE_dynamic_cast (ACE_INET_Addr*,address);
+    dynamic_cast<ACE_INET_Addr*>(address);
 
   this->peer_addr_ = *inet_addr;
 
   TAO_AV_UDP_QoS_Transport *transport =
-    ACE_dynamic_cast (TAO_AV_UDP_QoS_Transport*,this->transport_);
+    dynamic_cast<TAO_AV_UDP_QoS_Transport*>(this->transport_);
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
     {
@@ -624,7 +624,7 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
       if (i->length () > 0)
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = ACE_static_cast (u_long, i->length ());
+          iov[iovcnt].iov_len  = static_cast<u_long>(i->length ());
           iovcnt++;
 
           // The buffer is full make a OS call.  @@ TODO this should
@@ -1174,7 +1174,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   if (entry->get_peer_addr () != 0)
     {
-      local_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->get_peer_addr ());
+      local_addr = dynamic_cast<ACE_INET_Addr*>(entry->get_peer_addr ());
     }
   else
     ACE_NEW_RETURN (local_addr,
@@ -1194,8 +1194,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
   handler->flowspec_entry (this->entry_);
   handler->av_core (this->av_core_);
 
-  ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,
-                                               entry->address ());
+  ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(entry->address ());
 
   ACE_QoS_Params qos_params;
 

@@ -595,7 +595,7 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
     {
       ACE_ERROR (( LM_ERROR,
         "Remove replica %d mismatch.\n",
-        ACE_static_cast(int, id)
+        static_cast<int>(id)
         ));
     }
   }
@@ -603,8 +603,8 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
   {
     ACE_ERROR (( LM_ERROR,
       "Attempt to remove invalid replica %d. Limit %d.\n",
-      ACE_static_cast(int, id),
-      ACE_static_cast(int, this->replicas_.size())
+      static_cast<int>(id),
+      static_cast<int>(this->replicas_.size())
       ));
   }
 }
@@ -681,7 +681,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   (*factory_creation_id) <<= factory_id;
 
   ACE_ERROR ((LM_INFO,
-    "Created %s@%s#%d.\n", role, this->location_, ACE_static_cast(int, factory_id)
+    "Created %s@%s#%d.\n", role, this->location_, static_cast<int>(factory_id)
     ));
 
 

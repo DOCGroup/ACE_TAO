@@ -273,7 +273,7 @@ public:
   { return ::new char[sizeof (Shutdown_Consumer)]; }
 
   void operator delete (void *buf)
-  { ::delete [] ACE_static_cast(char*,buf); }
+  { ::delete [] static_cast<char*>(buf); }
 #endif /* 0 */
 
   // The module that we report to.
@@ -302,7 +302,7 @@ public:
     { return ::new char[sizeof (Shutdown_Channel)]; }
 
   void operator delete (void *buf)
-    { ::delete [] ACE_static_cast(char*,buf); }
+    { ::delete [] static_cast<char*>(buf); }
 #endif
 
   ACE_EventChannel *channel_;
@@ -410,7 +410,7 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event
       // in another thread!). Other ORBs may do different things and
       // this may not work!
       RtecEventComm::EventSet& copy =
-        ACE_const_cast (RtecEventComm::EventSet&, event);
+        const_cast<RtecEventComm::EventSet&>(event);
 
       this->time_stamp (copy);
       this->supplier_module_->push (this, copy ACE_ENV_ARG_PARAMETER);
@@ -967,7 +967,7 @@ ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
   ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
 
   return this->timer_module ()->schedule_timer (preemption_priority,
-                                                ACE_const_cast(ACE_Command_Base*,act),
+                                                const_cast<ACE_Command_Base*>(act),
                                                 tv_delta,
                                                 tv_interval);
 }

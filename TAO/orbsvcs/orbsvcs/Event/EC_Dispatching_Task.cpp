@@ -17,7 +17,7 @@ ACE_RCSID (Event,
 int
 TAO_EC_Queue::is_full_i (void)
 {
-  return ACE_static_cast (size_t, this->cur_count_) > this->high_water_mark_;
+  return static_cast<size_t>(this->cur_count_) > this->high_water_mark_;
 }
 
 // ****************************************************************
@@ -39,7 +39,7 @@ TAO_EC_Dispatching_Task::svc (void)
                         "EC (%P|%t) getq error in Dispatching Queue\n"));
 
           TAO_EC_Dispatch_Command *command =
-            ACE_dynamic_cast(TAO_EC_Dispatch_Command*, mb);
+            dynamic_cast<TAO_EC_Dispatch_Command*>(mb);
 
           if (command == 0)
             {

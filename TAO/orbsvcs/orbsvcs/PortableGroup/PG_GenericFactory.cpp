@@ -393,7 +393,7 @@ TAO_PG_GenericFactory::populate_object_group (
 
       const PortableGroup::FactoryInfo &factory_info = factory_infos[j];
 
-      if (j < ACE_static_cast (CORBA::ULong, initial_number_members))
+      if (j < static_cast<CORBA::ULong>(initial_number_members))
         {
           PortableGroup::GenericFactory_ptr factory =
             factory_info.the_factory.in ();
@@ -534,8 +534,7 @@ TAO_PG_GenericFactory::process_criteria (
       // members or the desired number of initial members cannot
       // possibly be created.
 
-      if (factory_infos_count < ACE_static_cast (CORBA::ULong,
-                                                 initial_number_members))
+      if (factory_infos_count < static_cast<CORBA::ULong>(initial_number_members))
         {
           unmet_criteria[uc].nam = name;
           unmet_criteria[uc++].val = value2;
@@ -563,8 +562,7 @@ TAO_PG_GenericFactory::process_criteria (
   if (membership_style == PortableGroup::MEMB_INF_CTRL)
     {
       if (minimum_number_members < initial_number_members
-          || ACE_static_cast (CORBA::ULong,
-                              minimum_number_members) > factory_infos_count)
+          || static_cast<CORBA::ULong>(minimum_number_members) > factory_infos_count)
         {
           unmet_criteria[uc].nam = name;
           unmet_criteria[uc++].val = value3;
@@ -637,12 +635,11 @@ TAO_PG_GenericFactory::check_minimum_number_members (
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (count >= ACE_static_cast (CORBA::ULong, minimum_number_members))
+      if (count >= static_cast<CORBA::ULong>(minimum_number_members))
         return;
 
       const CORBA::ULong gap =
-        ACE_static_cast (CORBA::ULong,
-                         minimum_number_members) - count;
+        static_cast<CORBA::ULong>(minimum_number_members) - count;
 
       CORBA::ULong creation_count = 0;
 

@@ -137,9 +137,7 @@ void ForwardCtrlServerInterceptor::receive_request_service_contexts (
 FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context
                                                ACE_ENV_ARG_DECL)
 {
-  Safe_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                            service_context->context_data.get_buffer ()
-                                            ),
+  Safe_InputCDR cdr (reinterpret_cast<const char*>(service_context->context_data.get_buffer ()),
                       service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
@@ -147,7 +145,7 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO), 0);
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int>(byte_order));
 
   FT::FTGroupVersionServiceContext fgvsc;
 

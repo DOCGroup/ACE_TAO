@@ -20,8 +20,7 @@ RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
    no_data_counter_ (0),
    data_since_last_report_ (0)
 {
-  const ACE_INET_Addr *const_inet_addr = ACE_dynamic_cast (const ACE_INET_Addr*,
-                                                           peer_addr);
+  const ACE_INET_Addr *const_inet_addr = dynamic_cast<const ACE_INET_Addr*>(peer_addr);
 
   ACE_INET_Addr *inet_addr;
   ACE_NEW (inet_addr,
@@ -226,7 +225,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
     ACE_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recv_rtp_packet - possible loop/collision detected"));
 
-  RTP_Packet data_packet(mb->rd_ptr (), ACE_static_cast (int, mb->length ()));
+  RTP_Packet data_packet(mb->rd_ptr (), static_cast<int>(mb->length ()));
 
   // make sure the packet is valid
   if (data_packet.is_valid ())

@@ -37,8 +37,7 @@ namespace TAO
       return retval;
 
     // Get the length of the CDR stream
-    CORBA::ULong length = ACE_static_cast (CORBA::ULong,
-                                           cdr.total_length ());
+    CORBA::ULong length = static_cast<CORBA::ULong>(cdr.total_length ());
 
     // Set the length
     tagged_components.component_data.length (length);
@@ -107,9 +106,7 @@ namespace TAO
         // Look for the primary
         if (pfile_tagged.get_component (tc) == 1)
           {
-            TAO_InputCDR cdr (ACE_reinterpret_cast (
-                                  const char*,
-                                  tc.component_data.get_buffer ()),
+            TAO_InputCDR cdr (reinterpret_cast<const char*>(tc.component_data.get_buffer ()),
                             tc.component_data.length ());
 
             CORBA::Boolean byte_order;
@@ -119,7 +116,7 @@ namespace TAO
             if (!cdr.good_bit ())
               return 0;
 
-            cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+            cdr.reset_byte_order (static_cast<int>(byte_order));
 
             cdr >> tg;
 

@@ -45,8 +45,7 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_POA_Current_Impl *pc_impl =
-    ACE_static_cast (TAO_POA_Current_Impl *,
-                     TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+    static_cast<TAO_POA_Current_Impl *>(TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
   PortableServer::ObjectId object_id;
   int status = TAO_POA::parse_ir_object_key (pc_impl->object_key (),

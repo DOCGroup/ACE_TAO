@@ -91,7 +91,7 @@ ECMS_Driver::run (int argc, char* argv[])
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
-                               ACE_static_cast (long, ACE_OS::getpid ()));
+                               static_cast<long>(ACE_OS::getpid ()));
               ACE_OS::fclose (pid);
             }
         }
@@ -251,7 +251,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
           ACE_hrtime_t t = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
 
-          if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
+          if (i == static_cast<CORBA::Long>(this->event_count_) - 1)
             event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
           else if (i % 2 == 0)
             event[0].header.type = this->event_a_;

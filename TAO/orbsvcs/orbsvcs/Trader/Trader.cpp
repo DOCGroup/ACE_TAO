@@ -670,26 +670,24 @@ TAO_Trader_Factory::manufacture_trader (void)
 #endif /* ACE_HAS_THREADS */
 
   TAO_TRADER* return_value = 0;
-  int components = ACE_static_cast (int, TAO_Trader_Base::LOOKUP);
+  int components = static_cast<int>(TAO_Trader_Base::LOOKUP);
 
   if (this->conformance_ >= TAO_TRADER_SIMPLE)
-    components |= ACE_static_cast (int, TAO_Trader_Base::REGISTER);
+    components |= static_cast<int>(TAO_Trader_Base::REGISTER);
 
   if (this->conformance_ >= TAO_TRADER_STANDALONE)
-    components |= ACE_static_cast (int, TAO_Trader_Base::ADMIN);
+    components |= static_cast<int>(TAO_Trader_Base::ADMIN);
 
   if (this->conformance_ >= TAO_TRADER_LINKED)
-    components |= ACE_static_cast (int, TAO_Trader_Base::LINK);
+    components |= static_cast<int>(TAO_Trader_Base::LINK);
 
   if (this->threadsafe_)
     ACE_NEW_RETURN (return_value,
-                    MT_TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
-                                                components)),
+                    MT_TRADER (static_cast<TAO_Trader_Base::Trader_Components>(components)),
                     0);
   else
     ACE_NEW_RETURN (return_value,
-                    TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
-                                             components)),
+                    TRADER (static_cast<TAO_Trader_Base::Trader_Components>(components)),
                     0);
 
   TAO_Import_Attributes_i &import_attributes =

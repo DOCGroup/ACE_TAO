@@ -3362,7 +3362,7 @@ Admin_Client::module_test (ACE_ENV_SINGLE_ARG_DECL)
       par_seq[i].type_def = CORBA::PrimitiveDef::_duplicate (p_long.in ());
       par_seq[i].type = p_long->type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      par_seq[i].mode = ACE_static_cast (CORBA::ParameterMode, i);
+      par_seq[i].mode = static_cast<CORBA::ParameterMode>(i);
 
       con_seq[i] = contexts[i];
     }

@@ -451,8 +451,7 @@ TAO::PG_Object_Group::increment_version (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%T %n (%P|%t) - Setting IOGR version to %u\n"),
-                  ACE_static_cast (unsigned,
-                                   this->tagged_component_.object_group_ref_version)
+                  static_cast<unsigned>(this->tagged_component_.object_group_ref_version)
                   ));
     }
 
@@ -503,8 +502,7 @@ TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
                               "IOGR to %s member: %s@%s.\n",
                               (info->is_primary_ ? "Primary" : "Backup"),
                               this->role_.c_str (),
-                              ACE_static_cast (const char *,
-                                               info->location_[0].id)
+                              static_cast<const char *>(info->location_[0].id)
                               ));
                 }
               //        dump_ior ("group", "iogr", this->tagged_component_.object_group_ref_version, iogr);
@@ -827,10 +825,8 @@ TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
                                   ACE_TEXT ("PG (%P|%t) Replica Factory ")
                                   ACE_TEXT ("@ %s refused create_object ")
                                   ACE_TEXT ("request for type %s\n"),
-                                  ACE_static_cast (const char *,
-                                                   factory_info.the_location[0].id),
-                                  ACE_static_cast (const char *,
-                                                   this->type_id_.in ())
+                                  static_cast<const char *>(factory_info.the_location[0].id),
+                                  static_cast<const char *>(this->type_id_.in ())
                                   ));
                     }
                 }

@@ -56,7 +56,7 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
       ACE_OS::sprintf (trader_name,
                        "%s_%ld",
                        host_name,
-                       ACE_static_cast (long, ACE_OS::getpid ()));
+                       static_cast<long>(ACE_OS::getpid ()));
 
       for (char *dot = 0;
            (dot = ACE_OS::strchr (trader_name, '.')) != 0;
@@ -144,8 +144,7 @@ TAO_Trading_Loader::fini (void)
 
               ACE_DEBUG ((LM_DEBUG,
                           "*** Removing link to %s.\n",
-                          ACE_static_cast (const char *,
-                                           link_name_seq[i])));
+                          static_cast<const char *>(link_name_seq[i])));
               our_link->remove_link (link_name_seq[i]
                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -333,14 +332,12 @@ TAO_Trading_Loader::bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL)
        i--)
     {
       // Avoid linking to ourselves.
-      if (ACE_OS::strcmp (ACE_static_cast (const char *,
-                                           link_name_seq[i]),
+      if (ACE_OS::strcmp (static_cast<const char *>(link_name_seq[i]),
                           this->name_.in ()) != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "*** Getting info for link %s.\n",
-                      ACE_static_cast (const char *,
-                                       link_name_seq[i])));
+                      static_cast<const char *>(link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[i]
                                     ACE_ENV_ARG_PARAMETER);

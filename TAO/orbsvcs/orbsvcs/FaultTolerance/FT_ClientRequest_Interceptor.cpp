@@ -205,16 +205,14 @@ namespace TAO
       // Grab the object group version
       // @@ NOTE: This involves an allocation and a dellocation. This is
       // really bad.
-      TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-        tp->component_data.get_buffer ()
-        ),
+      TAO_InputCDR cdr (reinterpret_cast<const char*>(tp->component_data.get_buffer ()),
         tp->component_data.length ());
       CORBA::Boolean byte_order;
 
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return;
 
-      cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+      cdr.reset_byte_order (static_cast<int>(byte_order));
 
       FT::TagFTGroupTaggedComponent gtc;
 
@@ -235,7 +233,7 @@ namespace TAO
         //ACE_THROW (CORBA::MARSHAL ());
 
       CORBA::ULong length =
-        ACE_static_cast (CORBA::ULong, ocdr.total_length ());
+        static_cast<CORBA::ULong>(ocdr.total_length ());
       sc.context_data.length (length);
       CORBA::Octet *buf = sc.context_data.get_buffer ();
 
@@ -324,7 +322,7 @@ namespace TAO
 
       // Make a *copy* of the CDR stream...
       CORBA::ULong length =
-        ACE_static_cast (CORBA::ULong, ocdr.total_length ());
+        static_cast<CORBA::ULong>(ocdr.total_length ());
       sc.context_data.length (length);
       CORBA::Octet *buf = sc.context_data.get_buffer ();
 

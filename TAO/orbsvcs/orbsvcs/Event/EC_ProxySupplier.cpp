@@ -273,7 +273,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   RtecEventComm::PushConsumer_var consumer =
     RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
 
-  this->pre_dispatch_hook (ACE_const_cast (RtecEventComm::EventSet&, event)
+  this->pre_dispatch_hook (const_cast<RtecEventComm::EventSet&>(event)
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

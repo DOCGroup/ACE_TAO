@@ -108,8 +108,7 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
 
   TAO_UIPMC_Endpoint *uipmc_endpoint =
-    ACE_dynamic_cast (TAO_UIPMC_Endpoint *,
-                      endpoint );
+    dynamic_cast<TAO_UIPMC_Endpoint *>(endpoint );
 
   if (uipmc_endpoint == 0)
     return -1;
@@ -143,8 +142,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                       ACE_Time_Value *)
 {
   TAO_UIPMC_Endpoint *uipmc_endpoint =
-    ACE_dynamic_cast (TAO_UIPMC_Endpoint *,
-                      desc.endpoint ());
+    dynamic_cast<TAO_UIPMC_Endpoint *>(desc.endpoint ());
 
   if (uipmc_endpoint == 0)
     return 0;

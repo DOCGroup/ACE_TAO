@@ -157,7 +157,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_OS::fprintf (pidf,
                                ACE_LIB_TEXT("%ld\n"),
-                               ACE_static_cast (long, ACE_OS::getpid ()));
+                               static_cast<long>(ACE_OS::getpid ()));
               ACE_OS::fclose (pidf);
             }
         }

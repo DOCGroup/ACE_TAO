@@ -22,7 +22,7 @@ void FT_ProxyAdmin_Base::activate(const FtRtecEventComm::ObjectId& oid
               ACE_ENV_ARG_DECL)
 {
   poa_->activate_object_with_id(
-    ACE_reinterpret_cast(const PortableServer::ObjectId&, oid), 
+    reinterpret_cast<const PortableServer::ObjectId&>(oid), 
     servant_
     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

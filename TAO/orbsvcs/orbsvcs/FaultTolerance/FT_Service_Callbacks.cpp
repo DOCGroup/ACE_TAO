@@ -85,12 +85,10 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
       (that_comp.get_component (that_tc) == 1))
     {
 
-      TAO_InputCDR this_cdr (ACE_reinterpret_cast (const char*,
-                                                   this_tc.component_data.get_buffer ()),
+      TAO_InputCDR this_cdr (reinterpret_cast<const char*>(this_tc.component_data.get_buffer ()),
                              this_tc.component_data.length ());
 
-      TAO_InputCDR that_cdr (ACE_reinterpret_cast (const char*,
-                                                   that_tc.component_data.get_buffer ()),
+      TAO_InputCDR that_cdr (reinterpret_cast<const char*>(that_tc.component_data.get_buffer ()),
                              that_tc.component_data.length ());
 
       CORBA::Boolean this_byte_order;
@@ -103,8 +101,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
           return 0;
         }
 
-      this_cdr.reset_byte_order (ACE_static_cast (int, this_byte_order));
-      that_cdr.reset_byte_order (ACE_static_cast (int, that_byte_order));
+      this_cdr.reset_byte_order (static_cast<int>(this_byte_order));
+      that_cdr.reset_byte_order (static_cast<int>(that_byte_order));
 
 
       FT::TagFTGroupTaggedComponent this_group_component;
@@ -149,8 +147,7 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
     return 0;
 
   // extract the group component
-  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                          tc.component_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<const char*>(tc.component_data.get_buffer ()),
                     tc.component_data.length ());
 
   CORBA::Boolean byte_order;
@@ -159,7 +156,7 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
     return 0;
   }
 
-  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+  cdr.reset_byte_order (static_cast<int>(byte_order));
 
   FT::TagFTGroupTaggedComponent group_component;
 

@@ -39,7 +39,7 @@ TAO_Notify_SequencePushSupplier::get_ior (ACE_CString & iorstr) const
   {
     CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    iorstr = ACE_static_cast (const char *, ior.in ());
+    iorstr = static_cast<const char *>(ior.in ());
     result = true;
   }
   ACE_CATCHANY

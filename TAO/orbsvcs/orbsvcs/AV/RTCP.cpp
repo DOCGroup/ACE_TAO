@@ -48,7 +48,7 @@ int
 TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                                              const ACE_Addr &peer_address)
 {
-  int length = ACE_static_cast (int, data->length ());
+  int length = static_cast<int>(data->length ());
   int more = length;
   char *buf_ptr = data->rd_ptr ();
   char first_rtcp_packet = 1;
@@ -479,8 +479,7 @@ TAO_AV_RTCP_Object::handle_control_input (ACE_Message_Block *frame,
 int
 TAO_AV_RTCP_Object::handle_control_output (ACE_Message_Block *frame)
 {
-  TAO_AV_RTCP_Callback *cb = ACE_dynamic_cast (TAO_AV_RTCP_Callback*,
-                                               this->callback_);
+  TAO_AV_RTCP_Callback *cb = dynamic_cast<TAO_AV_RTCP_Callback*>(this->callback_);
 
   return cb->send_frame (frame);
 }
@@ -488,8 +487,7 @@ TAO_AV_RTCP_Object::handle_control_output (ACE_Message_Block *frame)
 void
 TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 {
-  TAO_AV_RTCP_Callback *cb = ACE_dynamic_cast (TAO_AV_RTCP_Callback*,
-                                               this->callback_);
+  TAO_AV_RTCP_Callback *cb = dynamic_cast<TAO_AV_RTCP_Callback*>(this->callback_);
   cb->ts_offset (ts_offset);
 }
 
@@ -540,8 +538,7 @@ int
 TAO_AV_RTCP_Callback::send_report (int bye)
 {
   // get the RTCP control object in order to get the ssrc
-  TAO_AV_RTCP_Object *rtcp_prot_obj = ACE_dynamic_cast (TAO_AV_RTCP_Object*,
-                                               this->protocol_object_);
+  TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*>(this->protocol_object_);
   ACE_UINT32 my_ssrc = rtcp_prot_obj->ssrc ();
 
   RTCP_Packet *cp;
@@ -784,7 +781,7 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
 {
   RTCP_Channel_In *c;
 
-  RTP_Packet packet (frame->rd_ptr(), ACE_static_cast (int, frame->length()));
+  RTP_Packet packet (frame->rd_ptr(), static_cast<int>(frame->length()));
 
   if (this->inputs_.find (packet.ssrc(), c) < 0)
     {
@@ -803,7 +800,7 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
 int
 TAO_AV_RTCP_Callback::send_frame (ACE_Message_Block *frame)
 {
-  RTP_Packet packet (frame->rd_ptr(), ACE_static_cast (int, frame->length()));
+  RTP_Packet packet (frame->rd_ptr(), static_cast<int>(frame->length()));
   this->output_.updateStatistics (&packet);
 
   return 0;
