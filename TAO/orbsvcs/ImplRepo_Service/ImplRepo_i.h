@@ -152,9 +152,9 @@ private:
 class IR_Forwarder: public  PortableServer::DynamicImplementation
 {
 public:
-  IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
-                              PortableServer::POA_ptr poa_ptr,
-                              ImplRepo_i *ir_impl);
+  IR_Forwarder (CORBA::ORB_ptr orb_ptr,
+                PortableServer::POA_ptr poa_ptr,
+                ImplRepo_i *ir_impl);
 
   virtual void invoke (CORBA::ServerRequest_ptr request,
                        CORBA::Environment &env);
