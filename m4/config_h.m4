@@ -389,6 +389,9 @@ AH_TEMPLATE([ACE_HAS_CONFLICTING_XTI_MACROS],
 AH_TEMPLATE([ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES],
 [Prototypes for both signal() and struct sigaction are consistent.])
 
+AH_TEMPLATE([ACE_HAS_CONST_CHAR_SWAB],
+[Platform has swab(const char*, char*, ssize_t) variant.])
+
 AH_TEMPLATE([ACE_HAS_CPLUSPLUS_HEADERS],
 [Compiler/platform has correctly prototyped header files.])
 
@@ -442,6 +445,9 @@ AH_TEMPLATE([ACE_USES_IPV4_IPV6_MIGRATION],
 
 AH_TEMPLATE([ACE_HAS_NEW_NOTHROW],
 [Compiler supports new (std::nothrow)])
+
+AH_TEMPLATE([ACE_HAS_NONCONST_SWAB],
+[Platform has swab(char*, char*, ssize_t) variant.])
 
 AH_TEMPLATE([ACE_HAS_NONSTATIC_OBJECT_MANAGER],
 [Causes the ACE_Object_Manager instance to be created in
