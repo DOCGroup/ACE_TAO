@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// be/be_codegen.cpp:186
 
 #ifndef _TAO_IDL_ORIG_RTSCHEDULERC_H_
 #define _TAO_IDL_ORIG_RTSCHEDULERC_H_
@@ -86,14 +86,13 @@ namespace TAO
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
-
-
 namespace CORBA
 {
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:66
-
   typedef void* VoidData;
+
 } // module CORBA
 
 // TAO_IDL - Generated from
@@ -103,7 +102,7 @@ namespace RTScheduling
 {
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:611
 
 #if !defined (_RTSCHEDULING_THREADACTION__VAR_OUT_CH_)
 #define _RTSCHEDULING_THREADACTION__VAR_OUT_CH_
@@ -146,6 +145,11 @@ namespace RTScheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    static ThreadAction_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     static ThreadAction_ptr _nil (void)
     {
       return (ThreadAction_ptr)0;
@@ -165,7 +169,7 @@ namespace RTScheduling
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -196,7 +200,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadAction;
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:611
 
 #if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__VAR_OUT_CH_)
 #define _RTSCHEDULING_DISTRIBUTABLETHREAD__VAR_OUT_CH_
@@ -235,6 +239,11 @@ namespace RTScheduling
     static DistributableThread_ptr _duplicate (DistributableThread_ptr obj);
 
     static DistributableThread_ptr _narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    static DistributableThread_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -283,7 +292,7 @@ namespace RTScheduling
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -314,7 +323,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_DistributableThread;
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:611
 
 #if !defined (_RTSCHEDULING_CURRENT__VAR_OUT_CH_)
 #define _RTSCHEDULING_CURRENT__VAR_OUT_CH_
@@ -353,6 +362,11 @@ namespace RTScheduling
     static Current_ptr _duplicate (Current_ptr obj);
 
     static Current_ptr _narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -626,7 +640,7 @@ namespace RTScheduling
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -657,7 +671,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:611
 
 #if !defined (_RTSCHEDULING_RESOURCEMANAGER__VAR_OUT_CH_)
 #define _RTSCHEDULING_RESOURCEMANAGER__VAR_OUT_CH_
@@ -700,6 +714,11 @@ namespace RTScheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    static ResourceManager_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     static ResourceManager_ptr _nil (void)
     {
       return (ResourceManager_ptr)0;
@@ -708,7 +727,7 @@ namespace RTScheduling
 
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -739,7 +758,7 @@ namespace RTScheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ResourceManager;
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:611
 
 #if !defined (_RTSCHEDULING_SCHEDULER__VAR_OUT_CH_)
 #define _RTSCHEDULING_SCHEDULER__VAR_OUT_CH_
@@ -778,6 +797,11 @@ namespace RTScheduling
     static Scheduler_ptr _duplicate (Scheduler_ptr obj);
 
     static Scheduler_ptr _narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    static Scheduler_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -1093,7 +1117,7 @@ namespace RTScheduling
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1129,7 +1153,7 @@ namespace RTScheduling
 } // module RTScheduling
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -1252,7 +1276,7 @@ namespace TAO
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// be/be_codegen.cpp:1060
 
 #if defined (__ACE_INLINE__)
 #include "RTSchedulerC.i"

@@ -26,6 +26,7 @@ ifeq ($(corba_messaging),1)
 CPP_SRCS += \
   RTPortableServer \
   RTPortableServerC \
+  RTPortableServerA \
   RT_Acceptor_Filters \
   RT_Collocation_Resolver \
   RT_Object_Adapter_Factory \

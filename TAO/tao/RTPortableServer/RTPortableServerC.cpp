@@ -26,21 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:301
+// be/be_codegen.cpp:338
 
 
 #include "RTPortableServerC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation_Adapter.h"
-#include "tao/Object_T.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Special_Basic_Arguments.h"
-#include "tao/UB_String_Arguments.h"
-#include "tao/Var_Size_Argument_T.h"
 #include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
@@ -53,56 +42,20 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
 {
-
-  // TAO_IDL - Generated from
-  // be/be_visitor_arg_traits.cpp:262
-
-#if !defined (__TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_)
-#define __TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_RTPortableServer_Export Arg_Traits<CORBA::OctetSeq>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::OctetSeq,
-            CORBA::OctetSeq_var,
-            CORBA::OctetSeq_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-
-  // TAO_IDL - Generated from
-  // be/be_visitor_arg_traits.cpp:262
-
-#if !defined (__TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_)
-#define __TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_RTPortableServer_Export Arg_Traits<PortableServer::ObjectId>
-    : public
-        Var_Size_Arg_Traits_T<
-            PortableServer::ObjectId,
-            PortableServer::ObjectId_var,
-            PortableServer::ObjectId_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
 }
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTPortableServer::POA.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTPortableServer::POA_ptr
 TAO::Objref_Traits<RTPortableServer::POA>::tao_duplicate (
     RTPortableServer::POA_ptr p
@@ -111,6 +64,7 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_duplicate (
   return RTPortableServer::POA::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTPortableServer::POA>::tao_release (
     RTPortableServer::POA_ptr p
@@ -119,12 +73,14 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTPortableServer::POA_ptr
 TAO::Objref_Traits<RTPortableServer::POA>::tao_nil (void)
 {
   return RTPortableServer::POA::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTPortableServer::POA>::tao_marshal (
     RTPortableServer::POA_ptr p,
@@ -160,10 +116,32 @@ RTPortableServer::POA::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return POA::_nil ();
+    }
+
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+
+  return POA::_duplicate (proxy);
+}
+
+RTPortableServer::POA_ptr
+RTPortableServer::POA::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return POA::_nil ();
+    }
+
+  POA_ptr proxy =
+    dynamic_cast<POA_ptr> (_tao_objref);
+
+  return POA::_duplicate (proxy);
 }
 
 RTPortableServer::POA_ptr
@@ -221,114 +199,9 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
   return 0;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_RTPortableServer_POA[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254506f),
-  ACE_NTOHL (0x72746162),
-  ACE_NTOHL (0x6c655365),
-  ACE_NTOHL (0x72766572),
-  ACE_NTOHL (0x2f504f41),
-  ACE_NTOHL (0x3a312e30),
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTPortableServer/POA:1.0
-    4,
-  ACE_NTOHL (0x504f4100),  // name = POA
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_RTPortableServer_POA (
-    CORBA::tk_objref,
-    sizeof (_oc_RTPortableServer_POA),
-    (char *) &_oc_RTPortableServer_POA,
-    0,
-    sizeof (RTPortableServer::POA)
-  );
-
-namespace RTPortableServer
-{
-  ::CORBA::TypeCode_ptr _tc_POA =
-    &_tc_TAO_tc_RTPortableServer_POA;
-}
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTPortableServer::POA_ptr _tao_elem
-  )
-{
-  RTPortableServer::POA_ptr _tao_objptr =
-    RTPortableServer::POA::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    RTPortableServer::POA_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<RTPortableServer::POA>::insert (
-      _tao_any,
-      RTPortableServer::POA::_tao_any_destructor,
-      RTPortableServer::_tc_POA,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    RTPortableServer::POA_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<RTPortableServer::POA>::extract (
-        _tao_any,
-        RTPortableServer::POA::_tao_any_destructor,
-        RTPortableServer::_tc_POA,
-        _tao_elem
-      );
-}
-
-
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -347,11 +220,6 @@ operator>>= (
         RTPortableServer::POA
       >;
 
-  template class
-    TAO::Any_Impl_T<
-        RTPortableServer::POA
-      >;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
@@ -367,11 +235,6 @@ operator>>= (
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTPortableServer::POA
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        RTPortableServer::POA \
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
