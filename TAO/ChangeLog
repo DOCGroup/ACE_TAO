@@ -42,6 +42,9 @@ Tue Aug 27 15:41:57 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	
 Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 
+        Thanks to Christian Klutz <cklutz@gmx.net> for reporting the bug
+	that resulted in the following changes.
+  
 	* tao/PortableServer/PortableServer_PolicyFactory.cpp: New class
 	  for creating POA Policies.
 
