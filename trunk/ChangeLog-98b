@@ -1,3 +1,16 @@
+Wed Nov 25 12:01:20 1998  Ossama Othman  <othman@astrosun.tn.cornell.edu>
+
+        * apps/gperf/gperf.texi:
+	* apps/gperf/gperf.info:
+	* apps/gperf/texinfo.tex:
+	* apps/gperf/version.texi:
+
+	updated gperf.texi to work with recent versions of makeinfo (e.g. 1.68,
+ 	available in GNU texinfo-3.12).  Regenerated gperf.info with latest
+	makeinfo (1.68).  Added texinfo.tex to make available certain TeX
+	macros for texinfo to TeX converters.  Added version.texi to centralize
+	gperf update dates and versions (gets included by gperf.texi).
+	
 Wed Nov 25 12:01:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/context_switch_time.cpp (main): fixed
