@@ -1,3 +1,9 @@
+Thu Sep 03 17:03:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Dynamic.cpp (instance): Removed the typedef in the header
+ 	  file because some compiler was having problems with it.  Thanks
+ 	  to baksoo@dbserver.kaist.ac.kr for reporting this.
+
 Thu Sep 03 16:43:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_create): play the zero thread priority game
