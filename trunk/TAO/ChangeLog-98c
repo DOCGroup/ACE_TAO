@@ -1,3 +1,9 @@
+Sat Apr  4 15:50:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence.cpp,
+	  TAO_IDL/be_include/be_visitor_sequence.h: Added a case to
+	  support sequence of exceptions.
+
 Sat Apr 04 07:45:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.h: don't use u_longlong_t on Suns if
