@@ -60,10 +60,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
             return -1;
     }
 
-  // Block indefinitely if timeout == ACE_Time_Value::zero.
-  if (timeout != 0 && *timeout == ACE_Time_Value::zero)
-    timeout = 0;
-
   // Take into account the time between each select() call below.
   ACE_Countdown_Time countdown (timeout);
 
