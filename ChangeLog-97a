@@ -1,3 +1,19 @@
+Thu Apr 17 08:25:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.cpp (wait): There was a bug in
+ 	  ACE_Condition::wait(MUTEX& mutex, const ACE_Time_Value
+ 	  *abstime.)  Basically when abstime is zero, it ignores the
+ 	  parameter "mutex" that has been passed to it and instead goes on
+ 	  to call "ACE_Condition<MUTEX>::wait()" which uses "this->mutex_"
+ 	  as the mutex to be released and not the mutex that the caller
+ 	  has given.  The fix is to change the call "this->wait()" in the
+	  if-clause to:  
+
+	  return ACE_OS::cond_wait (&this->cond_, &mutex_.lock_);
+
+	  Thanks to Ashish Singhai <Ashish.Singhai@ACM.ORG> for reporting
+ 	  this.
+
 Wed Apr 16 17:05:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp (acquire): Added code to enable a minimum
