@@ -5,6 +5,10 @@ Wed Nov  5 19:03:20 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           ACE_HAS_LIMITED_SELECT are defined.  Thanks to Andrew G. Harvey
           <agh@cisco.com> for reporting this.
 
+        * ace/TLI.cpp:
+          Added #include of OS_NS_sys_socket.h to pickup opthdr.  Thanks
+          again to Andrew G. Harvey <agh@cisco.com> for reporting this.
+
         * ace/INET_Addr.cpp:
           Added ACE_UNUSED_ARG wrapper around the map variable when
           ACE_HAS_IPV6 isn't defined to get rid of warning.
