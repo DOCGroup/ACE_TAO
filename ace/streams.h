@@ -96,7 +96,7 @@ using std::oct;
 
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #include /**/ <fstream.h>
 #include /**/ <iostream.h>
 
@@ -110,7 +110,7 @@ using std::oct;
 #endif /* _MSC_VER */
 #include /**/ <strstrea.h> // VSB
 #endif /* ACE_WIN32 */
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 

@@ -4255,6 +4255,23 @@ ACE_OS::open (const char *filename,
     ACE_FAIL_RETURN (h);
   else
     return h;
+#elif defined (ACE_PSOS)
+  ACE_UNUSED_ARG (mode);
+  ACE_UNUSED_ARG (perms);
+  ACE_UNUSED_ARG (sa);
+# if defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (filename);
+  return 0;
+# else
+  unsigned long result, handle;
+  result = ::open_f (&handle, ACE_const_cast(char *, filename), 0);
+  if (result != 0)
+    {
+      errno = result;
+      return ACE_static_cast (ACE_HANDLE, -1);
+    }
+  return ACE_static_cast (ACE_HANDLE, handle);
+# endif /* defined (ACE_PSOS_LACKS_PHILE) */
 #else
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);

@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for pSOSystem V2.2.1,
-// using the Diab Data D-C++ 4.2 p3 compiler (or a later version)
+// The following configuration file is designed to work for pSOSystem V2.2.2,
+// using the Diab Data D-C++ 4.2a compiler (or a later version)
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -14,6 +14,14 @@
 # undef __ACE_INLINE__
 #endif /* __ACE_INLINE__ */
 
+#define ACE_LACKS_ISATTY
+
+#define ACE_LACKS_DIFFTIME
+
+#define ACE_LACKS_FCNTL
+
+#define ACE_LACKS_FILELOCKS
+
 #define ACE_LACKS_INLINE_FUNCTIONS
 
 #define ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER
@@ -22,7 +30,6 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#define ACE_PSOS_LACKS_PREPC
 
 #define ACE_HAS_STRDUP_EMULATION
 
@@ -42,12 +49,20 @@
 # define ACE_LACKS_SEEKDIR
 # define ACE_LACKS_REWINDDIR
 
+#define ACE_LACKS_TRUNCATE
+
 // Template instantiation definitions
 // #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE
 
-/* #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+// IO Streams stuff
+// #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+#define ACE_LACKS_IOSTREAM_TOTALLY
+#define ACE_LACKS_ACE_IOSTREAM
+#define ACE_LACKS_IOSTREAM_FX
+#define ACE_DEFAULT_LOG_STREAM 0
+#define ostream FILE
 
 #define ACE_LACKS_HRTIME_T
 
@@ -129,8 +144,6 @@
 
 #define ACE_LACKS_GETSERVBYNAME
 
-#define ACE_LACKS_IOSTREAM_FX
-
 #define ACE_LACKS_KEY_T
 
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
@@ -173,7 +186,7 @@
 
 #define ACE_LACKS_SYSV_SHMEM
 
-// #define ACE_LACKS_SYS_NERR
+#define ACE_LACKS_SYS_NERR
 
 #define ACE_LACKS_SYS_TYPES_H
 
@@ -193,6 +206,8 @@
 #endif /* ACE_NTRACE */
 
 #define ACE_PSOS_CANT_USE_SYS_TYPES
+
+// #define ACE_PSOS_LACKS_PHILE
 
 #define ACE_PSOS_SNARFS_HEADER_INFO
 

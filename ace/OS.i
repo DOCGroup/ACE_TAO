@@ -582,8 +582,13 @@ ACE_OS::getuid (void)
 ACE_INLINE int
 ACE_OS::isatty (ACE_HANDLE fd)
 {
+# if defined (ACE_LACKS_ISATTY)
+  ACE_UNUSED_ARG (fd);
+  return 0;
+#else
   // ACE_TRACE ("ACE_OS::isatty");
   ACE_OSCALL_RETURN (::isatty (fd), int, -1);
+# endif /* defined (ACE_LACKS_ISATTY) */
 }
 
 # if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
@@ -1008,6 +1013,9 @@ ACE_OS::unlink (const char *path)
 # if defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::unlink ((char *) path), ace_result_),
                      int, -1);
+# elif defined (ACE_PSOS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path), ace_result_),
+                     int, -1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
 # endif /* VXWORKS */
@@ -1109,9 +1117,13 @@ ACE_OS::_exit (int status)
   ::exit (status);
 #elif defined (ACE_PSOSIM)
   ::u_exit (status);
-#elif defined (ACE_PSOS_LACKS_PREPC)  // JINLU TM does not support exit
+#elif defined (ACE_PSOS)
+# if defined (ACE_PSOS_LACKS_PREPC)  // JINLU TM does not support exit
   ACE_UNUSED_ARG (status);
   return;
+# else
+  ::exit (status);
+# endif /* defined (ACE_PSOS_LACKS_PREPC) */
 #elif !defined (ACE_HAS_WINCE)
   ::_exit (status);
 #else
@@ -5358,9 +5370,7 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
   if (signum == 0)
     return 0;
   else
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_TM)
-    return (ACE_SignalHandler) ::signal (signum, (void (*)(void)) func);
-#elif defined (ACE_PSOS_TM)  //JINLU
+#if defined (ACE_PSOS_TM)  //JINLU
     return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) || !defined (ACE_LACKS_UNIX_SIGNALS)
 # if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
@@ -6907,6 +6917,15 @@ ACE_OS::close (ACE_HANDLE handle)
   // ACE_TRACE ("ACE_OS::close");
 #if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (handle), ace_result_), int, -1);
+#elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
+  unsigned long result;
+  result = ::close_f (handle);
+  if (result != 0)
+    {
+      errno = result;
+      return ACE_static_cast (int, -1);
+    }
+  return ACE_static_cast (int, 0);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -6946,6 +6965,10 @@ ACE_OS::creat (LPCTSTR filename, mode_t mode)
 #if defined (ACE_WIN32)
   return ACE_OS::open (filename, mode);
 #elif defined(ACE_PSOS_TM)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined(ACE_PSOS)
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
@@ -7346,6 +7369,15 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
     return (ssize_t) bytes_written;
   else
     ACE_FAIL_RETURN (-1);
+#elif defined (ACE_PSOS)
+# if defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (nbyte);
+  ACE_NOTSUP_RETURN (-1);
+# else
+  ACE_OSCALL_RETURN (::write_f (handle, buf, nbyte), ssize_t, -1);
+# endif /* defined (ACE_PSOS_LACKS_PHILE) */
 #else
 # if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::write (handle, (const char *) buf, nbyte), ssize_t, -1);
@@ -7385,6 +7417,25 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
     return (ssize_t) ok_len;
   else
     ACE_FAIL_RETURN (-1);
+#elif defined (ACE_PSOS)
+# if defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+# else
+  unsigned long count, result;
+  result = ::read_f (handle, buf, len, &count);
+  if (result != 0)
+    {
+      return ACE_static_cast (ssize_t, -1);
+    }
+  else
+    {
+      return ACE_static_cast (ssize_t,
+                              (count = len ? count : 0));
+    }
+# endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
 # if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::read (handle, (char *) buf, len), ssize_t, -1);
@@ -8983,7 +9034,7 @@ ACE_OS::getpid (void)
   // ACE_TRACE ("ACE_OS::getpid");
 #if defined (ACE_WIN32)
   return ::GetCurrentProcessId ();
-#elif defined (VXWORKS) || defined (ACE_PSOS_TM)
+#elif defined (VXWORKS) || defined (ACE_PSOS)
   // getpid() is not supported:  just one process anyways
   return 0;
 #elif defined (CHORUS)
@@ -9038,6 +9089,30 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
     ACE_FAIL_RETURN (-1);
   else
     return result;
+#elif defined (ACE_PSOS)
+# if defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (offset);
+  ACE_UNUSED_ARG (whence);
+  ACE_NOTSUP_RETURN (-1);
+# else
+  unsigned long oldptr, newptr, result;
+  // seek to the requested position
+  result = ::lseek_f (handle, whence, offset, &oldptr);
+  if (result != 0)
+    {
+      errno = result;
+      return ACE_static_cast (off_t, -1);
+    }
+  // now do a dummy seek to the current position to obtain the position
+  result = ::lseek_f (handle, SEEK_CUR, 0, &newptr);
+  if (result != 0)
+    {
+      errno = result;
+      return ACE_static_cast (off_t, -1);
+    }
+  return ACE_static_cast (off_t, newptr);
+# endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
   ACE_OSCALL_RETURN (::lseek (handle, offset, whence), int, -1);
 #endif /* ACE_WIN32 */
@@ -9140,7 +9215,7 @@ ACE_INLINE int
 ACE_OS::kill (pid_t pid, int signum)
 {
   // ACE_TRACE ("ACE_OS::kill");
-#if defined (ACE_WIN32) || defined (CHORUS) || defined(ACE_PSOS_TM)
+#if defined (ACE_WIN32) || defined (CHORUS) || defined(ACE_PSOS)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
@@ -9171,7 +9246,7 @@ ACE_OS::sigaction (int signum,
   else
     osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
-#elif defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS_TM)
+#elif defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS)
   ACE_UNUSED_ARG (signum);
   ACE_UNUSED_ARG (nsa);
   ACE_UNUSED_ARG (osa);
@@ -10444,14 +10519,19 @@ putchar (int c)
 #endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_PSOS)
+ACE_INLINE int
+isatty (ACE_HANDLE h)
+{
+  return ACE_OS::isatty (h);
+}
 #if defined (fileno)
 #undef fileno
+#endif /* defined (fileno)*/
 ACE_INLINE ACE_HANDLE
 fileno (FILE *fp)
 {
   return (ACE_HANDLE) fp;
 }
-#endif /* defined (fileno)*/
 #endif /* defined (ACE_PSOS) */
 
 ACE_INLINE

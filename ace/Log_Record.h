@@ -19,6 +19,7 @@
 #include "ace/ACE.h"
 
 #include "ace/Log_Priority.h"
+#include "ace/SString.h"
 
 #ifndef ACE_LOG_RECORD_H
 #define ACE_LOG_RECORD_H
@@ -63,7 +64,8 @@ public:
   ~ACE_Log_Record (void);
   // Default dtor.
 
-#if !defined (ACE_HAS_WINCE) /* @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY? */
+#if ! defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
   int print (const ASYS_TCHAR host_name[],
              u_long verbose_flag,
              FILE *fp = stderr);
@@ -75,10 +77,20 @@ public:
              ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
+
 #else
+
+# if defined (ACE_HAS_WINCE)
+
   int format_msg (const ASYS_TCHAR host_name[],
                   u_long verbose_flag,
                   CString *msg);
+
+  int print (const ASYS_TCHAR host_name[],
+             u_long verbose_flag,
+             ACE_CE_Bridge *log_ = 0);
+  // For Windows CE, the default is to log messages to a preset
+  // window.
 
   int print (const ASYS_TCHAR host_name[],
              u_long verbose_flag,
@@ -86,12 +98,18 @@ public:
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
+#else
+
   int print (const ASYS_TCHAR host_name[],
              u_long verbose_flag,
-             ACE_CE_Bridge *log_ = 0);
-  // For Windows CE, the default is to log messages to a preset
-  // window.
-#endif /* ! ACE_HAS_WINCE */
+             FILE *fp = stderr);
+  // Write the contents of the logging record to the appropriate
+  // <FILE>.
+
+# endif /* defined (ACE_HAS_WINCE) */
+
+
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   static const ASYS_TCHAR *priority_name (ACE_Log_Priority p);
   // Returns a character array with the string form of the
