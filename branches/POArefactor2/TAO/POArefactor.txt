@@ -1,3 +1,22 @@
+Tue Dec  7 11:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.{h,cpp}:
+          New factory for creating instances of the single thread strategy.
+          Each POA must have a unique instance because of the data stored
+
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+          For single thread strategy, get the single factory and call there
+          create, for the orb control we just get the singleton instance and
+          return that.
+
+        * tao/PortableServer/PortableServer.cpp:
+          Added single thread strategy factory for static case
+
+          Also added a destroy() method that must be implemented, but the
+          problem is now that I get a ThreadStrategy pointer and don't know
+          which factory to use for the destroy.
+
+Tue Dec  7 11:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
         * orbsvcs/examples/ORT/Object_Factory_i.cpp:
