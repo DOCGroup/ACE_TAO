@@ -1,6 +1,13 @@
+Sat Nov  8 23:36:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
+
+	  #included "tao/ORB_Constants.h" and "ace/CORBA_macros.h"
+	
 Sat Nov  8 23:19:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs//examples/Security/Send_File/Makefile:
+	* orbsvcs/examples/Security/Send_File/Makefile:
 
 	  Updated dependencies. 
 
