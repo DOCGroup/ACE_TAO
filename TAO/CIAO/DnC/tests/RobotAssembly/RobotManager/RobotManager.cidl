@@ -1,0 +1,12 @@
+// $Id$ 
+#include "RobotManager.idl"
+
+composition session RobotManager_Impl
+{
+  home executor RobotManagerHome_Exec
+  {
+    implements RobotAssembly::RobotManagerHome;
+    manages    RobotManager_Exec;
+  };
+};
+

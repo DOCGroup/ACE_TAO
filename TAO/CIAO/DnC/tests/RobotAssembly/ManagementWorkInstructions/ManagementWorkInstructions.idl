@@ -1,0 +1,20 @@
+// $Id$
+#include "../Robot_Base.idl" 
+
+module RobotAssembly
+{
+  component ManagementWorkInstructions
+  {
+	// ProductionInterfaces
+	consumes ProductionStatus ProductionReport;
+	publishes ProductionWorkOrder sendWorkOrder;
+
+	// Development interface
+    provides MWIController Controller;
+  };
+  home ManagementWorkInstructionsHome manages ManagementWorkInstructions
+  {
+  };
+};
+
+
