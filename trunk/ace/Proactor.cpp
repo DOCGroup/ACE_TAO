@@ -19,10 +19,6 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #   include "ace/WIN32_Proactor.h"
 #endif /* ACE_HAS_AIO_CALLS */
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
-#endif /* __ACE_INLINE__ */
-
 // Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 

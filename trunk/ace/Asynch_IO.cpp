@@ -12,12 +12,6 @@ ACE_RCSID(ace, Asynch_IO, "$Id$")
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_IO_Impl.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
-
-// *********************************************************************
-
 u_long
 ACE_Asynch_Result::bytes_transferred (void) const
 {
