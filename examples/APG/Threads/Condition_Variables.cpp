@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/config-lite.h"
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/Task.h"
 #include "ace/Synch.h"
 
@@ -107,3 +110,15 @@ template class ACE_Condition<ACE_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Condition<ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
+
+int ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_OS::puts (ACE_TEXT ("This example requires threads."));
+  return 0;
+}
+
+#endif /* ACE_HAS_THREADS */

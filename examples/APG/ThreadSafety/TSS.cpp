@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/config-lite.h"
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ClientContext.h"
@@ -72,3 +75,15 @@ template class ACE_Hash_Map_Iterator_Base_Ex<const char*,void*,ACE_Hash<const ch
 #pragma instantiate ACE_Hash_Map_Manager_Ex<const char*,void*,ACE_Hash<const char*>,ACE_Equal_To<const char*>,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char*,void*,ACE_Hash<const char*>, ACE_Equal_To<const char*>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
+
+int ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_OS::puts (ACE_TEXT ("This example requires threads."));
+  return 0;
+}
+
+#endif /* ACE_HAS_THREADS */
