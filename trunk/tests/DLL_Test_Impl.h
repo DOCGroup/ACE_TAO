@@ -51,7 +51,15 @@ public:
   // created/deleted using the memory allocator associated with the
   // DLL/SO.
   void *operator new (size_t bytes);
+
+#if defined (ACE_HAS_NEW_NOTHROW)
+  /// Overloaded new operator, nothrow_t variant.
+  void *operator new (size_t bytes, const ACE_nothrow_t &nt);
+#endif /* ACE_HAS_NEW_NOTHROW */
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *ptr);
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
+
 };
 
 #endif /* ACE_TESTS_DLL_TEST_IMPL_H */
