@@ -216,7 +216,10 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
 
           // copy the remaining def_name (if any left)
           if (def_curr)
-            ACE_OS::strcat (this->nested_type_name_, def_curr);
+            {
+              ACE_OS::strcat (this->nested_type_name_, def_curr);
+              ACE_OS::strcat (this->nested_type_name_, "::");
+            }
 
           // append our local name
           ACE_OS::strcat (this->nested_type_name_, this->local_name ()->get_string ());
