@@ -1,3 +1,8 @@
+Mon Dec  8 09:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+          Fixed incorrect exception macro
+
 Sun Dec  7 22:34:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
