@@ -147,8 +147,6 @@ public class ServiceRecord
   {
     Object result = this.invokeSimpleReflected("info");
 
-    System.err.println("info fin");
-
     if (result == null)
       return null;
     else

@@ -29,6 +29,7 @@ public class BlobWriter extends BlobHandler
     super (length, offset, filename);
     this.mb_ = mb;
     this.returnCode_ = -1;
+
   }
 
   /*******************************
@@ -107,14 +108,10 @@ public class BlobWriter extends BlobHandler
     // Create the header, store the actual length in mesglen 
     String mesg = this.requestPrefix_ + " " + filename + " " + this.requestSuffix_;
 
-    if (this.authentication_ != null) {
+    if (this.authentication_ != null) 
       mesg += "Authorization: Basic " + JACE.Connection.HTTPHelper.EncodeBase64(this.authentication_) + '\n';
 
-      System.err.println("Real password: " + this.authentication_);
-    }
-    mesg += "Content-length: " + this.length_ + "\n\n";
-
-    ACE.DEBUG("Sending header: " + mesg);
+    mesg += "Content-length: " + this.length_ + "\n";
 
     try
       {
@@ -139,6 +136,7 @@ public class BlobWriter extends BlobHandler
     String data = this.mb_.base ().substring (this.offset_,
 					      this.offset_ + this.length_);
 
+ 
     try
       {
 	//	System.out.println (data);
@@ -161,6 +159,8 @@ public class BlobWriter extends BlobHandler
 
   protected int receiveReply ()
   {
+    System.out.println("Waiting for reply");
+
     // Receive the reply from the server
     StringBuffer reply = new StringBuffer (1024);
     
@@ -195,9 +195,10 @@ public class BlobWriter extends BlobHandler
     returnCode_ = (new Integer (codeString)).intValue ();
     //    System.out.println (code);
 
-    if (returnCode_ >= 200 && returnCode_ < 300)  // Check if everything went smoothly
+    if (returnCode_ >= 200 && returnCode_ < 300) {  // Check if everything went smoothly
+      System.out.println("We got the goodies!");
       return 0;
-    else 
+    } else 
       return -1;
   }
 
