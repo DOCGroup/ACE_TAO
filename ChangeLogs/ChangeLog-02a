@@ -1,3 +1,10 @@
+Thu Jun 14 16:10:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* ace/Makefile:
+	* ace/RMCast/Makefile:
+
+	Updated the dependencies as they seem to have gone out of sync.
+
 Thu Jun 14 15:42:57 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Obstack_T.cpp (release): Forgot to reset the <block_> in
