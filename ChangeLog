@@ -1,25 +1,36 @@
+Mon Apr 14 07:05:06 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a usage of undefined reference.
+
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Added a -w to the command line to get the warnings.
+
 Mon Apr 14 10:55:48 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* bin/msvc_auto_compile.pl: Amended the -TAO target so that
-	TAO/orbsvcs/test/Notify/lib is the first library built. Fixes
-	build error in TAO_RT_NotifyTests.dsp which depends on it.
+        * bin/msvc_auto_compile.pl: Amended the -TAO target so that
+        TAO/orbsvcs/test/Notify/lib is the first library built. Fixes
+        build error in TAO_RT_NotifyTests.dsp which depends on it.
 
 Mon Apr 14 10:14:54 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* bin/MakeProjectCreator/config/namingexe.mpb:
-	* bin/MakeProjectCreator/config/server.mpb:
-	  Added missing libpath entries.
+        * bin/MakeProjectCreator/config/namingexe.mpb:
+        * bin/MakeProjectCreator/config/server.mpb:
+          Added missing libpath entries.
 
 Sun Apr 13 23:00:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/generate_compile_stats.sh:
-        
+
           Modified script to pull date directly from build log,
           only harvest build time for individual objects, dynamically
           rollup objects into composite objects--libs or executables--
           based on link steps in build log, and dynamically generate
-          html pages for composite objects.        
-        
+          html pages for composite objects.
+
 Fri Apr 11 18:05:00 2003  Roy Pollock  <rpollock@ghs.com>
 
         * ace/config-integritySCA.h
@@ -38,7 +49,7 @@ Fri Apr 11 18:05:00 2003  Roy Pollock  <rpollock@ghs.com>
           Add defined(INTEGRITY) cases
 
         * ace/OS.i
-        
+
           Cast the ACE_NOTSUP_RETURN of umask to mode_t
           Add defined(INTEGRITY) cases
 

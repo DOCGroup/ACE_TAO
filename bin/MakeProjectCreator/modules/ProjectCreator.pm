@@ -815,7 +815,8 @@ sub generate_default_pch_filenames {
 sub fix_pch_filenames {
   my($self) = shift;
   foreach my $type ('pch_header', 'pch_source') {
-    if ($self->get_assignment($type) eq '') {
+    my($pch) = $self->get_assignment($type);
+    if (defined $pch && $pch eq '') {
       $self->process_assignment($type, undef);
     }
   }
