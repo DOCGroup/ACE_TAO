@@ -1,6 +1,7 @@
 // -*- C++ -*-
 //
 //$Id$
+
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Var_Base_T<T,T_slice,TAG>::TAO_Array_Var_Base_T (void)
@@ -291,7 +292,19 @@ const T_slice &
 TAO_Array_Forany_T<T,T_slice,TAG>::operator[] (CORBA::ULong index) const
 {
 #if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
+# if defined (_MSC_VER) && _MSC_VER <= 1200
+  // @@ (OO) MSVC++ 6 can't handle the const_cast<> in the
+  //         multi-dimensional array case so reinterpret_cast<> cast
+  //         instead.  It's not clear if this is really the right
+  //         thing to do but the code won't compile with MSVC++ 6
+  //         without it.  We use a reinterpret_cast<> instead of a
+  //         C-style "sledgehammer" cast to make it obvious that this
+  //         code may have unresolved issues, and also to make it
+  //         easier for others to find this code.
+  return reinterpret_cast<const T_slice &> (this->ptr_[index]);
+# else
   return const_cast<const T_slice &> (this->ptr_[index]);
+# endif  /* _MSC_VER <= 1200 */
 #else
   const T_slice & tmp = this->ptr_[index];
   return tmp;
