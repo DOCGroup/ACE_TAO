@@ -1,3 +1,8 @@
+Fri Dec 17 14:40:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Local_Tokens.h (ACE_TSS_TPQ_Entry): Made the destructor
+	  virtual to avoid warnings from egcs.
+
 Fri Dec 17 13:27:24 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-pharlap.h: Added ACE_LACKS_TCP_NODELAY. Thanks to David
