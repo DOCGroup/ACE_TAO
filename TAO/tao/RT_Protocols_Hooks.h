@@ -43,17 +43,19 @@ public:
 
   virtual int call_client_protocols_hook (
                  TAO_ORB_Core *orb_core,
-                 RTCORBA::ProtocolProperties_var &properties,
+                 int &send_buffer_size,
+                 int &recv_buffer_size,
+                 int &no_delay,
                  const char *protocol_type);
 
   /// Define the Client_Protocols_TCP_Hook signature
   typedef int (*Client_Protocols_Hook) (TAO_ORB_Core *,
-                                        RTCORBA::ProtocolProperties_var &,
+                                        int &send_buffer_size,
+                                        int &recv_buffer_size,
+                                        int &no_delay,
                                         const char *);
 
   static void set_client_protocols_hook (Client_Protocols_Hook hook);
-
-  //  static void set_client_protocols_uiop_hook (Client_Protocols_UIOP_Hook hook);
 
   /// The hook to be set for the ClientProtocolPolicy.
   static Client_Protocols_Hook client_protocols_hook_;
@@ -66,13 +68,16 @@ public:
    * \param tcp_properties returns the Protocol List set
    */
   virtual int call_server_protocols_hook (TAO_ORB_Core *orb_core,
-                                          RTCORBA::ProtocolProperties_var &
-                                          properties,
+                                          int &send_buffer_size,
+                                          int &recv_buffer_size,
+                                          int &no_delay,
                                           const char *protocol_type);
 
   /// Define the Server_Protocols_Hook signature
   typedef int (*Server_Protocols_Hook) (TAO_ORB_Core *,
-                                        RTCORBA::ProtocolProperties_var &,
+                                        int &,
+                                        int &,
+                                        int &,
                                         const char *);
 
   static void set_server_protocols_hook (Server_Protocols_Hook hook);

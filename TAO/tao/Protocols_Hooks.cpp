@@ -15,11 +15,11 @@ TAO_Protocols_Hooks::~TAO_Protocols_Hooks (void)
 {
 }
 
-#if (TAO_HAS_RT_CORBA == 1)
-
 int
 TAO_Protocols_Hooks::call_client_protocols_hook (TAO_ORB_Core *,
-                                                 RTCORBA::ProtocolProperties_var &,
+                                                 int &,
+                                                 int &,
+                                                 int &,
                                                  const char *)
 {
   return 0;
@@ -28,13 +28,13 @@ TAO_Protocols_Hooks::call_client_protocols_hook (TAO_ORB_Core *,
 
 int
 TAO_Protocols_Hooks::call_server_protocols_hook (TAO_ORB_Core *,
-                                                 RTCORBA::ProtocolProperties_var &,
+                                                 int &,
+                                                 int &,
+                                                 int &,
                                                  const char *)
 {
   return 0;
 }
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 void
 TAO_Protocols_Hooks::call_policy_type_hook (CORBA::PolicyList *&,
@@ -120,7 +120,7 @@ TAO_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *,
   return;
 }
 
-int 
+int
 TAO_Protocols_Hooks::set_default_policies (TAO_ORB_Core *)
 {
   return 0;

@@ -1,3 +1,32 @@
+Wed Dec 27 17:37:39 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Protocols_Hooks.cpp : 
+	* tao/Protocols_Hooks.h : 
+	* tao/Default_Protocols_Hooks.cpp : 
+	* tao/Default_Protocols_Hooks.h : 
+	* tao/RT_Protocols_Hooks.cpp : 
+	* tao/RT_Protocols_Hooks.h : 
+	  This change is to remove the dependency of
+	  IIOP/UIOP_Connector/Acceptor on RTCORBA. 
+
+	  Changed the signature of the call_client(server)_protocols_hook
+	  to use three int variables instead and changed the signature of
+	  Client(Server)_Protocols_Hook in RT_Protocols_Hooks.h
+		  
+	* tao/RT_Policy_i.cpp : 
+	* tao/RT_Policy_i.h : 
+	  Correspondingly changed the signatures of
+	  TAO_Client(Server)ProtocolPolicy::hook methods and made
+	  appropriate changes to the implementation to assign values to the
+	  int variables send_buffer_size, recv_buffer_size and no_delay.
+
+	* tao/Strategies/UIOP_Connector.cpp : 
+	* tao/Strategies/UIOP_Acceptor.cpp : 
+	* tao/IIOP_Connector.cpp : 
+	* tao/IIOP_Acceptor.cpp : 
+	  Changed the implementation of init_iiop(uiop)_properties
+	  accordingly.
+	  
 Wed Dec 27 15:13:27 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/RT_Protocols_Hooks.cpp: 
