@@ -152,7 +152,7 @@ private:
 
   u_short port_;
   // Port number we listen at.
-  
+
   size_t reply_message_len_;
   // Size of the reply message.
 };
@@ -234,7 +234,7 @@ Handler::open (void *)
                        "%p\n",
                        "disable"),
                        0);
-                       
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client %s connected from %d on handle %d\n",
               cli_addr.get_host_name (),
@@ -277,7 +277,7 @@ Handler::parse_header_and_allocate_buffer (char *&request,
                                          sizeof (ACE_INT32));
   if (result == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) connected closed\n"));
       return -1;
     }
@@ -327,7 +327,7 @@ Twoway_Handler::run (void)
       // Subtract off the sizeof the length prefix.
       ssize_t r_bytes = this->peer ().recv_n (request,
                                               len - sizeof (ACE_UINT32));
-      
+
       if (r_bytes == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -385,17 +385,17 @@ Oneway_Handler::print_results (void)
   this->timer_.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
-	      et.real_time,
-	      et.user_time,
-	      et.system_time));
+              ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
+              et.real_time,
+              et.user_time,
+              et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
-	      this->message_count_,
+              ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
+              this->message_count_,
               this->total_bytes_,
-	      (((double) this->total_bytes_ * 8) / et.real_time) / (double) (1024 * 1024),
-	      ((et.user_time + et.system_time) / (double) this->message_count_) * ACE_ONE_SECOND_IN_USECS));
+              (((double) this->total_bytes_ * 8) / et.real_time) / (double) (1024 * 1024),
+              ((et.user_time + et.system_time) / (double) this->message_count_) * ACE_ONE_SECOND_IN_USECS));
 }
 
 // Function entry point into the oneway server task.
@@ -406,7 +406,7 @@ Oneway_Handler::run (void)
   // Read data from client (terminate on error).
 
   char *request = 0;
-      
+
   for (;;)
     {
       ACE_INT32 len = 0;
@@ -418,7 +418,7 @@ Oneway_Handler::run (void)
       // Subtract off the sizeof the length prefix.
       ssize_t r_bytes = this->peer ().recv_n (request,
                                               len - sizeof (ACE_UINT32));
-      
+
       if (r_bytes == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -507,7 +507,7 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
                        -1);
 
   Handler *handler;
-  
+
   ACE_ALLOCATOR_RETURN (handler,
                         (*handler_factory) (new_stream.get_handle ()),
                         -1);
@@ -548,7 +548,7 @@ Handler_Factory::handle_events (void)
     return -1;
 
   fd_set handles;
-  
+
   FD_ZERO (&handles);
   FD_SET (this->twoway_acceptor_.get_handle (),
           &handles);
@@ -574,7 +574,7 @@ Handler_Factory::handle_events (void)
       else if (result == 0 && OPTIONS::instance ()->verbose ())
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) select timed out\n"));
-      else 
+      else
         {
           if (FD_ISSET (this->twoway_acceptor_.get_handle (),
                         &temp))
@@ -599,7 +599,7 @@ main (int argc, char *argv[])
   OPTIONS::instance ()->parse_args (argc, argv);
 
   Handler_Factory server;
-  
+
   return server.handle_events ();
 }
 
@@ -608,5 +608,5 @@ template class ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
