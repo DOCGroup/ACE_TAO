@@ -1,3 +1,62 @@
+Thu Jan 17 17:04:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Acceptor_Impl.h: Removed the out_of_sockets_handler ()
+	  method as this was not used. Thanks to Andrew
+	  <andrew@activesol.net> for pointing this out. 
+	  
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Removed the method parse_bidir_policy () method
+	  and added a new method load_policy_validators (). 
+
+	* tao/orbconf.h: Added a new cached policy for BiDir connections. 
+
+	* tao/Policy_Validators.h:
+	* tao/Policy_Validators.cpp: Moved this class from PortableServer
+	  library. This is very useful in TAO when policy validators from
+	  other libraries needs to be added to the POA policy
+	  validator. We now use this as a basis of a new policy validator
+	  class in BiDir library. The BiDir library would add its policy
+	  validator to the POA policy validator. 
+	
+	* tao/BiDir_Adapter.h: Added a method load_policy_validators () to
+	  add teh policy validator.
+	
+	* tao/Makefile: Added the new files.
+
+	* tao/BiDir_GIOP/BiDirPolicy_Validator.h:
+	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp: The new policy
+	  validator for BiDir GIOP. 
+	
+	* tao/BiDir_GIOP/BiDirGIOP.cpp:
+	* tao/BiDir_GIOP/BiDirGIOP.h:
+	* tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+	* tao/BiDir_GIOP/BiDir_Policy_i.h:
+	* tao/BiDir_GIOP/Makefile: Changes to create and use the validator
+	  properly. 
+	
+	* tao/PortableServer/Default_Policy_Validator.cpp:
+	* tao/PortableServer/Default_Policy_Validator.h: Changes to use
+	  the Policy_Validator in TAO. 
+	
+	* tao/PortableServer/Makefile: Removed the Policy_Validator.* and
+	  generated dependecies. 
+
+	* tao/PortableServer/Policy_Validator.h:
+	* tao/PortableServer/Policy_Validator.cpp: Moved to
+	  $TAO_ROOT/tao. 
+	
+	* tao/PortableServer/Object_Adapter.h
+	* tao/PortableServer/Object_Adapter.i
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POA_Policy_Set.cpp:
+	* tao/PortableServer/POA_Policy_Set.h:
+	* tao/PortableServer/Policy_Validator.h:
+	* tao/RTPortableServer/RT_Policy_Validator.cpp:
+	* tao/RTPortableServer/RT_Policy_Validator.h: Changes to
+	  accomodate the new policy_Validator class in $TAO_ROOT/tao.
+
+
+
 Thu Jan 17 12:22:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):

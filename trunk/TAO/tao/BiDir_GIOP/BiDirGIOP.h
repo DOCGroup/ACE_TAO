@@ -17,19 +17,31 @@
 #include "ace/pre.h"
 
 #include "bidirgiop_export.h"
-#include "tao/BiDir_Adapter.h"
-#include "ace/Service_Config.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "tao/BiDir_Adapter.h"
+#include "ace/Service_Config.h"
+
+class TAO_BiDirPolicy_Validator;
+
+/**
+ * @class TAO_BiDirGIOP_Loader
+ *
+ * @brief Class that loads the BiDir library.
+ */
 
 class TAO_BiDirGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
 {
 public:
+
   /// Constructor
   TAO_BiDirGIOP_Loader (void);
 
+  /// Destructor
+  ~TAO_BiDirGIOP_Loader (void);
 
   /// Creates a  factory and returns it.
   virtual int activate (CORBA::ORB_ptr,
@@ -38,14 +50,16 @@ public:
                         TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Parse the policy sent by the ORB_Core
-  virtual int parse_policy (TAO_ORB_Core *orb_core,
-                            CORBA::Policy_ptr policy
-                            TAO_ENV_ARG_DECL)
+  virtual void load_policy_validators (TAO_Policy_Validator &validator)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
+
+private:
+
+  /// Our policy validator
+  TAO_BiDirPolicy_Validator *validator_;
 
 };
 

@@ -37,7 +37,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_POA_Policy_Validator;
+class TAO_Policy_Validator;
 
 class TAO_PortableServer_Export TAO_POA_Policy_Set
 {
@@ -63,7 +63,7 @@ public:
   void merge_policy (const CORBA::Policy_ptr policy
                      TAO_ENV_ARG_DECL);
 
-  void validate_policies (TAO_POA_Policy_Validator &validator,
+  void validate_policies (TAO_Policy_Validator &validator,
                           TAO_ORB_Core &orb_core
                           TAO_ENV_ARG_DECL);
 

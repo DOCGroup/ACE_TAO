@@ -15,15 +15,16 @@
 #define TAO_DEFAULT_POLICY_VALIDATOR_H_
 
 #include "ace/pre.h"
+#include "portableserver_export.h"
 
-#include "Policy_Validator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator
-  : public TAO_POA_Policy_Validator
+#include "tao/Policy_Validator.h"
+
+class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator : public TAO_Policy_Validator
 {
 public:
 

@@ -78,3 +78,10 @@ TAO_BidirectionalPolicy::value (
 {
   return this->value_;
 }
+
+
+TAO_Cached_Policy_Type
+TAO_BidirectionalPolicy::_tao_cached_type (void) const
+{
+  return TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP;
+}

@@ -2,16 +2,25 @@
 
 #include "BiDirGIOP.h"
 #include "BiDir_ORBInitializer.h"
+#include "BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
+
 
 ACE_RCSID(BiDir_GIOP, BiDirGIOP, "$Id$")
 
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
+  : validator_ (0)
 {
 }
 
+TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
+{
+  /*  if (this->validator_)
+      delete this->validator_;*/
+}
+
 int
-TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr,
+TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
                                 int,
                                 char *[]
                                 TAO_ENV_ARG_DECL)
@@ -38,35 +47,32 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr,
       PortableInterceptor::register_orb_initializer (bidir_orb_initializer.in ()
                                                      TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
+
+      TAO_ORB_Core *orb_core =
+        orb->orb_core ();
+
+      ACE_NEW_THROW_EX (this->validator_,
+                        TAO_BiDirPolicy_Validator (*orb_core),
+                        CORBA::NO_MEMORY (
+                            CORBA_SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                ENOMEM),
+                            CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (-1);
+
     }
 
   return 0;
 }
 
-int
-TAO_BiDirGIOP_Loader::parse_policy (TAO_ORB_Core *orb_core,
-                                    CORBA::Policy_ptr policy
-                                    TAO_ENV_ARG_DECL)
+void
+TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
-  BiDirPolicy::BidirectionalPolicy_var bidir_policy
-    = BiDirPolicy::BidirectionalPolicy::_narrow (policy
-                                                 TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Bidirectional policy. If we have a BiDirectional policy, we set a
-  // flag in the ORB_Core for use by the ORB
-  if (!CORBA::is_nil (bidir_policy.in ()))
-    {
-      // Set the flag in the ORB_Core
-      if (bidir_policy->value () == BiDirPolicy::BOTH)
-        orb_core->bidir_giop_policy (1);
-      return 1;
-    }
-
-  return 0;
+  // Add our validator
+  val.add_validator (this->validator_);
 }
+
 
 
 int

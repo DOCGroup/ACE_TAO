@@ -160,6 +160,7 @@ ORB_CORE_FILES = \
   ORB \
   corbafwd \
   PolicyC \
+  Policy_Validator \
   Encodable \
   Abstract_Servant_Base \
   Object_Proxy_Broker \
