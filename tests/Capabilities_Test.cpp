@@ -81,9 +81,9 @@ main (int, char *[])
     "   integer#2,\n"
     "   string=000030,\n\n";
 
-  int fd = ACE_OS::open (config, O_RDWR | O_CREAT | O_TRUNC, 0600);
+  ACE_HANDLE fd = ACE_OS::open (config, O_RDWR | O_CREAT | O_TRUNC, 0600);
 
-  if (fd == -1)
+  if (fd == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
 
 
@@ -95,7 +95,7 @@ main (int, char *[])
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::write"), -1);
     }
 
-  if (close (fd) != 0)
+  if (ACE_OS::close (fd) != 0)
     {
       ACE_OS::unlink (config);
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::close"), -1);
