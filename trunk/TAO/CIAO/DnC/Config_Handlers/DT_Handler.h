@@ -51,12 +51,12 @@ namespace CIAO
     {
     public:
       static void process_DataType (DOMNodeIterator * iter,
-                                    ::CORBA::TypeCode_ptr type,
+                                    ::CORBA::TypeCode_ptr &type,
                                     ::CORBA::ORB_ptr orb);
       // process <type> definitions in the descriptor files
     private:
       static void process_basic_tc (DOMNodeIterator * iter,
-                                    ::CORBA::TypeCode_ptr type);
+                                    ::CORBA::TypeCode_ptr &type);
       // process <Deployment:TCKind> definitions in the descriptor
       // files
     };

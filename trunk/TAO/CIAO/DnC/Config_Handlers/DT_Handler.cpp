@@ -6,7 +6,7 @@
 
 void
 CIAO::Config_Handler::DT_Handler::process_basic_tc (DOMNodeIterator * iter,
-                                                    ::CORBA::TypeCode_ptr type)
+                                                    ::CORBA::TypeCode_ptr &type)
 {
 
     // For all types defined return the appropriate typecode
@@ -15,43 +15,62 @@ CIAO::Config_Handler::DT_Handler::process_basic_tc (DOMNodeIterator * iter,
     // For this piece of code to work, it is necessary that ORB_init
     // be called by the top level handler which calls the
     // process_DataType common handler.
-    if (code_value == "tk_null")
+    if (ACE_OS::strcmp (code_value,
+                        "tk_null") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-    else if (code_value == "tk_short")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_short") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_short);
-    else if (code_value == "tk_long")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_long") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
-    else if (code_value == "tk_ushort")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_ushort") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
-    else if (code_value == "tk_ulong")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_ulong") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
-    else if (code_value == "tk_float")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_float") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
-    else if (code_value == "tk_double")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_double") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_double);
-    else if (code_value == "tk_boolean")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_boolean") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
-    else if (code_value == "tk_char")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_char") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_char);
-    else if (code_value == "tk_octet")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_octet") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
-    else if (code_value == "tk_string")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_string") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
-    else if (code_value == "tk_longlong")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_longlong") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
-    else if (code_value == "tk_ulonglong")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_ulonglong") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
-    else if (code_value == "tk_longdouble")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_longdouble") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
-    else if (code_value == "tk_wchar")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_wchar") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
-    else if (code_value == "tk_wstring")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_wstring") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
-    else if (code_value == "tk_any")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_any") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
-    else if (code_value == "tk_TypeCode")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_TypeCode") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
-    else if (code_value == "tk_Object")
+    else if (ACE_OS::strcmp (code_value,
+                             "tk_Object") == 0)
       type = CORBA::TypeCode::_duplicate (CORBA::_tc_Object);
     else
     {
@@ -64,12 +83,12 @@ CIAO::Config_Handler::DT_Handler::process_basic_tc (DOMNodeIterator * iter,
 
 void
 CIAO::Config_Handler::DT_Handler::process_DataType (DOMNodeIterator * iter,
-                                                    ::CORBA::TypeCode_ptr type,
+                                                    ::CORBA::TypeCode_ptr &type,
                                                     ::CORBA::ORB_ptr )
 {
   DOMNode * node = iter->nextNode ();
   XStr name (node->getNodeName ());
-  if (name == XStr (ACE_TEXT ("Deployment:TCKind")))
+  if (name == XStr (ACE_TEXT ("kind")))
     DT_Handler::process_basic_tc (iter, type);
   else
   {

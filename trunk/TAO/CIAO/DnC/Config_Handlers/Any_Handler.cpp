@@ -38,8 +38,8 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
   if (name == XStr (ACE_TEXT ("type")))
     {
       // Process DataType
-      ::CORBA::TypeCode * type = 0;
-      DT_Handler::process_DataType (iter, type, orb);
+      ::CORBA::TypeCode_var type;
+      DT_Handler::process_DataType (iter, type.out (), orb);
 
       //Switch on the type of the BasicType
       switch (type->kind ())
