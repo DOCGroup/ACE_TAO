@@ -1,3 +1,8 @@
+Wed Jul  9 12:14:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.cpp (TAO): Fixed a logic problem in the loop
+	  to make the invocation in the loop. 
+	
 Wed Jul  9 11:10:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:

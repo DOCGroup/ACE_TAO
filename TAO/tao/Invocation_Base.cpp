@@ -69,9 +69,9 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                                       ex_data,
                                       ex_count);
 
-    /*while (status != TAO_INVOKE_SUCCESS ||
-           status != TAO_INVOKE_FAILURE)
-           {*/
+    while (status == TAO_INVOKE_START ||
+           status == TAO_INVOKE_RESTART)
+      {
         Profile_Transport_Resolver resolver (stub);
 
         resolver.resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -113,6 +113,8 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                                  this->number_args_
                                  ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
+
+            cout << "Status is " << (int) status << endl;
           }
         else if (this->type_ == TAO_TWOWAY_INVOCATION
                  && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)
@@ -124,7 +126,7 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                  EINVAL),
                CORBA::COMPLETED_NO));
           }
-        /*}*/
+      }
   }
 
 
