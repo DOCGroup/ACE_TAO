@@ -1,13 +1,31 @@
+Mon Mar  5 11:24:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/Performance/Latency.cpp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          Fixed more missing ACE_TRY_ENV in resolve_initial_references()
+
 Mon Mar  5 12:55:06 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
-	  Removed bogus files from project file list.
-	
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
-	  Fixed some comments that were causing warnings with the Windows 
-	  builds.
-		
+        * examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
+          Removed bogus files from project file list.
+
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+          Fixed some comments that were causing warnings with the Windows
+          builds.
+
 Mon Mar  5 12:24:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/main.cpp:
@@ -17,8 +35,8 @@ Mon Mar  5 12:24:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Mar  5 07:35:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
-	  Fixed library name.
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+          Fixed library name.
 
 Mon Mar  5 08:03:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -29,33 +47,33 @@ Mon Mar  5 08:03:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Mar  5 07:59:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/client.cpp:
-	* tests/AMI/simple_client.cpp:
-	* tests/AMI/server.cpp:
-	* examples/mfc/client.cpp:
-	* examples/mfc/server.cpp:
+        * tests/AMI/client.cpp:
+        * tests/AMI/simple_client.cpp:
+        * tests/AMI/server.cpp:
+        * examples/mfc/client.cpp:
+        * examples/mfc/server.cpp:
 
-	  Fixed exception handling, especially missing ACE_TRY_ENVs for
-	  CORBA::ORB::resolve_initial_references (). Thanks to Ossama for
-	  pointing this out.
+          Fixed exception handling, especially missing ACE_TRY_ENVs for
+          CORBA::ORB::resolve_initial_references (). Thanks to Ossama for
+          pointing this out.
 
-	* examples/PluggableUDP/Diop/README:
+        * examples/PluggableUDP/Diop/README:
 
-	  Added a small paragraph about the limitations of the current
-	  DIOP implemenation.
-	  Also, added a disclaimer.
+          Added a small paragraph about the limitations of the current
+          DIOP implemenation.
+          Also, added a disclaimer.
 
 Mon Mar  5 04:42:52 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Comp_Test/ftp.h:
-	* orbsvcs/tests/AVStreams/Comp_Test/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Comp_Test/server.h:
-	* orbsvcs/tests/AVStreams/Comp_Test/server.cpp:
-	* orbsvcs/tests/AVStreams/Comp_Test/README:
-	* orbsvcs/tests/AVStreams/Comp_Test/run_test.pl:
+        * orbsvcs/tests/AVStreams/Comp_Test/ftp.h:
+        * orbsvcs/tests/AVStreams/Comp_Test/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Comp_Test/server.h:
+        * orbsvcs/tests/AVStreams/Comp_Test/server.cpp:
+        * orbsvcs/tests/AVStreams/Comp_Test/README:
+        * orbsvcs/tests/AVStreams/Comp_Test/run_test.pl:
 
-	  Added a new test to the AVStreams tests in order to demonstrate
-	  the use of AVStreams Service to pace data at a specified frame rate.
+          Added a new test to the AVStreams tests in order to demonstrate
+          the use of AVStreams Service to pace data at a specified frame rate.
 
 Mon Mar  5 01:26:42 2001  Fuzz Master D <brunsch@uci.edu>
 
@@ -70,7 +88,7 @@ Mon Mar  5 01:26:42 2001  Fuzz Master D <brunsch@uci.edu>
           the scripts, which does not work on Windows in either the
           new or old Process module).
 
-          But anyway, I'll still use it to signifythe close to my career
+          But anyway, I'll still use it to signify the close to my career
           as the the group Perl junkie.  Somewhat fitting that what
           started off with what I believe was a run_test script for
           IDL_Cubit and its associated Process module ended with
@@ -101,12 +119,12 @@ Mon Mar 05 09:10:27 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sun Mar 04 23:00:59 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.h (run):
+        * tao/ORB.h (run):
 
-	  Updated comments for the ORB::run() method.  This method, as
-	  implemented by TAO, no longer returns an "int" error status (see
-	  Carlos' ChangeLog entry from Feb 13).  The CORBA spec calls for
-	  a "void" return type.
+          Updated comments for the ORB::run() method.  This method, as
+          implemented by TAO, no longer returns an "int" error status (see
+          Carlos' ChangeLog entry from Feb 13).  The CORBA spec calls for
+          a "void" return type.
 
 Sun Mar 04 21:43:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
