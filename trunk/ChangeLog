@@ -1,3 +1,9 @@
+Mon Mar  8 18:03:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Timer_Queue_Adapters.i (activate): Remove erroneous
+	  ACE_UNUSED_ARG lines. Someone removed the arg names from the
+	  signature, making ACE_UNUSED_ARG unnecessary.
+
 Mon Mar  8 17:03:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
