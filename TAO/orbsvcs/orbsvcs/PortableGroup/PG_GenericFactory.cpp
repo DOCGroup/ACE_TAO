@@ -208,8 +208,6 @@ TAO_PG_GenericFactory::delete_object (
                                  ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
-      else
-        ACE_THROW (PortableGroup::ObjectNotFound ());
     }
   else
     ACE_THROW (PortableGroup::ObjectNotFound ());  // @@
