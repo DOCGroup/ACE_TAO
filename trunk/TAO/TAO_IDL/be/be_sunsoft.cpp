@@ -74,10 +74,14 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("%ld", ev->u.ulval);
           break;
         case AST_Expression::EV_longlong:
+#if ! defined (ACE_LACKS_LONGLONG_T)
           this->TAO_OutStream::print ("%ld", ev->u.llval);
+#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
           break;
         case AST_Expression::EV_ulonglong:
+#if ! defined (ACE_LACKS_LONGLONG_T)
           this->TAO_OutStream::print ("%ld", ev->u.ullval);
+#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
           break;
         case AST_Expression::EV_float:
           this->TAO_OutStream::print ("%f", ev->u.fval);

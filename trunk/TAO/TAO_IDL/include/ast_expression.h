@@ -136,8 +136,10 @@ public:
       long                lval;     // Contains long expression value
       unsigned long       ulval;    // Contains unsigned long expr value
       unsigned long       bval;     // Contains boolean expression value
-      ACE_CDR::LongLong   llval;    // Contains long long expr value
-      ACE_CDR::ULongLong  ullval;   // Contains unsigned long long expr value
+#if ! defined (ACE_LACKS_LONGLONG_T)
+      ACE_CDR::LongLong   llval;   // Contains long long expr value
+      ACE_CDR::ULongLong  ullval;  // Contains unsigned long long expr value
+#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
       float               fval;     // Contains 32-bit float expr value
       double              dval;     // Contains 64-bit float expr value
       char                cval;     // Contains char expression value
