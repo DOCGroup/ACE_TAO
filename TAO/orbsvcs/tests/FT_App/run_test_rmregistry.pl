@@ -201,7 +201,7 @@ $RM->Spawn ();
 
 print "TEST: waiting for registry's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$rm_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$rm_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     exit 1;
 }
@@ -215,7 +215,7 @@ $FAC1->Spawn ();
 
 print "TEST: waiting for factory 1's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($factory1_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$factory1_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$factory1_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $FAC1->Kill (); $FAC1->TimedWait (1);
     exit 1;
@@ -226,7 +226,7 @@ $FAC2->Spawn ();
 
 print "TEST: waiting for factory 2's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($factory2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$factory2_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$factory2_ior>\n";
     $FAC1->Kill (); $FAC1->TimedWait (1);
     $RM->Kill (); $RM->TimedWait (1);
     $FAC2->Kill (); $FAC2->TimedWait (1);
@@ -238,7 +238,7 @@ $FAC3->Spawn ();
 
 print "TEST: waiting for factory 3's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($factory3_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$factory3_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$factory3_ior>\n";
     $FAC1->Kill (); $FAC1->TimedWait (1);
     $FAC2->Kill (); $FAC2->TimedWait (1);
     $RM->Kill (); $RM->TimedWait (1);
@@ -254,27 +254,27 @@ $CTR->Spawn ();
 
 print "TEST: waiting for Replica IOR files from object group creator\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica1_ior>\n";
+    print STDERR "TEST ERROR: cannot find file <$replica1_ior>\n";
     $status = 1;
 }
 elsif (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica2_ior> \n";
+    print STDERR "TEST ERROR: cannot find file <$replica2_ior> \n";
     $status = 1;
 }
 elsif (PerlACE::waitforfile_timed ($replica3_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica3_ior> \n";
+    print STDERR "TEST ERROR: cannot find file <$replica3_ior> \n";
     $status = 1;
 }
 elsif (PerlACE::waitforfile_timed ($replica4_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica4_ior> \n";
+    print STDERR "TEST ERROR: cannot find file <$replica4_ior> \n";
     $status = 1;
 }
 elsif (PerlACE::waitforfile_timed ($replica5_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica5_ior> \n";
+    print STDERR "TEST ERROR: cannot find file <$replica5_ior> \n";
     $status = 1;
 }
 elsif (PerlACE::waitforfile_timed ($replica6_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica6_ior> \n";
+    print STDERR "TEST ERROR: cannot find file <$replica6_ior> \n";
     $status = 1;
 }
 
@@ -290,7 +290,7 @@ if($status != 0){
 print "\nTEST: wait for object group creator.\n" if ($verbose);
 $config = $CTR->WaitKill (5);
 if ($config != 0) {
-    print STDERR "ERROR: configuration manager returned $config\n";
+    print STDERR "TEST ERROR: configuration manager returned $config\n";
     $FAC3->Kill (); $FAC3->TimedWait (1);
     $FAC2->Kill (); $FAC2->TimedWait (1);
     $FAC1->Kill (); $FAC1->TimedWait (1);
@@ -306,7 +306,7 @@ print "\nTEST: starting client " . $CL1->CommandLine . "\n" if ($verbose);
 $client = $CL1->SpawnWaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "TEST ERROR: client returned $client\n";
     $status = 1;
 }
 
@@ -314,7 +314,7 @@ print "\nTEST: starting client again " . $CL2->CommandLine . "\n" if ($verbose);
 $client2 = $CL2->SpawnWaitKill (60);
 
 if ($client2 != 0) {
-    print STDERR "ERROR: client returned $client2\n";
+    print STDERR "TEST ERROR: client returned $client2\n";
     $status = 1;
 }
 
@@ -322,7 +322,7 @@ print "\nTEST: starting client, one more time with feeling " . $CL3->CommandLine
 $client3 = $CL3->SpawnWaitKill (60);
 
 if ($client3 != 0) {
-    print STDERR "ERROR: client returned $client3\n";
+    print STDERR "TEST ERROR: client returned $client3\n";
     $status = 1;
 }
 
@@ -332,28 +332,28 @@ if ($client3 != 0) {
 print "\nTEST: wait for factory 1.\n" if ($verbose);
 $factory1 = $FAC1->WaitKill (30);
 if ($factory1 != 0) {
-    print STDERR "ERROR: replica returned $factory 1\n";
+    print STDERR "TEST ERROR: replica returned $factory 1\n";
     $status = 1;
 }
 
 print "\nTEST: wait for factory 2.\n" if ($verbose);
 $factory2 = $FAC2->WaitKill (30);
 if ($factory2 != 0) {
-    print STDERR "ERROR: factory 2 returned $factory2\n";
+    print STDERR "TEST ERROR: factory 2 returned $factory2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for factory 3.\n" if ($verbose);
 $factory3 = $FAC3->WaitKill (30);
 if ($factory3 != 0) {
-    print STDERR "ERROR: factory 3 returned $factory3\n";
+    print STDERR "TEST ERROR: factory 3 returned $factory3\n";
     $status = 1;
 }
 
 print "\nTEST: shutting down the replication manager.\n" if ($verbose);
 $controller = $RMC->SpawnWaitKill (300);
 if ($controller != 0) {
-    print STDERR "ERROR: replication manager controller returned $controller\n";
+    print STDERR "TEST ERROR: replication manager controller returned $controller\n";
     $status = 1;
 }
 
@@ -361,7 +361,7 @@ print "\nTEST: wait for ReplicationManager.\n" if ($verbose);
 #$RM->Kill ();
 $repmgr = $RM->WaitKill (30);
 if ($repmgr != 0) {
-    print STDERR "ERROR: ReplicationManager returned $repmgr\n";
+    print STDERR "TEST ERROR: ReplicationManager returned $repmgr\n";
     $status = 1;
 }
 

@@ -35,7 +35,7 @@ $SV1->Spawn ();
 print "waiting for replica 1's IOR\n" if ($debug);
 
 if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find replica 1 file <$replica1_ior>\n";
+    print STDERR "TEST ERROR: cannot find replica 1 file <$replica1_ior>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
@@ -45,7 +45,7 @@ $SV2->Spawn ();
 
 print "waiting for replica 2's IOR\n" if ($debug);
 if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
-    print STDERR "ERROR: cannot find replica 2 file <$replica2_ior>\n";
+    print STDERR "TEST ERROR: cannot find replica 2 file <$replica2_ior>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
@@ -56,7 +56,7 @@ print "\nTest: Starting client " . $CL->CommandLine . "\n" if ($debug);
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "TEST ERROR: client returned $client\n";
     $status = 1;
 }
 
@@ -67,7 +67,7 @@ print "wait for server 2.\n" if ($debug);
 $server = $SV2->WaitKill (60);
 
 if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+    print STDERR "TEST ERROR: server returned $server\n";
     $status = 1;
 }
 
