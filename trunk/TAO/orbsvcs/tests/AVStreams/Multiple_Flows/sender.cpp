@@ -437,7 +437,7 @@ template class ACE_Unbounded_Set_Iterator <TAO_AV_Protocol_Object*>;
 #pragma instantiate ACE_Singleton <Sender,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate  ACE_Node <TAO_AV_Protocol_Object*>;
-#pragma instantiate ACE_Unbounded_Set <TAO_AV_Protocol_Object*>;
-#pragma instantiate ACE_Unbounded_Set_Iterator <TAO_AV_Protocol_Object*>;
+#pragma instantiate  ACE_Node <TAO_AV_Protocol_Object*>
+#pragma instantiate ACE_Unbounded_Set <TAO_AV_Protocol_Object*>
+#pragma instantiate ACE_Unbounded_Set_Iterator <TAO_AV_Protocol_Object*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1552,13 +1552,13 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Notify_Constrai
 #pragma instantiate ACE_Unbounded_Queue<TAO_ETCL_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_ETCL_Literal_Constraint>
 
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Entry <ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field>;
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry <ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

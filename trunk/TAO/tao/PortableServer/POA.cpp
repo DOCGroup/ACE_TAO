@@ -4191,5 +4191,5 @@ template class ACE_Node<TAO_POA *>;
 #  endif  /* ACE_LACKS_AUTO_PTR */
 
 #pragma instantiate ACE_Node<TAO_POA *>
-#pragma instantiate ACE_Array_Base <IOP::ProfileId>;
+#pragma instantiate ACE_Array_Base <IOP::ProfileId>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
