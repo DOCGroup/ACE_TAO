@@ -64,8 +64,8 @@ DP_Adapter::evalDP (const char* name,
     }
   ACE_CATCHANY
     {
-      ACE_THROW(CosTradingDynamic::DPEvalFailure
-                        (this->prop_name_, returned_type, extra_info));
+      ACE_THROW_RETURN(CosTradingDynamic::DPEvalFailure
+                        (this->prop_name_, returned_type, extra_info), 0);
     }
   ACE_ENDTRY;
 }
