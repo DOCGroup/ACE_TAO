@@ -1,3 +1,7 @@
+Fri Nov  7 16:19:14 2003  Dale Wilson  <wilson_d@ociweb.com>
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+          Missed a spot.  Still fixing build warnings.
+
 Fri Nov  7 15:36:37 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup.mpc:

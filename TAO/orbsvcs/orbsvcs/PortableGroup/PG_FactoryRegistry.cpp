@@ -243,7 +243,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 ::PortableGroup::FactoryRegistry_ptr TAO::PG_FactoryRegistry::reference()
 {
   // narrow and duplicate
-  return ::PortableGroup::FactoryRegistry::_narrow(this->this_obj_);
+  return ::PortableGroup::FactoryRegistry::_narrow(this->this_obj_.in ());
 }
 
 
@@ -513,7 +513,9 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
         ACE_ERROR((LM_INFO,
           "%s: Unregister_factory_by_location: Removing: [%d] %s@%s\n",
           this->identity_.c_str(),
-          (int)nInfo, role.c_str(), location[0].id
+          ACE_static_cast (int, nInfo), 
+          role.c_str(), 
+          ACE_static_cast (const char *, location[0].id)
           ));
         found = 1;
         if (length > 1)
