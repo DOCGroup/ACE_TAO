@@ -46,6 +46,7 @@ TAO/orbsvcs/orbsvcs/CosConcurrency
 TAO/orbsvcs/orbsvcs/CosLifeCycle
 TAO/orbsvcs/orbsvcs/CosTime
 TAO/orbsvcs/orbsvcs/CosNotification
+TAO/orbsvcs/orbsvcs/CosNotification_Skel
 TAO/orbsvcs/orbsvcs/DsLogAdmin
 TAO/orbsvcs/orbsvcs/DsEventLogAdmin
 TAO/orbsvcs/orbsvcs/DsNotifyLogAdmin
