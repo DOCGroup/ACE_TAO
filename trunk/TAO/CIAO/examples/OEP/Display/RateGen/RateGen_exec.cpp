@@ -24,13 +24,13 @@ MyImpl::Pulse_Handler::~Pulse_Handler ()
 }
 
 int
-MyImpl::Pulse_Handler::open ()
+MyImpl::Pulse_Handler::open_h ()
 {
   return this->activate ();
 }
 
 int
-MyImpl::Pulse_Handler::close ()
+MyImpl::Pulse_Handler::close_h ()
 {
   this->done_ = 1;
   this->reactor ()->notify ();
@@ -242,7 +242,7 @@ MyImpl::RateGen_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                   "MyImpl::RateGen_exec_i::ccm_activate\n"));
     }
 
-  this->pulser_.open ();
+  this->pulser_.open_h ();
 }
 
 void
@@ -263,7 +263,7 @@ MyImpl::RateGen_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                   "MyImpl::RateGen_exec_i::ccm_passivate\n"));
     }
 
-  this->pulser_.close ();
+  this->pulser_.close_h ();
 }
 
 void

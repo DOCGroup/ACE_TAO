@@ -5,7 +5,14 @@
 project(GPS_stub): ciao_client {
   after += HUDisplay_stub
   sharedname = GPS_stub
-  idlflags += -Wb,stub_export_macro=GPS_STUB_Export -Wb,stub_export_include=GPS_stub_export.h -Wb,skel_export_macro=GPS_SVNT_Export -Wb,skel_export_include=GPS_svnt_export.h
+  
+  libs += GPS_stub
+
+  idlflags += -Wb,stub_export_macro=GPS_STUB_Export 
+  idlflags += -Wb,stub_export_include=GPS_stub_export.h 
+  idlflags += -Wb,skel_export_macro=GPS_SVNT_Export 
+  idlflags += -Wb,skel_export_include=GPS_svnt_export.h
+
   dynamicflags   = GPS_STUB_BUILD_DLL
 
   IDL_Files {
@@ -20,9 +27,14 @@ project(GPS_stub): ciao_client {
 project(GPS_svnt) : ciao_servant {
   after += HUDisplay_svnt GPS_stub
   sharedname  = GPS_svnt
+
   libs    += GPS_stub HUDisplay_stub HUDisplay_svnt
+
   libpaths += ..
-  idlflags  +=  -Wb,export_macro=GPS_SVNT_Export -Wb,export_include=GPS_svnt_export.h
+
+  idlflags  +=  -Wb,export_macro=GPS_SVNT_Export 
+  idlflags  += -Wb,export_include=GPS_svnt_export.h
+
   dynamicflags = GPS_SVNT_BUILD_DLL
 
   CIDL_Files {
@@ -46,7 +58,8 @@ project(GPS_exec) : ciao_component {
   sharedname = GPS_exec
   libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
   libpaths += ..
-  idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
+  idlflags  += -Wb,export_macro=GPS_EXEC_Export 
+  idlflags  += -Wb,export_include=GPS_exec_export.h
   dynamicflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -64,7 +77,8 @@ project(GPS_tracing_exec) : ciao_component {
   sharedname = GPS_tracing_exec
   libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
   libpaths += ..
-  idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
+  idlflags  += -Wb,export_macro=GPS_EXEC_Export 
+  idlflags  += -Wb,export_include=GPS_exec_export.h
   dynamicflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {

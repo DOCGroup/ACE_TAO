@@ -4,7 +4,14 @@
 project(RoundTrip_stub): ciao_client {
   after += Benchmark_stub
   sharedname = RoundTrip_stub
-  idlflags += -Wb,stub_export_macro=ROUNDTRIP_STUB_Export -Wb,stub_export_include=RoundTrip_stub_export.h -Wb,skel_export_macro=ROUNDTRIP_SVNT_Export -Wb,skel_export_include=RoundTrip_svnt_export.h
+
+  libs     += RoundTrip_stub
+
+  idlflags += -Wb,stub_export_macro=ROUNDTRIP_STUB_Export 
+  idlflags += -Wb,stub_export_include=RoundTrip_stub_export.h 
+  idlflags += -Wb,skel_export_macro=ROUNDTRIP_SVNT_Export 
+  idlflags += -Wb,skel_export_include=RoundTrip_svnt_export.h
+
   dynamicflags   = ROUNDTRIP_STUB_BUILD_DLL
 
   IDL_Files {
@@ -19,9 +26,14 @@ project(RoundTrip_stub): ciao_client {
 project(RoundTrip_svnt) : ciao_servant {
   after += Benchmark_svnt RoundTrip_stub
   sharedname  = RoundTrip_svnt
+
   libs    += RoundTrip_stub Benchmark_stub Benchmark_svnt
+
   libpaths += ..
-  idlflags  +=  -Wb,export_macro=ROUNDTRIP_SVNT_Export -Wb,export_include=RoundTrip_svnt_export.h
+
+  idlflags +=  -Wb,export_macro=ROUNDTRIP_SVNT_Export 
+  idlflags += -Wb,export_include=RoundTrip_svnt_export.h
+
   dynamicflags = ROUNDTRIP_SVNT_BUILD_DLL
 
   CIDL_Files {
@@ -43,9 +55,13 @@ project(RoundTrip_svnt) : ciao_servant {
 project(RoundTrip_exec) : ciao_component {
   after += RoundTrip_svnt
   sharedname = RoundTrip_exec
-  libs      += RoundTrip_stub Benchmark_stub RoundTrip_svnt
+
+  libs     += RoundTrip_stub Benchmark_stub RoundTrip_svnt
   libpaths += ..
-  idlflags  +=  -Wb,export_macro=ROUNDTRIP_EXEC_Export -Wb,export_include=RoundTrip_exec_export.h
+
+  idlflags +=  -Wb,export_macro=ROUNDTRIP_EXEC_Export 
+  idlflags += -Wb,export_include=RoundTrip_exec_export.h
+
   dynamicflags   = ROUNDTRIP_EXEC_BUILD_DLL
 
   IDL_Files {
