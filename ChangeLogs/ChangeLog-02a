@@ -1,3 +1,9 @@
+Tue Dec 18 14:43:02 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Sock_Connect.cpp:
+	* ace/config-cygwin32-common.h:
+	  Use the #include /**/ trick to shut up the WinCE warnings.
+
 Tue Dec 18 22:05:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/make_release: Added comment to indicate the problem in

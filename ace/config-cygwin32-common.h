@@ -46,7 +46,7 @@
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 // It's there on all libc 5 systems I checked.
-#include <features.h>
+#include /**/ <features.h>
 
 
 // First the machine specific part
