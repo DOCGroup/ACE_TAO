@@ -49,7 +49,7 @@ if ($client == -1) {
   $status = 1;
 }
 
-$server = $SV->TimedWait (5);
+$server = $SV->TimedWait (15);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
   $SV->Kill (); $SV->TimedWait (1);

@@ -1,3 +1,15 @@
+Tue Jul 27 17:41:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/MT_Client/run_test.pl:
+	* tests/MT_Client/server.cpp:
+	  Work around problems in the thread-per-connection concurrency
+	  model: the ORB cannot wait for the server threads to exit
+	  because there is no portable way to ensure that they
+	  finish. Unfortunately if main() exits before the server threads
+	  finish doing their cleanup the program may crash. The current
+	  workaround is to sleep() before main exits, giving the server
+	  threads a chance to exit.
+
 Tue Jul 27 13:57:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 

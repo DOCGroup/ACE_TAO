@@ -90,6 +90,11 @@ main (int argc, char *argv[])
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_OS::sleep (5);
     }
   ACE_CATCHANY
     {
