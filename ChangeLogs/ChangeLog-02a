@@ -1,3 +1,9 @@
+Thu Apr 19 11:08:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ACE-INSTALL.html: Point out that ACE supports Solaris 8.
+	  Thanks to Logan Modahala <lmodahal@cisco.com> for motivating
+ 	  this.
+
 Wed Apr 18 13:57:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ACE.cpp:
