@@ -231,6 +231,13 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 void
 TAO_SSLIOP_Connection_Handler::handle_close_i (void)
 {
+  if (TAO_debug_level)
+    ACE_DEBUG  ((LM_DEBUG,
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("SSLIOP_Connection_Handler::handle_close_i ")
+                 ACE_TEXT ("(%d)\n"),
+                 this->transport ()->id ()));
+
   if (this->transport ()->wait_strategy ()->is_registered ())
     {
       // Make sure there are no timers.
