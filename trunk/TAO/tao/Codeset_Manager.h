@@ -2,11 +2,11 @@
 
 //=============================================================================
 /*
- *  @file     TAO_Codeset_Manager.h
+ *  @file Codeset_Manager.h
  *
  *  $Id$
  *
- *   Interface for the TAO CodeSet Manager.
+ *  Interface for the TAO CodeSet Manager.
  *
  *  @author  Mahesh Vedantam <mahesh#ociweb.com>
  */
@@ -14,8 +14,14 @@
 
 #ifndef TAO_CODESET_MANAGER_H
 #define TAO_CODESET_MANAGER_H
+// @@Phil/Mahesh -- We have a practice of including "ace/pre.h" and
+// "ace/post.h" in the end. Could you folks please include that?
 
+// @@Phil/Mahesh -- We include #pragma here. Please include that.
 #include "tao/CONV_FRAMEC.h"
+
+// @@Phil/Mahesh -- I dont see a need to include these two. Please
+// forward declare the stuff.
 #include "tao/Profile.h"
 #include "tao/Transport.h"
 
@@ -24,6 +30,9 @@ class TAO_Tagged_Components;
 class TAO_Codeset_Transport_Factory;
 
 // ****************************************************************
+
+// @@Phil/Mahesh -- We need doxygen documentation/ intro for this
+// class.
 
 class TAO_Export TAO_Codeset_Item
 {
@@ -59,6 +68,10 @@ private:
   TAO_Codeset_Translator_Factory *factory_;
 };
 
+// @@Phil/Mahesh -- Any reason to have this declaration in global
+// namespace in such a manner that any file that includes this
+// file will get these declarations?
+
 // typedefs for containers containing the list of codesets
 // factories for character and wide character.
 typedef ACE_Unbounded_Set<TAO_Codeset_Item*>
@@ -69,6 +82,8 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
         TAO_CodesetFactorySetItor;
 
 
+// @@Phil/Mahesh -- We need doxygen documentation/ intro for this
+// class.
 class TAO_Export TAO_Codeset_Manager
 {
 
@@ -90,11 +105,11 @@ public:
 
   /// Called from an Object of TAO_Messaging for every request at server side
   /// to process service context and set TCS for Char/WChar
-  void process_service_context ( TAO_ServerRequest &);
+  void process_service_context (TAO_ServerRequest &);
 
   /// Called by a client object to generate service context
   /// at this time Transport has the TCS for Char and WChar
-  void generate_service_context ( TAO_Operation_Details&, TAO_Transport & );
+  void generate_service_context (TAO_Operation_Details&, TAO_Transport & );
 
 
   void set_ncs_c (CONV_FRAME::CodeSetId ncs);
@@ -110,29 +125,29 @@ private:
                                     CONV_FRAME::CodeSetComponent & );
 
   // Find CodesetId in the codeset component
-  CORBA::Boolean isElementOf ( CONV_FRAME::CodeSetId,
-                               CONV_FRAME::CodeSetComponent & );
+  CORBA::Boolean isElementOf (CONV_FRAME::CodeSetId,
+                              CONV_FRAME::CodeSetComponent & );
 
   // find the intersection of CodesetIds between Client and Server CCS
   CONV_FRAME::CodeSetId intersectionOf (CONV_FRAME::CodeSetComponent &,
                                         CONV_FRAME::CodeSetComponent &);
 
-  CORBA::Boolean isCompatible(CONV_FRAME::CodeSetId,
-                              CONV_FRAME::CodeSetId);
+  CORBA::Boolean isCompatible (CONV_FRAME::CodeSetId,
+                               CONV_FRAME::CodeSetId);
 
 
   int init_codeset_factories_i (TAO_CodesetFactorySet&,
-				CONV_FRAME::CodeSetComponent&);
+                                CONV_FRAME::CodeSetComponent&);
 
   TAO_Codeset_Translator_Factory * get_char_trans (CONV_FRAME::CodeSetId,
-						   CONV_FRAME::CodeSetId);
+                                                   CONV_FRAME::CodeSetId);
 
   TAO_Codeset_Translator_Factory * get_wchar_trans (CONV_FRAME::CodeSetId,
-						    CONV_FRAME::CodeSetId);
+                                                    CONV_FRAME::CodeSetId);
 
   TAO_Codeset_Translator_Factory * get_translator_i (TAO_CodesetFactorySet&,
-						     CONV_FRAME::CodeSetId,
-						     CONV_FRAME::CodeSetId);
+                                                     CONV_FRAME::CodeSetId,
+                                                     CONV_FRAME::CodeSetId);
 
   CONV_FRAME::CodeSetComponentInfo codeset_info_;
 

@@ -11,9 +11,10 @@
 // =========================
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_H
-
 #include "ace/pre.h"
 #include "ace/Service_Object.h"
+
+// @@Phil -- #pragma stuff
 
 #include "tao/corbafwd.h"
 #include "tao/CONV_FRAMEC.h"
@@ -23,6 +24,8 @@ class TAO_OutputCDR;
 
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
+
+// @@Phil -- class documentation..
 
 class TAO_Export TAO_Codeset_Translator_Factory :
   public ACE_Service_Object

@@ -865,6 +865,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                         -1);
     }
 
+  // @@Phil: Could we add a -ORB option to prevent creation of codeset
+  // manager. This adds to our runtime footprint. It would be awesome
+  // if we can do away with this if the user doesnt want to. Does that
+  // sound reasonable? Please let me know if this is not possible.
 
   this->codeset_manager_ = trf->get_codeset_manager();
   if (this->codeset_manager_ == 0)

@@ -64,8 +64,8 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
      {
        if(TAO_debug_level > 2)
          ACE_DEBUG((LM_DEBUG,
-		    ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
-		    ACE_LIB_TEXT("transport already set\n")));
+                    ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+                    ACE_LIB_TEXT("transport already set\n")));
        return;
      }
 
@@ -77,8 +77,8 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
    {
      if(TAO_debug_level > 2)
        ACE_DEBUG((LM_DEBUG,
-		  ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
-		  ACE_LIB_TEXT("No codeset componnet in profile\n")));
+                  ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+                  ACE_LIB_TEXT("No codeset componnet in profile\n")));
      remote.ForCharData.native_code_set =
        TAO_Codeset_Manager::default_char_codeset;
      remote.ForWcharData.native_code_set =
@@ -91,9 +91,9 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
                                            this->codeset_info_.ForCharData);
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
-		 ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+                 ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
                  ACE_LIB_TEXT("setting char translator(%08x, %08x)\n"),
-		ncs,tcs));
+                ncs,tcs));
    trans.char_translator(this->get_char_trans (ncs,tcs));
 
    ncs = this->codeset_info_.ForWcharData.native_code_set;
@@ -102,7 +102,7 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
 
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
-		 ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+                 ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
                  ACE_LIB_TEXT("setting wchar translator (%08x, %08x)\n"),
                  ncs,tcs));
    trans.wchar_translator(this->get_wchar_trans (ncs,tcs));
@@ -134,18 +134,18 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
       TAO_InputCDR cdr (buffer,context.context_data.length ());
       CORBA::Boolean byte_order;
       if (cdr >> TAO_InputCDR::to_boolean (byte_order))
-	{
-	  cdr.reset_byte_order (ACE_static_cast (int, byte_order));
-	  cdr >> tcs_c;
-	  cdr >> tcs_w;
-	}
+        {
+          cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+          cdr >> tcs_c;
+          cdr >> tcs_w;
+        }
     }
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-		ACE_LIB_TEXT("(%P|%t) Codeset_Manager::process_service_context ")
-		ACE_LIB_TEXT("using tcsc = %08x, tcsw = %08x\n"),
-		tcs_c,tcs_w));
+                ACE_LIB_TEXT("(%P|%t) Codeset_Manager::process_service_context ")
+                ACE_LIB_TEXT("using tcsc = %08x, tcsw = %08x\n"),
+                tcs_c,tcs_w));
 
   CONV_FRAME::CodeSetId ncs =
     this->codeset_info_.ForCharData.native_code_set;
@@ -175,11 +175,16 @@ TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
     this->codeset_info_.ForWcharData.native_code_set;
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-		ACE_LIB_TEXT("(%P|%t) Codeset_Manager::generate_service_context ")
-		ACE_LIB_TEXT("using tcs_c = %08x, tcs_w = %08x\n"),
-		codeset_cntx.char_data,
-		codeset_cntx.wchar_data));
+                ACE_LIB_TEXT("(%P|%t) Codeset_Manager::generate_service_context ")
+                ACE_LIB_TEXT("using tcs_c = %08x, tcs_w = %08x\n"),
+                codeset_cntx.char_data,
+                codeset_cntx.wchar_data));
 
+  // @@Phil: Could we please use the abstraction TAO_Service_Context
+  // for doing all this? Looks like this is "repeated" code which
+  // could be either reused directly  from TAO_Service_Context or with
+  // some changes.  It would be nice if we could avoid code
+  // duplication.
   TAO_OutputCDR codeset_cdr;
   codeset_cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
   codeset_cdr << codeset_cntx;
@@ -217,6 +222,10 @@ CORBA::Boolean
 TAO_Codeset_Manager::isElementOf (CONV_FRAME::CodeSetId id,
                                   CONV_FRAME::CodeSetComponent &cs_comp)
 {
+  // @@Phil: Please use the values 0/1 as retuns. Here is the problem
+  // 1. CORBA::Boolean is a "char" and not a bool
+  // 2. Even if all our compilers support bool, you may want to return
+  // bool from this method instead of CORBA::Boolean.
   for (CORBA::ULong i=0L;
        i < cs_comp.conversion_code_sets.length();
        ++i )
@@ -232,11 +241,11 @@ CONV_FRAME::CodeSetId
 TAO_Codeset_Manager::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
                                      CONV_FRAME::CodeSetComponent &cs_comp2)
 {
-  for( CORBA::ULong index=0L;
+  for(CORBA::ULong index=0L;
        index < cs_comp1.conversion_code_sets.length();
        ++index )
-    if(this->isElementOf(cs_comp1.conversion_code_sets[index], cs_comp2))
-        return cs_comp1.conversion_code_sets[index];
+    if (this->isElementOf(cs_comp1.conversion_code_sets[index], cs_comp2))
+      return cs_comp1.conversion_code_sets[index];
   return 0;
 }
 
@@ -294,9 +303,9 @@ TAO_Codeset_Manager::add_char_translator (const char *name)
   ACE_NEW_RETURN (item, TAO_Codeset_Item (name), -1);
   if (this->char_factories_.insert (item) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
-		ACE_LIB_TEXT ("factories for %s: %p\n"),
-		name), -1);
+                ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
+                ACE_LIB_TEXT ("factories for %s: %p\n"),
+                name), -1);
   return 0;
 }
 
@@ -307,9 +316,9 @@ TAO_Codeset_Manager::add_wchar_translator (const char *name)
   ACE_NEW_RETURN (item, TAO_Codeset_Item (name), -1);
   if (this->wchar_factories_.insert (item) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
-		ACE_LIB_TEXT ("factories for %s: %p\n"),
-		name),-1);
+                ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
+                ACE_LIB_TEXT ("factories for %s: %p\n"),
+                name),-1);
   return 0;
 }
 
@@ -317,15 +326,15 @@ void
 TAO_Codeset_Manager::configure_codeset_factories()
 {
   if (init_codeset_factories_i (this->char_factories_,
-				this->codeset_info_.ForCharData) == -1)
+                                this->codeset_info_.ForCharData) == -1)
       ACE_ERROR ((LM_ERROR,
-		  ACE_LIB_TEXT ("TAO (%P|%t) failed to init char ")
-		  ACE_LIB_TEXT ("codeset factories\n")));
+                  ACE_LIB_TEXT ("TAO (%P|%t) failed to init char ")
+                  ACE_LIB_TEXT ("codeset factories\n")));
   if (init_codeset_factories_i (this->wchar_factories_,
-				this->codeset_info_.ForWcharData) == -1)
+                                this->codeset_info_.ForWcharData) == -1)
       ACE_ERROR ((LM_ERROR,
-		  ACE_LIB_TEXT ("TAO (%P|%t) failed to init wchar ")
-		  ACE_LIB_TEXT ("codeset factories\n")));
+                  ACE_LIB_TEXT ("TAO (%P|%t) failed to init wchar ")
+                  ACE_LIB_TEXT ("codeset factories\n")));
   if (this->codeset_info_.ForWcharData.native_code_set == 0)
     ACE_OutputCDR::wchar_maxbytes(0); // disallow wchar when no ncs_w set
 }
@@ -333,7 +342,7 @@ TAO_Codeset_Manager::configure_codeset_factories()
 /// Initialise the specific type codeset factories
 int
 TAO_Codeset_Manager::init_codeset_factories_i (TAO_CodesetFactorySet& factset,
-					       CONV_FRAME::CodeSetComponent& cs_comp)
+                                               CONV_FRAME::CodeSetComponent& cs_comp)
 {
   TAO_CodesetFactorySetItor end = factset.end ();
   TAO_CodesetFactorySetItor iter = factset.begin ();
@@ -341,29 +350,31 @@ TAO_Codeset_Manager::init_codeset_factories_i (TAO_CodesetFactorySet& factset,
   CONV_FRAME::CodeSetId ncs = cs_comp.native_code_set;
   cs_comp.conversion_code_sets.length(factset.size());
   CORBA::ULong index;
+
+  //@@Phil: What is the magic that you do for static builds?
   for (index=0; iter != end; iter++)
     {
       const char *name = (*iter)->codeset_name ();
       TAO_Codeset_Translator_Factory *trans =
-	ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::instance (name);
+        ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::instance (name);
       if (trans == 0)
-	{
+        {
           ACE_ERROR ((LM_ERROR,
-		      ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
-		      ACE_LIB_TEXT ("CodeSet <%s>, %p\n"),
-		      ACE_TEXT_CHAR_TO_TCHAR(name), ""));
-	  continue;
-	}
+                      ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
+                      ACE_LIB_TEXT ("CodeSet <%s>, %p\n"),
+                      ACE_TEXT_CHAR_TO_TCHAR(name), ""));
+          continue;
+        }
       if (trans->ncs() == ncs)
         {
-	  (*iter)->factory (trans);
+          (*iter)->factory (trans);
           cs_comp.conversion_code_sets[index++] = trans->tcs();
-	  if (TAO_debug_level > 2)
-	    ACE_DEBUG ((LM_DEBUG,
-			ACE_LIB_TEXT ("TAO (%P|%t) Loaded CodeSet <%s>, ")
-			ACE_LIB_TEXT ("ncs = %08x tcs = %08x\n"),
-			ACE_TEXT_CHAR_TO_TCHAR(name),
-			trans->ncs(),trans->tcs()));
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_LIB_TEXT ("TAO (%P|%t) Loaded CodeSet <%s>, ")
+                        ACE_LIB_TEXT ("ncs = %08x tcs = %08x\n"),
+                        ACE_TEXT_CHAR_TO_TCHAR(name),
+                        trans->ncs(),trans->tcs()));
         }
     }
   cs_comp.conversion_code_sets.length(index);
@@ -372,22 +383,22 @@ TAO_Codeset_Manager::init_codeset_factories_i (TAO_CodesetFactorySet& factset,
 
 TAO_Codeset_Translator_Factory *
 TAO_Codeset_Manager::get_char_trans (CONV_FRAME::CodeSetId ncs,
-				     CONV_FRAME::CodeSetId tcs)
+                                     CONV_FRAME::CodeSetId tcs)
 {
   return this->get_translator_i (this->char_factories_,ncs,tcs);
 }
 
 TAO_Codeset_Translator_Factory *
 TAO_Codeset_Manager::get_wchar_trans (CONV_FRAME::CodeSetId ncs,
-				      CONV_FRAME::CodeSetId tcs)
+                                      CONV_FRAME::CodeSetId tcs)
 {
   return this->get_translator_i (this->wchar_factories_,ncs,tcs);
 }
 
 TAO_Codeset_Translator_Factory *
 TAO_Codeset_Manager::get_translator_i (TAO_CodesetFactorySet& factset,
-				       CONV_FRAME::CodeSetId ncs,
-				       CONV_FRAME::CodeSetId tcs)
+                                       CONV_FRAME::CodeSetId ncs,
+                                       CONV_FRAME::CodeSetId tcs)
 {
   TAO_CodesetFactorySetItor end = factset.end ();
   TAO_CodesetFactorySetItor iter = factset.begin ();

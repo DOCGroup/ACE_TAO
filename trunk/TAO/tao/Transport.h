@@ -29,6 +29,8 @@
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
 #include "Synch_Refcountable.h"
+
+// @@Phil -- why should this be included?
 #include "CONV_FRAMEC.h"
 
 class TAO_ORB_Core;
@@ -1001,6 +1003,18 @@ protected:
   unsigned long purging_order_;
 
 private:
+  /// @@Phil, I think it would be nice if we could think of a way to
+  /// do the following.
+  /// We have been trying to use the transport for marking about
+  /// translator factories and such! IMHO this is a wrong encapulation
+  /// ie. trying to populate the transport object with these
+  /// details. We should probably have a class something like
+  /// TAO_Message_Property or TAO_Message_Translator or whatever (I am
+  /// sure you get the idea) and encapsulate all these
+  /// details. Coupling these seems odd. if I have to be more cynical
+  /// we can move this to the connection_handler and it may more sense
+  /// with the DSCP stuff around there. Do you agree?
+
   /// Additional member values required to support codeset translation
   TAO_Codeset_Translator_Factory *char_translator_;
   TAO_Codeset_Translator_Factory *wchar_translator_;
