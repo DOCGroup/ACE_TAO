@@ -193,6 +193,8 @@ AST_Decl::AST_Decl (NodeType nt,
       // The function body creates its own copy.
       this->original_local_name (n->last_component ());
     }
+
+  this->compute_repoID ();
 }
 
 AST_Decl::~AST_Decl (void)
@@ -916,8 +918,10 @@ AST_Decl::version (void)
                                   ':');
         }
 
-      this->version_ = (tail2 == 0) ? ACE::strnew ("1.0")
-                                    : ACE::strnew (tail2 + 1);
+      if (! this->typeid_set_ && tail2 != 0)
+        {
+          this->version_ = ACE::strnew (tail2 + 1);
+        }
     }
 
   return this->version_;
@@ -927,8 +931,8 @@ void
 AST_Decl::version (char *value)
 {
   // Previous #pragma version or #pragma id make this illegal.
-  if (this->version_ == 0 && this->repoID_ == 0
-      || ACE_OS::strcmp (this->version_, value) == 0)
+  if ((this->version_ == 0  || ACE_OS::strcmp (this->version_, value) == 0)
+      && ! this->typeid_set_)
     {
       delete [] this->version_;
       this->version_ = value;
@@ -1014,7 +1018,7 @@ AST_Decl::set_id_with_typeid (char *value)
   delete [] this->repoID_;
   this->repoID_ = 0;
   this->repoID (value);
-  this->typeid_set (I_TRUE);
+  this->typeid_set_ = I_TRUE;
 }
 
 void
