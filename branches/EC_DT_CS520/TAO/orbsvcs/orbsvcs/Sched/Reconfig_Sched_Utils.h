@@ -433,7 +433,7 @@ public:
 
 
 class TAO_RTSched_Export TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE 
+  // = TITLE
   //   A base class for scheduling strategies
   //
   // = DESCRIPTION This class provides a DFS finish time comparison
@@ -463,7 +463,7 @@ public:
 
 class TAO_RTSched_Export TAO_MUF_FAIR_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE 
+  // = TITLE
   //   A scheduling strategy that implements the Maximum Urgency First
   //   scheduling algorithm with Fair Admission of Indexed Rates
   //   (FAIR).
@@ -641,6 +641,61 @@ public:
                                   TAO_Reconfig_Scheduler_Entry &);
   // Compares two entries by subpriority alone.  Returns -1 if the
   // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int assign_config (RtecScheduler::Config_Info &,
+                            TAO_Reconfig_Scheduler_Entry &);
+  // Fills in a static dispatch configuration for a priority level, based
+  // on the operation characteristics of a representative scheduling entry.
+};
+
+class TAO_RTSched_Export TAO_EDF_FAIR_Reconfig_Sched_Strategy
+  : public TAO_Reconfig_Sched_Strategy_Base
+  // = TITLE
+  //   A scheduling strategy that implements the Earliest Deadline First
+  //   scheduling algorithm with Fair Admission of Indexed Rates
+  //   (FAIR).
+  //
+  // = DESCRIPTION
+  //   The strategy assigns static thread, global priority, and static
+  //   subpriority equal values for all, and assigns a dispatching
+  //   configuration with a earliest deadline dispatching queue for
+  //   each distinct criticality level.  It admits operation tuples in
+  //   order of ascending rate index, where the lowest rate for an
+  //   operation has index 0, the next higher rate has index 1, etc.
+{
+public:
+
+  static int total_priority_comp (const void *, const void *);
+  // Ordering function used to qsort an array of RT_Info_Tuple
+  // pointers into a total <priority, subpriority> ordering.  Returns
+  // -1 if the first one is higher, 0 if they're the same, and 1 if
+  // the second one is higher.
+
+  static int total_admission_comp (const void *, const void *);
+  // Ordering function used to qsort an array of RT_Info_Tuple
+  // pointers into a total ordering for admission control.  Returns
+  // -1 if the first one is higher, 0 if they're the same, and 1 if
+  // the second one is higher.
+
+  static int compare_priority (TAO_Reconfig_Scheduler_Entry &,
+                               TAO_Reconfig_Scheduler_Entry &);
+  // Compares two entries by priority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int compare_priority (TAO_RT_Info_Tuple &,
+                               TAO_RT_Info_Tuple &);
+  // Compares two tuples by priority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int compare_subpriority (TAO_Reconfig_Scheduler_Entry &,
+                                  TAO_Reconfig_Scheduler_Entry &);
+  // Compares two entries by subpriority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int compare_admission_order (TAO_RT_Info_Tuple &,
+                                      TAO_RT_Info_Tuple &);
+  // Compares two tuples by the given admission ordering.  Returns -1 if the
+  // first one is earlier, 0 if they're the same, and 1 if the second one is earlier.
 
   static int assign_config (RtecScheduler::Config_Info &,
                             TAO_Reconfig_Scheduler_Entry &);
