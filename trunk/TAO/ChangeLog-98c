@@ -135,6 +135,10 @@ Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
         * utils/catior/catior.cpp: added #include of ace/streams.h
           because this file uses ifstreams.
 
+        * tao/DynUnion_i.cpp (get_extractor): moved return statement
+          inside of ACE_LACKS_LONGLONG_T protection to avoid compiler
+          warning about unreachable statement.
+
 Mon Oct 19 15:37:53 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): Fixed a
