@@ -1,3 +1,36 @@
+Mon Jul 21 01:56:44 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* ace/OS.h: 	
+	* ace/OS.cpp: 		
+	  
+	  Added method getmacaddress () to get the mac address of the host
+	  for generating UUIDs
+
+	  Added to_string () method to ACE_Thread_ID class to create a
+	  string representation of ACE_Thread_ID.
+
+	* ace/config-win32-common.h: 	
+
+	  Included file nb30.h and library netapi32.lib required for
+	  obtaining MACaddress on windows.
+
+	* ace/UUID.h:
+	* ace/UUID.cpp:
+	* ace/UUID.i:
+
+	  Files added to generate UUID (Universally Unique ID) based on
+	  expired IETF draft titled "UUIDs and GUIDs". Modifications were
+	  made to the UUID generation as defined by the specification to
+	  add thread and process ids. This was done by adding a new
+	  variant 0xc0 not defined by the specification. By default only
+	  the time variant version of the UUID as defined by the spec is
+	  generated.
+
+	* tests/Makefile.tests: 	
+	* tests/UUIDTest.cpp:
+
+	  Simple test added to verify ACE UUID generation.
+	
 Sun Jul 20 14:14:46 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/NT_Service.i (ACE_NT_Service): Set dwWaitHint to 0 in the
@@ -1249,6 +1282,7 @@ Tue Jul  1 20:47:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Windows and fixes an alignment problem with ACE_PI_Control_Block
           due to differing definitions for MAXNAMELEN.  Thanks to
           Serge Kolgan <skolgan@trigraph.com> for help figuring this out.
+
 
 Tue Jul  1 19:39:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
