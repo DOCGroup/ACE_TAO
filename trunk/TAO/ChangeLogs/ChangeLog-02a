@@ -11,8 +11,8 @@ Wed Nov 15 21:52:10 2000  Ossama Othman  <ossama@uci.edu>
 	  Added ASN.1 (DER) certificate typedefs.  These typedefs are
 	  defined by the Firewall specification.  They are used by the
 	  soon to be added SSLIOP::Current object to return the peer
-	  certificate chain for the current SSL session as an octet
-	  sequence.
+	  certificate chain for the current SSL session as a sequence of
+	  octet sequences.
 
 	  Added new TAO-specific SSLIOP::Current interface definition.
 	  This interface can be used to obtain SSL session related
