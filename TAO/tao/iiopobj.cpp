@@ -8,6 +8,7 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 

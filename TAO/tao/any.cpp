@@ -32,6 +32,7 @@
 // COM NOTE: Yes, this is a utility data type whose implementation is
 // fully exposed.  Factories for these are not normally used in C++.
 
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 

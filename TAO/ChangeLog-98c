@@ -1,3 +1,22 @@
+Wed Jul 16 11:34:36 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/boa.cpp: Removed some unused code.
+	
+	* tao/compat/objbase.h: Added explicit check for prior inclusion
+ 	of ace/OS.h, with an error being produced if it's not included.
+  	This will help keep me honest and remember to always include OS.h
+ 	beforehand, since I do most of my development on non-WIN32
+ 	platforms.
+	
+	* tao/*.{h,cpp}: Added #include "ace/OS.h" before every inclusion
+ 	of <objbase.h>.  This is required on WIN32 platforms because
+ 	objbase.h eventually ends up including <winsock.h>, which is the
+ 	wrong version of winsock from what ACE requires.  Thus, by
+ 	including OS.h prior to objbase.h, objbase.h ends up not trying to
+ 	include a winsock header.
+	
+	* tao/orbobj.cpp: Added missing #include for tao/debug.h.
+	
 Wed Jul 16 10:55:55 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/PC_Install.bat: removed it since it isn't needed anymore

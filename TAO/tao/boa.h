@@ -24,6 +24,7 @@
 #if !defined (TAO_BOA_H)
 #  define TAO_BOA_H
 
+#  include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #  include <objbase.h>
 
 #  include "ace/SOCK_Stream.h"
