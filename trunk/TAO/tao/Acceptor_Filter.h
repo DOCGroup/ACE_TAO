@@ -22,14 +22,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object_KeyC.h"
-
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+
+namespace TAO
+{
+  class ObjectKey;
+}
 
 class TAO_MProfile;
 class TAO_Acceptor;
