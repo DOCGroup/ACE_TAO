@@ -97,7 +97,7 @@ private:
   int size_;
   // Number of threads to spawn.  By default is set to 10.
 
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
   // A pointer to our ORB.
 
   char* name_service_ior_;
