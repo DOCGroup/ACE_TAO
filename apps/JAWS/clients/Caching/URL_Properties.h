@@ -15,8 +15,8 @@
 //
 // ============================================================================
 
-#if !defined (ACE_URL_LOCATOR_H)
-#define ACE_URL_LOCATOR_H
+#if !defined (ACE_URL_PROPERTIES_H)
+#define ACE_URL_PROPERTIES_H
 
 #include "ace/SString.h"
 #include "ace/Array.h"
@@ -149,7 +149,7 @@ typedef ACE_Array<ACE_URL_Offer> ACE_URL_Offer_Seq;
 typedef char *ACE_URL_OfferID;
 
 #if defined (__ACE_INLINE__)
-#include "URL_Locator.i"
+#include "URL_Properties.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_WEB_LOCATOR_H */
+#endif /* ACE_WEB_PROPERTIES_H */
