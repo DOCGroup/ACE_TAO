@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -9,11 +9,13 @@
  *   A wrapper for mutexes that can be used across processes on the
  *   same host machine, as well as within a process, of course.
  *
- * @author Douglas C. Schmidt <schmidt@cs.wustl.edu> */
+ * @author Douglas C. Schmidt <schmidt@uci.edu>
+ */
 //=============================================================================
 
 #ifndef ACE_PROCESS_MUTEX_H
 #define ACE_PROCESS_MUTEX_H
+
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -189,4 +191,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_PROCESS_MUTEX_H */
