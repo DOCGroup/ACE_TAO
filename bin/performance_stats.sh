@@ -3,14 +3,14 @@
 # $Id$
 #
 
-if [ $# -lt 3 ]; then
-  echo "Usage: $0 <ACE_ROOT> <DEST> <DATE>"
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 <ACE_ROOT> <DEST>"
   exit 0
 fi
 
 ACE_ROOT=$1
 DEST=$2
-DATE=$3
+DATE=`date +%Y/%m/%d-%H:%M`
 
 COMMON_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool"
 
