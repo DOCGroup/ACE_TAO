@@ -1,3 +1,32 @@
+Wed Jul 11 02:19:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: Remember the
+	  native priority of the invoking thread.  Once the invocation
+	  completes, restore the thread to the original native thread
+	  priority.  
+
+	  Previously, when the priority was restored, it was done it terms
+	  of CORBA priority.  The problem with this approach was that in
+	  the conversion from native to CORBA and then back to native, we
+	  can lose precision and hence the native priority of the native
+	  thread may not be the same as its original native priority.
+	  Therefore, remembering the original native priority will
+	  alleviate this problem.
+
+	* tao/Protocols_Hooks: 
+	* tao/Default_Protocols_Hooks:
+	* tao/RT_Protocols_Hooks.cpp:
+	
+	  Expanded the priority interfaces on the Protocols_Hooks such
+	  that the user can obtain both the native and CORBA priorities.
+	  Also, the user can set both.
+
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint): 
+	* tao/RTCORBA/RT_Current.cpp (the_priority): 
+	* tao/Strategies/Reactor_Per_Priority.cpp (reactor): 
+
+	  Changed to use new priority interfaces.
+
 Tue Jul 10 22:37:48 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp (copy):
