@@ -4766,7 +4766,6 @@ public:
   // thread is the main thread, then the argument must be 1.
   // For private use of ACE_Object_Manager and ACE_Thread_Adapter only.
 
-private:
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   static int netdb_acquire (void);
   static int netdb_release (void);
