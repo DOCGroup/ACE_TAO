@@ -5367,6 +5367,9 @@ public:
                       size_t len);
   static char *strcpy (char *s,
                        const char *t);
+  static char *strecpy (char *des, const char *src);
+  // Copies <src> to <des>, returning a pointer to the end of the
+  // copied region, rather than the beginning, as <strcpy> does.
   static char *strpbrk (char *s1,
                         const char *s2);
   static const char *strpbrk (const char *s1,
@@ -5442,6 +5445,7 @@ public:
                           wint_t c);
   static const wchar_t *strchr (const wchar_t *s,
                                 wint_t c);
+  static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
   static wchar_t *strrchr (wchar_t *s,
                            wint_t c);
   static const wchar_t *strrchr (const wchar_t *s,
@@ -5744,6 +5748,16 @@ public:
   static void thr_testcancel (void);
   static void thr_yield (void);
 
+  static void unique_name (const void *object,
+                           LPTSTR name,
+                           size_t length);
+  // This method uses process id and object pointer to come up with a
+  // machine wide unique name.  The process ID will provide uniqueness
+  // between processes on the same machine. The "this" pointer of the
+  // <object> will provide uniqueness between other "live" objects in
+  // the same process. The uniqueness of this name is therefore only
+  // valid for the life of <object>.
+
   static ACE_thread_t NULL_thread;
   // This is necessary to deal with POSIX pthreads and their use of
   // structures for thread ids.
@@ -5802,8 +5816,8 @@ private:
   }
   // For use by ACE_Object_Manager only, to register its exit hook..
 
-  friend class ACE_Object_Manager;
-  // Allow the ACE_Object_Manager to call set_exit_hook.
+  friend class ACE_OS_Object_Manager;
+  // Allow the ACE_OS_Object_Manager to call set_exit_hook.
 
 # if defined (ACE_WIN32)
 #   if defined (ACE_HAS_WINCE)
@@ -5816,6 +5830,150 @@ private:
   // Translate fopen's mode char to open's mode.  This helper function
   // is here to avoid maintaining several pieces of identical code.
 # endif /* ACE_WIN32 */
+};
+
+class ACE_Export ACE_Object_Manager_Base
+{
+  // = TITLE
+  //     Base class for ACE_Object_Manager(s).
+  //
+  // = DESCRIPTION
+  //     Encapsulates the most useful ACE_Object_Manager data structures.
+public:
+  static int starting_up (void);
+  // Returns 1 before ACE_Object_Manager has been constructed.  This
+  // flag can be used to determine if the program is constructing
+  // static objects.  If no static object spawns any threads, the
+  // program will be single-threaded when this flag returns 1.  (Note
+  // that the program still might construct some static objects when
+  // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
+  // defined.)
+
+  static int shutting_down (void);
+  // Returns 1 after ACE_Object_Manager has been destroyed.  This flag
+  // can be used to determine if the program is in the midst of
+  // destroying static objects.  (Note that the program might destroy
+  // some static objects before this flag can return 1, if
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
+
+# if (defined (ACE_PSOS) && defined (__DIAB))  || \
+     (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
+  // The Diab compiler got confused and complained about access rights
+  // if this section was protected (changing this to public makes it happy).
+  // Similarly, DEC CXX 5.6 needs the methods to be public.
+public:
+# else  /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
+protected:
+# endif /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
+  ACE_Object_Manager_Base (void);
+  // Default constructor.
+
+  virtual ~ACE_Object_Manager_Base (void);
+  // Destructor.
+
+public:
+  virtual int init (void) = 0;
+  // Explicitly initialize.
+
+  virtual int fini (void) = 0;
+  // Explicitly destroy.
+
+  enum Object_Manager_State
+    {
+      UNINITIALIZED_OBJ_MAN = 0,
+      INITIALIZING_ACE_OS_OBJ_MAN,
+      INITIALIZED_ACE_OS_OBJ_MAN,
+      INITIALIZING_ACE_OBJ_MAN,
+      INITIALIZED_ACE_OBJ_MAN,
+      RUNNING_OBJ_MAN = INITIALIZED_ACE_OBJ_MAN,
+      SHUTTING_DOWN_ACE_OBJ_MAN,
+      SHUT_DOWN_ACE_OBJ_MAN,
+      SHUTTING_DOWN_ACE_OS_OBJ_MAN,
+      SHUT_DOWN_ACE_OS_OBJ_MAN,
+      TERMINATED_OBJ_MAN = SHUT_DOWN_ACE_OS_OBJ_MAN
+    };
+
+protected:
+  static Object_Manager_State object_manager_state_;
+  // State of the program, from the ACE Object_Managers' points-of-view.
+
+  u_int dynamically_allocated_;
+  // Flag indicating whether the ACE_Object_Manager was dynamically
+  // allocated by ACE.  (If is was dynamically allocated by the
+  // application, then the application is responsible for destroying
+  // it.)
+
+  ACE_Object_Manager_Base *next_;
+  // Link to next Object_Manager, for chaining.
+private:
+  // Disallow copying by not implementing the following . . .
+  ACE_Object_Manager_Base (const ACE_Object_Manager_Base &);
+  ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &);
+};
+
+extern "C"
+void
+ACE_OS_Object_Manager_Internal_Exit_Hook ();
+
+
+class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
+{
+public:
+  virtual int init (void);
+  // Explicitly initialize.
+
+  virtual int fini (void);
+  // Explicitly destroy.
+
+  enum Preallocated_Object
+    {
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_OS_MONITOR_LOCK,
+      ACE_TSS_CLEANUP_LOCK,
+#   if defined (ACE_HAS_TSS_EMULATION) && \
+       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+      ACE_TSS_BASE_LOCK,
+#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+# else
+      // There currently are no preallocated arrays in the ACE
+      // library.  If the application doesn't have any, make sure
+      // the the preallocated_array size is at least one by declaring
+      // this dummy . . .
+      ACE_OS_EMPTY_PREALLOCATED_OBJECT,
+# endif /* ACE_MT_SAFE */
+
+      ACE_OS_PREALLOCATED_OBJECTS  // This enum value must be last!
+    };
+  // Unique identifiers for preallocated objects.
+
+public:
+  // Application code should not use these explicitly, so they're
+  // hidden here.  They're public so that the ACE_Object_Manager can
+  // be constructed/destructed in main () with
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+  ACE_OS_Object_Manager ();
+  // Constructor.
+
+  ~ACE_OS_Object_Manager ();
+  // Destructor.
+
+private:
+  friend class ACE_OS;
+  friend class ACE_Object_Manager;
+  friend class ACE_OS_Object_Manager_Manager;
+  friend class ACE_TSS_Cleanup;
+  friend class ACE_TSS_Emulation;
+  friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
+  // This class is for internal use by ACE_OS, etc., only.
+
+  static ACE_OS_Object_Manager *instance (void);
+  // Accessor to singleton instance.
+
+  static ACE_OS_Object_Manager *instance_;
+  // Singleton instance pointer.
+
+  static void *preallocated_object[ACE_OS_PREALLOCATED_OBJECTS];
+  // Table of preallocated objects.
 };
 
 # if defined (ACE_HAS_WINCE)
@@ -6381,6 +6539,19 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 // Also, create an ACE_Object_Manager static instance in "main ()".
 #   include "ace/Object_Manager.h"
 
+// ACE_MAIN_OBJECT_MANAGER defines the ACE_Object_Manager(s) that will
+// be instantiated on the stack of main ().  Note that it is only used
+// when compiling main ():  its value does not affect the contents of
+// ace/OS.o.
+#   if defined (ACE_HAS_MINIMAL_ACE_OS)
+#     define ACE_MAIN_OBJECT_MANAGER \
+        ACE_OS_Object_Manager ace_os_object_manager;
+#   else  /* ! ACE_HAS_MINIMAL_ACE_OS */
+#     define ACE_MAIN_OBJECT_MANAGER \
+        ACE_OS_Object_Manager ace_os_object_manager; \
+        ACE_Object_Manager ace_object_manager;
+#   endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+
 #   if defined (ACE_PSOSIM)
 // PSOSIM root lacks the standard argc, argv command line parameters,
 // create dummy argc and argv in the "real" main  and pass to "user" main.
@@ -6392,7 +6563,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 { \
   int argc = 1;                            /* dummy arg count */ \
   char *argv[] = {"psosim"};               /* dummy arg list */ \
-  ACE_Object_Manager ace_object_manager;   /* has program lifetime */ \
+  ACE_MAIN_OBJECT_MANAGER \
   int ret_val = -1; /* assume the worst */ \
   if (ACE_PSOS_Time_t::init_simulator_time ()) /* init simulator time */ \
   { \
@@ -6417,7 +6588,7 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 { \
   int argc = 1;                           /* dummy arg count */ \
   char *argv[] = {"root"};                /* dummy arg list */ \
-  ACE_Object_Manager ace_object_manager;  /* has program lifetime */ \
+  ACE_MAIN_OBJECT_MANAGER \
   ace_main_i (argc, argv);                /* call user main, ignore result */ \
 } \
 int \
@@ -6428,7 +6599,7 @@ ace_main_i (int, char *[]);                      /* forward declaration */ \
 int \
 ACE_MAIN (int argc, char *argv[])   /* user's entry point, e.g., "main" */ \
 { \
-  ACE_Object_Manager ace_object_manager;        /* has program lifetime */ \
+  ACE_MAIN_OBJECT_MANAGER \
   return ace_main_i (argc, argv);         /* what the user calls "main" */ \
 } \
 int \

@@ -54,89 +54,6 @@ template <class T> class ACE_Array;
 #endif /* ! ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS */
 
 
-class ACE_Export ACE_Object_Manager_Base
-{
-  // = TITLE
-  //     Base class for ACE_Object_Manager(s).
-  //
-  // = DESCRIPTION
-  //     Encapsulates the most useful ACE_Object_Manager data structures.
-# if (defined (ACE_PSOS) && defined (__DIAB))  || \
-     (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
-  // The Diab compiler got confused and complained about access rights
-  // if this section was protected (changing this to public makes it happy).
-  // Similarly, DEC CXX 5.6 needs the methods to be public.
-public:
-# else  /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
-protected:
-# endif /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
-  ACE_Object_Manager_Base (void);
-  // Default constructor.
-
-  virtual ~ACE_Object_Manager_Base (void);
-  // Destructor.
-
-  ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
-  // Keeps track of all registered objects.
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Recursive_Thread_Mutex *internal_lock_;
-  // Lock that is used to guard internal structures.
-
-  ACE_Cleanup_Adapter<ACE_Null_Mutex> *singleton_null_lock_;
-  // Null lock for guarding singleton creation.
-
-  ACE_Array<ACE_Thread_Mutex *> *singleton_thread_locks_;
-  // Array of locks for guarding singleton creation.
-
-  ACE_Array<ACE_Mutex *> *singleton_mutex_locks_;
-  // Array of locks for guarding singleton creation.
-
-  ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *singleton_recursive_lock_;
-  // Lock for guarding singleton creation.
-
-  ACE_Array<ACE_RW_Thread_Mutex *> *singleton_rw_locks_;
-  // Array of locks for guarding singleton creation.
-
-public:
-  // = The <get_singleton_lock> accessors are for internal
-  // use by ACE_Singleton _only_.
-
-  static int get_singleton_lock (ACE_Null_Mutex *&);
-  // Accesses an <ACE_Null_Mutex> to be used for construction of
-  // <ACE_Singletons>.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.  The argument is ignored -- it is
-  // only used for overload resolution.
-
-  static int get_singleton_lock (ACE_Thread_Mutex *&);
-  // Accesses a non-recursive <ACE_Thread_Mutex> to be used for
-  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
-  // argument, on success; returns -1 on failure.  The argument is
-  // ignored -- it is only used for overload resolution.
-
-  static int get_singleton_lock (ACE_Mutex *&);
-  // Accesses a non-recursive <ACE_Mutex> to be used for construction
-  // of <ACE_Singletons>.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.  The argument is ignored -- it is
-  // only used for overload resolution.
-
-  static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
-  // Accesses a recursive <ACE_Recursive_Thread_Mutex> to be used for
-  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
-  // argument, on success; returns -1 on failure.
-
-  static int get_singleton_lock (ACE_RW_Thread_Mutex *&);
-  // Accesses a readers/writer <ACE_RW_Thread_Mutex> to be used for
-  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
-  // argument, on success; returns -1 on failure.
-#endif /* ACE_MT_SAFE */
-
-private:
-  // Disallow copying by not implementing the following . . .
-  ACE_Object_Manager_Base (const ACE_Object_Manager_Base &);
-  ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &);
-};
-
 class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
 {
   // = TITLE
@@ -214,6 +131,9 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
   //     building the ACE library and your applications.  This #define
   //     is enabled in some config files that are supplied with ACE.
   //
+  //     Note that the ACE_Object_Manager _must_ be created before
+  //     any threads are spawned by the program.
+  //
   //     If ACE_HAS_NONSTATIC_OBJECT_MANAGER is not #defined, the ACE
   //     library creates a static, singleton <ACE_Object_Manager> instance.
   //     The instance is placed in global program data, and constructed
@@ -253,14 +173,20 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
   //     Greif <jmg@trivida.com> for pointing out that ::exit ()
   //     doesn't destroy automatic objects, and for developing the
   //     recommendations in this paragraph.
+  //
+  //     Instead of creating a static ACE_Object_Manager, or creating
+  //     it on the stack of main (), another alternative is to #define
+  //     ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.  With that
+  //     #define, the application _must_ call ACE::init () at the
+  //     start of the program, and call ACE::fini () at the end.
 
 public:
-  static int init (void);
-  // Explicity initialize (construct the singleton instance of) the
+  virtual int init (void);
+  // Explicitly initialize (construct the singleton instance of) the
   // ACE_Object_Manager.
 
-  static int fini (void);
-  // Explicity destroy the singleton instance of the
+  virtual int fini (void);
+  // Explicitly destroy the singleton instance of the
   // ACE_Object_Manager.
 
   static int at_exit (ACE_Cleanup *object, void *param = 0);
@@ -309,17 +235,12 @@ public:
       ACE_LOG_MSG_INSTANCE_LOCK,
       ACE_MT_CORBA_HANDLER_LOCK,
       ACE_DUMP_LOCK,
-      ACE_OS_MONITOR_LOCK,
       ACE_SIG_HANDLER_LOCK,
       ACE_SINGLETON_NULL_LOCK,
       ACE_SINGLETON_RECURSIVE_THREAD_LOCK,
       ACE_THREAD_EXIT_LOCK,
       ACE_TOKEN_MANAGER_CREATION_LOCK,
       ACE_TOKEN_INVARIANTS_CREATION_LOCK,
-      ACE_TSS_CLEANUP_LOCK,
-# if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-      ACE_TSS_BASE_LOCK,
-# endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #endif /* ACE_MT_SAFE */
 
       // Hook for preallocated objects provided by application.
@@ -348,40 +269,12 @@ public:
   // ace/Managed_Object.h for information on accessing preallocated
   // arrays.
 
-  static int starting_up (void);
-  // Returns 1 before ACE_Object_Manager has been constructed.  This
-  // flag can be used to determine if the program is constructing
-  // static objects.  If no static object spawns any threads, the
-  // program will be single-threaded when this flag returns 1.  (Note
-  // that the program still might construct some static objects when
-  // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
-  // defined.)
-
-  static int shutting_down (void);
-  // Returns 1 after ACE_Object_Manager has been destroyed.  This flag
-  // can be used to determine if the program is in the midst of
-  // destroying static objects.  (Note that the program might destroy
-  // some static objects before this flag can return 1, if
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
-
   static ACE_Sig_Set &default_mask (void);
   // Accesses a default signal set used in ACE_Sig_Guard methods.
 
 private:
-  static int starting_up_;
-  // Flag indicating whether the program is starting up.
-
-  static int shutting_down_;
-  // Flag indicating whether the program is shutting down.
-
-  static u_int initialized_;
-  // Flag to allow graceful handling of multiple calls to init ().
-
-  u_int dynamically_allocated_;
-  // Flag indicating whether the ACE_Object_Manager was dynamically
-  // allocated by ACE.  (If is was dynamically allocated by the
-  // application, then the application is responsible for destroying
-  // it.)
+  ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
+  // Keeps track of all registered objects.
 
   ACE_Object_Manager_Preallocations *preallocations_;
   // Preallocated objects collection.
@@ -395,6 +288,40 @@ private:
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
   // Register an object or array for deletion at program termination.
   // See description of static version above for return values.
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+public:
+  // = The <get_singleton_lock> accessors are for internal
+  // use by ACE_Singleton _only_.
+
+  static int get_singleton_lock (ACE_Null_Mutex *&);
+  // Accesses an <ACE_Null_Mutex> to be used for construction of
+  // <ACE_Singletons>.  Returns 0, and the lock in the argument, on
+  // success; returns -1 on failure.  The argument is ignored -- it is
+  // only used for overload resolution.
+
+  static int get_singleton_lock (ACE_Thread_Mutex *&);
+  // Accesses a non-recursive <ACE_Thread_Mutex> to be used for
+  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
+  // argument, on success; returns -1 on failure.  The argument is
+  // ignored -- it is only used for overload resolution.
+
+  static int get_singleton_lock (ACE_Mutex *&);
+  // Accesses a non-recursive <ACE_Mutex> to be used for construction
+  // of <ACE_Singletons>.  Returns 0, and the lock in the argument, on
+  // success; returns -1 on failure.  The argument is ignored -- it is
+  // only used for overload resolution.
+
+  static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
+  // Accesses a recursive <ACE_Recursive_Thread_Mutex> to be used for
+  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
+  // argument, on success; returns -1 on failure.
+
+  static int get_singleton_lock (ACE_RW_Thread_Mutex *&);
+  // Accesses a readers/writer <ACE_RW_Thread_Mutex> to be used for
+  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
+  // argument, on success; returns -1 on failure.
+#endif /* ACE_MT_SAFE */
 
 public:
   // For internal use only by ACE_Managed_Objects.
@@ -419,13 +346,36 @@ public:
   ~ACE_Object_Manager (void);
 
 private:
+  static ACE_Object_Manager *instance_;
+  // Singleton pointer.
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_Recursive_Thread_Mutex *internal_lock_;
+  // Lock that is used to guard internal structures.
+
+  ACE_Cleanup_Adapter<ACE_Null_Mutex> *singleton_null_lock_;
+  // Null lock for guarding singleton creation.
+
+  ACE_Array<ACE_Thread_Mutex *> *singleton_thread_locks_;
+  // Array of locks for guarding singleton creation.
+
+  ACE_Array<ACE_Mutex *> *singleton_mutex_locks_;
+  // Array of locks for guarding singleton creation.
+
+  ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *singleton_recursive_lock_;
+  // Lock for guarding singleton creation.
+
+  ACE_Array<ACE_RW_Thread_Mutex *> *singleton_rw_locks_;
+  // Array of locks for guarding singleton creation.
+#endif /* ACE_MT_SAFE */
+
 #if defined (ACE_HAS_TSS_EMULATION)
   // Main thread's thread-specific storage array.
   void *ts_storage_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-  friend class ACE_Object_Manager_Destroyer;
+  friend class ACE_Object_Manager_Manager;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
   // Disallow copying by not implementing the following . . .
