@@ -29,7 +29,7 @@
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 

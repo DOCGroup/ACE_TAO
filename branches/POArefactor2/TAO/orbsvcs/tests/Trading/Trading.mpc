@@ -47,7 +47,7 @@ project(*import test): namingexe, trading_serv, dynamicany, portableserver {
   }
 }
 
-project(*colocated test): namingexe, trading_serv, dynamicany {
+project(*colocated test): namingexe, trading_serv, dynamicany, utils {
   after   += Trading_Test_Lib
   libs    += TTest
 

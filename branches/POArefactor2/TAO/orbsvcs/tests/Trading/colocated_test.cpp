@@ -2,15 +2,15 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "Offer_Exporter.h"
 #include "Offer_Importer.h"
 #include "Service_Type_Exporter.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
-ACE_RCSID (Trading, 
-           colocated_test, 
+ACE_RCSID (Trading,
+           colocated_test,
            "$Id$")
 
 void

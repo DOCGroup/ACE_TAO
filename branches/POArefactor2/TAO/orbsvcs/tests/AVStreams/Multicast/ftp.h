@@ -42,7 +42,6 @@ public:
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
 protected:
-  TAO_ORB_Manager *orb_manager_;
   //  FTP_Client_Flow_Handler *handler_;
   FTP_Client_Callback *callback_;
 };
@@ -64,7 +63,6 @@ public:
 private:
   Client *client_;
   // pointer to command handler object
-  TAO_ORB_Manager *orb_manager_;
 };
 
 
@@ -80,7 +78,6 @@ public:
 private:
   int parse_args (int argc, char **argv);
   int bind_to_server (const char *name);
-  TAO_ORB_Manager *orb_manager_;
   Endpoint_Reactive_Strategy endpoint_strategy_;
   AVStreams::MMDevice_var server_mmdevice_;
   TAO_MMDevice client_mmdevice_;
