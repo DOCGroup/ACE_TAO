@@ -74,7 +74,6 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "ACE_THROW_SPEC ((CORBA::SystemException));" << be_uidt;
 
   *os << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl
       << "static" << be_nl
       << node->strategized_proxy_broker_name () << " *" << be_nl 
       << "the" << node->strategized_proxy_broker_name ()

@@ -1,3 +1,10 @@
+Sun Aug  3 16:32:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL//be/be_visitor_interface/strategized_proxy_broker_ss.cpp: 
+
+          Fixed compilation from wrong environmental variable usage. 
+
 Sun Aug  3 09:05:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_include/be_visitor_tmplinst.h: Added to the branch
