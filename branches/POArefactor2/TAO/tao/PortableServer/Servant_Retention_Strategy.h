@@ -17,7 +17,7 @@
 #include "portableserver_export.h"
 #include "Active_Object_Map.h"
 #include "ace/Service_Config.h"
-#include "Object_Adapter.h" // for TAO_SERVANT_LOCATION, move this enum to another file
+#include "Servant_Location.h"
 #include "ServantRetentionStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

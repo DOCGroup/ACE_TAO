@@ -2158,7 +2158,6 @@ orbkey:
     this->key_to_stub_i (key, type_id, priority ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-
   TAO_Stub_Auto_Ptr safe_data (data);
 
   CORBA::Object_ptr tmp;

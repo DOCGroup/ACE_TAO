@@ -23,6 +23,7 @@
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/poa_macros.h"
+#include "tao/PortableServer/Servant_Location.h"
 
 #include "tao/Adapter.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -46,6 +47,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_POA;
+class TAO_POA_Manager;
+class TAO_TSS_Resources;
+class TAO_Transport;
+class TAO_Servant_Dispatcher;
+
 namespace TAO
 {
   namespace Portable_Server
@@ -56,25 +63,6 @@ namespace TAO
     class Temporary_Creation_Time;
   }
 }
-
-// ****************************************************************
-
-enum TAO_SERVANT_LOCATION
-{
-  TAO_SERVANT_FOUND,
-  TAO_DEFAULT_SERVANT,
-  TAO_SERVANT_MANAGER,
-  TAO_SERVANT_NOT_FOUND
-};
-
-// ****************************************************************
-
-// Forward declaration
-class TAO_POA;
-class TAO_POA_Manager;
-class TAO_TSS_Resources;
-class TAO_Transport;
-class TAO_Servant_Dispatcher;
 
 /**
  * @class TAO_Object_Adapter

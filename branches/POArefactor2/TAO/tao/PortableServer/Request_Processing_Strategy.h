@@ -20,7 +20,7 @@
 #include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
 
-#include "Object_Adapter.h" // for TAO_SERVANT_LOCATION, move this enum to another file
+#include "Servant_Location.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"

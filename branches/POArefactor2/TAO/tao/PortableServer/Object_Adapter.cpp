@@ -767,7 +767,7 @@ TAO_Object_Adapter::close (int wait_for_completion
   // etherealizations have finished and root POA has been destroyed
   // (implying that all descendent POAs have also been destroyed).
 
-  TAO_POA *root;
+  TAO_POA *root = 0;
   {
     ACE_GUARD (ACE_Lock, ace_mon, this->lock ());
     if (this->root_ == 0)

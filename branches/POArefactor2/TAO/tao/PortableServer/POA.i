@@ -81,13 +81,11 @@ TAO_POA::system_id (void)
   return (this->cached_policies_.id_assignment () == PortableServer::SYSTEM_ID);
 }
 
-
 ACE_INLINE CORBA::Boolean
 TAO_POA::root (void)
 {
   return this->parent_ == 0;
 }
-
 
 ACE_INLINE CORBA::Boolean
 TAO_POA::persistent (void)
