@@ -1,3 +1,13 @@
+Wed Mar  5 11:00:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+
+          Fixed the portspan overflow problem.  The port is restricted to
+          unsigned short but the port span plus the port could easily
+          overflow.  So, it's now silently restricted to
+          ACE_MAX_DEFAULT_PORT.  Thanks to Duane Binder
+          <duane.binder@veritas.com> for providing this fix.
+
 Wed Mar  5 10:21:54 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/GIOP_Message_Lite.cpp (parse_incoming_messages):
