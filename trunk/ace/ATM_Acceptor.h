@@ -17,14 +17,14 @@
 #ifndef ACE_ATM_ACCEPTOR_H
 #define ACE_ATM_ACCEPTOR_H
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Time_Value.h"
 #include "ace/ATM_Stream.h"
 #include "ace/ATM_Params.h"
 #include "ace/ATM_QoS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_ATM)
 
