@@ -779,7 +779,8 @@ endif # GHS
   os_include/os_strings.h \
   os_include/os_ctype.h
 
-.obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp OS.h \
+.obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp \
+  OS.h \
   pre.h \
   config-all.h \
   config.h \
@@ -981,7 +982,8 @@ endif # GHS
   OS_Thread_Adapter.inl \
   OS_QoS.h
 
-.obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp OS_Dirent.h \
+.obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp \
+  OS_Dirent.h \
   pre.h \
   OS_Export.h \
   config-all.h \
@@ -1064,7 +1066,8 @@ endif # GHS
   os_include/os_syslog.h \
   OS.i
 
-.obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp OS_Memory.h \
+.obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
+  OS_Memory.h \
   pre.h \
   OS_Export.h \
   config-all.h \
@@ -1173,7 +1176,8 @@ endif # GHS
   os_include/os_syslog.h \
   OS.i
 
-.obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp OS_String.h \
+.obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp \
+  OS_String.h \
   pre.h \
   OS_Export.h \
   config-all.h \
@@ -1230,7 +1234,8 @@ endif # GHS
   OS_Errno.inl \
   OS_TLI.inl
 
-.obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp OS_Errno.h \
+.obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp \
+  OS_Errno.h \
   pre.h \
   OS_Export.h \
   config-all.h \
@@ -2463,7 +2468,8 @@ endif # GHS
   Unbounded_Set.cpp \
   Memory_Pool.i
 
-.obj/Date_Time.o .obj/Date_Time.so .shobj/Date_Time.o .shobj/Date_Time.so: Date_Time.cpp Date_Time.h \
+.obj/Date_Time.o .obj/Date_Time.so .shobj/Date_Time.o .shobj/Date_Time.so: Date_Time.cpp \
+  Date_Time.h \
   pre.h \
   ACE_export.h \
   config-all.h \
@@ -2992,7 +2998,8 @@ endif # GHS
   Auto_Ptr.cpp \
   SStringfwd.h
 
-.obj/Functor.o .obj/Functor.so .shobj/Functor.o .shobj/Functor.so: Functor.cpp Functor_T.h \
+.obj/Functor.o .obj/Functor.so .shobj/Functor.o .shobj/Functor.so: Functor.cpp \
+  Functor_T.h \
   pre.h \
   Functor.h \
   config-all.h \
@@ -3338,7 +3345,8 @@ endif # GHS
   ace_wchar.inl \
   Recyclable.inl
 
-.obj/Hashable.o .obj/Hashable.so .shobj/Hashable.o .shobj/Hashable.so: Hashable.cpp Hashable.h \
+.obj/Hashable.o .obj/Hashable.so .shobj/Hashable.o .shobj/Hashable.so: Hashable.cpp \
+  Hashable.h \
   pre.h \
   ACE_export.h \
   config-all.h \
@@ -3562,7 +3570,8 @@ endif # GHS
   os_include/os_syslog.h \
   OS.i
 
-.obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp Init_ACE.h \
+.obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp \
+  Init_ACE.h \
   pre.h \
   ACE_export.h \
   config-all.h \
@@ -3650,7 +3659,8 @@ endif # GHS
   Managed_Object.i \
   Managed_Object.cpp
 
-.obj/Lib_Find.o .obj/Lib_Find.so .shobj/Lib_Find.o .shobj/Lib_Find.so: Lib_Find.cpp Lib_Find.h \
+.obj/Lib_Find.o .obj/Lib_Find.so .shobj/Lib_Find.o .shobj/Lib_Find.so: Lib_Find.cpp \
+  Lib_Find.h \
   pre.h \
   config-all.h \
   config.h \
@@ -4086,7 +4096,8 @@ endif # GHS
   RW_Mutex.inl \
   RW_Thread_Mutex.inl
 
-.obj/Registry.o .obj/Registry.so .shobj/Registry.o .shobj/Registry.so: Registry.cpp Registry.h \
+.obj/Registry.o .obj/Registry.so .shobj/Registry.o .shobj/Registry.so: Registry.cpp \
+  Registry.h \
   pre.h \
   OS.h \
   config-all.h \
@@ -4577,7 +4588,8 @@ endif # GHS
   os_include/os_syslog.h \
   OS.i
 
-.obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp Filecache.h \
+.obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp \
+  Filecache.h \
   pre.h \
   Mem_Map.h \
   ACE_export.h \
@@ -4812,7 +4824,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp config-all.h \
+.obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp \
+  config-all.h \
   pre.h \
   config.h \
   config-linux.h \
@@ -5692,7 +5705,8 @@ endif # GHS
   Method_Request.h \
   Activation_Queue.i
 
-.obj/Atomic_Op.o .obj/Atomic_Op.so .shobj/Atomic_Op.o .shobj/Atomic_Op.so: Atomic_Op.cpp Atomic_Op.h \
+.obj/Atomic_Op.o .obj/Atomic_Op.so .shobj/Atomic_Op.o .shobj/Atomic_Op.so: Atomic_Op.cpp \
+  Atomic_Op.h \
   pre.h \
   config-all.h \
   config.h \
@@ -6449,7 +6463,12 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i
+  ACE.i \
+  Guard_T.h \
+  Lock.h \
+  Lock.inl \
+  Guard_T.inl \
+  Guard_T.cpp
 
 .obj/RW_Process_Mutex.o .obj/RW_Process_Mutex.so .shobj/RW_Process_Mutex.o .shobj/RW_Process_Mutex.so: RW_Process_Mutex.cpp \
   RW_Process_Mutex.h \
@@ -6551,7 +6570,8 @@ endif # GHS
   Sock_Connect.i \
   ACE.i
 
-.obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp File_Lock.h \
+.obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp \
+  File_Lock.h \
   pre.h \
   OS.h \
   config-all.h \
@@ -7630,7 +7650,8 @@ endif # GHS
   Framework_Component_T.cpp \
   Thread_Manager.i
 
-.obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp FlReactor.h \
+.obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp \
+  FlReactor.h \
   pre.h \
   config-all.h \
   config.h \
@@ -8325,7 +8346,8 @@ endif # GHS
   Malloc_T.i \
   Malloc_T.cpp
 
-.obj/Proactor.o .obj/Proactor.so .shobj/Proactor.o .shobj/Proactor.so: Proactor.cpp Proactor.h \
+.obj/Proactor.o .obj/Proactor.so .shobj/Proactor.o .shobj/Proactor.so: Proactor.cpp \
+  Proactor.h \
   pre.h \
   config-all.h \
   config.h \
@@ -9381,7 +9403,8 @@ endif # GHS
   Select_Reactor_T.i \
   TP_Reactor.i
 
-.obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp TkReactor.h \
+.obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp \
+  TkReactor.h \
   pre.h \
   config-all.h \
   config.h \
@@ -9404,7 +9427,8 @@ endif # GHS
   ace_wchar.h \
   ace_wchar.inl
 
-.obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp XtReactor.h \
+.obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
+  XtReactor.h \
   pre.h \
   config-all.h \
   config.h \
@@ -9415,7 +9439,8 @@ endif # GHS
   ace_wchar.h \
   ace_wchar.inl
 
-.obj/QtReactor.o .obj/QtReactor.so .shobj/QtReactor.o .shobj/QtReactor.so: QtReactor.cpp QtReactor.h \
+.obj/QtReactor.o .obj/QtReactor.so .shobj/QtReactor.o .shobj/QtReactor.so: QtReactor.cpp \
+  QtReactor.h \
   pre.h \
   Select_Reactor.h \
   Select_Reactor_T.h \
@@ -9574,7 +9599,8 @@ endif # GHS
   Recursive_Thread_Mutex.inl \
   Select_Reactor_T.i
 
-.obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp Asynch_IO.h \
+.obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp \
+  Asynch_IO.h \
   pre.h \
   ACE_export.h \
   config-all.h \
@@ -10421,7 +10447,8 @@ endif # GHS
   os_include/os_syslog.h \
   OS.i
 
-.obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp INET_Addr.h \
+.obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
+  INET_Addr.h \
   pre.h \
   Sock_Connect.h \
   ACE_export.h \
@@ -12793,7 +12820,8 @@ endif # GHS
   INET_Addr.i \
   SOCK_Stream.i
 
-.obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp ATM_Addr.h \
+.obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp \
+  ATM_Addr.h \
   pre.h \
   config-all.h \
   config.h \
@@ -12985,7 +13013,8 @@ endif # GHS
   SString.i \
   DEV.i
 
-.obj/DEV_Addr.o .obj/DEV_Addr.so .shobj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp DEV_Addr.h \
+.obj/DEV_Addr.o .obj/DEV_Addr.so .shobj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp \
+  DEV_Addr.h \
   pre.h \
   Addr.h \
   ACE_export.h \
@@ -13419,7 +13448,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/FIFO_Recv.o .obj/FIFO_Recv.so .shobj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp FIFO_Recv.h \
+.obj/FIFO_Recv.o .obj/FIFO_Recv.so .shobj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp \
+  FIFO_Recv.h \
   pre.h \
   FIFO.h \
   ACE_export.h \
@@ -13624,7 +13654,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/FIFO_Send.o .obj/FIFO_Send.so .shobj/FIFO_Send.o .shobj/FIFO_Send.so: FIFO_Send.cpp FIFO_Send.h \
+.obj/FIFO_Send.o .obj/FIFO_Send.so .shobj/FIFO_Send.o .shobj/FIFO_Send.so: FIFO_Send.cpp \
+  FIFO_Send.h \
   pre.h \
   FIFO.h \
   ACE_export.h \
@@ -13829,7 +13860,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/FILE_Addr.o .obj/FILE_Addr.so .shobj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp FILE_Addr.h \
+.obj/FILE_Addr.o .obj/FILE_Addr.so .shobj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp \
+  FILE_Addr.h \
   pre.h \
   Addr.h \
   ACE_export.h \
@@ -14371,7 +14403,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/IOStream.o .obj/IOStream.so .shobj/IOStream.o .shobj/IOStream.so: IOStream.cpp IOStream.h \
+.obj/IOStream.o .obj/IOStream.so .shobj/IOStream.o .shobj/IOStream.so: IOStream.cpp \
+  IOStream.h \
   pre.h \
   config-all.h \
   config.h \
@@ -16144,7 +16177,8 @@ endif # GHS
   DEV.i \
   DEV_IO.i
 
-.obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp UNIX_Addr.h \
+.obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp \
+  UNIX_Addr.h \
   pre.h \
   config-all.h \
   config.h \
@@ -17108,7 +17142,8 @@ endif # GHS
   OS_QoS.h \
   MEM_Acceptor.i
 
-.obj/MEM_Addr.o .obj/MEM_Addr.so .shobj/MEM_Addr.o .shobj/MEM_Addr.so: MEM_Addr.cpp MEM_Addr.h \
+.obj/MEM_Addr.o .obj/MEM_Addr.so .shobj/MEM_Addr.o .shobj/MEM_Addr.so: MEM_Addr.cpp \
+  MEM_Addr.h \
   pre.h \
   ACE_export.h \
   config-all.h \
@@ -18647,7 +18682,9 @@ endif # GHS
   Malloc_Base.h \
   Timer_Heap_T.cpp \
   Timer_List_T.h \
-  Timer_List_T.cpp
+  Timer_List_T.cpp \
+  Recursive_Thread_Mutex.h \
+  Recursive_Thread_Mutex.inl
 
 .obj/Timer_Heap.o .obj/Timer_Heap.so .shobj/Timer_Heap.o .shobj/Timer_Heap.so: Timer_Heap.cpp \
   Timer_Heap.h \
@@ -18765,7 +18802,9 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  Timer_Heap_T.cpp
+  Timer_Heap_T.cpp \
+  Recursive_Thread_Mutex.h \
+  Recursive_Thread_Mutex.inl
 
 .obj/Timer_List.o .obj/Timer_List.so .shobj/Timer_List.o .shobj/Timer_List.so: Timer_List.cpp \
   Timer_List.h \
@@ -18877,7 +18916,9 @@ endif # GHS
   Signal.i \
   Reactor_Timer_Interface.h \
   Null_Mutex.h \
-  Timer_List_T.cpp
+  Timer_List_T.cpp \
+  Recursive_Thread_Mutex.h \
+  Recursive_Thread_Mutex.inl
 
 .obj/Timer_Queue.o .obj/Timer_Queue.so .shobj/Timer_Queue.o .shobj/Timer_Queue.so: Timer_Queue.cpp \
   Containers.h \
@@ -19004,7 +19045,9 @@ endif # GHS
   Signal.h \
   Signal.i \
   Reactor_Timer_Interface.h \
-  Null_Mutex.h
+  Null_Mutex.h \
+  Recursive_Thread_Mutex.h \
+  Recursive_Thread_Mutex.inl
 
 .obj/Timer_Wheel.o .obj/Timer_Wheel.so .shobj/Timer_Wheel.o .shobj/Timer_Wheel.so: Timer_Wheel.cpp \
   Timer_Wheel.h \
@@ -19116,7 +19159,9 @@ endif # GHS
   Signal.i \
   Reactor_Timer_Interface.h \
   Null_Mutex.h \
-  Timer_Wheel_T.cpp
+  Timer_Wheel_T.cpp \
+  Recursive_Thread_Mutex.h \
+  Recursive_Thread_Mutex.inl
 
 .obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
   pre.h \
@@ -20173,6 +20218,16 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Shared_Object.i \
+  Svc_Conf_Tokens.h \
+  Event_Handler.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  Atomic_Op.h \
+  Thread_Mutex.h \
   OS.h \
   OS_Dirent.h \
   OS_Export.h \
@@ -20180,8 +20235,6 @@ endif # GHS
   os_include/os_errno.h \
   OS_Errno.inl \
   os_include/os_dirent.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/os_inttypes.h \
@@ -20194,9 +20247,6 @@ endif # GHS
   os_include/os_float.h \
   os_include/os_stdlib.h \
   os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
   os_include/sys/os_resource.h \
   os_include/sys/os_time.h \
   os_include/sys/os_select.h \
@@ -20241,11 +20291,6 @@ endif # GHS
   os_include/sys/os_utsname.h \
   os_include/os_syslog.h \
   OS.i \
-  Shared_Object.i \
-  Svc_Conf_Tokens.h \
-  Event_Handler.h \
-  Atomic_Op.h \
-  Thread_Mutex.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -20421,6 +20466,16 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Shared_Object.i \
+  Svc_Conf_Tokens.h \
+  Event_Handler.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  Atomic_Op.h \
+  Thread_Mutex.h \
   OS.h \
   OS_Dirent.h \
   OS_Export.h \
@@ -20428,8 +20483,6 @@ endif # GHS
   os_include/os_errno.h \
   OS_Errno.inl \
   os_include/os_dirent.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/os_inttypes.h \
@@ -20442,9 +20495,6 @@ endif # GHS
   os_include/os_float.h \
   os_include/os_stdlib.h \
   os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
   os_include/sys/os_resource.h \
   os_include/sys/os_time.h \
   os_include/sys/os_select.h \
@@ -20489,11 +20539,6 @@ endif # GHS
   os_include/sys/os_utsname.h \
   os_include/os_syslog.h \
   OS.i \
-  Shared_Object.i \
-  Svc_Conf_Tokens.h \
-  Event_Handler.h \
-  Atomic_Op.h \
-  Thread_Mutex.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -20863,75 +20908,11 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS.h \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  OS_Errno.inl \
-  os_include/os_dirent.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  os_include/sys/os_select.h \
-  Basic_Types.i \
-  OS_String.inl \
-  os_include/os_string.h \
-  os_include/os_strings.h \
-  os_include/os_ctype.h \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  os_include/os_dlfcn.h \
-  os_include/sys/os_mman.h \
-  os_include/os_netdb.h \
-  os_include/netinet/os_in.h \
-  os_include/sys/os_socket.h \
-  os_include/sys/os_uio.h \
-  os_include/net/os_if.h \
-  os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
+  Shared_Object.i \
   Global_Macros.h \
-  Min_Max.h \
-  os_include/os_pthread.h \
-  os_include/os_assert.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  iosfwd.h \
-  os_include/arpa/os_inet.h \
-  os_include/netinet/os_tcp.h \
-  os_include/sys/os_shm.h \
-  os_include/os_pwd.h \
-  os_include/os_stropts.h \
-  os_include/os_termios.h \
-  os_include/os_aio.h \
-  os_include/sys/os_un.h \
-  os_include/os_poll.h \
-  os_include/sys/os_msg.h \
-  os_include/sys/os_utsname.h \
-  os_include/os_syslog.h \
-  OS.i \
-  Shared_Object.i
+  OS_Export.h
 
 .obj/XML_Svc_Conf.o .obj/XML_Svc_Conf.so .shobj/XML_Svc_Conf.o .shobj/XML_Svc_Conf.so: XML_Svc_Conf.cpp \
   XML_Svc_Conf.h \
@@ -21553,7 +21534,8 @@ endif # GHS
   DLL.h \
   Parse_Node.i
 
-.obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp CDR_Base.h \
+.obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp \
+  CDR_Base.h \
   pre.h \
   config-all.h \
   config.h \
@@ -22223,6 +22205,16 @@ endif # GHS
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Shared_Object.i \
+  Svc_Conf_Tokens.h \
+  Event_Handler.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  Atomic_Op.h \
+  Thread_Mutex.h \
   OS.h \
   OS_Dirent.h \
   OS_Export.h \
@@ -22230,8 +22222,6 @@ endif # GHS
   os_include/os_errno.h \
   OS_Errno.inl \
   os_include/os_dirent.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/os_inttypes.h \
@@ -22244,9 +22234,6 @@ endif # GHS
   os_include/os_float.h \
   os_include/os_stdlib.h \
   os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
   os_include/sys/os_resource.h \
   os_include/sys/os_time.h \
   os_include/sys/os_select.h \
@@ -22291,11 +22278,6 @@ endif # GHS
   os_include/sys/os_utsname.h \
   os_include/os_syslog.h \
   OS.i \
-  Shared_Object.i \
-  Svc_Conf_Tokens.h \
-  Event_Handler.h \
-  Atomic_Op.h \
-  Thread_Mutex.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -22534,7 +22516,11 @@ endif # GHS
   Framework_Component_T.h \
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
-  Null_Mutex.h
+  Null_Mutex.h \
+  RW_Thread_Mutex.h \
+  RW_Mutex.h \
+  RW_Mutex.inl \
+  RW_Thread_Mutex.inl
 
 .obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp Malloc.h \
   pre.h \
@@ -22679,7 +22665,8 @@ endif # GHS
   Managed_Object.i \
   Managed_Object.cpp
 
-.obj/PI_Malloc.o .obj/PI_Malloc.so .shobj/PI_Malloc.o .shobj/PI_Malloc.so: PI_Malloc.cpp PI_Malloc.h \
+.obj/PI_Malloc.o .obj/PI_Malloc.so .shobj/PI_Malloc.o .shobj/PI_Malloc.so: PI_Malloc.cpp \
+  PI_Malloc.h \
   pre.h \
   ACE_export.h \
   config-all.h \
@@ -23123,7 +23110,8 @@ endif # GHS
   Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
-  Memory_Pool.i
+  Memory_Pool.i \
+  Null_Mutex.h
 
 .obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp Mem_Map.h \
   pre.h \

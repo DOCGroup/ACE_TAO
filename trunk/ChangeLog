@@ -1,3 +1,15 @@
+Sun Aug 17 16:06:20 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Shared_Object.h:
+
+	  Include "ace/os_includes/sys/os_types.h" to pull in size_t
+	  typedef instead of "ace/OS.h".  The latter is overkill.
+
+	* ace/Shared_Object.cpp:
+
+	  Include "ace/Global_Macros.h" to pull in ACE_TRACE macro
+	  definition.
+
 Sun Aug 17 15:31:29 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS.h (ACE_CLEANUP_FUNC):
