@@ -1,0 +1,17 @@
+//$Id$
+
+project(IDL3) {
+  requires += cidl
+  sharedname =
+  staticname = IDL3
+  includes += ../..
+  libout = ..
+  Source_Files {
+        .
+	./SemanticGraph
+	./Traversal
+        ./SemanticAction/Impl
+
+  }
+
+}
