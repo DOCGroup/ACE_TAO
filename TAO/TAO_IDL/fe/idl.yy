@@ -1452,11 +1452,37 @@ struct_type :
 	}
 	;
 
-at_least_one_member : member members ;
+at_least_one_member 
+	: member members 
+	| /* EMPTY */
+	{
+	  idl_global->err()->syntax_error(idl_global->parse_state());
+	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+	  yyerrok;
+	}
+	| error
+	{
+	  idl_global->err()->syntax_error(idl_global->parse_state());
+	}
+	';'
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+	  yyerrok;
+	}
+	;
 
 members
 	: members member
 	| /* EMPTY */
+	| error
+	{
+	  idl_global->err()->syntax_error(idl_global->parse_state());
+	}
+	';'
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+	  yyerrok;
+	}
 	;
 
 member  : 
