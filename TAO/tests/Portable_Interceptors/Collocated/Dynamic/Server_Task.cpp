@@ -95,12 +95,14 @@ Server_Task::svc (void)
       this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (Echo_Server_Request_Interceptor::server_interceptor_check_ -
-          val != 10)
+      CORBA::ULong number_called =
+        Echo_Server_Request_Interceptor::server_interceptor_check_ - val;
+      if (number_called != 10)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR: Server Side Interceptors not"
-                      " called properly \n"));
+                      " called properly, called %d times, expected 10\n",
+                      number_called));
         }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
