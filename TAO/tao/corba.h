@@ -121,7 +121,7 @@
 #include "tao/objtable.h"
 #include "tao/optable.h"
 #include "tao/debug.h"
-#include "tao/managed_types.h"
+//#include "tao/managed_types.h"
 
 // GIOP - IIOP related includes
 #include "tao/iiopobj.h"
@@ -151,7 +151,7 @@
 #include "tao/giop.i"
 #include "tao/iioporb.i"
 #include "tao/iiopobj.i"
-#include "tao/managed_types.i"
+//#include "tao/managed_types.i"
 
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
