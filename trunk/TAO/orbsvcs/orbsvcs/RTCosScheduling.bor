@@ -1,0 +1,95 @@
+# Makefile for building the TAO_RTCosScheduling library with Borland C++ Builder
+
+NAME = TAO_RTCosScheduling
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
+
+OBJFILES = \
+	$(OBJDIR)\RTCosScheduling_ClientScheduler_i.obj \
+	$(OBJDIR)\RTCosScheduling_PCP_Manager.obj \
+	$(OBJDIR)\RTCosScheduling_ServerScheduler_i.obj
+
+LFLAGS = \
+	-j..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\lib \
+	-L..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\lib \
+	-j..\..\tao\RTPortableServer\$(CONFIG_SUBDIR) -j..\..\tao\RTPortableServer \
+	-L..\..\tao\RTPortableServer\$(CONFIG_SUBDIR) -L..\..\tao\RTPortableServer \
+	-j..\..\tao\RTCORBA\$(CONFIG_SUBDIR) -j..\..\tao\RTCORBA \
+	-L..\..\tao\RTCORBA\$(CONFIG_SUBDIR) -L..\..\tao\RTCORBA \
+	-j..\..\tao\PortableServer\$(CONFIG_SUBDIR) -j..\..\tao\PortableServer \
+	-L..\..\tao\PortableServer\$(CONFIG_SUBDIR) -L..\..\tao\PortableServer \
+	-j..\..\tao\IORInterceptor\$(CONFIG_SUBDIR) -j..\..\tao\IORInterceptor \
+	-L..\..\tao\IORInterceptor\$(CONFIG_SUBDIR) -L..\..\tao\IORInterceptor \
+	-j..\..\tao\ValueType\$(CONFIG_SUBDIR) -j..\..\tao\ValueType \
+	-L..\..\tao\ValueType\$(CONFIG_SUBDIR) -L..\..\tao\ValueType \
+	-j..\..\tao\ObjRefTemplate\$(CONFIG_SUBDIR) -j..\..\tao\ObjRefTemplate \
+	-L..\..\tao\ObjRefTemplate\$(CONFIG_SUBDIR) -L..\..\tao\ObjRefTemplate \
+	-j..\..\tao\$(CONFIG_SUBDIR) -j..\..\tao \
+	-L..\..\tao\$(CONFIG_SUBDIR) -L..\..\tao \
+	-j..\..\..\ace\$(CONFIG_SUBDIR) -j..\..\..\ace \
+	-L..\..\..\ace\$(CONFIG_SUBDIR) -L..\..\..\ace \
+	-j..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\lib \
+	-L..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\lib \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_RTPortableServer$(LIB_DECORATOR).lib \
+	TAO_RTCORBA$(LIB_DECORATOR).lib \
+	TAO_PortableServer$(LIB_DECORATOR).lib \
+	TAO_IORInterceptor$(LIB_DECORATOR).lib \
+	TAO_Valuetype$(LIB_DECORATOR).lib \
+	TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+
+
+IDLFILES = \
+	$(IDLDIR)\RTCosScheduling.idl
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS = -DTAO_RTCOSSCHEDULING_BUILD_DLL
+!endif
+
+CFLAGS = \
+	-I..\..\orbsvcs \
+	-I..\.. \
+	-I..\..\tao \
+	-I..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+IDLDIR = .
+
+INCLUDES = \
+	RTCosScheduling\RTCosScheduling_ClientScheduler_i.h \
+	RTCosScheduling\RTCosScheduling_PCP_Manager.h \
+	RTCosScheduling\RTCosScheduling_ServerScheduler_i.h \
+	RTCosScheduling\RTCosScheduling_ClientScheduler_i.i \
+	RTCosScheduling\RTCosScheduling_PCP_Manager.i \
+	RTCosScheduling\RTCosScheduling_ServerScheduler_i.i \
+	RTCosScheduling.idl
+
+INCDIR_NAME = orbsvcs
+
+all: idl_src_files
+
+BASE_BINDIR = ..\..\..\lib
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+# IDL File Directory: .
+$(IDLDIR)\RTCosSchedulingS.cpp $(IDLDIR)\RTCosSchedulingC.cpp: $(IDLDIR)\RTCosScheduling.idl
+	$(TAO_IDL) -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_include=RTCosScheduling\RTCosScheduling_export.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $**
