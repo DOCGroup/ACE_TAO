@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 #if defined (ACE_HAS_USING_KEYWORD)
+
 template <class T> ACE_INLINE
 POA_IR::ComponentRepository_tie<T>::ComponentRepository_tie (T &t)
 	: ptr_ (&t),
@@ -655,9 +655,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::ProvidesDef_tie<T>::ProvidesDef_tie (T &t)
 	: ptr_ (&t),
@@ -929,9 +926,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::UsesDef_tie<T>::UsesDef_tie (T &t)
 	: ptr_ (&t),
@@ -1216,9 +1210,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::EventDef_tie<T>::EventDef_tie (T &t)
 	: ptr_ (&t),
@@ -1505,9 +1496,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::EmitsDef_tie<T>::EmitsDef_tie (T &t)
 	: ptr_ (&t),
@@ -1794,9 +1782,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::PublishesDef_tie<T>::PublishesDef_tie (T &t)
 	: ptr_ (&t),
@@ -2083,9 +2068,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::ConsumesDef_tie<T>::ConsumesDef_tie (T &t)
 	: ptr_ (&t),
@@ -2372,9 +2354,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::ComponentDef_tie<T>::ComponentDef_tie (T &t)
 	: ptr_ (&t),
@@ -3337,9 +3316,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::PrimaryKeyDef_tie<T>::PrimaryKeyDef_tie (T &t)
 	: ptr_ (&t),
@@ -3626,9 +3602,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::FactoryDef_tie<T>::FactoryDef_tie (T &t)
 	: ptr_ (&t),
@@ -4040,9 +4013,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::FinderDef_tie<T>::FinderDef_tie (T &t)
 	: ptr_ (&t),
@@ -4454,9 +4424,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_IR::HomeDef_tie<T>::HomeDef_tie (T &t)
 	: ptr_ (&t),

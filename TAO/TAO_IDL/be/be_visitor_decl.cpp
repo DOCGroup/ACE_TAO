@@ -36,7 +36,7 @@ be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
 
 be_visitor_decl::~be_visitor_decl (void)
 {
-  delete this->ctx_;
+//  delete this->ctx_;
 }
 
 int

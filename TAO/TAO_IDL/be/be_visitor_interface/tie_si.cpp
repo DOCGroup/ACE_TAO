@@ -78,11 +78,6 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
                        node->local_name ());
     }
 
-  if (node->is_nested ())
-    {
-      *os << "\n#if defined (ACE_HAS_USING_KEYWORD)\n";
-    }
-
   os->indent (); // start with whatever indentation level we are at
 
   *os << "template <class T> ACE_INLINE" << be_nl
@@ -177,11 +172,6 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
                          "visit_interface - "
                          "traversal of inhertance graph failed\n"),
                         -1);
-    }
-
-  if (node->is_nested ())
-    {
-      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n";
     }
 
   return 0;

@@ -67,10 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // BE_produce.cc - Produce the work of the BE - does nothing in the
 //		   dummy BE
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-#include  "TAO_IDL_BE_Export.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
+#include "be_visitor_root.h"
+#include "TAO_IDL_BE_Export.h"
 
 ACE_RCSID(be, be_produce, "$Id$")
 
@@ -252,7 +253,7 @@ BE_produce (void)
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SS);
 
-  // create a visitor.
+  // Create a visitor.
   visitor = tao_cg->make_visitor (&ctx);
 
   // Generate code for the server skeletons.
@@ -266,18 +267,37 @@ BE_produce (void)
 
   delete visitor;
 
+  // (7) Generated server template header.
+  if (be_global->gen_tie_classes ())
+    {
+      ctx.reset ();
+      ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SH);
+
+      // Create a visitor.
+      be_visitor_root_sth sth_visitor (&ctx);
+
+      // Generate code for the implementation header.
+      if (root->accept (&sth_visitor) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_produce - "
+                      "server template header for Root failed\n"));
+          BE_abort ();
+        }
+    }
+
   // Check if the flags are set for generating the 
   // the implementation header and skeleton files.
   if (be_global->gen_impl_files ())
     {
-      // (7) generate implementation skeleton header.      
+      // (8) generate implementation header.      
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);
 
       // Create a visitor.
       visitor = tao_cg->make_visitor (&ctx);
 
-      // Generate code for the implementation skeleton header.
+      // Generate code for the implementation header.
       if (root->accept (visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -288,14 +308,14 @@ BE_produce (void)
       
       delete visitor;
       
-      // (8) Generate implementation skeleton header.      
+      // (9) Generate implementation source.      
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IS);
 
       // Create a visitor.
       visitor = tao_cg->make_visitor (&ctx);
       
-      // Generate code for the implementation skeleton header.
+      // Generate code for the implementation source.
       if (root->accept (visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
