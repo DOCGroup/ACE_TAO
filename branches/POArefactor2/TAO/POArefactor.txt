@@ -1,3 +1,12 @@
+Wed Oct 13 08:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Key_Adapters.{h,cpp}:
+          Moved include of Map_T.h to the cpp file, added forward declaration
+          of ACE_Active_Map_Manager_Key to the header file
+
+        * tao/PortableServer/Active_Object_Map:
+          Added include of Map_T.h
+
 Wed Oct 13 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Creation_Time.{h,cpp,inl}:
