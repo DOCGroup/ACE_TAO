@@ -94,9 +94,12 @@ CONTROLLED_FILES = \
         ChangeLog-93 \
         FAQ \
         Makefile \
+        Makefile.am \
+	NEWS \
         PROBLEM-REPORT-FORM \
         README \
         THANKS \
+        TODO \
         VERSION \
         WindozeCE \
         acconfig.h \
@@ -178,3 +181,6 @@ releaseall: release
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
+
+NEWS: VERSION
+	cp VERSION NEWS
