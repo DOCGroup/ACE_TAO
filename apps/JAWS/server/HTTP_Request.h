@@ -36,23 +36,30 @@ public:
   const char * method (void) const;
   const char * uri (void) const;
   const char * version (void) const;
+  const char * path (void) const;
 
   int cgi (void) const;
   const char * cgi_args (void) const;
-  const char * cgi_env (void) const;
+  const char * const * cgi_env (void) const;
 
   const char * query_string (void) const;
   const char * path_info (void) const;
 
   int type (void) const;
 
+  const Headers & headers (void) const;
+  const char * header_strings (int index) const;
+  const char * header_values (int index) const;
+
   // These are accessors I didn't implement, or don't
   // remember implementing, anyway.
   char *data (void);
   int data_length (void);
   int content_length (void);
+
   int status (void);
   const char *status_string (void);
+
   void dump (void);
   // Dump the state of the request.
 
@@ -89,6 +96,7 @@ private:
   const char * method (const char *method_string);
   const char * uri (char *uri_string);
   const char * version (const char *version_string);
+  const char * path (const char *uri_string);
 
   int cgi (char *uri_string);
 
@@ -104,9 +112,10 @@ private:
   char *method_;
   char *uri_;
   char *version_;
+  char *path_;
 
   int cgi_;
-  char *cgi_env_;
+  char **cgi_env_;
   char *cgi_args_;
 
   char *query_string_;

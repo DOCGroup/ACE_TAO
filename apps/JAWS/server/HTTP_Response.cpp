@@ -14,9 +14,12 @@
 // ============================================================================
 
 
+#include "ace/Process.h"
+
 #include "JAWS/server/HTTP_Response.h"
 #include "JAWS/server/HTTP_Request.h"
 #include "JAWS/server/HTTP_Helpers.h"
+#include "JAWS/server/HTTP_Config.h"
 #include "JAWS/server/IO.h"
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
@@ -182,9 +185,81 @@ HTTP_Response::normal_response (void)
 void
 HTTP_Response::cgi_response (void)
 {
-  // Build command line if any
+  ACE_Process_Options cgi_options;
+
+  // Build command line and arguments
+  cgi_options.path (this->request_.path ());
+
+  if (this->request_.cgi_args ())
+    {
+      cgi_options.cl_options ("%s", this->request_.cgi_args ());
+    }
+
   // Build environment variables
+  cgi_options.setenv ("SERVER_SOFTWARE", "%s", "JAWS/1.0");
+  cgi_options.setenv ("SERVER_NAME", "%s", "localhost");
+  cgi_options.setenv ("GATEWAY_INTERFACE", "%s", "CGI/1.1");
+
+  cgi_options.setenv ("SERVER_PROTOCOL", "%s",
+                      this->request_.version ()
+                      ? this->request_.version ()
+                      : "HTTP/0.9");
+  cgi_options.setenv ("SERVER_PORT", "%d", 5432);
+
+  cgi_options.setenv ("REQUEST_METHOD", "%s", this->request_.method ());
+
+  if (this->request_.path_info ())
+    {
+      cgi_options.setenv ("PATH_INFO", "%s", this->request_.path_info ());
+      cgi_options.setenv ("PATH_TRANSLATED", "%s/%s",
+                          HTTP_Config::instance ()->document_root (),
+                          this->request_.path_info ());
+    }
+
+  cgi_options.setenv ("SCRIPT_NAME", "%s", this->request_.uri ());
+
+  if (this->request_.query_string ())
+    cgi_options.setenv ("QUERY_STRING", "%s", this->request_.query_string ());
+
+  if (this->request_.cgi_env ())
+    {
+      int i = 0;
+      while (this->request_.cgi_env ()[i])
+        {
+          cgi_options.setenv (this->request_.cgi_env ()[i],
+                              "%s", this->request_.cgi_env ()[i+1]);
+          i += 2;
+        }
+    }
+
+  char buf[BUFSIZ];
+  char *p, *q;
+  ACE_OS::strcpy (buf, "HTTP_");
+  p = q = buf + ACE_OS::strlen (buf);
+
+  for (int i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
+    {
+      int j = 0;
+      char c;
+      while ((c = this->request_.header_strings (i)[j++]) != '\0')
+        {
+          if (isalpha (c))
+            *q++ = toupper (c);
+          else if (c == '-')
+            *q++ = '_';
+          else
+            *q++ = c;
+        }
+      *q = '\0';
+
+      cgi_options.setenv (buf, "%s", this->request_.header_values (i));
+      q = p;
+    }
+
+
   // Exec the cgi program
+  ACE_ProcessEx cgi_process;
+  cgi_process.start (cgi_options);
 }
 
 void
