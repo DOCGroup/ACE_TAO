@@ -1,2 +1,3 @@
 project(POA*): taoexe, portableserver {
+  avoids += minimum_corba
 }

@@ -1,3 +1,11 @@
+Sun Dec 14 08:43:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+	* tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
+	* performance-tests//RTCorba/Oneways/Reliable/Reliable.mpc:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+	  These tests should not be compiled with minimum_corba.
+
 Sun Dec 14 08:35:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/OBV/Supports/Supports_Test.mpc:
