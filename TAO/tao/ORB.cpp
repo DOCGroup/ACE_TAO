@@ -331,6 +331,8 @@ CORBA_ORB::run (ACE_Time_Value *tv,
 
     while (TAO_ORB_Core_instance ()->leader_available ())
       {
+        // @@ Why do this on every iteration, shouldn't this be done
+        // just once?
         if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ORB::run: Failed to add a follower thread\n"));
