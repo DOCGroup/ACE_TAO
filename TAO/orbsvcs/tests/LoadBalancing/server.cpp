@@ -83,12 +83,12 @@ main (int argc, char *argv[])
 
       // Obtain Reference to the TAO LoadBalancer ReplicationManager
       CORBA::Object_var lb =
-        orb->resolve_initial_references ("TAO_LoadBalancer",
+        orb->resolve_initial_references ("LoadBalancing",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       LoadBalancing::GenericFactory_var factory =
-        TAO_LoadBalancer::GenericFactory::_narrow (lb.in (),
+        LoadBalancing::GenericFactory::_narrow (lb.in (),
                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
