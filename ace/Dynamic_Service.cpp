@@ -28,18 +28,18 @@ ACE_Dynamic_Service<SERVICE>::instance (const char *name)
 {
   ACE_TRACE ("ACE_Dynamic_Service::instance");
   const ACE_Service_Type *svc_rec;
-  
+
   if (ACE_Service_Repository::instance ()->find (name,
                                                  &svc_rec) == -1)
     return 0;
 
   const ACE_Service_Type_Impl *type = svc_rec->type ();
-  
+
   if (type == 0)
     return 0;
   else
     {
-      const void *obj = type->object ();
+      void *obj = type->object ();
       return ACE_reinterpret_cast (SERVICE *, obj);
     }
 }
