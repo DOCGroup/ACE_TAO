@@ -1247,26 +1247,6 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-class ACE_Export ACE_Static_Object_Lock
-  // = TITLE
-  //     Provide an interface to access a global lock.
-  //
-  // = DESCRIPTION
-  //     This class is used to serialize the creation of
-  //     static singleton objects.  
-{
-public:
-  static ACE_Recursive_Thread_Mutex *instance (void);
-  // static lock access point
-
-  static void close_singleton (void);
-  // Clean up when program exits.
-
-private:
-  static ACE_Recursive_Thread_Mutex *mutex_;
-  // pointer to actual lock
-};
-
 #endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)

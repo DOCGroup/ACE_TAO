@@ -14,10 +14,6 @@
 #include "ace/Synch.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_MT_SAFE) && defined (ACE_HAS_THREADS)
-ACE_Recursive_Thread_Mutex *ACE_Static_Object_Lock::mutex_ = 0;
-#endif
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
@@ -901,30 +897,6 @@ ACE_RW_Thread_Mutex::dump (void) const
 // ACE_TRACE ("ACE_RW_Thread_Mutex::dump");
   ACE_RW_Mutex::dump ();
 }
-
-////////////////////////////////////////////////////////////////
-#include "ace/Malloc.h"
-
-void
-ACE_Static_Object_Lock::close_singleton (void)
-{
-  delete ACE_Static_Object_Lock::mutex_;
-  ACE_Static_Object_Lock::mutex_ = 0;
-}
-
-ACE_Recursive_Thread_Mutex *
-ACE_Static_Object_Lock::instance (void)
-{
-  // We assume things before main are single threaded.
-  if (ACE_Static_Object_Lock::mutex_ == 0)
-    {
-      ACE_NEW_RETURN (ACE_Static_Object_Lock::mutex_,
-		      ACE_Recursive_Thread_Mutex, 0);
-    }
-
-  return ACE_Static_Object_Lock::mutex_;
-}
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These are only specialized with ACE_HAS_THREADS.
