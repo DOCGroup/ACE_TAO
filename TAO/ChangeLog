@@ -1,3 +1,39 @@
+Sun Sep  8 21:04:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Bug_1270_Regression/Makefile:
+	* tests/Bug_1270_Regression/run_test.pl:
+	* tests/Bug_1270_Regression/Test.idl:
+	* tests/Bug_1270_Regression/Echo.h:
+	* tests/Bug_1270_Regression/Echo.cpp:
+	* tests/Bug_1270_Regression/client.cpp:
+	* tests/Bug_1270_Regression/Echo_Caller.h:
+	* tests/Bug_1270_Regression/Echo_Caller.cpp:
+	* tests/Bug_1270_Regression/ORB_Task.h:
+	* tests/Bug_1270_Regression/ORB_Task.cpp:
+	* tests/Bug_1270_Regression/Server_Timer.h:
+	* tests/Bug_1270_Regression/Server_Timer.cpp:
+	* tests/Bug_1270_Regression/shutdown.cpp:
+	* tests/Bug_1270_Regression/server.cpp:
+	  Add regression test for bug 1270
+
+	* tests/Bug_1269_Regression/Makefile:
+	* tests/Bug_1269_Regression/run_test.pl:
+	* tests/Bug_1269_Regression/Test.idl:
+	* tests/Bug_1269_Regression/Echo.h:
+	* tests/Bug_1269_Regression/Echo.cpp:
+	* tests/Bug_1269_Regression/client.cpp:
+	* tests/Bug_1269_Regression/Echo_Caller.h:
+	* tests/Bug_1269_Regression/Echo_Caller.cpp:
+	* tests/Bug_1269_Regression/ORB_Task.h:
+	* tests/Bug_1269_Regression/ORB_Task.cpp:
+	* tests/Bug_1269_Regression/Server_Timer.h:
+	* tests/Bug_1269_Regression/Server_Timer.cpp:
+	* tests/Bug_1269_Regression/shutdown.cpp:
+	* tests/Bug_1269_Regression/server.cpp:
+	  Add regression test for bug 1269, currently the test "passes",
+	  but it used to fail so we need a regression test for it
+	  anyways.
+
 Mon Sep  9 00:24:44 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* examples/Event_Comm/Makefile:
@@ -124,7 +160,7 @@ Wed Sep  4 19:44:55 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 
 Wed Sep  4 17:42:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-    * orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
 	* orbsvcs/ImplRepo_Service/implrepo.dsp:
 	* orbsvcs/ImplRepo_Service/ImplRepo.dsw:
 	   New dsp and modified existing to add new files and remove
@@ -137,9 +173,9 @@ Wed Sep  4 17:42:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 Wed Sep  4 17:11:25 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-    * tao/PortableServer/TAO_PortableServer.dsp:
-    * tao/PortableServer/TAO_PortableServer_Static.dsp:
-	   Added the new files.
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+	  Added the new files.
 
 Wed Sep  4 14:01:02 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
@@ -193,18 +229,18 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/PortableServer/ImR_ActivatorC.cpp:
 	* tao/PortableServer/ImR_ActivatorC.i:
 	* tao/PortableServer/ImR_ActivatorC.h:
-        * tao/PortableServer/ImR_ActivatorS_T.h:
-        * tao/PortableServer/ImR_ActivatorS_T.cpp:
-        * tao/PortableServer/ImR_ActivatorS_T.i:
+	* tao/PortableServer/ImR_ActivatorS_T.h:
+	* tao/PortableServer/ImR_ActivatorS_T.cpp:
+	* tao/PortableServer/ImR_ActivatorS_T.i:
 	* tao/PortableServer/ImR_LocatorS.h:
 	* tao/PortableServer/ImR_LocatorS.i:
 	* tao/PortableServer/ImR_LocatorS.cpp:
 	* tao/PortableServer/ImR_LocatorC.cpp:
 	* tao/PortableServer/ImR_LocatorC.i:
 	* tao/PortableServer/ImR_LocatorC.h:
-        * tao/PortableServer/ImR_LocatorS_T.h:
-        * tao/PortableServer/ImR_LocatorS_T.cpp:
-        * tao/PortableServer/ImR_LocatorS_T.i:
+	* tao/PortableServer/ImR_LocatorS_T.h:
+	* tao/PortableServer/ImR_LocatorS_T.cpp:
+	* tao/PortableServer/ImR_LocatorS_T.i:
 	  Related stubs and skeletons.
 	
 	* tao/PortableServer/Makefile:
@@ -2458,7 +2494,7 @@ Wed Aug  7 16:12:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tests/RTCORBA/Diffserv/Makefile:
 	* tests/RTCORBA/Diffserv/README:
 	* tests/RTCORBA/Diffserv/client.cpp:
- 	* tests/RTCORBA/Diffserv/server.cpp:
+	* tests/RTCORBA/Diffserv/server.cpp:
 	* tests/RTCORBA/Diffserv/test.idl:
 	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h:
 
