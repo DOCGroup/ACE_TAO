@@ -22,8 +22,7 @@
 
 // Separator for components in a name 
 /* static */
-const ACE_Registry::Istring ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
-
+LPCTSTR ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
 
 // Simple binding constructor
 ACE_Registry::Binding::Binding ()
@@ -618,7 +617,7 @@ ACE_Registry::make_name (const Istring &string)
 	  component.id_ = string.substr (last_position, 
 					 new_position - last_position);	  
 	  // Skip past the seperator
-	  new_position += ACE_Registry::STRING_SEPARATOR.length ();
+	  new_position += ACE_OS::strlen (ACE_Registry::STRING_SEPARATOR);
 	}
       else 
 	{

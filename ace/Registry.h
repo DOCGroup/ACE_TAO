@@ -55,7 +55,7 @@ public:
   typedef std::vector<Name_Component> Name;
   // A Name is an ordered collections of components (ids)
 
-  static const Istring STRING_SEPARATOR;
+  static LPCTSTR STRING_SEPARATOR;
   // Separator for components in a name 
 
   static Istring make_string (const Name &name);
