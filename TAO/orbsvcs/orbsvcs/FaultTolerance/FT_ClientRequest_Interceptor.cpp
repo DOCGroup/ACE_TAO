@@ -9,7 +9,7 @@
 #include "ace/Synch_Traits.h"
 
 ACE_RCSID (FaultTolerance,
-           FT_ORBInitializer,
+           FT_ClientORBInitializer,
            "$Id$")
 
 

@@ -2,19 +2,18 @@
 //
 // $Id$
 
-#include "FT_ORBInitializer.h"
-#include "FT_PolicyFactory.h"
-#include "FT_ClientRequest_Interceptor.h"
+#include "FT_ServerORBInitializer.h"
+#include "FT_ServerPolicyFactory.h"
 #include "FT_ServerRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 
 
 ACE_RCSID (FaultTolerance,
-           FT_ORBInitializer,
+           FT_ServerORBInitializer,
            "$Id$")
 void
-TAO_FT_ORBInitializer::pre_init (
+TAO_FT_ServerORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -23,7 +22,7 @@ TAO_FT_ORBInitializer::pre_init (
 }
 
 void
-TAO_FT_ORBInitializer::post_init (
+TAO_FT_ServerORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -36,16 +35,10 @@ TAO_FT_ORBInitializer::post_init (
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->register_client_request_interceptors (info
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-
-
 }
 
 void
-TAO_FT_ORBInitializer::register_policy_factories (
+TAO_FT_ServerORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -59,7 +52,7 @@ TAO_FT_ORBInitializer::register_policy_factories (
   // This policy factory is used for all FTCORBA related policies.
 
   ACE_NEW_THROW_EX (temp_factory,
-                    TAO_FT_PolicyFactory,
+                    TAO_FT_ServerPolicyFactory,
                     CORBA::NO_MEMORY (
                                       CORBA::SystemException::_tao_minor_code (
                          TAO_DEFAULT_MINOR_CODE,
@@ -69,34 +62,23 @@ TAO_FT_ORBInitializer::register_policy_factories (
 
   policy_factory = temp_factory;
 
-  // Bind the same policy factory to all RTCORBA related policy
+  // Bind the same policy factory to all FTCORBA related policy
   // types since a single policy factory is used to create each of
-  // the different types of RTCORBA policies.
+  // the different types of FTCORBA policies.
 
-  CORBA::PolicyType type = FT::REQUEST_DURATION_POLICY;
+
+  CORBA::PolicyType type = FT::HEARTBEAT_ENABLED_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  type = FT::HEARTBEAT_POLICY;
-  info->register_policy_factory (type,
-                                 policy_factory.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  type = FT::HEARTBEAT_ENABLED_POLICY;
-  info->register_policy_factory (type,
-                                 policy_factory.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
   // Transfer ownership of the policy factory to the registry.
   (void) policy_factory._retn ();
 }
 
+
 void
-TAO_FT_ORBInitializer::register_server_request_interceptors (
+TAO_FT_ServerORBInitializer::register_server_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -117,23 +99,3 @@ TAO_FT_ORBInitializer::register_server_request_interceptors (
 }
 
 
-void
-TAO_FT_ORBInitializer::register_client_request_interceptors (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  PortableInterceptor::ClientRequestInterceptor_ptr cri =
-    PortableInterceptor::ClientRequestInterceptor::_nil ();
-
-  ACE_NEW_THROW_EX (cri,
-                    TAO::FT_ClientRequest_Interceptor,
-                    CORBA::NO_MEMORY ());
-
-  PortableInterceptor::ClientRequestInterceptor_var
-    client_interceptor = cri;
-
-  info->add_client_request_interceptor (client_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}

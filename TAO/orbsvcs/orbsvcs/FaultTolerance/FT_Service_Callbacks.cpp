@@ -1,7 +1,7 @@
 // $Id$
 
 #include "FT_Service_Callbacks.h"
-#include "FT_Policy_i.h"
+#include "FT_ClientPolicy_i.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -13,7 +13,7 @@
 #include "tao/Client_Strategy_Factory.h"
 
 #if !defined (__ACE_INLINE__)
-# include "FT_Service_Callbacks.i"
+# include "FT_Service_Callbacks.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (FaultTolerance,
@@ -169,7 +169,7 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
 
   cdr >> group_component;
 
-  return group_component.object_group_id % max;
+  return (CORBA::ULong) group_component.object_group_id % max;
 }
 
 int
