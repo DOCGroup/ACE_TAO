@@ -1,13 +1,20 @@
+Mon Feb 01 12:00:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: With CC 5.0, enabled explicit template
+          instantiation and added ACE_LACKS_ACE_IOSTREAM.  Early versions
+          of CC 5.0 seem to have problems with automatic template
+          instantiation and ACE_IOStream.
+
 Mon Feb  1 10:41:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/CDR_Test.cpp: 
-	  There was a typo in a included filename.
+        * tests/CDR_Test.cpp:
+          There was a typo in a included filename.
 
 Mon Feb  1 08:39:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Synch.h: Clarified that the ACE_Semaphore::acquire() is in
- 	  absolute, rather than relative, time.  Thanks to Jacques
- 	  Salerian <Jacques.Salerian@era.ericsson.se> for reporting this.
+        * ace/Synch.h: Clarified that the ACE_Semaphore::acquire() is in
+          absolute, rather than relative, time.  Thanks to Jacques
+          Salerian <Jacques.Salerian@era.ericsson.se> for reporting this.
 
 Sun Jan 31 20:10:23 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -17,27 +24,27 @@ Sun Jan 31 20:10:23 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sun Jan 31 18:19:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* docs/tutorials/Makefile: Now we can build the UNSHAR SHAR HTML
- 	  right from the top-level.  Thanks James!
+        * docs/tutorials/Makefile: Now we can build the UNSHAR SHAR HTML
+          right from the top-level.  Thanks James!
 
-	* tests/Process_Strategy_Test: Updated the test to use ACE::fork()
- 	  and the new "avoid zombies" feature of ACE_Process_Strategy.
+        * tests/Process_Strategy_Test: Updated the test to use ACE::fork()
+          and the new "avoid zombies" feature of ACE_Process_Strategy.
 
-	* ace/ACE: Added a new version of fork() that can avoid creating
- 	  zombies.  Thanks to Garry Brother <gmbroth@romulus.ncsc.mil> for
- 	  this code.
+        * ace/ACE: Added a new version of fork() that can avoid creating
+          zombies.  Thanks to Garry Brother <gmbroth@romulus.ncsc.mil> for
+          this code.
 
-	* ace/Strategies_T: Changed the ACE_Process_Strategy so that
- 	  programmers can designate to not create zombies.  Thanks to
- 	  Garry Brother <gmbroth@romulus.ncsc.mil> for this suggestion.
+        * ace/Strategies_T: Changed the ACE_Process_Strategy so that
+          programmers can designate to not create zombies.  Thanks to
+          Garry Brother <gmbroth@romulus.ncsc.mil> for this suggestion.
 
-	* ace/ACE.cpp (daemonize): Only do a chdir if pathname != 0.
+        * ace/ACE.cpp (daemonize): Only do a chdir if pathname != 0.
 
-	* ace/ACE: Added a "program_name" argument to daemonize() so that
- 	  we can set the program name.
+        * ace/ACE: Added a "program_name" argument to daemonize() so that
+          we can set the program name.
 
-	* docs/tutorials: Reformatted all the header files to conform
-	  to the ACE programming style.
+        * docs/tutorials: Reformatted all the header files to conform
+          to the ACE programming style.
 
 Sun Jan 31 16:09:55 1999  Jeff Parswons >parsons@cs.wustl.edu>
 
@@ -56,59 +63,59 @@ Sun Jan 31 16:09:55 1999  Jeff Parswons >parsons@cs.wustl.edu>
 
 Sun Jan 31 11:58:32 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/{010|011|012|013|017}:
-	  In all of these, I'd overridden open() as open(int) to specify
-	  the number of threads in a thread-pool.  Steve Huston pointed
-	  out that this causes grief with some compilers.  I've changed
-	  all of these open(int) overrides to start(int) instead.
+        * docs/tutorials/{010|011|012|013|017}:
+          In all of these, I'd overridden open() as open(int) to specify
+          the number of threads in a thread-pool.  Steve Huston pointed
+          out that this causes grief with some compilers.  I've changed
+          all of these open(int) overrides to start(int) instead.
 
-	* docs/tutorials/017/Barrier_i.cpp (threads):
-	  The thr_equal() call was changed to !thr_equal().
+        * docs/tutorials/017/Barrier_i.cpp (threads):
+          The thr_equal() call was changed to !thr_equal().
 
-	* docs/tutorials/010/taks.cpp:
-	  Vishal recommended some extra commentation to make things a bit
-	  more clear WRT barrier synch.
+        * docs/tutorials/010/taks.cpp:
+          Vishal recommended some extra commentation to make things a bit
+          more clear WRT barrier synch.
 
-	* docs/tutorials/013/page01.html:
-	  Added Kirthika's abstract.
+        * docs/tutorials/013/page01.html:
+          Added Kirthika's abstract.
 
 Sat Jan 30 16:03:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* websvcs/lib/URL_Addr.h: 
-	* websvcs/lib/URL_Addr.cpp: 
-	  The HTTP address class can create an URL_Addr from a path
-	  relative to it.  This is useful when interpreting an address
-	  inside an HTML document.
+        * websvcs/lib/URL_Addr.h:
+        * websvcs/lib/URL_Addr.cpp:
+          The HTTP address class can create an URL_Addr from a path
+          relative to it.  This is useful when interpreting an address
+          inside an HTML document.
 
 Sat Jan 30 13:34:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Connection/non_blocking/test_sock_connector.cpp (main):
-	  Prevent the program from executing if compiled on non-NT Win32
-	  platform without Winsock2 installed.  Thanks to Greg Harrison
-	  <harrisog@erinet.com> for reporting ths problem.
+        * examples/Connection/non_blocking/test_sock_connector.cpp (main):
+          Prevent the program from executing if compiled on non-NT Win32
+          platform without Winsock2 installed.  Thanks to Greg Harrison
+          <harrisog@erinet.com> for reporting ths problem.
 
 1999-01-29  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Mem_Map.cpp (map_it): NT makes no claims about replacing
-	  previous mapping at the specified address.  Therefore, I have
-	  added a new macro ACE_LACKS_AUTO_MMAP_REPLACEMENT which is
-	  defined if there is no system support for replacing any previous
-	  mappings. In this case, we unmap() before (potentially) mapping
-	  to the same location.  ACE_LACKS_AUTO_MMAP_REPLACEMENT is
-	  defined on NT.
+        * ace/Mem_Map.cpp (map_it): NT makes no claims about replacing
+          previous mapping at the specified address.  Therefore, I have
+          added a new macro ACE_LACKS_AUTO_MMAP_REPLACEMENT which is
+          defined if there is no system support for replacing any previous
+          mappings. In this case, we unmap() before (potentially) mapping
+          to the same location.  ACE_LACKS_AUTO_MMAP_REPLACEMENT is
+          defined on NT.
 
 Fri Jan 29 17:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* websvcs/lib/URL_Addr.h:
-	* websvcs/lib/URL_Addr.cpp:
-	  We were not checking against nil strings in several places, also
-	  fixed some uninitialized members in the HTTP_Addr constructors.
+        * websvcs/lib/URL_Addr.h:
+        * websvcs/lib/URL_Addr.cpp:
+          We were not checking against nil strings in several places, also
+          fixed some uninitialized members in the HTTP_Addr constructors.
 
-	* bin/auto_compile:
-	  Added protection against simultaneous executions of the script;
-	  it checks for .disable file on the $LOGDIR directory, if present
-	  it does not execute; if not present it creates one; the file is
-	  deleted at program termination.
+        * bin/auto_compile:
+          Added protection against simultaneous executions of the script;
+          it checks for .disable file on the $LOGDIR directory, if present
+          it does not execute; if not present it creates one; the file is
+          deleted at program termination.
 
 Fri Jan 29 16:25:22 1999  Steve Huston  <shuston@riverace.com>
 
@@ -133,50 +140,50 @@ Fri Jan 29 16:25:22 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Jan 29 14:49:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/ACE.cpp:
-	* ace/Basic_Types.h:
-	* ace/INET_Addr.cpp:
-	* ace/Memory_Pool.cpp:
-	* ace/OS.cpp:
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/SOCK_Dgram_Bcast.cpp:
-	* ace/config-cray.h:
-	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
-	* include/makeinclude/platform_cray.GNU:
-	* tests/Basic_Types_Test.cpp:
-	* tests/Handle_Set_Test.cpp:
-	* tests/Message_Queue_Test.cpp:
-	* tests/SV_Shared_Memory_Test.cpp:
-	* tests/run_tests.sh:
-	  Thanks to Doug Anderson <doug@clark.net> for this port of ACE to
-	  Cray machines.
+        * ace/ACE.cpp:
+        * ace/Basic_Types.h:
+        * ace/INET_Addr.cpp:
+        * ace/Memory_Pool.cpp:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/config-cray.h:
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+        * include/makeinclude/platform_cray.GNU:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
+        * tests/run_tests.sh:
+          Thanks to Doug Anderson <doug@clark.net> for this port of ACE to
+          Cray machines.
 
 Fri Jan 29 13:51:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Removed definition of ACE_Thread_State.
+        * ace/OS.h: Removed definition of ACE_Thread_State.
 
-	* ace/Thread_Manager.*: Changed the ACE_Thread_State as a bunch of
-	  bit-masks so we don't overwe the thread states accidentally.
-	  Thanks to Tom Dobridge <dobridge@persimmon.com> for reporting
-	  the bug.
+        * ace/Thread_Manager.*: Changed the ACE_Thread_State as a bunch of
+          bit-masks so we don't overwrite the thread states accidentally.
+          Thanks to Tom Dobridge <dobridge@persimmon.com> for reporting
+          the bug.
 
 1999-01-28  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.cpp (open): this->close_i() must be
-	  called *before* the allocators are changed.
+        * ace/Hash_Map_Manager_T.cpp (open): this->close_i() must be
+          called *before* the allocators are changed.
 
-	* ace/Map_Manager.cpp (open): Close the old map (if any) before
-	  creating the new map.  This also make open() reentrant. Thanks
-	  to Zoran Ivanovic <zorani@pathcom.com> for reporting this bug.
+        * ace/Map_Manager.cpp (open): Close the old map (if any) before
+          creating the new map.  This also make open() reentrant. Thanks
+          to Zoran Ivanovic <zorani@pathcom.com> for reporting this bug.
 
 Thu Jan 28 19:08:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Active_Map_Manager_T.h:
-	  Steve's change didn't make it, so I changed BASE to
-	  ACE_AMM_BASE, I don't know about the pragma.
+        * ace/Active_Map_Manager_T.h:
+          Steve's change didn't make it, so I changed BASE to
+          ACE_AMM_BASE, I don't know about the pragma.
 
 Thu Jan 28 16:43:17 1999  Steve Huston  <shuston@riverace.com>
 
@@ -186,9 +193,9 @@ Thu Jan 28 16:43:17 1999  Steve Huston  <shuston@riverace.com>
 
 Thu Jan 28 10:04:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.cpp:
-	  Reverted to version 4.2, thanks to Kirthika for helping find
-	  this one.
+        * ace/Hash_Map_Manager_T.cpp:
+          Reverted to version 4.2, thanks to Kirthika for helping find
+          this one.
 
 Thu Jan 28 09:11:29 1999  Andreas Tobler <toa@pop.agri.ch>
 
