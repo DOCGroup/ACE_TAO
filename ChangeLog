@@ -1,3 +1,9 @@
+Thu Jul 24 01:19:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/DLL_Test.dsp:
+        * tests/DLL_Test_Impl.dsp:
+          Enabled RTTI so we can test dynamic_cast'ing in a dll.
+
 Wed Jul 23 23:47:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/os_dlfcn.h:
