@@ -1,3 +1,27 @@
+Thu Jun  8 14:44:39 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ../pace/linux/README
+	* ../pace/linux
+	* ../pace/sunos/README
+	* ../pace/sunos
+	* ../pace/emulation
+	 
+	  Removed from reposistory.
+
+	* ../pace/linux/TODO
+
+	  Moved to ../pace/posix/TODO
+
+	* ../pace/pace.dsw
+
+	  Moved to ../pace/win32/pace.dsw.
+	  Hi Darrell. This takes all traces of win32 stuff out of
+	  the main dir and although its slightly different than
+	  ace or tao, we are using our directories a little
+	  differently here. Nanbor thought that is might be ok so
+	  I will try it here until it breaks? or someone has good
+	  reason to move it back.
+
 Thu Jun  8 12:09:56 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/pace/sunos/*.{c,inl}:
