@@ -104,6 +104,9 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 <li><a href="#loadbalancer">TAO's Load Balancer</a></li>
 
+<li>
+<a href="#fault_tolerance">TAO's support for FT services </a></li>
+
 </UL>
 </TD>
 <TD>
@@ -1896,6 +1899,25 @@ Add persistence and then to add event notification</li>
 
 <hr>
 
+<h3><a NAME="fault_tolerance"></a>TAO's support for FT services</h3>
+
+<p>
+Point of contact: <a href="mailto:bala@cs.wustl.edu">Balachandran Natarajan</a>
+
+<h4>Current Status:</h4>
+<p>TAO supports the ORB level requirements to achieve Fault Tolerance
+for CORBA Objects. The details of the ORB level support is described
+in the  <a href="http://cgi.omg.org/cgi-bin/doc?ptc/00-04-04"> FT spec
+</a>. Specifically TAO
+implements the sections 27.2.2, 27.2.3, 27.2.6 thru 27.2.8 of the
+document. 
+
+<h4>Future Work:</h4>
+<ul>
+<li> Implement 27.2.9 of the document.</li>
+</ul>
+<hr>
+
 <h3><a NAME="loadbalancer"></a>TAO's Load Balancer</h3>
 
 <p>
@@ -2244,8 +2266,7 @@ specifications (updated 9 August 2000):<br>
 
   <li>GIOP fragments (1.1 and 1.2) are not completely tested.
 
-  <li>There are several "optional" features like bi-dir GIOP that we
-   don't support yet.
+  <li>The old ServantManager interfaces (POA stuff)
 
   <li>Domain Managers (useful for security, but otherwise nobody seems to
    care)
