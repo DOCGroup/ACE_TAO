@@ -23,6 +23,8 @@
 
 #if defined (ACE_WIN32)
 
+#include "ace/os_include/sys/os_mman.h"
+
 /**
  * @class ACE_Pagefile_Memory_Pool_Options
  *
