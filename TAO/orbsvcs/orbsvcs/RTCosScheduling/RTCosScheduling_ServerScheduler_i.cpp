@@ -130,7 +130,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
                        TAO_Linear_Priority_Mapping(
                          ACE_SCHED_FIFO),
                       CORBA::NO_MEMORY());
-      // WHERE the parameter is one of SCHED_OTHER, SCHED_FIFO, or SCHED_RR
 
       mapping_manager->mapping(this->pm_);
       ACE_TRY_CHECK;
@@ -590,7 +589,7 @@ void
 RTCosScheduling_ServerScheduler_Interceptor::finish_execution()
 {
   PCP_Manager *p = 0;
-  this->invocation_map_.unbind((ACE_OS::getpid() << 16) + ACE_Thread::self(),p);
+  this->invocation_map_.unbind((ACE_OS::getpid() << 16) + int(ACE_Thread::self()),p);
   if (p)
     {
       /// Release the Lock on the Thread
