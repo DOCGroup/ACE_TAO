@@ -1,3 +1,9 @@
+Tue Apr 20 15:18:35 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* TAO_ROOT/docs/INS.html: Added this page. It documents the
+  	  InterOperable Naming Service.
+	* TAO_ROOT/docs/releasenotes/index.html: Added a link to INS.html
+
 Tue Apr 20 14:27:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/deep_free.cpp:
