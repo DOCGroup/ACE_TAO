@@ -452,7 +452,7 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   if (this->handler_map_.bind (sh->get_handle (), ast) == -1)
     goto fail1;
 
-  else if (this->reactor ()->register_handler (this, mask) == -1)
+  else if (this->reactor ()->register_handler (sh->get_handle (), this, mask) == -1)
     goto fail2;
   // If we're starting connection under timer control then we need to
   // schedule a timeout with the ACE_Reactor.

@@ -22,12 +22,23 @@ Peer_Handler<PR_ST_2>::Peer_Handler (ACE_Reactor *r)
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "activating %d\n", this->get_handle ()));
+  ACE_DEBUG ((LM_DEBUG, "activating %d\n", this->peer ().get_handle ()));
   this->action_ = &Peer_Handler<PR_ST_2>::connected;
 
+  ACE_DEBUG ((LM_DEBUG, "please enter input..: "));      
+
   if (this->reactor ())
+#if defined (ACE_WIN32)
+    // On Win32, the std handle must be registered directly (and not
+    // as a socket)
     this->reactor ()->register_handler 
-      (this, ACE_Event_Handler::WRITE_MASK);
+      (this, ACE_STDIN);
+#else
+    // On non-Win32, the std handle must be registered as a normal
+    // handle with the READ mask
+    this->reactor ()->register_handler 
+      (ACE_STDIN, this, ACE_Event_Handler::READ_MASK);
+#endif /* ACE_WIN32 */
   else
     {
       while (this->connected () != -1)
@@ -37,12 +48,6 @@ Peer_Handler<PR_ST_2>::open (void *)
 			  ACE_Event_Handler::READ_MASK);
     }
   return 0;
-}
-
-template <PR_ST_1> ACE_HANDLE
-Peer_Handler<PR_ST_2>::get_handle (void) const
-{
-  return this->peer ().get_handle ();
 }
 
 template <PR_ST_1> int
@@ -70,8 +75,6 @@ Peer_Handler<PR_ST_2>::connected (void)
 {
   char buf[BUFSIZ];
 
-  ACE_DEBUG ((LM_DEBUG, "please enter input..: "));
-      
   ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
 
   if (n > 0 && this->peer ().send_n (buf, n) != n)
@@ -85,7 +88,10 @@ Peer_Handler<PR_ST_2>::connected (void)
       return -1;
     }
   else
-    return 0;
+    {
+      ACE_DEBUG ((LM_DEBUG, "please enter input..: "));      
+      return 0;
+    }
 }
 
 template <PR_ST_1> int
@@ -110,6 +116,14 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, "in handle_output\n"));
+
+  return (this->*action_) ();
+}
+
+template <PR_ST_1> int
+Peer_Handler<PR_ST_2>::handle_signal (int signum, siginfo_t *, ucontext_t *)
+{
+  ACE_DEBUG ((LM_DEBUG, "in handle_signal\n"));
 
   return (this->*action_) ();
 }
