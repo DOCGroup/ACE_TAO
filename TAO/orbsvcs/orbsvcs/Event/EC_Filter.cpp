@@ -83,12 +83,14 @@ TAO_EC_Null_Filter::event_ids(TAO_EC_Filter::Headers& headers)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex>;
-template class ACE_RB_Tree<RtecEventComm::EventHeader,int>;
+template class ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>;
+template class ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>;
+template class ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int>
+#pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
