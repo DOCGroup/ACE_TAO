@@ -1,6 +1,16 @@
+Mon Jun  7 15:44:51 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/ExecutionManager/Execution_Manager.cpp:
+        * DnC/ExecutionManager/ExecutionManager.mpc:
+
+          First cut at writing the executor that is used to start
+          deployment process and terminate it. Changed the mpc file to
+          rename the generated executable to be named executor as
+          described in the specification.
+
 Mon Jun  7 14:23:38 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.cpp: 
+	* DnC/Config_Handlers/DnC_Dump.cpp:
 
 	Fixed an error causing segmentation fault by changing
 	Dump_Obj::desc_map_ template argument from "const char*"
@@ -10,14 +20,14 @@ Mon Jun  7 14:23:38 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 Mon Jun  7 12:10:31 2004  Gan Deng <gan.dengg@vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	
+
           The PortConnectionDescription structure a PortKind variable change the
           code to make the connection decisions based on value of that variable.
           Also change the connection fields values which will be passed to
           finishLaunch() to make the NodeApplication work.
-      
+
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
-    
+
           Change the definition type of the <plan_> variable from const reference
           to just regular object mapped from IDL struct type.
 
@@ -38,7 +48,7 @@ Sun Jun  6 21:13:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/ServantHeaderGenerator.cpp:
-        
+
           Removed generation of a template parameter to the Servant_Impl
           base class that was removed from the CIAO_Server library in
 
@@ -291,7 +301,7 @@ Fri Jun  4 09:52:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
           Removed the check_plan_validity () method and added its
           functionality in the get_plan_info () method. This eliminates
-          the need to have a separate lopp to iterate over the list of
+          the need to have a separate loop to iterate over the list of
           names to populate the NodeManager references, now this step is
           done within a single loop.
 
