@@ -126,6 +126,41 @@ public class DemoCore extends Frame {
                 break;
               }
           }
+        if (args[arg_index].equals ("-dualECdemo") ||
+            args[arg_index].equals ("-dualECdemo1") ||
+            args[arg_index].equals ("-dualECdemo2")) 
+          {
+            // Use monotonic scales in the double precision data windows
+            DoubleVisComp.monotonic_scale (true);
+
+            // Establish connections
+            if (! connections_established_)
+              {
+                connections_established_ = true;
+                addConnection ("Weapons");
+                addConnection ("Weapons Latency (100 ns)");
+                addConnection ("Weapons Latency Jitter (100 ns)");
+                addConnection ("Navigation");
+                addConnection ("Navigation Latency (100 ns)");
+                addConnection ("Navigation Latency Jitter (100 ns)");
+                break;
+              }
+          }
+
+        else if (args[arg_index].equals ("-PRdemo"))
+          {
+            // Establish connections
+            if (! connections_established_)
+              {
+                connections_established_ = true;
+                addConnection ("High Consumer Persian Recursion", 2);
+                addConnection ("Low Consumer Persian Recursion", 2);
+		// addConnection ("High Consumer Execution Time (100 ns)", 2);
+		// addConnection ("Low Consumer Execution Time (100 ns)", 2);
+                break;
+              }
+          }
+
         // Skip over anything else.
         else
           {
@@ -146,7 +181,7 @@ public class DemoCore extends Frame {
   }
 
 
-  public boolean addConnection (String selected) {	
+  public boolean addConnection (String selected, int max_in_a_row) {	
 		// to not fill too many into it
     if (countVisComp_ < MAX_VIS_COMPS) {
       
@@ -166,10 +201,10 @@ public class DemoCore extends Frame {
 	  countVisComp_++;
 	  
           // not more than three in a row
-	  if (countVisComp_ == 3){
+	  if (countVisComp_ == max_in_a_row){
 	    constraints_.gridwidth = GridBagConstraints.REMAINDER;
           }
-          if (countVisComp_ > 3) {
+          if (countVisComp_ > max_in_a_row) {
 	    constraints_.gridwidth = 1;
 	  } 
 	  
@@ -184,6 +219,10 @@ public class DemoCore extends Frame {
       }
     }
     return false;
+  }
+
+  public boolean addConnection (String selected) {
+    return addConnection (selected, 3);
   }
   
   public void init () 
