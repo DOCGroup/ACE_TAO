@@ -18,6 +18,12 @@ Wed Feb 11 09:32:10 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Makefile: moved INSTALL= to before include of rules.local.GNU,
           so that the (unused) install command doesn't show up with make -n.
 
+        * include/makeinclude/platform_chorus_ghs.GNU: put posix -I before
+          stdc -I.
+
+        * ace/OS.h: removed include of stdfileio.h on ghs/Chorus.  It's not
+          necessary with the above change to platform_chorus_ghs.GNU.
+
 Wed Feb 11 09:24:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.4.25, released Wed Feb 11 09:24:51 1998.
