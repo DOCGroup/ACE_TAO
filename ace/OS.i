@@ -6067,7 +6067,8 @@ ACE_OS::gethrtime (void)
 
   u_long most;
   u_long least;
-  return ACE_OS::readPPCTimeBase (most, least);
+  ACE_OS::readPPCTimeBase (most, least);
+  return least; // ???? does not account for rollover of "least"!
 
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   // e.g., VxWorks (besides POWERPC && GreenHills) . . .
