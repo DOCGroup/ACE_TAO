@@ -24,7 +24,7 @@
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "tao/corba.h"
-#include "quoterC.h"
+#include "QuoterC.h"
 
 class Quoter_Client
 {

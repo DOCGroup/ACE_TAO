@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "quoterS.h"
+#include "QuoterS.h"
 
 #if !defined (QUOTER_FACTORY_FINDER_IMPL_H)
 #define QUOTER_FACTORY_FINDER_IMPL_H

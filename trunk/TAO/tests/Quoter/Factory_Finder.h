@@ -14,7 +14,7 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
-#include "tao/tao.h"
+#include "tao/TAO.h"
 #include "Factory_Finder_Impl.h"
 
 #if !defined (QUOTER_FACTORY_FINDER_H)
@@ -38,7 +38,7 @@ public:
   int run (CORBA::Environment& env);
   // Run the orb 
 
-  u_ parse_args (void);
+  u_int parse_args (void);
   // parse the passed parameters
 
 private:
