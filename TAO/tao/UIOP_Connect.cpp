@@ -127,13 +127,11 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char client[MAXPATHLEN + 16];
-  addr.addr_to_string (client, sizeof (client));
-
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) UIOP connection from client %s\n",
-                client));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) UIOP connection from client <%s> on %d\n",
+                  addr.get_path_name (), this->peer ().get_handle ()));
+
   return 0;
 }
 
@@ -269,7 +267,7 @@ TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 int
 TAO_UIOP_Client_Connection_Handler::open (void *)
 {
-  // @@ TODO: This flags should be set using the RT CORBA policies...
+  // @@ TODO: These flags should be set using the RT CORBA policies...
 
   // Here is where we could enable all sorts of things such as
   // nonblock I/O, sock buf sizes, etc.
@@ -306,14 +304,10 @@ TAO_UIOP_Client_Connection_Handler::open (void *)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char server[MAXPATHLEN + 1];
-
-  (void) addr.addr_to_string (server, sizeof (server));
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) UIOP connection to server <%s> on %d\n",
-                server, this->peer ().get_handle ()));
+                addr.get_path_name (), this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
   return this->transport ()->wait_strategy ()->register_handler ();
