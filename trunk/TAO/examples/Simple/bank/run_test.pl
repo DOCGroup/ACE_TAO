@@ -10,7 +10,7 @@ require ACEutils;
 require Process;
 $status = 0;
 
-$iorfile = "grid.ior";
+$iorfile = "bank.ior";
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile ");
 
@@ -27,8 +27,11 @@ if ($client->TimedWait (60) == -1) {
   $client->Kill (); $client->TimedWait (1);
 }
   
-  
-$SV->Kill (); $SV->TimedWait (1);
+$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
+  print STDERR "ERROR: cannot terminate the server\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  $status = 1;
+}
 
 unlink $iorfile;
 

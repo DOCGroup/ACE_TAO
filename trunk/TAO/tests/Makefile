@@ -19,7 +19,8 @@ DIRS  = CDR \
         Multiple_Inheritance \
 	MT_Client \
 	MT_Server \
-	FL_Cube
+	FL_Cube \
+	POA
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
