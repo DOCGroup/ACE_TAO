@@ -37,12 +37,12 @@ TAO_Transport::bidirectional_flag (int flag)
   this->bidirectional_flag_ = flag;
 }
 
-/*ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
+ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
 TAO_Transport::cache_map_entry (void)
 {
   return this->cache_map_entry_;
 }
-*/
+
 
 ACE_INLINE void
 TAO_Transport::cache_map_entry (
@@ -76,4 +76,20 @@ TAO_Transport::check_event_handler_i (const char *caller)
       return -1;
     }
   return 0;
+}
+
+ACE_INLINE unsigned long
+TAO_Transport::purging_order (void) const
+{
+  return this->purging_order_;
+}
+ 
+ACE_INLINE void
+TAO_Transport::purging_order (unsigned long value)
+{
+  // This should only be called by the Transport Cache Manager when
+  // it is holding it's lock.
+  // The transport should still be here since the cache manager still
+  // has a reference to it.
+  this->purging_order_ = value;
 }

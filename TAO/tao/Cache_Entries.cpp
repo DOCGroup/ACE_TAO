@@ -12,8 +12,7 @@ ACE_RCSID(tao, Cache_Entries, "$Id$")
 
 TAO_Cache_IntId::TAO_Cache_IntId (TAO_Transport *transport)
   : transport_ (TAO_Transport::_duplicate (transport)),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN),
-    purging_order_ (0)
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
 }
 
@@ -27,7 +26,6 @@ TAO_Cache_IntId::operator= (const TAO_Cache_IntId &rhs)
 {
   if (this != &rhs) {
     this->recycle_state_ = rhs.recycle_state_;
-    this->purging_order_ = rhs.purging_order_;
 
     TAO_Transport* old_transport = this->transport_;
     this->transport_ = TAO_Transport::_duplicate (rhs.transport_);

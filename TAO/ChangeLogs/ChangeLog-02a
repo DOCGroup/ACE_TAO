@@ -1,43 +1,68 @@
+Wed May 23 09:04:35 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * Cache_Entries.cpp:
+        * Cache_Entries.h:
+        * Cache_Entries.inl:
+        * Connection_Purging_Strategy.h:
+        * LRU_Connection_Purging_Strategy.cpp:
+        * LRU_Connection_Purging_Strategy.h:
+        * Transport.cpp:
+        * Transport.h:
+        * Transport.inl:
+        * Transport_Cache_Manager.cpp:
+        * Transport_Cache_Manager.h:
+        * Transport_Cache_Manager.inl:
+        * Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * Strategies/FIFO_Connection_Purging_Strategy.h:
+        * Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * Strategies/LFU_Connection_Purging_Strategy.h:
+        * Strategies/NULL_Connection_Purging_Strategy.cpp:
+        * Strategies/NULL_Connection_Purging_Strategy.h:
+
+          Performance enhancment and race condition fix for the connection
+          purging strategy change.  This version has far less allocations and
+          locking in the main line of execution.
+
 Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	* orbsvcs/orbsvcs/AV/QoS_UDP.h: 
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 	
-	* orbsvcs/orbsvcs/AV/Transport.h: 	
-	* orbsvcs/orbsvcs/AV/Transport.cpp: 		
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.h:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
 
-	  Provided a mechanism to modify QoS when there is a change in QoS. Also added the QoS negotiator mechanism as a means of notifying change in QoS.
+          Provided a mechanism to modify QoS when there is a change in QoS. Also added the QoS negotiator mechanism as a means of notifying change in QoS.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp: 
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
 
-	 Enhanced the test to test the notification and modification of change in QoS.
+         Enhanced the test to test the notification and modification of change in QoS.
 
 Tue May 22 15:34:20 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
-	* tao/tests/Big_Oneways/Session.{h,cpp}:
-	* tao/tests/AMI_Buffering/test_i.{h,cpp}:
-	* tao/examples/Logging/Logger_i.{h,cpp}:
-	* tao/examples/Buffered_Oneways/test_i.{h,cpp}:
-	* tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
+        * tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
+        * tao/tests/Big_Oneways/Session.{h,cpp}:
+        * tao/tests/AMI_Buffering/test_i.{h,cpp}:
+        * tao/examples/Logging/Logger_i.{h,cpp}:
+        * tao/examples/Buffered_Oneways/test_i.{h,cpp}:
+        * tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
 
-	  Fixed compile errors in Forte update 1.
+          Fixed compile errors in Forte update 1.
 
-	
+
 Mon May 21 23:22:20 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Internal.cpp (open_services):
+        * tao/TAO_Internal.cpp (open_services):
 
-	  Fixed seg faults that occured due to brain damaged compilers
-	  that still treat string literals as "char *" instead of "const
-	  char *".  This compiler problem caused the wrong (shallow)
-	  assignment operator to be used instead of the correct (deep)
-	  assignment operator.  When the string sequence went out of
-	  scope, it attempted to delete a string that was not dynamically
-	  allocated.  To get around deficiencies in such compilers,
-	  duplicate the string literal using CORBA::string_dup().
+          Fixed seg faults that occured due to brain damaged compilers
+          that still treat string literals as "char *" instead of "const
+          char *".  This compiler problem caused the wrong (shallow)
+          assignment operator to be used instead of the correct (deep)
+          assignment operator.  When the string sequence went out of
+          scope, it attempted to delete a string that was not dynamically
+          allocated.  To get around deficiencies in such compilers,
+          duplicate the string literal using CORBA::string_dup().
 
 Mon May 21 16:54:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 

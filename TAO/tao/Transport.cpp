@@ -71,6 +71,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , flush_timer_id_ (-1)
   , transport_timer_ (this)
   , id_ ((long) this)
+  , purging_order_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -108,6 +109,15 @@ TAO_Transport::~TAO_Transport (void)
 
       tmp->destroy ();
     }
+
+    // Avoid making the call if we can.  This may be redundant, unless
+    // someone called handle_close() on the connection handler from
+    // outside the TAO_Transport.
+    if (this->cache_map_entry_ != 0)
+      {
+        this->orb_core_->transport_cache ()->purge_entry (
+          this->cache_map_entry_);
+      }
 }
 
 int
@@ -563,13 +573,6 @@ TAO_Transport::connection_handler_closing (void)
                      *this->handler_lock_));
 
     this->transition_handler_state_i ();
-
-    // Avoid making the call if we can
-    if (this->cache_map_entry_ != 0)
-      {
-        this->orb_core_->transport_cache ()->purge_entry (
-          this->cache_map_entry_);
-      }
   }
   // Can't hold the lock while we release, b/c the release could
   // invoke the destructor!
@@ -626,19 +629,40 @@ void
 TAO_Transport::mark_invalid (void)
 {
   // @@ Do we need this method at all??
-  this->orb_core_->transport_cache ()->mark_invalid (
-    this->cache_map_entry_);
+  if (this->cache_map_entry_ != 0)
+    {
+      this->orb_core_->transport_cache ()->mark_invalid (
+        this->cache_map_entry_);
+    }
 }
 
 int
 TAO_Transport::make_idle (void)
 {
-  return this->orb_core_->transport_cache ()->make_idle (
-           this->cache_map_entry_);
+  if (this->cache_map_entry_ != 0)
+    {
+      return this->orb_core_->transport_cache ()->make_idle (
+               this->cache_map_entry_);
+    }
+  return -1;
 }
 
 void
 TAO_Transport::close_connection (void)
+{
+  this->close_connection_i ();
+
+  // Purge the entry
+  if (this->cache_map_entry_ != 0)
+    {
+      this->orb_core_->transport_cache ()->purge_entry (
+        this->cache_map_entry_);
+    }
+}
+
+
+void
+TAO_Transport::close_connection_i (void)
 {
   ACE_Event_Handler *eh = 0;
   {
@@ -671,20 +695,6 @@ TAO_Transport::close_connection (void)
 
   (void) eh->handle_close (ACE_INVALID_HANDLE,
                            ACE_Event_Handler::ALL_EVENTS_MASK);
-
-  // Purge the entry
-  // @todo This is redundant, handle_close() eventually calls
-  //       this->connection_handler_closing(), that performs the same
-  //       work, for some reason they hold the mutex while they do
-  //       that work though.
-  if (this->cache_map_entry_ != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport::close_connection () - "
-                  "Is this redundant?\n"));
-      this->orb_core_->transport_cache ()->purge_entry (
-        this->cache_map_entry_);
-    }
 
   for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
     {
