@@ -1,3 +1,89 @@
+Thu Jul 17 10:08:45 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
+
+	* align.h: A very subtle error in "align_binary" was corrected. I
+ 	was assuming that align_binary is always called by
+ 	"ptr_align_binary". In the original inline function versions of
+ 	align_binary and ptr_align_binary, the function align_binary would
+ 	subtract 1 from the specified alignment that ptr_align_binary
+ 	provided. Since I assumed that "align_binary" would always be
+ 	called by "ptr_align_binary", I subtracted the 1 in
+ 	ptr_align_binary and passed the result to "align_binary". This
+ 	caused all sorts of problems for application code that directly
+ 	called "align_binary". This error has been fixed. The macros for
+ 	align_binary and ptr_align_binary are now exactly as the original
+ 	inline functions.
+	
+	* any.{h,cpp}: Added comments. In addition, in the code for
+	Any::replace, we check if "_value" exists before trying to
+	DEEP_FREE it. Otherwise this was resulting in a segmentation fault
+	violation.
+
+	* boa.{h,i}: Added comments and changed "release" to CORBA_release
+
+	* cdr.{h,cpp}: Added some comments and removed some stuff that was
+	under #if 0 .. #endif
+
+	* corbacom.h: Added lots of comments for the CORBA_String_var class
+
+	* decode.cpp: Made TAO_Marshal_Union::decode to work, added comments.
+	
+	* encode.cpp: Made TAO_Marshal_Union::encode to work, added comments.
+
+	* factories.{h,cpp}: Added lots of comments. Removed "void
+	object_lookup_strategy" method since we do this in the parameters
+	class. Added code that will use a user defined lookup strategy if
+	the corresponding flag is set. This needs to be tested.
+
+	* iiopobj.{i,cpp}: In the allocation and deallocation of the buffer
+	for object key, we now use "new/delete" instead of "malloc/free".
+
+	* interp.cpp: commented out a line that decremented 4 from the
+	offset provided for indirected typecodes. I guess this was plain
+	hack to get some broken things to work.
+
+	* objtable.{h,cpp}: Added lots of comments. Added code that will use
+	template specialization for the dynamic hashing case. In addition,
+	improved the destructors of the classes since previously, these
+	were not releasing occupied memory.
+
+	* optable.{h,cpp}: Added lots of comments. Added template
+	specialization for dynamic hashing scheme. Made dynamic hashing
+	scheme the default. Added a new definition for "struct
+	TAO_operation_db_entry". The idea is that an IDL compiler will
+	generate a database of operations and their corresponding
+	skel_ptrs. Such a database is now passed to teh constructors of
+	the operation lookup tables. This way, only one instance of such
+	lookup tables can be shared by any number of objects implementing
+	the same interface.
+
+	* params.{h,i,cpp}: Made dynamic hashing the default. Added a hook
+	by which users can supply their lookup strategies. *Needs testing*.
+
+	* typecode.{h,i,cpp}: Added comments and many changes. The private
+	state's constructor now takes an argument that is a TCKind
+	representing the TypeCode kind of the object of which we are the
+	private state. Removed "child_free". Instead, we introduced a
+	destructor for the private state that frees all the
+	children. Another important change is to the constructor of the
+	TypeCode class. We pass a "parent" pointer, if any, to the
+	constructor. All children typecodes will share the octet buffer of
+	the parent. Only freestanding typecodes will allocate octet
+	buffers. We have a new data member called "non_aligned_buffer_"
+	because the buffer we allocate may not be aligned on a 4 byte
+	boundary. As a result, we may start using the buffer at a shifted
+	position to the right. However, we do not want to lose a handle to
+	the original buffer that was allocated because at the time of
+	freeing, this pointer needs to be freed.
+
+	* tests/Cubit/TAO: Modified a few files (method_db.i, cubitS.cpp)
+	so that they use the modified optable and objtable classes. Added
+	a README file to indicate how to run the example.
+
+	* tests/Thruput_test: Modified virtually all the files to make it
+	work with the latest TAO release and its include files. Also,
+	changes similar to Cubit were necessary due to changes in the
+	objtable and optable classes.
+
 Wed Jul 16 14:17:01 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 	* tao/params.*: Eliminated unnecessary
