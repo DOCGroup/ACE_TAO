@@ -40,8 +40,7 @@
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_SYSV_SHMEM
 
-#define ACE_LACKS_MMAP
-#define ACE_LACKS_MPROTECT
+#define ACE_HAS_BROKEN_MAP_FAILED
 
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_NAMED_POSIX_SEM
@@ -111,7 +110,7 @@
 
 #define ACE_DEFAULT_SELECT_REACTOR_SIZE 256
 
-#define ACE_HAS_GETPAGESIZE 1
+#define ACE_HAS_GETPAGESIZE
 
 // Platform lacks POSIX prototypes for certain System V functions
 // like shared memory and message queues.
@@ -119,7 +118,6 @@
 
 #define ACE_LACKS_STRRECVFD
 
-#define ACE_LACKS_MSYNC
 #define ACE_LACKS_MADVISE
 
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
