@@ -79,6 +79,7 @@ extern "C"
 
 #if defined (__Lynx__)
   int putenv (char *);
+  char *mktemp (char *);
   int mkstemp(char *);
 #endif /* __Lynx__ */
 
