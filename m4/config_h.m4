@@ -1000,6 +1000,9 @@ AH_TEMPLATE([ACE_LACKS_ACE_IOSTREAM],
 [Platform can not build ace/IOStream{,_T}.cpp.  This does not
    necessarily mean that the platform does not support iostreams.])
 
+AH_TEMPLATE([ACE_LACKS_ACE_CODECS],
+[Do not compile support for the "Codecs" ACE features.])
+
 AH_TEMPLATE([ACE_LACKS_ACE_OTHER],
 [Do not compile support for the "other" ACE features, such as CORBA
    handling, name services, and QoS.])

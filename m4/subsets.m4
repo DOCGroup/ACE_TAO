@@ -317,6 +317,26 @@ AC_ARG_ENABLE([lib-token],
                ace_user_enable_lib_full=no
               ],)
 
+AC_ARG_ENABLE([lib-codecs],
+     AC_HELP_STRING([--enable-lib-codecs],[build ACE_Codecs library]),
+              [
+               case "${enableval}" in
+                yes)
+                  ACE_CREATE_LIBACE_CODECS
+                  ;;
+                no)
+                  ace_user_enable_lib_codecs=no
+                  AC_DEFINE([ACE_LACKS_ACE_CODECS])
+                  ;;
+                *)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-lib-codecs])
+                  ;;
+               esac
+
+               dnl Disable full ACE library build
+               ace_user_enable_lib_full=no
+              ],)
+
 AC_ARG_ENABLE([lib-other],
      AC_HELP_STRING([--enable-lib-other],[build ACE_Other library]),
               [
@@ -364,6 +384,7 @@ if test $ace_user_enable_lib_full = no &&
    test $ace_user_enable_lib_memory = no &&
    test $ace_user_enable_lib_timer = no &&
    test $ace_user_enable_lib_token = no &&
+   test $ace_user_enable_lib_codecs = no &&
    test $ace_user_enable_lib_other = no; then
 
   dnl If we get here then no ACE libraries will be built!
@@ -372,50 +393,53 @@ if test $ace_user_enable_lib_full = no &&
 fi  dnl No components will be built!
 
 dnl Set which ACE subsets to build
-dnl AM_CONDITIONAL(BUILD_OS_FILES,
-dnl                test X$ace_user_enable_lib_os = Xyes)
+AM_CONDITIONAL(BUILD_OS_FILES,
+               test X$ace_user_enable_lib_os = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_UTILS_FILES,
-dnl                test X$ace_user_enable_lib_utils = Xyes)
+AM_CONDITIONAL(BUILD_UTILS_FILES,
+               test X$ace_user_enable_lib_utils = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_LOGGING_FILES,
-dnl                test X$ace_user_enable_lib_logging = Xyes)
+AM_CONDITIONAL(BUILD_LOGGING_FILES,
+               test X$ace_user_enable_lib_logging = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_THREADS_FILES,
-dnl                test X$ace_user_enable_lib_threads = Xyes)
+AM_CONDITIONAL(BUILD_THREADS_FILES,
+               test X$ace_user_enable_lib_threads = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_DEMUX_FILES,
-dnl                test X$ace_user_enable_lib_demux = Xyes)
+AM_CONDITIONAL(BUILD_DEMUX_FILES,
+               test X$ace_user_enable_lib_demux = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_CONNECTION_FILES,
-dnl                test X$ace_user_enable_lib_connection = Xyes)
+AM_CONDITIONAL(BUILD_CONNECTION_FILES,
+               test X$ace_user_enable_lib_connection = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_SOCKETS_FILES,
-dnl                test X$ace_user_enable_lib_sockets = Xyes)
+AM_CONDITIONAL(BUILD_SOCKETS_FILES,
+               test X$ace_user_enable_lib_sockets = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_IPC_FILES,
-dnl                test X$ace_user_enable_lib_ipc = Xyes)
+AM_CONDITIONAL(BUILD_IPC_FILES,
+               test X$ace_user_enable_lib_ipc = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_SVCCONF_FILES,
-dnl                test X$ace_user_enable_lib_svcconf = Xyes)
+AM_CONDITIONAL(BUILD_SVCCONF_FILES,
+               test X$ace_user_enable_lib_svcconf = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_STREAMS_FILES,
-dnl                test X$ace_user_enable_lib_streams = Xyes)
+AM_CONDITIONAL(BUILD_STREAMS_FILES,
+               test X$ace_user_enable_lib_streams = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_MEMORY_FILES,
-dnl                test X$ace_user_enable_lib_memory = Xyes)
+AM_CONDITIONAL(BUILD_MEMORY_FILES,
+               test X$ace_user_enable_lib_memory = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_TIMER_FILES,
-dnl                test X$ace_user_enable_lib_timer = Xyes)
+AM_CONDITIONAL(BUILD_TIMER_FILES,
+               test X$ace_user_enable_lib_timer = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_TOKEN_FILES,
-dnl                test X$ace_user_enable_lib_token = Xyes)
+AM_CONDITIONAL(BUILD_TOKEN_FILES,
+               test X$ace_user_enable_lib_token = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_OTHER_FILES,
-dnl                test X$ace_user_enable_lib_other = Xyes)
+AM_CONDITIONAL(BUILD_CODECS_FILES,
+               test X$ace_user_enable_lib_codecs = Xyes)
 
-dnl AM_CONDITIONAL(BUILD_FULL_LIBRARY,
-dnl                test X$ace_user_enable_lib_full = Xyes)
+AM_CONDITIONAL(BUILD_OTHER_FILES,
+               test X$ace_user_enable_lib_other = Xyes)
+
+AM_CONDITIONAL(BUILD_FULL_LIBRARY,
+               test X$ace_user_enable_lib_full = Xyes)
 
 dnl End ACE_CHECK_SUBSETS
 ])
@@ -567,7 +591,17 @@ AC_DEFUN([ACE_CREATE_LIBACE_TOKEN],
  dnl ACE_CREATE_LIBACE_OTHER
 ])
 
-dnl Set the component dependencies for the libACE_Utils library
+dnl Set the component dependencies for the libACE_Codecs library
+dnl Usage: ACE_CREATE_LIBACE_CODECS
+AC_DEFUN([ACE_CREATE_LIBACE_CODECS],
+[
+ ace_user_enable_lib_codecs=yes
+
+ dnl Be careful not to go into a circular/recursive loop with these macros!
+ ACE_CREATE_LIBACE_OS
+])
+
+dnl Set the component dependencies for the libACE_Other library
 dnl Usage: ACE_CREATE_LIBACE_OTHER
 AC_DEFUN([ACE_CREATE_LIBACE_OTHER],
 [
@@ -605,6 +639,7 @@ AC_DEFUN([ACE_CREATE_ALL_COMPONENTS],
  ace_user_enable_lib_memory=yes
  ace_user_enable_lib_timer=yes
  ace_user_enable_lib_token=yes
+ ace_user_enable_lib_codecs=yes
  ace_user_enable_lib_other=yes
 ])
 
@@ -625,5 +660,6 @@ AC_DEFUN([ACE_DISABLE_ALL_COMPONENTS],
  ace_user_enable_lib_memory=no
  ace_user_enable_lib_timer=no
  ace_user_enable_lib_token=no
+ ace_user_enable_lib_codecs=no
  ace_user_enable_lib_other=no
 ])
