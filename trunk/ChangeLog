@@ -1,3 +1,8 @@
+Sat Apr 13 19:28:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Basic_Types.h:  Added include of pthread.h to pick
+	  up typedef of pthread_key_t.
+
 Sat Apr 13 17:16:10 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.h:
