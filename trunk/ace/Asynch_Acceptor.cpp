@@ -112,21 +112,23 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 }
  
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_socket)
+ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
 {
-  // Take ownership of the <listen_socket>
-  this->listen_socket_ = listen_socket;
+  // Take ownership of the <listen_handle>
+  this->listen_handle_ = listen_handle;
 
-  // Initialize the ACE_Asynch_Accept
-  this->asynch_accept_.set_handle (this->listen_handle_);
-
-  return 0;
+  // Reinitialize the ACE_Asynch_Accept
+  if (this->asynch_accept_.open (*this,
+				 this->listen_handle_,
+				 0,
+				 this->proactor ()) == -1)
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Asynch_Accept::open")));
 }
  
 template <class HANDLER> ACE_HANDLE 
 ACE_Asynch_Acceptor<HANDLER>::get_handle (void) const
 {
-  return this->listen_socket_;
+  return this->listen_handle_;
 }
  
 template <class HANDLER> int
