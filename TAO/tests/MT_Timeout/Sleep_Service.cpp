@@ -12,7 +12,7 @@ Sleep_Service::Sleep_Service (CORBA::ORB_ptr orb)
 
 void
 Sleep_Service::go_to_sleep (CORBA::ULong microseconds
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong  secs = microseconds / 1000000;
@@ -23,9 +23,9 @@ Sleep_Service::go_to_sleep (CORBA::ULong microseconds
 }
 
 void
-Sleep_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Sleep_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

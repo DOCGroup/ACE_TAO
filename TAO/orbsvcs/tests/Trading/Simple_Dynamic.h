@@ -35,7 +35,7 @@ public:
   virtual CORBA::Any* evalDP (const char* /* name */,
                               CORBA::TypeCode_ptr /* returned_type */,
                               const CORBA::Any& /* extra_info */
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
 private:

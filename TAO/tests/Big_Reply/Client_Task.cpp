@@ -31,7 +31,7 @@ Client_Task::svc (void)
     {
       for (int i = 0; i != this->event_count_; ++i)
         {
-          this->reply_gen_->get_big_reply (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->reply_gen_->get_big_reply (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -63,7 +63,7 @@ Client_Task::validate_connection (void)
       ACE_TRY
         {
 
-          this->reply_gen_->ping (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->reply_gen_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
         ACE_CATCHANY {}

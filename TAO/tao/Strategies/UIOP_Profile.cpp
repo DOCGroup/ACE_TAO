@@ -98,7 +98,7 @@ TAO_UIOP_Profile::endpoint_count (void)
 
 void
 TAO_UIOP_Profile::parse_string (const char *string
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   if (!string || !*string)
     {
@@ -206,7 +206,7 @@ TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
 CORBA::ULong
 TAO_UIOP_Profile::hash (CORBA::ULong max
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -240,7 +240,7 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
 
 
 char *
-TAO_UIOP_Profile::to_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_UIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
   TAO_ObjectKey::encode_sequence_to_string (key.inout(),

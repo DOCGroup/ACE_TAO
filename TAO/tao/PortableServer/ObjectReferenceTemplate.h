@@ -62,22 +62,22 @@ class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
   /// Destructor
   ~TAO_ObjectReferenceTemplate (void);
 
-  virtual char * server_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * server_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char * orb_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * orb_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::AdapterName * adapter_name (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Object_ptr make_object (
       const char * repository_id,
       const PortableInterceptor::ObjectId & id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 private:
 

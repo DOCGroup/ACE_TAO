@@ -72,10 +72,10 @@ TAO_EC_RTCORBA_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
                              const RtecEventComm::EventSet& event,
                              TAO_EC_QOS_Info& qos_info
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   RtecEventComm::EventSet event_copy = event;
-  this->push_nocopy (proxy, consumer, event_copy, qos_info TAO_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, consumer, event_copy, qos_info ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -83,10 +83,10 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                          RtecEventComm::PushConsumer_ptr consumer,
                                          RtecEventComm::EventSet& event,
                                          TAO_EC_QOS_Info&
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
 {
   RTCORBA::Priority current_priority =
-    this->current_->the_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
@@ -98,7 +98,7 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       // some...
 
       this->tasks_[i].push (proxy, consumer, event
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       break;
     }

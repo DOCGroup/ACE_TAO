@@ -12,10 +12,10 @@ int main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      coll_test.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      coll_test.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      coll_test.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      coll_test.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

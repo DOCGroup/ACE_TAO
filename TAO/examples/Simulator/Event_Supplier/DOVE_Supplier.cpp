@@ -72,7 +72,7 @@ DOVE_Supplier::init (void)
     // Connect to the RootPOA.
     CORBA::Object_var poaObject_var =
       TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA"
-                                                                 TAO_ENV_ARG_PARAMETER);
+                                                                 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil (poaObject_var.in ()))
@@ -81,18 +81,18 @@ DOVE_Supplier::init (void)
                         -1);
 
     this->root_POA_var_ =
-      PortableServer::POA::_narrow (poaObject_var.in () TAO_ENV_ARG_PARAMETER);
+      PortableServer::POA::_narrow (poaObject_var.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     this->poa_manager_ =
-       root_POA_var_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+       root_POA_var_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // Get the Naming Service object reference.
     CORBA::Object_var namingObj_var =
       TAO_ORB_Core_instance()->orb()->resolve_initial_references (
           "NameService"
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil (namingObj_var.in ()))
@@ -102,7 +102,7 @@ DOVE_Supplier::init (void)
 
     this->namingContext_var_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -273,7 +273,7 @@ DOVE_Supplier::notify (CORBA::Any &message)
 
     // Now we invoke a RPC
     this->current_connection_params_->proxyPushConsumer_var_->push (events
-                                                                    TAO_ENV_ARG_PARAMETER);
+                                                                    ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -343,12 +343,12 @@ DOVE_Supplier::get_Scheduler ()
 
       CORBA::Object_var objref =
           namingContext_var_->resolve (schedule_name
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->current_connection_params_->scheduler_var_ =
         RtecScheduler::Scheduler::_narrow(objref.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -378,12 +378,12 @@ DOVE_Supplier::get_EventChannel ()
       CORBA::string_dup (this->current_connection_params_->es_name_);
 
     CORBA::Object_var eventServiceObj_var =
-      this->namingContext_var_->resolve (channel_name TAO_ENV_ARG_PARAMETER);
+      this->namingContext_var_->resolve (channel_name ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     this->current_connection_params_->eventChannel_var_ =
        RtecEventChannelAdmin::EventChannel::_narrow (eventServiceObj_var.in()
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil (this->current_connection_params_->eventChannel_var_.in()))
@@ -413,7 +413,7 @@ DOVE_Supplier::connect_Supplier ()
       this->current_connection_params_->
         scheduler_var_->
           create (this->current_connection_params_->pod_rt_info_.entry_point
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
 
     ACE_TRY_CHECK;
 
@@ -431,7 +431,7 @@ DOVE_Supplier::connect_Supplier ()
            this->current_connection_params_->pod_rt_info_.threads,
            ACE_static_cast (RtecScheduler::Info_Type_t,
                             this->current_connection_params_->pod_rt_info_.info_type)
-           TAO_ENV_ARG_PARAMETER);
+           ACE_ENV_ARG_PARAMETER);
 
     ACE_TRY_CHECK;
 
@@ -455,17 +455,17 @@ DOVE_Supplier::connect_Supplier ()
 
     // = Connect as a supplier.
     this->current_connection_params_->supplierAdmin_var_ =
-      this->current_connection_params_->eventChannel_var_->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->current_connection_params_->eventChannel_var_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     this->current_connection_params_->proxyPushConsumer_var_ =
-      this->current_connection_params_->supplierAdmin_var_->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->current_connection_params_->supplierAdmin_var_->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // In calling _this we get back an object reference and register
     // the servant with the POA.
     RtecEventComm::PushSupplier_var pushSupplier_var =
-      this->internal_DOVE_Supplier_ptr_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->internal_DOVE_Supplier_ptr_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // Connect the supplier to the proxy consumer.
@@ -473,7 +473,7 @@ DOVE_Supplier::connect_Supplier ()
     this->current_connection_params_->
       proxyPushConsumer_var_->connect_push_supplier (pushSupplier_var.in (),
                                                      qos
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY

@@ -74,22 +74,22 @@ public:
   /// This method implements one of the "starting" client side
   /// interception points.
   void send_request (TAO_ClientRequestInfo_i *ri
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
   void receive_reply (TAO_ClientRequestInfo_i *ri
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
   void receive_exception (TAO_ClientRequestInfo_i *ri
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
 
   /// This method implements one of the "ending" client side
   /// interception point.
   void receive_other (TAO_ClientRequestInfo_i *ri
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
   //@}
 
 protected:
@@ -99,7 +99,7 @@ protected:
   /// to notifying the Invocation object of the LOCATION_FORWARD.
   void process_forward_request (TAO_ClientRequestInfo_i *ri,
                                 PortableInterceptor::ForwardRequest &exc
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 
 private:
 

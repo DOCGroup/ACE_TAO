@@ -77,11 +77,11 @@ public:
 
   /// Initialize this object using the given input string.
   virtual void parse_string (const char *string
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 
   /// Return a string representation for this profile.
   /// client must deallocate memory.
-  virtual char * to_string (TAO_ENV_SINGLE_ARG_DECL);
+  virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Initialize this object using the given CDR octet string.
   virtual int decode (TAO_InputCDR& cdr);
@@ -138,7 +138,7 @@ public:
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 
   /// Please see the Profile.h for the documentation of this method
   virtual IOP::TaggedProfile &create_tagged_profile (void);

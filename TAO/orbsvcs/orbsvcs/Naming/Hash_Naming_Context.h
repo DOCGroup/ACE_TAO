@@ -123,7 +123,7 @@ public:
 
   virtual void bind (const CosNaming::Name &n,
                      CORBA::Object_ptr obj
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   // Create a binding for name <n> and object <obj> in the naming
   // context.  Compound names are treated as follows: ctx->bind (<c1;
   // c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
@@ -134,7 +134,7 @@ public:
 
   virtual void rebind (const CosNaming::Name &n,
                        CORBA::Object_ptr obj
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
   // This is similar to <bind> operation above, except for when the
   // binding for the specified name already exists in the specified
   // context.  In that case, the existing binding is replaced with the
@@ -142,20 +142,20 @@ public:
 
   virtual void bind_context (const CosNaming::Name &n,
                              CosNaming::NamingContext_ptr nc
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
   // This is the version of <bind> specifically for binding naming
   // contexts, so that they will participate in name resolution when
   // compound names are passed to be resolved.
 
    virtual void rebind_context (const CosNaming::Name &n,
                                CosNaming::NamingContext_ptr nc
-                               TAO_ENV_ARG_DECL);
+                               ACE_ENV_ARG_DECL);
   // This is a version of <rebind> specifically for naming contexts,
   // so that they can participate in name resolution when compound
   // names are passed.
 
   virtual CORBA::Object_ptr resolve (const CosNaming::Name &n
-                                     TAO_ENV_ARG_DECL);
+                                     ACE_ENV_ARG_DECL);
   // Return object reference that is bound to the name.  Compound name
   // resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
   // ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
@@ -163,19 +163,19 @@ public:
   // for "narrowing" the object to the appropriate type.
 
   virtual void unbind (const CosNaming::Name &n
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
   // Remove the name binding from the context.  When compound names
   // are used, unbind is defined as follows: ctx->unbind (<c1; c2;
   // cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
 
   virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n
-                                                         TAO_ENV_ARG_DECL);
+                                                         ACE_ENV_ARG_DECL);
   // This operation creates a new context and binds it to the name
   // supplied as an argument.  The newly-created context is
   // implemented by the same server as the context in which it was
   // bound (the name argument excluding the last component).
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
   // Delete the naming context.  The user should take care to <unbind> any
   // bindings in which the given context is bound to some names, to
   // avoid dangling references when invoking <destroy> operation.
@@ -190,7 +190,7 @@ protected:
   // = Helper method used by other methods.
 
   CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name
-                                            TAO_ENV_ARG_DECL);
+                                            ACE_ENV_ARG_DECL);
   // <get_context> is used by methods that need to resolve a compound
   // name before performing the actual operation (e.g., bind, unbind,
   // etc.)  <get_context> takes a full name (including the last

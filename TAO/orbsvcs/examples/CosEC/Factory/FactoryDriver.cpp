@@ -52,13 +52,13 @@ FactoryDriver::parse_args (int argc, char *argv [])
 int
 FactoryDriver::start (int argc, char *argv [])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       orb_ = CORBA::ORB_init (argc,
                               argv,
                               ""
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv) == -1)
@@ -71,7 +71,7 @@ FactoryDriver::start (int argc, char *argv [])
 
       CORBA::Object_var poa_object  =
         orb_->resolve_initial_references("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -81,15 +81,15 @@ FactoryDriver::start (int argc, char *argv [])
 
       root_poa_ =
         PortableServer::POA::_narrow (poa_object.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -106,23 +106,23 @@ FactoryDriver::start (int argc, char *argv [])
       if (factory_servant_->init (root_poa_.in (),
                                   child_poa_name_,
                                   context.in ()
-                                 TAO_ENV_ARG_PARAMETER) != 0)
+                                 ACE_ENV_ARG_PARAMETER) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to initialize "
                            "the factory. \n"),
                           1);
 
       // activate the factory in the root poa.
-      factory_ = factory_servant_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      factory_ = factory_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Give the ownership to the POA.
-      factory_servant_->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+      factory_servant_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
       CORBA::String_var
         str = orb_->object_to_string (factory_.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -134,7 +134,7 @@ FactoryDriver::start (int argc, char *argv [])
       name[0].id = CORBA::string_dup (factoryName_);
       naming_client_->rebind (name,
                               factory_.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

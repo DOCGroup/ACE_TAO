@@ -83,7 +83,7 @@ public:
                     TAO_AV_Callback *&callback);
 
   virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec
-                                                      TAO_ENV_ARG_DECL_NOT_USED);
+                                                      ACE_ENV_ARG_DECL_NOT_USED);
   /// Called when a distributor tries to connect to the receiver
 
 private:
@@ -108,7 +108,7 @@ public:
 
   int init (int argc,
             char **argv
-            TAO_ENV_ARG_DECL_NOT_USED);
+            ACE_ENV_ARG_DECL_NOT_USED);
   /// Initialize data components.
 
   int parse_args (int argc,
@@ -121,7 +121,7 @@ public:
   ACE_CString sender_name (void);
   ACE_CString receiver_name (void);
 
-  void shut_down (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shut_down (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 protected:
   Connection_Manager connection_manager_;

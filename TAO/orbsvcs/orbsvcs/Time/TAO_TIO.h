@@ -46,13 +46,13 @@ public:
   // Destructor.
 
   virtual TimeBase::IntervalT  time_interval (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This is the get method for the attribute time interval.
 
   virtual CosTime::OverlapType spans (CosTime::UTO_ptr time,
                                       CosTime::TIO_out overlap
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation returns a value of type OverlapType depending on
   // how the interval in the object and the time range represented by
@@ -63,7 +63,7 @@ public:
 
   virtual CosTime::OverlapType overlaps (CosTime::TIO_ptr interval,
                                          CosTime::TIO_out overlap
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation returns a value of type OverlapType depending on
   // how the interval in the object and interval in the parameter TIO
@@ -71,7 +71,7 @@ public:
   // parameter overlap contains the overlap interval, otherwise the
   // out parameter contains the gap between the two intervals.
 
-  virtual CosTime::UTO_ptr time (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CosTime::UTO_ptr time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a UTO in which the inaccuracy interval is equal to the
   // time interval in the TIO and time value is the midpoint of the

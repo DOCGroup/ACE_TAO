@@ -50,17 +50,17 @@ main (int argc , char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             ""
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test of pragma prefix handling.
@@ -71,7 +71,7 @@ main (int argc , char *argv[])
 
       hello_i h;
 
-      obj = h._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      obj = h._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -86,7 +86,7 @@ main (int argc , char *argv[])
 
       goodbye_i g;
 
-      obj = g._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      obj = g._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -101,7 +101,7 @@ main (int argc , char *argv[])
 
       sayonara_i s;
 
-      obj = s._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      obj = s._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -116,7 +116,7 @@ main (int argc , char *argv[])
 
       ciao_i c;
 
-      obj = c._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      obj = c._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -131,7 +131,7 @@ main (int argc , char *argv[])
 
       aloha_i a;
 
-      obj = a._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      obj = a._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -173,7 +173,7 @@ main (int argc , char *argv[])
 
       root_poa->destroy (1,
                          1
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

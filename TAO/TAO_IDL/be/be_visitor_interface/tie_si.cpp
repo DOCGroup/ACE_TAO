@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -161,13 +161,13 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << "template <class T> ACE_INLINE "
       << "PortableServer::POA_ptr" << be_nl
       << fulltiename
-      << "<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)" << be_nl
+      << "<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "return PortableServer::POA::_duplicate (this->poa_.in ());\n"
       << be_uidt_nl
       << "return this->" << localskelname
-      << "::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "}\n\n";
 
   if (node->traverse_inheritance_graph (be_visitor_interface_tie_si::method_helper, os) == -1)
@@ -189,8 +189,8 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
 int
 be_visitor_interface_tie_si::method_helper (be_interface *derived,
-					    be_interface *node,
-					    TAO_OutStream *os)
+                                            be_interface *node,
+                                            TAO_OutStream *os)
 {
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
@@ -202,8 +202,8 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "be_visitor_interface_tie_sh::"
-			 "method_helper\n"), -1);
+                         "be_visitor_interface_tie_sh::"
+                         "method_helper\n"), -1);
     }
   delete visitor;
   return 0;

@@ -85,7 +85,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
       // Call the Request back and send the reply data.
       this->req_->handle_response (this->reply_cdr_,
                                    this->reply_status_
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -117,7 +117,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
       TAO_OutputCDR out_cdr;
 
       comm_failure._tao_encode (out_cdr
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Turn into an output CDR
@@ -125,7 +125,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
 
       this->req_->handle_response (cdr,
                                    TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -36,59 +36,59 @@ TAO_Notify_Default_POA_Factory::fini (void)
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Default_POA_Factory::create_event_channel_POA (PortableServer::POA_ptr parent_poa TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::create_event_channel_POA (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 {
   return this->create_generic_childPOA_i (EC_POA_NAME,
-                                          parent_poa TAO_ENV_ARG_PARAMETER);
+                                          parent_poa ACE_ENV_ARG_PARAMETER);
 }
 
 
 PortableServer::POA_ptr
-TAO_Notify_Default_POA_Factory::create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL)
 {
   char child_poa_name[BUFSIZ];
 
   ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "SA");
 
   return this->create_generic_childPOA_i (child_poa_name, parent_poa
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Default_POA_Factory::create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL)
 {
   char child_poa_name[BUFSIZ];
 
   ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "CA");
 
   return this->create_generic_childPOA_i (child_poa_name,
-                                          parent_poa TAO_ENV_ARG_PARAMETER);
+                                          parent_poa ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Default_POA_Factory::create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL)
 {
   char child_poa_name[BUFSIZ];
 
   ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "PPC");
 
   return this->create_generic_childPOA_i (child_poa_name,
-                                          parent_poa TAO_ENV_ARG_PARAMETER);
+                                          parent_poa ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Default_POA_Factory::create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id ACE_ENV_ARG_DECL)
 {
   char child_poa_name[BUFSIZ];
 
   ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "PPS");
 
   return this->create_generic_childPOA_i (child_poa_name,
-                                          parent_poa TAO_ENV_ARG_PARAMETER);
+                                          parent_poa ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Default_POA_Factory::create_generic_childPOA_i (const char* child_poa_name, PortableServer::POA_ptr poa TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::create_generic_childPOA_i (const char* child_poa_name, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   // @@ Pradeep: if the Notification service is ever going to be
   // persistent or fault tolerant you may need to create this stuff
@@ -100,16 +100,16 @@ TAO_Notify_Default_POA_Factory::create_generic_childPOA_i (const char* child_poa
   // to detect duplicates for us.
   PortableServer::IdUniquenessPolicy_var idpolicy =
     poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil());
 
   PortableServer::IdAssignmentPolicy_var assignpolicy =
     poa->create_id_assignment_policy (PortableServer::USER_ID
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::POAManager_var manager =
-    poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Create a PolicyList
@@ -126,10 +126,10 @@ TAO_Notify_Default_POA_Factory::create_generic_childPOA_i (const char* child_poa
   PortableServer::POA_var poa_ret = poa->create_POA (child_poa_name,
                                                      manager.in (),
                                                      policy_list
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil());
 
-  idpolicy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  idpolicy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil());
 
   assignpolicy->destroy ();
@@ -169,7 +169,7 @@ TAO_Notify_Default_POA_Factory::long_to_ObjectId (const CORBA::Long id)
 }
 
 CORBA::Object_ptr
-TAO_Notify_Default_POA_Factory::activate_object_with_id (CORBA::Long id, PortableServer::POA_ptr poa, PortableServer::Servant servant TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::activate_object_with_id (CORBA::Long id, PortableServer::POA_ptr poa, PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
@@ -177,75 +177,75 @@ TAO_Notify_Default_POA_Factory::activate_object_with_id (CORBA::Long id, Portabl
 
   poa->activate_object_with_id (oid.in (),
                                 servant
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return poa->id_to_reference (oid.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-TAO_Notify_Default_POA_Factory::activate_object (PortableServer::POA_ptr poa, PortableServer::Servant servant TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::activate_object (PortableServer::POA_ptr poa, PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
-  PortableServer::ObjectId_var oid = poa->activate_object (servant TAO_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId_var oid = poa->activate_object (servant ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return poa->id_to_reference (oid.in () TAO_ENV_ARG_PARAMETER);
+  return poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-TAO_Notify_Default_POA_Factory::servant_to_reference (PortableServer::POA_ptr poa, PortableServer::Servant servant TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::servant_to_reference (PortableServer::POA_ptr poa, PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
-  PortableServer::ObjectId_var oid = poa->servant_to_id (servant TAO_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId_var oid = poa->servant_to_id (servant ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return poa->id_to_reference (oid.in () TAO_ENV_ARG_PARAMETER);
+  return poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-TAO_Notify_Default_POA_Factory::id_to_reference (CORBA::Long id, PortableServer::POA_ptr poa TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::id_to_reference (CORBA::Long id, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
     this->long_to_ObjectId (id);
 
   return poa->id_to_reference (oid.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Default_POA_Factory::destroy_POA (PortableServer::POA_ptr poa TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::destroy_POA (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   if (!CORBA::is_nil (poa))
-    poa->destroy (1,0 TAO_ENV_ARG_PARAMETER);
+    poa->destroy (1,0 ACE_ENV_ARG_PARAMETER);
   // The <wait_for_completion> flag causes a deadlock when destroying the POA
   // because we are involved in an upcall.
   // TODO:I have to think about what the implications of not waiting are.
 }
 
 void
-TAO_Notify_Default_POA_Factory::deactivate_object (CORBA::Object_ptr obj, PortableServer::POA_ptr poa TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::deactivate_object (CORBA::Object_ptr obj, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (poa) || CORBA::is_nil (obj))
     return;
 
   PortableServer::ObjectId_var id =
-    poa->reference_to_id (obj TAO_ENV_ARG_PARAMETER);
+    poa->reference_to_id (obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_Notify_Default_POA_Factory::deactivate_object (PortableServer::Servant servant, PortableServer::POA_ptr poa TAO_ENV_ARG_DECL)
+TAO_Notify_Default_POA_Factory::deactivate_object (PortableServer::Servant servant, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (poa) || servant == 0)
     return;
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (servant TAO_ENV_ARG_PARAMETER);
+    poa->servant_to_id (servant ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

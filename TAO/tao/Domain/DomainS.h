@@ -67,7 +67,7 @@
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual void* _downcast (
@@ -78,38 +78,38 @@
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::DomainManager *_this (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual CORBA::Policy_ptr get_domain_policy (
         CORBA::PolicyType policy_type
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -119,7 +119,7 @@
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
 
@@ -139,7 +139,7 @@
 
     virtual _TAO_CORBA_DomainManager_Proxy_Impl &select_proxy (
       ::CORBA::DomainManager *object
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   private:
@@ -147,7 +147,7 @@
     // as soon as their use is necessary.
     void create_proxy (
       int collocation_strategy
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
     // Caches the proxy implementations. The proxy implementation
@@ -187,7 +187,7 @@
     virtual CORBA::Policy_ptr get_domain_policy (
         CORBA::Object_ptr _collocated_tao_target_,
         CORBA::PolicyType policy_type
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -219,7 +219,7 @@
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual void* _downcast (
@@ -230,31 +230,31 @@
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     CORBA_ConstructionPolicy *_this (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual const char* _interface_repository_id (void) const;
@@ -262,7 +262,7 @@
     virtual void make_domain_manager (
         CORBA::InterfaceDef_ptr object_type,
         CORBA::Boolean constr_policy
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -272,28 +272,28 @@
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _get_policy_type_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *context
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static void copy_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *context
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static void destroy_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *context
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 
@@ -313,7 +313,7 @@
 
     virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl &select_proxy (
       CORBA_ConstructionPolicy *object
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   private:
@@ -321,7 +321,7 @@
     // as soon as their use is necessary.
     void create_proxy (
       int collocation_strategy
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
     // Caches the proxy implementations. The proxy implementation
@@ -364,7 +364,7 @@
         CORBA::Object_ptr _collocated_tao_target_,
         CORBA::InterfaceDef_ptr object_type,
         CORBA::Boolean constr_policy
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

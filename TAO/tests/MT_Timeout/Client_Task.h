@@ -46,7 +46,7 @@ public:
   /// Return the total number of timed out calls
   int timed_out_calls (void) const;
 
-  /// Return the number of calls with a too huge difference in 
+  /// Return the number of calls with a too huge difference in
   /// timeout versus actual response arrival.
   int too_big_difference_calls (void) const;
 
@@ -55,10 +55,10 @@ public:
 
 private:
   /// Run one iteration of the test
-  int one_iteration (TAO_ENV_SINGLE_ARG_DECL);
+  int one_iteration (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Make sure that the thread has a connection available
-  void validate_connection (TAO_ENV_SINGLE_ARG_DECL);
+  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// A reference to the ORB

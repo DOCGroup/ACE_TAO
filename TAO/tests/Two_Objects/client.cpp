@@ -37,13 +37,13 @@ int
 main (int argc, char *argv[])
 {
   // Used to declare the CORBA::Environment variable
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the arguments
@@ -54,13 +54,13 @@ main (int argc, char *argv[])
       // The object reference obtained is a reference to the factory
       // object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the object reference to the appropriate type
       Two_Objects_Test::Object_Factory_var factory =
         Two_Objects_Test::Object_Factory::_narrow(tmp.in ()
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -79,19 +79,19 @@ main (int argc, char *argv[])
       second = factory->create_second();
 
       // Call the oneway method
-      first->oneway_method (TAO_ENV_SINGLE_ARG_PARAMETER);
+      first->oneway_method (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Client : one way call done\n"));
 
       Two_Objects_Test::Octet_Seq_var reply_seq =
-      second->twoway_method (TAO_ENV_SINGLE_ARG_PARAMETER);
+      second->twoway_method (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Client : length of returned data is %d\n",
                      reply_seq->length() ));
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -20,7 +20,7 @@ test_i::~test_i (void)
 }
 
 void
-test_i::invoke_me (TAO_ENV_SINGLE_ARG_DECL)
+test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -39,7 +39,7 @@ test_i::invoke_me (TAO_ENV_SINGLE_ARG_DECL)
       // receive_request_service_contexts() interception point, and
       // then copied into the TSC current.
       retrieved_any =
-        this->current_->get_slot (this->slot_id_ TAO_ENV_ARG_PARAMETER);
+        this->current_->get_slot (this->slot_id_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
@@ -88,7 +88,7 @@ test_i::invoke_me (TAO_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY_EX (foo)
     {
-      this->current_->set_slot (this->slot_id_, data TAO_ENV_ARG_PARAMETER);
+      this->current_->set_slot (this->slot_id_, data ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (foo);
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
@@ -113,11 +113,11 @@ test_i::invoke_me (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Server is shutting down.\n"));
 
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

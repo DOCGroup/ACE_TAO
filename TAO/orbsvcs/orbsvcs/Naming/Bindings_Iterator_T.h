@@ -63,26 +63,26 @@ public:
   ~TAO_Bindings_Iterator (void);
   // Destructor.
 
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
   // Returns the Default POA of this Servant object
 
   // = Idl methods.
 
   CORBA::Boolean next_one (CosNaming::Binding_out b
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation passes back the next unseen binding.  True is
   // returned if a binding is passed back, and false is returned otherwise.
 
   CORBA::Boolean next_n (CORBA::ULong how_many,
                          CosNaming::BindingList_out bl
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation passes back at most <how_many> unseen bindings.
   // True is returned if bindings were passed back, and false is
   // returned if no bindings were passed back.
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation destroys the iterator.
 

@@ -61,7 +61,7 @@ TAO_DLL_ORB::init (int /*argc*/, ACE_TCHAR *argv[])
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.argv (),
                                     ""
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->orb_.in ()))
@@ -91,7 +91,7 @@ TAO_DLL_ORB::fini (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (TAO_Singleton_Manager::instance ()->fini () == -1)
@@ -115,7 +115,7 @@ TAO_DLL_ORB::svc (void)
   ACE_TRY_NEW_ENV
     {
       // Run the ORB event loop in its own thread.
-      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -507,10 +507,10 @@ tao_RTCORBA_PriorityModelPolicy_nil (
 RTCORBA::PriorityModelPolicy_ptr
 tao_RTCORBA_PriorityModelPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::PriorityModelPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::PriorityModelPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -634,10 +634,10 @@ RTCORBA::PriorityModelPolicy_var::tao_nil (void)
 ::RTCORBA::PriorityModelPolicy_ptr
 RTCORBA::PriorityModelPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::PriorityModelPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::PriorityModelPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -719,15 +719,15 @@ RTCORBA::PriorityModelPolicy::~PriorityModelPolicy (void)
 
 RTCORBA::PriorityModelPolicy_ptr RTCORBA::PriorityModelPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return PriorityModelPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return PriorityModelPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::PriorityModelPolicy_ptr RTCORBA::PriorityModelPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -819,10 +819,10 @@ tao_RTCORBA_ThreadpoolPolicy_nil (
 RTCORBA::ThreadpoolPolicy_ptr
 tao_RTCORBA_ThreadpoolPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::ThreadpoolPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::ThreadpoolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -946,10 +946,10 @@ RTCORBA::ThreadpoolPolicy_var::tao_nil (void)
 ::RTCORBA::ThreadpoolPolicy_ptr
 RTCORBA::ThreadpoolPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::ThreadpoolPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::ThreadpoolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1031,15 +1031,15 @@ RTCORBA::ThreadpoolPolicy::~ThreadpoolPolicy (void)
 
 RTCORBA::ThreadpoolPolicy_ptr RTCORBA::ThreadpoolPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ThreadpoolPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ThreadpoolPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ThreadpoolPolicy_ptr RTCORBA::ThreadpoolPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1127,10 +1127,10 @@ tao_RTCORBA_ProtocolProperties_nil (
 RTCORBA::ProtocolProperties_ptr
 tao_RTCORBA_ProtocolProperties_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::ProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::ProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1254,10 +1254,10 @@ RTCORBA::ProtocolProperties_var::tao_nil (void)
 ::RTCORBA::ProtocolProperties_ptr
 RTCORBA::ProtocolProperties_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::ProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::ProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1339,15 +1339,15 @@ RTCORBA::ProtocolProperties::~ProtocolProperties (void)
 
 RTCORBA::ProtocolProperties_ptr RTCORBA::ProtocolProperties::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ProtocolProperties::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ProtocolProperties_ptr RTCORBA::ProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1523,10 +1523,10 @@ tao_RTCORBA_ServerProtocolPolicy_nil (
 RTCORBA::ServerProtocolPolicy_ptr
 tao_RTCORBA_ServerProtocolPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::ServerProtocolPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::ServerProtocolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1650,10 +1650,10 @@ RTCORBA::ServerProtocolPolicy_var::tao_nil (void)
 ::RTCORBA::ServerProtocolPolicy_ptr
 RTCORBA::ServerProtocolPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::ServerProtocolPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::ServerProtocolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1735,15 +1735,15 @@ RTCORBA::ServerProtocolPolicy::~ServerProtocolPolicy (void)
 
 RTCORBA::ServerProtocolPolicy_ptr RTCORBA::ServerProtocolPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ServerProtocolPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ServerProtocolPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ServerProtocolPolicy_ptr RTCORBA::ServerProtocolPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1835,10 +1835,10 @@ tao_RTCORBA_ClientProtocolPolicy_nil (
 RTCORBA::ClientProtocolPolicy_ptr
 tao_RTCORBA_ClientProtocolPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::ClientProtocolPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::ClientProtocolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1962,10 +1962,10 @@ RTCORBA::ClientProtocolPolicy_var::tao_nil (void)
 ::RTCORBA::ClientProtocolPolicy_ptr
 RTCORBA::ClientProtocolPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::ClientProtocolPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::ClientProtocolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2047,15 +2047,15 @@ RTCORBA::ClientProtocolPolicy::~ClientProtocolPolicy (void)
 
 RTCORBA::ClientProtocolPolicy_ptr RTCORBA::ClientProtocolPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ClientProtocolPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ClientProtocolPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ClientProtocolPolicy_ptr RTCORBA::ClientProtocolPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2147,10 +2147,10 @@ tao_RTCORBA_PrivateConnectionPolicy_nil (
 RTCORBA::PrivateConnectionPolicy_ptr
 tao_RTCORBA_PrivateConnectionPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::PrivateConnectionPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::PrivateConnectionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2274,10 +2274,10 @@ RTCORBA::PrivateConnectionPolicy_var::tao_nil (void)
 ::RTCORBA::PrivateConnectionPolicy_ptr
 RTCORBA::PrivateConnectionPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::PrivateConnectionPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::PrivateConnectionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2359,15 +2359,15 @@ RTCORBA::PrivateConnectionPolicy::~PrivateConnectionPolicy (void)
 
 RTCORBA::PrivateConnectionPolicy_ptr RTCORBA::PrivateConnectionPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return PrivateConnectionPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return PrivateConnectionPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::PrivateConnectionPolicy_ptr RTCORBA::PrivateConnectionPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2455,10 +2455,10 @@ tao_RTCORBA_TCPProtocolProperties_nil (
 RTCORBA::TCPProtocolProperties_ptr
 tao_RTCORBA_TCPProtocolProperties_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::TCPProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::TCPProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2582,10 +2582,10 @@ RTCORBA::TCPProtocolProperties_var::tao_nil (void)
 ::RTCORBA::TCPProtocolProperties_ptr
 RTCORBA::TCPProtocolProperties_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::TCPProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::TCPProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2682,15 +2682,15 @@ RTCORBA::TCPProtocolProperties::~TCPProtocolProperties (void)
 
 RTCORBA::TCPProtocolProperties_ptr RTCORBA::TCPProtocolProperties::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TCPProtocolProperties::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return TCPProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::TCPProtocolProperties_ptr RTCORBA::TCPProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2778,10 +2778,10 @@ tao_RTCORBA_GIOPProtocolProperties_nil (
 RTCORBA::GIOPProtocolProperties_ptr
 tao_RTCORBA_GIOPProtocolProperties_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::GIOPProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::GIOPProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2905,10 +2905,10 @@ RTCORBA::GIOPProtocolProperties_var::tao_nil (void)
 ::RTCORBA::GIOPProtocolProperties_ptr
 RTCORBA::GIOPProtocolProperties_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::GIOPProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::GIOPProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2990,15 +2990,15 @@ RTCORBA::GIOPProtocolProperties::~GIOPProtocolProperties (void)
 
 RTCORBA::GIOPProtocolProperties_ptr RTCORBA::GIOPProtocolProperties::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return GIOPProtocolProperties::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return GIOPProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::GIOPProtocolProperties_ptr RTCORBA::GIOPProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3086,10 +3086,10 @@ tao_RTCORBA_UnixDomainProtocolProperties_nil (
 RTCORBA::UnixDomainProtocolProperties_ptr
 tao_RTCORBA_UnixDomainProtocolProperties_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::UnixDomainProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::UnixDomainProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3213,10 +3213,10 @@ RTCORBA::UnixDomainProtocolProperties_var::tao_nil (void)
 ::RTCORBA::UnixDomainProtocolProperties_ptr
 RTCORBA::UnixDomainProtocolProperties_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::UnixDomainProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::UnixDomainProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3298,15 +3298,15 @@ RTCORBA::UnixDomainProtocolProperties::~UnixDomainProtocolProperties (void)
 
 RTCORBA::UnixDomainProtocolProperties_ptr RTCORBA::UnixDomainProtocolProperties::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return UnixDomainProtocolProperties::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return UnixDomainProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::UnixDomainProtocolProperties_ptr RTCORBA::UnixDomainProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3394,10 +3394,10 @@ tao_RTCORBA_SharedMemoryProtocolProperties_nil (
 RTCORBA::SharedMemoryProtocolProperties_ptr
 tao_RTCORBA_SharedMemoryProtocolProperties_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::SharedMemoryProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::SharedMemoryProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3521,10 +3521,10 @@ RTCORBA::SharedMemoryProtocolProperties_var::tao_nil (void)
 ::RTCORBA::SharedMemoryProtocolProperties_ptr
 RTCORBA::SharedMemoryProtocolProperties_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::SharedMemoryProtocolProperties::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::SharedMemoryProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3606,15 +3606,15 @@ RTCORBA::SharedMemoryProtocolProperties::~SharedMemoryProtocolProperties (void)
 
 RTCORBA::SharedMemoryProtocolProperties_ptr RTCORBA::SharedMemoryProtocolProperties::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return SharedMemoryProtocolProperties::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return SharedMemoryProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::SharedMemoryProtocolProperties_ptr RTCORBA::SharedMemoryProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3993,10 +3993,10 @@ tao_RTCORBA_PriorityBandedConnectionPolicy_nil (
 RTCORBA::PriorityBandedConnectionPolicy_ptr
 tao_RTCORBA_PriorityBandedConnectionPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::PriorityBandedConnectionPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::PriorityBandedConnectionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4120,10 +4120,10 @@ RTCORBA::PriorityBandedConnectionPolicy_var::tao_nil (void)
 ::RTCORBA::PriorityBandedConnectionPolicy_ptr
 RTCORBA::PriorityBandedConnectionPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::PriorityBandedConnectionPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::PriorityBandedConnectionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4205,15 +4205,15 @@ RTCORBA::PriorityBandedConnectionPolicy::~PriorityBandedConnectionPolicy (void)
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr RTCORBA::PriorityBandedConnectionPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return PriorityBandedConnectionPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return PriorityBandedConnectionPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr RTCORBA::PriorityBandedConnectionPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -4301,10 +4301,10 @@ tao_RTCORBA_Current_nil (
 RTCORBA::Current_ptr
 tao_RTCORBA_Current_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::Current::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4428,10 +4428,10 @@ RTCORBA::Current_var::tao_nil (void)
 ::RTCORBA::Current_ptr
 RTCORBA::Current_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::Current::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4513,15 +4513,15 @@ RTCORBA::Current::~Current (void)
 
 RTCORBA::Current_ptr RTCORBA::Current::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return Current::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::Current_ptr RTCORBA::Current::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -4609,10 +4609,10 @@ tao_RTCORBA_Mutex_nil (
 RTCORBA::Mutex_ptr
 tao_RTCORBA_Mutex_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::Mutex::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::Mutex::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4736,10 +4736,10 @@ RTCORBA::Mutex_var::tao_nil (void)
 ::RTCORBA::Mutex_ptr
 RTCORBA::Mutex_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::Mutex::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::Mutex::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4821,15 +4821,15 @@ RTCORBA::Mutex::~Mutex (void)
 
 RTCORBA::Mutex_ptr RTCORBA::Mutex::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return Mutex::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return Mutex::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::Mutex_ptr RTCORBA::Mutex::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -4905,10 +4905,10 @@ tao_RTCORBA_RTORB_nil (
 RTCORBA::RTORB_ptr
 tao_RTCORBA_RTORB_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTCORBA::RTORB::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return RTCORBA::RTORB::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -5032,10 +5032,10 @@ RTCORBA::RTORB_var::tao_nil (void)
 ::RTCORBA::RTORB_ptr
 RTCORBA::RTORB_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTCORBA::RTORB::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTCORBA::RTORB::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -5117,15 +5117,15 @@ RTCORBA::RTORB::~RTORB (void)
 
 RTCORBA::RTORB_ptr RTCORBA::RTORB::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RTORB::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RTORB::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::RTORB_ptr RTCORBA::RTORB::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -5220,7 +5220,7 @@ void RTCORBA::RTORB::MutexNotFound::_raise ()
 
 void RTCORBA::RTORB::MutexNotFound::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -5228,7 +5228,7 @@ void RTCORBA::RTORB::MutexNotFound::_tao_encode (
 
 void RTCORBA::RTORB::MutexNotFound::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -5288,7 +5288,7 @@ void RTCORBA::RTORB::InvalidThreadpool::_raise ()
 
 void RTCORBA::RTORB::InvalidThreadpool::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -5296,7 +5296,7 @@ void RTCORBA::RTORB::InvalidThreadpool::_tao_encode (
 
 void RTCORBA::RTORB::InvalidThreadpool::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -5347,7 +5347,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::Threadpoo
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_ThreadpoolLane TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_ThreadpoolLane ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5438,7 +5438,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::Threadpoo
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_ThreadpoolLanes TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_ThreadpoolLanes ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5501,7 +5501,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, RTCORBA::PriorityModel &
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityModel TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityModel ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5631,7 +5631,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::PriorityB
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityBand TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityBand ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5722,7 +5722,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::PriorityB
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityBands TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityBands ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

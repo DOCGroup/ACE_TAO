@@ -61,15 +61,15 @@ public:
   virtual ~TAO_Notify_EventChannelFactory_i (void);
   // Destructor
 
-  static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA TAO_ENV_ARG_DECL);
+  static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
   // Create a factory servant and activates it with the default POA.
   // Also creates a resource factory and assigns it this default_POA.
 
-  CosNotifyChannelAdmin::EventChannelFactory_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr get_ref (ACE_ENV_SINGLE_ARG_DECL);
   // Get the CORBA object.
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
   ,    // This is ugly -- destroy_children should come BEFORE the env arg.
 #endif
                  CORBA::Boolean destroy_children = 0);
@@ -89,7 +89,7 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,
     CosNotifyChannelAdmin::ChannelID_out id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -98,7 +98,7 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr create_channel (
   ));
 
 virtual CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -106,7 +106,7 @@ virtual CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
 
 virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
     CosNotifyChannelAdmin::ChannelID id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -117,10 +117,10 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
   TAO_Notify_EventChannelFactory_i (void);
   // Constructor
 
-  void init_i (PortableServer::POA_ptr default_POA TAO_ENV_ARG_DECL);
+  void init_i (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
   // Initializes this object.
 
-  CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (TAO_ENV_SINGLE_ARG_DECL);
+  CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (ACE_ENV_SINGLE_ARG_DECL);
   // Create the default filter factory.
 
   // = Data members

@@ -38,13 +38,13 @@ public:
   ~Client (void);
   //Dtor..
 
-  void create_widgets (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void create_widgets (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Adds the callbacks to the GUI underneath.....
 
   void show (void);
 
   void parse_args (int argc, char *argv[]
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
 
   QVBox box_;
   // A box widget..

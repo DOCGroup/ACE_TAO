@@ -12,7 +12,7 @@ ACE_RCSID (FaultTolerance, FT_ORBInitializer, "$Id$")
 void
 TAO_FT_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -21,18 +21,18 @@ TAO_FT_ORBInitializer::pre_init (
 void
 TAO_FT_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_FT_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   // Register the FTCORBA policy factories.
 
@@ -60,19 +60,19 @@ TAO_FT_ORBInitializer::register_policy_factories (
   CORBA::PolicyType type = FT::REQUEST_DURATION_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = FT::HEARTBEAT_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = FT::HEARTBEAT_ENABLED_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Transfer ownership of the policy factory to the registry.

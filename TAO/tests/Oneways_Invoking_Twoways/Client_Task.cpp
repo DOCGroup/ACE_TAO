@@ -21,7 +21,7 @@ Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       for (int i = 0; i != 1; ++i)
@@ -30,7 +30,7 @@ Client_Task::svc (void)
                       "TAO (%P|%t) sending oneways...\n"));
 
           this->sender_->send_ready_message (this->us_.in ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

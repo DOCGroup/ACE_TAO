@@ -126,14 +126,14 @@ public:
 
   // = The TAO_ESF_Proxy methods
   virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
   virtual void connected (PROXY *proxy
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
   virtual void reconnected (PROXY *proxy
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
   virtual void disconnected (PROXY *proxy
-                             TAO_ENV_ARG_DECL);
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;

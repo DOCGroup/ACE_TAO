@@ -10,7 +10,7 @@
 int main (int argc, char* argv[])
 {
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 
@@ -18,7 +18,7 @@ int main (int argc, char* argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv,
                          "" /* the ORB name, it can be anything! */
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if(argc < 2){
@@ -27,21 +27,21 @@ int main (int argc, char* argv[])
       }
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // narrow down to the correct reference
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Set a POA Manager
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Activate the POA Manager
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create the servant
@@ -54,13 +54,13 @@ int main (int argc, char* argv[])
 
       // Get a reference to Naming Context
       CORBA::Object_var naming_context_object =
-        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow down the reference
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_context_object.in()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Bind Iterator_Factory to the Naming Context
@@ -72,13 +72,13 @@ int main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       // Run the orb
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Destroy the POA, waiting until the destruction terminates
-      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex) {

@@ -201,7 +201,7 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 }
 
 CORBA::ULong
-TAO_MProfile::hash (CORBA::ULong max TAO_ENV_ARG_DECL)
+TAO_MProfile::hash (CORBA::ULong max ACE_ENV_ARG_DECL)
 {
   CORBA::ULong hashval = 0;
 
@@ -210,7 +210,7 @@ TAO_MProfile::hash (CORBA::ULong max TAO_ENV_ARG_DECL)
 
   for (TAO_PHandle h = 0; h < this->last_ ; ++h)
     {
-      hashval += pfiles_[h]->hash (max TAO_ENV_ARG_PARAMETER);
+      hashval += pfiles_[h]->hash (max ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -222,20 +222,20 @@ TAO_MProfile::hash (CORBA::ULong max TAO_ENV_ARG_DECL)
 }
 
 void
-TAO_MProfile::init_policy_list (TAO_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::init_policy_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   // The first time this method is called
   // it causes the initialization of the policies
   // for the current profile.
 
-  this->get_current_profile ()->policies (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->get_current_profile ()->policies (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->is_policy_list_initialized_ = 1;
 }
 
 CORBA::PolicyList *
-TAO_MProfile::policy_list (TAO_ENV_SINGLE_ARG_DECL)
+TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!this->is_policy_list_initialized_)
     {
@@ -246,10 +246,10 @@ TAO_MProfile::policy_list (TAO_ENV_SINGLE_ARG_DECL)
 
       if (this->policy_list_ == 0)
         {
-          this->create_policy_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->create_policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          this->init_policy_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->init_policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
     }

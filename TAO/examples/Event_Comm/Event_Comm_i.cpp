@@ -157,7 +157,7 @@ The filtering criteria will not work.\n"));
 void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
                        const char *filtering_criteria
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    Event_Comm::Notifier::CannotSubscribe
@@ -219,7 +219,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
                          const char *filtering_criteria
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    Event_Comm::Notifier::CannotUnsubscribe
@@ -275,7 +275,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 
 void
 Notifier_i::disconnect (const char *reason
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -302,7 +302,7 @@ Notifier_i::disconnect (const char *reason
       ACE_TRY
         {
           consumer_ref->disconnect (reason
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -330,7 +330,7 @@ Notifier_i::disconnect (const char *reason
 
 void
 Notifier_i::push (const Event_Comm::Event &event
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -368,7 +368,7 @@ Notifier_i::push (const Event_Comm::Event &event
           ACE_TRY
             {
               consumer_ref->push (event
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -405,7 +405,7 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Event_Comm::Event &event
-                  TAO_ENV_ARG_DECL_NOT_USED)
+                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *tmpstr = event.tag_;
@@ -420,7 +420,7 @@ Consumer_i::push (const Event_Comm::Event &event
 
 void
 Consumer_i::disconnect (const char *reason
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

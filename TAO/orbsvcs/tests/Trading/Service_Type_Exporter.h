@@ -24,17 +24,17 @@ public:
 
   TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                              CORBA::Boolean verbose
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void remove_all_types (TAO_ENV_SINGLE_ARG_DECL)
+  void remove_all_types (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
                      CosTradingRepos::ServiceTypeRepository::HasSubTypes));
   // Remove all service types from the trading service instance.
 
-  void add_all_types (TAO_ENV_SINGLE_ARG_DECL)
+  void add_all_types (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -46,7 +46,7 @@ public:
                      CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
   // Add all the generated service types to the trading service instance.
 
-  void add_all_types_to_all (TAO_ENV_SINGLE_ARG_DECL)
+  void add_all_types_to_all (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -59,19 +59,19 @@ public:
   // Add all the generated service types to all the trading service
   // instances linked to the trading service we bootstrapped to.
 
-  void list_all_types (TAO_ENV_SINGLE_ARG_DECL)
+  void list_all_types (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // List all the service types registered with the trading service
   // instance.
 
-  void describe_all_types (TAO_ENV_SINGLE_ARG_DECL)
+  void describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType));
   // Describe all the service types registered with the trading
   // service instance.
 
-  void fully_describe_all_types (TAO_ENV_SINGLE_ARG_DECL)
+  void fully_describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType));
@@ -85,7 +85,7 @@ private:
   // Generate the service type description structures.
 
   void add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,

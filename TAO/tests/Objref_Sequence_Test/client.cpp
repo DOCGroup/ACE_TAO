@@ -34,7 +34,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv [])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
 
 
@@ -44,7 +44,7 @@ main (int argc, char *argv [])
         CORBA::ORB_init (argc,
                          argv,
                          ""
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
@@ -53,11 +53,11 @@ main (int argc, char *argv [])
       // Connect to the server
       CORBA::Object_var tmp =
         orb->string_to_object(ior
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Server_var server = Server::_narrow (tmp.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create object instances
@@ -83,7 +83,7 @@ main (int argc, char *argv [])
 
           server->CreateExtra (iAddSize,
                                vAddition.out ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
 
@@ -113,12 +113,12 @@ main (int argc, char *argv [])
                   "(%P|%t) Call delete on the server \n"));
 
       server->DeleteExtra (vServers.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Calling shutdown \n"));
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

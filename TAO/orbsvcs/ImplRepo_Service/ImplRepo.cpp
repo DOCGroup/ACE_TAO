@@ -13,7 +13,7 @@ run_standalone (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int status = server.init (TAO_ENV_SINGLE_ARG_PARAMETER);
+      int status = server.init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
@@ -22,10 +22,10 @@ run_standalone (void)
         }
       else
         {
-          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          status = server.fini (TAO_ENV_SINGLE_ARG_PARAMETER);
+          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (status == -1)

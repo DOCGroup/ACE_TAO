@@ -10,19 +10,19 @@ main (int argc, char *argv[])
 {
   IFR_DII_Client client;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       if (client.init (argc,
                        argv
-                       TAO_ENV_ARG_PARAMETER)
+                       ACE_ENV_ARG_PARAMETER)
            == -1)
         {
           return 1;
         }
       else
         {
-          client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

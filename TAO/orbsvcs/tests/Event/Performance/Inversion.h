@@ -41,14 +41,14 @@ public:
   // The options controlling the event types are ignored, and only two
   // consumers are created.
 
-  virtual void connect_consumers (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void connect_suppliers (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void connect_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void connect_suppliers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // In this test there are two consumers, the high priority consumer
   // receives only events from a single high priority supplier.  The
   // other consumer receives events from a set of low priority
   // suppliers.
 
-  virtual void activate_tasks (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void activate_tasks (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Activate the suppliers at different priorities
 
 private:

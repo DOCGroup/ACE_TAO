@@ -46,13 +46,13 @@ public:
   // supplier.  Stores <my_name> for printing out messages.  Returns 0
   // on success, -1 on failure.
 
-  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The channel is disconnecting.
 
   // = (not protected to allow short-circuiting) protected:
   virtual void push (const RtecEventComm::EventSet &events
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // If the <events>[0] is a notification, prints out the data from
   // the supplier.  If its a shutdown message, the consumer

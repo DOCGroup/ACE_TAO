@@ -30,14 +30,14 @@ TAO_EC_ConsumerControl::shutdown (void)
 
 void
 TAO_EC_ConsumerControl::consumer_not_exist (TAO_EC_ProxyPushSupplier *
-                                            TAO_ENV_ARG_DECL_NOT_USED)
+                                            ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
 TAO_EC_ConsumerControl::system_exception (TAO_EC_ProxyPushSupplier *,
                                           CORBA::SystemException &
-                                          TAO_ENV_ARG_DECL_NOT_USED)
+                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 

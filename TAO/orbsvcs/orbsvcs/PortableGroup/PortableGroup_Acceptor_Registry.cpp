@@ -35,7 +35,7 @@ TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry (void)
 void
 TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
                                            TAO_ORB_Core &orb_core
-                                           TAO_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL)
 {
   Entry *entry;
 
@@ -66,7 +66,7 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
               this->open_i (profile,
                             orb_core,
                             factory
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
 
               // found = 1;  // A usable protocol was found.
@@ -83,7 +83,7 @@ void
 TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                                              TAO_ORB_Core &orb_core,
                                              TAO_ProtocolFactorySetItor &factory
-                                             TAO_ENV_ARG_DECL)
+                                             ACE_ENV_ARG_DECL)
 {
   TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 

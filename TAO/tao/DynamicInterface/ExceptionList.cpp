@@ -50,7 +50,7 @@ CORBA_ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 
 CORBA::TypeCode_ptr
 CORBA_ExceptionList::item (CORBA::ULong slot
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_ptr *tc = 0;
 
@@ -67,7 +67,7 @@ CORBA_ExceptionList::item (CORBA::ULong slot
 
 void
 CORBA_ExceptionList::remove (CORBA::ULong
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }

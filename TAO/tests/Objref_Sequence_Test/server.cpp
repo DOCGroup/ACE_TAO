@@ -13,14 +13,14 @@ public:
 
   void CreateExtra (CORBA::ULong length,
                     ServerSequence_out seq
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void DeleteExtra (const ServerSequence &seq
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -43,7 +43,7 @@ ServerServant::ServerServant (PortableServer::POA_ptr poa,
 void
 ServerServant::CreateExtra (CORBA::ULong len,
                             ServerSequence_out seq
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -79,7 +79,7 @@ ServerServant::CreateExtra (CORBA::ULong len,
 
 void
 ServerServant::DeleteExtra (const ServerSequence &seq
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -108,10 +108,10 @@ ServerServant::DeleteExtra (const ServerSequence &seq
 }
 
 void
-ServerServant::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+ServerServant::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 /******************************************************/
@@ -147,7 +147,7 @@ int
 main (int argc, char *argv [])
 
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (parse_args (argc, argv) == -1)
     return -1;
@@ -159,17 +159,17 @@ main (int argc, char *argv [])
         CORBA::ORB_init (argc,
                          argv,
                          ""
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var vRootPOABase =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (vRootPOABase.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -178,7 +178,7 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POAManager_ptr pRootPOAManager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate the server
@@ -192,13 +192,13 @@ main (int argc, char *argv [])
       PortableServer::ServantBase_var owner_transfer(servant);
 
       Server_var server =
-        servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Announce the server
       CORBA::String_var obj_ref =
         orb->object_to_string (server.in ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Output the IOR to the <ior_output_file>
@@ -211,18 +211,18 @@ main (int argc, char *argv [])
       ACE_OS::fprintf (output_file, "%s", obj_ref.in ());
       ACE_OS::fclose (output_file);
 
-      pRootPOAManager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      pRootPOAManager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

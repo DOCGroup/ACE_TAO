@@ -75,7 +75,7 @@ Grid_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -83,7 +83,7 @@ Grid_Client_i::run (const char *name,
 
       Grid_ptr grid = client->make_grid (width_,
                                          height_
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -93,7 +93,7 @@ Grid_Client_i::run (const char *name,
       grid->set (setx_,
                  sety_,
                  value_
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -101,13 +101,13 @@ Grid_Client_i::run (const char *name,
 
       CORBA::Long ret_val = grid->get (setx_,
                                        sety_
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_ASSERT (ret_val == value_);
 
       if (client.shutdown () == 1) {
-        client->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
       ACE_UNUSED_ARG (ret_val);

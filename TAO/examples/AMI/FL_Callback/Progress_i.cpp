@@ -20,7 +20,7 @@ Progress_i::Progress_i (Progress_Window *window)
 
 void
 Progress_i::sent_request (CORBA::Long id
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG, "Progress (%t) - sent request %d\n", id));
@@ -29,7 +29,7 @@ Progress_i::sent_request (CORBA::Long id
 
 void
 Progress_i::recv_reply (CORBA::Long id
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->window_->recv_reply (id);
@@ -37,11 +37,11 @@ Progress_i::recv_reply (CORBA::Long id
 
 CORBA::Long
 Progress_i::bind (Peer_ptr a_peer
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Progress (%t) - peer bound\n"));
-  return this->window_->bind (a_peer TAO_ENV_ARG_PARAMETER);
+  return this->window_->bind (a_peer ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -132,7 +132,7 @@ Progress_Window::recv_reply (CORBA::Long id)
 
 CORBA::Long
 Progress_Window::bind (Peer_ptr a_peer
-                       TAO_ENV_ARG_DECL_NOT_USED)
+                       ACE_ENV_ARG_DECL_NOT_USED)
 {
   CORBA::ULong l = this->peers_.length ();
   this->peers_.length (l + 1);
@@ -155,14 +155,14 @@ Progress_Window::start ()
   if (this->peers_.length () < CORBA::ULong (this->n_peers_))
     return;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   for (CORBA::ULong i = 0; i != this->peers_.length (); ++i)
     {
       ACE_TRY
         {
           this->peers_[i]->start (this->peers_,
                                   this->n_iterations_
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

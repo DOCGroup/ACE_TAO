@@ -32,7 +32,7 @@ DLL_ORB::svc (void)
   ACE_TRY_NEW_ENV
     {
       // Run the ORB event loop in its own thread.
-      this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -70,7 +70,7 @@ DLL_ORB::init (int argc, char *argv[])
       // Initialize the ORB.
       this->orb_manager_.init (argc,
                                argv
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #if defined (ACE_HAS_THREADS)
@@ -155,7 +155,7 @@ Time_Date_Servant::init (int argc, char *argv[])
                           -1);
 
       CORBA::String_var str = orb->orb_manager_.activate (&servant_
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->ior_output_file_)

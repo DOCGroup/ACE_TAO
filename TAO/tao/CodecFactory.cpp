@@ -15,7 +15,7 @@ TAO_CodecFactory::TAO_CodecFactory (void)
 
 IOP::Codec_ptr
 TAO_CodecFactory::create_codec (const IOP::Encoding & enc
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::CodecFactory::UnknownEncoding))
 {

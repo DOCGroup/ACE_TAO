@@ -17,7 +17,7 @@ main (int argc, char *argv[])
 {
   CORBA::ORB_var orb;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       const char orbid[] = "mighty_orb";
@@ -25,7 +25,7 @@ main (int argc, char *argv[])
       CORBA::ORB_ptr my_orb = CORBA::ORB::_nil();
 
       {
-        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         my_orb = orb.in ();
@@ -42,7 +42,7 @@ main (int argc, char *argv[])
       // used in that scope.
       // -------------------------------------------------------------
 
-      orb = CORBA::ORB_init (argc, argv, orbid TAO_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This isn't portable, but TAO implements an ORB_ptr as a
@@ -77,10 +77,10 @@ main (int argc, char *argv[])
       // attempt to initialize a new ORB with the same ORBid.
       // -------------------------------------------------------------
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb = CORBA::ORB_init (argc, argv, orbid TAO_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This isn't portable, but TAO implements an ORB_ptr as a
@@ -116,7 +116,7 @@ main (int argc, char *argv[])
       // -------------------------------------------------------------
 
       CORBA::Object_var object =
-        orb->string_to_object (IOR TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // -------------------------------------------------------------
@@ -125,11 +125,11 @@ main (int argc, char *argv[])
       // clean-up.
       // -------------------------------------------------------------
       CORBA::ORB_var orb2 =
-        CORBA::ORB_init (argc, argv, "ORB number 2" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "ORB number 2" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb3 =
-        CORBA::ORB_init (argc, argv, "ORB number 3" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "ORB number 3" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // -------------------------------------------------------------
@@ -139,11 +139,11 @@ main (int argc, char *argv[])
       // ORB itself break when the last ORB is released.
       // -------------------------------------------------------------
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If we get here, then something went wrong.  A

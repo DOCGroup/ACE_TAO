@@ -8,7 +8,7 @@ ACE_RCSID(Trader, Constraint_Interpreter, "$Id$")
 TAO_Constraint_Interpreter::
 TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                             const char* constraints
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
                    CORBA::NO_MEMORY))
   : TAO_Interpreter ()
@@ -38,7 +38,7 @@ TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeSt
 TAO_Constraint_Interpreter::
 TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                            const char* constraints
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
                    CORBA::NO_MEMORY))
 {
@@ -79,7 +79,7 @@ TAO_Constraint_Interpreter::evaluate (TAO_Constraint_Evaluator& evaluator)
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                            const char* preference
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
                    CORBA::NO_MEMORY))
     : TAO_Interpreter ()
@@ -106,7 +106,7 @@ TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeSt
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                            const char* preference
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
                    CORBA::NO_MEMORY))
     : TAO_Interpreter ()

@@ -30,20 +30,20 @@ TAO_CEC_SupplierControl::shutdown (void)
 
 void
 TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPushConsumer *
-                                             TAO_ENV_ARG_DECL_NOT_USED)
+                                             ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
 TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPullConsumer *
-                                             TAO_ENV_ARG_DECL_NOT_USED)
+                                             ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
 TAO_CEC_SupplierControl::system_exception (TAO_CEC_ProxyPullConsumer *,
                                            CORBA::SystemException &
-                                           TAO_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 

@@ -149,7 +149,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
       << "forward_to.out ()";
   if (!be_global->exception_support ())
     *os << be_nl
-        << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+        << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
         << ");" << be_nl << be_uidt;
   else
     *os << be_uidt_nl << ");" << be_uidt_nl;

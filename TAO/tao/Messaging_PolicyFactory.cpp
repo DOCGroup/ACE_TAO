@@ -16,7 +16,7 @@ CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
@@ -28,7 +28,7 @@ TAO_Messaging_PolicyFactory::create_policy (
   case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       return TAO_RelativeRoundtripTimeoutPolicy::create (
                value
-               TAO_ENV_ARG_PARAMETER);
+               ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
@@ -37,7 +37,7 @@ TAO_Messaging_PolicyFactory::create_policy (
 
     case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
       return TAO_Sync_Scope_Policy::create (value
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
 
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
@@ -45,7 +45,7 @@ TAO_Messaging_PolicyFactory::create_policy (
 
     case TAO_BUFFERING_CONSTRAINT_POLICY_TYPE:
       return TAO_Buffering_Constraint_Policy::create (value
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 

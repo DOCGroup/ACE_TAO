@@ -52,7 +52,7 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
       << be_idt << be_idt_nl;
 
   *os << node->local_name () << " *object" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "private:" << be_idt_nl

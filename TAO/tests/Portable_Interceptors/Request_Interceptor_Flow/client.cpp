@@ -41,7 +41,7 @@ parse_args (int argc, char *argv[])
 }
 
 void
-client_test (Test_ptr server TAO_ENV_ARG_DECL)
+client_test (Test_ptr server ACE_ENV_ARG_DECL)
 {
   // Currently, there are only four scenarios for the client side
   // tests.
@@ -56,7 +56,7 @@ client_test (Test_ptr server TAO_ENV_ARG_DECL)
 
       ACE_TRY
         {
-          server->client_test (i TAO_ENV_ARG_PARAMETER);
+          server->client_test (i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCH (Test::X, ex)
@@ -89,7 +89,7 @@ client_test (Test_ptr server TAO_ENV_ARG_DECL)
 }
 
 void
-server_test (Test_ptr server TAO_ENV_ARG_DECL)
+server_test (Test_ptr server ACE_ENV_ARG_DECL)
 {
   // Currently, there are only four scenarios for the server side
   // tests.
@@ -104,7 +104,7 @@ server_test (Test_ptr server TAO_ENV_ARG_DECL)
 
       ACE_TRY
         {
-          server->server_test (i TAO_ENV_ARG_PARAMETER);
+          server->server_test (i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCH (Test::X, ex)
@@ -139,7 +139,7 @@ server_test (Test_ptr server TAO_ENV_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
@@ -152,24 +152,24 @@ main (int argc, char *argv[])
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "Client ORB"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_var server =
-        Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -180,13 +180,13 @@ main (int argc, char *argv[])
                             1);
         }
 
-      ::client_test (server.in () TAO_ENV_ARG_PARAMETER);
+      ::client_test (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ::server_test (server.in () TAO_ENV_ARG_PARAMETER);
+      ::server_test (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

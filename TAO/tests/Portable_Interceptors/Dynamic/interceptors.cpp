@@ -35,14 +35,14 @@ Echo_Client_Request_Interceptor::_remove_ref (void)
 }
 
 char *
-Echo_Client_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -50,7 +50,7 @@ Echo_Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Echo_Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -60,12 +60,12 @@ Echo_Client_Request_Interceptor::send_poll (
 void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -76,7 +76,7 @@ Echo_Client_Request_Interceptor::send_request (
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Long param;
@@ -93,12 +93,12 @@ Echo_Client_Request_Interceptor::send_request (
 void
 Echo_Client_Request_Interceptor::receive_other (
   PortableInterceptor::ClientRequestInfo_ptr ri
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -110,11 +110,11 @@ Echo_Client_Request_Interceptor::receive_other (
 void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -125,7 +125,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Long param;
@@ -140,7 +140,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Long param1, param2, result;
@@ -149,7 +149,7 @@ Echo_Client_Request_Interceptor::receive_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
-      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -165,12 +165,12 @@ Echo_Client_Request_Interceptor::receive_reply (
 void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -180,7 +180,7 @@ Echo_Client_Request_Interceptor::receive_exception (
 
 
   CORBA::String_var exception_id =
-    ri->received_exception_id (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->received_exception_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -212,14 +212,14 @@ Echo_Server_Request_Interceptor::_remove_ref (void)
 }
 
 char *
-Echo_Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -227,7 +227,7 @@ Echo_Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -236,12 +236,12 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -251,7 +251,7 @@ Echo_Server_Request_Interceptor::receive_request (
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Long param;
@@ -266,7 +266,7 @@ Echo_Server_Request_Interceptor::receive_request (
      }
 
   CORBA::String_var tmdi =
-    ri->target_most_derived_interface (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->target_most_derived_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -277,11 +277,11 @@ Echo_Server_Request_Interceptor::receive_request (
 void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -291,7 +291,7 @@ Echo_Server_Request_Interceptor::send_reply (
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Long param;
@@ -306,7 +306,7 @@ Echo_Server_Request_Interceptor::send_reply (
   if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Long param1, param2, result = 0;
@@ -315,7 +315,7 @@ Echo_Server_Request_Interceptor::send_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
-      CORBA::Any_var result_any = ri->result (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       (result_any.in ()) >>= result;
@@ -331,12 +331,12 @@ Echo_Server_Request_Interceptor::send_reply (
 void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
-  CORBA::String_var op = ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -346,12 +346,12 @@ Echo_Server_Request_Interceptor::send_exception (
 
 
   CORBA::Any_var any =
-    ri->sending_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->sending_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var type = any->type ();
 
-  const char *exception_id = type->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *exception_id = type->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -362,7 +362,7 @@ Echo_Server_Request_Interceptor::send_exception (
 void
 Echo_Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

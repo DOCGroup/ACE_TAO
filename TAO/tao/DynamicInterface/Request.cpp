@@ -65,7 +65,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               CORBA::NamedValue_ptr result,
                               CORBA::Flags flags,
                               CORBA::ExceptionList_ptr exceptions
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     args_ (CORBA::NVList::_duplicate (args)),
     result_ (CORBA::NamedValue::_duplicate (result)),
@@ -95,7 +95,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               CORBA::ORB_ptr orb,
                               const CORBA::Char *op
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     flags_ (0),
     // env_ (env),
@@ -141,7 +141,7 @@ CORBA_Request::~CORBA_Request (void)
 // flow in some exotic situations.
 
 void
-CORBA_Request::invoke (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
 
@@ -156,25 +156,25 @@ CORBA_Request::invoke (TAO_ENV_SINGLE_ARG_DECL)
   // Loop as needed for forwarding.
   for (;;)
     {
-      call.start (TAO_ENV_SINGLE_ARG_PARAMETER);
+      call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
       call.prepare_header (ACE_static_cast (CORBA::Octet,
                                             flag)
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->args_->_tao_encode (call.out_stream (),
                                 this->orb_->orb_core (),
                                 CORBA::ARG_IN | CORBA::ARG_INOUT
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Make the call ... blocking for the response.
       int status = call.invoke (this->exceptions_.in ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (status == TAO_INVOKE_RESTART)
@@ -217,18 +217,18 @@ CORBA_Request::invoke (TAO_ENV_SINGLE_ARG_DECL)
   if (this->result_ != 0)
     {
       this->result_->value ()->_tao_decode (call.inp_stream ()
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   this->args_->_tao_incoming_cdr (call.inp_stream (),
                                   CORBA::ARG_OUT | CORBA::ARG_INOUT,
                                   this->lazy_evaluation_
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 void
-CORBA_Request::send_oneway (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
 
@@ -242,23 +242,23 @@ CORBA_Request::send_oneway (TAO_ENV_SINGLE_ARG_DECL)
   // Loop as needed for forwarding.
   for (;;)
     {
-      call.start (TAO_ENV_SINGLE_ARG_PARAMETER);
+      call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Octet response_flag = ACE_static_cast (CORBA::Octet,
                                                     call.sync_scope ());
 
       call.prepare_header (response_flag
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->args_->_tao_encode (call.out_stream (),
                                 this->orb_->orb_core (),
                                 CORBA::ARG_IN | CORBA::ARG_INOUT
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      int status = call.invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+      int status = call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (status == TAO_INVOKE_RESTART)
@@ -288,7 +288,7 @@ CORBA_Request::send_oneway (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CORBA_Request::send_deferred (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -309,23 +309,23 @@ CORBA_Request::send_deferred (TAO_ENV_SINGLE_ARG_DECL)
   // Loop as needed for forwarding.
   for (;;)
     {
-      call.start (TAO_ENV_SINGLE_ARG_PARAMETER);
+      call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
       call.prepare_header (ACE_static_cast (CORBA::Octet, flag)
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->args_->_tao_encode (call.out_stream (),
                                 this->orb_->orb_core (),
                                 CORBA::ARG_IN | CORBA::ARG_INOUT
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Make the call without blocking.
-      CORBA::ULong status = call.invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong status = call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (status == TAO_INVOKE_RESTART)
@@ -349,7 +349,7 @@ CORBA_Request::send_deferred (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CORBA_Request::get_response (TAO_ENV_SINGLE_ARG_DECL)
+CORBA_Request::get_response (ACE_ENV_SINGLE_ARG_DECL)
 {
   while (!this->response_received_)
     {
@@ -358,13 +358,13 @@ CORBA_Request::get_response (TAO_ENV_SINGLE_ARG_DECL)
 
   if (this->lazy_evaluation_)
     {
-      this->args_->evaluate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->args_->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 CORBA::Boolean
-CORBA_Request::poll_response (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA_Request::poll_response (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
@@ -377,7 +377,7 @@ CORBA_Request::poll_response (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 CORBA_Request::handle_response (TAO_InputCDR &incoming,
                                 CORBA::ULong reply_status
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
@@ -391,14 +391,14 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
       if (this->result_ != 0)
         {
           this->result_->value ()->_tao_decode (incoming
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
       this->args_->_tao_incoming_cdr (incoming,
                                       CORBA::ARG_OUT | CORBA::ARG_INOUT,
                                       this->lazy_evaluation_
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       {

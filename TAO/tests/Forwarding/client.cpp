@@ -52,7 +52,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // Constructor
 
-  virtual void run_test (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL);
   // The actual implementation of the test
 
   // = The Task_Base methods
@@ -69,7 +69,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -85,12 +85,12 @@ main (int argc, char *argv[])
 
       ACE_Time_Value tv (5, 0);
 
-      orb->run (tv TAO_ENV_ARG_PARAMETER);
+      orb->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Now run a test in the main thread, just to confuse matters a
       // little more.
-      worker.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      worker.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       worker.thr_mgr ()->wait ();
@@ -98,18 +98,18 @@ main (int argc, char *argv[])
       if (do_shutdown)
         {
           CORBA::Object_var object =
-            orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+            orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           Simple_Server_var server =
-            Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+            Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -135,7 +135,7 @@ Worker::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -149,16 +149,16 @@ Worker::svc (void)
 }
 
 void
-Worker::run_test (TAO_ENV_SINGLE_ARG_DECL)
+Worker::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int j = 0; j != niterations; ++j)
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Boolean is_simple_server =
-        object->_is_a ("IDL:Simple_Server:1.0" TAO_ENV_ARG_PARAMETER);
+        object->_is_a ("IDL:Simple_Server:1.0" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       if (!is_simple_server)
         ACE_DEBUG ((LM_DEBUG,
@@ -166,11 +166,11 @@ Worker::run_test (TAO_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+    this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   Simple_Server_var server =
-    Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+    Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (server.in ()))
@@ -184,7 +184,7 @@ Worker::run_test (TAO_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i != niterations; ++i)
     {
       CORBA::Boolean r =
-        server->test_is_a ("IDL:Foo:1.0" TAO_ENV_ARG_PARAMETER);
+        server->test_is_a ("IDL:Foo:1.0" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (r != 0)

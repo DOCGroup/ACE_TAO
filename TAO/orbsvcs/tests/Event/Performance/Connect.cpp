@@ -24,9 +24,9 @@ EC_Connect::EC_Connect (void)
 }
 
 void
-EC_Connect::execute_test (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Connect::execute_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  // this->EC_Driver::execute_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+  // this->EC_Driver::execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int
@@ -109,12 +109,12 @@ void
 EC_Connect::connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_consumer (consumer_admin,
                                      i
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->consumer_connect_.sample (now - this->start_time_,
                                   now - start);
@@ -124,12 +124,12 @@ void
 EC_Connect::connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     int i
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_supplier (supplier_admin,
                                      i
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->supplier_connect_.sample (now - this->start_time_,
                                   now - start);
@@ -148,23 +148,23 @@ EC_Connect::allocate_supplier (int i)
 }
 
 void
-EC_Connect::connect_clients (TAO_ENV_SINGLE_ARG_DECL)
+EC_Connect::connect_clients (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->start_time_ = ACE_OS::gethrtime ();
   switch (this->order_)
     {
     default:
     case 0:
-      this->connect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->connect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      this->connect_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->connect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       return;
 
     case 1:
-      this->connect_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->connect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      this->connect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->connect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       return;
 
@@ -177,23 +177,23 @@ EC_Connect::connect_clients (TAO_ENV_SINGLE_ARG_DECL)
     max = this->n_suppliers_;
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   for (int i = 0; i != max; ++i)
     {
       if (i < this->n_consumers_)
         {
-          this->connect_consumer (consumer_admin.in (), i TAO_ENV_ARG_PARAMETER);
+          this->connect_consumer (consumer_admin.in (), i ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       if (i < this->n_suppliers_)
         {
-          this->connect_supplier (supplier_admin.in (), i TAO_ENV_ARG_PARAMETER);
+          this->connect_supplier (supplier_admin.in (), i ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -201,22 +201,22 @@ EC_Connect::connect_clients (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Connect::disconnect_clients (TAO_ENV_SINGLE_ARG_DECL)
+EC_Connect::disconnect_clients (ACE_ENV_SINGLE_ARG_DECL)
 {
   switch (this->order_)
     {
     default:
     case 0:
-      this->disconnect_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      this->disconnect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       return;
 
     case 1:
-      this->disconnect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      this->disconnect_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       return;
 
@@ -229,11 +229,11 @@ EC_Connect::disconnect_clients (TAO_ENV_SINGLE_ARG_DECL)
     max = this->n_suppliers_;
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
@@ -243,7 +243,7 @@ EC_Connect::disconnect_clients (TAO_ENV_SINGLE_ARG_DECL)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          this->suppliers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -254,7 +254,7 @@ EC_Connect::disconnect_clients (TAO_ENV_SINGLE_ARG_DECL)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          this->consumers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -268,14 +268,14 @@ EC_Connect::disconnect_clients (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Connect::disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL)
+EC_Connect::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-      this->consumers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -290,14 +290,14 @@ EC_Connect::disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Connect::disconnect_suppliers (TAO_ENV_SINGLE_ARG_DECL)
+EC_Connect::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-      this->suppliers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -324,24 +324,24 @@ ECC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     const RtecEventChannelAdmin::ConsumerQOS& qos,
     int shutdown_event_type
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   this->EC_Consumer::connect (consumer_admin,
                               qos,
                               shutdown_event_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
 }
 
 void
 ECC_Consumer::connect (
     const RtecEventChannelAdmin::ConsumerQOS& qos,
     int shutdown_event_type
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Consumer::connect (qos,
                               shutdown_event_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }
@@ -366,24 +366,24 @@ ECC_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     const RtecEventChannelAdmin::SupplierQOS& qos,
     int shutdown_event_type
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   this->EC_Supplier::connect (supplier_admin,
                               qos,
                               shutdown_event_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
 }
 
 void
 ECC_Supplier::connect (
     const RtecEventChannelAdmin::SupplierQOS& qos,
     int shutdown_event_type
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Supplier::connect (qos,
                               shutdown_event_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }

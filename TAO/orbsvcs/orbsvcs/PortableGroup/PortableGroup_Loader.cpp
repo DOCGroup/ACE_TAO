@@ -37,7 +37,7 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
       orb_initializer = temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

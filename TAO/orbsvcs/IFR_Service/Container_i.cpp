@@ -21,16 +21,16 @@ TAO_Container_i::~TAO_Container_i (void)
 }
 
 void
-TAO_Container_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Container_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Container_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int index = 0;
@@ -77,12 +77,12 @@ TAO_Container_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL)
             {
               TAO_IDLType_i *impl =
                 this->repo_->servant_factory ()->create_idltype (entry_key
-                                                                 TAO_ENV_ARG_PARAMETER);
+                                                                 ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
 
               auto_ptr<TAO_IDLType_i> safety (impl);
 
-              CORBA::DefinitionKind def_kind = impl->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+              CORBA::DefinitionKind def_kind = impl->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               switch (def_kind)
@@ -95,7 +95,7 @@ TAO_Container_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL)
                 case CORBA::dk_Fixed:
                 case CORBA::dk_Array:
                 case CORBA::dk_Sequence:
-                  impl->destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+                  impl->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_CHECK;
                   break;
                 default:
@@ -146,12 +146,12 @@ TAO_Container_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL)
 
           TAO_Contained_i *impl =
             this->repo_->servant_factory ()->create_contained (defn_key
-                                                               TAO_ENV_ARG_PARAMETER);
+                                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           auto_ptr<TAO_Contained_i> safety (impl);
 
-          impl->destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+          impl->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -163,18 +163,18 @@ TAO_Container_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL)
 
 CORBA_Contained_ptr
 TAO_Container_i::lookup (const char *search_name
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
   return this->lookup_i (search_name
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_Contained_ptr
 TAO_Container_i::lookup_i (const char *search_name
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key iter_key;
@@ -378,30 +378,30 @@ TAO_Container_i::lookup_i (const char *search_name
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_Contained::_nil ());
 
   return CORBA_Contained::_narrow (obj.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ContainedSeq *
 TAO_Container_i::contents (CORBA::DefinitionKind limit_type,
                            CORBA::Boolean exclude_inherited
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
   return this->contents_i (limit_type,
                            exclude_inherited
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ContainedSeq *
 TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                              CORBA::Boolean exclude_inherited
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (limit_type == CORBA::dk_none)
@@ -467,7 +467,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
 
   // Base interfaces
 
-  CORBA::DefinitionKind def_kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind def_kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (def_kind == CORBA::dk_Interface)
@@ -483,7 +483,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                                     path_queue,
                                     limit_type,
                                     exclude_inherited
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
     }
@@ -511,12 +511,12 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
       CORBA::Object_var obj =
         this->repo_->servant_factory ()->create_objref (next_kind,
                                                         next_path.c_str ()
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA_Contained_var next_cont =
         CORBA_Contained::_narrow (obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[j] = next_cont._retn ();
@@ -530,7 +530,7 @@ TAO_Container_i::lookup_name (const char *search_name,
                               CORBA::Long levels_to_search,
                               CORBA::DefinitionKind limit_type,
                               CORBA::Boolean exclude_inherited
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
@@ -539,7 +539,7 @@ TAO_Container_i::lookup_name (const char *search_name,
                               levels_to_search,
                               limit_type,
                               exclude_inherited
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ContainedSeq *
@@ -547,7 +547,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
                                 CORBA::Long levels_to_search,
                                 CORBA::DefinitionKind limit_type,
                                 CORBA::Boolean exclude_inherited
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
@@ -559,7 +559,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
                                levels_to_search,
                                limit_type,
                                exclude_inherited
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 
   size_t size = kind_queue.size ();
 
@@ -583,12 +583,12 @@ TAO_Container_i::lookup_name_i (const char *search_name,
       CORBA::Object_var obj =
         this->repo_->servant_factory ()->create_objref (next_kind,
                                                         next_path.c_str ()
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA_Contained_var next_cont =
         CORBA_Contained::_narrow (obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[i] = next_cont._retn ();
@@ -601,7 +601,7 @@ CORBA_Container::DescriptionSeq *
 TAO_Container_i::describe_contents (CORBA::DefinitionKind limit_type,
                                     CORBA::Boolean exclude_inherited,
                                     CORBA::Long max_returned_objs
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
@@ -609,19 +609,19 @@ TAO_Container_i::describe_contents (CORBA::DefinitionKind limit_type,
   return this->describe_contents_i (limit_type,
                                     exclude_inherited,
                                     max_returned_objs
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_Container::DescriptionSeq *
 TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
                                       CORBA::Boolean exclude_inherited,
                                       CORBA::Long max_returned_objs
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA_ContainedSeq_var contents = this->contents_i (limit_type,
                                                       exclude_inherited
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong length = contents->length ();
@@ -654,7 +654,7 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
   for (CORBA::ULong i = 0; i < ret_len; i++)
     {
       oid = this->repo_->ir_poa ()->reference_to_id (contents[i]
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       contained_path =
@@ -667,12 +667,12 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
 
       impl =
         this->repo_->servant_factory ()->create_contained (contained_key
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       auto_ptr<TAO_Contained_i> safety (impl);
 
-      desc = impl->describe_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+      desc = impl->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[i].contained_object =
@@ -690,7 +690,7 @@ CORBA_ModuleDef_ptr
 TAO_Container_i::create_module (const char *id,
                                 const char *name,
                                 const char *version
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_ModuleDef::_nil ());
@@ -698,18 +698,18 @@ TAO_Container_i::create_module (const char *id,
   return this->create_module_i (id,
                                 name,
                                 version
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ModuleDef_ptr
 TAO_Container_i::create_module_i (const char *id,
                                   const char *name,
                                   const char *version
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Module
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ModuleDef::_nil ());
 
   if (!legal_op)
@@ -717,7 +717,7 @@ TAO_Container_i::create_module_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ModuleDef::_nil ());
 
   if (bad_params)
@@ -752,11 +752,11 @@ TAO_Container_i::create_module_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Module,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ModuleDef::_nil ());
 
   return CORBA_ModuleDef::_narrow (obj.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ConstantDef_ptr
@@ -765,7 +765,7 @@ TAO_Container_i::create_constant (const char *id,
                                   const char *version,
                                   CORBA_IDLType_ptr type,
                                   const CORBA::Any &value
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_ConstantDef::_nil ());
@@ -775,7 +775,7 @@ TAO_Container_i::create_constant (const char *id,
                                   version,
                                   type,
                                   value
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ConstantDef_ptr
@@ -784,11 +784,11 @@ TAO_Container_i::create_constant_i (const char *id,
                                     const char *version,
                                     CORBA_IDLType_ptr type,
                                     const CORBA::Any &value
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Constant
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ConstantDef::_nil ());
 
   if (!legal_op)
@@ -796,7 +796,7 @@ TAO_Container_i::create_constant_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ConstantDef::_nil ());
 
   if (bad_params)
@@ -823,7 +823,7 @@ TAO_Container_i::create_constant_i (const char *id,
   // Get the path to our type and store it.
   PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (type
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ConstantDef::_nil ());
 
   CORBA::String_var type_path =
@@ -838,7 +838,7 @@ TAO_Container_i::create_constant_i (const char *id,
 
   CORBA::TypeCode_var val_tc = value.type ();
 
-  CORBA::TCKind kind = val_tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind kind = val_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ConstantDef::_nil ());
 
   switch (kind)
@@ -869,11 +869,11 @@ TAO_Container_i::create_constant_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Constant,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ConstantDef::_nil ());
 
   return CORBA_ConstantDef::_narrow (obj.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_StructDef_ptr
@@ -881,7 +881,7 @@ TAO_Container_i::create_struct (const char *id,
                                 const char *name,
                                 const char *version,
                                 const CORBA_StructMemberSeq &members
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_StructDef::_nil ());
@@ -890,7 +890,7 @@ TAO_Container_i::create_struct (const char *id,
                                 name,
                                 version,
                                 members
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_StructDef_ptr
@@ -898,11 +898,11 @@ TAO_Container_i::create_struct_i (const char *id,
                                   const char *name,
                                   const char *version,
                                   const CORBA_StructMemberSeq &members
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Struct
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_StructDef::_nil ());
 
   if (!legal_op)
@@ -910,7 +910,7 @@ TAO_Container_i::create_struct_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_StructDef::_nil ());
 
   if (bad_params)
@@ -963,7 +963,7 @@ TAO_Container_i::create_struct_i (const char *id,
 
       PortableServer::ObjectId_var oid =
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA_StructDef::_nil ());
 
       CORBA::String_var member_path =
@@ -974,7 +974,7 @@ TAO_Container_i::create_struct_i (const char *id,
                                                 member_path.in ());
     }
 
-  CORBA::DefinitionKind def_kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind def_kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_StructDef::_nil ());
 
   if (def_kind == CORBA::dk_Struct
@@ -989,11 +989,11 @@ TAO_Container_i::create_struct_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Struct,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_StructDef::_nil ());
 
   return CORBA_StructDef::_narrow (obj.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_UnionDef_ptr
@@ -1002,7 +1002,7 @@ TAO_Container_i::create_union (const char *id,
                                const char *version,
                                CORBA_IDLType_ptr discriminator_type,
                                const CORBA_UnionMemberSeq &members
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_UnionDef::_nil ());
@@ -1012,7 +1012,7 @@ TAO_Container_i::create_union (const char *id,
                                version,
                                discriminator_type,
                                members
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_UnionDef_ptr
@@ -1021,11 +1021,11 @@ TAO_Container_i::create_union_i (const char *id,
                                  const char *version,
                                  CORBA_IDLType_ptr discriminator_type,
                                  const CORBA_UnionMemberSeq &members
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Union
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
 
   if (!legal_op)
@@ -1033,7 +1033,7 @@ TAO_Container_i::create_union_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
 
   if (bad_params)
@@ -1059,7 +1059,7 @@ TAO_Container_i::create_union_i (const char *id,
   // Add a field to hold the path to the discriminator type.
   PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (discriminator_type
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
 
   CORBA::String_var disc_path =
@@ -1099,7 +1099,7 @@ TAO_Container_i::create_union_i (const char *id,
 
       PortableServer::ObjectId_var oid =
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
 
       CORBA::String_var member_path =
@@ -1111,10 +1111,10 @@ TAO_Container_i::create_union_i (const char *id,
 
       this->store_label (member_key,
                          members[i].label
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
     }
 
-  CORBA::DefinitionKind def_kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind def_kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
 
   if (def_kind == CORBA::dk_Struct
@@ -1129,11 +1129,11 @@ TAO_Container_i::create_union_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Union,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
 
   return CORBA_UnionDef::_narrow (obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_EnumDef_ptr
@@ -1141,7 +1141,7 @@ TAO_Container_i::create_enum (const char *id,
                               const char *name,
                               const char *version,
                               const CORBA_EnumMemberSeq &members
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_EnumDef::_nil ());
@@ -1150,7 +1150,7 @@ TAO_Container_i::create_enum (const char *id,
                               name,
                               version,
                               members
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_EnumDef_ptr
@@ -1158,11 +1158,11 @@ TAO_Container_i::create_enum_i (const char *id,
                                 const char *name,
                                 const char *version,
                                 const CORBA_EnumMemberSeq &members
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Enum
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_EnumDef::_nil ());
 
   if (!legal_op)
@@ -1170,7 +1170,7 @@ TAO_Container_i::create_enum_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_EnumDef::_nil ());
 
   if (bad_params)
@@ -1215,7 +1215,7 @@ TAO_Container_i::create_enum_i (const char *id,
                                                 members[i].in ());
     }
 
-  CORBA::DefinitionKind def_kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind def_kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_EnumDef::_nil ());
 
   if (def_kind == CORBA::dk_Struct
@@ -1230,11 +1230,11 @@ TAO_Container_i::create_enum_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Enum,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_EnumDef::_nil ());
 
   return CORBA_EnumDef::_narrow (obj.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_AliasDef_ptr
@@ -1242,7 +1242,7 @@ TAO_Container_i::create_alias (const char *id,
                                const char *name,
                                const char *version,
                                CORBA_IDLType_ptr original_type
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_AliasDef::_nil ());
@@ -1251,7 +1251,7 @@ TAO_Container_i::create_alias (const char *id,
                                name,
                                version,
                                original_type
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_AliasDef_ptr
@@ -1259,11 +1259,11 @@ TAO_Container_i::create_alias_i (const char *id,
                                  const char *name,
                                  const char *version,
                                  CORBA_IDLType_ptr original_type
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Alias
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_AliasDef::_nil ());
 
   if (!legal_op)
@@ -1271,7 +1271,7 @@ TAO_Container_i::create_alias_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_AliasDef::_nil ());
 
   if (bad_params)
@@ -1297,7 +1297,7 @@ TAO_Container_i::create_alias_i (const char *id,
   // Get the path to our original type and store it.
   PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (original_type
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_AliasDef::_nil ());
 
   CORBA::String_var unalias_path =
@@ -1311,11 +1311,11 @@ TAO_Container_i::create_alias_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Alias,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_AliasDef::_nil ());
 
   return CORBA_AliasDef::_narrow (obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_InterfaceDef_ptr
@@ -1323,7 +1323,7 @@ TAO_Container_i::create_interface (const char *id,
                                    const char *name,
                                    const char *version,
                                    const CORBA_InterfaceDefSeq &base_interfaces
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_InterfaceDef::_nil ());
@@ -1332,7 +1332,7 @@ TAO_Container_i::create_interface (const char *id,
                                    name,
                                    version,
                                    base_interfaces
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_InterfaceDef_ptr
@@ -1340,11 +1340,11 @@ TAO_Container_i::create_interface_i (const char *id,
                                      const char *name,
                                      const char *version,
                                      const CORBA_InterfaceDefSeq &base_interfaces
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Interface
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
   if (!legal_op)
@@ -1352,7 +1352,7 @@ TAO_Container_i::create_interface_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
   if (bad_params)
@@ -1392,7 +1392,7 @@ TAO_Container_i::create_interface_i (const char *id,
         {
           PortableServer::ObjectId_var oid =
             this->repo_->ir_poa ()->reference_to_id (base_interfaces[i]
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
           CORBA::String_var inherited_path =
@@ -1410,11 +1410,11 @@ TAO_Container_i::create_interface_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Interface,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
   return CORBA_InterfaceDef::_narrow (obj.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ValueDef_ptr
@@ -1428,7 +1428,7 @@ TAO_Container_i::create_value (const char *id,
                                const CORBA_ValueDefSeq &abstract_base_values,
                                const CORBA_InterfaceDefSeq &supported_interfaces,
                                const CORBA_InitializerSeq &initializers
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_ValueDef::_nil ());
@@ -1443,7 +1443,7 @@ TAO_Container_i::create_value (const char *id,
                                abstract_base_values,
                                supported_interfaces,
                                initializers
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ValueDef_ptr
@@ -1457,7 +1457,7 @@ TAO_Container_i::create_value_i (const char * /* id */,
                                  const CORBA_ValueDefSeq & /* abstract_base_values */,
                                  const CORBA_InterfaceDefSeq & /* supported_interfaces */,
                                  const CORBA_InitializerSeq & /* initializers */
-                                 TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+                                 ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -1469,7 +1469,7 @@ TAO_Container_i::create_value_box (const char *id,
                                    const char *name,
                                    const char *version,
                                    CORBA_IDLType_ptr original_type_def
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_ValueBoxDef::_nil ());
@@ -1478,7 +1478,7 @@ TAO_Container_i::create_value_box (const char *id,
                                    name,
                                    version,
                                    original_type_def
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ValueBoxDef_ptr
@@ -1486,11 +1486,11 @@ TAO_Container_i::create_value_box_i (const char *id,
                                      const char *name,
                                      const char *version,
                                      CORBA_IDLType_ptr original_type_def
-                                     TAO_ENV_ARG_DECL )
+                                     ACE_ENV_ARG_DECL )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_ValueBox
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ValueBoxDef::_nil ());
 
   if (!legal_op)
@@ -1498,7 +1498,7 @@ TAO_Container_i::create_value_box_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ValueBoxDef::_nil ());
 
   if (bad_params)
@@ -1524,7 +1524,7 @@ TAO_Container_i::create_value_box_i (const char *id,
   // Get the path to our original type and store it.
   PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (original_type_def
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ValueBoxDef::_nil ());
 
   CORBA::String_var boxed_path =
@@ -1538,11 +1538,11 @@ TAO_Container_i::create_value_box_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_ValueBox,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ValueBoxDef::_nil ());
 
   return CORBA_ValueBoxDef::_narrow (obj.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ExceptionDef_ptr
@@ -1550,7 +1550,7 @@ TAO_Container_i::create_exception (const char *id,
                                    const char *name,
                                    const char *version,
                                    const CORBA_StructMemberSeq &members
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_ExceptionDef::_nil ());
@@ -1559,7 +1559,7 @@ TAO_Container_i::create_exception (const char *id,
                                    name,
                                    version,
                                    members
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_ExceptionDef_ptr
@@ -1567,11 +1567,11 @@ TAO_Container_i::create_exception_i (const char *id,
                                      const char *name,
                                      const char *version,
                                      const CORBA_StructMemberSeq &members
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Exception
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ExceptionDef::_nil ());
 
   if (!legal_op)
@@ -1579,7 +1579,7 @@ TAO_Container_i::create_exception_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ExceptionDef::_nil ());
 
   if (bad_params)
@@ -1630,7 +1630,7 @@ TAO_Container_i::create_exception_i (const char *id,
 
       PortableServer::ObjectId_var oid =
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA_ExceptionDef::_nil ());
 
       CORBA::String_var member_path =
@@ -1645,18 +1645,18 @@ TAO_Container_i::create_exception_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Exception,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_ExceptionDef::_nil ());
 
   return CORBA_ExceptionDef::_narrow (obj.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_NativeDef_ptr
 TAO_Container_i::create_native (const char *id,
                                 const char *name,
                                 const char *version
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA_NativeDef::_nil ());
@@ -1664,18 +1664,18 @@ TAO_Container_i::create_native (const char *id,
   return this->create_native_i (id,
                                 name,
                                 version
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_NativeDef_ptr
 TAO_Container_i::create_native_i (const char *id,
                                   const char *name,
                                   const char *version
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Native
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_NativeDef::_nil ());
 
   if (!legal_op)
@@ -1683,7 +1683,7 @@ TAO_Container_i::create_native_i (const char *id,
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_NativeDef::_nil ());
 
   if (bad_params)
@@ -1710,11 +1710,11 @@ TAO_Container_i::create_native_i (const char *id,
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_Native,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_NativeDef::_nil ());
 
   return CORBA_NativeDef::_narrow (obj.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_AbstractInterfaceDef_ptr
@@ -1723,7 +1723,7 @@ TAO_Container_i::create_abstract_interface (
     const char *name,
     const char *version,
     const CORBA_AbstractInterfaceDefSeq &base_interfaces
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1733,7 +1733,7 @@ TAO_Container_i::create_abstract_interface (
                                             name,
                                             version,
                                             base_interfaces
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_AbstractInterfaceDef_ptr
@@ -1742,13 +1742,13 @@ TAO_Container_i::create_abstract_interface_i (
     const char *name,
     const char *version,
     const CORBA_AbstractInterfaceDefSeq &base_interfaces
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (
       CORBA::dk_AbstractInterface
-      TAO_ENV_ARG_PARAMETER
+      ACE_ENV_ARG_PARAMETER
     );
   ACE_CHECK_RETURN (CORBA_AbstractInterfaceDef::_nil ());
 
@@ -1757,7 +1757,7 @@ TAO_Container_i::create_abstract_interface_i (
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_AbstractInterfaceDef::_nil ());
 
   if (bad_params)
@@ -1797,7 +1797,7 @@ TAO_Container_i::create_abstract_interface_i (
         {
           PortableServer::ObjectId_var oid =
             this->repo_->ir_poa ()->reference_to_id (base_interfaces[i]
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA_AbstractInterfaceDef::_nil ());
 
           CORBA::String_var inherited_path =
@@ -1815,11 +1815,11 @@ TAO_Container_i::create_abstract_interface_i (
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_AbstractInterface,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_AbstractInterfaceDef::_nil ());
 
   return CORBA_AbstractInterfaceDef::_narrow (obj.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_LocalInterfaceDef_ptr
@@ -1828,7 +1828,7 @@ TAO_Container_i::create_local_interface (
     const char *name,
     const char *version,
     const CORBA_InterfaceDefSeq &base_interfaces
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1838,7 +1838,7 @@ TAO_Container_i::create_local_interface (
                                          name,
                                          version,
                                          base_interfaces
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_LocalInterfaceDef_ptr
@@ -1847,12 +1847,12 @@ TAO_Container_i::create_local_interface_i (
     const char *name,
     const char *version,
     const CORBA_InterfaceDefSeq &base_interfaces
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean legal_op = this->valid_container (CORBA::dk_LocalInterface
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_LocalInterfaceDef::_nil ());
 
   if (!legal_op)
@@ -1860,7 +1860,7 @@ TAO_Container_i::create_local_interface_i (
 
   CORBA::Boolean bad_params = this->pre_exist (id,
                                                name
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_LocalInterfaceDef::_nil ());
 
   if (bad_params)
@@ -1900,7 +1900,7 @@ TAO_Container_i::create_local_interface_i (
         {
           PortableServer::ObjectId_var oid =
             this->repo_->ir_poa ()->reference_to_id (base_interfaces[i]
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA_LocalInterfaceDef::_nil ());
 
           CORBA::String_var inherited_path =
@@ -1918,16 +1918,16 @@ TAO_Container_i::create_local_interface_i (
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (CORBA::dk_LocalInterface,
                                                     path.c_str ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_LocalInterfaceDef::_nil ());
 
   return CORBA_LocalInterfaceDef::_narrow (obj.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 TAO_Container_i::name_exists (const char *name
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int index = 0;
@@ -2003,7 +2003,7 @@ TAO_Container_i::name_exists (const char *name
     }
 
   // If we are an interface, check the inherited members.
-  CORBA::DefinitionKind def_kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind def_kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   if (def_kind == CORBA::dk_Interface)
@@ -2060,7 +2060,7 @@ TAO_Container_i::lookup_name_recursive (
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
 {
   ACE_Configuration_Section_Key defns_key;
@@ -2125,7 +2125,7 @@ TAO_Container_i::lookup_name_recursive (
               TAO_Container_i *impl =
                 this->repo_->servant_factory ()->create_container (
                                                      defn_key
-                                                     TAO_ENV_ARG_PARAMETER
+                                                     ACE_ENV_ARG_PARAMETER
                                                    );
               ACE_CHECK;
 
@@ -2143,13 +2143,13 @@ TAO_Container_i::lookup_name_recursive (
                                               : levels_to_search - 1,
                                            limit_type,
                                            exclude_inherited
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
     }
 
-  CORBA::DefinitionKind kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (kind == CORBA::dk_Interface || kind == CORBA::dk_Value)
@@ -2378,7 +2378,7 @@ TAO_Container_i::lookup_op (
 
 CORBA::Boolean
 TAO_Container_i::id_exists (const char *id
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The repo id must not already exist.
@@ -2400,16 +2400,16 @@ TAO_Container_i::id_exists (const char *id
 CORBA::Boolean
 TAO_Container_i::pre_exist (const char *id,
                             const char *name
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Boolean exist = this->id_exists (id TAO_ENV_ARG_PARAMETER);
+  CORBA::Boolean exist = this->id_exists (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   if (exist)
     return 1;
 
-  return name_exists (name TAO_ENV_ARG_PARAMETER);
+  return name_exists (name ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_TString
@@ -2516,10 +2516,10 @@ TAO_Container_i::create_common (
 
 CORBA::Boolean
 TAO_Container_i::valid_container (const CORBA::DefinitionKind op_kind
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::DefinitionKind my_kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind my_kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   int error_flag = 0;
@@ -2579,12 +2579,12 @@ TAO_Container_i::valid_container (const CORBA::DefinitionKind op_kind
 void
 TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
                               const CORBA::Any &value
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_var tc = value.type ();
 
-  CORBA::TCKind kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_InputCDR cdr (value._tao_get_cdr (),

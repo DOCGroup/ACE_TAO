@@ -42,29 +42,29 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
       CORBA::PolicyTypeSeq types;
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
                                                    CORBA::ADD_OVERRIDE
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_CEC_Pull_Event worker (this->event_channel_->consumer_admin (),
                                  this->event_channel_->supplier_control ());
 
       this->event_channel_->supplier_admin ()->for_each (&worker
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
-          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -91,12 +91,12 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
       // Get the PolicyCurrent object
       CORBA::Object_var tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Pre-compute the policy list to the set the right timeout
@@ -111,7 +111,7 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
         this->orb_->create_policy (
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any
-               TAO_ENV_ARG_PARAMETER);
+               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -149,7 +149,7 @@ TAO_CEC_Pulling_Strategy_Adapter::handle_timeout (
 
 void
 TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean has_event = 0;
   CORBA::Any_var any;
@@ -157,7 +157,7 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
   ACE_TRY
     {
       any = consumer->try_pull_from_supplier (has_event
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -169,7 +169,7 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
 
   if (has_event)
     {
-      this->consumer_admin_->push (any.in () TAO_ENV_ARG_PARAMETER);
+      this->consumer_admin_->push (any.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

@@ -12,7 +12,7 @@ ACE_RCSID (TAO_CodecFactory,
 void
 TAO_CodecFactory_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The CodecFactory is stateless and reentrant, so share a single
@@ -34,14 +34,14 @@ TAO_CodecFactory_ORBInitializer::pre_init (
 
   info->register_initial_reference ("CodecFactory",
                                     this->codec_factory_.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_CodecFactory_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

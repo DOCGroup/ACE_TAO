@@ -11,7 +11,7 @@ ACE_RCSID (ORT,
 void
 ORT_test_IORInterceptor_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -19,7 +19,7 @@ ORT_test_IORInterceptor_ORBInitializer::pre_init (
 void
 ORT_test_IORInterceptor_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::IORInterceptor_ptr ort_test_interceptor;
@@ -36,7 +36,7 @@ ORT_test_IORInterceptor_ORBInitializer::post_init (
     ort_test_interceptor;
 
   info->add_ior_interceptor (ior_interceptor.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }

@@ -39,7 +39,7 @@ Collocation_Tester::match_answer (const char *actual_answer,
 }
 
 int
-Collocation_Tester::test_top (TAO_ENV_SINGLE_ARG_DECL)
+Collocation_Tester::test_top (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<TOP>-------------------------------\n")));
@@ -58,7 +58,7 @@ Collocation_Tester::test_top (TAO_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Top\n\n")));
 
-  CORBA::String_var msg = top->top_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var msg = top->top_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
@@ -74,7 +74,7 @@ Collocation_Tester::test_top (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Collocation_Tester::test_right (TAO_ENV_SINGLE_ARG_DECL)
+Collocation_Tester::test_right (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<RIGHT>-------------------------------\n")));
@@ -93,12 +93,12 @@ Collocation_Tester::test_right (TAO_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Right\n\n")));
 
-  CORBA::String_var msg = right->top_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var msg = right->top_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
-  msg = right->right_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  msg = right->right_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   failure += this->match_answer (Quote::right, msg.in (), "right_quote");
@@ -115,7 +115,7 @@ Collocation_Tester::test_right (TAO_ENV_SINGLE_ARG_DECL)
 
 
 int
-Collocation_Tester::test_left (TAO_ENV_SINGLE_ARG_DECL)
+Collocation_Tester::test_left (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<LEFT>-------------------------------\n")));
@@ -135,12 +135,12 @@ Collocation_Tester::test_left (TAO_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Left\n\n")));
 
-  CORBA::String_var msg = left->top_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var msg = left->top_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
-  msg = left->left_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  msg = left->left_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(1);
 
   failure += this->match_answer (Quote::left, msg.in (), "left_quote");
@@ -157,7 +157,7 @@ Collocation_Tester::test_left (TAO_ENV_SINGLE_ARG_DECL)
 
 
 int
-Collocation_Tester::test_bottom (TAO_ENV_SINGLE_ARG_DECL)
+Collocation_Tester::test_bottom (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n-----------------------<BOTTOM>-------------------------------\n")));
@@ -177,22 +177,22 @@ Collocation_Tester::test_bottom (TAO_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Bottom\n\n")));
 
-  CORBA::String_var msg = bottom->top_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var msg = bottom->top_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(1);
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
-  msg = bottom->left_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  msg = bottom->left_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   failure += this->match_answer (Quote::left, msg.in (), "left_quote");
 
-  msg = bottom->right_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  msg = bottom->right_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(1);
 
   failure += this->match_answer (Quote::right, msg.in (), "right_quote");
 
-  msg = bottom->bottom_quote (TAO_ENV_SINGLE_ARG_PARAMETER);
+  msg = bottom->bottom_quote (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(1);
 
   failure += this->match_answer (Quote::bottom, msg.in (), "bottom_quote");
@@ -208,7 +208,7 @@ Collocation_Tester::test_bottom (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Collocation_Tester::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Collocation_Tester::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   Multiple::Top_var top =
     Multiple::Top::_narrow (this->object_.in ());
@@ -223,23 +223,23 @@ Collocation_Tester::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling ShutDown on Top.\n\n")));
 
-  top->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  top->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Collocation_Tester::run (TAO_ENV_SINGLE_ARG_DECL)
+Collocation_Tester::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  int failure_num =   this->test_top (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int failure_num =   this->test_top (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  failure_num += this->test_left (TAO_ENV_SINGLE_ARG_PARAMETER);
+  failure_num += this->test_left (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  failure_num += this->test_right (TAO_ENV_SINGLE_ARG_PARAMETER);
+  failure_num += this->test_right (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  failure_num += this->test_bottom (TAO_ENV_SINGLE_ARG_PARAMETER);
+  failure_num += this->test_bottom (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (failure_num)
@@ -249,5 +249,5 @@ Collocation_Tester::run (TAO_ENV_SINGLE_ARG_DECL)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\n\nThe Test Completed Successfully. Congratulations! ")));
 
-  this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }

@@ -1,14 +1,14 @@
 //$Id$
 static void M302 (Demux_Test_ptr objref
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
 {
-  objref->M302 (TAO_ENV_SINGLE_ARG_PARAMETER);
+  objref->M302 (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 static void shutdown (Demux_Test_ptr objref
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
-  objref->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  objref->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int Demux_Test_Client::init_operation_db (void)

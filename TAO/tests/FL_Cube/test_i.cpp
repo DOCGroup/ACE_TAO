@@ -20,19 +20,19 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
 }
 
 void
-Simple_Server_i::set_x_angle (CORBA::Long x TAO_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::set_x_angle (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->window_->set_x_angle (x);
 }
 
 void
-Simple_Server_i::set_y_angle (CORBA::Long y TAO_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::set_y_angle (CORBA::Long y ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->window_->set_y_angle (y);
 }
 
 void
-Simple_Server_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->orb_->shutdown (0);
 }

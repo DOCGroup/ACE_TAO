@@ -149,7 +149,7 @@ remove_offer (const char* type, CORBA::ULong id)
 template <class LOCK_TYPE> int
 TAO_Offer_Database<LOCK_TYPE>::
 remove_offer (const CosTrading::OfferId offer_id
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId))
 {
@@ -159,7 +159,7 @@ remove_offer (const CosTrading::OfferId offer_id
   this->parse_offer_id (offer_id,
                         stype,
                         index
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->remove_offer (stype,
@@ -174,13 +174,13 @@ template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id,
               char*& type_name
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId))
 {
   CORBA::ULong index;
   CosTrading::Offer* offer = 0;
-  this->parse_offer_id (offer_id, type_name, index TAO_ENV_ARG_PARAMETER);
+  this->parse_offer_id (offer_id, type_name, index ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (offer);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
@@ -193,7 +193,7 @@ lookup_offer (const CosTrading::OfferId offer_id,
 template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId))
 {
@@ -201,7 +201,7 @@ lookup_offer (const CosTrading::OfferId offer_id
   CORBA::ULong index;
   CosTrading::Offer* offer = 0;
 
-  this->parse_offer_id (offer_id, type_name, index TAO_ENV_ARG_PARAMETER);
+  this->parse_offer_id (offer_id, type_name, index ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (offer);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
@@ -275,7 +275,7 @@ TAO_Offer_Database<LOCK_TYPE>::
 parse_offer_id (const CosTrading::OfferId offer_id,
                 char*&service_type,
                 CORBA::ULong& id
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalOfferId))
 {
   // Get service type: it is everything from 17th character to the end.

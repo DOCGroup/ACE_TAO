@@ -44,7 +44,7 @@ public:
   // Execute the test.
 
   virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       TAO_ENV_ARG_DECL);
+                                       ACE_ENV_ARG_DECL);
   // Obtain the orb and the poa pointers
 
   int channel_count (void) const;
@@ -90,24 +90,24 @@ public:
 
   // = The EC_Driver methods
   virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       TAO_ENV_ARG_DECL);
+                                       ACE_ENV_ARG_DECL);
   virtual int parse_args (int& argc, char* argv[]);
   virtual void print_args (void) const;
   virtual void print_usage (void);
   // add some command line args to enable/disable observerions
 
-  void execute_test (TAO_ENV_SINGLE_ARG_DECL);
-  void run_cleanup (TAO_ENV_SINGLE_ARG_DECL);
+  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_cleanup (ACE_ENV_SINGLE_ARG_DECL);
   // Run the suppliers, using the <thread_manager> parameter
 
   void dump_results (void);
   void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
   void consumer_push (void*,
                       const RtecEventComm::EventSet&
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
 private:
   EC_Master *master_;

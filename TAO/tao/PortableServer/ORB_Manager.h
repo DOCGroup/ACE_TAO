@@ -64,7 +64,7 @@ public:
    */
   int init (int &argc,
             char *argv[]
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Initialize the ORB/root POA, using the supplied command line
     * arguments or the default ORB components.
@@ -74,7 +74,7 @@ public:
   int init (int &argc,
             char *argv[],
             const char *orb_name
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
@@ -86,7 +86,7 @@ public:
   int init_child_poa (int &argc,
                       char *argv[],
                       const char *poa_name
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
@@ -97,13 +97,13 @@ public:
                       char *argv[],
                       const char *poa_name,
                       const char *orb_name
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Shut down.  Invoke the destroy() methods on the orb and poa.
    *
    * @return -1 on failure, 0 on success
    */
-  int fini (TAO_ENV_SINGLE_ARG_DECL);
+  int fini (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Destructor.
   ~TAO_ORB_Manager (void);
@@ -119,7 +119,7 @@ public:
    *
    *  @return -1 on failure, 0 on success
    */
-  int activate_poa_manager (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int activate_poa_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Activate <servant>, using the POA <activate_object> call.  Users
@@ -130,7 +130,7 @@ public:
    *         memory deallocation of the string.
    */
   char *activate (PortableServer::Servant servant
-                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Deactivate object in RootPOA.
    *
@@ -138,7 +138,7 @@ public:
    *             of the servant to deactivate in the POA
    */
   void deactivate (const char *id
-                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Precondition: init_child_poa has been called.  Activate <servant>
@@ -156,7 +156,7 @@ public:
    */
   char *activate_under_child_poa (const char *object_name,
                                   PortableServer::Servant servant
-                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Deactivate object in child POA.
    *
@@ -164,7 +164,7 @@ public:
    *             the object to deactivate in the POA
    */
   void deactivate_under_child_poa (const char *id
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Run the ORB event loop with the specified <tv> time value.
    *
@@ -172,8 +172,8 @@ public:
    * @return -1 on failure, 0 on success
    */
   int run (ACE_Time_Value &tv
-           TAO_ENV_ARG_DECL_WITH_DEFAULTS);
-  int run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Accessor which returns the ORB pointer.  Following the normal

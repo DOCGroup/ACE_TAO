@@ -52,7 +52,7 @@ public:
   /// Copy the state from <source>, it uses the copy() operator to
   /// obtain independent copies of all the policies.
   void copy_from (TAO_Policy_Set* source
-                  TAO_ENV_ARG_DECL);
+                  ACE_ENV_ARG_DECL);
 
   /**
    * Modify the list of policies to include <policies>.
@@ -63,18 +63,18 @@ public:
    */
   void set_policy_overrides (const CORBA::PolicyList & policies,
                              CORBA::SetOverrideType set_add
-                             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /// Get the values (if any) for the policies in <types>, if <types>
   /// is an empty list the method returns *all* the current policies.
   CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types
-                                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   /// Obtain a cached policy for speedy lookups.
@@ -91,7 +91,7 @@ public:
 
   /// Utility method to set a single policy.
   void set_policy (const CORBA::Policy_ptr policy
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
 
   /// Returns the policy at the specified index.
   /// CORBA::Policy::_nil () is returned if the policy doesn't exist
@@ -104,7 +104,7 @@ private:
 
   /// Remove and destroy all the policy objects owned by this policy
   /// manager.
-  void cleanup_i (TAO_ENV_SINGLE_ARG_DECL);
+  void cleanup_i (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Utility method to determine if a policy's scope is compatible with ours.
   CORBA::Boolean compatible_scope (TAO_Policy_Scope policy_scope) const;

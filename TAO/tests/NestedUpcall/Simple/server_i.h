@@ -9,15 +9,15 @@ public:
             CORBA::ORB_ptr orb);
 
   void ping (CORBA::UShort time_to_live
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void start (client_ptr c,
               CORBA::UShort time_to_live
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -40,10 +40,10 @@ public:
   ~Nestea_Server_i (void);
 
   /// Initialize the Server state - parsing arguments and waiting
-  int init (int argc, char **argv TAO_ENV_ARG_DECL);
+  int init (int argc, char **argv ACE_ENV_ARG_DECL);
 
   /// Run the orb
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Parses the commandline arguments.

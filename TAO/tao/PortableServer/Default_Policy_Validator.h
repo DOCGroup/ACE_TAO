@@ -41,11 +41,11 @@ protected:
    * if that is not the case.
    */
   void validate_impl (TAO_Policy_Set &policies
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
   /// Add/merge policies.
   void merge_policies_impl (TAO_Policy_Set &policies
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
 
   /**
    * Return whether the specified policy type is legal for the

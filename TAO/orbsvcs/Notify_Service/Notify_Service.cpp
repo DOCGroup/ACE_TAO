@@ -31,17 +31,17 @@ TAO_Notify_Service::~TAO_Notify_Service (void)
 
 int
 TAO_Notify_Service::init_ORB (int& argc, char *argv []
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
                                 ""
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var poa_obj  =
     this->orb_->resolve_initial_references("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (poa_obj.in ()))
@@ -51,14 +51,14 @@ TAO_Notify_Service::init_ORB (int& argc, char *argv []
 
   this->poa_ =
     PortableServer::POA::_narrow (poa_obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -66,11 +66,11 @@ TAO_Notify_Service::init_ORB (int& argc, char *argv []
 
 int
 TAO_Notify_Service::init (int argc, char *argv[]
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   // initalize the ORB.
   if (this->init_ORB (argc, argv
-                      TAO_ENV_ARG_PARAMETER) != 0)
+                      ACE_ENV_ARG_PARAMETER) != 0)
   return -1;
 
   ACE_CHECK_RETURN (-1);
@@ -92,7 +92,7 @@ TAO_Notify_Service::init (int argc, char *argv[]
   if (this->use_name_svc_)
     {
       // Resolve the naming service.
-      int ns_ret = this->resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+      int ns_ret = this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (ns_ret != 0)
@@ -105,14 +105,14 @@ TAO_Notify_Service::init (int argc, char *argv[]
   // Activate the factory
   this->notify_factory_ =
     TAO_Notify_EventChannelFactory_i::create (this->poa_.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
   // Write IOR to a file, if asked.
   CORBA::String_var str =
-    this->orb_->object_to_string (this->notify_factory_.in () TAO_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (this->notify_factory_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_)
@@ -133,11 +133,11 @@ TAO_Notify_Service::init (int argc, char *argv[]
     {
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -147,10 +147,10 @@ TAO_Notify_Service::init (int argc, char *argv[]
         {
           CORBA::String_var ior =
             this->orb_->object_to_string (this->notify_factory_.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           adapter->bind (this->notify_factory_name_.c_str (), ior.in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
     }
@@ -163,13 +163,13 @@ TAO_Notify_Service::init (int argc, char *argv[]
 
     CosNaming::Name_var name =
       this->naming_->to_name (this->notify_factory_name_.c_str ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
 
     this->naming_->rebind (name.in (),
                            this->notify_factory_.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
     ACE_DEBUG ((LM_DEBUG,
@@ -188,16 +188,16 @@ TAO_Notify_Service::init (int argc, char *argv[]
           this->notify_factory_->create_channel (initial_qos,
                                                  initial_admin,
                                                  id
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
         name = this->naming_->to_name (
           this->notify_channel_name_.c_str ()
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (-1);
 
 
         this->naming_->rebind (name.in (),
                                ec.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (-1);
 
         ACE_DEBUG ((LM_DEBUG,
@@ -211,11 +211,11 @@ TAO_Notify_Service::init (int argc, char *argv[]
 }
 
 int
-TAO_Notify_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Need to check return value for errors.
@@ -226,7 +226,7 @@ TAO_Notify_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 
   this->naming_ =
     CosNaming::NamingContextExt::_narrow (naming_obj.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -245,10 +245,10 @@ TAO_Notify_Service::run ()
       return 0;
     }
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -261,17 +261,17 @@ TAO_Notify_Service::run ()
 }
 
 void
-TAO_Notify_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
   PortableServer::ObjectId_var oid =
     this->poa_->reference_to_id (this->notify_factory_.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // deactivate from the poa.
   this->poa_->deactivate_object (oid.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->use_name_svc_)
@@ -279,11 +279,11 @@ TAO_Notify_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
     // Unbind from the naming service.
     CosNaming::Name_var name =
       this->naming_->to_name (this->notify_factory_name_.c_str ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     this->naming_->unbind (name.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -393,10 +393,10 @@ Worker::orb (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

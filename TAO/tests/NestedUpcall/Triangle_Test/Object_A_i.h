@@ -35,10 +35,10 @@ public:
   // Destructor.
 
   virtual void foo (Initiator_ptr theInitiator_ptr
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void finish (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void finish (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   unsigned long finish_two_way_call_;

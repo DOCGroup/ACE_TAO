@@ -35,7 +35,7 @@ public:
   virtual ~TAO_Object_Proxy_Broker (void);
 
   virtual TAO_Object_Proxy_Impl &select_proxy (CORBA::Object_ptr object
-                                               TAO_ENV_ARG_DECL) = 0;
+                                               ACE_ENV_ARG_DECL) = 0;
 
 protected:
   TAO_Object_Proxy_Broker (void);

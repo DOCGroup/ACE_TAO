@@ -85,7 +85,7 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
     }
 
   // if we are supporting the alternate mapping, we must pass the
-  // TAO_ENV_ARG_PARAMETER as the last parameter
+  // ACE_ENV_ARG_PARAMETER as the last parameter
   if (!be_global->exception_support ())
     {
       switch (this->ctx_->state ())
@@ -94,12 +94,12 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
           // applicable only to these cases where the actual upcall is made
 
-          // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
+          // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
           // whether the operation node has parameters.
           if (node->argument_count () > 0)
-            *os << " TAO_ENV_ARG_PARAMETER";
+            *os << " ACE_ENV_ARG_PARAMETER";
           else
-            *os << "TAO_ENV_SINGLE_ARG_PARAMETER";
+            *os << "ACE_ENV_SINGLE_ARG_PARAMETER";
           break;
         default:
           break;

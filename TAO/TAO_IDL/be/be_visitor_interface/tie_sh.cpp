@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -118,7 +118,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "// set the ownership" << be_nl << be_nl
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt_nl
-      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt << "\n";
 
   if (node->traverse_inheritance_graph (
@@ -148,8 +148,8 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
 
 int
 be_visitor_interface_tie_sh::method_helper (be_interface *,
-					                                  be_interface *node,
-					                                  TAO_OutStream *os)
+                                                                          be_interface *node,
+                                                                          TAO_OutStream *os)
 {
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
@@ -161,8 +161,8 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "be_visitor_interface_tie_sh::"
-			 "method_helper\n"), -1);
+                         "be_visitor_interface_tie_sh::"
+                         "method_helper\n"), -1);
     }
 
   delete visitor;

@@ -21,39 +21,39 @@ TAO_HomeDef_i::~TAO_HomeDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_HomeDef_i::def_kind (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_HomeDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Home;
 }
 
 void
-TAO_HomeDef_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_HomeDef_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 CORBA_Contained::Description *
-TAO_HomeDef_i::describe (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->describe_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_Contained::Description *
-TAO_HomeDef_i::describe_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -61,16 +61,16 @@ TAO_HomeDef_i::describe_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_AR
 }
 
 CORBA::TypeCode_ptr
-TAO_HomeDef_i::type (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  return this->type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
-TAO_HomeDef_i::type_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -78,16 +78,16 @@ TAO_HomeDef_i::type_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PA
 }
 
 IR::HomeDef_ptr
-TAO_HomeDef_i::base_home (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::base_home (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (IR::HomeDef::_nil ());
 
-  return this->base_home_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->base_home_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 IR::HomeDef_ptr
-TAO_HomeDef_i::base_home_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::base_home_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -95,16 +95,16 @@ TAO_HomeDef_i::base_home_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_A
 }
 
 IR::ComponentDef_ptr
-TAO_HomeDef_i::managed_component (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::managed_component (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (IR::ComponentDef::_nil ());
 
-  return this->managed_component_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->managed_component_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 IR::ComponentDef_ptr
-TAO_HomeDef_i::managed_component_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::managed_component_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -112,16 +112,16 @@ TAO_HomeDef_i::managed_component_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_
 }
 
 IR::PrimaryKeyDef_ptr
-TAO_HomeDef_i::primary_key (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::primary_key (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (IR::PrimaryKeyDef::_nil ());
 
-  return this->primary_key_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->primary_key_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 IR::PrimaryKeyDef_ptr
-TAO_HomeDef_i::primary_key_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::primary_key_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -129,16 +129,16 @@ TAO_HomeDef_i::primary_key_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE
 }
 
 IR::FactoryDefSeq *
-TAO_HomeDef_i::factories (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::factories (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->factories_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->factories_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 IR::FactoryDefSeq *
-TAO_HomeDef_i::factories_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::factories_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -146,16 +146,16 @@ TAO_HomeDef_i::factories_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_A
 }
 
 IR::FinderDefSeq *
-TAO_HomeDef_i::finders (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::finders (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->finders_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->finders_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 IR::FinderDefSeq *
-TAO_HomeDef_i::finders_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::finders_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -163,16 +163,16 @@ TAO_HomeDef_i::finders_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG
 }
 
 CORBA::Boolean
-TAO_HomeDef_i::is_basic (TAO_ENV_SINGLE_ARG_DECL)
+TAO_HomeDef_i::is_basic (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->is_basic_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->is_basic_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Boolean
-TAO_HomeDef_i::is_basic_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_HomeDef_i::is_basic_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -184,7 +184,7 @@ TAO_HomeDef_i::create_primary_key (const char *id,
                                    const char *name,
                                    const char *version,
                                    CORBA_ValueDef_ptr primary_key
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (IR::PrimaryKeyDef::_nil ());
@@ -193,7 +193,7 @@ TAO_HomeDef_i::create_primary_key (const char *id,
                                      name,
                                      version,
                                      primary_key
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 IR::PrimaryKeyDef_ptr
@@ -201,7 +201,7 @@ TAO_HomeDef_i::create_primary_key_i (const char * /* id */,
                                      const char * /* name */,
                                      const char * /* version */,
                                      CORBA_ValueDef_ptr /* primary_key */
-                                     TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+                                     ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -214,7 +214,7 @@ TAO_HomeDef_i::create_factory (const char *id,
                                const char *version,
                                const CORBA_ParDescriptionSeq &params,
                                const CORBA_ExceptionDefSeq &exceptions
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (IR::FactoryDef::_nil ());
@@ -224,7 +224,7 @@ TAO_HomeDef_i::create_factory (const char *id,
                                  version,
                                  params,
                                  exceptions
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 IR::FactoryDef_ptr
@@ -234,7 +234,7 @@ TAO_HomeDef_i::create_factory_i (
     const char * /* version */,
     const CORBA_ParDescriptionSeq & /* params */,
     const CORBA_ExceptionDefSeq & /* exceptions */
-    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
+    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -248,7 +248,7 @@ TAO_HomeDef_i::create_finder (const char *id,
                               const char *version,
                               const CORBA_ParDescriptionSeq &params,
                               const CORBA_ExceptionDefSeq &exceptions
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (IR::FinderDef::_nil ());
@@ -258,7 +258,7 @@ TAO_HomeDef_i::create_finder (const char *id,
                                 version,
                                 params,
                                 exceptions
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
 }
 
 IR::FinderDef_ptr
@@ -268,7 +268,7 @@ TAO_HomeDef_i::create_finder_i (
     const char * /* version */,
     const CORBA_ParDescriptionSeq & /* params */,
     const CORBA_ExceptionDefSeq & /* exceptions */
-    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
+    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

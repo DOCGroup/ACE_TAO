@@ -15,7 +15,7 @@ CORBA::Policy_ptr
 TAO_Security_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {

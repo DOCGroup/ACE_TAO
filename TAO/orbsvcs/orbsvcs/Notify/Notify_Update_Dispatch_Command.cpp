@@ -22,10 +22,10 @@ TAO_Notify_Update_Dispatch_Command::~TAO_Notify_Update_Dispatch_Command ()
 }
 
 int
-TAO_Notify_Update_Dispatch_Command::execute (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Update_Dispatch_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->update_listener_->dispatch_update (this->added_, this->removed_
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;

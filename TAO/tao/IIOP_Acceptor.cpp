@@ -906,7 +906,7 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
   int recv_buffer_size = this->orb_core_->orb_params ()->sock_rcvbuf_size ();
   int no_delay = this->orb_core_->orb_params ()->nodelay ();
 
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (tph != 0)

@@ -54,20 +54,20 @@ public:
   /// Destructor.
   ~TAO_Named_RT_Mutex_Manager (void);
 
-  RTCORBA::Mutex_ptr create_mutex (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  RTCORBA::Mutex_ptr create_mutex (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::Mutex_ptr create_named_mutex (const char *name,
                                          CORBA::Boolean_out created_flag
-                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::Mutex_ptr open_named_mutex (const char * name
-                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::MutexNotFound
                      ));
@@ -110,7 +110,7 @@ public:
    * consistant priority inheritance/piority ceiling semantics
    * can be guaranteed.
    */
-  virtual RTCORBA::Mutex_ptr create_mutex (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTCORBA::Mutex_ptr create_mutex (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -119,7 +119,7 @@ public:
    * 0.
    */
   virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -129,12 +129,12 @@ public:
    */
   virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
                                                  CORBA::Boolean_out created_flag
-                                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Retrieve a previously created mutex.
   virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name
-                                                TAO_ENV_ARG_DECL_WITH_DEFAULTS )
+                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS )
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RTCORBA::RTORB::MutexNotFound
                       ));
@@ -150,7 +150,7 @@ public:
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
                                   CORBA::Boolean no_delay
-                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException ));
 
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
@@ -162,7 +162,7 @@ public:
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
                      CORBA::ULong max_request_buffer_size
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -176,12 +176,12 @@ public:
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
                                 CORBA::ULong max_request_buffer_size
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Free the resources associated with the specified threadpool.
   virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
 
@@ -190,13 +190,13 @@ public:
   create_priority_model_policy (
                                 RTCORBA::PriorityModel priority_model,
                                 RTCORBA::Priority server_priority
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a ThreadpoolPolicy instance for POA creation
   virtual RTCORBA::ThreadpoolPolicy_ptr
   create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -206,7 +206,7 @@ public:
   virtual RTCORBA::PriorityBandedConnectionPolicy_ptr
   create_priority_banded_connection_policy (const RTCORBA::PriorityBands &
                                             priority_bands
-                                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -215,7 +215,7 @@ public:
    * to the server.
    */
   virtual RTCORBA::PrivateConnectionPolicy_ptr
-  create_private_connection_policy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  create_private_connection_policy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -224,7 +224,7 @@ public:
    */
   virtual RTCORBA::ServerProtocolPolicy_ptr
   create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -233,7 +233,7 @@ public:
    */
   virtual RTCORBA::ClientProtocolPolicy_ptr
   create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the Thread Pool Manager.

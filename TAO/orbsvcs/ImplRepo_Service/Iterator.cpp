@@ -37,7 +37,7 @@ ImR_Iterator::~ImR_Iterator ()
 CORBA::Boolean
 ImR_Iterator::next_n (CORBA::ULong how_many,
                       ImplementationRepository::ServerInformationList_out server_list
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (server_list,
@@ -95,7 +95,7 @@ ImR_Iterator::next_n (CORBA::ULong how_many,
 // Destroys the iterator.
 
 void
-ImR_Iterator::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ImR_Iterator::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

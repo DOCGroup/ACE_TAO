@@ -48,15 +48,15 @@ public:
   // Constructor
 
   void push (const RtecEventComm::EventSet &event
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   RND_Driver *driver_;
@@ -83,7 +83,7 @@ public:
   RND_Timer (RND_Driver *driver);
 
   void push (const RtecEventComm::EventSet &event
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -111,15 +111,15 @@ public:
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
                 const RtecEventChannelAdmin::SupplierQOS &qos
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
-  void push_new_event (TAO_ENV_SINGLE_ARG_DECL);
+  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
   void push (RtecEventComm::EventSet &event
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Push a single event...
 
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int svc (void);
@@ -153,11 +153,11 @@ public:
   // Run the test
 
   void timer (const RtecEventComm::Event &e
-              TAO_ENV_ARG_DECL);
+              ACE_ENV_ARG_DECL);
   // The main timer has expired
 
   void event (const RtecEventComm::Event &e
-              TAO_ENV_ARG_DECL);
+              ACE_ENV_ARG_DECL);
   // One of the consumers has received an event
 
 private:

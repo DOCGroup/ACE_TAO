@@ -33,7 +33,7 @@ class Object_Factory_i : public virtual POA_Gateway::Object_Factory
   CORBA::Object_ptr
     create_object (const char *interface_repository_id,
                    CORBA::Object_ptr gatewayed_object
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:

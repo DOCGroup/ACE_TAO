@@ -54,12 +54,12 @@ public:
   ~TAO_CosEC_ProxyPushSupplier_i (void);
   // Destructor.
 
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Ends the event communication and disposes this object.
 
   virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected,
                        CosEventChannelAdmin::TypeError));

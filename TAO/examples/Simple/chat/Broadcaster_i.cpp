@@ -43,7 +43,7 @@ Broadcaster_i::~Broadcaster_i (void)
 void
 Broadcaster_i::add (Receiver_ptr receiver,
                     const char *nickname
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotAdd
@@ -68,7 +68,7 @@ Broadcaster_i::add (Receiver_ptr receiver,
   ACE_TRY
     {
       this->broadcast (broadcast_string.fast_rep ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -82,7 +82,7 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
 void
 Broadcaster_i::remove (Receiver_ptr receiver
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotRemove
@@ -118,14 +118,14 @@ Broadcaster_i::remove (Receiver_ptr receiver
     + " ****\n";
 
   this->broadcast (broadcast_string.fast_rep ()
-                   TAO_ENV_ARG_PARAMETER);
+                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Broadcaster_i::say (Receiver_ptr receiver,
                     const char *text
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
  ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -152,7 +152,7 @@ Broadcaster_i::say (Receiver_ptr receiver,
       ACE_CString broadcast_string ("[" + sender_nickname + "] " + text);
 
       this->broadcast (broadcast_string.fast_rep ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -166,7 +166,7 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
 void
 Broadcaster_i::broadcast (const char *text
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   // Broadcast the message to all registered clients.
 
@@ -177,7 +177,7 @@ Broadcaster_i::broadcast (const char *text
       ACE_TRY
         {
           (*iter).receiver_->message (text
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

@@ -23,14 +23,14 @@ TAO_Notify_Worker_Task::init_task (TAO_Notify_AdminProperties* const,
 }
 
 void
-TAO_Notify_Worker_Task::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Worker_Task::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
 int
-TAO_Notify_Worker_Task::process_event (TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value * /*tv*/)
+TAO_Notify_Worker_Task::process_event (TAO_Notify_Command *mb ACE_ENV_ARG_DECL, ACE_Time_Value * /*tv*/)
 {
-  int result = mb->execute (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int result = mb->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_Message_Block::release (mb);

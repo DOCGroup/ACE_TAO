@@ -38,7 +38,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -58,11 +58,11 @@ main (int argc, char *argv[])
             {
               iorfile = "file://" + iorfile;
               CORBA::Object_var tmp =
-                orb->string_to_object(iorfile.c_str () TAO_ENV_ARG_PARAMETER);
+                orb->string_to_object(iorfile.c_str () ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               test_var test =
-                test::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+                test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               if (CORBA::is_nil (test.in ()))
@@ -73,14 +73,14 @@ main (int argc, char *argv[])
                                     1);
                 }
 
-              test->send_stuff ("Some stuff to send" TAO_ENV_ARG_PARAMETER);
+              test->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK
 
               // Test for LFU strategy.  The transport to any other
               // server should be removed before the first one.
               if (i == 0)
                 {
-                  test->send_stuff ("Some stuff to send" TAO_ENV_ARG_PARAMETER);
+                  test->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK
 
                   holder = test;
@@ -91,7 +91,7 @@ main (int argc, char *argv[])
                                 // removed.
                   if (!CORBA::is_nil(holder.in ()))
                     {
-                      holder->send_stuff ("Some stuff to send" TAO_ENV_ARG_PARAMETER);
+                      holder->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK
                     }
                 }
@@ -102,10 +102,10 @@ main (int argc, char *argv[])
             }
         }
 
-      orb->shutdown (1 TAO_ENV_ARG_PARAMETER);
+      orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

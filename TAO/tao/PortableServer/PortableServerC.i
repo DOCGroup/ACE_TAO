@@ -1061,10 +1061,10 @@ tao_PortableServer_ThreadPolicy_nil (
 
 ACE_INLINE PortableServer::ThreadPolicy_ptr
 tao_PortableServer_ThreadPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::ThreadPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::ThreadPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1112,10 +1112,10 @@ tao_PortableServer_LifespanPolicy_nil (
 
 ACE_INLINE PortableServer::LifespanPolicy_ptr
 tao_PortableServer_LifespanPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::LifespanPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::LifespanPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1161,10 +1161,10 @@ tao_PortableServer_IdUniquenessPolicy_nil (
 
 ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
 tao_PortableServer_IdUniquenessPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::IdUniquenessPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::IdUniquenessPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1210,10 +1210,10 @@ tao_PortableServer_IdAssignmentPolicy_nil (
 
 ACE_INLINE PortableServer::IdAssignmentPolicy_ptr
 tao_PortableServer_IdAssignmentPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::IdAssignmentPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::IdAssignmentPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1261,10 +1261,10 @@ tao_PortableServer_ImplicitActivationPolicy_nil (
 
 ACE_INLINE PortableServer::ImplicitActivationPolicy_ptr
 tao_PortableServer_ImplicitActivationPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::ImplicitActivationPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::ImplicitActivationPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1310,10 +1310,10 @@ tao_PortableServer_ServantRetentionPolicy_nil (
 
 ACE_INLINE PortableServer::ServantRetentionPolicy_ptr
 tao_PortableServer_ServantRetentionPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantRetentionPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::ServantRetentionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1359,10 +1359,10 @@ tao_PortableServer_RequestProcessingPolicy_nil (
 
 ACE_INLINE PortableServer::RequestProcessingPolicy_ptr
 tao_PortableServer_RequestProcessingPolicy_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::RequestProcessingPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::RequestProcessingPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1414,10 +1414,10 @@ tao_PortableServer_POAManager_nil (
 
 ACE_INLINE PortableServer::POAManager_ptr
 tao_PortableServer_POAManager_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::POAManager::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::POAManager::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1465,10 +1465,10 @@ tao_PortableServer_AdapterActivator_nil (
 
 ACE_INLINE PortableServer::AdapterActivator_ptr
 tao_PortableServer_AdapterActivator_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::AdapterActivator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::AdapterActivator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1514,10 +1514,10 @@ tao_PortableServer_ServantManager_nil (
 
 ACE_INLINE PortableServer::ServantManager_ptr
 tao_PortableServer_ServantManager_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantManager::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::ServantManager::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1563,10 +1563,10 @@ tao_PortableServer_ServantActivator_nil (
 
 ACE_INLINE PortableServer::ServantActivator_ptr
 tao_PortableServer_ServantActivator_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantActivator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::ServantActivator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1612,10 +1612,10 @@ tao_PortableServer_ServantLocator_nil (
 
 ACE_INLINE PortableServer::ServantLocator_ptr
 tao_PortableServer_ServantLocator_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantLocator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::ServantLocator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1703,10 +1703,10 @@ tao_PortableServer_POA_nil (
 
 ACE_INLINE PortableServer::POA_ptr
 tao_PortableServer_POA_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::POA::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::POA::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1756,10 +1756,10 @@ tao_PortableServer_Current_nil (
 
 ACE_INLINE PortableServer::Current_ptr
 tao_PortableServer_Current_narrow (
-    CORBA::Object *p TAO_ENV_ARG_DECL
+    CORBA::Object *p ACE_ENV_ARG_DECL
   )
 {
-  return PortableServer::Current::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return PortableServer::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

@@ -52,17 +52,17 @@ public:
   // Destructor.
 
   void init (CORBA_TypeCode_ptr tc
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Initialize using just a TypeCode
 
   void init (const CORBA_Any& any
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Initialize using an Any.
 
   // = LocalObject methods.
   static TAO_DynAny_i *_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -70,7 +70,7 @@ public:
 
   virtual void from_any (
       const CORBA::Any & value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -79,7 +79,7 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -87,21 +87,21 @@ public:
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -111,11 +111,11 @@ public:
 private:
   // Check if the typecode is acceptable.
   void check_typecode (CORBA::TypeCode_ptr tc
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
 
   // Used when we are created from a typecode.
   void set_to_default_value (CORBA::TypeCode_ptr tc
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 
   // Called by both versions of init().
   void init_common (void);

@@ -97,7 +97,7 @@ TAO_Thread_Lane_Resources::leader_follower (void)
 
 int
 TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
-                                                   TAO_ENV_ARG_DECL)
+                                                   ACE_ENV_ARG_DECL)
 {
   /// Access the acceptor registry.
   TAO_Acceptor_Registry &ar =
@@ -108,7 +108,7 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
     ar.open (&this->orb_core_,
              this->leader_follower ().reactor (),
              ignore_address
-              TAO_ENV_ARG_PARAMETER);
+              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;

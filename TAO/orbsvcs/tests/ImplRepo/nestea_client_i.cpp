@@ -87,14 +87,14 @@ Nestea_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet"
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
@@ -108,10 +108,10 @@ Nestea_Client_i::init (int argc, char **argv)
                           -1);
 
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_ TAO_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (this->server_key_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->server_ = Nestea_Bookshelf::_narrow (server_object.in() TAO_ENV_ARG_PARAMETER);
+      this->server_ = Nestea_Bookshelf::_narrow (server_object.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))

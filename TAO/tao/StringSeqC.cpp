@@ -210,7 +210,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_StringSeq *&
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CORBA::_tc_StringSeq TAO_ENV_ARG_PARAMETER);
+      type->equivalent (CORBA::_tc_StringSeq ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -303,7 +303,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_WStringSeq *
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CORBA::_tc_WStringSeq TAO_ENV_ARG_PARAMETER);
+      type->equivalent (CORBA::_tc_WStringSeq ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

@@ -13,7 +13,7 @@ CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {

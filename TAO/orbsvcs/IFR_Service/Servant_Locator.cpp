@@ -17,7 +17,7 @@ IFR_ServantLocator::preinvoke (
     PortableServer::POA_ptr poa,
     const char * /* operation */,
     PortableServer::ServantLocator::Cookie &cookie
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
@@ -41,7 +41,7 @@ IFR_ServantLocator::preinvoke (
   PortableServer::Servant servant =
     this->repo_->servant_factory ()->create_tie (servant_key,
                                                  poa
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   cookie = servant;
@@ -56,7 +56,7 @@ IFR_ServantLocator::postinvoke (
     const char * /* operation */,
     PortableServer::ServantLocator::Cookie /* cookie */,
     PortableServer::Servant servant
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

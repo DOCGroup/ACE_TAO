@@ -42,7 +42,7 @@ public:
   virtual int init (int argc, char *argv[]);
   // Initialize the Naming Service with the arguments.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Run the TAO_Naming_Service.
 
   virtual ~TAO_Naming_Service (void);

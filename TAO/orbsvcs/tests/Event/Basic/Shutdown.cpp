@@ -22,18 +22,18 @@ EC_Shutdown::EC_Shutdown (void)
 }
 
 void
-EC_Shutdown::execute_test (TAO_ENV_SINGLE_ARG_DECL)
+EC_Shutdown::execute_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) destroying EC\n"));
 
-  this->destroy_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec destroyed\n"));
 
-  this->deactivate_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->deactivate_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->verbose ())
@@ -44,16 +44,16 @@ EC_Shutdown::execute_test (TAO_ENV_SINGLE_ARG_DECL)
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) ec cleanup\n"));
 
-  this->initialize_ec_impl (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->initialize_ec_impl (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->connect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->connect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->connect_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->connect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Shutdown (%P|%t) status reset\n"));
 
-  // this->EC_Driver::execute_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+  // this->EC_Driver::execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -72,7 +72,7 @@ EC_Shutdown::dump_results (void)
 
 void
 EC_Shutdown::consumer_disconnect (void* cookie
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->consumer_disconnects_++;
   if (this->verbose ())
@@ -81,7 +81,7 @@ EC_Shutdown::consumer_disconnect (void* cookie
 
 void
 EC_Shutdown::supplier_disconnect (void* cookie
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->supplier_disconnects_++;
   if (this->verbose ())

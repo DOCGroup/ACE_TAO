@@ -141,10 +141,10 @@ CORBA_TypeCodeFactory_var::tao_nil (void)
 ::CORBA_TypeCodeFactory_ptr
 CORBA_TypeCodeFactory_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::CORBA_TypeCodeFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::CORBA_TypeCodeFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -226,15 +226,15 @@ CORBA_TypeCodeFactory::~CORBA_TypeCodeFactory (void)
 
 CORBA_TypeCodeFactory_ptr CORBA_TypeCodeFactory::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return CORBA_TypeCodeFactory::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return CORBA_TypeCodeFactory::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_TypeCodeFactory_ptr CORBA_TypeCodeFactory::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))

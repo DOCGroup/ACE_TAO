@@ -39,7 +39,7 @@ Object_A_i::~Object_A_i (void)
 
 void
 Object_A_i::foo (Initiator_ptr theInitiator_ptr
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -47,7 +47,7 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr
 
   ACE_TRY
     {
-      theInitiator_ptr->foo_object_B (TAO_ENV_SINGLE_ARG_PARAMETER);
+      theInitiator_ptr->foo_object_B (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       while (!this->finish_two_way_call_)
@@ -64,7 +64,7 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr
 }
 
 void
-Object_A_i::finish (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_A_i::finish (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

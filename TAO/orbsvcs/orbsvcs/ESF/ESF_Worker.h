@@ -35,7 +35,7 @@ public:
 
   /// Callback interface.
   virtual void work (Object *object
-                     TAO_ENV_ARG_DECL) = 0;
+                     ACE_ENV_ARG_DECL) = 0;
 };
 
 #if defined (__ACE_INLINE__)

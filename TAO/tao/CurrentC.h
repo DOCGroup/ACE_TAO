@@ -95,7 +95,7 @@ public:
   static CORBA_Current_ptr tao_nil (void);
   static CORBA_Current_ptr tao_narrow (
       CORBA::Object *
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -153,12 +153,12 @@ public:
 
   static CORBA_Current_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static CORBA_Current_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static CORBA_Current_ptr _nil (void)

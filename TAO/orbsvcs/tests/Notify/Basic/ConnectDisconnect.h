@@ -71,25 +71,25 @@ public:
   void on_entity_destroyed (void);
   // Keeps track of how many objects were destroyed.
 
-  int parse_args (int argc, 
+  int parse_args (int argc,
                   char *argv[]);
 
-  int init (int argc, 
-            char *argv [] 
-            TAO_ENV_ARG_DECL);
+  int init (int argc,
+            char *argv []
+            ACE_ENV_ARG_DECL);
   // initialization.
 
-  void run_test (TAO_ENV_SINGLE_ARG_DECL);
+  void run_test (ACE_ENV_SINGLE_ARG_DECL);
   // Run the test.
 
-  void end_test (TAO_ENV_SINGLE_ARG_DECL);
+  void end_test (ACE_ENV_SINGLE_ARG_DECL);
   // End the test.
 
   int check_results (void);
   // Check if we got the expected results.
 
 protected:
-  void create_EC (TAO_ENV_SINGLE_ARG_DECL);
+  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
   // Create EC.
 
   CosNotifyChannelAdmin::EventChannel_var ec_;

@@ -28,38 +28,38 @@ Policy_Tester::~Policy_Tester (void)
 }
 
 void
-Policy_Tester::run (TAO_ENV_SINGLE_ARG_DECL)
+Policy_Tester::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POAManager_var poa_manager =
-    this->child_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->child_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 int
 Policy_Tester::init (int argc,
                      char *argv[]
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
 {
   // ORB Initialization.
   this->orb_ =
     CORBA::ORB_init (argc, argv, ""
-                     TAO_ENV_ARG_PARAMETER);
+                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Get a reference to the RT-ORB.
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTORB"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->rt_orb_ = RTCORBA::RTORB::_narrow (object.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Here we parse the command line paramether passed
@@ -74,13 +74,13 @@ Policy_Tester::init (int argc,
       if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
         {
           this->rt_poa_properties_ =
-            RT_Properties::read_from (arg TAO_ENV_ARG_PARAMETER);
+            RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
       else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
         {
           this->rt_object_properties_ =
-            RT_Properties::read_from (arg TAO_ENV_ARG_PARAMETER);
+            RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
       else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
@@ -119,7 +119,7 @@ Policy_Tester::init (int argc,
     }
 
   int result =
-    this->create_objects (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->create_objects (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (result != 0)
@@ -142,7 +142,7 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
 
 
 int
-Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
+Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::PolicyList poa_policy_list;
   poa_policy_list.length (3);
@@ -152,7 +152,7 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
   poa_policy_list[0] =
     this->rt_orb_->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                                  priority
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
       // Create priority Banded Connection Policy.
@@ -161,7 +161,7 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
 
   poa_policy_list[1] =
     this->rt_orb_->create_priority_banded_connection_policy (poa_priority_bands
-                                                             TAO_ENV_ARG_PARAMETER);
+                                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
       // Client Protocol Policy.
@@ -179,11 +179,11 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
     this->rt_orb_->create_client_protocol_policy (protocol_list);
 
   CORBA::Object_var object =
-    this->orb_->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->poa_ =
-    PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_mgr =
@@ -193,18 +193,18 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
     this->poa_->create_POA ("Child_POA",
                             poa_mgr.in (),
                             poa_policy_list
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->child_poa_ =
-    RTPortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+    RTPortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Create a Corba Object reference, using the policies
   // set at the POA level.
   object =
     this->child_poa_->create_reference ("IDL:Counter:1.0"
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -214,7 +214,7 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
                         "Unable to create Object!\n"))
     return -1;
 
-  Counter_var base_object = Counter::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+  Counter_var base_object = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (!check_reference (base_object.in(),
@@ -222,7 +222,7 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
     return -1;
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (base_object.in () TAO_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (base_object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -248,7 +248,7 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
     this->child_poa_->create_reference_with_priority
     ("IDL:Counter:1.0",
      this->rt_object_properties_->priority ()
-     TAO_ENV_ARG_PARAMETER);
+     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -258,7 +258,7 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
                         "Unable to create a Counter Object!\n"))
     return -1;
 
-  Counter_var over_object = Counter::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+  Counter_var over_object = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (!check_reference (over_object.in(),
@@ -267,7 +267,7 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
 
 
   CORBA::String_var o_ior =
-    this->orb_->object_to_string (over_object.in () TAO_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (over_object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -286,8 +286,8 @@ Policy_Tester::create_objects (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Policy_Tester::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Policy_Tester::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

@@ -11,7 +11,7 @@ public:
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
                 CORBA::Boolean isFilter
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -11,7 +11,7 @@ ACE_RCSID(tao, RT_Endpoint_Utils, "$Id$")
 
 CORBA::Policy *
 TAO_RT_Endpoint_Utils::priority_bands_policy (TAO_GIOP_Invocation *invocation
-                                              TAO_ENV_ARG_DECL)
+                                              ACE_ENV_ARG_DECL)
 {
   CORBA::Policy *bands_policy = CORBA::Policy::_nil ();
   TAO_RT_Stub *rt_stub =
@@ -20,7 +20,7 @@ TAO_RT_Endpoint_Utils::priority_bands_policy (TAO_GIOP_Invocation *invocation
   ACE_TRY
     {
       bands_policy =
-        rt_stub->effective_priority_banded_connection (TAO_ENV_SINGLE_ARG_PARAMETER);
+        rt_stub->effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)
@@ -41,7 +41,7 @@ TAO_RT_Endpoint_Utils::priority_bands_policy (TAO_GIOP_Invocation *invocation
 
 CORBA::Policy *
 TAO_RT_Endpoint_Utils::client_protocol_policy (TAO_GIOP_Invocation *invocation
-                                               TAO_ENV_ARG_DECL)
+                                               ACE_ENV_ARG_DECL)
 {
   TAO_RT_Stub *rt_stub =
     ACE_dynamic_cast (TAO_RT_Stub *, invocation->stub ());
@@ -49,7 +49,7 @@ TAO_RT_Endpoint_Utils::client_protocol_policy (TAO_GIOP_Invocation *invocation
   CORBA::Policy *retval = 0;
   ACE_TRY
     {
-      retval = rt_stub->effective_client_protocol (TAO_ENV_SINGLE_ARG_PARAMETER);
+      retval = rt_stub->effective_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)

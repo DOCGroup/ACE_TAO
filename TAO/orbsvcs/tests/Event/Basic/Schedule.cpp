@@ -49,13 +49,13 @@ EC_Schedule::print_usage (void)
 }
 
 void
-EC_Schedule::initialize_ec_impl (TAO_ENV_SINGLE_ARG_DECL)
+EC_Schedule::initialize_ec_impl (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->scheduler_impl_ = new ACE_Config_Scheduler;
-  this->scheduler_ = this->scheduler_impl_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->scheduler_ = this->scheduler_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->EC_Driver::initialize_ec_impl (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->EC_Driver::initialize_ec_impl (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -72,7 +72,7 @@ EC_Schedule::cleanup_ec (void)
 }
 
 void
-EC_Schedule::execute_test (TAO_ENV_SINGLE_ARG_DECL)
+EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Long min_priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -91,7 +91,7 @@ EC_Schedule::execute_test (TAO_ENV_SINGLE_ARG_DECL)
                                         infos.out (),
                                         configs.out (),
                                         anomalies.out ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->verbose ())
@@ -113,13 +113,13 @@ EC_Schedule::build_consumer_qos (
   int i,
   RtecEventChannelAdmin::ConsumerQOS& qos,
   int& shutdown_event_type
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   char name[128];
   ACE_OS::sprintf (name, "EC_Schedule::Consumer::%04x", i);
 
   RtecScheduler::handle_t rt_info =
-    this->scheduler_->create (name TAO_ENV_ARG_PARAMETER);
+    this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // The worst case execution time is far less than 2
@@ -135,7 +135,7 @@ EC_Schedule::build_consumer_qos (
                          time,
                          0,
                          RtecScheduler::OPERATION
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int type_start =
@@ -159,13 +159,13 @@ EC_Schedule::build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
       int& shutdown_event_type
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
   char name[128];
   ACE_OS::sprintf (name, "EC_Schedule::Supplier::%04x", i);
 
   RtecScheduler::handle_t rt_info =
-    this->scheduler_->create (name TAO_ENV_ARG_PARAMETER);
+    this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_Time_Value tv (0, this->burst_pause_);
@@ -186,7 +186,7 @@ EC_Schedule::build_supplier_qos (
                          time,
                          1,
                          RtecScheduler::OPERATION
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int type_start = this->supplier_type_start_ + i*this->supplier_type_shift_;

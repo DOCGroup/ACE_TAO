@@ -23,7 +23,7 @@ int
 TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
                                 int,
                                 char *[]
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_DEF_GIOP_MINOR >= 2)
@@ -45,7 +45,7 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
       bidir_orb_initializer = tmp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (bidir_orb_initializer.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       TAO_ORB_Core *orb_core =

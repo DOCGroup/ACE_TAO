@@ -41,11 +41,11 @@ public:
 
   // ctor
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void send_val (CORBA::Long val
-                 TAO_ENV_ARG_DECL_NOT_USED)
+                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  signals:

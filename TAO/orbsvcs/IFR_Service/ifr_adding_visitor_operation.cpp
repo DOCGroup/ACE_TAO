@@ -20,7 +20,7 @@ ifr_adding_visitor_operation::~ifr_adding_visitor_operation (void)
 int
 ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // If this operation is already in the repository (for example, if
@@ -30,7 +30,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       CORBA_Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (prev_def.in ()))
@@ -88,11 +88,11 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
           prev_def =
             be_global->repository ()->lookup_id (ex->repoID ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           exceptions[i++] = CORBA_ExceptionDef::_narrow (prev_def.in ()
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ex_iter.next ();
@@ -134,7 +134,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       // Updates ir_current_.
       this->get_referenced_type (return_type
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Is the operation oneway?
@@ -150,7 +150,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
         {
           CORBA_InterfaceDef_var iface =
             CORBA_InterfaceDef::_narrow (current_scope
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA_OperationDef_var new_def =
@@ -162,7 +162,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                      this->params_,
                                      exceptions,
                                      contexts
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else
@@ -199,12 +199,12 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
   AST_Type *arg_type = node->field_type ();
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Updates ir_current_.
       this->get_referenced_type (arg_type
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->params_[this->index_].type_def =

@@ -38,7 +38,7 @@ TAO_Connector::~TAO_Connector (void)
 int
 TAO_Connector::make_mprofile (const char *string,
                               TAO_MProfile &mprofile
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   // This method utilizes the "Template Method" design pattern to
   // parse the given URL style IOR for the protocol being used
@@ -170,14 +170,14 @@ TAO_Connector::make_mprofile (const char *string,
           // or
           //    `endpoint/object_key'
 
-          TAO_Profile *profile = this->make_profile (TAO_ENV_SINGLE_ARG_PARAMETER);
+          TAO_Profile *profile = this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           // Failure:  Problem during profile creation
 
           // Initialize a Profile using the individual endpoint
           // string.
           // @@ Not exception safe!  We need a TAO_Profile_var!
-          profile->parse_string (endpoint.c_str () TAO_ENV_ARG_PARAMETER);
+          profile->parse_string (endpoint.c_str () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           // Give up ownership of the profile.

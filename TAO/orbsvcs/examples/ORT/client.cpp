@@ -46,11 +46,11 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior TAO_ENV_ARG_DECL);
+        orb->string_to_object (ior ACE_ENV_ARG_DECL);
       ACE_TRY_CHECK;
 
       ORT::sum_server_var server =
-        ORT::sum_server::_narrow (obj.in () TAO_ENV_ARG_DECL);
+        ORT::sum_server::_narrow (obj.in () ACE_ENV_ARG_DECL);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -66,7 +66,7 @@ main (int argc, char *argv[])
 
       CORBA::ULong result = server->add_variables (a,
                                                    b
-                                                   TAO_ENV_ARG_DECL);
+                                                   ACE_ENV_ARG_DECL);
       ACE_TRY_CHECK;
 
       cout << "**************************RREESSUULLTT: *****" <<

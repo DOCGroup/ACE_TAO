@@ -39,7 +39,7 @@ public:
 //                                                        AVStreams::QoS & the_qos,
 //                                                        CORBA::Boolean_out met_qos,
 //                                                        char *& named_fdev,
-//                                                        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+//                                                        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 //   // bridge method for the application to override the consumer object
 //   // creation. Default implementation creates a TAO_FlowConsumer.
 

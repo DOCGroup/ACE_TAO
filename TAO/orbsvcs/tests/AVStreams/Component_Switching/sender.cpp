@@ -146,20 +146,20 @@ Sender::~Sender (void)
 }
 
 void
-Sender::shut_down (TAO_ENV_SINGLE_ARG_DECL)
+Sender::shut_down (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       AVStreams::MMDevice_var mmdevice =
-        this->sender_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
                                                                 mmdevice.in ()
-                                                                TAO_ENV_ARG_PARAMETER);
+                                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      SENDER::instance ()->connection_manager ().destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      SENDER::instance ()->connection_manager ().destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -205,7 +205,7 @@ Sender::parse_args (int argc,
 int
 Sender::init (int argc,
               char **argv
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
 {
   /// Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -261,18 +261,18 @@ Sender::init (int argc,
     this->sender_mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /// Register the object reference with the Naming Service and bind to
   /// the receivers
   this->connection_manager_.bind_to_receivers (this->sender_name_,
                                                mmdevice.in ()
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /// Connect to the receivers
-  this->connection_manager_.connect_to_receivers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->connection_manager_.connect_to_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -280,7 +280,7 @@ Sender::init (int argc,
 
 /// Method to send data at the specified rate
 int
-Sender::pace_data (TAO_ENV_SINGLE_ARG_DECL)
+Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 {
   /// The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -309,7 +309,7 @@ Sender::pace_data (TAO_ENV_SINGLE_ARG_DECL)
               ACE_DEBUG ((LM_DEBUG,
                           "Shut Down called\n"));
 
-              this->shut_down (TAO_ENV_SINGLE_ARG_PARAMETER);
+              this->shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               break;
@@ -332,7 +332,7 @@ Sender::pace_data (TAO_ENV_SINGLE_ARG_DECL)
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
 
-              this->shut_down (TAO_ENV_SINGLE_ARG_PARAMETER);
+              this->shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               break;
@@ -375,7 +375,7 @@ Sender::pace_data (TAO_ENV_SINGLE_ARG_DECL)
                   /// Run the orb for the wait time so the sender can
                   /// continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                 }
@@ -450,51 +450,51 @@ int
 main (int argc,
       char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ///Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Initialize the Client.
       int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "client::init failed\n"), -1);
 
-      SENDER::instance ()->pace_data (TAO_ENV_SINGLE_ARG_PARAMETER);
+      SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy ();

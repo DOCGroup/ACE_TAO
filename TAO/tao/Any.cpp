@@ -31,10 +31,10 @@ CORBA_Any::type (void) const
 
 void
 CORBA_Any::type (CORBA::TypeCode_ptr tc
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean equiv = this->type_->equivalent (tc
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (equiv)
@@ -279,7 +279,7 @@ CORBA_Any::free_value (void)
 void
 CORBA_Any::_tao_encode (TAO_OutputCDR &cdr,
                         TAO_ORB_Core *orb_core
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   // Always append the CDR stream, even when the value_.
   if (this->cdr_ == 0)
@@ -293,12 +293,12 @@ CORBA_Any::_tao_encode (TAO_OutputCDR &cdr,
   TAO_Marshal_Object::perform_append (this->type_.in (),
                                       &in,
                                       &cdr
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 void
 CORBA_Any::_tao_decode (TAO_InputCDR &cdr
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   // Just read into the CDR stream...
 
@@ -314,7 +314,7 @@ CORBA_Any::_tao_decode (TAO_InputCDR &cdr
   CORBA::TypeCode::traverse_status status =
     TAO_Marshal_Object::perform_skip (this->type_.in (),
                                       &cdr
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -522,12 +522,12 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
 void
 CORBA_Any::operator<<= (const CORBA_Exception &exception)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       TAO_OutputCDR stream;
-      exception._tao_encode (stream TAO_ENV_ARG_PARAMETER);
+      exception._tao_encode (stream ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->_tao_replace (exception._type (),
@@ -548,12 +548,12 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
 void
 CORBA_Any::operator<<= (CORBA_Exception *exception)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       TAO_OutputCDR stream;
-      exception->_tao_encode (stream TAO_ENV_ARG_PARAMETER);
+      exception->_tao_encode (stream ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->_tao_replace (exception->_type (),
@@ -717,13 +717,13 @@ CORBA_Any::operator<<= (from_wstring ws)
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Short &s) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_short
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -746,13 +746,13 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::UShort &s) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_ushort
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -778,13 +778,13 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Long &l) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_long
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -810,13 +810,13 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::ULong &l) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_ulong
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -842,13 +842,13 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::LongLong &l) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_longlong
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -874,13 +874,13 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::ULongLong &l) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_ulonglong
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result)
@@ -915,13 +915,13 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Float &f) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_float
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -947,13 +947,13 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Double &d) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_double
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -979,13 +979,13 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::LongDouble &ld) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_longdouble
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1011,13 +1011,13 @@ CORBA_Any::operator>>= (CORBA::LongDouble &ld) const
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Any &a) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_any
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1045,14 +1045,14 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
 CORBA::Boolean
 CORBA_Any::operator>>= (const CORBA::Any *&a) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       a = 0;
       CORBA::Boolean equivalent =
         this->type_->equivalent (CORBA::_tc_any
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!equivalent)
@@ -1105,7 +1105,7 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
 CORBA::Boolean
 CORBA_Any::operator>>= (const char *&s) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -1113,7 +1113,7 @@ CORBA_Any::operator>>= (const char *&s) const
 
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_string
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1172,7 +1172,7 @@ CORBA::Any::_tao_any_wstring_destructor (void *x)
 CORBA::Boolean
 CORBA_Any::operator>>= (const CORBA::WChar *&s) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -1180,7 +1180,7 @@ CORBA_Any::operator>>= (const CORBA::WChar *&s) const
 
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_wstring
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1232,13 +1232,13 @@ CORBA::Any::_tao_any_tc_destructor (void *x)
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_TypeCode
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1285,13 +1285,13 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
 CORBA::Boolean
 CORBA_Any::operator>>= (to_boolean b) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_boolean
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1317,13 +1317,13 @@ CORBA_Any::operator>>= (to_boolean b) const
 CORBA::Boolean
 CORBA_Any::operator>>= (to_octet o) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_octet
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1349,13 +1349,13 @@ CORBA_Any::operator>>= (to_octet o) const
 CORBA::Boolean
 CORBA_Any::operator>>= (to_char c) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_char
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1381,13 +1381,13 @@ CORBA_Any::operator>>= (to_char c) const
 CORBA::Boolean
 CORBA_Any::operator>>= (to_wchar wc) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_wchar
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!result)
@@ -1413,12 +1413,12 @@ CORBA_Any::operator>>= (to_wchar wc) const
 CORBA::Boolean
 CORBA_Any::operator>>= (to_string s) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
@@ -1426,10 +1426,10 @@ CORBA_Any::operator>>= (to_string s) const
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -1438,7 +1438,7 @@ CORBA_Any::operator>>= (to_string s) const
           return 0;
         }
 
-      CORBA::ULong bound = tcvar->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong bound = tcvar->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (s.bound_ != bound)
@@ -1483,12 +1483,12 @@ CORBA_Any::operator>>= (to_string s) const
 CORBA::Boolean
 CORBA_Any::operator>>= (to_wstring ws) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
@@ -1496,10 +1496,10 @@ CORBA_Any::operator>>= (to_wstring ws) const
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -1508,7 +1508,7 @@ CORBA_Any::operator>>= (to_wstring ws) const
           return 0;
         }
 
-      CORBA::ULong bound = tcvar->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong bound = tcvar->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ws.bound_ != bound)
@@ -1553,12 +1553,12 @@ CORBA_Any::operator>>= (to_wstring ws) const
 CORBA::Boolean
 CORBA_Any::operator>>= (to_object obj) const
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
@@ -1566,10 +1566,10 @@ CORBA_Any::operator>>= (to_object obj) const
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -1664,7 +1664,7 @@ operator<< (TAO_OutputCDR& cdr,
       TAO_Marshal_Object::perform_append (tc.in (),
                                           &input,
                                           &cdr
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA_Exception, ex)
@@ -1698,7 +1698,7 @@ operator>> (TAO_InputCDR &cdr,
 
       // Skip over the next aregument.
       CORBA::TypeCode::traverse_status status =
-        TAO_Marshal_Object::perform_skip (tc.in (), &cdr TAO_ENV_ARG_PARAMETER);
+        TAO_Marshal_Object::perform_skip (tc.in (), &cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)

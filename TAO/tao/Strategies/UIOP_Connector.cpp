@@ -119,7 +119,7 @@ TAO_UIOP_Connector::close (void)
 int
 TAO_UIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                              TAO_Transport_Descriptor_Interface *desc
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -396,7 +396,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::make_profile (TAO_ENV_SINGLE_ARG_DECL)
+TAO_UIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
@@ -462,13 +462,13 @@ TAO_UIOP_Connector::init_uiop_properties (void)
   // lookup and caching are not done based on protocol
   // properties.
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
   int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
   int no_delay = 0;
 
-  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (tph != 0)

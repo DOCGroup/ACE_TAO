@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
   int high_priority =
     ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                      process_priority);
-  
+
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
@@ -111,17 +111,17 @@ int main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var manager_object =
         orb->resolve_initial_references ("ORBPolicyManager"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (manager_object.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Any sync_scope;
@@ -132,19 +132,19 @@ int main (int argc, char *argv[])
       policy_list[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             sync_scope
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       policy_manager->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -155,13 +155,13 @@ int main (int argc, char *argv[])
       POA_Destroyer destroy_poa (root_poa.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
@@ -172,20 +172,20 @@ int main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var ec_owner (ec_impl);
 
-      ec_impl->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int thread_count = 1;
       if (disable_low_priority == 0)
         thread_count += nthreads;
-      ACE_Barrier barrier (thread_count);      
+      ACE_Barrier barrier (thread_count);
 
       ACE_Auto_Basic_Array_Ptr<Servant_var<ECCL_Supplier> > low_priority_suppliers (new Servant_var<ECCL_Supplier>[nthreads]);
       ACE_Auto_Basic_Array_Ptr<Servant_var<ECCL_Consumer> > low_priority_consumers (new Servant_var<ECCL_Consumer>[nthreads]);
@@ -196,14 +196,14 @@ int main (int argc, char *argv[])
             Servant_var<ECCL_Supplier> (new ECCL_Supplier);
           low_priority_suppliers[i]->connect (ec.in (),
                                               ACE_ES_EVENT_UNDEFINED + 1 + i
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           low_priority_consumers[i] =
             Servant_var<ECCL_Consumer> (new ECCL_Consumer (iterations));
           low_priority_consumers[i]->connect (ec.in (),
                                               ACE_ES_EVENT_UNDEFINED + 1 + i
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           low_priority_tasks[i].init (iterations,
@@ -220,15 +220,15 @@ int main (int argc, char *argv[])
                                               low_priority);
             }
         }
-      
+
       Servant_var<ECCL_Consumer> consumer_impl (new ECCL_Consumer (iterations));
       consumer_impl->connect (ec.in (), ACE_ES_EVENT_UNDEFINED
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Servant_var<ECCL_Supplier> supplier_impl (new ECCL_Supplier);
       supplier_impl->connect (ec.in (), ACE_ES_EVENT_UNDEFINED
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ECCL_Send_Task high_priority_task;
@@ -268,25 +268,25 @@ int main (int argc, char *argv[])
         }
       low_priority_stats.dump_results ("Low Priority", gsf);
 
-      supplier_impl->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      supplier_impl->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer_impl->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      consumer_impl->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int j = 0; j != nthreads; ++j)
         {
-          low_priority_suppliers[j]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+          low_priority_suppliers[j]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          low_priority_consumers[j]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+          low_priority_consumers[j]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      ec_impl->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ec_impl->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

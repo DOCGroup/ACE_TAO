@@ -64,7 +64,7 @@ public:
   int close (void);
   int connect (TAO_GIOP_Invocation *invocation,
                TAO_Transport_Descriptor_Interface *desc
-               TAO_ENV_ARG_DECL);
+               ACE_ENV_ARG_DECL);
   int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
@@ -81,7 +81,7 @@ protected:
    * Please check the documentation in Pluggable.h.
    */
   //@{
-  virtual TAO_Profile *make_profile (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Obtains uiop properties that must be used by this connector, i.e.,
   /// initializes <uiop_properties_>.

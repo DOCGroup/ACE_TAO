@@ -69,12 +69,12 @@ Identity_Server::init (int argc,
 {
   int result;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       result = this->orb_manager_.init (argc,
                                         argv
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return result;
@@ -89,11 +89,11 @@ Identity_Server::init (int argc,
       CORBA::ORB_var orb = orb_manager_.orb ();
       CORBA::Object_var obj =
         orb->string_to_object (this->group_factory_ior_
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       Load_Balancer::Object_Group_Factory_var factory =
         Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -108,7 +108,7 @@ Identity_Server::init (int argc,
 
       Load_Balancer::Object_Group_var random_group =
         factory->make_random ("Identity, Random"
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -117,7 +117,7 @@ Identity_Server::init (int argc,
 
       Load_Balancer::Object_Group_var rr_group =
         factory->make_round_robin ("Identity, Round Robin"
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create the requested number of <Identity> objects, and
@@ -130,7 +130,7 @@ Identity_Server::init (int argc,
                     random_objects_));
       create_objects (random_objects_,
                       random_group.in ()
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -139,7 +139,7 @@ Identity_Server::init (int argc,
                     random_objects_));
       create_objects (rr_objects_,
                       rr_group.in ()
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -156,7 +156,7 @@ Identity_Server::init (int argc,
 void
 Identity_Server::create_objects (size_t number_of_objects,
                                  Load_Balancer::Object_Group_ptr group
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   // Create the specified number of servants, and register each one
   // with the provided <Object_Group>.
@@ -176,29 +176,29 @@ Identity_Server::create_objects (size_t number_of_objects,
       ACE_CHECK;
       PortableServer::ServantBase_var s = identity_servant;
       orb_manager_.activate (identity_servant
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       Load_Balancer::Member member;
       member.id = CORBA::string_dup (id);
-      member.obj = identity_servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      member.obj = identity_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Bind the servant in the <Object_Group>.
-      group->bind (member TAO_ENV_ARG_PARAMETER);
+      group->bind (member ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 int
-Identity_Server::run (TAO_ENV_SINGLE_ARG_DECL)
+Identity_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Server: Initialized \n"));
 
   int result;
 
-  result = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;
@@ -217,10 +217,10 @@ main (int argc, char *argv[])
   if (server.init (argc, argv) == -1)
     return 1;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      result = server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -74,7 +74,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
 
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
                                       TAO_ORB_Core *orb_core
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
   : TAO_Profile (TAO_TAG_UIPMC_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
@@ -83,7 +83,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
     tagged_profile_ ()
 {
   this->add_group_component ();
-  this->parse_string (string TAO_ENV_ARG_PARAMETER);
+  this->parse_string (string ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   addressing_mode_ = default_addressing_mode_;
 }
@@ -177,7 +177,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 
 void
 TAO_UIPMC_Profile::parse_string (const char *string
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
@@ -400,7 +400,7 @@ TAO_UIPMC_Profile::is_equivalent (const TAO_Profile *other_profile)
 
 CORBA::ULong
 TAO_UIPMC_Profile::hash (CORBA::ULong max
-                         TAO_ENV_ARG_DECL_NOT_USED)
+                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = this->endpoint_.hash ();
@@ -430,7 +430,7 @@ TAO_UIPMC_Profile::endpoint_count (void)
 }
 
 char *
-TAO_UIPMC_Profile::to_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // @@ Frank: Update to pull out GroupID information...
 
@@ -664,7 +664,7 @@ void
 TAO_UIPMC_Profile::request_target_specifier (
                       TAO_Target_Specification &target_spec,
                       TAO_Target_Specification::TAO_Target_Address required_type
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   // Fill out the target specifier based on the required type.
   switch (required_type)
@@ -695,7 +695,7 @@ TAO_UIPMC_Profile::supports_multicast (void) const
 
 void
 TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   // ** See race condition note about addressing mode in Profile.h **
   switch (addr)

@@ -61,7 +61,7 @@ public:
   // Copy constructor.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
 
@@ -69,19 +69,19 @@ public:
   // Returns a copy of <this>.
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_value (TAO_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TimeT request_duration_value (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Policy_ptr copy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void set_time_value (ACE_Time_Value &time_value);
@@ -115,7 +115,7 @@ public:
   // Copy constructor.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
@@ -124,19 +124,19 @@ public:
   // Returns a copy of <this>.
 
   // = The FT::HeartBeatPolicy methods
-  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (TAO_ENV_SINGLE_ARG_DECL)
+  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Policy_ptr copy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void set_time_value (ACE_Time_Value &time_value,
@@ -179,7 +179,7 @@ public:
   // Copy constructor.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
@@ -189,19 +189,19 @@ public:
 
   // = The FT::HeartBeatPolicy methods
   virtual CORBA::Boolean heartbeat_enabled_policy_value (
-      TAO_ENV_SINGLE_ARG_DECL)
+      ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Policy_ptr copy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

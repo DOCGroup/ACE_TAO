@@ -40,7 +40,7 @@ public:
   /// Dispatch the request to the servant.
   virtual void dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
                          TAO_ServerRequest &req
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
 
   /// Factory method for creating new POA's.
   virtual TAO_POA *create_POA (const ACE_CString &name,
@@ -51,7 +51,7 @@ public:
                                TAO_SYNCH_MUTEX &thread_lock,
                                TAO_ORB_Core &orb_core,
                                TAO_Object_Adapter *object_adapter
-                               TAO_ENV_ARG_DECL);
+                               ACE_ENV_ARG_DECL);
 };
 
 #include "ace/post.h"

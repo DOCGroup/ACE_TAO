@@ -47,16 +47,16 @@ class TAO_PortableServer_Export TAO_Thread_Policy :
 public:
   TAO_Thread_Policy (PortableServer::ThreadPolicyValue value);
 
-  PortableServer::ThreadPolicyValue value (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::ThreadPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -78,16 +78,16 @@ class TAO_PortableServer_Export TAO_Lifespan_Policy :
 public:
   TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value);
 
-  PortableServer::LifespanPolicyValue value (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::LifespanPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Return the cached policy type for this policy.
@@ -107,16 +107,16 @@ class TAO_PortableServer_Export TAO_Id_Uniqueness_Policy :
 public:
   TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value);
 
-  PortableServer::IdUniquenessPolicyValue value (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::IdUniquenessPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -136,16 +136,16 @@ class TAO_PortableServer_Export TAO_Id_Assignment_Policy :
 public:
   TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value);
 
-  PortableServer::IdAssignmentPolicyValue value (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::IdAssignmentPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -167,16 +167,16 @@ class TAO_PortableServer_Export TAO_Implicit_Activation_Policy :
 public:
   TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value);
 
-  PortableServer::ImplicitActivationPolicyValue value (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::ImplicitActivationPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -196,16 +196,16 @@ class TAO_PortableServer_Export TAO_Servant_Retention_Policy :
 public:
   TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value);
 
-  PortableServer::ServantRetentionPolicyValue value (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::ServantRetentionPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -225,16 +225,16 @@ class TAO_PortableServer_Export TAO_Request_Processing_Policy :
 public:
   TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value);
 
-  PortableServer::RequestProcessingPolicyValue value (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::RequestProcessingPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.

@@ -21,7 +21,7 @@ TAO_Notify_AdminProperties::~TAO_Notify_AdminProperties ()
 }
 
 CosNotification::AdminProperties*
-TAO_Notify_AdminProperties::get_admin (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_AdminProperties::get_admin (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -55,7 +55,7 @@ TAO_Notify_AdminProperties::get_admin (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_AdminProperties::set_admin (const CosNotification::AdminProperties & admin TAO_ENV_ARG_DECL)
+TAO_Notify_AdminProperties::set_admin (const CosNotification::AdminProperties & admin ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotification::UnsupportedAdmin

@@ -255,7 +255,7 @@ TAO_ORB_Core::default_buffering_constraint (void) const
 
 
 int
-TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
+TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 {
   // Right now, this code expects to begin parsing in argv[1] rather
   // than argv[0].  I don't think that's wise.  I think we need to
@@ -391,7 +391,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
           // All preconnect or endpoint strings should be of the above form(s).
 
           set_endpoint_helper (current_arg
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -781,7 +781,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
           // used.
 
           set_endpoint_helper (current_arg
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -1018,10 +1018,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 
   // Set ORB-level policy defaults.
   TAO_Protocols_Hooks *tph =
-    this->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  int status = tph->set_default_policies (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int status = tph->set_default_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -1050,7 +1050,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
-  int ret = this->bidirectional_giop_init (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int ret = this->bidirectional_giop_init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
@@ -1074,7 +1074,7 @@ TAO_ORB_Core::fini (void)
     {
       // Shutdown the ORB and block until the shutdown is complete.
       this->shutdown (1
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -1301,7 +1301,7 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks)
 }
 
 TAO_Protocols_Hooks *
-TAO_ORB_Core::get_protocols_hooks (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Check if there is a cached reference.
   if (this->protocols_hooks_ != 0)
@@ -1314,13 +1314,13 @@ TAO_ORB_Core::get_protocols_hooks (TAO_ENV_SINGLE_ARG_DECL)
 
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 
   return this->protocols_hooks_;
 }
 
 int
-TAO_ORB_Core::bidirectional_giop_init (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::bidirectional_giop_init (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->bidir_adapter_ == 0)
     {
@@ -1332,7 +1332,7 @@ TAO_ORB_Core::bidirectional_giop_init (TAO_ENV_SINGLE_ARG_DECL)
     return this->bidir_adapter_->activate (this->orb_.in (),
                                            0,
                                            0
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   else
     return 0;
 }
@@ -1351,14 +1351,14 @@ TAO_ORB_Core::services_callbacks_init (void)
 int
 TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
                                           TAO_Profile *profile
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
       return this->ft_service_.service_callback ()->
                  raise_comm_failure (invoke,
                                      profile
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
     }
 
   invoke->close_connection ();
@@ -1374,14 +1374,14 @@ TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
 int
 TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
                                                TAO_Profile *profile
-                                               TAO_ENV_ARG_DECL)
+                                               ACE_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
       return this->ft_service_.service_callback ()->
                  raise_transient_failure (invoke,
                                           profile
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
     }
 
   ACE_THROW_RETURN (CORBA::TRANSIENT (
@@ -1398,7 +1398,7 @@ TAO_ORB_Core::service_context_list (
     TAO_Stub *stub,
     TAO_Service_Context &service_context,
     CORBA::Boolean restart
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   // @@ We look at the services if they are loaded. But if more
   // services offer this feature we may want to keep expanding the
@@ -1409,14 +1409,14 @@ TAO_ORB_Core::service_context_list (
       this->ft_service_.service_callback ()->service_context_list (stub,
                                                                    service_context.service_info (),
                                                                    restart
-                                                                   TAO_ENV_ARG_PARAMETER);
+                                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   this->protocols_hooks_->rt_service_context (stub,
                                               service_context,
                                               restart
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -1466,7 +1466,7 @@ TAO_ORB_Core::inherit_from_parent_thread (
 }
 
 CORBA::Object_ptr
-TAO_ORB_Core::root_poa (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->root_poa_.in ()))
     return CORBA::Object::_duplicate (this->root_poa_.in ());
@@ -1489,12 +1489,12 @@ TAO_ORB_Core::root_poa (TAO_ENV_SINGLE_ARG_DECL)
 
   // @@ Not exception safe
   TAO_Adapter *poa_adapter = factory->create (this);
-  poa_adapter->open (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   this->root_poa_ = poa_adapter->root ();
 
-  this->adapter_registry_.insert (poa_adapter TAO_ENV_ARG_PARAMETER);
+  this->adapter_registry_.insert (poa_adapter ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return CORBA::Object::_duplicate (this->root_poa_.in ());
@@ -1518,13 +1518,13 @@ TAO_ORB_Core::poa_adapter (void)
 TAO_Stub *
 TAO_ORB_Core::create_stub (const char *repository_id,
                            const TAO_MProfile &profiles
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   TAO_Stub *retval =
     this->stub_factory ()->create_stub (repository_id,
                                         profiles,
                                         this
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
   return retval;
 }
@@ -1542,11 +1542,11 @@ TAO_Stub *
 TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   const char *type_id,
                                   CORBA::PolicyList *policy_list
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   /// Initialize a TAO_Stub object with the mprofile thats passed.
   TAO_Stub *stub =
-    this->create_stub (type_id, mprofile TAO_ENV_ARG_PARAMETER);
+    this->create_stub (type_id, mprofile ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (stub);
 
   stub->base_profiles ().policy_list (policy_list);
@@ -1660,7 +1660,7 @@ TAO_ORB_Core::lf_strategy (void)
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int perform_work
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
@@ -1668,7 +1668,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
   // This method should only be called by servers, so now we set up
   // for listening!
-  int ret = this->open (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int ret = this->open (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
@@ -1765,16 +1765,16 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   if (this->has_shutdown () == 0)
     {
       this->adapter_registry_.check_close (wait_for_completion
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->adapter_registry_.close (wait_for_completion
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Set the shutdown flag
@@ -1794,7 +1794,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
         tm->wait ();
 
       // Invoke Interceptor::destroy() on all registered interceptors.
-      this->destroy_interceptors (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Explicitly destroy the object reference table since it
@@ -1805,7 +1805,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
 }
 
 void
-TAO_ORB_Core::destroy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   //
   // All destroy() should do is (a) call shutdown() and (b) unbind()
@@ -1822,7 +1822,7 @@ TAO_ORB_Core::destroy (TAO_ENV_SINGLE_ARG_DECL)
   //
 
   // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1 TAO_ENV_ARG_PARAMETER);
+  this->shutdown (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now remove it from the ORB table so that it's ORBid may be
@@ -1835,7 +1835,7 @@ TAO_ORB_Core::destroy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_ORB_Core::destroy_interceptors (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 {
   size_t len = 0;
 
@@ -1846,7 +1846,7 @@ TAO_ORB_Core::destroy_interceptors (TAO_ENV_SINGLE_ARG_DECL)
   len = client_interceptors.size ();
   for (size_t i = 0; i < len; ++i)
     {
-      client_interceptors[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      client_interceptors[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -1856,7 +1856,7 @@ TAO_ORB_Core::destroy_interceptors (TAO_ENV_SINGLE_ARG_DECL)
   len = server_interceptors.size ();
   for (size_t j = 0; j < len; ++j)
     {
-      server_interceptors[j]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server_interceptors[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -1867,14 +1867,14 @@ TAO_ORB_Core::destroy_interceptors (TAO_ENV_SINGLE_ARG_DECL)
   len = ior_interceptors.size ();
   for (size_t k = 0; k < len; ++k)
     {
-      ior_interceptors[k]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ior_interceptors[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 // Set up listening endpoints.
 int
-TAO_ORB_Core::open (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::open (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Double check pattern
   if (this->open_called_ == 1)
@@ -1888,7 +1888,7 @@ TAO_ORB_Core::open (TAO_ENV_SINGLE_ARG_DECL)
   /// Open the Acceptor Registry.
   int ret=
     this->lane_resources ().open_acceptor_registry (0
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
@@ -1906,7 +1906,7 @@ TAO_ORB_Core::lane_resources (void)
 }
 
 void
-TAO_ORB_Core::resolve_typecodefactory_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
@@ -1920,11 +1920,11 @@ TAO_ORB_Core::resolve_typecodefactory_i (TAO_ENV_SINGLE_ARG_DECL)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->typecode_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0 TAO_ENV_ARG_PARAMETER);
+    loader->create_object (this->orb_.in (), 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ORB_Core::resolve_dynanyfactory_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
@@ -1938,11 +1938,11 @@ TAO_ORB_Core::resolve_dynanyfactory_i (TAO_ENV_SINGLE_ARG_DECL)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->dynany_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0 TAO_ENV_ARG_PARAMETER);
+    loader->create_object (this->orb_.in (), 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ORB_Core::resolve_iormanipulation_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_iormanipulation_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("IORManip_Loader");
@@ -1957,11 +1957,11 @@ TAO_ORB_Core::resolve_iormanipulation_i (TAO_ENV_SINGLE_ARG_DECL)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->ior_manip_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0 TAO_ENV_ARG_PARAMETER);
+    loader->create_object (this->orb_.in (), 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ORB_Core::resolve_ior_table_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Adapter_Factory *factory =
     ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
@@ -1977,10 +1977,10 @@ TAO_ORB_Core::resolve_ior_table_i (TAO_ENV_SINGLE_ARG_DECL)
 
   // @@ Not exception safe
   TAO_Adapter *iortable_adapter = factory->create (this);
-  this->adapter_registry_.insert (iortable_adapter TAO_ENV_ARG_PARAMETER);
+  this->adapter_registry_.insert (iortable_adapter ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  iortable_adapter->open (TAO_ENV_SINGLE_ARG_PARAMETER);
+  iortable_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->ior_table_ = iortable_adapter->root ();
@@ -1988,7 +1988,7 @@ TAO_ORB_Core::resolve_ior_table_i (TAO_ENV_SINGLE_ARG_DECL)
 
 int
 TAO_ORB_Core::set_endpoint_helper (const char *current_arg
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   ACE_CString endpts (current_arg);
 
@@ -2011,7 +2011,7 @@ TAO_ORB_Core::set_endpoint_helper (const char *current_arg
 
 CORBA::Object_ptr
 TAO_ORB_Core::resolve_rir (const char *name
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   // Get the table of initial references specified through
   // -ORBInitRef.
@@ -2061,14 +2061,14 @@ TAO_ORB_Core::resolve_rir (const char *name
       list_of_profiles += object_id;
 
       return this->orb ()->string_to_object (list_of_profiles.c_str ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
     }
 
   return CORBA::Object::_nil ();
 }
 
 CORBA::ORB::ObjectIdList_ptr
-TAO_ORB_Core::list_initial_references (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Unsupported initial services should NOT be included in the below list!
   const char *initial_services[] = { TAO_LIST_OF_INITIAL_SERVICES };
@@ -2495,7 +2495,7 @@ TAO_ORB_Core::implrepo_service (void)
 
       ACE_TRY_NEW_ENV
         {
-          CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService" TAO_ENV_ARG_PARAMETER);
+          CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
@@ -2774,10 +2774,10 @@ TAO_ORB_Core_instance (void)
           CORBA::ORB_var orb;
 
           int argc = 0;
-          TAO_ENV_DECLARE_NEW_ENV;
+          ACE_DECLARE_NEW_CORBA_ENV;
           ACE_TRY
             {
-              orb = CORBA::ORB_init (argc, 0, 0 TAO_ENV_ARG_PARAMETER);
+              orb = CORBA::ORB_init (argc, 0, 0 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -2794,7 +2794,7 @@ TAO_ORB_Core_instance (void)
 
 int
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
 
   TAO_Stub *stub = object->_stubobj ();
@@ -2806,7 +2806,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
 
       int collocated =
         orb_core->collocation_resolver ().is_collocated (object
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (collocated)

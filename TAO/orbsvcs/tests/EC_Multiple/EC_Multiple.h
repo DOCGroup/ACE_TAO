@@ -50,24 +50,24 @@ public:
              int message_count,
              const RtecScheduler::Period_t& rate,
              RtecEventChannelAdmin::EventChannel_ptr ec
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void close (TAO_ENV_SINGLE_ARG_DECL);
+  void close (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
   void activate (const char* name,
                  const RtecScheduler::Period_t& rate,
                  RtecEventChannelAdmin::EventChannel_ptr ec
-                 TAO_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL);
 
   void push (const RtecEventComm::EventSet& events
-             TAO_ENV_ARG_DECL);
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+             ACE_ENV_ARG_DECL);
+  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Implement the callbacks for our consumer personality.
 
 
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The methods in the skeleton.
 
@@ -120,16 +120,16 @@ public:
   void open (const char* name,
              int event_a, int event_b,
              RtecEventChannelAdmin::EventChannel_ptr ec
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void close (TAO_ENV_SINGLE_ARG_DECL);
+  void close (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -185,7 +185,7 @@ public:
   void push_supplier (void* supplier_cookie,
                       RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
                       const RtecEventComm::EventSet &events
-                      TAO_ENV_ARG_DECL_NOT_USED);
+                      ACE_ENV_ARG_DECL_NOT_USED);
   // Callback method for suppliers, we push for them to their
   // consumers and take statistics on the way.
   // It is possible that we ignore the <consumer> parameter when
@@ -194,44 +194,44 @@ public:
   void push_consumer (void* consumer_cookie,
                       ACE_hrtime_t arrival,
                       const RtecEventComm::EventSet& events
-                      TAO_ENV_ARG_DECL_NOT_USED);
+                      ACE_ENV_ARG_DECL_NOT_USED);
   // Callback method for consumers, if any of our consumers has
   // received events it will invoke this method.
 
   void shutdown_supplier (void* supplier_cookie,
                           RtecEventComm::PushConsumer_ptr consumer
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
   // One of the suppliers has completed its work.
 
 private:
   RtecEventChannelAdmin::EventChannel_ptr
     get_ec (CosNaming::NamingContext_ptr naming_context,
             const char* ec_name
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Helper routine to obtain an EC given its name.
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          TAO_ENV_ARG_DECL);
-  void disconnect_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
+  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Connect the suppliers.
 
   void activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                           TAO_ENV_ARG_DECL);
+                           ACE_ENV_ARG_DECL);
   // Activate the suppliers, i.e. they start generating events.
 
   void connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
                     RtecEventChannelAdmin::EventChannel_ptr remote_ec,
                     RtecScheduler::Scheduler_ptr remote_sch
-                    TAO_ENV_ARG_DECL);
+                    ACE_ENV_ARG_DECL);
   // Connect the EC gateway, it builds the Subscriptions and the
   // Publications list.
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          TAO_ENV_ARG_DECL);
-  void disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
+  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
   // Connect and disconnect the consumers.
 
-  int shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Called when the main thread (i.e. not the scavenger thread) is
   // shutting down.
 

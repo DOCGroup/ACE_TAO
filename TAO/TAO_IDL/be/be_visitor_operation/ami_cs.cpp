@@ -120,7 +120,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
-  // last argument - is always TAO_ENV_ARG_PARAMETER
+  // last argument - is always ACE_ENV_ARG_PARAMETER
   *os << "{" << be_idt_nl;
 
   *os << this->gen_environment_var () << be_nl;
@@ -392,7 +392,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "_tao_call.start (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
+  *os << "_tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
   // Check if there is an exception.
   // Return type is void, so we know what to generate here.
   *os << "ACE_CHECK;" << be_nl;
@@ -412,7 +412,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
 
   *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, _tao_response_flag) TAO_ENV_ARG_PARAMETER"
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag) ACE_ENV_ARG_PARAMETER"
       << be_uidt_nl << ");" << be_uidt << "\n";
 
   // Now make sure that we have some in and inout
@@ -456,7 +456,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
     }
 
   *os << be_nl
-      << "int _invoke_status = _tao_call.invoke (TAO_ENV_SINGLE_ARG_PARAMETER);";
+      << "int _invoke_status = _tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);";
 
   *os << be_uidt_nl;
 

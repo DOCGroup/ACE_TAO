@@ -26,7 +26,7 @@ int showNSonly = 0;
 
 static void list_context (CosNaming::NamingContext_ptr nc,
                           int level
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
 
 static void
 get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
@@ -102,7 +102,7 @@ static void
 show_chunk (CosNaming::NamingContext_ptr nc,
             const CosNaming::BindingList &bl,
             int level
-            TAO_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL)
 {
   for (CORBA::ULong i = 0;
        i < bl.length ();
@@ -126,7 +126,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
       Name[0].kind =
         CORBA::string_dup (bl[i].binding_name[0].kind);
 
-      CORBA::Object_var obj = nc->resolve (Name TAO_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = nc->resolve (Name ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // If this is a context node, follow it down to the next
@@ -137,10 +137,10 @@ show_chunk (CosNaming::NamingContext_ptr nc,
                       ": naming context\n"));
 
           CosNaming::NamingContext_var xc =
-            CosNaming::NamingContext::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+            CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          list_context (xc.in (), level + 1 TAO_ENV_ARG_PARAMETER);
+          list_context (xc.in (), level + 1 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       // Mark this node as a reference
@@ -150,7 +150,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
             {
               CORBA::String_var str =
                 orb->object_to_string (obj.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
               ACE_DEBUG ((LM_DEBUG,
                           ": <%s>\n",
@@ -169,16 +169,16 @@ show_chunk (CosNaming::NamingContext_ptr nc,
 static void
 list_context (CosNaming::NamingContext_ptr nc,
               int level
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
 {
   CosNaming::BindingIterator_var it;
   CosNaming::BindingList_var bl;
   const CORBA::ULong CHUNK = 100;
 
-  nc->list (CHUNK, bl, it TAO_ENV_ARG_PARAMETER);
+  nc->list (CHUNK, bl, it ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  show_chunk (nc, bl.in (), level TAO_ENV_ARG_PARAMETER);
+  show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (it.in ()))
@@ -188,12 +188,12 @@ list_context (CosNaming::NamingContext_ptr nc,
       do
         {
           more = it->next_n (CHUNK, bl);
-          show_chunk (nc, bl.in (), level TAO_ENV_ARG_PARAMETER);
+          show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       while (more);
 
-      it->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      it->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -204,10 +204,10 @@ main (int argc, char *argv[])
   showIOR = 0;
   showNSonly = 0;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      orb = CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       char *pname = argv[0];
@@ -246,16 +246,16 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
-        CosNaming::NamingContext::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
         orb->object_to_string (root_nc.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()) || CORBA::is_nil (root_nc.in ()))
@@ -282,7 +282,7 @@ main (int argc, char *argv[])
                           "Naming Service:\n---------\n"));
             }
 
-          list_context (root_nc.in (), 1 TAO_ENV_ARG_PARAMETER);
+          list_context (root_nc.in (), 1 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

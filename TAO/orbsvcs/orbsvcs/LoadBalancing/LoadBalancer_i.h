@@ -59,17 +59,17 @@ public:
   // things) pre-computed.
   //
   void load_changed (TAO_LB_ReplicaProxy *proxy
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   // The load for <proxy> has changed, the LoadBalancer can use this
   // opportunity to determine if the load on one of the services is
   // too high.
 
   void disconnect (TAO_LB_ReplicaProxy *proxy
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnect proxy from the Load Balancer.
 
-  CORBA::Object_ptr replica (TAO_ENV_SINGLE_ARG_DECL)
+  CORBA::Object_ptr replica (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return a reference to the Replica to which client requests should
   // be redirected next.
@@ -78,11 +78,11 @@ public:
   virtual LoadBalancing::ReplicaProxy_ptr connect (
         LoadBalancing::ReplicaControl_ptr control,
         CORBA::Object_ptr replica
-        TAO_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
                      LoadBalancing::ReplicaProxy::NilReplica,
                      CORBA::SystemException));
-  virtual CORBA::Object_ptr group_identity (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Object_ptr group_identity (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

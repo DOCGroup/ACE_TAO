@@ -68,7 +68,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual void* _downcast (
@@ -79,37 +79,37 @@ TAO_NAMESPACE  POA_ImplementationRepository
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     ::ImplementationRepository::ServerObject *_this (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual void ping (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -119,11 +119,11 @@ TAO_NAMESPACE  POA_ImplementationRepository
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual void shutdown (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -133,7 +133,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
 
@@ -153,7 +153,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Impl &select_proxy (
       ::ImplementationRepository::ServerObject *object
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   private:
@@ -161,7 +161,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // as soon as their use is necessary.
     void create_proxy (
       int collocation_strategy
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
     // Caches the proxy implementations. The proxy implementation
@@ -200,7 +200,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     virtual void ping (
         CORBA_Object *_collocated_tao_target_
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -208,7 +208,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     virtual void shutdown (
         CORBA_Object *_collocated_tao_target_
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -237,7 +237,7 @@ public:
 
   virtual void ping (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -245,7 +245,7 @@ public:
 
   virtual void shutdown (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -279,7 +279,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const char* logical_type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void* _downcast (
@@ -290,38 +290,38 @@ public:
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void _dispatch (
       TAO_ServerRequest &req,
       void *_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   ::ImplementationRepository::Administration *_this (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual const char* _interface_repository_id (void) const;
 
   virtual void activate_server (
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -333,13 +333,13 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void register_server (
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -350,13 +350,13 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void reregister_server (
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -366,12 +366,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void remove_server (
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -382,12 +382,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void shutdown_server (
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -398,14 +398,14 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual char * server_is_running (
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -416,12 +416,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void server_is_shutting_down (
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -432,13 +432,13 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void find (
       const char * server,
       ImplementationRepository::ServerInformation_out info
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -449,14 +449,14 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void list (
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -466,7 +466,7 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
 
@@ -486,7 +486,7 @@ public:
 
   virtual ::ImplementationRepository::_TAO_Administration_Proxy_Impl &select_proxy (
     ::ImplementationRepository::Administration *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -494,7 +494,7 @@ private:
   // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
   // Caches the proxy implementations. The proxy implementation
@@ -534,7 +534,7 @@ public:
   virtual void activate_server (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -546,7 +546,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -557,7 +557,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -566,7 +566,7 @@ public:
   virtual void remove_server (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -576,7 +576,7 @@ public:
   virtual void shutdown_server (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -588,7 +588,7 @@ public:
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -598,7 +598,7 @@ public:
   virtual void server_is_shutting_down (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -609,7 +609,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       const char * server,
       ImplementationRepository::ServerInformation_out info
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -621,7 +621,7 @@ public:
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -651,7 +651,7 @@ public:
   virtual void activate_server (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -663,7 +663,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -674,7 +674,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -683,7 +683,7 @@ public:
   virtual void remove_server (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -693,7 +693,7 @@ public:
   virtual void shutdown_server (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -705,7 +705,7 @@ public:
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -715,7 +715,7 @@ public:
   virtual void server_is_shutting_down (
       CORBA_Object *_collocated_tao_target_,
       const char * server
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -726,7 +726,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       const char * server,
       ImplementationRepository::ServerInformation_out info
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -738,7 +738,7 @@ public:
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -772,7 +772,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const char* logical_type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void* _downcast (
@@ -783,31 +783,31 @@ public:
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void _dispatch (
       TAO_ServerRequest &req,
       void *_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   ::ImplementationRepository::ServerInformationIterator *_this (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual const char* _interface_repository_id (void) const;
@@ -815,7 +815,7 @@ public:
   virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -825,11 +825,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void destroy (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -839,7 +839,7 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
 
@@ -859,7 +859,7 @@ public:
 
   virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl &select_proxy (
     ::ImplementationRepository::ServerInformationIterator *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -867,7 +867,7 @@ private:
   // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
   // Caches the proxy implementations. The proxy implementation
@@ -908,7 +908,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -916,7 +916,7 @@ public:
 
   virtual void destroy (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -947,7 +947,7 @@ public:
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -955,7 +955,7 @@ public:
 
   virtual void destroy (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException

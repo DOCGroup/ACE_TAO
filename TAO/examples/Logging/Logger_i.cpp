@@ -19,7 +19,7 @@ Logger_Factory_i::~Logger_Factory_i (void)
 
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Logger_i *result;
@@ -62,7 +62,7 @@ Logger_Factory_i::make_logger (const char *name
   // registration attempt.
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
-  return result->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return result->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 Logger_i::Logger_i (const char *name)
@@ -112,33 +112,33 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity_level_ TAO_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity_level_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
 Logger_i::log2 (const Logger::Log_Record &log_rec
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity_level_ TAO_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity_level_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
 Logger_i::logv2 (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity TAO_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity ACE_ENV_ARG_PARAMETER);
 }
 
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity
-               TAO_ENV_ARG_DECL_NOT_USED)
+               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create an <ACE_Log_Record> to leverage existing logging
@@ -188,7 +188,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
 void
 Logger_i::verbosity (Logger::Verbosity_Level level
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->verbosity_level_ = level;

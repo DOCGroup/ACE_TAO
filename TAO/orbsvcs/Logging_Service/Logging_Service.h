@@ -40,7 +40,7 @@ class Logging_Service
   // Parses the command line arguments.
 
   void startup (int argc, char *argv[]
-               TAO_ENV_ARG_DECL);
+               ACE_ENV_ARG_DECL);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -48,16 +48,16 @@ class Logging_Service
   // run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Shutdown the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
 protected:
   void init_ORB (int& argc, char *argv []
-                 TAO_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
 
-  void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
   // = Data members

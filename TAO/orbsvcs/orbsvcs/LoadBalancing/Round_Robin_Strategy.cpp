@@ -39,7 +39,7 @@ TAO_LB_Round_Robin_Strategy::~TAO_LB_Round_Robin_Strategy (void)
 }
 
 CORBA::Object_ptr
-TAO_LB_Round_Robin_Strategy::replica (TAO_ENV_SINGLE_ARG_DECL)
+TAO_LB_Round_Robin_Strategy::replica (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,

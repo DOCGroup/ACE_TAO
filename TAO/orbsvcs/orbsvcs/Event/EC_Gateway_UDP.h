@@ -201,7 +201,7 @@ public:
 
   /// Decode the events, the message must be complete.
   void decode (RtecEventComm::EventSet& event
-               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Increment the timeout counter...
   void inc_timeout (void);
@@ -299,17 +299,17 @@ public:
              ACE_Reactor *reactor,
              const ACE_Time_Value &expire_interval,
              int max_timeout
-             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect and shutdown the gateway, no further connectsions
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Connect to the EC using the given publications lists.
   void open (RtecEventChannelAdmin::SupplierQOS& pub
-             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect to the EC.
-  virtual void close (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * The Event_Handlers call this method when data is available at the
@@ -324,13 +324,13 @@ public:
                       const void* act);
 
   // The PushSupplier method.
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Call the RtecUDPAdmin::AddrServer
   void get_addr (const RtecEventComm::EventHeader& header,
                  RtecUDPAdmin::UDP_Addr_out addr
-                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 private:
   /// The remote and the local EC, so we can reconnect when the list changes.

@@ -377,7 +377,7 @@ template class TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE
 // This is necessary with g++ 2.91.66 to avoid a couple of strange
 // unresolved ACE_Hash_Map_Entry symbols.  (Strange because c++filt
 // can't demangle them.)
-template class ACE_Hash_Map_Entry<char const *, void (*)(CORBA_ServerRequest &, void *, void * TAO_ENV_ARG_DECL_NOT_USED)>;
+template class ACE_Hash_Map_Entry<char const *, void (*)(CORBA_ServerRequest &, void *, void * ACE_ENV_ARG_DECL_NOT_USED)>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>

@@ -48,11 +48,11 @@ class TAO_Security_Export TAO_Security_ORBInitializer
 public:
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -60,7 +60,7 @@ private:
   /// Register Security policy factories.
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info
-         TAO_ENV_ARG_DECL);
+         ACE_ENV_ARG_DECL);
 
 private:
 

@@ -18,7 +18,7 @@ Database_i::set (Test::Index i,
                  const Test::OctetSeq& seq,
                  CORBA::Double verification_token,
                  CORBA::Double_out returned_token
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((Test::OutOfRange))
 {
   if (i >= this->max_range_)
@@ -45,7 +45,7 @@ Database_i::set (Test::Index i,
 
 Test::OctetSeq*
 Database_i::get (Test::Index i
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange))
 {
   if (i >= this->max_range_)
@@ -61,7 +61,7 @@ Database_i::get (Test::Index i
 
 CORBA::ULong
 Database_i::get_crc (Test::Index i
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange))
 {
   if (i >= this->max_range_)
@@ -73,7 +73,7 @@ Database_i::get_crc (Test::Index i
 }
 
 void
-Database_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Database_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();

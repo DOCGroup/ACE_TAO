@@ -38,13 +38,13 @@ static const char* ior_output_file = "supplier.ior";
 class sig_i : public POA_sig
 {
 public:
-  void go (TAO_ENV_SINGLE_ARG_DECL)
+  void go (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 
 void
-sig_i::go (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+sig_i::go (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   start = 1;
@@ -103,13 +103,13 @@ Consumer_Client::parse_args (int argc, char *argv[])
 
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
 create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::SupplierAdmin_var admin =
     ec->new_for_suppliers (CosNotifyChannelAdmin::AND_OP,
                            adminid
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (0);
 
@@ -117,11 +117,11 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
   if (filter)
     {
       CosNotifyFilter::FilterFactory_var ffact =
-        ec->default_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CosNotifyFilter::Filter_var filter =
-        ffact->create_filter (GRAMMAR TAO_ENV_ARG_PARAMETER);
+        ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CosNotifyFilter::ConstraintExpSeq constraint_list (1);
@@ -130,10 +130,10 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
       constraint_list[0].event_types.length (0);
       constraint_list[0].constraint_expr = CORBA::string_dup ("type == 'odd'");
 
-      filter->add_constraints (constraint_list TAO_ENV_ARG_PARAMETER);
+      filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      admin->add_filter (filter.in () TAO_ENV_ARG_PARAMETER);
+      admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
@@ -175,7 +175,7 @@ SendEvent (void)
         {
           for (unsigned int i = 0; i < supplier_count; i++)
             {
-              suppliers[i]->send_event (event TAO_ENV_ARG_PARAMETER);
+              suppliers[i]->send_event (event ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -191,7 +191,7 @@ SendEvent (void)
 static void
 create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                   PortableServer::POA_ptr poa
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
 {
   for (unsigned int i = 0; i < supplier_count; i++)
     {
@@ -199,10 +199,10 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
       ACE_NEW_THROW_EX (suppliers[i],
                         TAO_Notify_StructuredPushSupplier (),
                         CORBA::NO_MEMORY ());
-      suppliers[i]->init (poa TAO_ENV_ARG_PARAMETER);
+      suppliers[i]->init (poa ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      suppliers[i]->connect (admin TAO_ENV_ARG_PARAMETER);
+      suppliers[i]->connect (admin ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -218,22 +218,22 @@ int main (int argc, char* argv[])
   ACE_TRY_NEW_ENV
     {
       Consumer_Client client;
-      status = client.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == 0)
         {
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 0 TAO_ENV_ARG_PARAMETER);
+            client.create_event_channel ("MyEventChannel", 0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           sig_i sig_impl;
-          sig_var sig = sig_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+          sig_var sig = sig_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::ORB_ptr orb = client.orb ();
           CORBA::String_var ior =
-                   orb->object_to_string (sig.in () TAO_ENV_ARG_PARAMETER);
+                   orb->object_to_string (sig.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // If the ior_output_file exists, output the ior to it
@@ -251,10 +251,10 @@ int main (int argc, char* argv[])
             }
 
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
-                            create_supplieradmin (ec.in () TAO_ENV_ARG_PARAMETER);
+                            create_supplieradmin (ec.in () ACE_ENV_ARG_PARAMETER);
           if (!CORBA::is_nil (admin.in ()))
             {
-              create_suppliers (admin.in (), client.root_poa () TAO_ENV_ARG_PARAMETER);
+              create_suppliers (admin.in (), client.root_poa () ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               while (!done)

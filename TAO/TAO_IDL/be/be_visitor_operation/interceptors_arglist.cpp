@@ -58,7 +58,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // generate the TAO_ENV_ARG_PARAMETER for the alternative mapping
+  // generate the ACE_ENV_ARG_PARAMETER for the alternative mapping
   if (!be_global->exception_support ())
     {
       switch (this->ctx_->state ())
@@ -73,14 +73,14 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
           {
-            *os << " TAO_ENV_ARG_PARAMETER";
+            *os << " ACE_ENV_ARG_PARAMETER";
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
           {
            // last argument - is always CORBA::Environment
-            *os << " TAO_ENV_ARG_DECL_NOT_USED";
+            *os << " ACE_ENV_ARG_DECL_NOT_USED";
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
@@ -89,7 +89,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
               // @@ Do it for all cases i.e arg count > = 0
 
               // last argument - is always CORBA::Environment
-              *os << " TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl;
+              *os << " ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl;
               break;
             }
         default:

@@ -42,14 +42,14 @@ public:
 
   // = The skeleton methods
   virtual void active_objects (CORBA::Short ao
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_ready_message (Test::Receiver_ptr receiver
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void ping (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

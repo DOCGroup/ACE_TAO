@@ -89,7 +89,7 @@ void WxViewIORDialog::decodeIOR()
 
       // The need to const_cast should disappear in TAO 1.1.2
       char* profileString =
-          const_cast<TAO_Profile*>(profile)->to_string(TAO_ENV_SINGLE_ARG_PARAMETER);
+          const_cast<TAO_Profile*>(profile)->to_string(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       profiles->AppendItem( rootItem, profileString);
       delete [] profileString;

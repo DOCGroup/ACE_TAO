@@ -20,39 +20,39 @@ public:
   virtual ~FactoryClient (void);
   // destructor.
 
-  void init_ORB (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 
-  void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Try to get hold of a running naming service.
 
-  void resolve_factory (TAO_ENV_SINGLE_ARG_DECL);
+  void resolve_factory (ACE_ENV_SINGLE_ARG_DECL);
   // Try to resolve the factory from the Naming service.
 
   CosEventChannelFactory::ChannelFactory_ptr
-  create_factory (TAO_ENV_SINGLE_ARG_DECL);
+  create_factory (ACE_ENV_SINGLE_ARG_DECL);
   // Create a local Factory and also set the <factory_>.
 
-  virtual void run_test (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void run_test (ACE_ENV_SINGLE_ARG_DECL);
   // Runs a couple of tests to check if the factory behaves correctly.
 
 protected:
   CosEventChannelAdmin::EventChannel_ptr
       create_channel (const char *channel_id,
                      CosEventChannelFactory::ChannelFactory_ptr factory
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   // Create a channel.
 
   void destroy_channel (const char *channel_id
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
   // Destroy the channel.
 
   void find_channel (const char* channel_id
-                    TAO_ENV_ARG_DECL);
+                    ACE_ENV_ARG_DECL);
   // Find a channel.
 
   void find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
   // Find a channel.
 
   // = Protected Data members.
@@ -87,21 +87,21 @@ FactoryClient::~FactoryClient (void)
 void
 FactoryClient::init_ORB (int argc,
                        char *argv []
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
                                 ""
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FactoryClient::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+FactoryClient::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Need to check return value for errors.
@@ -109,14 +109,14 @@ FactoryClient::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->use_naming_service = 1;
 }
 
 void
-FactoryClient::resolve_factory (TAO_ENV_SINGLE_ARG_DECL)
+FactoryClient::resolve_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (this->use_naming_service == 1);
 
@@ -126,17 +126,17 @@ FactoryClient::resolve_factory (TAO_ENV_SINGLE_ARG_DECL)
 
   CORBA::Object_var obj =
     this->naming_context_->resolve (name
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->factory_ =
     CosEventChannelFactory::ChannelFactory::_narrow (obj.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 CosEventChannelFactory::ChannelFactory_ptr
-FactoryClient::create_factory (TAO_ENV_SINGLE_ARG_DECL)
+FactoryClient::create_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::UNKNOWN (),
                     CosEventChannelFactory::ChannelFactory::_nil ());
@@ -145,7 +145,7 @@ FactoryClient::create_factory (TAO_ENV_SINGLE_ARG_DECL)
 CosEventChannelAdmin::EventChannel_ptr
 FactoryClient::create_channel (const char *channel_id,
                             CosEventChannelFactory::ChannelFactory_ptr factory
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Trying to create channel %s\n", channel_id));
@@ -157,7 +157,7 @@ FactoryClient::create_channel (const char *channel_id,
     {
       ec = factory->create (channel_id,
                             this->use_naming_service
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_ASSERT (!CORBA::is_nil (ec.in ()));
@@ -185,7 +185,7 @@ FactoryClient::create_channel (const char *channel_id,
 
 void
 FactoryClient::destroy_channel (const char *channel_id
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Destroying Cos Event Channel \"%s \"\n",
@@ -193,13 +193,13 @@ FactoryClient::destroy_channel (const char *channel_id
 
   this->factory_->destroy (channel_id,
                            use_naming_service
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 FactoryClient::find_channel (const char* channel_id
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -209,13 +209,13 @@ FactoryClient::find_channel (const char* channel_id
 
       CosEventChannelAdmin::EventChannel_var channel =
         this->factory_->find (channel_id
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       CORBA::String_var str =
         orb_->object_to_string (channel.in ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -223,7 +223,7 @@ FactoryClient::find_channel (const char* channel_id
                   str.in ()));
 
       this->find_channel_id (channel.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)
@@ -241,11 +241,11 @@ FactoryClient::find_channel (const char* channel_id
 
 void
 FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   CORBA::String_var str =
     orb_->object_to_string (channel
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -254,7 +254,7 @@ FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel
 
   char *channel_id =
     this->factory_->find_channel_id (channel
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -266,7 +266,7 @@ FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel
  */
 
 void
-FactoryClient::run_test (TAO_ENV_SINGLE_ARG_DECL)
+FactoryClient::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->factory_.in ()));
 
@@ -276,85 +276,85 @@ FactoryClient::run_test (TAO_ENV_SINGLE_ARG_DECL)
   // create the first cosec
   cosec[0] = this->create_channel (channel_id[0],
                                    this->factory_.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
  // create the second cosec
   cosec[1] = this->create_channel (channel_id[1],
                                    this->factory_.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // create the third cosec
   cosec[2] = this->create_channel (channel_id[2],
                                    this->factory_.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // see it we can destroy this one..
   this->destroy_channel (channel_id[2]
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // see if we can find it?
   this->find_channel_id (cosec[2].in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // see if we can create it again?
   cosec[2] = this->create_channel (channel_id[2],
                                    this->factory_.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // try and find a channel that does not exist.
   this->find_channel ("areyouthere?"
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // see if it can detect duplicates.
   this->create_channel (channel_id[2],
                         this->factory_.in ()
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // see if it can give us the id?
   this->find_channel_id (cosec[0].in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->find_channel_id (cosec[1].in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->find_channel_id (cosec[2].in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // check if we can get the channels from the id.
   this->find_channel (channel_id[0]
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->find_channel (channel_id[1]
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->find_channel (channel_id[2]
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   //destroy them all.
   this->destroy_channel (channel_id[0]
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->destroy_channel (channel_id[1]
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->destroy_channel (channel_id[2]
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // end of testing.
@@ -373,15 +373,15 @@ main (int argc, char *argv [])
 
       ft.init_ORB (argc,
                    argv
-                   TAO_ENV_ARG_PARAMETER);
+                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_TRY_EX (naming)
         {
-          ft.resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ft.resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (naming);
 
-          ft.resolve_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ft.resolve_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (naming);
         }
       ACE_CATCHANY
@@ -391,12 +391,12 @@ main (int argc, char *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Creating a local Factory\n"));
           // TBD:
-          ft.create_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ft.create_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_ENDTRY;
 
-      ft.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ft.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)

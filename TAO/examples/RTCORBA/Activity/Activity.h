@@ -43,14 +43,14 @@ private:
 
 public:
   /// initialize the ORB et. al.
-  int init (int& argc, char *argv [] TAO_ENV_ARG_DECL);
+  int init (int& argc, char *argv [] ACE_ENV_ARG_DECL);
 
 
   /// Activate the tasks, jobs, poas.
-  void run (int argc, char *argv[] TAO_ENV_ARG_DECL);
+  void run (int argc, char *argv[] ACE_ENV_ARG_DECL);
 
   /// Resolve the naming service.
-  int resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
 
   /// = Accessors
   CORBA::ORB_ptr orb (void);
@@ -61,7 +61,7 @@ public:
 
   /// Returns priority if server declared model else -1
   CORBA::Short get_server_priority (CORBA::Object_ptr server
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
   /// = Callbacks
   /// Task ended notification
   void task_ended (Periodic_Task* ended_task);
@@ -75,13 +75,13 @@ public:
 
   /// = Activation methods.
   /// Activate the POA's
-  void activate_poa_list (TAO_ENV_SINGLE_ARG_DECL);
+  void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Activate the task list.
-  void activate_schedule (TAO_ENV_SINGLE_ARG_DECL);
+  void activate_schedule (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Activate the Job's
-  void activate_job_list (TAO_ENV_SINGLE_ARG_DECL);
+  void activate_job_list (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Check if we should process exit
   void check_ifexit (void);

@@ -42,41 +42,41 @@ class Subscribe
   Subscribe (void);
   ~Subscribe ();
 
-  void init (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  void init (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // Init the Client.
 
-  void run (TAO_ENV_SINGLE_ARG_DECL);
+  void run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the demo.
 
   void done (void);
   // Called when all events we are waiting for have occured.
 
  protected:
-  void init_ORB (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 
-  void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Try to get hold of a running naming service.
 
-  void resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL);
+  void resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL);
   // Try to resolve the Notify factory from the Naming service.
 
-  void create_EC (TAO_ENV_SINGLE_ARG_DECL);
+  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
   // Create an EC.
 
-  void create_supplieradmin(TAO_ENV_SINGLE_ARG_DECL);
+  void create_supplieradmin(ACE_ENV_SINGLE_ARG_DECL);
   // Create the Supplier Admin.
 
-  void create_consumeradmin (TAO_ENV_SINGLE_ARG_DECL);
+  void create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL);
   // Create the Consumer Admin.
 
-  void create_consumers (TAO_ENV_SINGLE_ARG_DECL);
+  void create_consumers (ACE_ENV_SINGLE_ARG_DECL);
   // Create and initialize the consumers.
 
-  void create_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+  void create_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // create and initialize the suppliers.
 
-  void send_events (TAO_ENV_SINGLE_ARG_DECL);
+  void send_events (ACE_ENV_SINGLE_ARG_DECL);
   // send the events.
 
   // = Data Members
@@ -135,11 +135,11 @@ class Subscribe_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPus
   Subscribe_StructuredPushConsumer (Subscribe* subscribe);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin TAO_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
   // Connect the Consumer to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  virtual void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
@@ -164,7 +164,7 @@ protected:
     virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -174,7 +174,7 @@ protected:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -182,7 +182,7 @@ protected:
        ));
 
   virtual void disconnect_structured_push_consumer (
-        TAO_ENV_SINGLE_ARG_DECL
+        ACE_ENV_SINGLE_ARG_DECL
         )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -205,15 +205,15 @@ class Subscribe_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPus
   // Constructor.
 
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
-                TAO_ENV_ARG_DECL);
+                ACE_ENV_ARG_DECL);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
   virtual void send_event (const CosNotification::StructuredEvent& event
-                           TAO_ENV_ARG_DECL);
+                           ACE_ENV_ARG_DECL);
   // Send one event.
 
 protected:
@@ -232,7 +232,7 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -241,7 +241,7 @@ protected:
 
   // = StructuredPushSupplier method
     virtual void disconnect_structured_push_supplier (
-        TAO_ENV_SINGLE_ARG_DECL
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

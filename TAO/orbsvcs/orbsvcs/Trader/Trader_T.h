@@ -113,27 +113,27 @@ public:
   TAO_Trader_Components (const TAO_Trading_Components_i& comps);
 
   // = CosTrading::TraderComponents methods.
-  virtual CosTrading::Lookup_ptr lookup_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::Lookup_ptr lookup_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns an object reference to the Lookup interface of the trader.
   // Returns nil if the trader does not support Lookup interface.
 
-  virtual CosTrading::Register_ptr register_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::Register_ptr register_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference for the Register interface of the trader.
   // Returns nil if the trader does not support Register interface.
 
-  virtual CosTrading::Link_ptr link_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::Link_ptr link_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference for the Link interface of the trader.
   // Returns nil if the trader does not support Link interface.
 
-  virtual CosTrading::Proxy_ptr proxy_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::Proxy_ptr proxy_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference to the Proxy interface of the trader.
   // Returns nil if the trader does not support Proxy interface.
 
-  virtual CosTrading::Admin_ptr admin_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::Admin_ptr admin_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference for the Admin interface of the trader.
   // Returns nil if the trader does not support Admin interface.
@@ -152,16 +152,16 @@ public:
 
   // = CosTrading::SupportAttributes methods.
 
-  virtual CORBA::Boolean supports_modifiable_properties (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Boolean supports_modifiable_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean supports_dynamic_properties (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Boolean supports_dynamic_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean supports_proxy_offers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Boolean supports_proxy_offers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosTrading::TypeRepository_ptr type_repos (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::TypeRepository_ptr type_repos (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -178,47 +178,47 @@ public:
 
   // = CosTrading::ImportAttributes methods.
 
-  virtual CORBA::ULong def_search_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong def_search_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong max_search_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong max_search_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Search cardinality determines the maximum number of offers searched
   // before not considering other offers.
 
-  virtual CORBA::ULong def_match_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong def_match_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong max_match_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong max_match_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Match cardinality determines the maximum number of offers
   // matched to the constraints before not considering other offers..
 
-  virtual CORBA::ULong def_return_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong def_return_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong max_return_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong max_return_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return cardinality determines the maximum number of offers marked
   // to return before not considering other offers.
 
 
-  virtual CORBA::ULong max_list (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong max_list (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong def_hop_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong def_hop_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong max_hop_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong max_hop_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosTrading::FollowOption def_follow_policy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::FollowOption def_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosTrading::FollowOption max_follow_policy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::FollowOption max_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -235,7 +235,7 @@ public:
   TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
 
   // = CosTrading::LinkAttributes methods
-  virtual CosTrading::FollowOption max_link_follow_policy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::FollowOption max_link_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

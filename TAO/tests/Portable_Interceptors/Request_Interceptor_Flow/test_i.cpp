@@ -13,7 +13,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 void
 test_i::client_test (Test::TestScenario scenario
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((Test::X,
                    Test::UnknownScenario,
                    CORBA::SystemException))
@@ -35,7 +35,7 @@ test_i::client_test (Test::TestScenario scenario
 
 void
 test_i::server_test (Test::TestScenario scenario
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((Test::X,
                    Test::UnknownScenario,
                    CORBA::SystemException))
@@ -56,11 +56,11 @@ test_i::server_test (Test::TestScenario scenario
 }
 
 void
-test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_INFO,
               "Server is shutting down.\n"));
 
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

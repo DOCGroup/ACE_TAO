@@ -39,18 +39,18 @@ public:
   // Constructor
 
   // = The EC_Driver methods
-  void execute_test (TAO_ENV_SINGLE_ARG_DECL);
+  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
   // Don't run the suppliers just create the EC and then destroy it.
 
   void dump_results (void);
   // Don't dump the EC_Driver results, they are meaningless.
 
   virtual void consumer_disconnect (void* consumer_cookie
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
   // One of the consumers in the test has been disconnected from the EC
 
   virtual void supplier_disconnect (void* supplier_cookie
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
   // One of the suppliers in the test has been disconnected from the EC
 
 

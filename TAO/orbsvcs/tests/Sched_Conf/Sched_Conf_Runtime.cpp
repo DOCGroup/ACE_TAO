@@ -24,11 +24,11 @@ main (int argc, char *argv[])
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil(poa_object.in ()))
@@ -37,14 +37,14 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in() TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Store a pointer to the local run-time scheduler.
@@ -64,18 +64,18 @@ main (int argc, char *argv[])
           // run-time scheduler's create and lookup methods.
           ACE_ASSERT (infos [i].handle ==
                       runtime_scheduler->create (infos [i].entry_point
-                                                 TAO_ENV_ARG_PARAMETER));
+                                                 ACE_ENV_ARG_PARAMETER));
           ACE_TRY_CHECK;
 
           ACE_ASSERT (infos [i].handle ==
                       runtime_scheduler->lookup (infos [i].entry_point
-                                                 TAO_ENV_ARG_PARAMETER));
+                                                 ACE_ENV_ARG_PARAMETER));
           ACE_TRY_CHECK;
 
           // Make sure the values in the RT_Info returned by get are OK.
           delete rt_info;
           rt_info = runtime_scheduler->get (infos [i].handle
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_ASSERT (rt_info != 0);
@@ -123,7 +123,7 @@ main (int argc, char *argv[])
                                   infos [i].threads,
                                   ACE_static_cast (RtecScheduler::Info_Type_t,
                                                    infos [i].info_type)
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Make sure the correct priority values are returned.
@@ -131,7 +131,7 @@ main (int argc, char *argv[])
                                        priority,
                                        subpriority,
                                        p_priority
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_ASSERT (priority == infos [i].priority);
@@ -141,7 +141,7 @@ main (int argc, char *argv[])
                                                    priority,
                                                    subpriority,
                                                    p_priority
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_ASSERT (priority == infos [i].priority);
@@ -159,7 +159,7 @@ main (int argc, char *argv[])
             dispatch_configuration (configs [j].preemption_priority,
                                     priority,
                                     dispatching_type
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_ASSERT (priority == configs [j].thread_priority);

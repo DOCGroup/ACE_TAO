@@ -57,7 +57,7 @@ void CORBA_WrongTransaction::_raise (void)
 }
 
 void CORBA_WrongTransaction::_tao_encode (TAO_OutputCDR &cdr
-                                          TAO_ENV_ARG_DECL) const
+                                          ACE_ENV_ARG_DECL) const
 {
   if (cdr << *this)
     return;
@@ -65,7 +65,7 @@ void CORBA_WrongTransaction::_tao_encode (TAO_OutputCDR &cdr
 }
 
 void CORBA_WrongTransaction::_tao_decode (TAO_InputCDR &cdr
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
 {
   if (cdr >> *this)
     return;

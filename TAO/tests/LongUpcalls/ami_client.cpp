@@ -39,11 +39,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
@@ -52,11 +52,11 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -65,14 +65,14 @@ main (int argc, char *argv[])
       Controller controller_impl;
 
       Test::Controller_var controller =
-        controller_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        controller_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      object = orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+      object = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Manager_var manager =
-        Test::Manager::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Test::Manager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (manager.in ()))
@@ -83,10 +83,10 @@ main (int argc, char *argv[])
       Manager_Handler handler_impl (manager.in (),
                                     controller.in ());
       Test::AMI_ManagerHandler_var handler =
-        handler_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        handler_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const CORBA::Short worker_count = 10;
@@ -94,22 +94,22 @@ main (int argc, char *argv[])
                                     worker_count,
                                     CORBA::Long (1000),
                                     controller.in ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (30, 0);
-      orb->run (tv TAO_ENV_ARG_PARAMETER);
+      orb->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       controller_impl.dump_results ();
 
-      manager->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      manager->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

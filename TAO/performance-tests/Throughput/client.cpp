@@ -64,18 +64,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Receiver_Factory_var receiver_factory =
-        Test::Receiver_Factory::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+        Test::Receiver_Factory::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (receiver_factory.in ()))
@@ -100,18 +100,18 @@ main (int argc, char *argv[])
           message.the_payload.length (message_size);
 
           Test::Receiver_var receiver =
-            receiver_factory->create_receiver (TAO_ENV_SINGLE_ARG_PARAMETER);
+            receiver_factory->create_receiver (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           for (int i = 0; i != message_count; ++i)
             {
               message.message_id = i;
-              receiver->receive_data (message TAO_ENV_ARG_PARAMETER);
+              receiver->receive_data (message ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
-          receiver->done (TAO_ENV_SINGLE_ARG_PARAMETER);
+          receiver->done (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_hrtime_t elapsed_time = ACE_OS::gethrtime () - start;
 
@@ -140,11 +140,11 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          receiver_factory->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          receiver_factory->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

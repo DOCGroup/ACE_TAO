@@ -22,10 +22,10 @@ ECFL_Consumer::
 
 void
 ECFL_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   {
@@ -34,12 +34,12 @@ ECFL_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
       return;
 
     this->proxy_supplier_ =
-      consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
 
   RtecEventComm::PushConsumer_var consumer =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos;
@@ -57,12 +57,12 @@ ECFL_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
 
   this->proxy_supplier_->connect_push_consumer (consumer.in (),
                                                 consumer_qos
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-ECFL_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+ECFL_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -74,17 +74,17 @@ ECFL_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      proxy->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+      proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY {} ACE_ENDTRY;
 
-  PortableServer::POA_var poa = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id = poa->servant_to_id (this
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -96,7 +96,7 @@ ECFL_Consumer::samples (void) const
 
 void
 ECFL_Consumer::push (const RtecEventComm::EventSet &events
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Consumer::push (%P|%t)\n"));
@@ -113,7 +113,7 @@ ECFL_Consumer::push (const RtecEventComm::EventSet &events
 }
 
 void
-ECFL_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECFL_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);

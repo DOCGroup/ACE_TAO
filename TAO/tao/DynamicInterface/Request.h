@@ -99,7 +99,7 @@ public:
   CORBA_Any &return_value (void);
   // Returns reference to Any for extraction using >>=.
 
-  void invoke (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void invoke (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Perform method resolution and invoke an appropriate method. If
   // the method returns successfully, its result is placed in the
   // result argument specified on <create_request>. The behavior is
@@ -109,20 +109,20 @@ public:
   // A default argument is set, but please note that this not recommended
   // as the user may not be able to propagate the exceptions
 
-  void send_oneway (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void send_oneway (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Send a oneway request.
   // A default argument is set, but please note that this not recommended
   // as the user may not be able to propagate the exceptions.
 
   // The 'deferred synchronous' methods.
-  void send_deferred (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void get_response (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  CORBA::Boolean poll_response (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void send_deferred (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void get_response (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Boolean poll_response (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // Callback method for deferred synchronous requests.
   void handle_response (TAO_InputCDR &incoming,
                         CORBA::ULong reply_status
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // Pseudo object methods.
   static CORBA_Request* _duplicate (CORBA_Request*);
@@ -166,12 +166,12 @@ private:
                  CORBA::NamedValue_ptr result,
                  CORBA::Flags flags,
                  CORBA::ExceptionList_ptr exceptions
-                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   CORBA_Request (CORBA::Object_ptr obj,
                  CORBA::ORB_ptr orb,
                  const CORBA::Char *op
-                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   ~CORBA_Request (void);
 

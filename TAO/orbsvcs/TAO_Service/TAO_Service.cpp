@@ -32,12 +32,12 @@ extern "C" void handler (int)
 int
 main (int argc, ACE_TCHAR *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
@@ -46,7 +46,7 @@ main (int argc, ACE_TCHAR *argv[])
         {
           ACE_Time_Value tv (5, 0);
 
-          orb->perform_work (tv TAO_ENV_ARG_PARAMETER);
+          orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,

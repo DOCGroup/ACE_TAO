@@ -214,7 +214,7 @@ private:
   int write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Writes the locate _reply message in to the <output>

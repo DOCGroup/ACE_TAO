@@ -26,13 +26,13 @@ TAO_PortableGroup_ORBInitializer::TAO_PortableGroup_ORBInitializer ()
 void
 TAO_PortableGroup_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
@@ -76,7 +76,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
 void
 TAO_PortableGroup_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

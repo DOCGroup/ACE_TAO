@@ -44,28 +44,28 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_SequencePushSupplier:public POA_CosNotif
   TAO_Notify_SequencePushSupplier (void);
   // Constructor.
 
-  void init (PortableServer::POA_ptr poa  TAO_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL);
   // Init
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin ACE_ENV_ARG_DECL);
   // Activates this servant with the POA supplied in init.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
   virtual void send_events (const CosNotification::EventBatch & notifications
-                           TAO_ENV_ARG_DECL);
+                           ACE_ENV_ARG_DECL);
   // Send one event.
 
   CosNotifyChannelAdmin::SequenceProxyPushConsumer_ptr get_proxy_consumer (void);
   // Accessor for <proxy_consumer_>.
 
-  void deactivate (TAO_ENV_SINGLE_ARG_DECL);
+  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
   // Deactivate the object.
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
   // = Data Members
@@ -85,7 +85,7 @@ protected:
     virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -94,7 +94,7 @@ protected:
 
     // = SequencePushSupplier method
     virtual void disconnect_sequence_push_supplier (
-        TAO_ENV_SINGLE_ARG_DECL
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

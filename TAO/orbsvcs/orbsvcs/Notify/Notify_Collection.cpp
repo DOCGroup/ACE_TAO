@@ -52,9 +52,9 @@ TAO_Notify_Shutdown_Worker::TAO_Notify_Shutdown_Worker (void)
 }
 
 void
-TAO_Notify_Shutdown_Worker::work (TAO_Notify_EventListener* listener TAO_ENV_ARG_DECL)
+TAO_Notify_Shutdown_Worker::work (TAO_Notify_EventListener* listener ACE_ENV_ARG_DECL)
 {
-  listener->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  listener->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 /********************************************************************/

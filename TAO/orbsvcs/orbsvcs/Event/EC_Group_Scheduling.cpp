@@ -14,7 +14,7 @@ void
 TAO_EC_Group_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *,
       TAO_EC_ProxyPushConsumer *
-      TAO_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -22,12 +22,12 @@ void
 TAO_EC_Group_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
                                         TAO_EC_ProxyPushConsumer *,
                                         TAO_EC_Supplier_Filter *filter
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
   TAO_EC_QOS_Info event_info;
   // @@ yuck...
   filter->push_scheduled_event (ACE_const_cast (RtecEventComm::EventSet&,
                                                 event),
                                 event_info
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
 }

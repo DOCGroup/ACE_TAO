@@ -15,7 +15,7 @@ void
 Manager::start_workers (CORBA::Short worker_count,
                         CORBA::Long milliseconds,
                         Test::Controller_ptr controller
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Thread_Manager thread_manager;
@@ -30,10 +30,10 @@ Manager::start_workers (CORBA::Short worker_count,
 }
 
 void
-Manager::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Manager::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -52,10 +52,10 @@ int
 Worker::svc (void)
 {
   // ACE_DEBUG ((LM_DEBUG, "Worker starts\n"));
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->controller_->worker_started (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->controller_->worker_started (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ACE_DEBUG ((LM_DEBUG, "Worker start reported\n"));
@@ -63,7 +63,7 @@ Worker::svc (void)
       ACE_Time_Value tv (0, 1000 * this->milliseconds_);
       ACE_OS::sleep (tv);
 
-      this->controller_->worker_finished (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->controller_->worker_finished (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ACE_DEBUG ((LM_DEBUG, "Worker completion reported\n"));

@@ -68,7 +68,7 @@ public:
   /// Create object using a string ior.
   TAO_UIPMC_Profile (const char *string,
                      TAO_ORB_Core *orb_core
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_UIPMC_Profile (void);
@@ -76,7 +76,7 @@ public:
   /// Initialize this object using the given input string.
   /// Url-style string contain only one endpoint.
   virtual void parse_string (const char *string
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 
   /**
    * Return a string representation for this profile.
@@ -84,7 +84,7 @@ public:
    * This is used to create url-style reference.  Only one
    * endpoint is included into the string.
    */
-  virtual char * to_string (TAO_ENV_SINGLE_ARG_DECL);
+  virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Initialize this object using the given CDR octet string.
   virtual int decode (TAO_InputCDR& cdr);
@@ -134,7 +134,7 @@ public:
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max
-                             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Please refer to Profile.h for the documentation of this
   /// function.
@@ -146,7 +146,7 @@ public:
   virtual void request_target_specifier (
                       TAO_Target_Specification &target_spec,
                       TAO_Target_Specification::TAO_Target_Address required_type
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
   /// Returns true since this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;
@@ -162,7 +162,7 @@ public:
   /// Set and validate the addressing mode if the remote ORB returns an
   /// exception.
   virtual void addressing_mode (CORBA::Short addr_mode
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 
 private:
 

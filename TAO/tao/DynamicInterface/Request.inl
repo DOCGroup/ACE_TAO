@@ -66,42 +66,42 @@ ACE_INLINE CORBA_Any &
 CORBA_Request::add_in_arg (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_IN TAO_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_element (CORBA::ARG_IN ACE_ENV_ARG_PARAMETER)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_in_arg (const CORBA::Char *name)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_IN TAO_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_item (name, CORBA::ARG_IN ACE_ENV_ARG_PARAMETER)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_inout_arg (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_INOUT TAO_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_element (CORBA::ARG_INOUT ACE_ENV_ARG_PARAMETER)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_inout_arg (const CORBA::Char *name)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_INOUT TAO_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_item (name, CORBA::ARG_INOUT ACE_ENV_ARG_PARAMETER)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_out_arg (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_element (CORBA::ARG_OUT TAO_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_element (CORBA::ARG_OUT ACE_ENV_ARG_PARAMETER)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_out_arg (const CORBA::Char *name)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  return this->args_->add_item (name, CORBA::ARG_OUT TAO_ENV_ARG_PARAMETER)->any_;
+  return this->args_->add_item (name, CORBA::ARG_OUT ACE_ENV_ARG_PARAMETER)->any_;
 }
 
 ACE_INLINE void

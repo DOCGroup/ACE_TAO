@@ -166,7 +166,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
           reply_handler_skel_ (this->reply_cdr_,
                                this->reply_handler_.in (),
                                reply_error
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -201,7 +201,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 
       TAO_OutputCDR out_cdr;
 
-      comm_failure._tao_encode (out_cdr TAO_ENV_ARG_PARAMETER);
+      comm_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -213,7 +213,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -247,7 +247,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
       TAO_OutputCDR out_cdr;
 
-      timeout_failure._tao_encode (out_cdr TAO_ENV_ARG_PARAMETER);
+      timeout_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Turn into an output CDR
@@ -258,7 +258,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

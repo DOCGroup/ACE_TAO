@@ -17,7 +17,7 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
 void
 Notify_Structured_Push_Consumer::push_structured_event (
                           const CosNotification::StructuredEvent& /*event*/
-                          TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (++this->count_ == this->expected_)

@@ -24,7 +24,7 @@ public:
   CORBA::Double price () throw (CORBA::SystemException);
   void set_price (CORBA::Double new_price) throw (CORBA::SystemException);
 
-  void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     throw (CORBA::SystemException);
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);

@@ -8,14 +8,14 @@ ACE_RCSID (IORInterceptor,
            "$Id$")
 
 char *
-FOO_IORInterceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_IORInterceptor");
 }
 
 void
-FOO_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -23,7 +23,7 @@ FOO_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 FOO_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // According to the Portable Interceptors specification,
@@ -32,7 +32,7 @@ FOO_IORInterceptor::establish_components (
   // does the right thing, and ignores any IOR interceptors that throw
   // an exception.
 
-  CORBA::String_var name = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the length of the string plus one for the NULL terminator.
@@ -53,7 +53,7 @@ FOO_IORInterceptor::establish_components (
 
   // Add the tagged component to all profiles.
   info->add_ior_component (FOO_Component
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -65,7 +65,7 @@ FOO_IORInterceptor::establish_components (
 void
 FOO_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
@@ -75,7 +75,7 @@ void
 FOO_IORInterceptor::adapter_manager_state_changed (
     PortableInterceptor::AdapterManagerId ,
     PortableInterceptor::AdapterState
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
@@ -85,7 +85,7 @@ void
 FOO_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
     PortableInterceptor::AdapterState
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;

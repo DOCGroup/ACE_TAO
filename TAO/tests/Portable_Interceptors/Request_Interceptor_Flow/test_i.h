@@ -34,20 +34,20 @@ public:
 
   /// The client-side test operation.
   virtual void client_test (Test::TestScenario scenario
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((Test::X,
                      Test::UnknownScenario,
                      CORBA::SystemException));
 
   /// The server-side test operation.
   virtual void server_test (Test::TestScenario scenario
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((Test::X,
                      Test::UnknownScenario,
                      CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

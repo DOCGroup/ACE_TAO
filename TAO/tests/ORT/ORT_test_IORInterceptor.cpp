@@ -15,14 +15,14 @@ ORT_test_IORInterceptor::ORT_test_IORInterceptor ()
 }
 
 char *
-ORT_test_IORInterceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ORT_test_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ORT_IORInterceptor");
 }
 
 void
-ORT_test_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ORT_test_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -30,11 +30,11 @@ ORT_test_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ORT_test_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr /* info */
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->establish_count_;
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "Establish_Components is invoked %d times till now\n",
               this->establish_count_));
@@ -46,7 +46,7 @@ components_established (PortableInterceptor::IORInfo_ptr /* ior_info */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->components_establish_count_;
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "Components Established is invoked %d times till now\n",
               this->establish_count_));

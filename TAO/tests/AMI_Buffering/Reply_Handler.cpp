@@ -10,19 +10,19 @@ Reply_Handler::Reply_Handler (void)
 }
 
 void
-Reply_Handler::receive_data (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Reply_Handler::receive_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Reply_Handler::receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      holder->raise_receive_data (TAO_ENV_SINGLE_ARG_PARAMETER);
+      holder->raise_receive_data (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -34,19 +34,19 @@ Reply_Handler::receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holde
 }
 
 void
-Reply_Handler::sync (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Reply_Handler::sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Reply_Handler::sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      holder->raise_sync (TAO_ENV_SINGLE_ARG_PARAMETER);
+      holder->raise_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -58,19 +58,19 @@ Reply_Handler::sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
 }
 
 void
-Reply_Handler::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Reply_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Reply_Handler::shutdown_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      holder->raise_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      holder->raise_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -28,7 +28,7 @@ Logger_Client::init (int argc, char *argv[])
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       if (TAO_debug_level > 0)
@@ -38,7 +38,7 @@ Logger_Client::init (int argc, char *argv[])
       orb_ = CORBA::ORB_init (argc,
                               argv,
                               "internet"
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0)
@@ -50,7 +50,7 @@ Logger_Client::init (int argc, char *argv[])
         return -1;
 
       // Initialize the naming service
-      int ret = this->init_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+      int ret = this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -58,7 +58,7 @@ Logger_Client::init (int argc, char *argv[])
                            "services.\n"),
                           -1);
       // Create the logger instances
-      ret = this->init_loggers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ret = this->init_loggers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,7 +79,7 @@ Logger_Client::init (int argc, char *argv[])
 }
 
 int
-Logger_Client::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Initialize the naming services
   if (my_name_client_.init (orb_.in ()) != 0)
@@ -95,7 +95,7 @@ Logger_Client::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 
   CORBA::Object_var factory_ref =
     my_name_client_->resolve (factory_name
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "\nFactory_ref resolved\n"));
@@ -111,7 +111,7 @@ Logger_Client::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
   // Narrow the factory and check the success
   factory_ =
     Logger_Factory::_narrow (factory_ref.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -127,7 +127,7 @@ Logger_Client::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
   // If debugging, get the factory's IOR
   CORBA::String_var str =
     orb_->object_to_string (factory_.in ()
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The factory IOR is <%s>\n",
@@ -136,18 +136,18 @@ Logger_Client::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Logger_Client::init_loggers (TAO_ENV_SINGLE_ARG_DECL)
+Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
   ACE_TRY
     {
       this->logger_1_ = factory_->make_logger ("key1"
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->logger_2_ = factory_->make_logger ("key2"
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->logger_1_.in ()))
@@ -169,7 +169,7 @@ Logger_Client::init_loggers (TAO_ENV_SINGLE_ARG_DECL)
           ACE_DEBUG ((LM_DEBUG,
                       "\nTrying to resolve already created logger..."));
           Logger_var logger_3 = factory_->make_logger ("key1"
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (logger_3.in ()))
@@ -195,7 +195,7 @@ Logger_Client::init_loggers (TAO_ENV_SINGLE_ARG_DECL)
 int
 Logger_Client::run (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Create 3 Log_Records for the test
@@ -245,36 +245,36 @@ Logger_Client::run (void)
         }
 
       // Change the verbosity.
-      this->logger_1_->verbosity (Logger::VERBOSE_LITE TAO_ENV_ARG_PARAMETER);
+      this->logger_1_->verbosity (Logger::VERBOSE_LITE ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Log the first Log_Record (VERBOSE_LITE)
-      this->logger_1_->log (rec1 TAO_ENV_ARG_PARAMETER);
+      this->logger_1_->log (rec1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Change the verbosity again.
-      this->logger_2_->verbosity (Logger::VERBOSE TAO_ENV_ARG_PARAMETER);
+      this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Log the second Log_Record (VERBOSE)
-      this->logger_2_->log (rec2 TAO_ENV_ARG_PARAMETER);
+      this->logger_2_->log (rec2 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Change the verbosity again
-      this->logger_2_->verbosity (Logger::SILENT TAO_ENV_ARG_PARAMETER);
+      this->logger_2_->verbosity (Logger::SILENT ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Log the third log record using logv() (this shows if the
       // verbosity level overrides the logger's verbosity level)
-      this->logger_2_->logv (rec3, Logger::VERBOSE TAO_ENV_ARG_PARAMETER);
+      this->logger_2_->logv (rec3, Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
 
       // Change the verbosity again (so that regular log msgs can be
       // seen again)
-      this->logger_2_->verbosity (Logger::VERBOSE TAO_ENV_ARG_PARAMETER);
+      this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Log the fourth record using log2()
-      this->logger_2_->log2 (rec4 TAO_ENV_ARG_PARAMETER);
+      this->logger_2_->log2 (rec4 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 

@@ -18,7 +18,7 @@ class Quoter_Stock_Factory_Locator_i : public PortableServer::ServantLocator
                                              PortableServer::POA_ptr poa,
                                              const char * operation,
                                              void * & cookie
-                                             TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     throw (CORBA::SystemException, PortableServer::ForwardRequest);
 
   // Postinvoke function
@@ -27,7 +27,7 @@ class Quoter_Stock_Factory_Locator_i : public PortableServer::ServantLocator
                            const char * operation,
                            void * cookie,
                            PortableServer::Servant servant
-                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     throw (CORBA::SystemException);
 
  private:

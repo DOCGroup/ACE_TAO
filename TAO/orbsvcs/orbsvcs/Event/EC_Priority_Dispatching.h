@@ -60,12 +60,12 @@ public:
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
 
 private:
   /// Use our own thread manager.

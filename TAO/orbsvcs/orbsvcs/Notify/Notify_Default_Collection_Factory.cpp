@@ -39,7 +39,7 @@ TAO_Notify_Default_Collection_Factory::fini (void)
 }
 
 TAO_Notify_EventListener_List*
-TAO_Notify_Default_Collection_Factory::create_event_listener_list (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+TAO_Notify_Default_Collection_Factory::create_event_listener_list (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
 {
   // @@ Pradeep: the copy_on_write versions are a much better choice
   // for a default than the immediate changes version.  The latter
@@ -68,7 +68,7 @@ ACE_NEW_THROW_EX (listener_list,
 }
 
 TAO_Notify_UpdateListener_List*
-TAO_Notify_Default_Collection_Factory::create_update_listener_list (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+TAO_Notify_Default_Collection_Factory::create_update_listener_list (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
 {
 
   /*  TAO_Notify_UpdateListener_List* listener_list =

@@ -64,12 +64,12 @@ public:
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,
                      TAO_EC_QOS_Info &qos_info
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet &event,
                             TAO_EC_QOS_Info &qos_info
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 };
 
 // ****************************************************************
@@ -96,12 +96,12 @@ public:
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,
                      TAO_EC_QOS_Info &qos_info
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet &event,
                             TAO_EC_QOS_Info &qos_info
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
 #if defined (__ACE_INLINE__)

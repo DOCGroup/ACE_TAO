@@ -29,20 +29,20 @@ public:
   Visual_i (CORBA::ORB_ptr orb);
 
   void normal (CORBA::Long arg
-               TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void nothing (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void nothing (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void user (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void user (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test_Interceptors::Silly));
 
-  void system (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void system (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

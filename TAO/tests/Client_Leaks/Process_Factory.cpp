@@ -20,7 +20,7 @@ Process_Factory::shutdown_received (void)
 }
 
 Test::Process_ptr
-Process_Factory::create_new_process (TAO_ENV_SINGLE_ARG_DECL)
+Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed))
 {
   Startup_Callback *startup_callback_impl;
@@ -32,11 +32,11 @@ Process_Factory::create_new_process (TAO_ENV_SINGLE_ARG_DECL)
   PortableServer::ServantBase_var owner_transfer(startup_callback_impl);
 
   Test::Startup_Callback_var startup_callback =
-    startup_callback_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    startup_callback_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (Test::Process::_nil ());
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (startup_callback.in () TAO_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (startup_callback.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Test::Process::_nil ());
 
   const char* argv[3] = {
@@ -68,7 +68,7 @@ Process_Factory::create_new_process (TAO_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i != 500 && !process_has_started; ++i)
     {
       ACE_Time_Value interval (0, 10000);
-      this->orb_->perform_work (interval TAO_ENV_ARG_PARAMETER);
+      this->orb_->perform_work (interval ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (Test::Process::_nil ());
 
       process_has_started =
@@ -78,12 +78,12 @@ Process_Factory::create_new_process (TAO_ENV_SINGLE_ARG_DECL)
   ACE_TRY
     {
       PortableServer::POA_var poa =
-        startup_callback_impl->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+        startup_callback_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (startup_callback_impl TAO_ENV_ARG_PARAMETER);
+        poa->servant_to_id (startup_callback_impl ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -104,15 +104,15 @@ Process_Factory::create_new_process (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Process_Factory::noop (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Process_Factory::noop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-Process_Factory::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Process_Factory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown_received_ = 1;
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

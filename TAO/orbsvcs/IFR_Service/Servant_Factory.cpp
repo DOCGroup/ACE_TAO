@@ -15,7 +15,7 @@ IFR_Servant_Factory::IFR_Servant_Factory (TAO_Repository_i *repo)
 TAO_IDLType_i *
 IFR_Servant_Factory::create_idltype (
     ACE_Configuration_Section_Key servant_key
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   u_int def_kind = 0;
@@ -231,7 +231,7 @@ IFR_Servant_Factory::create_idltype (
 TAO_Contained_i *
 IFR_Servant_Factory::create_contained (
     ACE_Configuration_Section_Key servant_key
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   u_int def_kind = 0;
@@ -513,7 +513,7 @@ IFR_Servant_Factory::create_contained (
 TAO_Container_i *
 IFR_Servant_Factory::create_container (
     ACE_Configuration_Section_Key servant_key
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   u_int def_kind = 0;
@@ -642,7 +642,7 @@ PortableServer::Servant
 IFR_Servant_Factory::create_tie (
     ACE_Configuration_Section_Key servant_key,
     PortableServer::POA_ptr poa
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   u_int def_kind = 0;
@@ -1370,7 +1370,7 @@ IFR_Servant_Factory::create_tie (
 CORBA::Object_ptr
 IFR_Servant_Factory::create_objref (CORBA::DefinitionKind def_kind,
                                     const char *obj_id
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (obj_id);
@@ -1488,5 +1488,5 @@ IFR_Servant_Factory::create_objref (CORBA::DefinitionKind def_kind,
 
   return this->repo_->ir_poa ()->create_reference_with_id (oid.in (),
                                                            repo_id.c_str ()
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
 }

@@ -58,7 +58,7 @@ main (int argc, char **argv)
         CORBA::ORB_init (argc,
                          argv,
                          0
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
@@ -68,23 +68,23 @@ main (int argc, char **argv)
 
       CORBA::Object_var object =
         orb->string_to_object (ior
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_var test =
         test::_narrow (object.in ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i < iterations; i++)
         {
-          test->method (TAO_ENV_SINGLE_ARG_PARAMETER);
+          test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       if (shutdown_server)
         {
-          test->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -30,7 +30,7 @@ TAO_DLL_Parser::match_prefix (const char *ior_string) const
 CORBA::Object_ptr
 TAO_DLL_Parser::parse_string (const char *ior,
                               CORBA::ORB_ptr orb
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Skip the prefix, we know it is there because this method in only
@@ -52,7 +52,7 @@ TAO_DLL_Parser::parse_string (const char *ior,
          CORBA::Object::_nil ());
     }
 
-  return loader->create_object (orb, 0, 0 TAO_ENV_ARG_PARAMETER);
+  return loader->create_object (orb, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,

@@ -90,37 +90,37 @@ POA_ImplementationRepository::ServerObject_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_ImplementationRepository::ServerObject_tie<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)
+POA_ImplementationRepository::ServerObject_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->ServerObject::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->ServerObject::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::ping  (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   this->ptr_->ping (
-TAO_ENV_SINGLE_ARG_PARAMETER
+ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::shutdown  (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   this->ptr_->shutdown (
-TAO_ENV_SINGLE_ARG_PARAMETER
+ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -197,18 +197,18 @@ POA_ImplementationRepository::Administration_tie<T>::_is_owner (CORBA::Boolean b
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_ImplementationRepository::Administration_tie<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)
+POA_ImplementationRepository::Administration_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->Administration::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->Administration::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
     const char * server
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -218,7 +218,7 @@ void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
 {
   this->ptr_->activate_server (
 server
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -226,7 +226,7 @@ template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::register_server  (
     const char * server,
     const ImplementationRepository::StartupOptions & options
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -236,7 +236,7 @@ void POA_ImplementationRepository::Administration_tie<T>::register_server  (
   this->ptr_->register_server (
 server,
     options
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -244,7 +244,7 @@ template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::reregister_server  (
     const char * server,
     const ImplementationRepository::StartupOptions & options
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -253,14 +253,14 @@ void POA_ImplementationRepository::Administration_tie<T>::reregister_server  (
   this->ptr_->reregister_server (
 server,
     options
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
     const char * server
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -269,14 +269,14 @@ void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
 {
   this->ptr_->remove_server (
 server
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
     const char * server
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -285,7 +285,7 @@ void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
 {
   this->ptr_->shutdown_server (
 server
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -294,7 +294,7 @@ char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
     const char * server,
     const char * addr,
     ImplementationRepository::ServerObject_ptr server_object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -305,14 +305,14 @@ char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
 server,
     addr,
     server_object
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_down  (
     const char * server
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -321,7 +321,7 @@ void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_dow
 {
   this->ptr_->server_is_shutting_down (
 server
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -329,7 +329,7 @@ template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::find  (
     const char * server,
     ImplementationRepository::ServerInformation_out info
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -339,7 +339,7 @@ void POA_ImplementationRepository::Administration_tie<T>::find  (
   this->ptr_->find (
 server,
     info
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -348,7 +348,7 @@ void POA_ImplementationRepository::Administration_tie<T>::list  (
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list,
     ImplementationRepository::ServerInformationIterator_out server_iterator
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -358,7 +358,7 @@ void POA_ImplementationRepository::Administration_tie<T>::list  (
 how_many,
     server_list,
     server_iterator
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -435,19 +435,19 @@ POA_ImplementationRepository::ServerInformationIterator_tie<T>::_is_owner (CORBA
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_ImplementationRepository::ServerInformationIterator_tie<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)
+POA_ImplementationRepository::ServerInformationIterator_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->ServerInformationIterator::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->ServerInformationIterator::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class T> ACE_INLINE
 CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator_tie<T>::next_n  (
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -456,20 +456,20 @@ CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator_tie<T>::n
   return this->ptr_->next_n (
 how_many,
     server_list
-    TAO_ENV_ARG_PARAMETER
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerInformationIterator_tie<T>::destroy  (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-TAO_ENV_SINGLE_ARG_PARAMETER
+ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 

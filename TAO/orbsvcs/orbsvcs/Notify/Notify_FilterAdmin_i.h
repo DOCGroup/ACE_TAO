@@ -42,7 +42,7 @@ public:
   // Destructor
 
   // = match operation on all the filters
-  CORBA::Boolean match (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
+  CORBA::Boolean match (TAO_Notify_Event &event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
@@ -51,7 +51,7 @@ public:
 
   virtual CosNotifyFilter::FilterID add_filter (
     CosNotifyFilter::Filter_ptr new_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -59,7 +59,7 @@ public:
 
   virtual void remove_filter (
     CosNotifyFilter::FilterID filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -68,7 +68,7 @@ public:
 
   virtual CosNotifyFilter::Filter_ptr get_filter (
     CosNotifyFilter::FilterID filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -76,14 +76,14 @@ public:
   ));
 
   virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual void remove_all_filters (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

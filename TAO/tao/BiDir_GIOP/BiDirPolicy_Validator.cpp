@@ -13,18 +13,18 @@ TAO_BiDirPolicy_Validator::TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core)
 
 void
 TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
 {
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP);
 
   BiDirPolicy::BidirectionalPolicy_var srp =
     BiDirPolicy::BidirectionalPolicy::_narrow (policy.in ()
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   BiDirPolicy::BidirectionalPolicyValue val =
-    srp->value (TAO_ENV_SINGLE_ARG_PARAMETER);
+    srp->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Set the flag in the ORB_Core
@@ -34,7 +34,7 @@ TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies
 
 void
 TAO_BiDirPolicy_Validator::merge_policies_impl (TAO_Policy_Set & /*policies*/
-                                                TAO_ENV_ARG_DECL_NOT_USED)
+                                                ACE_ENV_ARG_DECL_NOT_USED)
 {
   return ;
 }

@@ -39,7 +39,7 @@ Data::Data (CORBA::ORB_var orb)
     m_any1 (CORBA::_tc_long),
     orb_ (orb)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -63,7 +63,7 @@ Data::Data (CORBA::ORB_var orb)
       // Getting the RootPOA so we can generate object references.
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -76,27 +76,27 @@ Data::Data (CORBA::ORB_var orb)
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       // Generate values for the member variables.
      this->m_objref1 =
         root_poa->create_reference ("foo"
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       this->m_objref2 =
         root_poa->create_reference ("foo"
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       // Clean up after the POA
       root_poa->destroy (1,
                          1
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
     }

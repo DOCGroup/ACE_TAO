@@ -51,7 +51,7 @@ class TAO_CosEventChannelFactory_i :
   int init (PortableServer::POA_ptr poa,
             const char* child_poa_name,
             CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ()
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // This method creates a child poa with <poa> as the
   // parent. It also accepts a Naming_Context which is used to register
   // the event channels if specified.
@@ -66,7 +66,7 @@ class TAO_CosEventChannelFactory_i :
   //    doesn't have to be exposed through the IDL interface. Anyway,
   //    there must be a way to cleanup any resources created by the
   //    factory, and you must avoid CORBA calls in the destructor,
-  //    first because you won't have an TAO_ENV_SINGLE_ARG_PARAMETER and second because
+  //    first because you won't have an ACE_ENV_SINGLE_ARG_PARAMETER and second because
   //    exceptions in destructors are evil.
   // @@ Pradeep: anyway you can just use exceptions and not return -1?
 
@@ -75,7 +75,7 @@ class TAO_CosEventChannelFactory_i :
     (
      const char * channel_id,
      CORBA::Boolean store_in_naming_service
-     TAO_ENV_ARG_DECL
+     ACE_ENV_ARG_DECL
      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -87,7 +87,7 @@ class TAO_CosEventChannelFactory_i :
     (
      const char * channel_id,
      CORBA::Boolean unbind_from_naming_service
-     TAO_ENV_ARG_DECL
+     ACE_ENV_ARG_DECL
      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -97,7 +97,7 @@ class TAO_CosEventChannelFactory_i :
   virtual CosEventChannelAdmin::EventChannel_ptr find
     (
      const char * channel_id
-     TAO_ENV_ARG_DECL
+     ACE_ENV_ARG_DECL
      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -107,7 +107,7 @@ class TAO_CosEventChannelFactory_i :
   virtual char * find_channel_id
     (
      CosEventChannelAdmin::EventChannel_ptr channel
-     TAO_ENV_ARG_DECL
+     ACE_ENV_ARG_DECL
      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,

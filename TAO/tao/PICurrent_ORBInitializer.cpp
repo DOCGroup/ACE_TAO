@@ -17,11 +17,11 @@ ACE_RCSID (TAO,
 void
 TAO_PICurrent_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ORBInitInfo_var tao_info =
-    TAO_ORBInitInfo::_narrow (info TAO_ENV_ARG_PARAMETER);
+    TAO_ORBInitInfo::_narrow (info ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_ORB_Core *orb_core = tao_info->orb_core ();
@@ -42,7 +42,7 @@ TAO_PICurrent_ORBInitializer::pre_init (
   // instance between all ORBs.
   info->register_initial_reference ("PICurrent",
                                     current.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Cache the downcasted pointer in the ORB Core.
@@ -52,7 +52,7 @@ TAO_PICurrent_ORBInitializer::pre_init (
 void
 TAO_PICurrent_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

@@ -50,13 +50,13 @@ public:
   /// SecurityLevel1::Current::get_attributes() method.
   virtual Security::AttributeList * get_attributes (
       const Security::AttributeTypeList &attributes
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// SSLIOP-specific version of the
   /// SecurityLevel2::Current::received_credentials() method.
   virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials (
-      TAO_ENV_SINGLE_ARG_DECL)
+      ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the SSL peer certificate associated with the

@@ -29,11 +29,11 @@ TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Ma
 }
 
 int
-TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result =
     this->lane_resources_->open_acceptor_registry (0
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;

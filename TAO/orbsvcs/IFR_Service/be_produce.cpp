@@ -93,22 +93,22 @@ BE_cleanup (void)
   idl_global = 0;
 
   // Remove the holding scope entry from the repository.
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA_Contained_var result =
         be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (result.in ()))
         {
           CORBA_ModuleDef_var scope =
             CORBA_ModuleDef::_narrow (result.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          scope->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          scope->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -140,18 +140,18 @@ TAO_IFR_BE_Export int
 BE_ifr_init (int &ac,
              char *av[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       be_global->orb (CORBA::ORB_init (ac,
                                        av,
                                        0
-                                       TAO_ENV_ARG_PARAMETER));
+                                       ACE_ENV_ARG_PARAMETER));
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         be_global->orb ()->resolve_initial_references ("InterfaceRepository"
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
@@ -165,7 +165,7 @@ BE_ifr_init (int &ac,
         }
 
       CORBA_Repository_var repo = CORBA_Repository::_narrow (object.in ()
-                                                             TAO_ENV_ARG_PARAMETER);
+                                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (repo.in ()))
@@ -193,14 +193,14 @@ BE_ifr_init (int &ac,
 }
 
 void
-BE_create_holding_scope (TAO_ENV_SINGLE_ARG_DECL)
+BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA_ModuleDef_ptr scope = CORBA_ModuleDef::_nil ();
 
   // If we are multi-threaded, it may already be created.
   CORBA_Contained_var result =
     be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (result.in ()))
@@ -210,14 +210,14 @@ BE_create_holding_scope (TAO_ENV_SINGLE_ARG_DECL)
                                       be_global->holding_scope_name (),
                                       be_global->holding_scope_name (),
                                       "1.0"
-                                      TAO_ENV_ARG_PARAMETER
+                                      ACE_ENV_ARG_PARAMETER
                                     );
       ACE_CHECK;
     }
   else
     {
       scope = CORBA_ModuleDef::_narrow (result.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -228,10 +228,10 @@ BE_create_holding_scope (TAO_ENV_SINGLE_ARG_DECL)
 TAO_IFR_BE_Export void
 BE_produce (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      BE_create_holding_scope (TAO_ENV_SINGLE_ARG_PARAMETER);
+      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the root node.

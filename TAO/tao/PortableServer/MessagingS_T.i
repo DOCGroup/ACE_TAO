@@ -23,30 +23,30 @@
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -90,12 +90,12 @@ POA_Messaging::ReplyHandler_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::ReplyHandler_tie<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)
+POA_Messaging::ReplyHandler_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->ReplyHandler::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->ReplyHandler::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */

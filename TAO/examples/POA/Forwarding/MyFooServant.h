@@ -36,18 +36,18 @@ public:
                 MyFooServantActivator &activator,
                 CORBA::Long value);
 
-  virtual CORBA::Long doit (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long doit (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Setup forwarding
-  virtual void forward (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void forward (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Foo::Cannot_Forward));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
   // Returns the default POA for this servant.
 
 protected:

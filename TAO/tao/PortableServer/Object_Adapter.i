@@ -45,36 +45,36 @@ TAO_Object_Adapter::transient_poa_name_size ()
 
 ACE_INLINE int
 TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   // Lock access for the duration of this transaction.
   TAO_OBJECT_ADAPTER_GUARD_RETURN (-1);
 
   return this->locate_servant_i (key
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE TAO_SERVANT_LOCATION
 TAO_Object_Adapter::find_servant (const TAO_ObjectKey &key,
                                   PortableServer::Servant &servant
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   // Lock access for the duration of this transaction.
   TAO_OBJECT_ADAPTER_GUARD_RETURN (TAO_SERVANT_NOT_FOUND);
 
   return this->find_servant_i (key,
                                servant
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE int
 TAO_Object_Adapter::find_persistent_poa (const poa_name &system_name,
                                          TAO_POA *&poa
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
 {
   return this->hint_strategy_->find_persistent_poa (system_name,
                                                     poa
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE int
@@ -83,13 +83,13 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
                               CORBA::Boolean root,
                               const TAO_Temporary_Creation_Time &poa_creation_time,
                               TAO_POA *&poa
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   if (activate_it)
     {
       return this->find_persistent_poa (system_name,
                                         poa
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
     }
   else
     {
@@ -97,7 +97,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
                                        root,
                                        poa_creation_time,
                                        poa
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
     }
 }
 

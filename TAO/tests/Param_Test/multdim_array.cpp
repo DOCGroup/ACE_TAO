@@ -47,7 +47,7 @@ Test_Multdim_Array::opname (void) const
 
 void
 Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= Param_Test::Multdim_Array_forany (this->in_.inout ());
   req->add_inout_arg ("s2") <<= Param_Test::Multdim_Array_forany (this->inout_.inout ());
@@ -55,7 +55,7 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_Multdim_Array);
 
-  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
 
@@ -64,13 +64,13 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
   Param_Test::Multdim_Array_copy (this->ret_, forany.in ());
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= forany;
   Param_Test::Multdim_Array_copy (this->out_, forany.in ());
@@ -78,7 +78,7 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req
 
 int
 Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/
-                                     TAO_ENV_ARG_DECL_NOT_USED/*env*/)
+                                     ACE_ENV_ARG_DECL_NOT_USED/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -134,14 +134,14 @@ Test_Multdim_Array::reset_parameters (void)
 
 int
 Test_Multdim_Array::run_sii_test (Param_Test_ptr objref
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       this->ret_ = objref->test_multdim_array (this->in_.in (),
                                                this->inout_.inout (),
                                                this->out_.inout ()
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       return 0;
     }

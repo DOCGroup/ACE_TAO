@@ -32,7 +32,7 @@
 
 class TAO_Notify_Constraint_Visitor;
 
-class TAO_Notify_Export TAO_Notify_Constraint_Interpreter 
+class TAO_Notify_Export TAO_Notify_Constraint_Interpreter
   : public TAO_ETCL_Interpreter
 {
   //
@@ -49,7 +49,7 @@ public:
   // Destructor
 
   void build_tree (const char* constraints
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CosNotifyFilter::InvalidConstraint,
                      CORBA::NO_MEMORY));
   // This constructor builds an expression tree representing the

@@ -35,11 +35,11 @@ public:
   Client_ORBInitializer (void);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

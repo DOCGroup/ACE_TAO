@@ -10,7 +10,7 @@
 //    ncontextext_client_i.h
 //
 // = DESCRIPTION
-//    This class implements a simple CORBA client which 
+//    This class implements a simple CORBA client which
 //    converts a Name to a string and viceversa, forms a IIOPNAME
 //    url address and can resolve a stringified name.
 //
@@ -39,14 +39,14 @@ class NContextExt_Client_i
   NContextExt_Client_i (void);
   ~NContextExt_Client_i (void);
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Execute the client example code.
 
   int init (int argc, char **argv);
   // Initialize the client communication endpoint with the server.
 
  private:
-  
+
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
@@ -58,7 +58,7 @@ class NContextExt_Client_i
   // Prints the values of the original name, strigified name and
   // destringified name. Also, prints the value of the address of the
   // naming context, a name that identifies a binding in that naming
-  // context and the corresponding iioploc URL 
+  // context and the corresponding iioploc URL
   // representation.
 
   char * get_name (void);

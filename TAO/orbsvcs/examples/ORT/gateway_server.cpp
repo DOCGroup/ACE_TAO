@@ -42,7 +42,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "gateway_server_orb"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -51,12 +51,12 @@ main (int argc, char *argv[])
       /// Resolve reference to RootPOA
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Narrow it down correctly.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Check for nil references
@@ -67,11 +67,11 @@ main (int argc, char *argv[])
 
       /// Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Activate it.
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ///@}
@@ -81,25 +81,25 @@ main (int argc, char *argv[])
 
       policies [0] =
         root_poa->create_servant_retention_policy (PortableServer::RETAIN
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policies [1] =
         root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       policies [2] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var gateway_poa =
         root_poa->create_POA ("Gateway_POA",
                               poa_manager.in (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0; i != policies.length (); ++i) {
@@ -109,13 +109,13 @@ main (int argc, char *argv[])
       // Get the POA Current object reference
       obj =
         orb->resolve_initial_references ("POACurrent"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the object reference to a POA Current reference
       PortableServer::Current_var poa_current =
         PortableServer::Current::_narrow (obj.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Gateway_i *gateway;
@@ -126,7 +126,7 @@ main (int argc, char *argv[])
                         CORBA::NO_MEMORY ());
       ACE_TRY_CHECK;
 
-      gateway_poa->set_servant (gateway TAO_ENV_ARG_PARAMETER);
+      gateway_poa->set_servant (gateway ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Get the ObjectID
@@ -145,7 +145,7 @@ main (int argc, char *argv[])
       /// Activate the Object_Factory_i Object
       gateway_poa->activate_object_with_id (oid.in (),
                                             object_factory
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the object reference.
@@ -155,7 +155,7 @@ main (int argc, char *argv[])
       /// Convert the object reference to a string format.
       CORBA::String_var ior =
         orb->object_to_string (gateway_object_factory.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// If the ior_output_file exists, output the IOR to it.
@@ -172,7 +172,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

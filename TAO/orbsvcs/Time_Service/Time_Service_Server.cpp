@@ -14,17 +14,17 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "[SERVER] Process/Thread Id : (%P/%t) Time Service server\n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int r = server.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      int r = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (r == -1)
         return 1;
       else
         {
-          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

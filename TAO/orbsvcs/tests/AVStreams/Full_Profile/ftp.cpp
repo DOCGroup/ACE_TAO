@@ -49,9 +49,9 @@ FTP_Client_Callback::handle_timeout (void *)
                 {
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
                   AVStreams::flowSpec stop_spec (1);
-                  CLIENT::instance ()->streamctrl ()->stop (stop_spec TAO_ENV_ARG_PARAMETER);
+                  CLIENT::instance ()->streamctrl ()->stop (stop_spec ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
-                  //CLIENT::instance ()->streamctrl ()->destroy (stop_spec TAO_ENV_ARG_PARAMETER);
+                  //CLIENT::instance ()->streamctrl ()->destroy (stop_spec ACE_ENV_ARG_PARAMETER);
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
                   ACE_TRY_CHECK;
                   return 0;
@@ -192,7 +192,7 @@ Client::Client (void)
 int
 Client::bind_to_server (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -208,12 +208,12 @@ Client::bind_to_server (void)
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
       CORBA::Object_var server_mmdevice_obj =
         my_naming_client_->resolve (server_mmdevice_name
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->server_mmdevice_ =
         AVStreams::MMDevice::_narrow (server_mmdevice_obj.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
@@ -238,7 +238,7 @@ Client::init (int argc,char **argv)
   this->argv_ = argv;
 
   CORBA::String_var ior;
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 
@@ -261,12 +261,12 @@ Client::init (int argc,char **argv)
                        "Data");
 
       this->fdev_->flowname (this->flowname ());
-      AVStreams::MMDevice_var mmdevice = this->client_mmdevice_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      AVStreams::MMDevice_var mmdevice = this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      AVStreams::FDev_var fdev = this->fdev_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      AVStreams::FDev_var fdev = this->fdev_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       mmdevice->add_fdev (fdev.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
 
       if (this->my_naming_client_.init (this->orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -299,7 +299,7 @@ Client::init (int argc,char **argv)
 int
 Client::run (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       char flow_protocol_str [BUFSIZ];
@@ -324,7 +324,7 @@ Client::run (void)
       timer.start ();
 
       AVStreams::MMDevice_var client_mmdevice
-        = this->client_mmdevice_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        = this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Bind the client and server mmdevices.
@@ -333,7 +333,7 @@ Client::run (void)
                                      this->server_mmdevice_.in (),
                                      the_qos.inout (),
                                      flow_spec
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       timer.stop ();
       timer.elapsed_time (elapsed);
       elapsed.dump ();
@@ -341,12 +341,12 @@ Client::run (void)
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
-      this->streamctrl_.start (start_spec TAO_ENV_ARG_PARAMETER);
+      this->streamctrl_.start (start_spec ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Schedule a timer for the for the flow handler.
       ACE_Time_Value tv (10000,0);
-      this->orb_->run (tv TAO_ENV_ARG_PARAMETER);
+      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
@@ -366,13 +366,13 @@ int
 main (int argc,
       char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
@@ -380,7 +380,7 @@ main (int argc,
 
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -390,10 +390,10 @@ main (int argc,
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();
 
-      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (result < 0)

@@ -25,14 +25,14 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TA
 }
 
 TimeBase::TimeT
-TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->relative_expiry_;
 }
 
 CORBA::PolicyType
-TAO_RelativeRoundtripTimeoutPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RelativeRoundtripTimeoutPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how this minimizes the
@@ -62,10 +62,10 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
     {
       Messaging::RelativeRoundtripTimeoutPolicy_var p =
         Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy.in ()
-                                                             TAO_ENV_ARG_PARAMETER);
+                                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TimeBase::TimeT t = p->relative_expiry (TAO_ENV_SINGLE_ARG_PARAMETER);
+      TimeBase::TimeT t = p->relative_expiry (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       TimeBase::TimeT seconds = t / 10000000u;
       TimeBase::TimeT microseconds = (t % 10000000u) / 10;
@@ -93,7 +93,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
 CORBA::Policy_ptr
 TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val
-                                            TAO_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -124,7 +124,7 @@ TAO_RelativeRoundtripTimeoutPolicy::clone (void) const
 }
 
 CORBA::Policy_ptr
-TAO_RelativeRoundtripTimeoutPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_RelativeRoundtripTimeoutPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
@@ -140,7 +140,7 @@ TAO_RelativeRoundtripTimeoutPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_RelativeRoundtripTimeoutPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RelativeRoundtripTimeoutPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -188,7 +188,7 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
 }
 
 CORBA::PolicyType
-TAO_Sync_Scope_Policy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Sync_Scope_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Messaging::SYNC_SCOPE_POLICY_TYPE;
@@ -242,7 +242,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
 
 CORBA::Policy_ptr
 TAO_Sync_Scope_Policy::create (const CORBA::Any& val
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   Messaging::SyncScope synchronization;
   if ((val >>= synchronization) == 0)
@@ -269,14 +269,14 @@ TAO_Sync_Scope_Policy::clone (void) const
 }
 
 Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Sync_Scope_Policy::synchronization (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->synchronization_;
 }
 
 CORBA::Policy_ptr
-TAO_Sync_Scope_Policy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Sync_Scope_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Sync_Scope_Policy *servant = 0;
@@ -289,7 +289,7 @@ TAO_Sync_Scope_Policy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Sync_Scope_Policy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Sync_Scope_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

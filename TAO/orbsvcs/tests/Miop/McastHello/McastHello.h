@@ -22,15 +22,15 @@ class McastHello
 {
 public:
   /// Constructor
-  McastHello (CORBA::ORB_ptr orb, 
+  McastHello (CORBA::ORB_ptr orb,
               int instance,
               CORBA::Boolean &status);
 
   // = The skeleton methods
-  virtual void send_forty_two (CORBA::Long forty_two TAO_ENV_ARG_DECL)
+  virtual void send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -30,7 +30,7 @@ TAO_EC_SupplierControl::shutdown (void)
 
 void
 TAO_EC_SupplierControl::supplier_not_exist (TAO_EC_ProxyPushConsumer *
-                                            TAO_ENV_ARG_DECL_NOT_USED)
+                                            ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 

@@ -155,7 +155,7 @@ read_IOR_from_file (void)
 int
 main (int argc, char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -163,7 +163,7 @@ main (int argc, char **argv)
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
@@ -180,17 +180,17 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object = orb->string_to_object (IOR
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a Foo reference.
       Foo_var foo = Foo::_narrow (object.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (foo.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -212,20 +212,20 @@ main (int argc, char **argv)
           if (oneway)
             {
               // Invoke the simply_doit() method of the foo reference.
-              foo->simply_doit (TAO_ENV_SINGLE_ARG_PARAMETER);
+              foo->simply_doit (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else if (timed_operations)
             {
               // Invoke the timed_operation() method of the foo reference.
               foo->timed_operation (timeout
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else
             {
               // Invoke the doit() method of the foo reference.
-              result = foo->doit (TAO_ENV_SINGLE_ARG_PARAMETER);
+              result = foo->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -239,7 +239,7 @@ main (int argc, char **argv)
 
       if (shutdown_server)
         {
-          foo->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          foo->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 

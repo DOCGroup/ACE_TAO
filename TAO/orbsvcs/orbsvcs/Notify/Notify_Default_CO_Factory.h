@@ -51,55 +51,55 @@ public:
 
   // = TAO_Notify_CO_Factory methods
   // = Creation methods
-  TAO_Notify_EventChannel_i* create_event_channel (TAO_Notify_EventChannelFactory_i* parent TAO_ENV_ARG_DECL);
+  TAO_Notify_EventChannel_i* create_event_channel (TAO_Notify_EventChannelFactory_i* parent ACE_ENV_ARG_DECL);
   // Create an Event Channel.
 
-  TAO_Notify_ConsumerAdmin_i* create_consumer_admin (TAO_Notify_EventChannel_i* channel TAO_ENV_ARG_DECL);
+  TAO_Notify_ConsumerAdmin_i* create_consumer_admin (TAO_Notify_EventChannel_i* channel ACE_ENV_ARG_DECL);
   // Create a Consumer Admin.
 
-  TAO_Notify_SupplierAdmin_i* create_supplier_admin (TAO_Notify_EventChannel_i* channel TAO_ENV_ARG_DECL);
+  TAO_Notify_SupplierAdmin_i* create_supplier_admin (TAO_Notify_EventChannel_i* channel ACE_ENV_ARG_DECL);
   // Create a Supplier Admin.
 
-  TAO_Notify_FilterFactory_i* create_filter_factory (TAO_ENV_SINGLE_ARG_DECL);
+  TAO_Notify_FilterFactory_i* create_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
   // Create the Filter Factory.
 
   // = Proxy Creation methods.
-  TAO_Notify_StructuredProxyPushSupplier_i* create_struct_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent TAO_ENV_ARG_DECL);
+  TAO_Notify_StructuredProxyPushSupplier_i* create_struct_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent ACE_ENV_ARG_DECL);
   // Create a Structured ProxyPushSupplier.
 
-  TAO_Notify_SequenceProxyPushSupplier_i* create_seq_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent TAO_ENV_ARG_DECL);
+  TAO_Notify_SequenceProxyPushSupplier_i* create_seq_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent ACE_ENV_ARG_DECL);
   // Create a Sequence ProxyPushSupplier.
 
-  TAO_Notify_ProxyPushSupplier_i* create_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent TAO_ENV_ARG_DECL);
+  TAO_Notify_ProxyPushSupplier_i* create_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent ACE_ENV_ARG_DECL);
   // Create a ProxyPushSupplier.
 
-  TAO_Notify_StructuredProxyPushConsumer_i* create_struct_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent TAO_ENV_ARG_DECL);
+  TAO_Notify_StructuredProxyPushConsumer_i* create_struct_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent ACE_ENV_ARG_DECL);
   // Create a Structured ProxyPushConsumer.
 
-  TAO_Notify_SequenceProxyPushConsumer_i* create_seq_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent TAO_ENV_ARG_DECL);
+  TAO_Notify_SequenceProxyPushConsumer_i* create_seq_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent ACE_ENV_ARG_DECL);
   // Create a Sequence ProxyPushConsumer.
 
-  TAO_Notify_ProxyPushConsumer_i* create_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent TAO_ENV_ARG_DECL);
+  TAO_Notify_ProxyPushConsumer_i* create_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent ACE_ENV_ARG_DECL);
   // Create a ProxyPushConsumer.
 
   //= Locks
   // = Methods to create locks.
-  ACE_Lock* create_channel_factory_lock (TAO_ENV_SINGLE_ARG_DECL);
+  ACE_Lock* create_channel_factory_lock (ACE_ENV_SINGLE_ARG_DECL);
   // Create lock type used by channel factory.
 
-  ACE_Lock* create_event_channel_lock (TAO_ENV_SINGLE_ARG_DECL);
+  ACE_Lock* create_event_channel_lock (ACE_ENV_SINGLE_ARG_DECL);
   // Create lock type used by EC's.
 
-  ACE_Lock* create_consumer_admin_lock (TAO_ENV_SINGLE_ARG_DECL);
+  ACE_Lock* create_consumer_admin_lock (ACE_ENV_SINGLE_ARG_DECL);
   // Create lock type used by Consumer Admin's.
 
-  ACE_Lock* create_supplier_admin_lock (TAO_ENV_SINGLE_ARG_DECL);
+  ACE_Lock* create_supplier_admin_lock (ACE_ENV_SINGLE_ARG_DECL);
   // Create lock type used by Supplier Admin's.
 
-  ACE_Lock* create_proxy_supplier_lock (TAO_ENV_SINGLE_ARG_DECL);
+  ACE_Lock* create_proxy_supplier_lock (ACE_ENV_SINGLE_ARG_DECL);
   // Create lock type used by proxy supplier.
 
-  ACE_Lock* create_proxy_consumer_lock (TAO_ENV_SINGLE_ARG_DECL);
+  ACE_Lock* create_proxy_consumer_lock (ACE_ENV_SINGLE_ARG_DECL);
   // Create lock type used by proxy consumer.
 };
 

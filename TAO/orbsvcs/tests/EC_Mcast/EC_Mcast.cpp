@@ -41,16 +41,16 @@ ECM_Driver::ECM_Driver (void)
 int
 ECM_Driver::run (int argc, char* argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA"
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -59,11 +59,11 @@ ECM_Driver::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv))
@@ -137,43 +137,43 @@ ECM_Driver::run (int argc, char* argv[])
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
-        this->orb_->object_to_string (ec.in () TAO_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%s>\n", str.in ()));
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: local EC objref ready\n"));
 
       this->open_federations (ec.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_federations done\n"));
 
       this->open_senders (ec.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_senders done\n"));
 
       this->open_receivers (ec.in ()
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: open_receivers done\n"));
 
       this->activate_federations (ec.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: activate_federations done\n"));
@@ -184,17 +184,17 @@ ECM_Driver::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->close_receivers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->close_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      this->close_senders (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->close_senders (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->close_federations (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->close_federations (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
 
-      ec_impl.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ec_impl.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -212,7 +212,7 @@ ECM_Driver::run (int argc, char* argv[])
 
 void
 ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "Federation <%s> shuting down\n",
               federation->name ()));
@@ -222,19 +222,19 @@ ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation
 
 void
 ECM_Driver::open_federations (RtecEventChannelAdmin::EventChannel_ptr ec
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->open (this->event_count_,
-                                         ec TAO_ENV_ARG_PARAMETER);
+                                         ec ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   this->federations_running_ = this->local_federations_count_;
   RtecEventComm::Time interval = this->event_period_;
@@ -243,24 +243,24 @@ ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec
     {
       this->local_federations_[i]->activate (ec,
                                              interval
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-ECM_Driver::close_federations (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Driver::close_federations (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->close (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->local_federations_[i]->close (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   if (this->endpoint_.dgram ().open (ACE_Addr::sap_any) == -1)
     {
@@ -278,17 +278,17 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec
     {
       this->all_federations_[i]->open (&this->endpoint_,
                                        ec
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-ECM_Driver::close_senders (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Driver::close_senders (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
-      this->all_federations_[i]->close (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->all_federations_[i]->close (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   this->endpoint_.dgram ().close ();
@@ -296,23 +296,23 @@ ECM_Driver::close_senders (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->open_receiver (ec,
                                                   &this->endpoint_
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-ECM_Driver::close_receivers (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Driver::close_receivers (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->close_receiver (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->local_federations_[i]->close_receiver (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -594,16 +594,16 @@ ECM_Federation::~ECM_Federation (void)
 void
 ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
                       RtecEventChannelAdmin::EventChannel_ptr ec
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   RtecUDPAdmin::AddrServer_var addr_server =
-    this->addr_server (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->addr_server (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->sender_.init (ec,
                       addr_server.in (),
                       endpoint
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ TODO Make this a parameter....
@@ -622,23 +622,23 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
       qos.insert_type (this->consumer_ipaddr (i), 0);
     }
   RtecEventChannelAdmin::ConsumerQOS qos_copy = qos.get_ConsumerQOS ();
-  this->sender_.open (qos_copy TAO_ENV_ARG_PARAMETER);
+  this->sender_.open (qos_copy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-ECM_Federation::close (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Federation::close (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->sender_.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->sender_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->sender_.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->sender_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 RtecUDPAdmin::AddrServer_ptr
-ECM_Federation::addr_server (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Federation::addr_server (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return this->addr_server_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->addr_server_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -652,7 +652,7 @@ ECM_Supplier::ECM_Supplier (ECM_Local_Federation* federation)
 void
 ECM_Supplier::open (const char* name,
                     RtecEventChannelAdmin::EventChannel_ptr ec
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
@@ -670,29 +670,29 @@ ECM_Supplier::open (const char* name,
               0, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  RtecEventComm::PushSupplier_var objref = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  RtecEventComm::PushSupplier_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
                                                 qos.get_SupplierQOS ()
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-ECM_Supplier::close (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Supplier::close (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ = 0;
@@ -701,7 +701,7 @@ ECM_Supplier::close (TAO_ENV_SINGLE_ARG_DECL)
 void
 ECM_Supplier::activate (RtecEventChannelAdmin::EventChannel_ptr ec,
                         RtecEventComm::Time interval
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   ACE_ConsumerQOS_Factory consumer_qos;
   consumer_qos.start_disjunction_group ();
@@ -711,20 +711,20 @@ ECM_Supplier::activate (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventComm::PushConsumer_var cref =
-    this->consumer_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->consumer_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_->connect_push_consumer (cref.in (),
                                                 consumer_qos.get_ConsumerQOS ()
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -736,7 +736,7 @@ ECM_Supplier::supplier_id (void) const
 
 void
 ECM_Supplier::push (const RtecEventComm::EventSet& events
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
   for (u_int i = 0; i < events.length (); ++i)
     {
@@ -745,20 +745,20 @@ ECM_Supplier::push (const RtecEventComm::EventSet& events
         continue;
 
       this->federation_->supplier_timeout (this->consumer_proxy_.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-ECM_Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECM_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // this->supplier_proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+  // this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-ECM_Supplier::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECM_Supplier::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
@@ -775,7 +775,7 @@ void
 ECM_Consumer::open (const char*,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     ACE_RANDR_TYPE &seed
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -784,21 +784,21 @@ ECM_Consumer::open (const char*,
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
 
   // = Connect as a consumer.
-  this->consumer_admin_ = ec->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_admin_ = ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->connect (seed TAO_ENV_ARG_PARAMETER);
+  this->connect (seed ACE_ENV_ARG_PARAMETER);
 }
 
 void
 ECM_Consumer::connect (ACE_RANDR_TYPE &seed
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
   this->supplier_proxy_ =
-    this->consumer_admin_->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->consumer_admin_->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ConsumerQOS_Factory qos;
@@ -825,17 +825,17 @@ ECM_Consumer::connect (ACE_RANDR_TYPE &seed
       qos.insert_type (federation->consumer_ipaddr (i), 0);
     }
 
-  RtecEventComm::PushConsumer_var objref = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  RtecEventComm::PushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS ()
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-ECM_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
@@ -844,16 +844,16 @@ ECM_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 
   RtecEventChannelAdmin::ProxyPushSupplier_var tmp =
     this->supplier_proxy_._retn ();
-  tmp->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+  tmp->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-ECM_Consumer::close (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Consumer::close (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
-      this->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->consumer_admin_ =
         RtecEventChannelAdmin::ConsumerAdmin::_nil ();
@@ -869,15 +869,15 @@ ECM_Consumer::close (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 ECM_Consumer::push (const RtecEventComm::EventSet& events
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->federation_->consumer_push (arrival, events TAO_ENV_ARG_PARAMETER);
+  this->federation_->consumer_push (arrival, events ACE_ENV_ARG_PARAMETER);
 }
 
 void
-ECM_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECM_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -914,7 +914,7 @@ ECM_Local_Federation::~ECM_Local_Federation (void)
 void
 ECM_Local_Federation::open (int event_count,
                             RtecEventChannelAdmin::EventChannel_ptr ec
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   this->event_count_ = event_count;
 
@@ -923,38 +923,38 @@ ECM_Local_Federation::open (int event_count,
   ACE_OS::strcpy (buf, this->federation_->name ());
   ACE_OS::strcat (buf, "/supplier");
 
-  this->supplier_.open (buf, ec TAO_ENV_ARG_PARAMETER);
+  this->supplier_.open (buf, ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_OS::strcpy (buf, this->federation_->name ());
   ACE_OS::strcat (buf, "/consumer");
-  this->consumer_.open (buf, ec, this->seed_ TAO_ENV_ARG_PARAMETER);
+  this->consumer_.open (buf, ec, this->seed_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->last_subscription_change_ = ACE_OS::gettimeofday ();
 }
 
 void
-ECM_Local_Federation::close (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Local_Federation::close (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->consumer_.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->supplier_.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 ECM_Local_Federation::activate (RtecEventChannelAdmin::EventChannel_ptr ec,
                                 RtecEventComm::Time interval
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
-  this->supplier_.activate (ec, interval TAO_ENV_ARG_PARAMETER);
+  this->supplier_.activate (ec, interval ACE_ENV_ARG_PARAMETER);
 }
 
 void
 ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
   RtecEventComm::EventSet sent (1);
   sent.length (1);
@@ -973,14 +973,14 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 
   if (this->event_count_ < 0)
     {
-      this->driver_->federation_has_shutdown (this TAO_ENV_ARG_PARAMETER);
+      this->driver_->federation_has_shutdown (this ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       return;
     }
   int i = this->event_count_ % this->federation_->supplier_types ();
   s.header.type = this->federation_->supplier_ipaddr (i);
 
-  consumer->push (sent TAO_ENV_ARG_PARAMETER);
+  consumer->push (sent ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->send_count_++;
@@ -997,9 +997,9 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
       ACE_DEBUG ((LM_DEBUG,
                   "Reconfiguring federation %s: %f %f [%d]\n",
                   this->name (), p, maxp, x));
-      this->consumer_.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->consumer_.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      this->consumer_.connect (this->seed_ TAO_ENV_ARG_PARAMETER);
+      this->consumer_.connect (this->seed_ ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       this->last_subscription_change_ = ACE_OS::gettimeofday ();
     }
@@ -1008,7 +1008,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 void
 ECM_Local_Federation::consumer_push (ACE_hrtime_t,
                                      const RtecEventComm::EventSet &event
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (event.length () == 0)
     {
@@ -1040,10 +1040,10 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
 void
 ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                                      TAO_ECG_UDP_Out_Endpoint* ignore_from
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   RtecUDPAdmin::AddrServer_var addr_server =
-    this->federation_->addr_server (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->federation_->addr_server (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
@@ -1057,7 +1057,7 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                         reactor,
                         expire_interval,
                         max_timeouts
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const int bufsize = 512;
@@ -1069,7 +1069,7 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   this->mcast_eh_.reactor (reactor);
 
-  this->mcast_eh_.open (ec TAO_ENV_ARG_PARAMETER);
+  this->mcast_eh_.open (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_SupplierQOS_Factory qos;
@@ -1082,20 +1082,20 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   RtecEventChannelAdmin::SupplierQOS qos_copy =
     qos.get_SupplierQOS ();
-  this->receiver_.open (qos_copy TAO_ENV_ARG_PARAMETER);
+  this->receiver_.open (qos_copy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 
 }
 
 void
-ECM_Local_Federation::close_receiver (TAO_ENV_SINGLE_ARG_DECL)
+ECM_Local_Federation::close_receiver (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->receiver_.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->receiver_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->receiver_.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->receiver_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->mcast_eh_.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->mcast_eh_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 

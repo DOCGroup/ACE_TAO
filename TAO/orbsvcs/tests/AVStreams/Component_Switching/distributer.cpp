@@ -89,7 +89,7 @@ Distributer_Receiver_StreamEndPoint::set_protocol_object (const char *,
 
 CORBA::Boolean
 Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec
-                                                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                                                  ACE_ENV_ARG_DECL_NOT_USED)
 {
   //if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -296,7 +296,7 @@ Distributer::parse_args (int argc,
 int
 Distributer::init (int argc,
                    char ** argv
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   /// Initialize the connection class.
   int result =
@@ -343,7 +343,7 @@ Distributer::init (int argc,
     this->distributer_sender_mmdevice_;
 
   AVStreams::MMDevice_var distributer_sender_mmdevice =
-    this->distributer_sender_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->distributer_sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (this->distributer_receiver_mmdevice_,
@@ -355,7 +355,7 @@ Distributer::init (int argc,
     this->distributer_receiver_mmdevice_;
 
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
-    this->distributer_receiver_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->distributer_receiver_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
@@ -363,21 +363,21 @@ Distributer::init (int argc,
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->distributer_name_,
                                             distributer_receiver_mmdevice.in ()
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /// Connect to sender.
-  this->connection_manager_.connect_to_sender (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->connection_manager_.connect_to_sender (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /// Bind to receivers.
   this->connection_manager_.bind_to_receivers (this->distributer_name_,
                                                distributer_sender_mmdevice.in ()
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   /// Connect to receivers
-  this->connection_manager_.connect_to_receivers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->connection_manager_.connect_to_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -390,25 +390,25 @@ Distributer::done (void) const
 }
 
 void
-Distributer::shut_down (TAO_ENV_SINGLE_ARG_DECL)
+Distributer::shut_down (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       AVStreams::MMDevice_var receiver_mmdevice =
-        this->distributer_receiver_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->distributer_receiver_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DISTRIBUTER::instance ()->connection_manager ().unbind_receiver (this->sender_name_,
                                                                        this->distributer_name_,
                                                                        receiver_mmdevice.in ());
       AVStreams::MMDevice_var sender_mmdevice =
-        this->distributer_sender_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->distributer_sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DISTRIBUTER::instance ()->connection_manager ().unbind_sender (this->distributer_name_,
                                                                      sender_mmdevice.in ());
 
-      DISTRIBUTER::instance ()->connection_manager ().destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      DISTRIBUTER::instance ()->connection_manager ().destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -429,7 +429,7 @@ int
 main (int argc,
       char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       /// Initialize the ORB first.
@@ -437,38 +437,38 @@ main (int argc,
         CORBA::ORB_init (argc,
                          argv,
                          0
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Initialize the Distributer
       int result =
         DISTRIBUTER::instance ()->init (argc,
                                         argv
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)
@@ -476,11 +476,11 @@ main (int argc,
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          orb->perform_work (TAO_ENV_SINGLE_ARG_PARAMETER);
+          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      DISTRIBUTER::instance ()->shut_down (TAO_ENV_SINGLE_ARG_PARAMETER);
+      DISTRIBUTER::instance ()->shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

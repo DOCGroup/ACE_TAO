@@ -27,11 +27,11 @@ public:
          SecurityLevel2::Current_ptr current);
 
   /// Test method.
-  virtual void baz (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void baz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Foo::Bar::NoSecurityAttributes));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

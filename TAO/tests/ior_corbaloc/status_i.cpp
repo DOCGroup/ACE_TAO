@@ -2,14 +2,14 @@
 
 #include "status_i.h"
 
-corbaloc_Status_i::corbaloc_Status_i (TAO_ENV_ARG_DECL_NOT_USED)
+corbaloc_Status_i::corbaloc_Status_i (ACE_ENV_ARG_DECL_NOT_USED)
         : server_name_()
 {
   // Constructor
 }
 
 CORBA::Boolean
-corbaloc_Status_i::print_status (TAO_ENV_ARG_DECL_NOT_USED)
+corbaloc_Status_i::print_status (ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 

@@ -37,14 +37,14 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (TAO_Transport *transport
 {
   // @todo This is not the right way to do this....
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       TAO_ORB_Core *orb_core = transport->orb_core ();
 
       while (!transport->queue_is_empty ())
         {
-          int result = orb_core->run (0, 1 TAO_ENV_ARG_PARAMETER);
+          int result = orb_core->run (0, 1 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (result == -1)

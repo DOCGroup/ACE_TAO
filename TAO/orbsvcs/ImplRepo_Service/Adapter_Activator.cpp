@@ -23,7 +23,7 @@ CORBA::Boolean
 ImR_Adapter_Activator::unknown_adapter (
   PortableServer::POA_ptr parent,
   const char *name
-  TAO_ENV_ARG_DECL
+  ACE_ENV_ARG_DECL
 )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -38,41 +38,41 @@ ImR_Adapter_Activator::unknown_adapter (
       exception_message = "While PortableServer::POA::create_servant_retention_policy";
       policies[0] =
         parent->create_servant_retention_policy
-                  (PortableServer::NON_RETAIN TAO_ENV_ARG_PARAMETER);
+                  (PortableServer::NON_RETAIN ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Request Processing Policy
       exception_message = "While PortableServer::POA::create_request_processing_policy";
       policies[1] =
         parent->create_request_processing_policy
-                  (PortableServer::USE_SERVANT_MANAGER TAO_ENV_ARG_PARAMETER);
+                  (PortableServer::USE_SERVANT_MANAGER ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        parent->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        parent->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       exception_message = "While create_POA";
       PortableServer::POA_var child = parent->create_POA (name,
                                                           poa_manager.in (),
                                                           policies
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter::policy->destroy";
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       exception_message = "While child->the_activator";
-      child->the_activator (this TAO_ENV_ARG_PARAMETER);
+      child->the_activator (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter, set_servant_manager";
-      child->set_servant_manager(this->servant_locator_ TAO_ENV_ARG_PARAMETER);
+      child->set_servant_manager(this->servant_locator_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -27,7 +27,7 @@ public:
   TAO_ESF_Shutdown_Proxy (void);
 
   void work (PROXY *proxy
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 };
 
 // ****************************************************************

@@ -51,7 +51,7 @@ public:
   virtual void print_usage (void);
   virtual void print_args (void) const;
 
-  void execute_test (TAO_ENV_SINGLE_ARG_DECL);
+  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
   // Don't run the suppliers, just test connect and disconnect calls.
 
   virtual void dump_results (void);
@@ -59,19 +59,19 @@ public:
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     int i
-    TAO_ENV_ARG_DECL);
-  virtual void disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL);
-  virtual void disconnect_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+    ACE_ENV_ARG_DECL);
+  virtual void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
 
   virtual EC_Consumer* allocate_consumer (int i);
   virtual EC_Supplier* allocate_supplier (int i);
 
-  virtual void connect_clients (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
-  virtual void disconnect_clients (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void connect_clients (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void disconnect_clients (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 private:
   ACE_hrtime_t start_time_;
@@ -95,11 +95,11 @@ public:
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       int shutdown_event_type
-      TAO_ENV_ARG_DECL);
+      ACE_ENV_ARG_DECL);
   virtual void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       int shutdown_event_type
-      TAO_ENV_ARG_DECL);
+      ACE_ENV_ARG_DECL);
   virtual void dump_results (const char* name,
                              ACE_UINT32 global_scale_factor);
 
@@ -118,11 +118,11 @@ public:
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
         const RtecEventChannelAdmin::SupplierQOS& qos,
         int shutdown_event_type
-        TAO_ENV_ARG_DECL);
+        ACE_ENV_ARG_DECL);
   virtual void connect (
       const RtecEventChannelAdmin::SupplierQOS& qos,
       int shutdown_event_type
-      TAO_ENV_ARG_DECL);
+      ACE_ENV_ARG_DECL);
   virtual void dump_results (const char* name,
                              ACE_UINT32 global_scale_factor);
 

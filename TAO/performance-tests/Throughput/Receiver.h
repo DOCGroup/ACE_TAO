@@ -26,10 +26,10 @@ public:
 
   // = The skeleton methods
   virtual void receive_data (const Test::Message &message
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void done (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void done (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

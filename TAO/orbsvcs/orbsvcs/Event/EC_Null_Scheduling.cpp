@@ -14,7 +14,7 @@ void
 TAO_EC_Null_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *,
       TAO_EC_ProxyPushConsumer *
-      TAO_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -22,7 +22,7 @@ void
 TAO_EC_Null_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
                                         TAO_EC_ProxyPushConsumer *,
                                         TAO_EC_Supplier_Filter *filter
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
   for (CORBA::ULong j = 0; j < event.length (); ++j)
     {
@@ -33,7 +33,7 @@ TAO_EC_Null_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
 
       TAO_EC_QOS_Info event_info;
       filter->push_scheduled_event (single_event, event_info
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

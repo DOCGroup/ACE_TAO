@@ -28,7 +28,7 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy 
 
 
 CORBA::PolicyType
-TAO_BidirectionalPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_BidirectionalPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how this minimizes the
@@ -48,7 +48,7 @@ TAO_BidirectionalPolicy::clone (void) const
 }
 
 CORBA::Policy_ptr
-TAO_BidirectionalPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_BidirectionalPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
@@ -64,7 +64,7 @@ TAO_BidirectionalPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_BidirectionalPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_BidirectionalPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -72,7 +72,7 @@ TAO_BidirectionalPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 BiDirPolicy::BidirectionalPolicyValue
 TAO_BidirectionalPolicy::value (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
       CORBA::SystemException))
 {

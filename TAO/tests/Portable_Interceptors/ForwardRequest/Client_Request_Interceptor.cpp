@@ -19,14 +19,14 @@ Client_Request_Interceptor::Client_Request_Interceptor (
 
 char *
 Client_Request_Interceptor::name (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Client_Request_Interceptor");
 }
 
 void
-Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -34,14 +34,14 @@ Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Client_Request_Interceptor::send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   ++this->request_count_;
 
   CORBA::Boolean response_expected =
-    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -58,18 +58,18 @@ Client_Request_Interceptor::send_request (
           this->orb_ = CORBA::ORB_init (argc,
                                         0,
                                         this->orb_id_.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
       CORBA::Object_var forward =
         this->orb_->string_to_object (this->forward_str_.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::String_var forward_str =
         this->orb_->object_to_string (forward.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -87,7 +87,7 @@ Client_Request_Interceptor::send_request (
 void
 Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -95,7 +95,7 @@ Client_Request_Interceptor::send_poll (
 void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -103,7 +103,7 @@ Client_Request_Interceptor::receive_reply (
 void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -112,17 +112,17 @@ Client_Request_Interceptor::receive_exception (
 void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean response_expected =
-    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableInterceptor::ReplyStatus reply_status =
-    ri->reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected   // A one-way or asynchronous request.
@@ -136,7 +136,7 @@ Client_Request_Interceptor::receive_other (
   // This will throw an exception if a location forward has not
   // occured.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var forward = ri->forward_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (forward.in ()))

@@ -18,14 +18,14 @@ Server_IORInterceptor (Gateway::Object_Factory_ptr
 }
 
 char *
-Server_IORInterceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_IORInterceptor");
 }
 
 void
-Server_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->gateway_object_factory_ = Gateway::Object_Factory::_nil ();
@@ -34,10 +34,10 @@ Server_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Server_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var name = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the length of the string plus one for the NULL terminator.
@@ -60,7 +60,7 @@ Server_IORInterceptor::establish_components (
 
   // Add the tagged component to all profiles.
   info->add_ior_component (ORT_Component
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,

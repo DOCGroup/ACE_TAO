@@ -20,11 +20,11 @@ TAO_Direct_Object_Proxy_Impl::~TAO_Direct_Object_Proxy_Impl (void)
 CORBA::Boolean
 TAO_Direct_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
                                      const CORBA::Char *logical_type_id
-                                     TAO_ENV_ARG_DECL )
+                                     ACE_ENV_ARG_DECL )
 {
 
   return target->_servant ()->_is_a (logical_type_id
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -32,13 +32,13 @@ TAO_Direct_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
 
 CORBA::Boolean
 TAO_Direct_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
-                                             TAO_ENV_ARG_DECL)
+                                             ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean _tao_retval = 0;
   ACE_TRY
     {
       if (target->_servant () != 0)
-        return target->_servant ()->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
+        return target->_servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // @@ Maybe we want to change this exception...
       ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
@@ -58,12 +58,12 @@ TAO_Direct_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
 
 CORBA_InterfaceDef_ptr
 TAO_Direct_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
-                                              TAO_ENV_ARG_DECL)
+                                              ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       if (target->_servant () != 0)
-        return target->_servant ()->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);
+        return target->_servant ()->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // @@ Maybe we want to change this exception...
       ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);

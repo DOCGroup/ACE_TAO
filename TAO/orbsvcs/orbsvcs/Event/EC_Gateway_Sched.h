@@ -48,7 +48,7 @@ public:
              RtecScheduler::Scheduler_ptr lcl_sched,
              const char* lcl_name,
              const char* rmt_name
-             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
 #include "ace/post.h"

@@ -59,7 +59,7 @@ public:
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecUDPAdmin::AddrServer_ptr addr_server,
              TAO_ECG_UDP_Out_Endpoint *endpoint
-             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * The sender may need to fragment the message, otherwise the
@@ -72,20 +72,20 @@ public:
 
   /// Disconnect and shutdown the sender, no further connections will
   /// work unless init() is called again.
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Connect (or reconnect) to the EC with the given subscriptions.
   void open (RtecEventChannelAdmin::ConsumerQOS &sub
-             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Disconnect from the EC, but reconnection is still possible.
-  void close (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// The PushConsumer methods.
-  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void push (const RtecEventComm::EventSet &events
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -96,18 +96,18 @@ private:
    */
   void marshal_one_event (const RtecEventComm::Event& e,
                           TAO_OutputCDR &cdr
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
 
   /// Helper function to marshal and send a single event.
   void send_event (const RtecUDPAdmin::UDP_Addr& udp_addr,
                    const RtecEventComm::Event& e
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
 
   /// Helper function to send one or more events once they have been
   /// marshaled into a CDR stream.
   void send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
                         TAO_OutputCDR &cdr
-                        TAO_ENV_ARG_DECL);
+                        ACE_ENV_ARG_DECL);
 
   /**
    * Send one fragment, the first entry in the iovec is used to send
@@ -123,7 +123,7 @@ private:
                       CORBA::ULong fragment_count,
                       iovec iov[],
                       int iovcnt
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Count the number of fragments that will be required to send the

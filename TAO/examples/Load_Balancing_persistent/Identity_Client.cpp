@@ -82,7 +82,7 @@ Identity_Client::init (int argc,
     {
       result = this->orb_manager_.init (argc,
                                         argv
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return result;
@@ -104,13 +104,13 @@ Identity_Client::init (int argc,
 }
 
 int
-Identity_Client::run (TAO_ENV_SINGLE_ARG_DECL)
+Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();
   CORBA::Object_var obj =
     orb->string_to_object (this->group_factory_ior_
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (obj.in () == 0)
@@ -121,7 +121,7 @@ Identity_Client::run (TAO_ENV_SINGLE_ARG_DECL)
 
   Load_Balancer::Object_Group_Factory_var factory =
     Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (factory.in ()))
@@ -157,7 +157,7 @@ Identity_Client::run (TAO_ENV_SINGLE_ARG_DECL)
       // Remote call
       object_group =
         factory->resolve (group_name
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       CORBA::String_var iorstring =
@@ -187,13 +187,13 @@ Identity_Client::run (TAO_ENV_SINGLE_ARG_DECL)
     }
 
   // List <Object_Group>'s id.
-  CORBA::String_var id = object_group->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var id = object_group->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   ACE_DEBUG ((LM_DEBUG, "Object Group's id is: %s\n\n", id.in ()));
 
   // List all <Object_Group>s members.
   Load_Balancer::Member_ID_List_var id_list =
-    object_group->members (TAO_ENV_SINGLE_ARG_PARAMETER);
+    object_group->members (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   ACE_DEBUG ((LM_DEBUG,
               "The group contains %d members:\n",
@@ -211,15 +211,15 @@ Identity_Client::run (TAO_ENV_SINGLE_ARG_DECL)
 
   for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
     {
-      objref = object_group->resolve (TAO_ENV_SINGLE_ARG_PARAMETER);
+      objref = object_group->resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       obj = orb->string_to_object (objref.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       identity_object = Identity::_narrow (obj.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (CORBA::is_nil (identity_object.in ()))
@@ -256,7 +256,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      result = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

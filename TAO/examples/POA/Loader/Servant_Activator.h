@@ -60,7 +60,7 @@ public:
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr poa
-                                             TAO_ENV_ARG_DECL)
+                                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
@@ -78,7 +78,7 @@ public:
                             PortableServer::Servant servant,
                             CORBA::Boolean cleanup_in_progress,
                             CORBA::Boolean remaining_activations
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This method is invoked whenever a MyFooServant for a MyFoo object
   // is deactivated. This occurs when the POA is destroyed or the

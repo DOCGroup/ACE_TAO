@@ -44,14 +44,14 @@ svr_worker (void *arg)
     {
       int result = cubit_server.init (args.argc (),
                                       args.argv ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result == -1)
         return (void *) 1;
 
       barrier->server_init_.wait ();
-      cubit_server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      cubit_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       barrier->client_fini_.wait ();

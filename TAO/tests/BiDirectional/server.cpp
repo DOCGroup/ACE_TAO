@@ -44,11 +44,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -57,11 +57,11 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Policies for the childPOA to be created.
@@ -73,7 +73,7 @@ main (int argc, char *argv[])
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                             pol
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create POA as child of RootPOA with the above policies.  This POA
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
         root_poa->create_POA ("childPOA",
                               poa_manager.in (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Creation of childPOA is over. Destroy the Policy objects.
@@ -91,11 +91,11 @@ main (int argc, char *argv[])
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -109,16 +109,16 @@ main (int argc, char *argv[])
 
       child_poa->activate_object_with_id (id.in (),
                                           &server_impl
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
         child_poa->id_to_reference (id.in ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (obj.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -142,23 +142,23 @@ main (int argc, char *argv[])
           // Just process one upcall. We know that we would get the
           // clients IOR in that call.
           CORBA::Boolean pending =
-            orb->work_pending(TAO_ENV_SINGLE_ARG_PARAMETER);
+            orb->work_pending(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (pending)
             {
-              orb->perform_work(TAO_ENV_SINGLE_ARG_PARAMETER);
+              orb->perform_work(ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
           // Now that hopefully we have the clients IOR, just start
           // making remote calls to the client.
-          retval = server_impl.call_client (TAO_ENV_SINGLE_ARG_PARAMETER);
+          retval = server_impl.call_client (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -27,7 +27,7 @@ Criteria_Evaluator::~Criteria_Evaluator ()
 }
 
 LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
-Criteria_Evaluator::getInitialization (TAO_ENV_SINGLE_ARG_DECL)
+Criteria_Evaluator::getInitialization (ACE_ENV_SINGLE_ARG_DECL)
 {
   LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr = 0;
 
@@ -45,7 +45,7 @@ Criteria_Evaluator::getInitialization (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 char *
-Criteria_Evaluator::getFilter (TAO_ENV_SINGLE_ARG_DECL)
+Criteria_Evaluator::getFilter (ACE_ENV_SINGLE_ARG_DECL)
 {
   const char* string;
   CORBA::Any value;

@@ -30,7 +30,7 @@ public:
 
 private:
   void push_structured_event (const CosNotification::StructuredEvent&
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static CORBA::Short event_count;

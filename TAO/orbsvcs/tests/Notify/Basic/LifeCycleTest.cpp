@@ -11,7 +11,7 @@
 ACE_RCSID (Notify_Tests, LifeCycleTest, "$Id$")
 
 LifeCycleTest::LifeCycleTest (void)
-  : count_ (10) 
+  : count_ (10)
 {
 }
 
@@ -20,10 +20,10 @@ LifeCycleTest::~LifeCycleTest (void)
 }
 
 int
-LifeCycleTest::parse_args (int argc, 
+LifeCycleTest::parse_args (int argc,
                            char *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc, 
+    ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
 
     const char *current_arg = 0;
@@ -41,7 +41,7 @@ LifeCycleTest::parse_args (int argc,
           ACE_DEBUG ((LM_DEBUG,
                       "usage: %s "
                       "-count testcount \n",
-                      argv[0], 
+                      argv[0],
                       argv[0]));
 
           arg_shifter.consume_arg ();
@@ -58,19 +58,19 @@ LifeCycleTest::parse_args (int argc,
 }
 
 void
-LifeCycleTest::init (int argc, 
-                     char* argv[] 
-                     TAO_ENV_ARG_DECL)
+LifeCycleTest::init (int argc,
+                     char* argv[]
+                     ACE_ENV_ARG_DECL)
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                        argv, 
-                                        "" 
-                                        TAO_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        argv,
+                                        ""
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var rootObj = 
+  CORBA::Object_var rootObj =
     orb->resolve_initial_references ("NameService"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (rootObj.in ()))
@@ -82,21 +82,21 @@ LifeCycleTest::init (int argc,
 
   CosNaming::NamingContext_var rootNC =
     CosNaming::NamingContext::_narrow (rootObj.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup ("NotifyEventChannelFactory");
 
-  CORBA::Object_var obj = rootNC->resolve (name 
-                                           TAO_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = rootNC->resolve (name
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   notify_factory_ =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (
         obj.in()
-        TAO_ENV_ARG_PARAMETER
+        ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 
@@ -110,32 +110,32 @@ LifeCycleTest::init (int argc,
 }
 
 void
-LifeCycleTest::run_test(TAO_ENV_SINGLE_ARG_DECL)
+LifeCycleTest::run_test(ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->count_; ++i)
     {
-     this->create_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
+     this->create_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->create_supplier_admin (TAO_ENV_SINGLE_ARG_PARAMETER);
+     this->create_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->create_consumer_admin (TAO_ENV_SINGLE_ARG_PARAMETER);
+     this->create_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->destroy_consumer_admin (TAO_ENV_SINGLE_ARG_PARAMETER);
+     this->destroy_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->destroy_supplier_admin (TAO_ENV_SINGLE_ARG_PARAMETER);
+     this->destroy_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->destroy_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
+     this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
   }
 }
 
 void
-LifeCycleTest::create_ec (TAO_ENV_SINGLE_ARG_DECL)
+LifeCycleTest::create_ec (ACE_ENV_SINGLE_ARG_DECL)
 {
     CosNotifyChannelAdmin::ChannelID id;
     CosNotification::QoSProperties initial_qos;
@@ -144,7 +144,7 @@ LifeCycleTest::create_ec (TAO_ENV_SINGLE_ARG_DECL)
     this->ec_ = notify_factory_->create_channel (initial_qos,
                                                  initial_admin,
                                                  id
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (CORBA::is_nil (ec_.in ())) {
@@ -153,80 +153,80 @@ LifeCycleTest::create_ec (TAO_ENV_SINGLE_ARG_DECL)
       return;
     }
 
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "created event channel\n"));
 }
 
 void
-LifeCycleTest::create_supplier_admin (TAO_ENV_SINGLE_ARG_DECL)
+LifeCycleTest::create_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
           CosNotifyChannelAdmin::OR_OP;
 
-  supplier_admin_ = this->ec_->new_for_suppliers (ifgop, 
-                                                  adminid 
-                                                  TAO_ENV_ARG_PARAMETER);
+  supplier_admin_ = this->ec_->new_for_suppliers (ifgop,
+                                                  adminid
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (CORBA::is_nil (supplier_admin_.in ())) 
+  if (CORBA::is_nil (supplier_admin_.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to create supplier admin\n"));
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "created supplier admin\n"));
 }
 
 void
-LifeCycleTest::create_consumer_admin (TAO_ENV_SINGLE_ARG_DECL)
+LifeCycleTest::create_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
-  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid TAO_ENV_ARG_PARAMETER);
+  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (CORBA::is_nil (consumer_admin_.in())) 
+  if (CORBA::is_nil (consumer_admin_.in()))
     {
       ACE_ERROR ((LM_ERROR,
                          " (%P|%t) Unable to find supplier admin\n"));
       return;
     }
 
-   ACE_DEBUG ((LM_DEBUG, 
+   ACE_DEBUG ((LM_DEBUG,
                "created consumer admin\n"));
 }
 
 void
-LifeCycleTest::destroy_supplier_admin (TAO_ENV_SINGLE_ARG_DECL)
+LifeCycleTest::destroy_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->supplier_admin_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "destroyed supplier admin\n"));
 }
 
 void
-LifeCycleTest::destroy_consumer_admin (TAO_ENV_SINGLE_ARG_DECL)
+LifeCycleTest::destroy_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->consumer_admin_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "destroyed consumer admin\n"));
 }
 
 void
-LifeCycleTest::destroy_ec (TAO_ENV_SINGLE_ARG_DECL)
+LifeCycleTest::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->ec_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "destroyed event channel\n"));
 }
 
@@ -234,20 +234,20 @@ LifeCycleTest::destroy_ec (TAO_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       LifeCycleTest test;
 
-      test.parse_args (argc, 
+      test.parse_args (argc,
                        argv);
 
-      test.init (argc, 
-                 argv 
-                 TAO_ENV_ARG_PARAMETER);
+      test.init (argc,
+                 argv
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      test.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH(CosNotification::UnsupportedAdmin, ex)

@@ -86,11 +86,11 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << "virtual void _raise (void);\n" << be_nl
           << "virtual void _tao_encode (" << be_idt << be_idt_nl
           << "TAO_OutputCDR &" << be_nl
-          << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+          << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
           << ") const;" << be_uidt_nl << be_nl
           << "virtual void _tao_decode (" << be_idt << be_idt_nl
           << "TAO_InputCDR &" << be_nl
-          << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+          << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
           << "static " << node->local_name ()
           << " *_downcast (CORBA::Exception *);\n\n";

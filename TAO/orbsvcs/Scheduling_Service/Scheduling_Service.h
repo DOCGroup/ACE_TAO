@@ -51,7 +51,7 @@ public:
   int init (int argc, char *argv[]);
   // Initialize the Scheduling Service with the arguments.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Run the TAO_Scheduling_Service.
 
   ~TAO_Scheduling_Service (void);

@@ -21,7 +21,7 @@
 class test_i : public POA_test
 {
 public:
-  void destroy_poa (TAO_ENV_SINGLE_ARG_DECL)
+  void destroy_poa (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void test_poa (PortableServer::POA_ptr poa);
@@ -36,14 +36,14 @@ test_i::test_poa (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::destroy_poa (TAO_ENV_SINGLE_ARG_DECL)
+test_i::destroy_poa (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean etherealize_objects = 1;
   CORBA::Boolean wait_for_completion = 1;
   this->poa_->destroy (etherealize_objects,
                        wait_for_completion
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -51,33 +51,33 @@ PortableServer::POA_ptr
 init_orb (int argc,
           char **argv,
           const char *orb_name
-          TAO_ENV_ARG_DECL)
+          ACE_ENV_ARG_DECL)
 {
   // Initialize the ORB first.
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
                                         orb_name
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Obtain the RootPOA.
   CORBA::Object_var obj =
     orb->resolve_initial_references ("RootPOA"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   return root_poa._retn ();
@@ -87,7 +87,7 @@ int
 main (int argc,
       char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -95,18 +95,18 @@ main (int argc,
         init_orb (argc,
                   argv,
                   "first ORB"
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var second_poa =
         init_orb (argc,
                   argv,
                   "second ORB"
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_i servant;
-      test_var test_object = servant._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test_var test_object = servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int expected_exception_raised = 0;
@@ -115,7 +115,7 @@ main (int argc,
         {
           servant.test_poa (first_poa.in ());
 
-          test_object->destroy_poa (TAO_ENV_SINGLE_ARG_PARAMETER);
+          test_object->destroy_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (first_poa);
         }
       ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
@@ -140,10 +140,10 @@ main (int argc,
 
       servant.test_poa (second_poa.in ());
 
-      test_object->destroy_poa (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test_object->destroy_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      first_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      first_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

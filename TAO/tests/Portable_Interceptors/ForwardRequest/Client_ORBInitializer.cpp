@@ -15,7 +15,7 @@ ACE_RCSID (ForwardRequest,
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -23,13 +23,13 @@ Client_ORBInitializer::pre_init (
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var orb_id = info->orb_id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var orb_id = info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::StringSeq_var args = info->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::StringSeq_var args = info->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var forward_str;
@@ -59,7 +59,7 @@ Client_ORBInitializer::post_init (
     client_interceptor = interceptor;
 
   info->add_client_request_interceptor (client_interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }

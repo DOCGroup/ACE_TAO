@@ -18,7 +18,7 @@ Receiver::Receiver (void)
 
 void
 Receiver::receive_data (const Test::Message &the_message
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -45,7 +45,7 @@ Receiver::receive_data (const Test::Message &the_message
 }
 
 void
-Receiver::done (TAO_ENV_SINGLE_ARG_DECL)
+Receiver::done (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->message_count_ == 0)
@@ -87,12 +87,12 @@ Receiver::done (TAO_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      PortableServer::POA_var poa = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+      PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::ObjectId_var oid =
-        poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
+      poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY {} ACE_ENDTRY;

@@ -52,13 +52,13 @@ public:
   /// Return a sequence containing the security mechanisms supported
   /// by the Security Service.
   virtual Security::MechandOptionsList * supported_mechanisms (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the list of Credentials currently associated with the
   /// application itself, i.e. its own credentials.
   virtual SecurityLevel2::CredentialsList * own_credentials (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a reference to the RequiredRights object.
@@ -68,7 +68,7 @@ public:
    * control.
    */
   virtual SecurityLevel2::RequiredRights_ptr required_rights_object (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a reference to the PrincipalAuthenticator object.
@@ -77,7 +77,7 @@ public:
    * create credentials for them.
    */
   virtual SecurityLevel2::PrincipalAuthenticator_ptr principal_authenticator (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a reference to the AccessDecision object.
@@ -86,7 +86,7 @@ public:
    * of objects.
    */
   virtual SecurityLevel2::AccessDecision_ptr access_decision (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a reference to the AuditDecision object.
@@ -95,14 +95,14 @@ public:
    * be audited for a given object.
    */
   virtual SecurityLevel2::AuditDecision_ptr audit_decision (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the TargetCredentials associated with the given object
   /// reference.
   virtual SecurityLevel2::TargetCredentials_ptr get_target_credentials (
       CORBA::Object_ptr obj_ref
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Remove the given credential from the application's own
@@ -114,14 +114,14 @@ public:
    */
   virtual void remove_own_credentials (
       SecurityLevel2::Credentials_ptr creds
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the security policy currently in effect corresponding to
   /// the given policy type.
   virtual CORBA::Policy_ptr get_security_policy (
       CORBA::PolicyType policy_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -138,7 +138,7 @@ public:
    * when credentials are created and authenticated.
    */
   void add_own_credentials (SecurityLevel2::Credentials_ptr creds
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
   //@}
 
 protected:

@@ -17,11 +17,11 @@ ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 
 int
 TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, CORBA::UnknownUserException))
 {
   int retval = this->invoke_i (0
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (retval);
 
   // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
@@ -52,10 +52,10 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
            i++)
         {
           CORBA::TypeCode_ptr tcp = exceptions->item (i
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
-          const char *xid = tcp->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+          const char *xid = tcp->id (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           if (ACE_OS::strcmp (buf.in (), xid) != 0)
@@ -95,15 +95,15 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
 //***************************************************************************
 
 int
-TAO_GIOP_DII_Deferred_Invocation::invoke (TAO_ENV_SINGLE_ARG_DECL)
+TAO_GIOP_DII_Deferred_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invoke_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->invoke_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 
 int
-TAO_GIOP_DII_Deferred_Invocation::invoke_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_GIOP_DII_Deferred_Invocation::invoke_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Register a reply dispatcher for this Asynch_Invocation. Use the
@@ -123,7 +123,7 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (TAO_ENV_SINGLE_ARG_DECL)
 
   // Just send the request, without trying to wait for the reply.
   retval = TAO_GIOP_Invocation::invoke (0
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)

@@ -21,7 +21,7 @@ IdAssignment::~IdAssignment (void)
 }
 
 int
-IdAssignment::parse_args (int argc, 
+IdAssignment::parse_args (int argc,
                           char *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
@@ -59,7 +59,7 @@ IdAssignment::parse_args (int argc,
                      "-ec_count <count>",
                      "-ca_count <count>",
                      "-sa_count <count>\n",
-                     argv[0], 
+                     argv[0],
                      argv[0]));
 
           arg_shifter.consume_arg ();
@@ -76,19 +76,19 @@ IdAssignment::parse_args (int argc,
 }
 
 void
-IdAssignment::init (int argc, 
-                    char *argv[] 
-                    TAO_ENV_ARG_DECL)
+IdAssignment::init (int argc,
+                    char *argv[]
+                    ACE_ENV_ARG_DECL)
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                        argv, 
-                                        "" 
-                                        TAO_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        argv,
+                                        ""
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var rootObj = 
+  CORBA::Object_var rootObj =
     orb->resolve_initial_references ("NameService"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (rootObj.in ()))
@@ -99,16 +99,16 @@ IdAssignment::init (int argc,
 
     }
   CosNaming::NamingContext_var rootNC =
-    CosNaming::NamingContext::_narrow (rootObj.in () 
-                                       TAO_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (rootObj.in ()
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup ("NotifyEventChannelFactory");
 
-  CORBA::Object_var obj = rootNC->resolve (name 
-                                           TAO_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = rootNC->resolve (name
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (obj.in ()))
@@ -118,17 +118,17 @@ IdAssignment::init (int argc,
       return;
     }
 
-  this->notify_factory_ = 
+  this->notify_factory_ =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (
         obj.in()
-        TAO_ENV_ARG_PARAMETER
+        ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK;
 
 }
 
 CosNotifyChannelAdmin::ChannelID
-IdAssignment::create_ec (TAO_ENV_SINGLE_ARG_DECL)
+IdAssignment::create_ec (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotification::QoSProperties initial_qos;
@@ -137,7 +137,7 @@ IdAssignment::create_ec (TAO_ENV_SINGLE_ARG_DECL)
     this->notify_factory_->create_channel (initial_qos,
                                            initial_admin,
                                            id
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return id;
@@ -146,11 +146,11 @@ IdAssignment::create_ec (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 IdAssignment::destroy_ec(CosNotifyChannelAdmin::ChannelID id
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
-    this->notify_factory_->get_event_channel (id 
-                                              TAO_ENV_ARG_PARAMETER);
+    this->notify_factory_->get_event_channel (id
+                                              ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 
@@ -161,21 +161,21 @@ IdAssignment::destroy_ec(CosNotifyChannelAdmin::ChannelID id
       return;
     }
 
-   ec->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+   ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
    ACE_CHECK;
 }
 
 CosNotifyChannelAdmin::AdminID
 IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
   CosNotifyChannelAdmin::EventChannel_var ec =
-    this->notify_factory_->get_event_channel (channel_id 
-                                              TAO_ENV_ARG_PARAMETER);
+    this->notify_factory_->get_event_channel (channel_id
+                                              ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (0);
 
@@ -187,16 +187,16 @@ IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
     }
 
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->new_for_suppliers (ifgop, 
-                           adminid 
-                           TAO_ENV_ARG_PARAMETER);
+    ec->new_for_suppliers (ifgop,
+                           adminid
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (CORBA::is_nil (supplier_admin.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to create supplier admin\n"),0);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "created supplier admin\n"));
 
   return adminid;
@@ -204,15 +204,15 @@ IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
 
 CosNotifyChannelAdmin::AdminID
 IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
   CosNotifyChannelAdmin::EventChannel_var ec =
-    this->notify_factory_->get_event_channel (channel_id 
-                                              TAO_ENV_ARG_PARAMETER);
+    this->notify_factory_->get_event_channel (channel_id
+                                              ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (0);
 
@@ -224,16 +224,16 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
     }
 
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->new_for_consumers (ifgop, 
-                           adminid 
-                           TAO_ENV_ARG_PARAMETER);
+    ec->new_for_consumers (ifgop,
+                           adminid
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (CORBA::is_nil (consumer_admin.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to create consumer admin\n"),0);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "created consumer admin\n"));
 
   return adminid;
@@ -244,12 +244,12 @@ void
 IdAssignment::destroy_consumer_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
     CosNotifyChannelAdmin::AdminID admin_id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
-    this->notify_factory_->get_event_channel (channel_id 
-                                              TAO_ENV_ARG_PARAMETER);
+    this->notify_factory_->get_event_channel (channel_id
+                                              ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 
@@ -261,8 +261,8 @@ IdAssignment::destroy_consumer_admin (
     }
 
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->get_consumeradmin (admin_id 
-                           TAO_ENV_ARG_PARAMETER);
+    ec->get_consumeradmin (admin_id
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (consumer_admin.in()))
@@ -271,10 +271,10 @@ IdAssignment::destroy_consumer_admin (
                   " (%P|%t) Unable to get consumer admin\n"));
     }
 
-  consumer_admin->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  consumer_admin->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "destroyed consumer admin\n"));
 }
 
@@ -283,12 +283,12 @@ void
 IdAssignment::destroy_supplier_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
     CosNotifyChannelAdmin::AdminID admin_id
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
-    this->notify_factory_->get_event_channel (channel_id 
-                                              TAO_ENV_ARG_PARAMETER);
+    this->notify_factory_->get_event_channel (channel_id
+                                              ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 
@@ -299,23 +299,23 @@ IdAssignment::destroy_supplier_admin (
     }
 
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->get_supplieradmin (admin_id 
-                           TAO_ENV_ARG_PARAMETER);
+    ec->get_supplieradmin (admin_id
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (supplier_admin.in ()))
     ACE_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to get supplier admin\n"));
 
-  supplier_admin->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  supplier_admin->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "destroyed supplier admin\n"));
 }
 
 void
-IdAssignment::run_test(TAO_ENV_SINGLE_ARG_DECL)
+IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID* ec_id = 0;
   ACE_NEW (ec_id,
@@ -339,30 +339,30 @@ IdAssignment::run_test(TAO_ENV_SINGLE_ARG_DECL)
 
       for (ec_count = 0; ec_count < this->ec_count_; ++ec_count)
         {
-          ec_id[ec_count] = this->create_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ec_id[ec_count] = this->create_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          // Connect <consumer_admin_count_> number of consumers 
+          // Connect <consumer_admin_count_> number of consumers
           // to the current ec.
-          for (int cons_count = 0; 
-               cons_count < this->consumer_admin_count_; 
+          for (int cons_count = 0;
+               cons_count < this->consumer_admin_count_;
                ++cons_count)
             {
-              consumer_admin_id [cons_count] = 
+              consumer_admin_id [cons_count] =
                 this->create_consumer_admin (ec_id [ec_count]
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
 
-          // Connect <supplier_admin_count_> number of suppliers 
+          // Connect <supplier_admin_count_> number of suppliers
           // to the current ec.
-          for (int supp_count = 0; 
-               supp_count < this->supplier_admin_count_; 
+          for (int supp_count = 0;
+               supp_count < this->supplier_admin_count_;
                ++supp_count)
             {
-              supplier_admin_id [supp_count] = 
+              supplier_admin_id [supp_count] =
                 this->create_supplier_admin (ec_id [ec_count]
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
@@ -370,8 +370,8 @@ IdAssignment::run_test(TAO_ENV_SINGLE_ARG_DECL)
       // Destroy the ec, the admins should destroy too.
       for (ec_count = 0; ec_count < this->ec_count_; ++ec_count)
         {
-          this->destroy_ec (ec_id[ec_count] 
-                            TAO_ENV_ARG_PARAMETER);
+          this->destroy_ec (ec_id[ec_count]
+                            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -386,63 +386,63 @@ IdAssignment::run_test(TAO_ENV_SINGLE_ARG_DECL)
 
       for (ec_count = 0; ec_count < this->ec_count_; ++ec_count)
         {
-          ec_id[ec_count] = this->create_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ec_id[ec_count] = this->create_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           int cons_count, supp_count;
-          // Connect <consumer_admin_count_> number of consumers 
+          // Connect <consumer_admin_count_> number of consumers
           // to the current ec.
-          for (cons_count = 0; 
-               cons_count < this->consumer_admin_count_; 
+          for (cons_count = 0;
+               cons_count < this->consumer_admin_count_;
                ++cons_count)
             {
-              consumer_admin_id[cons_count] = 
+              consumer_admin_id[cons_count] =
                 this->create_consumer_admin (ec_id[ec_count]
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
 
-          // Connect <supplier_admin_count_> number of suppliers 
+          // Connect <supplier_admin_count_> number of suppliers
           // to the current ec.
           for (supp_count = 0; supp_count < this->supplier_admin_count_; ++supp_count)
             {
-              supplier_admin_id[supp_count] = 
+              supplier_admin_id[supp_count] =
                 this->create_supplier_admin (ec_id[ec_count]
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
 
           // Destroy the admins.
 
           // Destroy consumer admins.
-          for (cons_count = 0; 
-               cons_count < this->consumer_admin_count_; 
+          for (cons_count = 0;
+               cons_count < this->consumer_admin_count_;
                ++cons_count)
             {
               this->destroy_consumer_admin (ec_id[ec_count],
                                             consumer_admin_id[cons_count]
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
 
           // Destroy supplier admins
-          for (supp_count = 0; 
-               supp_count < this->supplier_admin_count_; 
+          for (supp_count = 0;
+               supp_count < this->supplier_admin_count_;
                ++supp_count)
             {
-              this->destroy_supplier_admin (ec_id[ec_count], 
+              this->destroy_supplier_admin (ec_id[ec_count],
                                             supplier_admin_id[supp_count]
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
 
-        } 
+        }
 
       // Destroy the ec,
       for (ec_count = 0; ec_count < this->ec_count_; ++ec_count)
         {
-          this->destroy_ec (ec_id[ec_count] 
-                            TAO_ENV_ARG_PARAMETER);
+          this->destroy_ec (ec_id[ec_count]
+                            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -453,20 +453,20 @@ IdAssignment::run_test(TAO_ENV_SINGLE_ARG_DECL)
 
 int main (int argc, char* argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       IdAssignment test;
 
-      test.parse_args (argc, 
+      test.parse_args (argc,
                        argv);
 
-      test.init (argc, 
-                 argv 
-                 TAO_ENV_ARG_PARAMETER);
+      test.init (argc,
+                 argv
+                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      test.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -477,7 +477,7 @@ int main (int argc, char* argv[])
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "IdAssignment test suceeded\n"));
   return 0;
 }

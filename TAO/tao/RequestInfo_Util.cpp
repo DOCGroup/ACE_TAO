@@ -9,7 +9,7 @@
 ACE_RCSID (tao, RequestInfo_Util, "$Id$")
 
 Dynamic::ParameterList *
-TAO_RequestInfo_Util::make_parameter_list (TAO_ENV_SINGLE_ARG_DECL)
+TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   Dynamic::ParameterList *parameter_list = 0;
   ACE_NEW_THROW_EX (parameter_list,
@@ -26,7 +26,7 @@ TAO_RequestInfo_Util::make_parameter_list (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 Dynamic::ExceptionList *
-TAO_RequestInfo_Util::make_exception_list (TAO_ENV_SINGLE_ARG_DECL)
+TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   Dynamic::ExceptionList *exception_list = 0;
   ACE_NEW_THROW_EX (exception_list,
@@ -43,7 +43,7 @@ TAO_RequestInfo_Util::make_exception_list (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 Dynamic::ContextList *
-TAO_RequestInfo_Util::make_context_list (TAO_ENV_SINGLE_ARG_DECL)
+TAO_RequestInfo_Util::make_context_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   Dynamic::ContextList *context_list = 0;
   ACE_NEW_THROW_EX (context_list,
@@ -60,7 +60,7 @@ TAO_RequestInfo_Util::make_context_list (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 Dynamic::RequestContext *
-TAO_RequestInfo_Util::make_request_context (TAO_ENV_SINGLE_ARG_DECL)
+TAO_RequestInfo_Util::make_request_context (ACE_ENV_SINGLE_ARG_DECL)
 {
   Dynamic::RequestContext *request_context = 0;
   ACE_NEW_THROW_EX (request_context,
@@ -78,7 +78,7 @@ TAO_RequestInfo_Util::make_request_context (TAO_ENV_SINGLE_ARG_DECL)
 
 CORBA::Any *
 TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   CORBA::Any *any = 0;
 

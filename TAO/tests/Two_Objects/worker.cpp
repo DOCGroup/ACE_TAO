@@ -14,14 +14,14 @@ Worker::Worker (CORBA::ORB_ptr orb, int time)
 int
 Worker::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       ACE_Time_Value tv (timeout_);
 
       ///orb times out after <timeout> seconds
-      this->orb_->run (tv TAO_ENV_ARG_PARAMETER);
+      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

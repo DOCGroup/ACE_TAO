@@ -200,10 +200,10 @@ tao_TAO_BufferingConstraintPolicy_nil (
 ACE_INLINE TAO::BufferingConstraintPolicy_ptr
 tao_TAO_BufferingConstraintPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TAO::BufferingConstraintPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return TAO::BufferingConstraintPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

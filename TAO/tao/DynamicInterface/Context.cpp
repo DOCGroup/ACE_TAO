@@ -55,7 +55,7 @@ CORBA_Context::_decr_refcnt (void)
 }
 
 const char *
-CORBA_Context::context_name (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_Context::context_name (ACE_ENV_SINGLE_ARG_DECL) const
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
@@ -63,7 +63,7 @@ CORBA_Context::context_name (TAO_ENV_SINGLE_ARG_DECL) const
 }
 
 CORBA_Context_ptr
-CORBA_Context::parent (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_Context::parent (ACE_ENV_SINGLE_ARG_DECL) const
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
@@ -73,7 +73,7 @@ CORBA_Context::parent (TAO_ENV_SINGLE_ARG_DECL) const
 void
 CORBA_Context::create_child (const char * /* child_ctx_name */,
                              CORBA_Context_out /* child_ctx */
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -82,7 +82,7 @@ CORBA_Context::create_child (const char * /* child_ctx_name */,
 void
 CORBA_Context::set_one_value (const char * /* propname */,
                               const CORBA_Any & /* propvalue */
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -90,7 +90,7 @@ CORBA_Context::set_one_value (const char * /* propname */,
 
 void
 CORBA_Context::set_values (CORBA::NVList_ptr
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -98,7 +98,7 @@ CORBA_Context::set_values (CORBA::NVList_ptr
 
 void
 CORBA_Context::delete_values (const char * /* propname */
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -109,7 +109,7 @@ CORBA_Context::get_values (const char * /* start_scope */,
                            CORBA::Flags /* op_flags */,
                            const char * /* pattern */,
                            CORBA::NVList_ptr & /* values */
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -154,7 +154,7 @@ CORBA_ContextList::add_consume (char *ctx)
 
 char *
 CORBA_ContextList::item (CORBA::ULong slot
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
 {
   char **ctx = 0;
 
@@ -171,7 +171,7 @@ CORBA_ContextList::item (CORBA::ULong slot
 
 void
 CORBA_ContextList::remove (CORBA::ULong
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }

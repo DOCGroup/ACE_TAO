@@ -47,13 +47,13 @@ public:
   virtual ~TAO_Notify_ProxySupplier (void);
   // Destructor
 
-  void init (CosNotifyChannelAdmin::ProxyID myID TAO_ENV_ARG_DECL);
+  void init (CosNotifyChannelAdmin::ProxyID myID ACE_ENV_ARG_DECL);
   // Init the Proxy.
 
   // = Notify_Event_Listener methods
-  virtual void dispatch_event (TAO_Notify_Event &event TAO_ENV_ARG_DECL);
+  virtual void dispatch_event (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
 
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent TAO_ENV_ARG_DECL);
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent ACE_ENV_ARG_DECL);
 
   virtual TAO_Notify_Worker_Task* event_dispatch_task (void);
   // The Worker task associated with the event listener for event dispatching
@@ -63,14 +63,14 @@ public:
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual void suspend_connection (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -79,7 +79,7 @@ public:
   ));
 
   virtual void resume_connection (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -88,7 +88,7 @@ public:
   ));
 
   virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -96,14 +96,14 @@ public:
 
   virtual void priority_filter (
     CosNotifyFilter::MappingFilter_ptr priority_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -111,7 +111,7 @@ public:
 
   virtual void lifetime_filter (
     CosNotifyFilter::MappingFilter_ptr lifetime_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -119,7 +119,7 @@ public:
 
   virtual CosNotification::EventTypeSeq * obtain_offered_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -128,7 +128,7 @@ public:
   virtual void subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -139,7 +139,7 @@ public:
   // so we can update the qos on our tasks.
   virtual void set_qos (
     const CosNotification::QoSProperties & qos
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -148,13 +148,13 @@ public:
 
  protected:
   // = Helper methods
-  virtual void dispatch_event_i (TAO_Notify_Event &event TAO_ENV_ARG_DECL) = 0;
+  virtual void dispatch_event_i (TAO_Notify_Event &event ACE_ENV_ARG_DECL) = 0;
   // Derived classes should implement this.
 
-  void on_connected (TAO_ENV_SINGLE_ARG_DECL);
+  void on_connected (ACE_ENV_SINGLE_ARG_DECL);
   // Derived classes should call this when their consumers connect.
 
-  void on_disconnected (TAO_ENV_SINGLE_ARG_DECL);
+  void on_disconnected (ACE_ENV_SINGLE_ARG_DECL);
   // Derived classes should call this when their consumers disconnect.
 
   // = Data members

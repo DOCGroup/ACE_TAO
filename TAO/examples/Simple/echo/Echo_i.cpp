@@ -34,7 +34,7 @@ Echo_i::orb (CORBA::ORB_ptr o)
 
 Echo::List *
 Echo_i::echo_list (const char *
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Echo::List_var list;
@@ -54,17 +54,17 @@ Echo_i::echo_list (const char *
   // Just do something to get a list of object references.
   list[CORBA::ULong(0)] =
     orb_->resolve_initial_references ("NameService"
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   list[CORBA::ULong(1)] =
     orb_->resolve_initial_references ("NameService"
-                                      TAO_ENV_ARG_PARAMETER);;
+                                      ACE_ENV_ARG_PARAMETER);;
   ACE_CHECK_RETURN (0);
 
   list[CORBA::ULong(2)] =
     orb_->resolve_initial_references ("NameService"
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return list._retn ();
@@ -74,7 +74,7 @@ Echo_i::echo_list (const char *
 
 char *
 Echo_i::echo_string (const char *mesg
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The pointer mesg was NULL, return.
@@ -100,7 +100,7 @@ Echo_i::echo_string (const char *mesg
 // Shutdown the server application.
 
 void
-Echo_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

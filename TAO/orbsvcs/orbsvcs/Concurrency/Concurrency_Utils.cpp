@@ -53,7 +53,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_var &orb,
 
       poa->activate_object_with_id (id.in (),
                                     &lock_set_factory_
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringify the objref we'll be implementing, and print it to
@@ -61,12 +61,12 @@ TAO_Concurrency_Server::init (CORBA::ORB_var &orb,
       // client.  Then release the object.
       CORBA::Object_var obj =
         poa->id_to_reference (id.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
         orb->object_to_string (obj.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

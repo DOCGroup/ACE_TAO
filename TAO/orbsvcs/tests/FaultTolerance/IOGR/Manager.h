@@ -44,17 +44,17 @@ public:
 
   void init (int argc,
              char *argv[]
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
   // Initialize the ORB, POA etc.
 
-  int make_merged_iors (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int make_merged_iors (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Merges the different IORS
 
-  int set_properties (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int set_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Sets the properties for the profiles
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the  ORB event loop..
 
   int write_to_file (void);

@@ -15,10 +15,10 @@ main (int argc, char *argv [])
   ACE_TRY_NEW_ENV
     {
       client.init (argc, argv
-                   TAO_ENV_ARG_PARAMETER); //Init the Client
+                   ACE_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 
-      client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)

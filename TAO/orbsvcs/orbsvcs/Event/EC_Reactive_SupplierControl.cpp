@@ -36,11 +36,11 @@ TAO_EC_Reactive_SupplierControl::~TAO_EC_Reactive_SupplierControl (void)
 
 void
 TAO_EC_Reactive_SupplierControl::query_suppliers (
-      TAO_ENV_SINGLE_ARG_DECL)
+      ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_EC_Ping_Supplier worker (this);
   this->event_channel_->supplier_admin ()->for_each (&worker
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -56,26 +56,26 @@ TAO_EC_Reactive_SupplierControl::handle_timeout (
       CORBA::PolicyTypeSeq types;
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
                                                    CORBA::ADD_OVERRIDE
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Query the state of the suppliers...
-      this->query_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->query_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
-          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -102,12 +102,12 @@ TAO_EC_Reactive_SupplierControl::activate (void)
       // Get the PolicyCurrent object
       CORBA::Object_var tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Pre-compute the policy list to the set the right timeout
@@ -122,7 +122,7 @@ TAO_EC_Reactive_SupplierControl::activate (void)
         this->orb_->create_policy (
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any
-                TAO_ENV_ARG_PARAMETER);
+                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -145,14 +145,14 @@ TAO_EC_Reactive_SupplierControl::shutdown (void)
 void
 TAO_EC_Reactive_SupplierControl::supplier_not_exist (
       TAO_EC_ProxyPushConsumer *proxy
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       //ACE_DEBUG ((LM_DEBUG,
       //            "EC_Reactive_SupplierControl(%P|%t) - "
       //            "Consumer %x does not exists\n", long(proxy)));
-      proxy->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -166,7 +166,7 @@ void
 TAO_EC_Reactive_SupplierControl::system_exception (
       TAO_EC_ProxyPushConsumer *proxy,
       CORBA::SystemException & /* exception */
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -180,7 +180,7 @@ TAO_EC_Reactive_SupplierControl::system_exception (
       //   return;
 
       // Anything else is serious, including timeouts...
-      proxy->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -211,24 +211,24 @@ TAO_EC_SupplierControl_Adapter::handle_timeout (
 
 void
 TAO_EC_Ping_Supplier::work (TAO_EC_ProxyPushConsumer *consumer
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       CORBA::Boolean disconnected;
       CORBA::Boolean non_existent =
         consumer->supplier_non_existent (disconnected
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (non_existent && !disconnected)
         {
-          this->control_->supplier_not_exist (consumer TAO_ENV_ARG_PARAMETER);
+          this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
-      this->control_->supplier_not_exist (consumer TAO_ENV_ARG_PARAMETER);
+      this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
@@ -236,7 +236,7 @@ TAO_EC_Ping_Supplier::work (TAO_EC_ProxyPushConsumer *consumer
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
-      this->control_->supplier_not_exist (consumer TAO_ENV_ARG_PARAMETER);
+      this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

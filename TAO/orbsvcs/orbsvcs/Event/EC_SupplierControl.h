@@ -56,7 +56,7 @@ public:
    * CORBA::OBJECT_NOT_EXIST exception has been raised).
    */
   virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy
-                                   TAO_ENV_ARG_DECL_NOT_USED);
+                                   ACE_ENV_ARG_DECL_NOT_USED);
 };
 
 #if defined (__ACE_INLINE__)

@@ -34,7 +34,7 @@ Throughput_StructuredPushConsumer::accumulate_into (
 }
 
 void
-Throughput_StructuredPushConsumer::dump_stats (const char* msg, 
+Throughput_StructuredPushConsumer::dump_stats (const char* msg,
                                                ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -43,7 +43,7 @@ Throughput_StructuredPushConsumer::dump_stats (const char* msg,
 void
 Throughput_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
@@ -82,13 +82,13 @@ Throughput_StructuredPushConsumer::push_structured_event (
   if (this->push_count_%1000 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P)(%t) event count = %d\n", 
+                  "(%P)(%t) event count = %d\n",
                   this->push_count_));
     }
 
   if (push_count_ == test_client_->perconsumer_count_)
   {
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "(%t)expected count reached\n"));
     test_client_->peer_done ();
   }
@@ -117,7 +117,7 @@ Throughput_StructuredPushSupplier::accumulate_into (
 }
 
 void
-Throughput_StructuredPushSupplier::dump_stats (const char* msg, 
+Throughput_StructuredPushSupplier::dump_stats (const char* msg,
                                                ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -157,7 +157,7 @@ Throughput_StructuredPushSupplier::svc (void)
 
   event.remainder_of_body <<= test_client_->payload_;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   this->throughput_start_ = ACE_OS::gethrtime ();
 
@@ -174,7 +174,7 @@ Throughput_StructuredPushSupplier::svc (void)
           event.filterable_data[0].value <<= Throughput_base;
 
           this->proxy_consumer_->push_structured_event (event
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           ACE_hrtime_t end = ACE_OS::gethrtime ();
@@ -211,31 +211,31 @@ Notify_Throughput::Notify_Throughput (void)
 
 Notify_Throughput::~Notify_Throughput ()
 {
-  TAO_ENV_DECLARE_NEW_ENV;
-  this->orb_->shutdown (0 
-                        TAO_ENV_ARG_PARAMETER);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  this->orb_->shutdown (0
+                        ACE_ENV_ARG_PARAMETER);
 
   delete payload_;
 }
 
 int
-Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
+Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
 {
   // Initialize base class.
-  Notify_Test_Client::init_ORB (argc, 
-                                argv 
-                                TAO_ENV_ARG_PARAMETER);
+  Notify_Test_Client::init_ORB (argc,
+                                argv
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   CORBA::Object_var manager_object =
     orb_->resolve_initial_references ("ORBPolicyManager"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::PolicyManager_var policy_manager =
     CORBA::PolicyManager::_narrow (manager_object.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::Any sync_scope;
@@ -246,11 +246,11 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
   policy_list[0] =
     orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         sync_scope
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   policy_manager->set_policy_overrides (policy_list,
                                         CORBA::SET_OVERRIDE
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 #else
   ACE_DEBUG ((LM_DEBUG,
@@ -268,19 +268,19 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
     }
 
   // Create all participents ...
-  this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
+    ec_->new_for_suppliers (this->ifgop_, adminid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
+    ec_->new_for_consumers (this->ifgop_, adminid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
@@ -301,12 +301,12 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
       ACE_NEW_RETURN (consumers_[i],
                       Throughput_StructuredPushConsumer (this),
                       -1);
-      consumers_[i]->init (root_poa_.in () 
-                           TAO_ENV_ARG_PARAMETER);
+      consumers_[i]->init (root_poa_.in ()
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       consumers_[i]->connect (this->consumer_admin_.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -317,11 +317,11 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
                       -1);
       suppliers_[i]->TAO_Notify_StructuredPushSupplier::init (
                          root_poa_.in ()
-                         TAO_ENV_ARG_PARAMETER
+                         ACE_ENV_ARG_PARAMETER
                        );
       ACE_CHECK_RETURN (-1);
       suppliers_[i]->connect (this->supplier_admin_.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -337,7 +337,7 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
   added[0].type_name = CORBA::string_dup ("*");
 
   this->consumer_admin_->subscription_change (added, removed
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -395,8 +395,8 @@ Notify_Throughput::parse_args(int argc, char *argv[])
       else if ((current_arg = arg_shifter.get_the_parameter ("-payload")))
         {
           this->payload_size_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (this->payload_, 
-                          char [this->payload_size_], 
+          ACE_NEW_RETURN (this->payload_,
+                          char [this->payload_size_],
                           -1);
           //
           arg_shifter.consume_arg ();
@@ -444,22 +444,22 @@ Notify_Throughput::parse_args(int argc, char *argv[])
 }
 
 void
-Notify_Throughput::create_EC (TAO_ENV_SINGLE_ARG_DECL)
+Notify_Throughput::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->colocated_ec_ == 1)
     {
       this->notify_factory_ =
         TAO_Notify_EventChannelFactory_i::create (this->root_poa_.in ()
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
     }
   else
     {
-      this->resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      this->resolve_Notify_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->resolve_Notify_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -472,12 +472,12 @@ Notify_Throughput::create_EC (TAO_ENV_SINGLE_ARG_DECL)
 
       CORBA::Object_var obj =
         this->naming_context_->resolve (name
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->ec_ =
         CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 else
@@ -487,7 +487,7 @@ else
     ec_ = notify_factory_->create_channel (initial_qos_,
                                            initial_admin_,
                                            id
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -495,7 +495,7 @@ else
 }
 
 void
-Notify_Throughput::run_test (TAO_ENV_SINGLE_ARG_DECL)
+Notify_Throughput::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
 
   ACE_DEBUG ((LM_DEBUG, "colocated_ec_ %d ,"
@@ -519,7 +519,7 @@ Notify_Throughput::run_test (TAO_ENV_SINGLE_ARG_DECL)
     {
       suppliers_[i]->
         TAO_Notify_StructuredPushSupplier::init (root_poa_.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (suppliers_[i]->activate (THR_NEW_LWP | THR_JOINABLE) != 0)
@@ -543,7 +543,7 @@ Notify_Throughput::run_test (TAO_ENV_SINGLE_ARG_DECL)
   if (this->ec_name_.length () == 0) // we are not using a global EC
     {
       // Destroy the ec.
-      this->ec_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -614,10 +614,10 @@ main (int argc, char* argv[])
   ACE_TRY_NEW_ENV
     {
       events.init (argc, argv
-                      TAO_ENV_ARG_PARAMETER); //Init the Client
+                      ACE_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 
-      events.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      events.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for threads to exit...\n"));

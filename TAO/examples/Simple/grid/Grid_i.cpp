@@ -17,7 +17,7 @@ Grid_i::Grid_i (void)
 
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
   : width_ (x),
     height_ (y)
 {
@@ -51,7 +51,7 @@ void
 Grid_i::set (CORBA::Short x,
              CORBA::Short y,
              CORBA::Long value
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Grid::RANGE_ERROR))
 {
@@ -69,7 +69,7 @@ Grid_i::set (CORBA::Short x,
 CORBA::Long
 Grid_i::get (CORBA::Short x,
              CORBA::Short y
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Grid::RANGE_ERROR))
 {
@@ -85,14 +85,14 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short
-Grid_i::width (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->width_;
 }
 
 CORBA::Short
-Grid_i::height (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::height (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->height_;
@@ -100,7 +100,7 @@ Grid_i::height (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Grid_i::width (CORBA::Short x
-               TAO_ENV_ARG_DECL_NOT_USED)
+               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->width_ = x;
@@ -108,7 +108,7 @@ Grid_i::width (CORBA::Short x
 
 void
 Grid_i::height (CORBA::Short y
-                TAO_ENV_ARG_DECL_NOT_USED)
+                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->height_ = y;
@@ -117,7 +117,7 @@ Grid_i::height (CORBA::Short y
 // Destroy the grid
 
 void
-Grid_i::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Delete the array.
@@ -143,7 +143,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 // Shutdown.
 
 void
-Grid_Factory_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_Factory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -181,7 +181,7 @@ Grid_Factory_i::~Grid_Factory_i (void)
 Grid_ptr
 Grid_Factory_i::make_grid (CORBA::Short width,
                            CORBA::Short height
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Grid_i *grid_ptr = 0;
@@ -200,12 +200,12 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
   ACE_NEW_THROW_EX (grid_ptr,
-                    Grid_i (width, height TAO_ENV_ARG_PARAMETER),
+                    Grid_i (width, height ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (Grid::_nil ());
 
   // Register the Grid pointer.
-  Grid_ptr gptr = grid_ptr->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  Grid_ptr gptr = grid_ptr->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   return gptr;
 }

@@ -25,7 +25,7 @@ void
 TAO_ServerRequestInterceptor_Adapter::
 receive_request_service_contexts (
   TAO_ServerRequestInfo *ri
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   // This method implements one of the "starting" server side
   // interception point.
@@ -43,7 +43,7 @@ receive_request_service_contexts (
         {
           this->interceptors_[i]->receive_request_service_contexts (
             ri
-            TAO_ENV_ARG_PARAMETER);
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // The starting interception point completed successfully.
@@ -55,7 +55,7 @@ receive_request_service_contexts (
     {
       ri->forward_reference (exc);
       this->send_other (ri
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;
@@ -67,7 +67,7 @@ receive_request_service_contexts (
 void
 TAO_ServerRequestInterceptor_Adapter::
 receive_request (TAO_ServerRequestInfo *ri
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
 {
   // This method implements an "intermediate" server side interception
   // point.  Interceptors are invoked in the same order they were
@@ -91,7 +91,7 @@ receive_request (TAO_ServerRequestInfo *ri
       for (size_t i = 0; i < this->stack_size_; ++i)
         {
           this->interceptors_[i]->receive_request (ri
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Note that no interceptors are pushed on to or popped off
@@ -103,7 +103,7 @@ receive_request (TAO_ServerRequestInfo *ri
     {
       ri->forward_reference (exc);
       this->send_other (ri
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;
@@ -116,7 +116,7 @@ receive_request (TAO_ServerRequestInfo *ri
 void
 TAO_ServerRequestInterceptor_Adapter::
 send_reply (TAO_ServerRequestInfo *ri
-            TAO_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -137,7 +137,7 @@ send_reply (TAO_ServerRequestInfo *ri
 
       this->interceptors_[this->stack_size_]->send_reply (
         ri
-        TAO_ENV_ARG_PARAMETER);
+        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -149,7 +149,7 @@ send_reply (TAO_ServerRequestInfo *ri
 void
 TAO_ServerRequestInterceptor_Adapter::
 send_exception (TAO_ServerRequestInfo *ri
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -172,7 +172,7 @@ send_exception (TAO_ServerRequestInfo *ri
 
           this->interceptors_[this->stack_size_]->send_exception (
             ri
-            TAO_ENV_ARG_PARAMETER);
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -180,7 +180,7 @@ send_exception (TAO_ServerRequestInfo *ri
     {
       ri->forward_reference (exc);
       this->send_other (ri
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;
@@ -199,11 +199,11 @@ send_exception (TAO_ServerRequestInfo *ri
 
       ri->exception (&ACE_ANY_EXCEPTION);
 
-      this->send_exception (ri TAO_ENV_ARG_PARAMETER);
+      this->send_exception (ri ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableInterceptor::ReplyStatus status =
-        ri->reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Only re-throw the exception if it hasn't been transformed by
@@ -220,7 +220,7 @@ send_exception (TAO_ServerRequestInfo *ri
 void
 TAO_ServerRequestInterceptor_Adapter::
 send_other (TAO_ServerRequestInfo *ri
-            TAO_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -243,7 +243,7 @@ send_other (TAO_ServerRequestInfo *ri
 
           this->interceptors_[this->stack_size_]->send_other (
             ri
-            TAO_ENV_ARG_PARAMETER);
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -251,7 +251,7 @@ send_other (TAO_ServerRequestInfo *ri
     {
       ri->forward_reference (exc);
       this->send_other (ri
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->location_forwarded_ = 1;

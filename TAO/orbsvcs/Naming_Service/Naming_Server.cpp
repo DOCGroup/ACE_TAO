@@ -17,7 +17,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      naming_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      naming_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

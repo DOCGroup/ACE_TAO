@@ -28,17 +28,17 @@ public:
   // The peer
 
   virtual void request (CORBA::Long retval
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void request_excep (AMI_PeerExceptionHolder * excep_holder
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void start (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void start (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -58,26 +58,26 @@ public:
   void init (CORBA::ORB_ptr orb,
              Progress_ptr progress,
              const ACE_Time_Value &delay
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void reply (CORBA::Long result
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used by the Reply_Handler to indicate that a reply has been
   // received.
 
    // = See test.idl for an explanation of these methods.
   CORBA::Long request (CORBA::Long id
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void start (const PeerSet& the_peers,
               CORBA::Long iterations
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -10,11 +10,11 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
   protocols [0] = CORBA::string_dup ("TCP");
   protocols [1] = CORBA::string_dup ("UDP");
   protocols [2] = CORBA::string_dup ("RTP/UDP");
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->set_protocol_restriction (protocols
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -103,7 +103,7 @@ int
 Server::init (int argc,
               char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       PortableServer::POAManager_var mgr
@@ -133,10 +133,10 @@ Server::init (int argc,
 
       this->fdev_->flowname ("Data");
 
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      AVStreams::FDev_var fdev = this->fdev_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      AVStreams::FDev_var fdev = this->fdev_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (fdev.in ()))
@@ -145,7 +145,7 @@ Server::init (int argc,
       if (CORBA::is_nil (mmdevice.in ()))
         cout << "MMDevice is nil" << endl;
 
-      mmdevice->add_fdev (fdev.in () TAO_ENV_ARG_PARAMETER);
+      mmdevice->add_fdev (fdev.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Register the mmdevice with the naming service.
@@ -156,7 +156,7 @@ Server::init (int argc,
       // Register the video control object with the naming server.
       this->my_naming_client_->rebind (server_mmdevice_name,
                                        mmdevice.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -172,10 +172,10 @@ Server::init (int argc,
 int
 Server::run (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
     ACE_CATCHANY
@@ -226,14 +226,14 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
@@ -241,7 +241,7 @@ main (int argc,
 
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

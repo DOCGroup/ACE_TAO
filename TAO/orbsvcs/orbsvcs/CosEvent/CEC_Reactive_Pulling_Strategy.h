@@ -112,7 +112,7 @@ public:
                       TAO_CEC_SupplierControl *control);
 
   virtual void work (TAO_CEC_ProxyPullConsumer *consumer
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
 private:
   /// Used to propagate the events.

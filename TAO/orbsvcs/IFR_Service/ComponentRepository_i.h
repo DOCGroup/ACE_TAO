@@ -60,7 +60,7 @@ public:
       const char *version,
       IR::ComponentDef_ptr base_component,
       const CORBA_InterfaceDefSeq & supports_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -70,7 +70,7 @@ public:
       const char *version,
       IR::ComponentDef_ptr base_component,
       const CORBA_InterfaceDefSeq & supports_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -81,7 +81,7 @@ public:
       IR::HomeDef_ptr base_home,
       IR::ComponentDef_ptr managed_component,
       CORBA_ValueDef_ptr primary_key
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -92,7 +92,7 @@ public:
       IR::HomeDef_ptr base_home,
       IR::ComponentDef_ptr managed_component,
       CORBA_ValueDef_ptr primary_key
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

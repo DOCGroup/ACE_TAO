@@ -107,7 +107,7 @@ int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
                              int ignore_address
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // protocol_factories is in the following form
@@ -249,7 +249,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                                          addrs,
                                          factory,
                                          ignore_address
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
 
               if (result != 0)
@@ -470,7 +470,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                ACE_CString &addrs,
                                TAO_ProtocolFactorySetItor &factory,
                                int ignore_address
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   ACE_CString options_tmp;
   this->extract_endpoint_options (addrs,

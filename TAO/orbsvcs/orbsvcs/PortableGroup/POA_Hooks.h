@@ -49,7 +49,7 @@ public:
   virtual PortableServer::ObjectId * create_id_for_reference (
       TAO_POA &the_poa,
       CORBA::Object_ptr the_ref
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -59,7 +59,7 @@ public:
   virtual PortableServer::IDs * reference_to_ids (
       TAO_POA &the_poa,
       CORBA::Object_ptr the_ref
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -70,7 +70,7 @@ public:
       TAO_POA &the_poa,
       CORBA::Object_ptr ref,
       const PortableServer::ObjectId & oid
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -81,7 +81,7 @@ public:
       TAO_POA &the_poa,
       CORBA::Object_ptr ref,
       const PortableServer::ObjectId & oid
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -99,7 +99,7 @@ protected:
   int create_group_acceptors (CORBA::Object_ptr the_ref,
                               TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
                               TAO_ORB_Core &orb_core
-                              TAO_ENV_ARG_DECL);
+                              ACE_ENV_ARG_DECL);
 
   /// Helper function to associate group references with
   /// object references.
@@ -107,7 +107,7 @@ protected:
         TAO_POA &the_poa,
         CORBA::Object_ptr group_ref,
         CORBA::Object_ptr obj_ref
-        TAO_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::NotAGroupObject));
 

@@ -98,7 +98,7 @@ public:
   static CORBA_PollableSet_ptr tao_duplicate (CORBA_PollableSet_ptr);
   static void tao_release (CORBA_PollableSet_ptr);
   static CORBA_PollableSet_ptr tao_nil (void);
-  static CORBA_PollableSet_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+  static CORBA_PollableSet_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
 private:
@@ -174,7 +174,7 @@ public:
   static CORBA_Pollable_ptr tao_duplicate (CORBA_Pollable_ptr);
   static void tao_release (CORBA_Pollable_ptr);
   static CORBA_Pollable_ptr tao_nil (void);
-  static CORBA_Pollable_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+  static CORBA_Pollable_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
 private:
@@ -229,11 +229,11 @@ public:
   static CORBA_Pollable_ptr _duplicate (CORBA_Pollable_ptr obj);
   static CORBA_Pollable_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CORBA_Pollable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CORBA_Pollable_ptr _nil (void)
     {
@@ -242,14 +242,14 @@ public:
 
   virtual CORBA::Boolean is_ready (
       CORBA::ULong timeout
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
 
   virtual CORBA_PollableSet_ptr create_pollable_set (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -310,7 +310,7 @@ public:
   static CORBA_DIIPollable_ptr tao_duplicate (CORBA_DIIPollable_ptr);
   static void tao_release (CORBA_DIIPollable_ptr);
   static CORBA_DIIPollable_ptr tao_nil (void);
-  static CORBA_DIIPollable_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+  static CORBA_DIIPollable_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
 private:
@@ -365,11 +365,11 @@ public:
   static CORBA_DIIPollable_ptr _duplicate (CORBA_DIIPollable_ptr obj);
   static CORBA_DIIPollable_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CORBA_DIIPollable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CORBA_DIIPollable_ptr _nil (void)
     {
@@ -419,11 +419,11 @@ public:
   static CORBA_PollableSet_ptr _duplicate (CORBA_PollableSet_ptr obj);
   static CORBA_PollableSet_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CORBA_PollableSet_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   static CORBA_PollableSet_ptr _nil (void)
     {
@@ -453,12 +453,12 @@ public:
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static NoPossiblePollable *_downcast (CORBA::Exception *);
@@ -494,12 +494,12 @@ public:
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static UnknownPollable *_downcast (CORBA::Exception *);
@@ -513,7 +513,7 @@ public:
 #endif /* end #if !defined */
 
 virtual CORBA_DIIPollable_ptr create_dii_pollable (
-    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -521,7 +521,7 @@ virtual CORBA_DIIPollable_ptr create_dii_pollable (
 
 virtual void add_pollable (
     CORBA_Pollable_ptr potential
-    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -529,7 +529,7 @@ virtual void add_pollable (
 
 virtual CORBA_Pollable_ptr poll (
     CORBA::ULong timeout
-    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -538,7 +538,7 @@ virtual CORBA_Pollable_ptr poll (
 
 virtual void remove (
     CORBA_Pollable_ptr potential
-    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -546,7 +546,7 @@ virtual void remove (
   )) = 0;
 
 virtual CORBA::UShort number_left (
-    TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
   ACE_THROW_SPEC ((
     CORBA::SystemException

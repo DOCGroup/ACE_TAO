@@ -24,16 +24,16 @@ TAO_Notify_Source_Filter_Eval_Command::~TAO_Notify_Source_Filter_Eval_Command ()
 }
 
 int
-TAO_Notify_Source_Filter_Eval_Command::execute (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Source_Filter_Eval_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean result =
-    this->event_source_->evaluate_filter (*this->event_ TAO_ENV_ARG_PARAMETER);
+    this->event_source_->evaluate_filter (*this->event_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (result == 1)
     {
       this->event_processor_->
-        lookup_subscriptions (this->event_, this->event_source_ TAO_ENV_ARG_PARAMETER);
+        lookup_subscriptions (this->event_, this->event_source_ ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       return 0;

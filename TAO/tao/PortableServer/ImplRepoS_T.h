@@ -63,17 +63,17 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     void ping (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
         void shutdown (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -119,11 +119,11 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     void activate_server (
         const char * server
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -134,7 +134,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -144,7 +144,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -152,7 +152,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
         void remove_server (
         const char * server
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -161,7 +161,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
         void shutdown_server (
         const char * server
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -172,7 +172,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -181,7 +181,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
         void server_is_shutting_down (
         const char * server
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -191,7 +191,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -202,7 +202,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -248,19 +248,19 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::Boolean next_n (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
         void destroy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException

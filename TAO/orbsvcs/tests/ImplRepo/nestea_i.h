@@ -46,20 +46,20 @@ public:
 
   /// Add <cans> number of cans to the bookshelf.
   virtual void drink (CORBA::Long cans
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Removes <cans> number of cans from the bookshelf.
   virtual void crush (CORBA::Long cans
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the number of cans in the bookshelf.
-  virtual CORBA::Long bookshelf_size (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long bookshelf_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns comments about your collection.
-  virtual char *get_praise (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char *get_praise (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

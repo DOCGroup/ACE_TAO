@@ -26,9 +26,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       ACE_NEW (lookup,
                (TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
-      this->trading_components ().lookup_if (lookup->_this (TAO_ENV_SINGLE_ARG_PARAMETER));
+      this->trading_components ().lookup_if (lookup->_this (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK;
-      lookup->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+      lookup->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->ifs_[LOOKUP_IF] = lookup;
@@ -40,9 +40,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       ACE_NEW (reg,
                (TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
-      this->trading_components ().register_if (reg->_this (TAO_ENV_SINGLE_ARG_PARAMETER));
+      this->trading_components ().register_if (reg->_this (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK;
-      reg->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+      reg->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->ifs_[REGISTER_IF] = reg;
@@ -54,9 +54,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       ACE_NEW (admin,
                (TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
-      this->trading_components ().admin_if (admin->_this (TAO_ENV_SINGLE_ARG_PARAMETER));
+      this->trading_components ().admin_if (admin->_this (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK;
-      admin->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+      admin->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->ifs_[ADMIN_IF] = admin;
@@ -68,9 +68,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       ACE_NEW (proxy,
                (TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
-      this->trading_components ().proxy_if (proxy->_this (TAO_ENV_SINGLE_ARG_PARAMETER));
+      this->trading_components ().proxy_if (proxy->_this (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK;
-      proxy->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+      proxy->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->ifs_[PROXY_IF] = proxy;
@@ -82,9 +82,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       ACE_NEW (link,
                (TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
-      this->trading_components ().link_if (link->_this (TAO_ENV_SINGLE_ARG_PARAMETER));
+      this->trading_components ().link_if (link->_this (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK;
-      link->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+      link->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->ifs_[LINK_IF] = link;
@@ -105,14 +105,14 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
           ACE_TRY
             {
               PortableServer::POA_var poa =
-                this->ifs_[i]->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+                this->ifs_[i]->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               PortableServer::ObjectId_var id =
-                poa->servant_to_id (this->ifs_[i] TAO_ENV_ARG_PARAMETER);
+                poa->servant_to_id (this->ifs_[i] ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+              poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -146,35 +146,35 @@ TAO_Trader_Components (const TAO_Trading_Components_i& comps)
 }
 
 template <class IF> CosTrading::Lookup_ptr
-TAO_Trader_Components<IF>::lookup_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Trader_Components<IF>::lookup_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::Lookup::_duplicate (this->comps_.lookup_if ());
 }
 
 template <class IF> CosTrading::Register_ptr
-TAO_Trader_Components<IF>::register_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Trader_Components<IF>::register_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::Register::_duplicate (this->comps_.register_if ());
 }
 
 template <class IF> CosTrading::Admin_ptr
-TAO_Trader_Components<IF>::admin_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Trader_Components<IF>::admin_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::Admin::_duplicate (this->comps_.admin_if ());
 }
 
 template <class IF> CosTrading::Proxy_ptr
-TAO_Trader_Components<IF>::proxy_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Trader_Components<IF>::proxy_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::Proxy::_duplicate (this->comps_.proxy_if ());
 }
 
 template <class IF> CosTrading::Link_ptr
-TAO_Trader_Components<IF>::link_if (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Trader_Components<IF>::link_if (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::Link::_duplicate (this->comps_.link_if ());
@@ -187,28 +187,28 @@ TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs)
 }
 
 template <class IF> CORBA::Boolean
-TAO_Support_Attributes<IF>::supports_modifiable_properties (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Support_Attributes<IF>::supports_modifiable_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.supports_modifiable_properties ();
 }
 
 template <class IF> CORBA::Boolean
-TAO_Support_Attributes<IF>::supports_dynamic_properties (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Support_Attributes<IF>::supports_dynamic_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.supports_dynamic_properties ();
 }
 
 template <class IF> CORBA::Boolean
-TAO_Support_Attributes<IF>::supports_proxy_offers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Support_Attributes<IF>::supports_proxy_offers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.supports_proxy_offers ();
 }
 
 template <class IF> CosTrading::TypeRepository_ptr
-TAO_Support_Attributes<IF>::type_repos (TAO_ENV_SINGLE_ARG_DECL_NOT_USED )
+TAO_Support_Attributes<IF>::type_repos (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::TypeRepository::_duplicate (this->attrs_.type_repos ());
@@ -222,77 +222,77 @@ TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs)
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_search_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::def_search_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_search_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_search_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::max_search_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_search_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_match_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::def_match_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_match_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_match_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::max_match_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_match_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_return_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::def_return_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_return_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_return_card (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::max_return_card (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_return_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_list (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::max_list (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_list ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_hop_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::def_hop_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_hop_count ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_hop_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::max_hop_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_hop_count ();
 }
 
 template <class IF> CosTrading::FollowOption
-TAO_Import_Attributes<IF>::def_follow_policy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::def_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_follow_policy ();
 }
 
 template <class IF> CosTrading::FollowOption
-TAO_Import_Attributes<IF>::max_follow_policy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Import_Attributes<IF>::max_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_follow_policy ();
@@ -306,7 +306,7 @@ TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs)
 }
 
 template <class IF> CosTrading::FollowOption
-TAO_Link_Attributes<IF>::max_link_follow_policy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Link_Attributes<IF>::max_link_follow_policy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_link_follow_policy ();

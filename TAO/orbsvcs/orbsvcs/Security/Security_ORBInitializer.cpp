@@ -17,13 +17,13 @@ ACE_RCSID (TAO_Security,
 void
 TAO_Security_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // allocate_tss_slot_id() TAO extension.
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
@@ -41,10 +41,10 @@ TAO_Security_ORBInitializer::pre_init (
   // Reserve a TSS slot in the ORB core internal TSS resources for the
   // thread-specific portion of Security::Current.
   size_t tss_slot = tao_info->allocate_tss_slot_id (0
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::String_var orb_id = info->orb_id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var orb_id = info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create the SecurityLevel2::Current object.
@@ -64,7 +64,7 @@ TAO_Security_ORBInitializer::pre_init (
   // ORB.
   info->register_initial_reference ("SecurityCurrent",
                                     security_current.in ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create the SecurityLevel2::SecurityManager object.
@@ -85,25 +85,25 @@ TAO_Security_ORBInitializer::pre_init (
   // ORB.
   info->register_initial_reference ("SecurityManager",
                                     security_manager.in ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_Security_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_Security_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   // Register the security policy factories.
 
@@ -121,37 +121,37 @@ TAO_Security_ORBInitializer::register_policy_factories (
   type = Security::SecQOPPolicy;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = Security::SecMechanismsPolicy;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = Security::SecInvocationCredentialsPolicy;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = Security::SecFeaturePolicy;   // Deprecated
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = Security::SecDelegationDirectivePolicy;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = Security::SecEstablishTrustPolicy;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // ----------------------------------------------------------------

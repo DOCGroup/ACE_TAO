@@ -140,10 +140,10 @@ RTPortableServer::POA_var::tao_nil (void)
 ::RTPortableServer::POA_ptr
 RTPortableServer::POA_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::RTPortableServer::POA::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::RTPortableServer::POA::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -225,15 +225,15 @@ RTPortableServer::POA::~POA (void)
 
 RTPortableServer::POA_ptr RTPortableServer::POA::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return POA::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return POA::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 RTPortableServer::POA_ptr RTPortableServer::POA::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))

@@ -318,7 +318,7 @@ int
 TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 {
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::handle_qos\n"));
@@ -375,7 +375,7 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
                   AVStreams::Negotiator_var remote_negotiator;
                   this->negotiator_->negotiate (remote_negotiator.in (),
                                                 new_qos
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
                 }
             }
     }
@@ -871,7 +871,7 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 int
 TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   int result = 0;
 
   //  TAO_AV_Callback *callback = 0;
@@ -1020,7 +1020,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
     {
       CORBA::Any_ptr negotiator_any =
         this->endpoint_->get_property_value ("Negotiator"
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (negotiator);
 
       *negotiator_any >>= negotiator;
@@ -1298,7 +1298,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
     {
       CORBA::Any_ptr negotiator_any =
         this->endpoint_->get_property_value ("Negotiator"
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (negotiator);
 
       *negotiator_any >>= negotiator;

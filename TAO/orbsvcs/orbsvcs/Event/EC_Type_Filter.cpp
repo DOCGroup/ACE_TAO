@@ -16,14 +16,14 @@ TAO_EC_Type_Filter::TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header
 int
 TAO_EC_Type_Filter::filter (const RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   if (event.length () != 1)
-    return this->filter_set (event, qos_info TAO_ENV_ARG_PARAMETER);
+    return this->filter_set (event, qos_info ACE_ENV_ARG_PARAMETER);
 
   if (this->can_match (event[0].header))
     {
-      this->push (event, qos_info TAO_ENV_ARG_PARAMETER);
+      this->push (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       return 1;
     }
@@ -33,14 +33,14 @@ TAO_EC_Type_Filter::filter (const RtecEventComm::EventSet& event,
 int
 TAO_EC_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   if (event.length () != 1)
-    return this->filter_set (event, qos_info TAO_ENV_ARG_PARAMETER);
+    return this->filter_set (event, qos_info ACE_ENV_ARG_PARAMETER);
 
   if (this->can_match (event[0].header))
     {
-      this->push_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
+      this->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       return 1;
     }
@@ -50,19 +50,19 @@ TAO_EC_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 void
 TAO_EC_Type_Filter::push (const RtecEventComm::EventSet& event,
                           TAO_EC_QOS_Info& qos_info
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   if (this->parent () != 0)
-    this->parent ()->push (event, qos_info TAO_ENV_ARG_PARAMETER);
+    this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_EC_Type_Filter::push_nocopy (RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   if (this->parent () != 0)
-    this->parent ()->push_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
+    this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -116,7 +116,7 @@ int
 TAO_EC_Type_Filter::add_dependencies (
       const RtecEventComm::EventHeader& header,
       const TAO_EC_QOS_Info &
-      TAO_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL_NOT_USED)
 {
   return this->can_match (header);
 }
@@ -124,7 +124,7 @@ TAO_EC_Type_Filter::add_dependencies (
 int
 TAO_EC_Type_Filter::filter_set (const RtecEventComm::EventSet& event,
                                 TAO_EC_QOS_Info& qos_info
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   CORBA::ULong maximum = event.length ();
   if (event.maximum () == 0)
@@ -143,7 +143,7 @@ TAO_EC_Type_Filter::filter_set (const RtecEventComm::EventSet& event,
   if (matched.length () == 0)
     return 0;
 
-  this->push (matched, qos_info TAO_ENV_ARG_PARAMETER);
+  this->push (matched, qos_info ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return 1;

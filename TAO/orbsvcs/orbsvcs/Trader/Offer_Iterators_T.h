@@ -53,12 +53,12 @@ public:
 
   virtual CORBA::Boolean next_n (CORBA::ULong n,
                                  CosTrading::OfferSeq_out offers
-                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deposit at maximum n offers into the return sequence and return 1,
   // or return 0 if the iterator is done and no offers are returned.
 
-  virtual CORBA::ULong max_left (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::UnknownMaxLeft));
   // Throws CosTrading::UnknownMaxLeft since with the presence of

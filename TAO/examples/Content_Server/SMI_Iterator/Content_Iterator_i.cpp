@@ -27,7 +27,7 @@ Content_Iterator_i::~Content_Iterator_i (void)
 CORBA::Boolean
 Content_Iterator_i::next_chunk (CORBA::ULong offset,
                                 Web_Server::Chunk_Type_out chunk
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initialize/allocate the Chunk_Type sequence
@@ -117,23 +117,23 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
 }
 
 void
-Content_Iterator_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+Content_Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   (void) this->file_io_.close ();
 
   // Get the POA used when activating the Content_Iterator object.
-  PortableServer::POA_var poa = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+  PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid = poa->servant_to_id (this
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now deactivate the iterator object.
-  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Decrease the reference count on our selves.

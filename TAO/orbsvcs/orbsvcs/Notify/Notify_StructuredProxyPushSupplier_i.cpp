@@ -18,7 +18,7 @@ TAO_Notify_StructuredProxyPushSupplier_i::~TAO_Notify_StructuredProxyPushSupplie
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier_i::connect_structured_push_consumer (CosNotifyComm::StructuredPushConsumer_ptr push_consumer TAO_ENV_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier_i::connect_structured_push_consumer (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventChannelAdmin::AlreadyConnected,
@@ -53,7 +53,7 @@ TAO_Notify_StructuredProxyPushSupplier_i::connect_structured_push_consumer (CosN
                             CORBA::INTERNAL ());
         ACE_CHECK;
 
-        this->on_connected (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->on_connected (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     }
@@ -70,28 +70,28 @@ TAO_Notify_StructuredProxyPushSupplier_i::connect_structured_push_consumer (CosN
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      event.do_push (this->push_consumer_.in () TAO_ENV_ARG_PARAMETER);
+      event.do_push (this->push_consumer_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
     {
       ACE_DEBUG ((LM_DEBUG, "Exception dispatching structured event\n"));
       // misbehaving client,
-      this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);  // FUZZ: ignore check_for_ace_check
+      this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);  // FUZZ: ignore check_for_ace_check
     }
   ACE_ENDTRY;
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      this->push_consumer_->offer_change (added, removed TAO_ENV_ARG_PARAMETER);
+      this->push_consumer_->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -104,31 +104,31 @@ TAO_Notify_StructuredProxyPushSupplier_i::dispatch_update_i (CosNotification::Ev
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier_i::shutdown_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier_i::shutdown_i (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->on_disconnected (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->on_disconnected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // ask our parent to deactivate us.
   this->consumer_admin_->
-    deactivate_proxy_pushsupplier (this TAO_ENV_ARG_PARAMETER);
+    deactivate_proxy_pushsupplier (this ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier_i::disconnect_structured_push_supplier(TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier_i::disconnect_structured_push_supplier(ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   // unregister with CA
-  this->consumer_admin_->unregister_listener (this TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->unregister_listener (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->shutdown_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Tell the consumer that we're going away ...
   // @@ Later, lookup a "notify_on_disconnect" option.
@@ -140,12 +140,12 @@ TAO_Notify_StructuredProxyPushSupplier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
       return;
   }
 
-  this->shutdown_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_TRY
     {
-      this->push_consumer_->disconnect_structured_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->push_consumer_->disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL

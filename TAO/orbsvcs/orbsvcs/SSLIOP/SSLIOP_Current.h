@@ -63,7 +63,7 @@ public:
   /// Return the peer certificate associated with the current
   /// request.
   virtual SSLIOP::ASN_1_Cert * get_peer_certificate (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      SSLIOP::Current::NoContext));
 
@@ -75,7 +75,7 @@ public:
   /// certficate.  However, the certificate chain on the server side
   /// does NOT contain the peer (client) certificate.
   virtual SSLIOP::SSL_Cert * get_peer_certificate_chain (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      SSLIOP::Current::NoContext));
 
@@ -84,7 +84,7 @@ public:
   /// means of determining whether or not SSL session state is
   /// available.
   virtual CORBA::Boolean no_context (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the TSS slot ID assigned to this object.
@@ -118,12 +118,12 @@ public:
 
   static TAO_SSLIOP_Current_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static TAO_SSLIOP_Current_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static TAO_SSLIOP_Current_ptr _nil (void)
@@ -197,7 +197,7 @@ public:
   static TAO_SSLIOP_Current_ptr tao_nil (void);
   static TAO_SSLIOP_Current_ptr tao_narrow (
       CORBA::Object *
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 

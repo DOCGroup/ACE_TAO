@@ -28,12 +28,12 @@ TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec (void)
 
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // ----------------------------------------------------------------
@@ -75,7 +75,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
 
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::FormatMismatch))
 {
@@ -117,12 +117,12 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
 
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // ----------------------------------------------------------------
@@ -138,7 +138,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
       TAO_Marshal_Object::perform_append (tc.in (),
                                           &input,
                                           &cdr
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // TAO extension: replace the contents of the octet sequence with
@@ -177,7 +177,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                                     CORBA::TypeCode_ptr tc
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::FormatMismatch,
                    IOP::Codec::TypeMismatch))
@@ -215,7 +215,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 
       // Skip over the next argument.
       CORBA::TypeCode::traverse_status status =
-        TAO_Marshal_Object::perform_skip (tc, &cdr TAO_ENV_ARG_PARAMETER);
+        TAO_Marshal_Object::perform_skip (tc, &cdr ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);  // @@ Should we throw a
                              //    IOP::Codec::TypeMismatch exception
                              //    here if this fails?
@@ -280,7 +280,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 void
 TAO_CDR_Encaps_Codec::check_type_for_encoding (
   const CORBA::Any & data
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   // @@ TODO: Are there any other conditions we need to check?
 

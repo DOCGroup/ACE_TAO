@@ -25,7 +25,7 @@ TAO_IORInfo::~TAO_IORInfo (void)
 
 CORBA::Policy_ptr
 TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::PolicyList *policy_list =
@@ -38,7 +38,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
     {
       CORBA::PolicyType pt =
         (*policy_list)[i]->policy_type (
-          TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       if (pt == type)
@@ -55,7 +55,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
 
 void
 TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Priyanka, why aren't you using the following:
@@ -64,7 +64,7 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
 
   // Add the given tagged component to all profiles.
   this->poa_->save_ior_component (component
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -72,7 +72,7 @@ void
 TAO_IORInfo::add_ior_component_to_profile (
     const IOP::TaggedComponent &component,
     IOP::ProfileId profile_id
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add the given tagged component to all profiles matching the given
@@ -83,26 +83,26 @@ TAO_IORInfo::add_ior_component_to_profile (
   //    ?!!!?
   this->poa_->save_ior_component_and_profile_id (component,
                                                  profile_id
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 PortableInterceptor::AdapterManagerId
-TAO_IORInfo::manager_id (TAO_ENV_SINGLE_ARG_DECL)
+TAO_IORInfo::manager_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_->get_manager_id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->poa_->get_manager_id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableInterceptor::AdapterState
-TAO_IORInfo::state (TAO_ENV_SINGLE_ARG_DECL)
+TAO_IORInfo::state (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_->get_adapter_state (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->poa_->get_adapter_state (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
-TAO_IORInfo::adapter_template (TAO_ENV_SINGLE_ARG_DECL)
+TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /* Returns Object Reference Template whenever an IOR Interceptor is
@@ -125,7 +125,7 @@ TAO_IORInfo::adapter_template (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 PortableInterceptor::ObjectReferenceFactory *
-TAO_IORInfo::current_factory (TAO_ENV_SINGLE_ARG_DECL)
+TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /* Returns the current_factory that is used to create the object
@@ -143,17 +143,17 @@ TAO_IORInfo::current_factory (TAO_ENV_SINGLE_ARG_DECL)
                                               CORBA::COMPLETED_NO),
                         0);
     }
-    
+
   return adapter_factory;
 }
 
 void
 TAO_IORInfo::current_factory (
     PortableInterceptor::ObjectReferenceFactory * current_factory
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->poa_->set_obj_ref_factory (current_factory
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

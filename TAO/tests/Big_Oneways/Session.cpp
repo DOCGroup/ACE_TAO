@@ -36,7 +36,7 @@ Session::svc (void)
   /// thread
   PortableServer::ServantBase_var auto_decrement (this);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -53,7 +53,7 @@ Session::svc (void)
       CORBA::ULong session_count =
         this->other_sessions_.length ();
 
-      this->validate_connections (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0; i != this->message_count_; ++i)
@@ -70,7 +70,7 @@ Session::svc (void)
           for (CORBA::ULong j = 0; j != session_count; ++j)
             {
               this->other_sessions_[j]->receive_payload (payload
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -83,7 +83,7 @@ Session::svc (void)
             return 0;
           }
       }
-      this->terminate (1 TAO_ENV_ARG_PARAMETER);
+      this->terminate (1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -97,7 +97,7 @@ Session::svc (void)
 }
 
 void
-Session::validate_connections (TAO_ENV_SINGLE_ARG_DECL)
+Session::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ULong session_count =
     this->other_sessions_.length ();
@@ -107,7 +107,7 @@ Session::validate_connections (TAO_ENV_SINGLE_ARG_DECL)
         {
           ACE_TRY
             {
-              this->other_sessions_[j]->ping (TAO_ENV_SINGLE_ARG_PARAMETER);
+              this->other_sessions_[j]->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY {} ACE_ENDTRY;
@@ -117,7 +117,7 @@ Session::validate_connections (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 Session::start (const Test::Session_List &other_sessions
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Test::Already_Running,
                    Test::No_Peers))
@@ -138,12 +138,12 @@ Session::start (const Test::Session_List &other_sessions
         // access to this object....
         ACE_TRY
           {
-            this->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+            this->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
             if (this->task_.activate (
                     THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
               {
-                this->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+                this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
               }
             else
@@ -170,17 +170,17 @@ Session::start (const Test::Session_List &other_sessions
   }
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
-  this->terminate (0 TAO_ENV_ARG_PARAMETER);
+  this->terminate (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-Session::ping (TAO_ENV_SINGLE_ARG_DECL_NOT_USED) ACE_THROW_SPEC ((CORBA::SystemException))
+Session::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Session::receive_payload (const Test::Payload &the_payload
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (the_payload.length () != this->payload_size_)
@@ -217,23 +217,23 @@ Session::receive_payload (const Test::Payload &the_payload
     if (this->more_work ())
       return;
   }
-  this->terminate (1 TAO_ENV_ARG_PARAMETER);
+  this->terminate (1 ACE_ENV_ARG_PARAMETER);
 }
 
 
 void
-Session::destroy (TAO_ENV_SINGLE_ARG_DECL)
+Session::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Make sure local resources are released
 
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -250,14 +250,14 @@ Session::more_work (void) const
 
 void
 Session::terminate (CORBA::Boolean success
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (())
 {
   // Make sure that global resources are released
   ACE_TRY_EX(GLOBAL)
     {
       this->control_->session_finished (success
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX(GLOBAL);
     }
   ACE_CATCHANY

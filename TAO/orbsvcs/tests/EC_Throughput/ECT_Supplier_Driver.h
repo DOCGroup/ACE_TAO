@@ -35,7 +35,7 @@ public:
   virtual ~ECT_Supplier_Driver (void);
 
   virtual void shutdown_consumer (void* consumer_cookie
-                                  TAO_ENV_ARG_DECL_NOT_USED);
+                                  ACE_ENV_ARG_DECL_NOT_USED);
   // Not used....
 
   enum {
@@ -52,11 +52,11 @@ private:
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          TAO_ENV_ARG_DECL);
-  void disconnect_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
+  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Connect the suppliers.
 
-  void activate_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Activate the suppliers, i.e. they start generating events.
 
   void dump_results (void);

@@ -24,7 +24,7 @@ CC_LockSet::CC_LockSet (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->Init (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->Init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -42,7 +42,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
 {
   ACE_TRY_NEW_ENV
     {
-      this->Init (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->Init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -56,7 +56,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
 // Initialization.
 
 void
-CC_LockSet::Init (TAO_ENV_SINGLE_ARG_DECL)
+CC_LockSet::Init (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Set the mode of the statically allocated locks
   lock_[CC_IR] = 0;
@@ -93,7 +93,7 @@ CORBA::Boolean CC_LockSet::compatible (CC_LockModeEnum mr)
 
 void
 CC_LockSet::lock (CosConcurrencyControl::lock_mode mode
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
@@ -114,7 +114,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode
 
 CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode
-                      TAO_ENV_ARG_DECL_NOT_USED)
+                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CC_LockModeEnum lm = lmconvert (mode);
@@ -155,7 +155,7 @@ CC_LockSet::lmconvert (CosConcurrencyControl::lock_mode mode)
 
 void
 CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosConcurrencyControl::LockNotHeld))
 {
@@ -200,7 +200,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode
 void
 CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
                          CosConcurrencyControl::lock_mode new_mode
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosConcurrencyControl::LockNotHeld))
 {
@@ -213,7 +213,7 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
     ACE_THROW (CosConcurrencyControl::LockNotHeld());
   else if (this->change_mode_i (lm_held, lm_new)==1)
     {
-      this->unlock (held_mode TAO_ENV_ARG_PARAMETER);
+      this->unlock (held_mode ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (semaphore_.acquire () == -1)

@@ -20,14 +20,14 @@ TAO_InvocationCredentialsPolicy::~TAO_InvocationCredentialsPolicy (void)
 
 CORBA::PolicyType
 TAO_InvocationCredentialsPolicy::policy_type (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Security::SecInvocationCredentialsPolicy;
 }
 
 CORBA::Policy_ptr
-TAO_InvocationCredentialsPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_InvocationCredentialsPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_InvocationCredentialsPolicy *policy = 0;
@@ -45,13 +45,13 @@ TAO_InvocationCredentialsPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_InvocationCredentialsPolicy::destroy (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 SecurityLevel2::CredentialsList *
-TAO_InvocationCredentialsPolicy::creds (TAO_ENV_SINGLE_ARG_DECL)
+TAO_InvocationCredentialsPolicy::creds (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel2::CredentialsList *creds = 0;

@@ -45,7 +45,7 @@ typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler *,
     CORBA::ULong reply_status
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
     );
 
 struct TAO_Exception_Data;
@@ -66,7 +66,7 @@ namespace TAO_Messaging_Helper
                                           CORBA::ULong marshaled_data_length,
                                           CORBA::Boolean byte_order,
                                           CORBA::Boolean is_system_exception
-                                          TAO_ENV_ARG_DECL);
+                                          ACE_ENV_ARG_DECL);
 }
 
 #endif /* TAO_HAS_AMI_CALLBACK */

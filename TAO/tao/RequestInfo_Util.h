@@ -44,19 +44,19 @@ public:
    */
   //@{
   static Dynamic::ParameterList * make_parameter_list (
-    TAO_ENV_SINGLE_ARG_DECL);
+    ACE_ENV_SINGLE_ARG_DECL);
 
   static Dynamic::ExceptionList * make_exception_list (
-    TAO_ENV_SINGLE_ARG_DECL);
+    ACE_ENV_SINGLE_ARG_DECL);
 
   static Dynamic::ContextList * make_context_list (
-    TAO_ENV_SINGLE_ARG_DECL);
+    ACE_ENV_SINGLE_ARG_DECL);
 
   static Dynamic::RequestContext * make_request_context (
-    TAO_ENV_SINGLE_ARG_DECL);
+    ACE_ENV_SINGLE_ARG_DECL);
 
   static CORBA::Any * make_any (CORBA::Boolean tk_void_any
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
   //@}
 
 };

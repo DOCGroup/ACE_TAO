@@ -15,7 +15,7 @@ TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
 {
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::bind_structured_event (
     const CosNotification::StructuredEvent &s_event
   )
@@ -29,14 +29,14 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (
       int status =
         this->property_lookup_.bind (
             name_str,
-            ACE_const_cast (CORBA::Any *, 
+            ACE_const_cast (CORBA::Any *,
                             &s_event.filterable_data[index].value)
           );
 
       if (status != 0)
         {
           return 1;
-        } 
+        }
     }
 
   return 0;
@@ -75,7 +75,7 @@ TAO_Notify_Constraint_Visitor::visit_literal (
   return 0;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
 {
   int return_value = -1;
@@ -96,7 +96,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
   return return_value;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_union_value (
     TAO_ETCL_Union_Value *union_value
   )
@@ -119,7 +119,7 @@ TAO_Notify_Constraint_Visitor::visit_union_value (
   return 0;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_union_pos (
     TAO_ETCL_Union_Pos *union_pos
   )
@@ -134,7 +134,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
 
           TAO_DynUnion_i dyn_union;
           dyn_union.init (this->current_member_.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::TypeCode_var tc = this->current_member_->type ();
@@ -146,12 +146,12 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
             case TAO_ETCL_UNSIGNED:
               {
                 CORBA::Any disc_any;
-                CORBA::TypeCode_var disc_tc = 
-                  tc->discriminator_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+                CORBA::TypeCode_var disc_tc =
+                  tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
-                CORBA::TCKind disc_kind = 
+                CORBA::TCKind disc_kind =
                   TAO_DynAnyFactory::unalias (disc_tc.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
                 switch (disc_kind)
@@ -194,16 +194,16 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
 
                 DynamicAny::DynAny_var dyn_any =
                   TAO_DynAnyFactory::make_dyn_any (disc_any
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
                 dyn_union.set_discriminator (dyn_any.in ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
                 DynamicAny::DynAny_var u_member =
-                  dyn_union.member (TAO_ENV_SINGLE_ARG_PARAMETER);
+                  dyn_union.member (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
-                this->current_member_ = 
-                  u_member->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
+                this->current_member_ =
+                  u_member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
                 break;
@@ -211,8 +211,8 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
             case TAO_ETCL_STRING:
               {
                 const char *name = (const char *) disc_val;
-                CORBA::ULong count = 
-                  tc->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+                CORBA::ULong count =
+                  tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
                 const char *member_name = 0;
@@ -221,7 +221,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                 for (i = 0; i < count; ++i)
                   {
                     member_name = tc->member_name (i
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
                     ACE_TRY_CHECK;
 
                     if (ACE_OS::strcmp (name, member_name) == 0)
@@ -230,16 +230,16 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                       }
                   }
 
-                // If there's no match, member_label will throw 
+                // If there's no match, member_label will throw
                 // CORBA::TypeCode::Bounds and the catch block will
                 // return -1;
-                this->current_member_ = tc->member_label (i 
-                                                          TAO_ENV_ARG_PARAMETER);
+                this->current_member_ = tc->member_label (i
+                                                          ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
                 break;
               }
-            // The TAO_ETCL_Union_Value that was put on the queue 
+            // The TAO_ETCL_Union_Value that was put on the queue
             // shouldn't have any other type.
             default:
               return -1;
@@ -274,7 +274,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
   ACE_ENDTRY;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_component_pos (
     TAO_ETCL_Component_Pos *pos
   )
@@ -286,7 +286,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
       // component as found in property_lookup_ will be in current_member_.
       CORBA::TypeCode_var tc = this->current_member_->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DynamicAny::DynAny_var member;
@@ -299,11 +299,11 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
           {
             TAO_DynEnum_i dyn_enum;
             dyn_enum.init (this->current_member_.in ()
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             success = dyn_enum.seek (slot
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             if (success == 0)
@@ -311,8 +311,8 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
                 return -1;
               }
 
-            member = 
-              dyn_enum.current_component (TAO_ENV_SINGLE_ARG_PARAMETER);
+            member =
+              dyn_enum.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             break;
@@ -321,11 +321,11 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
           {
             TAO_DynStruct_i dyn_struct;
             dyn_struct.init (this->current_member_.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             success = dyn_struct.seek (slot
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             if (success == 0)
@@ -333,7 +333,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
                 return -1;
               }
 
-            member = dyn_struct.current_component (TAO_ENV_SINGLE_ARG_PARAMETER);
+            member = dyn_struct.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             break;
@@ -345,7 +345,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
           return -1;
       }
 
-      CORBA::Any_var value = member->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var value = member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_ETCL_Constraint *comp = pos->component ();
@@ -369,7 +369,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
   ACE_ENDTRY;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_component_assoc (
     TAO_ETCL_Component_Assoc *assoc
   )
@@ -379,7 +379,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
   // no way that TAO can put one into the event's filterable data.
   // However, from the looks of the ETCL grammar, I believe that a
   // contruct like 'exist $(foo)' is legal, and is in effect using
-  // the event's filterable data as one big NVList. It is 
+  // the event's filterable data as one big NVList. It is
   // equivalent to '$.foo'. I've implemented this method on that
   // basis, while keeping in mind that a clearer interpretation of
   // the spec may come along someday.
@@ -413,7 +413,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
     }
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_component_array (
     TAO_ETCL_Component_Array *array
   )
@@ -425,7 +425,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
       // component as found in property_lookup_ will be in current_member_.
       CORBA::TypeCode_var tc = this->current_member_->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DynamicAny::DynAny_var member;
@@ -438,11 +438,11 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
           {
             TAO_DynEnum_i dyn_array;
             dyn_array.init (this->current_member_.in ()
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             success = dyn_array.seek (slot
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             if (success == 0)
@@ -450,7 +450,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
                 return -1;
               }
 
-            member = dyn_array.current_component (TAO_ENV_SINGLE_ARG_PARAMETER);
+            member = dyn_array.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             break;
@@ -459,11 +459,11 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
           {
             TAO_DynStruct_i dyn_sequence;
             dyn_sequence.init (this->current_member_.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             success = dyn_sequence.seek (slot
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             if (success == 0)
@@ -471,8 +471,8 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
                 return -1;
               }
 
-            member = 
-              dyn_sequence.current_component (TAO_ENV_SINGLE_ARG_PARAMETER);
+            member =
+              dyn_sequence.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             break;
@@ -483,7 +483,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
           return -1;
       }
 
-      CORBA::Any_var value = member->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var value = member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_ETCL_Constraint *comp = array->component ();
@@ -507,7 +507,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
   ACE_ENDTRY;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -522,7 +522,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
             // If the TCKind is not a sequence or an array, the
             // call to length() will raise an exception, and the
             // catch block will return -1;
-            CORBA::ULong length = tc->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+            CORBA::ULong length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             TAO_ETCL_Literal_Constraint lit (length);
@@ -536,14 +536,14 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
             // catch block will return -1;
             TAO_DynUnion_i dyn_union;
             dyn_union.init (this->current_member_.in ()
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
-            DynamicAny::DynAny_var disc = 
-              dyn_union.get_discriminator (TAO_ENV_SINGLE_ARG_PARAMETER);
+            DynamicAny::DynAny_var disc =
+              dyn_union.get_discriminator (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
-            CORBA::Any_var disc_any = disc->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
+            CORBA::Any_var disc_any = disc->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             TAO_ETCL_Literal_Constraint lit (disc_any);
@@ -552,7 +552,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
           }
         case TAO_ETCL_TYPE_ID:
           {
-            const char *name = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+            const char *name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             TAO_ETCL_Literal_Constraint lit (name);
@@ -561,7 +561,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
           }
         case TAO_ETCL_REPOS_ID:
           {
-            const char *id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+            const char *id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             TAO_ETCL_Literal_Constraint lit (id);
@@ -579,7 +579,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
   ACE_ENDTRY;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_component (
     TAO_ETCL_Component *component
   )
@@ -611,7 +611,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
     }
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_dot (TAO_ETCL_Dot *dot)
 {
   // If we are here, we know we're headed for a more nested
@@ -620,7 +620,7 @@ TAO_Notify_Constraint_Visitor::visit_dot (TAO_ETCL_Dot *dot)
   return dot->component ()->accept (this);
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_eval (TAO_ETCL_Eval *eval)
 {
   // Nothing to do but visit the contained component.
@@ -649,7 +649,7 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
 
       // If the current member is not a union, this call will
       // throw BadKind and the catch block will return -1.
-      CORBA::Long default_index = tc->default_index (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Long default_index = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // No default index.
@@ -674,11 +674,11 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
   ACE_ENDTRY;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
 {
   TAO_ETCL_Constraint *component = exist->component ();
-  
+
   if (component->accept (this) == 0)
     {
       TAO_ETCL_Literal_Constraint top;
@@ -698,7 +698,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
   return -1;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_unary_expr (
     TAO_ETCL_Unary_Expr *unary_expr
   )
@@ -739,7 +739,7 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
   return -1;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_binary_expr (
     TAO_ETCL_Binary_Expr *binary_expr
   )
@@ -773,7 +773,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_expr (
   }
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_or (
     TAO_ETCL_Binary_Expr *binary
   )
@@ -815,7 +815,7 @@ TAO_Notify_Constraint_Visitor::visit_or (
   return return_value;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_and (
     TAO_ETCL_Binary_Expr *binary
   )
@@ -928,7 +928,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (
   return return_value;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_twiddle (
     TAO_ETCL_Binary_Expr *binary
   )
@@ -958,7 +958,7 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (
   return return_value;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_in (
     TAO_ETCL_Binary_Expr *binary
   )
@@ -990,7 +990,7 @@ TAO_Notify_Constraint_Visitor::visit_in (
                 {
                   CORBA::TypeCode_var tc = component->type ();
                   kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
               ACE_CATCHANY
@@ -1004,23 +1004,23 @@ TAO_Notify_Constraint_Visitor::visit_in (
               switch (kind)
               {
                 case CORBA::tk_sequence:
-                  result = this->sequence_does_contain (component, 
+                  result = this->sequence_does_contain (component,
                                                         left);
                   break;
                 case CORBA::tk_array:
-                  result = this->array_does_contain (component, 
+                  result = this->array_does_contain (component,
                                                      left);
                   break;
                 case CORBA::tk_struct:
-                  result = this->struct_does_contain (component, 
+                  result = this->struct_does_contain (component,
                                                       left);
                   break;
                 case CORBA::tk_union:
-                  result = this->union_does_contain (component, 
+                  result = this->union_does_contain (component,
                                                      left);
                   break;
                 case CORBA::tk_any:
-                  result = this->any_does_contain (component, 
+                  result = this->any_does_contain (component,
                                                    left);
                   break;
                 default:
@@ -1036,7 +1036,7 @@ TAO_Notify_Constraint_Visitor::visit_in (
   return return_value;
 }
 
-int 
+int
 TAO_Notify_Constraint_Visitor::visit_preference (
     TAO_ETCL_Preference *
   )
@@ -1059,7 +1059,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
     {
       CORBA::TypeCode_var type = any->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The literal and the array elements must be
@@ -1073,12 +1073,12 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
         }
 
       TAO_DynSequence_i dyn_seq;
-      dyn_seq.init (*any 
-                    TAO_ENV_ARG_PARAMETER);
+      dyn_seq.init (*any
+                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      DynamicAny::AnySeq_var any_seq = 
-        dyn_seq.get_elements (TAO_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::AnySeq_var any_seq =
+        dyn_seq.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ULong length = any_seq->length ();
@@ -1100,7 +1100,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
   ACE_ENDTRY;
 
   return 0;
-}                                
+}
 
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::array_does_contain (
@@ -1113,7 +1113,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
     {
       CORBA::TypeCode_var type = any->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The literal and the array elements must be
@@ -1127,12 +1127,12 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
         }
 
       TAO_DynArray_i dyn_array;
-      dyn_array.init (*any 
-                      TAO_ENV_ARG_PARAMETER);
+      dyn_array.init (*any
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      DynamicAny::AnySeq_var any_seq = 
-        dyn_array.get_elements (TAO_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::AnySeq_var any_seq =
+        dyn_array.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ULong length = any_seq->length ();
@@ -1167,11 +1167,11 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
     {
       TAO_DynStruct_i dyn_struct;
       dyn_struct.init (*any
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       DynamicAny::NameValuePairSeq_var members =
-        dyn_struct.get_members (TAO_ENV_SINGLE_ARG_PARAMETER);
+        dyn_struct.get_members (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ULong length = members->length ();
@@ -1182,7 +1182,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
         {
           tc = members[i].value.type ();
           kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // The literal and the struct member must be
@@ -1222,20 +1222,20 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
   ACE_TRY
     {
       TAO_DynUnion_i dyn_union;
-      dyn_union.init (*any 
-                      TAO_ENV_ARG_PARAMETER);
+      dyn_union.init (*any
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      DynamicAny::DynAny_var cc = 
-        dyn_union.current_component (TAO_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc =
+        dyn_union.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-  
-      CORBA::Any_var member = cc->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
+
+      CORBA::Any_var member = cc->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tc = member->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The literal and the union member must be
@@ -1287,21 +1287,21 @@ TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
           return 0;
         }
     case TAO_ETCL_DOUBLE:
-      if (tc_kind != CORBA::tk_double 
+      if (tc_kind != CORBA::tk_double
           && tc_kind != CORBA::tk_float)
         {
           return 0;
         }
     case TAO_ETCL_INTEGER:
     case TAO_ETCL_SIGNED:
-      if (tc_kind != CORBA::tk_short 
+      if (tc_kind != CORBA::tk_short
           && tc_kind != CORBA::tk_long
           && tc_kind != CORBA::tk_longlong)
         {
           return 0;
         }
     case TAO_ETCL_UNSIGNED:
-      if (tc_kind != CORBA::tk_ushort 
+      if (tc_kind != CORBA::tk_ushort
           && tc_kind != CORBA::tk_ulong
           && tc_kind != CORBA::tk_ulonglong)
         {

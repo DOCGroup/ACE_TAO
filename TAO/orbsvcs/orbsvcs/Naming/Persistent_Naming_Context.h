@@ -180,7 +180,7 @@ public:
                                                         const char *poa_id,
                                                         size_t context_size,
                                                         TAO_Persistent_Context_Index *ind
-                                                        TAO_ENV_ARG_DECL);
+                                                        ACE_ENV_ARG_DECL);
   // This utility method factors out the code needed to create a new
   // Persistent Naming Context servant and activate it under the
   // specified POA with the specified id.  This function is static so
@@ -189,7 +189,7 @@ public:
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
-  virtual CosNaming::NamingContext_ptr new_context (TAO_ENV_SINGLE_ARG_DECL);
+  virtual CosNaming::NamingContext_ptr new_context (ACE_ENV_SINGLE_ARG_DECL);
   // This operation returns a new naming context implemented by the
   // same naming server in which the operation was invoked.  The
   // context is not bound.
@@ -197,7 +197,7 @@ public:
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
                      CosNaming::BindingIterator_out &bi
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   // Returns at most the requested number of bindings <how_many> in
   // <bl>.  If the naming context contains additional bindings, they
   // are returned with a BindingIterator.  In the naming context does

@@ -29,7 +29,7 @@ CC_LockSetFactory::~CC_LockSetFactory (void)
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create (TAO_ENV_SINGLE_ARG_DECL)
+CC_LockSetFactory::create (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CC_LockSet *ls = 0;
@@ -41,12 +41,12 @@ CC_LockSetFactory::create (TAO_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY());
   ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
-  return ls->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return ls->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosConcurrencyControl::LockSet_ptr
 CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CC_LockSet *ls = 0;
@@ -58,5 +58,5 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which
                     CORBA::NO_MEMORY());
   ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
-  return ls->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return ls->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }

@@ -37,11 +37,11 @@ public:
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer
-      TAO_ENV_ARG_DECL);
+      ACE_ENV_ARG_DECL);
   virtual void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
                                TAO_EC_Supplier_Filter *filter
-                               TAO_ENV_ARG_DECL);
+                               ACE_ENV_ARG_DECL);
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Group_Scheduling

@@ -10,7 +10,7 @@ ACE_RCSID(Forwarding, test_i, "$Id$")
 
 CORBA::Boolean
 Simple_Server_i::test_is_a (const char * /* type */
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) test_is_a %s\n", type));
@@ -18,8 +18,8 @@ Simple_Server_i::test_is_a (const char * /* type */
 }
 
 void
-Simple_Server_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

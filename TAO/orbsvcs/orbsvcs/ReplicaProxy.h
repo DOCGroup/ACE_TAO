@@ -55,7 +55,7 @@ public:
   // Return a reference to the Replica.
 
   virtual void current_load (CORBA::Float load
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send the value of the current load on the Object being load
   // balanced, where the definition of "load" is load balancing
@@ -69,7 +69,7 @@ public:
   // without affecting the client, or detect rapid raises in load and
   // react proactively to those...
 
-  virtual void disconnect (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
                      CORBA::SystemException));
   // Send a request to disconnect from the LoadBalancer.
@@ -93,7 +93,7 @@ private:
   void connect (TAO_LB_LoadBalancer *balancer,
                 LoadBalancing::ReplicaControl_ptr control,
                 CORBA::Object_ptr replica
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
                      LoadBalancing::ReplicaProxy::NilReplica,
                      CORBA::SystemException));

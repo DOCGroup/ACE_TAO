@@ -25,7 +25,7 @@ TAO_Interceptor_List::~TAO_Interceptor_List (void)
 size_t
 TAO_Interceptor_List::add_interceptor_i (
     PortableInterceptor::Interceptor_ptr interceptor
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
@@ -34,7 +34,7 @@ TAO_Interceptor_List::add_interceptor_i (
       /// If the Interceptor is not anonymous, make sure an
       /// Interceptor with the same isn't already registered.
       CORBA::String_var name = interceptor->name (
-        TAO_ENV_SINGLE_ARG_PARAMETER);
+        ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       size_t old_len = this->length ();
@@ -122,10 +122,10 @@ TAO_ClientRequestInterceptor_List::interceptor (size_t index)
 void
 TAO_ClientRequestInterceptor_List::add_interceptor (
   PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   size_t index = this->add_interceptor_i (interceptor
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->interceptors_[index] =
@@ -168,10 +168,10 @@ TAO_ServerRequestInterceptor_List::interceptor (size_t index)
 void
 TAO_ServerRequestInterceptor_List::add_interceptor (
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   size_t index = this->add_interceptor_i (interceptor
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->interceptors_[index] =
@@ -216,10 +216,10 @@ TAO_IORInterceptor_List::interceptor (size_t index)
 void
 TAO_IORInterceptor_List::add_interceptor (
   PortableInterceptor::IORInterceptor_ptr interceptor
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   size_t index = this->add_interceptor_i (interceptor
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->interceptors_[index] =

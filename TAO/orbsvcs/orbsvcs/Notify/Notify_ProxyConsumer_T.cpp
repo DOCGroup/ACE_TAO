@@ -23,14 +23,14 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::TAO_Notify_ProxyConsumer (TAO_Notify_Sup
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL)
 {
   this->proxy_id_ = proxy_id;
 
   TAO_Notify_CO_Factory* cof =
     TAO_Notify_Factory::get_channel_objects_factory ();
 
-  this->lock_ = cof->create_proxy_consumer_lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->lock_ = cof->create_proxy_consumer_lock (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create the task to forward filtering commands to:
@@ -39,7 +39,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     this->event_manager_->resource_factory ();
 
   this->filter_eval_task_ =
-    event_manager_objects_factory->create_source_eval_task (TAO_ENV_SINGLE_ARG_PARAMETER);
+    event_manager_objects_factory->create_source_eval_task (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get hold of the admin properties.
@@ -58,7 +58,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer (void)
   ACE_DECLARE_NEW_CORBA_ENV;
 
   this->event_manager_->unregister_from_subscription_updates (this
-                                                              TAO_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   delete this->lock_;
@@ -67,7 +67,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer (void)
   this->supplier_admin_->_remove_ref ();
 
   // @@: Move this to on_disconnected
-  this->filter_eval_task_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->filter_eval_task_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
@@ -77,27 +77,27 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer (void)
 }
 
 template <class SERVANT_TYPE> CORBA::Boolean
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event ACE_ENV_ARG_DECL)
 {
   // check if it passes the parent filter.
   CORBA::Boolean bval =
     this->supplier_admin_->get_filter_admin ().match (event
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean ret_val;
 
-  ret_val = this->supplier_admin_->MyOperator (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ret_val = this->supplier_admin_->MyOperator (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (ret_val == CosNotifyChannelAdmin::AND_OP)
     {
-      ret_val = bval && this->filter_admin_.match (event TAO_ENV_ARG_PARAMETER);
+      ret_val = bval && this->filter_admin_.match (event ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   else
     {
-      ret_val = bval || this->filter_admin_.match (event TAO_ENV_ARG_PARAMETER);
+      ret_val = bval || this->filter_admin_.match (event ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -111,7 +111,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::filter_eval_task (void)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_connected (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_connected (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get hold of the admin properties.
   TAO_Notify_AdminProperties* const admin_properties =
@@ -124,14 +124,14 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_connected (TAO_ENV_SINGLE_ARG_DECL)
       supplier_count->value () >= admin_properties->max_suppliers ())
     ACE_THROW (CORBA::IMP_LIMIT ()); // we've reached the limit of suppliers connected.
 
-  this->event_manager_->register_for_subscription_updates (this TAO_ENV_ARG_PARAMETER);
+  this->event_manager_->register_for_subscription_updates (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   (*supplier_count)++;
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_disconnected (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_disconnected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
 {
   // Get hold of the admin properties.
   TAO_Notify_AdminProperties* const admin_properties =
@@ -141,17 +141,17 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_disconnected (TAO_ENV_SINGLE_ARG_DECL
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed TAO_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
                    ))
 {
-  this->event_manager_->update_publication_list (added, removed TAO_ENV_ARG_PARAMETER);
+  this->event_manager_->update_publication_list (added, removed ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChannelAdmin::ObtainInfoMode mode TAO_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChannelAdmin::ObtainInfoMode mode ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -170,39 +170,39 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChan
       // if updates are currently off, switch them on.
       if (this->updates_on_ == 0)
         this->event_manager_->register_for_subscription_updates (this
-                                                                 TAO_ENV_ARG_PARAMETER);
+                                                                 ACE_ENV_ARG_PARAMETER);
     }
   else
     {
       // if updates are currently on, switch them off.
       if (this->updates_on_ == 1)
         this->event_manager_->unregister_from_subscription_updates (this
-                                                                    TAO_ENV_ARG_PARAMETER);
+                                                                    ACE_ENV_ARG_PARAMETER);
     }
 
   return event_type_seq;
 }
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::MyAdmin (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->supplier_admin_->get_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->supplier_admin_->get_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxyConsumer<SERVANT_TYPE>::set_qos (
                            const CosNotification::QoSProperties & qos
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosNotification::UnsupportedQoS
   ))
 {
   // Call our base class set_qos ().
-  TAO_Notify_Proxy<SERVANT_TYPE>::set_qos (qos TAO_ENV_ARG_PARAMETER);
+  TAO_Notify_Proxy<SERVANT_TYPE>::set_qos (qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Then update our task's qos

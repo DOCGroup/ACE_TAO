@@ -173,14 +173,14 @@ TAO_Persistent_Context_Index::init (size_t context_size)
     // CASE 1:there are no Naming Contexts registered.  We need to create
     // one.
     {
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
 
       this->root_context_ =
         TAO_Persistent_Naming_Context::make_new_context (poa_.in (),
                                                          TAO_ROOT_NAMING_CONTEXT,
                                                          context_size,
                                                          this
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -246,16 +246,16 @@ TAO_Persistent_Context_Index::recreate_all (void)
       PortableServer::ServantBase_var s = context;
 
       // Register with the POA.
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (entry->ext_id_.poa_id_);
 
       this->poa_->activate_object_with_id (id.in (),
                                            context
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      CosNaming::NamingContext_var result = context->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CosNaming::NamingContext_var result = context->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       // If this is the root Naming Context, take a note of it.

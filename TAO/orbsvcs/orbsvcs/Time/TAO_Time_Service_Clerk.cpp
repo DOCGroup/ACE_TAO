@@ -37,7 +37,7 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
 // in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::universal_time (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Time_Service_Clerk::universal_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -59,7 +59,7 @@ TAO_Time_Service_Clerk::universal_time (TAO_ENV_SINGLE_ARG_DECL)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::secure_universal_time (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Time_Service_Clerk::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -72,7 +72,7 @@ CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
                                             TimeBase::TdfT tdf
-                                            TAO_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -90,7 +90,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -116,7 +116,7 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
 CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                                       TimeBase::TimeT upper
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;

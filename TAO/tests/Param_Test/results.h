@@ -39,7 +39,7 @@ public:
   // prints the time stats
 
   void print_exception (const char *call_name
-                        TAO_ENV_ARG_DECL_NOT_USED);
+                        ACE_ENV_ARG_DECL_NOT_USED);
   // print the exception
 
   void start_timer (void);

@@ -65,7 +65,7 @@ public:
   // Destructor.
 
   void
-  destroy (TAO_ENV_SINGLE_ARG_DECL)
+  destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroy the log object and all contained records.
 

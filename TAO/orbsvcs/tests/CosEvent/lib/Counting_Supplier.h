@@ -42,16 +42,16 @@ public:
   // = The CosEventComm::PushSupplier methods
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
   void push (const CORBA::Any& events
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Push an event.
 
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -79,7 +79,7 @@ public:
   void stop (void);
   CORBA::ULong push_count (void);
 
-  void run (TAO_ENV_SINGLE_ARG_DECL);
+  void run (ACE_ENV_SINGLE_ARG_DECL);
   // Run a single iteration of the test
 
 private:
@@ -116,17 +116,17 @@ public:
   // = The CosEventComm::PullSupplier methods
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
   // The PullSupplier methods.
-  CORBA::Any* pull (TAO_ENV_SINGLE_ARG_DECL)
+  CORBA::Any* pull (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
   CORBA::Any* try_pull (CORBA::Boolean_out has_event
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  virtual void disconnect_pull_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong event_count;

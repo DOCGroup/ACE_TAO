@@ -62,7 +62,7 @@ class TAO_Notify_Export TAO_Notify_Factory
  protected:
   friend class TAO_Notify_EventChannelFactory_i;
 
-  static void init (TAO_ENV_SINGLE_ARG_DECL);
+  static void init (ACE_ENV_SINGLE_ARG_DECL);
   // Initalize the services.
 
   static void shutdown (void);

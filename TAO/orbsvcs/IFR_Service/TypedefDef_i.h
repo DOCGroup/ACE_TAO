@@ -34,7 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_TypedefDef_i : public virtual TAO_Contained_i, 
+class TAO_TypedefDef_i : public virtual TAO_Contained_i,
                          public virtual TAO_IDLType_i
 {
   // = TITLE
@@ -53,13 +53,13 @@ public:
   // Destructor
 
   virtual CORBA_Contained::Description *describe (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA_Contained::Description *describe_i (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.

@@ -38,7 +38,7 @@ MT_Object_i::~MT_Object_i (void)
 CORBA::Long
 MT_Object_i::yadda (CORBA::Long hop_count,
                        MT_Object_ptr partner
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -49,8 +49,8 @@ MT_Object_i::yadda (CORBA::Long hop_count,
   {
     if (partner != 0)
       return partner->yadda (hop_count + 1,
-                             this->_this (TAO_ENV_SINGLE_ARG_PARAMETER)
-                             TAO_ENV_ARG_PARAMETER) + 1;
+                             this->_this (ACE_ENV_SINGLE_ARG_PARAMETER)
+                             ACE_ENV_ARG_PARAMETER) + 1;
   }
 
   return 0;

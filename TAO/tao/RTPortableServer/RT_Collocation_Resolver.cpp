@@ -17,7 +17,7 @@ ACE_RCSID(RTCORBA, RT_Collocation_Resolver, "$Id$")
 
 CORBA::Boolean
 TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
-                                            TAO_ENV_ARG_DECL) const
+                                            ACE_ENV_ARG_DECL) const
 {
   // Make sure that the servant is in the same ORB that created this
   // object.
@@ -33,7 +33,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   TAO_Object_Adapter::Servant_Upcall servant_upcall (orb_core);
   TAO_POA *poa =
     servant_upcall.lookup_POA (object->_object_key ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Get the thread pool associated with this POA.
@@ -96,7 +96,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
                          servant_upcall.system_id_,
                          servant_upcall,
                          servant_upcall.current_context_
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Get the priority that the servant will run at.

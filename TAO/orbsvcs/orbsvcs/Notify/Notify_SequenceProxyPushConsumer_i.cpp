@@ -20,7 +20,7 @@ TAO_Notify_SequenceProxyPushConsumer_i::~TAO_Notify_SequenceProxyPushConsumer_i 
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier TAO_ENV_ARG_DECL)
+TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventChannelAdmin::AlreadyConnected
@@ -51,7 +51,7 @@ TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotif
                             CORBA::INTERNAL ());
         ACE_TRY_CHECK;
 
-        this->on_connected (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->on_connected (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     }
@@ -66,12 +66,12 @@ TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotif
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL)
+TAO_Notify_SequenceProxyPushConsumer_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       this->push_supplier_->subscription_change (added, removed
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
@@ -82,7 +82,7 @@ TAO_Notify_SequenceProxyPushConsumer_i::dispatch_update_i (CosNotification::Even
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer_i::push_structured_events (const CosNotification::EventBatch & notifications TAO_ENV_ARG_DECL)
+TAO_Notify_SequenceProxyPushConsumer_i::push_structured_events (const CosNotification::EventBatch & notifications ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -102,24 +102,24 @@ TAO_Notify_SequenceProxyPushConsumer_i::push_structured_events (const CosNotific
     new TAO_Notify_StructuredEvents (notifications);
 
   // Send 'em out
-  this->event_manager_->process_event (notify_events, this TAO_ENV_ARG_PARAMETER);
+  this->event_manager_->process_event (notify_events, this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   notify_events->_decr_refcnt ();
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer_i::disconnect_sequence_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SequenceProxyPushConsumer_i::disconnect_sequence_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   // ask our parent to deaactivate us.
   this->supplier_admin_->
-    deactivate_proxy_pushconsumer (this TAO_ENV_ARG_PARAMETER);
+    deactivate_proxy_pushconsumer (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->on_disconnected (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->on_disconnected (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

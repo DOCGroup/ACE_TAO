@@ -197,7 +197,7 @@ TAO_ECG_UDP_Request_Entry::fragment_buffer (CORBA::ULong fragment_offset)
 
 void
 TAO_ECG_UDP_Request_Entry::decode (RtecEventComm::EventSet& event
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   TAO_InputCDR cdr (&this->payload_,
                     ACE_static_cast(int,this->byte_order_));
@@ -234,7 +234,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             ACE_Reactor *reactor,
                             const ACE_Time_Value &expire_interval,
                             int max_timeout
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->ignore_from_ = ignore_from;
 
@@ -258,13 +258,13 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 
 void
 TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     return;
 
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
-    this->close (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (pub.publications.length () == 0)
@@ -272,15 +272,15 @@ TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub
 
   // = Connect as a supplier to the local EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->lcl_ec_->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->lcl_ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventComm::PushSupplier_var supplier_ref =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Receiver (%t) Gateway/Supplier "));
@@ -288,35 +288,35 @@ TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub
 
   this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                 pub
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_ECG_UDP_Receiver::close (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Receiver::close (ACE_ENV_SINGLE_ARG_DECL)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_ECG_UDP_Receiver::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ECG_UDP_Receiver::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -325,9 +325,9 @@ TAO_ECG_UDP_Receiver::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-TAO_ECG_UDP_Receiver::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Receiver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
@@ -511,14 +511,14 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       return 0;
     }
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       RtecEventComm::EventSet event;
-      entry->int_id_->decode (event TAO_ENV_ARG_PARAMETER);
+      entry->int_id_->decode (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->consumer_proxy_->push (event TAO_ENV_ARG_PARAMETER);
+      this->consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //      ACE_DEBUG ((LM_DEBUG,
@@ -539,9 +539,9 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 void
 TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
                                 RtecUDPAdmin::UDP_Addr_out addr
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
-  this->addr_server_->get_addr (header, addr TAO_ENV_ARG_PARAMETER);
+  this->addr_server_->get_addr (header, addr ACE_ENV_ARG_PARAMETER);
 }
 
 int

@@ -58,7 +58,7 @@ public:
 
   virtual int gen_environment_decl (int argument_emitted,
                                     be_operation *node);
-  // generate the TAO_ENV_ARG declaration, needs to know if there was
+  // generate the ACE_ENV_ARG declaration, needs to know if there was
   // at least one argument emitted to deal with all the commas.
 
   virtual const char *gen_environment_var (void);

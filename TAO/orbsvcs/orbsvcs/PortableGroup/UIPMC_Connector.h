@@ -53,7 +53,7 @@ public:
   int close (void);
   int connect (TAO_GIOP_Invocation *invocation,
                TAO_Transport_Descriptor_Interface *desc
-               TAO_ENV_ARG_DECL);
+               ACE_ENV_ARG_DECL);
   int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
@@ -64,7 +64,7 @@ public:
 protected:
   /// = More TAO_Connector methods, please check the documentation on
   ///   Pluggable.h
-  virtual TAO_Profile * make_profile (TAO_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Obtain UIPMC properties that must be used by this connector, i.e.,
   /// initialize <uipmc_properties_>.

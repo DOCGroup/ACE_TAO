@@ -45,7 +45,7 @@ public:
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
   // set the bcastion flags
 
-  void execute_test (TAO_ENV_SINGLE_ARG_DECL);
+  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
   // Don't run the suppliers, just test connect and disconnect calls.
 
   void dump_results (void);
@@ -71,7 +71,7 @@ public:
 
   virtual void get_addr (const RtecEventComm::EventHeader& header,
                          RtecUDPAdmin::UDP_Addr& address
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

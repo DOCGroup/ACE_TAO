@@ -19,7 +19,7 @@ TAO_SSLIOP_Util::setup_handler_state (TAO_ORB_Core *orb_core,
                                       TAO_IIOP_Properties *tcp_properties,
                                       TAO_SSLIOP_Connection_Handler_State &s)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Go straight to the object_ref_table in the ORB Core to avoid
@@ -29,12 +29,12 @@ TAO_SSLIOP_Util::setup_handler_state (TAO_ORB_Core *orb_core,
       CORBA::Object_var obj =
         orb_core->object_ref_table ().resolve_initial_references (
           "SSLIOPCurrent"
-          TAO_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       SSLIOP::Current_var current =
         SSLIOP::Current::_narrow (obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (current.in ()))
@@ -42,7 +42,7 @@ TAO_SSLIOP_Util::setup_handler_state (TAO_ORB_Core *orb_core,
 
       TAO_SSLIOP_Current_var tao_current =
         TAO_SSLIOP_Current::_narrow (current.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (tao_current.in ()))

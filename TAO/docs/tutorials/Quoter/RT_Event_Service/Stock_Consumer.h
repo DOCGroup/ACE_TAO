@@ -20,9 +20,9 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (const RtecEventComm::EventSet& data TAO_ENV_ARG_DECL_NOT_USED)
+  void push (const RtecEventComm::EventSet& data ACE_ENV_ARG_DECL_NOT_USED)
     throw (CORBA::SystemException);
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     throw (CORBA::SystemException);
 
 private:

@@ -227,7 +227,7 @@ TAO_NAMESPACE  IR
     static ComponentDef_ptr tao_nil (void);
     static ComponentDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -312,7 +312,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -472,7 +472,7 @@ TAO_NAMESPACE  IR
     static ProvidesDef_ptr tao_nil (void);
     static ProvidesDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -557,7 +557,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -717,7 +717,7 @@ TAO_NAMESPACE  IR
     static UsesDef_ptr tao_nil (void);
     static UsesDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -802,7 +802,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -962,7 +962,7 @@ TAO_NAMESPACE  IR
     static HomeDef_ptr tao_nil (void);
     static HomeDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1047,7 +1047,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -1207,7 +1207,7 @@ TAO_NAMESPACE  IR
     static EventDef_ptr tao_nil (void);
     static EventDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1286,7 +1286,7 @@ TAO_NAMESPACE  IR
     static EmitsDef_ptr tao_nil (void);
     static EmitsDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1371,7 +1371,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -1531,7 +1531,7 @@ TAO_NAMESPACE  IR
     static PublishesDef_ptr tao_nil (void);
     static PublishesDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1616,7 +1616,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -1776,7 +1776,7 @@ TAO_NAMESPACE  IR
     static ConsumesDef_ptr tao_nil (void);
     static ConsumesDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -1861,7 +1861,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -2021,7 +2021,7 @@ TAO_NAMESPACE  IR
     static FactoryDef_ptr tao_nil (void);
     static FactoryDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2106,7 +2106,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -2266,7 +2266,7 @@ TAO_NAMESPACE  IR
     static FinderDef_ptr tao_nil (void);
     static FinderDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2351,7 +2351,7 @@ TAO_NAMESPACE  IR
     virtual void _downcast (
         void* target,
         CORBA_Object *src
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual CORBA_Object* _upcast (void *src) const;
   };
@@ -2511,7 +2511,7 @@ TAO_NAMESPACE  IR
     static PrimaryKeyDef_ptr tao_nil (void);
     static PrimaryKeyDef_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2590,7 +2590,7 @@ TAO_NAMESPACE  IR
     static ComponentRepository_ptr tao_nil (void);
     static ComponentRepository_ptr tao_narrow (
         CORBA::Object *
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
 
@@ -2654,12 +2654,12 @@ TAO_NAMESPACE  IR
 
     static ComponentRepository_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ComponentRepository_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     static ComponentRepository_ptr _nil (void)
@@ -2675,7 +2675,7 @@ TAO_NAMESPACE  IR
         const char * version,
         IR::ComponentDef_ptr base_component,
         const CORBA_InterfaceDefSeq & supports_interfaces
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2688,7 +2688,7 @@ TAO_NAMESPACE  IR
         IR::HomeDef_ptr base_home,
         IR::ComponentDef_ptr managed_component,
         CORBA_ValueDef_ptr primary_key
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2696,7 +2696,7 @@ TAO_NAMESPACE  IR
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -2751,7 +2751,7 @@ TAO_NAMESPACE  IR
         const char * version,
         IR::ComponentDef_ptr base_component,
         const CORBA_InterfaceDefSeq & supports_interfaces
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2765,7 +2765,7 @@ TAO_NAMESPACE  IR
         IR::HomeDef_ptr base_home,
         IR::ComponentDef_ptr managed_component,
         CORBA_ValueDef_ptr primary_key
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2801,7 +2801,7 @@ TAO_NAMESPACE  IR
         const char * version,
         IR::ComponentDef_ptr base_component,
         const CORBA_InterfaceDefSeq & supports_interfaces
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2815,7 +2815,7 @@ TAO_NAMESPACE  IR
         IR::HomeDef_ptr base_home,
         IR::ComponentDef_ptr managed_component,
         CORBA_ValueDef_ptr primary_key
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2844,7 +2844,7 @@ TAO_NAMESPACE  IR
     virtual ~_TAO_ComponentRepository_Proxy_Broker (void);
     virtual _TAO_ComponentRepository_Proxy_Impl &select_proxy (
         ComponentRepository *object
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       ) = 0;
 
   protected:
@@ -2871,7 +2871,7 @@ TAO_NAMESPACE  IR
 
     virtual _TAO_ComponentRepository_Proxy_Impl &select_proxy (
         ComponentRepository *object
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     private:
@@ -2919,12 +2919,12 @@ TAO_NAMESPACE  IR
 
       static ProvidesDef_ptr _narrow (
           CORBA::Object_ptr obj
-          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
       static ProvidesDef_ptr _unchecked_narrow (
           CORBA::Object_ptr obj
-          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
       static ProvidesDef_ptr _nil (void)
@@ -2935,7 +2935,7 @@ TAO_NAMESPACE  IR
       static void _tao_any_destructor (void*);
 
       virtual CORBA_InterfaceDef_ptr interface_type (
-          TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -2943,7 +2943,7 @@ TAO_NAMESPACE  IR
 
       virtual CORBA::Boolean _is_a (
           const CORBA::Char *type_id
-          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
       virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -2993,7 +2993,7 @@ TAO_NAMESPACE  IR
       virtual ~_TAO_ProvidesDef_Proxy_Impl (void) { }
       virtual CORBA_InterfaceDef_ptr interface_type (
           CORBA_Object *_collocated_tao_target_
-          TAO_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -3024,7 +3024,7 @@ TAO_NAMESPACE  IR
       virtual ~_TAO_ProvidesDef_Remote_Proxy_Impl (void) { }
       virtual CORBA_InterfaceDef_ptr interface_type (
           CORBA_Object *_collocated_tao_target_
-          TAO_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -3053,7 +3053,7 @@ TAO_NAMESPACE  IR
       virtual ~_TAO_ProvidesDef_Proxy_Broker (void);
       virtual _TAO_ProvidesDef_Proxy_Impl &select_proxy (
           ProvidesDef *object
-          TAO_ENV_ARG_DECL_WITH_DEFAULTS
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
         ) = 0;
 
     protected:
@@ -3080,7 +3080,7 @@ TAO_NAMESPACE  IR
 
       virtual _TAO_ProvidesDef_Proxy_Impl &select_proxy (
           ProvidesDef *object
-          TAO_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL
         );
 
       private:
@@ -3198,12 +3198,12 @@ TAO_NAMESPACE  IR
 
         static UsesDef_ptr _narrow (
             CORBA::Object_ptr obj
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
         static UsesDef_ptr _unchecked_narrow (
             CORBA::Object_ptr obj
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
         static UsesDef_ptr _nil (void)
@@ -3214,14 +3214,14 @@ TAO_NAMESPACE  IR
         static void _tao_any_destructor (void*);
 
         virtual CORBA_InterfaceDef_ptr interface_type (
-            TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+            ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
           ACE_THROW_SPEC ((
             CORBA::SystemException
           ));
 
         virtual CORBA::Boolean is_multiple (
-            TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+            ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -3229,7 +3229,7 @@ TAO_NAMESPACE  IR
 
         virtual CORBA::Boolean _is_a (
             const CORBA::Char *type_id
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
         virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -3279,7 +3279,7 @@ TAO_NAMESPACE  IR
         virtual ~_TAO_UsesDef_Proxy_Impl (void) { }
         virtual CORBA_InterfaceDef_ptr interface_type (
             CORBA_Object *_collocated_tao_target_
-            TAO_ENV_ARG_DECL
+            ACE_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -3287,7 +3287,7 @@ TAO_NAMESPACE  IR
 
         virtual CORBA::Boolean is_multiple (
             CORBA_Object *_collocated_tao_target_
-            TAO_ENV_ARG_DECL
+            ACE_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -3318,7 +3318,7 @@ TAO_NAMESPACE  IR
         virtual ~_TAO_UsesDef_Remote_Proxy_Impl (void) { }
         virtual CORBA_InterfaceDef_ptr interface_type (
             CORBA_Object *_collocated_tao_target_
-            TAO_ENV_ARG_DECL
+            ACE_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -3326,7 +3326,7 @@ TAO_NAMESPACE  IR
 
         virtual CORBA::Boolean is_multiple (
             CORBA_Object *_collocated_tao_target_
-            TAO_ENV_ARG_DECL
+            ACE_ENV_ARG_DECL
           )
           ACE_THROW_SPEC ((
             CORBA::SystemException
@@ -3355,7 +3355,7 @@ TAO_NAMESPACE  IR
         virtual ~_TAO_UsesDef_Proxy_Broker (void);
         virtual _TAO_UsesDef_Proxy_Impl &select_proxy (
             UsesDef *object
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS
           ) = 0;
 
       protected:
@@ -3382,7 +3382,7 @@ TAO_NAMESPACE  IR
 
         virtual _TAO_UsesDef_Proxy_Impl &select_proxy (
             UsesDef *object
-            TAO_ENV_ARG_DECL
+            ACE_ENV_ARG_DECL
           );
 
         private:
@@ -3827,12 +3827,12 @@ TAO_NAMESPACE  IR
 
           static EventDef_ptr _narrow (
               CORBA::Object_ptr obj
-              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
           static EventDef_ptr _unchecked_narrow (
               CORBA::Object_ptr obj
-              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
           static EventDef_ptr _nil (void)
@@ -3844,14 +3844,14 @@ TAO_NAMESPACE  IR
 
           virtual CORBA::Boolean is_a (
               const char * event_id
-              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
             ACE_THROW_SPEC ((
               CORBA::SystemException
             ));
 
           virtual CORBA_ValueDef_ptr event (
-              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -3859,7 +3859,7 @@ TAO_NAMESPACE  IR
 
           virtual CORBA::Boolean _is_a (
               const CORBA::Char *type_id
-              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
           virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -3910,7 +3910,7 @@ TAO_NAMESPACE  IR
           virtual CORBA::Boolean is_a (
               CORBA_Object *_collocated_tao_target_,
               const char * event_id
-              TAO_ENV_ARG_DECL
+              ACE_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -3918,7 +3918,7 @@ TAO_NAMESPACE  IR
 
           virtual CORBA_ValueDef_ptr event (
               CORBA_Object *_collocated_tao_target_
-              TAO_ENV_ARG_DECL
+              ACE_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -3950,7 +3950,7 @@ TAO_NAMESPACE  IR
           virtual CORBA::Boolean is_a (
               CORBA_Object *_collocated_tao_target_,
               const char * event_id
-              TAO_ENV_ARG_DECL
+              ACE_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -3958,7 +3958,7 @@ TAO_NAMESPACE  IR
 
           virtual CORBA_ValueDef_ptr event (
               CORBA_Object *_collocated_tao_target_
-              TAO_ENV_ARG_DECL
+              ACE_ENV_ARG_DECL
             )
             ACE_THROW_SPEC ((
               CORBA::SystemException
@@ -3987,7 +3987,7 @@ TAO_NAMESPACE  IR
           virtual ~_TAO_EventDef_Proxy_Broker (void);
           virtual _TAO_EventDef_Proxy_Impl &select_proxy (
               EventDef *object
-              TAO_ENV_ARG_DECL_WITH_DEFAULTS
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS
             ) = 0;
 
         protected:
@@ -4014,7 +4014,7 @@ TAO_NAMESPACE  IR
 
           virtual _TAO_EventDef_Proxy_Impl &select_proxy (
               EventDef *object
-              TAO_ENV_ARG_DECL
+              ACE_ENV_ARG_DECL
             );
 
           private:
@@ -4132,12 +4132,12 @@ TAO_NAMESPACE  IR
 
             static EmitsDef_ptr _narrow (
                 CORBA::Object_ptr obj
-                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
             static EmitsDef_ptr _unchecked_narrow (
                 CORBA::Object_ptr obj
-                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
             static EmitsDef_ptr _nil (void)
@@ -4149,7 +4149,7 @@ TAO_NAMESPACE  IR
 
             virtual CORBA::Boolean _is_a (
                 const CORBA::Char *type_id
-                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
             virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -4243,7 +4243,7 @@ TAO_NAMESPACE  IR
             virtual ~_TAO_EmitsDef_Proxy_Broker (void);
             virtual _TAO_EmitsDef_Proxy_Impl &select_proxy (
                 EmitsDef *object
-                TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS
               ) = 0;
 
           protected:
@@ -4270,7 +4270,7 @@ TAO_NAMESPACE  IR
 
             virtual _TAO_EmitsDef_Proxy_Impl &select_proxy (
                 EmitsDef *object
-                TAO_ENV_ARG_DECL
+                ACE_ENV_ARG_DECL
               );
 
             private:
@@ -4318,12 +4318,12 @@ TAO_NAMESPACE  IR
 
               static PublishesDef_ptr _narrow (
                   CORBA::Object_ptr obj
-                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
               static PublishesDef_ptr _unchecked_narrow (
                   CORBA::Object_ptr obj
-                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
               static PublishesDef_ptr _nil (void)
@@ -4335,7 +4335,7 @@ TAO_NAMESPACE  IR
 
               virtual CORBA::Boolean _is_a (
                   const CORBA::Char *type_id
-                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
               virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -4429,7 +4429,7 @@ TAO_NAMESPACE  IR
               virtual ~_TAO_PublishesDef_Proxy_Broker (void);
               virtual _TAO_PublishesDef_Proxy_Impl &select_proxy (
                   PublishesDef *object
-                  TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS
                 ) = 0;
 
             protected:
@@ -4456,7 +4456,7 @@ TAO_NAMESPACE  IR
 
               virtual _TAO_PublishesDef_Proxy_Impl &select_proxy (
                   PublishesDef *object
-                  TAO_ENV_ARG_DECL
+                  ACE_ENV_ARG_DECL
                 );
 
               private:
@@ -4504,12 +4504,12 @@ TAO_NAMESPACE  IR
 
                 static ConsumesDef_ptr _narrow (
                     CORBA::Object_ptr obj
-                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                 static ConsumesDef_ptr _unchecked_narrow (
                     CORBA::Object_ptr obj
-                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                 static ConsumesDef_ptr _nil (void)
@@ -4521,7 +4521,7 @@ TAO_NAMESPACE  IR
 
                 virtual CORBA::Boolean _is_a (
                     const CORBA::Char *type_id
-                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                 virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -4615,7 +4615,7 @@ TAO_NAMESPACE  IR
                 virtual ~_TAO_ConsumesDef_Proxy_Broker (void);
                 virtual _TAO_ConsumesDef_Proxy_Impl &select_proxy (
                     ConsumesDef *object
-                    TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS
                   ) = 0;
 
               protected:
@@ -4642,7 +4642,7 @@ TAO_NAMESPACE  IR
 
                 virtual _TAO_ConsumesDef_Proxy_Impl &select_proxy (
                     ConsumesDef *object
-                    TAO_ENV_ARG_DECL
+                    ACE_ENV_ARG_DECL
                   );
 
                 private:
@@ -4690,12 +4690,12 @@ TAO_NAMESPACE  IR
 
                   static ComponentDef_ptr _narrow (
                       CORBA::Object_ptr obj
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                   static ComponentDef_ptr _unchecked_narrow (
                       CORBA::Object_ptr obj
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                   static ComponentDef_ptr _nil (void)
@@ -4706,7 +4706,7 @@ TAO_NAMESPACE  IR
                   static void _tao_any_destructor (void*);
 
                   virtual CORBA_InterfaceDefSeq * supported_interfaces (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4714,56 +4714,56 @@ TAO_NAMESPACE  IR
 
                   virtual void supported_interfaces (
                       const CORBA_InterfaceDefSeq & supported_interfaces
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual IR::ComponentDef_ptr base_component (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual IR::ProvidesDefSeq * provides_interfaces (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual IR::UsesDefSeq * uses_interfaces (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual IR::EmitsDefSeq * emits_events (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual IR::PublishesDefSeq * publishes_events (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual IR::ConsumesDefSeq * consumes_events (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
                     ));
 
                   virtual CORBA::Boolean is_basic (
-                      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4774,7 +4774,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_InterfaceDef_ptr interface_type
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4786,7 +4786,7 @@ TAO_NAMESPACE  IR
                       const char * version,
                       CORBA_InterfaceDef_ptr interface_type,
                       CORBA::Boolean is_multiple
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4797,7 +4797,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4808,7 +4808,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4819,7 +4819,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4827,7 +4827,7 @@ TAO_NAMESPACE  IR
 
                   virtual CORBA::Boolean _is_a (
                       const CORBA::Char *type_id
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                   virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -4877,7 +4877,7 @@ TAO_NAMESPACE  IR
                   virtual ~_TAO_ComponentDef_Proxy_Impl (void) { }
                   virtual CORBA_InterfaceDefSeq * supported_interfaces (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4886,7 +4886,7 @@ TAO_NAMESPACE  IR
                   virtual void supported_interfaces (
                       CORBA_Object *_collocated_tao_target_,
                       const CORBA_InterfaceDefSeq & supported_interfaces
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4894,7 +4894,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::ComponentDef_ptr base_component (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4902,7 +4902,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::ProvidesDefSeq * provides_interfaces (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4910,7 +4910,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::UsesDefSeq * uses_interfaces (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4918,7 +4918,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::EmitsDefSeq * emits_events (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4926,7 +4926,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::PublishesDefSeq * publishes_events (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4934,7 +4934,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::ConsumesDefSeq * consumes_events (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4942,7 +4942,7 @@ TAO_NAMESPACE  IR
 
                   virtual CORBA::Boolean is_basic (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4954,7 +4954,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_InterfaceDef_ptr interface_type
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4967,7 +4967,7 @@ TAO_NAMESPACE  IR
                       const char * version,
                       CORBA_InterfaceDef_ptr interface_type,
                       CORBA::Boolean is_multiple
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4979,7 +4979,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -4991,7 +4991,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5003,7 +5003,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5034,7 +5034,7 @@ TAO_NAMESPACE  IR
                   virtual ~_TAO_ComponentDef_Remote_Proxy_Impl (void) { }
                   virtual CORBA_InterfaceDefSeq * supported_interfaces (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5043,7 +5043,7 @@ TAO_NAMESPACE  IR
                   virtual void supported_interfaces (
                       CORBA_Object *_collocated_tao_target_,
                       const CORBA_InterfaceDefSeq & supported_interfaces
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5051,7 +5051,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::ComponentDef_ptr base_component (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5059,7 +5059,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::ProvidesDefSeq * provides_interfaces (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5067,7 +5067,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::UsesDefSeq * uses_interfaces (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5075,7 +5075,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::EmitsDefSeq * emits_events (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5083,7 +5083,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::PublishesDefSeq * publishes_events (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5091,7 +5091,7 @@ TAO_NAMESPACE  IR
 
                   virtual IR::ConsumesDefSeq * consumes_events (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5099,7 +5099,7 @@ TAO_NAMESPACE  IR
 
                   virtual CORBA::Boolean is_basic (
                       CORBA_Object *_collocated_tao_target_
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5111,7 +5111,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_InterfaceDef_ptr interface_type
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5124,7 +5124,7 @@ TAO_NAMESPACE  IR
                       const char * version,
                       CORBA_InterfaceDef_ptr interface_type,
                       CORBA::Boolean is_multiple
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5136,7 +5136,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5148,7 +5148,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5160,7 +5160,7 @@ TAO_NAMESPACE  IR
                       const char * name,
                       const char * version,
                       CORBA_ValueDef_ptr value
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     )
                     ACE_THROW_SPEC ((
                       CORBA::SystemException
@@ -5189,7 +5189,7 @@ TAO_NAMESPACE  IR
                   virtual ~_TAO_ComponentDef_Proxy_Broker (void);
                   virtual _TAO_ComponentDef_Proxy_Impl &select_proxy (
                       ComponentDef *object
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS
                     ) = 0;
 
                 protected:
@@ -5216,7 +5216,7 @@ TAO_NAMESPACE  IR
 
                   virtual _TAO_ComponentDef_Proxy_Impl &select_proxy (
                       ComponentDef *object
-                      TAO_ENV_ARG_DECL
+                      ACE_ENV_ARG_DECL
                     );
 
                   private:
@@ -5342,12 +5342,12 @@ TAO_NAMESPACE  IR
 
                     static PrimaryKeyDef_ptr _narrow (
                         CORBA::Object_ptr obj
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                     static PrimaryKeyDef_ptr _unchecked_narrow (
                         CORBA::Object_ptr obj
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                     static PrimaryKeyDef_ptr _nil (void)
@@ -5359,14 +5359,14 @@ TAO_NAMESPACE  IR
 
                     virtual CORBA::Boolean is_a (
                         const char * primary_key_id
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
                       ));
 
                     virtual CORBA_ValueDef_ptr primary_key (
-                        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -5374,7 +5374,7 @@ TAO_NAMESPACE  IR
 
                     virtual CORBA::Boolean _is_a (
                         const CORBA::Char *type_id
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -5425,7 +5425,7 @@ TAO_NAMESPACE  IR
                     virtual CORBA::Boolean is_a (
                         CORBA_Object *_collocated_tao_target_,
                         const char * primary_key_id
-                        TAO_ENV_ARG_DECL
+                        ACE_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -5433,7 +5433,7 @@ TAO_NAMESPACE  IR
 
                     virtual CORBA_ValueDef_ptr primary_key (
                         CORBA_Object *_collocated_tao_target_
-                        TAO_ENV_ARG_DECL
+                        ACE_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -5465,7 +5465,7 @@ TAO_NAMESPACE  IR
                     virtual CORBA::Boolean is_a (
                         CORBA_Object *_collocated_tao_target_,
                         const char * primary_key_id
-                        TAO_ENV_ARG_DECL
+                        ACE_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -5473,7 +5473,7 @@ TAO_NAMESPACE  IR
 
                     virtual CORBA_ValueDef_ptr primary_key (
                         CORBA_Object *_collocated_tao_target_
-                        TAO_ENV_ARG_DECL
+                        ACE_ENV_ARG_DECL
                       )
                       ACE_THROW_SPEC ((
                         CORBA::SystemException
@@ -5502,7 +5502,7 @@ TAO_NAMESPACE  IR
                     virtual ~_TAO_PrimaryKeyDef_Proxy_Broker (void);
                     virtual _TAO_PrimaryKeyDef_Proxy_Impl &select_proxy (
                         PrimaryKeyDef *object
-                        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS
                       ) = 0;
 
                   protected:
@@ -5529,7 +5529,7 @@ TAO_NAMESPACE  IR
 
                     virtual _TAO_PrimaryKeyDef_Proxy_Impl &select_proxy (
                         PrimaryKeyDef *object
-                        TAO_ENV_ARG_DECL
+                        ACE_ENV_ARG_DECL
                       );
 
                     private:
@@ -5647,12 +5647,12 @@ TAO_NAMESPACE  IR
 
                       static FactoryDef_ptr _narrow (
                           CORBA::Object_ptr obj
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                       static FactoryDef_ptr _unchecked_narrow (
                           CORBA::Object_ptr obj
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                       static FactoryDef_ptr _nil (void)
@@ -5664,7 +5664,7 @@ TAO_NAMESPACE  IR
 
                       virtual CORBA::Boolean _is_a (
                           const CORBA::Char *type_id
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                       virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -5758,7 +5758,7 @@ TAO_NAMESPACE  IR
                       virtual ~_TAO_FactoryDef_Proxy_Broker (void);
                       virtual _TAO_FactoryDef_Proxy_Impl &select_proxy (
                           FactoryDef *object
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS
                         ) = 0;
 
                     protected:
@@ -5785,7 +5785,7 @@ TAO_NAMESPACE  IR
 
                       virtual _TAO_FactoryDef_Proxy_Impl &select_proxy (
                           FactoryDef *object
-                          TAO_ENV_ARG_DECL
+                          ACE_ENV_ARG_DECL
                         );
 
                       private:
@@ -5833,12 +5833,12 @@ TAO_NAMESPACE  IR
 
                         static FinderDef_ptr _narrow (
                             CORBA::Object_ptr obj
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                         static FinderDef_ptr _unchecked_narrow (
                             CORBA::Object_ptr obj
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                         static FinderDef_ptr _nil (void)
@@ -5850,7 +5850,7 @@ TAO_NAMESPACE  IR
 
                         virtual CORBA::Boolean _is_a (
                             const CORBA::Char *type_id
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                         virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -5944,7 +5944,7 @@ TAO_NAMESPACE  IR
                         virtual ~_TAO_FinderDef_Proxy_Broker (void);
                         virtual _TAO_FinderDef_Proxy_Impl &select_proxy (
                             FinderDef *object
-                            TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS
                           ) = 0;
 
                       protected:
@@ -5971,7 +5971,7 @@ TAO_NAMESPACE  IR
 
                         virtual _TAO_FinderDef_Proxy_Impl &select_proxy (
                             FinderDef *object
-                            TAO_ENV_ARG_DECL
+                            ACE_ENV_ARG_DECL
                           );
 
                         private:
@@ -6019,12 +6019,12 @@ TAO_NAMESPACE  IR
 
                           static HomeDef_ptr _narrow (
                               CORBA::Object_ptr obj
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                           static HomeDef_ptr _unchecked_narrow (
                               CORBA::Object_ptr obj
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                           static HomeDef_ptr _nil (void)
@@ -6035,42 +6035,42 @@ TAO_NAMESPACE  IR
                           static void _tao_any_destructor (void*);
 
                           virtual IR::HomeDef_ptr base_home (
-                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual IR::ComponentDef_ptr managed_component (
-                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual IR::PrimaryKeyDef_ptr primary_key (
-                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual IR::FactoryDefSeq * factories (
-                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual IR::FinderDefSeq * finders (
-                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
                             ));
 
                           virtual CORBA::Boolean is_basic (
-                              TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6081,7 +6081,7 @@ TAO_NAMESPACE  IR
                               const char * name,
                               const char * version,
                               CORBA_ValueDef_ptr primary_key
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6093,7 +6093,7 @@ TAO_NAMESPACE  IR
                               const char * version,
                               const CORBA_ParDescriptionSeq & params,
                               const CORBA_ExceptionDefSeq & exceptions
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6105,7 +6105,7 @@ TAO_NAMESPACE  IR
                               const char * version,
                               const CORBA_ParDescriptionSeq & params,
                               const CORBA_ExceptionDefSeq & exceptions
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6113,7 +6113,7 @@ TAO_NAMESPACE  IR
 
                           virtual CORBA::Boolean _is_a (
                               const CORBA::Char *type_id
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
                           virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -6163,7 +6163,7 @@ TAO_NAMESPACE  IR
                           virtual ~_TAO_HomeDef_Proxy_Impl (void) { }
                           virtual IR::HomeDef_ptr base_home (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6171,7 +6171,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::ComponentDef_ptr managed_component (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6179,7 +6179,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::PrimaryKeyDef_ptr primary_key (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6187,7 +6187,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::FactoryDefSeq * factories (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6195,7 +6195,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::FinderDefSeq * finders (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6203,7 +6203,7 @@ TAO_NAMESPACE  IR
 
                           virtual CORBA::Boolean is_basic (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6215,7 +6215,7 @@ TAO_NAMESPACE  IR
                               const char * name,
                               const char * version,
                               CORBA_ValueDef_ptr primary_key
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6228,7 +6228,7 @@ TAO_NAMESPACE  IR
                               const char * version,
                               const CORBA_ParDescriptionSeq & params,
                               const CORBA_ExceptionDefSeq & exceptions
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6241,7 +6241,7 @@ TAO_NAMESPACE  IR
                               const char * version,
                               const CORBA_ParDescriptionSeq & params,
                               const CORBA_ExceptionDefSeq & exceptions
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6272,7 +6272,7 @@ TAO_NAMESPACE  IR
                           virtual ~_TAO_HomeDef_Remote_Proxy_Impl (void) { }
                           virtual IR::HomeDef_ptr base_home (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6280,7 +6280,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::ComponentDef_ptr managed_component (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6288,7 +6288,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::PrimaryKeyDef_ptr primary_key (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6296,7 +6296,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::FactoryDefSeq * factories (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6304,7 +6304,7 @@ TAO_NAMESPACE  IR
 
                           virtual IR::FinderDefSeq * finders (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6312,7 +6312,7 @@ TAO_NAMESPACE  IR
 
                           virtual CORBA::Boolean is_basic (
                               CORBA_Object *_collocated_tao_target_
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6324,7 +6324,7 @@ TAO_NAMESPACE  IR
                               const char * name,
                               const char * version,
                               CORBA_ValueDef_ptr primary_key
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6337,7 +6337,7 @@ TAO_NAMESPACE  IR
                               const char * version,
                               const CORBA_ParDescriptionSeq & params,
                               const CORBA_ExceptionDefSeq & exceptions
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6350,7 +6350,7 @@ TAO_NAMESPACE  IR
                               const char * version,
                               const CORBA_ParDescriptionSeq & params,
                               const CORBA_ExceptionDefSeq & exceptions
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             )
                             ACE_THROW_SPEC ((
                               CORBA::SystemException
@@ -6379,7 +6379,7 @@ TAO_NAMESPACE  IR
                           virtual ~_TAO_HomeDef_Proxy_Broker (void);
                           virtual _TAO_HomeDef_Proxy_Impl &select_proxy (
                               HomeDef *object
-                              TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS
                             ) = 0;
 
                         protected:
@@ -6406,7 +6406,7 @@ TAO_NAMESPACE  IR
 
                           virtual _TAO_HomeDef_Proxy_Impl &select_proxy (
                               HomeDef *object
-                              TAO_ENV_ARG_DECL
+                              ACE_ENV_ARG_DECL
                             );
 
                           private:

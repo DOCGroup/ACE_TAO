@@ -45,7 +45,7 @@ public:
   // thread entry point
 
 private:
-  void validate_connection (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void validate_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Validate the connection
 
 private:

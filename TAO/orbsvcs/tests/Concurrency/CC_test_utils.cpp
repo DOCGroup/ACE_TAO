@@ -53,7 +53,7 @@ CC_TestUtils::create_lock_set (void)
   ACE_TRY
     {
       lock_set =
-        CC_naming_service::Instance()->get_lock_set_factory ()->create (TAO_ENV_SINGLE_ARG_PARAMETER);
+        CC_naming_service::Instance()->get_lock_set_factory ()->create (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (lock_set))

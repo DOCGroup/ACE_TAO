@@ -17,7 +17,7 @@ TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i (void)
 
 TAO_TypeCodeFactory_i *
 TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr obj
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     {
@@ -55,7 +55,7 @@ TAO_TypeCodeFactory_i::create_struct_tc (
     const char *id,
     const char *name,
     const CORBA_StructMemberSeq &members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -63,7 +63,7 @@ TAO_TypeCodeFactory_i::create_struct_tc (
                                         name,
                                         members,
                                         CORBA::tk_struct
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
@@ -72,7 +72,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     const char *name,
     CORBA::TypeCode_ptr discriminator_type,
     const CORBA_UnionMemberSeq &members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -92,7 +92,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   CORBA::Boolean good_disc_type =
     this->valid_disc_type (discriminator_type
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   if (!good_disc_type)
@@ -131,7 +131,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
             {
               CORBA::Boolean equiv =
                 members[i].type.in ()->equivalent (members[i - 1].type.in ()
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
               // If adjacent names are the same and their types are equivalent,
@@ -179,7 +179,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       // Valid member type?
       valid_member = this->valid_content_type (tc_holder
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       if (!valid_member)
@@ -208,7 +208,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
           CORBA::Boolean equiv =
             discriminator_type->equivalent (tmp.in ()
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
           if (!equiv)
@@ -224,7 +224,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     this->unique_label_values (members,
                                discriminator_type,
                                raw_default_index
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   if (!unique_labels)
@@ -265,7 +265,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
       if (index == raw_default_index)
         {
           // This is the default label - we have to find a legal value.
-          CORBA::TCKind kind = discriminator_type->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          CORBA::TCKind kind = discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
           this->compute_default_label (kind,
@@ -284,7 +284,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
           (void) TAO_Marshal_Object::perform_append (tc.in (),
                                                      &in,
                                                      &cdr
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
         }
 
@@ -318,7 +318,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
     const char *id,
     const char *name,
     const CORBA_EnumMemberSeq &members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -400,7 +400,7 @@ TAO_TypeCodeFactory_i::create_alias_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr original_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -420,7 +420,7 @@ TAO_TypeCodeFactory_i::create_alias_tc (
 
   CORBA::Boolean valid_content =
     this->valid_content_type (original_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   if (!valid_content)
@@ -471,7 +471,7 @@ TAO_TypeCodeFactory_i::create_exception_tc (
     const char *id,
     const char *name,
     const CORBA_StructMemberSeq &members
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -479,27 +479,27 @@ TAO_TypeCodeFactory_i::create_exception_tc (
                                         name,
                                         members,
                                         CORBA::tk_except
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_interface_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
                                  CORBA::tk_objref
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_string_tc (
     CORBA::ULong bound
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -527,7 +527,7 @@ TAO_TypeCodeFactory_i::create_string_tc (
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_wstring_tc (
     CORBA::ULong bound
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -556,7 +556,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_fixed_tc (
     CORBA::UShort /* digits */,
     CORBA::UShort /* scale */
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -568,13 +568,13 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_sequence_tc (
     CORBA::ULong bound,
     CORBA::TypeCode_ptr element_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean valid_element =
     this->valid_content_type (element_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   if (!valid_element)
@@ -616,13 +616,13 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_array_tc (
     CORBA::ULong length,
     CORBA::TypeCode_ptr element_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean valid_element =
     this->valid_content_type (element_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   if (!valid_element)
@@ -667,7 +667,7 @@ TAO_TypeCodeFactory_i::create_value_tc (
     CORBA::ValueModifier /* type_modifier */,
     CORBA::TypeCode_ptr /* concrete_base */,
     const CORBA_ValueMemberSeq & /* members */
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -680,7 +680,7 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr boxed_type
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -701,7 +701,7 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
 
   CORBA::Boolean valid_content =
     this->valid_content_type (boxed_type
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   if (!valid_content)
@@ -745,20 +745,20 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_native_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
                                  CORBA::tk_native
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_recursive_tc (
     const char * /* id */
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -770,56 +770,56 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_abstract_interface_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
                                  CORBA::tk_abstract_interface
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_local_interface_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
                                  CORBA::tk_local_interface
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_component_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
                                  CORBA::tk_component
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_home_tc (
     const char *id,
     const char *name
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
                                  CORBA::tk_home
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -1008,7 +1008,7 @@ TAO_TypeCodeFactory_i::create_tc_common (
     const char *id,
     const char *name,
     CORBA::TCKind kind
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1061,7 +1061,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
     const char *name,
     const CORBA_StructMemberSeq &members,
     CORBA::TCKind kind
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1111,7 +1111,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
       tc_holder = members[index].type.in ();
 
       valid_member = this->valid_content_type (tc_holder
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       if (!valid_member)
@@ -1221,9 +1221,9 @@ TAO_TypeCodeFactory_i::valid_id (const char *id)
 
 CORBA::Boolean
 TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
-                                           TAO_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL)
 {
-  CORBA::TCKind kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (kind == CORBA::tk_null
@@ -1240,9 +1240,9 @@ CORBA::Boolean
 TAO_TypeCodeFactory_i::unique_label_values (const CORBA_UnionMemberSeq &members,
                                             CORBA::TypeCode_ptr disc_tc,
                                             CORBA::ULong default_index_slot
-                                            TAO_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
 {
-  CORBA::TCKind disc_kind = disc_tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind disc_kind = disc_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong length = members.length ();
@@ -1392,9 +1392,9 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA_UnionMemberSeq &members,
 
 CORBA::Boolean
 TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
-  CORBA::TCKind kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (kind == CORBA::tk_enum

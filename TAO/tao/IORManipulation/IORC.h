@@ -90,12 +90,12 @@ TAO_NAMESPACE  TAO_IOP
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static EmptyProfileList *_downcast (CORBA::Exception *);
@@ -136,12 +136,12 @@ TAO_NAMESPACE  TAO_IOP
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static NotFound *_downcast (CORBA::Exception *);
@@ -182,12 +182,12 @@ TAO_NAMESPACE  TAO_IOP
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static Duplicate *_downcast (CORBA::Exception *);
@@ -228,12 +228,12 @@ TAO_NAMESPACE  TAO_IOP
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static Invalid_IOR *_downcast (CORBA::Exception *);
@@ -274,12 +274,12 @@ TAO_NAMESPACE  TAO_IOP
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        TAO_ENV_ARG_DECL_NOT_USED
+        ACE_ENV_ARG_DECL_NOT_USED
       );
 
     static MultiProfileList *_downcast (CORBA::Exception *);
@@ -334,7 +334,7 @@ TAO_NAMESPACE  TAO_IOP
     static TAO_IOR_Property_ptr tao_duplicate (TAO_IOR_Property_ptr);
     static void tao_release (TAO_IOR_Property_ptr);
     static TAO_IOR_Property_ptr tao_nil (void);
-    static TAO_IOR_Property_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static TAO_IOR_Property_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -389,11 +389,11 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
     static TAO_IOR_Property_ptr _duplicate (TAO_IOR_Property_ptr obj);
     static TAO_IOR_Property_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static TAO_IOR_Property_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static TAO_IOR_Property_ptr _nil (void)
       {
@@ -402,7 +402,7 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
 
     virtual CORBA::Boolean set_property (
         CORBA::Object_ptr ior
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -412,7 +412,7 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
     virtual CORBA::Boolean set_primary (
         CORBA::Object_ptr ior1,
         CORBA::Object_ptr ior2
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -422,7 +422,7 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
 
     virtual CORBA::Object_ptr get_primary (
         CORBA::Object_ptr ior
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -431,7 +431,7 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
 
     virtual CORBA::Boolean is_primary_set (
         CORBA::Object_ptr ior
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -492,7 +492,7 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
     static TAO_IOR_Manipulation_ptr tao_duplicate (TAO_IOR_Manipulation_ptr);
     static void tao_release (TAO_IOR_Manipulation_ptr);
     static TAO_IOR_Manipulation_ptr tao_nil (void);
-    static TAO_IOR_Manipulation_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static TAO_IOR_Manipulation_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -547,11 +547,11 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     static TAO_IOR_Manipulation_ptr _duplicate (TAO_IOR_Manipulation_ptr obj);
     static TAO_IOR_Manipulation_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static TAO_IOR_Manipulation_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static TAO_IOR_Manipulation_ptr _nil (void)
       {
@@ -590,7 +590,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
         virtual void _downcast (
             void* target,
             CORBA_Object *src
-            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
         virtual CORBA_Object* _upcast (void *src) const;
 
@@ -709,7 +709,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
     virtual CORBA::Object_ptr merge_iors (
         const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -721,7 +721,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     virtual CORBA::Object_ptr add_profiles (
         CORBA::Object_ptr ior1,
         CORBA::Object_ptr ior2
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -733,7 +733,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     virtual CORBA::Object_ptr remove_profiles (
         CORBA::Object_ptr ior1,
         CORBA::Object_ptr ior2
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -745,7 +745,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     virtual CORBA::Boolean set_property (
         TAO_IOP::TAO_IOR_Property_ptr prop,
         CORBA::Object_ptr ior
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -757,7 +757,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
         TAO_IOP::TAO_IOR_Property_ptr prop,
         CORBA::Object_ptr ior1,
         CORBA::Object_ptr ior2
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -770,7 +770,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     virtual CORBA::Object_ptr get_primary (
         TAO_IOP::TAO_IOR_Property_ptr prop,
         CORBA::Object_ptr ior
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -780,7 +780,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     virtual CORBA::Boolean is_primary_set (
         TAO_IOP::TAO_IOR_Property_ptr prop,
         CORBA::Object_ptr ior
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -789,7 +789,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     virtual CORBA::ULong is_in_ior (
         CORBA::Object_ptr ior1,
         CORBA::Object_ptr ior2
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -798,7 +798,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
     virtual CORBA::ULong get_profile_count (
         CORBA::Object_ptr ior
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,

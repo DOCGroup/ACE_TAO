@@ -73,7 +73,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
   *os << be_global->stub_export_macro () << "void" << be_nl
       << "operator<<= (CORBA::Any &any, " << node->name ()
-      << " **value) // non-copying" << be_nl  
+      << " **value) // non-copying" << be_nl
       << "{" << be_idt_nl
       << "TAO_OutputCDR stream;" << be_nl
       << "if (stream << *value)" << be_nl
@@ -84,7 +84,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "*value," << be_nl
-      << node->name () << "::_tao_any_destructor);" 
+      << node->name () << "::_tao_any_destructor);"
       << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -99,7 +99,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "value = 0;" << be_nl
       << "CORBA::TypeCode_var type = any.type ();" << be_nl << be_nl
       << "CORBA::Boolean result = type->equivalent (" << node->tc_name ()
-      << " TAO_ENV_ARG_PARAMETER);" << be_nl
+      << " ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl << be_nl
       << "if (!result)" << be_nl
       << "{" << be_idt_nl

@@ -30,12 +30,12 @@ public:
                                  CORBA::Boolean& done);
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   void push_structured_events (const CosNotification::EventBatch&
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_CString name_;

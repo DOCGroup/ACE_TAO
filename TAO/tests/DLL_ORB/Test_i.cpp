@@ -12,7 +12,7 @@ Test_i::Test_i (void)
 }
 
 void
-Test_i::invoke_me (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+Test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_INFO,
@@ -20,14 +20,14 @@ Test_i::invoke_me (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAME
 }
 
 void
-Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_INFO,
               "Server is shutting down.\n"));
 
   if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void

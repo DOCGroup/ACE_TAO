@@ -35,7 +35,7 @@ class POA_Holder
 
   /// Activate the new POA using the parameters initialized before.
   void activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa
-                 TAO_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL);
 
  protected:
   /// = POA create options.

@@ -33,7 +33,7 @@ public:
   TAO_ESF_Peer_Connected (PEER *peer);
 
   void work (PROXY *proxy
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
 private:
   PEER* peer_;
@@ -56,7 +56,7 @@ public:
   TAO_ESF_Peer_Reconnected (PEER *peer);
 
   void work (PROXY *proxy
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
 private:
   PEER* peer_;
@@ -79,7 +79,7 @@ public:
   TAO_ESF_Peer_Disconnected (PEER *peer);
 
   void work (PROXY *proxy
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
 private:
   PEER* peer_;

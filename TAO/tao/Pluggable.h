@@ -161,7 +161,7 @@ public:
   /// MProfile.
   int make_mprofile (const char *ior,
                      TAO_MProfile &mprofile
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
   ///  Initialize object and register with reactor.
   virtual int open (TAO_ORB_Core *orb_core) = 0;
@@ -176,7 +176,7 @@ public:
    */
   virtual int connect (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc
-                       TAO_ENV_ARG_DECL) = 0;
+                       ACE_ENV_ARG_DECL) = 0;
 
   /// Initial set of connections to be established.
   virtual int preconnect (const char *preconnections) = 0;
@@ -195,7 +195,7 @@ public:
 protected:
 
   /// Create a profile with a given endpoint.
-  virtual TAO_Profile *make_profile (TAO_ENV_SINGLE_ARG_DECL) = 0;
+  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
