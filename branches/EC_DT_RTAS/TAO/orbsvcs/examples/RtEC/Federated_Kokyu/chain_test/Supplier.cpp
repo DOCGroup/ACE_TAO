@@ -53,7 +53,11 @@ Supplier::timeout_occured (Object_ID oid ACE_ENV_ARG_DECL)
   event[0].header.eid.tid = oid.tid;
   event[0].header.eid.pid = oid.pid;
   event[0].header.eid.queue_id = oid.queue_id;
+  event[0].header.eid.gateway_id = 0;
   oid.type = event[0].header.type;
+  oid.pid = ACE_OS::getpid();
+  oid.tid = ACE_OS::thr_self();
+
 
   //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time
   //when event is pushed by client.
@@ -110,7 +114,7 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
 
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
 
-  DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+//  DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
   supplier_impl_->timeout_occured (oid ACE_ENV_ARG_PARAMETER);
 
@@ -118,7 +122,7 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   //DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
   ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
-  DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+//  DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void

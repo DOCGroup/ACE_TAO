@@ -14,6 +14,22 @@
 #include "tao/Utils/Servant_Var.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
+struct subtask_t
+{
+  int task_index;
+  int subtask_index;
+  ACE_Time_Value exec;
+  ACE_Time_Value period;
+  ACE_Time_Value phase;
+}; //struct subtask_t
+
+struct task_trigger_t
+{
+  Supplier_Timeout_Handler *handler;
+  ACE_Time_Value period;
+  ACE_Time_Value phase;
+}; //struct task_trigger_t
+
 class Kokyu_EC : public POA_RtEventChannelAdmin::RtSchedEventChannel
 {
 public:
@@ -27,7 +43,7 @@ public:
       return (tv.sec () * 1000000 + tv.usec ())*10;
     }
 
-    int init(const char* schedule_discipline, PortableServer::POA_ptr poa);
+    int init(const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor = 0);
 
     virtual RtEventChannelAdmin::handle_t register_consumer (
         const char * entry_point,
@@ -92,8 +108,7 @@ public:
                                    Supplier * supplier_impl,
                                    const char * supp_entry_point,
                                    RtecEventComm::EventType supp_type,
-                                   Timeout_Consumer * timeout_consumer_impl,
-                                   const char * timeout_entry_point,
+                                   Supplier_Timeout_Handler * timeout_handler_impl, 
                                    ACE_Time_Value period,
                                    RtecScheduler::Criticality_t crit,
                                    RtecScheduler::Importance_t imp
@@ -107,6 +122,8 @@ public:
                        ));
 
   ///Takes ownership of Timeout_Consumer
+
+/*
   void add_timeout_consumer(
                             Supplier * supplier_impl,
                             Timeout_Consumer * timeout_consumer_impl,
@@ -122,7 +139,7 @@ public:
                      , RtecScheduler::INTERNAL
                      , RtecScheduler::SYNCHRONIZATION_FAILURE
                      ));
-
+*/
     ///Takes ownership of Supplier
     void add_supplier(
                       Supplier * supplier_impl,
@@ -181,8 +198,13 @@ private:
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_;
   RtecScheduler::Scheduler_var scheduler_;
 
+  ACE_Vector<task_trigger_t> task_triggers_; //also keeps track of timeout_handlers
+
+  ACE_Reactor *reactor_;
+  ACE_Vector<long> timer_handles_;
+
   ACE_Vector<Supplier*> suppliers_;
-  ACE_Vector<Timeout_Consumer*> timeout_consumers_;
+//  ACE_Vector<Timeout_Consumer*> timeout_consumers_;
   ACE_Vector<Consumer*> consumers_;
 }; //class Kokyu_EC
 

@@ -63,10 +63,12 @@ Consumer::push (const RtecEventComm::EventSet& events
 
   Object_ID oid;
   oid.id = events[0].header.eid.id;
-  oid.tid = events[0].header.eid.tid;
-  oid.pid = events[0].header.eid.pid;
+//  oid.tid = events[0].header.eid.tid;
+//  oid.pid = events[0].header.eid.pid;
   oid.queue_id = events[0].header.eid.queue_id;
   oid.type = events[0].header.type;
+  oid.pid = ACE_OS::getpid();
+  oid.tid = ACE_OS::thr_self();
 
   ACE_TIMEPROBE("START_SERVICE");
   DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
