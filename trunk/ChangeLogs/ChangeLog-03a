@@ -1,7 +1,25 @@
+Mon Nov  5 13:31:15 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ACE.cpp:
+
+          Fix a build warning for 64-bit HP-UX.
+
+        * ace/Active_Map_Manager_T.i:
+
+          Cast the free list id to ACE_UINT32 to match up with the
+          slot_index () type.  On 64-bit HP-UX, the free list id type
+          (size_t) is a 64 bit number and must be cast down to 32 bits.
+          Otherwise, the slot_index is cast up to 64 bits and does not give
+          the correct results.
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          Add a -L./ to allow the 64-bit HP-UX builds to link properly.
+          
 Mon Nov  5 11:17:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* bin/auto_compile:
-	  Add support for the new status.txt file in the scoreboard.
+        * bin/auto_compile:
+          Add support for the new status.txt file in the scoreboard.
 
 Mon Nov  5 13:02:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -17,30 +35,30 @@ Mon Nov  5 13:02:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Sun Nov 04 11:18:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (fopen): Changed to forward call to fopen instead of
-	  _fopen on non-borland compilers when not using UNICODE.  This
-	  change allows the code to compile on Win98.  Thanks to Jstwo
-	  <jstwo@writeme.com> for submitting the fix.
+        * ace/OS.cpp (fopen): Changed to forward call to fopen instead of
+          _fopen on non-borland compilers when not using UNICODE.  This
+          change allows the code to compile on Win98.  Thanks to Jstwo
+          <jstwo@writeme.com> for submitting the fix.
 
 Thu Nov  1 16:21:51 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* bin/auto_run_tests.pl: Added snippet of code that puts the
-	  current directory ('.') in the PATH environment variable since
-	  auto_run_tests.pl depends on the current directory being there.
+        * bin/auto_run_tests.pl: Added snippet of code that puts the
+          current directory ('.') in the PATH environment variable since
+          auto_run_tests.pl depends on the current directory being there.
 
 Thu Nov 1 15:49:04  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/platform_osf1_4.x_cxx.GNU: Moved the
-	  CXX_VERSION definition to the global scope.
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU: Moved the
+          CXX_VERSION definition to the global scope.
 
-	* include/makeinclude/platform_tru64_cxx.GNU: Added
-	  -D_PTHREAD_ENV_DECCXX flag to the CPPFLAGS. This is done only
-	  for v5.1, 1885. The pthreads.h in 1885 is messed up. The
-	  conditional include of c_asm.h is busted for DECCXX and
-	  v1885. Hence the change. We need to do this to protect ACE and
-	  TAO applications on this platform and compiler
-	  combinations. Thanks to  Don Hinton <dhinton@gmx.net> for
-	  reporting the problem.
+        * include/makeinclude/platform_tru64_cxx.GNU: Added
+          -D_PTHREAD_ENV_DECCXX flag to the CPPFLAGS. This is done only
+          for v5.1, 1885. The pthreads.h in 1885 is messed up. The
+          conditional include of c_asm.h is busted for DECCXX and
+          v1885. Hence the change. We need to do this to protect ACE and
+          TAO applications on this platform and compiler
+          combinations. Thanks to  Don Hinton <dhinton@gmx.net> for
+          reporting the problem.
 
 Thu Nov  1 14:25:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -54,65 +72,65 @@ Thu Nov  1 14:25:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Nov  1 10:27:21 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Select_Reactor_Base.h (open):
-	* ace/Select_Reactor_T.h (ACE_Select_Reactor_T, open):
+        * ace/Select_Reactor_Base.h (open):
+        * ace/Select_Reactor_T.h (ACE_Select_Reactor_T, open):
 
-	  Added a note about the "size" of the Select_Reactor on Unix
-	  platforms. On Unix platforms, the size parameter should be as
-	  large as the maximum number of file descriptors allowed for a
-	  given process.  This is necessary since a file descriptor is
-	  used to directly index the array of event handlers maintained by
-	  the Reactor's handler repository.  Direct indexing is used for
-	  efficiency reasons.
+          Added a note about the "size" of the Select_Reactor on Unix
+          platforms. On Unix platforms, the size parameter should be as
+          large as the maximum number of file descriptors allowed for a
+          given process.  This is necessary since a file descriptor is
+          used to directly index the array of event handlers maintained by
+          the Reactor's handler repository.  Direct indexing is used for
+          efficiency reasons.
 
 Thu Nov  1 06:38:30 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/ACE.cpp: Fixed some minor formatting problems so that
-	  format_hexdump() works properly.  Thanks to Kyle Brost
- 	  <Kyle.Brost@quest.com> for reporting this.
+        * ace/ACE.cpp: Fixed some minor formatting problems so that
+          format_hexdump() works properly.  Thanks to Kyle Brost
+          <Kyle.Brost@quest.com> for reporting this.
 
-	* ace/config-win32.h: Include the config-cygwin32.h file when
-	  __CYGWIN32__ is enabled.  Thanks to Johnny Willemsen for
- 	  reporting this.
+        * ace/config-win32.h: Include the config-cygwin32.h file when
+          __CYGWIN32__ is enabled.  Thanks to Johnny Willemsen for
+          reporting this.
 
-	* ace/Synch.i (remove): Added some casts to make certain compilers
-	  happy?  Thanks to Guillaume Renaud <guillaume.renaud@valtech.fr>
- 	  for reporting this.
+        * ace/Synch.i (remove): Added some casts to make certain compilers
+          happy?  Thanks to Guillaume Renaud <guillaume.renaud@valtech.fr>
+          for reporting this.
 
-	* ace/OS.i: Updated the Win32 version of ACE_OS::llseek().  Thanks to
-	  Doron Rajwan <doron@BANDWIZ.COM> for reporting this.
+        * ace/OS.i: Updated the Win32 version of ACE_OS::llseek().  Thanks to
+          Doron Rajwan <doron@BANDWIZ.COM> for reporting this.
 
 Wed Oct 31 11:25:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.h: The ACE_OS::llseek() method must be static!  Thanks to
-	  Doron Rajwan <doron@BANDWIZ.COM> for reporting this.
+        * ace/OS.h: The ACE_OS::llseek() method must be static!  Thanks to
+          Doron Rajwan <doron@BANDWIZ.COM> for reporting this.
 
 Tue Oct 30 08:30:16 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/RB_Tree.cpp (operator=): Make sure to check for self-assignment
-	  in the operator=.  Thanks to Johnny Willemsen for reporting
- 	  this.
+        * ace/RB_Tree.cpp (operator=): Make sure to check for self-assignment
+          in the operator=.  Thanks to Johnny Willemsen for reporting
+          this.
 
 Mon Oct 29 05:23:56 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Naming_Context.{h,cpp}: Moved ACE_STATIC_SVC_REQUIRE from the
-	  .h file to the .cpp file to avoid multiple definitions.  Thanks to
-	  Boris Kaminer <boris.kaminer@orcsoftware.com> for reporting this.
+        * ace/Naming_Context.{h,cpp}: Moved ACE_STATIC_SVC_REQUIRE from the
+          .h file to the .cpp file to avoid multiple definitions.  Thanks to
+          Boris Kaminer <boris.kaminer@orcsoftware.com> for reporting this.
 
 Sun Oct 28 10:05:32 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/config-macosx.h:
-	* include/makeincludes/platform_macosx.GNU
-	  Added new fixes to get this to work on MacOS X.  Thanks to John
- 	  Michael Zorko <j.zorko@att.net> and Fikri Pribadi
- 	  <fikri@ugotacall.com> for contributing this.
+        * ace/config-macosx.h:
+        * include/makeincludes/platform_macosx.GNU
+          Added new fixes to get this to work on MacOS X.  Thanks to John
+          Michael Zorko <j.zorko@att.net> and Fikri Pribadi
+          <fikri@ugotacall.com> for contributing this.
 
 Wed Oct 24 23:59:13 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Configuration_Import_Export.cpp: Fixed a bug where a
-	  check of a pointer was made rather than the character pointed to
- 	  by the pointer.  Thanks to Juan Jose Comellas
- 	  <uanjo@comellas.org> for reporting this.
+        * ace/Configuration_Import_Export.cpp: Fixed a bug where a
+          check of a pointer was made rather than the character pointed to
+          by the pointer.  Thanks to Juan Jose Comellas
+          <uanjo@comellas.org> for reporting this.
 
 Tue Oct 30 22:53:57 2001  Ossama Othman  <ossama@uci.edu>
 
