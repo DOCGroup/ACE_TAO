@@ -1,7 +1,13 @@
+Sun Jun 20 15:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+          Added include of ace/OS_NS_string.h to fix compile errors in
+          HPUX builds
+
 Sun Jun 20 09:10:37 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
   	* docs/index.html: Added libraries.html.
-    
+
 	* docs/libraries.html: Updated the documentation to be more consistent.
 
 Sun Jun 20 00:34:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -10,7 +16,7 @@ Sun Jun 20 00:34:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* docs/Tags.html:
 
 	  Updated documentation.
-	
+
 	* docs/libraries.html:
 
 	  New documentation for different libraries in $TAO_ROOT/tao.
