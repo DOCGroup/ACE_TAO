@@ -2,7 +2,6 @@
 //---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
-
 #include "ReceiverImpl.h"
 #include "ChatClientWnd.h"
 //---------------------------------------------------------------------------
@@ -26,7 +25,7 @@ void TReceiverImplementation::message (const char* msg) throw (CORBA::SystemExce
 void TReceiverImplementation::shutdown () throw (CORBA::SystemException)
 {
   // Instruct the ORB to shutdown.
-  orb_->shutdown ();
+  orb_->shutdown (0);
 }
 //---------------------------------------------------------------------------
 void TReceiverImplementation::orb (CORBA::ORB_ptr o)
