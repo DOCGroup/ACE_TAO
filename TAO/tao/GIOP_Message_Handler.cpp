@@ -1,7 +1,9 @@
 #include "tao/GIOP_Message_Handler.h"
+#include "tao/GIOP_Message_Generator_Parser_Impl.h"
+#include "tao/ORB_Core.h"
 #include "tao/Pluggable.h"
 #include "tao/debug.h"
-#include "tao/GIOP_Message_Generator_Parser_Impl.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Handler.inl"
@@ -15,12 +17,11 @@ ACE_RCSID(tao, GIOP_Message_Handler, "$Id$")
 
 
 
-TAO_GIOP_Message_Handler::
-    TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core)
-      : message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
-        message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
-        current_buffer_ (message_size_),
-        message_state_ (orb_core)
+TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core)
+  : message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
+    message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
+    current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    message_state_ (orb_core)
 {
 }
 
