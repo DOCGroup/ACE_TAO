@@ -122,7 +122,7 @@ struct TAO_Call_Data
   u_int except_count;
   // # exceptions.
 
-  const CORBA::TypeCode_ptr *excepts;
+  CORBA::TypeCode_ptr *excepts;
   // Their descriptions.
 };
 
