@@ -182,29 +182,29 @@ TAO_Register<TRADER>::modify (const char *id,
 	support_attrs.type_repos ();
       CosTradingRepos::ServiceTypeRepository_ptr rep = 
 	CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
-      TAO_CHECK_ENV_RETURN (_env,);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
       TRADER::SERVICE_TYPE_MAP &service_type_map = 
 	this->trader_.service_type_map ();
       
       CosTrading::Offer* offer =
 	service_type_map.lookup_offer ((CosTrading::OfferId) id, type, _env);
-      TAO_CHECK_ENV_RETURN (_env,);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
       
       if (offer != 0)
 	{
 	  // Yank our friend, the type struct.
 	  TYPE_STRUCT* type_struct = rep->describe_type (type, _env);
-	  TAO_CHECK_ENV_RETURN (_env,);
+	  TAO_CHECK_ENV_RETURN_VOID (_env);
 	  TAO_Offer_Modifier offer_mod (type, type_struct, *offer);
 
 	  // Delete, add, and change properties of the offer.
 	  this->validate_properties (type, type_struct,
 				     (CosTrading::PropertySeq) modify_list, _env);
-	  TAO_CHECK_ENV_RETURN (_env,);
+	  TAO_CHECK_ENV_RETURN_VOID (_env);
 	  offer_mod.delete_properties (del_list, _env);
-	  TAO_CHECK_ENV_RETURN (_env,);
+	  TAO_CHECK_ENV_RETURN_VOID (_env);
 	  offer_mod.merge_properties (modify_list, _env);
-	  TAO_CHECK_ENV_RETURN (_env,);
+	  TAO_CHECK_ENV_RETURN_VOID (_env);
 
 	  // Alter our reference to the offer. 
 	  offer_mod.affect_change ();
@@ -237,7 +237,7 @@ TAO_Register<TRADER>::withdraw_using_constraint (const char *type,
   
   // Retrieve the type struct
   TYPE_STRUCT* type_struct = rep->describe_type (type, _env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // Try to find the map of offers of desired service type.
   TRADER::SERVICE_TYPE_MAP::Local_Offer_Iterator*
@@ -247,7 +247,7 @@ TAO_Register<TRADER>::withdraw_using_constraint (const char *type,
     {
       TAO_Constraint_Validator validator (type_struct);
       TAO_Constraint_Interpreter constr_inter (validator, constr, _env);
-      TAO_CHECK_ENV_RETURN (_env,);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
       
       while (offer_iter->has_more_offers ())
 	{
@@ -348,7 +348,7 @@ validate_properties (const char* type,
   int length = properties.length ();
   SERVICE_TYPE_REPOS::PropStructSeq& prop_types = type_struct->props;
   TAO_Property_Evaluator_By_Name prop_eval (properties, _env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
   
   // Perform property validation
   length = prop_types.length ();
