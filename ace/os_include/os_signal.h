@@ -50,6 +50,11 @@
 #  endif /* ACE_LACKS_SIGINFO_H */
 #endif /* ACE_HAS_SIGINFO_T */
 
+#if defined (VXWORKS)
+#  include /**/ <sigLib.h>
+#  define NSIG (_NSIGS + 1)
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
