@@ -120,8 +120,12 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       // mean that duplicates were detected, so i thought that
       // it made sense to translate them to DuplicateChannel.
 
-      int retval = ec->init (defPOA,
-                             ACE_TRY_ENV);
+      // @@ Pradeep: right, but you want to report those only if they
+      //    are raised during the activation of the EC, the problem is
+      //    that you are raising the same error if the EC makes a
+      //    mistake and activates the same object twice.
+
+      int retval = ec->init (defPOA, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (retval == -1)

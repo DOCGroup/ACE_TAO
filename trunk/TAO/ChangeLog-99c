@@ -1,3 +1,13 @@
+Sat May 15 22:15:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+	  Added some more @@ comments for Pradeep, in response to his
+	  questions.
+
+	* tao/Connect.cpp:
+	  Remvoed yet another call to ORB_Core_instance()
+
 Sat May 15 22:16:06 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp:

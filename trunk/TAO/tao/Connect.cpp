@@ -278,30 +278,30 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 
 #if !defined (TAO_NO_IOR_TABLE)
   if (ACE_OS::memcmp (object_key,
-		      &TAO_POA::objectkey_prefix[0],
-		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+                      &TAO_POA::objectkey_prefix[0],
+                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       ACE_CString object_id (ACE_reinterpret_cast (const char *, object_key),
-			     TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
-			     0,
-			     0);
+                             TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
+                             0,
+                             0);
 
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Simple Object key %s. Doing the Table Lookup ...\n",
-		    object_id.c_str ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "Simple Object key %s. Doing the Table Lookup ...\n",
+                    object_id.c_str ()));
 
       CORBA::Object_ptr object_reference;
 
       // Do the Table Lookup.
       int status =
-	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
-							 object_reference);
+        this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
+                                                         object_reference);
 
       // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
 
       if (CORBA::is_nil (object_reference) || status == -1)
-	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
+        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
 
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
@@ -376,11 +376,11 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
 // #if !defined (TAO_NO_IOR_TABLE)
 //   if (ACE_OS::memcmp (tmp_key.get_buffer (),
-// 		      &TAO_POA::objectkey_prefix[0],
-// 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
+//                    &TAO_POA::objectkey_prefix[0],
+//                    TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
 //     {
 //       ACE_DEBUG ((LM_DEBUG,
-// 		  "TAO Object Key Prefix found in the object key.\n"));
+//                "TAO Object Key Prefix found in the object key.\n"));
 
 
 //       // Do the Table Lookup. Raise a location forward exception or
@@ -638,7 +638,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   TAO_OutputCDR output (repbuf, sizeof(repbuf),
                         TAO_ENCAP_BYTE_ORDER,
                         this->orb_core_->output_cdr_buffer_allocator (),
-                        this->orb_core_->output_cdr_buffer_allocator ());
+                        this->orb_core_->output_cdr_dblock_allocator (),
+                        this->orb_core_->orb_params ()->cdr_memcpy_tradeoff ());
 
   int result = 0;
   int error_encountered = 0;
