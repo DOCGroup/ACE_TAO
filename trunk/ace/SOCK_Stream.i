@@ -76,7 +76,7 @@ ACE_SOCK_Stream::recv_n (void *buf,
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::recvv_n (iovec iov[],
-                          size_t n,
+                          int n,
                           const ACE_Time_Value *timeout,
                           size_t *bytes_transferred) const
 {
@@ -120,7 +120,7 @@ ACE_SOCK_Stream::send_n (const void *buf,
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::sendv_n (const iovec iov[],
-                          size_t n,
+                          int n,
                           const ACE_Time_Value *timeout,
                           size_t *bytes_transferred) const
 {

@@ -1,3 +1,31 @@
+Mon Jul 22 16:39:21 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Acceptor.cpp (info):
+        * ace/Connector.cpp (info): Cast return val to int.
+
+        * ace/Message_Queue.h (message_count):
+        * ace/Message_Queue_T.{h cpp i} (message_count): Change return value
+          from size_t to int. Changed cur_count_ member (and accessors that
+          return it) from size_t to int. This is a compromise to unify the
+          length of arguments without changing the return types of all
+          methods that return a message count (all the enqueue/dequeue methods,
+          as well as a few others).
+          Changed a number of @arg to @param for doxygen.
+
+        * ace/SOCK_IO.{h i} (recvv, sendv):
+        * ace/SOCK_Stream.{h i}(recvv_n, sendv_n): Changed iovcnt arg from
+          size_t to int. int, though sort of odd as a choice, is the
+          UNIX98 standard and more commonly implemented. Removes an arg
+          size mismatch between the SOCK_IO and ACE layers, restricting the
+          iovcnt range at the SOCK_IO layers to match the layer below.
+          Changed the recv and send iov-enabled, deprecated methods to cast
+          their size_t iovcnt args to int... these deprecated methods should
+          be removed after 5.3 is out.
+
+        * tests/Conn_Test.cpp: Replaced %d with %@ when logging pointers.
+          Added missing string arg for a ACE_ERROR %p directive. Use a
+          int select_width instead of casting ACE_HANDLE for Win64.
+
 Mon Jul 22 15:13:38 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* ace/Atomic_Op.h:

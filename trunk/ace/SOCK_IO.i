@@ -45,7 +45,7 @@ ACE_SOCK_IO::recv (void *buf,
 
 ASYS_INLINE ssize_t
 ACE_SOCK_IO::recvv (iovec iov[],
-                    size_t n,
+                    int n,
                     const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv");
@@ -62,7 +62,7 @@ ACE_SOCK_IO::recv (iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return this->recvv (iov,
-                      n,
+                      ACE_static_cast (int, n),
                       timeout);
 }
 
@@ -115,7 +115,7 @@ ACE_SOCK_IO::send (const void *buf,
 
 ASYS_INLINE ssize_t
 ACE_SOCK_IO::sendv (const iovec iov[],
-                    size_t n,
+                    int n,
                     const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::sendv");
@@ -132,7 +132,7 @@ ACE_SOCK_IO::send (const iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return this->sendv (iov,
-                      n,
+                      ACE_static_cast (int, n),
                       timeout);
 }
 

@@ -179,7 +179,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -809,7 +809,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -1161,7 +1161,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int

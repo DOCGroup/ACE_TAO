@@ -132,12 +132,12 @@ public:
    * Retrieve a poiner to the first ACE_Message_Block in the queue
    * without removing it.
    *
-   * @arg first_item  Reference to an ACE_Message_Block * that will
-   *               point to the first block on the queue.  The block
-   *               remains on the queue until this or another thread
-   *               dequeues it.
-   * @arg timeout  The absolute time the caller will wait until
-   *               for a block to be queued.
+   * @param first_item  Reference to an ACE_Message_Block * that will
+   *                    point to the first block on the queue.  The block
+   *                    remains on the queue until this or another thread
+   *                    dequeues it.
+   * @param timeout     The absolute time the caller will wait until
+   *                    for a block to be queued.
    *
    * @retval  The number of ACE_Message_Blocks on the queue.
    * @return  -1 on failure.  errno holds the reason. If EWOULDBLOCK,
@@ -153,11 +153,11 @@ public:
    * order is maintained when messages of the same priority are
    * inserted consecutively.
    *
-   * @arg new_item Pointer to an ACE_Message_Block that will be
-   *               added to the queue.  The block's @c msg_priority()
-   *               method will be called to obtain the queueing priority.
-   * @arg timeout  The absolute time the caller will wait until
-   *               for the block to be queued.
+   * @param new_item Pointer to an ACE_Message_Block that will be
+   *                 added to the queue.  The block's @c msg_priority()
+   *                 method will be called to obtain the queueing priority.
+   * @param timeout  The absolute time the caller will wait until
+   *                 for the block to be queued.
    *
    * @retval  The number of ACE_Message_Blocks on the queue after adding
    *          the specified block.
@@ -287,7 +287,7 @@ public:
   /**
    * Number of total messages on the queue.
    */
-  virtual size_t message_count (void);
+  virtual int message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -444,12 +444,12 @@ protected:
    * so they can wakeup and continue other processing.
    * No messages are removed from the queue.
    *
-   * @arg pulse  If 0, the queue's state is changed to DEACTIVATED
-   *             and any other operations called until the queue is
-   *             reactivated will immediately return -1 with
-   *             errno == ESHUTDOWN.
-   *             If not zero, only the waiting threads are notified and
-   *             the queue's state changes to PULSED.
+   * @param pulse  If 0, the queue's state is changed to DEACTIVATED
+   *               and any other operations called until the queue is
+   *               reactivated will immediately return -1 with
+   *               errno == ESHUTDOWN.
+   *               If not zero, only the waiting threads are notified and
+   *               the queue's state changes to PULSED.
    *
    * @retval The state of the queue before the call.
    */
@@ -493,7 +493,7 @@ protected:
   size_t cur_length_;
 
   /// Current number of messages in the queue.
-  size_t cur_count_;
+  int cur_count_;
 
   /// The notification strategy used when a new message is enqueued.
   ACE_Notification_Strategy *notification_strategy_;
@@ -1107,7 +1107,7 @@ public:
   /**
    * Number of total messages on the queue.
    */
-  virtual size_t message_count (void);
+  virtual int message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
