@@ -409,8 +409,8 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
-  typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IntId>::ITERATOR ITER_DEF;
-  typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IntId>::ENTRY ENTRY_DEF;
+  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::ITERATOR ITER_DEF;
+  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::ENTRY ENTRY_DEF;
 
   // Typedef to the type of BindingIterator servant for ease of use.
   typedef TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF> ITER_SERVANT;
@@ -493,7 +493,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 //@@ Need instantiation for TAO_Bindings_Iterator.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
+template class ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
 template class ACE_Hash_Map_Manager<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
@@ -510,7 +510,7 @@ template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_Ext
 template class ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId> > >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IntId>
+#pragma instantiate ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId>

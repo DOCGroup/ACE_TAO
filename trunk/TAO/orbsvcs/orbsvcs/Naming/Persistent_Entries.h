@@ -17,9 +17,13 @@
 #ifndef TAO_PERSISTENT_ENTRIES_H
 #define TAO_PERSISTENT_ENTRIES_H
 
+#include "ace/Hash_Map_With_Allocator_T.h"
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
-#include "Shared_Hash_Map_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_ORBSVCS_Export TAO_Persistent_IntId
 {
@@ -118,7 +122,7 @@ public:
   // Constructor.
 
   TAO_Persistent_Index_IntId (ACE_UINT32 *counter,
-                              ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
+                              ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
                               TAO_Persistent_IntId> * hash_map);
   // Constructor.
 
@@ -134,7 +138,7 @@ public:
   ACE_UINT32 *counter_;
   //
 
-  ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
+  ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
     TAO_Persistent_IntId> * hash_map_;
   // The pointer to the context's bindings hash map.
 };

@@ -1,3 +1,27 @@
+Sat Jun 26 14:23:25 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* ace/Event_Handler_T.h
+	Removed "ACE_Export" - it is not necessary for a template class.
+
+	* orbsvcs/tests/Simple_Naming/client.cpp
+	Clean up of the remaining old exception code.
+
+	* TAO/docs/releasenotes/index.html
+	Updated the Naming Service section.
+
+	* orbsvcs/orbsvcs/Naming/Shared_Hash_Map_T.{h, cpp}
+	Removed these files. (They were modified and moved up into the
+	ACE_wrappers/ace dicrectory.  See ACE ChangeLog for more info: tag 
+	Sat Jun 26 14:41:31 1999  Marina Spivak).
+
+	* orbsvcs/orbsvcs/Makefile
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h, cpp}
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Index.{h, cpp}	
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h, cpp}	
+	Updated the files to reflect the removal of 
+	Shared_Hash_Map_T.{h,cpp} from this directory.
+
+
 Sat Jun 26 13:10:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors,

@@ -285,8 +285,6 @@ MT_Test::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to bind in thread %8.8x \n",
                   ACE_OS::thr_self ()));
-
-      ACE_TRY_ENV.clear ();
     }
   ACE_CATCHANY
     {
@@ -325,8 +323,6 @@ MT_Test::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to resolve in thread %8.8x \n",
                   ACE_OS::thr_self ()));
-
-      ACE_TRY_ENV.clear ();
     }
   ACE_CATCHANY
     {
@@ -351,8 +347,6 @@ MT_Test::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to unbind in thread %8.8x \n",
                   ACE_OS::thr_self ()));
-
-      ACE_TRY_ENV.clear ();
     }
   ACE_CATCHANY
     {
@@ -726,7 +720,6 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
     }
   ACE_CATCH (CosNaming::NamingContext::InvalidName, ex)
     {
-      ACE_TRY_ENV.clear ();
       ACE_DEBUG ((LM_DEBUG,
                   "InvalidName exception works properly\n"));
     }
@@ -762,7 +755,6 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
-      ACE_TRY_ENV.clear ();
       ACE_DEBUG ((LM_DEBUG,
                   "AlreadyBound exception (case 1) works properly\n"));
     }
@@ -800,7 +792,6 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
-      ACE_TRY_ENV.clear ();
       ACE_DEBUG ((LM_DEBUG,
                   "AlreadyBound  exception (case 2) works properly\n"));
     }
@@ -842,7 +833,6 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 1)"
                     " - parameters aren't set correctly\n"));
-      ACE_TRY_ENV.clear ();
     }
   ACE_CATCHANY
     {
@@ -884,7 +874,6 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 2)"
                     " - parameters aren't set correctly\n"));
-      ACE_TRY_ENV.clear ();
     }
   ACE_CATCHANY
     {
@@ -926,7 +915,6 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 3)"
                     " - parameters aren't set correctly\n"));
-      ACE_TRY_ENV.clear ();
     }
   ACE_CATCHANY
     {
@@ -1113,7 +1101,6 @@ Destroy_Test::not_empty_test (CosNaming::NamingContext_var &ref,
 
   ACE_CATCH (CosNaming::NamingContext::NotEmpty, ex)
     {
-      ACE_TRY_ENV.clear ();
       ACE_DEBUG ((LM_DEBUG,
                   "NotEmpty exception works properly\n"));
     }
@@ -1133,7 +1120,6 @@ Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref,
 
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
-      ACE_TRY_ENV.clear ();
       ACE_DEBUG ((LM_DEBUG,
                   "Destroy works properly\n"));
     }

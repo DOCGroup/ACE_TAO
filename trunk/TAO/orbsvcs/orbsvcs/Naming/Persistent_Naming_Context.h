@@ -26,13 +26,13 @@ class TAO_ORBSVCS_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
   //     name to object  bindings in a Naming Context.
   //
   // = DESCRIPTION
-  //     Wrapper on top of ACE_Shared_Hash_Map (which is a wrapper
+  //     Wrapper on top of ACE_Hash_Map_With_Allocator (which is a wrapper
   //     around ACE_Hash_Map_Manager).  Uses ACE_Allocator (allocating
   //     from persistent storage) to make bindings persistent and
   //     supports TAO_Bindings_Map interface.  Used by TAO_Persistent_Naming_Context.
 public:
 
-  typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IntId> HASH_MAP;
+  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId> HASH_MAP;
   // Underlying data structure - typedef for ease of use.
 
   // = Initialization and termination methods.

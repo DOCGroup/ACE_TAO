@@ -504,13 +504,13 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
             forward slash is needed to prevent ambiguities of
             where the rendezvous point ends and where the key
             string begins since both may contain forward
-            slashes in them. 
+            slashes in them.
 
             The <i>rendezvous point</i> for <code>uiop</code> is
             any valid path and filename that the ORB has permission to
             read and write to.<P>
 
-            The <code>-ORBendpoint</code> option uses a syntax similar 
+            The <code>-ORBendpoint</code> option uses a syntax similar
             to that of the URL style object reference shown above.
             The only difference is that the object key delimiter and
             the object key string are not specified.
@@ -537,11 +537,11 @@ Complete support for multiple profiles.</li><p>
 Future Work:
 <ul>
 <li>
-Verify all of TAO's regression tests still work. This will be followed 
+Verify all of TAO's regression tests still work. This will be followed
 by performing a suite of tests to compare performance of with the unmodified
 TAO distribution. Also, we'll extensively retest TAO using Purify and
 Quantify.
-</li><p> 
+</li><p>
 
 <li>
 In parallel, we will add support for multiple profiles.</li><p>
@@ -799,13 +799,6 @@ Future work:
 Support for a load balancing feature similar to the one present in ORBIX.
 It will be possible to bind a group of objects under a single name, and when a client attempts to resolve the name in question, a preset policy (e.g., random, round robin, etc.) will determine which one of the object references from the group will be returned.
 </li>
-<li>
-Update to the 'destroy' method, once the POA restructuring effort is complete, to do the "Right Thing TM".
-</li>
-<li>
-Replication of the bindings to other Naming Service's currently running.
-It will probably be modeled after the LDAP Multi-Master Replication
-Protocol.</li>
 <li>
 Support for the Naming Service to handle the IIOP
 LocateRequest messages and respond with LocateReply messages with a
