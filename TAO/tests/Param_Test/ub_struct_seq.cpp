@@ -47,6 +47,12 @@ Test_Struct_Sequence::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Struct_Sequence::init_parameters (Param_Test_ptr objref,
                                      CORBA::Environment &env)
@@ -99,7 +105,7 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
                                 CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_StructSeq, 
+  CORBA::Any in_arg (Param_Test::_tc_StructSeq,
                      &this->in_,
                      0);
 
@@ -255,6 +261,12 @@ Test_Unbounded_Struct_Sequence::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr objref,
                                      CORBA::Environment &env)
@@ -266,7 +278,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr objref,
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
-  
+
   // set the length of the sequence
   this->in_.length (len);
   this->inout_->length (len);
@@ -308,7 +320,7 @@ Test_Unbounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
                                 CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_PathSpec, 
+  CORBA::Any in_arg (Param_Test::_tc_PathSpec,
                      &this->in_,
                      0);
 

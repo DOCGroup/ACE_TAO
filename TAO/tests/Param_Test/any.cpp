@@ -46,6 +46,12 @@ Test_Any::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Any::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 #if 0 /* any_table isn't currently used */
 static const CORBA::TypeCode_ptr any_table [] =
 {

@@ -46,6 +46,12 @@ Test_String_Sequence::opname (void) const
   return this->opname_;
 }
 
+void
+Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_String_Sequence::init_parameters (Param_Test_ptr objref,
                                        CORBA::Environment &env)
@@ -102,7 +108,7 @@ Test_String_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
                                 CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_StrSeq, 
+  CORBA::Any in_arg (Param_Test::_tc_StrSeq,
                      (void *) &this->in_.in (),
                      0);
 
