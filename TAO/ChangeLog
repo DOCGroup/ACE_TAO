@@ -1,3 +1,11 @@
+Sat Dec  6 20:35:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+
+          Renamed be_visit_struct() method be_visit_structure() so it
+          overrides the base class method.
+
 Sat Dec  6 13:26:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Advanced/README_DOCGROUP:
