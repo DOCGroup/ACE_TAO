@@ -1,3 +1,10 @@
+Tue May 04 12:15:06 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Object_Adapter.cpp (dispatch_servant_i): replaced
+          direct comparison of ACE_thread_t's with ACE_OS::thr_equal ().
+          Thanks to Steven D. Chen <sdc2951@aw101.iasl.ca.boeing.com>
+          for reporting this on HP-UX and for verifying the fix.
+
 Tue May 04 12:03:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile,tmplinst-orbsvcs.cpp:
