@@ -98,6 +98,17 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  *os << "CORBA::Boolean" << be_nl
+      << "TAO::Any_Impl_T<" << node->name () << ">::to_value ("
+      << be_idt <<  be_idt_nl
+      << "CORBA::ValueBase *&_tao_elem" << be_uidt_nl
+      << ") const" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::add_ref (this->value_);" << be_nl
+      << "_tao_elem = this->value_;" << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
       << be_idt_nl
       << "  defined (ACE_HAS_GNU_REPO)" << be_nl

@@ -157,6 +157,10 @@ namespace CORBA
     const void *value (void) const;
 
   private:
+    CORBA::Boolean checked_to_object (CORBA::Object_ptr &) const;
+    CORBA::Boolean checked_to_value (CORBA::ValueBase *&) const;
+    CORBA::Boolean checked_to_abstract_base (CORBA::AbstractBase_ptr &) const;
+
     // Unimplemented - hides unsigned char insert/extract.
     void operator<<= (unsigned char);
     CORBA::Boolean operator>>= (unsigned char&) const;
@@ -296,6 +300,10 @@ namespace TAO
     // Used only by Unknown_IDL_Type.
     virtual void _tao_decode (TAO_InputCDR &
                               ACE_ENV_ARG_DECL_NOT_USED);
+
+    virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
+    virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
+    virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
 
   protected:
     Any_Impl (_tao_destructor,

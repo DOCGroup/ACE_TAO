@@ -128,6 +128,43 @@ CORBA_ValueBase_var::_retn (void)
   return val;
 }
 
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::tao_duplicate (CORBA::ValueBase *p)
+{
+  p->_add_ref ();
+  return p;
+}
+
+ACE_INLINE void
+CORBA_ValueBase_var::tao_release (CORBA::ValueBase *p)
+{
+  p->_remove_ref ();
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::tao_nil (void)
+{
+  return 0;
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::tao_narrow (
+    CORBA::ValueBase *p
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  p->_add_ref ();
+  return CORBA::ValueBase::_downcast (p);
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::tao_upcast (void *src)
+{
+  CORBA::ValueBase **tmp =
+    ACE_static_cast (CORBA::ValueBase **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_ValueBase_out
 // *************************************************************

@@ -50,10 +50,10 @@ namespace TAO
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
                                    T *&);
-    static CORBA::Boolean widen (const CORBA::Any &,
-                                 _tao_destructor,
-                                 CORBA::TCKind,
-                                 T *&);
+
+    virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
+    virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
+    virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);

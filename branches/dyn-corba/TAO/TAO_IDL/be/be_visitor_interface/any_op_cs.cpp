@@ -95,6 +95,30 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  *os << "CORBA::Boolean" << be_nl
+      << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
+      << be_idt <<  be_idt_nl
+      << "CORBA::Object_ptr &_tao_elem" << be_uidt_nl
+      << ") const" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = CORBA::Object::_duplicate (this->value_);" << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  if (node->is_abstract () || node->has_mixed_parentage ())
+    {
+      *os << "CORBA::Boolean" << be_nl
+          << "TAO::Any_Impl_T<" << node->name () << ">::to_abstract_base ("
+          << be_idt <<  be_idt_nl
+          << "CORBA::AbstractBase_ptr &_tao_elem" << be_uidt_nl
+          << ") const" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "_tao_elem = CORBA::AbstractBase::_duplicate (this->value_);" 
+          << be_nl
+          << "return 1;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
+
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
       << be_idt_nl
       << "  defined (ACE_HAS_GNU_REPO)" << be_nl;
