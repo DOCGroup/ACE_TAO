@@ -221,7 +221,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE uid_t pace_getegid ();
+  PACE_INLINE pace_uid_t pace_getegid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -230,7 +230,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE uid_t pace_geteuid ();
+  PACE_INLINE pace_uid_t pace_geteuid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -239,7 +239,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE uid_t pace_getgid ();
+  PACE_INLINE pace_uid_t pace_getgid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -303,7 +303,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE uid_t pace_getuid ();
+  PACE_INLINE pace_uid_t pace_getuid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -412,7 +412,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.2.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE int pace_setuid (uid_t uid);
+  PACE_INLINE int pace_setuid (pace_uid_t uid);
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
