@@ -1,3 +1,9 @@
+Fri Mar 24 21:32:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  Updated the section on the Notification Service.
+	  Thanks to Roger Tragin <rtragin@wpine.com> for reminding to update.
+
 Fri Mar 24 17:15:07 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Acceptor.cpp (is_collocated):
@@ -17,7 +23,7 @@ Fri Mar 24 15:40:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/CosNaming.dsp:
 
-          Changed the release version of the IDL custom build to use 
+          Changed the release version of the IDL custom build to use
           "Naming\naming_export.h" instead of just "naming_export.h"
 
         * examples/mfc/StdAfx.h:
@@ -26,7 +32,7 @@ Fri Mar 24 15:40:25 2000  Darrell Brunsch <brunsch@uci.edu>
         * examples/mfc/server.dsp:
 
           As was pointed out by David Dunn <dunn@tripos.com>, the release
-          version wasn't compiling since the headers were not in the proper 
+          version wasn't compiling since the headers were not in the proper
           order.  Moved the ACE/TAO headers to the beginning of StdAfx.
           While I was there, I fixed up the dsp files to be more consistent
           with the rest of our project files.
@@ -43,11 +49,11 @@ Thu Mar 23 21:49:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/RTEvent.dsp: Somehow the debugging information
           generation was turned off. Turned it back on, so once again
-          RTEvent can be stepped into with the debugger.  
+          RTEvent can be stepped into with the debugger.
 
         * orbsvcs/orbsvcs/DSLogAdmin.dsp: (removed)
         * orbsvcs/orbsvcs/DsLogAdmin.dsp: (added)
-        * orbsvcs/orbsvcs/orbsvcs.dsw: 
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
           Fixed the capitalization of DsLogAdmin.
           [Bug 508]
 
