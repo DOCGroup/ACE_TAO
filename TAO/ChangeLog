@@ -1,3 +1,10 @@
+Mon Dec 23 06:57:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp: Fixed warnings in
+	  SunCC builds. Yet another problem with SunCC compiler. This
+	  should also hopefully fix a similar problem with Borland 6.
+
 Sun Dec 22 22:46:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp: Replaced the word "error" from one

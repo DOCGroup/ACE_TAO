@@ -28,6 +28,12 @@ TAO_NS_ThreadPool_Task::init (int argc, char **argv)
   return this->ACE_Task<ACE_NULL_SYNCH>::init (argc, argv);
 }
 
+void
+TAO_NS_ThreadPool_Task::init (TAO_NS_AdminProperties &p)
+{
+  // Call the base class implementation
+  TAO_NS_Worker_Task::init (p);
+}
 TAO_NS_Timer*
 TAO_NS_ThreadPool_Task::timer (void)
 {
