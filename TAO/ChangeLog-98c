@@ -3,6 +3,9 @@ Fri Nov 07 15:42:45 1997  David L. Levine  <levine@cs.wustl.edu>
         * tao/default_server.cpp (parse_args): check for 0 argv[curarg]
           before calling strcmp on it.
 
+        * tests/Cubit/TAO/IDL_Cubit/Makefile: added MUNCHED for
+          VxWorks/g++.
+
 Fri Nov  7 10:30:59 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/tao_internals.cpp (fake_service_entries_i): Updated faked
@@ -17,7 +20,7 @@ Fri Nov 07 02:45:56 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Nov  7 01:58:30 1997  Nanbor Wang  <nw1@coyote.wolfpack.cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp: 
+	* TAO_IDL/driver/drv_preproc.cpp:
 	* TAO_IDL/driver/drv_fork.cpp: Added the (__FreeBSD__) flag to
  	  correctly include wait.h file.
 
