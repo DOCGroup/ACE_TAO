@@ -8,19 +8,19 @@
 #include	<signal.h>
 #include	<stdio.h>
 #include	<stdlib.h>
+#include <ace/Get_Opt.h>
 
 #if	unix
 #	include	<unistd.h>
 #	include	<sys/time.h>
 
 #else	// windows
-#include "ace/Get_Opt.h"
 
 #endif	// unix
 
 #include	"cubit.hh"
 
-#include	"../lib/runtime/debug.hh"
+#include	<corba/debug.hh>
 
 
 #if !defined (DECLARED_GETTIMEOFDAY)
@@ -65,54 +65,51 @@ main (int    argc, char   *argv[])
     //
     // Parse command line and verify parameters.
     //
-    ACE_Get_Opt get_opt (argc, argv, "dn:O:x");
+    ACE_Get_Opt opts (argc, argv, "dn:O:x");
 
     int			c;
 
-    while ((c = get_opt ()) != -1)
-       switch (c)
-    {
-      case 'd':			// debug flag
-         debug_level++;
-         continue;
-   
-      case 'n':			// loop count
-         loop_count = (unsigned) atoi (get_opt.optarg);
-         continue;
-         
-      case 'O':			// stringified objref
-      {
-         objref = orb_ptr->string_to_object (
-            (CORBA_String)get_opt.optarg, env);
-         if (env.exception () != 0)
-         {
-            print_exception (env.exception (), "string2object");
-            return 1;
-         }
-      }
-      continue;
+    while ((c = opts ()) != -1)
+	switch (c) {
+	  case 'd':			// debug flag
+	    debug_level++;
+	    continue;
 
-	   case 'x':
-	       exit_later++;
-	      continue;
+	  case 'n':			// loop count
+	    loop_count = (unsigned) ACE_OS::atoi (opts.optarg);
+	    continue;
 
-	   case '?':
-	   default:
-	       fprintf (stderr, "usage:  %s"
-			       " [-d]"
-			       " [-n loopcount]"
-   			    " [-O objref]"
-	   		    " [-x]"
-		   	    "\n", argv [0]
-			       );
-	      return 1;
-    }
+	  case 'O':			// stringified objref
+	    {
+		objref = orb_ptr->string_to_object (
+			(CORBA_String)opts.optarg, env);
+		if (env.exception () != 0) {
+		    print_exception (env.exception (), "string2object");
+		    return 1;
+		}
+	    }
+	    continue;
+
+	  case 'x':
+	    exit_later++;
+	    continue;
+
+	  case '?':
+	  default:
+	    ACE_OS::fprintf (stderr, "usage:  %s"
+			     " [-d]"
+			    " [-n loopcount]"
+			    " [-O objref]"
+			    " [-x]"
+			    "\n", argv [0]
+			    );
+	    return 1;
+        }
     
-    if (CORBA_is_nil (objref) == CORBA_B_TRUE)
-    {
-	   fprintf (stderr, "%s:  must identify non-null target objref\n",
-		argv [0]);
-	   return 1;
+    if (CORBA_is_nil (objref) == CORBA_B_TRUE) {
+	ACE_OS::fprintf (stderr, "%s:  must identify non-null target objref\n",
+			 argv [0]);
+	return 1;
     }
 
     //
@@ -123,17 +120,14 @@ main (int    argc, char   *argv[])
     CORBA_Boolean		type_ok;
 
     type_ok = objref->_is_a (Cubit__id, env);
-    if (env.exception () != 0)
-    {
-	   print_exception (env.exception (), "check type of target");
-	   return -1;
-    } 
-    else if (type_ok != CORBA_B_TRUE)
-    {
-	   fprintf (stderr, "%s:  target objref is of wrong type\n",
-	   	argv [0]);
-	   printf ("type_ok = %d\n", type_ok);
-	   return 1;
+    if (env.exception () != 0) {
+	print_exception (env.exception (), "check type of target");
+	return -1;
+    } else if (type_ok != CORBA_B_TRUE) {
+	ACE_OS::fprintf (stderr, "%s:  target objref is of wrong type\n",
+		argv [0]);
+	ACE_OS::printf ("type_ok = %d\n", type_ok);
+	return 1;
     }
 
     //
@@ -150,12 +144,9 @@ main (int    argc, char   *argv[])
     call_count = 0;
     error_count = 0;
 
-#if	defined (HAVE_GETTIMEOFDAY)
-    timeval			before, after;
+    ACE_Time_Value before, after;
 
-    if (gettimeofday (&before, 0) < 0)
-   	dperror ("gettimeofday before");
-#endif	// defined (HAVE_GETTIMEOFDAY)
+    before = ACE_OS::gettimeofday();
 
     for (i = 0; i < loop_count; i++) {
 	//
@@ -172,7 +163,7 @@ main (int    argc, char   *argv[])
 	    dmsg2 ("cube octet:  %d --> %d\n", arg_octet, ret_octet);
 	    arg_octet = arg_octet * arg_octet * arg_octet;
 	    if (arg_octet != ret_octet) {
-		printf ("** cube_octet(%d) ERROR (--> %d)\n",
+		ACE_OS::printf ("** cube_octet(%d) ERROR (--> %d)\n",
 			(CORBA_Octet) func (i), ret_octet);
 		error_count++;
 	    }
@@ -192,8 +183,8 @@ main (int    argc, char   *argv[])
 	    dmsg2 ("cube short:  %d --> %d\n", arg_short, ret_short);
 	    arg_short = arg_short * arg_short * arg_short;
 	    if (arg_short != ret_short) {
-		printf ("** cube_short(%d) ERROR (--> %d)\n",
-			(CORBA_Short) func (i), ret_short);
+		ACE_OS::printf ("** cube_short(%d) ERROR (--> %d)\n",
+				(CORBA_Short) func (i), ret_short);
 		error_count++;
 	    }
 	}
@@ -212,7 +203,7 @@ main (int    argc, char   *argv[])
 	    dmsg2 ("cube long:  %d --> %d\n", arg_long, ret_long);
 	    arg_long = arg_long * arg_long * arg_long;
 	    if (arg_long != ret_long) {
-		printf ("** cube_long(%ld) ERROR (--> %ld)\n",
+		ACE_OS::printf ("** cube_long(%ld) ERROR (--> %ld)\n",
 			(CORBA_Long) func (i), ret_long);
 		error_count++;
 	    }
@@ -242,7 +233,7 @@ main (int    argc, char   *argv[])
 	    if (arg_struct.l != ret_struct->l
 		    || arg_struct.s != ret_struct->s
 		    || arg_struct.o != ret_struct->o) {
-		printf ("** cube_struct ERROR\n");
+		ACE_OS::printf ("** cube_struct ERROR\n");
 		error_count++;
 	    }
 	    delete ret_struct;
@@ -250,28 +241,25 @@ main (int    argc, char   *argv[])
 
     }
 
-#if	defined (HAVE_GETTIMEOFDAY)
-    if (gettimeofday (&after, 0) < 0)
-	dperror ("gettimeofday after");
+    after = ACE_OS::gettimeofday();
 
-    if (call_count > 0) {
-	if (error_count == 0) {
-	    unsigned long	us;
+    if (call_count > 0) 
+      {
+	if (error_count == 0)
+	  {
+	    ACE_Time_Value diff = after - before;
+	    unsigned long	us = diff.sec() * 1000 * 1000 + diff.usec();
 
-	    us = after.tv_sec - before.tv_sec;
-	    us *= 1000 * 1000;
-	    us += after.tv_usec - before.tv_usec;
 	    us /= call_count;
 
-	    printf ("cube average call time\t= %ld.%.03ldms, \t"
-		    "%ld calls/second\n",
-		    us / 1000, us % 1000,
-		    1000000L / us);
-	}
+	    ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
+			    "%ld calls/second\n",
+			    us / 1000, us % 1000,
+			    1000000L / us);
+	  }
 
-	printf ("%d calls, %d errors\n", call_count, error_count);
-    }
-#endif	// defined (HAVE_GETTIMEOFDAY)
+	ACE_OS::printf ("%d calls, %d errors\n", call_count, error_count);
+      }
 
     //
     // Simple test for DII:  call "cube_struct".  (It's not timed
@@ -327,7 +315,7 @@ main (int    argc, char   *argv[])
 	result = (Cubit_Many *) req->result ()->value ()->value ();
 
 	if (result->o != 27 || result->l != 125 || result->s != -343)
-	    fprintf (stderr, "DII cube_struct -- bad results\n");
+	    ACE_OS::fprintf (stderr, "DII cube_struct -- bad results\n");
 	else
 	    dmsg ("DII cube_struct ... success!!");
 	
@@ -348,7 +336,7 @@ main (int    argc, char   *argv[])
 
     if (exit_later) {
 	Cubit_please_exit (objref, env);
-	dexc (env, "server, please exit");
+	dexc (env, "server, please ACE_OS::exit");
     }
 
     CORBA_release (objref);
@@ -384,7 +372,7 @@ cube_union_stub(
         u.l = u.l  * u.l * u.l ;
 
         if (u.l != r->l) {
-            printf ("** cube_union ERROR\n");
+            ACE_OS::printf ("** cube_union ERROR\n");
             error_count++;
         }
 
@@ -418,7 +406,7 @@ cube_union_stub(
         if (u.cm.l != r->cm.l
              || u.cm.s != r->cm.s
              || u.cm.o != r->cm.o) {
-             printf ("** cube_union ERROR\n");
+             ACE_OS::printf ("** cube_union ERROR\n");
              error_count++;
         }
 
@@ -492,7 +480,7 @@ cube_union_dii (
 
     if (r->cm.o != 27 || r->cm.l != 125 || r->cm.s != -343) {
 	error_count++;
-        fprintf (stderr, "cube_union_dii -- bad results\n");
+        ACE_OS::fprintf (stderr, "cube_union_dii -- bad results\n");
     }
     else
         dmsg ("cube_union_dii ... success!!");

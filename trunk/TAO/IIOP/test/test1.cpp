@@ -217,7 +217,9 @@ DEFINE_TEST (wchar, WChar);
 // show up in this macro ...
 DEFINE_TEST3 (wstring, WChar *, WString);
 
+#if !defined(NONNATIVE_LONGDOUBLE)
 DEFINE_TEST (longdouble, LongDouble);
+#endif
 
 #undef	DEFINE_TEST
 
