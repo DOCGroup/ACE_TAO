@@ -898,7 +898,7 @@ ACE_Process_Manager::wait (pid_t pid,
 
       this->notify_proc_handler (idx,
                                  *status);
-      this->remove_proc (idx);
+      this->remove (pid);
     }
 
   return pid;

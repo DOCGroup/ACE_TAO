@@ -1,3 +1,13 @@
+Fri Feb 13 12:21:06 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+ 
+	* ace/Process_Manager.cpp (wait): If the
+	  ACE_Event_Handler::handle_exit() methods kills a managed
+ 	  process, the process_table_ array is modified before
+ 	  this->remove_proc (idx) is called. In this case the value of idx
+ 	  is wrong, so we replace remove_proc(idx) with remove(pid).
+  	  Thanks to Carsten Prescher <carsten.prescher@sysde.eads.net> for
+ 	  reporting this.  This fixes bugid 1743.
+
 Fri Feb 13 09:47:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/CDR_Stream.cpp (clone_from):
