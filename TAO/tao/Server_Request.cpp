@@ -93,7 +93,7 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
     *ppv = this;
 
   if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
+    return TAO_ResultFromScode (TAO_E_NOINTERFACE);
 
  (void) this->AddRef ();
   return TAO_NOERROR;

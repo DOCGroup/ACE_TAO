@@ -1,19 +1,31 @@
 /* This may look like C, but it's really -*- C++ -*- */
-// @(#)objbase.h        1.4 95/09/25
-// Copyright 1995 by Sun Microsystems, Inc.
+// $Id$
+
+// ============================================================================
 //
-// COM          Basic Component Object Model definitions
+// = LIBRARY
+//    TAO
 //
-// This has "enough COM" to compile (on UNIX) a recent version of the
-// IIOP engine code, which more or less uses COM as a source standard.
+// = FILENAME
+//    objbase.h
 //
-// (It's unknown whether the C++ compilers on UNIX put vtables as the first
-// member or not; that matters to folk writing "objects in C", relying on the
-// COM ABI.  In any case, the API to a pure C++ programmer is the same.)
+// = DESCRIPTION
+// 
+//   This has "enough COM" to compile (on UNIX) a recent version of the
+//   IIOP engine code, which more or less uses COM as a source standard.
 //
-// Note that Microsoft changed the header file structure so that some
-// development environments now prefer "objbase.h" not "compobj.h".
+//   (It's unknown whether the C++ compilers on UNIX put vtables as the first
+//   member or not; that matters to folk writing "objects in C", relying on the
+//   COM ABI.  In any case, the API to a pure C++ programmer is the same.)
 //
+//   Note that Microsoft changed the header file structure so that some
+//   development environments now prefer "objbase.h" not "compobj.h".
+//
+// = AUTHOR
+//     Portions Copyright 1994-1995 by Sun Microsystems Inc.
+//     Portions Copyright 1997 by Washington University
+//
+// ============================================================================
 
 #ifndef _compobj_h
 #define _compobj_h
@@ -75,7 +87,7 @@ public:
 typedef u_long TAO_SCODE;
 
 inline TAO_HRESULT
-ResultFromScode(TAO_SCODE scode)
+TAO_ResultFromScode(TAO_SCODE scode)
 {
   return scode;
 }
