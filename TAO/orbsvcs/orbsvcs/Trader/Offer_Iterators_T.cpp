@@ -92,10 +92,7 @@ next_n (CORBA::ULong n,
 	  TAO_CHECK_ENV;
 	  
 	  if (offer != 0)
-	    {
-	      CosTrading::Offer& destination = (*offers)[ret_offers++];
-	      this->pfilter_.filter_offer (*offer, destination);
-	    }
+            this->pfilter_.filter_offer (offer, offers[ret_offers++]);
 	}
       TAO_CATCHANY {}
       TAO_ENDTRY;      
