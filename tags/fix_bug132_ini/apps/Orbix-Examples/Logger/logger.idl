@@ -1,0 +1,58 @@
+/* -*- C++ -*- */
+// $Id$
+
+// @(#)logger.idl	1.1	10/18/96
+
+// logger.idl
+
+interface logger
+// = TITLE
+// This is the CORBA interface for the logger class.
+{
+  // = Types of logging messages.
+  enum Log_Priority 
+  {
+    LM_MESSAGE,
+    LM_DEBUG, 
+    LM_WARNING,
+    LM_ERROR,
+    LM_EMERG
+  };
+
+  // = Format of the logging record.
+  struct Log_Record 
+  {
+    Log_Priority   type;         // Type of logging message.
+    long           time;         // Time stamp at sender.
+    long           app_id;       // Process ID of sender.
+    long           host_addr;    // IP address of the sender.
+    sequence<char> msg_data;     // Sender-specific logging message.
+  };
+
+  oneway void log (in Log_Record log_rec);
+  // Transmit a Log_Record to the logging server.
+  
+  attribute char verbose;
+  // Toggle verbose formatting
+};
+  
+interface profile_logger
+  : logger // Profile_Logger IS-A Logger
+// = TITLE 
+// IDL Profile Logger definition that is used
+// to compute statistics about the logging.
+{
+  // = Stores the amount of time that has elapsed.
+  struct Elapsed_Time
+  {
+    double real_time;
+    double user_time;
+    double system_time;
+  };
+
+  void start_timer ();
+  // Activate the timer.
+
+  void stop_timer (out Elapsed_Time et);
+  // Deactivate the timer and return the elapsed time.
+};

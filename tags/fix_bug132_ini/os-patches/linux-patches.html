@@ -1,0 +1,214 @@
+<!-- $Id$ -->
+
+<html><head>
+  <title>Linux Configuration Support for ACE</title>
+  <link rev=made href="mailto:levine@cs.wustl.edu">
+</head>
+
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+<center>
+  <h1>Linux Configuration Support for ACE</h1>
+  <font size=+1>
+  <a href="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</a><br>
+  </font>
+</center>
+
+<h2>&nbsp;</h2>
+
+RedHat 5.1 is distributed with glibc-2.0.7-13 and egcs-1.0.2-8.
+ACE and TAO work just fine with it.<p>
+
+With RedHat 5.0 distributions of Linux, it's best to upgrade the
+distribution with these:
+<ul>
+  <li>glibc-2.0.7-7 or later, or<br>
+      glibc-2.0.6
+      (at <a href="ftp://sunsite.unc.edu/pub/gnu/glibc-2.0.6.tar.gz">ftp://sunsite.unc.edu/pub/gnu/glibc-2.0.6.tar.gz</a>)
+      plus <a href="#Old Patches">Torbjörn's patch, below</a>
+  <li>egcs 1.0.2 (from ftp://ftp.cygnus.com/pub/egcs/releases/)
+</ul>
+
+Thanks to James CE Johnson &lt;jjohnson@lads.com&gt;, Torbjörn
+Lindgren &lt;tl@funcom.com&gt;, Oleg Krivosheev
+&lt;kriol@fnal.gov&gt;, and Chanaka Liyanaarachchi
+&lt;chanakal@ittc.ukans.edu&gt; for this information.  With the above
+configurations, ACE compiles and runs cleanly on Intel platforms.  It
+compiles and runs cleanly on Alpha platforms with the patches listed
+below.<p>
+
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+There is a bug in <code>getsockname ()</code> on versions of Linux
+through 2.0.34.  <code>getsockname ()</code> returns an Internet host
+address of 127.0.0.1 (localhost) instead of 0.0.0.0 for sockets that
+aren't connected.  This bug prevents TAO servers from working
+correctly.  To fix it, comment out these two lines in function
+<code>inet_getname ()</code> in
+<code>/usr/src/linux/net/ipv4/af_inet.c</code>:
+
+<pre>
+	} else {
+		__u32 addr = sk-&gt;rcv_saddr;
+		if (!addr) {
+			addr = sk-&gt;saddr;
+/* comment out this line:  if (!addr) */
+/* comment out this line:  	addr = ip_my_addr(); */
+		}
+		sin-&gt;sin_port = sk-&gt;dummy_th.source;
+		sin-&gt;sin_addr.s_addr = addr;
+	}
+</pre>
+
+and rebuild your kernel.  This fix has been implemented in 2.1.x
+versions of the kernel.<p>
+
+Without the following patch from Scott Snyder &lt;sss@d0linux01.fnal.gov&gt;,
+egcs 1.0.1 on Linux won't be able to compile
+netsvcs/lib/Server_Logging_Handler.cpp:
+
+<pre>
+1997-12-10  scott snyder  &lt;sss@d0linux01.fnal.gov&gt;
+
+	* method.c (make_thunk): Avoid name buffer overflow.
+
+
+Index: gcc/cp/method.c
+===================================================================
+RCS file: /d0sgi0/usr0/snyder/CVSROOT/egcs/gcc/cp/method.c,v
+retrieving revision 1.1.1.5
+diff -c -r1.1.1.5 method.c
+*** method.c    1997/12/08 21:06:03     1.1.1.5
+--- method.c    1997/12/11 05:40:37
+***************
+*** 1811,1817 ****
+       tree function;
+       int delta;
+  {
+!   char buffer[250];
+    tree thunk_id;
+    tree thunk;
+    char *func_name;
+--- 1811,1817 ----
+       tree function;
+       int delta;
+  {
+!   char *buffer;
+    tree thunk_id;
+    tree thunk;
+    char *func_name;
+***************
+*** 1822,1827 ****
+--- 1822,1828 ----
+    if (TREE_CODE (func_decl) != FUNCTION_DECL)
+      abort ();
+    func_name = IDENTIFIER_POINTER (DECL_ASSEMBLER_NAME (func_decl));
++   buffer = (char *)alloca (strlen (func_name) + 32);
+    if (delta&lt;=0)
+      sprintf (buffer, "__thunk_%d_%s", -delta, func_name);
+    else
+</pre>
+
+With RedHat 5.0 on Alpha CPUs, two system patches and one
+glibc-2.0.6/linuxthreads patch are necessary in addition to the above.
+The first patch is for the GNU assembler, gas.  It is only necessary
+on Alphas, and only when <code>-g</code> is used.  If you don't want
+to patch the assembler, you can enable the SUPPRESS_DASH_G option in
+the <code>platform_linux.GNu</code>.  Otherwise, this patch can be
+applied to the binutils gas source.  Then, rebuild and install as.
+The file to be patched is binutils-2.8.1/gas/config/tc-alpha.h:<p>
+
+NOTE:  this patch isn't necessary with binutils-2.9.1.<p>
+
+<pre>
+--- tc-alpha.h.orig	Mon May 26 12:32:38 1997
++++ tc-alpha.h	Sat Feb 28 06:45:41 1998
+@@ -25,6 +25,8 @@
+
+ #define TARGET_ARCH			bfd_arch_alpha
+
++#define PAGE_SIZE 8192
++
+ #define TARGET_FORMAT (OUTPUT_FLAVOR == bfd_target_ecoff_flavour	\
+ 		       ? "ecoff-littlealpha"				\
+ 		       : OUTPUT_FLAVOR == bfd_target_elf_flavour	\
+</pre><p>
+
+In addition, you'll need to patch
+<code>/usr/src/linux/include/linux/posix_types.h</code> as follows
+to avoid compilation errors:<p>
+
+<pre>
+--- posix_types.h.ORIGINAL	Wed Nov 12 12:01:56 1997
++++ posix_types.h	Fri Feb 27 14:13:16 1998
+@@ -41,9 +41,14 @@
+ #undef __FDMASK
+ #define	__FDMASK(d)	(1UL &lt;&lt; ((d) % __NFDBITS))
+
++#if defined (__KERNEL__)
+ typedef struct fd_set {
+ 	unsigned long fds_bits [__FDSET_LONGS];
+ } __kernel_fd_set;
++#else  /* ! __KERNEL__ */
++#include &lt;gnu/types.h&gt;
++typedef __fd_set __kernel_fd_set;
++#endif /* ! __KERNEL__ */
+
+ /* Type of a signal handler.  */
+ typedef void (*__kernel_sighandler_t)(int);
+</pre><p>
+
+Finally, on Alpha only, I removed wrapsyscall from the LinuxThreads
+library by patching linuxthreads/Makefile:
+
+<pre>
+36c36
+&lt;                      semaphore wrapsyscall
+---
+&gt;                      semaphore # wrapsyscall
+</pre>
+
+With that and the above configuration/pathes, all ACE tests run
+perfectly cleanly on Alpha!<p>
+
+<hr>
+<h3><a name="Old Patches">Old Patches</a></h3>
+
+If you use glibc-2.0.6, you'll need to apply Torbjörn Lindgren's
+&lt;tl@funcom.com&gt; patch to glibc-2.0.6's LinuxThreads:<p>
+
+<pre>
+--- signals.c.old	Wed Jan 14 01:09:02 1998
++++ signals.c	Wed Jan 14 01:11:37 1998
+@@ -82,7 +82,7 @@
+   pthread_mutex_lock(&sigwaited_mut);
+   /* Make sure no other thread is waiting on our signals */
+ test_again:
+-  for (s = 0; s &lt; NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && sigismember(&sigwaited, s)) {
+       pthread_cond_wait(&sigwaited_changed, &sigwaited_mut);
+       goto test_again;
+@@ -96,7 +96,7 @@
+   /* Install our signal handler on all signals in set,
+      and unblock them in mask.
+      Also mark those signals as being sigwaited on */
+-  for (s = 1; s &lt;= NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
+       sigdelset(&mask, s);
+       action.sa_handler = __pthread_sighandler;
+@@ -121,7 +121,7 @@
+   self-&gt;p_cancel_jmp = NULL;
+   /* The signals are now reblocked. Restore the sighandlers. */
+   pthread_mutex_lock(&sigwaited_mut);
+-  for (s = 1; s &lt;= NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
+       sigaction(s, &(saved_signals[s]), NULL);
+       sigdelset(&sigwaited, s);
+</pre>
+
+</body> </html>
