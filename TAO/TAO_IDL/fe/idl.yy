@@ -249,7 +249,7 @@ extern int yyleng;
 start :	definitions ;
 
 definitions
-	: definition definitions
+	: definitions definition
 	| /* empty */
 	;
 
