@@ -3,6 +3,7 @@ Thu Jun 06 13:56:54 2002  Ossama Othman  <ossama@uci.edu>
 	* tao/PortableServer/Object_Adapter.cpp:
 	* tao/RTCORBA/RT_Current.cpp:
 	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+	* tao/RTPortableServer\RT_Servant_Dispatcher.cpp:
 
 	  Include "tao/Protocols_Hooks.h" to pull in TAO_Protocols_Hooks
 	  class declaration.
