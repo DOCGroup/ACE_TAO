@@ -1,9 +1,14 @@
+Mon Apr 12 15:35:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+          Removed wrongly added path
+
 Mon Apr 12 10:11:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.mpc:
-        
+
           Reverted the change I made in
-          
+
           Fri Apr  9 12:28:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           since it was not necessary with recent changes to the MPC
