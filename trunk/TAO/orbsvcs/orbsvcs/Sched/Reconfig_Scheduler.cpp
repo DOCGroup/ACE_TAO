@@ -21,11 +21,6 @@
 #include "Reconfig_Scheduler_T.h"
 #include "Reconfig_Scheduler.h"
 
-// The templatized method parameters needed by this file are
-// hopelessly broken on pre-2.8 versions of g++
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,6 +32,5 @@
 
 ACE_RCSID(Sched, Reconfig_Scheduler, "$Id$")
 
-#endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHEDULER_C */

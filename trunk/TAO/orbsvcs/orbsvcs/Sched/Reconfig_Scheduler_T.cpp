@@ -18,11 +18,6 @@
 #ifndef TAO_RECONFIG_SCHEDULER_T_C
 #define TAO_RECONFIG_SCHEDULER_T_C
 
-// The templatized method parameters needed by this file are
-// hopelessly broken on pre-2.8 versions of g++
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-
 #include "Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Auto_Ptr.h"
@@ -1518,6 +1513,5 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::dependency_count ()
 }
 
 
-#endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHEDULER_T_C */
