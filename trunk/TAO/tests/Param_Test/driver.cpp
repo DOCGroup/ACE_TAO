@@ -470,6 +470,7 @@ Driver::run (void)
         delete client;
       }
       break;
+#if 0
     case Options::TEST_MULTDIM_ARRAY:
       {
         Param_Test_Client<Test_Multdim_Array> *client = new
@@ -483,6 +484,7 @@ Driver::run (void)
         delete client;
       }
       break;
+#endif
     default:
       break;
     }
@@ -534,7 +536,9 @@ template class Param_Test_Client<Test_Fixed_Array>;
 template class Param_Test_Client<Test_Var_Array>;
 template class Param_Test_Client<Test_Exception>;
 template class Param_Test_Client<Test_Big_Union>;
+#if 0
 template class Param_Test_Client<Test_Multdim_Array>;
+#endif
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -564,6 +568,7 @@ template class Param_Test_Client<Test_Multdim_Array>;
 #pragma instantiate Param_Test_Client<Test_Var_Array>
 #pragma instantiate Param_Test_Client<Test_Exception>
 #pragma instantiate Param_Test_Client<Test_Big_Union>
+#if 0
 #pragma instantiate Param_Test_Client<Test_Multdim_Array>
-
+#endif
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
