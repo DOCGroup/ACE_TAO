@@ -1,3 +1,9 @@
+Sun Feb 5 20:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Added SuSE Linux to the list of platforms supported by
+          Remedy IT
+
 Sun Feb 5 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Object.cpp:
