@@ -1,6 +1,6 @@
-Sun Nov 30 17:54:33 CST 1997
+Mon Dec  8 14:30:59 CST 1997
 ====================================================================
-ASNMP = ACE+SNMP++ Version 1.6
+ASNMP = ACE+SNMP++ Version 1.7
 By Michael R. MacFaden mrm@acm.org, mrm@yagosys.com
 ====================================================================
 
@@ -50,16 +50,9 @@ How does ASNMP differ from SNMP?
   not the place to include GUI support in the new world of
   multi-threaded apps.  
 
-  The SNMP object does not provide an ASYNC interface.
-  A new one based on class callbacks will be added in 
-  the future. Use ACE Threads if blocking doesn't suit you.
-  Otherwise, check out Eric Newton's get_async code in examples/get
-  directory.
+  The async interface does not match the HP implementation.
 
-  SNMP V2c/V3 cmds (getbulk) has been hidden from the API until I
-  have an agent that talks V2c to test with. 
-
-How to build this library?
+How to build this library
   Set ACE_ROOT and platform_macros.GNU per ../INSTALL file.
   create libasnmp.a, libasnmp.so and then run the tests
 
