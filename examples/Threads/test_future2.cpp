@@ -73,7 +73,7 @@ private:
   virtual int close (u_long flags = 0);
   // Should not be accessible from outside...  (use end () instead).
 
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0) 
+  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0)
     { return 0; };
   // Doesn't have any use for this example.
 
@@ -191,7 +191,7 @@ Scheduler::~Scheduler (void)
 }
 
 int 
-Scheduler::open (void *args)
+Scheduler::open (void *)
 {
   scheduler_open_count++;
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s open\n", this->name_));
@@ -199,7 +199,7 @@ Scheduler::open (void *args)
 }
 
 int 
-Scheduler::close (u_long flags)
+Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s close\n", this->name_));
   scheduler_open_count--;
@@ -496,7 +496,7 @@ test_timeout (int n_iterations)
 }
 
 int
-main (int argc, char *argv[]) 
+main (int, char *[]) 
 {
   int n_iterations = determine_iterations ();
 
