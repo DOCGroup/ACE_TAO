@@ -48,7 +48,13 @@ server (void)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  if (ACE_OS::mkstemp (shm_key) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
+  if (
+#if defined (ACE_LACKS_MKSTEMP)
+      ACE_OS::mktemp (shm_key) == 0
+#else
+      ACE_OS::mkstemp (shm_key) == 0
+#endif
+      || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), shm_key), 1);
 
   switch (ACE_OS::fork ())
