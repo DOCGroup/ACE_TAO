@@ -53,7 +53,7 @@ public:
 
 typedef char ACE_ES_Event_Container_Chunk[sizeof (ACE_ES_Event_Container)];
 
-typedef ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_MEMORY_POOL_MUTEX> _ACE_Event_Container_Allocator;
+typedef ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_SYNCH_MUTEX> _ACE_Event_Container_Allocator;
 
 class TAO_ORBSVCS_Export ACE_ES_Event_Container_Allocator : public _ACE_Event_Container_Allocator
 // = TITLE
@@ -69,10 +69,7 @@ public:
 
 // ************************************************************
 
-typedef char ACE_ES_Event_Chunk[sizeof (RtecEventComm::Event)];
-
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_MEMORY_POOL_MUTEX> ACE_ES_Event_Allocator;
-//typedef ACE_Cached_Allocator<ACE_ES_Event_Chunk, ACE_MEMORY_POOL_MUTEX> _ACE_Event_Allocator;
+typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> ACE_ES_Event_Allocator;
 
 class TAO_ORBSVCS_Export ACE_ES_Memory_Pools
 // = TITLE

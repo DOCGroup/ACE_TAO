@@ -1,16 +1,25 @@
+Mon Aug 10 15:56:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
+	  The memory pools are global from some time now, but they did not
+	  have the right kind of lock; this lead to memory corruption
+	  problems when sending events at a very high rate. Thanks to
+	  "Mark L. Boriack" <mboriack@std.saic.com> for reporting this
+	  problem.
+
 Mon Aug 10 13:59:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs\tests\ImplRepo\Impl_Repo.idl:
-	* orbsvcs\tests\ImplRepo\client.dsp:
-	* orbsvcs\tests\ImplRepo\client_impl.cpp:
-	* orbsvcs\tests\ImplRepo\implrepo.dsp:
-	* orbsvcs\tests\ImplRepo\ir_implrepo_impl.cpp:
-	* orbsvcs\tests\ImplRepo\ir_implrepo_impl.h:
-	* orbsvcs\tests\ImplRepo\ir_server.cpp:
-	* orbsvcs\tests\ImplRepo\server.dsp:
-	* orbsvcs\tests\ImplRepo\server_impl.cpp:
-	* orbsvcs\tests\ImplRepo\server_impl.h:
-	* orbsvcs\tests\ImplRepo\svc.conf:
+	* orbsvcs/tests/ImplRepo/Impl_Repo.idl:
+	* orbsvcs/tests/ImplRepo/client.dsp:
+	* orbsvcs/tests/ImplRepo/client_impl.cpp:
+	* orbsvcs/tests/ImplRepo/implrepo.dsp:
+	* orbsvcs/tests/ImplRepo/ir_implrepo_impl.cpp:
+	* orbsvcs/tests/ImplRepo/ir_implrepo_impl.h:
+	* orbsvcs/tests/ImplRepo/ir_server.cpp:
+	* orbsvcs/tests/ImplRepo/server.dsp:
+	* orbsvcs/tests/ImplRepo/server_impl.cpp:
+	* orbsvcs/tests/ImplRepo/server_impl.h:
+	* orbsvcs/tests/ImplRepo/svc.conf:
 	  The server now registers itself with the IR.
 
 Mon Aug 10 13:33:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
