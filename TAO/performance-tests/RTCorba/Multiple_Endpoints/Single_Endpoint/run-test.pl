@@ -31,7 +31,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
                        " -ORBSvcConf client.conf "
                        . " -i file://$iorfile "
-                       . " -n 1000 "
+                       . " -n 100000 "
                        . " -t 1 -t 2 -t 3 -t 4 -t 5 -t 30");
 
 $client = $CL->TimedWait (60);
@@ -40,7 +40,7 @@ if ($client == -1) {
   $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->TimedWait (10);
+$server = $SV->TimedWait (60);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
   $SV->Kill (); $SV->TimedWait (1);

@@ -25,9 +25,6 @@ server
 
 -o <ior_output_file>      Name of the file where to store IOR of the server.
 
--n <number of threads>    Number of threads, which will be servicing
-                          endpoint and connections for each priority.
-
 client
 
 -i <ior>                  IOR of the object to use for invocations.

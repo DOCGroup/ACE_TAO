@@ -10,7 +10,6 @@ require ACEutils;
 
 $client_conf="client.conf";
 $server_conf="server.conf";
-$threads='2';
 $iorfile = "test.ior";
 
 print STDERR "================ Endpoint Per Priority Test\n";
@@ -25,7 +24,7 @@ $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        . " -ORBEndPoint iiop://localhost:0/priority=4 "
                        . " -ORBEndPoint iiop://localhost:0/priority=5 "
                        . " -ORBEndPoint iiop://localhost:0/priority=30 "
-                       . " -o $iorfile -n $threads");
+                       . " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -36,7 +35,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
                        " -ORBSvcConf client.conf "
                        . " -i file://$iorfile "
-                       . " -t 1 -t 2 -t 3 -t 4 -t 5 -t 30 -n 1000");
+                       . " -t 1 -t 2 -t 3 -t 4 -t 5 -t 30 -n 100000");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -44,7 +43,7 @@ if ($client == -1) {
   $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->TimedWait (10);
+$server = $SV->TimedWait (30);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
   $SV->Kill (); $SV->TimedWait (1);
