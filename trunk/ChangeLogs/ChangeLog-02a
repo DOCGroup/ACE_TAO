@@ -1,3 +1,10 @@
+Tue Dec 18 22:05:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/make_release: Added comment to indicate the problem in
+	  producing diffs  when a beta after a major or minor release is
+	  cut. This needs fixing. Will get to this when the other pending
+	  changes go in.
+
 Tue Dec 18 16:01:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS_Dirent.cpp (readdir_emulation): Fixed an "off-by-one"
