@@ -1,6 +1,16 @@
+Wed Jan  7 13:10:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Generate the -j option again, thanks for Chris Kohlhoff for pointing
+          out the need for it. If there are no staticflags or dynamicflags, just
+          generate nothing instead of an empty line. Don't generate the
+          INCLUDES anymore because we generate an explicit install target.
+          Fixed the install target to handle existing directories and generate
+          it at the end of the file.
+
 Wed Jan  7 13:03:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/Unbounde_Set_Ex.h:
+        * ace/Unbounded_Set_Ex.h:
           Added #include of ace/os_include/os_stddef.h to get size_t. This
           fixed compile errors in the Cygwin build
 
