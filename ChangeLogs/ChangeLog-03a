@@ -1,3 +1,11 @@
+Wed Jul 10 13:31:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/CLD.dsp:
+        * examples/C++NPv2/examples.dsw: Added CLD project.
+
+        * examples/Client_Logging_Daemon.cpp: Disable the info, suspend, and
+          resume methods - these are left as an exercise for the reader.
+
 Wed Jul 10 11:24:39 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AIO_CLD.dsp:
