@@ -1,3 +1,15 @@
+Thu Jul 15 02:29:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POA.cpp (create_reference_with_id_i): Reverted back to use
+	  find_system_id_using_user_id () from
+	  find_servant_and_system_id_using_user_id ().  It has different
+	  semantics to what we expected.  We need something that can find
+	  the system id using appropriate strategy, at the same time,
+	  return the servant if one is available.  Before we have that
+	  function, <create_reference_with_id_i> basically generates
+	  broken collocated object when DIRECT collocation strategy is
+	  used.
+
 Wed Jul 14 21:49:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
