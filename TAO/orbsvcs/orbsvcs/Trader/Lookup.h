@@ -307,15 +307,12 @@ private:
   // A list of recent request_id_stems 
 };
 
-int operator== (const CosTrading::Admin::OctetSeq_var& left,
-		const CosTrading::Admin::OctetSeq_var& right);
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Lookup.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
 
 #endif /* TAO_LOOKUP_H */

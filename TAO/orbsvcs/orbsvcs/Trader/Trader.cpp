@@ -16,6 +16,10 @@
 
 #include "Trader.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),
     import_attributes_ (*this),
@@ -162,6 +166,39 @@ operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
   return (r < l);
 }
 
+int
+operator== (const CosTrading::Admin::OctetSeq_var& l,
+	   const CosTrading::Admin::OctetSeq_var& r)
+{
+  int return_value = 0;
+  CosTrading::Admin::OctetSeq& left = l;
+  CosTrading::Admin::OctetSeq& right = r;
+  CORBA::ULong left_length = left.length (),
+    right_length = right.length ();
+
+  /*
+  if (left_length != right_length)
+    return_value = 0;
+  else
+  */
+  
+  if (left_length == right_length) 
+    {
+      for (CORBA::ULong i = 0; i < left_length; i++)
+	{
+	  if (left[i] == right[i])
+	    {
+	      return_value = 1;
+	      break;
+	    }
+	  else /* if (left[i] > right[i]) */
+	    break;
+	}
+    }
+
+  return return_value;
+}
+
 #include "Trader_T.h"
 
 TAO_Trader_Factory::TAO_TRADER*
@@ -195,3 +232,6 @@ TAO_Trader_Factory::create_MT_linked_trader (void)
 */
 #endif /* ACE_HAS_THREADS */
 
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */

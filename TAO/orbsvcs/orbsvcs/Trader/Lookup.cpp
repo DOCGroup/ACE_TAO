@@ -754,37 +754,5 @@ TAO_Lookup<TRADER>
   TAO_ENDTRY;
 }
 
-int
-operator== (const CosTrading::Admin::OctetSeq_var& l,
-	   const CosTrading::Admin::OctetSeq_var& r)
-{
-  int return_value = 0;
-  CosTrading::Admin::OctetSeq& left = l;
-  CosTrading::Admin::OctetSeq& right = r;
-  CORBA::ULong left_length = left.length (),
-    right_length = right.length ();
-
-  /*
-  if (left_length != right_length)
-    return_value = 0;
-  else
-  */
-  
-  if (left_length == right_length) 
-    {
-      for (CORBA::ULong i = 0; i < left_length; i++)
-	{
-	  if (left[i] == right[i])
-	    {
-	      return_value = 1;
-	      break;
-	    }
-	  else /* if (left[i] > right[i]) */
-	    break;
-	}
-    }
-
-  return return_value;
-}
 
 #endif /* TAO_LOOKUP_C */

@@ -22,10 +22,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "Attributes.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 // Forward Declaration.
 class TAO_Trader_Base;
 
@@ -152,9 +148,7 @@ int
 operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
 
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
+int operator== (const CosTrading::Admin::OctetSeq_var& left,
+		const CosTrading::Admin::OctetSeq_var& right);
 
 #endif /* TAO_TRADER_BASE_H */

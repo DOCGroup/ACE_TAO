@@ -20,7 +20,7 @@
 
 #include "Property_Filter.h"
 
-class TAO_ORBSVCS_Export  TAO_Offer_Iterator :
+class TAO_Offer_Iterator :
   public POA_CosTrading::OfferIterator
   // = TITLE
   //     This class implements CosTrading::OfferIterator IDL

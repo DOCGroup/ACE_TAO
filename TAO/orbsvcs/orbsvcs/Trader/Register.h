@@ -20,10 +20,6 @@
 #include "Attributes_T.h"
 #include "Offer_Modifier.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 template <class TRADER>
 class TAO_Register :
   public TAO_Trader_Components<POA_CosTrading::Register>,
@@ -310,9 +306,5 @@ public:
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Register.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
 
 #endif /* ACE_REGISTER_H */
