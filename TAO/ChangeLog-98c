@@ -1,3 +1,12 @@
+Wed Jul 15 12:07:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Servant_Base.cpp: 
+	  Added timeprobes in operation lookup.
+
+	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp: 
+	  Added TIMEPROBE_PRINT at the end.
+
 Wed Jul 15 12:11:01 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/Makefile: 

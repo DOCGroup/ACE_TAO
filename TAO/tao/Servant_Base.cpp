@@ -1,6 +1,27 @@
 // $Id$
 
 #include "tao/corba.h"
+#include "tao/Timeprobe.h"
+
+#if defined (ACE_ENABLE_TIMEPROBES)
+
+static const char *TAO_Servant_Base_Timeprobe_Description[] =
+{
+  "Servant_Base::_find - start",
+  "Servant_Base::_find - end"
+};
+
+enum
+{
+  TAO_SERVANT_BASE_FIND_START = 700,
+  TAO_SERVANT_BASE_FIND_END
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
+                                  TAO_SERVANT_BASE_FIND_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_ServantBase::TAO_ServantBase (void)
   :  optable_ (0)
@@ -47,6 +68,7 @@ int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return optable_->find (opname, skelfunc);
 }
 
