@@ -64,7 +64,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send_i");
 
-  // @@ FIXME: Not thread safe!
+  // NOTE: Caller must provide thread-synchronization.
 
   // No send flags are supported in SSL.
   if (flags != 0)
@@ -88,9 +88,22 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
         {
         case SSL_ERROR_NONE:
           return bytes_sent;
+
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
           break;
+
+        case SSL_ERROR_ZERO_RETURN:
+          // @@ This appears to be the right/expected thing to do.
+          //    However, it'd be nice if someone could verify this.
+          //
+          // The peer has notified us that it is shutting down via
+          // the SSL "close_notify" message so we need to
+          // shutdown, too.
+
+          (void) ::SSL_shutdown (this->ssl_);
+          return bytes_sent;
+
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
@@ -121,39 +134,42 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
 
-  // @@ FIXME: Not thread safe!
-
-  if (flags)
-    {
-      if (ACE_BIT_ENABLED (flags, MSG_PEEK))
-        return ::SSL_peek (this->ssl_,
-                           ACE_static_cast (char*, buf),
-                           n);
-      else
-        ACE_NOTSUP_RETURN (-1);
-    }
+  // NOTE: Caller must provide thread-synchronization.
 
   int bytes_read = 0;
 
-  // The SSL_read() call is wrapped in a do/while(SSL_pending())
-  // loop to force a full SSL record (SSL is a record-oriented
-  // protocol, not a stream-oriented one) to be read prior to
-  // returning to the Reactor.  This is necessary to avoid some subtle
-  // problems where data from another record is potentially handled
-  // before the current record is fully handled.
+  // The SSL_read() and SSL_peek() calls are wrapped in a
+  // do/while(SSL_pending()) loop to force a full SSL record (SSL is a
+  // record-oriented protocol, not a stream-oriented one) to be read
+  // prior to returning to the Reactor.  This is necessary to avoid
+  // some subtle problems where data from another record is
+  // potentially handled before the current record is fully handled.
   do
     {
-      bytes_read = ::SSL_read (this->ssl_,
-                               ACE_static_cast (char *, buf),
-                               n);
+      if (flags)
+        {
+          if (ACE_BIT_ENABLED (flags, MSG_PEEK))
+            bytes_read = ::SSL_peek (this->ssl_,
+                                     ACE_static_cast (char *, buf),
+                                     n);
+          else
+            ACE_NOTSUP_RETURN (-1);
+        }
+      else
+        bytes_read = ::SSL_read (this->ssl_,
+                                 ACE_static_cast (char *, buf),
+                                 n);
 
-      switch (::SSL_get_error (this->ssl_, bytes_read))
+      int status = ::SSL_get_error (this->ssl_, bytes_read);
+      switch (status)
         {
         case SSL_ERROR_NONE:
           return bytes_read;
+
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
           break;
+
         case SSL_ERROR_ZERO_RETURN:
           // @@ This appears to be the right/expected thing to do.
           //    However, it'd be nice if someone could verify this.
@@ -163,6 +179,15 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           // shutdown, too.
           (void) ::SSL_shutdown (this->ssl_);
           return bytes_read;
+
+        case SSL_ERROR_SYSCALL:
+          if (bytes_read == 0)
+            // An EOF occured but the SSL "close_notify" message was
+            // not sent.  This is a protocol error, but we ignore it.
+            return 0;
+
+          // If not an EOF, then fall through to "default" case.
+
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
