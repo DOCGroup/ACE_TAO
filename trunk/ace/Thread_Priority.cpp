@@ -169,7 +169,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
   if (ACE_PRIORITY_MIN <= default_thread_priority_
       && default_thread_priority_ <= ACE_PRIORITY_MAX)
     {
-      switch (priority_class)
+      switch (priority_class_)
       {
         case ACE_LOW_PRIORITY_CLASS :
           os_default_thread_priority_ =
@@ -200,47 +200,10 @@ ACE_Thread_Priority::convert_to_os_priority (void)
 
 #else
 
-/* mapping of
-      ACE_Thread_Priority::                    to        VxWorks
-   Priority_Class             Thread_Priority      class         priority
-   ==============             ===============      =====         ========
-   ACE_LOW_PRIORITY_CLASS        0 .. 6             N/A           0 .. 6
-   ACE_NORMAL_PRIORITY_CLASS     0 .. 6             N/A           7 .. 13
-   ACE_HIGH_PRIORITY_CLASS       0 .. 6             N/A          14 .. 20
-   ACE_REALTIME_PRIORITY_CLASS   0 .. 6             N/A          21 .. 27
- */
-
-// assumes that priority increases with increasing ACE_pri_t value
 long
 ACE_Thread_Priority::convert_to_os_priority (void)
 {
-  os_priority_class_ = -1;  /* unused on this platform */
-
-  if (ACE_PRIORITY_MIN <= default_thread_priority_
-      && default_thread_priority_ <= ACE_PRIORITY_MAX)
-    {
-      switch (priority_class)
-      {
-        case ACE_LOW_PRIORITY_CLASS :
-          os_default_thread_priority_ = default_thread_priority_;
-          break;
-        case ACE_NORMAL_PRIORITY_CLASS :
-          os_default_thread_priority_ = default_thread_priority_ + 7;
-          break;
-        case ACE_HIGH_PRIORITY_CLASS :
-          os_default_thread_priority_ = default_thread_priority_ + 14;
-          break;
-        case ACE_REALTIME_PRIORITY_CLASS :
-          os_default_thread_priority_ = default_thread_priority_ + 21;
-          break;
-      }
-    }
-  else
-    // The user specified a thread priority outside the enum range, so
-    // use it without modification.
-    os_default_thread_priority_ = default_thread_priority_;
-
-  return 0;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 #endif /* ACE_HAS_STHREADS */
