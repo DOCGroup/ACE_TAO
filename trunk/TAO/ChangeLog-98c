@@ -1,3 +1,10 @@
+Thu Nov 12 14:01:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/try_macros.h: Made the native exception macros fit 
+          on one line so compilers don't get confused by the "try" 
+          by itself.  Thanks to Virginie Amar<vamar@amadeus.net> 
+          for submitting this fix.
+
 Thu Nov 12 07:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
