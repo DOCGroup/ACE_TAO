@@ -1,3 +1,12 @@
+Tue Apr 28 21:58:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Map_Manager_Test.cpp: Added assertion test on the number
+	  of iterations to ensure the test does run correctly.
+
+	* tests/Map_Manager_Test.cpp (main): Disabled the VERBOSE_LITE
+	  Log_Msg flag before starting the real test and reenabled it
+	  after the tests.
+
 Tue Apr 28 06:49:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html,os-patches/linux-patches.html: updated
