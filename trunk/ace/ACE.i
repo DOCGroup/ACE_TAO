@@ -4,6 +4,24 @@
 // ACE.i
 // Miscellaneous static methods used throughout ACE.
 
+inline u_int
+ACE::major_version ()
+{
+  return ACE_MAJOR_VERSION;
+}
+
+inline u_int
+ACE::minor_version ()
+{
+  return ACE_MINOR_VERSION;
+}
+
+inline u_int
+ACE::beta_version ()
+{
+  return ACE_BETA_VERSION;
+}
+
 inline ssize_t
 ACE::send (ACE_HANDLE handle, const void *buf, size_t len)
 {
