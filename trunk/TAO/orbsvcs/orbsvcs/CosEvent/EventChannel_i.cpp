@@ -52,7 +52,7 @@ EventChannel_i::for_consumers (CORBA::Environment &TAO_TRY_ENV)
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object.
   return
-    CosEventChannelAdmin::ConsumerAdmin::_duplicate (this->consumeradmin_)
+    CosEventChannelAdmin::ConsumerAdmin::_duplicate (this->consumeradmin_);
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
