@@ -1,9 +1,11 @@
-#
+eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
+    & eval 'exec perl -pi -S $0 $argv:q'
+    if 0;
+
 # $Id$
-#
 
 #
-# This script is used by Hash_Map_Manager_Helper.csh.
+# This script is used by Hash_Map_Manager_Helper.
 #
 
 #
@@ -66,6 +68,9 @@
 # are using the template instantiation provided in ACE for ACE_Hash
 # and ACE_Equal_To, don't instantiate those templates.
 
+# The first three lines above let this script run without specifying the
+# full path to perl, as long as it is in the user's PATH.
+# Taken from perlrun man page.
 
 $template_instantiation = "template class";
 $end_of_template_instantiation = ";";
