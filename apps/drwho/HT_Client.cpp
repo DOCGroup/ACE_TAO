@@ -13,7 +13,7 @@ HT_Client::insert (const char *key_name, int max_len)
 
   // This is tricky... 
 
-  for (prpp = &this->hash_table[ACE::hash_pjw (key_name)];
+  for (prpp = &this->hash_table[ACE::hash_pjw (key_name) % this->hash_table_size];
        *prpp != 0
          && ACE_OS::strncmp ((*prpp)->get_login (),
                              key_name, max_len) != 0;
