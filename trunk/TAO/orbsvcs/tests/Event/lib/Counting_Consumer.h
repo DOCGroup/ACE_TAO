@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel testsuite
-//
-// = FILENAME
-//   Counting_Consumer
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Counting_Consumer
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_COUNTING_CONSUMER_H
 #define EC_COUNTING_CONSUMER_H
@@ -26,50 +22,51 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
+/**
+ * @class EC_Counting_Consumer
+ *
+ * @brief Simple consumer object to implement EC tests.
+ *
+ * This is a simple consumer that counts the events it receives.
+ */
 class EC_Test_Export EC_Counting_Consumer : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object to implement EC tests.
-  //
-  // = DESCRIPTION
-  //   This is a simple consumer that counts the events it receives.
-  //
 public:
+  /// Constructor
   EC_Counting_Consumer (const char* name);
-  // Constructor
 
+  /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
                 ACE_ENV_ARG_DECL);
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   void deactivate (ACE_ENV_SINGLE_ARG_DECL);
-  // Simple connect/disconnect methods..
 
+  /// Print out an error message if the event count is too far from the
+  /// expected count.
   void dump_results (int expected_count, int tolerance);
-  // Print out an error message if the event count is too far from the
-  // expected count.
 
   // = The RtecEventComm::PushConsumer methods
 
+  /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // The skeleton methods.
 
+  /// Keep track of the number of events received.
   CORBA::ULong event_count;
-  // Keep track of the number of events received.
 
+  /// Keep track of the number of disconnect calls received.
   CORBA::ULong disconnect_count;
-  // Keep track of the number of disconnect calls received.
 
 protected:
+  /// The proxy
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // The proxy
 
+  /// The name
   const char* name_;
-  // The name
 };
 
 #endif /* ECT_CONSUMER_H */

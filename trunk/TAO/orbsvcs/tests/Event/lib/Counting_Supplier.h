@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel testsuite
-//
-// = FILENAME
-//   Counting_Supplier
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Counting_Supplier
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EC_COUNTING_SUPPLIER_H
 #define EC_COUNTING_SUPPLIER_H
@@ -27,29 +23,33 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 
+/**
+ * @class EC_Counting_Supplier
+ *
+ * @brief Simple supplier object
+ *
+ * This class is a supplier of events.
+ */
 class EC_Test_Export EC_Counting_Supplier : public POA_RtecEventComm::PushSupplier
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //   This class is a supplier of events.
-  //
 public:
+  /// Constructor
   EC_Counting_Supplier (void);
-  // Constructor
 
   // = The RtecEventComm::PushSupplier methods
 
+  /**
+   * Connect as a consumer to receive a TIMEOUT every <period>
+   * milliseconds.
+   * The class pushes an event (in its supplier role) every time it
+   * receives the timeout.
+   */
   void activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                  int period
                  ACE_ENV_ARG_DECL);
   void deactivate (ACE_ENV_SINGLE_ARG_DECL);
-  // Connect as a consumer to receive a TIMEOUT every <period>
-  // milliseconds.
-  // The class pushes an event (in its supplier role) every time it
-  // receives the timeout.
 
+  /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 int published_source,
                 int published_type,
@@ -60,47 +60,46 @@ public:
                 const RtecEventChannelAdmin::SupplierQOS &qos
                 ACE_ENV_ARG_DECL);
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  // Simple connect/disconnect methods..
 
+  /// The Consumer side methods.
   void push (const RtecEventComm::EventSet& events
              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // The Consumer side methods.
 
+  /// The skeleton methods.
   virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // The skeleton methods.
 
+  /// Count the number of events sent
   CORBA::ULong event_count;
-  // Count the number of events sent
 
+  /// Count the number of disconnect_push_supplier calls
   CORBA::ULong disconnect_count;
-  // Count the number of disconnect_push_supplier calls
 
 private:
+  /// Adapter...
   ACE_PushConsumer_Adapter<EC_Counting_Supplier> consumer_adapter_;
-  // Adapter...
 
+  /// The adapter proxy...
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // The adapter proxy...
 
+  /// Our proxy
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-  // Our proxy
 
+  /// The event source
   int event_source_;
-  // The event source
 
+  /// The event type
   int event_type_;
-  // The event type
 };
 
 class EC_Test_Export EC_Counting_Supplier_Task : public ACE_Task_Base
 {
 public:
+  /// Create the task...
   EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
-  // Create the task...
 
   // = Check the ACE_Task_Base documentation.
   int svc (void);
@@ -108,21 +107,21 @@ public:
   void stop (void);
   CORBA::ULong push_count (void);
 
+  /// Run a single iteration of the test
   void run (ACE_ENV_SINGLE_ARG_DECL);
-  // Run a single iteration of the test
 
 private:
+  /// The supplier we are turning into an active object
   EC_Counting_Supplier *supplier_;
-  // The supplier we are turning into an active object
 
+  /// The event we push through the supplier
   RtecEventComm::EventSet event_;
-  // The event we push through the supplier
 
+  /// Set to 1 when the test must stop
   int stop_flag_;
-  // Set to 1 when the test must stop
 
+  /// Count the number of push() calls
   CORBA::ULong push_count_;
-  // Count the number of push() calls
 
   TAO_SYNCH_MUTEX lock_;
 };
