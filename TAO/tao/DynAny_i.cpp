@@ -57,7 +57,6 @@ TAO_DynAny_i::TAO_DynAny_i (CORBA_TypeCode_ptr tc)
             break;
           default:
             ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
-            break;
         }
     }
   ACE_CATCHANY
