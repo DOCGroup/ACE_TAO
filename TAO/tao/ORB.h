@@ -228,14 +228,6 @@ public:
     virtual int _is_a (const char* interface_id) const;
   };
 
-  // Typedefs for CORBA_ORB_RequestSeq,
-  // which is an argument of send_multiple_requests_*().
-  // See Request.{h,i,cpp} for definitions.
-  typedef CORBA_ORB_RequestSeq RequestSeq;
-  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
-  typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
-  typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
-
   typedef char *ObjectId;
   typedef CORBA::String_var ObjectId_var;
   typedef CORBA::String_out ObjectId_out;
@@ -282,6 +274,14 @@ public:
 #endif /* TAO_HAS_VALUETYPE */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  // Typedefs for CORBA_ORB_RequestSeq,
+  // which is an argument of send_multiple_requests_*().
+  // See Request.{h,i,cpp} for definitions.
+  typedef CORBA_ORB_RequestSeq RequestSeq;
+  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
+  typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
+  typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
 
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &new_list,

@@ -163,7 +163,7 @@ Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-			               " (%P|%t) Unable to resolve the Name Service.\n"),
+                                       " (%P|%t) Unable to resolve the Name Service.\n"),
                           -1);
 
       exception_message = "While narrowing naming context";
@@ -242,7 +242,8 @@ Quoter_Server::~Quoter_Server (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "Could not unbind Quoter Server from the Name Service\n"));
-      ACE_PRINT_EXCEPTION ("~Quoter_Server");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "~Quoter_Server");
     }
   ACE_ENDTRY;
 

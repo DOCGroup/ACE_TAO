@@ -78,8 +78,8 @@ CORBA::TypeCode_ptr CORBA::_tc_Object = 0;
 // Two typecodes for exceptions
 CORBA::TypeCode_ptr CORBA::TypeCode::_tc_Bounds = 0;
 CORBA::TypeCode_ptr CORBA::TypeCode::_tc_BadKind = 0;
-// Some more typecodes in the CORBA namespace. We keep adding 
-// to this list as we find more and more things being introduced 
+// Some more typecodes in the CORBA namespace. We keep adding
+// to this list as we find more and more things being introduced
 // to the CORBA namespace.
 
 CORBA::TypeCode_ptr CORBA::_tc_Current = 0;
@@ -87,7 +87,9 @@ CORBA::TypeCode_ptr CORBA::_tc_Identifier = 0;
 CORBA::TypeCode_ptr CORBA::_tc_RepositoryId = 0;
 CORBA::TypeCode_ptr CORBA::_tc_ORBid = 0;
 CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
+#if !defined(TAO_HAS_MINIMUM_CORBA)
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 0;
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA::TypeCode_ptr CORBA::_tc_PolicyErrorCode = 0;
 CORBA::TypeCode_ptr CORBA::_tc_PolicyError = 0;
@@ -109,7 +111,7 @@ CORBA::TypeCode_ptr TC_opaque = 0;
 CORBA::TypeCode_ptr TC_ServiceContextList = 0;
 CORBA::TypeCode_ptr TC_completion_status = 0;
 
-// initialize all the ORB owned TypeCode constants. This 
+// initialize all the ORB owned TypeCode constants. This
 // routine will be invoked by the ORB_init method.
 void
 TAO_TypeCodes::init (void)
@@ -235,7 +237,7 @@ TAO_TypeCodes::init (void)
     0, 0, 0, 0            // no members to this typecode
   };
 
-  CORBA::TypeCode::_tc_Bounds = 
+  CORBA::TypeCode::_tc_Bounds =
     new CORBA::TypeCode (CORBA::tk_except,
                          sizeof tc_buf_Bounds,
                          tc_buf_Bounds,
@@ -259,7 +261,7 @@ TAO_TypeCodes::init (void)
     0, 0, 0, 0            // no members to this typecode
   };
 
-  CORBA::TypeCode::_tc_BadKind = 
+  CORBA::TypeCode::_tc_BadKind =
     new CORBA::TypeCode (CORBA::tk_except,
                          sizeof tc_buf_BadKind,
                          tc_buf_BadKind,
@@ -269,23 +271,23 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_Identifier[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
-    25, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4964), 
-    ACE_NTOHL (0x656e7469), 
-    ACE_NTOHL (0x66696572), 
-    ACE_NTOHL (0x3a312e30), 
+    25,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4964),
+    ACE_NTOHL (0x656e7469),
+    ACE_NTOHL (0x66696572),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:CORBA/Identifier:1.0
-    11, 
-    ACE_NTOHL (0x4964656e), 
-    ACE_NTOHL (0x74696669), 
+    11,
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
     ACE_NTOHL (0x657200fd),  // name = Identifier
     CORBA::tk_string,
     0, // string length
   };
 
-  CORBA::_tc_Identifier = 
+  CORBA::_tc_Identifier =
     new CORBA::TypeCode (CORBA::tk_alias,
                          sizeof (_oc_CORBA_Identifier),
                          (char *) &_oc_CORBA_Identifier,
@@ -295,23 +297,23 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_RepositoryId[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
-    27, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5265), 
-    ACE_NTOHL (0x706f7369), 
-    ACE_NTOHL (0x746f7279), 
-    ACE_NTOHL (0x49643a31), 
+    27,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5265),
+    ACE_NTOHL (0x706f7369),
+    ACE_NTOHL (0x746f7279),
+    ACE_NTOHL (0x49643a31),
     ACE_NTOHL (0x2e3000fd),  // repository ID = IDL:CORBA/RepositoryId:1.0
-    13, 
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    13,
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0xfdfdfd),  // name = RepositoryId
     CORBA::tk_string,
     0, // string length
   };
-  CORBA::_tc_RepositoryId = 
+  CORBA::_tc_RepositoryId =
     new CORBA::TypeCode (CORBA::tk_alias,
                          sizeof (_oc_CORBA_RepositoryId),
                          (char *) &_oc_CORBA_RepositoryId,
@@ -321,17 +323,17 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_ORBid[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
-    28, ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f52), 
-    ACE_NTOHL (0x4269643a), 
+    28, ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f52),
+    ACE_NTOHL (0x4269643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ORBid:1.0
-    6, 
-    ACE_NTOHL (0x4f524269), 
+    6,
+    ACE_NTOHL (0x4f524269),
     ACE_NTOHL (0x64000000),  // name = ORBid
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0, // string length
   };
   CORBA::_tc_ORBid = new CORBA::TypeCode (CORBA::tk_alias,
@@ -343,29 +345,30 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_ObjectId[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
-    31, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f62), 
-    ACE_NTOHL (0x6a656374), 
-    ACE_NTOHL (0x49643a31), 
+    31,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f62),
+    ACE_NTOHL (0x6a656374),
+    ACE_NTOHL (0x49643a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ObjectId:1.0
-    9, 
-    ACE_NTOHL (0x4f626a65), 
-    ACE_NTOHL (0x63744964), 
+    9,
+    ACE_NTOHL (0x4f626a65),
+    ACE_NTOHL (0x63744964),
     ACE_NTOHL (0x0),  // name = ObjectId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0, // string length
   };
-  CORBA_ORB::_tc_ObjectId = 
+  CORBA_ORB::_tc_ObjectId =
     new CORBA::TypeCode (CORBA::tk_alias,
                          sizeof (_oc_CORBA_ObjectId),
                          (char *) &_oc_CORBA_ObjectId,
                          0,
                          sizeof (CORBA_ORB::ObjectId));
 
+#if !defined(TAO_HAS_MINIMUM_CORBA)
   static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
   {
     TAO_ENCAP_BYTE_ORDER,   // byte order
@@ -399,28 +402,29 @@ TAO_TypeCodes::init (void)
                          (char *) &_oc_CORBA_ORB_InconsistentTypeCode,
                          0,
                          sizeof (CORBA_ORB_InconsistentTypeCode));
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // ****************************************************************
 
   static const CORBA::Long _oc_CORBA_PolicyErrorCode[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
-    38, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x4572726f), 
-    ACE_NTOHL (0x72436f64), 
-    ACE_NTOHL (0x653a312e), 
-    ACE_NTOHL (0x30000000),  // repository ID = 
+    38,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x4572726f),
+    ACE_NTOHL (0x72436f64),
+    ACE_NTOHL (0x653a312e),
+    ACE_NTOHL (0x30000000),  // repository ID =
                              //   IDL:omg.org/CORBA/PolicyErrorCode:1.0
-    16, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63794572), 
-    ACE_NTOHL (0x726f7243), 
+    16,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63794572),
+    ACE_NTOHL (0x726f7243),
     ACE_NTOHL (0x6f646500),  // name = PolicyErrorCode
     CORBA::tk_short,
   };
@@ -434,45 +438,45 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_PolicyError[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
-    34, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x4572726f), 
-    ACE_NTOHL (0x723a312e), 
-    ACE_NTOHL (0x30000000),   // repository ID = 
+    34,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x4572726f),
+    ACE_NTOHL (0x723a312e),
+    ACE_NTOHL (0x30000000),   // repository ID =
                               //   IDL:omg.org/CORBA/PolicyError:1.0
-    12, 
-    ACE_NTOHL (0x506f6c69), 
-  
-    ACE_NTOHL (0x63794572), 
+    12,
+    ACE_NTOHL (0x506f6c69),
+
+    ACE_NTOHL (0x63794572),
     ACE_NTOHL (0x726f7200),   // name = PolicyError
     1, // member count
-    7, 
-    ACE_NTOHL (0x72656173), 
+    7,
+    ACE_NTOHL (0x72656173),
     ACE_NTOHL (0x6f6e0000),   // name = reason
     CORBA::tk_alias,          // typecode kind for typedefs
     72,                       // encapsulation length
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    38, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x4572726f), 
-    ACE_NTOHL (0x72436f64), 
-    ACE_NTOHL (0x653a312e), 
-    ACE_NTOHL (0x30000000),   // repository ID = 
+    38,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x4572726f),
+    ACE_NTOHL (0x72436f64),
+    ACE_NTOHL (0x653a312e),
+    ACE_NTOHL (0x30000000),   // repository ID =
                               //   IDL:omg.org/CORBA/PolicyErrorCode:1.0
-    16, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63794572), 
-    ACE_NTOHL (0x726f7243), 
+    16,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63794572),
+    ACE_NTOHL (0x726f7243),
     ACE_NTOHL (0x6f646500),   // name = PolicyErrorCode
     CORBA::tk_short,
   };
@@ -486,25 +490,25 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_InvalidPolicies[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    38, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f496e), 
-    ACE_NTOHL (0x76616c69), 
-    ACE_NTOHL (0x64506f6c), 
-    ACE_NTOHL (0x69636965), 
-    ACE_NTOHL (0x733a312e), 
+    38,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f496e),
+    ACE_NTOHL (0x76616c69),
+    ACE_NTOHL (0x64506f6c),
+    ACE_NTOHL (0x69636965),
+    ACE_NTOHL (0x733a312e),
     ACE_NTOHL (0x30000000),   // repository ID = IDL:omg.org/CORBA/InvalidPolicies:1.0
-    16, 
-    ACE_NTOHL (0x496e7661), 
-    ACE_NTOHL (0x6c696450), 
-    ACE_NTOHL (0x6f6c6963), 
+    16,
+    ACE_NTOHL (0x496e7661),
+    ACE_NTOHL (0x6c696450),
+    ACE_NTOHL (0x6f6c6963),
     ACE_NTOHL (0x69657300),   // name = InvalidPolicies
     1,                        // member count
-    8, 
-    ACE_NTOHL (0x696e6469), 
+    8,
+    ACE_NTOHL (0x696e6469),
     ACE_NTOHL (0x63657300),   // name = indices
     CORBA::tk_sequence,       // typecode kind
     12,                       // encapsulation length
@@ -522,20 +526,20 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_PolicyType[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    33, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x54797065), 
-    ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),          // repository ID = 
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x54797065),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),          // repository ID =
                               //   IDL:omg.org/CORBA/PolicyType:1.0
-    11, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63795479), 
+    11,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63795479),
     ACE_NTOHL (0x70650000),   // name = PolicyType
     CORBA::tk_ulong,
   };
@@ -549,17 +553,17 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_Policy[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    29, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x3a312e30), 
+    29,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),          // repository ID = IDL:omg.org/CORBA/Policy:1.0
-    7, 
-    ACE_NTOHL (0x506f6c69), 
+    7,
+    ACE_NTOHL (0x506f6c69),
     ACE_NTOHL (0x63790000),   // name = Policy,
   };
   CORBA::_tc_Policy =
@@ -572,20 +576,20 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_PolicyList[] =
   {
     TAO_ENCAP_BYTE_ORDER,       // byte order
-    33, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x4c697374), 
-    ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),            // repository ID = 
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x4c697374),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),            // repository ID =
                                 //   IDL:omg.org/CORBA/PolicyList:1.0
-    11, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63794c69), 
+    11,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63794c69),
     ACE_NTOHL (0x73740000),     // name = PolicyList
     CORBA::tk_sequence,         // typecode kind
     68,                         // encapsulation length
@@ -593,18 +597,18 @@ TAO_TypeCodes::init (void)
     CORBA::tk_objref,           // typecode kind
     52,                         // encapsulation length
     TAO_ENCAP_BYTE_ORDER,       // byte order
-    29, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),            // repository ID = 
+    29,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),            // repository ID =
                                 //   IDL:omg.org/CORBA/Policy:1.0
-    7, 
-    ACE_NTOHL (0x506f6c69), 
+    7,
+    ACE_NTOHL (0x506f6c69),
     ACE_NTOHL (0x63790000),     // name = Policy,
     0,
   };
@@ -618,21 +622,21 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_PolicyTypeSeq[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    36, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x54797065), 
-    ACE_NTOHL (0x5365713a), 
-    ACE_NTOHL (0x312e3000),   // repository ID = 
+    36,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x54797065),
+    ACE_NTOHL (0x5365713a),
+    ACE_NTOHL (0x312e3000),   // repository ID =
                               //   IDL:omg.org/CORBA/PolicyTypeSeq:1.0
-    14, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63795479), 
-    ACE_NTOHL (0x70655365), 
+    14,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63795479),
+    ACE_NTOHL (0x70655365),
     ACE_NTOHL (0x71000000),   // name = PolicyTypeSeq
     CORBA::tk_sequence,       // typecode kind
     80,                       // encapsulation length
@@ -640,20 +644,20 @@ TAO_TypeCodes::init (void)
     CORBA::tk_alias,          // typecode kind for typedefs
     64,                       // encapsulation length
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    33, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
     ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x54797065), 
-    ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),          // repository ID = 
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x54797065),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),          // repository ID =
                               //   IDL:omg.org/CORBA/PolicyType:1.0
-    11, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63795479), 
+    11,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63795479),
     ACE_NTOHL (0x70650000),   // name = PolicyType
     CORBA::tk_ulong,
     0,
@@ -668,33 +672,33 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_SetOverrideType[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    38, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5365), 
-    ACE_NTOHL (0x744f7665), 
-    ACE_NTOHL (0x72726964), 
-    ACE_NTOHL (0x65547970), 
-    ACE_NTOHL (0x653a312e), 
-    ACE_NTOHL (0x30000000),   // repository ID = 
+    38,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5365),
+    ACE_NTOHL (0x744f7665),
+    ACE_NTOHL (0x72726964),
+    ACE_NTOHL (0x65547970),
+    ACE_NTOHL (0x653a312e),
+    ACE_NTOHL (0x30000000),   // repository ID =
                               //   IDL:omg.org/CORBA/SetOverrideType:1.0
-    16, 
-    ACE_NTOHL (0x5365744f), 
-    ACE_NTOHL (0x76657272), 
-    ACE_NTOHL (0x69646554), 
+    16,
+    ACE_NTOHL (0x5365744f),
+    ACE_NTOHL (0x76657272),
+    ACE_NTOHL (0x69646554),
     ACE_NTOHL (0x79706500),   // name = SetOverrideType
     2,                        // member count
-    13, 
-    ACE_NTOHL (0x5345545f), 
-    ACE_NTOHL (0x4f564552), 
-    ACE_NTOHL (0x52494445), 
-    ACE_NTOHL (0x0),          // name = SET_OVERRIDE
-    13, 
-    ACE_NTOHL (0x4144445f), 
+    13,
+    ACE_NTOHL (0x5345545f),
     ACE_NTOHL (0x4f564552),
-    ACE_NTOHL (0x52494445), 
+    ACE_NTOHL (0x52494445),
+    ACE_NTOHL (0x0),          // name = SET_OVERRIDE
+    13,
+    ACE_NTOHL (0x4144445f),
+    ACE_NTOHL (0x4f564552),
+    ACE_NTOHL (0x52494445),
     ACE_NTOHL (0x0),          // name = ADD_OVERRIDE
   };
  CORBA::_tc_SetOverrideType =
@@ -707,21 +711,21 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_PolicyManager[] =
  {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    36, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x4d616e61), 
-    ACE_NTOHL (0x6765723a), 
-    ACE_NTOHL (0x312e3000),   // repository ID = 
+    36,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x4d616e61),
+    ACE_NTOHL (0x6765723a),
+    ACE_NTOHL (0x312e3000),   // repository ID =
                               //   IDL:omg.org/CORBA/PolicyManager:1.0
-    14, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63794d61), 
-    ACE_NTOHL (0x6e616765), 
+    14,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63794d61),
+    ACE_NTOHL (0x6e616765),
     ACE_NTOHL (0x72000000),   // name = PolicyManager,
   };
  CORBA::_tc_PolicyManager =
@@ -734,21 +738,21 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_PolicyCurrent[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    36, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x43757272), 
-    ACE_NTOHL (0x656e743a), 
-    ACE_NTOHL (0x312e3000),   // repository ID = 
+    36,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c696379),
+    ACE_NTOHL (0x43757272),
+    ACE_NTOHL (0x656e743a),
+    ACE_NTOHL (0x312e3000),   // repository ID =
                               //   IDL:omg.org/CORBA/PolicyCurrent:1.0
-    14, 
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63794375), 
-    ACE_NTOHL (0x7272656e), 
+    14,
+    ACE_NTOHL (0x506f6c69),
+    ACE_NTOHL (0x63794375),
+    ACE_NTOHL (0x7272656e),
     ACE_NTOHL (0x74000000),   // name = PolicyCurrent,
   };
  CORBA::_tc_PolicyCurrent =
@@ -764,19 +768,19 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_Pollable[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    31, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c6c6162), 
-    ACE_NTOHL (0x6c653a31), 
-    ACE_NTOHL (0x2e300000),   // repository ID = 
+    31,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c6c6162),
+    ACE_NTOHL (0x6c653a31),
+    ACE_NTOHL (0x2e300000),   // repository ID =
                               //   IDL:omg.org/CORBA/Pollable:1.0
-    9, 
-    ACE_NTOHL (0x506f6c6c), 
-    ACE_NTOHL (0x61626c65), 
+    9,
+    ACE_NTOHL (0x506f6c6c),
+    ACE_NTOHL (0x61626c65),
     ACE_NTOHL (0x0),          // name = Pollable,
   };
  CORBA::_tc_Pollable =
@@ -789,20 +793,20 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_DIIPollable[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    34, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4449), 
-    ACE_NTOHL (0x49506f6c), 
-    ACE_NTOHL (0x6c61626c), 
-    ACE_NTOHL (0x653a312e), 
-    ACE_NTOHL (0x30000000),   // repository ID = 
+    34,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4449),
+    ACE_NTOHL (0x49506f6c),
+    ACE_NTOHL (0x6c61626c),
+    ACE_NTOHL (0x653a312e),
+    ACE_NTOHL (0x30000000),   // repository ID =
                               //   IDL:omg.org/CORBA/DIIPollable:1.0
-    12, 
-    ACE_NTOHL (0x44494950), 
-    ACE_NTOHL (0x6f6c6c61), 
+    12,
+    ACE_NTOHL (0x44494950),
+    ACE_NTOHL (0x6f6c6c61),
     ACE_NTOHL (0x626c6500),   // name = DIIPollable,
   };
  CORBA::_tc_DIIPollable =
@@ -815,27 +819,27 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_PollableSet[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    34, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c6c6162), 
-    ACE_NTOHL (0x6c655365), 
-    ACE_NTOHL (0x743a312e), 
-    ACE_NTOHL (0x30000000),   // repository ID = 
+    34,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f506f),
+    ACE_NTOHL (0x6c6c6162),
+    ACE_NTOHL (0x6c655365),
+    ACE_NTOHL (0x743a312e),
+    ACE_NTOHL (0x30000000),   // repository ID =
                               //   IDL:omg.org/CORBA/PollableSet:1.0
-    12, 
-    ACE_NTOHL (0x506f6c6c), 
-    ACE_NTOHL (0x61626c65), 
+    12,
+    ACE_NTOHL (0x506f6c6c),
+    ACE_NTOHL (0x61626c65),
     ACE_NTOHL (0x53657400),   // name = PollableSet,
   };
  CORBA::_tc_PollableSet =
-   new CORBA::TypeCode (CORBA::tk_objref, 
-                        sizeof (_oc_CORBA_PollableSet), 
-                        (char *) &_oc_CORBA_PollableSet, 
-                        0, 
+   new CORBA::TypeCode (CORBA::tk_objref,
+                        sizeof (_oc_CORBA_PollableSet),
+                        (char *) &_oc_CORBA_PollableSet,
+                        0,
                         sizeof (CORBA_PollableSet));
 
 #endif /* TAO_POLLER */
@@ -845,15 +849,15 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_Current[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
-    22, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4375), 
-    ACE_NTOHL (0x7272656e), 
-    ACE_NTOHL (0x743a312e), 
+    22,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4375),
+    ACE_NTOHL (0x7272656e),
+    ACE_NTOHL (0x743a312e),
     ACE_NTOHL (0x3000fdfd),   // repository ID = IDL:CORBA/Current:1.0
-    8, 
-    ACE_NTOHL (0x43757272), 
+    8,
+    ACE_NTOHL (0x43757272),
     ACE_NTOHL (0x656e7400),   // name = Current,
   };
  CORBA::_tc_Current = new CORBA::TypeCode (CORBA::tk_objref,
@@ -949,7 +953,7 @@ TAO_TypeCodes::init (void)
     // END bytes of encapsulation 0 (sequence params)
   };
 
-  TC_ServiceContextList = 
+  TC_ServiceContextList =
     new CORBA::TypeCode (CORBA::tk_sequence,
                          sizeof _oc_svc_ctx_list,
                          (char *) &_oc_svc_ctx_list,
@@ -1054,7 +1058,9 @@ TAO_TypeCodes::fini (void)
 
   CORBA::release (CORBA::_tc_ORBid);
 
+#if !defined(TAO_HAS_MINIMUM_CORBA)
   CORBA::release (CORBA_ORB::_tc_InconsistentTypeCode);
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::release (CORBA_ORB::_tc_ObjectId);
 
