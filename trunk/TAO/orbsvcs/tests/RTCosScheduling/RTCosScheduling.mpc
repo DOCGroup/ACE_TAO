@@ -18,6 +18,8 @@ project(commonlib): rtcosscheduling, orbsvcslib {
 
 project(*server): rtcosscheduling, rt_server, orbsvcsexe {
   after += commonlib
+  libs += testSched_Common
+  libpaths += .
   exename = server
   comps = 
   Source_Files {
@@ -28,6 +30,8 @@ project(*server): rtcosscheduling, rt_server, orbsvcsexe {
 
 project(*client): rtcosscheduling, rt_client, orbsvcsexe {
   after += commonlib
+  libs += testSched_Common
+  libpaths += .
   exename = client
   comps = 
   Source_Files {

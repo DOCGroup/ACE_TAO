@@ -33,7 +33,7 @@ FILES = \
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-LDLIBS = -lTAO_RTCosScheduling -lTAO_RTPortableServer -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
+LDLIBS = -ltestSched_Common -lTAO_RTCosScheduling -lTAO_RTPortableServer -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -85,7 +85,7 @@ ifeq ($(static_libs),1)
 endif
 
 
-LDFLAGS      += -L../../../../lib
+LDFLAGS      += -L. -L../../../../lib
 
 TAO_IDLFLAGS += -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Gv
 #----------------------------------------------------------------------------
