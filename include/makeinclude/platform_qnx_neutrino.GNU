@@ -1,24 +1,20 @@
 # $Id$
 
-# QNX 4.25 hosted GNU g++ for Neutrino 2.0 Beta
-
-# NOTE: with g++ 2.8.0, you'll need to disable optimization in order to
-#       instantiate ACE_Map_Manager (ace/Map_Manager.cpp).  The easiest
-#       way to do that is to set "optimize = 0", either below or on
-#       your make command line.
+# QNX 4.25 hosted GNU g++ for Neutrino 2.0
 
 CROSS-COMPILE = 1
+ACE_HAS_GNUG_PRE_2_8 := 0
+static_libs_only = 1
 
 ifeq (,$(debug))
   debug = 1
 endif # ! debug
 ifeq (,$(optimize))
-  optimize = 0
+  optimize = 1
 endif # ! optimize
-
-static_libs_only = 1
-
-ACE_HAS_GNUG_PRE_2_8 := 0
+ifeq (,$(repo))
+  repo = 1
+endif # ! repo
 
 CC      = i386-nto-gcc
 CXX     = i386-nto-g++
