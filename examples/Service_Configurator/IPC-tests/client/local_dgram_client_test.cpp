@@ -62,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   parse_args (argc, argv);
 
-  char *sock_client = ACE_OS::tempnam (0, 0);
+  char *sock_client = ACE_OS::tempnam ();
 
   ACE_LSOCK_Dgram sd ((ACE_UNIX_Addr) (sock_client));
   if (ACE_OS::unlink (sock_client))
