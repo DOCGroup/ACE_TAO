@@ -1,3 +1,8 @@
+Wed Feb 16 10:19:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.h: Remove the extraneous ACE_Handler:: qualification
+	  of Proxy_Ptr used inside ACE_Handler. This confused MSVC 6.
+
 Wed Feb 16 10:13:41 2005  Steve Huston  <shuston@riverace.com>
 
 	* examples/Reactor/Proactor/post_completions.cpp:

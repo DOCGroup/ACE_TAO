@@ -1576,10 +1576,10 @@ public:
   private:
     ACE_Handler *handler_;
   };
-  typedef ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy,ACE_SYNCH_MUTEX>
+  typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX>
     Proxy_Ptr;
 
-  ACE_Handler::Proxy_Ptr &proxy (void);
+  Proxy_Ptr &proxy (void);
 
 protected:
   /// The proactor associated with this handler.
@@ -1589,7 +1589,7 @@ protected:
   ACE_HANDLE    handle_;
 
   /// Refers to proxy for this handler.
-  ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX> proxy_;
+  ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> proxy_;
 };
 
 // Forward declarations
