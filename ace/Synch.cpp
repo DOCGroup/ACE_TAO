@@ -15,11 +15,11 @@
 #include "ace/Synch.h"
 #include "ace/Object_Manager.h"
 
+ACE_RCSID(ace, Synch, "$Id$")
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch.i"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID(ace, Synch, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
