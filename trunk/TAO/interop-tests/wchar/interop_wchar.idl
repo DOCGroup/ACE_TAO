@@ -14,6 +14,8 @@ module interop {
     any st_any;
   };
 
+  typedef sequence< wstruct > wstructseq;
+
   enum wchar_types {is_wchar, is_wstring, is_warray};
 
   union wunion switch (wchar_types) {
@@ -41,6 +43,9 @@ module interop {
 
     boolean wstruct_to_server (in wstruct test, in short key);
     wstruct wstruct_from_server (in short key);
+
+    boolean wstructseq_to_server (in wstructseq test, in short key);
+    wstructseq wstructseq_from_server (in short key);
 
     boolean wunion_to_server (in wunion test, in short key);
     wunion wunion_from_server (in short key, in wchar_types type);

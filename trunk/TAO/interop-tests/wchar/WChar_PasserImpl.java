@@ -26,7 +26,8 @@ public class WChar_PasserImpl
 
     public String orb_name ()
     {
-        return "JacORB";
+        // we don't really know, eh?
+        return "Java ORB";
     }
 
     public boolean wchar_to_server (char test, short key)
@@ -65,12 +66,41 @@ public class WChar_PasserImpl
 
     public boolean wstruct_to_server (wstruct test, short key)
     {
-        return false;
+        return match_wstruct (key, test);
     }
 
     public wstruct wstruct_from_server (short key)
     {
         return new wstruct();
+    }
+
+    public boolean wstructseq_to_server (wstruct[] test, short key)
+    {
+        boolean result = true;
+        System.out.println ("wstructseq_to_server called, key = " + key);
+        for (int i = 0; i < test.length; i++)
+        {
+            if (wstruct_to_server(test[i],key))
+            {
+                //            System.out.println ("wstructseq_to_server passed entry " + i);
+            }
+            else
+            {
+                System.out.println ("wstructseq_to_server FAILED entry " + i);
+                result = false;
+            }
+        }            
+        return result;
+    }
+    
+    public wstruct[] wstructseq_from_server (short key)
+    {
+        wstruct[] wsList = new wstruct[5];
+        for (int i = 0; i < wsList.length; i++)
+        {
+            wsList[i] = get_wstruct(key);
+        }
+        return wsList;
     }
 
     public boolean wunion_to_server (wunion test, short key)
@@ -133,5 +163,30 @@ public class WChar_PasserImpl
         orb.shutdown(false);
     }
 
+    // TODO: this should have a home where it's accessable to both
+    // client & server, but it doesn't belong in WCharReference
+    public wstruct get_wstruct (short key)
+    {
+        wstruct result = new wstruct();
+
+        result.st_char = ref.get_wchar(key);
+        result.st_string = ref.get_wstring(key);
+        result.st_array = ref.get_warray(key);
+        result.st_any = orb.create_any();
+        result.st_any.insert_wstring(ref.get_wstring(key));
+          
+        return result;
+    }
+      
+    // TODO: this should have a home where it's accessable to both
+    // client & server, but it doesn't belong in WCharReference
+    public boolean match_wstruct (short key, wstruct test )
+    {
+        boolean result = ref.match_wchar(key, test.st_char);
+        result &= ref.match_wstring(key, test.st_string);
+        result &= ref.match_warray(key, test.st_array);
+        // @@ todo result &= ref.match_wstring (key, test.st_any.extract_wstring());
+        return result;
+    }
 
 }
