@@ -198,6 +198,9 @@ public:
       ACE_TOKEN_MANAGER_CREATION_LOCK,
       ACE_TOKEN_INVARIANTS_CREATION_LOCK,
       ACE_TSS_CLEANUP_LOCK,
+# if defined (ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+      ACE_TSS_BASE_LOCK,
+# endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
 #endif /* ACE_MT_SAFE */
 
       // Hook for preallocated objects provided by application.
