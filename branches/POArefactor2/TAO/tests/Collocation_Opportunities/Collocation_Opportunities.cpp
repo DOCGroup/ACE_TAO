@@ -69,7 +69,7 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL)
   else
     {
       TAO::Portable_Server::POA_Current &tao_poa_current =
-        dynamic_cast <TAO::Portable_Server::POA__Current &>
+        dynamic_cast <TAO::Portable_Server::POA_Current &>
                           (*(this->poa_current_.in ()));
 
       TAO::Portable_Server::POA_Current &tao_poa_current_implementation =
