@@ -1,6 +1,11 @@
 This is TAO version 0.2.42, released Tue Dec 01 10:16:02 1998.
 
-If you have any problems with TAO, please send email to the ACE
-mailing list (ace-users@cs.wustl.edu), preferably filling in the form
-found in the file BUG-REPORT-FORM.  Make sure to include the versions
-of TAO and ACE, the OS platform, and the C++ compiler you used.
+If you have any problems with or questions about TAO, please send
+email to the ACE mailing list (ace-users@cs.wustl.edu), preferably
+filling in the form found in the file BUG-REPORT-FORM.  To ensure that
+you see responses, please do one of the following:
+
+    1) Subscribe to the ace-users mail list, by sending email with
+       contents "subscribe ace-users" to majordomo@cs.wustl.edu.
+
+    2) Or, monitor the comp.soft-sys.ace newsgroup for responses.
