@@ -1,3 +1,8 @@
+Fri Apr 30 10:48:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect): Reordered the code
+	  to avoid putting compiler specific code here.
+
 Fri Apr 30 02:05:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
