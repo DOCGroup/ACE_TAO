@@ -73,6 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(driver, drv_init, "$Id$")
 
+const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
+
 void
 DRV_init (void)
 {
@@ -105,8 +107,10 @@ DRV_init (void)
   idl_global->set_cpp_location ("cc");
 #endif /* TAO_IDL_PREPROCESSOR */
 
-  char local_escapes[1024];
-  ACE_OS::memset (&local_escapes, 0, 1024);
+  char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
+  ACE_OS::memset (&local_escapes, 
+                  0, 
+                  LOCAL_ESCAPES_BUFFER_SIZE);
 
   idl_global->set_local_escapes (local_escapes);
   idl_global->set_be ("");
