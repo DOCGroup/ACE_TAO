@@ -130,7 +130,7 @@ class ACE_OS_Export ACE_OS_TLI
 public:
   // = A set of wrappers for TLI.
   static int t_accept (ACE_HANDLE fildes,
-                       int resfd,
+                       ACE_HANDLE resfd,
                        struct t_call
                        *call);
   static char *t_alloc (ACE_HANDLE fildes,
@@ -157,9 +157,9 @@ public:
   static int t_listen (ACE_HANDLE fildes,
                        struct t_call *call);
   static int t_look (ACE_HANDLE fildes);
-  static int t_open (char *path,
-                     int oflag,
-                     struct t_info *info);
+  static ACE_HANDLE t_open (char *path,
+                            int oflag,
+                            struct t_info *info);
   static int t_optmgmt (ACE_HANDLE fildes,
                         struct t_optmgmt *req,
                         struct t_optmgmt *ret);
