@@ -1,10 +1,25 @@
+Tue Oct 27 22:46:18 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Notifier_i.cpp (shutdown):
+         removed all the iterating sequence through the Hash map.
+
+Sun Oct 25 16:13:52 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/
+	 Consumer_Input_Handler.cpp (unregister_consumer):
+	 -made changes to reinitialize variable unregistered_.
+	 Consumer_Signal_Handler.h
+	 Consumer_Input_Handler
+	 -added friend class ShutupPlusPlus to stop g++ from cribbing
+	  about having a private destructor and no friend methods.
+
 Tue Oct 27 22:22:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.36 released.
 
 Tue Oct 27 12:53:05 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} : 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} :
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
 	  Fixed a few g++ warnings and added code to work properly with
@@ -145,6 +160,7 @@ Sun Oct 25 20:26:59 1998  Jeff Parsons <jp4@cs.wustl.edu>
           Fixed some memory leaks - the ones that are left
           are all similar, but I'm not sure how to approach
           it yet.
+
 
 Sun Oct 25 16:12:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 

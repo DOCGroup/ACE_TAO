@@ -48,7 +48,11 @@ Consumer_Handler::~Consumer_Handler ()
        	       "%p\n",
        	       "remove_stdin_handler"));
 
-
+  /*if (reactor_used()->remove_handler (consumer_signal_handler_,
+				  ACE_Event_Handler::READ_MASK) == -1)
+     ACE_ERROR ((LM_ERROR,
+		 "%p\n",
+		 "removal of signal handler\n"));*/
 
 }
 
@@ -209,7 +213,7 @@ Consumer_Handler::init (int argc, char **argv)
                   Consumer_Signal_Handler (this),
                   -1);
 
-  if( this->reactor ()->register_handler
+  if( this->reactor_used ()->register_handler
       (SIGINT,
        consumer_signal_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -217,7 +221,7 @@ Consumer_Handler::init (int argc, char **argv)
 		       "register_handler for SIGINT"),
 		      -1);
 
- if( this->reactor ()->register_handler
+ if( this->reactor_used ()->register_handler
       (SIGWINCH,
        consumer_signal_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -317,7 +321,7 @@ Consumer_Handler::run (void)
 }
 
 ACE_Reactor *
-Consumer_Handler::reactor (void) const
+Consumer_Handler::reactor_used (void) const
 {
   return (TAO_ORB_Core_instance ()->reactor ());
 }
