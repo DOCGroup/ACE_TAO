@@ -215,7 +215,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
     CORBA::release (any->type_);
 
   any->type_ = elem_tc._retn ();
-  any->any_owns_data_ = 1;
+  any->any_owns_data_ = 0;
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
