@@ -59,23 +59,23 @@ namespace TAO
 
   ACE_STATIC_SVC_DECLARE (ORT_Adapter_Factory_Impl)
   ACE_FACTORY_DECLARE (TAO_ORT, ORT_Adapter_Factory_Impl)
+}
 
-  #if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
+#if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
 
-  typedef int (*TAO_Module_Initializer) (void);
+typedef int (*TAO_Module_Initializer) (void);
 
-  static TAO_Module_Initializer
+static TAO_Module_Initializer
   TAO_Requires_ORTFactory_Initializer =
-    &ORT_Adapter_Factory_Impl::Initializer;
+    &TAO::ORT_Adapter_Factory_Impl::Initializer;
 
   #else
 
   static int
   TAO_Requires_ORTFactory_Initializer =
-    ORT_Adapter_Factory_Impl::Initializer ();
+    TAO::ORT_Adapter_Factory_Impl::Initializer ();
 
   #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
-}
 
 #include /**/ "ace/post.h"
 

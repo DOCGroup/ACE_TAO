@@ -59,7 +59,7 @@ namespace TAO
   PortableInterceptor::ObjectReferenceTemplate *
   ORT_Adapter_Impl::get_adapter_template (void)
   {
-    CORBA::add_ref (ort_template_.in());
+    CORBA::add_ref (ort_template_.in ());
 
     return ort_template_;
   }
@@ -67,7 +67,7 @@ namespace TAO
   PortableInterceptor::ObjectReferenceFactory *
   ORT_Adapter_Impl::get_obj_ref_factory (void)
   {
-    CORBA::add_ref (ort_factory_.in());
+    CORBA::add_ref (ort_factory_.in ());
 
     return ort_factory_;
   }
@@ -91,10 +91,10 @@ namespace TAO
                               PortableServer::POA_ptr poa
                               ACE_ENV_ARG_DECL)
   {
-    // No need to lock here, there is one instance for each POA and when the POA
-    // creates and actives an ORT_Adapter it will lock itself.
+    // No need to lock here, there is one instance for each POA and
+    // when the POA creates and actives an ORT_Adapter it will lock
+    // itself. Create an ObjectReferenceTemplate for this POA.
 
-    // Create an ObjectReferenceTemplate for this POA.
     ACE_NEW_THROW_EX (this->tao_ort_template_,
                       ObjectReferenceTemplate (server_id,
                                                orb_id,
@@ -106,7 +106,7 @@ namespace TAO
     this->ort_template_ = this->tao_ort_template_;
 
     // Must increase ref count since this->obj_ref_factory_ will
-    // descrease it upon destruction.
+    // decrease it upon destruction.
     CORBA::add_ref (this->ort_template_.in ());
     this->ort_factory_ = this->ort_template_;
 

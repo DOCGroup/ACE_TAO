@@ -759,8 +759,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           array_obj_ref_template[i] = child_at;
         }
 
-      child_poa->adapter_state_ = PortableInterceptor::INACTIVE;
-
+      child_poa->adapter_state_ =
+        PortableInterceptor::INACTIVE;
 
       ++i;
     }
@@ -1069,7 +1069,8 @@ TAO_POA::get_servant_manager_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   // This operation requires the USE_SERVANT_MANAGER policy; if not
   // present, the WrongPolicy exception is raised.
-  if (this->cached_policies_.request_processing () != PortableServer::USE_SERVANT_MANAGER)
+  if (this->cached_policies_.request_processing () !=
+      PortableServer::USE_SERVANT_MANAGER)
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         PortableServer::ServantManager::_nil ());
@@ -1078,7 +1079,8 @@ TAO_POA::get_servant_manager_i (ACE_ENV_SINGLE_ARG_DECL)
   // This operation returns the servant manager associated with the
   // POA.  If no servant manager has been associated with the POA, it
   // returns a null reference.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
+  if (this->cached_policies_.servant_retention () ==
+      PortableServer::RETAIN)
     return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
   else
     return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
@@ -4096,56 +4098,50 @@ TAO_POA::ORT_adapter_factory (void)
 TAO::ORT_Adapter *
 TAO_POA::ORT_adapter_i (void)
 {
-  if (this->ort_adapter_ != 0)
-    return this->ort_adapter_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      TAO::ORT_Adapter_Factory * ort_ap_factory =
+        this->ORT_adapter_factory ();
 
-  {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
-      {
-        TAO::ORT_Adapter_Factory * ort_ap_factory =
-          this->ORT_adapter_factory();
+      if (!ort_ap_factory)
+        return 0;
 
-        if (!ort_ap_factory)
-          return 0;
+      // Get the full adapter name of this POA, do this before we
+      // create the adapter so that in case this fails, we just
+      // return 0 and not a not activated adapter
+      PortableInterceptor::AdapterName *adapter_name =
+        this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-        // Get the full adapter name of this POA, do this before we create the
-        // adapter so that in case this fails, we just return 0 and not a not
-        // activated adapter
-        PortableInterceptor::AdapterName *adapter_name =
-          this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        this->ort_adapter_ =
+      this->ort_adapter_ =
           ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      ACE_TRY_CHECK;
 
-        if (!ort_adapter_)
-          return 0;
+      if (!ort_adapter_)
+        return 0;
 
-        // @todo We have to look at this, we activate it but hold the POA lock,
-        // in case we are called by ORT_adapter, we shouldn't keep the lock
-        // here, but then the ort_adapter should be guarded against multiple
-        // activations.
-        this->ort_adapter_->activate (this->orb_core_.server_id (),
-                                      this->orb_core_.orbid (),
-                                      adapter_name,
-                                      this
-                                      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCHANY
-      {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "(%P|%t) Cannot initialize the "
-                             "object_reference_template_adapter\n");
-      }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (0);
-  }
+      // @todo We have to look at this, we activate it but hold the POA lock,
+      // in case we are called by ORT_adapter, we shouldn't keep the lock
+      // here, but then the ort_adapter should be guarded against multiple
+      // activations.
+      this->ort_adapter_->activate (this->orb_core_.server_id (),
+                                    this->orb_core_.orbid (),
+                                    adapter_name,
+                                    this
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "(%P|%t) Cannot initialize the "
+                           "object_reference_template_adapter\n");
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   return this->ort_adapter_;
-
 }
 
 TAO::ORT_Adapter *
@@ -4162,7 +4158,7 @@ TAO_POA::ORT_adapter (ACE_ENV_SINGLE_ARG_DECL)
   if (this->ort_adapter_ != 0)
     return this->ort_adapter_;
 
-  return this->ORT_adapter_i();
+  return this->ORT_adapter_i ();
 }
 
 TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa

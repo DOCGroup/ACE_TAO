@@ -480,7 +480,7 @@ TAO_POA::get_adapter_template_i ()
 {
   if (this->ORT_adapter_i ())
     {
-      return this->ort_adapter_->get_adapter_template();
+      return this->ort_adapter_->get_adapter_template ();
     }
 
   return 0;
