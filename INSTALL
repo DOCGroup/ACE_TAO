@@ -284,7 +284,7 @@ I assume you're using MSVC++ 4.0(things are a little different for the
    named the project "ace."  Select the dynamic link library option
    and say "ok."  By default, the config-win32*.h files are set up to
    build DLLs.  If you choose to build ACE as a static library you'll
-   need to unset ACE_HAS_DLL in the config-win32*.h file and select
+   have to #define ACE_HAS_DLL 0 in the preproccessor options and select
    the static link library option when creating a project workspace.
 
 2. INSERT FILES INTO PROJECT. 
