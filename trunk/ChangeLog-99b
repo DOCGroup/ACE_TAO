@@ -11,6 +11,10 @@ Fri Mar 05 14:15:46 1999  David L. Levine  <levine@cs.wustl.edu>
           aren't any other resources associated with it.  So,
           free_all_keys_left () can just skip over it.
 
+        * ace/OS.cpp (cleanup_tss): disabled call to
+          free_all_keys_left () with ACE_HAS_TSS_EMULATION, because
+          ACE_TSS_Cleanup::in_use_key_ initialization isn't thread safe, yet.
+
 Fri Mar  5 11:05:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * examples/Log_Msg/Log_Msg.dsw: Fixed the path to Callback.dsp.
