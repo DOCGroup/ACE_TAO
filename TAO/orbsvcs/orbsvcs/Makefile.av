@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:AV
 
-ACE_SHLIBS = -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO_IORTable -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
