@@ -347,6 +347,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+
   // Set the target specification mode
   switch (this->profile_->addressing_mode ())
     {
@@ -356,10 +357,14 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
       break;
 
     case TAO_Target_Specification::Profile_Addr:
-      this->target_spec_.target_specifier (
-                this->profile_->create_tagged_profile ()
-              );
-      break;
+      {
+        IOP::TaggedProfile *tp =
+          this->profile_->create_tagged_profile ();
+
+        if (tp)
+          this->target_spec_.target_specifier (*tp);
+      }
+        break;
 
     case TAO_Target_Specification::Reference_Addr:
       // We need to call the method seperately. If there is no

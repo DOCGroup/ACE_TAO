@@ -12,8 +12,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
 
-ACE_RCSID (IORTable, 
-           Table_Adapter, 
+ACE_RCSID (IORTable,
+           Table_Adapter,
            "$Id$")
 
 TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core *orb_core)
@@ -102,6 +102,12 @@ TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
   return new CORBA::Object (stub);
 }
 
+CORBA::Long
+TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *,
+                                                 CORBA::Object_ptr )
+{
+  return 0;
+}
 // ****************************************************************
 
 TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory (void)

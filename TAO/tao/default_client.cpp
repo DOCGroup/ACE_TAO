@@ -19,7 +19,8 @@
 ACE_RCSID(tao, default_client, "$Id$")
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
-  : profile_lock_type_ (TAO_THREAD_LOCK)
+  : profile_lock_type_ (TAO_THREAD_LOCK),
+    rd_table_size_ (TAO_RD_TABLE_SIZE)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
@@ -75,7 +76,6 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               this->report_option_value_error (ACE_LIB_TEXT("-ORBProfileLock"), name);
           }
         }
-
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_LIB_TEXT("-ORBIIOPProfileLock")) == 0)
         {
@@ -157,6 +157,15 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                 this->report_option_value_error (ACE_LIB_TEXT("-ORBTransportMuxStrategy"), name);
             }
         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                                   ACE_LIB_TEXT("-ORBReplyDispatcherTableSize")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              this->rd_table_size_ = ACE_OS::atoi (argv[curarg]);
+            }
+        }
       else if (ACE_OS::strncmp (argv[curarg], ACE_LIB_TEXT("-ORB"), 4) == 0)
         {
           // Can we assume there is an argument after the option?
@@ -218,6 +227,12 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transpor
                     0);
 
   return tms;
+}
+
+int
+TAO_Default_Client_Strategy_Factory::reply_dispatcher_table_size (void) const
+{
+  return this->rd_table_size_;
 }
 
 TAO_Wait_Strategy *

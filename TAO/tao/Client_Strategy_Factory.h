@@ -56,6 +56,9 @@ public:
   /// Create the correct client request muxing strategy.
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
 
+  /// Return the size of the reply dispatcher table
+  virtual int reply_dispatcher_table_size (void) const;
+
   /// Create the correct client <wait_for_reply> strategy.
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
 

@@ -64,20 +64,20 @@ namespace TAO
 
 #if !defined (_TAO_OBJECTKEY_CH_)
 #define _TAO_OBJECTKEY_CH_
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
-  
+
   class ObjectKey;
   class ObjectKey_var;
-  
+
   // *************************************************************
   // TAO::ObjectKey
   // *************************************************************
-  
-  class TAO_Export ObjectKey : public 
-  
-  // TAO_IDL - Generated from 
+
+  class TAO_Export ObjectKey : public
+
+  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -85,15 +85,15 @@ namespace TAO
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ObjectKey (void);
     ObjectKey (CORBA::ULong max);
     ObjectKey (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        CORBA::Octet *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        CORBA::Octet *buffer,
         CORBA::Boolean release = 0
       );
     ObjectKey (const ObjectKey &);
@@ -109,48 +109,48 @@ namespace TAO
 
 #if !defined (_TAO_OBJECTKEY___VAR_CH_)
 #define _TAO_OBJECTKEY___VAR_CH_
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
+
   // *************************************************************
   // class TAO::ObjectKey_var
   // *************************************************************
-  
+
   class TAO_Export ObjectKey_var
   {
   public:
     ObjectKey_var (void);
     ObjectKey_var (ObjectKey *);
     ObjectKey_var (const ObjectKey_var &);
-    
+
     // Fixed-size base types only.
     ObjectKey_var (const ObjectKey &);
-    
+
     ~ObjectKey_var (void);
-    
+
     ObjectKey_var &operator= (ObjectKey *);
     ObjectKey_var &operator= (const ObjectKey_var &);
-    
+
     // Fixed-size base types only.
     ObjectKey_var &operator= (const ObjectKey &);
-    
+
     ObjectKey *operator-> (void);
     const ObjectKey *operator-> (void) const;
-    
+
     operator const ObjectKey &() const;
     operator ObjectKey &();
     operator ObjectKey &() const;
     CORBA::Octet & operator[] (CORBA::ULong index);
     const CORBA::Octet & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const ObjectKey &in (void) const;
     ObjectKey &inout (void);
     ObjectKey *&out (void);
     ObjectKey *_retn (void);
     ObjectKey *ptr (void) const;
-  
+
   private:
     ObjectKey *ptr_;
   };
@@ -159,10 +159,10 @@ namespace TAO
 
 #if !defined (_TAO_OBJECTKEY___OUT_CH_)
 #define _TAO_OBJECTKEY___OUT_CH_
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
+
   class TAO_Export ObjectKey_out
   {
   public:
@@ -175,7 +175,7 @@ namespace TAO
     ObjectKey *&ptr (void);
     ObjectKey *operator-> (void);
     CORBA::Octet & operator[] (CORBA::ULong index);
-  
+
   private:
     ObjectKey *&ptr_;
     // Assignment from T_var not allowed.
@@ -183,7 +183,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
 }
 TAO_NAMESPACE_CLOSE // module TAO
 
@@ -231,4 +231,3 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
-

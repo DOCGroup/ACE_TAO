@@ -328,6 +328,9 @@ public:
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
+                                                    CORBA::Object_ptr);
+
 protected:
 
   int locate_servant_i (const TAO::ObjectKey &key
