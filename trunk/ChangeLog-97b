@@ -1,3 +1,9 @@
+Sun Oct 12 16:22:06 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* examples/Naming/Makefile: 
+	  There is no need to set LDLIBS to add local object files
+	  anymore, using FILES is enough.
+
 Sun Oct 12 14:18:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Created a new group of Timer_Queue_Adapters files and moved
