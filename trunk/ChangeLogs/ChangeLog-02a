@@ -1,3 +1,9 @@
+Sat Sep  1 08:07:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp: Fixed a compilation error  in the
+	  Notification queue portion of the code. Thanks to our daily
+	  builds for helping me with this testing.
+
 Fri Aug 31 22:12:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp:
