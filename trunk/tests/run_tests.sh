@@ -5,12 +5,6 @@
 IFS="|"
 tmp=/tmp
 
-# these patterns should not be included in log file
-ERROR_MSGS="assertion failed|not supported|No such file or directory|Invalid argument|timeout|Bad file number"
-
-# these patterns must be included in log file
-SUCCESS_MSGS="starting|Ending"
-
 run()
 {
   echo running $1
@@ -27,16 +21,7 @@ run()
     echo \"$1\" dumped core!!!!
   fi
 
-  for i in $SUCCESS_MSGS; do
-    grep $i log/$1.log >/dev/null
-    if [ $? -eq 1 ]; then
-      echo Error in log file no line with $i
-    fi
-  done
-
-  for i in $ERROR_MSGS; do
-    grep $i log/$1.log
-  done
+  ./run_tests.check log/$1.log
 }
 
 echo "Starting tests..."
