@@ -128,7 +128,7 @@ else
 ifeq ($(CPU),PPC860)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -mcpu=860
-  CCFLAGS += -fno-implicit-templates -mlongcal
+  CCFLAGS += -fno-implicit-templates -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else

@@ -311,6 +311,9 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   do
     {
       result = client_stream_.recv (offset, remaining);
+      int error = errno;
+      if (result == 0 && error != EWOULDBLOCK) 
+        remaining = 0;
 
       if (result >= 0)
         {
@@ -330,7 +333,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
             remaining = 0;
         }
     }
-  while (result == -1 && errno == EWOULDBLOCK || remaining > 0);
+  while (result == -1 && error == EWOULDBLOCK || remaining > 0);
 
   switch (result)
     {
