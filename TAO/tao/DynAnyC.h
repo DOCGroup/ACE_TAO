@@ -63,12 +63,6 @@ public:
   operator const CORBA_DynAny_ptr &() const;
   operator CORBA_DynAny_ptr &();
 
-  // These are here to satisfy g++'s way of dealing with templates.
-  // These operators are not called in any TAO code but are
-  // given a semi-reasonable definition anyway.
-  CORBA::Boolean operator == (const CORBA_DynAny_var &);
-  CORBA::Boolean operator != (const CORBA_DynAny_var &);
-
   // in, inout, out, _retn
   CORBA_DynAny_ptr in (void) const;
   CORBA_DynAny_ptr &inout (void);
