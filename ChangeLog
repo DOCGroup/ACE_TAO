@@ -1,3 +1,8 @@
+Fri Aug  1 12:37:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added setting of ACE_HAS_CHARPTR_DL
+
 Fri Aug  1 07:21:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
