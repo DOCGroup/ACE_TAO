@@ -754,7 +754,6 @@ template class ACE_Unbounded_Set<TAO_AV_Acceptor*>;
 template class ACE_Unbounded_Set<TAO_AV_Connector*>;
 template class ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
 template class ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
-template class ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node <TAO_AV_Connector*>
 #pragma instantiate ACE_Node <TAO_AV_Acceptor*>
@@ -762,5 +761,4 @@ template class ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>;
 #pragma instantiate ACE_Unbounded_Set<TAO_AV_Acceptor*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>
-#pragma instantiate ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
