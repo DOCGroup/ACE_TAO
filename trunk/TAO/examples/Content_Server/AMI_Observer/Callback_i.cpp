@@ -9,7 +9,7 @@
 #include "ace/Synch.h"
 #include "Callback.h"
 
-ACE_RCSID(Content_Server, Callback, "$Id$")
+ACE_RCSID(AMI_Observer, Callback, "$Id$")
 
 Callback_i::Callback_i (int * request_count)
   : file_ (ACE_sap_any_cast (ACE_FILE_Addr &)),
@@ -24,7 +24,7 @@ Callback_i::Callback_i (int * request_count)
   ACE_FILE_Connector connector;
 
   if (connector.connect (this->file_io_,
-                         this->file_, 
+                         this->file_,
                          0,
                          ACE_Addr::sap_any,
                          0,

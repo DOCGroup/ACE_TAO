@@ -59,7 +59,7 @@ private:
 
   int metadata_received (void);
   // Returns one if the metadata was received, and zero otherwise.
-  
+
   int content_received (void);
   // Returns one if the entire content was received, and zero
   // otherwise.

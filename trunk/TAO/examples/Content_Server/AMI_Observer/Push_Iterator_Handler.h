@@ -61,7 +61,7 @@ private:
   // on the heap).
 
   virtual void register_callback (
-      const Web_Server::Metadata_Type & metadata, 
+      const Web_Server::Metadata_Type & metadata,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // AMI callback that is invoked when a response from the
@@ -71,6 +71,9 @@ private:
       Web_Server::AMI_Iterator_FactoryExceptionHolder *,
       CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
+
+  void deactivate (CORBA::Environment &ACE_TRY_ENV);
+  // Deactivate this handler.
 
 private:
   Callback_i * callback_servant_;

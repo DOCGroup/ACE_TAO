@@ -6,7 +6,7 @@
 #include "Push_Iterator_Factory_i.h"
 #include "Callback_Handler.h"
 
-ACE_RCSID(Content_Server, Push_Iterator_Factory_i, "$Id$")
+ACE_RCSID(AMI_Observer, Push_Iterator_Factory_i, "$Id$")
 
 Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback (
