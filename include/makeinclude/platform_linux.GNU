@@ -127,16 +127,16 @@ endif
 sctp ?=
 # support for OpenSS7 SCTP
 ifeq ($(sctp),openss7)
-  PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_OPENSS7_SCTP
-  PLATFORM_SCTP_LDFLAGS=
-  PLATFORM_SCTP_LIBS= 
+  PLATFORM_SCTP_CPPFLAGS?= -DACE_HAS_OPENSS7_SCTP
+  PLATFORM_SCTP_LDFLAGS?=
+  PLATFORM_SCTP_LIBS?=
 endif
 
 # support for LKSCTP (Linux Kernel 2.5)
 ifeq ($(sctp),lksctp)
-  PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_LKSCTP
-  PLATFORM_SCTP_LDFLAGS=
-  PLATFORM_SCTP_LIBS= /usr/local/lib/libsctp.a
+  PLATFORM_SCTP_CPPFLAGS?= -DACE_HAS_LKSCTP
+  PLATFORM_SCTP_LDFLAGS?=
+  PLATFORM_SCTP_LIBS?= /usr/local/lib/libsctp.a
 endif
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
