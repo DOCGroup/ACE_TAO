@@ -6,7 +6,8 @@
 NAMES = \
         NamespaceSupport_Test \
         Transcoder_Test \
-        HttpCharStream_Test
+        HttpCharStream_Test \
+        ContentHandler_Test
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
@@ -18,6 +19,7 @@ CPPDIR = .
 
 LIBFILES = \
         $(ACE_LIB) \
+        $(ACE_XML_PARSER_LIB) \
         $(ACE_XML_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -3,6 +3,20 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "ContentHandler_Test"=.\ContentHandler_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+###############################################################################
+
 Project: "HttpCharStream_Test"=.\HttpCharStream_Test.dsp - Package Owner=<4>
 
 Package=<5>

@@ -736,7 +736,7 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
 //             if (this->try_grow_cdata (replace->length (),
 //                                       cdata_length, xmlenv) == 0)
 //               {
-                cdata_length = replace->length ();
+                cdata_length += replace->length ();
                 for (size_t i = 0; i < replace->length (); ++i)
                   this->obstack_.grow ((*replace)[i]);
 //              }
