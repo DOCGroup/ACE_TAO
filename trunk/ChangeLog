@@ -1,3 +1,9 @@
+Mon Dec  2 19:41:27 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Rather than close connections outright
+          when beginning to shut down test, just shut down the write side.
+          This is an effort to make the receiving closes cleaner.
+
 Mon Dec  2 17:58:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/ACE.cpp: Fixed a compile error with g++.
