@@ -299,8 +299,11 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # g++
 
+# We dont want to hard code. Looks like the contents of VDIR should
+# have the right contents in any type of builds. If not, folks please
+# feel to revert it to the way things were in rev 4.114.
 ifndef OBJDIRS
-  OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
+  OBJDIRS = $(basename $(VDIR))
 endif # OBJDIRS
 
 ifndef OBJEXT
