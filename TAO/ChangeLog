@@ -1,3 +1,17 @@
+Fri Mar 26 10:36:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+
+	  Fixed an error with dynamic hash look up. This fixes some more
+	  problems.  Probelms largely stemmed from wrong count made for
+	  the number of operations that are generated for the operation
+	  table. The way this was busted, makes one get a feeling that
+	  this was never tested ever. 
+
+	  The counts still seem problematic for GPERF and LINEAR hash. I
+	  haven't touched it, since I am afraid that this could break
+	  things before BFO.
+
 Fri Mar 26 10:28:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Sequence.cpp:
