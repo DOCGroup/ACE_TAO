@@ -652,13 +652,13 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
     ACE_ERROR_RETURN ((LM_ERROR,
                       "IIOP get_local_addr failed.\n"), 0);
   }
-    
+
   // @@ Vishal, please update this code and the server-side code in
   // $TAO_ROOT/orbsvcs/Naming_Service/ so that it (1) sends a string
   // rather than a u_short (the string should contain the name passed
   // in by the user to resolve_initial_references()) and (2) the
   // client doesn't explicitly send the port number, but instead the
-  // Naming_Service implementation will use the ACE_SOCK_Dgram::recv() 
+  // Naming_Service implementation will use the ACE_SOCK_Dgram::recv()
   // method that returns the port number of the client, so we can use
   // that to reply.
 
@@ -718,8 +718,8 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   if (n_bytes == -1 || retval == -1)
   {
     delete [] buf;
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                      "Error reading IIOP multicast response!\n"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                      "Error reading IIOP multicast response!\n"),
                       0);
   }
 
@@ -757,7 +757,7 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   {
     // Convert ior to an object reference.
     CORBA_Object_ptr objectified_ior = this->string_to_object ((CORBA::String) buf, env);
-  
+
     // Check for errors.
     if (env.exception () == 0)
       return_value = objectified_ior;
@@ -831,7 +831,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   // First we create a profile list, well actually a list
   // of one!
-  TAO_IIOP_Profile *pfile = 
+  TAO_IIOP_Profile *pfile =
     new TAO_IIOP_Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
                           key);
 
@@ -1063,14 +1063,6 @@ CORBA::ORB_init (int &argc,
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
-  env.clear ();
-
-  // Make sure initialization of TAO globals only occurs once.
-  CORBA_ORB::init_orb_globals (env);
-
-  if (env.exception () != 0)
-    return 0;
-
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
   // routine does).
@@ -1109,6 +1101,14 @@ CORBA::ORB_init (int &argc,
 
   // Initialize the ORB Core instance.
   int result = oc->init (argc, (char **) argv);
+
+  env.clear ();
+
+  // Make sure initialization of TAO globals only occurs once.
+  CORBA_ORB::init_orb_globals (env);
+
+  if (env.exception () != 0)
+    return 0;
 
   // Check for errors and return 0 if error.
   if (result == -1)
