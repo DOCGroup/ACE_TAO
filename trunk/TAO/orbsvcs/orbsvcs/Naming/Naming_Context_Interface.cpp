@@ -451,10 +451,10 @@ TAO_Naming_Context::to_url (const char * addr,
   ACE_CHECK_RETURN (0);
 
 
-  // The 'corbaloc:' tag is to be prepended at the starting of the
+  // The 'corbaname:' tag is to be prepended at the starting of the
   // return parameter.
   //
-  char prefix []= "corbaloc:";
+  char prefix []= "corbaname:";
 
   // Allocate dynamic memory
   //
@@ -463,11 +463,18 @@ TAO_Naming_Context::to_url (const char * addr,
   // Copy 'prefix' to the return parameter.
   char *dest = ACE_OS::strcpy (str_url , prefix);
 
+  /// move to end of dest string
+  dest += ACE_OS::strlen(dest);
+
   // Concatenate the address
   dest = ACE_OS::strcat (dest, addr);
 
-  // Concatenate the seperator between the addr and Name
+  /// Concatenate the seperator between the addr and Name
+  dest += ACE_OS::strlen(dest);
   dest = ACE_OS::strcat (dest, "/");
+
+  /// move to end of dest string
+  dest += ACE_OS::strlen(dest);
 
   // Now append the stringified object name to the return variable.
   // The percent '%' character is used as an escape. If a character
@@ -497,6 +504,7 @@ TAO_Naming_Context::to_url (const char * addr,
   // Terminate the string
   *dest = '\0';
 
+  //  ACE_OS::strcat (str_url, dest);
   return str_url;
 }
 

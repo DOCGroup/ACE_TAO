@@ -1,3 +1,24 @@
+Wed Jan  2 15:57:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp (to_url): 
+	  The to_url method should actually be returning a corbaname type
+	  URL instead of the corbaloc style URL. According to the
+	  INS specification, the method should return a fully formed URL
+	  along with the key_string and corbaname format is the one that
+	  can have the key_string in it.
+
+	  Moved the pointer to the end of the dest string before
+	  concatenating something to it. Previously, it was returning only
+	  escaped key_string.
+
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp :
+	  Modified the string that is passed to the to_url method to have
+	  a ':' before the dummy address. Now, its in one of the correct
+	  syntaxes.
+	
+	  Thanks to Scott Harris <harris_s@ociweb.com> for reporting all
+	  these. 	
+
 Wed Jan 02 15:25:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ValueFactory.h: Removed the non-standard tao extension
