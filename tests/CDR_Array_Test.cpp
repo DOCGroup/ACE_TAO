@@ -496,7 +496,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("====== Read iteration %d\n", n)));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("====== Read iteration %d\n"), n));
 
         int size = (total + dst_offset) * H::size ();
         ACE_InputCDR is (toread, size, opposite_byte_order);
