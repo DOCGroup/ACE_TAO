@@ -1,3 +1,10 @@
+Mon Aug 31 12:25:15 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Object_Manager.*: reorganized to provide the
+          ACE_Object_Manager_Base class.  This class contains
+          the data structures used to support Singleton
+          registration for destruction.
+
 Sun Aug 30 23:05:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.cpp: Should include ace/Thread.h also.
