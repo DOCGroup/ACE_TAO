@@ -1,3 +1,15 @@
+Mon Aug  2 10:28:25 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp (open):
+	* tao/UIOP_Connector.cpp (open):
+
+	  Use ACE_NEW_RETURN macros instead of basic C++ `new' to allocate
+	  memory.
+
+	  Moved allocation of connector lock after call to
+	  make_caching_strategy() to prevent a potential memory leak from
+	  occurring.
+
 Sun Aug 01 10:30:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OBV/Typed_Events/Client_i.h: This file needs check-in
