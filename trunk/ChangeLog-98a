@@ -1,3 +1,22 @@
+Fri Apr 10 02:42:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.{h,cpp} (ACE_CE_Bridge): This new class bridges
+	  a text-based ACE programs with a default window that prints out
+	  the default ACE_Log_Msg output.
+
+	  CE always uses non-static object manager and we replace the
+	  original main function with a well know entry that the main
+	  window program can call back from to invoke the ACE program in a
+	  separate thread.
+
+	* ace/Log_Record.{h,cpp}: Added support for passing strings as
+	  windows messages.
+
+	* ace/Log_Msg.cpp (log): Specialized CE support.
+	  
+	* windoezCE: The template windows program that receives ACE
+	  messages.  See CE-Status or README file for more info.
+
 Fri Apr 10 00:41:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Reactor_Exception_Test: Tidied the test up a bit.  Thanks
