@@ -17,7 +17,7 @@
 // ============================================================================
 
 #include "ace/Sched_Params.h"
-#include "Scheduler_Internal.h"
+#include "Scheduler.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Scheduler.i"
@@ -226,7 +226,7 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
                           info.threads,
                           number_of_dependencies(info));
 
-  for (u_int i = 0; i < number_of_dependencies(info); ++i)
+  for (int i = 0; i < number_of_dependencies(info); ++i)
     {
       RT_Info tmp;
       // TODO: info.dependencies [i].rt_info >>= &tmp;
