@@ -159,7 +159,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -352,7 +352,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -531,7 +531,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -715,7 +715,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -921,7 +921,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1119,7 +1119,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1247,7 +1247,7 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
@@ -1532,7 +1532,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1722,7 +1722,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1907,7 +1907,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);

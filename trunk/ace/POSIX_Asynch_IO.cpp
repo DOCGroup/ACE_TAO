@@ -143,7 +143,7 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
 // ****************************************************************
 
 int
-ACE_POSIX_Asynch_Operation::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_POSIX_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
                                   const void * /* completion_key */,
                                   ACE_Proactor *proactor)
@@ -828,7 +828,7 @@ ACE_POSIX_Asynch_Accept::set_handle (ACE_HANDLE handle)
 }
 
 int
-ACE_POSIX_Asynch_Accept::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_POSIX_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                ACE_HANDLE handle,
                                const void *completion_key,
                                ACE_Proactor *proactor)
@@ -1245,7 +1245,7 @@ ACE_POSIX_Asynch_Connect::set_handle (ACE_HANDLE)
 }
 
 int
-ACE_POSIX_Asynch_Connect::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_POSIX_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                 ACE_HANDLE handle,
                                 const void *completion_key,
                                 ACE_Proactor *proactor)
