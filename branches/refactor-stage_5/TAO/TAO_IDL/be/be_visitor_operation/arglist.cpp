@@ -51,7 +51,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
       *os << "CORBA::Object *_collocated_tao_target_";
 
@@ -116,7 +115,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
       *os << ";";
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       // Each method is pure virtual in the server header.
       *os << " = 0;";
