@@ -543,59 +543,59 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 //                     -1);
 // }
 
-int
-be_visitor_typecode_defn::visit_exception (be_exception *node)
-{
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-      return this->visit_type (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-      return this->gen_typecode (node);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-      return this->gen_encapsulation (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-      this->computed_tc_size_ = this->compute_tc_size (node);
-      return ((this->computed_tc_size_ > 0) ? 0 : -1);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-      this->computed_encap_len_ = this->compute_encap_length (node);
-      return ((this->computed_encap_len_ > 0) ? 0 : -1);
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-//       return this->visit_members (node);
-    default:
-      // error
-      break;
-    }
+// int
+// be_visitor_typecode_defn::visit_exception (be_exception *node)
+// {
+//   switch (this->ctx_->sub_state ())
+//     {
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
+//       return this->visit_type (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
+//       return this->gen_typecode (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
+//       return this->gen_encapsulation (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
+//       this->computed_tc_size_ = this->compute_tc_size (node);
+//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
+//       this->computed_encap_len_ = this->compute_encap_length (node);
+//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
+// //       return this->visit_members (node);
+//     default:
+//       // error
+//       break;
+//     }
 
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ACE_TEXT ("visit - bad sub state ")
-                     ACE_TEXT ("in visitor context\n")),
-                    -1);
-}
+//   ACE_ERROR_RETURN ((LM_ERROR,
+//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                      ACE_TEXT ("visit - bad sub state ")
+//                      ACE_TEXT ("in visitor context\n")),
+//                     -1);
+// }
 
-int
-be_visitor_typecode_defn::visit_field (be_field *node)
-{
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
-      return this->gen_encapsulation (node);
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      this->computed_encap_len_ = this->compute_encap_length (node);
-      return ((this->computed_encap_len_ > 0) ? 0 : -1);
-    default:
-      // error
-      break;
-    }
+// int
+// be_visitor_typecode_defn::visit_field (be_field *node)
+// {
+//   switch (this->ctx_->sub_state ())
+//     {
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
+//       return this->gen_encapsulation (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
+//       this->computed_encap_len_ = this->compute_encap_length (node);
+//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
+//     default:
+//       // error
+//       break;
+//     }
 
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ACE_TEXT ("visit - bad sub state ")
-                     ACE_TEXT ("in visitor context\n")),
-                    -1);
-}
+//   ACE_ERROR_RETURN ((LM_ERROR,
+//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                      ACE_TEXT ("visit - bad sub state ")
+//                      ACE_TEXT ("in visitor context\n")),
+//                     -1);
+// }
 
 // int
 // be_visitor_typecode_defn::visit_interface (be_interface *node)
@@ -626,49 +626,49 @@ be_visitor_typecode_defn::visit_field (be_field *node)
 //                     -1);
 // }
 
-int
-be_visitor_typecode_defn::visit_component (be_component *node)
-{
-  return this->visit_interface (node);
-}
+// int
+// be_visitor_typecode_defn::visit_component (be_component *node)
+// {
+//   return this->visit_interface (node);
+// }
 
-int
-be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd *)
-{
-  // nothing to do
-  return 0;
-}
+// int
+// be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd *)
+// {
+//   // nothing to do
+//   return 0;
+// }
 
-int
-be_visitor_typecode_defn::visit_predefined_type (be_predefined_type *node)
-{
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-      // top level typecodes are defined in the CORBA library. If we show up
-      // here, then it is an error
-      break;
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-      return this->gen_typecode (node);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-      return this->gen_encapsulation (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-      this->computed_tc_size_ = this->compute_tc_size (node);
-      return ((this->computed_tc_size_ > 0) ? 0 : -1);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-      this->computed_encap_len_ = this->compute_encap_length (node);
-      return ((this->computed_encap_len_ > 0) ? 0 : -1);
-    default:
-      // error
-      break;
-    }
+// int
+// be_visitor_typecode_defn::visit_predefined_type (be_predefined_type *node)
+// {
+//   switch (this->ctx_->sub_state ())
+//     {
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
+//       // top level typecodes are defined in the CORBA library. If we show up
+//       // here, then it is an error
+//       break;
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
+//       return this->gen_typecode (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
+//       return this->gen_encapsulation (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
+//       this->computed_tc_size_ = this->compute_tc_size (node);
+//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
+//       this->computed_encap_len_ = this->compute_encap_length (node);
+//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
+//     default:
+//       // error
+//       break;
+//     }
 
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ACE_TEXT ("visit - bad sub state ")
-                     ACE_TEXT ("in visitor context\n")),
-                    -1);
-}
+//   ACE_ERROR_RETURN ((LM_ERROR,
+//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                      ACE_TEXT ("visit - bad sub state ")
+//                      ACE_TEXT ("in visitor context\n")),
+//                     -1);
+// }
 
 int
 be_visitor_typecode_defn::visit_sequence (be_sequence * node)
@@ -851,27 +851,27 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 //   return this->visit_valuetype (node);
 // }
 
-int
-be_visitor_typecode_defn::visit_union_branch (be_union_branch *node)
-{
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
-      return this->gen_encapsulation (node);
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      this->computed_encap_len_ = this->compute_encap_length (node);
-      return ((this->computed_encap_len_ > 0) ? 0 : -1);
-    default:
-      // error
-      break;
-    }
+// int
+// be_visitor_typecode_defn::visit_union_branch (be_union_branch *node)
+// {
+//   switch (this->ctx_->sub_state ())
+//     {
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
+//       return this->gen_encapsulation (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
+//       this->computed_encap_len_ = this->compute_encap_length (node);
+//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
+//     default:
+//       // error
+//       break;
+//     }
 
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ACE_TEXT ("visit - bad sub state ")
-                     ACE_TEXT ("in visitor context\n")),
-                    -1);
-}
+//   ACE_ERROR_RETURN ((LM_ERROR,
+//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                      ACE_TEXT ("visit - bad sub state ")
+//                      ACE_TEXT ("in visitor context\n")),
+//                     -1);
+// }
 
 //  methods that actually produce the typecode and the encapsulations
 
@@ -1257,51 +1257,51 @@ be_visitor_typecode_defn::gen_encapsulation (be_array *node)
 //   return 0;
 // }
 
-int
-be_visitor_typecode_defn::gen_encapsulation (be_field *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_type *bt;  // our type node
+// int
+// be_visitor_typecode_defn::gen_encapsulation (be_field *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
+//   be_type *bt;  // our type node
 
-  os->indent (); // start from whatever indentation level we were at
+//   os->indent (); // start from whatever indentation level we were at
 
-  // generate name
-  this->gen_name (node);
+//   // generate name
+//   this->gen_name (node);
 
-  // hand over code generation to our type node
-  bt = be_type::narrow_from_decl (node->field_type ());
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
-  if (!bt || bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::gen_encapsulation (field) - ")
-                         ACE_TEXT ("failed to generate typecode\n")),
-                        -1);
-    }
-  // revert the state to what it was before because we may be dealing with
-  // subsequent fields for which we have to be in the "gen scope"
-  // substate
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
+//   // hand over code generation to our type node
+//   bt = be_type::narrow_from_decl (node->field_type ());
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+//   if (!bt || bt->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::gen_encapsulation (field) - ")
+//                          ACE_TEXT ("failed to generate typecode\n")),
+//                         -1);
+//     }
+//   // revert the state to what it was before because we may be dealing with
+//   // subsequent fields for which we have to be in the "gen scope"
+//   // substate
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
 
-  if (node->visibility() != AST_Field::vis_NA)
-    {
-      // generate visibility marker
+//   if (node->visibility() != AST_Field::vis_NA)
+//     {
+//       // generate visibility marker
 
-      // Even though visibility marker is UShort it seems that
-      // it would always be aligned on ULong boundary.
-      ACE_CDR::ULong visibility =
-        node->visibility() == AST_Field::vis_PRIVATE ? 0 : 1;
+//       // Even though visibility marker is UShort it seems that
+//       // it would always be aligned on ULong boundary.
+//       ACE_CDR::ULong visibility =
+//         node->visibility() == AST_Field::vis_PRIVATE ? 0 : 1;
 
-      os->indent (); // start from current indentation level
-      *os << visibility << ", // data member visibility marker"
-          << "\n\n";
+//       os->indent (); // start from current indentation level
+//       *os << visibility << ", // data member visibility marker"
+//           << "\n\n";
 
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-    }
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//     }
 
-  return 0;
-}
+//   return 0;
+// }
 
 // int
 // be_visitor_typecode_defn::gen_typecode (be_interface *node)
@@ -2701,46 +2701,46 @@ be_visitor_typecode_defn::compute_encap_length (be_array *node)
 //   return this->computed_encap_len_;
 // }
 
-ACE_CDR::Long
-be_visitor_typecode_defn::compute_encap_length (be_field *node)
-{
-  be_type *bt;
+// ACE_CDR::Long
+// be_visitor_typecode_defn::compute_encap_length (be_field *node)
+// {
+//   be_type *bt;
 
-  // struct member is represented as the "name" followed by the typecode
+//   // struct member is represented as the "name" followed by the typecode
 
-  ACE_CDR::Long encap_len =
-    this->name_encap_len (node); // for name
+//   ACE_CDR::Long encap_len =
+//     this->name_encap_len (node); // for name
 
-  // add to this, the size of our typecode
-  bt = be_type::narrow_from_decl (node->field_type ());
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+//   // add to this, the size of our typecode
+//   bt = be_type::narrow_from_decl (node->field_type ());
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
 
-  if (!bt || bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_encap_len (array) - ")
-                         ACE_TEXT ("cannot compute tc size\n")),
-                        -1);
-    }
+//   if (!bt || bt->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_encap_len (array) - ")
+//                          ACE_TEXT ("cannot compute tc size\n")),
+//                         -1);
+//     }
 
-  // note that we must add typecode size of base type
-  this->computed_encap_len_ = encap_len + this->computed_tc_size_;
+//   // note that we must add typecode size of base type
+//   this->computed_encap_len_ = encap_len + this->computed_tc_size_;
 
-  // revert the sub state
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN);
+//   // revert the sub state
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN);
 
-  if (node->visibility() != AST_Field::vis_NA)
-    {
-      // count visibility marker
+//   if (node->visibility() != AST_Field::vis_NA)
+//     {
+//       // count visibility marker
 
-      // Even though visibility marker is UShort it seems that
-      // it would always be aligned on ULong boundary.
-      this->computed_encap_len_ += 4;
-    }
+//       // Even though visibility marker is UShort it seems that
+//       // it would always be aligned on ULong boundary.
+//       this->computed_encap_len_ += 4;
+//     }
 
-  return this->computed_encap_len_;
-}
+//   return this->computed_encap_len_;
+// }
 
 // ACE_CDR::Long
 // be_visitor_typecode_defn::compute_tc_size (be_interface *node)

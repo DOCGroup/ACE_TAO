@@ -65,19 +65,19 @@ public:
 //   virtual int visit_enum (be_enum *node);
   // visit an enum
 
-  virtual int visit_exception (be_exception *node);
-  // visit an enum
+//   virtual int visit_exception (be_exception *node);
+  // visit an exception
 
 //   virtual int visit_interface (be_interface *node);
   // visit interface
 
-  virtual int visit_interface_fwd (be_interface_fwd *node);
+//   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface
 
-  virtual int visit_component (be_component *node);
+//   virtual int visit_component (be_component *node);
   // visit component
 
-  virtual int visit_predefined_type (be_predefined_type *node);
+//   virtual int visit_predefined_type (be_predefined_type *node);
   // visit predefined types
 
   virtual int visit_sequence (be_sequence *node);
@@ -104,10 +104,10 @@ public:
 //   virtual int visit_enum_val (be_enum_val *node);
 //   // visit the enumeration values
 
-  virtual int visit_field (be_field *node);
+//   virtual int visit_field (be_field *node);
   // visit the field (struct and exception member)
 
-  virtual int visit_union_branch (be_union_branch *node);
+//   virtual int visit_union_branch (be_union_branch *node);
   // visit the union member
 
   // = special methods
@@ -124,17 +124,17 @@ public:
 
 //   int gen_typecode (be_enum *node);
 
-  int gen_typecode (be_exception *node);
+//   int gen_typecode (be_exception *node);
 
 //   int gen_typecode (be_interface *node);
 
-  int gen_typecode (be_interface_fwd *node);
+//   int gen_typecode (be_interface_fwd *node);
 
-  int gen_typecode (be_predefined_type *node);
+//   int gen_typecode (be_predefined_type *node);
 
-  int gen_typecode (be_sequence *node);
+//   int gen_typecode (be_sequence *node);
 
-  int gen_typecode (be_string *node);
+//   int gen_typecode (be_string *node);
 
 //   int gen_typecode (be_structure *node);
 
@@ -152,23 +152,23 @@ public:
 
 //   int gen_encapsulation (be_enum_val *node);
 
-  int gen_encapsulation (be_exception *node);
+//   int gen_encapsulation (be_exception *node);
 
-  int gen_encapsulation (be_field *node);
+//   int gen_encapsulation (be_field *node);
 
 //   int gen_encapsulation (be_interface *node);
 
-  int gen_encapsulation (be_interface_fwd *node);
+//   int gen_encapsulation (be_interface_fwd *node);
 
-  int gen_encapsulation (be_predefined_type *node);
+//   int gen_encapsulation (be_predefined_type *node);
 
-  int gen_encapsulation (be_sequence *node);
+//   int gen_encapsulation (be_sequence *node);
 
-  int gen_encapsulation (be_string *node);
+//   int gen_encapsulation (be_string *node);
 
 //   int gen_encapsulation (be_structure *node);
 
-  int gen_encapsulation (be_typedef *node);
+//   int gen_encapsulation (be_typedef *node);
 
   int gen_encapsulation (be_union *node);
 
@@ -182,21 +182,21 @@ public:
 
 //   ACE_CDR::Long compute_tc_size (be_enum *node);
 
-  ACE_CDR::Long compute_tc_size (be_exception *node);
+//   ACE_CDR::Long compute_tc_size (be_exception *node);
 
 //   ACE_CDR::Long compute_tc_size (be_interface *node);
 
-  ACE_CDR::Long compute_tc_size (be_interface_fwd *node);
+//   ACE_CDR::Long compute_tc_size (be_interface_fwd *node);
 
-  ACE_CDR::Long compute_tc_size (be_predefined_type *node);
+//   ACE_CDR::Long compute_tc_size (be_predefined_type *node);
 
-  ACE_CDR::Long compute_tc_size (be_sequence *node);
+//   ACE_CDR::Long compute_tc_size (be_sequence *node);
 
-  ACE_CDR::Long compute_tc_size (be_string *node);
+//   ACE_CDR::Long compute_tc_size (be_string *node);
 
 //   ACE_CDR::Long compute_tc_size (be_structure *node);
 
-  ACE_CDR::Long compute_tc_size (be_typedef *node);
+//   ACE_CDR::Long compute_tc_size (be_typedef *node);
 
   ACE_CDR::Long compute_tc_size (be_union *node);
 
@@ -210,23 +210,23 @@ public:
 
 //   ACE_CDR::Long compute_encap_length (be_enum_val *node);
 
-  ACE_CDR::Long compute_encap_length (be_exception *node);
+//   ACE_CDR::Long compute_encap_length (be_exception *node);
 
-  ACE_CDR::Long compute_encap_length (be_field *node);
+//   ACE_CDR::Long compute_encap_length (be_field *node);
 
 //   ACE_CDR::Long compute_encap_length (be_interface *node);
 
-  ACE_CDR::Long compute_encap_length (be_interface_fwd *node);
+//   ACE_CDR::Long compute_encap_length (be_interface_fwd *node);
 
-  ACE_CDR::Long compute_encap_length (be_predefined_type *node);
+//   ACE_CDR::Long compute_encap_length (be_predefined_type *node);
 
-  ACE_CDR::Long compute_encap_length (be_sequence *node);
+//   ACE_CDR::Long compute_encap_length (be_sequence *node);
 
-  ACE_CDR::Long compute_encap_length (be_string *node);
+//   ACE_CDR::Long compute_encap_length (be_string *node);
 
 //   ACE_CDR::Long compute_encap_length (be_structure *node);
 
-  ACE_CDR::Long compute_encap_length (be_typedef *node);
+//   ACE_CDR::Long compute_encap_length (be_typedef *node);
 
   ACE_CDR::Long compute_encap_length (be_union *node);
 
