@@ -4470,11 +4470,11 @@ public:
                          int iovcnt);
 
 #if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  static ssize_t writev (ACE_HANDLE handle, 
-                         const WSABUF *buffers, 
+  static ssize_t writev (ACE_HANDLE handle,
+                         const WSABUF *buffers,
                          int n);
-  static ssize_t readv (ACE_HANDLE handle, 
-                        WSABUF *buffers, 
+  static ssize_t readv (ACE_HANDLE handle,
+                        WSABUF *buffers,
                         int n);
 #endif /* ACE_HAS_WINSOCK2 */
 
@@ -5604,6 +5604,26 @@ private:
 # define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
+#if defined (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)
+# define ACE_INLINE_FOR_GNUC ACE_INLINE
+#else
+# define ACE_INLINE_FOR_GNUC
+#endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
+
+struct ACE_Export ACE_IO_Vector :
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  public WSABUF
+#else
+  public iovec
+#endif /* ACE_HAS_WINSOCK2 */
+{
+  ssize_t length (void) const;
+  void length (ssize_t new_length);
+
+  void *buffer (void) const;
+  void buffer (void *new_buffer);
+};
+
 #if defined (UNICODE)
 
 # if !defined (ACE_DEFAULT_NAMESPACE_DIR)
@@ -5672,7 +5692,7 @@ private:
 # if defined (ASYS_INLINE)
 #   undef ASYS_INLINE
 # endif /* ASYS_INLINE */
-# define ASYS_INLINE 
+# define ASYS_INLINE
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   undef ACE_HAS_INLINED_OSCALLS
 # endif /* ACE_HAS_INLINED_OSCALLS */
@@ -5687,26 +5707,6 @@ private:
 #   define ACE_INLINE inline
 #   include "ace/OS.i"
 # endif /* ACE_HAS_INLINED_OSCALLS */
-
-#if defined (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)
-# define ACE_INLINE_FOR_GNUC ACE_INLINE
-#else
-# define ACE_INLINE_FOR_GNUC
-#endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
-
-struct ACE_Export ACE_IO_Vector :
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))  
-  public WSABUF
-#else
-  public iovec
-#endif /* ACE_HAS_WINSOCK2 */
-{
-  ssize_t length (void) const;
-  void length (ssize_t new_length);
-
-  void *buffer (void) const;
-  void buffer (void *new_buffer);  
-};
 
 #include "ace/Trace.h"
 
