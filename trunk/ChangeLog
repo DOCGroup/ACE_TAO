@@ -1,3 +1,9 @@
+Tue Aug 27 11:08:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Pair_T.{h,i}: Added support for operator== to the ACE_Pair
+	  can be used in maps, etc.  Thanks to Gonzalo Diethelm
+ 	  <gonzalo.diethelm@aditiva.com> for this addition.
+
 Tue Aug 27 06:45:58 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:

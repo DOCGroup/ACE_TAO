@@ -49,6 +49,13 @@ ACE_Pair<T1, T2>::second (const T2 &t2)
   this->second_ = t2;
 }
 
+template <class T1, class T2> ACE_INLINE int
+ACE_Pair<T1, T2>::operator== (const ACE_Pair<T1, T2> &rhs) const
+{
+  return (this->first_ == rhs.first_ &&
+          this->second_ == rhs.second_);
+}
+
 template <class T1, class T2> ACE_INLINE
 ACE_Reference_Pair<T1, T2>::ACE_Reference_Pair (T1 &t1,
                                                 T2 &t2)
@@ -69,4 +76,9 @@ ACE_Reference_Pair<T1, T2>::second (void) const
   return this->second_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+template <class T1, class T2> ACE_INLINE int
+ACE_Reference_Pair<T1, T2>::operator== (const ACE_Reference_Pair<T1, T2> &rhs) const
+{
+  return (this->first_ == rhs.first_ &&
+          this->second_ == rhs.second_);
+}
