@@ -6,7 +6,7 @@ Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
 	  New table that maps object group ID to the index
 	  of the next element in a "locations of object group members"
 	  sequence.
-	
+
 	* orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h:
 
 	  Added location index map that maps object group ID to the index
@@ -14,7 +14,7 @@ Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Added lock member to be used for synchronization of the location
 	  index map.
-	
+
 	* orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.cpp
 	  (TAO_LB_RoundRobin):
 
@@ -626,11 +626,11 @@ Wed Sep 25 11:12:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
           -- Modified files to complete the support of CORBA Components
 	     and related types in the IDL compiler.
 
-          -- Fixed a bug in the redefinition of forward declared structs and 
+          -- Fixed a bug in the redefinition of forward declared structs and
              unions. Thanks to Ken Sedgwick <ken@xvros.org> for sending in the
              example IDL file that uncovered the bug.
 
-          -- Changed addition of newlines to generated code to make it more 
+          -- Changed addition of newlines to generated code to make it more
              consistent and readable.
 
           -- Added file and line number annotation to generated code
