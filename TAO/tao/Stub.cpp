@@ -63,11 +63,10 @@ STUB_Object::STUB_Object (char *repository_id,
                           TAO_MProfile &profiles)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
+    forward_profiles_ (0),
     profile_in_use_ (0),
-    fwd_profile_ (0),
     profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
+    profile_success_ (0),
     // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
@@ -77,18 +76,17 @@ STUB_Object::STUB_Object (char *repository_id,
   this->profile_lock_ptr_ =  
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 
-  set_profiles (&profiles);
+  set_base_profiles (&profiles);
 }
 
 STUB_Object::STUB_Object (char *repository_id,
                           TAO_Profile *profile)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
+    forward_profiles_ (0),
     profile_in_use_ (0),
-    fwd_profile_ (0),
     profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
+    profile_success_ (0),
     // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
@@ -102,8 +100,8 @@ STUB_Object::STUB_Object (char *repository_id,
   base_profiles_.set (1);
   
   base_profiles_.give_profile (profile);
-  
-  this->set_profile_in_use_i (this->base_profiles_.get_next ());  
+
+  reset_base ();
 
 }
 
@@ -111,11 +109,10 @@ STUB_Object::STUB_Object (char *repository_id,
                           TAO_MProfile *profiles)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
+    forward_profiles_ (0),
     profile_in_use_ (0),
-    fwd_profile_ (0),
     profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
+    profile_success_ (0),
     // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
@@ -127,18 +124,17 @@ STUB_Object::STUB_Object (char *repository_id,
   this->profile_lock_ptr_ =  
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 
-  set_profiles (profiles);
+  set_base_profiles (profiles);
 
 }
 
 STUB_Object::STUB_Object (char *repository_id)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
-    fwd_profiles_ (0),
+    forward_profiles_ (0),
     profile_in_use_ (0),
-    fwd_profile_ (0),
     profile_lock_ptr_ (0),
-    fwd_profile_success_ (0),
+    profile_success_ (0),
     // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
@@ -200,16 +196,14 @@ STUB_Object::is_equivalent (CORBA::Object_ptr other_obj,
   if (CORBA::is_nil (other_obj) == 1)
     return 0;
 
-  STUB_Object *other_iiop_obj =
-    ACE_dynamic_cast (STUB_Object*, other_obj->_stubobj ());
-  if (other_iiop_obj == 0)
-    return 0;
+  TAO_Profile *other_profile = other_obj->_stubobj ()->profile_in_use_;
+  TAO_Profile *this_profile = this->profile_in_use_;
 
-  if (! this->profile_in_use_ || ! other_iiop_obj->profile_in_use_ )
+  if (other_profile == 0 || this_profile == 0)
     return 0;
 
   // Compare the profiles
-  return this->profile_in_use_->is_equivalent (other_iiop_obj->profile_in_use_, env);
+  return this_profile->is_equivalent (other_profile, env);
 }
 
 // Memory managment
@@ -358,6 +352,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
       for (;;)
         {
           // Start the call by constructing the request message header.
+	  // and connecting to the server.
           TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX1)
             {
               call.start (TAO_IN_ENV);
@@ -371,20 +366,26 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                                 guard,
                                 *this->profile_lock_ptr_));
 
-              // If this is the fwd_profile, then check to see if we
-              // need to go back to the original profile and try that.
-              if (this->fwd_profile_ != 0)
-                {
-		  this->set_fwd_profile (0);
-
-                  // See if we need to try again.
-                  if (this->fwd_profile_success_ == 1)
-                    {
-                      this->fwd_profile_success_ = 0;
-                      TAO_IN_ENV.clear ();
-                      TAO_GOTO (roundtrip_continue_label);
-                    }
+	      // get the next profile and try again
+	      // If a forward profile once succeeded but now fails then
+	      // start all over again.  Otherwise get the next profile and 
+	      // try again.  If this was the last profile in the list then
+	      // stop.
+	      if (profile_success_ && forward_profiles_)
+		{
+		  // reset profiles list and start all over again
+		  reset_profiles ();
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (roundtrip_continue_label);
                 }
+              else if (next_profile () != 0)
+		{
+                  TAO_IN_ENV.clear ();
+  		  TAO_GOTO (roundtrip_continue_label);
+		}
+	
+              // @@ Should re reset the profile list here?
+              reset_profiles ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
@@ -405,20 +406,21 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                                 guard,
                                 *this->profile_lock_ptr_));
 
-              // If this is the fwd_profile, then check to see if we
-              // need to go back to the original profile and try that.
-              if (this->fwd_profile_ != 0)
-                {
-		  this->set_fwd_profile (0);
-
-                  // See if we need to try again.
-                  if (this->fwd_profile_success_ == 1)
-                    {
-                      this->fwd_profile_success_ = 0;
-                      TAO_IN_ENV.clear ();
-                      TAO_GOTO (roundtrip_continue_label);
-                    }
+	      if (profile_success_ && forward_profiles_)
+		{
+		  // reset profiles list and start all over again
+		  reset_profiles ();
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (roundtrip_continue_label);
                 }
+              else if (next_profile () != 0)
+		{
+                  TAO_IN_ENV.clear ();
+  		  TAO_GOTO (roundtrip_continue_label);
+		}
+	
+              // @@ Should re reset the profile list here?
+              reset_profiles ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
@@ -427,12 +429,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
             return;
           else if (status == TAO_GIOP_NO_EXCEPTION)
             {
-              // @@ DB: and lock this
-              // @@ FRED - make a request and it fails first time
-              //    then fail.  Otherwise, go back to first profile
-              //    and start again!
-              if (this->fwd_profile_ != 0)
-                this->fwd_profile_success_ = 1;
+	      profile_success_ = 1;
 
               // Now, get all the "return", "out", and "inout"
               // parameters from the response message body.
@@ -511,8 +508,8 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
               return;
             }
           TAO_LABEL (roundtrip_continue_label);
-        }
-    }
+        } // for loop
+    } // if (two way)
   else
     {
       for (;;)
@@ -533,20 +530,23 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                                 guard,
 	                                *this->profile_lock_ptr_));
 
-              // If this is the fwd_profile, then check to see if we
+              // If this is the forward_profile, then check to see if we
               // need to go back to the original profile and try that.
-              if (this->fwd_profile_ != 0)
-                {
-		  this->set_fwd_profile (0);
-
-                  // See if we need to try again.
-                  if (this->fwd_profile_success_ == 1)
-                    {
-                      this->fwd_profile_success_ = 0;
-                      TAO_IN_ENV.clear ();
-                      TAO_GOTO (oneway_continue_label);
-                    }
+	      if (profile_success_ && forward_profiles_)
+		{
+		  // reset profiles list and start all over again
+		  reset_profiles ();
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (roundtrip_continue_label);
                 }
+              else if (next_profile () != 0)
+		{
+                  TAO_IN_ENV.clear ();
+  		  TAO_GOTO (roundtrip_continue_label);
+		}
+	
+              // @@ Should re reset the profile list here?
+              reset_profiles ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
@@ -557,9 +557,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
           ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
           /* TAO_GIOP_ReplyStatusType status = */ call.invoke (TAO_IN_ENV);
 
-          // @@ and lock this
-          if (this->fwd_profile_ != 0)
-            this->fwd_profile_success_ = 1;
+          profile_success_ = 1;
 
           // @@ TODO We do not get any LOCATION_FORWARD in this case,
           // IMHO this is a good case for use of a LocateRequest,

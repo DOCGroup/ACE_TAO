@@ -310,75 +310,52 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-  TAO_Profile *set_profile_in_use_i (TAO_Profile *pfile);
-  // Makes a copy of the profile and frees the existing profile_in_use.
-  // NOT THREAD SAFE
-
-  TAO_Profile *set_profile_in_use (TAO_Profile *pfile);
-  // THREAD SAFE
-  // Makes a copy of the profile and frees the existing profile_in_use.
-
+  // Manage the base (non-forwarded) profiles.
   TAO_Profile *profile_in_use (void) ;
   // returns a pointer to the profile_in_use object.  This object
-  // retains ownership of this object.
-
-  TAO_Profile *set_profiles (TAO_MProfile *mprofiles);
-  // This method *WILL* also set the profile_in_use to reference
-  // the first profile in this list!
-  // client must free this memory when done!
+  // retains ownership of this profile.
 
   TAO_MProfile *get_profiles (void);
-  // Reference to the profile list, reference count is not
-  // incremented.
-
-  TAO_MProfile *copy_profiles (void);
   // Copy of the profile list, user must free memory when done.
   // although the user can call get_profiles then reorder
   // the list and give it back to STUB_Object.
 
+  // manage forward and base profiles.
   TAO_Profile *next_profile (void);
-  // this will both set profile_in_use_ to reference the next
-  // profile in the mprofiles list AND it will return a pointer 
-  // to this profile.  This object retains ownership of the profile!
+  // THREAD SAFE.  If forward_profiles is null then this will
+  // get the next profile in the base_profiles list.  If forward is not null
+  // then this will get the next profile for the list of forwarding
+  // profiles.  If all profiles have been tried then 0 is returned and
+  // profile_in_use_ is set to the first profile in the base_profiles
+  // list.
 
-  TAO_Profile *reset_profiles (void);
+  void reset_profiles (void);
   // THREAD SAFE
-  // this method will reset the profile list to reference the first
-  // profile AND it will set profile_in_use to ref this profile.
+  // this method will reset the base profile list to reference the first
+  // profile and if there are anmy existing forward profiles they are
+  // reset.
 
-  void set_fwd_profiles (TAO_MProfile *mprofiles);
-  // THREAD SAFE.
-  // set the prifile list of the current profile_in_use to
-  // mprofiles.  The object profile_in_use will take responsibilty
-  // for the memory and this object (STUB_Obj) will be responsible
-  // for list manipulation!
-
-  TAO_MProfile *get_fwd_profiles (void);
-  // Copy of the fwd profile list, user must free memory when done.
-  // although the user can call get_profiles then reorder
-  // the list and give it back to STUB_Object.
-
-  TAO_Profile *next_fwd_profile (void);
-  // this will both set fwd_profile to reference the next
-  // profile in the profile_in_use's fwd_profiles's list AND it will 
-  // return a pointer to this profile.  This object retains ownership 
-  // of the profile!
-
-  TAO_Profile *get_fwd_profile (void) ;
-  // Returns the current forwarding profile.
-  // THREAD-SAFE.  Returns the current forwarding profile.
-
+  // Just forward profiles.
   void use_locate_requests (CORBA::Boolean use_it);
   // set the flags to use locate_requests.
 
-protected:
-  ACE_Lock &get_profile_lock (void);
-  // Gives reference to the lock guarding the forwarding profile.
+  void set_valid_profile (void);
+   // NON-THREAD-SAFE.  Will set profile_success_ to 0.
 
-  TAO_Profile *get_fwd_profile_i (void) ;
-  // NON-THREAD-SAFE.  Returns the current forwarding profile.
-  // @@ Should this be public
- 
+   CORBA::Boolean valid_profile (void);
+   // returns TRUE if a connection was successful with at least
+   // one profile.
+
+   TAO_Profile *set_base_profiles (TAO_MProfile *mprofiles);
+   // Initialize the base_profiles_ and set profile_in_use_ to
+   // reference the first profile.
+
+  void add_forward_profiles (TAO_MProfile *mprofiles);
+  // THREAD SAFE.
+  // set the forward_profiles.  This object will assume ownership of
+  // this TAO_MProfile object!!
+
+//FREDprotected:
   void put_params (CORBA_Environment &TAO_IN_ENV,
                    const TAO_Call_Data *info,
                    TAO_GIOP_Invocation &call,
@@ -392,41 +369,49 @@ protected:
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 
-private:
+//FREDprivate:
+  TAO_Profile *set_profile_in_use_i (TAO_Profile *pfile);
+  // Makes a copy of the profile and frees the existing profile_in_use.
+  // NOT THREAD SAFE
+
   void reset_first_locate_request (void);
   // NON-THREAD-SAFE.
   // reset the flag telling that the locate request should be used
 
-  TAO_Profile *set_fwd_profile (TAO_Profile *new_profile);
-  // NOT THREAD-SAFE.  Sets a new value for the forwarding profile and
-  // returns the current value.
- 
-  void reset_fwd_profiles (void);
-  // NOT THREAD-SAFE.
-  // get rid of forwarding for the current profile!
+  TAO_Profile *next_forward_profile (void);
+  // NON-THREAD-SAFE.  utility method for next_profile.
+
+  void forward_back_one (void);
+  // NON-THREAD-SAFE.  utility method which unrolls (removes or pops)
+  // the top most forwarding profile list.
+
+  void reset_base ();
+  // NON-THREAD-SAFE.  utility method which resets or initializes
+  // the base_profile list and forward flags.
+
+  void reset_forward ();
+   // NOT THREAD-SAFE.  utility method which pops all forward profile
+   // lists and resets the forward_profiles_ pointer.
 
   ~STUB_Object (void);
   // Destructor is to be called only through _decr_refcnt()
 
-private:
+//FREDprivate:
     // @@ For now, we keep track of transport specific profiles here,
   //    but in the next iteration this will go away ... only transport
   //    neutral info is kept here => STUB_Object should also go away!
   //    fredk
   TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
-  TAO_MProfile     *fwd_profiles_;
+  TAO_MProfile     *forward_profiles_;
 
   TAO_Profile *profile_in_use_;
   // this is the profile that we are currently sending/receiving with
 
-  TAO_Profile *fwd_profile_;
-  // Store the forwarding profile
-
   ACE_Lock* profile_lock_ptr_;
   // Mutex to protect access to the forwarding profile
 
-  size_t fwd_profile_success_;
+  size_t profile_success_;
   // Have we successfully talked to the forward profile yet?
 
   ACE_SYNCH_MUTEX refcount_lock_;

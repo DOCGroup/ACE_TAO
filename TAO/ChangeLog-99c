@@ -1,3 +1,24 @@
+Wed Feb 24 11:07:32 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+        * Updated how forwarding is performed so that multiple
+	  profiles are used.  This following files were modified.
+	  These is still an issue with concurrency since the Stub object is
+	  responsible for managing the profile list and forwarding
+	  information.
+          IIOP_Profile.cpp
+          IIOP_Profile.h
+          Invocation.cpp
+          MProfile.cpp
+          MProfile.h
+          MProfile.i
+          Pluggable.cpp
+          Pluggable.h
+          Stub.cpp
+          Stub.h
+          Stub.i
+          encode.cpp
+
+
 Tue Feb 23 20:10:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
