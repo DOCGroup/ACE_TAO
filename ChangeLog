@@ -1,3 +1,18 @@
+Thu Sep  9 16:40:27 2004  Steve Huston  <shuston@riverace.com>
+
+	* apps/Gateway/Gateway/Connection_Handler.cpp:
+	* apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
+	* apps/Gateway/Gateway/File_Parser.{h cpp}:
+	* apps/Gateway/Gateway/Gateway.cpp:
+	* apps/Gateway/Gateway/gatewayd.cpp:
+	* apps/Gateway/Peer/Options.{h cpp}:
+	* apps/Gateway/Peer/Peer.{h cpp}: Narrow/wide char fixes.
+	
+	* apps/Gateway/Gateway/Options.h: Removed const char *connector_host()
+	  method because it's not ever defined or referenced.
+
+	* apps/Gateway/Peer/peer.mpc: New project definition.
+
 Thu Sep  9 16:17:38 2004  Olli Savia  <ops@iki.fi>
 
         * apps/JAWS3/jaws3/Templates.cpp:

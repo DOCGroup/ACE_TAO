@@ -227,13 +227,13 @@ class ACE_Svc_Export Peer_Factory : public ACE_Service_Object
 public:
   // = Dynamic initialization and termination hooks from <ACE_Service_Object>.
 
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the acceptor and connector.
 
   virtual int fini (void);
   // Perform termination activities.
 
-  virtual int info (char **, size_t) const;
+  virtual int info (ACE_TCHAR **, size_t) const;
   // Return info about this service.
 
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);

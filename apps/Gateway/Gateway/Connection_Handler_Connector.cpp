@@ -15,7 +15,7 @@ int
 Connection_Handler_Connector::initiate_connection (Connection_Handler *connection_handler,
                                                    ACE_Synch_Options &synch_options)
 {
-  char addr_buf[MAXHOSTNAMELEN];
+  ACE_TCHAR addr_buf[MAXHOSTNAMELEN];
 
   // Mark ourselves as idle so that the various iterators will ignore
   // us until we are reconnected.
@@ -25,8 +25,8 @@ Connection_Handler_Connector::initiate_connection (Connection_Handler *connectio
   // addr_buf.
   if (connection_handler->local_addr ().addr_to_string (addr_buf, sizeof addr_buf) == -1
       || connection_handler->remote_addr ().addr_to_string (addr_buf, sizeof addr_buf) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n",
-                      "can't obtain peer's address"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("can't obtain peer's address")), -1);
 
   // Try to connect to the Peer.
   if (this->connect (connection_handler,
@@ -37,22 +37,22 @@ Connection_Handler_Connector::initiate_connection (Connection_Handler *connectio
       if (errno != EWOULDBLOCK)
         {
           connection_handler->state (Connection_Handler::FAILED);
-          ACE_DEBUG ((LM_DEBUG, "(%t) %p on address %s\n",
-                      "connect", addr_buf));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) %p on address %s\n"),
+                      ACE_TEXT ("connect"), addr_buf));
           return -1;
         }
       else
         {
           connection_handler->state (Connection_Handler::CONNECTING);
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) in the process of connecting to %s\n",
+                      ACE_TEXT ("(%t) in the process of connecting to %s\n"),
                       addr_buf));
         }
     }
   else
     {
       connection_handler->state (Connection_Handler::ESTABLISHED);
-      ACE_DEBUG ((LM_DEBUG, "(%t) connected to %s on %d\n",
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %d\n"),
                   addr_buf, connection_handler->get_handle ()));
     }
   return 0;

@@ -47,7 +47,7 @@ class File_Parser
   //     <Consumer_Map>.
 public:
   // = Open and Close the file specified
-  int open (const char filename[]);
+  int open (const ACE_TCHAR filename[]);
   int close (void);
 
   virtual FP::Return_Type read_entry (ENTRY &entry,

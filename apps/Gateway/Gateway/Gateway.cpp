@@ -23,13 +23,13 @@ class ACE_Svc_Export Gateway : public ACE_Service_Object
   //     for the <Gateway> routing.
 protected:
   // = Service configurator hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Perform initialization.
 
   virtual int fini (void);
   // Perform termination when unlinked dynamically.
 
-  virtual int info (char **, size_t) const;
+  virtual int info (ACE_TCHAR **, size_t) const;
   // Return info about this service.
 
   // = Configuration methods.
@@ -77,7 +77,7 @@ Gateway::handle_input (ACE_HANDLE h)
 }
 
 int
-Gateway::init (int argc, char *argv[])
+Gateway::init (int argc, ACE_TCHAR *argv[])
 {
   // Parse the "command-line" arguments.
   Options::instance ()->parse_args (argc, argv);
@@ -92,8 +92,8 @@ Gateway::init (int argc, char *argv[])
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "register_handler"),
+                       ACE_TEXT ("(%t) %p\n"),
+                       ACE_TEXT ("register_handler")),
                       -1);
 
   // Register this handler to receive events on stdin.  We use this to
@@ -102,8 +102,8 @@ Gateway::init (int argc, char *argv[])
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "register_stdin_handler"),
+                       ACE_TEXT ("(%t) %p\n"),
+                       ACE_TEXT ("register_stdin_handler")),
                       -1);
 
   // If this->performance_window_ > 0 start a timer.
@@ -114,11 +114,11 @@ Gateway::init (int argc, char *argv[])
           (&this->event_channel_, 0,
            Options::instance ()->performance_window ()) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "schedule_timer"));
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("schedule_timer")));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "starting timer for %d seconds...\n",
+                    ACE_TEXT ("starting timer for %d seconds...\n"),
                    Options::instance ()->performance_window ()));
     }
 
@@ -159,12 +159,12 @@ Gateway::fini (void)
 // Returns information on the currently active service.
 
 int
-Gateway::info (char **strp, size_t length) const
+Gateway::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, "%s\t %s", "Gateway daemon",
-             "# Application-level gateway\n");
+  ACE_OS::strcpy
+    (buf, ACE_TEXT ("Gateway daemon\t   # Application-level gateway\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -185,7 +185,7 @@ Gateway::parse_connection_config_file (void)
 
   if (connection_file.open (Options::instance ()->connection_config_file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
+                       ACE_TEXT ("(%t) %p\n"),
                        Options::instance ()->connection_config_file ()),
                       -1);
 
@@ -208,12 +208,12 @@ Gateway::parse_connection_config_file (void)
 
           if (pci.connection_id_ != 1)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) warning, the first connection id should be 1 not %d\n",
+                        ACE_TEXT ("(%t) warning, the first connection id should be 1 not %d\n"),
                         pci.connection_id_));
         }
       else if (previous_connection_id + 1 != pci.connection_id_)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%t) warning, connection ids should keep increasing by 1 and %d + 1 != %d\n",
+                    ACE_TEXT ("(%t) warning, connection ids should keep increasing by 1 and %d + 1 != %d\n"),
                     previous_connection_id,
                     pci.connection_id_));
 
@@ -223,13 +223,13 @@ Gateway::parse_connection_config_file (void)
 
       if (Options::instance ()->enabled (Options::DEBUG))
         ACE_DEBUG ((LM_DEBUG,
-                    "(%t) conn id = %d, "
-                    "host = %s, "
-                    "remote port = %d, "
-                    "proxy role = %c, "
-                    "max retry timeout = %d, "
-                    "local port = %d, "
-                    "priority = %d\n",
+                    ACE_TEXT ("(%t) conn id = %d, ")
+                    ACE_TEXT ("host = %s, ")
+                    ACE_TEXT ("remote port = %d, ")
+                    ACE_TEXT ("proxy role = %c, ")
+                    ACE_TEXT ("max retry timeout = %d, ")
+                    ACE_TEXT ("local port = %d, ")
+                    ACE_TEXT ("priority = %d\n"),
                     pci.connection_id_,
                     pci.host_,
                     pci.remote_port_,
@@ -257,7 +257,7 @@ Gateway::parse_connection_config_file (void)
 
   if (file_empty)
     ACE_ERROR ((LM_WARNING,
-               "warning: connection connection_handler configuration file was empty\n"));
+               ACE_TEXT ("warning: connection connection_handler configuration file was empty\n")));
   return 0;
 }
 
@@ -271,7 +271,7 @@ Gateway::parse_consumer_config_file (void)
 
   if (consumer_file.open (Options::instance ()->consumer_config_file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
+                       ACE_TEXT ("(%t) %p\n"),
                        Options::instance ()->consumer_config_file ()),
                       -1);
 
@@ -285,15 +285,15 @@ Gateway::parse_consumer_config_file (void)
       if (Options::instance ()->enabled (Options::DEBUG))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) connection id = %d, payload = %d, "
-                      "number of consumers = %d\n",
+                      ACE_TEXT ("(%t) connection id = %d, payload = %d, ")
+                      ACE_TEXT ("number of consumers = %d\n"),
                       cci_entry.connection_id_,
                       cci_entry.type_,
                       cci_entry.total_consumers_));
 
           for (int i = 0; i < cci_entry.total_consumers_; i++)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) destination[%d] = %d\n",
+                        ACE_TEXT ("(%t) destination[%d] = %d\n"),
                         i,
                         cci_entry.consumers_[i]));
         }
@@ -318,7 +318,7 @@ Gateway::parse_consumer_config_file (void)
             dispatch_set->insert (connection_handler);
           else
             ACE_ERROR ((LM_ERROR,
-                        "(%t) not found: destination[%d] = %d\n",
+                        ACE_TEXT ("(%t) not found: destination[%d] = %d\n"),
                         i,
                         cci_entry.consumers_[i]));
         }
@@ -328,7 +328,7 @@ Gateway::parse_consumer_config_file (void)
 
   if (file_empty)
     ACE_ERROR ((LM_WARNING,
-               "warning: consumer map configuration file was empty\n"));
+               ACE_TEXT ("warning: consumer map configuration file was empty\n")));
   return 0;
 }
 

@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project(Gateway_Peer) : aceexe {
+  exename = peerd
+  Source_Files {
+    Options.cpp
+    Peer.cpp
+    peerd.cpp
+  }
+  Documentation_Files {
+    svc.conf
+  }
+}

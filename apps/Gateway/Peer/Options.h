@@ -39,7 +39,7 @@ public:
   static Options *instance (void);
   // Return Singleton.
 
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the arguments and set the options.
 
   // = Accessor methods.
@@ -64,7 +64,7 @@ public:
   // The connector port number, i.e., the one that we use to actively
   // establish connections with a gatewayd and create a Consumer.
 
-  const char *connector_host (void) const;
+  const ACE_TCHAR *connector_host (void) const;
   // Our connector port host, i.e., the host running the gatewayd
   // process.
 
@@ -119,7 +119,7 @@ private:
   // The connector port number, i.e., the one that we use to actively
   // establish connections with a gatewayd and create a Consumer.
 
-  const char *connector_host_;
+  const ACE_TCHAR *connector_host_;
   // Our connector host, i.e., where the gatewayd process is running.
 
   long timeout_;
