@@ -1,3 +1,7 @@
+Thu Nov  6 17:07:58 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/tao_internals.i: Added missing #include file.
+
 Thu Nov  6 14:51:22 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* TAO_IDL/Makefile: Renamed libutil to libtao_idl_util. libutil is

@@ -3,7 +3,7 @@
 // $Id$
 
 #include "ace/Service_Config.h"
-
+#include "ace/Object_Manager.h"
 
 ACE_INLINE int
 TAO_Internal::open_services (int& argc, char** argv)
