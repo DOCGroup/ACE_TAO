@@ -9,6 +9,7 @@
 #include <xercesc/util/XMLUniDefs.hpp>
 #include "Config_Handlers/Config_Handler_export.h"
 #include "Config_Handlers/Domain_Handler.h"
+#include "Config_Handlers/DnC_Dump.h"
 #include "Config_Handlers/Config_Error_Handler.h"
 
 using Config_Handler::XStr;
@@ -149,7 +150,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Deployment::Domain domain;
       domain_handler.process_domain(domain);
-      domain_handler.dump(domain);
+      Deployment::DnC_Dump::dump (domain);
+      //domain_handler.dump(domain);
 
       // parser->release ();
     }
