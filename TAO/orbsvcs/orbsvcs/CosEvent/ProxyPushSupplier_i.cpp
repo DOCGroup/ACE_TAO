@@ -130,11 +130,11 @@ void TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushCon
 
 
   if (push_consumer == CosEventComm::PushConsumer::_nil())
-    ACE_THROW (CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   ACE_NEW_THROW_EX (this->wrapper_,
                     TAO_CosEC_PushConsumerWrapper (push_consumer),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // @@ This code is not exception safe.

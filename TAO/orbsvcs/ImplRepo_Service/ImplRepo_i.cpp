@@ -46,7 +46,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       TAO_MProfile *mp;
       ACE_NEW_THROW_EX (mp,
                         TAO_MProfile (1),
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       TAO_Profile *new_pfile;

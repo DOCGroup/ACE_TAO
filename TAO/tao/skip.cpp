@@ -85,7 +85,7 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Primitive::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -202,7 +202,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
             ACE_DEBUG ((LM_DEBUG,
                         "TAO_Marshal_TypeCode::skip: "
                         "Bad kind_ value in CDR stream"));
-          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          env.exception (new CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
@@ -214,7 +214,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_TypeCode::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -247,7 +247,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Principal::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -333,7 +333,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
             if (TAO_debug_level > 0)
               ACE_DEBUG ((LM_DEBUG,
                           "error decoding IIOP host/port"));
-            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+            env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
 
@@ -341,7 +341,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
         if (str.skip (TC_opaque,
                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
           {
-            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+            env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
       }
@@ -354,7 +354,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_ObjRef::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -396,7 +396,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Struct::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -519,7 +519,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                 }
                                 break;
                               default:
-                                env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+                                env.exception (new CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
                                 return CORBA::TypeCode::TRAVERSE_STOP;
                             }// end of switch
 
@@ -539,13 +539,13 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                             }
                           else
                             {
-                              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+                              env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
                               return CORBA::TypeCode::TRAVERSE_STOP;
                             }
                         }
                       else
                         {
-                          env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+                          env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
                           return CORBA::TypeCode::TRAVERSE_STOP;
                         }
                     } // end of for loop
@@ -557,25 +557,25 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                 }
               else
                 {
-                  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+                  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
                   return CORBA::TypeCode::TRAVERSE_STOP;
                 }
             }
           else
             {
-              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+              env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
         }
       else
         {
-          env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+          env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
   else
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -607,7 +607,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_TypeCode::skip detected error"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -657,7 +657,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::skip detected error\n"));
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -696,7 +696,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::skip detected error\n"));
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -731,7 +731,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Alias::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -784,7 +784,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Except::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -822,7 +822,7 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_WString::skip detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

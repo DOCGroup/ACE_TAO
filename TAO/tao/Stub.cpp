@@ -379,7 +379,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
 
           // The only case left is status == TAO_INVOKE_OK, exit the
           // loop.  We cannot retry because at this point we either
@@ -482,7 +482,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
 
           break;
         }
@@ -586,7 +586,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
 
           // The only case left is status == TAO_INVOKE_OK, exit the
           // loop.  We cannot retry because at this point we either
@@ -770,7 +770,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
 
           break;
         }

@@ -66,7 +66,7 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
   if (servant != 0)
     return servant;
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                       0);
 }
 

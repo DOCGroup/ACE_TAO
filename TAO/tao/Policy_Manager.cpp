@@ -20,7 +20,7 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
   // @@ The spec does not say what to do on this case.
   if (set_add != CORBA::SET_OVERRIDE
       && set_add != CORBA::ADD_OVERRIDE)
-    ACE_THROW (CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   CORBA::InvalidPolicies invalid_policies;
   invalid_policies.indices.length (policies.length ());

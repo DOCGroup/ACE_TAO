@@ -23,7 +23,7 @@ Grid_i::Grid_i (CORBA::Short x,
 {
   ACE_NEW_THROW_EX (array_,
                     CORBA::Long *[y],
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Allocate memory for the matrix.
@@ -32,7 +32,7 @@ Grid_i::Grid_i (CORBA::Short x,
     {
       ACE_NEW_THROW_EX (array_[ctr],
                         CORBA::Long[x],
-                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
       ACE_CHECK;
     }
 
@@ -189,7 +189,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   // returns a null value if it fails
   ACE_NEW_THROW_EX (grid_ptr,
                     Grid_i (width, height, ACE_TRY_ENV),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (Grid::_nil ());
 
   // Register the Grid pointer.

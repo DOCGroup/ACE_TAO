@@ -80,7 +80,7 @@ CORBA::Boolean CORBA_Pollable::is_ready (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -100,7 +100,7 @@ CORBA::Boolean CORBA_Pollable::is_ready (
     if (!(
           (_tao_out << timeout)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -112,7 +112,7 @@ CORBA::Boolean CORBA_Pollable::is_ready (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -122,7 +122,7 @@ CORBA::Boolean CORBA_Pollable::is_ready (
   if (!(
         (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -134,7 +134,7 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -160,7 +160,7 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -170,7 +170,7 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -413,7 +413,7 @@ CORBA::DIIPollable_ptr CORBA_PollableSet::create_dii_pollable (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -439,7 +439,7 @@ CORBA::DIIPollable_ptr CORBA_PollableSet::create_dii_pollable (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -449,7 +449,7 @@ CORBA::DIIPollable_ptr CORBA_PollableSet::create_dii_pollable (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -461,7 +461,7 @@ void CORBA_PollableSet::add_pollable (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -481,7 +481,7 @@ void CORBA_PollableSet::add_pollable (
     if (!(
           (_tao_out << potential)
       ))
-      ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -493,7 +493,7 @@ void CORBA_PollableSet::add_pollable (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -516,7 +516,7 @@ CORBA_Pollable_ptr CORBA_PollableSet::poll (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -536,7 +536,7 @@ CORBA_Pollable_ptr CORBA_PollableSet::poll (
     if (!(
           (_tao_out << timeout)
       ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (_tao_CORBA_PollableSet_poll_exceptiondata, 1, ACE_TRY_ENV);
@@ -548,7 +548,7 @@ CORBA_Pollable_ptr CORBA_PollableSet::poll (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -558,7 +558,7 @@ CORBA_Pollable_ptr CORBA_PollableSet::poll (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -575,7 +575,7 @@ void CORBA_PollableSet::remove (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -595,7 +595,7 @@ void CORBA_PollableSet::remove (
     if (!(
           (_tao_out << potential)
       ))
-      ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
     int _invoke_status =
       _tao_call.invoke (_tao_CORBA_PollableSet_remove_exceptiondata, 1, ACE_TRY_ENV);
@@ -607,7 +607,7 @@ void CORBA_PollableSet::remove (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
 
     }
     break;
@@ -624,7 +624,7 @@ CORBA::UShort CORBA_PollableSet::number_left (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -650,7 +650,7 @@ CORBA::UShort CORBA_PollableSet::number_left (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -660,7 +660,7 @@ CORBA::UShort CORBA_PollableSet::number_left (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 

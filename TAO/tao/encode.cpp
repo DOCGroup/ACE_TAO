@@ -99,7 +99,7 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Primitive::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -149,7 +149,7 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Any::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -219,7 +219,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_TypeCode::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -238,7 +238,7 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
 
   if ((*stream << p) == 0)
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -265,7 +265,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 
   if ((*stream << obj) == 0)
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -400,7 +400,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Struct::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -546,7 +546,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
             ACE_DEBUG ((LM_DEBUG,
                         "Union::encode - "
                         "Bad discriminant type\n"));
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE),
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                             CORBA::TypeCode::TRAVERSE_STOP);
         }// end of switch
 
@@ -581,7 +581,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                 "Union::encode - failed. "
                 "No match and no default case\n"));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                     CORBA::TypeCode::TRAVERSE_STOP);
 }
 
@@ -822,7 +822,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
   // If an error was detected but no exception was raised then raise a
   // marshal exception.
   if (env.exception () == 0)
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+    env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -972,7 +972,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::encode detected error\n"));
-  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -1056,7 +1056,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Alias::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1178,7 +1178,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Except::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

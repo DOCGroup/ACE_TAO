@@ -908,7 +908,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->open () == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), 0);
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
 
   CORBA::String id = 0;
 
@@ -927,7 +927,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   TAO_MProfile *mp;
   ACE_NEW_THROW_EX (mp,
                     TAO_MProfile (1),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
 
   TAO_ORB_Parameters *orb_params =
@@ -939,14 +939,14 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                       orb_params->addr ().get_port_number (),
                                       key,
                                       orb_params->addr ()),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
 
   mp->give_profile (pfile);
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
 
   return stub;
@@ -971,7 +971,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   if (CORBA::is_nil (new_obj))
     {
       data->_decr_refcnt ();
-      env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      env.exception (new CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
       return CORBA::Object::_nil ();
     }
 
@@ -1178,7 +1178,7 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
                       sizeof (CORBA::WChar),
                       sizeof (void *)));
 
-          ACE_THROW (CORBA::INITIALIZE (CORBA::COMPLETED_NO));
+          ACE_THROW (CORBA::INITIALIZE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         }
     }
   CORBA_ORB::orb_init_count_++;
@@ -1221,7 +1221,7 @@ CORBA::ORB_init (int &argc,
   // Check for errors and return 0 if error.
   if (result == -1)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO), 0);
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
     }
 
   // This (init_orb_globals) must come *after* ORB Core initialization.
@@ -1396,7 +1396,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   if (tmp [0] && !isspace (tmp [0]))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                         CORBA::Object::_nil ());
     }
 

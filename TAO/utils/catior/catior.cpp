@@ -70,7 +70,7 @@ catiiop (CORBA::String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      env.exception (new CORBA_DATA_CONVERSION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -88,7 +88,7 @@ catiiop (CORBA::String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      env.exception (new CORBA_DATA_CONVERSION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
       CORBA::string_free (hostname);
       return 0;
     }
@@ -401,7 +401,7 @@ catpoop (CORBA::String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      env.exception (new CORBA_DATA_CONVERSION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
       return 0;
     }
 
