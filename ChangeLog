@@ -1,3 +1,10 @@
+Wed Apr 14 22:18:58 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp (svc):
+
+	  Wrapped ACE_Guard instantiation within an ACE_GUARD_RETURN
+	  macro.  Addresses an unused variable warning.
+
 Wed Apr 14 20:29:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.cpp (thr_create):

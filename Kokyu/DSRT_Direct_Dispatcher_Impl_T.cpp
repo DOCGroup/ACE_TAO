@@ -13,7 +13,7 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
 
 namespace Kokyu
 {
-  
+
 /*
 //@@VS: This is somehow not being recognized by MSVC, which results
 //in a link error. For now, the definition has been moved to the .h
@@ -40,7 +40,7 @@ operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
 */
 template <class DSRT_Scheduler_Traits>
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                          int sched_scope)
   :DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>(sched_policy, sched_scope),
    sched_queue_modified_ (0),
@@ -105,7 +105,9 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
   while(1)
     {
       ACE_GUARD_RETURN (cond_lock_t,
-                        mon, sched_queue_modified_cond_lock_, 0);
+                        mon,
+                        sched_queue_modified_cond_lock_,
+                        0);
 
       if (this->shutdown_flagged_)
         break;
@@ -115,7 +117,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
 #ifdef KOKYU_DSRT_LOGGING
           ACE_DEBUG ((LM_DEBUG,
                       "(%t): sched thread about to wait on cv\n"));
-#endif 
+#endif
           sched_queue_modified_cond_.wait ();
         }
 
@@ -125,7 +127,11 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
 
       sched_queue_modified_ = 0;
 
-      ACE_Guard<ACE_SYNCH_RECURSIVE_MUTEX> synch_lock_mon(this->synch_lock_);
+      ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                        synch_lock_mon,
+                        this->synch_lock_,
+                        0);
+
       if (this->ready_queue_.current_size () <= 0)
         continue;
 
@@ -139,12 +145,12 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
       ACE_hthread_t most_eligible_thr_handle = item_var->thread_handle ();
 
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
-                  "(%t|%T):curr scheduled thr handle = %d\n", 
-                  this->curr_scheduled_thr_handle_)); 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T):curr scheduled thr handle = %d\n",
+                  this->curr_scheduled_thr_handle_));
+      ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T):most eligible thr handle = %d \n",
-                  most_eligible_thr_handle)); 
+                  most_eligible_thr_handle));
 #endif
 
       if (this->curr_scheduled_thr_handle_ != most_eligible_thr_handle)
@@ -152,19 +158,19 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
           if (this->curr_scheduled_thr_handle_ != 0)
             {
               if (ACE_OS::thr_setprio (this->curr_scheduled_thr_handle_,
-                                       this->inactive_prio_, 
+                                       this->inactive_prio_,
                                        this->sched_policy_) == -1)
                 {
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("%p\n"),
                               ACE_TEXT ("thr_setprio on curr_scheduled_thr_handle_ failed.")));
                   ACE_DEBUG ((LM_DEBUG, "thr_handle = %d, prio = %d\n",
-                              this->curr_scheduled_thr_handle_, 
+                              this->curr_scheduled_thr_handle_,
                               this->inactive_prio_));
                 }
             }
 
-          if (ACE_OS::thr_setprio (most_eligible_thr_handle, 
+          if (ACE_OS::thr_setprio (most_eligible_thr_handle,
                                    this->active_prio_, this->sched_policy_) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -191,8 +197,8 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i enter\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i enter\n"));
 #endif
 
   DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
@@ -208,12 +214,12 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
     return -1;
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i after ready_q.insert\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i after ready_q.insert\n"));
 #endif
-  
-  if (ACE_OS::thr_setprio (thr_handle, 
-                           this->blocked_prio_, 
+
+  if (ACE_OS::thr_setprio (thr_handle,
+                           this->blocked_prio_,
                            this->sched_policy_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -222,8 +228,8 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
     }
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i after thr_setprio\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i after thr_setprio\n"));
 #endif
 
   //ready_queue_.dump ();
@@ -234,16 +240,16 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                     mon, this->sched_queue_modified_cond_lock_, 0);
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i after acquiring cond lock\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i after acquiring cond lock\n"));
 #endif
 
   this->sched_queue_modified_ = 1;
   this->sched_queue_modified_cond_.signal ();
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):schedule_i exit\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):schedule_i exit\n"));
 #endif
 
   return 0;
@@ -277,8 +283,8 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
   if (found == 0 && flag == BLOCK)
     {
       thr_handle = dispatch_item->thread_handle ();
-      if (ACE_OS::thr_setprio (thr_handle, 
-                               this->blocked_prio_, 
+      if (ACE_OS::thr_setprio (thr_handle,
+                               this->blocked_prio_,
                                this->sched_policy_) == -1)
         {
           ACE_ERROR ((LM_ERROR,
