@@ -194,6 +194,7 @@ ORB_CORE_FILES = \
   ORB_Table \
   Follower \
   Follower_Auto_Ptr \
+  LF_Follower_Auto_Adder \
   Leader_Follower \
   Leader_Follower_Flushing_Strategy \
   LF_Event \
