@@ -49,6 +49,9 @@ public:
   ~TAO_Thread_Per_Connection_Handler (void);
 
   /// = Active object activation method.
+  /**
+   * @todo: This probably needs to go after x.4.1
+   */
   virtual int activate (long flags = THR_NEW_LWP,
                         int n_threads = 1,
                         int force_active = 0,
@@ -67,6 +70,14 @@ public:
   virtual int svc (void);
   virtual int open (void *);
   virtual int close (u_long);
+
+  /// Helper method invoked by TAO's acceptors.
+  /**
+   * This method checks the priority of the invoking thread and sets
+   * the priority of thread that will be created by activate ().
+   */
+  int activate_threads (long flags,
+                        int n_threads);
 
 private:
   /// Pointer to protocsol specific code that does the bunch of the

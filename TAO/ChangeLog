@@ -1,3 +1,22 @@
+Fri Mar  5 15:56:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Thread_Per_Connection_Handler.cpp:
+	* tao/Thread_Per_Connection_Handler.h:
+
+	  Added a new method activate_threads (). This method gets the
+	  priority of the invoking thread and transfers it to the thread
+	  that it is about to create. This feature was broken before,
+	  ie. TAO never honored the priority of the invoking thread at
+	  all. 
+	
+	* tao/Acceptor_Impl.cpp:
+
+	  Use activate_threads () instead of activate ().
+
+	  These changes were due to a bug report submitted by Abhi
+	  <abhi@qualcomm.com> and thanks to him for reporting the
+	  problem. 
+
 Fri Mar  5 18:36:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
