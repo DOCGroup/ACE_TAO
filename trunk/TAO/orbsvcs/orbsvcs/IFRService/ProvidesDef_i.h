@@ -28,9 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -81,16 +79,16 @@ public:
       CORBA::InterfaceDef_ptr interface_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
-    ACE_THROW_SPEC ((CORBA::SystemException));   
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void interface_type_i (
       CORBA::InterfaceDef_ptr interface_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
-    ACE_THROW_SPEC ((CORBA::SystemException));   
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

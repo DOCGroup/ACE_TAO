@@ -28,9 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -40,7 +38,7 @@ class TAO_IFRService_Export TAO_ExtValueDef_i : public virtual TAO_ValueDef_i
   //    TAO_ExtValueDef_i
   //
   // = DESCRIPTION
-  //    Adds member and methods to TAO_ValueDef_i to get IDL3 
+  //    Adds member and methods to TAO_ValueDef_i to get IDL3
   //    attribute exceptions.
   //
 public:
@@ -54,29 +52,29 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   CORBA::ExtInitializerSeq *ext_initializers_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual void ext_initializers (
       const CORBA::ExtInitializerSeq &ext_initializers
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   void ext_initializers_i (
       const CORBA::ExtInitializerSeq &ext_initializers
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
@@ -109,7 +107,7 @@ public:
   void exceptions (ACE_Configuration_Section_Key &key,
                    const char *sub_section,
                    const CORBA::ExcDescriptionSeq &exceptions);
-  /// Public because it's also called from 
+  /// Public because it's also called from
   /// TAO_Container_i::create_ext_value_i.
 
 private:
@@ -125,7 +123,7 @@ private:
                    const CORBA::ExceptionDefSeq &exceptions);
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -34,9 +34,7 @@
 #include "rteventlog_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -47,12 +45,12 @@ class TAO_RTEventLogFactory_i;
 /**
  * @class TAO_RTEventLog_i
  *
- * @brief The RTEventLog is an EventChannel and a Log. 
+ * @brief The RTEventLog is an EventChannel and a Log.
  *
  * It is used to log events that pass through the EventChannel.
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_RTEventLog_Export TAO_RTEventLog_i : 
+class TAO_RTEventLog_Export TAO_RTEventLog_i :
   public TAO_Log_i,
   public POA_RTEventLogAdmin::EventLog,
   public virtual PortableServer::RefCountServantBase
@@ -139,7 +137,7 @@ public:
   TAO_EC_ObserverStrategy *observer_strategy_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

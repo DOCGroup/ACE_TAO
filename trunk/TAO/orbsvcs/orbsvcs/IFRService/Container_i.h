@@ -28,9 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -402,7 +400,7 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   static int same_as_tmp_name (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exisits.
 
@@ -464,12 +462,12 @@ private:
       ACE_ENV_ARG_DECL
     );
   // Common code for create_value_i and create_ext_value_i.
-  
+
 protected:
   static const char *tmp_name_holder_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

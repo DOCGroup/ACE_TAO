@@ -30,13 +30,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_InterfaceDef_i 
+class TAO_IFRService_Export TAO_InterfaceDef_i
   : public virtual TAO_Container_i,
     public virtual TAO_Contained_i,
     public virtual TAO_IDLType_i
@@ -193,7 +191,7 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Gathers the attributes and operations of all the ancestors.
-  
+
   static int name_clash (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are in a list of supported interfaces.
@@ -226,7 +224,7 @@ private:
   // attribute name.
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Implements the Factory for NotifyLog Objects.
- *  
+ *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -29,12 +29,10 @@
 #include "NotifyLog_i.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
- 
+
 class TAO_NotifyLog_i;
 class TAO_NotifyLogNotification;
 
@@ -148,7 +146,7 @@ public:
   CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
     CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::ProxyNotFound, 
+      CosNotifyChannelAdmin::ProxyNotFound,
       CORBA::SystemException
     ));
 
@@ -156,7 +154,7 @@ public:
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID& proxy_id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminLimitExceeded, 
+      CosNotifyChannelAdmin::AdminLimitExceeded,
       CORBA::SystemException
     ));
 
@@ -164,19 +162,19 @@ public:
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID& id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotifyChannelAdmin::AdminLimitExceeded, 
+      CosNotifyChannelAdmin::AdminLimitExceeded,
       CORBA::SystemException
     ));
 
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-          ACE_ENV_SINGLE_ARG_DECL 
+          ACE_ENV_SINGLE_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
 
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-          ACE_ENV_SINGLE_ARG_DECL 
+          ACE_ENV_SINGLE_ARG_DECL
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -192,7 +190,7 @@ public:
                             const CosNotification::EventTypeSeq& removed
                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotifyComm::InvalidEventType, 
+      CosNotifyComm::InvalidEventType,
       CORBA::SystemException
     ));
 
@@ -203,17 +201,17 @@ public:
         ));
   void set_qos (const CosNotification::QoSProperties& ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS, 
+      CosNotification::UnsupportedQoS,
       CORBA::SystemException
     ));
   void validate_qos (const CosNotification::QoSProperties&,
                      CosNotification::NamedPropertyRangeSeq_out
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotification::UnsupportedQoS, 
+      CosNotification::UnsupportedQoS,
       CORBA::SystemException
     ));
-                   
+
   /// CosNotifyFilter::FilterAdmin.
   CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((
@@ -225,7 +223,7 @@ public:
         ));
   CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
-      CosNotifyFilter::FilterNotFound, 
+      CosNotifyFilter::FilterNotFound,
       CORBA::SystemException
     ));
   CosNotifyFilter::FilterIDSeq* get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
@@ -244,7 +242,7 @@ protected:
   /// The Channel ID.
   CosNotifyChannelAdmin::ChannelID channel_id_;
 
-  /// The EventChannel the factory uses to enable the 
+  /// The EventChannel the factory uses to enable the
   /// NotifyLogNotification object to connect to and send
   /// log-generated events.
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
@@ -266,7 +264,7 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

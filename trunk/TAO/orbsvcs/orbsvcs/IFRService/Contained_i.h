@@ -28,9 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -168,7 +166,7 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   static int same_as_tmp_name (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exists.
 
@@ -185,7 +183,7 @@ protected:
   // parameter. Since a section removal can be
   // recursive, this need be done only at the top
   // level.
-  
+
 private:
   CORBA::Boolean name_exists (
       const char *name
@@ -220,12 +218,12 @@ private:
   // Recursively calls move_i for definitions,
   // as well as operations and attributes if
   // applicable.
-  
+
 private:
   static const char *tmp_name_holder_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -17,9 +17,7 @@
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -38,7 +36,7 @@
  * to keep trying to connect to server object groups under certain
  * conditions.
  */
-class TAO_FT_Export TAO_FT_Request_Duration_Policy 
+class TAO_FT_Export TAO_FT_Request_Duration_Policy
   : public FT::RequestDurationPolicy,
     public TAO_Local_RefCounted_Object
 {
@@ -200,7 +198,7 @@ private:
   CORBA::Boolean heartbeat_enabled_value_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

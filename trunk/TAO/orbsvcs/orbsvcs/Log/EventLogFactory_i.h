@@ -11,7 +11,7 @@
  *
  *  @author Rob Ruff <rruff@scires.com>
  *  @David A. Hanvey <d.hanvey@qub.ac.uk>
- *  
+ *
  */
 //=============================================================================
 
@@ -34,9 +34,7 @@
 #include "EventLog_i.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -63,7 +61,7 @@ public:
   /// Destructor.
   ~TAO_EventLogFactory_i ();
 
-  /// Initialise the EventChannel and obtain a 
+  /// Initialise the EventChannel and obtain a
   /// pointer to it.
   CosEventChannelAdmin::EventChannel_ptr
     init (PortableServer::POA_ptr poa
@@ -122,7 +120,7 @@ protected:
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
- 
+
   /// The event channel used for log generated events.
   TAO_CEC_EventChannel *impl;
 
@@ -131,7 +129,7 @@ protected:
 
   /// EventChannel used to obtain the ConsumerAdmin.
   CosEventChannelAdmin::EventChannel_var event_channel_;
- 
+
   /// The ConsumerAdmin that the EventLogFactory supports.
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
@@ -139,7 +137,7 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
