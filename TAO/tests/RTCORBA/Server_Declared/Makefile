@@ -42,8 +42,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-TAO_SRVR_LIBS := -lTAO_Stratgies $(TAO_SRVR_LIBS)
-TAO_CLNT_LIBS := -lTAO_Stratgies $(TAO_CLNT_LIBS)
+TAO_SRVR_LIBS := -lTAO_Strategies $(TAO_SRVR_LIBS)
+TAO_CLNT_LIBS := -lTAO_Strategies $(TAO_CLNT_LIBS)
 
 #----------------------------------------------------------------------------
 #       Local targets
