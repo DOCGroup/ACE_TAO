@@ -171,9 +171,12 @@
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
-#if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#define ACE_DEFAULT_SELECT_REACTOR_SIZE 256
-#endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
+// @@ This unnecessarily limits the default size of the Select_Reactor
+//    to 256 file descriptors.  `ace/OS.h' correctly sets the default
+//    size to FD_SETSIZE.
+// #if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
+// #define ACE_DEFAULT_SELECT_REACTOR_SIZE 256
+// #endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
 #define ACE_HAS_GETPAGESIZE 1
 
