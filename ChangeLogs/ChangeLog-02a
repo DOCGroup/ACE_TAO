@@ -1,3 +1,9 @@
+Mon Feb  7 08:34:26 2000  Darrell Brunsch <brunsch@uci.edu>
+
+	* docs/ACE-subsets.html:
+          Removed the instructions for subsets on Win32. Subsets are not 
+          supported under MSVC Project files.  
+
 Sun Feb  6 20:44:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace-config.1.in:
