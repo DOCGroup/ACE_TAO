@@ -617,19 +617,11 @@ FT_FTRequestServiceContext_out::operator-> (void)
 }
 
 
-#if !defined (_FT_REQUESTDURATIONPOLICY___CI_)
-#define _FT_REQUESTDURATIONPOLICY___CI_
-
 ACE_INLINE
 FT_RequestDurationPolicy::FT_RequestDurationPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
-#endif /* end #if !defined */
-
-
-#if !defined (_FT_REQUESTDURATIONPOLICY___VAR_CI_)
-#define _FT_REQUESTDURATIONPOLICY___VAR_CI_
 
 // *************************************************************
 // Inline operations for class FT_RequestDurationPolicy_var
@@ -725,12 +717,6 @@ FT_RequestDurationPolicy_var::_retn (void)
 }
 
 
-#endif /* end #if !defined */
-
-
-#if !defined (_FT_REQUESTDURATIONPOLICY___OUT_CI_)
-#define _FT_REQUESTDURATIONPOLICY___OUT_CI_
-
 // *************************************************************
 // Inline operations for class FT_RequestDurationPolicy_out
 // *************************************************************
@@ -793,9 +779,6 @@ FT_RequestDurationPolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-
-#endif /* end #if !defined */
 
 // *************************************************************
 // Inline operations for class FT_TagFTHeartbeatEnabledTaggedComponent_var
@@ -1054,19 +1037,11 @@ FT_HeartbeatPolicyValue_var::ptr (void) const
 }
 
 
-#if !defined (_FT_HEARTBEATPOLICY___CI_)
-#define _FT_HEARTBEATPOLICY___CI_
-
 ACE_INLINE
 FT_HeartbeatPolicy::FT_HeartbeatPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
-#endif /* end #if !defined */
-
-
-#if !defined (_FT_HEARTBEATPOLICY___VAR_CI_)
-#define _FT_HEARTBEATPOLICY___VAR_CI_
 
 // *************************************************************
 // Inline operations for class FT_HeartbeatPolicy_var
@@ -1162,12 +1137,6 @@ FT_HeartbeatPolicy_var::_retn (void)
 }
 
 
-#endif /* end #if !defined */
-
-
-#if !defined (_FT_HEARTBEATPOLICY___OUT_CI_)
-#define _FT_HEARTBEATPOLICY___OUT_CI_
-
 // *************************************************************
 // Inline operations for class FT_HeartbeatPolicy_out
 // *************************************************************
@@ -1232,22 +1201,11 @@ FT_HeartbeatPolicy_out::operator-> (void)
 }
 
 
-#endif /* end #if !defined */
-
-
-#if !defined (_FT_HEARTBEATENABLEDPOLICY___CI_)
-#define _FT_HEARTBEATENABLEDPOLICY___CI_
-
 ACE_INLINE
 FT_HeartbeatEnabledPolicy::FT_HeartbeatEnabledPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
-#endif /* end #if !defined */
-
-
-#if !defined (_FT_HEARTBEATENABLEDPOLICY___VAR_CI_)
-#define _FT_HEARTBEATENABLEDPOLICY___VAR_CI_
 
 // *************************************************************
 // Inline operations for class FT_HeartbeatEnabledPolicy_var
@@ -1343,11 +1301,6 @@ FT_HeartbeatEnabledPolicy_var::_retn (void)
 }
 
 
-#endif /* end #if !defined */
-
-
-#if !defined (_FT_HEARTBEATENABLEDPOLICY___OUT_CI_)
-#define _FT_HEARTBEATENABLEDPOLICY___OUT_CI_
 
 // *************************************************************
 // Inline operations for class FT_HeartbeatEnabledPolicy_out
@@ -1412,9 +1365,298 @@ FT_HeartbeatEnabledPolicy_out::operator-> (void)
   return this->ptr_;
 }
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTGroupTaggedComponent &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.version) &&
+    (strm << _tao_aggregate.ft_domain_id.in ()) &&
+    (strm << _tao_aggregate.object_group_id) &&
+    (strm << _tao_aggregate.object_group_ref_version)
+  )
+    return 1;
+  else
+    return 0;
 
-#endif /* end #if !defined */
+}
 
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTGroupTaggedComponent &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.version) &&
+    (strm >> _tao_aggregate.ft_domain_id.out ()) &&
+    (strm >> _tao_aggregate.object_group_id) &&
+    (strm >> _tao_aggregate.object_group_ref_version)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTPrimaryTaggedComponent &_tao_aggregate)
+{
+  if (
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.primary))
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTPrimaryTaggedComponent &_tao_aggregate)
+{
+  if (
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.primary))
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FTGroupVersionServiceContext &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.object_group_ref_version)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FTGroupVersionServiceContext &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.object_group_ref_version)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FTRequestServiceContext &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.client_id.in ()) &&
+    (strm << _tao_aggregate.retention_id) &&
+    (strm << _tao_aggregate.expiration_time)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FTRequestServiceContext &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.client_id.out ()) &&
+    (strm >> _tao_aggregate.retention_id) &&
+    (strm >> _tao_aggregate.expiration_time)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::RequestDurationPolicy_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::RequestDurationPolicy_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::RequestDurationPolicy_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::RequestDurationPolicy_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::RequestDurationPolicy::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTHeartbeatEnabledTaggedComponent &_tao_aggregate)
+{
+  if (
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.heartbeat_enabled))
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTHeartbeatEnabledTaggedComponent &_tao_aggregate)
+{
+  if (
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.heartbeat_enabled))
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::HeartbeatPolicyValue &_tao_aggregate)
+{
+  if (
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.heartbeat)) &&
+    (strm << _tao_aggregate.heartbeat_interval) &&
+    (strm << _tao_aggregate.heartbeat_timeout)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::HeartbeatPolicyValue &_tao_aggregate)
+{
+  if (
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.heartbeat)) &&
+    (strm >> _tao_aggregate.heartbeat_interval) &&
+    (strm >> _tao_aggregate.heartbeat_timeout)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::HeartbeatPolicy_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::HeartbeatPolicy_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::HeartbeatPolicy_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::HeartbeatPolicy_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::HeartbeatPolicy::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::HeartbeatEnabledPolicy_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::HeartbeatEnabledPolicy_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::HeartbeatEnabledPolicy_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::HeartbeatEnabledPolicy_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::HeartbeatEnabledPolicy::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
 
 
 #endif /*TAO_HAS_FT_CORBA == 1*/
