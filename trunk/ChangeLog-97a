@@ -1,3 +1,13 @@
+Mon May 05 11:50:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Stack.* (ACE_Unbounded_Queue):
+	  1) made peek () const.
+	  2) added another peek (u_int index = 0) function that can peek
+             at any queue item, not just the first.  It returns a pointer
+             to the item (or 0 if not found), to avoid copying.
+	  3) changed return type of size () from int to size_t.
+	  4) inlined size ().
+
 Mon May  5 08:19:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Strategies_T: Added a number of fixes and enhancements to
