@@ -12,8 +12,8 @@ ACE_RCSID(Latency, ping, "$Id$")
 
 const char *ping_ior = CORBA::string_dup ("file://ping.ior");
 const char *pong_ior = CORBA::string_dup ("file://pong.ior");
-const char *ping_address = CORBA::string_dup ("224.9.9.2:12345");
-const char *pong_address = CORBA::string_dup ("224.9.9.2:23456");
+const char *ping_address = CORBA::string_dup ("localhost:12345");
+const char *pong_address = CORBA::string_dup ("localhost:23456");
 const char *protocol = CORBA::string_dup ("UDP");
 
 int milliseconds = 30000;
@@ -80,9 +80,9 @@ int main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
 
-      parse_args (argc, argv);
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
+      parse_args (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -162,6 +162,8 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
      // flow_spec.length (0);
      // stream_control->stop (flow_spec ACE_ENV_ARG_PARAMETER);

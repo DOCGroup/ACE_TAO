@@ -122,42 +122,34 @@ Server::init (int argc,
                            "the TAO_Naming_Client. \n"),
                           -1);
 
-      // Register the video mmdevice object with the ORB
-      ACE_NEW_RETURN (this->mmdevice_,
-                      TAO_MMDevice (&this->reactive_strategy_),
-                      -1);
+      ACE_NEW_RETURN (this->streamendpoint_b_, TAO_StreamEndPoint_B, -1);
 
-      ACE_NEW_RETURN (this->fdev_,
-                      FTP_Server_FDev,
-                      -1);
+      ACE_NEW_RETURN (this->fep_b_, FTP_Server_FlowEndPoint, -1);
 
-      this->fdev_->flowname ("Data");
+      sep_b_ = this->streamendpoint_b_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+     
+      fep_b_obj_ = this->fep_b_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK; 
 
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() ACE_ENV_ARG_PARAMETER );
       ACE_TRY_CHECK;
 
-      AVStreams::FDev_var fdev = this->fdev_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+     ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));   
 
-      if (CORBA::is_nil (fdev.in ()))
-        cout << "FDev is nil" << endl;
-
-      if (CORBA::is_nil (mmdevice.in ()))
-        cout << "MMDevice is nil" << endl;
-
-      mmdevice->add_fdev (fdev.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Register the mmdevice with the naming service.
-      CosNaming::Name server_mmdevice_name (1);
-      server_mmdevice_name.length (1);
-      server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
+      CosNaming::Name server_sep_b_name (1);
+      server_sep_b_name.length (1);
+      server_sep_b_name [0].id = CORBA::string_dup ("Server_StreamEndPoint_b");
 
       // Register the video control object with the naming server.
-      this->my_naming_client_->rebind (server_mmdevice_name,
-                                       mmdevice.in ()
+      this->my_naming_client_->rebind (server_sep_b_name,
+                                       sep_b_.in ()
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+
     }
   ACE_CATCHANY
     {
@@ -209,9 +201,15 @@ Server::parse_args (int argc,char **argv)
           this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
           break;
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename"),-1);
+          ACE_ERROR_RETURN ((LM_ERROR,"Usage: server -f filename\n"),-1);
         }
     }
+
+    if( ! this->fp_ )
+    {
+       ACE_ERROR_RETURN ((LM_ERROR, "Invalid file!\nUsage: server -f filename\n"),-1);
+    }
+
   return 0;
 }
 
@@ -269,10 +267,8 @@ main (int argc,
 template class ACE_Singleton <Server,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 s#pragma instantiate ACE_Singleton <Server,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

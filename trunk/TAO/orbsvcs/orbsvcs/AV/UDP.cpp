@@ -352,7 +352,7 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                            TAO_AV_Flow_Protocol_Factory *factory,
                            TAO_AV_Core::Flow_Component flow_comp)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Acceptor::open "));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Acceptor::open\n"));
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
@@ -376,7 +376,7 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_AV_UDP_Acceptor::open: %s",
+                "TAO_AV_UDP_Acceptor::open: %s\n",
                 buf));
 
   int result = this->open_i (inet_addr, 0);
@@ -886,7 +886,7 @@ TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
 TAO_AV_Acceptor*
 TAO_AV_UDP_Factory::make_acceptor (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_acceptor "));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_acceptor\n"));
   TAO_AV_Acceptor *acceptor = 0;
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_UDP_Acceptor,
@@ -897,7 +897,7 @@ TAO_AV_UDP_Factory::make_acceptor (void)
 TAO_AV_Connector*
 TAO_AV_UDP_Factory::make_connector (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_connector "));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Factory::make_connector\n"));
   TAO_AV_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
                   TAO_AV_UDP_Connector,
@@ -1014,8 +1014,9 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Transport *transport)
 {
   TAO_AV_Callback *callback = 0;
-  endpoint->get_callback (entry->flowname (),
-                          callback);
+  if( endpoint->get_callback (entry->flowname (), callback) ) {
+    ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
+  }
 
   TAO_AV_UDP_Object *object = 0;
   ACE_NEW_RETURN (object,

@@ -217,7 +217,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "address given for flow %s",
+                        "address given for flow %s\n",
                         entry->flowname ()));
 
           address_flow_set.insert (entry);
@@ -286,7 +286,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
         if (address_flow_set.size () > 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "This connector registry is called ONE\n"));
+                        "(%N,%l) This connector registry is called\n"));
 
             result = this->connector_registry_->open (endpoint,
                                                       this,

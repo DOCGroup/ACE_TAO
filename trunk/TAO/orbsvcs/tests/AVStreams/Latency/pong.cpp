@@ -94,13 +94,13 @@ parse_args (int argc, char *argv[])
   if (pong_protocols.length () == 0)
     {
       pong_protocols.length (1);
-      pong_protocols[0] = CORBA::string_dup ("UDP=224.9.9.2:23456");
+      pong_protocols[0] = CORBA::string_dup ("UDP=localhost:23456");
     }
 
   if (ping_protocols.length () == 0)
     {
       ping_protocols.length (1);
-      ping_protocols[0] = CORBA::string_dup ("UDP=224.9.9.2:12345");
+      ping_protocols[0] = CORBA::string_dup ("UDP=localhost:12345");
     }
 
   // Indicates sucessful parsing of the command line
@@ -112,10 +112,11 @@ int main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
 
-      parse_args (argc, argv);
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
+
+      parse_args (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -191,7 +192,7 @@ int main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      orb->run ();
+      orb->run ( ACE_ENV_SINGLE_ARG_PARAMETER );
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
@@ -335,7 +336,7 @@ Ping_Send_Callback::handle_timeout (void *)
   int result = this->protocol_object_->send_frame (&this->frame_);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "FTP_Client_Flow_Handler::send - %p\n",
+                       "Ping_Send_Callback::handle_timeout - send_frame - %p\n",
                        ""),
                       -1);
 
