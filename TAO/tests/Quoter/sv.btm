@@ -1,7 +1,0 @@
-set nsiorfile=%temp%\qns_ior
-REM read in the IOR from the file
-for %%d in (@%nsiorfile) do set ior=%%d
-
-REM Start the server
-echo %ior
-start "Quoter Server" /k Quoter_Server.exe -ORBport 10041 -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf server.conf 
