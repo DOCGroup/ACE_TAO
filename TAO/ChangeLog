@@ -1,3 +1,28 @@
+Sun Nov 30 12:15:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+
+          Added missing include of ace/Barrier.h.
+
+        * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.dsp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+        * orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * performance-tests/Callback/client.dsp:
+        * performance-tests/Callback/server.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+
+          Added link libraries, corrected link library names, added 
+          link include paths, and added or corrected IDL compiler 
+          executable dependencies as needed.
+
+        * orbsvcs/tests/Notify/Notify_Tests.dsw:
+
+          Added project dependencies.
+
 Sun Nov 30 10:44:41 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * tao/Fault_Tolerance_Service.cpp
