@@ -1,6 +1,5 @@
 #include "ace/TkReactor.h"
 
-#if defined (ACE_HAS_TK)
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 
@@ -435,4 +434,3 @@ ACE_TkReactor::cancel_timer (long timer_id,
     }
 }
 
-#endif /* ACE_HAS_TK */

@@ -73,6 +73,15 @@ PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
 PLATFORM_X11_LIBS =-lX11
 PLATFORM_X11_LDFLAGS=
 
+# TODO: Fix the parameters
+#PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
+#PLATFORM_TCL_LIBS=-ltcl8.4
+#PLATFORM_TCL_LDFLAGS=
+#
+#PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+#PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+#PLATFORM_TK_LDFLAGS=
+
 ## Unfortunately, gcc 3.0 fails to many cpp files with
 ## optimization enabled.  Even -O causes the compiler
 ## to core dump on some files.

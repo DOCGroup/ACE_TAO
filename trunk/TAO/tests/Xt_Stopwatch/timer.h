@@ -18,7 +18,6 @@
 
 #include "Stopwatch_display.h"
 
-#if defined (ACE_HAS_XT)
 
 #include <Xm/Xm.h>
 
@@ -69,6 +68,5 @@ class Timer_imp
   // Required by Xt functions
 };
 
-#endif /*ACE_HAS_XT*/
 
 #endif /* TIMER_H */

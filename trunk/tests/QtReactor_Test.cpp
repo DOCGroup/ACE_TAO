@@ -59,7 +59,6 @@ ACE_RCSID (tests,
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Dgram.h"
 
-#if defined (ACE_HAS_QT)
 // Qt specific code
 #include "QtReactor_Test.h"
 
@@ -86,7 +85,6 @@ void QTestApplication::exec( int msec )
 	inherited::exec();
 }
 
-#endif /* ACE_HAS_QT */
 
 // maximum time for testing QtReactor (msec)
 const int TotalTestTime = 8000;
@@ -892,7 +890,6 @@ void testNativeReactor( int argc, ACE_TCHAR *argv[] )
 
 void testQtReactor( int argc, ACE_TCHAR *argv[] )
 {
-#if defined (ACE_HAS_QT)
 	// Qt specific code
   ACE_DEBUG ((LM_INFO, ACE_TEXT( "Testing QtReactor\n")));
 
@@ -914,7 +911,6 @@ void testQtReactor( int argc, ACE_TCHAR *argv[] )
         else
             ACE_ERROR ((LM_INFO, ACE_TEXT( "QtReactor_Test passed.\n")));
     }
-#endif /* ACE_HAS_QT */
 }
 
 int
@@ -924,11 +920,6 @@ run_main ( int argc, ACE_TCHAR *argv[] )
 
 	testNativeReactor( argc, argv );
 	testQtReactor( argc, argv );
-
-#ifndef ACE_HAS_QT
-	ACE_ERROR ( (LM_INFO,
-				   ACE_TEXT( "ACE is not configured for Qt on this platform\n" ) ) );
-#endif /* ACE_HAS_QT */
 
 	ACE_END_TEST;
 

@@ -914,26 +914,31 @@ project(Thread Pool Reactor Resume Test) : acetest {
   }
 }
 
-project(XtReactor Test) : acetest {
-  exename   = XtReactor_Test
-  requires += ace_other
+project(XtMotifReactor Test) : acetest, ace_xtreactor, ace_motif {
+  exename   = XtMotifReactor_Test
+
   Source_Files {
-    XtReactor_Test.cpp
+    XtMotifReactor_Test.cpp
   }
 }
 
-project(FlReactor Test) : acetest {
+project(XtAthenaReactor Test) : acetest, ace_xtreactor, ace_athena {
+  exename   = XtAthenaReactor_Test
+  Source_Files {
+    XtAthenaReactor_Test.cpp
+  }
+}
+
+project(FlReactor Test) : acetest, ace_flreactor {
   exename   = FlReactor_Test
-  requires += ace_other
 
   Source_Files {
     FlReactor_Test.cpp
   }
 }
 
-project(TkReactor Test) : acetest {
+project(TkReactor Test) : acetest,ace_tkreactor {
   exename   = TkReactor_Test
-  requires += ace_other
 
   Source_Files {
     TkReactor_Test.cpp
@@ -1138,9 +1143,8 @@ project(SOCK_SEQPACK_SCTP_Test) : acetest {
   }
 }
 
-project(QtReactor Test) : acetest, ace_qt, qt_moc {
+project(QtReactor Test) : acetest, ace_qtreactor {
   exename   = QtReactor_Test
-  requires += qt
   MOC_Files {
     QtReactor_Test.h
   }

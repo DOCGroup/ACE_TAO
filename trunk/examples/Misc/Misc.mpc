@@ -50,14 +50,14 @@ project(*test_trace) : aceexe {
   }
 }
 
-project(*test_XtReactor1) : aceexe {
+project(*test_XtReactor1) : aceexe, ace_xtreactor, ace_motif {
   exename = test_XtReactor1
   Source_Files {
     test_XtReactor1.cpp
   }
 }
 
-project(*test_XtReactor2) : aceexe {
+project(*test_XtReactor2) : aceexe, ace_xtreactor, ace_motif {
   exename = test_XtReactor2
   Source_Files {
     test_XtReactor2.cpp

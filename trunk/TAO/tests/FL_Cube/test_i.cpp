@@ -1,8 +1,6 @@
 // $Id$
 
 #include "test_i.h"
-
-#if defined(ACE_HAS_FL)
 #include <GL/gl.h>
 
 ACE_RCSID(FL_Cube, test_i, "$Id$")
@@ -177,4 +175,3 @@ Simple_Window::draw_cube (void)
     glEnd();
 }
 
-#endif /* ACE_HAS_FL */

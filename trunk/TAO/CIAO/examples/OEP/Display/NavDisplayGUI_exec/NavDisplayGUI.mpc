@@ -1,5 +1,5 @@
 // $Id$
-project(NavDisplayGUI_exec) : ciao_component, qt, qt_moc {
+project(NavDisplayGUI_exec) : ciao_component, qt {
   after   += NavDisplay_exec
   requires += qt
   sharedname = NavDisplayGUI_exec

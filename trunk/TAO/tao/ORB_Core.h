@@ -104,6 +104,10 @@ class TAO_ClientRequestInfo;
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
+namespace TAO
+{
+  class GUIResource_Factory;
+}
 
 namespace CORBA
 {
@@ -189,7 +193,6 @@ public:
   /// current thread.
   TAO_ClientRequestInfo *client_request_info_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 };
 
 
@@ -293,7 +296,7 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static
-  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
                                                   ACE_ENV_ARG_DECL);
   //@}
 
@@ -375,6 +378,9 @@ public:
   /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory (void);
 
+  /// Returns pointer to the factory for creating gui resources
+  TAO::GUIResource_Factory *gui_resource_factory (void);
+
   /// Returns pointer to the client factory.
   TAO_Client_Strategy_Factory *client_factory (void);
 
@@ -411,6 +417,13 @@ public:
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
+
+  /** Sets the value of TAO_ORB_Core::gui_resource_factory_.
+   *
+   *  Sets the value of gui_resource_factory in TSS. ORB_Core is responsible
+   *  for releasing this factory if needed.
+   */
+  static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory);
 
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
@@ -459,6 +472,7 @@ public:
 
   /// Gets the value of TAO_ORB_Core::valuetype_adapter_name.
   static const char *valuetype_adapter_name (void);
+
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.

@@ -18,8 +18,6 @@
 
 #include "testS.h"
 
-#if defined(ACE_HAS_FL)
-
 #include <FL/Fl_Gl_Window.h>
 
 
@@ -78,7 +76,5 @@ private:
   Simple_Window* window_;
   // Display the graphics...
 };
-
-#endif /* ACE_HAS_FL */
 
 #endif /* TAO_FL_SERVER_TEST_I_H */

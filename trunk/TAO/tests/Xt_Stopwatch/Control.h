@@ -17,7 +17,6 @@
 #define CONTROL_H
 #include "Client.h"
 
-#if defined (ACE_HAS_XT)
 
 #include <Xm/Xm.h>
 #include <Xm/PushB.h>
@@ -60,6 +59,5 @@ class Control
 
 };
 
-#endif /*ACE_HAS_XT */
 
 #endif /* CONTROL_H */

@@ -1230,6 +1230,23 @@ TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 }
 
 void
+TAO_ORB_Core::set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory)
+{
+  // @@Marek, I would as well like this to be stored in per-orb TSS
+  // instead of globasl TSS. Please see TAO_ORB_Core_TSS_Resources in
+  // ORB_Core.h for details.
+  if (TAO_TSS_RESOURCES::instance ()->gui_resource_factory_ != 0)
+    {
+
+      ACE_DEBUG ((LM_WARNING,
+                  "TAO (%P|%t) - Deleting old gui_resource_factory.\n"));
+      delete TAO_TSS_RESOURCES::instance ()->gui_resource_factory_;
+    }
+
+  TAO_TSS_RESOURCES::instance ()->gui_resource_factory_ = gui_resource_factory;
+}
+
+void
 TAO_ORB_Core::dynamic_adapter_name (const char *name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->dynamic_adapter_name_ = name;
@@ -1305,6 +1322,13 @@ TAO_ORB_Core::resource_factory (void)
 
   return this->resource_factory_;
 }
+
+TAO::GUIResource_Factory *
+TAO_ORB_Core::gui_resource_factory (void)
+{
+  return TAO_TSS_RESOURCES::instance ()->gui_resource_factory_;
+}
+
 
 TAO_Thread_Lane_Resources_Manager &
 TAO_ORB_Core::thread_lane_resources_manager (void)

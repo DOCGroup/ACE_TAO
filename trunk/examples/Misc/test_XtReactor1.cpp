@@ -15,7 +15,6 @@ ACE_RCSID (Misc,
            test_XtReactor1,
            "$Id$")
 
-#if defined (ACE_HAS_XT)
 //#define String XtString
 #include <Xm/PushB.h>
 
@@ -172,12 +171,3 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
 
   return 0;
 }
-#else
-int
-ACE_TMAIN (int, ACE_TCHAR *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "XT not configured for this platform\n"),
-                    0);
-}
-#endif /* ACE_HAS_XT */

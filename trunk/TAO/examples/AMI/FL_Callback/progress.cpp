@@ -2,21 +2,12 @@
 
 #include "Progress_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+#include "tao/FlResource_Loader.h"
 
-ACE_RCSID (FL_Callback, 
-           progress, 
+ACE_RCSID (FL_Callback,
+           progress,
            "$Id$")
-
-#if !defined (ACE_HAS_FL)
-
-int main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "This example requires FL support\n"));
-  return 0;
-}
-
-#else
 
 #include <FL/Fl.h>
 #include <FL/Fl_Window.h>
@@ -64,6 +55,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  TAO::FlResource_Loader fl_loader;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -150,5 +142,3 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
   return 0;
 }
-
-#endif /* ACE_HAS_FL */

@@ -1,0 +1,19 @@
+//  -*- MPC -*- now wouldn't this be cool...
+// ace_flreactor.mpc,v
+
+project(ACE_FlReactor) : acedefaults, aceversion, core, acelib, ace_fl{
+
+  sharedname   = ACE_FlReactor
+  dynamicflags = ACE_FLREACTOR_BUILD_DLL
+
+  Header_Files {
+    ACE_TkReactor_export.h
+    TkReactor.h
+  }
+
+  Source_Files(ACE_COMPONENTS) {
+    Demux {
+      FlReactor.cpp
+    }
+  }
+}

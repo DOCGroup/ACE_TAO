@@ -1,21 +1,9 @@
 // $Id$
-
+#include "tao/FlResource_Loader.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"
-#include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID(FL_Cube, client, "$Id$")
-
-#if !defined (ACE_HAS_FL)
-
-int main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "FL not supported on this platform\n"));
-  return 0;
-}
-
-#else
 
 #include <FL/Fl.h>
 #include <FL/Fl_Window.h>
@@ -65,6 +53,8 @@ private:
 
 int main (int argc, char* argv[])
 {
+  TAO::FlResource_Loader fl_loader;
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -207,4 +197,3 @@ Client::parse_args (int argc, char *argv[]
     Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-#endif /* ACE_HAS_FL */

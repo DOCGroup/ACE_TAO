@@ -18,9 +18,6 @@
 
 #include "testC.h"
 
-#if defined (ACE_HAS_QT)
-
-#include "tao/qt_resource.h"
 #include <qapplication.h>
 #include <qvbox.h>
 #include <qslider.h>
@@ -69,7 +66,5 @@ private:
 
   QApplication *qapp_;
 };
-
-#endif /*ACE_HAS_QT*/
 
 #endif /* _QT_CLIENT_H */

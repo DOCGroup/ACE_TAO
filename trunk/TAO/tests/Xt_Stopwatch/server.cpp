@@ -8,20 +8,7 @@ ACE_RCSID (Xt_Stopwatch,
            server,
            "$Id$")
 
-
-#if !defined (ACE_HAS_XT)
-
-int
-main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "Xt not supported on this platform\n"));
-  return 0;
-}
-
-#else
-
-#include "tao/xt_resource.h"
+#include "tao/XtResource_Loader.h"
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
 #include "timer.h"
@@ -72,7 +59,7 @@ main (int argc, char *argv[])
                                      NULL,
                                      0);
 
-  TAO_XT_Resource_Factory::set_context (app);
+  TAO::XtResource_Loader xt_loader (app);
 
   Stopwatch_display stopwatch (toplevel);
 
@@ -157,4 +144,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#endif /* ACE_HAS_Xt */

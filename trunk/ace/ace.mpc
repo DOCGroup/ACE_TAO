@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, svcconf, uuid, filecache {
+project(ACE) : acedefaults, aceversion, core, other, codecs, token, svcconf, uuid, filecache {
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
@@ -80,7 +80,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     FILE_IO.cpp
     File_Lock.cpp
     Flag_Manip.cpp
-    FlReactor.cpp
     Framework_Component.cpp
     Functor.cpp
     Functor_String.cpp
@@ -190,7 +189,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Process_Mutex.cpp
     Process_Semaphore.cpp
     Profile_Timer.cpp
-    QtReactor.cpp
     Reactor.cpp
     Reactor_Notification_Strategy.cpp
     Read_Buffer.cpp
@@ -258,7 +256,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Timer_List.cpp
     Timer_Queue.cpp
     Timer_Wheel.cpp
-    TkReactor.cpp
     TLI.cpp
     TLI_Acceptor.cpp
     TLI_Connector.cpp
@@ -276,7 +273,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     WIN32_Asynch_IO.cpp
     WIN32_Proactor.cpp
     XTI_ATM_Mcast.cpp
-    XtReactor.cpp
   }
 
   Template_Files {

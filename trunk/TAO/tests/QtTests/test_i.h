@@ -1,5 +1,4 @@
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -18,10 +17,6 @@
 
 #include "testS.h"
 
-
-#if defined(ACE_HAS_QT)
-
-#include "tao/qt_resource.h"
 #include <qapplication.h>
 #include <qobject.h>
 
@@ -55,7 +50,5 @@ private:
   CORBA::ORB_var orb_;
   // The ORB
 };
-
-#endif /* ACE_HAS_QT */
 
 #endif /* SERVER_TEST_I_H */

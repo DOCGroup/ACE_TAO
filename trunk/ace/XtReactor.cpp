@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/XtReactor.h"
-#if defined (ACE_HAS_XT)
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
@@ -446,4 +445,3 @@ ACE_XtReactor::cancel_timer (long timer_id,
     }
 }
 
-#endif /* ACE_HAS_XT */
