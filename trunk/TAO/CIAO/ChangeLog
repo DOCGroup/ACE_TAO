@@ -1,3 +1,16 @@
+Mon Jun 14 14:24:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        *  DnC/NodeManager/Node_Daemon.cpp:
+
+           Added missing header file "ace/OS_NS_unistd.h" which contains
+           hostname function.
+
+Sun Jun 13 16:13:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        *  DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+           Some cosmetic changes.
+
 Sun Jun 13 17:55:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
