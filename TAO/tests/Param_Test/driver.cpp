@@ -593,9 +593,13 @@ template class Param_Test_Client<Test_Short>;
 template class Param_Test_Client<Test_ULongLong>;
 template class Param_Test_Client<Test_Unbounded_String>;
 template class Param_Test_Client<Test_Bounded_String>;
+template class Param_Test_Client<Test_Unbounded_WString>;
+template class Param_Test_Client<Test_Bounded_WString>;
 template class Param_Test_Client<Test_Fixed_Struct>;
 template class Param_Test_Client<Test_String_Sequence>;
 template class Param_Test_Client<Test_Bounded_String_Sequence>;
+template class Param_Test_Client<Test_WString_Sequence>;
+template class Param_Test_Client<Test_Bounded_WString_Sequence>;
 template class Param_Test_Client<Test_Var_Struct>;
 template class Param_Test_Client<Test_Nested_Struct>;
 template class Param_Test_Client<Test_Recursive_Struct>;
@@ -627,9 +631,13 @@ template class Param_Test_Client<Test_Multdim_Array>;
 #pragma instantiate Param_Test_Client<Test_ULongLong>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
 #pragma instantiate Param_Test_Client<Test_Bounded_String>
+#pragma instantiate Param_Test_Client<Test_Unbounded_WString>
+#pragma instantiate Param_Test_Client<Test_Bounded_WString>
 #pragma instantiate Param_Test_Client<Test_Fixed_Struct>
 #pragma instantiate Param_Test_Client<Test_String_Sequence>
 #pragma instantiate Param_Test_Client<Test_Bounded_String_Sequence>
+#pragma instantiate Param_Test_Client<Test_WString_Sequence>
+#pragma instantiate Param_Test_Client<Test_Bounded_WString_Sequence>
 #pragma instantiate Param_Test_Client<Test_Var_Struct>
 #pragma instantiate Param_Test_Client<Test_Nested_Struct>
 #pragma instantiate Param_Test_Client<Test_Recursive_Struct>
