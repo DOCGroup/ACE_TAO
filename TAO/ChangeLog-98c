@@ -1,3 +1,8 @@
+Thu Sep  3 20:49:13 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: Removed some warnings about
+ 	signed with unsigned comparisons.
+
 Thu Sep 03 18:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/start_services: removed -ORBobjrefstyle url
