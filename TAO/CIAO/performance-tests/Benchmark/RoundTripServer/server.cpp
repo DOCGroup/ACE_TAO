@@ -61,7 +61,7 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(roundtrip_impl);
 
-      LatencyTest_var roundtrip =
+      Benchmark::LatencyTest_var roundtrip =
         roundtrip_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
