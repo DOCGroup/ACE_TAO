@@ -196,17 +196,27 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_forany")
           << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
+
       // the _alloc, _dup, copy, and free methods
-      *os << "static " << tdef->nested_type_name (scope, "_slice") << " *"
-          << tdef->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
-      *os << "static " << tdef->nested_type_name (scope, "_slice") << " *"
-          << tdef->nested_type_name (scope, "_dup") << " (const "
-          << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
-      *os << "static void " << tdef->nested_type_name (scope, "_copy") << " ("
-          << tdef->nested_type_name (scope, "_slice") << " *_tao_to, const "
-          << tdef->nested_type_name (scope, "_slice") << " *_tao_from);" << be_nl;
-      *os << "static void " << tdef->nested_type_name (scope, "_free") << " ("
-          << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
+
+      // Since the function nested_type_name() contains a static buffer,
+      // we can have only one call to it from any instantiation per stream
+      // output statement.
+
+      // _alloc
+      *os << "ACE_INLINE " << tdef->nested_type_name (scope, "_slice") << " *";
+      *os << tdef->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
+      // _dup
+      *os << "ACE_INLINE " << tdef->nested_type_name (scope, "_slice") << " *";
+      *os << tdef->nested_type_name (scope, "_dup") << " (const ";
+      *os << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
+      // _copy
+      *os << "ACE_INLINE void " << tdef->nested_type_name (scope, "_copy") << " (";
+      *os << tdef->nested_type_name (scope, "_slice") << " *_tao_to, const ";
+      *os << tdef->nested_type_name (scope, "_slice") << " *_tao_from);" << be_nl;
+      // _free
+      *os << "ACE_INLINE void " << tdef->nested_type_name (scope, "_free") << " (";
+      *os << tdef->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
     }
   return 0;
 }
