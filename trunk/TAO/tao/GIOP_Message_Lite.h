@@ -166,8 +166,17 @@ private:
                  const u_char *ptr,
                  size_t len);
   // Print out the contents of the buffer.
+  
+  ACE_Allocator *cdr_buffer_alloc_;
+  ACE_Allocator *cdr_dblock_alloc_;
+  // Allocators for the outpur CDR that we hold. As we cannot rely on
+  // the resources from ORB Core we reserve our own resources. The
+  // reason that we cannot believe the ORB core is that, for a
+  // multi-threaded servers it dishes out resources cached in
+  // TSS. This would be dangerous as TSS gets destroyed before we
+  // would. So we have our own memory that we can rely on. 
 
-  TAO_OutputCDR output_;
+  TAO_OutputCDR *output_;
   // The output cdr for the GIOP lite message
 
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];

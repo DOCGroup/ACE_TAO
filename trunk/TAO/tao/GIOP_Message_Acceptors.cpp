@@ -20,7 +20,7 @@ TAO_GIOP_Message_Acceptors::
                           TAO_InputCDR &input,
                           CORBA::Octet message_type)
 {
-  this->output_.reset ();
+  this->output_->reset ();
   switch (message_type)
     {
     case TAO_GIOP_REQUEST:
@@ -85,7 +85,7 @@ TAO_GIOP_Message_Acceptors::
   // and <sync_with_server> as appropriate.
   TAO_GIOP_ServerRequest request (this,
                                   input,
-                                  this->output_,
+                                  *this->output_,
                                   orb_core,
                                   version);
 
@@ -184,13 +184,13 @@ TAO_GIOP_Message_Acceptors::
       reply_params.params_ = 0;
 
       // Make the GIOP header and Reply header
-      this->write_reply_header (this->output_,
+      this->write_reply_header (*this->output_,
                                 reply_params);
       
       CORBA::Object_ptr object_ptr =
         forward_request.forward_reference.in();
 
-      this->output_ << object_ptr;
+      *this->output_ << object_ptr;
 
       // Flag for code below catch blocks.
       location_forward = 1;
@@ -292,7 +292,7 @@ TAO_GIOP_Message_Acceptors::
       || (sync_with_server && location_forward))
     {
       result = this->send_message (transport,
-                                   this->output_);
+                                   *this->output_);
 
       if (result == -1)
         {
@@ -630,16 +630,16 @@ TAO_GIOP_Message_Acceptors::
   // different from the reply header made by the make_reply () call..
   // Make the GIOP message header
   this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_LOCATEREPLY,
-                               this->output_);
+                               *this->output_);
 
   // This writes the header & body
-  this->accept_state_->write_locate_reply_mesg (this->output_,
+  this->accept_state_->write_locate_reply_mesg (*this->output_,
                                                 request.request_id (),
                                                 status_info);
 
   // Send the message
   int result = this->send_message (transport,
-                                   this->output_);
+                                   *this->output_);
 
   // Print out message if there is an error
   if (result == -1)
