@@ -1,3 +1,26 @@
+Wed Sep  8 17:13:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/DLL_Manager.{h cpp}: Added new private method,
+	  ACE_DLL_Handle::get_dll_names().
+	  This builds the list of names to try to dlopen() based on the
+	  specified dll_name and the platform's prefix/suffix/decorator
+	  configuration. It doesn't try to load anything and doesn't do any
+	  search path games like ACE::ldfind(). All of the rules for locating
+	  files based on environments and security policy are administered by
+	  the OS. This just feeds names to try, allowing for example, svc.conf
+	  to continue simply specifying base names like "ACE". This restores
+	  basic OS functionality, such as the ability to load a DLL from the
+	  same directory as the loading executable, as well as closing
+	  potential security loopholes opened by ACE's scanning the search
+	  path and passing absolute paths to dlopen().
+	  ACE_DLL_Handle::open() now calls get_dll_names() for a list of names
+	  to try unless ACE_MUST_HELP_DLOPEN_SEARCH_PATH is defined, in which
+	  case it does the old ACE::ldfind() call and dlopen()s the
+	  absolute path as it did before this change.
+
+	  This also allows DLLs to load on wide-char non-Windows builds without
+	  messing with the sprintf() format specs in Lib_Find.cpp.
+
 Wed Sep  8 10:17:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Time_Value.{h,inl} Added a new msec() method that uses
