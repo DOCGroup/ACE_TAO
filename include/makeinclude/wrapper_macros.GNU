@@ -82,6 +82,8 @@ VSHDIR		= .shobj/
 endif # VSHDIR
 ifdef SHLIBA
 VLDLIBS :=$(VLDLIBS) -lACEshr $(LIBS)
+else
+VLDLIBS :=$(VLDLIBS) $(ACELIB) $(LIBS)
 endif
 YACC		= yacc
 
