@@ -106,7 +106,7 @@ public:
     /// High priority control messages
     MB_PRIORITY = 0x80,
     /// User-defined control messages
-    MB_USER     = 0x200 
+    MB_USER     = 0x200
   };
 
   typedef int ACE_Message_Type;
@@ -117,7 +117,7 @@ public:
     /// Don't delete the data on exit since we don't own it.
     DONT_DELETE = 01,
     /// user defined flags start here
-    USER_FLAGS = 0x1000 
+    USER_FLAGS = 0x1000
   };
 
   // = Initialization and termination.
@@ -376,18 +376,24 @@ public:
   void wr_ptr (char *ptr);
   void wr_ptr (size_t n);
 
-  // = Message length is <wr_ptr> - <rd_ptr>.
-  /**
-   * Get the length of the message
-   * Set the length of the message
-   * Get the length of the <Message_Block>s, including chained
-   * <Message_Block>s.
+  /** @name Message length and size operations
+   *
+   * Message length is (wr_ptr - rd_ptr).
+   *
+   * Message size is capacity of the message, including data outside
+   * the [rd_ptr,wr_ptr] range.
    */
+  //@{
+  /// Get the length of the message
   size_t length (void) const;
+
+  /// Set the length of the message
   void length (size_t n);
+
+  /// Get the length of the <Message_Block>s, including chained
+  /// <Message_Block>s.
   size_t total_length (void) const;
 
-  // = Set/get <Message_Block> size info.
   /// Get the total number of bytes in all <Message_Block>s, including
   /// chained <Message_Block>s.
   size_t total_size (void) const;
@@ -414,6 +420,7 @@ public:
   /// Get the number of bytes available after the <wr_ptr_> in the
   /// top-level <Message_Block>.
   size_t space (void) const;
+  //@}
 
   // = <ACE_Data_Block> methods.
 
