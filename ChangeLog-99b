@@ -1,3 +1,47 @@
+1999-08-31  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Modified the test to use a single handler registered for
+	  QOS_MASK|READ_MASK instead of two separate handlers. Had to
+	  remove the following files and add other files.
+	 
+	* ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
+	* ACE_wrappers/examples/QOS/Read_Handler.h
+	* ACE_wrappers/examples/QOS/QOS_Event_Handler.h
+	* ACE_wrappers/examples/QOS/Read_Handler.cpp
+
+	  Added the following files :
+
+	  The Sender event handler is only registered for QOS events. It
+ 	  uses the ACE_OS::sendto () as soon as it receives a QOS event.
+	
+	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp
+	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.h
+
+	  The Receiver event handler is registered for both QOS as well as
+	  READ events since it has to initially wait for a PATH RSVP message
+	  from the sender (QOS event, finally!!) and then read from the
+	  same QOS enabled socket.
+	
+	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
+	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
+
+	  The client and server have been modified to subscribe to the
+	  same multicast session. The RSVP SP on the receiver side sends
+	  RESV messages at the earliest indication of QOS parameters AND
+	  existence of a matching PATH state. This state is found only if
+	  a multicast socket has been created (by the sender) with a
+	  matching "multicast session" address.
+	
+	* ACE_wrappers/examples/QOS/server.cpp: 
+	* ACE_wrappers/examples/QOS/client.cpp:
+
+	  Modified the following to incorporate the removal and addition
+	  of files listed above.
+
+	* ACE_wrappers/examples/QOS/QOS.dsw 
+	* ACE_wrappers/examples/QOS/client.dsp
+	* ACE_wrappers/examples/QOS/server.dsp 
+
 Tue Aug 31 16:05:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc_T,
