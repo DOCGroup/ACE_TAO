@@ -707,12 +707,13 @@ public:
 class ACE_Export ACE_Null_Condition
 {
   // = TITLE
-  //     Implement a do nothing <ACE_Condition> variable wrapper, i.e.,
-  //     all methods are no ops.  This class is necessary since some
-  //     C++ compilers are *very* lame...
+  //     Implement a do nothing <ACE_Condition> variable wrapper,
+  //     i.e., all methods are no ops.  This class is necessary since
+  //     some C++ compilers are *very* lame...
 public:
-  ACE_Null_Condition (ACE_Null_Mutex &m, int = 0,
-			    LPCTSTR = 0, void * = 0);
+  ACE_Null_Condition (const ACE_Null_Mutex &m,
+                      LPCTSTR = 0,
+                      void * = 0);
   ~ACE_Null_Condition (void);
   int remove (void);
   int wait (ACE_Time_Value * = 0);
