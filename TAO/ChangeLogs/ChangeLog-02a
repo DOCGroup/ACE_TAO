@@ -1,3 +1,23 @@
+Thu Feb 10 22:04:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h;
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	  Changes to enable call to 'delete' on the
+	  scoped name member in the destructor of all instances 
+	  of AST_Decl.Specifically, code generation for arguments 
+	  and attributes had to be modified to avoid double
+	  deletion in those cases. An IDL file with a large number
+	  of enums was causing the IDL comiler to run out of heap
+	  memory. These changes and the changes to utl_string.cpp
+	  in the ChangeLog entry below have fixed that problem.
+
+	* TAO_IDL/util/utl_string.cpp:
+	  Cosmetic changes.
+
 Thu Feb 10 15:14:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.yy:
