@@ -3799,38 +3799,106 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 
+// @@ We may want to move these Filter classes to a separate file, but they
+// are only used here.
+
+class TAO_Default_Acceptor_Filter : public TAO_Acceptor_Filter
+{
+  // = TITLE
+  //   Default Acceptor_Filter.
+  //
+  // = DESCRIPTION
+  //   Default strategy for populating mprofile: all available
+  //   endpoints are included.
+  //
+public:
+  TAO_Default_Acceptor_Filter (void);
+
+  virtual int fill_mprofile (const TAO_ObjectKey &object_key,
+                             TAO_MProfile &mprofile,
+                             TAO_Acceptor **acceptors_begin,
+                             TAO_Acceptor **acceptors_end);
+  // Populate <mprofile> with all available endpoints.
+};
+
+TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)
+{
+}
+
+int
+TAO_Default_Acceptor_Filter::fill_mprofile (const TAO_ObjectKey &object_key,
+                                            TAO_MProfile &mprofile,
+                                            TAO_Acceptor **acceptors_begin,
+                                            TAO_Acceptor **acceptors_end)
+{
+  int acceptors_used = 0;
+
+  for (TAO_Acceptor** acceptor = acceptors_begin;
+       acceptor != acceptors_end;
+       ++acceptor)
+    {
+      if ((*acceptor)->create_mprofile (object_key, mprofile)
+          == -1)
+        return -1;
+    }
+
+  return 0;
+}
+
 #if (TAO_HAS_RT_CORBA == 1)
 
-// @@ We may want to move this class to its own file, but it is only
-// used here.
-
-class TAO_Server_Policy_Acceptor_Filter : public TAO_Acceptor_Filter
+class TAO_Server_Protocol_Acceptor_Filter : public TAO_Acceptor_Filter
 {
+  // = TITLE
+  //   RTCORBA::ServerProtocolPolicy Acceptor_Filter.
+  //
+  // = DESCRIPTION
+  //   Populates mprofile with endpoints selected based on the
+  //   RTCORBA::ServerProtocolPolicy.
+  //
 public:
-  TAO_Server_Policy_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
+  TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
-  virtual int evaluate (TAO_Acceptor *acceptor);
+  virtual int fill_mprofile (const TAO_ObjectKey &object_key,
+                             TAO_MProfile &mprofile,
+                             TAO_Acceptor **acceptors_begin,
+                             TAO_Acceptor **acceptors_end);
+  // Populate <mprofile> based on what's in <protocols_>.
 
 private:
   RTCORBA::ProtocolList &protocols_;
+  // Value of the ServerProtocolPolicy used for endpoint
+  // selection.
 };
 
-TAO_Server_Policy_Acceptor_Filter::
-TAO_Server_Policy_Acceptor_Filter (RTCORBA::ProtocolList &protocols)
+TAO_Server_Protocol_Acceptor_Filter::
+TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols)
   :  protocols_ (protocols)
 {
 }
 
 int
-TAO_Server_Policy_Acceptor_Filter::evaluate (TAO_Acceptor *acceptor)
+TAO_Server_Protocol_Acceptor_Filter::
+fill_mprofile (const TAO_ObjectKey &object_key,
+               TAO_MProfile &mprofile,
+               TAO_Acceptor **acceptors_begin,
+               TAO_Acceptor **acceptors_end)
 {
-  for (CORBA::ULong j = 0;
-       j != this->protocols_.length ();
-       ++j)
+  // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
+  // which protocols get included into IOR and in what order.
+  for (CORBA::ULong j = 0; j < protocols_.length (); ++j)
     {
-      if (acceptor->tag () ==  this->protocols_[j].protocol_type)
-        return 1;
+      CORBA::ULong protocol_type = protocols_[j].protocol_type;
+
+      for (TAO_Acceptor** acceptor = acceptors_begin;
+           acceptor != acceptors_end;
+           ++acceptor)
+        if ((*acceptor)->tag () == protocol_type
+            && (*acceptor)->create_mprofile (object_key,
+                                             mprofile) == -1)
+          return -1;
     }
+
   return 0;
 }
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -3980,19 +4048,19 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (0);
 
   // By default all the acceptors are useful, but with RT CORBA we
-  // must only accept the protocols configured in the POA.
+  // must only use acceptors that satisfy the specified policies.
   TAO_Acceptor_Filter *filter = 0;
+  TAO_Default_Acceptor_Filter default_filter;
+  filter = &default_filter;
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
-  // which protocols get included into IOR and in what order.
   TAO_ServerProtocolPolicy *policy =
     this->policies ().server_protocol ();
   RTCORBA::ProtocolList & protocols = policy->protocols_rep ();
 
-  TAO_Server_Policy_Acceptor_Filter real_filter (protocols);
-  filter = &real_filter;
+  TAO_Server_Protocol_Acceptor_Filter server_protocol_filter (protocols);
+  filter = &server_protocol_filter;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

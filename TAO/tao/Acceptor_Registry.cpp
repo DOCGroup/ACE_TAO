@@ -60,17 +60,13 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
   if (mprofile.set (pfile_count) < 0)
     return -1;
 
-  TAO_AcceptorSetIterator end = this->end ();
-  for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
-    {
-      if (filter == 0 || filter->evaluate (*i))
-        {
-          if ((*i)->create_mprofile (object_key, mprofile) == -1)
-            return -1;
-        }
-    }
+  // Leave it to the filter to decide which acceptors/in which order
+  // go into the mprofile.
+  return filter->fill_mprofile (object_key,
+                                mprofile,
+                                this->begin (),
+                                this->end ());
 
-  return 0;
 }
 
 int
