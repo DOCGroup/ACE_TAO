@@ -1,3 +1,52 @@
+Tue Jun 20 18:08:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/Interoperable_Naming/Makefile : 
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp: 
+	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
+	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
+	* orbsvcs/tests/Interoperable_Naming/server.cpp:
+	  
+	  The test doesnot need server implementation. So, removed
+	server.cpp, Iterator_Factory_i.{h,cpp}. Made changes in Makefile
+	and ncontext_client_i.cpp to reflect this.
+	
+Mon Jun 19 17:14:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/CosNaming.idl:
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+
+	  Added the CosNaming::NamingContextExt interface to the
+	CosNaming.idl file. And made the corresonding changes to the base
+	class too. This interface has four methods:
+	to_string (), to_name (), to_url () and resolve_str ().
+
+	These changes are in accordance with the following CORBA spec:
+	Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
+      	Joint Submission by BEA Systems, DSTC, IONA, and Inprise
+
+	* orbsvcs/tests/Makefile: 
+	* orbsvcs/tests/Interoperable_Naming/Makefile: 
+	* orbsvcs/tests/Interoperable_Naming/Web_Server.idl: 
+	* orbsvcs/tests/Interoperable_Naming/README: 
+	* orbsvcs/tests/Interoperable_Naming/run_test.pl: 
+	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp: 
+	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h: 
+	* orbsvcs/tests/Interoperable_Naming/server.cpp: 
+	* orbsvcs/tests/Interoperable_Naming/client.cpp: 
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h: 
+	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp: 
+		
+	  Added a test to show the functionality of the
+	  CosNaming::NamingContextExt interface in the Interoperable
+	  Naming Service. This test converts a name into its stringified
+	  form <to_name>, then uses this stringified name to resolve its
+	  naming context <resolve_str> , then converts this stringified
+	  name back to the unstringified form <to_string>. It also forms a
+	  iiopname url string given the address of a random naming context
+	  and the name of an object in that naming context <to_url>.
+
+
 Tue Jun 20 15:07:30 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/SMI_Iterator/Makefile (TAO_IDLFLAGS):
