@@ -1216,6 +1216,12 @@ be_interface::gen_operation_table (const char *flat_name,
         this->skel_count_++;
 
         os->indent ();
+        *os << "_component, &"
+            << skeleton_class_name
+            << "::_component_skel\n";
+        this->skel_count_++;
+
+        os->indent ();
         *os << "_interface, &"
             << skeleton_class_name
             << "::_interface_skel\n";

@@ -208,20 +208,6 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
       return new be_visitor_interface_direct_proxy_impl_ss (new_ctx);
 
-      // Old Collocation Stuff.
-
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-      return new be_visitor_interface_thru_poa_collocated_sh (new_ctx);
-
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-      return new be_visitor_interface_thru_poa_collocated_ss (new_ctx);
-
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-      return new be_visitor_interface_direct_collocated_sh (new_ctx);
-
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
-      return new be_visitor_interface_direct_collocated_ss (new_ctx);
-
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
       return new be_visitor_interface_any_op_ch (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
@@ -486,10 +472,6 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_IS:
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
@@ -587,14 +569,6 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_is (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_IH:
       return new be_visitor_operation_ih (new_ctx);
-    case TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SH:
-      return new be_visitor_operation_thru_poa_collocated_sh (new_ctx);
-    case TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SS:
-      return new be_visitor_operation_thru_poa_collocated_ss (new_ctx);
-    case TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH:
-      return new be_visitor_operation_direct_collocated_sh (new_ctx);
-    case TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS:
-      return new be_visitor_operation_direct_collocated_ss (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH:
       return new be_visitor_operation_smart_proxy_ch (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS:

@@ -281,6 +281,33 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "}" << be_uidt << be_uidt_nl;
   *os << "}\n\n";
 
+  // Generate code for the _component skeleton.
+  *os << "void " << full_skel_name
+      << "::_component_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &_tao_server_request, " << be_nl
+      << "void * _tao_object_reference," << be_nl
+      << "void * /* Servant_Upcall */" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_uidt_nl;
+  *os << "{" << be_idt_nl;
+  *os << full_skel_name << " *_tao_impl = ("
+      << full_skel_name << " *) _tao_object_reference;" << be_nl;
+  *os << "CORBA::Object_var _tao_retval =" << be_idt_nl
+      << "_tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);"
+      << be_uidt_nl;
+  *os << "ACE_CHECK;" << be_nl << be_nl;
+  *os << "_tao_server_request.init_reply ();" << be_nl;
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
+      << be_nl;
+  *os << "if (!(_tao_out << _tao_retval._retn ()))"
+      << be_idt_nl;
+
+  if (be_global->use_raw_throw ())
+    *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+  else
+    *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  *os << "}\n\n";
+
   // Generate code for the _is_a override.
   os->indent ();
   *os << "CORBA::Boolean " << full_skel_name

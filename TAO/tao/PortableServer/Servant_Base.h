@@ -61,9 +61,11 @@ public:
   // Default <_non_existent>: always returns false.
 
   virtual CORBA_InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    );
+                                                 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Query the Interface Repository for the interface definition.
+
+  virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  // Default <_get_component>: always returns CORBA::Object::_nil().
 
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.

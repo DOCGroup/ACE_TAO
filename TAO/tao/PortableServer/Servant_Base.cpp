@@ -111,6 +111,12 @@ TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
                                  ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::Object_ptr
+TAO_ServantBase::_get_component (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return CORBA::Object::_nil ();
+}
+
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,
@@ -144,7 +150,7 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
       servant_orb = poa_current_impl->orb_core ().orb () ;
 
 
-      stub = 
+      stub =
         poa_current_impl->poa ()->key_to_stub (
             poa_current_impl->object_key (),
             this->_interface_repository_id (),
@@ -155,11 +161,11 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      PortableServer::POA_var poa = 
+      PortableServer::POA_var poa =
         this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Object_var object = 
+      CORBA::Object_var object =
         poa->servant_to_reference (this ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -220,9 +226,9 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
       // Invoke the skeleton, it will demarshal the arguments,
       // invoke the right operation on the skeleton class
       // (<derived_this>), and marshal any results.
-      skel (req, 
-            derived_this, 
-            servant_upcall 
+      skel (req,
+            derived_this,
+            servant_upcall
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -303,9 +309,9 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
       // Invoke the skeleton, it will demarshal the arguments,
       // invoke the right operation on the skeleton class
       // (<derived_this>), and marshal any results.
-      skel (req, 
-            derived_this, 
-            servant_upcall 
+      skel (req,
+            derived_this,
+            servant_upcall
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
