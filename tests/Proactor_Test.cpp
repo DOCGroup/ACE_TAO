@@ -754,7 +754,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     // Reset pointers.
     mb.rd_ptr ()[result.bytes_transferred ()] = '\0';
 
-    if (loglevel == 0)
+    if (loglevel > 1)
       {
         LogLocker log_lock;
 
@@ -814,7 +814,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                                        this->index_,
                                        ACE_TEXT ("read"));
       }
-    else
+    else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) Receiver %d: read %d bytes\n"),
@@ -851,7 +851,7 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 
     ACE_Message_Block & mb = result.message_block ();
 
-    if (loglevel == 0)
+    if (loglevel > 1)
       {
         LogLocker log_lock;
 
@@ -914,7 +914,7 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                                        this->index_,
                                        ACE_TEXT ("write"));
       }
-    else
+    else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) Receiver %d: wrote %d bytes ok\n"),
@@ -1510,7 +1510,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 
     ACE_Message_Block & mb = result.message_block ();
 
-    if (loglevel == 0)
+    if (loglevel > 1)
       { 
         LogLocker log_lock;
 
@@ -1609,7 +1609,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                                        this->index_,
                                        ACE_TEXT ("write"));
       }
-    else
+    else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) Sender %d: wrote %d bytes ok\n"),
@@ -1653,7 +1653,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
     ACE_Message_Block & mb = result.message_block ();
 
-    if (loglevel == 0)
+    if (loglevel > 1)
       {
         LogLocker log_lock;
 
@@ -1735,7 +1735,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                                        this->index_,
                                        ACE_TEXT ("read"));
       }
-    else
+    else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) Sender %d: read %d bytes ok\n"),
@@ -1787,8 +1787,9 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    f file")
       ACE_TEXT ("\n    c console")
       ACE_TEXT ("\n-v log level")
-      ACE_TEXT ("\n    0 - log all messages")
-      ACE_TEXT ("\n    1 - log only errors and unusual cases")
+      ACE_TEXT ("\n    0 - log errors and highlights")
+      ACE_TEXT ("\n    1 - log level 0 plus progress information")
+      ACE_TEXT ("\n    2 - log level 1 plus operation parameters and results")
       ACE_TEXT ("\n-x max transfer byte count per Sender")
       ACE_TEXT ("\n-u show this message")
       ACE_TEXT ("\n"),
@@ -1835,32 +1836,25 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   // First, set up all the defaults then let any args change them.
   both = 1;                       // client and server simultaneosly
-#if defined(ACE_WIN32) || defined(sun)
+  //#if defined(ACE_WIN32) || defined(sun)
   duplex = 1;                     // full duplex is on
-#else   // Linux,IRIX - weak AIO implementation
-  duplex = 0;                     // full duplex is off
-#endif
+  //#else   // Linux,IRIX - weak AIO implementation
+  // duplex = 0;                     // full duplex is off
+  //#endif
   host = ACE_LOCALHOST;           // server to connect
   port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
   max_aio_operations = 512;       // POSIX Proactor params
-#if defined (sun)
-  proactor_type = SUN;            // Proactor type for SunOS
-  threads = 1;                    // aiosuspend() not MT Safe.
-#else
+  //#if defined (sun)
+  //proactor_type = SUN;            // Proactor type for SunOS
+  //threads = 1;                    // aiosuspend() not MT Safe.
+  //#else
   proactor_type = DEFAULT;        // Proactor type = default
   threads = 3;                    // size of Proactor thread pool
-#endif
+  //#endif
 
-# if 0 /*defined(__sgi) || defined (ACE_LINUX_COMMON_H)*/
-  ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("Weak AIO implementation, test will work with ")
-	      ACE_TEXT ("3 clients\n")));
-  senders = 3;                    // number of senders
-#else
   senders = 10;                   // number of senders
-#endif   
 
-  loglevel = 1;                   // log level : 0 full/ 1 only errors
+  loglevel = 0;                   // log level : only errors and highlights
   // Default transfer limit 50 messages per Sender
   xfer_limit = 50 * ACE_OS::strlen (complete_message);
 
@@ -1916,6 +1910,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
       } // switch
     } // while
 
+  if (proactor_type == SUN && threads > 1)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sun aiowait is not thread-safe; ")
+                  ACE_TEXT ("changing to 1 thread\n")));
+      threads = 1;
+    }
+
   return 0;
 }
 
@@ -1960,10 +1961,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  // First wait for sessions to begin, then wait for them to run down
-  while (acceptor.get_number_sessions () == 0 &&
-	 connector.get_number_sessions () == 0   )
-    ACE_OS::sleep (1);
+  // Wait a couple of seconds to let things get going, then poll til
+  // all sessions are done.
+  ACE_OS::sleep (2);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
   while (acceptor.get_number_sessions () > 0 ||
 	 connector.get_number_sessions () > 0   )
