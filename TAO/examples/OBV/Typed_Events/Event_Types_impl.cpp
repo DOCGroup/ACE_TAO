@@ -171,8 +171,9 @@ Log_Msg_impl::~Log_Msg_impl ()
 void
 Log_Msg_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 {
-  Event_impl::do_print (ACE_TRY_ENV);
   // The timestamp
+  Event_impl::do_print (ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (this->urgency () > 0)
     {
@@ -220,9 +221,8 @@ Event_List_Link_impl::~Event_List_Link_impl ()
 }
 
 Event*
-Event_List_Link_impl::get_event (CORBA::Environment &ACE_TRY_ENV)
+Event_List_Link_impl::get_event (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->my_event ();
 }
 
@@ -264,9 +264,8 @@ Event_List_impl::~Event_List_impl ()
 }
 
 void
-Event_List_impl::store_event (Event* e, CORBA::Environment &ACE_TRY_ENV)
+Event_List_impl::store_event (Event* e, CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   // This operation should perform atomically and should
   // guard against the access to the list from another thread.
   // But this is omitted in this example.
@@ -424,9 +423,8 @@ Temperature_Criterion_impl::is_critical (Event* e,
 
 
 void
-Temperature_Criterion_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
+Temperature_Criterion_impl::do_print (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   ACE_DEBUG((LM_DEBUG, "Alarm boundary for events with origin id %d is\n",
              this->origin_id_ () ));
   this->meltingpoint ()->do_print();
@@ -464,9 +462,8 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 
 
 CORBA::Boolean
-Position_Criterion_impl::is_critical (Event* e, CORBA::Environment &ACE_TRY_ENV)
+Position_Criterion_impl::is_critical (Event* e, CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   Position* p = Position::_downcast (e);
   // Is Event really a Position ?
   if (p)
@@ -533,9 +530,8 @@ Log_Msg_Criterion_impl::is_critical (Event* e,
 
 
 void
-Log_Msg_Criterion_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
+Log_Msg_Criterion_impl::do_print (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   ACE_DEBUG((LM_DEBUG,
              "All log messages with urgency greater zero are registered.\n" ));
 }
@@ -582,9 +578,8 @@ Criterion_List_impl::store_criterion (Criterion *c,
 }
 
 CORBA::Boolean
-Criterion_List_impl::is_critical (Event *e, CORBA::Environment &ACE_TRY_ENV)
+Criterion_List_impl::is_critical (Event *e, CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   // Try all criterions. Walking the list is efficient enough for
   // demonstration.
 

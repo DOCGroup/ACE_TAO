@@ -1,35 +1,40 @@
+Wed Mar 28 11:49:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+          Fixed Fuzz problems with ACE_TRY_ENV.
+
 Wed Mar 28 13:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/tests/DynAny_Test/test_dynsequence.cpp:
-	* tao/tests/DynAny_Test/test_dynstruct.cpp:
-	* tao/tests/DynAny_Test/test_dynunion.cpp:
-	* tao/tests/Param_Test/bd_long_seq.cpp:
-	* tao/tests/Param_Test/param_test_i.cpp:
-	* tao/tests/Param_Test/typecode.cpp:
-	* tao/DynamicAny/DynAny_i.cpp:
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicInterface/Request.cpp:
+        * tao/tests/DynAny_Test/test_dynstruct.cpp:
+        * tao/tests/DynAny_Test/test_dynunion.cpp:
+        * tao/tests/Param_Test/bd_long_seq.cpp:
+        * tao/tests/Param_Test/param_test_i.cpp:
+        * tao/tests/Param_Test/typecode.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicInterface/Request.cpp:
         * orbsvcs/IFR_Service/IFR_Server.cpp:
 
           Added missing ACE_CHECK/ACE_TRY_CHECK
 
 Wed Mar 28 13:43:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
-	  compilation errors in the Core build. The TAO_GIOP_Invocation
-	  class now stores TAO_Service_Context instead of
-	  IOP::ServiceContextList.  Made changes to access the
-	  IOP::ServiceContextList from the TAO_Service_Context class.  
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
+          compilation errors in the Core build. The TAO_GIOP_Invocation
+          class now stores TAO_Service_Context instead of
+          IOP::ServiceContextList.  Made changes to access the
+          IOP::ServiceContextList from the TAO_Service_Context class.
 
 Wed Mar 28 13:30:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Smart_Proxies/server.cpp:
-	* tests/Smart_Proxies/Benchmark/client.cpp:
-	* tests/Smart_Proxies/Benchmark/server.cpp :
-	* tests/Smart_Proxies/On_Demand/server.cpp:
-	* tests/Smart_Proxies/Policy/server.cpp: Fixed some fuzz script
-	  warnings. 
-	
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp :
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp: Fixed some fuzz script
+          warnings.
+
 Wed Mar 28 13:10:22 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/IFR_Service/Makefile:
