@@ -1765,47 +1765,6 @@ public:
 };
 
 #if defined (ACE_HAS_THREADS)
-/**
- * @class ACE_recursive_mutex_state
- *
- * @brief Stores the state of the recursive mutex before setting it to
- * "non-owner" state in the constructor.  The destructor then restores
- * the state of the mutex. 
- */
-class ACE_recursive_mutex_state
-{
-public:
-  /// Save the <mutex> and then <reset()> it.
-  ACE_recursive_mutex_state (ACE_Recursive_Thread_Mutex &mutex);
-
-  /// Restore the <mutex> to its original state saved by the
-  /// constructor.  
-  ~ACE_recursive_mutex_state (void);
-
-private:
-  /// Reset the <mutex> to be "unlocked".
-  int reset (ACE_recursive_thread_mutex_t &mutex);
-
-  /// Save the state of <mutex>.
-  int save (ACE_recursive_thread_mutex_t &mutex);
-
-  /// Restore the state of <mutex> to a previously saved value.
-  int restore (ACE_recursive_thread_mutex_t &mutex);
-
-  ACE_Recursive_Thread_Mutex &mutex_;
-#if defined (ACE_HAS_RECURSIVE_MUTEXES) && defined (ACE_WIN32)
-  // On windows the mutex is a CRITICAL_SECTION, so just save
-  // everything!
-  size_t lock_count_;
-  size_t recursion_count_;
-  ACE_HANDLE owning_thread_;
-  ACE_HANDLE lock_semaphore_;
-#else
-  // Store the important state of a recursive mutex.
-  int nesting_level_;
-  ACE_thread_t owner_id_;
-#endif /* ACE_HAS_RECURSIVE_MUTEXES */
-};
 
 template <class ACE_LOCK>
 class ACE_Condition;
