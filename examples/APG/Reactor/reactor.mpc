@@ -40,7 +40,7 @@ project(Timer Cancel) : aceexe {
   }
 }
 
-project(Timers) : aceexe {
+project(*Timers) : aceexe {
   exename = Timers
   Source_Files {
     Timers.cpp

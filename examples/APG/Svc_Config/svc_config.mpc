@@ -1,6 +1,6 @@
-project(HA Status) : acelib {
-  sharedname = HA_Status
-  dllflags   = HASTATUS_BUILD_DLL
+project(*HA Status) : acelib {
+  sharedname   = HA_Status
+  dynamicflags = HASTATUS_BUILD_DLL
   Source_Files {
     HA_Status_Dynamic.cpp
   }
