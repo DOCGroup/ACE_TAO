@@ -21,20 +21,13 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
                   int open_mode,
                   int close_on_destruction)
-  : close_on_destruction_ (close_on_destruction)
+  : handle_ (ACE_OS::dlopen (dll_name, open_mode)),
+    close_on_destruction_ (close_on_destruction)
 {
-  // If the library name is not given, don't open the file.
-  if (dll_name != 0)
-   {
-     this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
-
-     // The ACE_SHLIB_HANDLE object is obtained.
-
-     if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
-       ACE_ERROR ((LM_ERROR,
-                   "%s\n",
-                   this->error ()));
-   }
+  if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
+    ACE_ERROR ((LM_ERROR,
+                "%s\n",
+                this->error ()));
 }
 
 // The library is closed before the class gets destroyed depending on
@@ -81,7 +74,7 @@ ACE_DLL::open (ACE_DL_TYPE dll_name,
   return 0;
 }
 
-// The symbol refernce of the name specified is obtained. 
+// The symbol refernce of the name specified is obtained.
 
 void *
 ACE_DLL::symbol (ACE_DL_TYPE sym_name)
@@ -96,8 +89,8 @@ int
 ACE_DLL::close (void)
 {
   // The handle is checked to see whether the library is closed
-  // already.  If not, it is closed and the handle is made invalid
-  // which portrays that it is closed.
+  // already.  If not, it is closed and the handle is made invalid to
+  // indicate that it's now closed.
   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
       int retval = ACE_OS::dlclose (this->handle_);
@@ -113,7 +106,7 @@ ACE_DLL::close (void)
 char *
 ACE_DLL::error (void)
 {
-  return ACE_OS::dlerror();
+  return ACE_OS::dlerror ();
 } 
 
 // Return the handle to the user either temporarily or forever, thus
@@ -124,7 +117,7 @@ ACE_SHLIB_HANDLE
 ACE_DLL::get_handle (int become_owner)
 {
   // Since the caller is becoming the owner of the handle we lose
-  // rights to close it on destruction. The new controller has to do
+  // rights to close it on destruction.  The new controller has to do
   // it explicitly.
   if (become_owner == 0)
     this->close_on_destruction_ = 1;
