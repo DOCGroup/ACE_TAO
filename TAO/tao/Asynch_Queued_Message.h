@@ -57,7 +57,7 @@ public:
   virtual int all_data_sent (void) const;
   virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
   virtual void bytes_transferred (size_t &byte_count);
-  /// @@NOTE: No reason to belive why this would be called. But have
+  /// @note No reason to believe why this would be called. But have
   /// it here for the sake of uniformity.
   virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
   virtual void destroy (void);
