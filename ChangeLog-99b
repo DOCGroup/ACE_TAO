@@ -1,25 +1,39 @@
+Mon Sep 06 15:05:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: moved ACELIB setting (to null) to before include
+          of rules.lib.GNU.  That way, rules.lib.GNU can use the value of
+          $(ACELIB) to determine whether the ACE library object files
+          should be linked into the library, with repo=1. [Bug 248]
+
+        * include/makeinclude/rules.lib.GNU: with repo=1 when building
+          static libs, except for libACE, include all of the ACE lib's
+          object files.  The prevents multiple instantiations, by GNU
+          repo, of templates that are used in the ACE library.  See the
+          gcc info pages, Template Instantiation node, for more information.
+          [Bug 248]
+
 Mon Sep  6 08:45:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor: Cleaned up some of the coding in
- 	  the examples.
+        * examples/Reactor/WFMO_Reactor: Cleaned up some of the coding in
+          the examples.
 
-	* ace/Profile_Timer.cpp: Reformatted the code a bit.
+        * ace/Profile_Timer.cpp: Reformatted the code a bit.
 
-	* examples/Threads/process_manager.cpp (main): Fixed some warnings
-	  and errors.  Thanks to David for reporting this.
+        * examples/Threads/process_manager.cpp (main): Fixed some warnings
+          and errors.  Thanks to David for reporting this.
 
-	* ace/OS.i: Fixed ACE_UNUSED_ARG(options) to be
- 	  ACE_UNUSED_ARG(wait_options).  Thanks to David's build logs for
- 	  reporting this.
+        * ace/OS.i: Fixed ACE_UNUSED_ARG(options) to be
+          ACE_UNUSED_ARG(wait_options).  Thanks to David's build logs for
+          reporting this.
 
-	* tests/Signal_Test.cpp: Changed the types of parameters passed
-	  to run_test() from int to long so that we can safely cast them
- 	  to and from void *'s.  Thanks to David Levine for pointing this
- 	  out.
+        * tests/Signal_Test.cpp: Changed the types of parameters passed
+          to run_test() from int to long so that we can safely cast them
+          to and from void *'s.  Thanks to David Levine for pointing this
+          out.
 
-	* ace/Process_Manager.cpp (notify_proc_handler): Removed
-	  the now unused parameter h.  Thanks to David for pointing this
- 	  out.
+        * ace/Process_Manager.cpp (notify_proc_handler): Removed
+          the now unused parameter h.  Thanks to David for pointing this
+          out.
 
 Mon Sep 06 07:25:01 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -78,6 +78,18 @@ endif
 VLIB    = $(LIB:%.a=%$(VAR).a)
 
 $(VLIB): $(VLOBJS)
+
+ifeq (1,$(repo))
+  ifneq (,$(ACELIB))
+    #### With repo, link in all of the ace object files to the lib.
+    #### This avoids multiple instantiations.  We haven't found it to
+    #### be necessary with shared libs, so just do it for static libs.
+    vpath %.o $(ACE_ROOT)/ace/$(VDIR)
+
+    $(VLIB): $(ACE_ROOT)/ace/$(VDIR)*.o
+  endif # ! ACELIB
+endif # repo
+
 ifdef PRELIB
 	$(PRELIB)
 endif
