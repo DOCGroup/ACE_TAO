@@ -1,3 +1,9 @@
+Wed Aug 29 14:46:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
+	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile: Will
+	  not build with old g++ compilers.
+
 Wed Aug 29 14:27:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Throughput/svc.conf: Used blocked flushing

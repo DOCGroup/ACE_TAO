@@ -13,7 +13,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
 
 IDL_FILES = Control
 IDL_SRC = ControlC.cpp ControlS.cpp
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 BIN_UNCHECKED = client server
+endif # ACE_HAS_GNUG_PRE_2_8
 
 server_OBJS=$(addsuffix .o,server Coordinator ControlC ControlS)
 client_OBJS=$(addsuffix .o,client Consumer Supplier Loopback_Consumer Loopback_Supplier Loopback Peer ControlC ControlS)

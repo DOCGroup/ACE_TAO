@@ -11,7 +11,9 @@ endif
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 BIN_UNCHECKED = client server
+endif # ACE_HAS_GNUG_PRE_2_8
 
 server_OBJS=$(addsuffix .o,server)
 client_OBJS=$(addsuffix .o,client Consumer Supplier Client_Task)
