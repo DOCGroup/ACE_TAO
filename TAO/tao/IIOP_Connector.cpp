@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "ace/Auto_Ptr.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/GIOP.h"
@@ -57,25 +58,38 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   TAO_IIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
+  
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_Connect_Creation_Strategy (
                                              this->orb_core_->thr_mgr (),
                                              this->orb_core_),
                   -1);
 
+  auto_ptr<TAO_IIOP_Connect_Creation_Strategy> new_connect_creation_strategy (connect_creation_strategy);
+
   TAO_Cached_Connector_Lock *connector_lock = 0;
   ACE_NEW_RETURN (connector_lock,
                   TAO_Cached_Connector_Lock (this->orb_core_),
                   -1);
+  
+  auto_ptr<TAO_Cached_Connector_Lock> new_connector_lock (connector_lock);
 
   ACE_NEW_RETURN (this->cached_connect_strategy_,
                   CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
-                                           connect_creation_strategy,
+                                           new_connect_creation_strategy.get (),
                                            0,
                                            0,
-                                           connector_lock,
+                                           new_connector_lock.get (),
                                            1),
                   -1);
+  
+  auto_ptr<CACHED_CONNECT_STRATEGY> new_cached_connect_strategy (this->cached_connect_strategy_);
+
+  // Finally everything is fine.  Make sure to take ownership away
+  // from the auto pointer.
+  connect_creation_strategy = new_connect_creation_strategy.release ();
+  connector_lock = new_connector_lock.release (); 
+  this->cached_connect_strategy_ = new_cached_connect_strategy.release ();
 
   return this->base_connector_.open (this->orb_core_->reactor (),
                                      &this->null_creation_strategy_,
@@ -489,6 +503,13 @@ TAO_IIOP_Connector::make_caching_strategy (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class auto_ptr<TAO_IIOP_Connect_Creation_Strategy>;
+template class auto_ptr<TAO_Cached_Connector_Lock>;
+template class auto_ptr<TAO_CACHED_CONNECT_STRATEGY>;
+template class ACE_Auto_Basic_Ptr<TAO_IIOP_Connect_Creation_Strategy>;
+template class ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>;
+template class ACE_Auto_Basic_Ptr<TAO_CACHED_CONNECT_STRATEGY>;
+
 template class ACE_Node<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
@@ -566,10 +587,17 @@ template class ACE_Cached_Connect_Strategy_Ex<TAO_HANDLER, ACE_SOCK_CONNECTOR, T
 template class ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>;
 
 template class ACE_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>;
-template class ACE_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>;
-template class ACE_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_ATTRIBUTES>;
+template class ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>;
+template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_ATTRIBUTES>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr<TAO_IIOP_Connect_Creation_Strategy>
+#pragma instantiate auto_ptr<TAO_Cached_Connector_Lock>
+#pragma instantiate auto_ptr<TAO_CACHED_CONNECT_STRATEGY>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_IIOP_Connect_Creation_Strategy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_CACHED_CONNECT_STRATEGY>
 
 #pragma instantiate ACE_Node<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
@@ -648,7 +676,7 @@ template class ACE_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDL
 #pragma instantiate ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 
 #pragma instantiate ACE_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>
-#pragma instantiate ACE_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>
-#pragma instantiate ACE_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_ATTRIBUTES>
+#pragma instantiate ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>
+#pragma instantiate ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_ATTRIBUTES>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

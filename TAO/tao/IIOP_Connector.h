@@ -142,11 +142,11 @@ public:
                                            ACE_Null_Mutex>
           HASH_MAP_REVERSE_ITERATOR;
 
-  typedef ACE_Recyclable_Handler_Caching_Utility<ADDR,
-                                                 CACHED_HANDLER,
-                                                 HASH_MAP,
-                                                 HASH_MAP_ITERATOR,
-                                                 ATTRIBUTES>
+  typedef ACE_Refcounted_Recyclable_Handler_Caching_Utility<ADDR,
+                                                            CACHED_HANDLER,
+                                                            HASH_MAP,
+                                                            HASH_MAP_ITERATOR,
+                                                            ATTRIBUTES>
           CACHING_UTILITY;
 
 #if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
