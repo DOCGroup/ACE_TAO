@@ -361,41 +361,49 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "!CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&" << be_nl
           << "stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&"
           << be_nl
-          << "obj->_is_collocated () &&"
+          << "obj->_is_collocated () &&" << be_nl
           << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
           << "_Factory_function_pointer != 0" << be_uidt_nl << ")"  // 1 idt
-          << be_uidt_nl << "{" // 0 idt
+          << be_nl << "{" // 0 idt
           << be_idt_nl   // 1 idt
-          << "ACE_NEW_RETURN (" << be_idt_nl  // 2 idt
+          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl  // 2 idt
           << "default_proxy," << be_nl
           << "::" <<  bt->name () 
-          << " (" << be_idt_nl  // 3 idt
+          << " (" << be_idt << be_idt_nl  // 3 idt
           << "stub," << be_nl
           << "1," << be_nl
-          << "obj->_servant ())," << be_nl
-          << be_uidt_nl // 2 idt
+          << "obj->_servant ()" << be_uidt_nl << ")," << be_uidt_nl
           <<  bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ());"
-          << be_uidt_nl   // 1 idt
-          << "}" << be_uidt_nl; // 0 idt
+          << "::_nil ()" << be_uidt_nl << ");"
+          << be_uidt << be_uidt_nl   // 1 idt
+          << "}" << be_uidt_nl << be_nl; // 0 idt
 
 
       // The default proxy will either be returned else be transformed to
       // a smart one!
       *os << "if (CORBA::is_nil (default_proxy))" << be_idt_nl
-          << "ACE_NEW_RETURN (default_proxy, ::" << bt->name ()
-          << " (stub, 0, obj->_servant ()), " << bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ());"<< be_uidt_nl;
+          << "{" << be_idt_nl
+          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "default_proxy," << be_nl
+          << "::" << bt->name () << " (" << be_idt << be_idt_nl
+          << "stub," << be_nl
+          << "0," << be_nl
+          << "obj->_servant ()" << be_uidt_nl
+          << ")," << be_uidt_nl 
+          << bt->nested_type_name (this->ctx_->scope ())
+          << "::_nil ()" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
 
       if (be_global->gen_smart_proxies ())
         {
-          *os << "  return TAO_" << node->flat_name ()
+          *os << "return TAO_" << node->flat_name ()
               << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
-              << be_nl;
+              << be_uidt_nl;
         }
       else
         {
-          *os << "  return default_proxy;" << be_nl;
+          *os << "return default_proxy;" << be_uidt_nl;
         }
 
       *os << "}" << be_uidt_nl
