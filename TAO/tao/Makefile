@@ -216,6 +216,10 @@ ORB_CORE_FILES = \
 
 DYNAMIC_ANY_FILES =
 
+FT_CORBA_FILES = \
+  FT_CORBAC \
+  FT_CORBAS
+
 TEMPLATE_FILES = \
   TAO_Singleton
 
@@ -275,6 +279,7 @@ ORB_CORE_FILES += \
 
 endif # corba_messaging
 
+
 ifeq ($(rt_corba),1)
 
 ORB_CORE_FILES += \
@@ -305,7 +310,8 @@ ifndef TAO_COMPONENTS
     Interpretive_Marshaling \
     IDL_Compiler \
     ORB_Core \
-    Dynamic_Any
+    Dynamic_Any \
+    Ft_Corba \
 
   ifeq (1,$(CROSS-COMPILE))
   else
@@ -354,7 +360,11 @@ endif # INTERFACE_REPO
 
 ifneq (,$(findstring Pluggable_Messaging,$(TAO_COMPONENTS)))
   FILES += $(PLUGGABLE_MESSAGING_FILES)
-endif # INTERFACE_REPO
+endif # PLUGGABLE_MESSAGING
+
+ifneq (,$(findstring Ft_Corba,$(TAO_COMPONENTS)))
+  FILES += $(FT_CORBA_FILES)
+endif # FT_CORBA
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 BUILD   += TAO_COMPONENTS
@@ -418,7 +428,8 @@ MODULES=POA_FILES \
 	ORB_CORE_FILES \
 	DYNAMIC_ANY_FILES \
 	PLUGGABLE_MESSAGING_FILES \
-	INTERFACE_REPO_FILES
+	INTERFACE_REPO_FILES \
+	FT_CORBA_FILES
 
 SIZES: $(addsuffix .size, $(MODULES))
 	@for i in $^; do \
