@@ -35,7 +35,10 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("RootPOA",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::_narrow");
 

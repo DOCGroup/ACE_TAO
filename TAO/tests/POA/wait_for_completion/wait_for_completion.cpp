@@ -61,8 +61,9 @@ init_orb (int argc,
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Obtain the RootPOA.
-  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA",
-                                                           ACE_TRY_ENV);
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("RootPOA",
+                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POA_var object from Object_var.

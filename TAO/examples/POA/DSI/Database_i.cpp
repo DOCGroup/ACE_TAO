@@ -6,7 +6,7 @@
 ACE_RCSID(DSI, Database_i, "$Id$")
 
 DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
-//  : DATABASE_MALLOC ()
+  //  : DATABASE_MALLOC ()
 {
 }
 
