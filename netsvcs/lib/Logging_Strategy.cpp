@@ -24,6 +24,8 @@ ACE_Logging_Strategy::tokenize (char *flag_string)
 	ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
       else if (ACE_OS::strcmp (flag, "VERBOSE") == 0)
 	ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE);
+      else if (ACE_OS::strcmp (flag, "VERBOSE_LITE") == 0)
+        ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE_LITE);
       else if (ACE_OS::strcmp (flag, "SILENT") == 0)
 	ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
     }
@@ -37,8 +39,6 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 
   this->flags_ = 0;
   this->filename_ = ACE_DEFAULT_LOGFILE;
-
-  ACE_LOG_MSG->open ("Logging_Strategy");
 
   ACE_Get_Opt get_opt (argc, argv, "f:s:", 0);
 
@@ -76,22 +76,26 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
   if (this->flags_ != 0)
     {
       // Clear all flags
-      ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR  | 
-					  ACE_Log_Msg::LOGGER  |
-					  ACE_Log_Msg::OSTREAM |
-					  ACE_Log_Msg::VERBOSE |
-					  ACE_Log_Msg::SILENT);
+      ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::STDERR  
+                                          | ACE_Log_Msg::LOGGER  
+                                          | ACE_Log_Msg::OSTREAM 
+                                          | ACE_Log_Msg::VERBOSE 
+                                          | ACE_Log_Msg::VERBOSE_LITE 
+                                          | ACE_Log_Msg::SILENT);
       // Check if OSTREAM bit is set
-      if (ACE_BIT_ENABLED (this->flags_, ACE_Log_Msg::OSTREAM))
+      if (ACE_BIT_ENABLED (this->flags_, 
+                           ACE_Log_Msg::OSTREAM))
 	{
 	  // Create a new ofstream to direct output to the file
-	  ofstream *output_file = new ofstream (this->filename_);
+	  ofstream *output_file =
+            new ofstream (this->filename_);
 	  ACE_Log_Msg::instance()->msg_ostream (output_file);
 	}
       // Now set the flags for Log_Msg
       ACE_Log_Msg::instance()->set_flags (this->flags_);
     }
-  return 0;
+
+  return ACE_LOG_MSG->open ("Logging_Strategy");
 }
 
 // The following is a "Factory" used by the ACE_Service_Config and
