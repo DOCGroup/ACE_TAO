@@ -1,0 +1,156 @@
+@(#)TESTS	1.1 95/09/13
+
+NOTES ON HOW TO TEST THE IIOP ENGINE
+
+Thus far there aren't many standalone tests and little is automated.  This
+file provides brief notes on how to use the tests that do exist, so you
+can verify various functionality.  It supplements the source code and
+a good test-oriented imagination by only a little bit.
+
+The "make test" target in the Makefile is intended to provide reasonably
+good coverage of this implementation.  If you use this code to debug
+some other implementation you may find it useful to know how to get this
+engine code to act differently ... or find out why it's acting the way it
+does act!.
+
+A useful debugging feature is the "-d" flag; each time it's passed, the
+"debug level" is incremented.  So "-ddd" sets the debug level to three,
+generating more output than "-d".  You get message read/write tracing
+with "-d", and at higher levels you can get dumps of more and more data
+in messages.  In a debugger you can assign directly to "debug_level".
+There's currently no point in setting the level to more than ten.
+
+(The "-d" flag, along with other debugging support in the IIOP library,
+is only available if you compile it "-DDEBUG".)
+
+-----------------------
+CLNT, SVR ... this is a real test of the IIOP protocol and uses TCP to
+connect arbitrary processes.  It exercises the TCP code as well as the
+interpretive marshaling of structures as parameters (and return values).
+There is also a simple test to verify that the DII code works for arbitrary
+structures.
+
+The test also prints out the average time used to do the basic calls (not
+using DII).  Note that on modern CPUs, you will see very strong "cache
+effects" for this code -- much of the IIOP engine code is small enough to
+fit into on-chip caches (or a variety of other system caches) and so the
+numbers reported with large loop counts (guaranteeing maximal caching) will
+be much better than you'd see in typical use of this code (where caches are
+filled with other data, at least initially).
+
+* "svr" ... prints an IOR and listens for for requests to it.  The
+  IDL interface supported by the server is "cubit.idl".
+    
+    % svr > obj &			# default, URL-style strings
+    % cat obj
+    iiop:1.0//argon:5555/key0
+    %
+
+    % svr -o foobar > obj &		# ask for IOR strings instead
+    % cat obj
+    IOR:00000000000000010000000000000001000000000000001800010000000000066172676f6e0015b3000000046b657930
+    %
+
+* "clnt -O that_ior" ... makes some simple requests to the server,
+  cubing numbers of different kinds.
+    
+    % clnt -d -O `cat obj`
+    24584: cube octet:  139 --> 179
+    24584: cube short:  -117 --> -28749
+    24584: cube long:  -117 --> -1601613
+    24584: cube struct ...
+    24584: DII cube_struct ... success!!
+    cube average call time	= 8.441ms, 	118 calls/second
+    4 calls, 0 errors
+    %
+
+    % clnt -dd -O `cat obj`
+    24590: send GIOP v1.0 msg, 66 data bytes, my endian, Request
+    24590: recv GIOP v1.0 msg, 13 data bytes, my endian, Reply
+    24590: send GIOP v1.0 msg, 41 data bytes, my endian, Request
+    24590: recv GIOP v1.0 msg, 13 data bytes, my endian, Reply
+    24590: cube octet:  139 --> 179
+    24590: send GIOP v1.0 msg, 42 data bytes, my endian, Request
+    24590: recv GIOP v1.0 msg, 14 data bytes, my endian, Reply
+    24590: cube short:  -117 --> -28749
+    24590: send GIOP v1.0 msg, 44 data bytes, my endian, Request
+    24590: recv GIOP v1.0 msg, 16 data bytes, my endian, Reply
+    24590: cube long:  -117 --> -1601613
+    24590: send GIOP v1.0 msg, 50 data bytes, my endian, Request
+    24590: recv GIOP v1.0 msg, 22 data bytes, my endian, Reply
+    24590: cube struct ...
+    24590: send GIOP v1.0 msg, 50 data bytes, my endian, Request
+    24590: recv GIOP v1.0 msg, 22 data bytes, my endian, Reply
+    24590: DII cube_struct ... success!!
+    cube average call time	= 19.481ms, 	51 calls/second
+    4 calls, 0 errors
+    %
+
+* If you use the URL style objref, it's easy to substitute different
+  keys for the one "svr" prints, causing the server to send standard
+  OBJECT_NOT_EXIST exceptions back to the client.  (This helps to
+  test system exception marshaling, as well as error reporting!)
+
+* Similarly to give host and port names that don't work, to generate
+  client side COMM_FAILURE exceptions.
+
+* The client and server can be on different systems of course.
+  Also, one server can talk to many clients.
+
+* "clnt -O that_ior -n250 -x" ... does the above, 250 times (total
+  of 1000 calls) and asks "svr" to exit when done
+
+* The server can be set up to forward calls to a child process by
+  passing the "-f" flag to it.  The child is forked and assigned an
+  unused port, and then tells the parent its address.  (This kind of
+  facility is part of what's needed to provide BOA-style activation
+  of new processes as required.)
+
+* The server supports a "-t" option, which controls whether the OA
+  is asked to fork a thread to handle each incoming message.  You
+  won't get any benefit from using that without POSIX.1c threads!
+
+-----------------------
+TEST1_SVR, TEST1_CLNT ... this is a more thorough functional test
+than the "cubit" interface above.  Its goal is to test all of the
+IDL primitive types and parameter passing modes, in operations that
+have multiple parameters in request and response message.
+
+* "test1_svr" ... very like "svr" but supports the interfaces defined
+  in the "test1.idl" file.  Or at least, many of them -- as of this
+  writing the test is incomplete.
+
+* "test1_clnt" ... very like "clnt", but doesn't time the calls.
+
+* There are a few problems that these tests unearth on some platforms,
+  e.g. with "float" comparisons on x86 platforms, or when optimization
+  is enabled in some cases.  It appears these are all test bugs rather
+  than implementation bugs, but in any case if you happen to identify
+  fixes for them that'd be appreciated!
+
+* Not all the tests have been written yet ... notably Any, Principal,
+  and wide character strings.
+
+* Since not all platforms support 128 bit floating point directly, you
+  will need to pass the "-l" flag to "test1_clnt" when doing (manual)
+  network testing between machines where one does support it directly
+  (for example, SPARC and PowerPC) and one doesn't (e.g. x86 platforms).
+  Otherwise, there is a loss of numeric precision which will be reported
+  as test failures.
+  
+  (LongDouble values are passed through bridges without any loss of
+  precision, but if software needs to manipulate the values -- e.g.
+  to perform multiplications as this test does -- it must convert
+  them to "double" and lose both precision and range in the process.
+  Code for such conversions is not currently included.)
+
+-----------------------
+ECHO_SVR, ECHO_CLNT ... this is related to an early version of "test1",
+and uses the same on-the-wire call syntax with different call semantics.
+Where "test1" almost always modifies its input value to create output
+values, "echo" sends back the input data unchanged.
+
+Its point is to simplify debugging some classes of marshaling error which
+may turn up, since the "test1" code tries to ensure different patterns are
+sent.  This makes it harder to diagnose bugs turned up by "test1", although
+it performs a more complete overall test.

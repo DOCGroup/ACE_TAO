@@ -1,0 +1,164 @@
+Mon Apr 14 13:45:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* roa.{hh,i,cpp},tcpoa.cpp,svr.cpp: Replaced ACE_ROA with
+ 	ROA_Parameters, which is a GoF-style singleton.
+
+Sun Apr 13 00:01:56 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* roa.cpp: Fix continuation condition in ROA_Handler::svc()'s loop
+ 	so that it doesn't stop after one iteration.  Also added some
+ 	debug messages.
+
+	* giop.cpp: Fixed some returns being called with no value.  This
+ 	should have been caught in the previous round of changes.
+
+Sat Apr 12 23:10:08 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tcpoa.{hh,cpp}: TCP_OA::handle_message() now returns a value
+ 	indicating how a message was handled.
+
+	* roa.cpp: ROA_Handler::handle_input() now returns a meaningful
+ 	value based on what TCP_OA::handle_message() returns.
+
+	* giop.{hh,cpp}: Added end-of-file detection on socket
+ 	connections, and that is now propagated all the way back up
+ 	through GIOP::incoming_message().  I don't know if I violated
+ 	something in the spec by doing this, but it was necessary.  I'll
+ 	look into it later.
+
+Thu Apr 10 11:49:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* giop.{hh,cpp}: Overloaded all methods dealing with connections
+ 	so that there are two, one taking a file descriptor as argument,
+ 	the other taking an ACE_SOCK_Stream.  Right now, the *_Stream
+ 	version simply forwards to the fd-based one.  I would have
+ 	preferred to get rid of the fd-based methods altogether, but we've
+ 	only converted the server runtime; the client is still using the
+ 	original sun code, which is effectively fd-based.  In the course
+ 	of doing this, I also simplified the decls for incoming_message by
+ 	creating typedefs for some of the function pointers passed as
+ 	args.
+
+	* orbconf.hh: Fixed the stupid auto-endian-ness detector
+ 	AGAIN...had my logic reversed!
+
+	* roa.cpp: Adjusted code in accordance with changes to tcpoa.hh.
+
+	* tcpoa.hh: Moved and renamed TCP_OA::dispatch_context to be
+ 	::Dispatch_Context, and changed its endpoint member to be an
+ 	ACE_SOCK_Stream.
+
+	* roa.hh: Fixed handle_input() to use the underlying peer() data
+ 	member for reading data, rather than using its argument.  This is
+ 	so that when a different thread handles each connection,
+ 	handle_input() can simply be called repeatedly by svc().
+
+Wed Apr  9 16:19:21 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tcpoa.cpp: Fixed a problem that G++ didn't notice regarding
+ 	changing the notion of endpoints in servers from server_endpoint
+ 	to an ACE_HANDLE.
+
+Wed Apr  9 15:43:37 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* svr.cpp: The -p option is gone, and -e takes its place and is
+ 	required.  This requires the user to specify not only the port
+ 	number, but also the IP address of on which the server should
+ 	listen for requests.  See ACE_INET_Addr documentation for valid
+ 	string formats for addresses.  Also, the -t option sets the "use
+ 	threads" global.
+
+	* orbconf.hh: Hopefully resolved the tension between MS and Unix
+ 	platforms in inferring endian-ness of the target platform based on
+ 	preprocessor defines.  We now check for i386, _M_X86, and vax
+ 	(yeah, like we really worry about that, but it's easy to do).
+
+	* roa.{hh,i,cpp}: Added support for spawning threads to handle
+ 	incoming requests.  This involves a state flag for whether or not
+ 	to use threads, calling activate() in ROA_Handler::open() if that
+ 	flag is set, and creating ROA_Handler::svc() that simply loops
+ 	calling handle_input().
+	
+Tue Apr  8 11:14:57 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/test/svr.cpp: Moved setting of upcall(), forwarder(),
+ 	context(), etc. into here rather than in TCP_OA::TCP_OA(), which
+ 	is where I mistakenly stuck them a few days ago (duh!).
+
+	* IIOP/lib/tcpoa.cpp: Removed setting of ACE_ROA::upcall(), which belongs
+ 	in the server code.  I got confused because the function names
+ 	were so similar: tcpoa.cpp contains ::tcp_oa_dispatcher(), and
+ 	svr.cpp contains ::tcpoa_dispatch().
+
+	* IIOP/lib/roa.{hh,i,cpp}: Added forwarding function to ACE_ROA global namespace
+ 	hack.
+
+	* IIOP/lib/orbconf.hh: Fixed preprocessor checks that auto-detect
+ 	endian-ness of this processor.
+
+Mon Apr  7 21:08:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/test/test1_{clnt,svr}.cpp: THESE HAVE NOT BEEN CONVERTED TO
+ 	USE ACE EVENT HANDLING!!  This round of changes explicitly
+ 	instantiates templates where required.
+
+	* IIOP/test/svr.cpp: Global function ::OA_listen() no longer
+ 	exists; its functionality is now fully contained within ::main().
+  	If USE_ACE_EVENT_HANDLING is defined, a Reactor-based event loop
+ 	is used.  The original intent was to allow conditional compilation
+ 	to select btw. the original method and a Reactor-based method.
+  	However, weaving that into the library proved far more difficult
+ 	than anticipated, so more than likely not defining
+ 	USE_ACE_EVENT_HANDLING will cause massive grief.
+
+	* IIOP/lib/toa.cpp: Changed call to TCP_OA::init() to reflect new
+ 	ACE_INET_Addr argument type.
+
+	* IIOP/lib/tcpoa.cpp (TCP_OA): All initialization methods were
+ 	changed, specifically the CTOR and TCP_OA::init, to reflect the
+ 	introduction of ACE_INET_Addr.  Two side-effects of using
+ 	ACE_INET_Addr are that (1) a server can specify the address on
+ 	which it wants to listen and (2) best that I can tell, the server
+ 	MUST specify the address on which it wants to listen because
+ 	otherwise it won't be able to publish a rational IOR.  The event
+ 	loop is now changed to simply loop on Reactor::handle_events().
+
+	* IIOP/lib/tcpoa.hh (TCP_OA): Removed vestiges of this component's
+ 	use of the original connection management scheme.  Where
+ 	appropriate, hostnames and ports were replaces by ACE_INET_Addr,
+ 	endpoints by ACE_HANDLEs, etc.  One particularly nasty thing done
+ 	was to declare ROA_Handler as a friend so that handle_message()
+ 	can be called from ROA_Handler::handle_input(), which to me
+ 	exposes a hole in the original architecture wherein input is
+ 	"pulled" rather than waited-for.  We might need to re-think how
+ 	this is handled within TAO.
+
+	* IIOP/lib/roa.{hh,i,cpp}: These files contain the required
+ 	components to support the new server-side ACE-based
+ 	connection/event substrate.  The client side remains, as always,
+ 	using the connection mgmt scheme used by the original Sun IIOP
+ 	code.
+
+	* IIOP/lib/giop.cpp: Added explicit template instantiation for
+ 	when this is needed.
+
+	* IIOP/lib/corbacom.hh: Now protects itself from multiple
+ 	inclusion.
+
+	* IIOP/lib/Makefile: Added roa.* where appropriate.
+
+Wed Mar 19 10:25:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/docs/us/codecount/*.count: Added to repository.
+
+	* Makefile: Added to repository.
+
+	* IIOP/objbase.h: Moved to IIOP/compat.
+
+	* IIOP/initguid.h: Moved to IIOP/compat.
+
+Thu Mar 13 14:06:28 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ChangeLog: Added the ChangeLog.
+	
+
