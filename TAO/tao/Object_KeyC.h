@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be\be_codegen.cpp:171
 
 #ifndef _TAO_IDL_ORIG_OBJECT_KEYC_H_
 #define _TAO_IDL_ORIG_OBJECT_KEYC_H_
@@ -67,13 +67,13 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace TAO
 {
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+  // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_TAO_OBJECTKEY_CH_)
 #define _TAO_OBJECTKEY_CH_
@@ -146,12 +146,12 @@ namespace TAO
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module TAO
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -159,12 +159,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
-
-#ifndef __ACE_INLINE__
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
+// be\be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_TAO_ObjectKey_H_
 #define _TAO_CDR_OP_TAO_ObjectKey_H_
@@ -181,12 +176,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
-
-#endif /* __ACE_INLINE__ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
+// be\be_codegen.cpp:978
 
 #if defined (__ACE_INLINE__)
 #include "Object_KeyC.i"
@@ -201,4 +191,6 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */
+
