@@ -458,7 +458,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                            argv[curarg]);
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_LIB_TEXT("-ORBDropRepliesDuringShutdown")) == 0)
+                                 ACE_TEXT("-ORBDropRepliesDuringShutdown")) == 0)
       {
         ++curarg;
         if (curarg < argc)
@@ -471,7 +471,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               this->drop_replies_ = true;
           }
         else
-          this->report_option_value_error (ACE_LIB_TEXT("-ORBDropRepliesDuringShutdown"),
+          this->report_option_value_error (ACE_TEXT("-ORBDropRepliesDuringShutdown"),
                                            argv[curarg]);
       }
     else if (ACE_OS::strncmp (argv[curarg],

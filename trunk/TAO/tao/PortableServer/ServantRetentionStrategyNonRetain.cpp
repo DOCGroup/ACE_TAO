@@ -231,7 +231,7 @@ namespace TAO
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
       // object id will do (even an empty one).
-      PortableServer::ObjectId *sys_id;
+      PortableServer::ObjectId *sys_id = 0;
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId,
                         CORBA::NO_MEMORY ());
