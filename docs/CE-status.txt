@@ -1,5 +1,9 @@
 -*- mode: outline; outline-regexp: " *\\[" -*-
 
+Note, the CE stuff has changed hands and this document has gotten
+out of date.  It should be updated in the next release to reflect
+the current status.
+
 This document presents the status of the ACE port to Windows CE.  We
 present hints on writing portable code using ACE on Windows CE and
 other Win32 platforms.  Moreover, we outline current unresolved
