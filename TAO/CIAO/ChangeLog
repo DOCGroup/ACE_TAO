@@ -1,11 +1,18 @@
+Thu Jan 29 11:00:50 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	  Reverted some more changes since they caused the C++ generated
+	  code to break.
+
 Thu Jan 29 10:03:42 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
 
-	  Debian package libboost-dev apparently does not include regex. 
-	  Instead regex is provided as a separate libboost-regex-dev. 
-	  Added libboost-regex-dev as a required package to build CCF. 
-	  Thanks to Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de> 
+	  Debian package libboost-dev apparently does not include regex.
+	  Instead regex is provided as a separate libboost-regex-dev.
+	  Added libboost-regex-dev as a required package to build CCF.
+	  Thanks to Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>
 	  for reporting this.
 
 Wed Jan 28 17:49:06 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
