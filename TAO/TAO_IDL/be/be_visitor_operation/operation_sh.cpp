@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -119,8 +119,8 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
   delete visitor;
 
   // generate the corresponding static skeleton method for this operation only
-  // if there was no "native" type and the interface is not locality constraint.
-  if (!node->has_native () && !idl_global->gen_locality_constraint ())
+  // if there was no "native" type.
+  if (!node->has_native ())
     {
       os->indent ();
       *os << "static void ";
@@ -139,9 +139,9 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
           << "void *_tao_obj, " << be_nl
           << "void *_tao_context, " << be_nl
           << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-	  << "TAO_default_environment ()"
-	  << be_uidt << be_uidt_nl
-	  << ");" << be_uidt << "\n\n";
+          << "TAO_default_environment ()"
+          << be_uidt << be_uidt_nl
+          << ");" << be_uidt << "\n\n";
     }
 
   return 0;

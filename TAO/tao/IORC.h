@@ -452,7 +452,7 @@ TAO_NAMESPACE  TAO_IOP
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     TAO_IOR_Manipulation (void);

@@ -46,8 +46,9 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
 
-  if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
-                                                   // not imported
+  if (!node->cli_hdr_gen () &&  // not already generated and
+      !node->imported () &&     // not imported
+      !node->is_local_interface ()) // and not local interface.
     {
       // Grab the stream.
       os = this->ctx_->stream ();
@@ -60,7 +61,7 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
       *os << "class " << node->replacement ()->local_name () << ";" << be_nl;
 
       // generate the _ptr declaration
-      *os << "typedef " << node->replacement ()->local_name () 
+      *os << "typedef " << node->replacement ()->local_name ()
           << " *" << node->replacement ()->local_name ()
           << "_ptr;" << be_nl << be_nl;
 
@@ -69,7 +70,7 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
       *os << "class AMI_" << node->local_name () << "Handler;" << be_nl;
 
       // generate the _ptr declaration
-      *os << "typedef AMI_" << node->local_name () 
+      *os << "typedef AMI_" << node->local_name ()
           << "Handler *AMI_" << node->local_name ()
           << "Handler_ptr;" << be_nl << be_nl;
 */

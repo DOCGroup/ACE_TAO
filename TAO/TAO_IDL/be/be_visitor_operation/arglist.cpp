@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -104,13 +104,13 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-      // User defined operations are pure virtual if the interface
-      // is locality constraint.
-      if (idl_global->gen_locality_constraint ())
+      // @@ What to do with local interface?
+#if 0
         {
           *os << " = 0;\n\n";
           break;
         }
+#endif
       // Fall thru.
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:

@@ -87,7 +87,7 @@ public:
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 
 private:
   TAO_RT_Current (const TAO_RT_Current &);

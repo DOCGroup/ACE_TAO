@@ -418,7 +418,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynAny (void); // default constructor
   CORBA_DynAny (TAO_Stub *objref,
@@ -518,7 +518,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynEnum (void); // default constructor
   CORBA_DynEnum (TAO_Stub *objref,
@@ -803,7 +803,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynStruct (void); // default constructor
   CORBA_DynStruct (TAO_Stub *objref,
@@ -919,7 +919,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynUnion (void); // default constructor
   CORBA_DynUnion (TAO_Stub *objref,
@@ -1291,7 +1291,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynSequence (void); // default constructor
   CORBA_DynSequence (TAO_Stub *objref,
@@ -1382,7 +1382,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynArray (void); // default constructor
   CORBA_DynArray (TAO_Stub *objref,

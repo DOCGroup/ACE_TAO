@@ -153,7 +153,7 @@ InputPath=.\Event_Types.idl
 InputName=Event_Types
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 -Gc -Gv $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 -Gv $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -192,7 +192,7 @@ InputPath=.\Event_Types.idl
 InputName=Event_Types
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 -Gc -Gv $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 -Gv $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

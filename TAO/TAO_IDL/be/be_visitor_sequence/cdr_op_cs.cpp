@@ -45,9 +45,6 @@ be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs (void)
 int
 be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 {
-  if (idl_global->gen_locality_constraint ())
-    return 0;
-
   if (this->ctx_->alias ())
     {
       // we are here because the base type of the sequence node is
@@ -186,9 +183,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         }
 
       *os << "// set the length of the sequence" << be_nl
-         	<< "_tao_sequence.length (_tao_seq_len);" << be_nl;
+                << "_tao_sequence.length (_tao_seq_len);" << be_nl;
       // Now we do a check for the sequence length to be non zero.
-	    // If length is 0 we return true.
+            // If length is 0 we return true.
       *os << "// If length is 0 we return true." << be_nl;
       *os << "if (0 >= _tao_seq_len) " << be_idt_nl;
       *os << "return 1;" << be_uidt_nl;

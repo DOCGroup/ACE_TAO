@@ -74,7 +74,7 @@ CORBA::Boolean PortableInterceptor::Cookie::_is_a (const CORBA::Char *value, COR
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* PortableInterceptor::Cookie::_remote_interface_repository_id (void) const
+const char* PortableInterceptor::Cookie::_interface_repository_id (void) const
 {
   return "IDL:TAO/PortableInterceptor/Cookie:1.0";
 }
@@ -300,7 +300,7 @@ CORBA::Boolean PortableInterceptor::Interceptor::_is_a (const CORBA::Char *value
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* PortableInterceptor::Interceptor::_remote_interface_repository_id (void) const
+const char* PortableInterceptor::Interceptor::_interface_repository_id (void) const
 {
   return "IDL:TAO/PortableInterceptor/Interceptor:1.0";
 }
@@ -375,7 +375,7 @@ CORBA::Boolean PortableInterceptor::ServerRequestInterceptor::_is_a (const CORBA
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* PortableInterceptor::ServerRequestInterceptor::_remote_interface_repository_id (void) const
+const char* PortableInterceptor::ServerRequestInterceptor::_interface_repository_id (void) const
 {
   return "IDL:TAO/PortableInterceptor/ServerRequestInterceptor:1.0";
 }
@@ -450,7 +450,7 @@ CORBA::Boolean PortableInterceptor::ClientRequestInterceptor::_is_a (const CORBA
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* PortableInterceptor::ClientRequestInterceptor::_remote_interface_repository_id (void) const
+const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository_id (void) const
 {
   return "IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0";
 }

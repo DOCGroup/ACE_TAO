@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -45,7 +45,9 @@ be_visitor_interface_any_op_ch::~be_visitor_interface_any_op_ch (void)
 int
 be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 {
-  if (node->cli_hdr_any_op_gen () || node->imported ())
+  if (node->cli_hdr_any_op_gen () ||
+      node->imported () ||
+      node->is_local_interface ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -53,13 +55,12 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
   // Generate the stub factory function pointer declaration the interface is
   // not locality constraint.
-  if (!idl_global->gen_locality_constraint ())
-    *os << "extern " << idl_global->stub_export_macro () << " "
-        << node->full_name () << "_ptr (*_TAO_collocation_"
-        << node->flat_name () << "_Stub_Factory_function_pointer) ("
-        << be_idt << be_idt_nl
-        << "CORBA::Object_ptr obj" << be_uidt_nl
-        << ");" << be_uidt_nl;
+  *os << "extern " << idl_global->stub_export_macro () << " "
+      << node->full_name () << "_ptr (*_TAO_collocation_"
+      << node->flat_name () << "_Stub_Factory_function_pointer) ("
+      << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // generate the Any <<= and >>= operator declarations
   os->indent ();

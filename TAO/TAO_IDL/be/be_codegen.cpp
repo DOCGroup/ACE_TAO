@@ -177,10 +177,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       else
         *this->client_header_ << "<";
 
-      if (idl_global->gen_locality_constraint ())
-        *this->client_header_ << "tao/corbafwd.h";
-      else
-        *this->client_header_ << "tao/corba.h";
+      *this->client_header_ << "tao/corba.h";
 
       if (idl_global->changing_standard_include_files () == 1)
         *this->client_header_ << "\"\n";
@@ -355,10 +352,6 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   // need to put only the base names. Path info is not required.
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
-
-  if (idl_global->gen_locality_constraint ())
-    *this->client_stubs_ << "#include \"" <<
-      idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
 
   // generate the code that includes the inline file if not included in the
   // header file

@@ -292,7 +292,7 @@ CORBA::Boolean ImplementationRepository::ServerObject::_is_a (const CORBA::Char 
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* ImplementationRepository::ServerObject::_remote_interface_repository_id (void) const
+const char* ImplementationRepository::ServerObject::_interface_repository_id (void) const
 {
   return "IDL:ImplementationRepository/ServerObject:1.0";
 }
@@ -2398,7 +2398,7 @@ CORBA::Boolean ImplementationRepository::Administration::_is_a (const CORBA::Cha
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* ImplementationRepository::Administration::_remote_interface_repository_id (void) const
+const char* ImplementationRepository::Administration::_interface_repository_id (void) const
 {
   return "IDL:ImplementationRepository/Administration:1.0";
 }
@@ -2968,7 +2968,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::_is_a (const
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* ImplementationRepository::ServerInformationIterator::_remote_interface_repository_id (void) const
+const char* ImplementationRepository::ServerInformationIterator::_interface_repository_id (void) const
 {
   return "IDL:ImplementationRepository/ServerInformationIterator:1.0";
 }

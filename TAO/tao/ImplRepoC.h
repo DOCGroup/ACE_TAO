@@ -160,7 +160,7 @@ class TAO_Export ServerObject : public virtual ACE_CORBA_1 (Object)
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     ServerObject (void);
@@ -1144,7 +1144,7 @@ public:
       CORBA::Environment &env =
         TAO_default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 
 protected:
   Administration (void);
@@ -1437,7 +1437,7 @@ public:
       CORBA::Environment &env =
         TAO_default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 
 protected:
   ServerInformationIterator (void);
