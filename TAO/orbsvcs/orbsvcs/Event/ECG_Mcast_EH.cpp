@@ -460,9 +460,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_ECG_Mcast_Soc
 template class ACE_Hash_Map_Manager<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Hash<ACE_HANDLE>, ACE_Equal_To<ACE_HANDLE>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_HANDLE, TAO_ECG_Mcast_Socket * >;
-template class ACE_Hash<ACE_HANDLE>;
-template class ACE_Node<ACE_HANDLE>;
-template class ACE_Equal_To<ACE_HANDLE>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Hash<ACE_HANDLE>, ACE_Equal_To<ACE_HANDLE>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Hash<ACE_HANDLE>, ACE_Equal_To<ACE_HANDLE>, ACE_Null_Mutex>;
