@@ -26,6 +26,7 @@
 
 #include "ace/Containers.h"
 #include "ace/Log_Msg.h"
+#include "ace/Basic_Stats.h"
 
 class ACE_Export ACE_Stats_Value
 {
@@ -190,52 +191,58 @@ private:
 
 // ****************************************************************
 
-class ACE_Export ACE_Throughput_Stats
+
+/// A simple class to make throughput and latency analysis.
+/**
+ *
+ * Keep the relevant information to perform throughput and latency
+ * analysis, including:
+ * 1) Minimum, Average and Maximum latency
+ * 2) Jitter for the latency
+ * 3) Linear regression for throughput
+ * 4) Accumulate results from several samples to obtain aggregated
+ *    results, across several threads or experiments.
+ *
+ * @TODO: The idea behind this class was to use linear regression to
+ *        determine if the throughput was linear or exhibited jitter.
+ *        Unfortunately it never worked quite right, so only average
+ *        throughput is computed.
+ */
+class ACE_Export ACE_Throughput_Stats : public ACE_Basic_Stats
 {
-  // = TITLE
-  //   A simple class to make throughput and latency analysis.
-  //
-  // = DESCRIPTION
-  //   Keep the relevant information to perform throughput and latency
-  //   analysis, including:
-  //   1) Minimum, Average and Maximum latency
-  //   2) Jitter for the latency
-  //   3) Linear regression for throughput
-  //   4) Accumulate results from several samples to obtain aggregated
-  //      results, across several threads or experiments.
-  //
 public:
+  /// Constructor
   ACE_Throughput_Stats (void);
-  // Default constructor.
 
+  /// Store one sample
   void sample (ACE_UINT64 throughput, ACE_UINT64 latency);
-  // Store one sample
 
+  /// Update the values to reflect the stats in @param throughput
   void accumulate (const ACE_Throughput_Stats &throughput);
-  // Update the values to reflect the stats in <throughput>
 
+  /// Print down the stats
   void dump_results (const ACE_TCHAR* msg, ACE_UINT32 scale_factor);
-  // Print down the stats
 
+  /// Dump the average throughput stats.
+  static void dump_throughput (const ACE_TCHAR *msg,
+                               ACE_UINT32 scale_factor,
+                               ACE_UINT64 elapsed_time,
+                               ACE_UINT32 samples_count);
 private:
-  ACE_UINT64 samples_count_;
-  // The number of samples
-
-  ACE_UINT64 latency_min_;
-  ACE_UINT32 latency_min_at_;
-  ACE_UINT64 latency_max_;
-  ACE_UINT32 latency_max_at_;
-  ACE_UINT64 latency_sum_;
-  ACE_UINT64 latency_sum2_;
-  // The stadigraphs for latency computation
-
+  /// The last throughput measurement.
   ACE_UINT64 throughput_last_;
+
+#if 0
+  /// These are the fields that we should keep to perform linear
+  /// regression
+  //@{
   ACE_UINT64 throughput_sum_x_;
   ACE_UINT64 throughput_sum_x2_;
   ACE_UINT64 throughput_sum_y_;
   ACE_UINT64 throughput_sum_y2_;
   ACE_UINT64 throughput_sum_xy_;
-  // The stadigraphs for throughput computation
+  //@}
+#endif /* 0 */
 };
 
 

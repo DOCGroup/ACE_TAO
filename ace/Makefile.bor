@@ -169,6 +169,7 @@ OBJFILES = \
 	$(OBJDIR)\SPIPE_Stream.obj \
 	$(OBJDIR)\SString.obj \
 	$(OBJDIR)\Stats.obj \
+	$(OBJDIR)\Sample_History.obj \
 	$(OBJDIR)\Strategies.obj \
 	$(OBJDIR)\SV_Message.obj \
 	$(OBJDIR)\SV_Message_Queue.obj \

@@ -40,7 +40,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/tcp_test.o .obj/tcp_test.so .shobj/tcp_test.o .shobj/tcp_test.so: tcp_test.cpp \
+.obj/tcp_test.o .obj/tcp_test.o .obj/tcp_test.o .obj/tcp_test.o: tcp_test.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -170,8 +170,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Stats.h \
- $(ACE_ROOT)/ace/Stats.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
@@ -183,6 +181,12 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ $(ACE_ROOT)/ace/Stats.h \
+ $(ACE_ROOT)/ace/Basic_Stats.h \
+ $(ACE_ROOT)/ace/Basic_Stats.inl \
+ $(ACE_ROOT)/ace/Stats.i \
+ $(ACE_ROOT)/ace/Sample_History.h \
+ $(ACE_ROOT)/ace/Sample_History.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

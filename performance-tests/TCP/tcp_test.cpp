@@ -27,9 +27,10 @@
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Stats.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Sched_Params.h"
+#include "ace/Stats.h"
+#include "ace/Sample_History.h"
 
 // FUZZ: disable check_for_math_include
 #include <math.h>
@@ -50,6 +51,7 @@ static char rbuf[MAXPKTSZ];
 static int usdelay = DEFINTERVAL;
 static int bufsz = DEFPKTSZ;
 static int VERBOSE = 0;
+static int dump_history = 0;
 static int svr_thrno = DEFAULT_THRNO;
 static int server = 0;
 static int client = 0;
@@ -71,6 +73,7 @@ usage (void)
   ACE_ERROR ((LM_ERROR,
               "tcp_test\n"
               "  [-v]          (Verbose)\n"
+              "  [-h] (dump all the samples)\n"
               "  [-m message size]\n"
               "  [-i iterations]\n"
               "  [-I usdelay]\n"
@@ -210,7 +213,7 @@ Client::run (void)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "get_response"), -1);
     }
 
-  ACE_Throughput_Stats throughput;
+  ACE_Sample_History history (nsamples);
 
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i != nsamples; ++i)
@@ -231,8 +234,7 @@ Client::run (void)
 
       ACE_hrtime_t end = ACE_OS::gethrtime ();
 
-      throughput.sample (end - test_start,
-                         end - start);
+      history.sample (end - start);
 
       if (VERBOSE && i % 500 == 0)
         {
@@ -240,10 +242,22 @@ Client::run (void)
                       "Send %d / %d events\n", i, nsamples));
         }
     }
+  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
-  throughput.dump_results ("Client", gsf);
+  if (dump_history)
+    {
+      history.dump_samples ("HISTORY", gsf);
+    }
+
+  ACE_Basic_Stats latency;
+  history.collect_basic_stats (latency);
+  latency.dump_results ("Client", gsf);
+  ACE_Throughput_Stats::dump_throughput ("Client", gsf,
+                                         test_end - test_start,
+                                         latency.samples_count ());
+                                         
 
   return 0;
 }
@@ -506,7 +520,7 @@ main (int argc, char *argv[])
     }
 
 
-  ACE_Get_Opt getopt (argc, argv, "xwf:vb:I:p:sci:m:at:");
+  ACE_Get_Opt getopt (argc, argv, "hxwf:vb:I:p:sci:m:at:");
 
   while ((c = getopt ()) != -1)
     {
@@ -514,6 +528,10 @@ main (int argc, char *argv[])
         {
         case 'v':
           VERBOSE = 1;
+          break;
+
+        case 'h':
+          dump_history = 1;
           break;
 
         case 'm':
