@@ -1,17 +1,22 @@
+Tue Dec 01 15:32:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: added
+          -r option to support thread-per-rate test.
+
 Tue Dec  1 14:35:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h: 
-	* tao/IIOP_ORB.h: 
-	* tao/IIOP_ORB.cpp: 
-	* tao/POA.h: 
-	* tao/POA.cpp: 
-	  CORBA::ORB::string_to_object() was taking a <char*> argument,
-	  but it should be a <const char*>.
+        * tao/ORB.h:
+        * tao/IIOP_ORB.h:
+        * tao/IIOP_ORB.cpp:
+        * tao/POA.h:
+        * tao/POA.cpp:
+          CORBA::ORB::string_to_object() was taking a <char*> argument,
+          but it should be a <const char*>.
 
 Tue Dec 01 13:55:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Generic_Servant/client.cpp: Changed to add native
- 	  exception handling.
+        * examples/POA/Generic_Servant/client.cpp: Changed to add native
+          exception handling.
 
 Tue Dec  1 12:33:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -19,22 +24,22 @@ Tue Dec  1 12:33:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/tests/Simulator/Event_Supplier/Makefile: fixed problem with
           tao_idl invocation in Makefiles, added TAO/orbsvcs/orbsvcs include
           path switch to flags for tao_idl, modified rules to ensure flags were
-          used as part of rule.  Thanks to Joe Loyall <jloyall@bbn.com> for 
+          used as part of rule.  Thanks to Joe Loyall <jloyall@bbn.com> for
           reporting this.
 
 Tue Dec  1 10:12:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	  Use an ACE_INET_Addr in recvfrom(); a plain ACE_Addr produces
-	  problems on NT. Thanks to Dave Meyer <dmeyer@std.saic.com> for
-	  reporting this and providing the fix.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Use an ACE_INET_Addr in recvfrom(); a plain ACE_Addr produces
+          problems on NT. Thanks to Dave Meyer <dmeyer@std.saic.com> for
+          reporting this and providing the fix.
 
-	* tao/Typecode.cpp: 
-	  The size for a TypeCode field was not computed properly (it
-	  should be sizeof(TypeCode_ptr)).
+        * tao/Typecode.cpp:
+          The size for a TypeCode field was not computed properly (it
+          should be sizeof(TypeCode_ptr)).
 
-	* docs/releasenotes/TODO.html: 
-	  Added the blocking writes task.
+        * docs/releasenotes/TODO.html:
+          Added the blocking writes task.
 
 Tue Dec 01 10:16:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -42,33 +47,33 @@ Tue Dec 01 10:16:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Nov 30 01:10:35 1998  Matt Braun  <mjb2@cs.wustl.edu>
 
-	* tests/Param_Test/ub_any_seq.cpp: Added test for const char* and
-	  changed sequence length from 1 to 5 because the "random" choice
-	  of types was only pseudo-random and the various test types
-	  wern't being tested. Currently, the test segfaults, but I
-	  believe this to be indicative of a deeper problem.
+        * tests/Param_Test/ub_any_seq.cpp: Added test for const char* and
+          changed sequence length from 1 to 5 because the "random" choice
+          of types was only pseudo-random and the various test types
+          wern't being tested. Currently, the test segfaults, but I
+          believe this to be indicative of a deeper problem.
 
 Sun Nov 29 18:09:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.{h,cpp} (resolve_initial_references): Allows this
-	  function to pass back InvalidName exception.
-	  (InvalidName): New CORBA::ORB exception type.
+        * tao/ORB.{h,cpp} (resolve_initial_references): Allows this
+          function to pass back InvalidName exception.
+          (InvalidName): New CORBA::ORB exception type.
 
 Sat Nov 28 10:57:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/corba.h: Added TAO_Export to global variable <TC_opaque>.
+        * tao/corba.h: Added TAO_Export to global variable <TC_opaque>.
 
-	* tao/Typecode.h (CORBA_TypeCode): Added TAO_Export for Bounds and
-	  BadKind excepiton classes.
+        * tao/Typecode.h (CORBA_TypeCode): Added TAO_Export for Bounds and
+          BadKind excepiton classes.
 
-	* tao/ORB.{h,cpp} (operator==,operator!=): Added comparison
-	  operations for non-native long double.  We also need other
-	  comparison operators for our long double to work transparently.
+        * tao/ORB.{h,cpp} (operator==,operator!=): Added comparison
+          operations for non-native long double.  We also need other
+          comparison operators for our long double to work transparently.
 
 Thu Nov 26 11:37:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Invocation.cpp (invoke): Variable <tcp> must be
-	  initialized to avoid g++ warnings.
+        * tao/Invocation.cpp (invoke): Variable <tcp> must be
+          initialized to avoid g++ warnings.
 
 Thu Nov 26 01:08:00 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -125,27 +130,27 @@ Thu Nov 26 01:08:00 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Nov 25 20:50:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Invocation.cpp: The ORB was raising incorrect exceptions
- 	  when the connection to the server was broken, or if the client
- 	  was not able to create a new connection to the server.  The
- 	  correct behavior in these (and some other) cases is to raise the
- 	  TRANSIENT exception; and not raise the COMM_FAILURE exception.
+        * tao/Invocation.cpp: The ORB was raising incorrect exceptions
+          when the connection to the server was broken, or if the client
+          was not able to create a new connection to the server.  The
+          correct behavior in these (and some other) cases is to raise the
+          TRANSIENT exception; and not raise the COMM_FAILURE exception.
 
-	  TRANSIENT exception indicates that some (all) resources that the
- 	  client ORB requires to complete the remote method call are
- 	  unavailable.  These resources includes the server ;)
+          TRANSIENT exception indicates that some (all) resources that the
+          client ORB requires to complete the remote method call are
+          unavailable.  These resources includes the server ;)
 
-	  COMM_FAILURE exception indicates that a failure happened while
- 	  the client and server were in the middle of some communication.
+          COMM_FAILURE exception indicates that a failure happened while
+          the client and server were in the middle of some communication.
 
-	  Thanks to Christa Schwanninger
- 	  <christa.schwanninger@mchp.siemens.de> for pointing out this
- 	  problem, and to Carlos for helping sort the exceptions.
+          Thanks to Christa Schwanninger
+          <christa.schwanninger@mchp.siemens.de> for pointing out this
+          problem, and to Carlos for helping sort the exceptions.
 
 Mon Nov 23 17:45:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Object.cpp (do_static_call): <status> cannot be
-	  initialized to zero.
+        * tao/IIOP_Object.cpp (do_static_call): <status> cannot be
+          initialized to zero.
 
 Wed Nov 25 18:20:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -154,148 +159,148 @@ Wed Nov 25 18:20:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Nov 25 10:26:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Simple/echo: Reenabled the use of the Naming Service
- 	  for this example and then fixed the run_tests.pl script to not
- 	  use them ;-)
+        * examples/Simple/echo: Reenabled the use of the Naming Service
+          for this example and then fixed the run_tests.pl script to not
+          use them ;-)
 
-	* tao/TAO.h: Added a clarification on the role of the
- 	  TAO_ORB_Manager.  Thanks to Christian Mueffling <cvm@aiss.de>
- 	  for motivating this.
+        * tao/TAO.h: Added a clarification on the role of the
+          TAO_ORB_Manager.  Thanks to Christian Mueffling <cvm@aiss.de>
+          for motivating this.
 
-	* tao/ORB: Added the rudiments of a way to keep track of the
- 	  "default ORB" using the Singleton pattern.  Thanks to Irfan and
- 	  Carlos for uncovering the need for this, as well as Jon Biggar
- 	  and Steve Vinoski <vinoski@iona.com> for verifying this need.
+        * tao/ORB: Added the rudiments of a way to keep track of the
+          "default ORB" using the Singleton pattern.  Thanks to Irfan and
+          Carlos for uncovering the need for this, as well as Jon Biggar
+          and Steve Vinoski <vinoski@iona.com> for verifying this need.
 
 Wed Nov 25 00:47:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Invocation.cpp (invoke): Reordered error handling so
-	  handle_close (of client side connection) happens in the right
-	  places.
+        * tao/Invocation.cpp (invoke): Reordered error handling so
+          handle_close (of client side connection) happens in the right
+          places.
 
-	* tao/GIOP.cpp (send_error):
-	* tao/Connect.cpp (handle_input): Prevent handle_close from being
-	  called in here.  Simply return -1 should do the trick.
-	  Otherwise, servers may crash when communication errors occur.
+        * tao/GIOP.cpp (send_error):
+        * tao/Connect.cpp (handle_input): Prevent handle_close from being
+          called in here.  Simply return -1 should do the trick.
+          Otherwise, servers may crash when communication errors occur.
 
 Tue Nov 24 15:03:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Invocation.cpp (location_forward): Removed an unused
-	  variable.  Thanks to David for noticing this.
+        * tao/Invocation.cpp (location_forward): Removed an unused
+          variable.  Thanks to David for noticing this.
 
 Mon Nov 23 17:09:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_Object.cpp (do_static_call): Explicitly initialize
-	  <status> to avoid gcc warnings.
+        * tao/IIOP_Object.cpp (do_static_call): Explicitly initialize
+          <status> to avoid gcc warnings.
 
-	* tao/try_macros.h: Fixed a typo.
+        * tao/try_macros.h: Fixed a typo.
 
 Mon Nov 23 07:56:09 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/try_macros.h:
+        * tao/try_macros.h:
 
-	  Made enhancements to the macros added by anbor. In particular,
-	  we now have TAO_TRY_SYS_EX (LABEL) and TAO_CHECK_ENV_SYS_EX
-	  (LABEL) to overcome problems arising out of redefinition of
-	  labels. This was happening in IIOP_Object.cpp file
+          Made enhancements to the macros added by anbor. In particular,
+          we now have TAO_TRY_SYS_EX (LABEL) and TAO_CHECK_ENV_SYS_EX
+          (LABEL) to overcome problems arising out of redefinition of
+          labels. This was happening in IIOP_Object.cpp file
 
-	* tao/IIOP_Object.cpp:
+        * tao/IIOP_Object.cpp:
 
-	  Use TAO_TRY_SYS_EX (LABEL) and TAO_CHECK_ENV_SYS_EX (LABEL)
-	  macros to eliminate the multiple label declaration error. Also,
-	  Nanbor had forgotten to use the TAO_CHECK_ENV macros to check if
-	  an exception was thrown or not.
+          Use TAO_TRY_SYS_EX (LABEL) and TAO_CHECK_ENV_SYS_EX (LABEL)
+          macros to eliminate the multiple label declaration error. Also,
+          Nanbor had forgotten to use the TAO_CHECK_ENV macros to check if
+          an exception was thrown or not.
 
 Mon Nov 23 01:20:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: Changed
-	  the default argument of Cubit_Client to not using collocation so
-	  the client will not shutdown the server without being asked to
-	  do so.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: Changed
+          the default argument of Cubit_Client to not using collocation so
+          the client will not shutdown the server without being asked to
+          do so.
 
-	* tao/IIOP_Object.cpp (do_static_call): Made the method native
-	  exception safe so it will not return prematurely and will try
-	  out all the forwarding profiles one by one.
+        * tao/IIOP_Object.cpp (do_static_call): Made the method native
+          exception safe so it will not return prematurely and will try
+          out all the forwarding profiles one by one.
 
-	* tao/Invocation.cpp (invoke): Make sure all the invoke method
-	  doesn't send back GIOP MessageError back to server.  They should
-	  be taken care of in TAO_GIOP::recv_request.  Also made these
-	  invoke methods native exception safe so the connections get
-	  closed down properly and error messages gets generated as
-	  directed.
+        * tao/Invocation.cpp (invoke): Make sure all the invoke method
+          doesn't send back GIOP MessageError back to server.  They should
+          be taken care of in TAO_GIOP::recv_request.  Also made these
+          invoke methods native exception safe so the connections get
+          closed down properly and error messages gets generated as
+          directed.
 
-	* tao/try_macros.h: Added more "exception" handling macros for
-	  TAO's internal use.  The motivation is to reuse the
- 	  CORBA_Environment passed in to TAO's internal function to avoid
-	  declaring more env variables and copying exceptions between
-	  these variables.
+        * tao/try_macros.h: Added more "exception" handling macros for
+          TAO's internal use.  The motivation is to reuse the
+          CORBA_Environment passed in to TAO's internal function to avoid
+          declaring more env variables and copying exceptions between
+          these variables.
 
-	* tao/GIOP.{h,cpp}: The following changes are needed to make sure
-	  we differentiate receiving a GIOP MessageError from something
-	  goes wrong when receiving a request.  It also makes sure that
-	  the ORB doesn't send out MessageError unnecessarily.
+        * tao/GIOP.{h,cpp}: The following changes are needed to make sure
+          we differentiate receiving a GIOP MessageError from something
+          goes wrong when receiving a request.  It also makes sure that
+          the ORB doesn't send out MessageError unnecessarily.
 
-	  (make_error): Removed unused method.
-	  (GIOP::MessageType): Added CommunicationError to further
-	  classify errors.
-	  (send_error): Changed the server type from
-	  <TAO_Client_Connection_Handler *&> to <TAO_SVC_HANDLER *&>
-	  because this method is not used by clients only.
-	  (recv_request): Made sure the proper error status get returned
-	  in various stages.  Prevented it from sending sendsuperfluous
-	  MessageError back to its party.  Only GIOP header receiving
-	  errors can trigger that.
-	  (parse_header_std): Changed from returning MessageError to -1.
-	  If something goes wrong here, it doesn't mean we received a
-	  MessageError message.
+          (make_error): Removed unused method.
+          (GIOP::MessageType): Added CommunicationError to further
+          classify errors.
+          (send_error): Changed the server type from
+          <TAO_Client_Connection_Handler *&> to <TAO_SVC_HANDLER *&>
+          because this method is not used by clients only.
+          (recv_request): Made sure the proper error status get returned
+          in various stages.  Prevented it from sending sendsuperfluous
+          MessageError back to its party.  Only GIOP header receiving
+          errors can trigger that.
+          (parse_header_std): Changed from returning MessageError to -1.
+          If something goes wrong here, it doesn't mean we received a
+          MessageError message.
 
-	* tao/Connect.cpp (handle_input): Made sure we differentiate the
-	  real GIOP MessageError and other cases when errors occur in
-	  receiving a request.  Also make sure the server won't throw
-	  unnecessary exception in any case when receiving requests.
-	  Otherwise, the server may crash because of a rogue link.
+        * tao/Connect.cpp (handle_input): Made sure we differentiate the
+          real GIOP MessageError and other cases when errors occur in
+          receiving a request.  Also make sure the server won't throw
+          unnecessary exception in any case when receiving requests.
+          Otherwise, the server may crash because of a rogue link.
 
 Sun Nov 22 18:20:11 1998 Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
-	  Changed ACE_NEW_RETURN to ACE_NEW_THROW_RETURN in order to
-	  support exceptions
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+          Changed ACE_NEW_RETURN to ACE_NEW_THROW_RETURN in order to
+          support exceptions
 
-	* orbsvcs/tests/Concurrency/test.basic:
-	  Changed the exception to reflect new exception type
+        * orbsvcs/tests/Concurrency/test.basic:
+          Changed the exception to reflect new exception type
 
 Sat Nov 21 19:30:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/{client,server}.cpp: Added
-	template class, #pragma instantiate for the templates. Thanks to
-	Leif Jakobsmeier" <leif@informatik.uni-frankfurt.de> for pointing
-	this out.
+        * orbsvcs/tests/AVStreams/benchmark/{client,server}.cpp: Added
+        template class, #pragma instantiate for the templates. Thanks to
+        Leif Jakobsmeier" <leif@informatik.uni-frankfurt.de> for pointing
+        this out.
 
 Sat Nov 21 02:29:00 1998 Marina Spivak  <marina@cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/Simple_Naming/run-test.pl:  modified the
-	script to also run the newly added multithreaded test.
+        * TAO/orbsvcs/tests/Simple_Naming/run-test.pl:  modified the
+        script to also run the newly added multithreaded test.
 
-	* TAO/orbsvcs/tests/Simple_Naming/process-m-output.pl:  added perl
-	script to analyze the output of the multithreaded test and print a
-	diagnostic message.
+        * TAO/orbsvcs/tests/Simple_Naming/process-m-output.pl:  added perl
+        script to analyze the output of the multithreaded test and print a
+        diagnostic message.
 
-	* TAO/orbsvcs/tests/Simple_Naming/README: updated file to include
-	new test description.
+        * TAO/orbsvcs/tests/Simple_Naming/README: updated file to include
+        new test description.
 
 Fri Nov 20 19:07:44 1998  Marina Spivak  <marina@cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/Simple_Naming/client.{h,cpp}: added two new
-	tests, MT_Test and Loop_Test for multiclient (concurrent) access
-	to the Naming Service.
+        * TAO/orbsvcs/tests/Simple_Naming/client.{h,cpp}: added two new
+        tests, MT_Test and Loop_Test for multiclient (concurrent) access
+        to the Naming Service.
 
 Fri Nov 20 17:46:40 1998 Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Typecode.h:
-	* tao/Typecode.i:
-	* tao/Typecode.cpp:
-	  Added locks for changes in the Typecode private state. We use
-	  the Double Checked Lock pattern to minimize the run-time cost.
+        * tao/Typecode.h:
+        * tao/Typecode.i:
+        * tao/Typecode.cpp:
+          Added locks for changes in the Typecode private state. We use
+          the Double Checked Lock pattern to minimize the run-time cost.
 
 Fri Nov 20 07:08:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
