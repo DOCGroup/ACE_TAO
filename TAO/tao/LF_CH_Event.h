@@ -37,6 +37,7 @@ public:
   /// Destructor
   virtual ~TAO_LF_CH_Event (void);
 
+  //@{
   /// Return 1 if the condition was satisfied successfully, 0 if it
   /// has not
   int successful (void) const;
@@ -44,12 +45,17 @@ public:
   /// Return 1 if an error was detected while waiting for the
   /// event
   int error_detected (void) const;
-  //@}
+
 
   /// Reset the state, irrespective of the previous states
   void reset_state (int new_state);
 
+protected:
 
+  /// Check whether we have reached the final state..
+  virtual int is_state_final (void);
+
+  //@}
 private:
   /// Validate and change the state
   /*
@@ -93,9 +99,6 @@ private:
    *
    */
   virtual void state_changed_i (int new_state);
-
-  /// Check whether we have reached the final state..
-  virtual int is_state_final (void);
 
   /// Set the state irrespective of anything.
   virtual void set_state (int new_state);
