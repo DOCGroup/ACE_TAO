@@ -196,12 +196,12 @@ module LoadBalancing
       raises (ObjectGroupNotFound,
               MemberNotFound);
 
-    ObjectGroup set_primary_member (in ObjectGroup object_group,
-                                    in Location the_location)
-      raises (ObjectGroupNotFound,
-              MemberNotFound,
-              PrimaryNotSet,
-              BadReplicationStyle);
+//     ObjectGroup set_primary_member (in ObjectGroup object_group,
+//                                     in Location the_location)
+//       raises (ObjectGroupNotFound,
+//               MemberNotFound,
+//               PrimaryNotSet,
+//               BadReplicationStyle);
 
     Locations locations_of_members (in ObjectGroup object_group)
       raises (ObjectGroupNotFound);

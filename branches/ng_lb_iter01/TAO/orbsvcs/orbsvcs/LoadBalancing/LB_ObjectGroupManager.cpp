@@ -68,21 +68,6 @@ TAO_LB_ObjectGroupManager::remove_member (
                     LoadBalancing::ObjectGroup::_nil ());
 }
 
-LoadBalancing::ObjectGroup_ptr
-TAO_LB_ObjectGroupManager::set_primary_member (
-    LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const LoadBalancing::Location & /* the_location */,
-    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberNotFound,
-                   LoadBalancing::PrimaryNotSet,
-                   LoadBalancing::BadReplicationStyle))
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    LoadBalancing::ObjectGroup::_nil ());
-}
-
 LoadBalancing::Locations *
 TAO_LB_ObjectGroupManager::locations_of_members (
     LoadBalancing::ObjectGroup_ptr /* object_group */,
