@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : messaging, naming, portablegroup {
+  libs      += TAO_CosLoadBalancing
+  after     += CosLoadBalancing
+  tagchecks += CosLoadBalancing
+}

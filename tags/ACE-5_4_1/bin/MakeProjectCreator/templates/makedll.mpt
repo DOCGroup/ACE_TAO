@@ -1,0 +1,187 @@
+// -*- MPC -*-
+// $Id$
+
+// ***********************************************************************
+// The default configuration for the 'make' project type is gcc.  This
+// is controlled by the configurations template variable.  It may be
+// changed on the MPC command line via the -value_template option. 
+// Additionally, each compiler has a default platform.  The default
+// platform for gcc is linux.  This too can be changed via the
+// -value_template option.  Below are some examples.
+//
+// Use SunCC on the default platform (solaris):
+//   mwc.pl -type make -value_template configurations=SunCC
+// Use the default configuration (gcc) on LynxOS:
+//   mwc.pl -type make -value_template platforms=lynxos
+// Use HP-UX aCC on the default platform (HP-UX):
+//   mwc.pl -type make -value_template configurations=aCC
+// ***********************************************************************
+
+conditional_include "common"
+
+configurations = gcc
+ln             = ln -s
+soext          = so
+exeext         =
+cppflags       =
+arflags        =
+
+// ***********************************************************************
+// Configuration Section
+// ***********************************************************************
+
+cxx {
+  cxx        = cxx
+  clean      = cxx_repository so_locations
+  tempincopt = "-ptr "
+  tempinc    = cxx_repository
+  platforms  = tru64
+}
+
+gcc {
+  cxx       = g++
+  pic       = -fPIC
+  platforms = linux
+}
+
+SunCC {
+  cxx       = CC
+  pic       = -KPIC
+  linkflags = -library=Cstd -library=Crun
+  clean     = SunWS_cache ir.out
+  platforms = solaris
+}
+
+aCC {
+  cxx           = aCC
+  pic           = +Z
+  platforms     = hpux
+  compilerflags = -AA -D_RWSTD_MULTI_THREAD
+}
+
+xlC_r {
+  cxx       = xlC_r
+  platforms = aix
+}
+
+SGICC {
+  cxx       = CC
+  pic       = -KPIC
+  linkflags = -Wl,-woff,84
+  clean     = ii_files
+  platforms = irix
+}
+
+wrsppc {
+  cxx          = g++ppc
+  ld           = ldppc
+  cputype      = ppc
+  cpu          = PPC604
+  ar           = arppc
+  nm           = nmppc
+  compileflags = -mlongcall -nostdlib
+  linkflags    = -X -r
+  platforms    = vxworks
+}
+
+wrspentium {
+  cxx          = g++pentium
+  ld           = ldpentium
+  cputype      = pentium
+  cpu          = PENTIUM
+  ar           = arpentium
+  nm           = nmpentium
+  compileflags = -nostdlib
+  linkflags    = -X -r
+  platforms    = vxworks
+}
+
+// ***********************************************************************
+// Platform Section
+// ***********************************************************************
+
+tru64 {
+  shflags       = -shared /usr/lib/libcxxstd.a
+  ldlibs        = -ltli -lrt
+  extracppflags = -D__USE_STD_IOSTREAM -D_REENTRANT
+}
+
+linux {
+  shflags       = -shared
+  ldlibs        = -ldl -lpthread
+  extracppflags = -D_REENTRANT
+}
+
+solaris {
+  shflags       = -G
+  ldlibs        = -lsocket -ldl -lnsl -lgen -lposix4 -lthread
+  extracppflags = -D_REENTRANT
+}
+
+hpux {
+  soext         = sl
+  shflags       = -b
+  ldlibs        = -lxti -lpthread -lrt -ldld
+  extracppflags = -D_REENTRANT
+}
+
+aix {
+  soext         =
+  ldlibs        = -ldl -lpthread
+  extracppflags = -D_REENTRANT
+}
+
+irix {
+  shflags = -shared
+  ldlibs  = -lsocket -ldl -lgen -lpthread
+}
+
+lynxos {
+  soext         =
+  extracppflags = -D__NO_INCLUDE_WARN__
+}
+
+macos {
+  dld     = libtool
+  soext   = dylib
+  shflags = -dynamic
+  ldlibs  = -lcc_dynamic -lstdc++ -lSystem -ldl
+}
+
+unixware {
+  shflags       = -G
+  ldlibs        = -lsocket -ldl -lnsl -lgen -lposix4 -lthread
+  extracppflags = -D_REENTRANT
+
+}
+
+qnx {
+  shflags       = -shared
+  ldlibs        = -lsocket
+  extracppflags = -D__GCC_BUILTIN
+}
+
+vxworks {
+  soext         =
+  specialscript = "#!/bin/sh\nfor i in $$3; do\nfor j in $$4; do\ni=`echo $$i | sed sa\^-laa`\n[ -r \"$$j/lib$$i.a\" ] && libs=\"$$libs $$j/lib$$i.a\" && break\ndone\ndone\n$$1 $$2 $$libs | munch | grep -v \\.cpp > $$5"
+  prelink       = __ctordtor.c
+  ldlibs        = -L$(WIND_BASE)/target/lib/$(CPUTYPE)/$(CPU)/common -larch
+  extracppflags = -I$(WIND_BASE)/target/h
+}
+
+cygwin32 {
+  soext   = dll
+  exeext  = .exe
+  shflags = -shared
+  ln      = mv
+  rc      = windres
+}
+
+mingw32 {
+  soext   = dll
+  exeext  = .exe
+  shflags = -shared
+  ln      = mv
+  ldlibs  = -lwsock32 -lnetapi32
+  rc      = windres
+}
