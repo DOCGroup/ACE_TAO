@@ -1,3 +1,7 @@
+Mon Sep 14 23:28:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.39 released.
+
 Mon Sep 14 21:46:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers.h: added "class" to several ACE_DLList friend
