@@ -99,7 +99,7 @@ Client::init (int argc,
   this->bind_to_remote_mmdevice (argc, argv, env);
 
   manager_.orb ()->open ();
-  // Create a local mmdevice for now..
+  // Create a locall mmdevice for now..
   //  mmdevice_impl = new TAO_MMDevice;
   //  this->remote_mmdevice_ = mmdevice_impl->_this (env);
 
@@ -239,7 +239,8 @@ Client::bind_to_remote_mmdevice (int argc,
   return 0;
 }
 
-// Testing the methods of the property service, with local_mmdevice. 
+
+// Testing the methods of the property service.
 
 int 
 Client::property_tester (CORBA::Environment &env)
@@ -248,20 +249,48 @@ Client::property_tester (CORBA::Environment &env)
   this->test_define_property (env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
+  // Test the number of properties.
+  this->test_get_number_of_properties (env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+  
   // Testing get_all_property_names.
   this->test_get_all_property_names (env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+  
+  // Testing delete property.
+  this->test_delete_property ("string_property",env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Testing get_properties.
   this->test_get_properties (env);
   TAO_CHECK_ENV_RETURN (env, 1);
+
+  // Testing delete_properties.
+  this->test_delete_properties (env);
+  TAO_CHECK_ENV_RETURN (env, 1);
   
-  // Tesing get_all_properties.
+  // Test the number of properties.
+  this->test_get_number_of_properties (env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+  
+  // Testing define_properties.
+  this->test_define_properties (env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+
+  // Test the number of properties.
+  this->test_get_number_of_properties (env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+
+  // Testing get_all_property_names.
+  this->test_get_all_property_names (env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+  
+  // Testing get_all_properties.
   this->test_get_all_properties (env);
   TAO_CHECK_ENV_RETURN (env, 1);
 }
 
-// Testing define_property with local_mmdevice.
+// Testing define_property.
 
 int
 Client::test_define_property (CORBA::Environment &env)
@@ -270,9 +299,8 @@ Client::test_define_property (CORBA::Environment &env)
               "\nChecking define_property\n"));
   
   CORBA::Any anyval;
-  
+ 
   // Prepare a char and "define" that in the PropertySet.
-
   CORBA::Char ch = '#';
   anyval <<= from_char (ch);
   ch = '*';
@@ -291,14 +319,13 @@ Client::test_define_property (CORBA::Environment &env)
   anyval <<= s; 
   s = 7; 
   anyval >>= s;
-
+  
   ACE_DEBUG ((LM_DEBUG,
               "Main : Short s = %d\n",
               s));
-
-  local_mmdevice_->define_property ("short_property",
-                                    anyval,
-                                    env);
+  remote_mmdevice_->define_property ("short_property",
+                                     anyval,
+                                     env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Prepare a Long and "define" that in the PropertySet.
@@ -310,11 +337,11 @@ Client::test_define_property (CORBA::Environment &env)
               "Main : Long l = %d\n",
               l));
   CORBA::Any newany(anyval);
-  local_mmdevice_->define_property ("long_property",
-                                  anyval,
-                                  env);
+  remote_mmdevice_->define_property ("long_property",
+                                     anyval,
+                                     env);
   TAO_CHECK_ENV_RETURN (env, 1);
-
+  
   
   // Prepare a Float and "define" that in the PropertySet.
   CORBA::Float f = 3.14;
@@ -324,9 +351,9 @@ Client::test_define_property (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "Main : Float f = %f\n",
               f));
-  local_mmdevice_->define_property ("float_property", 
-                                  anyval, 
-                                  env);
+  remote_mmdevice_->define_property ("float_property", 
+                                     anyval, 
+                                     env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Prepare a String and "define" that in the PropertySet.
@@ -341,10 +368,9 @@ Client::test_define_property (CORBA::Environment &env)
               "Main: String :  %s, From any :  %s\n",
               strvar.in (),
               newstr));
-
-  local_mmdevice_->define_property ("string_property",
-                                  anyval,
-                                  env);
+  remote_mmdevice_->define_property ("string_property",
+                                     anyval,
+                                     env);
   TAO_CHECK_ENV_RETURN (env, 1);
 }
 
@@ -358,14 +384,14 @@ Client::test_get_all_property_names (CORBA::Environment &env)
 
   // Get the size.
   CORBA::ULong num_of_properties =
-    local_mmdevice_->get_number_of_properties (env);
+    remote_mmdevice_->get_number_of_properties (env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Get half on the names and half of on the iterator.
   CORBA::ULong how_many = num_of_properties / 2;
   CosPropertyService::PropertyNames_var names_var;
   CosPropertyService::PropertyNamesIterator_var iterator_var;
-  local_mmdevice_->get_all_property_names (how_many,
+  remote_mmdevice_->get_all_property_names (how_many,
                                            names_var.out (),
                                            iterator_var.out (), 
                                            env);
@@ -406,25 +432,30 @@ Client::test_get_properties (CORBA::Environment &env)
   // Get float_property, string_property and no_property. If return
   // value is false and type is tc_void then that name is not there in
   // the PropertySet.
-
+  ACE_DEBUG ((LM_DEBUG, "\nTesting get_properties\n"));
   CosPropertyService::PropertyNames_var names;
-
-  ACE_NEW_RETURN (names,
+  CosPropertyService::PropertyNames_ptr names_ptr;
+    
+  ACE_NEW_RETURN (names_ptr,
                   CosPropertyService::PropertyNames,
                   -1);
-  names->length (4);
+  names = names_ptr;
+  
+  names->length (3);
   names [0] = CORBA::string_dup ("float_property");
-  names [1] = CORBA::string_dup ("string_property");
-  names [2] = CORBA::string_dup ("long_property");
-  names [3] = CORBA::string_dup ("no_property");
+  //names [1] = CORBA::string_dup ("string_property");
+  names [1] = CORBA::string_dup ("long_property");
+  //names [2] = CORBA::string_dup ("char_property");
+  names [2] = CORBA::string_dup ("no_property");
+  
   CosPropertyService::Properties_var properties;
-
+  
   // Get the properties.
-  CORBA::Boolean return_val = local_mmdevice_->get_properties (names,
-                                                               properties.out (),
-                                                               env);
+  CORBA::Boolean return_val = remote_mmdevice_->get_properties (names.in (),
+                                                                properties.out (),
+                                                                env);
   TAO_CHECK_ENV_RETURN (env, 1);
-
+  
   if (properties.ptr () != 0)
     {
       // Go thru the properties and print them out, if they are not
@@ -462,8 +493,118 @@ Client::test_get_properties (CORBA::Environment &env)
               properties [pi].property_value >>= l;
               ACE_DEBUG ((LM_DEBUG,"%d\n", l));
             }
+          if (properties [pi].property_value.type () == CORBA::_tc_char)
+            {
+              CORBA::Char ch;
+              properties [pi].property_value >>= to_char (ch);
+              ACE_DEBUG ((LM_DEBUG,"%c\n", ch));
+            }
         }
     }
+  return 0;
+}
+
+// Testing, get_number_of_properties.
+
+int
+Client::test_get_number_of_properties (CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+              "\nNumber of props : %d\n",
+              this->remote_mmdevice_->get_number_of_properties (env)));
+  TAO_CHECK_ENV_RETURN (env, 1);
+  
+  return 0;
+}
+
+// Test delete_property.
+
+int 
+Client::test_delete_property (CORBA::String property_name,
+                              CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, "\nDeleting %s\n",property_name));
+
+  this->remote_mmdevice_->delete_property (property_name, env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+
+  return 0;
+}  
+
+// Test delete_properties.
+// Make a sequence of property names and delete them from the
+// PropertySet.  Deleting char, short, long, float and string
+// properties.
+
+int
+Client::test_delete_properties (CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "\nChecking delete_properties\n"));
+  CosPropertyService::PropertyNames prop_names;
+  prop_names.length (4);
+  prop_names [0] = CORBA::string_dup ("char_property");
+  prop_names [1] = CORBA::string_dup ("short_property");
+  prop_names [2] = CORBA::string_dup ("long_property");
+  prop_names [3] = CORBA::string_dup ("float_property");
+  ACE_DEBUG ((LM_DEBUG,
+              "Length of sequence %d, Maxlength : %d\n",
+              prop_names.length (),
+              prop_names.maximum ()));
+  this->remote_mmdevice_->delete_properties (prop_names,
+                                   env);
+  TAO_CHECK_ENV_RETURN (env, 0);
+  
+  return 0;
+}
+
+// Defines a sequnce of properties containing, char, short, long,
+// float in the property set.
+
+int
+Client::test_define_properties (CORBA::Environment &env)
+{  
+  ACE_DEBUG ((LM_DEBUG,
+              "\nChecking define_properties\n"));
+  CosPropertyService::Properties nproperties;
+  nproperties.length (4);
+  CORBA::Any anyval;
+  // Prepare a char and "define" that in the PropertySet.
+  CORBA::Char ch = '#';
+  anyval <<= from_char (ch);
+  ch = '*';
+  anyval >>= to_char (ch);  
+  nproperties[0].property_name  = CORBA::string_copy ("char_property");
+  nproperties[0].property_value <<= from_char (ch);
+  
+  // Prepare a Short and "define" that in the PropertySet.
+  CORBA::Short s = 3;
+  anyval <<= s; 
+  s = 7; 
+  anyval >>= s;
+  nproperties[1].property_name  = CORBA::string_copy ("short_property");
+  nproperties[1].property_value <<= s;
+  
+  // Prepare a Long and "define" that in the PropertySet.
+  CORBA::Long l = 931232;
+  anyval <<= l;
+  l = 931233;
+  anyval >>= l;
+  nproperties[2].property_name  = CORBA::string_copy ("long_property");
+  nproperties[2].property_value <<= l;
+  
+  // Prepare a Float and "define" that in the PropertySet.
+  CORBA::Float f = 3.14;
+  anyval <<= f;
+  f = 4.14;
+  anyval >>= f;
+  nproperties[3].property_name  = CORBA::string_copy ("float_property");
+  nproperties[3].property_value <<= f;
+  
+  // Define this sequence of properties now.
+  this->remote_mmdevice_->define_properties (nproperties, env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+
   return 0;
 }
 
@@ -475,18 +616,18 @@ Client::test_get_all_properties (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting get_all_properties\n"));
   // Get the number of current properties.
-  CORBA::ULong num_of_properties =
-    this->local_mmdevice_->get_number_of_properties (env);
+  CORBA::ULong num_of_properties = 
+    this->remote_mmdevice_->get_number_of_properties (env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Get half on the properties and half of on the iterator.
-  CORBA::ULong how_many = num_of_properties / 2;
+  CORBA::ULong how_many = 0;
   CosPropertyService::Properties_var properties;
   CosPropertyService::PropertiesIterator_var iterator;
-  local_mmdevice_->get_all_properties (how_many,
-                                       properties.out (),
-                                       iterator.out (), 
-                                       env);
+  remote_mmdevice_->get_all_properties (how_many,
+                                        properties.out (),
+                                        iterator.out (), 
+                                        env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Print out the properties now.
@@ -500,7 +641,7 @@ Client::test_get_all_properties (CORBA::Environment &env)
           ACE_DEBUG ((LM_DEBUG,
                       "%s : ",
                       properties [pi].property_name.in ()));
-
+          
           // Print the value if type is not tk_void.
           if (properties [pi].property_value.type () == CORBA::_tc_void) 
             ACE_DEBUG ((LM_DEBUG,"Void\n"));
@@ -532,15 +673,23 @@ Client::test_get_all_properties (CORBA::Environment &env)
   if (iterator.ptr () != 0)
     {
       CosPropertyService::Property_var property;
-
-      while (iterator->next_one (property.out (), env) == CORBA::B_TRUE)
+      
+      while (iterator->next_one (property.out (), env) != CORBA::B_FALSE)
         {
+          ACE_DEBUG ((LM_DEBUG, "Iteration over PropertyIterartor"));
           TAO_CHECK_ENV_RETURN (env, 1);
           ACE_DEBUG ((LM_DEBUG,
                       "%s : ",
                       property->property_name.in ()));
 
           // Print the property_value.
+          if (property->property_value.type () == CORBA::_tc_char)
+            {
+              CORBA::Char c;
+              property->property_value >>= to_char (c);
+              ACE_DEBUG ((LM_DEBUG,"%c\n", c));
+            }
+
           if (property->property_value.type () == CORBA::_tc_short)
             {
               CORBA::Short s;
@@ -579,7 +728,7 @@ main (int argc, char **argv)
   TAO_TRY
     {
       Client client;
-
+      
       if (client.init (argc, 
                        argv, 
                        TAO_TRY_ENV) == -1)

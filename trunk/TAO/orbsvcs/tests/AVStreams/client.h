@@ -36,8 +36,8 @@ class Client
   // = DESCRIPTION
   //    Encapsulates client functionality.
 public:
-  // Constructor
   Client (void);
+  // Constructor.
   
   int init (int argc, 
             char **argv,
@@ -61,6 +61,9 @@ protected:
   int test_define_property (CORBA::Environment &env);
   // Testing the define property method.
   
+  int test_get_number_of_properties (CORBA::Environment &env);
+  // Testing the number of properties, currently in the Property Set. 
+
   int test_get_all_property_names (CORBA::Environment &env);
   //Testing get_all_property_names.
   
@@ -70,6 +73,16 @@ protected:
   int test_get_all_properties (CORBA::Environment &env);
   // Testing get_all_properties.
   
+  int test_delete_property (CORBA::String property_name,
+                            CORBA::Environment &env);
+  // Testing delete_property.
+  
+  int test_delete_properties (CORBA::Environment &env);
+  // Testing delete_properties.
+
+  int test_define_properties (CORBA::Environment &env);
+  // Defining a sequence of properties.
+
   TAO_ORB_Manager manager_;
   // The ORB manager, handles ORB initialization etc.
   
