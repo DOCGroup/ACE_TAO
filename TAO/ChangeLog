@@ -1,3 +1,8 @@
+Mon May  9 13:14:24 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Buffering/AMI_Buffering.cpp:
+          Added missing ACE_CHECK macro usage
+
 Mon May  9 10:02:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         For AMH and AMI TAO allocates response handlers currently from the
