@@ -131,9 +131,9 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *,
 }
 
 Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (Client *client)
-  :ENDPOINT_STRATEGY (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
-   client_ (client)
+  : client_ (client)
 {
+  this->init(TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ());
 }
 
 int

@@ -127,11 +127,11 @@ Client::Client (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa, int task_id)
   : orb_ (orb),
     poa_ (poa),
     ttcp_reactive_strategy_ (orb, poa,this),
-    reactive_strategy_ (orb, poa),
     client_mmdevice_ (0),
     task_id_ (task_id)
 
 {
+  reactive_strategy_.init (orb, poa);
 }
 
 void
@@ -434,9 +434,9 @@ Client::establish_stream (void)
 ttcp_Endpoint_Reactive_Strategy_A::ttcp_Endpoint_Reactive_Strategy_A (CORBA::ORB_ptr orb,
                                                                       PortableServer::POA_ptr poa,
                                                                       Client *client)
-  : TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>  (orb, poa),
-    client_ (client)
+  : client_ (client)
 {
+  this->init (orb, poa);
 }
 
 int

@@ -78,8 +78,8 @@ FTP_Server_Callback::handle_destroy (void)
 }
 
 Server::Server (void)
-  : reactive_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ())
 {
+  reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ());
 }
 
 int
