@@ -47,6 +47,7 @@ public:
 
 private:
   Simple_i server_impl;
+  Ping_i ping_impl;
 
   int read_ir_ior (void);
 

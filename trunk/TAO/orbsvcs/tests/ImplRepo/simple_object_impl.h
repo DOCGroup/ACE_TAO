@@ -21,6 +21,7 @@
 #define	SIMPLE_OBJECT_IMPL_H
 
 #include "Simple_ObjectS.h"
+#include "../../ImplRepo_Service/PingS.h"
 
 // Forward declarations.
 class Simple_i;
@@ -56,5 +57,23 @@ public:
 
 };
 
+// Forward declarations.
+class Ping_i;
+
+// Typedefs.
+typedef Ping_i *Ping_i_ptr;
+typedef Ping_i_ptr Ping_i_ref;
+
+class Ping_i: public POA_Ping_Object
+  // = TITLE
+  //    Ping Object Implementation
+  //
+  // = DESCRIPTION
+  //    Implementation Repository uses this to check to see if the server
+  //    is still running.
+{
+public:
+  virtual void ping (CORBA::Environment &env);
+};
 
 #endif /* SIMPLE_OBJECT_IMPL_H */

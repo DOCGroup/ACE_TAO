@@ -1,7 +1,7 @@
 // $Id$
 
 #include "server_impl.h"
-#include "Impl_RepoC.h"
+#include "../../ImplRepo_Service/ImplRepoC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
@@ -76,9 +76,15 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
       if (retval != 0)
         return retval;
    
-      CORBA::String_var str  =
+      CORBA::String_var server_str  =
         this->orb_manager_.activate_under_child_poa ("server",
                                                      &this->server_impl,
+                                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA::String_var ping_str =
+        this->orb_manager_.activate_under_child_poa ("ping",
+                                                     &this->ping_impl,
                                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -90,7 +96,10 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
             this->register_with_ir ();
 
           CORBA::Object_var server_object =  
-            this->orb_manager_.orb ()->string_to_object (str, env);
+            this->orb_manager_.orb ()->string_to_object (server_str, env);
+
+          CORBA::Object_var ping_object = 
+            this->orb_manager_.orb ()->string_to_object (ping_str, env);
 
           // Talk to the Implementation Repository if we are already registered
           CORBA::Object_var implrepo_object =
@@ -106,28 +115,31 @@ Server_i::init (int argc, char** argv, CORBA::Environment& env)
                                "invalid implrepo key <%s>\n",
                                this->ir_server_key_),
                               -1);
+          
 
-          Implementation_Repository::INET_Addr addr;
-
-          ImplRepo->server_is_running ("Simple_Server", server_object, addr, TAO_TRY_ENV);
+          CORBA::String newior = ImplRepo->server_is_running ("simpserv", 
+                                                                  server_object, 
+                                                                  ping_object, 
+                                                                  TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", this->orb_manager_.orb ()->object_to_string (server_object, env)));
+            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", newior));
 
           if (this->ior_output_file_)
             {
-              ACE_OS::fprintf (this->ior_output_file_, "%s", this->orb_manager_.orb ()->object_to_string (server_object, env));
+              ACE_OS::fprintf (this->ior_output_file_, "%s", newior);
               ACE_OS::fclose (this->ior_output_file_);
             }
         }
       else
       {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", str.in()));
+            ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", server_str.in()));
 
           if (this->ior_output_file_)
             {
-              ACE_OS::fprintf (this->ior_output_file_, "%s", str.in());
+              ACE_OS::fprintf (this->ior_output_file_, "%s", server_str.in());
               ACE_OS::fclose (this->ior_output_file_);
             }
       }
@@ -177,7 +189,7 @@ Server_i::register_with_ir (void)
     proc_opts.environment_ = CORBA::string_dup ("");
     proc_opts.working_directory_ = CORBA::string_dup ("");
 
-    ImplRepo->register_server ("Simple_Server", proc_opts, TAO_TRY_ENV);
+    ImplRepo->register_server ("simpserv", proc_opts, TAO_TRY_ENV);
   }
   TAO_CATCHANY
   {
