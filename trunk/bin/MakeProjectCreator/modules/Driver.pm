@@ -281,7 +281,7 @@ sub run {
         print STDERR "Unable to process: $file\n";
         $status++;
       }
-      print "\r  End Time: " . scalar(localtime(time())) . "\n";
+      print "  End Time: " . scalar(localtime(time())) . "\n";
     }
   }
 
@@ -292,7 +292,7 @@ sub run {
 sub progress {
   ## This method will be called before each output
   ## file (or set of output files in vc6's case) is written.
-  print "\r$progress[$index]";
+  print "$progress[$index]\r";
   $index++;
   if ($index > $#progress) {
     $index = 0;

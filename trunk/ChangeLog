@@ -1,3 +1,24 @@
+Tue Jul 30 08:14:34 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Added an error check for invalid inheritance syntax.
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Changed the progress indicator to allow for cleaner output
+          when an error occurs.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Remove duplicate libs, libpaths and includes when addition or
+          subtraction is involved.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Cleaned up the template to make generated Makefiles a little more
+          consistent.
+
 Tue Jul 30 06:50:26 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Dynamic_Service.cpp: Moved ACE_Dynamic_Service::instance()

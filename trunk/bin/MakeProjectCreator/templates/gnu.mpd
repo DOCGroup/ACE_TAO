@@ -26,6 +26,7 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 <%endif%>
 
 <%gnu_source_files%>
+<%if(!exename)%>
 <%if(comps)%>
 
 <%if(compname)%>
@@ -34,9 +35,6 @@ CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
 <%foreach(comps)%>
 ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
 <%endfor%>
-<%if(exename)%>
-BIN = $(BIN_UNCHECKED)
-<%endif%>
 <%if(staticname)%>
 LIB   = $(LIB_UNCHECKED)
 <%endif%>
@@ -70,6 +68,7 @@ else
 endif
 <%endif%>
 <%endif%>
+<%endif%>
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -78,23 +77,25 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
-<%if(!comps)%>
+<%if(exename)%>
 
+<%if(compname)%>
+CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
+<%endif%>
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
 <%endfor%>
 <%foreach(avoids)%>
-ifeq ($(<%avoid%>),0)
+ifneq ($(<%avoid%>),1)
 <%endfor%>
-<%if(exename)%>
+<%foreach(comps)%>
+ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
+<%endfor%>
 BIN    = $(BIN_UNCHECKED)
-<%endif%>
-<%foreach(avoids requires)%>
+<%foreach(avoids requires comps)%>
 endif
 <%endfor%>
-<%endif%>
 
-<%if(exename)%>
 OBJS   = $(addsuffix .o, <%notdirfiles%>)
 SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
