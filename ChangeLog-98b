@@ -1,3 +1,15 @@
+Tue Oct 06 09:53:22 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-fsu-pthread.h,config-mit-pthread.h,config-mvs.h,
+          config-sco-5.0.0-mit-pthread.h,config-tandem.h,README:
+          removed ACE_HAS_YIELD_VOID_PTR because it's no longer used.
+          Thanks to Ossama for reporting this.
+
+        * config-dgux-4.x-ghs.h,config-hpux-10.x.h,config-mit-pthread.h,
+          config-mvs.h,config-sco-5.0.0-mit-pthread.h,config-tandem.h,README:
+          removed ACE_LACKS_KEYDELETE because it's no longer used.  Thanks to
+          Ossama for reporting this.
+
 Tue Oct 06 03:36:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.48 released.
@@ -8,17 +20,17 @@ Tue Oct 06 02:53:28 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Oct  6 02:16:01 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.cpp: 
+        * ace/Asynch_Acceptor.cpp:
 
-	* ace/Asynch_IO.cpp (handle_input):
+        * ace/Asynch_IO.cpp (handle_input):
 
-	* ace/Proactor.cpp: Changed the behavior of the POSIX
-	implementation of Asynch_Accept further more to make it behave
-	exactly like the NT implementation. The Message Block now will
-	contain <Local Address, Remote Addess> in that order as it looks
-	in NT. THANKS a lot to Irfan for this change, so things will be
-	robust even if Asynch_Accpet is used directly not only through
-	Asynch_Acceptor. 
+        * ace/Proactor.cpp: Changed the behavior of the POSIX
+        implementation of Asynch_Accept further more to make it behave
+        exactly like the NT implementation. The Message Block now will
+        contain <Local Address, Remote Addess> in that order as it looks
+        in NT. THANKS a lot to Irfan for this change, so things will be
+        robust even if Asynch_Accpet is used directly not only through
+        Asynch_Acceptor.
 
 Mon Oct 05 23:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -26,12 +38,12 @@ Mon Oct 05 23:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Oct  5 23:19:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (fork): Changed to use fork1 when ACE_HAS_STHREAD is
-	  defined.  Otherwise, file descriptors get messed up and socket
-	  connections get lost after exec'ing a new program.  Generally
-	  speaking, you should not simply fork a multi-threaded program
-	  without calling exec ().  On pthread compliant platform, fork
-	  does what fork1 does on solaris thread.
+        * ace/OS.cpp (fork): Changed to use fork1 when ACE_HAS_STHREAD is
+          defined.  Otherwise, file descriptors get messed up and socket
+          connections get lost after exec'ing a new program.  Generally
+          speaking, you should not simply fork a multi-threaded program
+          without calling exec ().  On pthread compliant platform, fork
+          does what fork1 does on solaris thread.
 
 Mon Oct 05 21:21:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
