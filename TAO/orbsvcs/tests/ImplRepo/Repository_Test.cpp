@@ -13,7 +13,8 @@ int main (int argc, char *argv[])
 
   new_rec.comm_line = "cl value";
   new_rec.env = "env value";
-  new_rec.ior = "ior value";
+  new_rec.host = 100;
+  new_rec.port = 1;
   new_rec.ping_ior = "ping_ior value";
   new_rec.wdir = "wdir value";
 
@@ -34,13 +35,12 @@ int main (int argc, char *argv[])
     cout << "Command line: " << rec.comm_line << endl;
     cout << "Environment: " << rec.env << endl;
     cout << "Working directory: " << rec.wdir << endl;
-    cout << "IOR: " << rec.ior << endl;
+    cout << "Host and Port: " << rec.host << ":" << rec.port << endl;
     cout << "Ping IOR: " << rec.ping_ior << endl;
 
     delete [] rec.comm_line;
     delete [] rec.env;
     delete [] rec.wdir;
-    delete [] rec.ior;
     delete [] rec.ping_ior;
   }
 
