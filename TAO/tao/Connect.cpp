@@ -776,7 +776,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
         {
           // No exception but some kind of error, yet a response is
           // required.
-          if (TAO_orbdebug)
+          if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
                         "TAO: (%P|%t) %s: closing conn, no exception, "
                         "but expecting response\n",
@@ -789,7 +789,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
     {
       // No exception, no response expected, but an error ocurred,
       // close the socket.
-      if (TAO_orbdebug)
+      if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     "TAO: (%P|%t) %s: closing conn, no exception, "
                     "but expecting response\n",

@@ -520,7 +520,8 @@ TAO_GIOP::recv_message (TAO_Transport *transport,
             case 0:
               if (TAO_orbdebug)
                 ACE_DEBUG ((LM_DEBUG,
-                            "(%t) End of connection, transport handle %d\n",
+                            "TAO (%P|%t) GIOP::recv_message "
+                            "end of connection, transport handle %d\n",
                             transport->handle ()));
               return TAO_GIOP::EndOfFile;
               // @@ should probably find some way to report this without
@@ -531,7 +532,7 @@ TAO_GIOP::recv_message (TAO_Transport *transport,
             case -1: // error
               if (TAO_orbdebug)
                 ACE_DEBUG ((LM_ERROR,
-                            "(%P|%t) GIOP::recv_message header %p\n",
+                            "TAO (%P|%t) GIOP::recv_message header %p\n",
                             "read_buffer"));
               break;
               /* NOTREACHED */
@@ -539,7 +540,7 @@ TAO_GIOP::recv_message (TAO_Transport *transport,
             default:
               if (TAO_orbdebug)
                 ACE_DEBUG ((LM_ERROR,
-                            "(%P|%t) GIOP::recv_message header read failed, "
+                            "TAO (%P|%t) GIOP::recv_message header read failed, "
                             "only %d of %d bytes\n",
                             len,
                             header_len));

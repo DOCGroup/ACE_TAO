@@ -189,9 +189,10 @@ TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core *orb_core,
       this->expecting_response_ = 0;
       this->calling_thread_ = ACE_OS::NULL_thread;
 
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - failed request for <%x>\n",
-                  this->transport_));
+      //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - failed request for <%x>\n",
+      //this->transport_));
     }
+  return result;
 }
 
 int
@@ -234,8 +235,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
     {
       // = Wait as a follower.
 
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (follower) on <%x>\n",
-                  this->transport_));
+      //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (follower) on <%x>\n",
+      //this->transport_));
 
       // wait until we have input available or there is no leader, in
       // which case we must become the leader anyway....
@@ -265,8 +266,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
                     "remove_follower failed for <%x>\n", cond));
 
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
-                  this->reply_received_, this->transport_));
+      //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
+      //this->reply_received_, this->transport_));
 
       // Now somebody woke us up to become a leader or to handle
       // our input. We are already removed from the follower queue.
@@ -318,14 +319,14 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
   int result = 0;
 
-  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
-              this->transport_));
+  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
+  //this->transport_));
 
   while (result >= 0 && this->reply_received_ == 0)
     result = orb_core->reactor ()->handle_events ();
 
-  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
-              this->transport_));
+  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
+  //this->transport_));
 
   // Re-acquire the lock.
   if (ace_mon.acquire () == -1)

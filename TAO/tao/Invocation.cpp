@@ -772,10 +772,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // Wait for the reply. We should wait till we receive the reply
   // fully.
   // @@ Check for return value -1 here !!! (Alex).
-  int reply_error = 0;
-
-  while (!this->transport_->message_received () && reply_error == 0)
-    reply_error = this->transport_->wait_for_reply ();
+  int reply_error = this->transport_->wait_for_reply ();
 
   if (reply_error == -1)
     {
