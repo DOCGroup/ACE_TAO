@@ -30,6 +30,7 @@ CUBIT_SVR_OBJS = cubitC.o \
 		 cubitS.o \
 		 Cubit_Server.o \
 		 Cubit_Client.o \
+		 Cubit_i.o \
 		 server.o \
 		 RTI_IO.o \
 		 tmplinst.o
