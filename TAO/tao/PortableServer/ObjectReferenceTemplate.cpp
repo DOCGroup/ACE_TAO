@@ -11,8 +11,6 @@ ACE_RCSID (PortableServer,
            ObjectReferenceTemplate,
            "$Id$")
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-
 TAO_ObjectReferenceTemplate::
 TAO_ObjectReferenceTemplate (const char *server_id,
                              const char *orb_id,
@@ -96,5 +94,3 @@ TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInte
 TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */

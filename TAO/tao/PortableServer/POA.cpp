@@ -11,6 +11,8 @@
 # include "tao/PortableServer/ImplRepo_i.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#include "tao/StringSeqC.h"
+
 #include "tao/PortableServer/IORInfo.h"
 #include "tao/PortableServer/ObjectReferenceTemplate.h"
 #include "tao/PortableServer/ObjectReferenceFactory.h"
@@ -159,6 +161,8 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
   return request_processing_policy;
 }
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 void
 TAO_POA::set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory
                               *current_factory
@@ -178,8 +182,6 @@ TAO_POA::set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory
 
   this->obj_ref_factory_ = obj_ref_factory;
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_POA::TAO_POA (const TAO_POA::String &name,
                   TAO_POA_Manager &poa_manager,
