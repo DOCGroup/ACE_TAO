@@ -199,16 +199,16 @@ Headers_Map::operator[] (const char * const header) const
   return *item_ptr;
 }
 
-const int
+int
 Headers_Map::mapped (const char * const header) const
 {
   return this->find (header) != NULL;
 }
 
-Headers_Map::Map_Item * const
+Headers_Map::Map_Item *
 Headers_Map::find (const char * const header) const
 {
-  Headers_Map * const mutable_this = (Headers_Map * const)this;
+  Headers_Map * const mutable_this = (Headers_Map *)this;
 
   mutable_this->garbage.header_ = header;
   Headers_Map::Map_Item *mi_ptr =
@@ -220,7 +220,7 @@ Headers_Map::find (const char * const header) const
   return mi_ptr;
 }
 
-Headers_Map::Map_Item * const
+Headers_Map::Map_Item *
 Headers_Map::place (const char * const header)
 {
   this->map_[this->num_headers_++].header_ = ACE_OS::strdup(header);
