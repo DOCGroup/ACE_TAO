@@ -528,6 +528,10 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOP_IORC.cpp
 # ADD CPP /GR
 # End Source File
@@ -1384,6 +1388,10 @@ SOURCE=.\Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOP_IORC.h
 # End Source File
 # Begin Source File
@@ -2165,6 +2173,10 @@ SOURCE=.\Invocation.i
 # Begin Source File
 
 SOURCE=.\Invocation_Endpoint_Selectors.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_CodecC.i
 # End Source File
 # Begin Source File
 

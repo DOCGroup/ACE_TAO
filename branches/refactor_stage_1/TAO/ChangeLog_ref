@@ -1,3 +1,9 @@
+Mon Apr 14 17:10:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+
+	  Added IOP_IORC.* and IOP_CodecC.* to the project.
+
 Mon Apr 14 16:10:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
