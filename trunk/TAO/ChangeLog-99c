@@ -1,3 +1,15 @@
+Fri Oct  1 11:16:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+	  Return type code generation for functions in the
+	  header file were calling nested_type_name(), which
+	  would generate an ACE_NESTED_CLASS macro if necessary.
+	  This macro is for the benefit of MSVC, which has some
+	  namespace problems. But for return types, it works
+	  fine, the macro is not needed, and in some cases it was
+	  actually leaving out part of the scoped name that
+	  needed to be there.
+
 Fri Oct  1 10:23:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp:
