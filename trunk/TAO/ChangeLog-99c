@@ -1,7 +1,7 @@
 Tue Jun 29 20:37:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/configurations.html: Updated documentation for thread-pool
-	  concurrency policy.
+	  concurrency policy.  Thanks to Madhu Konety <madhu.konety@stdc.com> for motivating this.
 
 Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
