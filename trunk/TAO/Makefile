@@ -92,4 +92,4 @@ CHECK =
 release: INSTALL
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k tao -t $(REL) \
 	   -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)"  &&  \
-	 cd ..  &&  make releasetao
+	 cd ..  &&  $(MAKE) releasetao
