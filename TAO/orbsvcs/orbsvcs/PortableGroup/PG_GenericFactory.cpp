@@ -124,7 +124,7 @@ TAO_PG_GenericFactory::create_object (
   }
 
   {
-    int _todo_get_the_domain_id_from_somewhere_;
+    //    int _todo_get_the_domain_id_from_somewhere_;
   }
   const char * domain_id = "dummy-domain-id";
 
@@ -239,7 +239,7 @@ TAO_PG_GenericFactory::delete_object (
 
 //TODO - fix this code. Factory-ids and group-ids are now different
 {
-  int _todo_fix_temporarily_disabled_code_;
+  //  int _todo_fix_temporarily_disabled_code_;
 }
 #if 0
           PortableServer::ObjectId_var oid;
@@ -250,7 +250,7 @@ TAO_PG_GenericFactory::delete_object (
             oid.in ()
             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-#endif 0
+#endif
         }
     }
   else
@@ -312,16 +312,16 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
 
 void
 TAO_PG_GenericFactory::delete_member (
-  PortableGroup::ObjectGroupId group_id,
-  const PortableGroup::Location & location
-  ACE_ENV_ARG_DECL)
+  PortableGroup::ObjectGroupId ,
+  const PortableGroup::Location &
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
 
   //TODO - Fix this code. The original implementation for the load balancer assumed
   //       that the factory-creation-id was the same as the object-group-id. This
   //       is not longer true. The find below is supposed to be a factory-creation-id.
 {
-  int _todo_fix_temporarily_disabled_code_;
+  //  int _todo_fix_temporarily_disabled_code_;
 }
   return;
 
@@ -600,17 +600,17 @@ TAO_PG_GenericFactory::process_criteria (
 
 void
 TAO_PG_GenericFactory::check_minimum_number_members (
-  PortableGroup::ObjectGroup_ptr object_group,
-  PortableGroup::ObjectGroupId group_id,
-  const char * type_id
-  ACE_ENV_ARG_DECL)
+  PortableGroup::ObjectGroup_ptr ,
+  PortableGroup::ObjectGroupId ,
+  const char *
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
 
   //TODO - Fix this code. The original implementation for the load balancer assumed
   //       that the factory-creation-id was the same as the object-group-id. This
   //       is not longer true. The find below is supposed to be a factory-creation-id.
 {
-  int _todo_fix_temporarily_disabled_code_;
+  //  int _todo_fix_temporarily_disabled_code_;
 }
   return;
 
