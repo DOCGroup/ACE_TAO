@@ -746,10 +746,12 @@ Wed Nov 13 14:15:33 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Nov 13 14:30:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 
-	* Repeated ChangeLogTag: Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
+	* Repeated ChangeLogTag: Tue Nov 12 12:37:18 2002  Pradeep Gore
+	  <pradeep@oomworks.com> 
 	* orbsvcs/orbsvcs/CosNotification.dsp:
 	  Updated.
-	* Repeated only the removal of files as per ChangeLogTag: Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
+	* Repeated only the removal of files as per ChangeLogTag: Mon Nov
+	  11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com> 
 
 	* orbsvcs/orbsvcs/Notify/Object.h:
 	* orbsvcs/orbsvcs/Notify/Object.cpp:
@@ -1118,8 +1120,9 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Removed code that depended the Dispatch_Observer.
 
 	* orbsvcs/orbsvcs/Notify/EventType.h:
-	* orbsvcs/orbsvcs/Notify/EventType.cpp:
-	  Added a <dump> debugging helper method that prints the contents of the event type.
+	* orbsvcs/orbsvcs/Notify/EventType.cpp: 
+	  Added a <dump> debugging helper method that prints the contents
+	  of the event type. 
 
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
@@ -1184,9 +1187,9 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
 	* orbsvcs/orbsvcs/Notify/Proxy.h:
-	  - Removed added_, removed_ data members, <type_added> and <type_removed> code because
-	  subscription/offer_change handling logic has been
-	  simplified.
+	  - Removed added_, removed_ data members, <type_added> and
+	  <type_removed> code because subscription/offer_change handling
+	  logic has been simplified.
 	  - Added <types_changed> method that enqueues a
 	  TAO_NS_Method_Request_Updates object in the Proxys worker task queue.
 	  - Renamed the <admin_subscription> to
@@ -1515,8 +1518,8 @@ Thu Nov  7 06:44:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/tests/Security/Secure_Invocation/Makefile.bor:
         * orbsvcs/tests/Security/Secure_Invocation/client.bor:
         * orbsvcs/tests/Security/Secure_Invocation/server.bor:
-          Added these new BCB makefiles. Thanks to Oleg Kraynov <mustafa@gema.ru>
-          for creating these.
+          Added these new BCB makefiles. Thanks to Oleg Kraynov
+	  <mustafa@gema.ru> for creating these.
 
 Wed Nov  6 11:43:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -1554,7 +1557,8 @@ Tue Nov 05 17:32:22 2002  Pradeep Gore  <pradeep@oomworks.com>
 Tue Nov 05 12:01:25 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
-	  ENV variable was being used in <init>, changed it back to ACE_ENV_ARG_DECL.
+	  ENV variable was being used in <init>, changed it back to
+	  ACE_ENV_ARG_DECL. 
 
 Tue Nov  5 08:28:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -1615,7 +1619,8 @@ Mon Nov  4 19:03:12 CST 2002 Pradeep Gore  <pradeep@oomworks.com>
           Added missing initialization of updates_off_ data member.
 
         * orbsvcs/orbsvcs/Notify/Service.h:
-          Defined the string name for the Notify_Default_Event_Manager_Objects_Factory.
+          Defined the string name for the
+	  Notify_Default_Event_Manager_Objects_Factory. 
 
         * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
@@ -2168,7 +2173,7 @@ Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1284 for more
 	details. This fix does the following
 
-	- The invation class selects a timeout from the two options that
+	- The invocation class selects a timeout from the two options that
 	  it has access to, viz. a user defined timeouts for connection
 	  establishment or the roundtrip timeout defined by the user.
 
@@ -2548,14 +2553,14 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         - Fixes bugs related to Notification Object Lifecycle,
         - Fixes bugs related to incorrect ID assignments,
         - Fixes implementation of SequenceProxys and Event Batch.
-        - Contains base framwork for adding RT-CORBA extensions.
+        - Contains base framework for adding RT-CORBA extensions.
 
         Added Files:
         * orbsvcs/orbsvcs/NotifyExt.idl:
 	  Defines extensions to The Notification Service to support
-	  threadpools. 
-	  The threadpool parameters are passed to the set_qos method as QoS name-value pair. 
-	  For the Cos Notify, a threadpool is created as an ACE_Task object.
+	  threadpools. The threadpool parameters are passed to the set_qos
+	  method as QoS name-value pair. For the Cos Notify, a threadpool
+	  is created as an ACE_Task object. 
 
 	* orbsvcs/orbsvcs/Notify_Forwarder.idl:
 	  An internal interface to context switch the event propagation
@@ -2585,7 +2590,8 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Builder.cpp:
         * orbsvcs/orbsvcs/Notify/Builder.h:
         * orbsvcs/orbsvcs/Notify/Builder.inl :
-	  Builder for the EventChannelFactory, EventChannel, Admin and proxy objects.
+	  Builder for the EventChannelFactory, EventChannel, Admin and
+	  proxy objects. 
     
         * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.cpp :
         * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.h:
@@ -2609,9 +2615,10 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Container_T.cpp:
         * orbsvcs/orbsvcs/Notify/Container_T.h :
         * orbsvcs/orbsvcs/Notify/Container_T.inl:
-	  Base class for the Factory-Container objects in Notify viz. Factory, Channel and Admin objects.
-	  This class manages the lifetimes of the POA's for activating the
-	  EC objects as well as the POA for activating the Proxys.
+	  Base class for the Factory-Container objects in Notify
+	  viz. Factory, Channel and Admin objects. This class manages the
+	  lifetimes of the POA's for activating the EC objects as well as
+	  the POA for activating the Proxys. 
 	
         * orbsvcs/orbsvcs/Notify/Destroy_Callback.h :
           Callback for each Notify Object that supports the <release>
@@ -2670,13 +2677,13 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Event_Map_T.cpp :
         * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
         * orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
-  	 Template definition of the lookup data structure that maps
-	 EventTypes to recipient lists.
+  	  Template definition of the lookup data structure that maps
+	  EventTypes to recipient lists.
 
         * orbsvcs/orbsvcs/Notify/Factory.cpp :
         * orbsvcs/orbsvcs/Notify/Factory.h:
         * orbsvcs/orbsvcs/Notify/Factory.inl:
-         An default factory that creates Notify objects.
+          An default factory that creates Notify objects.
 
         * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp :
         * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
@@ -2816,21 +2823,21 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
         * orbsvcs/orbsvcs/Notify/QoSProperties.h:
         * orbsvcs/orbsvcs/Notify/QoSProperties.inl:
-        Container of the common QoS properties supported by the
-        Notification.
+          Container of the common QoS properties supported by the
+          Notification.
 
         * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
         * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
         * orbsvcs/orbsvcs/Notify/Reactive_Task.inl:
-        A worker task that executes the command object in the context
-        of the caller thread. 
+          A worker task that executes the command object in the context
+          of the caller thread. 
 
         * orbsvcs/orbsvcs/Notify/Refcountable.cpp:
         * orbsvcs/orbsvcs/Notify/Refcountable.h:
         * orbsvcs/orbsvcs/Notify/Refcountable.inl:
-        A base class for Notify Objects that wish to be refcounted.
-        If a destroy_callback is supplied, it is invoked when the
-        ref. count falls to 0.
+          A base class for Notify Objects that wish to be refcounted. 
+          If a destroy_callback is supplied, it is invoked when the
+          ref. count falls to 0.
 
         * orbsvcs/orbsvcs/Notify/Service.h :
 	  Interface that defines a ACE_Service_Object for clients to
@@ -2841,31 +2848,31 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp:
         * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h:
         * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
-        Helper class for propagating Admin level subscription changes
-        to proxys.
+	  Helper class for propagating Admin level subscription changes
+          to proxys.
 
         * orbsvcs/orbsvcs/Notify/Supplier.cpp:
         * orbsvcs/orbsvcs/Notify/Supplier.h:
         * orbsvcs/orbsvcs/Notify/Supplier.inl:
-        A base wrapper class for encapsulation the remote supplier
-        that has connect to a proxy.  
+          A base wrapper class for encapsulation the remote supplier
+          that has connect to a proxy.  
 
         * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
         * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
         * orbsvcs/orbsvcs/Notify/SupplierAdmin.inl:
-        Supplier Admin implementation.
+          Supplier Admin implementation.
 
         * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
         * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
         * orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl:
-        A worker task that creates a thread pool and executes the
-        enqueued Method_Request command objects in the worker thread
-        context.
+          A worker task that creates a thread pool and executes the 
+          enqueued Method_Request command objects in the worker thread 
+          context.
 
         * orbsvcs/orbsvcs/Notify/Types.cpp
         * orbsvcs/orbsvcs/Notify/Types.h:
         * orbsvcs/orbsvcs/Notify/Types.inl:
-        Classthe defines the commonly used Types in Notification.
+          Class that defines the commonly used Types in Notification.
 
         * orbsvcs/orbsvcs/Notify/Worker_Task.cpp:
         * orbsvcs/orbsvcs/Notify/Worker_Task.h:
@@ -2970,20 +2977,20 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.inl:
-        Wrapper to manage the StructuredSupplier that connects to the
-        Structured Consumer Proxy.
+          Wrapper to manage the StructuredSupplier that connects to the
+          Structured Consumer Proxy.
 
         * orbsvcs/Notify_Service/Notify_Server.cpp:
         * orbsvcs/Notify_Service/Notify_Service.cpp:
         * orbsvcs/Notify_Service/Notify_Service.h:
         * orbsvcs/Notify_Service/svc.conf:
 
-        Changes to obtain the Notification Factory via Service Object.
+          Changes to obtain the Notification Factory via Service Object.
 
         * orbsvcs/orbsvcs/CosNotification.dsp:
         * orbsvcs/orbsvcs/Makefile.CosNotification:
 
-        New source and idl files added.
+          New source and idl files added.
 
 Sat Oct 26 14:44:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -3106,8 +3113,9 @@ Fri Oct 25 09:49:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * examples/OBV/Typed_Events/Event_Types_impl.cpp:
 
-          Added missing .in() in an assignment of _var class contents to a pointer,
-          and 'this->' in several places where a member variable is referenced.
+          Added missing .in() in an assignment of _var class contents to a
+	  pointer,  and 'this->' in several places where a member variable
+	  is referenced. 
 
 Thu Oct 24 19:48:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -3564,7 +3572,7 @@ Sat Oct 19 09:47:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/orbsvcs/Makefile: Prevent ImplRepo from being compiled
 	  in minimum_corba setting. The fix "Fri Oct 18 15:52:11 2002
 	  Priyanka Gontla  <pgontla@ociweb.com>" seems goofy. Need to get
-	  Criag and Priyanka to take a look.
+	  Craig and Priyanka to take a look.
 
 Sat Oct 19 08:40:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -3601,10 +3609,8 @@ Fri Oct 18 22:23:53 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
 Fri Oct 18 16:49:04 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
-	*
-	orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/
-	run_test.pl:
-	Added the file to the new directory created for the test.
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+	  Added the file to the new directory created for the test.
 
 Fri Oct 18 16:11:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
