@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Servant_Base.h"
-#include "POA.h"
-#include "Operation_Table.h"
+#include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Operation_Table.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
@@ -139,13 +139,6 @@ TAO_ServantBase::_find (const char *opname,
   return optable_->find (opname, skelfunc, st, length);
 }
 
-/*int
-TAO_ServantBase::_bind (const char *opname,
-                        const TAO_Skeleton skel_ptr)
-{
-  return optable_->bind (opname, skel_ptr);
-}
-*/
 TAO_Stub *
 TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -337,8 +330,8 @@ TAO_RefCountServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     delete this;
 }
 
-long
-TAO_RefCountServantBase::_ref_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+CORBA::ULong
+TAO_RefCountServantBase::_refcount_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->ref_count_.value ();
 }
@@ -512,10 +505,3 @@ TAO_ServantBase_var::_retn (void)
   return retval;
 }
 
-void
-TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
-                                  void *
-                                  ACE_ENV_ARG_DECL)
-{
-  ACE_THROW (CORBA::BAD_OPERATION ());
-}
