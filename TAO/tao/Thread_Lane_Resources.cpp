@@ -20,16 +20,19 @@ ACE_RCSID(tao, Thread_Lane_Resources, "$Id$")
 
 TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
                                                       TAO_New_Leader_Generator *new_leader_generator)
-  : orb_core_ (orb_core),
-    acceptor_registry_ (0),
-    connector_registry_ (0),
-    transport_cache_ (0),
-    leader_follower_ (0),
-    new_leader_generator_ (new_leader_generator),
-    input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0),
-    input_cdr_msgblock_allocator_ (0),
-    transport_message_buffer_allocator_ (0)
+  : orb_core_ (orb_core)
+    , acceptor_registry_ (0)
+    , connector_registry_ (0)
+    , transport_cache_ (0)
+    , leader_follower_ (0)
+    , new_leader_generator_ (new_leader_generator)
+    , input_cdr_dblock_allocator_ (0)
+    , input_cdr_buffer_allocator_ (0)
+    , input_cdr_msgblock_allocator_ (0)
+    , transport_message_buffer_allocator_ (0)
+    , output_cdr_dblock_allocator_ (0)
+    , output_cdr_buffer_allocator_ (0)
+    , output_cdr_msgblock_allocator_ (0)
 {
   // Create the transport cache.
   ACE_NEW (this->transport_cache_,

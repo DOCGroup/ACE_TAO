@@ -17,8 +17,6 @@
 
 . Test case for forwarded objects in collocated mode being remote
 
-. Remove tao_queryinterface
-
 . Recursive location forwards is broken still.
 
 . Oneways and location forwards
@@ -40,8 +38,6 @@
 . Move traits classes in the header file to the cpp file.
 
 . Collocation and AMI
-
-. Try a build with MESSAGING == 0;
 
 . Real-time CORBA testing
 
