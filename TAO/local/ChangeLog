@@ -1,3 +1,9 @@
+Wed Nov 19 14:53:25 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * Scheduler.cpp: #include Scheduler.h instead of Scheduler_Internal.h.
+          (export): changed loop index from u_int to int to avoid
+          signed/unsigned comparison.
+
 Tue Nov 18 13:26:32 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Latency.cpp: 
