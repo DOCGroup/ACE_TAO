@@ -56,6 +56,12 @@ ACE_Bounded_Stack<T>::top (T &item) const
     return 0;
 }
 
+template <class T> ACE_INLINE size_t
+ACE_Bounded_Stack<T>::size (void) const
+{
+  return this->size_;
+}
+
 //----------------------------------------
 
 template <class T, size_t SIZE> ACE_INLINE int 
@@ -111,6 +117,12 @@ ACE_Fixed_Stack<T, SIZE>::top (T &item) const
     return 0;
 }
 
+template <class T, size_t SIZE> ACE_INLINE size_t
+ACE_Fixed_Stack<T, SIZE>::size (void) const
+{
+  return this->size_;
+}
+
 //----------------------------------------
 
 template <class T> ACE_INLINE int 
@@ -141,12 +153,18 @@ ACE_Unbounded_Stack<T>::is_full (void) const
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Unbounded_Queue<T>::size (void) const
+ACE_Unbounded_Stack<T>::size (void) const
 {
   return this->cur_size_;
 }
 
 // --- 
+
+template <class T> ACE_INLINE size_t
+ACE_Unbounded_Queue<T>::size (void) const
+{
+  return this->cur_size_;
+}
 
 template <class T> ACE_INLINE int 
 ACE_Unbounded_Queue<T>::is_empty (void) const

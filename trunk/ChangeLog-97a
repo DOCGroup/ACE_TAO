@@ -1,5 +1,9 @@
 Thu May 08 01:12:59 1997    <irfan@TWOSTEP>
 
+	* Containers: Added size methods to stack containers and
+ 	  consolidated friendship between ACE_Unbounded_Stack_Iterator and
+ 	  ACE_Unbounded_Stack
+
 	* tests/Message_Block_Test.cpp: I was incorrect about each data
 	  block having its own lock. Since *many* data blocks can share
 	  the same lock, for the case of message block chains, we would
