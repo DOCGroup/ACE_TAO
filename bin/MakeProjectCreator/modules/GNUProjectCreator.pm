@@ -37,23 +37,6 @@ sub sort_files {
 }
 
 
-sub translate_value {
-  my($self) = shift;
-  my($key)  = shift;
-  my($val)  = shift;
-
-  if ($key eq 'depends' && $val ne '') {
-    my($arr) = $self->create_array($val);
-    $val = '';
-    foreach my $entry (@$arr) {
-      $val .= '"' . $self->project_file_name($entry) . '" ';
-    }
-    $val =~ s/\s+$//;
-  }
-  return $val;
-}
-
-
 sub convert_slashes {
   #my($self) = shift;
   return 0;
@@ -141,7 +124,7 @@ sub fill_value {
   }
   elsif ($name eq 'comptarget') {
     foreach my $name (keys %$names) {
-      if ($name ne 'default') {
+      if (defined $compscript{$name}) {
         if (!defined $value) {
           $value = '';
         }
@@ -155,21 +138,21 @@ sub fill_value {
   }
   elsif ($name eq 'compclean') {
     foreach my $name (keys %$names) {
-      if ($name ne 'default') {
+      if (defined $compscript{$name}) {
         $value = 'compclean';
         last;
       }
     }
   }
   elsif ($name eq 'notdirfiles') {
-    $value = "\$(notdir \$(FILES))";
+    $value = '$(notdir $(FILES))';
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
       foreach my $key (keys %$comps) {
         my($arr) = $$comps{$key};
         foreach my $file (@$arr) {
           if ($file =~ /^\.\.\//) {
-            $value = "\$(FILES)";
+            $value = '$(FILES)';
             last;
           }
         }

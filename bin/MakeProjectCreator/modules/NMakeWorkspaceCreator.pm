@@ -31,8 +31,8 @@ sub crlf {
 
 
 sub workspace_file_name {
-  #my($self) = shift;
-  return 'Makefile';
+  my($self) = shift;
+  return $self->get_modified_workspace_name('Makefile', '');
 }
 
 

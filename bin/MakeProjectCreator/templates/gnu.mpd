@@ -160,16 +160,16 @@ endif
 <%endif%>
 <%if(dllflags)%>
 ifeq ($(shared_libs),1)
-ifneq ($(SHLIB),)
-CPPFLAGS     +=<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
-endif
+  ifneq ($(SHLIB),)
+    CPPFLAGS +=<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
+  endif
 endif
 <%endif%>
 <%if(libflags)%>
 ifeq ($(static_libs),1)
-ifneq ($(LIB),)
-CPPFLAGS     +=<%foreach(libflags)%> -D<%libflag%><%endfor%>
-endif
+  ifneq ($(LIB),)
+    CPPFLAGS +=<%foreach(libflags)%> -D<%libflag%><%endfor%>
+  endif
 endif
 <%endif%>
 
