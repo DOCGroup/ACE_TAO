@@ -7,7 +7,6 @@ Tue Nov  5 14:26:32 1996  David Levine  <levine@cs.wustl.edu>
 	  <m_rueger@SYSCOMP.DE> for originally creating run_tests.sh, and
 	  for maintaining it, and to Alan Stewart <axs2@osi.com> for
 	  suggesting fixes/enhancements.
-	* tests/run_tests.ksh:  added, at suggestion of Alan Stewart
 	* tests/Time_Service_Test.cpp and Tokens_Test.cpp:  changed to
 	  return 0 on success instead of 42
 
