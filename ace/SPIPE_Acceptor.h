@@ -82,9 +82,17 @@ private:
   int create_new_instance (int perms = 0);
 
 #if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-  ACE_OVERLAPPED overlapped_;
+  // On Windows, the handle maintained in the ACE_IPC_SAP class is the
+  // event handle from event_. The pipe handle is useless for telling
+  // when a pipe connect is done/ready, and it changes on each pipe
+  // acceptance, quite unlike other acceptor-type classes in ACE.
+  // This allows the get_handle()-obtained handle to be used for
+  // registering with the reactor (albeit for signal, not input)
+  // to tell when a pipe accept is done.
+  ACE_OVERLAPPED   overlapped_;
   ACE_Manual_Event event_;
-  int already_connected_;
+  ACE_HANDLE       pipe_handle_;
+  int              already_connected_;
 #endif /* ACE_WIN32 */
 
 };
