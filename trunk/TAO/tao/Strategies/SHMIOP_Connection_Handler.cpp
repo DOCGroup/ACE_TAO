@@ -24,8 +24,8 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
-ACE_RCSID (Strategies, 
-	   SHMIOP_Connection_Handler, 
+ACE_RCSID (Strategies,
+	   SHMIOP_Connection_Handler,
 	   "$Id$")
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
@@ -110,8 +110,8 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) SHMIOP connection from client")
-                  ACE_LIB_TEXT ("<%s> on %d\n"),
+                  ACE_TEXT ("TAO (%P|%t) SHMIOP connection from client")
+                  ACE_TEXT ("<%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
 

@@ -119,10 +119,10 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
        if (TAO_debug_level > 0)
          {
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
-                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
-                       ACE_LIB_TEXT ("due to a hostname lookup ")
-                       ACE_LIB_TEXT ("failure.\n")));
+                       ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
+                       ACE_TEXT ("due to a hostname lookup ")
+                       ACE_TEXT ("failure.\n")));
          }
 
        return -1;
@@ -276,7 +276,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
                       ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
-                      ACE_LIB_TEXT("errno")));
+                      ACE_TEXT("errno")));
         }
 
       return 0;

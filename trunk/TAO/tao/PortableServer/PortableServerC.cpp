@@ -280,9 +280,9 @@ PortableServer::ForwardRequest::ForwardRequest (
 CORBA::TypeCode_ptr PortableServer::ForwardRequest::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::_tc_ForwardRequest;
 }
@@ -395,9 +395,9 @@ void PortableServer::NotAGroupObject::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::NotAGroupObject::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::_tc_NotAGroupObject;
 }
@@ -1656,9 +1656,9 @@ void PortableServer::POAManager::AdapterInactive::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POAManager::AdapterInactive::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POAManager::_tc_AdapterInactive;
 }
@@ -2494,9 +2494,9 @@ void PortableServer::POA::AdapterAlreadyExists::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::AdapterAlreadyExists::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_AdapterAlreadyExists;
 }
@@ -2595,9 +2595,9 @@ void PortableServer::POA::AdapterNonExistent::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::AdapterNonExistent::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_AdapterNonExistent;
 }
@@ -2714,9 +2714,9 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy (
 CORBA::TypeCode_ptr PortableServer::POA::InvalidPolicy::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_InvalidPolicy;
 }
@@ -2817,9 +2817,9 @@ void PortableServer::POA::NoServant::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::NoServant::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_NoServant;
 }
@@ -2920,9 +2920,9 @@ void PortableServer::POA::ObjectAlreadyActive::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::ObjectAlreadyActive::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_ObjectAlreadyActive;
 }
@@ -3021,9 +3021,9 @@ void PortableServer::POA::ObjectNotActive::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::ObjectNotActive::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_ObjectNotActive;
 }
@@ -3122,9 +3122,9 @@ void PortableServer::POA::ServantAlreadyActive::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::ServantAlreadyActive::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_ServantAlreadyActive;
 }
@@ -3223,9 +3223,9 @@ void PortableServer::POA::ServantNotActive::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::ServantNotActive::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_ServantNotActive;
 }
@@ -3324,9 +3324,9 @@ void PortableServer::POA::WrongAdapter::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::WrongAdapter::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_WrongAdapter;
 }
@@ -3425,9 +3425,9 @@ void PortableServer::POA::WrongPolicy::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::POA::WrongPolicy::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::POA::_tc_WrongPolicy;
 }
@@ -3671,9 +3671,9 @@ void PortableServer::Current::NoContext::_tao_decode (
 CORBA::TypeCode_ptr PortableServer::Current::NoContext::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::PortableServer::Current::_tc_NoContext;
 }

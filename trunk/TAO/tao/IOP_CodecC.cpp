@@ -434,9 +434,9 @@ namespace IOP
 CORBA::TypeCode_ptr IOP::Codec::FormatMismatch::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::IOP::Codec::_tc_FormatMismatch;
 }
@@ -535,9 +535,9 @@ void IOP::Codec::TypeMismatch::_tao_decode (
 CORBA::TypeCode_ptr IOP::Codec::TypeMismatch::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
 
   return ::IOP::Codec::_tc_TypeMismatch;
 }

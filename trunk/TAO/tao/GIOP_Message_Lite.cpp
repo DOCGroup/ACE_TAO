@@ -1618,7 +1618,7 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
                   ACE_TEXT ("%d data bytes, %s endian, <%s = %d> \n"),
                   ACE_TEXT_CHAR_TO_TCHAR(label),
                   len - TAO_GIOP_LITE_HEADER_LEN,
-                  (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_LIB_TEXT("my") : ACE_LIB_TEXT("other"),
+                  (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
                   ACE_TEXT_CHAR_TO_TCHAR (message_name),
                   *id));
 

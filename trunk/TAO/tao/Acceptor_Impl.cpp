@@ -166,9 +166,9 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
          {
            const ACE_TCHAR *error = 0;
            if (f->activate_server_connections ())
-             error = ACE_LIB_TEXT("could not activate new connection");
+             error = ACE_TEXT("could not activate new connection");
            else
-             error = ACE_LIB_TEXT("could not register new connection in the reactor");
+             error = ACE_TEXT("could not register new connection in the reactor");
 
            ACE_ERROR ((LM_ERROR,
                        "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "

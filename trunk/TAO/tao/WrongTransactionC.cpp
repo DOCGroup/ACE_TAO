@@ -51,7 +51,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::WrongTransaction::WrongTransaction (void)
@@ -134,7 +134,7 @@ void CORBA::WrongTransaction::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -147,7 +147,7 @@ void CORBA::WrongTransaction::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -155,10 +155,10 @@ void CORBA::WrongTransaction::_tao_decode (
 CORBA::TypeCode_ptr CORBA::WrongTransaction::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
-  
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
+
   return ::CORBA::_tc_WrongTransaction;
 }
 
@@ -196,5 +196,5 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

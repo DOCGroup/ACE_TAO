@@ -137,9 +137,9 @@ TAO_SCIOP_Connection_Handler::open (void*)
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof(local_as_string));
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT("TAO(%P|%t) - TAO_SCIOP_Connection_Handler::open, ")
-                      ACE_LIB_TEXT("Holy Cow! The remote addr and ")
-                      ACE_LIB_TEXT("local addr are identical (%s == %s)\n"),
+                      ACE_TEXT("TAO(%P|%t) - TAO_SCIOP_Connection_Handler::open, ")
+                      ACE_TEXT("Holy Cow! The remote addr and ")
+                      ACE_TEXT("local addr are identical (%s == %s)\n"),
                       remote_as_string, local_as_string));
         }
       return -1;
@@ -154,8 +154,8 @@ TAO_SCIOP_Connection_Handler::open (void*)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) - Connection_Handler::open, SCIOP ")
-                  ACE_LIB_TEXT ("connection to peer <%s> on %d\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Connection_Handler::open, SCIOP ")
+                  ACE_TEXT ("connection to peer <%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
 
@@ -284,7 +284,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT("(%P|%t) Listening port [%d] on [%s]\n"),
+                      ACE_TEXT("(%P|%t) Listening port [%d] on [%s]\n"),
                       listen_point.port,
                       ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
         }

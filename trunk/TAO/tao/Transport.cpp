@@ -45,11 +45,11 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
 {
   ACE_Log_Msg::instance ()->acquire ();
 
-#define DUMP_IOV_PREFIX  ACE_LIB_TEXT("Transport[") ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT("]::%s")
+#define DUMP_IOV_PREFIX  ACE_TEXT("Transport[") ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT("]::%s")
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("TAO (%P|%t) - ")
-              DUMP_IOV_PREFIX ACE_LIB_TEXT (", ")
-              ACE_LIB_TEXT ("sending %d buffers\n"),
+              ACE_TEXT ("TAO (%P|%t) - ")
+              DUMP_IOV_PREFIX ACE_TEXT (", ")
+              ACE_TEXT ("sending %d buffers\n"),
               id, ACE_TEXT_CHAR_TO_TCHAR (location), iovcnt));
 
   for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
@@ -63,9 +63,9 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) - ")
-                  DUMP_IOV_PREFIX ACE_LIB_TEXT (", ")
-                  ACE_LIB_TEXT ("buffer %d/%d has %d bytes\n"),
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  DUMP_IOV_PREFIX ACE_TEXT (", ")
+                  ACE_TEXT ("buffer %d/%d has %d bytes\n"),
                   id, ACE_TEXT_CHAR_TO_TCHAR(location),
                   i, iovcnt,
                   iov_len));
@@ -76,9 +76,9 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         {
           ACE_TCHAR header[1024];
           ACE_OS::sprintf (header,
-                           ACE_LIB_TEXT("TAO - ") DUMP_IOV_PREFIX ACE_LIB_TEXT(" (")
-                           ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT("/")
-                           ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT(")\n"),
+                           ACE_TEXT("TAO - ") DUMP_IOV_PREFIX ACE_TEXT(" (")
+                           ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT("/")
+                           ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT(")\n"),
                            id, location, offset, iov_len);
 
           len = iov_len - offset;
@@ -97,9 +97,9 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("TAO (%P|%t) - ")
-              DUMP_IOV_PREFIX ACE_LIB_TEXT (", ")
-              ACE_LIB_TEXT ("end of data\n"),
+              ACE_TEXT ("TAO (%P|%t) - ")
+              DUMP_IOV_PREFIX ACE_TEXT (", ")
+              ACE_TEXT ("end of data\n"),
               id, ACE_TEXT_CHAR_TO_TCHAR(location)));
 
   ACE_Log_Msg::instance ()->release ();
@@ -730,7 +730,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Transport[%d]::drain_queue_helper, "
                       "error during %p\n",
-                      this->id (), ACE_LIB_TEXT ("send()")));
+                      this->id (), ACE_TEXT ("send()")));
         }
 
       if (errno == EWOULDBLOCK || errno == EAGAIN)

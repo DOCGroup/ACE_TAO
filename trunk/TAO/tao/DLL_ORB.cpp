@@ -36,10 +36,10 @@ TAO_DLL_ORB::init (int /*argc*/, ACE_TCHAR *argv[])
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_WARNING,
-                  ACE_LIB_TEXT ("TAO (%P|%t) - The TAO_DLL_ORB class is ")
-                  ACE_LIB_TEXT ("deprecated.  See the class documentation\n")
-                  ACE_LIB_TEXT ("TAO (%P|%t) - `tao/DLL_ORB.h' for details ")
-                  ACE_LIB_TEXT ("explaining why this is so.\n")));
+                  ACE_TEXT ("TAO (%P|%t) - The TAO_DLL_ORB class is ")
+                  ACE_TEXT ("deprecated.  See the class documentation\n")
+                  ACE_TEXT ("TAO (%P|%t) - `tao/DLL_ORB.h' for details ")
+                  ACE_TEXT ("explaining why this is so.\n")));
     }
 
   // Make sure TAO's singleton manager is initialized, and set to not

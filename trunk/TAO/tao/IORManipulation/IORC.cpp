@@ -51,7 +51,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::EmptyProfileList::EmptyProfileList (void)
@@ -134,7 +134,7 @@ void TAO_IOP::EmptyProfileList::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -147,7 +147,7 @@ void TAO_IOP::EmptyProfileList::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -155,14 +155,14 @@ void TAO_IOP::EmptyProfileList::_tao_decode (
 CORBA::TypeCode_ptr TAO_IOP::EmptyProfileList::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
-  
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
+
   return ::TAO_IOP::_tc_EmptyProfileList;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::NotFound::NotFound (void)
@@ -245,7 +245,7 @@ void TAO_IOP::NotFound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -258,7 +258,7 @@ void TAO_IOP::NotFound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -266,14 +266,14 @@ void TAO_IOP::NotFound::_tao_decode (
 CORBA::TypeCode_ptr TAO_IOP::NotFound::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
-  
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
+
   return ::TAO_IOP::_tc_NotFound;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::Duplicate::Duplicate (void)
@@ -356,7 +356,7 @@ void TAO_IOP::Duplicate::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -369,7 +369,7 @@ void TAO_IOP::Duplicate::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -377,14 +377,14 @@ void TAO_IOP::Duplicate::_tao_decode (
 CORBA::TypeCode_ptr TAO_IOP::Duplicate::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
-  
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
+
   return ::TAO_IOP::_tc_Duplicate;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::Invalid_IOR::Invalid_IOR (void)
@@ -467,7 +467,7 @@ void TAO_IOP::Invalid_IOR::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -480,7 +480,7 @@ void TAO_IOP::Invalid_IOR::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -488,14 +488,14 @@ void TAO_IOP::Invalid_IOR::_tao_decode (
 CORBA::TypeCode_ptr TAO_IOP::Invalid_IOR::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
-  
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
+
   return ::TAO_IOP::_tc_Invalid_IOR;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::MultiProfileList::MultiProfileList (void)
@@ -578,7 +578,7 @@ void TAO_IOP::MultiProfileList::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -591,7 +591,7 @@ void TAO_IOP::MultiProfileList::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -599,10 +599,10 @@ void TAO_IOP::MultiProfileList::_tao_decode (
 CORBA::TypeCode_ptr TAO_IOP::MultiProfileList::_type (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
-  
+              ACE_TEXT ("This TAO-specific method is now")
+              ACE_TEXT (" deprecated and will be removed")
+              ACE_TEXT (" in future versions.\n")));
+
   return ::TAO_IOP::_tc_MultiProfileList;
 }
 
@@ -647,7 +647,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*TAO_IOP__TAO_TAO_IOR_Property_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -658,7 +658,7 @@ TAO_IOP::TAO_IOR_Property::TAO_IOR_Property (void)
 TAO_IOP::TAO_IOR_Property::~TAO_IOR_Property (void)
 {}
 
-void 
+void
 TAO_IOP::TAO_IOR_Property::_tao_any_destructor (void *_tao_void_pointer)
 {
   TAO_IOR_Property *_tao_tmp_pointer =
@@ -676,10 +676,10 @@ TAO_IOP::TAO_IOR_Property::_narrow (
     {
       return TAO_IOR_Property::_nil ();
     }
-  
+
   TAO_IOR_Property_ptr proxy =
     dynamic_cast<TAO_IOR_Property_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Property::_duplicate (proxy);
 }
 
@@ -693,10 +693,10 @@ TAO_IOP::TAO_IOR_Property::_unchecked_narrow (
     {
       return TAO_IOR_Property::_nil ();
     }
-  
+
   TAO_IOR_Property_ptr proxy =
     dynamic_cast<TAO_IOR_Property_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Property::_duplicate (proxy);
 }
 
@@ -707,7 +707,7 @@ TAO_IOP::TAO_IOR_Property::_duplicate (TAO_IOR_Property_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -792,12 +792,12 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*TAO_IOP__TAO_TAO_IOR_Manipulation_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
@@ -856,7 +856,7 @@ TAO_IOP::TAO_IOR_Manipulation::TAO_IOR_Manipulation (void)
 TAO_IOP::TAO_IOR_Manipulation::~TAO_IOR_Manipulation (void)
 {}
 
-void 
+void
 TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor (void *_tao_void_pointer)
 {
   TAO_IOR_Manipulation *_tao_tmp_pointer =
@@ -874,10 +874,10 @@ TAO_IOP::TAO_IOR_Manipulation::_narrow (
     {
       return TAO_IOR_Manipulation::_nil ();
     }
-  
+
   TAO_IOR_Manipulation_ptr proxy =
     dynamic_cast<TAO_IOR_Manipulation_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Manipulation::_duplicate (proxy);
 }
 
@@ -891,10 +891,10 @@ TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
     {
       return TAO_IOR_Manipulation::_nil ();
     }
-  
+
   TAO_IOR_Manipulation_ptr proxy =
     dynamic_cast<TAO_IOR_Manipulation_ptr> (_tao_objref);
-  
+
   return TAO_IOR_Manipulation::_duplicate (proxy);
 }
 
@@ -905,7 +905,7 @@ TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1098,7 +1098,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         TAO_IOP::TAO_IOR_Property
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         TAO_IOP::TAO_IOR_Property
@@ -1143,7 +1143,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         TAO_IOP::TAO_IOR_Manipulation
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         TAO_IOP::TAO_IOR_Manipulation
@@ -1160,7 +1160,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         TAO_IOP::TAO_IOR_Property
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         TAO_IOP::TAO_IOR_Property
@@ -1200,11 +1200,11 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         TAO_IOP::TAO_IOR_Manipulation
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         TAO_IOP::TAO_IOR_Manipulation
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
