@@ -19,8 +19,6 @@
 #include "tao/corbafwd.h"
 
 #include "tao/PolicyC.h"
-#include "tao/RTCORBAC.h"
-#include "tao/RT_Policy_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -5,7 +5,9 @@ ACE_INLINE
 TAO_Profile::TAO_Profile (CORBA::ULong tag)
   :  tag_ (tag),
      forward_to_ (0),
-     refcount_ (1)
+     refcount_ (1),
+     policy_list_(0),
+     are_policies_parsed_(0)
 {
 }
 

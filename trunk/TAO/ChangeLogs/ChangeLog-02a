@@ -1,3 +1,16 @@
+Sat Jun 03 11:55:23 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Policy_Factory.h
+	* tao/Policy_Factory.i
+
+	- Added guard to selecttively import and instantiate
+	RT-Corba related stuff.
+
+	* tao/Profile.i
+
+	- Modified constructor of Profile class.
+	 
+
 Sat Jun 03 04:17:38 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA:
