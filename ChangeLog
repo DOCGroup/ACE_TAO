@@ -1,3 +1,9 @@
+Mon Jul 21 08:59:14 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\UUID.cpp (get_systemtime): 
+
+	  Temporary fix to get the compiles rolling again.
+
 Mon Jul 21 01:56:44 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* ace/OS.h: 	
