@@ -949,32 +949,34 @@ ACE_recursive_mutex_state::~ACE_recursive_mutex_state (void)
   ACE_OS::thread_mutex_unlock (&mutex_.get_nesting_mutex ());
 }    
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+//ACE_TEMPLATE_METHOD_SPECIALIZATION int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
 { 
   return ACE_OS::cond_destroy (&this->cond_); 
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION 
+//ACE_TEMPLATE_METHOD_SPECIALIZATION 
 ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition (void) 
 { 
   this->remove (); 
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION 
+//ACE_TEMPLATE_METHOD_SPECIALIZATION 
 ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_Mutex &m)
   : mutex_ (m)
 { 
   ACE_OS::cond_init (&this->cond_); 
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int 
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+int 
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
 {
   return this->wait (this->mutex_, abstime);
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mutex, 
                                              const ACE_Time_Value *abstime)
 {
@@ -1001,7 +1003,8 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   return 0;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int 
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::signal (void)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
@@ -1010,7 +1013,8 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::signal (void)
   return ACE_OS::cond_signal (&this->cond_);
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int 
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast (void)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
@@ -1019,7 +1023,8 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast (void)
   return ACE_OS::cond_broadcast (&this->cond_);
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION ACE_Recursive_Thread_Mutex &
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_Recursive_Thread_Mutex &
 ACE_Condition<ACE_Recursive_Thread_Mutex>::mutex (void)
 {
   return this->mutex_;
