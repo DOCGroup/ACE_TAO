@@ -38,6 +38,11 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
         * include/makeinclude/rules.local.GNU: set SOEXT if it was not set,
           so that it's always non-null for make depend.
 
+        * ace/OS.h: #define ACE_THR_PRI_FIFO_DEF on all threaded platforms,
+          if not already defined in OS.h or in the individual platform config
+          file.  It should be used by applications for a default real-time
+          thread priority.
+
 Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
