@@ -44,16 +44,6 @@ namespace TAO
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
-
-    PortableServer::Servant
-    RequestProcessingStrategyAOMOnly::get_servant (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
-    }
-
     void
     RequestProcessingStrategyAOMOnly::set_servant (
       PortableServer::Servant /*servant*/
@@ -65,6 +55,15 @@ namespace TAO
     }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+    PortableServer::Servant
+    RequestProcessingStrategyAOMOnly::get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::WrongPolicy))
+    {
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
+    }
 
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyAOMOnly::locate_servant (

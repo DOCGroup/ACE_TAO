@@ -256,16 +256,16 @@ public:
                      PortableServer::POA::NoServant,
                      PortableServer::POA::WrongPolicy));
 
-  PortableServer::Servant get_servant_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
-
   void set_servant (PortableServer::Servant servant
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+  PortableServer::Servant get_servant_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::WrongPolicy));
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant
                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
