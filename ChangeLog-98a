@@ -1,3 +1,10 @@
+Sun Feb 01 12:09:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers.cpp (ACE_Ordered_MultiSet::insert and find):
+          expanded ITERATOR type of second argument, because g++ couldn't
+          deal with it.  It can in the class declaration in Containers.h,
+          so I didn't change that.
+
 Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (uname): Made it comform with Unicode.
