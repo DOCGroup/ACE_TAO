@@ -1,3 +1,73 @@
+Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i:
+
+	  CORBA 2.3 Updates:
+	
+	  No longer destroy the ORB_Core in the ORB's destructor.  Let the
+	  ORB_Table handle ORB_Core deallocation.  CORBA::ORB::destroy()
+	  will also destroy the ORB's underlying ORB_Core.  It is the
+	  user's responsibility to release an ORB.
+
+	  All ORB methods that access the ORB_Core in some way now check
+	  that the ORB_Core hasn't been shutdown or destroyed before
+	  continuing.
+	
+	  Moved exception and type code destruction to the ORB_Table since 
+	  exceptions must be kept around during the lifetime of the
+	  application.
+
+	  Summary of Changes:
+
+	  These changes allow code such as the following:
+
+	    {
+             ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
+            }
+            {
+	     ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
+	    }
+
+	  to work according to the spec, i.e. in both cases the ORBid
+	  "my_orb" refers to the same ORB.  The ORB must be explicitly
+	  destroyed by using its destroy() method before the ORBid can be
+	  reused for another ORB.  Here is an example:
+
+	    {
+               CORBA::ORB_var orb1 = CORBA::ORB_init (argc, argv, "my_orb");
+               orb1->destroy();
+
+               // "my_orb" ORB identifier can now be used to identify
+               // another ORB.
+	       CORBA::ORB_var orb2 = CORBA::ORB_init (argc, argv, "my_orb");
+	    }
+
+	  These changes also allow code such as the following to work:
+
+	    try
+	      {
+	         CORBA::ORB_var orb = CORBA::ORB_init ();
+
+	         // yadda, yadda
+	         // orb goes out of scope
+	      }
+	    catch (CORBA::Exception &e)
+	      {
+	         // Do something with exception `e'
+	      }
+
+	* tests/Makefile:
+	* tests/ORB_init/Makefile:
+	* tests/ORB_init/ORB_init.cpp:
+	* tests/ORB_init/README:
+
+	  Added a simple test that verifies that ORB initialization works
+	  as expected under the circumstances described above.
+
 Tue Sep 14 11:57:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp: Changed the use of the name
@@ -403,10 +473,10 @@ Wed Sep  8 14:03:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Wed Sep  8 14:00:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
 
-        * tao/ORB_Core.cpp: (ORB_init) changed to allow correct parsing.
+        * tao/ORB_Core.cpp: (init) changed to allow correct parsing.
           Problem: comparing and matching longer arguments with shorter
           flags. I moved the else if { } blocks for (-ORBDebug and
-          -ORBCOllocation) as both these flags were too early in the
+          -ORBCollocation) as both these flags were too early in the
           parsing loop and were eating their longer counterparts (ie:
           -ORBDebugLevel) was never reached.  Thanks to Michael Kircher
           for reporting this problem.

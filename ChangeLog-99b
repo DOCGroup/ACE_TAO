@@ -1,3 +1,14 @@
+Tue Sep 14 15:03:21 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* bin/run_all_list.pm:
+
+	  Added ORB_init test to the list of tests to run.
+
+	* configure.in:
+	* configure:
+
+	  Do not define ACE_USE_POLL, even if system poll() works.
+
 Tue Sep 14 11:02:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Hash_Map_With_Allocator_T.h:
