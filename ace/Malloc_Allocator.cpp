@@ -61,18 +61,9 @@ ACE_Allocator::instance (void)
 #         endif /* !ACE_NDEBUG */
 
           // Initialize the allocator_instance by using a placement
-          // new.  The ACE_NEW_RETURN below doesn't actually allocate
-          // a new instance.  It just initializes it in place.
-          ACE_NEW_RETURN (ACE_Allocator::allocator_,
-                          (&allocator_instance) ACE_New_Allocator,
-                          0);
-          // If we ever need to cast the address of
-          // allocator_instance, then expand the ACE_NEW_RETURN above
-          // as follows . . .
-          //
-          // ACE_Allocator::allocator_ =
-          //   (ACE_New_Allocator *)
-          //     new (&allocator_instance) ACE_New_Allocator;
+          // new.
+          ACE_Allocator::allocator_ =
+            new (&allocator_instance) ACE_New_Allocator;
         }
     }
 
