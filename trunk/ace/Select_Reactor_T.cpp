@@ -5,6 +5,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Select_Reactor_T.h"
+#include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
 
 #if !defined (__ACE_INLINE__)
