@@ -6,9 +6,7 @@ cubit_i.cpp
 	C++
 cubitS.cpp
 	C++
-svr.cpp
-	C++
 cubitC.cpp
 	C++
-sockem.c
-	C
+server.cpp
+	C++
