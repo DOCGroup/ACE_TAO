@@ -1,3 +1,11 @@
+Mon Nov 11 23:04:34 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.dsw:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.dsp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.dsp:
+
+	  New MSVC++ 6 project files for this test.
+
 Mon Nov 11 22:33:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile (TAO_LB_LIBS):
