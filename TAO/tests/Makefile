@@ -83,6 +83,7 @@ DIRS  = CDR \
 	Oneways_Invoking_Twoways \
 	AMI_Buffering \
 	DLL_ORB \
+        ORB_shutdown \
 	Two_Objects \
 	Nested_Upcall_Crash
 
