@@ -139,13 +139,11 @@ public:
   CORBA_ULong tablesize (void);
 
 protected:
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static TAO_OA_Parameters *instance_;
   // Pointer to the Singleton instance.
 
-  static TAO_OA_Parameters ace_singleton_lock_;
+  static ACE_SYNCH_MUTEX ace_singleton_lock_;
   // Lock the creation of the singleton.  
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   static TAO_OA_Parameters *&instance_i (void);
   // Get pointer to the Singleton instance
