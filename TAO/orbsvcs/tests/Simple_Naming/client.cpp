@@ -140,10 +140,11 @@ CosNaming_Client::parse_args (void)
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
+                           "Argument %c \n usage:  %s"
                            " [-d]"
                            " [-s or -e or -t or -i or -y]"
                            "\n",
+                           c,
                            this->argv_ [0]),
                           -1);
       }
@@ -179,8 +180,8 @@ CosNaming_Client::init (int argc, char **argv)
   TAO_TRY
     {
       // Initialize ORB.
-      this->orbmgr_.init (argc,
-                          argv,
+      this->orbmgr_.init (this->argc_,
+                          this->argv_,
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
