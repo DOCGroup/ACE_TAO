@@ -1,3 +1,12 @@
+Wed Dec  8 11:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FloatSeqC.{h,cpp,i,inl}:
+        * tao/FloatSeqA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
 Tue Dec  7 21:55:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
