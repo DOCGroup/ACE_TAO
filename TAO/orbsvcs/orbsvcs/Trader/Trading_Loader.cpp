@@ -17,7 +17,7 @@
 #include "Trading_Loader.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/reserved_ports.h"
+#include "tao/default_ports.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
