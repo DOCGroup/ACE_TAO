@@ -154,12 +154,15 @@ public:
   LPSECURITY_ATTRIBUTES get_process_attributes (void) const;
   // Get the process_attributes.  Returns NULL if
   // set_process_attributes has not been set.
+
   LPSECURITY_ATTRIBUTES set_process_attributes (void);
   // If this is called, a non-null process attributes is sent to
   // CreateProcess.
+
   LPSECURITY_ATTRIBUTES get_thread_attributes (void) const;
   // Get the thread_attributes.  Returns NULL if set_thread_attributes
   // has not been set.
+
   LPSECURITY_ATTRIBUTES set_thread_attributes (void);
   // If this is called, a non-null thread attributes is sent to
   // CreateProcess.
@@ -170,14 +173,14 @@ public:
   // Allows disabling of handle inheritence.
 #else /* All things not WIN32 */
 
-  char * const *command_line_argv (void);
+  char *const *command_line_argv (void);
   // argv-style command-line options.  Parses and modifies the string
   // created from this->command_line.  All spaces not in quotes ("" or
   // '') are replaced with null (\0) bytes.  An argv array is built
   // and returned with each entry pointing to the start of
   // null-terminated string.  Returns { 0 } if nothing has been set.
 
-  char * const *env_argv (void);
+  char *const *env_argv (void);
   // argv-style array of environment settings.
 
   // = Accessors for the standard handles.
