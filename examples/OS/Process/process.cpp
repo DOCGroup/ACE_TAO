@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    process.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Tim Harrison.
-// 
+//
 // ============================================================================
 
 #include "ace/OS.h"
@@ -124,7 +124,9 @@ test_more (void)
 		  "test_more", error));
     }
 
-  new_process.wait ();
+  int status;
+  new_process.wait (&status);
+  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
   ACE_OS::close (infile);
 
   ACE_DEBUG ((LM_DEBUG, "More succeeded.\n"));
@@ -147,7 +149,9 @@ test_date (void)
       return;
     }
 
-  new_process.wait ();
+  int status;
+  new_process.wait (&status);
+  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
   ACE_DEBUG ((LM_DEBUG, "date succeeded.\n"));
 }
 
@@ -156,7 +160,7 @@ test_ls (void)
 {
   ACE_Process_Options options;
   options.command_line ("%s -al", LS_PATH);
-  
+
   ACE_Process new_process;
   if (new_process.spawn (options) == -1)
     {
@@ -165,7 +169,9 @@ test_ls (void)
 		  "test_ls", error));
     }
 
-  new_process.wait ();
+  int status;
+  new_process.wait (&status);
+  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
 }
 
 #if defined (ACE_WIN32)
@@ -178,7 +184,7 @@ win32_test_ls (void)
   STARTUPINFO startup_info;
   ACE_OS::memset ((void *) &startup_info,
 		  0, sizeof startup_info);
-  ACE_OS::memset ((void *) &process_info, 
+  ACE_OS::memset ((void *) &process_info,
 		  0, sizeof process_info);
   startup_info.cb = sizeof (startup_info);
   startup_info.dwFlags = STARTF_USESTDHANDLES;
@@ -197,7 +203,7 @@ win32_test_ls (void)
       return;
     }
 
-  BOOL fork_result = 
+  BOOL fork_result =
     ::CreateProcess ("c:\\Utils\\bin\\ls.exe",
 		     "-a",
 		     NULL, // No process attributes.
@@ -231,7 +237,7 @@ win32_spawn_environment_process (void)
   STARTUPINFO startup_info;
   ACE_OS::memset ((void *) &startup_info,
 		  0, sizeof startup_info);
-  ACE_OS::memset ((void *) &process_info, 
+  ACE_OS::memset ((void *) &process_info,
 		  0, sizeof process_info);
   startup_info.cb = sizeof (startup_info);
   startup_info.dwFlags = STARTF_USESTDHANDLES;
@@ -286,12 +292,12 @@ win32_spawn_environment_process (void)
     size += ACE_OS::strlen (existing_environment + size) + 1;
 
   ACE_OS::memcpy (environment + (ACE_OS::strlen (environment) + 1),
-		  existing_environment, 
+		  existing_environment,
 		  size);
 
   ::FreeEnvironmentStrings (existing_environment);
 
-  BOOL fork_result = 
+  BOOL fork_result =
     ::CreateProcess ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe",
 		     "process -g",
 		     NULL, // No process attributes.
@@ -332,7 +338,9 @@ test_setenv (const char *argv0)
       return;
     }
 
-  process.wait ();
+  int status;
+  process.wait (&status);
+  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
 }
 
 // Tests the ACE_Tokenizer.
@@ -376,7 +384,10 @@ main (int argc, char *argv[])
       ACE_Process process;
       if (process.spawn (options) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
-      process.wait ();
+
+      int status;
+      process.wait (&status);
+      ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
     }
 
   if (run_date)
@@ -415,5 +426,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
-
