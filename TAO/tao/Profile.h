@@ -308,10 +308,6 @@ protected:
   /// The tagged components
   TAO_Tagged_Components tagged_components_;
 
-  /// Flag indicating whether the lazy decoding of the client exposed
-  /// policies has taken place.
-  CORBA::Boolean are_policies_parsed_;
-
   /// Pointer to the TAO_Stub to which this profile is related.
   TAO_Stub *stub_;
 
@@ -323,6 +319,10 @@ protected:
   // So to save memory, each TAO_Profile has a pointer to the same
   // PolicyList object. The life cycle of this object is managed
   // by the TAO_MProfile class.
+
+  /// Flag indicating whether the lazy decoding of the client exposed
+  /// policies has taken place.
+  CORBA::Boolean are_policies_parsed_;
 
   /// The current addressing mode.
   /// This may be changed if a remote server sends back an address mode
