@@ -128,8 +128,8 @@ TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
     delete address_;
   if (this->clean_up_control_address_)
     delete control_address_;
-  delete local_addr_;
-  delete local_control_addr_;
+  if (local_control_addr_ != 0)
+    delete local_control_addr_;
 }
 
 int
@@ -139,6 +139,8 @@ TAO_FlowSpec_Entry::set_protocol (void)
     {
       if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"TCP") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_TCP;
+      else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"SCTP_SEQ") == 0)
+          this->protocol_ = TAO_AV_Core::TAO_AV_SCTP_SEQ;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"UDP") == 0)
           this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"QoS_UDP") == 0)
@@ -244,6 +246,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 	    case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
             case TAO_AV_Core::TAO_AV_RTP_UDP:
             case TAO_AV_Core::TAO_AV_TCP:
+            case TAO_AV_Core::TAO_AV_SCTP_SEQ:
             case TAO_AV_Core::TAO_AV_UDP:
             case TAO_AV_Core::TAO_AV_QOS_UDP:
               {
@@ -327,6 +330,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
             case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
             case TAO_AV_Core::TAO_AV_RTP_UDP:
             case TAO_AV_Core::TAO_AV_TCP:
+            case TAO_AV_Core::TAO_AV_SCTP_SEQ:
             case TAO_AV_Core::TAO_AV_UDP:
             case TAO_AV_Core::TAO_AV_QOS_UDP:
               {
@@ -529,7 +533,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 {
   if (this->flowname_.length() == 0)
     return "";
-
+  
   char address [BUFSIZ];
   ACE_CString address_str;
   ACE_CString peer_address_str;
@@ -548,6 +552,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_QOS_UDP:
         case TAO_AV_Core::TAO_AV_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_TCP:
+        case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
             ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
             inet_addr->addr_to_string (address,BUFSIZ);
@@ -587,6 +592,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_QOS_UDP:
         case TAO_AV_Core::TAO_AV_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_TCP:
+	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
             ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
             control_port = inet_addr->get_port_number() + 1;
@@ -617,6 +623,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_QOS_UDP:
         case TAO_AV_Core::TAO_AV_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_TCP:
+	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
 	    ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->peer_addr_);
             inet_addr->addr_to_string (address,BUFSIZ);
@@ -654,6 +661,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_QOS_UDP:
         case TAO_AV_Core::TAO_AV_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_TCP:
+	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
             ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->control_address_);
             control_port = inet_addr->get_port_number();
@@ -804,6 +812,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_QOS_UDP:
         case TAO_AV_Core::TAO_AV_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_TCP:
+	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
         case TAO_AV_Core::TAO_AV_SFP_UDP:
         case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
           {
@@ -843,6 +852,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_QOS_UDP:
         case TAO_AV_Core::TAO_AV_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_TCP:
+	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
             ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->control_address_);
             control_port = inet_addr->get_port_number();
