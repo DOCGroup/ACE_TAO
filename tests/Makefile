@@ -32,7 +32,7 @@ BIN =   Aio_Platform_Test \
         Hash_Map_Manager_Test \
         Hash_Map_Bucket_Iterator_Test \
         IOStream_Test \
-	Malloc_Test \
+        Malloc_Test \
         Map_Test \
         Map_Manager_Test \
         Mem_Map_Test \
@@ -120,7 +120,9 @@ ifndef SOEXT
   SOEXT=so
 endif
 ifdef shared_libs
-  BUILD += libDLL_Test.$(SOEXT)
+  ifndef VXWORKS
+    BUILD += libDLL_Test.$(SOEXT)
+  endif # ! VXWORKS
 endif # shared_libs
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
