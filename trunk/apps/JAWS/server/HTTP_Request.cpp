@@ -12,6 +12,10 @@ HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS]
     "Allow", "Content-Encoding", "Content-Length", "Content-Type",
     "Expires", "Last-Modified" };
 
+const char * const
+HTTP_Request::static_method_strings_[HTTP_Request::NUM_HEADER_STRINGS]
+= { "GET", "HEAD", "POST", "PUT" };
+
 // for reasons of efficiency, this class expects buffer to be
 // null-terminated, and buflen does NOT include the \0
 
@@ -65,10 +69,11 @@ HTTP_Request::parse_request_line (char * const request_line)
   ptr = ACE_OS::strchr (request_line, '\n');
   if (ptr > request_line && ptr[-1] == '\r')
     ptr--, offset++;
-  if (ptr == request_line) {
-    this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-    return;
-  }
+  if (ptr == request_line)
+    {
+      this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
+      return;
+    }
   *ptr = '\0';
   ptr += offset;
 
@@ -81,32 +86,32 @@ HTTP_Request::parse_request_line (char * const request_line)
 
   this->got_request_line_ = 1;
 
-  if (this->method_ == NULL) {
-    this->method_ = 0;
-    this->uri_ = 0;
-    this->version_ = 0;
-    this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-    return;
-  }
+  if (this->method_ == NULL)
+    {
+      this->method_ = 0;
+      this->uri_ = 0;
+      this->version_ = 0;
+      this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
+      return;
+    }
   else this->method_ = ACE_OS::strdup (this->method_);
 
-  if (this->uri_ == NULL) {
-    this->uri_ = 0;
-    this->version_ = 0;
-    this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-    return;
-  }
+  if (this->uri_ == NULL)
+    {
+      this->uri_ = 0;
+      this->version_ = 0;
+      this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
+      return;
+    }
   else this->uri_ = ACE_OS::strdup (this->uri_);
 
-  if (this->version_ == NULL) {
-    this->version_ = 0;
-    if (ACE_OS::strcmp (this->method_, "GET") != 0) {
-      this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
+  if (this->version_ == NULL)
+    {
+      this->version_ = 0;
+      if (ACE_OS::strcmp (this->method_, "GET") != 0)
+        this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
     }
-  }
-  else {
-    this->version_ = ACE_OS::strdup (this->version_);
-  }
+  else this->version_ = ACE_OS::strdup (this->version_);
 
   // Delegate according to the request type.
   if (ACE_OS::strcmp (this->method_, "GET") == 0) {

@@ -8,14 +8,6 @@
 #include "JAWS/server/HTTP_Helpers.h"
 #include "JAWS/server/IO.h"
 
-/* static */
-// const char *HTTP_Handler::HTTP_HEADER = "HTTP/1.0 200 Document follows\r\n" "Server: JAWS\r\n\r\n";
-
-const char *HTTP_Handler::HTTP_HEADER = "";
-const char *HTTP_Handler::HTTP_TRAILER = "";
-const int HTTP_Handler::HTTP_HEADER_LENGTH  = ACE_OS::strlen (HTTP_Handler::HTTP_HEADER);
-const int HTTP_Handler::HTTP_TRAILER_LENGTH = ACE_OS::strlen (HTTP_Handler::HTTP_TRAILER);
-
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 			    HTTP_Handler_Factory &factory)
   : factory_ (factory),
@@ -46,9 +38,10 @@ HTTP_Handler::open (ACE_HANDLE handle,
                                      SO_RCVBUF,
                                      (char *) &sockbufsize,
                                      sizeof (sockbufsize));
-    if (result < 0) {
-      perror ("SO_RCVBUF");
-    }
+    if (result < 0)
+      {
+        perror ("SO_RCVBUF");
+      }
   }
 
   this->handle_ = handle;
@@ -61,48 +54,65 @@ HTTP_Handler::open (ACE_HANDLE handle,
 void 
 HTTP_Handler::read_complete (ACE_Message_Block &message_block)
 {
-  switch (this->request_.parse_request (message_block)) {
-  case 0:
-    do {
-      int next_read_size
-        = HTTP_Handler::MAX_REQUEST_SIZE - message_block.length ();
-      if (next_read_size == 0) {
-        this->request_too_long ();
-        return;
-      }
-      this->io_.read (message_block, next_read_size);
-    } while (0);
-    break;
+  // This is actually a callback entry point.  The JAWS_IO framework
+  // calls into this method after some data has been read in.
 
-  default:
-    // this->request_.respond ();
-    this->response_.process_request ();
-  }
+  switch (this->request_.parse_request (message_block))
+    {
+    case 0:
+      do
+        {
+          int next_read_size
+            = HTTP_Handler::MAX_REQUEST_SIZE - message_block.length ();
+
+          if (next_read_size == 0)
+            {
+              this->request_too_long ();
+              return;
+            }
+
+          this->io_.read (message_block, next_read_size);
+        }
+      while (0);
+      break;
+
+    default:
+      // this->request_.respond ();
+      this->response_.process_request ();
+    }
 }
 
 void 
 HTTP_Handler::receive_file_complete (void)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) %s received successfully\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s received successfully\n",
+              request_.filename ()));
+
   char buffer[BUFSIZ];
-  ACE_OS::sprintf (buffer, 
-		   "%s %d %s",
-		   "HTTP/1.0",
-		   HTTP_Status_Code::STATUS_OK,
-		   "Successful");  
-  this->io_.send_confirmation_message (buffer, ACE_OS::strlen (buffer));
+  int buflen =
+    ACE_OS::sprintf (buffer, 
+                     "%s %d %s",
+                     this->request_.version (),
+                     HTTP_Status_Code::STATUS_OK,
+                     "Successful");  
+
+  this->io_.send_confirmation_message (buffer, buflen);
 }
 
 void 
 HTTP_Handler::receive_file_error (int result)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in receiving file\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in receiving file\n",
+              request_.filename ()));
+
   char buffer[BUFSIZ];
-  ACE_OS::sprintf (buffer, 
-		   "%s %d %s",
-		   "HTTP/1.0",
-		   result,
-		   "Failed");  
+  int buflen =
+    ACE_OS::sprintf (buffer, 
+                     "%s %d %s",
+                     this->request_.version (),
+                     result,
+                     "Failed");  
+
   this->io_.send_confirmation_message (buffer, ACE_OS::strlen (buffer));
 }
 
@@ -121,7 +131,9 @@ HTTP_Handler::error_message_complete (void)
 void 
 HTTP_Handler::transmit_file_complete (void)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) %s transmitted successfully\n", request_.filename ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s transmitted successfully\n",
+              request_.filename ()));
+
   this->done ();
 }
 
@@ -194,6 +206,7 @@ Synch_HTTP_Handler_Factory::create_http_handler (void)
   ACE_NEW_RETURN (io, JAWS_Synch_IO, 0);
   HTTP_Handler *handler;
   ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), 0);
+
   return handler;
 }
 
