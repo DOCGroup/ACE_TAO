@@ -69,17 +69,21 @@ passed to the preprocessor
 .B \-Y
 passed to the preprocessor
 .TP
-.B "\-H perfect_hashing"
+.B "\-H perfect_hash"
 To specify the IDL compiler to generate skelton code that uses perfect hashed
 operation lookup strategy, which is the default strategy. Perfect hashing uses
 gperf program, to generate lookup methods.
 .TP
-.B "\-H dynamic_hashing"
+.B "\-H dynamic_hash"
 To specify the IDL compiler to generate skelton code that uses dynamic hashed
 operation lookup strategy.
 .TP
 .B "\-H binary_search"
 To specify the IDL compiler to generate skelton code that uses binary search
+based operation lookup strategy.
+.TP
+.B "\-H binary_linear"
+To specify the IDL compiler to generate skelton code that uses linear search
 based operation lookup strategy.
 .TP
 .B \-g
