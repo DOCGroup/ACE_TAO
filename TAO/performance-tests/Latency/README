@@ -44,8 +44,7 @@ $ client -ORBSvcConf client.conf -n 4 -i 1000
 $ st_server -ORBSvcConf st_server.conf
 $ st_client -ORBSvcConf st_client.conf -i 1000
 
-AMI Latency Test:
-==================
+= AMI Latency Test:
 
 $ server -o ior_file \
         -ORBSvcConf server.conf
@@ -53,8 +52,7 @@ $ server -o ior_file \
 $ ami-latency-client -k file://ior_file -i 1000 \
         -ORBSvcConf client-st-muxed.conf
 
-AMI Throughput Test:
-==================
+= AMI Throughput Test:
 
 $ server -o ior_file -ORBEndpoint iiop://localhost:port \
         -ORBSvcConf server.conf
@@ -63,3 +61,29 @@ $ ami-throughput-client -s -k file://ior_file -i 1000 \
                 -ORBSvcConf client-st-muxed.conf \
                 -ORBPreconnect iiop://localhost:port
 
+= Deferred Synchronous Test:
+
+	The server uses a regular (but lock-free) reactor. The 
+  client uses a single thread to create DII requests and
+  send them without blocking on the reply (deferred synchronous).
+  After all the requests have been sent, the client gets the
+  response for each request in turn (blocking if it has not yet
+  arrived) and extracts the return value.
+
+  - Expected output:
+	As in the multi-threaded test, the client only prints the
+  results for its single thread. The time to prepare the DII request
+  is sampled for each iteration and stats are output in the same
+  format as for the other tests in this directory. Then the total
+  time is measured to prepare and send all requests as well as
+  the total time for the entire rounctrip process. Since only one
+  sample is taken for these last two meaurements, the "latency"
+  output is merely the reciprocal of the throughput.
+
+  - How to run:
+	You can use the run_test.pl script or:
+
+$ st_server -ORBSvcConf st_server.conf
+
+$ deferred_synch_client -ORBSvcConf client-st-muxed.conf \	
+	-i 1000
