@@ -95,36 +95,29 @@ main (int argc, char *argv[])
       AMI_Simple_Server_Handler_var the_handler =
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      for (int i = 0; i != niterations; ++i)
-        {
-          CORBA::Long number = 0;
 
-          number = server->get_number (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "get_number = %d\n",
-                      number));
-
-          // server->test_method (ACE_TRY_ENV);
-          // ACE_TRY_CHECK;
-
-          server->sendc_get_number (the_handler.in (),
-                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          number = server->get_number (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "get_number = %d\n",
-                      number));
-
-          //server->put_number (number, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
-      //  server->shutdown (ACE_TRY_ENV);
+      CORBA::Long number = 0;
+      
+      number = server->get_number (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  "get_number = %d\n",
+                  number));
+      
+      // server->test_method (ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
+      
+      server->sendc_get_number (the_handler.in (),
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      number = server->get_number (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  "get_number = %d\n",
+                  number));
     }
   ACE_CATCHANY
     {
