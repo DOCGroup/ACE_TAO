@@ -1,3 +1,9 @@
+Fri Aug 21 19:54:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: 
+	  The ACE_HAS_EXCEPTIONS macro definition goes into CPPFLAGS now,
+	  so make depend can use it too.
+
 Fri Aug 21 18:47:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.cpp (wait): Need to check if status is non-null
