@@ -52,8 +52,19 @@ ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
 void
 ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 {
-  elapsed_time.tv_sec = (time_t) ((this->end_ - this->start_)  / global_scale_factor_) / 1000000;
-  elapsed_time.tv_nsec = (long) ((this->end_ - this->start_) / global_scale_factor_) % 1000000;
+  // See elapsed_time (ACE_hrtime_t &nanoseconds) implementation below;
+  // this implementation is based on that.
+
+  // Just grab the nanoseconds.  That is, leave off all values above
+  // microsecond.  This equation is right!  Don't mess with me!
+  int nseconds = (this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_;
+
+  // Get just the microseconds (dropping any left over nanoseconds).
+  ACE_hrtime_t useconds; 
+  useconds = (this->end_ - this->start_) / global_scale_factor_;
+
+  elapsed_time.tv_sec = (time_t) (useconds / 1000000);
+  elapsed_time.tv_nsec = (time_t) (useconds % 1000000 * 1000  +  nseconds);
 }
 #endif /* ACE_HAS_POSIX_TIME */
 
