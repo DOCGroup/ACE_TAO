@@ -759,7 +759,7 @@ Key_List::output_keylength_table (void)
       ACE_OS::printf ("\n%sstatic %sunsigned %s lengthtable[] =\n%s%s{\n    ",
                       indent,
                       option[CONSTANT] ? "const " : "",
-                      max_key_len <= UCHAR_MAX ? "char" : (max_key_len <= USHRT_MAX ? "short" : "long"),
+                      max_key_len <= ((int) UCHAR_MAX) ? "char" : (max_key_len <= ((int) USHRT_MAX) ? "short" : "long"),
                       indent,
                       indent);
 
@@ -1118,7 +1118,7 @@ Key_List::output_hash_function (void)
   // Generate the asso_values table.
   ACE_OS::printf ("  static %sunsigned %s asso_values[] =\n    {",
                   option[CONSTANT] ? "const " : "",
-                  max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
+                  max_hash_value <= ((int) UCHAR_MAX) ? "char" : (max_hash_value <= ((int) USHRT_MAX) ? "short" : "int"));
 
   ACE_OS::printf ("\n#if defined (ACE_MVS)");
 #if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
