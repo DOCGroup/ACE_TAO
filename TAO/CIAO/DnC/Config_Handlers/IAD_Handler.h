@@ -62,7 +62,10 @@ namespace CIAO
       ~IAD_Handler();
 
       /// Process the component package description
-      void process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
+      void static
+	process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
+
+    protected:
 
       /// Process the label attribute
       void process_label (const XMLCh* label, ::Deployment::ImplementationArtifactDescription &iad);
