@@ -5,6 +5,7 @@
 
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 
 class Test_i : public POA_Test
 {
