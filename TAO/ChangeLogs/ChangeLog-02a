@@ -1,3 +1,10 @@
+Tue Jul 10 22:37:48 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp (copy):
+
+	  Perform a deep copy, not a shallow copy.  The copy is supposed
+	  to be independent of the original.
+
 Tue Jul 10 15:59:31 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptorC.h:
