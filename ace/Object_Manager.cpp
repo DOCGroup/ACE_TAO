@@ -18,11 +18,24 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   : shutting_down_(0)
 {
   ACE_NEW (registered_objects_, ACE_Unbounded_Queue<object_info_t>);
+
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+  // Store the address of this static instance so that instance ()
+  // doesn't allocate a new one when called.
+  instance_ = this;
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
   object_info_t info;
+
+  // This call closes and deletes all ACE library services and
+  // singletons.
+  ACE_Service_Config::close ();
+
+  // Close the Log_Msg instance.
+  ACE_Log_Msg::close ();
 
   // Call all registered cleanup hooks, in reverse order of
   // registration.  Before starting, mark this object as being
@@ -39,13 +52,6 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   delete registered_objects_;
   registered_objects_ = 0;
 
-  // This call closes and deletes all ACE library services and
-  // singletons.
-  ACE_Service_Config::close ();
-
-  // Close the Log_Msg instance.
-  ACE_Log_Msg::close ();
-
   // Close the ACE_Allocator.
   ACE_Allocator::close_singleton ();
 
@@ -53,6 +59,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Close the ACE_Allocator and ACE_Static_Object_Lock.
   ACE_Static_Object_Lock::close_singleton ();
 # endif /* ACE_HAS_THREADS */
+
+  ACE_OS::fprintf (stderr, "~ACE_Object_Manager: leaving\n"); // ???? temporary
 }
 
 ACE_Object_Manager *
