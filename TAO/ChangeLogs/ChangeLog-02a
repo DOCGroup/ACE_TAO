@@ -1,3 +1,12 @@
+Tue Jun 19 14:35:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/DSI_Gateway/README:
+
+          Added reminder that ACE must be compiled with
+          ACE_ENABLE_SWAP_ON_WRITE defined if the gateway is to
+          correctly process requests and/or replies that are not
+          in its native byte order.
+
 Tue Jun 19 12:27:39 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/Endpoint_Per_Priority/Makefile.bor:
