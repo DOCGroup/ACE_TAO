@@ -172,6 +172,7 @@ my $gzip = "${gnu}gzip";
 my $make = "${gnu}make -s";
 my $mv = '/bin/mv -f';
 my $rm = "${gnu}/rm -f";
+my $md5sum = '/project/danzon/pkg/gnu/bin/md5sum';
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
 unless ("$controlled_files") {
@@ -604,6 +605,7 @@ sub create_kit () {
     "\\.gif\"";
 
   my $build_command;
+  my $archives;
 
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao') {
     if ($create_zips) {
@@ -624,6 +626,7 @@ sub create_kit () {
         "$chmod a+r ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
         "$dispose ACE.zip ACE-lib.zip $dest &&" .
         "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
+      $archives = "ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip";
     } else {
       $build_command = 
         "$find $release_files $release_filter | $cpio -o -H tar | " .
@@ -632,6 +635,7 @@ sub create_kit () {
           "$gzip -9 > ACE-lib.tar.gz && " .
         "$chmod a+r ACE.tar.gz ACE-lib.tar.gz && " .
         "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
+      $archives = "ACE.tar.gz ACE-lib.tar.gz";
     }
   }
   
@@ -649,16 +653,25 @@ sub create_kit () {
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz ACE+TAO.zip && " .
         "$dispose ACE+TAO.tar.gz ACE+TAO.zip $dest";
+      $archives = "ACE+TAO.tar.gz ACE+TAO.zip";
     } else {
       $build_command .= 
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz && " .
         "$dispose ACE+TAO.tar.gz $dest";
+      $archives = "ACE+TAO.tar.gz";
     }
   }
 
+  $md5sum_command =
+    "for p in $archives; do " .
+      "$rm $dest/\$p.md5; " .
+      "$md5sum \$p > $dest/\$p.md5; " .
+      "done";
+
   &ex ($build_command);
+  &ex ($md5sum_command);
 }
 
 
