@@ -172,13 +172,19 @@ int Client_Handler::open (void *_acceptor)
  */
 int Client_Handler::close(u_long flags)
 {
+	/*
+	   Down in the depths of our baseclass, this will eventually cause us
+	   to be destroyed.  Since all of the destructors are virtual, everything
+	   gets cleaned up nicely.
+	 */
 	this->handle_close(ACE_INVALID_HANDLE,0);
 
 	/*
-	   After we've taken care of ourselves, call the baseclass method
-	   to do any other necessary cleanup.
+	   Don't forward the close() to the baseclass!  handle_close() above has
+	   already taken care of delete'ing.  Forwarding close() would cause that
+	   to happen again and things would get really ugly at that point!
 	 */
-	return inherited::close();
+	return 0;
 }
 
 /*
