@@ -1,3 +1,12 @@
+Sun Oct 17 19:00:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp : Made changes to
+	  incorporate the -ORBMulticastDiscoveryEndpoint option to the
+	  ORB. The option is available now and has been tested. A sample
+	  usage of the option is 
+
+	  -ORBMulticastDiscoveryEndpoint "224.9.9.3:10014"
+
 Sat Oct 16 19:48:27 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp: 
