@@ -1,3 +1,27 @@
+Tue Aug 27 12:40:12 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	Fix for [BUG 1265]. 
+	
+	* tao/Adapter.cpp:
+	* tao/Adapter.h: Methods check_close () and close () have an empty
+	  ACE_THROW_SPEC (()) to indicate that no exceptions pass through
+	  to the higher layer. 
+	  
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp (shutdown): Applied the patch in BUG 1265 which
+	  basically releases the mutex before calling actual close () on
+	  the adapter objects. Further, made sure that
+	  destroy_interceptors () and the shutdown () calls dont propagate
+	  exceptions to the caller. 
+
+  	  Please see the discussions in BUG 1265 and chapter 2 of
+	  "Exceptional C++" by Herb Sutter for details. 
+
+	* tao/ORB.cpp (shutdown): Added a comment as to why we cannot lock
+	  exceptions within this method. Doing so would render us
+	  non-compliant with the CORBA spec. 
+
+	 
 Tue Aug 27 10:22:50 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tests/ORB_shutdown/server.cpp: Fixed a compile error in builds

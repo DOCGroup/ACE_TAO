@@ -45,25 +45,54 @@ TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
 void
 TAO_Adapter_Registry::close (int wait_for_completion
                              ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC (())
 {
-  for (size_t i = 0; i != this->adapters_count_; ++i)
+  ACE_TRY
     {
-      this->adapters_[i]->close (wait_for_completion ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      for (size_t i = 0; i != this->adapters_count_; ++i)
+        {
+          this->adapters_[i]->close (wait_for_completion
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 3)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "Exception in TAO_Adapter_Registry::close () \n");
+      return;
+    }
+  ACE_ENDTRY;
+
+  return;
 }
 
 void
 TAO_Adapter_Registry::check_close (int wait_for_completion
                                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC (())
 {
-  for (size_t i = 0; i != this->adapters_count_; ++i)
+  ACE_TRY
     {
-      this->adapters_[i]->check_close (wait_for_completion ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      for (size_t i = 0; i != this->adapters_count_; ++i)
+        {
+          this->adapters_[i]->check_close (wait_for_completion
+                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
-}
+  ACE_CATCHALL
+    {
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("(%P|%t) Exception in TAO_Adapter_Registry::check_close () \n")));
+      return;
+    }
+  ACE_ENDTRY;
 
+  return;
+}
 void
 TAO_Adapter_Registry::insert (TAO_Adapter *adapter
                               ACE_ENV_ARG_DECL)
