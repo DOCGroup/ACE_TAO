@@ -83,7 +83,7 @@ Tue Dec 11 15:06:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 	  call to generate the extra comma does not work on windows.
 	  Change for another "clever" trick that should be more reliable.
 
->>>>>>> 1.4531
+
 Tue Dec 11 09:54:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/orbconf.h:
