@@ -52,7 +52,7 @@ if ($server == -1) {
 }
 
 $gateway = $GW->TimedWait (5);
-if ($server == -1) {
+if ($gateway == -1) {
   print STDERR "ERROR: server timedout\n";
   $GW->Kill (); $GW->TimedWait (1);
 }

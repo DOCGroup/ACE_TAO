@@ -1,14 +1,20 @@
+Fri Nov 17 07:36:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/DSI_Gateway/run_test.pl:
+          Fixed bug in script, it would not exit correctly if the gateway
+          was frozen.
+
 Fri Nov 17 01:07:36 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORBInitInfo.cpp (arguments):
+        * tao/ORBInitInfo.cpp (arguments):
 
-	  Made string sequence allocation exception safe by using a
-	  CORBA::StringSeq_var.
+          Made string sequence allocation exception safe by using a
+          CORBA::StringSeq_var.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input_i,
-	  fetch_handle):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input_i,
+          fetch_handle):
 
-	  Added these missing method implementations (client side).
+          Added these missing method implementations (client side).
 
 Fri Nov 17 000:46:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -28,33 +34,33 @@ Fri Nov 17 000:46:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Nov 17 09:21:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
-	* tests/*/*.bor:
-	* examples/*/*.bor:
+        * tests/*/*.bor:
+        * examples/*/*.bor:
           Added to several Borland C++ Builder makefiles the IDLFILES section
           so that the generated client and server stubs are deleted
           when doing a clean
 
 Thu Nov 16 23:15:41 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/Makefile:
+        * tests/RTCORBA/Banded_Connections/Makefile:
 
-	  Generated dependencies.
-	
-	* tests/RTCORBA/Banded_Connections/server.cpp:
-	 
-	  Output improvements.
-	
-	* tests/RTCORBA/Banded_Connections/client.conf
-	* tests/RTCORBA/Banded_Connections/server.conf
-	* tests/RTCORBA/Banded_Connections/run_test.pl
-	* tests/RTCORBA/Banded_Connections/bands.unix
-	* tests/RTCORBA/Banded_Connections/bands.nt
+          Generated dependencies.
 
-	  Updated perl script to work on NT and unix.
-	
-	* tao/PortableServer/Object_Adapter.cpp (pre_invoke):
+        * tests/RTCORBA/Banded_Connections/server.cpp:
 
-	  Added debugging message.
+          Output improvements.
+
+        * tests/RTCORBA/Banded_Connections/client.conf
+        * tests/RTCORBA/Banded_Connections/server.conf
+        * tests/RTCORBA/Banded_Connections/run_test.pl
+        * tests/RTCORBA/Banded_Connections/bands.unix
+        * tests/RTCORBA/Banded_Connections/bands.nt
+
+          Updated perl script to work on NT and unix.
+
+        * tao/PortableServer/Object_Adapter.cpp (pre_invoke):
+
+          Added debugging message.
 
 Thu Nov 16 23:13:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -66,30 +72,30 @@ Thu Nov 16 23:13:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Nov 16 19:29:00 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp:
-	* orbsvcs/orbsvcs/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP_Connect.cpp:
-	* orbsvcs/orbsvcs/SSLIOP_Connect.h:
-	* orbsvcs/orbsvcs/SSLIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP_Endpoint.h:
-	* orbsvcs/orbsvcs/SSLIOP_Endpoint.i:
-	* orbsvcs/orbsvcs/SSLIOP_Factory.h:
-	* orbsvcs/orbsvcs/SSLIOP_Profile.cpp:
-	* orbsvcs/orbsvcs/SSLIOP_Profile.h:
-	* orbsvcs/orbsvcs/SSLIOP_Profile.i:
-	* orbsvcs/orbsvcs/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP_Connect.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Connect.h:
+        * orbsvcs/orbsvcs/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP_Endpoint.i:
+        * orbsvcs/orbsvcs/SSLIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Profile.h:
+        * orbsvcs/orbsvcs/SSLIOP_Profile.i:
+        * orbsvcs/orbsvcs/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Transport.h:
 
-	  Removed all "ACE_HAS_SSL" protection.  It isn't needed since
-	  SSLIOP is in a separate library altogether.
+          Removed all "ACE_HAS_SSL" protection.  It isn't needed since
+          SSLIOP is in a separate library altogether.
 
-	* orbsvcs/orbsvcs/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP_Factory.cpp:
 
-	  Added ACE_STATIC_SVC_REQUIRE macro to ensure that the SSLIOP
-	  factory is registered with the Service Configurator when linking
-	  statically.
+          Added ACE_STATIC_SVC_REQUIRE macro to ensure that the SSLIOP
+          factory is registered with the Service Configurator when linking
+          statically.
 
 Thu Nov 16 19:06:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
