@@ -1,3 +1,12 @@
+Mon Dec 23 10:44:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+
+	  Fixed code generation errors for components and eventtypes. Thanks
+	  to Nanbor Wang <nanbor@cse.wustl.edu> for his example IDL files
+	  that uncovered the problem.
+
 Mon Dec 23 06:57:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
