@@ -1685,6 +1685,18 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
 
+int 
+TAO_ORB_Core::connection_caching_strategy_type (void)
+{
+  return this->resource_factory ()->get_connection_caching_strategy_type ();
+}
+
+double 
+TAO_ORB_Core::purge_percentage (void)
+{
+  return this->resource_factory ()->get_purge_percentage ();
+}
+
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
 TAO_Policy_Current &

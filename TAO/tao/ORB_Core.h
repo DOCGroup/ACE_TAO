@@ -414,6 +414,13 @@ public:
   int run (ACE_Time_Value *tv, int break_on_timeouts);
   // Run the event loop
 
+  int connection_caching_strategy_type (void);
+  // Tells what type of caching strategy to use for connection management.
+
+  double purge_percentage (void);
+  // What is the percentage of entries to be removed from the
+  // connection cache on demand?
+
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
                          CORBA::UShort port,
