@@ -1,6 +1,6 @@
 # $Id$
 #
-# NOTE: the above file from ACE 4.6 has been modified by Mike P. to get rid of 
+# NOTE: the above file from ACE 4.6 has been modified by Mike P. to get rid of
 # thread related stuff until we can obtain fsu-threads library.
 
 # Requires gcc 2.7.2 Skunkware 97
@@ -12,10 +12,15 @@ optimize = 1
 
 CC              = gcc
 # for no threads
-LDLIBS		+= -lm -L $(ACE_ROOT)/ace 
+LDLIBS		+= -lm -L $(ACE_ROOT)/ace
 CXX		= g++
-CFLAGS		+= -melf -w 
-CCFLAGS		+= -melf -fno-implicit-templates 
+CFLAGS		+= -melf -w
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS		+= -melf $(TEMPLATES_FLAG)
 # -g option not supported for C++ on systems using the DWARF debugging format
 #DCFLAGS		+= -g
 DCCFLAGS	+= $(DCFLAGS)

@@ -17,14 +17,13 @@ threads = 1
 
 CC              = gcc
 CXX             = g++
-#CFLAGS          += #-frepo -fexternal-templates
-#CFLAGS          += -D__STDC__=0
-#CCFLAGS         += $(CFLAGS) -fno-implicit-templates
-#CCFLAGS         += $(CFLAGS) #-fexceptions #-fno-implicit-templates  or  -frepo
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 
 ACE_GNUG_ON_UNIXWARE = 1
 

@@ -28,7 +28,12 @@ optimize = 1
 CC              = gcc
 CXX             = g++
 CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 
 # -w suppresses warnings
 # -H tells you which header files are being included
@@ -53,5 +58,3 @@ SOFLAGS         = -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
 INCLDIRS        += -I$(PSS_ROOT)/include -I$(PSS_BSP) -I$(ACE_ROOT)/ace
-
-

@@ -34,12 +34,16 @@ ifeq (,$(PERL_PATH))
 endif # ! PERL_PATH
 
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 #### BEGIN target CPU-specific settings
 
 # look them up
 CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
 #CCFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags) -fno-implicit-templates
-CCFLAGS = -fno-implicit-templates
+CCFLAGS = $(TEMPLATES_FLAG)
 
 #### END target CPU-specific settings
 
@@ -54,7 +58,7 @@ endif # ! ACE_CC_VERSION
 
 ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
   ACE_HAS_GNUG_PRE_2_8 := 0
-  CFLAGS += 
+  CFLAGS +=
   ifneq (1,$(exceptions))
     #### With exceptions, this is applied in wrapper_macros.GNU.
     #### Without, we do it here.
@@ -72,7 +76,7 @@ ifeq (,$(rtti))
 endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
-INCLDIRS        += 
+INCLDIRS        +=
 # Hand build tests/rtems_init.o  .. something like this
 #  sparc-rtems-gcc -B/opt/rtems/sparc-rtems/erc32/lib/ -specs bsp_specs \
 #       -qrtems -mcpu=cypress  -O -g \

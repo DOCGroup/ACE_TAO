@@ -24,7 +24,11 @@ THR_DEFS	= -DACE_HAS_THREADS -D_REENTRANT
 endif
 endif
 
-CCFLAGS		+= $(CFLAGS) -fno-implicit-templates -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS		+= $(CFLAGS) $(TEMPLATES_FLAG) -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
 # On HP-UX 11, there's a conflict with pthread_atfork in sys/unistd.h and
 # sys/pthread.h - both define the function, but slightly differently.
 # -fstrict-prototype resolves the issue.

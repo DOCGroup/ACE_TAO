@@ -34,6 +34,17 @@ endif # ! rtti
 shared_libs =
 static_libs = 1
 
+# I (kitty) don't want to touch this file with regard to template
+# instantiation. If somebody has access to the platforms specified here,
+# they are welcome to check the instantiation problem. Overriding it to be
+# explicit.
+#
+templates = "explicit"
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 ifeq (,$(WIND_BASE))
   default:
 	@ERROR: you must set your WIND_BASE environment variable
@@ -79,56 +90,56 @@ endif # default CPU
 ifeq ($(CPU),SH7700)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7700LE)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3 -ml
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7750)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
   TOOLENV = sh
 else
 ifeq ($(CPU),SH7750LE)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4 -ml -mspace
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
   TOOLENV = sh
 else
 ifeq ($(CPU),PPC403)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC403 -mcpu=403
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC604)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
-  CCFLAGS += -fno-implicit-templates -mlongcall
+  CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC603)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC603
-  CCFLAGS += -fno-implicit-templates -mlongcall
+  CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC860)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -mcpu=860
-  CCFLAGS += -fno-implicit-templates -mlongcall
+  CCFLAGS += $(TEMPLATES_FLAG) -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
@@ -136,7 +147,7 @@ ifeq ($(CPU),SIMNT)
   BINXSYM_NAME = xsym
   CFLAGS += -U__WINNT -UWIN32 -U__WINNT__ -UWINNT -U__MINGW32__ -U_WIN32 \
             -U__WIN32 -U__WIN32__ -U__WIN32 -B$(GCCLIB_DIR) -DCPU=SIMNT
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = \
     $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = simpc
@@ -169,7 +180,7 @@ else
 ifeq ($(CPU),SIMSPARCSOLARIS)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SIMSPARCSOLARIS
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = \
     $(HOST_DIR)/lib/gcc-lib/sparc-sun-solaris2.5.1/cygnus-2.7.2-960126
   TOOLENV = simso
@@ -177,39 +188,39 @@ else
 ifeq ($(CPU),SPARC)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SPARC
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sparc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = sparc
 else
 ifeq ($(CPU),MC68020)
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68020 -m68020 -m68881
-  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68030)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68030 -m68030 -m68881
-  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68040)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68040 -m68040 -m68881
-  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68060)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68060 -m68040 -m68881
-  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  CCFLAGS += $(TEMPLATES_FLAG) -DACE_VXWORKS=0x540
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = 68k
 else
   BINXSYM_NAME = xsym
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += $(TEMPLATES_FLAG)
 endif # MC68060
 endif # MC68040
 endif # MC68030
@@ -296,7 +307,7 @@ ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
   CFLAGS += -DACE_VXWORKS=0x540
   ifeq ($(TOOLENV),386)
     #### Tornado II should support -fno-implicit-templates for pc486.
-    CCFLAGS += -fno-implicit-templates
+    CCFLAGS += $(TEMPLATES_FLAG)
   endif # 386
   ifneq (1,$(exceptions))
     #### With exceptions, this is applied in wrapper_macros.GNU.

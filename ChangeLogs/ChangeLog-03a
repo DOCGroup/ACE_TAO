@@ -1,3 +1,52 @@
+Sun Apr  7 04:22:19 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU(templates):
+
+          Added option templates which can be used to specify the
+          instantiation policy desired. Allowable values are explicit,
+          automatic and used. Added flag TEMPLATE_FLAGS which should be
+          set to the proper value in each of the platform config files.
+
+        * include/makeinclude/platform_g++_common.GNU:
+
+          New file which holds the parsing and setting logic for GNU C++.
+
+        * include/makeinclude/platform_aix4_g++.GNU(templates):
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_chorus4.x_g++.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_irix5.3_g++.GNU:
+        * include/makeinclude/platform_irix6.x_g++.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_osf1_4.x_g++.GNU:
+        * include/makeinclude/platform_psosim_g++.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_sco5.0.0-mit-pthread.GNU:
+        * include/makeinclude/platform_sco5.0.0-nothread.GNU:
+        * include/makeinclude/platform_sunos4_g++.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_unixware_g++.GNU:
+
+          For all of the platforms above, when using g++ versions 2.95.x,
+          2.96, 3.0.x or 3.x or later, the instantiation policy is set to
+          automatic.
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+
+          Only exception to the above. The kind of parsing that is done in
+          this file scares me. So I explicitly set it to "explicit".
+
+          Thanks to Alex Libman <AlexL@rumblegroup.com> for motivating
+          this.
+
+          If people with any of the above platforms can test if this works
+          for them, it would be great. If suddenly your files don't link,
+          just set templates="explicit" in platform_macros.GNU and all
+          will be fine. This one was easy :-) Next round of changes is for
+          the above platforms with different compilers.
+
 Sun Apr  7 04:02:23 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-g++-common.h (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES):

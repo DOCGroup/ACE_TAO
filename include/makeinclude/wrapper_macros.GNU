@@ -28,6 +28,10 @@
 #  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                     default, others do not.
+#  templates	    Type of template instantiation to perform. Can be one of
+# 		    automatic, used, explicit. Defaults to automatic if the
+#                   platform/compiler combination supports it, otherwise is
+#                   set to explicit.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 #  pace             Enable PACE as the underpinnings of ACE_OS.
 #  probe            Enable ACE_Timeprobes.
@@ -94,6 +98,8 @@
 #  DLD          Name of dynamic linker
 #  LD           Name of linker
 #  IDL          Name of the CORBA IDL compiler
+#  TEMPLATES_FLAG Flag to pass to the compiler to control the instantiation of
+# 		  templates.
 #  INSBIN       Binary (executable) installation directory
 #  INSINC       Include file installation directory
 #  INSMAN       Manpage installation directory
