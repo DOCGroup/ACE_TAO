@@ -138,20 +138,23 @@ public:
 
   // = Construction
   IIOP_Object (char *repository_id);
-  // construct from a repository (type) ID
+  // Construct from a repository (type) ID.
 
   IIOP_Object (char *repository_id,
                const IIOP::Profile &profile);
-  // construct from a repository ID and a profile ID
+  // Construct from a repository ID and a profile ID.
 
-  IIOP_Object (const char *host = "localhost", const CORBA::UShort p =
-               TAO_DEFAULT_SERVER_PORT, const char *objkey = "0",
+  IIOP_Object (const char *host = "localhost",
+               const CORBA::UShort p = TAO_DEFAULT_SERVER_PORT,
+               const char *objkey = "0",
                char *repository_id = 0);
-  // this constructor will usually be used by a _bind call on the client side
+  // This constructor will usually be used by a <_bind> call on the
+  // client side.
 
-  IIOP_Object (char *repository_id, const ACE_INET_Addr &addr, const
+  IIOP_Object (char *repository_id,
+               const ACE_INET_Addr &addr, const
                char *objkey = "0");
-  // constructor used typically by the server side
+  // Constructor used typically by the server side.
 
   // = COM stuff
   ULONG __stdcall AddRef (void);

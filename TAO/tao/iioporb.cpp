@@ -205,11 +205,10 @@ iiop_string_to_object (CORBA::String string,
 
   // type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
-  // gets thoroughly excercised/debugged!
-  // Without a typeID, the _narrow will be required to make an expensive remote
-  // "is_a" call.
+  // gets thoroughly excercised/debugged!  Without a typeID, the
+  // _narrow will be required to make an expensive remote "is_a" call.
 
-  IIOP_Object *data = new IIOP_Object (NULL);	// null type ID
+  IIOP_Object *data = new IIOP_Object ((char *) 0); // null type ID
 
   // Remove the "N.N//" prefix, and verify the version's one
   // that we accept
