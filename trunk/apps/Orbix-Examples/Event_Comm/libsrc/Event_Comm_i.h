@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -26,10 +25,9 @@
 #include "Notifier_i.h"
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
-#define nil 0
 
-// Tie the Notification_Receiver and Notifier implementation classes
-// together with the IDL interface.
+// Tie the <Notification_Receiver> and <Notifier> implementation
+// classes together with the IDL interface.
 
 DEF_TIE_Event_Comm_Notification_Receiver (Notification_Receiver_i)
 DEF_TIE_Event_Comm_Notifier (Notifier_i)

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -9,10 +8,6 @@
 // 
 // = FILENAME
 //    Input_Handler.h
-//
-// = DESCRIPTION 
-//    Subclass of ACE ACE_Service_Object that receives unsubscribes from
-//    the Notifier when input is received from the keyboard.
 //
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
@@ -29,13 +24,16 @@
 class Notification_Receiver_Handler;
 
 class Input_Handler : public ACE_Service_Object
+{
   // = TITLE
   //   Handles input events generated from a keyboard.
   //
   // = DESCRIPTION
-{
+  //    This subclass <ACE_Service_Object> receives "unsubscribes"
+  //    from the <Notifier> when input is received from the keyboard.
 public:
-  Input_Handler (Notification_Receiver_Handler *, ACE_HANDLE h = 0);
+  Input_Handler (Notification_Receiver_Handler *,
+                 ACE_HANDLE h = 0);
   
   virtual int handle_input (ACE_HANDLE);
   // Dispatch the callback when events occur.
@@ -60,8 +58,8 @@ private:
   // ACE_HANDLE where the input comes from. 
 
   Notification_Receiver_Handler *receiver_handler_;
-  // Pointer to the <Notification_Receiver_Handler> that 
-  // receives notifications from the <Event_Comm::Notifier>.
+  // Pointer to the <Notification_Receiver_Handler> that receives
+  // notifications from the <Event_Comm::Notifier>.
 
   int consumer_initiated_shutdown_;
   // Keep track of whether the Consumer initiated the shutdown.

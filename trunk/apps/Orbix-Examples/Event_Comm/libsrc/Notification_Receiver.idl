@@ -1,9 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// @(#)Notification_Receiver.idl	1.1	10/18/96
-
-
 // ============================================================================
 //
 // = LIBRARY
@@ -27,16 +24,15 @@
 #define _Notification_Receiver_iDL
 
 interface Notification_Receiver
+{
   // = TITLE
   //   Defines the interface for a <Notification_Receiver> of events.
   //   Note that all operations are <oneway> to avoid blocking.
-  //
-  // = DESCRIPTION
-{
-  oneway void receive_notification (in Notification notification);
+
+  void receive_notification (in Notification notification);
   // Inform the <Notification_Receiver> that <event> has occurred.
 
-  oneway void disconnect (in string reason);
+  void disconnect (in string reason);
   // Disconnect the <Notification_Receiver> from the <Notifier>,
   // giving it the <reason>.
 };
