@@ -177,7 +177,6 @@ depend.local: $(MAKEFILE)
 	sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
 	    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
 	    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
-	    -e "/:$$/d" \
 	    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .obj/\1.$(SOEXT) $(VSHDIR)\1.o $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
 	@mv $(MAKEFILE).new $(MAKEFILE)
