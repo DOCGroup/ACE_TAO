@@ -8,8 +8,11 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-
-
+LIBNAME  = libTAO_RTCORBA
+MAKEFILE = Makefile
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
+ACE_SHLIBS = -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -20,11 +23,6 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(corba_messaging),1)
 
-LIBNAME  = libTAO_RTCORBA
-MAKEFILE = Makefile
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
-ACE_SHLIBS = -lTAO -lACE
 
 CPP_SRCS += \
   Direct_Priority_Mapping \

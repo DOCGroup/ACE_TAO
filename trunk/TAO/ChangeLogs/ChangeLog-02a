@@ -1,3 +1,11 @@
+Fri Jun 15 15:10:40 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+
+	  Fixed a bug which caused the static versions of the libraries
+	  when static wasn't specified.
+
 Fri Jun 15 11:20:22 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/Priority_Mapping.h:
@@ -8,9 +16,9 @@ Fri Jun 15 11:20:22 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tao/RTCORBA/diffs/RTCORBAC.h.diff:
         * tao/RTCORBA/diffs/RTCORBAC.i.diff:
 
-          Removed need for forward references into the RTCORBA 
-          namespace by Priority_Mapping.h.  This was causing 
-          problems on SunCC42 and VxWorks since neither one 
+          Removed need for forward references into the RTCORBA
+          namespace by Priority_Mapping.h.  This was causing
+          problems on SunCC42 and VxWorks since neither one
           allows namespaces to be reopened.  Also cleaned up
           diff files since there were lots of unnecessary differences.
 
@@ -36,16 +44,16 @@ Fri Jun 15 11:20:22 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * tests/RTCORBA/Server_Declared/Makefile:
         * tests/RTCORBA/Server_Protocol/Makefile:
         * tests/RTCORBA/Thread_Pool/Makefile:
-          
+
           Updated makefiles and project files since rtcorbafwd.h
-          was removed.  
+          was removed.
 
 Fri Jun 15 11:19:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:
         * tao/DynamicAny/DynArray_i.cpp:
 
-          Applied patches sent in by Philippe Merle 
+          Applied patches sent in by Philippe Merle
           <Philippe.Merle@lifl.fr> to fix some initialization
           oversights.
 
@@ -54,16 +62,16 @@ Fri Jun 15 11:11:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/orb.idl:
 
           Changed the contents of struct NamedValue to conform to
-          the current IDL given in the spec (CORBA 2.4.2 section 7.1.1). 
-          This change also eliminates a name clash. Thanks to Xavier MONTET 
+          the current IDL given in the spec (CORBA 2.4.2 section 7.1.1).
+          This change also eliminates a name clash. Thanks to Xavier MONTET
           <montet@cena.fr> for reporting the name clash.
 
 Thu Jun 14 17:44:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/rtcorbafwd.h:
-          
+
           Changed the minPriority and maxPriority typedefs to use a
-          CORBA::Short to fix compiler errors on the IA64 compiler.          
+          CORBA::Short to fix compiler errors on the IA64 compiler.
 
 Thu Jun 14 16:31:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
