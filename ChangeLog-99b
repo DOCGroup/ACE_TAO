@@ -1,9 +1,14 @@
+Fri Jun 11 10:43:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: properly reverted all the changes of today.
+          The comments are more helpful this way.
+
 Fri Jun 11 10:09:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Dirent.i: Don't call closedir() on a NULL dirp because some
- 	  platforms (such as SunOS 5.7) will segfault!  Thanks to Tom
- 	  Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for pointing
- 	  this out.
+        * ace/Dirent.i: Don't call closedir() on a NULL dirp because some
+          platforms (such as SunOS 5.7) will segfault!  Thanks to Tom
+          Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for pointing
+          this out.
 
 Fri Jun 11 07:31:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
