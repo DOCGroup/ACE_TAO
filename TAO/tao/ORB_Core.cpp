@@ -1957,7 +1957,6 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (())
 {
 
-
   ACE_TRY
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2018,7 +2017,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
         {
           this->ior_interceptor_adapter_->destroy_interceptors (
               ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
         }
 
     }

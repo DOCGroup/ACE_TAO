@@ -56,7 +56,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual void destroy_interceptors (
-      ACE_ENV_ARG_DECL
+      ACE_ENV_SINGLE_ARG_DECL
       )
   ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
