@@ -25,10 +25,10 @@ The expected test output is the following:
 
 ==== Running SSLIOP Big_Request test
 Activated as <IOR:010000001200000049...0a410>
-Sending octet sequence of length 3461724
-Received octet sequence of length: 3461724
-Sending octet sequence of length: 3461724
-Received octet sequence of length 3461724
+Sending  octet sequence of length:	3461724
+Received octet sequence of length:	3461724
+Sending  octet sequence of length:	3461724
+Received octet sequence of length:	3461724
 
 Event loop finished.
 
