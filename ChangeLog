@@ -1,3 +1,58 @@
+Thu Sep 30 01:26:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+
+	  Added check for Linux event poll interface.
+
+	* MPC/modules/AutomakeWorkspaceCreator.pm:
+
+	  Updated list of files to be cleaned in generated clean-local
+	  target to match current list used by the MPC generated
+	  GNUmakefiles.
+
+	* MPC/templates/automake.mpd:
+
+	  Removed line continuation generation code.  A line continuation
+	  character was not generated after processing the "libs" list
+	  despite the fact that "pure_libs" or "lit_libs" may be defined
+	  as well.  This fix causes all libraries to be listed on one line
+	  rather than be split up across multiple lines.
+
+	* m4/config_h.m4:
+
+	  Added autoheader templates for the ACE_HAS_{EVENT,DEV}_POLL
+	  preprocessor symbols.
+
+	* m4/tls.m4 (ACE_CHECK_TLS):
+
+	  Fixed test for Kerberos include flags so that it wouldn't assume
+	  that Kerberos include flags are needed for all cases.
+
+	  Fixed problem where the Kerberos include flags would not be set
+	  correctly if running the `configure' script with cached results.
+
+	  Define and substitute new make variable
+	  "ACE_KERBEROS_INCLUDES" that contains a directory rather than a
+	  preprocessor command line option.  The existing
+	  "ACE_TLS_CPPFLAGS" preprocessor command line option variable is
+	  not compatible with MPC.
+
+	* ace/SSL/Makefile.am (libACE_SSL_la_CPPFLAGS):
+
+	  Added "-I$(ACE_KERBEROS_INCLUDES)" to the preprocessor flag
+	  list.
+
+	  (libACE_SSL_la_LIBADD):
+
+	  Added "-lssl -lcrypto" to the library link list.
+
+	* ace/SSL/ssl.mpc:
+
+	  Define new automake project-specific section that defines the
+	  OpenSSL libraries to link, and added the
+	  $(ACE_KERBEROS_INCLUDES) include directory variable to the
+	  generated include path.
+
 Wed Sep 29 18:13:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.mpc: Added 'script' as a base project for Test_Output
@@ -14,7 +69,7 @@ Wed Sep 29 17:50:27 2004  Steve Huston  <shuston@riverace.com>
 
 Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/Basic_Stats.{h,inl,cpp}: 
+	* ace/Basic_Stats.{h,inl,cpp}:
 
 	  - Removed calculation of variation squared or deviation in the
 	  output from dump_results(). I don't think either was been
@@ -36,11 +91,11 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Fixed a for loop.  It should be 1 to n inclusive.
 
-	* ace/DLL_Manager.cpp: 
+	* ace/DLL_Manager.cpp:
 
 	  Added additional debug statements.
 
-	* bin/tao_other_tests.lst: 
+	* bin/tao_other_tests.lst:
 
 	  TAO/performance-tests/Protocols/run_test.pl was added.
 
@@ -407,8 +462,15 @@ Fri Sep 24 22:35:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
           New ICMP and "ping" support, and accompanying test.
 
+<<<<<<< ChangeLog
+	* ace/Makefile.am (libACE_Sockets_la_SOURCES):
+	* ace/ace.mpc:
+	* tests/Makefile.am:
+	* tests/tests.mpc:
+=======
         * ace/ace.mpc:
         * tests/tests.mpc:
+>>>>>>> 4.7677
 
           Added new ICMP and "ping" source files to the appropriate
           source lists.
