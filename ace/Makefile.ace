@@ -302,7 +302,6 @@ TEMPLATE_FILES = \
            RB_Tree \
            Select_Reactor_T \
            Singleton \
-	   SOCK_Dgram_Mcast_T \
            Strategies_T \
            Stream \
            Stream_Modules \

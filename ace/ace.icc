@@ -11,6 +11,7 @@ group OS_FILES =
   "OS.cpp",
   "OS_Dirent.cpp",
   "OS_Memory.cpp",
+  "OS_QoS.cpp",
   "OS_String.cpp",
   "OS_TLI.cpp",
   "OS_Errno.cpp",
@@ -28,6 +29,7 @@ group OS_INCLUDES =
   "OS.h",
   "OS_Dirent.h",
   "OS_Memory.h",
+  "OS_QoS.h",
   "OS_String.h",
   "OS_TLI.h",
   "OS_Errno.h",
@@ -46,7 +48,6 @@ group UTILS_FILES =
   "ARGV.cpp",
   "Argv_Type_Converter.cpp",
   "Capabilities.cpp",
-  "Connection_Recycling_Strategy.cpp",
   "Containers.cpp",
   "Configuration.cpp",
   "Configuration_Import_Export.cpp",
@@ -57,22 +58,23 @@ group UTILS_FILES =
   "Framework_Component.cpp",
   "Functor.cpp",
   "Get_Opt.cpp",
-  "Handle_Ops.cpp",
   "Hash_Map_Manager.cpp",
+  "Connection_Recycling_Strategy.cpp",
   "Hashable.cpp",
+  "Notification_Strategy.cpp",
+  "Recyclable.cpp",
+  "Refcountable.cpp",
+  "Handle_Ops.cpp",
   "Init_ACE.cpp",
   "Lib_Find.cpp",
   "Message_Block.cpp",
   "Method_Request.cpp",
-  "Notification_Strategy.cpp",
   "Object_Manager.cpp",
-  "Recyclable.cpp",
-  "Refcountable.cpp",
   "Registry.cpp",
-  "Sample_History.cpp",
+  "String_Base_Const.cpp",
   "SString.cpp",
   "Stats.cpp",
-  "String_Base_Const.cpp"
+  "Sample_History.cpp"
 //  #### NOTE:  see below for Filecache.
 
 group UTILS_INCLUDES =
@@ -82,7 +84,6 @@ group UTILS_INCLUDES =
   "ARGV.h",
   "Argv_Type_Converter.h",
   "Capabilities.h",
-  "Connection_Recycling_Strategy.h",
   "Containers.h",
   "Configuration.h",
   "Configuration_Import_Export.h",
@@ -93,23 +94,23 @@ group UTILS_INCLUDES =
   "Framework_Component.h",
   "Functor.h",
   "Get_Opt.h",
-  "Handle_Ops.h",
   "Hash_Map_Manager.h",
+  "Connection_Recycling_Strategy.h",
   "Hashable.h",
-  "High_Res_Timer.h",
+  "Notification_Strategy.h",
+  "Recyclable.h",
+  "Refcountable.h",
+  "Handle_Ops.h",
   "Init_ACE.h",
   "Lib_Find.h",
   "Message_Block.h",
   "Method_Request.h",
-  "Notification_Strategy.h",
   "Object_Manager.h",
-  "Recyclable.h",
-  "Refcountable.h",
   "Registry.h",
-  "Sample_History.h",
+  "String_Base_Const.h",
   "SString.h",
   "Stats.h",
-  "String_Base_Const.h"
+  "Sample_History.h"
 //  #### NOTE:  see below for Filecache.
 
 group LOGGING_FILES =
@@ -138,6 +139,7 @@ group LOGGING_INCLUDES =
 
 group THREADS_FILES =
   "Activation_Queue.cpp",
+  "Atomic_Op.cpp",
   "Process.cpp",
   "Process_Manager.cpp",
   "Synch.cpp",
@@ -155,6 +157,7 @@ group THREADS_FILES =
 
 group THREADS_INCLUDES =
   "Activation_Queue.h",
+  "Atomic_Op.h",
   "Process.h",
   "Process_Manager.h",
   "Synch.h",
@@ -171,7 +174,6 @@ group THREADS_INCLUDES =
   "Token.h"
 
 group DEMUX_FILES =
-  "Dev_Poll_Reactor.cpp",
   "Event_Handler.cpp",
   "FlReactor.cpp",
   "Msg_WFMO_Reactor.cpp",
@@ -184,6 +186,7 @@ group DEMUX_FILES =
   "Select_Reactor.cpp",
   "Select_Reactor_Base.cpp",
   "SUN_Proactor.cpp",
+  "Dev_Poll_Reactor.cpp",
   "TP_Reactor.cpp",
   "TkReactor.cpp",
   "WFMO_Reactor.cpp",
@@ -191,7 +194,6 @@ group DEMUX_FILES =
   "QtReactor.cpp"
 
 group DEMUX_INCLUDES =
-  "Dev_Poll_Reactor.h",
   "Event_Handler.h",
   "FlReactor.h",
   "Msg_WFMO_Reactor.h",
@@ -204,6 +206,7 @@ group DEMUX_INCLUDES =
   "Select_Reactor.h",
   "Select_Reactor_Base.h",
   "SUN_Proactor.h",
+  "Dev_Poll_Reactor.h",
   "TP_Reactor.h",
   "TkReactor.h",
   "WFMO_Reactor.h",
@@ -370,6 +373,7 @@ group IPC_INCLUDES =
 
 group SVCCONF_FILES =
   "DLL.cpp",
+  "DLL_Manager.cpp",
   "Dynamic_Service_Base.cpp",
   "Parse_Node.cpp",
   "Service_Config.cpp",
@@ -386,6 +390,7 @@ group SVCCONF_FILES =
 
 group SVCCONF_INCLUDES =
   "DLL.h",
+  "DLL_Manager.h",
   "Dynamic_Service_Base.h",
   "Parse_Node.h",
   "Service_Config.h",
@@ -485,6 +490,12 @@ group TOKEN_INCLUDES =
   "Token_Manager.h",
   "Token_Request_Reply.h"
 
+group CODECS_FILES =
+  "Codecs.cpp"
+
+group CODECS_INCLUDES =
+  "Codecs.h"
+
 group OTHER_FILES =
   "Local_Name_Space.cpp",
   "Name_Proxy.cpp",
@@ -512,10 +523,10 @@ group TEMPLATE_FILES =
 	   "Unbounded_Queue.cpp",
            "Asynch_Acceptor.cpp",
            "Asynch_Connector.cpp",
+           "Atomic_Op_T.cpp",
            "Auto_IncDec_T.cpp",
            "Auto_Ptr.cpp",
            "Based_Pointer_T.cpp",
-           "Bound_Ptr.cpp",
            "Connector.cpp",
            "Containers_T.cpp",
            "Cache_Map_Manager_T.cpp",
@@ -549,7 +560,6 @@ group TEMPLATE_FILES =
            "Module.cpp",
            "Obstack_T.cpp",
            "Pair_T.cpp",
-           "Refcounted_Auto_Ptr.cpp",
            "RB_Tree.cpp",
            "Select_Reactor_T.cpp",
            "Singleton.cpp",
@@ -603,6 +613,7 @@ option
                     MEMORY_INCLUDES,
                     TIMER_INCLUDES,
                     TOKEN_INCLUDES,
+                    CODECS_INCLUDES,
                     OTHER_INCLUDES,
                     "config.h",
                     "config-aix-4.x.h",
@@ -625,8 +636,11 @@ option
                 MEMORY_FILES,
                 TIMER_FILES,
                 TOKEN_FILES,
+                CODECS_FILES,
                 OTHER_FILES
-
+            if ($__IBMCPP__ >= 500) {
+                source type(cpp) TEMPLATE_FILES
+            }
             source type (lib) "libtli_r.a"
             source type (lib) "libpthreads.a"
             source type (lib) "libc_r.a"
@@ -635,3 +649,4 @@ option
             source type (imp) "pse.exp"
         }
     }
+
