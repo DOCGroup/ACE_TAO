@@ -620,6 +620,21 @@ AH_TEMPLATE([ACE_HAS_PTHREAD_PROCESS_ENUM],
 [pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
    PTHREAD_PROCESS_SHARED values])
 
+AH_TEMPLATE([ACE_HAS_PTHREAD_SUSPEND],
+[Platform has pthread_suspend().])
+
+AH_TEMPLATE([ACE_HAS_PTHREAD_SUSPEND_NP],
+[Platform has pthread_suspend_np().])
+
+AH_TEMPLATE([ACE_HAS_PTHREAD_CONTINUE],
+[Platform has pthread_continue().])
+
+AH_TEMPLATE([ACE_HAS_PTHREAD_CONTINUE_NP],
+[Platform has pthread_continue_np().])
+
+AH_TEMPLATE([ACE_HAS_PTHREAD_RESUME_NP],
+[Platform has pthread_resume_np().])
+
 AH_TEMPLATE([ACE_HAS_PURIFY],[Purify'ing.  Defined on command line.])
 
 AH_TEMPLATE([ACE_HAS_QUANTIFY],[Quantify'ing.  Defined on command line.])
