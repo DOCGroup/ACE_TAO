@@ -1,3 +1,111 @@
+Wed May  9 15:36:46 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Makefile:
+        * performance-tests/Makefile.bor:
+        * performance-tests/README:
+        * performance-tests/AMI_Latency/Makefile:
+        * performance-tests/AMI_Latency/Makefile.bor:
+        * performance-tests/AMI_Latency/README:
+        * performance-tests/AMI_Latency/Roundtrip.cpp:
+        * performance-tests/AMI_Latency/Roundtrip.h:
+        * performance-tests/AMI_Latency/Roundtrip_Handler.cpp:
+        * performance-tests/AMI_Latency/Roundtrip_Handler.h:
+        * performance-tests/AMI_Latency/Server_Task.cpp:
+        * performance-tests/AMI_Latency/Server_Task.h:
+        * performance-tests/AMI_Latency/Test.idl:
+        * performance-tests/AMI_Latency/client.bor:
+        * performance-tests/AMI_Latency/client.cpp:
+        * performance-tests/AMI_Latency/run_test.pl:
+        * performance-tests/AMI_Latency/server.bor:
+        * performance-tests/AMI_Latency/server.cpp:
+        * performance-tests/DII_Latency/Makefile:
+        * performance-tests/DII_Latency/Makefile.bor:
+        * performance-tests/DII_Latency/README:
+        * performance-tests/DII_Latency/Roundtrip.cpp:
+        * performance-tests/DII_Latency/Roundtrip.h:
+        * performance-tests/DII_Latency/Test.idl:
+        * performance-tests/DII_Latency/client.bor:
+        * performance-tests/DII_Latency/client.cpp:
+        * performance-tests/DII_Latency/run_test.pl:
+        * performance-tests/DII_Latency/server.bor:
+        * performance-tests/DII_Latency/server.cpp:
+        * performance-tests/DII_Latency/svc.conf:
+        * performance-tests/DSI_Latency/Makefile:
+        * performance-tests/DSI_Latency/Makefile.bor:
+        * performance-tests/DSI_Latency/README:
+        * performance-tests/DSI_Latency/Roundtrip.cpp:
+        * performance-tests/DSI_Latency/Roundtrip.h:
+        * performance-tests/DSI_Latency/Test.idl:
+        * performance-tests/DSI_Latency/client.bor:
+        * performance-tests/DSI_Latency/client.cpp:
+        * performance-tests/DSI_Latency/run_test.pl:
+        * performance-tests/DSI_Latency/server.bor:
+        * performance-tests/DSI_Latency/server.cpp:
+        * performance-tests/DSI_Latency/svc.conf:
+        * performance-tests/Deferred_Latency/Makefile:
+        * performance-tests/Deferred_Latency/Makefile.bor:
+        * performance-tests/Deferred_Latency/README:
+        * performance-tests/Deferred_Latency/Roundtrip.cpp:
+        * performance-tests/Deferred_Latency/Roundtrip.h:
+        * performance-tests/Deferred_Latency/Test.idl:
+        * performance-tests/Deferred_Latency/client.bor:
+        * performance-tests/Deferred_Latency/client.cpp:
+        * performance-tests/Deferred_Latency/run_test.pl:
+        * performance-tests/Deferred_Latency/server.bor:
+        * performance-tests/Deferred_Latency/server.cpp:
+        * performance-tests/Deferred_Latency/svc.conf:
+        * performance-tests/Single_Threaded_Latency/Makefile:
+        * performance-tests/Single_Threaded_Latency/Makefile.bor:
+        * performance-tests/Single_Threaded_Latency/README:
+        * performance-tests/Single_Threaded_Latency/Roundtrip.cpp:
+        * performance-tests/Single_Threaded_Latency/Roundtrip.h:
+        * performance-tests/Single_Threaded_Latency/Test.idl:
+        * performance-tests/Single_Threaded_Latency/client.bor:
+        * performance-tests/Single_Threaded_Latency/client.cpp:
+        * performance-tests/Single_Threaded_Latency/run_test.pl:
+        * performance-tests/Single_Threaded_Latency/server.bor:
+        * performance-tests/Single_Threaded_Latency/server.cpp:
+        * performance-tests/Single_Threaded_Latency/svc.conf:
+        * performance-tests/Thread_Per_Connection_Latency/Client_Task.cpp:
+        * performance-tests/Thread_Per_Connection_Latency/Client_Task.h:
+        * performance-tests/Thread_Per_Connection_Latency/Makefile:
+        * performance-tests/Thread_Per_Connection_Latency/Makefile.bor:
+        * performance-tests/Thread_Per_Connection_Latency/README:
+        * performance-tests/Thread_Per_Connection_Latency/Roundtrip.cpp:
+        * performance-tests/Thread_Per_Connection_Latency/Roundtrip.h:
+        * performance-tests/Thread_Per_Connection_Latency/Test.idl:
+        * performance-tests/Thread_Per_Connection_Latency/client.bor:
+        * performance-tests/Thread_Per_Connection_Latency/client.cpp:
+        * performance-tests/Thread_Per_Connection_Latency/run_test.pl:
+        * performance-tests/Thread_Per_Connection_Latency/server.bor:
+        * performance-tests/Thread_Per_Connection_Latency/server.cpp:
+        * performance-tests/Thread_Per_Connection_Latency/svc.conf:
+        * performance-tests/Thread_Pool_Latency/Client_Task.cpp:
+        * performance-tests/Thread_Pool_Latency/Client_Task.h:
+        * performance-tests/Thread_Pool_Latency/Makefile:
+        * performance-tests/Thread_Pool_Latency/Makefile.bor:
+        * performance-tests/Thread_Pool_Latency/README:
+        * performance-tests/Thread_Pool_Latency/Roundtrip.cpp:
+        * performance-tests/Thread_Pool_Latency/Roundtrip.h:
+        * performance-tests/Thread_Pool_Latency/Test.idl:
+        * performance-tests/Thread_Pool_Latency/Worker_Thread.cpp:
+        * performance-tests/Thread_Pool_Latency/Worker_Thread.h:
+        * performance-tests/Thread_Pool_Latency/client.bor:
+        * performance-tests/Thread_Pool_Latency/client.cpp:
+        * performance-tests/Thread_Pool_Latency/run_test.pl:
+        * performance-tests/Thread_Pool_Latency/server.bor:
+        * performance-tests/Thread_Pool_Latency/server.cpp:
+        * performance-tests/Thread_Pool_Latency/svc.conf:
+          Move each one of the tests in the Latency directory to its own
+          place.  There are many advantages to this organization, for
+          example, we can compile the basic tests even with minimum CORBA
+          enabled.
+          It is also easier to run the tests on the nightly regression
+          builds, and somewhat easier to interpret the results.
+          The disadvantage is that is is harder to maintain the code, if
+          anybody has an idea on how to improve this they are welcome to
+          change the code.
+
 Wed May  9 17:11:23 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAOACE.dsw:
