@@ -1,4 +1,11 @@
 Sun Jul 11 14:45:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* tao/Wait_Strategy.cpp
+	* tao/Wait_Strategy.h
+	* tao/default_client.cpp
+	  Moved the Leader Follower implementation to Exclusive Leader
+	  Follower class, leaving way for implementing the new Muxed
+	  Leader Follower implementation.  		
 
 	* tao/Invocation.cpp
 	* tao/Invocation.h
