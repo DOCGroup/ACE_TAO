@@ -34,5 +34,9 @@
 # include /**/ <stropts.h>
 #endif /* !ACE_LACKS_STROPTS_H */
 
+# if defined (ACE_LACKS_STRRECVFD)
+struct strrecvfd {};
+# endif /* ACE_LACKS_STRRECVFD */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STROPTS_H */

@@ -30,5 +30,19 @@
 # include /**/ <sys/sem.h>
 #endif /* !ACE_LACKS_SYS_SEM_H */
 
+# if defined (ACE_LACKS_SEMBUF_T)
+struct sembuf
+{
+  /// semaphore #
+  unsigned short sem_num;
+
+  /// semaphore operation
+  short sem_op;
+
+  /// operation flags
+  short sem_flg;
+};
+# endif /* ACE_LACKS_SEMBUF_T */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_SEM_H */

@@ -1,3 +1,50 @@
+Thu May  8 23:24:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented out a ton of code and moved it into the following
+          files as noted.  The commented out code will be removed once the
+          other platforms have been tested and we are ready to commit to
+          the main trunk.
+
+        * ace/Thread.h:
+          Moved struct cancel_state here.
+
+        * ace/os_include/pthread.h:
+          Moved pthead_self() declaration here.
+
+        * ace/os_include/semaphore.h:
+          Moved struct ACE_sema_t and SEM_FAILED here.
+
+        * ace/os_include/stdint.h:
+          Moved BSD style types, e.g., u_char, here.
+
+        * ace/os_include/stropts.h:
+          Moved struct strrecvfd declaration here.
+
+        * ace/os_include/time.h:
+          Moved ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R define and
+          undef of ctime when ACE_HAS_BROKEN_CTIME here.
+
+        * ace/os_include/sys/msg.h:
+          Moved struct msgbuf declaration here.
+
+        * ace/os_include/sys/resource.h:
+          Moved rlimit typedef here.
+
+        * ace/os_include/sys/sem.h:
+          Moved struct sembuf declartion here.
+
+        * ace/os_include/sys/stat.h:
+          Moved ACE_LACKS_MODE_MASK, e.g., S_IRWXG, definitions
+          and struct stat here.
+
+        * ace/os_include/sys/types.h:
+          Moved clockid_t and dev_t typedefs and conditional include
+          of <types.h> here.
+
+        * ace/os_include/sys/uio.h:
+          Moved struct iovec and related typedefs here.
+
 Thu May  7 02:04:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
