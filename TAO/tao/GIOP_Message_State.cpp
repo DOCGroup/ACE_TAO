@@ -5,6 +5,7 @@
 #include "tao/GIOP_Message_Base.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_State.inl"
@@ -22,11 +23,15 @@ public:
           msg_ = 0;
           return;
         }
+
       this->msg_ = new char[ACE_OS::strlen (msg) + MAGIC_LENGTH ];
       ACE_OS::strcpy (this->msg_, msg);
       ACE_OS::strcat (this->msg_, " begin\n");
+
       if (TAO_debug_level >= this->which_level_)
-        ACE_DEBUG ((LM_DEBUG, this->msg_ ));
+        {
+          ACE_DEBUG ((LM_DEBUG, this->msg_ ));
+        }
     }
 
   ~TAO_Debug_Msg_Emitter_Guard ()
@@ -40,6 +45,7 @@ public:
               ACE_OS::strcpy (begin_start, " end\n");
               ACE_DEBUG ((LM_DEBUG, this->msg_));
             }
+
           delete[] this->msg_;
         }
     }
@@ -72,18 +78,22 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (
 // the *caller* needs to do that first.
 int
 TAO_GIOP_Message_State::take_values_from_message_block (
-  const ACE_Message_Block& mb
+    const ACE_Message_Block& mb
   )
 {
   const char* buf = mb.rd_ptr ();
 
   // Get the version information
   if (this->set_version_info_from_buffer (buf) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Get the byte order information...
   if (this->set_byte_order_info_from_buffer (buf) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Get the message type
   this->message_type_ = buf[TAO_GIOP_MESSAGE_TYPE_OFFSET];
@@ -97,6 +107,7 @@ TAO_GIOP_Message_State::take_values_from_message_block (
   if (this->message_size_ == 0)
     {
       const char* msgname = 0;
+
       switch (this->message_type_)
         {
         case TAO_GIOP_MESSAGERROR:
@@ -107,13 +118,23 @@ TAO_GIOP_Message_State::take_values_from_message_block (
       if (msgname != 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) GIOP_Message_State::take_values: %s rcv'd.\n",
-                       msgname));
+            {
+              ACE_DEBUG ((
+                  LM_DEBUG, 
+                  "(%P|%t) GIOP_Message_State::take_values: %s rcv'd.\n",
+                  msgname
+                ));
+            }
         }
       else
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) GIOP_Message_State::take_values: Message of size zero rcv'd.\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG, 
+                          "(%P|%t) GIOP_Message_State::take_values: "
+                          "Message of size zero rcv'd.\n"));
+            }
+
           return -1;
         }
     }
@@ -165,10 +186,14 @@ TAO_GIOP_Message_State::set_byte_order_info_from_buffer (const char *buf)
           this->byte_order_ != 1)
         {
           if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, "
-                        "invalid byte order <%d> for version <1.0>\n",
-                        this->byte_order_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - GIOP_Message_State::"
+                          "get_byte_order_info, "
+                          "invalid byte order <%d> for version <1.0>\n",
+                          this->byte_order_));
+            }
+
           return -1;
         }
     }
@@ -185,12 +210,15 @@ TAO_GIOP_Message_State::set_byte_order_info_from_buffer (const char *buf)
       if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
         {
           if (TAO_debug_level > 2)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d>")
-                      ACE_TEXT (" for version <%d %d> \n"),
-                      buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
-                      this->giop_version_.major,
-                      this->giop_version_.minor));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d>")
+                          ACE_TEXT (" for version <%d %d> \n"),
+                          buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
+                          this->giop_version_.major,
+                          this->giop_version_.minor));
+            }
+
           return -1;
         }
     }
