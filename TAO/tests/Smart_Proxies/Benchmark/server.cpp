@@ -67,7 +67,7 @@ void
 Test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (ACE_TRY_ENV);
+  this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
 static const char *ior_output_file = 0;
