@@ -1,3 +1,9 @@
+Sat Jan 23 23:08:27 1999  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR.{h,i,cpp}:
+          Caught numerous inline ordering errors and mistakes in
+          long double functions (not defined on NT) with g++.
+
 Sat Jan 23 21:13:47 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tests/tests.dsw:
