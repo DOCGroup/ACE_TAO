@@ -306,8 +306,8 @@ class ACE_Export ACE_Time_Value
   // = DESCRIPTION
   //     This class centralizes all the time-related processing in
   //     ACE.  These timers are typically used in conjunction with
-  //     lower-level OS mechanisms like select(), poll(), or
-  //     cond_timedwait().  ACE_Time_Value help make the use of these
+  //     lower-level OS mechanisms like <select>, <poll>, or
+  //     <cond_timedwait>.  ACE_Time_Value help make the use of these
   //     mechanisms portable across OS platforms,
 {
 public:
@@ -318,7 +318,7 @@ public:
   // = Initialization methods.
 
   ACE_Time_Value (long sec = 0, long usec = 0);
-  // Constructor (needed to avoid conflict with the <double> version).
+  // Constructor.
 
   // = Methods for converting to/from various time formats.
   ACE_Time_Value (const struct timeval &t);
@@ -335,8 +335,11 @@ public:
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 #endif
 
-  void set (long sec = 0, long usec = 0);
-  // Construct a Time_Value from a timeval.
+  void set (long sec, long usec);
+  // Construct a Time_Value from two <long>s.
+
+  void set (double d);
+  // Construct a Time_Value from a <double>.
 
   void set (const timeval &t);
   // Construct a Time_Value from a timeval.
@@ -1263,6 +1266,12 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_SignalHandler SIG_PF
 typedef void (*ACE_SignalHandlerV)(...);
 #endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
+
+#if defined (BUFSIZ)
+#define ACE_STREAMBUF_SIZE BUFSIZ
+#else
+#define ACE_STREAMBUF_SIZE 1024
+#endif /* BUFSIZ */
 
 #if defined (ACE_WIN32)
 // Turn off warnings for /W4
@@ -2241,7 +2250,7 @@ class ACE_Export ACE_OS
   //     ACE_Log_Msg::restart() flag is enabled).
 {
 public:
-  struct flock_t
+  struct ace_flock_t
     // = TITLE
     //     OS file locking structure.
   {
@@ -2313,18 +2322,18 @@ public:
   static int sprintf (char *buf, const char *format, ...);
 
   // = A set of wrappers for file locks.
-  static int flock_init (ACE_OS::flock_t *lock, int flags = 0, 
+  static int flock_init (ACE_OS::ace_flock_t *lock, int flags = 0, 
                          LPCTSTR name = 0, mode_t perms = 0);
-  static int flock_destroy (ACE_OS::flock_t *lock);
-  static int flock_rdlock (ACE_OS::flock_t *lock, short whence = 0, 
+  static int flock_destroy (ACE_OS::ace_flock_t *lock);
+  static int flock_rdlock (ACE_OS::ace_flock_t *lock, short whence = 0, 
                            off_t start = 0, off_t len = 0);
-  static int flock_tryrdlock (ACE_OS::flock_t *lock, short whence = 0, 
+  static int flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence = 0, 
                               off_t start = 0, off_t len = 0);
-  static int flock_trywrlock (ACE_OS::flock_t *lock, short whence = 0, 
+  static int flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence = 0, 
                               off_t start = 0, off_t len = 0);
-  static int flock_unlock (ACE_OS::flock_t *lock, short whence = 0, 
+  static int flock_unlock (ACE_OS::ace_flock_t *lock, short whence = 0, 
                            off_t start = 0, off_t len = 0);
-  static int flock_wrlock (ACE_OS::flock_t *lock, short whence = 0, 
+  static int flock_wrlock (ACE_OS::ace_flock_t *lock, short whence = 0, 
                            off_t start = 0, off_t len = 0);
 
   // = A set of wrappers for low-level process operations.

@@ -145,7 +145,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  ACE_OS::flock_t lock_;
+  ACE_OS::ace_flock_t lock_;
   // Locking structure for OS record locks.
 
   // = Prevent assignment and initialization.

@@ -5297,7 +5297,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 }
 
 ACE_INLINE int 
-ACE_OS::flock_init (ACE_OS::flock_t *lock, 
+ACE_OS::flock_init (ACE_OS::ace_flock_t *lock, 
 		    int flags, 
 		    LPCTSTR name,
 		    mode_t perms)
@@ -5325,7 +5325,7 @@ ACE_OS::flock_init (ACE_OS::flock_t *lock,
 }
 
 ACE_INLINE int 
-ACE_OS::flock_wrlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
 {
   // ACE_TRACE ("ACE_OS::flock_wrlock");
 #if defined (ACE_WIN32)
@@ -5348,7 +5348,7 @@ ACE_OS::flock_wrlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t le
 }
   
 ACE_INLINE int 
-ACE_OS::flock_rdlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
 {
   // ACE_TRACE ("ACE_OS::flock_rdlock");
 #if defined (ACE_WIN32)
@@ -5371,9 +5371,9 @@ ACE_OS::flock_rdlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t le
 }
 
 ACE_INLINE int 
-ACE_OS::flock_trywrlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
 {
-  // ACE_TRACE ("ACE_OS::flock_trywrlock");
+  // ACE_TRACE ("ACE_OS::ace_flock_trywrlock");
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG(whence);
   lock->overlapped_.Offset = start;
@@ -5395,9 +5395,9 @@ ACE_OS::flock_trywrlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t
 }
 
 ACE_INLINE int 
-ACE_OS::flock_tryrdlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
 {
-  // ACE_TRACE ("ACE_OS::flock_tryrdlock");
+  // ACE_TRACE ("ACE_OS::ace_flock_tryrdlock");
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG(whence);
   lock->overlapped_.Offset = start;
@@ -5419,7 +5419,7 @@ ACE_OS::flock_tryrdlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t
 }
 
 ACE_INLINE int
-ACE_OS::flock_unlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
 {
   // ACE_TRACE ("ACE_OS::flock_unlock");
 #if defined (ACE_WIN32)
@@ -5443,7 +5443,7 @@ ACE_OS::flock_unlock (ACE_OS::flock_t *lock, short whence, off_t start, off_t le
 }
 
 ACE_INLINE int 
-ACE_OS::flock_destroy (ACE_OS::flock_t *lock)
+ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
 {
   // ACE_TRACE ("ACE_OS::flock_destroy");
   if (lock->handle_ != ACE_INVALID_HANDLE)

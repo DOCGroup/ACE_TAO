@@ -458,10 +458,6 @@ private:
   // that this pointer is shared by all owners of this
   // <ACE_Data_Block>.
 
-  int delete_allocator_strategy_;
-  // Keep track of whether we have to delete the <allocator_strategy_>
-  // pointer.
-
   ACE_Lock *locking_strategy_;
   // Pointer to the locking strategy defined for this
   // <ACE_Data_Block>.  This is used to protect regions of code that

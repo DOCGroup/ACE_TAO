@@ -1,3 +1,23 @@
+Tue Feb  4 15:08:55 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Misc/test_iostreams.cpp: Added a test that illustrates
+ 	  how the new ACE_iostreams mechanism works.  Thanks to James CE
+ 	  Johnson <jcej@lads.com> for this.
+
+	* ace/Message_Block: Updated the ACE_Message_Block implementation
+ 	  to use ACE_Service_Config::alloc() if the user doesn't supply a
+ 	  customize version.  This also means that we never delete the
+ 	  allocator_strategy_, so we can remove this flag and reduce the
+ 	  amount of storage by 4 bytes.  Thanks to Irfan for noticing that
+ 	  we can do this.
+
+	* ace/platform_dgux4_epc.h: Added a new platform config file
+	  for DG/UX.  Thanks to Michael Maxie <maxie@acm.org> for
+	  this.
+
+	* ace/config-dgux-4.11-epc.h: Added a new config file for DG/UX.
+  	  Thanks to Michael Maxie <maxie@acm.org> for this.
+
 Mon Feb  3 15:35:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-aix-*.h: Added a (char *) cast to

@@ -87,6 +87,16 @@ ACE_Time_Value::set (long sec, long usec)
   this->tv_usec_ = usec;
 }
 
+void
+ACE_Time_Value::set (double d)
+{
+  // ACE_TRACE ("ACE_Time_Value::set");
+  long l = (long) d;
+  this->tv_sec_ = l;
+  this->tv_usec_ = ((long) (d - (double) l)) * 1000000;
+  this->normalize ();
+}
+
 ACE_Time_Value::ACE_Time_Value (long sec, long usec)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
@@ -368,9 +378,9 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
 #endif /* VXWORKS */ 
 
 void 
-ACE_OS::flock_t::dump (void) const
+ACE_OS::ace_flock_t::dump (void) const
 {
-// ACE_TRACE ("ACE_OS::flock_t::dump");
+// ACE_TRACE ("ACE_OS::ace_flock_t::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "handle_ = %u", this->handle_));
