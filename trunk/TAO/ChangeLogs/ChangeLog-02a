@@ -1,5 +1,11 @@
 Tue Jul  3 20:09:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
+	* tao/Strategies/TAO_Strategies.dsp:
+
+	  Added DIOP source files to project.
+	
+Tue Jul  3 20:09:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
 	* examples/PluggableUDP/tests/Basic/Makefile:
 	* examples/PluggableUDP/tests/Performance/Makefile:
 	* examples/PluggableUDP/tests/SimplePerformance/Makefile:

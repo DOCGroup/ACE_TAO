@@ -98,6 +98,34 @@ SOURCE=.\advanced_resource.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DIOP_Acceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Connection_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Connector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Profile.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Transport.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FIFO_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -195,6 +223,34 @@ SOURCE=.\UIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\advanced_resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Acceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Connection_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Profile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Transport.h
 # End Source File
 # Begin Source File
 
@@ -299,6 +355,26 @@ SOURCE=.\UIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\advanced_resource.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Acceptor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Connection_Handler.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DIOP_Transport.i
 # End Source File
 # Begin Source File
 
