@@ -1010,6 +1010,10 @@ ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
 					them at all.
 					Both QNX/RTP and LynxOS suffer from
 					this problem.
+
+ACE_LACKS_MEMBER_TEMPLATES              Compiler does not support
+                                        member template feature.
+
 ----------------------------------------
 
 The following macros determine the svc.conf file format ACE uses.

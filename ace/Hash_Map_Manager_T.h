@@ -687,20 +687,19 @@ public:
 /**
  * @class ACE_Hash_Map_Bucket_Iterator
  *
- * @brief Forward iterator for the <ACE_Hash_Map_Manager_Ex> which only
- * traverses a particular bucket.  The particular bucket is
- * specified by the <EXT_ID> parameter specified in the
- * constructor.
+ * @brief Forward iterator for the <ACE_Hash_Map_Manager_Ex> which
+ * only traverses a particular bucket.  The particular bucket is
+ * specified by the <EXT_ID> parameter specified in the constructor.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking
- * is inherently inefficient and/or error-prone within an
- * STL-style iterator.  If you require locking, you can
- * explicitly use an <ACE_Guard> or <ACE_Read_Guard> on the
- * <ACE_Hash_Map_Manager_Ex>'s internal lock, which is
- * accessible via its <mutex> method.
- * Note that this iterator cannot be created by calling a method
- * on the map, since this would require adding explicit template
+ * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
+ * inherently inefficient and/or error-prone within an STL-style
+ * iterator.  If you require locking, you can explicitly use an
+ * <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager_Ex>'s
+ * internal lock, which is accessible via its <mutex> method.
+ *
+ * Note that a creation method for this new iterator cannot be added
+ * to the hash map, since this would require adding explicit template
  * instantiations for bucket iterators on platforms with broken
  * templates.
  */
