@@ -51,8 +51,7 @@ ACE_OS::opendir (const ACE_TCHAR *filename)
 #  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
-#    elif defined (VXWORKS)
-  // VxWorks' ::opendir () is declared with a non-const argument.
+#    elif defined (ACE_HAS_NONCONST_OPENDIR)
   return ::opendir (const_cast<char *> (filename));
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));

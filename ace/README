@@ -405,6 +405,8 @@ ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
 ACE_HAS_NEW_NOTHROW                     Compiler offers new (nothrow).
 ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
                                         in call to chdir
+ACE_HAS_NONCONST_OPENDIR                Platform uses non-const char *
+                                        in call to opendir
 ACE_HAS_NONCONST_RMDIR                  Platform uses non-const char *
                                         in call to rmdir
 ACE_HAS_NONCONST_UNLINK                 Platform uses non-const char *
