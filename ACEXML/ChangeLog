@@ -1,3 +1,21 @@
+Wed Nov 20 22:58:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.cpp (parse_char_reference):
+
+          Fixed stupid thinko in conditional parsing of a hex character
+          reference.
+
+        * common/Mem_Map_Stream.cpp:
+
+          We can use the old way of fetching on-demand and don't need to
+          use a while loop.
+
+        * common/NamespaceSupport.cpp:
+
+          Fixed a long-standing bug with core dumping. With these changes,
+          we are able to parse the XML specification itself. Is this
+          called Meta or what ?
+
 Wed Nov 20 20:44:56 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * common/Mem_Map_Stream.cpp (grow_file_and_remap):

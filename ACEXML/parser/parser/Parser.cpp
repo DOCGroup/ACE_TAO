@@ -947,8 +947,8 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                 this->obstack_.unwind (cdata);
                 cdata_length = 0;
               }
-
-            switch (this->peek ())
+            ch = this->peek();
+            switch (ch)
               {
                 case '!':             // a comment or a CDATA section.
                   this->get ();       // consume '!'
@@ -1005,7 +1005,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                                                         endname
                                                         ACEXML_ENV_ARG_PARAMETER);
                     ACEXML_CHECK_RETURN (-1);
-                    this->prefix_mapping (this->xml_namespace_. getPrefix(ns_uri),
+                    this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
                                           ns_uri, ns_lname, 0
                                           ACEXML_ENV_ARG_PARAMETER);
                     ACEXML_CHECK_RETURN (-1);
@@ -1028,7 +1028,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                 if (this->parse_char_reference (buf, len) != 0)
                   {
                     // [WFC: Legal Character]
-                    this->fatal_error (ACE_TEXT ("Invalid CharacterRef")
+                    this->fatal_error (ACE_TEXT ("Invalid CharRef")
                                        ACEXML_ENV_ARG_PARAMETER);
                     ACEXML_CHECK_RETURN (-1);
                   }
@@ -1330,6 +1330,9 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
                                     "name and AttDef")
                           ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
+      this->skip_whitespace_count (&fwd);
+      if (fwd == '>')
+        break;
       attname = this->parse_attname (ACEXML_ENV_SINGLE_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
 
@@ -1363,6 +1366,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
   this->get ();                 // consume closing '>'
   return 0;
 }
+
 
 int
 ACEXML_Parser::check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
@@ -2101,7 +2105,7 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
   int more_digit = 0;
   ch = this->get ();
   for ( ; i < len &&
-          (this->isNormalDigit (ch) && (hex ? this->isCharRef(ch): 1)); ++i)
+          (this->isNormalDigit (ch) || (hex ? this->isCharRef(ch): 0)); ++i)
     {
       buf[i] = ch;
       ch = this->get();
@@ -2219,7 +2223,7 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str ACEXML_ENV_ARG_DECL)
             ACEXML_CHECK_RETURN (-1);
             break;
           case 0:
-            this->pop_context (0 ACEXML_ENV_ARG_PARAMETER);
+            this->pop_context (1 ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK_RETURN (-1);
             break;
           default:
@@ -2309,9 +2313,6 @@ ACEXML_Parser::parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL)
   if (!this->external_entity_)
     {
       ACEXML_StrCharStream* str = 0;
-      //       ACE_DEBUG ((LM_DEBUG,
-      //                   ACE_TEXT ("Entity is %s\n Replacement Text is : %s\n"),
-      //                   replace, entity));
       ACE_NEW_RETURN (str, ACEXML_StrCharStream (entity, replace), 0);
       if (str)
         {
