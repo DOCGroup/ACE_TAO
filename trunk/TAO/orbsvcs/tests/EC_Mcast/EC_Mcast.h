@@ -111,7 +111,6 @@ public:
 
   void open (TAO_ECG_UDP_Out_Endpoint *endoint,
              RtecEventChannelAdmin::EventChannel_ptr ec,
-             RtecScheduler::Scheduler_ptr scheduler,
              CORBA::Environment &_env);
   // Connect the UDP sender to the EC.
 
@@ -164,19 +163,15 @@ public:
   ECM_Supplier (ECM_Local_Federation* federation);
 
   void open (const char* name,
-             RtecScheduler::Period_t period,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             RtecScheduler::Scheduler_ptr scheduler,
              CORBA::Environment& _env);
   // This method connects the supplier to the EC.
 
   void close (CORBA::Environment &_env);
   // Disconnect from the EC.
 
-  void activate (const char* name,
-                 RtecScheduler::Period_t period,
-                 RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                 RtecScheduler::Scheduler_ptr scheduler,
+  void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
+                 RtecEventComm::Time interval,
                  CORBA::Environment& _env);
   // Connect as a consumer to start receiving events.
 
@@ -224,7 +219,6 @@ public:
 
   void open (const char* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             RtecScheduler::Scheduler_ptr scheduler,
              ACE_RANDR_TYPE &seed,
              CORBA::Environment& _env);
   // This method connects the consumer to the EC.
@@ -247,9 +241,6 @@ private:
   ECM_Local_Federation* federation_;
   // To callback.
 
-  RtecScheduler::handle_t rt_info_;
-  // The handle for our RT_Info description.
-
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC using this proxy.
 
@@ -271,18 +262,15 @@ public:
   // Destructor
 
   void open (int event_count,
-             RtecScheduler::Period_t period,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             RtecScheduler::Scheduler_ptr scheduler,
              CORBA::Environment& _env);
   // Connect both the supplier and the consumer.
 
   void close (CORBA::Environment& _env);
   // Disconnect everybody from the EC
 
-  void activate (RtecScheduler::Period_t period,
-                 RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                 RtecScheduler::Scheduler_ptr scheduler,
+  void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
+                 RtecEventComm::Time interval,
                  CORBA::Environment& _env);
   // Activate the supplier
 
@@ -299,7 +287,6 @@ public:
   // The federation description.
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
-                      RtecScheduler::Scheduler_ptr scheduler,
                       TAO_ECG_UDP_Out_Endpoint* ignore_from,
                       CORBA::Environment &_env);
   // Connect the UDP receiver to the EC.
@@ -431,12 +418,10 @@ public:
 
 private:
   void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-                         RtecScheduler::Scheduler_ptr scheduler,
                          CORBA::Environment &_env);
   // Connect the federations to the EC.
 
   void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-                             RtecScheduler::Scheduler_ptr scheduler,
                              CORBA::Environment &_env);
   // Activate all the federations
 
@@ -445,12 +430,10 @@ private:
   // the objects, etc.
 
   void open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
-                     RtecScheduler::Scheduler_ptr scheduler,
                      CORBA::Environment &_env);
   // Connect all the senders, so we can start multicasting events.
 
   void open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec,
-                       RtecScheduler::Scheduler_ptr scheduler,
                        CORBA::Environment &_env);
   // Connect all the receivers, thus we accept events arriving through
   // multicast.
@@ -483,7 +466,7 @@ private:
 
 private:
   int event_period_;
-  // The events are generated using this interval.
+  // The events are generated using this interval, in microseconds.
 
   int event_count_;
   // How many events will the suppliers send

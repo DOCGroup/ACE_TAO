@@ -6,38 +6,38 @@
 #include "RtecEventComm.idl"
 #include "RtecScheduler.idl"
 
-module RtecEventChannelAdmin 
+module RtecEventChannelAdmin
 {
   exception AlreadyConnected {};
   exception TypeError {};
 
-  struct Dependency 
+  struct Dependency
   {
     RtecEventComm::Event event;
     RtecScheduler::handle_t rt_info;
   };
   typedef sequence<Dependency> DependencySet;
 
-  struct ConsumerQOS 
+  struct ConsumerQOS
   {
     DependencySet dependencies;
     boolean is_gateway;
   };
 
-  struct Publication 
+  struct Publication
   {
     RtecEventComm::Event event;
     RtecScheduler::Dependency_Info dependency_info;
   };
   typedef sequence<Publication> PublicationSet;
 
-  struct SupplierQOS 
+  struct SupplierQOS
   {
     PublicationSet publications;
     boolean is_gateway;
   };
 
-  interface ProxyPushSupplier: RtecEventComm::PushSupplier 
+  interface ProxyPushSupplier: RtecEventComm::PushSupplier
     {
       // = TITLE
       //   The Proxy Supplier
@@ -64,7 +64,7 @@ module RtecEventChannelAdmin
       // Resume the reception of events.
     };
 
-  interface ProxyPushConsumer: RtecEventComm::PushConsumer 
+  interface ProxyPushConsumer: RtecEventComm::PushConsumer
     {
       // = TITLE
       //   The Proxy Consumer
@@ -84,7 +84,7 @@ module RtecEventChannelAdmin
 
   // @@ TODO: Find out the exception specs for the following interface's
   // methods.
-  interface ConsumerAdmin 
+  interface ConsumerAdmin
     {
       // = TITLE
       //   The Supplier factory
@@ -97,7 +97,7 @@ module RtecEventChannelAdmin
       // Obtain a supplier
     };
 
-  interface SupplierAdmin 
+  interface SupplierAdmin
     {
       // = TITLE
       //   The Consumer factory
@@ -110,7 +110,7 @@ module RtecEventChannelAdmin
       // Obtain a consumer
     };
 
-  interface Observer 
+  interface Observer
     {
       // = TITLE
       //   Observes any changes in the consumer or supplier sets for an
@@ -123,19 +123,18 @@ module RtecEventChannelAdmin
 
       void update_consumer (in ConsumerQOS sub);
       // A change in the list of consumers has ocurred. The disjunction
-      // of the subscriptions (and its equivalent form ) is
-      // passed to the observer.
+      // of the subscriptions is passed to the observer.
 
       void update_supplier (in SupplierQOS pub);
-      // A change in the list of consumers has ocurred. The disjunction
-      // of the publications (and its equivalent form for suppliers).
+      // A change in the list of suppliers has ocurred. The disjunction
+      // of the publications is passed to the observer.
     };
 
   typedef unsigned long Observer_Handle;
   // This is used as an opaque ID to control the addition and removal
   // of handles from an event channel.
 
-  interface EventChannel 
+  interface EventChannel
     {
       // = TITLE
       //   The Event Channel class

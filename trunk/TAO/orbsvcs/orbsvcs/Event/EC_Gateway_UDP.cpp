@@ -27,8 +27,6 @@ TAO_ECG_UDP_Sender::get_local_addr (ACE_INET_Addr& addr)
 
 void
 TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-                          RtecScheduler::Scheduler_ptr lcl_sched,
-                          const char* lcl_name,
                           RtecUDPAdmin::AddrServer_ptr addr_server,
                           TAO_ECG_UDP_Out_Endpoint* endpoint,
                           CORBA::Environment &TAO_IN_ENV)
@@ -40,29 +38,6 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
     RtecUDPAdmin::AddrServer::_duplicate (addr_server);
 
   this->endpoint_ = endpoint;
-
-  this->lcl_info_ = lcl_sched->lookup (lcl_name, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-  if (this->lcl_info_ == -1)
-    {
-      this->lcl_info_ =
-        lcl_sched->create (lcl_name, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-
-      ACE_Time_Value tv (0, 500);
-      TimeBase::TimeT time;
-      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-      lcl_sched->set (this->lcl_info_,
-                      RtecScheduler::VERY_HIGH_CRITICALITY,
-                      time, time, time,
-                      25000 * 10,
-                      RtecScheduler::VERY_LOW_IMPORTANCE,
-                      time,
-                      0,
-                      RtecScheduler::OPERATION,
-                      TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-    }
 }
 
 int
@@ -97,10 +72,6 @@ TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
 
   if (sub.dependencies.length () == 0)
     return;
-  for (CORBA::ULong j = 0; j < sub.dependencies.length (); ++j)
-    {
-      sub.dependencies[j].rt_info = this->lcl_info_;
-    }
 
   //ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
   //ACE_SupplierQOS_Factory::debug (pub);
@@ -657,8 +628,6 @@ TAO_ECG_UDP_Receiver::TAO_ECG_UDP_Receiver (void)
 
 void
 TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-                            RtecScheduler::Scheduler_ptr lcl_sched,
-                            const char* lcl_name,
                             TAO_ECG_UDP_Out_Endpoint* ignore_from,
                             RtecUDPAdmin::AddrServer_ptr addr_server,
                             ACE_Reactor *reactor,
@@ -673,29 +642,6 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 
   this->addr_server_ =
     RtecUDPAdmin::AddrServer::_duplicate (addr_server);
-
-  this->lcl_info_ = lcl_sched->lookup (lcl_name, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-  if (this->lcl_info_ == -1)
-    {
-      this->lcl_info_ =
-        lcl_sched->create (lcl_name, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-
-      ACE_Time_Value tv (0, 500);
-      TimeBase::TimeT time;
-      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-      lcl_sched->set (this->lcl_info_,
-                      RtecScheduler::VERY_HIGH_CRITICALITY,
-                      time, time, time,
-                      25000 * 10,
-                      RtecScheduler::VERY_LOW_IMPORTANCE,
-                      time,
-                      1,
-                      RtecScheduler::REMOTE_DEPENDANT,
-                      TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-    }
 
   this->reactor_ = reactor;
   this->max_timeout_ = max_timeout;
@@ -722,11 +668,6 @@ TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub,
 
   if (pub.publications.length () == 0)
     return;
-
-  for (CORBA::ULong i = 0; i < pub.publications.length (); ++i)
-    {
-      pub.publications[i].dependency_info.rt_info = this->lcl_info_;
-    }
 
   // = Connect as a supplier to the local EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =

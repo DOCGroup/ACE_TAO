@@ -33,6 +33,14 @@
 #include "ace/Containers.h"
 #include "tao/corba.h"
 #include "EC_Busy_Lock.h"
+#if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
+// g++ 2.7.2 is broken and cannot handle forward declaration of
+// templates in this case.
+// I could just include this file for all compilers, but I want to
+// minimize compile-time dependencies *and* document this problem so
+// we can fix it as g++ 2.7.2 is phased out.
+#include "EC_Command.h"
+#endif /* __GNUC__ */
 
 class TAO_EC_ProxyPushSupplier;
 template<class Target,class Object> class TAO_EC_Connected_Command;

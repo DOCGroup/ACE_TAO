@@ -88,6 +88,7 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::connected (
   if (this->busy_count_ == 0)
     {
       // We can add the object immediately
+      supplier->_incr_refcnt ();
       this->connected_i (supplier, ACE_TRY_ENV);
     }
   else

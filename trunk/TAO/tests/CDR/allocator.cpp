@@ -35,9 +35,9 @@ class Application_Simulator
   // = DESCRIPTION
   //   Tries to simulate the behavior of an application: it randomly
   //   acquires and releases memory, of variable sizes.
-  //   The intention is to produce some level of fragmentation in main 
+  //   The intention is to produce some level of fragmentation in main
   //   memory.
-  
+
 public:
   Application_Simulator (int max_fragments,
                     int max_fragment_size);
@@ -128,15 +128,15 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "SEED = %d\n", seed));
 
-  ACE_Allocator* buffer_allocator = 
+  ACE_Allocator* buffer_allocator =
     ACE_Allocator::instance ();
-  ACE_Allocator* dblock_allocator = 
+  ACE_Allocator* dblock_allocator =
     ACE_Allocator::instance ();
   if (tss)
     {
-      buffer_allocator = 
+      buffer_allocator =
         TAO_ORB_Core_instance ()->output_cdr_buffer_allocator ();
-      dblock_allocator = 
+      dblock_allocator =
         TAO_ORB_Core_instance ()->output_cdr_dblock_allocator ();
     }
 
@@ -147,7 +147,7 @@ main (int argc, char *argv[])
 
   int* argument_sizes;
   ACE_NEW_RETURN (argument_sizes, int[max_arguments], 1);
-    
+
   int n = ACE_OS::rand_r (seed) % max_arguments + 1;
   for (int k = 0; k < n; ++k)
     argument_sizes[k] = ACE_OS::rand_r (seed) % max_argument_size + 1;

@@ -131,8 +131,6 @@ public:
   // Get the local endpoint used to send the events.
 
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-             RtecScheduler::Scheduler_ptr lcl_sched,
-             const char* lcl_name,
              RtecUDPAdmin::AddrServer_ptr addr_server,
              TAO_ECG_UDP_Out_Endpoint* endpoint,
              CORBA::Environment &_env);
@@ -199,9 +197,6 @@ private:
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the
   // subscription list changes.
-
-  RtecScheduler::handle_t lcl_info_;
-  // Our local and remote RT_Infos.
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a consumer) using this proxy.
@@ -427,8 +422,6 @@ public:
   TAO_ECG_UDP_Receiver (void);
 
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-             RtecScheduler::Scheduler_ptr lcl_sched,
-             const char* lcl_name,
              TAO_ECG_UDP_Out_Endpoint* ignore_from,
              RtecUDPAdmin::AddrServer_ptr addr_server,
              ACE_Reactor *reactor,
@@ -477,10 +470,7 @@ private:
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the list changes.
 
-  RtecScheduler::handle_t lcl_info_;
-  // Our RT_Info.
-
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
+ RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
   // We talk to the EC (as a consumer) using this proxy.
 
   TAO_ECG_UDP_Out_Endpoint* ignore_from_;
