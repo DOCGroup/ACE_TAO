@@ -1,3 +1,23 @@
+Thu Mar 18 12:57:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * toa/FloatSeqS.h:
+        
+          Removed inclusion of FloatSeqS.i.
+          
+        * tao/ShortSeq.pidl:  
+        * tao/ShortSeqA.cpp:
+        * tao/ShortSeqC.cpp:
+        * tao/ShortSeqC.h:
+        * tao/ShortSeqC.i:
+        * tao/ShortSeqS.h:
+        
+          New files, adding the predefined sequence of CORBA::Short
+          to the ORB files.
+          
+        * tao/tao.mpc:
+        
+          Added new files to the MPC generator.
+
 Thu Mar 18 12:13:36 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.{h,cpp}: 
@@ -13,6 +33,10 @@ Thu Mar 18 12:21:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/FloatSeqS.h:
         
           Forgot to add this needed empty file to the repository.
+          
+        * tao/tao.mpc:
+        
+          And to the generator.
 
 Thu Mar 18 10:45:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 

@@ -28,12 +28,12 @@
 // TAO_IDL - Generated from
 // .\be\be_codegen.cpp:411
 
-#ifndef _TAO_IDL_ORIG_FLOATSEQS_H_
-#define _TAO_IDL_ORIG_FLOATSEQS_H_
+#ifndef _TAO_IDL_ORIG_SHORTSEQS_H_
+#define _TAO_IDL_ORIG_SHORTSEQS_H_
 
 #include /**/ "ace/pre.h"
 
-#include "FloatSeqC.h"
+#include "ShortSeqC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
