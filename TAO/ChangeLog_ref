@@ -1,3 +1,33 @@
+Fri Jun 20 16:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+
+          New file. Placing TAO::Argument's method implementations in
+          the header file was causing circular dependencies.
+
+        * tao/TAO.dsp:
+
+          Added new file to project.
+
+        * tao/Argument.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Special_Basic_Arguments.h:
+
+          Changes to file includes.
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+          Added typedefs for TypeCode_Arg_Traits and Object_Arg_Traits,
+          to be used in generated code.
+
+        * tao/Policy_ForwardC.cpp:
+
+          Corrected typo in #pragma instantiation.
+
 Fri Jun 20 13:12:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Arg_Traits_T.h:

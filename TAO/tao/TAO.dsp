@@ -184,6 +184,10 @@ SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Argument.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
@@ -1572,6 +1576,10 @@ SOURCE=.\object.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Argument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
@@ -2654,6 +2662,11 @@ SOURCE=.\BD_String_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\Codeset_Translator_Factory_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
