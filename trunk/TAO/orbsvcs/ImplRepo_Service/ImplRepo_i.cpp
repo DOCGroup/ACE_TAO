@@ -44,8 +44,6 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       // @@ Darrell, please make sure to use the ACE_NEW_RETURN or
       // ACE_NEW macros for your dynamic memory allocations in all
       // your code.
-      IIOP::Profile *new_profile = new IIOP::Profile (iiop_obj->profile);
-    
       new_iiop_obj = new IIOP_Object (iiop_obj->type_id, 
                                       ACE::strnew (new_addr->host_),
                                       new_addr->port_,
@@ -94,8 +92,7 @@ ImplRepo_i::activate_server (const char *server,
     }
 
   // if length is 0, then none is running yet.
-  // @@ Darrell, please make sure to use ACE_OS::strlen().
-  if (strlen (ping_ior) != 0)
+  if (ACE_OS::strlen (ping_ior) != 0)
     {
       TAO_TRY
         {
@@ -249,7 +246,7 @@ ImplRepo_i::reregister_server (const char *server,
   rec.port = 0;
   rec.ping_ior = "";
 
-  int status = this->repository_.update (server, rec);
+  this->repository_.update (server, rec);
 
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -609,7 +606,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_id_assignment_policy");
-      return -1;
+      return 0;
     }
 
   // Lifespan Policy
@@ -618,7 +615,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_lifespan_policy");
-      return -1;
+      return 0;
     }
 
   // Request Processing Policy
@@ -627,7 +624,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_request_processing_policy");
-      return -1;
+      return 0;
     }
 
   // @@ Darrell, can you please make all this code work correctly with
@@ -639,7 +636,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_id_uniqueness_policy");
-      return -1;
+      return 0;
     }
 
   PortableServer::POA_var child = parent->create_POA (name,
@@ -660,7 +657,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   if (env.exception () != 0)
     {
       env.print_exception ("unknown_adapter::policy->destroy");
-      return -1;
+      return 0;
     }
 
   PortableServer::AdapterActivator_var activator = this->_this (env);
