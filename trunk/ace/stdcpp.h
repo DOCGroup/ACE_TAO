@@ -79,20 +79,22 @@
 
 # else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #   include /**/ <fstream.h>
-#   include /**/ <iomanip.h>
 #   include /**/ <iostream.h>
-#   include /**/ <istream.h>
-#   include /**/ <ostream.h>
 
 #   if defined (ACE_WIN32)
 #     include /**/ <ios.h>
 #     include /**/ <streamb.h>
 #     include /**/ <strstrea.h>
+#     include /**/ <istream.h>
+#     include /**/ <ostream.h>
+#     include /**/ <iomanip.h>
 #   endif /* ACE_WIN32 */
+
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
-// Now
+// Now include the new standard headers (like cstdio) if using the
+// new standard.
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 # if defined (_MSC_VER)
