@@ -187,7 +187,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           if (dgram.ACE_SOCK::set_option (
                 IPPROTO_IP,
                 IP_MULTICAST_TTL,
-                ACE_reinterpret_cast (void *, mcast_ttl_optval),
+                &mcast_ttl_optval,
                 sizeof (mcast_ttl_optval)) != 0)
             result = -1;
 
