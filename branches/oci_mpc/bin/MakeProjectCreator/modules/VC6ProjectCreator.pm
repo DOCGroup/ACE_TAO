@@ -18,6 +18,15 @@ use vars qw(@ISA);
 @ISA = qw(ProjectCreator);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my($dynamiclib) = "DLL";
+my($staticlib)  = "LIB";
+my($dynamicexe) = "EXE";
+my($staticexe)  = "Static EXE";
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -27,19 +36,19 @@ sub get_type_append {
   if ($self->lib_target()) {
     ## Set the type_append preserving whitespace
     if ($self->get_writing_type() == 1) {
-      $type = " LIB";
+      $type = " $staticlib";
     }
     else {
-      $type = " DLL";
+      $type = " $dynamiclib";
     }
   }
   else {
     ## Set the type_append preserving whitespace
     if ($self->get_writing_type() == 1) {
-      $type = " Static EXE";
+      $type = " $staticexe";
     }
     else {
-      $type = " EXE";
+      $type = " $dynamicexe";
     }
   }
   return $type;
@@ -53,7 +62,7 @@ sub translate_value {
 
   if ($key eq 'depends' && $val ne "") {
     my($arr) = $self->create_array($val);
-    my($app) = "DLL";
+    my($app) = $dynamiclib;
     $val = "";
 
     ## Only write dependencies for non-static projects
@@ -61,11 +70,21 @@ sub translate_value {
     my($wt) = $self->get_writing_type();
     if ($wt == 0 || $self->exe_target()) {
       if ($wt == 1) {
-        $app = "LIB";
+        $app = $staticlib;
       }
-
       foreach my $entry (@$arr) {
-        $val .= "\"$entry $app\" ";
+        my($dep) = $app;
+        ## Hack for executable dependencies
+        if ($entry =~ /exe/i) {
+          if ($wt == 1) {
+            $dep = $staticexe;
+          }
+          else {
+            $dep = $dynamicexe;
+          }
+        }
+
+        $val .= "\"$entry $dep\" ";
       }
       $val =~ s/\s+$//;
     }

@@ -1167,11 +1167,6 @@ sub update_project_info {
   my($value)   = "";
   my($arr)     = ($append && defined $$pi[0] ? pop(@$pi) : []);
 
-  ## Set up the hash table when we are starting a new project_info
-  if ($append == 0) {
-    $self->{'project_info_hash_table'} = {};
-  }
-
   ## Append the values of all names into one string
   my(@narr) = @$names;
   for(my $i = 0; $i <= $#narr; $i++) {
@@ -1182,11 +1177,14 @@ sub update_project_info {
   }
 
   ## If we haven't seen this value yet, put it on the array
-  if (!defined $self->{'project_info_hash_table'}->{$value}) {
-    $self->{'project_info_hash_table'}->{$value} = 1;
+  if (!defined $self->{'last_info_seen'} ||
+      "@narr" ne $self->{'last_info_seen'}) {
     $self->save_project_value("@narr", $value);
     push(@$arr, $value);
   }
+
+  ## Save the last info name seen, so we don't add duplicates above.
+  $self->{'last_info_seen'} = "@narr";
 
   ## Always push the array back onto the project_info
   push(@$pi, $arr);

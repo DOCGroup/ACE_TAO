@@ -92,8 +92,10 @@ sub write_comps {
         if (!defined $val) {
           $val = $dep;
         }
-        print $fh "                {$pguid}.$i = {$val}\r\n";
-        $i++;
+        if ($pguid ne $val) {
+          print $fh "                {$pguid}.$i = {$val}\r\n";
+          $i++;
+        }
       }
     }
   }
