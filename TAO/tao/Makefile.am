@@ -1,6 +1,7 @@
 ##  Process this file with automake to create Makefile.in
 
 includedir = @includedir@/tao
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
@@ -957,6 +958,11 @@ nobase_include_HEADERS += \
   WStringSeq.pidl \
   WrongTransaction.pidl
 
+pkgconfigdata_DATA = TAO.pc
+
+TAO.pc: ${top_builddir}/config.status ${srcdir}/TAO.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO.pc.in
+
 EXTRA_DIST = \
   tao.rc
 
@@ -997,6 +1003,11 @@ nobase_include_HEADERS += \
   BiDir_GIOP/BiDirPolicyC.i \
   BiDir_GIOP/BiDir_Policy_i.inl \
   BiDir_GIOP/BiDirPolicy.pidl
+
+pkgconfigdata_DATA += TAO_BiDirGIOP.pc
+
+TAO_BiDirGIOP.pc: ${top_builddir}/config.status ${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
 
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
@@ -1108,6 +1119,11 @@ nobase_include_HEADERS += \
   PortableServer/ImplRepo.pidl \
   PortableServer/PortableServer.pidl
 
+pkgconfigdata_DATA += TAO_PortableServer.pc
+
+TAO_PortableServer.pc: ${top_builddir}/config.status ${srcdir}/PortableServer/TAO_PortableServer.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/PortableServer/TAO_PortableServer.pc.in
+
 EXTRA_DIST += \
   PortableServer/TAO_PortableServer.rc
 
@@ -1157,6 +1173,11 @@ nobase_include_HEADERS += \
   IFR_Client/IFR_Components.pidl \
   IFR_Client/IFR_Extended.pidl
 
+pkgconfigdata_DATA += TAO_IFR_Client.pc
+
+TAO_IFR_Client.pc: ${top_builddir}/config.status ${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
+
 EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.rc
 
@@ -1190,6 +1211,11 @@ nobase_include_HEADERS += \
   Domain/DomainS.i \
   Domain/DomainS_T.i \
   Domain/DomainS_T.cpp
+
+pkgconfigdata_DATA += TAO_Domain.pc
+
+TAO_Domain.pc: ${top_builddir}/config.status ${srcdir}/Domain/TAO_Domain.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Domain/TAO_Domain.pc.in
 
 EXTRA_DIST += \
   Domain/TAO_Domain.rc
@@ -1238,6 +1264,11 @@ nobase_include_HEADERS += \
   DynamicAny/dynamicany_export.h \
   DynamicAny/DynamicAnyC.i \
   DynamicAny/DynamicAny.pidl
+
+pkgconfigdata_DATA += TAO_DynamicAny.pc
+
+TAO_DynamicAny.pc: ${top_builddir}/config.status ${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
 
 EXTRA_DIST += \
   DynamicAny/TAO_DynamicAny.rc
@@ -1290,6 +1321,11 @@ nobase_include_HEADERS += \
   Valuetype/AbstractBase_T.cpp \
   Valuetype/Sequence_T.cpp \
   Valuetype/Value_VarOut_T.cpp
+
+pkgconfigdata_DATA += TAO_Valuetype.pc
+
+TAO_Valuetype.pc: ${top_builddir}/config.status ${srcdir}/Valuetype/TAO_Valuetype.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Valuetype/TAO_Valuetype.pc.in
 
 EXTRA_DIST += \
   Valuetype/TAO_Valuetype.rc
@@ -1368,6 +1404,11 @@ nobase_include_HEADERS += \
   Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/TAO_Ext.pidl
 
+pkgconfigdata_DATA += TAO_Messaging.pc
+
+TAO_Messaging.pc: ${top_builddir}/config.status ${srcdir}/Messaging/TAO_Messaging.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Messaging/TAO_Messaging.pc.in
+
 EXTRA_DIST += \
   Messaging/TAO_Messaging.rc
 
@@ -1428,6 +1469,11 @@ nobase_include_HEADERS += \
   DynamicInterface/Request.inl \
   DynamicInterface/Server_Request.inl
 
+pkgconfigdata_DATA += TAO_DynamicInterface.pc
+
+TAO_DynamicInterface.pc: ${top_builddir}/config.status ${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
+
 endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
@@ -1471,6 +1517,11 @@ nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplateC.inl \
   ObjRefTemplate/Default_ORT.pidl \
   ObjRefTemplate/ObjectReferenceTemplate.pidl
+
+pkgconfigdata_DATA += TAO_ObjRefTemplate.pc
+
+TAO_ObjRefTemplate.pc: ${top_builddir}/config.status ${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
 
 EXTRA_DIST += \
   ObjRefTemplate/TAO_ObjRefTemplate.rc
@@ -1519,6 +1570,11 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInfo.pidl \
   IORInterceptor/IORInterceptor.pidl
 
+pkgconfigdata_DATA += TAO_IORInterceptor.pc
+
+TAO_IORInterceptor.pc: ${top_builddir}/config.status ${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
+
 EXTRA_DIST += \
   IORInterceptor/TAO_IORInterceptor.rc
 
@@ -1553,6 +1609,11 @@ nobase_include_HEADERS += \
   IORManipulation/ior_manip_export.h \
   IORManipulation/IORC.i \
   IORManipulation/IOR.pidl
+
+pkgconfigdata_DATA += TAO_IORManip.pc
+
+TAO_IORManip.pc: ${top_builddir}/config.status ${srcdir}/IORManipulation/TAO_IORManip.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/IORManipulation/TAO_IORManip.pc.in
 
 EXTRA_DIST += \
   IORManipulation/TAO_IORManip.rc
@@ -1589,6 +1650,11 @@ nobase_include_HEADERS += \
   IORTable/iortable_export.h \
   IORTable/IORTableC.i \
   IORTable/IORTable.pidl
+
+pkgconfigdata_DATA += TAO_IORTable.pc
+
+TAO_IORTable.pc: ${top_builddir}/config.status ${srcdir}/IORTable/TAO_IORTable.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/IORTable/TAO_IORTable.pc.in
 
 EXTRA_DIST += \
   IORTable/TAO_IORTable.rc
@@ -1699,6 +1765,11 @@ nobase_include_HEADERS += \
   RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBA_include.pidl
 
+pkgconfigdata_DATA += TAO_RTCORBA.pc
+
+TAO_RTCORBA.pc: ${top_builddir}/config.status ${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
+
 endif BUILD_RT_CORBA
 
 EXTRA_DIST += \
@@ -1752,6 +1823,11 @@ nobase_include_HEADERS += \
   RTPortableServer/RT_Collocation_Resolver.i \
   RTPortableServer/RT_POA.i \
   RTPortableServer/RTPortableServer.pidl
+
+pkgconfigdata_DATA += TAO_RTPortableServer.pc
+
+TAO_RTPortableServer.pc: ${top_builddir}/config.status ${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
 
 endif BUILD_RT_CORBA
 
@@ -1808,6 +1884,11 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler.pidl \
   RTScheduling/RTScheduler_include.pidl
 
+pkgconfigdata_DATA += TAO_RTScheduler.pc
+
+TAO_RTScheduler.pc: ${top_builddir}/config.status ${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
+
 endif BUILD_CORBA_MESSAGING
 endif BUILD_RT_CORBA
 
@@ -1839,6 +1920,11 @@ nobase_include_HEADERS += \
   SmartProxies/Smart_Proxies.h \
   SmartProxies/smartproxies_export.h \
   SmartProxies/Smart_Proxies.inl
+
+pkgconfigdata_DATA += TAO_SmartProxies.pc
+
+TAO_SmartProxies.pc: ${top_builddir}/config.status ${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
 
 EXTRA_DIST += \
   SmartProxies/SmartProxies.rc
@@ -1965,6 +2051,11 @@ nobase_include_HEADERS += \
   Strategies/sciop_endpoints.pidl \
   Strategies/uiop_endpoints.pidl
 
+pkgconfigdata_DATA += TAO_Strategies.pc
+
+TAO_Strategies.pc: ${top_builddir}/config.status ${srcdir}/Strategies/TAO_Strategies.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Strategies/TAO_Strategies.pc.in
+
 EXTRA_DIST += \
   Strategies/TAO_Strategies.rc
 
@@ -2001,6 +2092,11 @@ nobase_include_HEADERS += \
   TypeCodeFactory/typecodefactory_export.h \
   TypeCodeFactory/TypeCodeFactoryC.inl \
   TypeCodeFactory/TypeCodeFactory.pidl
+
+pkgconfigdata_DATA += TAO_TypeCodeFactory.pc
+
+TAO_TypeCodeFactory.pc: ${top_builddir}/config.status ${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
 
 EXTRA_DIST += \
   TypeCodeFactory/TypeCodeFactory.rc
@@ -2043,6 +2139,11 @@ nobase_include_HEADERS += \
   Utils/utils_export.h \
   Utils/PolicyList_Destroyer.inl \
   Utils/Servant_Var.inl
+
+pkgconfigdata_DATA += TAO_Utils.pc
+
+TAO_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_Utils.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_Utils.pc.in
 
 ## Clean up template repositories, etc.
 clean-local:

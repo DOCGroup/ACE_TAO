@@ -1,3 +1,32 @@
+Mon Jan  3 17:04:26 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Generate pkg-config *.pc files from templates.
+
+	* tao/BiDir_GIOP/TAO_BiDirGIOP.pc.in:
+	* tao/Domain/TAO_Domain.pc.in:
+	* tao/DynamicAny/TAO_DynamicAny.pc.in:
+	* tao/DynamicInterface/TAO_DynamicInterface.pc.in:
+	* tao/IFR_Client/TAO_IFR_Client.pc.in:
+	* tao/IORInterceptor/TAO_IORInterceptor.pc.in:
+	* tao/IORManipulation/TAO_IORManip.pc.in:
+	* tao/IORTable/TAO_IORTable.pc.in:
+	* tao/Messaging/TAO_Messaging.pc.in:
+	* tao/ObjRefTemplate/TAO_ObjRefTemplate.pc.in:
+	* tao/PortableServer/TAO_PortableServer.pc.in:
+	* tao/RTCORBA/TAO_RTCORBA.pc.in:
+	* tao/RTPortableServer/TAO_RTPortableServer.pc.in:
+	* tao/RTScheduling/TAO_RTScheduler.pc.in:
+	* tao/SmartProxies/TAO_SmartProxies.pc.in:
+	* tao/Strategies/TAO_Strategies.pc.in:
+	* tao/TAO.pc.in:
+	* tao/TAO_Utils.pc.in:
+	* tao/TypeCodeFactory/TAO_TypeCodeFactory.pc.in:
+	* tao/Valuetype/TAO_Valuetype.pc.in:
+
+	  New files, pkg-config *.pc templates.
+
 Mon Jan  3 11:31:35 2005  Dale Wilson  <wilson_d@ociweb.com>
 
         * NEWS:
