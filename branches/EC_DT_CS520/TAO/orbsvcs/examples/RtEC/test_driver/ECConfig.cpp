@@ -25,6 +25,7 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/Event/EC_Gateway_Sched.h"
 
 //REACTOR CHANGE
 #include "tao/ORB_Core.h"
@@ -104,7 +105,7 @@ ECConfig<SCHED_STRAT>::reset (ACE_ENV_SINGLE_ARG_DECL)
     poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
+    //ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
   }
 
   {
@@ -118,7 +119,7 @@ ECConfig<SCHED_STRAT>::reset (ACE_ENV_SINGLE_ARG_DECL)
     poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
+    //ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
   }
 
   if (this->use_federated && !CORBA::is_nil(this->gateway_obs.in()))
@@ -133,7 +134,7 @@ ECConfig<SCHED_STRAT>::reset (ACE_ENV_SINGLE_ARG_DECL)
       poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "gateway deactivated\n"));
+      //ACE_DEBUG ((LM_DEBUG, "gateway deactivated\n"));
     }
 
   delete this->ec_impl;
@@ -157,7 +158,7 @@ template <class SCHED_STRAT> int
 ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 {
   if (this->configured) {
-    ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resetting EC\n")));
+    //ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resetting EC\n")));
     this->reset(); //delete memory used by previous configuration
   }
 
@@ -166,7 +167,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
     {
       this->initEC();
 
-      ACE_DEBUG((LM_DEBUG,ACE_TEXT("EC Initialized\n")));
+      //ACE_DEBUG((LM_DEBUG,ACE_TEXT("EC Initialized\n")));
 
       ////////////////// EC ready; do config ////////////////////
       size_t tsize = testconfigs->size();
@@ -242,7 +243,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
             orb->object_to_string (this->event_channel.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          ACE_DEBUG((LM_DEBUG,"Writing supplier EC IOR\n"));
+          //ACE_DEBUG((LM_DEBUG,"Writing supplier EC IOR\n"));
           // Output the EC's ior to the supplierEC iorfile
           FILE *output_file = ACE_OS::fopen (supplierEC_iorfile, "w");
           if (output_file == 0)
@@ -254,7 +255,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 
           ior = orb->object_to_string (this->scheduler.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          ACE_DEBUG((LM_DEBUG,"Writing supplier Sched IOR\n"));
+          //ACE_DEBUG((LM_DEBUG,"Writing supplier Sched IOR\n"));
           // Output the scheduler's ior to the supplierSched iorfile
           output_file = ACE_OS::fopen (supplierSched_iorfile, "w");
           if (output_file == 0)
@@ -280,7 +281,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
             orb->object_to_string (this->event_channel.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          ACE_DEBUG((LM_DEBUG,"Writing consumer EC IOR\n"));
+          //ACE_DEBUG((LM_DEBUG,"Writing consumer EC IOR\n"));
           // Output the EC's ior to the consumerEC iorfile
           FILE *output_file = ACE_OS::fopen (consumerEC_iorfile, "w");
           if (output_file == 0)
@@ -290,7 +291,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
 
-          ACE_DEBUG((LM_DEBUG,"Writing consumer Sched IOR\n"));
+          //ACE_DEBUG((LM_DEBUG,"Writing consumer Sched IOR\n"));
           ior = orb->object_to_string (this->scheduler.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
           // Output the scheduler's ior to the consumerSched iorfile
@@ -325,7 +326,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
         }
 
       ////////////////// Configured; compute schedule ///////////
-      ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
+      //ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Config_Info_Set_var configs;
       RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
@@ -370,10 +371,10 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
         }
 
       ///////////// Activate the EC /////////////////
-      ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
+      //ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
       this->ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
+      //ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
 
       if (this->suppliers.size() > 0)
         {
@@ -394,9 +395,9 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 template <class SCHED_STRAT> int
 ECConfig<SCHED_STRAT>::run (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Running ECConfig\n"));
+  //ACE_DEBUG ((LM_DEBUG, "Running ECConfig\n"));
   if (!this->configured) {
-    ACE_DEBUG ((LM_DEBUG, "Tried to run before configured\n"));
+    //ACE_DEBUG ((LM_DEBUG, "Tried to run before configured\n"));
     return 1;
   }
 
@@ -408,28 +409,29 @@ ECConfig<SCHED_STRAT>::run (void)
       //ACE_Reactor *reactor = ACE_Reactor::instance();
 
       // Spawn orb thread (which calls orb.run(), then terminates on return)
-      ACE_DEBUG((LM_DEBUG,"SPAWNING ORB thread\n"));
+      //ACE_DEBUG((LM_DEBUG,"SPAWNING ORB thread\n"));
       //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,&(this->orb));
       spawn_data_t *data = new spawn_data_t;
-      printf("data points to %p\n",(void*)(data));
-      printf("setting data->lock to %p\n",(void*)(this->test_done));
+      //printf("data points to %p\n",(void*)(data));
+      //printf("setting data->lock to %p\n",(void*)(this->test_done));
       data->lock = this->test_done;
-      printf("data->lock = %p\n",(void*)(data->lock));
+      //printf("data->lock = %p\n",(void*)(data->lock));
       data->orb = &(this->orb);
-      printf("data->orb = %p\n",(void*)(data->orb));
+      //printf("data->orb = %p\n",(void*)(data->orb));
       data->ready = &(this->ready);
       data->use_federated = this->use_federated;
       data->is_server = this->suppliers.size()>0; //assume client if no suppliers
-      int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,data);
+      //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,data);
       //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,reactor);
       //no need for getting tid?
-      if (ret == -1)
+      /*
+        if (ret == -1)
         {
           ACE_DEBUG ((LM_DEBUG, "ERROR: Couldn't spawn ORB->run() thread: %s\n",
                       ACE_OS::strerror(errno)));
           return 1;
         }
-
+      */
       orb->run();
       //this method returns when orb->shutdown() is called; then thread exits
 
@@ -447,7 +449,7 @@ ECConfig<SCHED_STRAT>::run (void)
       */
       //REACTOR CHANGE END
 
-      ACE_DEBUG((LM_DEBUG, "ORB thread: Shutdown\n"));
+      //ACE_DEBUG((LM_DEBUG, "ORB thread: Shutdown\n"));
 
       if (inst->wait() == -1) //wait for ORB thread to terminate
         {
@@ -462,7 +464,7 @@ ECConfig<SCHED_STRAT>::run (void)
       //Shutdown EC
       //this->reset();
 
-      ACE_DEBUG ((LM_DEBUG, "suppliers finished\n"));
+      //ACE_DEBUG ((LM_DEBUG, "suppliers finished\n"));
 
     }
   ACE_CATCHANY
@@ -480,7 +482,7 @@ ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_EC_Kokyu_Factory::init_svcs ();
 
-  ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Initializing event channel\n")));
+  //ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Initializing event channel\n")));
 
   // ORB initialization boiler plate...
   int argc = 0;
@@ -489,7 +491,7 @@ ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
     CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resolving initial references\n")));
+  //ACE_DEBUG((LM_DEBUG,ACE_TEXT("Resolving initial references\n")));
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -504,7 +506,7 @@ ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
   //TODO: do these need to remain in scope beyond this function?
 
-  ACE_DEBUG((LM_DEBUG,ACE_TEXT("Creating sched service\n")));
+  //ACE_DEBUG((LM_DEBUG,ACE_TEXT("Creating sched service\n")));
 
   // Create a scheduling service
   ACE_NEW (this->sched_impl,SCHED_STRAT);
@@ -519,7 +521,7 @@ ECConfig<SCHED_STRAT>::initEC(ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_NEW (this->ec_impl,TAO_EC_Event_Channel (attributes));
 
-  ACE_DEBUG((LM_DEBUG,ACE_TEXT("Created ec_impl\n")));
+  //ACE_DEBUG((LM_DEBUG,ACE_TEXT("Created ec_impl\n")));
 
   this->event_channel =
     this->ec_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -540,7 +542,7 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
   remoteEC_ior += supplierEC_iorfile;
   remoteSched_ior += supplierSched_iorfile;
 
-  ACE_DEBUG((LM_DEBUG,"Reading EC IOR: %s\n",remoteEC_ior.c_str()));
+  //ACE_DEBUG((LM_DEBUG,"Reading EC IOR: %s\n",remoteEC_ior.c_str()));
   CORBA::Object_var ec_obj =
     orb->string_to_object (remoteEC_ior.c_str() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -550,17 +552,17 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG((LM_DEBUG,"Reading Sched IOR: %s\n",remoteSched_ior.c_str()));
+  //ACE_DEBUG((LM_DEBUG,"Reading Sched IOR: %s\n",remoteSched_ior.c_str()));
   CORBA::Object_var sched_obj = orb->string_to_object(remoteSched_ior.c_str() ACE_ENV_ARG_PARAMETER);
   RtecScheduler::Scheduler_var remote_sch =
     RtecScheduler::Scheduler::_narrow (sched_obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG((LM_DEBUG,"Creating gateway\n"));
+  //ACE_DEBUG((LM_DEBUG,"Creating gateway\n"));
   //TAO_EC_Gateway_Sched *gateway = new TAO_EC_Gateway_Sched();
   ECConfig_Gateway *gateway = new ECConfig_Gateway();
 
-  ACE_DEBUG((LM_DEBUG,"Gateway init\n"));
+  //ACE_DEBUG((LM_DEBUG,"Gateway init\n"));
   //for consumer, remote is supplier EC
   gateway->init (remote_ec.in (),
                  this->event_channel.in (),
@@ -570,9 +572,9 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
                  consumerEC_iorfile
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  ACE_DEBUG((LM_DEBUG,"Gateway init returned; assigning\n"));
+  //ACE_DEBUG((LM_DEBUG,"Gateway init returned; assigning\n"));
   this->gateway_impl = gateway;
-  ACE_DEBUG((LM_DEBUG,"Gateway init completed\n"));
+  //ACE_DEBUG((LM_DEBUG,"Gateway init completed\n"));
 
   this->gateway_obs = this->gateway_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -581,7 +583,7 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
     {
       //Might throw a CANT_APPEND_OBSERVER exception
       //But I think we can ignore it if that happens
-      ACE_DEBUG((LM_DEBUG,"Appending gateway observer\n"));
+      //ACE_DEBUG((LM_DEBUG,"Appending gateway observer\n"));
       //append to consumer EC so that connecting consumers update the gateway!
       RtecEventChannelAdmin::Observer_Handle h =
         this->event_channel->append_observer (this->gateway_obs.in ()
@@ -590,16 +592,16 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
 
       this->gateway_impl->observer_handle (h);
 
-      ACE_DEBUG((LM_DEBUG,"Gateway observer appended\n"));
+      //ACE_DEBUG((LM_DEBUG,"Gateway observer appended\n"));
     }
   ACE_CATCH(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER,exc)
     {
       //ignore
-      ACE_DEBUG((LM_DEBUG,"Caught CANT_APPEND_OBSERVER\n"));
+      //ACE_DEBUG((LM_DEBUG,"Caught CANT_APPEND_OBSERVER\n"));
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG((LM_DEBUG,"Gateway created\n"));
+ // ACE_DEBUG((LM_DEBUG,"Gateway created\n"));
 }
 
 template <class SCHED_STRAT> void
@@ -625,7 +627,7 @@ ECConfig<SCHED_STRAT>::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
           std::ostringstream entry_prefix;
           entry_prefix << "Supplier " << supp_idx;
 
-          ACE_DEBUG((LM_DEBUG,"Supplier.connect() for %s\n",entry_prefix.str().c_str()));
+          //ACE_DEBUG((LM_DEBUG,"Supplier.connect() for %s\n",entry_prefix.str().c_str()));
           this->suppliers[supp_idx]->connect (&(this->ready),
                                               this->test_done,
                                               this->scheduler.in(),
@@ -647,7 +649,7 @@ ECConfig<SCHED_STRAT>::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 template <class SCHED_STRAT> void
 ECConfig<SCHED_STRAT>::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DEBUG((LM_DEBUG,"Consumers to connect: %d\n",this->consumers.size()));
+  //ACE_DEBUG((LM_DEBUG,"Consumers to connect: %d\n",this->consumers.size()));
   //this->consumers already has correct size
   size_t cons_idx = 0;
   for (size_t i=0; i<this->testcfgs.size(); ++i)
@@ -660,7 +662,7 @@ ECConfig<SCHED_STRAT>::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
           std::ostringstream entry_prefix;
           entry_prefix << "Consumer " << cons_idx;
 
-          ACE_DEBUG((LM_DEBUG,"Consumer.connect() for %s\n",entry_prefix.str().c_str()));
+          //ACE_DEBUG((LM_DEBUG,"Consumer.connect() for %s\n",entry_prefix.str().c_str()));
           //don't set the RT_Info values
           this->consumers[cons_idx]->connect (this->scheduler.in(),
                                               entry_prefix.str().c_str(),
@@ -684,7 +686,7 @@ ECConfig<SCHED_STRAT>::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
     {
       for (size_t i = 0; i < this->suppliers.size(); ++i)
         {
-          ACE_DEBUG((LM_DEBUG,"Disconnecting supplier %d\n",i));
+          //ACE_DEBUG((LM_DEBUG,"Disconnecting supplier %d\n",i));
           this->suppliers[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
@@ -731,9 +733,10 @@ ECConfig<SCHED_STRAT>::print_RT_Infos (ACE_Array<RtecScheduler::handle_t> cfg_se
         if (i!=0)
           {
             //finish previous line
-            ACE_DEBUG ((LM_DEBUG, "\n"));
+            //ACE_DEBUG ((LM_DEBUG, "\n"));
           }
-        ACE_DEBUG ((LM_DEBUG, rt_info_format,
+/*
+		ACE_DEBUG ((LM_DEBUG, rt_info_format,
                     (const char *) info.entry_point,
                     info.handle,
                     ACE_CU64_TO_CU32 (info.worst_case_execution_time),
@@ -748,9 +751,10 @@ ECConfig<SCHED_STRAT>::print_RT_Infos (ACE_Array<RtecScheduler::handle_t> cfg_se
                     info.preemption_subpriority,
                     info.preemption_priority,
                     info.info_type));
+*/
       }
       //finish last line
-      ACE_DEBUG ((LM_DEBUG, "\n"));
+      //ACE_DEBUG ((LM_DEBUG, "\n"));
     }
   ACE_CATCHANY
     {
@@ -780,7 +784,7 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
       //now we block on a socket connect until a consumer opens it
       //this way, we don't start running until the consumer is ready
       ACE_SOCK_Stream accstrm;
-      ACE_DEBUG((LM_DEBUG,"Opening supplier socket %s\n",addr_str.c_str()));
+      //ACE_DEBUG((LM_DEBUG,"Opening supplier socket %s\n",addr_str.c_str()));
       ACE_INET_Addr addr(addr_str.c_str());
       ACE_SOCK_Acceptor acc(addr);
       if (acc.accept(accstrm,&addr) != 0) //blocks until consumer opens
@@ -789,17 +793,17 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
                      "Cannot accept socket: %s\n",
                      ACE_OS::strerror(errno)));
         }
-      ACE_DEBUG((LM_DEBUG,"Supplier: unblocked on socket\n"));
+      //ACE_DEBUG((LM_DEBUG,"Supplier: unblocked on socket\n"));
 
       //once opened, no need for socket any more
       acc.close();
       accstrm.close();
-      ACE_DEBUG((LM_DEBUG, "Supplier: closed socket\n"));
+      //ACE_DEBUG((LM_DEBUG, "Supplier: closed socket\n"));
     }
   else
     {
       //now we open a socket to start up the supplier
-      ACE_DEBUG((LM_DEBUG,"Connecting consumer socket %s\n",addr_str.c_str()));
+      //ACE_DEBUG((LM_DEBUG,"Connecting consumer socket %s\n",addr_str.c_str()));
       ACE_SOCK_Stream connstrm;
       ACE_INET_Addr addr(addr_str.c_str());
       ACE_SOCK_Connector conn;
@@ -809,11 +813,11 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
                      "Consumer cannot connect socket: %s\n",
                      ACE_OS::strerror(errno)));
         }
-      ACE_DEBUG((LM_DEBUG,"Consumer: connected socket\n"));
+      //ACE_DEBUG((LM_DEBUG,"Consumer: connected socket\n"));
 
       //once opened, no need for socket any more
       connstrm.close();
-      ACE_DEBUG((LM_DEBUG, "Consumer: closed socket\n"));
+      //ACE_DEBUG((LM_DEBUG, "Consumer: closed socket\n"));
     }
 }
 
@@ -843,7 +847,7 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
     }
   else
     {
-      ACE_DEBUG((LM_DEBUG,"No barrier after configured&orbrun because not federated\n"));
+      //ACE_DEBUG((LM_DEBUG,"No barrier after configured and orb started because application is not federated\n"));
     }
 
   //      Block waiting for consumers to finish
@@ -851,8 +855,8 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
   int ret = data_ptr->lock->acquire_write();
   if (ret == -1)
     {
-      ACE_DEBUG((LM_DEBUG, "ERROR: could not acquire write lock for ECConfig: %s\n",
-                 ACE_OS::strerror(errno)));
+      //ACE_DEBUG((LM_DEBUG, "ERROR: could not acquire write lock for ECConfig: %s\n",
+      //           ACE_OS::strerror(errno)));
       return 0;
     }
   //release the lock, since it has served its purpose
@@ -866,16 +870,16 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
   if (data_ptr->is_server)
     {
       //HACK: client doesn't shutdown!
-      ACE_DEBUG((LM_DEBUG,"Supplier shutting down ORB\n"));
+      //ACE_DEBUG((LM_DEBUG,"Supplier shutting down ORB\n"));
       (*(data_ptr->orb))->shutdown(1); //argument is TRUE so orb waits until work
       //done before shutting down
     }
   /*
   //orb->orb_core()->reactor()->end_reactor_event_loop();
-  ACE_DEBUG((LM_DEBUG,"DONE; stopping reactor event loop\n"));
+  //ACE_DEBUG((LM_DEBUG,"DONE; stopping reactor event loop\n"));
   ACE_Reactor::instance()->end_reactor_event_loop();
   */
-  ACE_DEBUG((LM_DEBUG,"ORB Thread exiting\n"));
+  //ACE_DEBUG((LM_DEBUG,"ORB Thread exiting\n"));
   return 0;
 }
 

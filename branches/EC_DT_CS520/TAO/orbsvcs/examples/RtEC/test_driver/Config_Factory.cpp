@@ -55,20 +55,26 @@ Default_Config_Factory::init (int argc, ACE_TCHAR* argv[])
                   || (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("rms")) == 0))
                 {
                   this->sched_type_ = RMS; //default
+/*
                   ACE_DEBUG ((LM_DEBUG,
                               "Default_Config_Factory: Scheduling type is RMS\n"));
+*/
                 }
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("muf")) == 0)
                 {
                   this->sched_type_ = MUF;
+/*
                   ACE_DEBUG ((LM_DEBUG,
                               "Default_Config_Factory: Scheduling type is MUF\n"));
+*/
                 }
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("edf")) == 0)
                 {
                   this->sched_type_ = EDF;
+/*
                   ACE_DEBUG ((LM_DEBUG,
                               "Default_Config_Factory: Scheduling type is EDF\n"));
+*/
                 }
               else
                 {
@@ -83,10 +89,12 @@ Default_Config_Factory::init (int argc, ACE_TCHAR* argv[])
       else
         {
           arg_shifter.consume_arg ();
+/*
           ACE_DEBUG ((LM_DEBUG,
                       "Default_Config_Factory - "
                       "ignoring option <%s>\n",
                       arg));
+*/
         }
     }
   return 0;
@@ -105,25 +113,33 @@ Default_Config_Factory::create_testconfig ()
     {
       switch (this->sched_type_) {
         case EDF:
+/*
           ACE_DEBUG ((LM_DEBUG,
                       "Default_Config_Factory: Returning EDF Test_Config\n"));
+*/
           return new TestConfig::ECConfig<EDF_SCHED_TYPE>();
           break;
         case MUF:
+/*
           ACE_DEBUG ((LM_DEBUG,
                       "Default_Config_Factory: Returning MUF Test_Config\n"));
+*/
           return new TestConfig::ECConfig<MUF_SCHED_TYPE>();
           break;
         case RMS:
+/*
           ACE_DEBUG ((LM_DEBUG,
                       "Default_Config_Factory: Returning RMS Test_Config\n"));
+*/
           return new TestConfig::ECConfig<RMS_SCHED_TYPE>();
           break;
         default:
+/*
           ACE_ERROR ((LM_ERROR,
                       "Default_Config_Factory - "
                       "unknown scheduling type <%d>\n",
                       this->sched_type_));
+*/
           return 0;
       };
     } //else...

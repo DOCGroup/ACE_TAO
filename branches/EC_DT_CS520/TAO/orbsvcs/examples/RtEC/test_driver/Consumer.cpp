@@ -82,8 +82,10 @@ Consumer::connect_impl (bool set_rtinfo, //true if should set RT_Info
   //create consumer RT_Info
   std::ostringstream cons_entry_pt;
   cons_entry_pt << entry_prefix; //unique RT_Info entry point
-  ACE_DEBUG((LM_DEBUG,"Creating %s\n",cons_entry_pt.str().c_str()));
-  ACE_DEBUG((LM_DEBUG,"\timportance: %d\tcriticality: %d\n",importance,criticality));
+    /*
+       ACE_DEBUG((LM_DEBUG,"Creating %s\n",cons_entry_pt.str().c_str()));
+       ACE_DEBUG((LM_DEBUG,"\timportance: %d\tcriticality: %d\n",importance,criticality));
+       */
   RtecScheduler::handle_t rt_info = scheduler->create (cons_entry_pt.str().c_str()
                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -112,12 +114,14 @@ Consumer::connect_impl (bool set_rtinfo, //true if should set RT_Info
                       RtecScheduler::OPERATION
                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      ACE_DEBUG((LM_DEBUG,"Set Consumer %d RT_Info\n",this->_consumer_id));
-      ACE_DEBUG((LM_DEBUG,"\tcriticality: %d\n",criticality));
-      ACE_DEBUG((LM_DEBUG,"\tTimes (worst,typical,cached): %d, %d, %d\n",tmp,tmp,tmp));
-      ACE_DEBUG((LM_DEBUG,"\tperiod: %d\n",p));
-      ACE_DEBUG((LM_DEBUG,"\timportance: %d\n",importance));
-      ACE_DEBUG((LM_DEBUG,"\tquantum: %d\n",tmp));
+      /*
+         ACE_DEBUG((LM_DEBUG,"Set Consumer %d RT_Info\n",this->_consumer_id));
+         ACE_DEBUG((LM_DEBUG,"\tcriticality: %d\n",criticality));
+         ACE_DEBUG((LM_DEBUG,"\tTimes (worst,typical,cached): %d, %d, %d\n",tmp,tmp,tmp));
+         ACE_DEBUG((LM_DEBUG,"\tperiod: %d\n",p));
+         ACE_DEBUG((LM_DEBUG,"\timportance: %d\n",importance));
+         ACE_DEBUG((LM_DEBUG,"\tquantum: %d\n",tmp));
+         */
     } else
     {
       ACE_DEBUG((LM_DEBUG,"NOT Set Consumer %d RT_Info\n",this->_consumer_id));
@@ -143,6 +147,12 @@ Consumer::connect_impl (bool set_rtinfo, //true if should set RT_Info
   this->_supplier_proxy->connect_push_consumer (consumerv.in (),
                                                 consQoS.get_ConsumerQOS ()
                                                 ACE_ENV_ARG_PARAMETER);
+  ACE_DEBUG((LM_DEBUG, "Consumer (%t) "));
+    printf("object pointer (%p) ---> push_supplier (%p)\n",
+	this,
+	this->_supplier_proxy.in());
+
+
   ACE_CHECK;
 
   ACE_DEBUG((LM_DEBUG,"Consumer %d connected\n",this->_consumer_id));

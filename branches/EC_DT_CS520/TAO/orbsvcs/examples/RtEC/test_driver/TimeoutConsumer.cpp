@@ -101,7 +101,9 @@ TimeoutConsumer::connect (RtecScheduler::Scheduler_ptr scheduler,
   ACE_UNUSED_ARG(ec);
 
   this->entry_pt << entry_prefix << " TimeoutConsumer"; //unique RT_Info entry point
+/*
   ACE_DEBUG((LM_DEBUG,"Creating %s\n",this->entry_pt.str().c_str()));
+*/
 
   this->_handler = new Timer_Event_Handler(this);
   ACE_Time_Value interval;
@@ -167,16 +169,18 @@ TimeoutConsumer::push (const RtecEventComm::EventSet& events
     }
 
 
+/*
   ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) received %d events:\n",this->entry_pt.str().c_str(),
-             events.length()));
+            events.length()));
+*/
   for (size_t i=0; i<events.length(); ++i)
     {
       if (ACE_ES_EVENT_INTERVAL_TIMEOUT == events[i].header.type)
         {
-          ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) received timeout event\n",this->entry_pt.str().c_str()));
+  	//  ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) received timeout event\n",this->entry_pt.str().c_str()));
           if (this->_observer != 0)
             {
-              ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) updating observer\n",this->entry_pt.str().c_str()));
+        //      ACE_DEBUG((LM_DEBUG,"TimeoutConsumer %s (%P|%t) updating observer\n",this->entry_pt.str().c_str()));
               this->_observer->update();
             }
         }
@@ -187,8 +191,8 @@ TimeoutConsumer::push (const RtecEventComm::EventSet& events
           ACE_Thread::self(handle);
           ACE_Thread::getprio(handle,prio);
           //ACE_thread_t tid = ACE_Thread::self();
-          ACE_DEBUG ((LM_DEBUG, "TimeoutConsumer %s @%d (%P|%t) we received event type %d\n",
-                      this->entry_pt.str().c_str(),prio,events[0].header.type));
+//          ACE_DEBUG ((LM_DEBUG, "TimeoutConsumer %s @%d (%P|%t) we received event type %d\n",
+//                      this->entry_pt.str().c_str(),prio,events[0].header.type));
         }
     }
 }
