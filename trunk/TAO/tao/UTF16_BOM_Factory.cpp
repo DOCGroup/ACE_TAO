@@ -83,9 +83,8 @@ UTF16_BOM_Factory::init (int argc, ACE_TCHAR *argv[])
 int
 UTF16_BOM_Factory::parse_one_arg (int argc, ACE_TCHAR *argv[])
 {
-  ACE_UNUSED_ARG (argc);
   int consumed = 0;
-  if (ACE_OS::strcasecmp (argv[0], "-forcebe") == 0)
+  if ((argc > 0) && (ACE_OS::strcasecmp (argv[0], "-forcebe") == 0))
   {
     this->forceBE_ = true;
     consumed = 1;

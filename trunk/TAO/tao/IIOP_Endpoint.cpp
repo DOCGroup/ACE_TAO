@@ -108,10 +108,8 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (use_dotted_decimal_addresses == 0 && TAO_debug_level > 5)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) ")
-                      ACE_TEXT ("IIOP_Endpoint::set ")
-                      ACE_TEXT ("- %p "),
-                      ACE_TEXT ("cannot determine hostname\n")));
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Endpoint::set, ")
+                      ACE_TEXT ("- %p cannot determine hostname\n")));
         }
 
       const char *tmp = addr.get_host_addr ();
@@ -120,8 +118,7 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) ")
-                          ACE_TEXT ("IIOP_Endpoint::set ")
+                          ACE_TEXT ("TAO (%P|%t) - IIOP_Endpoint::set, ")
                           ACE_TEXT ("- %p "),
                           ACE_TEXT ("cannot determine hostname and hostaddr\n")));
             }
@@ -266,7 +263,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       // Search for the ":"
       ssize_t col_pos = rem_tmp.find (":");
 
-      if (col_pos == ACE_CString::npos) 
+      if (col_pos == ACE_CString::npos)
         {
           pos = tmp.find (latest->host_.in (),
                           pos + length);
