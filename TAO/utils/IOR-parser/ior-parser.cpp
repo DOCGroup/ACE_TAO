@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "ior-handler.h"
+#include "ace/Log_Msg.h"
 
 IorHandler parser;
 
