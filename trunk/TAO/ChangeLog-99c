@@ -1,3 +1,14 @@
+Sat May 15 14:45:28 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/Repository.h:
+          added #include of ace/SString.h.
+
+        * orbsvcs/ImplRepo_Service/Repository.h,ImplRepo_i.h:
+          change multiple #include protection to #ifndef.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (activate_object):
+          commented out unused local "new_addr".
+
 Sat May 15 14:35:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ObjectIDList.*: fixed RCS Id string.
