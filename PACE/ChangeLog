@@ -1,9 +1,15 @@
+Sat Apr 21 17:37:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * pace/win32/socket.inl:
+        * pace/win32/socket.c:
+          Make Fuzz happy, some RCS ids went missing.
+
 Mon Apr 16 16:17:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* pace/posix/socket.h: 
-	* pace/config/platform.h:
-	* include/makeinclude/rules.common.GNU:
-	  Add support for QNX, it behaves like other POSIX platforms.
+        * pace/posix/socket.h:
+        * pace/config/platform.h:
+        * include/makeinclude/rules.common.GNU:
+          Add support for QNX, it behaves like other POSIX platforms.
 
 Wed Mar 21 09:26:38 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -14,15 +20,15 @@ Wed Mar 21 09:26:38 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 Mon Mar 19 16:56:47 2001  Luther Baker  <luther@cs.wustl.edu>
 
         * pace/win32/unistd.c:
-        * pace/win32/unistd.inl:	
-	* pace/win32/stdio.c:
-	* pace/win32/time.inl:
+        * pace/win32/unistd.inl:
+        * pace/win32/stdio.c:
+        * pace/win32/time.inl:
           Removed ::MsvcFoo punctuation. Since PACE is a c-library,
-	  it doesn't recognize this C++ism. (::)
-	
-	* pace/win32/unistd.h:
-	  Added signature for pace_win32_read (needs to be visible
-	  before unistd.inl).
+          it doesn't recognize this C++ism. (::)
+
+        * pace/win32/unistd.h:
+          Added signature for pace_win32_read (needs to be visible
+          before unistd.inl).
 
 Tue Mar 13 12:58:09 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
