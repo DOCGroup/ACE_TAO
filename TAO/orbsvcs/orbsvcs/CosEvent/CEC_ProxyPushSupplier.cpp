@@ -433,10 +433,12 @@ TAO_CEC_ProxyPushSupplier::_remove_ref (CORBA::Environment &)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_ESF_RefCount_Guard<CORBA::ULong>;
 template class TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate TAO_ESF_RefCount_Guard<CORBA::ULong>
 #pragma instantiate TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
