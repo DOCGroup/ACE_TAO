@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Naming_Context_Interface.h
@@ -9,11 +10,13 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NAMING_CONTEXT_INTERFACE_H
 #define TAO_NAMING_CONTEXT_INTERFACE_H
+
 #include "ace/pre.h"
+
 #include "orbsvcs/CosNamingS.h"
+
 #include "naming_export.h"
 
 class TAO_Naming_Context_Impl;
@@ -243,6 +246,12 @@ public:
 
 private:
 
+  enum Hint
+    {
+      HINT_ID,
+      HINT_KIND
+    };
+
   /**
    * This private function is used as a helper to <to_name>. It reads
    * character by character from 'src' and depending on the character,
@@ -251,7 +260,7 @@ private:
    * 'kind' fields or a seperator between two name components, the
    * control is returned back to the calling function <to_name>.
    */
-  void to_name_helper (char *dest, const char*& src);
+  void to_name_helper (char *dest, const char*& src, Hint hint);
 
   /**
    * This method functions similar to <to_name_helper>. If the
@@ -405,6 +414,6 @@ public:
   virtual PortableServer::POA_ptr _default_POA (void) = 0;
 };
 
-
 #include "ace/post.h"
+
 #endif /* TAO_NAMING_CONTEXT_INTERFACE_H */
