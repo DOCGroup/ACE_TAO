@@ -11,7 +11,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 
   // Check to see that we not at the high water mark.
   if (this->mode_ == ACE_PURE_FREE_LIST 
-      || this->size_ >= this->hwm_)
+      || this->size_ < this->hwm_)
     {
       element->set_next (this->free_list_);
       this->free_list_ = element;
