@@ -262,7 +262,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("TAO::HTIOP::Acceptor::open - "),
+                         ACE_TEXT ("TAO::HTIOP::Acceptor::open - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -418,7 +418,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("TAO::HTIOP::Acceptor::open_default - "),
+                         ACE_TEXT ("TAO::HTIOP::Acceptor::open_default - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }

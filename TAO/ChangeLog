@@ -1,3 +1,16 @@
+Mon Nov 29 21:57:06 MST 2004  Scott Harris <harris_s@ociweb.com>
+
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+
+          Removed extra commas after ACE_TEXT macros that should 
+          not have been there because the strings should have
+          been concatenated.  Originally found a bad log output
+          and searched for other similar problems.
+
 Mon Nov 29 16:45:00 2004 Huang-Ming Huang <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp
           Fixed problem when the immediate successor of the primary crashes. Thanks
