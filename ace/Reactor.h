@@ -741,6 +741,9 @@ protected:
   ACE_Reactor_Handle_Set wait_set_;
   // Tracks handles that are waited for by select().
 
+  ACE_Reactor_Handle_Set suspend_set_;
+  // Tracks handles that are currently suspended.
+
   ACE_Reactor_Handle_Set ready_set_;
   // Track HANDLES we are interested in for various events that must
   // be dispatched *without* going through select().

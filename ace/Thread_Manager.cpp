@@ -66,6 +66,7 @@ ACE_Thread_Descriptor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nthr_handle_ = %d", this->thr_handle_));
   ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
   ACE_DEBUG ((LM_DEBUG, "\nthr_state_ = %d", this->thr_state_));
+  ACE_DEBUG ((LM_DEBUG, "\ncleanup_info_.cleanup_hook_ = %x\n", this->cleanup_info_.cleanup_hook_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -78,6 +79,10 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
     thr_state_ (ACE_THR_IDLE)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
+
+  this->cleanup_info_.cleanup_hook_ = 0;
+  this->cleanup_info_.object_ = 0;
+  this->cleanup_info_.param_ = 0;
 }
 
 // The following macro simplifies subsequence code.
@@ -490,18 +495,16 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                   stack_size,
                                   thread_args);
   if (result != 0)
-    {
-      // _Don't_ clobber errno here!  result is either 0 or -1, and
-      // ACE_OS::thr_create () already set errno!    D. Levine 28 Mar 1997
-      // errno = result;
-      return -1;
-    }
+    // _Don't_ clobber errno here!  result is either 0 or -1, and
+    // ACE_OS::thr_create () already set errno!  D. Levine 28 Mar 1997
+    // errno = result;
+    return -1;
   else
-    {
-      return this->append_thr (*t_id, *t_handle, 
-                               ACE_THR_SPAWNED, 
-                               grp_id, task);
-    }
+    return this->append_thr (*t_id,
+			     *t_handle, 
+			     ACE_THR_SPAWNED, 
+			     grp_id,
+			     task);
 }
 
 // Create a new thread running <func>.  *Must* be called with the
@@ -634,6 +637,9 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
       thr_desc.grp_id_ = grp_id;
       thr_desc.thr_state_ = thr_state;
       thr_desc.task_ = task;
+      thr_desc.cleanup_info_.cleanup_hook_ = 0;
+      thr_desc.cleanup_info_.object_ = 0;
+      thr_desc.cleanup_info_.param_ = 0;
 
       this->current_count_++;
       return 0;
@@ -680,8 +686,7 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
   ACE_TRACE ("ACE_Thread_Manager::insert_thr");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  // Check for duplicates and bail out if they're already
-  // registered...
+  // Check for duplicates and bail out if we're already registered...
   if (this->find_thread (t_id) != -1)
     return -1;
 
