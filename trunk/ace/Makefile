@@ -265,6 +265,7 @@ TEMPLATE_FILES = \
            Message_Queue_T \
            Module \
            Pair_T \
+           Refcounted_Auto_Ptr \
            RB_Tree \
            Select_Reactor_T \
            Singleton \
