@@ -378,6 +378,7 @@ DRV_pre_proc(char *myfile)
     exit(99);
   }
 
+#if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   if (ACE_OS::unlink(tmp_file) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp output file ")
@@ -385,6 +386,7 @@ DRV_pre_proc(char *myfile)
          << "\n";
     exit(99);
   }
+#endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
 
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     exit(0);
@@ -399,7 +401,7 @@ DRV_check_for_include (const char* buf)
 {
   const char* r = buf;
   const char* h;
-  
+
   // Skip initial '#'.
   if (*r != '#')
     return;
@@ -431,10 +433,10 @@ DRV_check_for_include (const char* buf)
   char end_char = '"';
   if (*r == '<')
     end_char = '>';
-  
+
   // Skip this " or <.
   r++;
-  
+
   // Store this position.
   h = r;
 
