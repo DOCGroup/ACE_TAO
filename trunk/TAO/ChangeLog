@@ -1,3 +1,8 @@
+Mon Dec  9 14:51:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/LF_Connect_Strategy.cpp (wait): Cosmetic fixes to the debug
+	  statements. Should fix a FMR problem with Purify.
+
 Mon Dec  9 16:33:07 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:  Added missing 
