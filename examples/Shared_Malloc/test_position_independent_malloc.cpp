@@ -6,6 +6,7 @@
 #include "ace/Malloc.h"
 #include "ace/Based_Pointer_T.h"
 #include "ace/Synch.h"
+#include "test_position_independent_malloc.h"
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
@@ -13,15 +14,6 @@ typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
 // Default address for memory-mapped files.
 static void *base_addr = ACE_DEFAULT_BASE_ADDR;
-
-// Some dummy data 
-struct Dummy_Data
-{
-  int i1_;
-  int i2_;
-  int i3_;
-  ACE_Based_Pointer<Dummy_Data> next_;
-};
 
 #if 0
 struct Long_Test 
