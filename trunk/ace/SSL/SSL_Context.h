@@ -108,7 +108,7 @@ public:
     TLSv1
   };
 
-  ACE_SSL_Context ();
+  ACE_SSL_Context (void);
   // Constructor
 
   ~ACE_SSL_Context (void);
@@ -165,6 +165,23 @@ public:
   // Set and query the default verify mode for this context, it is
   // inherited by all the ACE_SSL objects created using the context.
   // It can be overriden on a per-ACE_SSL object.
+
+
+  // = Random number generator seed related methods.  These methods
+  //   can be called more than once.
+
+  int random_seed (const char * seed);
+  // Seed the underlying random number generator.  This value should
+  // have at least 128 bits of entropy.
+
+  int egd_file (const char * socket_file);
+  // Set the Entropy Gathering Daemon (EGD) UNIX domain socket file to
+  // read random seed values from.
+
+  int seed_file (const char * seed_file, long bytes = -1);
+  // Set the file that contains the random seed value state, and the
+  // amount of bytes to read.  "-1" bytes causes the entire file to be
+  // read.
 
 private:
   void check_context (void);

@@ -35,6 +35,14 @@
 #define ACE_SSL_CERT_DIR_ENV  "SSL_CERT_DIR"
 #endif /* ACE_SSL_CERT_DIR_ENV */
 
+#if !defined (ACE_SSL_EGD_FILE_ENV)
+#define ACE_SSL_EGD_FILE_ENV  "SSL_EGD_FILE"
+#endif /* ACE_SSL_EGD_FILE_ENV */
+
+#if !defined (ACE_SSL_RAND_FILE_ENV)
+#define ACE_SSL_RAND_FILE_ENV  "SSL_RAND_FILE"
+#endif /* ACE_SSL_RAND_FILE_ENV */
+
 #include "ace/post.h"
 
 #endif /* ACE_SSLCONF_H */
