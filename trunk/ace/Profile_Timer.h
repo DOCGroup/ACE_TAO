@@ -34,11 +34,14 @@ public:
       double system_time;
     };
 
-  ACE_Profile_Timer (void) {}
+  ACE_Profile_Timer (void);
   ~ACE_Profile_Timer (void) {}
-  int  start (void) { errno = ENOTSUP; return -1; }
-  int  stop (void) { errno = ENOTSUP; return -1; }
-  int  elapsed_time (ACE_Elapsed_Time & /* et */) { errno = ENOTSUP; return -1; }
+  int  start (void);
+  int  stop (void);
+  int  elapsed_time (ACE_Elapsed_Time &et);
+
+private:
+  ACE_High_Res_Timer timer_;
 };
 #else
 class ACE_Export ACE_Profile_Timer
@@ -134,10 +137,11 @@ private:
 #endif /* ACE_HAS_PRUSAGE_T */
 };
 
+#endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
+
 #if defined (__ACE_INLINE__)
 #include "ace/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
 #endif /* ACE_PROFILE_TIMER_H */
 

@@ -44,5 +44,25 @@ ACE_Profile_Timer::stop (void)
   ACE_OS::getrusage (RUSAGE_SELF, &this->end_usage_);
   return 0;
 }
+
 #endif /* ACE_HAS_PRUSAGE_T */
+
+#else
+
+ACE_INLINE int 
+ACE_Profile_Timer::start (void) 
+{
+  ACE_TRACE ("ACE_Profile_Timer::start");
+  timer_.start ();
+  return 0;
+}
+
+ACE_INLINE int 
+ACE_Profile_Timer::stop (void) 
+{
+  ACE_TRACE ("ACE_Profile_Timer::stop");
+  timer_.stop ();
+  return 0;
+}
+
 #endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */

@@ -4,13 +4,13 @@
 #define ACE_BUILD_DLL
 #include "ace/Profile_Timer.h"
 
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) 
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Profile_Timer)
+
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) 
 
 void
 ACE_Profile_Timer::dump (void) const
@@ -225,4 +225,29 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   this->compute_times (et);
   return 0;
 }
+
+#else
+
+ACE_Profile_Timer::ACE_Profile_Timer (void)
+  : timer_ ()
+{
+  ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
+}
+
+int
+ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
+{
+  ACE_TRACE ("ACE_Profile_Timer::elapsed_time");
+
+  ACE_hrtime_t delta_t; /* nanoseconds */
+  timer_.elapsed_time (delta_t);
+
+  et.real_time = delta_t / 1000000000.0;
+  et.user_time = 0;
+  et.system_time = 0;
+
+  return 0;
+}
+
+
 #endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
