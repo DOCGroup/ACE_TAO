@@ -1,3 +1,9 @@
+Mon Mar  5 07:57:07 2001  Johnny Willemsen
+
+        * tests/Makefile.bor:
+
+        Added missing Refcounted_Auto_Ptr_Test to the build
+
 Sun Mar  4 19:31:16 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_run_tests.lst:
@@ -7,8 +13,8 @@ Sun Mar  4 19:31:16 2001  Darrell Brunsch <brunsch@uci.edu>
         * bin/PerlACE/Process_Unix.pm:
         * bin/PerlACE/Process_Win32.pm:
 
-          Added a destructor to detect if a process wasn't explicitly 
-          killed before the object went out of scope. Will print out 
+          Added a destructor to detect if a process wasn't explicitly
+          killed before the object went out of scope. Will print out
           an error and kill it.
 
         * bin/PerlACE/Run_Test.pm:
@@ -19,7 +25,7 @@ Sun Mar  4 19:31:16 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Updated run_test.pl instructions to fit all the changes I
           just made.
-        
+
         * examples/Export/run_test.pl:
         * performance-tests/RPC/run_test.pl:
         * performance-tests/TCP/run_test.pl:
@@ -212,7 +218,7 @@ Sun Mar  4 19:31:16 2001  Darrell Brunsch <brunsch@uci.edu>
           reason they were originally moved is because it was easier to
           select all the debug versions during a batch build.  But now
           we have pippen.pl and msvc_auto_compile.pl, so this is no
-          longer an issue, while this strange setup would compilicate the 
+          longer an issue, while this strange setup would compilicate the
           nightly builds.  Thus, it was standardized back.
 
         * bin/create_vt_dsps.pl: (removed)
