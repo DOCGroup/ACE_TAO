@@ -1,3 +1,13 @@
+Fri Jun 14 09:34:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.i (ctime):
+
+	  For the ACE_HAS_WINCE, pass a statically allocated buffer to
+	  ctime_r() since ctime_r() will return that same buffer as the
+	  return value of ctime().  Fixes memory access violations.
+	  Thanks to Michael Searles <msearles@base16.com> for pointing out
+	  the problem.
+
 Thu Jun 13 21:26:49 2002  Steve Huston  <shuston@riverace.com>
 
 	* ace/Configuration_Import_Export.cpp (squish): Replaced use

@@ -992,7 +992,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       const size_t ACE_L_cuserid = 9;  // 8 character user ID + NULL
 #endif  /* _POSIX_SOURCE */
 
-      static ACE_TCHAR tmp[ACE_L_cuserid] = { 0 };
+      static ACE_TCHAR tmp[ACE_L_cuserid] = { '\0' };
       max_length = ACE_L_cuserid - 1; // Do not include NULL in length
 
       userid = tmp;
@@ -8865,7 +8865,7 @@ ACE_OS::ctime (const time_t *t)
 #elif defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   return "ctime-return";
 #elif defined (ACE_HAS_WINCE)
-  ACE_TCHAR buf[26];              // 26 is a "magic number" ;)
+  static ACE_TCHAR buf[26];              // 26 is a "magic number" ;)
   return ACE_OS::ctime_r (t, buf, 26);
 #elif defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
