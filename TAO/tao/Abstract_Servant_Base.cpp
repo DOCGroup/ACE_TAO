@@ -2,8 +2,8 @@
 
 #include "tao/Abstract_Servant_Base.h"
 
-ACE_RCSID (tao, 
-           Abstract_Servant_Base, 
+ACE_RCSID (tao,
+           Abstract_Servant_Base,
            "$Id$")
 
 TAO_Abstract_ServantBase::TAO_Abstract_ServantBase (void)
@@ -17,12 +17,12 @@ TAO_Abstract_ServantBase::~TAO_Abstract_ServantBase (void)
 }
 
 void
-TAO_Abstract_ServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Abstract_ServantBase::_add_ref (void)
 {
 }
 
 void
-TAO_Abstract_ServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Abstract_ServantBase::_remove_ref (void)
 {
 }
 
@@ -36,7 +36,3 @@ TAO_Abstract_ServantBase & TAO_Abstract_ServantBase::operator= (const TAO_Abstra
 {
   return *this;
 }
-
-
-
-

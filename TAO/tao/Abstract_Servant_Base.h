@@ -78,20 +78,20 @@ public:
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                                ACE_ENV_ARG_DECL) = 0;
 
   /// Default <_non_existent>: always returns false.
   virtual CORBA::Boolean _non_existent (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+    ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Query the Interface Repository.
   virtual CORBA::InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_SINGLE_ARG_DECL
     ) = 0;
 
   /// Default <_get_component>: always returns nil.
   virtual CORBA::Object_ptr _get_component (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+    ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   //@{
   /**
@@ -99,8 +99,8 @@ public:
    *
    * Reference counting hooks are no-ops by default.
    */
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
   //@}
 
   /// Get the correct vtable.

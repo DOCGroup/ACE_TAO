@@ -167,14 +167,14 @@ public:
   ~TAO_RefCountServantBase (void);
 
   /// Increase reference count by one.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _add_ref (void);
 
   /**
    * Decreases reference count by one; if the resulting reference
    * count equals zero, _remove_ref invokes delete on its this pointer
    * in order to destroy the servant.
    */
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _remove_ref (void);
 
   /**
    * Returns the current reference count value.  This method is
