@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./Consumer_Supplier_EC -s edf -i server.ior -o middle1.ior -d 3

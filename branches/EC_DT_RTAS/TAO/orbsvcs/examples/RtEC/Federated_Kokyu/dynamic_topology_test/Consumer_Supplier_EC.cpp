@@ -29,7 +29,8 @@
 namespace
 {
   int supp_id = 3;
-  ACE_CString sched_type ="rms";
+  ACE_CString sched_type = "rms";
+  ACE_CString ior_input_file = "file://consumer_ec.ior";
   FILE * ior_output_file;
 }
 
@@ -130,39 +131,32 @@ public:
     //Supplier types
     RtecEventComm::EventType supp_normal_type;
     RtecEventComm::EventType supp_ft_type;
-    //We need to register these since the scheduler is local; it doesn't know about the other Consumer_Supplier_EC
-    RtecEventComm::EventType supp_normal_type_hack;
-    RtecEventComm::EventType supp_ft_type_hack;
     //Consumer types
     RtecEventComm::EventType cons_normal_type;
     RtecEventComm::EventType cons_ft_type;
     if (supp_id == 3)
       {
+        ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC has id 3\n"));
         supp_normal_type = ACE_ES_EVENT_UNDEFINED+6;
         supp_ft_type = ACE_ES_EVENT_UNDEFINED+8;
-        supp_normal_type_hack = ACE_ES_EVENT_UNDEFINED+7;
-        supp_ft_type_hack = ACE_ES_EVENT_UNDEFINED+9;
         cons_normal_type = ACE_ES_EVENT_UNDEFINED+2;
         cons_ft_type = ACE_ES_EVENT_UNDEFINED+4;
       }
     else //supp_id == 4
       {
+        ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC has id 4\n"));
         supp_normal_type = ACE_ES_EVENT_UNDEFINED+7;
         supp_ft_type = ACE_ES_EVENT_UNDEFINED+9;
-        supp_normal_type_hack = ACE_ES_EVENT_UNDEFINED+6;
-        supp_ft_type_hack = ACE_ES_EVENT_UNDEFINED+8;
         cons_normal_type = ACE_ES_EVENT_UNDEFINED+3;
         cons_ft_type = ACE_ES_EVENT_UNDEFINED+5;
       }
     Kokyu_EC::EventType_Vector supp1_3_types;
     supp1_3_types.push_back(supp_normal_type);
     supp1_3_types.push_back(supp_ft_type);
-    supp1_3_types.push_back(supp_normal_type_hack);
-    supp1_3_types.push_back(supp_ft_type_hack);
 
     Kokyu_EC::EventType_Vector cons1_2_types(2);
-    cons1_2_types.push_back(cons_ft_type);
     cons1_2_types.push_back(cons_normal_type);
+    cons1_2_types.push_back(cons_ft_type);
 
     Supplier *supplier_impl1_3;
     ACE_NEW(supplier_impl1_3,
@@ -178,14 +172,24 @@ public:
     add_consumer_with_supplier(consumer_impl1_2, //deleted in consumer
                                "consumer1_2",
                                tv,
-                               cons1_2_types,
+                               cons1_2_types[0],
                                RtecScheduler::VERY_LOW_CRITICALITY,
                                RtecScheduler::VERY_LOW_IMPORTANCE,
                                supplier_impl1_3,
                                "supplier1_3",
-                               supp1_3_types
+                               supp1_3_types[0]
                                ACE_ENV_ARG_PARAMETER
                                );
+    ACE_CHECK;
+
+    EventType_Vector types(4);
+    for(RtecEventComm::EventType type = ACE_ES_EVENT_UNDEFINED+6;
+        type <= ACE_ES_EVENT_UNDEFINED+9; type++)
+      {
+        types.push_back(type);
+      }
+
+    add_dummy_supplier(types);
     ACE_CHECK;
 
     //Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -245,7 +249,7 @@ main (int argc, char* argv[])
 
       cons_supp_ec.init_gateway(orb.in(),
                                poa.in(),
-                               "file://consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
+                               ior_input_file.c_str() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       // ****************************************************************
       RtEventChannelAdmin::RtSchedEventChannel_var cons_supp_ec_ior =
@@ -319,8 +323,12 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "cs:o:d:");
+  ACE_Get_Opt get_opts (argc, argv, "s:o:d:i:");
   int c;
+  //these used for handline '-i':
+  const char* input_file;
+  size_t len;
+  char *filename;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -344,12 +352,24 @@ int parse_args (int argc, char *argv[])
           supp_id = atol(get_opts.opt_arg ());
           break;
         }
+      case 'i':
+        input_file = get_opts.opt_arg();
+        len = ACE_OS::strlen("file://")+ACE_OS::strlen(input_file)+1;
+        filename = new char[len];
+        sprintf(filename,"file://%s",input_file);
+        ACE_DEBUG((LM_DEBUG,"Adding consumer IOR %s\n",filename));
+        ior_input_file = filename;
+        break;
       case '?':
       default:
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Usage:  %s -s <rms|muf|edf> -d <supplier id>"
-                             "\n",
+                             "Usage:  %s -s <rms|muf|edf>"
+                             " -d <supplier id>"
+                             " [-o iorfile]"
+                             " [-i server_EC_ior_file]"
+                             "\n"
+                             "For multiple consumers, specify -i multiple times\n",
                              argv [0]),
                             -1);
         }
