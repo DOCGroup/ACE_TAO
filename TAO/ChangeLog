@@ -1,10 +1,26 @@
+Thu Aug 28 22:04:40 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IOP_IORC.h:
+
+	  Made #undef of "IOR" (for HPUX) match the original one found in
+	  corbafwd.h.  It is more generic.
+
+	* tao/Object.h:
+	* tao/Stub.h:
+	* tao/corbafwd.h:
+
+	  #undef "IOR" (for HPUX) after all headers have been included to
+	  make sure it isn't indirectly redefined by other headers.
+	  Addresses TAO HPUX build failures.
+
 Thu Aug 28 19:15:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
         * tests/Portable_Interceptors/Collocated/Dynamic/test_i.cpp:
         * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Client_Task.cpp:
 
-          Fixed compilation errors related to misused ACE error handling macros.
+          Fixed compilation errors related to misused ACE error handling
+	  macros.
 
 Thu Aug 28 18:35:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
