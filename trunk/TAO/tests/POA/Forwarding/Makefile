@@ -16,11 +16,12 @@ LDLIBS = -lTAO
 
 TAO_IDLFLAGS=-I$(TAO_ROOT)/tao
 IDL_SRC	= FooC.cpp FooS.cpp
-PROG_SRCS =	$(IDL_SRC) server.cpp client.cpp
+PROG_SRCS =	$(IDL_SRC) server.cpp client.cpp \
+		MyFooServant.cpp Servant_Locator.cpp
 
 LSRC = $(PROG_SRCS)
 
-SVR_OBJS = FooC.o FooS.o server.o
+SVR_OBJS = FooC.o FooS.o server.o MyFooServant.o Servant_Locator.o
 CLT_OBJS = FooC.o FooS.o client.o
 
 BIN = server client
