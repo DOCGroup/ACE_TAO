@@ -232,7 +232,10 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
 void
 TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 {
-  if (rhs.dirty () && deep_copy)
+  if (!rhs.dirty ())
+    return;  // Nothing to copy
+
+  if (deep_copy)
     {
       size_t new_size  = rhs.slot_table ().size ();
 
