@@ -1,21 +1,17 @@
-#
 # $Id$
-#
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
 unshift @INC, '../../../../bin';
 require Process;
-require Uniqueid;
-
-$iorfile = "theior";
-$sleeptime = 10;
+require ACEutils;
 
 $SV = Process::Create ("server".$Process::EXE_EXT, 
 		       " -ORBobjrefstyle url");
 
-sleep ($sleeptime);
+sleep ($ACE::sleeptime);
 
 $status  = system ("client".$Process::EXE_EXT.
 		   " -x ");
