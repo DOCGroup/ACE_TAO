@@ -44,6 +44,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 # $(ACE_ROOT)/bin/clone.cpp file and install it in your ~/bin
 # directory (or some place similar).
 
+.PHONY: clone
 clone:
 	@for dir in $(CLONE) ;\
 	do \
@@ -72,6 +73,7 @@ RELEASE_FILES = $(addprefix TAO/,$(CONTROLLED_FILES)) \
                 TAO/INSTALL \
 		TAO/orbsvcs/README
 
+.PHONY: INSTALL
 INSTALL: TAO-INSTALL.html
 	lynx -dump $^ > $@; chmod a+r $@
 
@@ -118,6 +120,8 @@ release-old:	INSTALL
 
 releaseall-old: INSTALL
 	@$(TIMESTAMP) true
+
+.PHONY: release
 
 REL = beta
 CHECK =
