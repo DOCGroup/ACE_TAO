@@ -6,5 +6,5 @@ project : orbsvcslib, ifr_client, valuetype, security, taoidldefaults {
   includes   += $(CIAO_ROOT)/DnC/Core
   idlflags += -I$(CIAO_ROOT)/DnC/Core
   libs     += CIAO_Client
-  includes += $(CIAO_ROOT)
+  includes += $(CIAO_ROOT)/DnC/Core
 }
