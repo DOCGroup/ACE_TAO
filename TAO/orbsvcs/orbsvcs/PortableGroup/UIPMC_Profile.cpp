@@ -630,6 +630,11 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   group.object_group_ref_version = this->ref_version_;
 
   TAO_OutputCDR out_cdr;
+
+  // Write the byte order.
+  out_cdr << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
+
+  // Write the group information.
   if ((out_cdr << group) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
