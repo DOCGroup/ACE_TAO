@@ -252,9 +252,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                         << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
 
   *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#if (_MSC_VER >= 1200)\n"
                         << "#pragma warning(push)\n"
-                        << "#endif /* _MSC_VER >= 1200 */\n"
                         << "#pragma warning(disable:4250)";
 
   if (be_global->use_raw_throw ())
@@ -467,9 +465,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
   *this->server_header_ << be_nl << be_nl
                         << "#if defined(_MSC_VER)\n"
-                        << "#if (_MSC_VER >= 1200)\n"
                         << "#pragma warning(push)\n"
-                        << "#endif /* _MSC_VER >= 1200 */\n"
                         << "#pragma warning(disable:4250)";
 
   if (be_global->use_raw_throw ())
@@ -563,9 +559,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
     }
 
   *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
-                                 << "#if (_MSC_VER >= 1200)\n"
                                  << "#pragma warning(push)\n"
-                                 << "#endif /* _MSC_VER >= 1200 */\n"
                                  << "#pragma warning(disable:4250)\n";
 
   if (be_global->use_raw_throw ())
@@ -970,7 +964,7 @@ TAO_CodeGen::end_client_header (void)
                         << "\"\n";
   *this->client_header_ << "#endif /* defined INLINE */";
 
-  *this->client_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */";
 
@@ -1015,7 +1009,7 @@ TAO_CodeGen::end_server_header (void)
                         << "\"\n";
   *this->server_header_ << "#endif /* defined INLINE */";
 
-  *this->server_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->server_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */";
 
@@ -1122,7 +1116,7 @@ TAO_CodeGen::end_server_template_header (void)
       << "\")";
   *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
 
-  *this->server_template_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
                                  << "#pragma warning(pop)\n"
                                  << "#endif /* _MSC_VER */";
 
