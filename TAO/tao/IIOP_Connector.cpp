@@ -212,7 +212,7 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                        "errno"));
          }
 
-       this->active_connect_strategy_->post_failed_connect (svc_handler);
+       (void) this->active_connect_strategy_->post_failed_connect (svc_handler);
 
        return -1;
      }

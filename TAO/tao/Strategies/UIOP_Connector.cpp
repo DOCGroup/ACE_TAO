@@ -214,6 +214,8 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       uiop_endpoint->rendezvous_point (),
                       ACE_TEXT ("errno")));
         }
+
+      (void) this->active_connect_strategy_->post_failed_connect (svc_handler);
       return -1;
     }
 
