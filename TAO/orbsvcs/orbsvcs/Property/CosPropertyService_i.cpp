@@ -1091,11 +1091,11 @@ TAO_PropertySet::delete_all_properties (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get all the property names in a names' sequence.
-  CosPropertyService::PropertyNames_ptr names_ptr = 0;
+  CosPropertyService::PropertyNames *names_ptr = 0;
   CosPropertyService::PropertyNames_out names_out (names_ptr);
   CosPropertyService::PropertyNames_var names;
 
-  CosPropertyService::PropertyNamesIterator_ptr iter_ptr = 0;
+  CosPropertyService::PropertyNamesIterator *iter_ptr = 0;
   CosPropertyService::PropertyNamesIterator_out iter_out (iter_ptr);
   CosPropertyService::PropertyNamesIterator_var iter;
 
