@@ -1,13 +1,21 @@
-Thu Aug  6 20:41:44 1998  James C Hu  <jxh@cs.wustl.edu>
-
-	* ace/Filecache.cpp: Avoided a deadlock detected by Tom Dobridge
-	  (thanks!).
-
 Thu Aug  6 17:44:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Priority_Task_Test.cpp: Enhanced this test so that it runs
+ 	  correctly on platforms where you must be root to muck around
+ 	  with thread priorities.  Thanks to John Mulhern
+ 	  <9107@mn3.lawson.lawson.com> for reporting this.
+
+	* tests/MT_SOCK_Test.cpp: Reformatted the code to make it more
+ 	  readable and also to remove a C-style cast.
 
 	* ace/Message_Queue_T.h: Improved the documentation of the low
  	  water mark and high water marks.  Thanks to Umar for encouraging
  	  this.
+
+Thu Aug  6 20:41:44 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/Filecache.cpp: Avoided a deadlock detected by Tom Dobridge
+	  (thanks!).
 
 Thu Aug 06 14:59:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
