@@ -435,6 +435,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TAO_Strategies_Static"=.\tao\Strategies\TAO_Strategies_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "gperf"=..\apps\gperf\src\gperf.dsp - Package Owner=<4>
 
 Package=<5>
