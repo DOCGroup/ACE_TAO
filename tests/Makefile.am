@@ -88,7 +88,7 @@ FRAMEWORK_COMPONENT_TEST = Framework_Component_Test
 lib_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la libTest_Output.la
 
 libTest_Output_la_SOURCES = Test_Output.cpp test_config.h
-#libTest_Output_la_LDFLAGS = -module
+libTest_Output_la_LDFLAGS = -module
 libTest_Output_la_LIBADD = $(top_builddir)/ace/libACE.la
 
 libDLL_Test_la_SOURCES = DLL_Test_Impl.cpp DLL_Test_Impl.h
@@ -103,6 +103,7 @@ libService_Config_DLL_la_LIBADD = $(top_builddir)/ace/libACE.la
 ## issued by the user.
 ##check_PROGRAMS =
 noinst_PROGRAMS = \
+  ACE_Test \
   Aio_Platform_Test \
   Arg_Shifter_Test \
   ARGV_Test \
@@ -217,6 +218,7 @@ noinst_PROGRAMS = \
   Token_Strategy_Test \
   TP_Reactor_Test \
   TSS_Test \
+  TSS_Static_Test \
   Unbounded_Set_Test_Ex \
   Upgradable_RW_Test \
   UPIPE_SAP_Test \
