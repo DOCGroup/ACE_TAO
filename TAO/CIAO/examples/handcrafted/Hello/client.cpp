@@ -54,11 +54,11 @@ main (int argc, char *argv[])
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
 
-      if (read_ior (argv[1]) != 0)
-        return -1;
+//       if (read_ior (argv[1]) != 0)
+//         return -1;
 
       // Destringify argv[1]
-      CORBA::Object_var obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
       if  (CORBA::is_nil (obj.in ()))
         {
           cerr << "Nil simple reference" << endl;
@@ -94,6 +94,7 @@ main (int argc, char *argv[])
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+#if 0
       HelloWorld_var hw2 = hh->create ();
 
       if  (CORBA::is_nil (hw2.in ()))
@@ -105,6 +106,7 @@ main (int argc, char *argv[])
       hi = hw->sayhello (name
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+#endif
     }
   ACE_CATCHANY
     {

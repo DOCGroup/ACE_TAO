@@ -83,6 +83,8 @@ main (int argc, char *argv[])
       mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      // Start Deployment part
+
       CIAO::Session_Container container (orb);
       container.init ();
       CORBA::Object_var home;
@@ -106,6 +108,7 @@ main (int argc, char *argv[])
         ACE_TRY_CHECK;
       }
 
+      // Start Home registration part
       CORBA::String_var str = orb->object_to_string (home.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK
@@ -113,6 +116,9 @@ main (int argc, char *argv[])
       write_IOR (str.in ());
 
       cout << str.in () << endl;
+      // End Home registration part
+
+      // End Deployment part
 
       ACE_DEBUG ((LM_DEBUG,
                   "Running generic server...\n"));
