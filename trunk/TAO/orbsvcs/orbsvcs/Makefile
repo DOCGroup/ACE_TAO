@@ -70,6 +70,11 @@ ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
         Naming/Naming_Context \
 	Naming/Hash_Naming_Context \
         Naming/Entries \
+	Naming/Shared_Hash_Map \
+	Naming/Persistent_Naming_Context \
+	Naming/Persistent_Entries \
+	Naming/Persistent_Bindings_Map \
+	Naming/Persistent_Context_Index \
         Naming/Naming_Utils
 endif # Naming
 
