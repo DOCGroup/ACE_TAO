@@ -39,9 +39,17 @@
 #include "tao/orbconf.h"
 #include "ace/CORBA_macros.h"
 
+#if defined (TAO_HAS_EXCEPTIONS)
+#define TAO_RAISE(EXCEPTION) throw EXCEPTION
+#else
+#define TAO_RAISE(EXCEPTION)
+#endif /* TAO_HAS_EXCEPTIONS */
+
+// This is used in the implementation of the _raise methods
+
 // Remove the following line when we're not using TAO try macros any
 // more.
-#define TAO_USES_DEPRECATED_TAO_TRY_MACROS
+//#define TAO_USES_DEPRECATED_TAO_TRY_MACROS
 
 #if defined (TAO_USES_DEPRECATED_TAO_TRY_MACROS)
 
@@ -137,9 +145,6 @@
 // and I'm concerned that putting a throw spec can result in an
 // "unexpected" exception, which *could* be translated into a
 // CORBA::UNKNOWN, but I'm not sure.
-
-#define TAO_RAISE(EXCEPTION) throw EXCEPTION
-// This is used in the implementation of the _raise methods
 
 #else /* ACE_HAS_EXCEPTIONS && TAO_IDL_COMPILES_HAS_EXCEPTIONS */
 
@@ -284,8 +289,6 @@ return
 #define TAO_RETHROW_SAME_ENV_RETURN_VOID return
 
 #define TAO_THROW_SPEC(X)
-
-#define TAO_RAISE(EXCEPTION)
 
 #endif /* TAO_HAS_EXCEPTIONS */
 
