@@ -47,7 +47,9 @@ Wed Nov 26 10:33:22 1997    <irfan@TWOSTEP>
 Sat Dec 20 14:57:30 1997    <nw1@CHA-CHA>
 
 	* All MSVC 5.0 project files: Removed unnecessary library
- 	  inclusions.  Most of them are not necessary.
+ 	  inclusions.  Most of them are not necessary. Thanks to
+	  Patrick J. McNerthney <pat@thememedia.com> for suggesting
+	  this.
 
 Wed Nov 26 15:49:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
