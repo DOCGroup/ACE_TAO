@@ -19,15 +19,7 @@
 #ifndef TAO_ATTRIBUTES_H
 #define TAO_ATTRIBUTES_H
 
-#if defined (OS_NO_NAMESPACE)
-#define queue foobar
-#endif /* OS_NO_NAMESPACE */
-
 #include "orbsvcs/CosTradingS.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#endif /* OS_NO_NAMESPACE */
 
 class TAO_Trader_Base;
  

@@ -25,16 +25,7 @@
 #include "Constraint_Visitor.h"
 #include "Constraint_Nodes.h"
 
-#if defined (OS_NO_NAMESPACE)
-#define queue foobar
-#endif /* OS_NO_NAMESPACE */
-
 #include "orbsvcs/SequencesC.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#endif /* OS_NO_NAMESPACE */
-
 
 class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 //

@@ -89,7 +89,7 @@ add_type (const char * name,
   // check if the service type already exists.
   type_iterator = this->type_map_.find (name);
   if (type_iterator != this->type_map_.end ())
-    TAO_THROW_RETURN (SERVICE_TYPE_REPOS::ServiceTypeExists (name),
+    TAO_THROW_RETURN (SERVICE_TYPE_REPOS::ServiceTypeExists (),
 		      this->incarnation_);
   
   // make sure all property names are valid and appear only once.
@@ -100,8 +100,19 @@ add_type (const char * name,
   this->validate_supertypes (super_types, super_map, _env);
   TAO_CHECK_ENV_RETURN (_env, this->incarnation_);
 
+  // NOTE: I don't really know a way to do this without an Interface
+  // Repository, since the Interface Repository IDs don't contain
+  // information about supertypes.
+  // 
   // make sure interface name is legal.
-  // this->validate_interface (if_name) forthcoming
+  //  this->validate_interface (if_name, super_types, _env);
+  //  TAO_CHECK_ENV_RETURN(_env, this->incarnation);
+  //
+  // Instead, we do this:
+  // 
+  if (if_name == 0)
+    TAO_THROW_RETURN (SERVICE_TYPE_REPOS::InterfaceTypeMismatch (),
+		      this->incarnation_);
   
   // collect and make sure that properties of all supertypes and this type
   // are compatible.  We can use prop_map and super_types_map for the job.
