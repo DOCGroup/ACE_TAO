@@ -115,7 +115,7 @@ TAO_UIPMC_Transport::messaging_object (void)
 
 struct MIOP_Packet
 {
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
   int iovcnt;
   int length;
 };
@@ -299,7 +299,7 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
       // Check if we've filled up this fragment or if we've run out of
       // iov entries.
       if (current_fragment->length == MIOP_MAX_DGRAM_SIZE ||
-          current_fragment->iovcnt == IOV_MAX)
+          current_fragment->iovcnt == ACE_IOV_MAX)
         {
           // Make a new fragment.
           num_fragments++;
