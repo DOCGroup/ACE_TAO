@@ -104,6 +104,11 @@ public:
 
   ACE_CString id_;
   // Any information user wants to store (not used by Naming Service).
+
+  const char * id (void);
+  const char * kind (void);
+  // Accessors.
+
 };
 
 #endif /* TAO_ENTRIES_H */

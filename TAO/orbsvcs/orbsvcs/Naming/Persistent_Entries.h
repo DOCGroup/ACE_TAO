@@ -99,6 +99,9 @@ public:
   const char * kind_;
   // These point into shared/mmaped memory.
 
+  // Accessors.
+  const char * id (void);
+  const char * kind (void);
 };
 
 class TAO_ORBSVCS_Export TAO_Persistent_Index_IntId
