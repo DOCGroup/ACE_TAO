@@ -149,14 +149,7 @@ public:
 
   int run (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Runs the orb.
-/*
-  char* get_forward_host (const char *server);
-  // Returns the host of the server that needs to be forwarded to.
 
-  CORBA::UShort get_forward_port (const char *server);
-  // Returns the port of the server that needs to be forwarded to.
-*/
-private:
   struct Endpoint
   {
     Endpoint ();
@@ -167,6 +160,7 @@ private:
     CORBA::UShort port;
   };
   
+private:
   Endpoint activate_server_i (const char *server,
                               const int check_startup,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
