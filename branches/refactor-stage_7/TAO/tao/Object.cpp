@@ -26,41 +26,6 @@ ACE_RCSID (tao,
            Object,
            "$Id$")
 
-// Traits specializations for CORBA::Object.
-
-CORBA::Object_ptr
-TAO::Objref_Traits<CORBA::Object>::tao_duplicate (
-    CORBA::Object_ptr p
-  )
-{
-  return CORBA::Object::_duplicate (p);
-}
-
-void
-TAO::Objref_Traits<CORBA::Object>::tao_release (
-    CORBA::Object_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-CORBA::Object_ptr
-TAO::Objref_Traits<CORBA::Object>::tao_nil (void)
-{
-  return CORBA::Object::_nil ();
-}
-
-CORBA::Boolean
-TAO::Objref_Traits<CORBA::Object>::tao_marshal (
-    CORBA::Object_ptr p,
-    TAO_OutputCDR & cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-// =========================================================
-
 CORBA::Object::~Object (void)
 {
   if (this->protocol_proxy_)
@@ -929,6 +894,80 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
   return (CORBA::Boolean) cdr.good_bit ();
 }
+
+// Traits specializations for CORBA::Object.
+// =========================================================
+
+namespace TAO
+{
+  CORBA::Object_ptr
+  Objref_Traits<CORBA::Object>::tao_duplicate (CORBA::Object_ptr p)
+  {
+    return CORBA::Object::_duplicate (p);
+  }
+
+  void
+  Objref_Traits<CORBA::Object>::tao_release (CORBA::Object_ptr p)
+  {
+    CORBA::release (p);
+  }
+
+  CORBA::Object_ptr
+  Objref_Traits<CORBA::Object>::tao_nil (void)
+  {
+    return CORBA::Object::_nil ();
+  }
+
+  CORBA::Boolean
+  Objref_Traits<CORBA::Object>::tao_marshal (CORBA::Object_ptr p,
+                                             TAO_OutputCDR & cdr)
+  {
+    return p->marshal (cdr);
+  }
+
+  //=============================================================
+  using namespace CORBA;
+
+  CORBA::Boolean
+  Ret_Object_Argument_T<Object_ptr,Object_var>::demarshal (TAO_InputCDR &cdr)
+  {
+    return cdr >> this->x_.out ();
+  }
+
+  void
+  Ret_Object_Argument_T<Object_ptr,Object_var>::interceptor_result (CORBA::Any * )
+  {
+    if (TAO_debug_level > 2)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Cannot insert a vanilla CORBA Object"
+                    " into an Any for returning the return argument \n"));
+      }
+  }
+
+  Ret_Object_Argument_T<Object_ptr,Object_var>::Ret_Object_Argument_T (void)
+  {
+  }
+
+  Object_ptr &
+  Ret_Object_Argument_T<Object_ptr,Object_var>::arg (void)
+  {
+    return this->x_.out ();
+  }
+
+  Object_ptr
+  Ret_Object_Argument_T<Object_ptr,Object_var>::excp (void)
+  {
+    return this->x_.ptr ();
+  }
+
+  Object_ptr
+  Ret_Object_Argument_T<Object_ptr,Object_var>::retn (void)
+  {
+    return this->x_._retn ();
+  }
+} // close TAO namespace
+
 
 TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj

@@ -400,6 +400,31 @@ namespace TAO
         TAO_OutputCDR & cdr
       );
   };
+
+  /**
+   * @class Ret_Object_Argument_T
+   *
+   * @brief Specialization for CORBA::Object, necessitated since we
+   *  don't have an Any insertion operator for Object.
+   */
+  ACE_TEMPLATE_SPECIALIZATION
+  class Ret_Object_Argument_T <CORBA::Object_ptr, CORBA::Object_var> : public Argument
+  {
+  public:
+    Ret_Object_Argument_T (void);
+
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+
+    virtual void interceptor_result (CORBA::Any *);
+
+    CORBA::Object_ptr & arg (void);
+
+    CORBA::Object_ptr excp (void);
+    CORBA::Object_ptr retn (void);
+
+  private:
+    CORBA::Object_var x_;
+  };
 };
 
 
