@@ -41,8 +41,6 @@ OSVERSIONINFO ACE_OS::win32_versioninfo_;
 // Cached win32 version information.
 # endif /* ACE_WIN32 */
 
-u_int ACE_Thread_Exit::is_constructed_ = 0;
-
 class ACE_OS_Thread_Mutex_Guard
 {
   // = TITLE
@@ -219,6 +217,8 @@ ACE_OS::netdb_release (void)
 #endif /* ! ACE_MT_SAFE */
 
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
+
+u_int ACE_Thread_Exit::is_constructed_ = 0;
 
 // Static constant representing `zero-time'.
 // Note: this object requires static construction.
