@@ -357,3 +357,18 @@ The steps of the walk-through are as follows:
     outliers:
            60182.000
 
+******************************************
+*    Running a Complete Test Spectrum    *
+******************************************
+
+People who are interested in round-trip latency often want to see a
+"spectrum" of statistics for a range of payload sizes.  This
+distribution includes a script, run_spectrum.pl, that automates
+running SOCK_STREAM_clt or SOCK_SEQPACK_clt multiple times in order to
+generate a spectrum.
+
+The run_spectrum.pl script offers embedded documentation.  To see the
+full documentation, please run
+
+   ./run_spectrum.pl --manual
+
