@@ -7,12 +7,12 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "TAOC.h"
+#include "tao/TAOC.h"
 
-#include "TAOS.h"
+#include "tao/TAOS.h"
 
 #if !defined (__ACE_INLINE__)
-#include "TAOC.i"
+#include "tao/TAOC.i"
 #endif /* !defined INLINE */
 
 #if defined (TAO_HAS_CORBA_MESSAGING)

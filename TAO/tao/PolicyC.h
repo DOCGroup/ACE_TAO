@@ -547,7 +547,7 @@ CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &,
 // ****************************************************************
 
 #if defined (__ACE_INLINE__)
-#include "PolicyC.i"
+#include "tao/PolicyC.i"
 #else
 
 CORBA::Boolean TAO_Export

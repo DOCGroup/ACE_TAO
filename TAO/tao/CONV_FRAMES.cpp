@@ -17,8 +17,8 @@
 //
 // ================================================================
 
-#include "CONV_FRAMES.h"
+#include "tao/CONV_FRAMES.h"
 
 #if !defined (__ACE_INLINE__)
-#include "CONV_FRAMES.i"
+#include "tao/CONV_FRAMES.i"
 #endif /* !defined INLINE */

@@ -430,7 +430,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_PollableSet::Unknown
 
 
 #if defined (__ACE_INLINE__)
-#include "PollableC.i"
+#include "tao/PollableC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

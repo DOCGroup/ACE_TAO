@@ -17,12 +17,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "DomainS_T.i"
+#include "tao/DomainS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "DomainS_T.cpp"
+#include "tao/DomainS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 

@@ -1209,7 +1209,7 @@ TAO_NAMESPACE POA_PortableServer
 TAO_NAMESPACE_CLOSE
 
 #if defined (__ACE_INLINE__)
-#include "POAS.i"
+#include "tao/POAS.i"
 #endif // defined INLINE
 
 #if defined(_MSC_VER)

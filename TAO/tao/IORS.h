@@ -203,7 +203,7 @@ TAO_NAMESPACE_CLOSE
 
 
 #if defined (__ACE_INLINE__)
-#include "IORS.i"
+#include "tao/IORS.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

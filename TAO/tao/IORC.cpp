@@ -11,7 +11,7 @@
 #include "tao/IORC.h"
 
 #if !defined (__ACE_INLINE__)
-#include "IORC.i"
+#include "tao/IORC.i"
 #endif /* !defined INLINE */
 
 #include "tao/IORS.h"
@@ -45,7 +45,7 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_TAO_IOP::_tao_collocated_TAO_IOR_Manipulation (
-          ACE_reinterpret_cast (POA_TAO_IOP::TAO_IOR_Manipulation_ptr, 
+          ACE_reinterpret_cast (POA_TAO_IOP::TAO_IOR_Manipulation_ptr,
                                 servant),
           0
         ),

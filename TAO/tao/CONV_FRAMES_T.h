@@ -26,12 +26,12 @@
 
 
 #if defined (__ACE_INLINE__)
-#include "CONV_FRAMES_T.i"
+#include "tao/CONV_FRAMES_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "CONV_FRAMES_T.cpp"
+#include "tao/CONV_FRAMES_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 

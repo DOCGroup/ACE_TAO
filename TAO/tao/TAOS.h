@@ -10,7 +10,7 @@
 #ifndef _TAO_IDL_TAOS_H_
 #define _TAO_IDL_TAOS_H_
 
-#include "TAOC.h"
+#include "tao/TAOC.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
@@ -182,10 +182,10 @@ TAO_NAMESPACE  POA_TAO
 }
 TAO_NAMESPACE_CLOSE
 
-#include "TAOS_T.h"
+#include "tao/TAOS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "TAOS.i"
+#include "tao/TAOS.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

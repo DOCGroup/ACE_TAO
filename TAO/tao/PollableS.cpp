@@ -25,7 +25,7 @@
 #include "tao/Server_Request.h"
 
 #if !defined (__ACE_INLINE__)
-#include "PollableS.i"
+#include "tao/PollableS.i"
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, PollableS, "$Id$")
@@ -326,7 +326,7 @@ POA_CORBA::Pollable::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::Pollable *retval = CORBA::Pollable::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_Pollable (this, 
+                  POA_CORBA::_tao_collocated_Pollable (this,
                                                        stub),
                   CORBA::Pollable::_nil ());
 
@@ -560,7 +560,7 @@ POA_CORBA::DIIPollable::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::DIIPollable *retval = CORBA::DIIPollable::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DIIPollable (this, 
+                  POA_CORBA::_tao_collocated_DIIPollable (this,
                                                           stub),
                   CORBA::DIIPollable::_nil ());
 
@@ -965,7 +965,7 @@ POA_CORBA::PollableSet::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::PollableSet *retval = CORBA::PollableSet::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_PollableSet (this, 
+                  POA_CORBA::_tao_collocated_PollableSet (this,
                                                           stub),
                   CORBA::PollableSet::_nil ());
 

@@ -17,11 +17,11 @@
 //
 // ================================================================
 
-#include "CONV_FRAMEC.h"
+#include "tao/CONV_FRAMEC.h"
 #include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
-#include "CONV_FRAMEC.i"
+#include "tao/CONV_FRAMEC.i"
 #endif /* !defined INLINE */
 
 static const CORBA::Long _oc_CONV_FRAME_CodeSetId[] =

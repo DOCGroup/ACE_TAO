@@ -19,7 +19,7 @@
 #ifndef TAO_IOPS_H
 #define TAO_IOPS_H
 
-#include "IOPC.h"
+#include "tao/IOPC.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,10 +35,10 @@ TAO_NAMESPACE  POA_IOP
 }
 TAO_NAMESPACE_CLOSE
 
-#include "IOPS_T.h"
+#include "tao/IOPS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "IOPS.i"
+#include "tao/IOPS.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

@@ -532,7 +532,8 @@ CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_S
 #endif /* __ACE_INLINE__ */
 
 #if defined (__ACE_INLINE__)
-#include "Services.i"
+
+#include "tao/Services.i"
 #endif /* defined INLINE */
 
 

@@ -327,7 +327,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
 #endif /* __ACE_INLINE__ */
 
 #if defined (__ACE_INLINE__)
-#include "DomainC.i"
+#include "tao/DomainC.i"
 #endif /* defined INLINE */
 
 #endif /* TAO_IDL_DOMAINC_H */

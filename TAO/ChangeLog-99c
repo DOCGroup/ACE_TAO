@@ -1,16 +1,78 @@
+Thu Oct 21 13:14:59 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: The following files were changed to fix #include such that
+	  they are prefixed by tao/.  This will prevent inclusion problems
+	  if users have files with the same names as the ones used in TAO.
+
+	  - BoundsC.cpp
+	  - BoundsC.h
+	  - Buffering_Constraint_Policy.h
+	  - CONV_FRAMEC.cpp
+	  - CONV_FRAMEC.h
+	  - CONV_FRAMES.cpp
+	  - CONV_FRAMES.h
+	  - CONV_FRAMES_T.cpp
+	  - CONV_FRAMES_T.h
+	  - Client_Priority_Policy.h
+	  - CurrentC.h
+	  - DomainC.h
+	  - DomainS_T.cpp
+	  - DomainS_T.h
+	  - DynAnyC.cpp
+	  - DynAnyC.h
+	  - IOPS.cpp
+	  - IOPS.h
+	  - IOPS_T.cpp
+	  - IOPS_T.h
+	  - IORC.cpp
+	  - IORC.h
+	  - IORS.cpp
+	  - IORS.h
+	  - InterfaceC.cpp
+	  - InterfaceC.h
+	  - MessagingC.h
+	  - MessagingS.cpp
+	  - MessagingS.h
+	  - MessagingS_T.cpp
+	  - MessagingS_T.h
+	  - Messaging_Policy_i.h
+	  - ObjectIDList.cpp
+	  - ObjectIDList.h
+	  - POAC.h
+	  - POAS.h
+	  - PolicyC.h
+	  - PollableC.h
+	  - PollableS.cpp
+	  - PollableS.h
+	  - PollableS_T.cpp
+	  - PollableS_T.h
+	  - Services.h
+	  - TAOC.cpp
+	  - TAOC.h
+	  - TAOS.cpp
+	  - TAOS.h
+	  - TAOS_T.cpp
+	  - TAOS_T.h
+	  - TimeBaseC.cpp
+	  - TimeBaseS.cpp
+	  - TimeBaseS.h
+	  - TimeBaseS_T.cpp
+	  - TimeBaseS_T.h
+	  - qt_resource.h
+
 Thu Oct 21 12:07:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/QtTests/test_i.cpp (send_val): 
+	* tests/QtTests/test_i.cpp (send_val):
 	* tests/QtTests/test_i.h: Made similar changes that could lead to
 	  an error in platforms like IRIX. The changes were nothing, but
 	  addition of the THROW_SPEC to the signature of the methods in
 	  the implementation class. This example has been tested sofar
 	  only on Linux as we have the libraries for Qt only on that
-	  platform. 
+	  platform.
 
 Thu Oct 21 11:52:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/timer.h: 
+	* tests/Xt_Stopwatch/timer.h:
 	* tests/Xt_Stopwatch/client.cpp:
 	* tests/Xt_Stopwatch/Client.h:
 	* tests/Xt_Stopwatch/Control.h:
@@ -19,7 +81,7 @@ Thu Oct 21 11:52:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Xt_Stopwatch/Makefile: Fixed a compile error. Thanks to
 	  Thomas Groth <groth.th@stn-atlas.de> for reporting this. I also
 	  updated the Makefile dependencies & removed some warnings on
-	  Sun_Egcs. 
+	  Sun_Egcs.
 
 Thu Oct 21 10:54:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 

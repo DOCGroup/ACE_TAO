@@ -2290,7 +2290,7 @@ TAO_NAMESPACE PortableServer{
 TAO_NAMESPACE_CLOSE
 
 #if defined (__ACE_INLINE__)
-#include "POAC.i"
+#include "tao/POAC.i"
 #else
 
 // POA's policies.

@@ -511,7 +511,7 @@ operator>> (
 
 
 #if defined (__ACE_INLINE__)
-#include "IORC.i"
+#include "tao/IORC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)
