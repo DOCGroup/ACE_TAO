@@ -69,7 +69,7 @@ main (int argc, char *argv[])
       // Fill in some useless data.
       for (CORBA::ULong i = 0; i < len; ++i)
         data_input[i] = i % 9;
-     
+
       ACE_DEBUG ((LM_DEBUG,
                   "Sending octet sequence of length %u\n",
                   data_input.length()));
