@@ -1,3 +1,9 @@
+Thu Nov 27 16:51:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/ARGV_Test.cpp:
+
+	  Fixed compile errors on Win32.
+
 Thu Nov 27 10:51:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.bin.GNU:
