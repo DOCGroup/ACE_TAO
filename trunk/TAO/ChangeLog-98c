@@ -1,3 +1,7 @@
+Sat Jul 05 13:25:23 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.4, released Sat Jul 05 13:25:23 1997.
+
 Sat Jul  5 12:39:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao: All throughout TAO I removed the direct use of system
