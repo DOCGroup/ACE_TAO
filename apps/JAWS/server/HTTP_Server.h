@@ -33,6 +33,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Global_Macros.h"
 
 // Forward declaration.
 class ACE_Proactor;
@@ -140,6 +141,6 @@ private:
 
 ACE_SVC_FACTORY_DECLARE (HTTP_Server)
 
-ACE_STATIC_SVC_DECLARE (HTTP_Server)
+ACE_STATIC_SVC_DECLARE_EXPORT (ACE_Svc, HTTP_Server)
 
 #endif /* HTTP_SERVER_H */
