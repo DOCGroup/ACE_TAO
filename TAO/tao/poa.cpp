@@ -3,7 +3,7 @@
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// POA initialisation -- both anonymous and (for system bootstrapping) 
+// POA initialisation -- both anonymous and (for system bootstrapping)
 // named POAs.
 //
 // XXX at this time, there's a strong linkage between this code and
@@ -43,14 +43,14 @@ CORBA_POA::init (CORBA::ORB_ptr parent,
 
 CORBA_POA::CORBA_POA (CORBA::ORB_ptr owning_orb,
                       CORBA::Environment &)
-  : do_exit_ (CORBA::B_FALSE), 
+  : do_exit_ (CORBA::B_FALSE),
     orb_ (owning_orb),
     call_count_ (0),
     skeleton_ (0)
 {
   TAO_Server_Strategy_Factory *f = orb_->server_factory ();
   TAO_ORB_Core* p = TAO_ORB_Core_instance ();
-  
+
   this->objtable_ = f->create_object_table ();
 
   // @@ What is this doing here?  Why is it setting the root poa based
@@ -78,7 +78,7 @@ CORBA_POA::create (CORBA::OctetSeq &key,
   else
     id = 0;
 
-  
+
 
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
@@ -181,7 +181,7 @@ CORBA_POA::register_dir (dsi_handler handler,
 CORBA::POA_ptr
 CORBA_POA::get_named_poa (CORBA::ORB_ptr orb,
                           CORBA::String name,
-                          CORBA::Environment &env) 
+                          CORBA::Environment &env)
 {
   env.clear ();
 
@@ -189,7 +189,7 @@ CORBA_POA::get_named_poa (CORBA::ORB_ptr orb,
   {
     IIOP_ORB *internet;
 
-    if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR) 
+    if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR)
       {
         CORBA::POA_ptr tcp_oa;
 
@@ -202,7 +202,7 @@ CORBA_POA::get_named_poa (CORBA::ORB_ptr orb,
 
         tcp_oa = CORBA::POA::init (orb, poa_name, env);
 
-        if (env.exception () != 0) 
+        if (env.exception () != 0)
           return 0;
         else
           return tcp_oa;		// derives from POA
@@ -221,7 +221,7 @@ CORBA_POA::get_named_poa (CORBA::ORB_ptr orb,
 
 CORBA::POA_ptr
 CORBA_POA::get_poa (CORBA::ORB_ptr orb,
-		    CORBA::Environment &env) 
+		    CORBA::Environment &env)
 {
   env.clear ();
 
@@ -229,7 +229,7 @@ CORBA_POA::get_poa (CORBA::ORB_ptr orb,
   {
     IIOP_ORB	*internet;
 
-    if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR) 
+    if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR)
       {
         CORBA::POA_ptr tcp_oa;
 
@@ -241,7 +241,7 @@ CORBA_POA::get_poa (CORBA::ORB_ptr orb,
 
         tcp_oa = CORBA::POA::init (orb, anonymous, env);
 
-        if (env.exception () != 0) 
+        if (env.exception () != 0)
           return 0;
         else
           return tcp_oa;		// derives from POA
@@ -255,12 +255,12 @@ CORBA_POA::get_poa (CORBA::ORB_ptr orb,
 }
 
 void CORBA_POA::dispatch (CORBA::OctetSeq &key,
-			  CORBA::ServerRequest &req,
-			  void *context,
-			  CORBA::Environment &env) 
+                          CORBA::ServerRequest &req,
+                          void *context,
+                          CORBA::Environment &env)
 {
   ACE_UNUSED_ARG(context);
-  
+
   TAO_Skeleton skel;  // pointer to function pointer for the operation
   CORBA::Object_ptr obj;  // object that will be looked up based on the key
   CORBA::String  opname;
@@ -268,27 +268,38 @@ void CORBA_POA::dispatch (CORBA::OctetSeq &key,
   // Get the skeleton
 
   // Find the object based on the key
-  if (this->find (key, obj) != -1) 
+  if (this->find (key, obj) != -1)
     {
+#if 0 // XXXASG - testing a new way of handling requests to overcome the
+      // casting problem arising out of virtual inheritance
       opname = req.op_name ();
 
       // Find the skeleton "glue" function based on the operation name
       if (obj->find (opname, skel) != -1)
         // Schedule the upcall.  This is the degenerate case of scheduling...
         // using a "do it now!" scheduler
-	skel (req, obj, env);
+        skel (req, obj, env);
       else
-	{
-	  // Something really bad happened: the operation was not
-	  // found in the object, fortunately there is a standard
-	  // exception for that purpose.
-	  env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
-	  ACE_ERROR ((LM_ERROR,
-		      "Cannot find operation <%s> in object\n",
-		      opname));
-	}
+        {
+          // Something really bad happened: the operation was not
+          // found in the object, fortunately there is a standard
+          // exception for that purpose.
+          env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
+          ACE_ERROR ((LM_ERROR,
+                      "Cannot find operation <%s> in object\n",
+                      opname));
+        }
+#endif
+      obj->dispatch (req, context, env);
+    }
+  else
+    {
+      env.exception (new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO));
+      ACE_ERROR ((LM_ERROR, "Cannot find object\n"));
+
     }
 
+  // @@ XXXASG -
   // We need to pass this skel and associated information to the
   // scheduler. How do we do it??
 }
@@ -301,7 +312,7 @@ CORBA_POA::find (const CORBA::OctetSeq &key,
 }
 
 int
-CORBA_POA::bind (const CORBA::OctetSeq &key, 
+CORBA_POA::bind (const CORBA::OctetSeq &key,
 		 CORBA::Object_ptr obj)
 {
   return objtable_->bind (key, obj);
@@ -315,16 +326,16 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
                            CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (some_info);
-  
+
   IIOP_ServerRequest svr_req (&request_body, this->orb (), this);
 
   // Why are we copying this when we can just pass in a handle to the
   // hdr?
-  svr_req.opname_ = hdr.operation; 
+  svr_req.opname_ = hdr.operation;
 
   this->dispatch (hdr.object_key,
                   svr_req,
-                  0, // this is IIOP residue 
+                  0, // this is IIOP residue
                   env);
 
   svr_req.release ();
@@ -332,7 +343,7 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
   // If no reply is necessary (i.e., oneway), then return!
   if (hdr.response_expected == 0)
     return;
-  
+
   // Otherwise check for correct parameter handling, and reply as
   // appropriate.
   //
@@ -351,19 +362,19 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
   resp_ctx.length = 0;
   response.encode (&TC_ServiceContextList, &resp_ctx, 0, env);
   response.put_ulong (hdr.request_id);
-  
+
   CORBA::TypeCode_ptr tc;
   const void *value;
 
-  if (!svr_req.params_ && env.exception () == 0) 
+  if (!svr_req.params_ && env.exception () == 0)
     {
       dmsg ("DSI user error, didn't supply params");
       env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
     }
 
   // Standard exceptions only.
-  if (env.exception () != 0) 
-    {	
+  if (env.exception () != 0)
+    {
       CORBA::Environment env2;
       CORBA::Exception *x = env.exception ();
       CORBA::TypeCode_ptr except_tc = x->type ();
@@ -374,7 +385,7 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
 
   // Any exception at all.
   else if (svr_req.exception_)
-    {	
+    {
       CORBA::Exception *x;
       CORBA::TypeCode_ptr except_tc;
 
@@ -385,43 +396,43 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
       //
       // XXX x->type () someday ...
       if (svr_req.ex_type_ == CORBA::SYSTEM_EXCEPTION)
-	response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+        response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       else
-	response.put_ulong (TAO_GIOP_USER_EXCEPTION);
+        response.put_ulong (TAO_GIOP_USER_EXCEPTION);
 
       (void) response.encode (except_tc, x, 0, env);
     }
 
   // Normal reply.
   else
-    {				
+    {
       // First finish the GIOP header ...
       response.put_ulong (TAO_GIOP_NO_EXCEPTION);
 
       // ... then send any return value ...
       if (svr_req.retval_)
-	{
-	  tc = svr_req.retval_->type ();
-	  value = svr_req.retval_->value ();
-	  (void) response.encode (tc, value, 0, env);
-	}
+        {
+          tc = svr_req.retval_->type ();
+          value = svr_req.retval_->value ();
+          (void) response.encode (tc, value, 0, env);
+        }
 
       // ... Followed by "inout" and "out" parameters, left to right
       for (u_int i = 0;
            i < svr_req.params_->count ();
            i++)
-	{
-	  CORBA::NamedValue_ptr	nv = svr_req.params_->item (i);
-	  CORBA::Any_ptr any;
+        {
+          CORBA::NamedValue_ptr	nv = svr_req.params_->item (i);
+          CORBA::Any_ptr any;
 
-	  if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
-	    continue;
+          if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
+            continue;
 
-	  any = nv->value ();
-	  tc = any->type ();
-	  value = any->value ();
-	  (void) response.encode (tc, value, 0, env);
-	}
+          any = nv->value ();
+          tc = any->type ();
+          value = any->value ();
+          (void) response.encode (tc, value, 0, env);
+        }
     }
 }
 
