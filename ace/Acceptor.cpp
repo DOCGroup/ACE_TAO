@@ -342,8 +342,9 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
   //    ask -- TLI is *horrible*...).
 
   // @@ What should we do if any of the substrategies fail?  Right
-  // now, we just log an error message and return 0 (which means that
-  // the Acceptor remains registered with the Reactor)...
+  // now, we just print out a diagnostic message if <ACE::debug>
+  // returns > 0 and return 0 (which means that the Acceptor remains
+  // registered with the Reactor)...
   do
     {
       // Create a service handler, using the appropriate creation
@@ -352,28 +353,37 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       SVC_HANDLER *svc_handler = 0;
 
       if (this->make_svc_handler (svc_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("make_svc_handler")),
-                          0);
-
+        {
+          if (ACE::debug () > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("%p\n"),
+                        ASYS_TEXT ("make_svc_handler")));
+          return 0;
+        }
       // Accept connection into the Svc_Handler.
 
       else if (this->accept_svc_handler (svc_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("accept_svc_handler")),
-                          0);
+        {
+          if (ACE::debug () > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("%p\n"),
+                        ASYS_TEXT ("accept_svc_handler")));
+          return 0;
+        }
+
       // Activate the <svc_handler> using the designated concurrency
       // strategy (note that this method becomes responsible for
       // handling errors and freeing up the memory if things go
       // awry...).
-
       else if (this->activate_svc_handler (svc_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("activate_svc_handler")),
-                          0);
+        {
+          if (ACE::debug () > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("%p\n"),
+                        ASYS_TEXT ("activate_svc_handler")));
+          return 0;
+        }
+
       conn_handle.set_bit (listener);
     }
 

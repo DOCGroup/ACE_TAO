@@ -1,3 +1,9 @@
+Thu Dec  9 17:18:57 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Acceptor.cpp (handle_input): Only printout a diagnostic
+	  message if ACE::debug () > 0.  Thanks to Chris Uzdavinis
+ 	  <chris@atdesk.com> for reporting this.
+
 Thu Dec  9 19:55:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h:
