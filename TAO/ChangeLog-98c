@@ -1,3 +1,19 @@
+Thu Dec 03 01:24:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/try_macros.h: Added TAO_TRY_VAR and TAO_TRY_VAR_EX.  These
+ 	  macros are similar to TAO_TRY and TAO_TRY_EX, except that they
+ 	  work with a user specified environment variable instead of
+ 	  creating one for itself.
+
+	* tao/Object.cpp (_non_existent): Added the use of exception
+ 	  macros to this method.  This will make this method work with
+	  native exceptions.  
+	  
+	  If the _non_existent() remote call succeeds, it return 0; if
+ 	  CORBA::OBJECT_NOT_EXIST is thrown, it returns 1; and any other
+ 	  (system) exception raised in making the remote call is passed
+ 	  through to the user.
+
 Thu Dec 03 01:00:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Environment.cpp:

@@ -37,11 +37,13 @@
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 // These are all on one line so the keywords don't confuse compilers.
 #define TAO_TRY do { CORBA_Environment TAO_TRY_ENV; try {
+#define TAO_TRY_VAR(X) do { CORBA_Environment &TAO_TRY_ENV = X; try {
 // TAO_*_SYS macros don't declare a new environment variable but use
 // existing ones.
 #define TAO_TRY_SYS do { try {
 #define TAO_TRY_SYS_EX(LABEL) do { try {
 #define TAO_TRY_EX(LABEL) do { CORBA_Environment TAO_TRY_ENV; try {
+#define TAO_TRY_VAR_EX(X,LABEL) do { CORBA_Environment &TAO_TRY_ENV = X; try {
 
 #define TAO_CATCH(TYPE,VAR) } catch (TYPE & VAR) { ACE_UNUSED_ARG (VAR);
 #define TAO_CATCH_SYS(TYPE,VAR) TAO_CATCH(TYPE,VAR)
@@ -115,15 +117,12 @@
 // Define a local enviroment variable...
 #define TAO_TRY_ENV __env
 
-// I would like to experiment with this idea in the future....
-#if 0
 #define TAO_TRY_VAR(X) \
-do { CORBA_Environment &_env = CORBA_Environment::default_environment ()= X; \
+do { CORBA_Environment &TAO_TRY_ENV = X; \
 int TAO_TRY_FLAG = 1; \
 TAO_TRY_LABEL: \
 if (TAO_TRY_FLAG) \
 do {
-#endif /* 0 */
 
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
@@ -146,6 +145,14 @@ do {
 #define TAO_TRY_EX(LABEL) \
 do { \
 CORBA_Environment TAO_TRY_ENV; \
+int TAO_TRY_FLAG = 1; \
+TAO_TRY_LABEL ## LABEL: \
+if (TAO_TRY_FLAG) \
+do {
+
+#define TAO_TRY_VAR_EX(X,LABEL) \
+do { \
+CORBA_Environment &TAO_TRY_ENV = X; \
 int TAO_TRY_FLAG = 1; \
 TAO_TRY_LABEL ## LABEL: \
 if (TAO_TRY_FLAG) \

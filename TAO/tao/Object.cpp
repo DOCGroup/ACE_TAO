@@ -189,20 +189,22 @@ CORBA_Object::_non_existent (CORBA::Environment &env)
   void* _tao_arguments[1];
   void** _tao_current_arg = _tao_arguments;
   *_tao_current_arg = &retval; _tao_current_arg++;
-  this->_stubobj ()->do_static_call (env,
-				     &Object_non_existent_calldata,
-				     _tao_arguments);
 
-  CORBA::Exception *x = env.exception ();
-
-  if (x != 0)
+  TAO_TRY_VAR (env)
     {
-      if (CORBA::OBJECT_NOT_EXIST::_narrow (x) != 0)
-	{
-	  env.clear ();
-	  return 1;
-	}
+      this->_stubobj ()->do_static_call (env,
+                                         &Object_non_existent_calldata,
+                                         _tao_arguments);
+      TAO_CHECK_ENV;
     }
+  TAO_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      ACE_UNUSED_ARG (ex);
+      env.clear ();
+      return 1;
+    }
+  TAO_ENDTRY;
+
   return 0;
 }
 
