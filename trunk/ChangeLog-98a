@@ -1,24 +1,24 @@
 Mon Mar  2 12:59:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* netsvcs/lib/Log_Message_Receiver.cpp
- 	  (Log_Message_Receiver_Impl): Removed some stray inline keywords.
-  	  Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
- 	  reporting this.
+        * netsvcs/lib/Log_Message_Receiver.cpp
+          (Log_Message_Receiver_Impl): Removed some stray inline keywords.
+          Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
+          reporting this.
 
-	* ace/OS.i (sigwait): Added support for POSIX sigwait().  Thanks
- 	  to Russ Noseworthy <rnosewor@objectsciences.com> for reporting
- 	  this.
+        * ace/OS.i (sigwait): Added support for POSIX sigwait().  Thanks
+          to Russ Noseworthy <rnosewor@objectsciences.com> for reporting
+          this.
 
-	* ace/Containers.cpp (done): 
-	  ace/Map_Manager.cpp (done): Corrected some misplaced "consts" in
- 	  the ACE_static_cast macro.  Thanks to Russ Noseworthy
- 	  <rnosewor@objectsciences.com> for reporting this.
+        * ace/Containers.cpp (done):
+          ace/Map_Manager.cpp (done): Corrected some misplaced "consts" in
+          the ACE_static_cast macro.  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for reporting this.
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU (CXX): Commented
- 	  out the -pta option since it might not be necessary.  If this
- 	  breaks code then we'll need to reevaluate this change.  Thanks
- 	  to Russ Noseworthy <rnosewor@objectsciences.com> for suggesting
- 	  this.
+        * include/makeinclude/platform_sunos5_sunc++.GNU (CXX): Commented
+          out the -pta option since it might not be necessary.  If this
+          breaks code then we'll need to reevaluate this change.  Thanks
+          to Russ Noseworthy <rnosewor@objectsciences.com> for suggesting
+          this.
 
 Mon Mar 02 09:13:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -40,6 +40,10 @@ Mon Mar 02 09:13:26 1998  David L. Levine  <levine@cs.wustl.edu>
           include platform_sunos5_sunc++.GNU.  There's no difference between
           the two at this point.  There is one significant net change to
           the 5.6 platform:  -s is no longer included in LDFLAGS.
+
+        * ace/config-chorus.h: added ACE_LACKS_ACE_IOSTREAM with ghs, because
+          its iostream doesn't have separate operators for signed/unsigned
+          char.
 
 Sun Mar  1 13:54:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
