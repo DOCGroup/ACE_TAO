@@ -926,7 +926,7 @@ int be_interface::gen_server_skeletons (void)
   *ss << "CORBA::String opname = req.op_name (); // retrieve operation name" <<
                                                  nl;
   *ss << "// find the skeleton corresponding to this opname" << nl;
-  *ss << "if (this->find (opname, skel) == -1)" << nl;
+  *ss << "if (this->_find (opname, skel) == -1)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   *ss << "env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));" <<

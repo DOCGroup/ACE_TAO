@@ -1,3 +1,13 @@
+Thu Jan 22 14:40:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbacom.h: 
+	  Fixed multiple definitions of ORB_var and ORB_out due to a
+	  simplistic merge.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  Generate _find() to locate operations; using just find() is not
+	  complaint.
+
 Thu Jan 22 10:40:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Merged changes from main_to_poa_merge_10 up to
