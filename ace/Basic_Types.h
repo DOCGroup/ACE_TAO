@@ -38,7 +38,6 @@
 //
 //    Byte-order (endian-ness) determination:
 //      ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
-//      ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
 //
 // ============================================================================
 
