@@ -3,72 +3,101 @@
 
 // $Id$
 
+int 
+operator< (const TAO_SFP_Fragment_Node& left,
+           const TAO_SFP_Fragment_Node& right)
+{
+  return left.fragment_info_.frag_number < right.fragment_info_.frag_number;
+}
+
 // constructor.
-SFP::SFP (CORBA::ORB_ptr orb,
-          ACE_Reactor* reactor,
-          ACE_Time_Value timeout1,
-          ACE_Time_Value timeout2,
-          SFP_Callback *callback)
+TAO_SFP::TAO_SFP (CORBA::ORB_ptr orb,
+                  ACE_Reactor* reactor,
+                  ACE_Time_Value timeout1,
+                  ACE_Time_Value timeout2,
+                  SFP_Callback *callback)
   :orb_ (orb),
    reactor_ (reactor),
-   encoder_ (0),
-   decoder_ (0),
    timeout1_ (timeout1),
    timeout2_ (timeout2),
    start_tries_ (10),
    startReply_tries_ (10),
    callback_ (callback),
-   sequence_num_ (0)
+   sequence_num_ (0),
+   credit_num_ (10),
+   magic_number_len_ (sizeof (magic_number_)-1)
 {
-
-}
-
-void
-SFP::set_cdr_length (void)
-{
-  CORBA::ULong bodylen = encoder_->total_length ();
-  char* buf = ACE_const_cast(char*,encoder_->buffer ());
-  buf += 4;
-#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
-  *ACE_reinterpret_cast(CORBA::ULong*,buf) = bodylen;
-#else
-  if (!encoder_->do_byte_swap ())
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      *ACE_reinterpret_cast(CORBA::ULong*, buf) = bodylen;
+      // fill in the default frameHeader fields.
+      this->frame_header_.magic_number [0] = '=';
+      this->frame_header_.magic_number [1] = 'S';
+      this->frame_header_.magic_number [2] = 'F';
+      this->frame_header_.magic_number [3] = 'P';
+      this->frame_header_.flags = TAO_ENCAP_BYTE_ORDER;
+      this->output_cdr_.reset ();
+      this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
+                                &this->frame_header_,
+                                0,
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      this->frame_header_len_ = this->output_cdr_.total_length ();
+      // fill in the default fragment message fields.
+      this->fragment_.magic_number [0] = 'F';
+      this->fragment_.magic_number [1] = 'R';
+      this->fragment_.magic_number [2] = 'A';
+      this->fragment_.magic_number [3] = 'G';
+      this->output_cdr_.reset ();
+      this->output_cdr_.encode (flowProtocol::_tc_fragment,
+                                &this->fragment_,
+                                0,
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      this->fragment_len_ = this->output_cdr_.total_length ();
+      // fill in the default Start message fields.
+      this->start_.magic_number [0] = '=';
+      this->start_.magic_number [1] = 'S';
+      this->start_.magic_number [2] = 'T';
+      this->start_.magic_number [3] = 'A';
+      this->start_.major_version = TAO_SFP_MAJOR_VERSION;
+      this->start_.minor_version = TAO_SFP_MINOR_VERSION;
+      this->start_.flags = 0;
+      this->start_len_ = sizeof (this->start_);
+      // fill in the default StartReply message fields.
+      this->start_reply_.magic_number [0] = '=';
+      this->start_reply_.magic_number [1] = 'S';
+      this->start_reply_.magic_number [2] = 'T';
+      this->start_reply_.magic_number [3] = 'R';
+      this->start_reply_.flags = 0;
+      this->start_reply_len_ = sizeof (this->start_reply_);
+      // fill in the default Credit message fields.
+      this->credit_.magic_number [0] = '=';
+      this->credit_.magic_number [1] = 'C';
+      this->credit_.magic_number [2] = 'R';
+      this->credit_.magic_number [3] = 'E';
+      this->credit_len_ = sizeof (this->credit_);
+      this->output_cdr_.reset ();
+      //      this->output_cdr_ <<= this->credit_;
+      this->output_cdr_.reset ();
+      this->output_cdr_.encode (flowProtocol::_tc_credit,
+                                &this->credit_,
+                                0,
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      this->credit_len_ = this->output_cdr_.total_length ();
     }
-  else
+  ACE_CATCHANY
     {
-      ACE_CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP constructor");
     }
-#endif
-}
-
-// Copies length bytes from the given message into the
-// CDR buffer. Returns 0 on success, -1 on failure
-int
-SFP::create_cdr_buffer (char *message,
-                        size_t length)
-{
-  if (this->decoder_)
-    delete this->decoder_;
-
-  ACE_NEW_RETURN (this->decoder_,
-                  TAO_InputCDR (message,
-                                length),
-                  -1);
-
-  ACE_OS::memcpy (this->decoder_->rd_ptr (),
-                  message,
-                  length);
-
-  return 0;
+  ACE_ENDTRY;
 }
 
 // Start the active end of the stream.
 int
-SFP::start_stream (const char *receiver_addr)
+TAO_SFP::start_stream (const char *receiver_addr)
 {
-  // @@we have to do ACE_NTOHS for all the network-byte ordered fields.
   int result;
   ACE_INET_Addr sender;
   result = this->connect_to_receiver (receiver_addr);
@@ -76,17 +105,18 @@ SFP::start_stream (const char *receiver_addr)
     return result;
   while (this->start_tries_ > 0)
     {
-      if ((result = this->send_start ()) != 0)
+      result = this->send_start ();
+      if (result != 0)
         return result;
-      char magic_number [4];
       // Timed recv.
+      char magic_number [MAGIC_NUMBER_LEN];
       ssize_t n =this->dgram_.recv (magic_number,
-                                    sizeof(magic_number),
+                                    this->magic_number_len_,
                                     sender,
                                     MSG_PEEK,
                                     &this->timeout1_);
-      ACE_DEBUG ((LM_DEBUG,"n = %d\n",n));
-      if (n == -1)
+      //      ACE_DEBUG ((LM_DEBUG,"n = %d\n",n));
+      if (n == -1) 
         {
           if (errno == ETIME)
             {
@@ -95,15 +125,14 @@ SFP::start_stream (const char *receiver_addr)
               continue;
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,"dgram recv error:%p","recv"),-1);
+            ACE_ERROR_RETURN ((LM_ERROR,"dgram recv error:%d,%p",errno,"recv"),-1);
         }
       else if (n==0)
         ACE_ERROR_RETURN ((LM_ERROR,"SFP::start_stream -peek"),-1);
-      // successful receive of dgram.
-      ACE_DEBUG ((LM_DEBUG,"StartReply received"));
+      // Null terminate the magic number.
+      magic_number [this->magic_number_len_] = 0;
       // check if its startreply message.
-      char *magic_string = this->magic_number_to_string (magic_number);
-      if (ACE_OS::strcmp (magic_string,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
+      if (ACE_OS::strcmp (magic_number,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,"(%P|%t)StartReply message received\n"));
           flowProtocol::StartReply start_reply;
@@ -113,19 +142,19 @@ SFP::start_stream (const char *receiver_addr)
           if (n != sizeof (start_reply))
             ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input-StartReply\n"),0);
           //  check for SFP version difference.??
-          // Call the application back.
           this->state_ = REPLY_RECEIVED;
         }
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,"Invalid message while StartReply expected\n"),0);
       // register the data handler.
-      result = this->register_dgram_handler ();
-      return result;
+      return this->register_dgram_handler ();
     }
   return 0;
 }
 
 // Start the passive end of the stream.
 int
-SFP::start_stream (const char *local_addr,int Credit)
+TAO_SFP::start_stream (const char *local_addr,int Credit)
 {
   int result;
   ACE_INET_Addr sender;
@@ -137,10 +166,10 @@ SFP::start_stream (const char *local_addr,int Credit)
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SFP::passive start- open failed\n"),-1);
 
-  char magic_number[4];
+  char magic_number[MAGIC_NUMBER_LEN];
   // Timed recv.
   ssize_t n =this->dgram_.recv (magic_number,
-                                sizeof(magic_number),
+                                this->magic_number_len_,
                                 sender,
                                 MSG_PEEK,
                                 &this->timeout2_);
@@ -150,11 +179,11 @@ SFP::start_stream (const char *local_addr,int Credit)
     }
   else if (n==0)
     ACE_ERROR_RETURN ((LM_ERROR,"SFP::start_stream -peek"),-1);
-
-  ACE_DEBUG ((LM_DEBUG,"Start received:"));
-  char *magic_string = this->magic_number_to_string (magic_number);
-  if (ACE_OS::strcmp (magic_string,TAO_SFP_START_MAGIC_NUMBER) == 0)
+  // Null terminate the magic_number.
+  magic_number [this->magic_number_len_] = 0;
+  if (ACE_OS::strcmp (magic_number,TAO_SFP_START_MAGIC_NUMBER) == 0)
     {
+      ACE_DEBUG ((LM_DEBUG,"Start received:"));
       // Read the start message.
       flowProtocol::Start start;
       n = this->dgram_.recv ((char *)&start,
@@ -179,270 +208,96 @@ SFP::start_stream (const char *local_addr,int Credit)
         ACE_ERROR_RETURN ((LM_ERROR,"schedule_timer failed\n"),result);
 
       // register the data handler.
-      result = this->register_dgram_handler ();
-      return result;
+      return this->register_dgram_handler ();
     }
-
   else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,"Invalid messaged received"),-1);
-    }
+      ACE_ERROR_RETURN ((LM_ERROR,"Invalid messaged received while Start expected\n"),-1);
   return 0;
 }
 
 // Sends the ACE_Message_Block data as a frame, fragmenting if necessary.
 int
-SFP::send_simple_frame (ACE_Message_Block *frame)
+TAO_SFP::send_frame (ACE_Message_Block *frame)
 {
-  // Currently there is no fragmentation  handled, just a simple
-  // frame.
-
-  ACE_Message_Block *mb;
-  ACE_NEW_RETURN (mb,
-                  ACE_Message_Block,
-                  -1);
-  if (this->credit_ > 0)
+  ACE_TRY_NEW_ENV
     {
-      // if we have enough credit then we send.
-      // Currently no fragmentation.
-      int length = frame->length ();
-
-      if (length > ACE_MAX_DGRAM_SIZE)
-          ACE_ERROR_RETURN ((LM_ERROR,"sfp doesn't support fragmentation yet"),-1);
-
-      flowProtocol::frameHeader frame_header;
-
-      // The magic_number and flags are to be sent in network-byte order.
-      frame_header.magic_number [0] = ACE_HTONS ('=');
-      frame_header.magic_number [1] = ACE_HTONS ('S');
-      frame_header.magic_number [2] = ACE_HTONS ('F');
-      frame_header.magic_number [3] = ACE_HTONS ('P');
-
-      // set the byte order and no fragments.
-      frame_header.flags = 0;
-      frame_header.flags |= TAO_ENCAP_BYTE_ORDER;
-
-      frame_header.flags = ACE_HTONS (frame_header.flags);
-      //set the size of the message block.
-      int len = sizeof(frame_header.magic_number)+sizeof
-        (frame_header.flags);
-        mb->size (len);
-
-        mb->rd_ptr ((char *)&frame_header);
-        mb->wr_ptr ((char *)&frame_header+len);
-        if (this->encoder_ != 0)
-          delete this->encoder_;
-        ACE_NEW_RETURN (this->encoder_,
-                      TAO_OutputCDR,
-                      -1);
-
-      frame_header.message_type = flowProtocol::SimpleFrame;
-      frame_header.message_size = frame->length ();
-      this->encoder_->write_octet (frame_header.message_type);
-      this->encoder_->write_ulong (frame_header.message_size);
-
-      // This is a good maximum, because Dgrams cannot be longer than
-      // 64K and the usual size for a CDR fragment is 512 bytes.
-      // @@ TODO In the future we may need to allocate some memory
-      // from the heap.
-      const int TAO_WRITEV_MAX = 128;
-      iovec iov[TAO_WRITEV_MAX];
-
-      iov[0].iov_base = mb->rd_ptr ();
-      iov[0].iov_len = mb->length ();
-      ACE_DEBUG ((LM_DEBUG,"length: %d ",mb->length ()));
-      int iovcnt = 1;
-      for (const ACE_Message_Block* b = this->encoder_->begin ();
-           b != this->encoder_->end () && iovcnt < TAO_WRITEV_MAX;
-           b = b->cont ())
+      if (this->credit_num_ > 0)
         {
-          iov[iovcnt].iov_base = b->rd_ptr ();
-          iov[iovcnt].iov_len =  b->length ();
-          ACE_DEBUG ((LM_DEBUG,"length: %d ",b->length ()));
-          iovcnt++;
-        }
-      iov[iovcnt].iov_base = frame->rd_ptr ();
-      iov[iovcnt].iov_len = frame->length ();
-      ACE_DEBUG ((LM_DEBUG,"length: %d ",frame->length ()));
-      ssize_t n = this->dgram_.send (iov,
-                                     iovcnt,
-                                     this->receiver_inet_addr_);
-      if (n == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "send_simple_frame (%t) send failed %p\n", ""),-1);
-      else if (n == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "send_simple_Frame (%t) EOF on send \n"),-1);
-    }
-  return 0;
-}
-
-// This is used to send large frames with fragmentation.This is not
-// complete yet.
-int
-SFP::send_frame (ACE_Message_Block *frame)
-{
-  ACE_Message_Block *mb;
-  ACE_NEW_RETURN (mb,
-                  ACE_Message_Block,
-                  -1);
-  if (this->credit_ > 0)
-    {
-      // if we have enough credit then we send.
-      // Do fragmentation if necessary.
-      int length = frame->length ();
-
-      int total_length = 0;
-      ACE_Message_Block *temp = frame;
-      while (temp != 0)
-        {
-          total_length += temp->length ();
-          temp = temp->next ();
-        }
-      flowProtocol::frameHeader frame_header;
-
-      // The magic_number and flags are to be sent in network-byte order.
-      frame_header.magic_number [0] = ACE_HTONS ('=');
-      frame_header.magic_number [1] = ACE_HTONS ('S');
-      frame_header.magic_number [2] = ACE_HTONS ('F');
-      frame_header.magic_number [3] = ACE_HTONS ('P');
-      // sizeof (frameHeader) may have to be replaced with more
-      // accurate size??.
-      if (total_length > (ACE_MAX_DGRAM_SIZE- sizeof (flowProtocol::frameHeader)))
-        {
-          // If the message size is not okay including the headers i.e it
-          // cannot fit in a dgram.
-
-          // set the byte order and no fragments.
-          frame_header.flags = 0;
-          frame_header.flags |= TAO_ENCAP_BYTE_ORDER;
-          // set the fragments bit.
-          frame_header.flags |= 2;
-
-          frame_header.flags = ACE_HTONS (frame_header.flags);
-
-          // first fragment will have size to be
-          //set the size of the message block.
-          int len = sizeof(frame_header.magic_number)+sizeof
-            (frame_header.flags);
-          mb->size (len);
-
-          mb->rd_ptr ((char *)&frame_header);
-          mb->wr_ptr ((char *)&frame_header+len);
-          if (this->encoder_ != 0)
-            delete this->encoder_;
-          ACE_NEW_RETURN (this->encoder_,
-                          TAO_OutputCDR,
-                          -1);
-
-
-          // This is a good maximum, because Dgrams cannot be longer than
-          // 64K and the usual size for a CDR fragment is 512 bytes.
-          // @@ TODO In the future we may need to allocate some memory
-          // from the heap.
-          int message_len = 0;
-          const int TAO_WRITEV_MAX = 128;
-          iovec iov[TAO_WRITEV_MAX];
-
-          iov[0].iov_base = mb->rd_ptr ();
-          iov[0].iov_len = mb->length ();
-          int header_len = mb->length ()+2* sizeof(CORBA::ULong);
-          message_len += header_len;
-          ACE_DEBUG ((LM_DEBUG,"length: %d ",mb->length ()));
-          int iovcnt = 2;
-          ACE_Message_Block *mb = frame;
-          int prev_len;
-          while (mb != 0)
-            {
-              prev_len = message_len;
-              message_len += mb->length ();
-              if (message_len > ACE_MAX_DGRAM_SIZE)
-                {
-                  // get only the length that we can accomodate.
-                  int current_len = ACE_MAX_DGRAM_SIZE - prev_len;
-                  if (current_len < mb->length ())
-                    {
-                      // The above condition is an assertion.
-                      iov [iovcnt].iov_base = mb->rd_ptr ();
-                      iov [iovcnt].iov_len = current_len;
-                      message_len += current_len;
-                      mb->rd_ptr (current_len);
-                      iovcnt++;
-                    }
-                  break;
-                }
-              else
-                {
-                  // we can accomodate this message block
-                      iov [iovcnt].iov_base = mb->rd_ptr ();
-                      iov [iovcnt].iov_len = mb->length ();
-                      message_len += mb->length ();
-                      iovcnt++;
-                      mb = mb->next ();
-                }
+          // if we have enough credit then we send.
+          int total_length = 0;
+          for (ACE_Message_Block *temp = frame;temp != 0;temp = temp->cont ())
+            total_length += temp->length ();
+          ACE_DEBUG ((LM_DEBUG,"total_length of frame=%d\n",total_length));
+          if (total_length < (SFP_MAX_PACKET_SIZE -this->frame_header_len_))
+            {  
+              // clear the output cdr.
+              this->output_cdr_.reset ();
+              // CDR encode the frame header.
+              //(<<= isAvailable only in compiled marshalling!)
+              this->frame_header_.message_type = flowProtocol::SimpleFrame;
+              this->frame_header_.message_size = frame->length ()+this->frame_header_len_;
+              this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
+                                        &this->frame_header_,
+                                        0,
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              //          this->output_cdr_ <<= this->frame_header_;
+              this->send_cdr_buffer (this->output_cdr_,frame);
             }
-          frame_header.message_type = flowProtocol::SimpleFrame;
-          frame_header.message_size = message_len - header_len;
-          this->encoder_->write_octet (frame_header.message_type);
-          this->encoder_->write_ulong (frame_header.message_size);
-
-          // THe header will be only in the first cdr fragment.
-          iov[1].iov_base = this->encoder_->begin ()->rd_ptr ();
-          iov[1].iov_len = this->encoder_->begin ()->length ();
-
-          // send the fragment 0.
-          ssize_t n = this->dgram_.send (iov,
-                                         iovcnt,
-                                         this->receiver_inet_addr_);
-          if (n == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "send_frame (%t) fragment 0 send failed %p\n", ""),-1);
-          else if (n == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "send_Frame (%t) EOF on send \n"),-1);
-
-          int frag_number = 0;
-          // If there is any more data send those as fragments.
-          while (mb != 0)
+          else // larger frame,fragment and send it.
             {
-              flowProtocol::fragment frag;
-
-              // The magic_number and flags are to be sent in network-byte order.
-              frag.magic_number [0] = ACE_HTONS ('F');
-              frag.magic_number [1] = ACE_HTONS ('R');
-              frag.magic_number [2] = ACE_HTONS ('A');
-              frag.magic_number [3] = ACE_HTONS ('G');
-
-              ACE_Message_Block *magic_block;
-              ACE_NEW_RETURN (magic_block,
-                              ACE_Message_Block,
-                              -1);
-              magic_block->size (5);// magic_number+flags size.
-              magic_block->rd_ptr ((char *)&frag);
-              magic_block->wr_ptr (5);
-
-              iov [0].iov_base = magic_block->rd_ptr ();
-              iov [0].iov_len = magic_block->length ();
-
-              int header_len = 5 + 4 *sizeof (CORBA::ULong);
-              message_len = header_len;
-              // 5 for magic_number+flags and 4 ulongs in the fragment header.
-              iovcnt = 2;//  1 is for the frag header.
+              // set the fragments bit.
+              this->frame_header_.flags |= 2;
+              // This is a good maximum, because Dgrams cannot be longer than
+              // 64K and the usual size for a CDR fragment is 512 bytes.
+              // @@ TODO In the future we may need to allocate some memory
+              // from the heap.
+              int message_len = this->frame_header_len_;
+              iovec iov[TAO_WRITEV_MAX];
+              int iovcnt = 1;// since first iov is for frameHeader. 
+              flowProtocol::frame frame_info;
+              frame_info.timestamp = 10;
+              frame_info.synchSource = 10;
+              frame_info.source_ids.length (1);
+              frame_info.source_ids [0] = 1; // XXX random number.
+              frame_info.sequence_num = this->sequence_num_;
+              this->output_cdr_.reset ();
+              this->output_cdr_.encode (flowProtocol::_tc_frame,
+                                        &frame_info,
+                                        0,
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              ACE_DEBUG ((LM_DEBUG,"frame info length:%d\n",this->output_cdr_.total_length ()));
+              for (const ACE_Message_Block* b = this->output_cdr_.begin ()->clone ();
+                   b != 0 && iovcnt < TAO_WRITEV_MAX;
+                   b = b->cont ())
+                {
+                  //                  ACE_DEBUG ((LM_DEBUG,"iovcnt:%d\n",iovcnt));
+                  iov[iovcnt].iov_base = b->rd_ptr ();
+                  iov[iovcnt].iov_len =  b->length ();
+                  message_len += b->length ();
+                  ACE_DEBUG ((LM_DEBUG,"send_cdr_buffer:length=%d\n",b->length ()));
+                  // print the buffer.
+                  //                  DUMP_BUF (b->rd_ptr (),b->length ());
+                  iovcnt++;
+                }
+              ACE_Message_Block *mb = frame;
+              int prev_len;
               while (mb != 0)
                 {
                   prev_len = message_len;
                   message_len += mb->length ();
-                  if (message_len > ACE_MAX_DGRAM_SIZE)
+                  if (message_len > SFP_MAX_PACKET_SIZE)
                     {
                       // get only the length that we can accomodate.
-                      int current_len = ACE_MAX_DGRAM_SIZE - prev_len;
+                      int current_len = SFP_MAX_PACKET_SIZE - prev_len;
                       if (current_len < mb->length ())
                         {
                           // The above condition is an assertion.
                           iov [iovcnt].iov_base = mb->rd_ptr ();
                           iov [iovcnt].iov_len = current_len;
+                          message_len += (current_len-mb->length ());
                           mb->rd_ptr (current_len);
-                          message_len += current_len;
                           iovcnt++;
                         }
                       break;
@@ -454,59 +309,134 @@ SFP::send_frame (ACE_Message_Block *frame)
                       iov [iovcnt].iov_len = mb->length ();
                       message_len += mb->length ();
                       iovcnt++;
-                      mb = mb->next ();
+                      mb = mb->cont ();
                     }
                 }
-              // send this fragment.
-              // set the more fragments flag
-              if ((mb != 0) && (mb->length () != 0))
-                frag.flags = ACE_HTONS (2);
-              else
-                break;
-              if (this->encoder_ != 0)
-                delete this->encoder_;
-              ACE_NEW_RETURN (this->encoder_,
-                              TAO_OutputCDR,
-                              -1);
-              frag.frag_number = frag_number++;
-              frag.sequence_num = this->sequence_num_;
-              frag.frag_sz = message_len - header_len;
-              frag.source_id = 0;
-              this->encoder_->write_ulong (frag.frag_number);
-              this->encoder_->write_ulong (frag.sequence_num);
-              this->encoder_->write_ulong (frag.frag_sz);
-              this->encoder_->write_ulong (frag.source_id);
-
-              // THe header will be only in the first cdr fragment.
-              iov[1].iov_base = this->encoder_->begin ()->rd_ptr ();
-              iov[1].iov_len = this->encoder_->begin ()->length ();
-
-              //   send the fragment now.
+              //  This can be either a simpleframe or a sequenced frame,other types of frames.
+              this->frame_header_.message_type = flowProtocol::Frame;
+              this->frame_header_.message_size = message_len;
+              ACE_DEBUG ((LM_DEBUG,"first fragment of size:%d\n",message_len- this->frame_header_len_));
+              this->output_cdr_.reset ();
+              this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
+                                        &this->frame_header_,
+                                        0,
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              // header will be only in the first cdr fragment.
+              iov[0].iov_base = this->output_cdr_.begin ()->rd_ptr ();
+              iov[0].iov_len = this->output_cdr_.begin ()->length ();
+              ACE_DEBUG ((LM_DEBUG,"frame header len:%d\n",iov[0].iov_len));
+              // send the first fragment.
+              for (int i=0;i<iovcnt;i++)
+                {
+                  //                  DUMP_BUF (iov[i].iov_base,iov[i].iov_len);
+                }
               ssize_t n = this->dgram_.send (iov,
                                              iovcnt,
                                              this->receiver_inet_addr_);
               if (n == -1)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "SFP::send_frame (%t) send failed %p\n", ""));
-                  return -1;
-                }
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "send_frame (%t) fragment 0 send failed %p\n", ""),-1);
               else if (n == 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "send_Frame (%t) EOF on send \n"),-1);
+
+              int frag_number = 1;
+              // If there is any more data send those as fragments.
+              while (mb != 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "SFP::send_frame (%t) EOF on send \n"));
-                  return -1;
+                  message_len = this->fragment_len_;
+                  iovcnt = 1;//  1 is for the frag header.
+                  while (mb != 0)
+                    {
+                      prev_len = message_len;
+                      message_len += mb->length ();
+                      if (message_len > SFP_MAX_PACKET_SIZE)
+                        {
+                          // get only the length that we can accomodate.
+                          int current_len = SFP_MAX_PACKET_SIZE - prev_len;
+                          if (current_len < mb->length ())
+                            {
+                              // The above condition is an assertion.
+                              iov [iovcnt].iov_base = mb->rd_ptr ();
+                              iov [iovcnt].iov_len = current_len;
+                              message_len += (current_len - mb->length ());
+                              mb->rd_ptr (current_len);
+                              iovcnt++;
+                            }
+                          break;
+                        }
+                      else
+                        {
+                          // we can accomodate this message block
+                          iov [iovcnt].iov_base = mb->rd_ptr ();
+                          iov [iovcnt].iov_len = mb->length ();
+                          iovcnt++;
+                          mb = mb->cont ();
+                        }
+                    }
+                  this->fragment_.flags =  TAO_ENCAP_BYTE_ORDER;
+                  if (mb == 0)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,"sending the last fragment\n"));
+                      // This is the last fragment so clear the fragments bit.
+                    }
+                  else
+                    {
+                      // set the more fragments flag
+                      this->fragment_.flags |= 2;
+                    }
+                  // if there are no data blocks.
+                  if (iovcnt == 1)
+                    break;
+                  this->fragment_.frag_number = frag_number++;
+                  this->fragment_.sequence_num = this->sequence_num_;
+                  this->fragment_.frag_sz = message_len;
+                  this->fragment_.source_id = 0;
+                  this->output_cdr_.reset ();
+                  this->output_cdr_.encode (flowProtocol::_tc_fragment,
+                                            &this->fragment_,
+                                            0,
+                                            ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                  ACE_DEBUG ((LM_DEBUG,"sending a fragment numbered %d of size %d\n",
+                              this->fragment_.frag_number,
+                              this->fragment_.frag_sz));
+                  // THe header will be only in the first cdr fragment.
+                  iov[0].iov_base = this->output_cdr_.begin ()->rd_ptr ();
+                  iov[0].iov_len = this->output_cdr_.begin ()->length ();
+                  //   send the fragment now.
+                  // without the sleep the fragments gets lost! 
+                  // probably because the UDP buffer queue on the sender side
+                  // is overflown it drops the packets.
+                  // XXX: This is a hack.
+                  ACE_OS::sleep (1);
+                  ssize_t n = this->dgram_.send (iov,
+                                                 iovcnt,
+                                                 this->receiver_inet_addr_);
+                  if ((n == -1) || (n==0))
+                    ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP::send_framed failed:%p\n",""),-1);
                 }
             }
         }
+      else
+        {
+          // flow controlled so wait. 
+        }
     }
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("TAO_SFP::send_frame");
+      return -1;
+    }
+  ACE_ENDTRY;
   return 0;
 }
 
 
 // creates a connected dgram.
 int
-SFP::connect_to_receiver (const char *receiver_addr)
+TAO_SFP::connect_to_receiver (const char *receiver_addr)
 {
   this->receiver_addr_ = ACE_OS::strdup (receiver_addr);
   // Get the local UDP address
@@ -531,30 +461,34 @@ SFP::connect_to_receiver (const char *receiver_addr)
     return -1;
 
   this->receiver_inet_addr_.set (receiver_addr);
-  if (ACE_OS::connect (this->dgram_.get_handle (),(sockaddr *) this->receiver_inet_addr_.get_addr (),
-                       this->receiver_inet_addr_.get_size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) datagram connect failed %p\n"),-1);
   return 0;
 }
 
 // sends all the ACE_Message_Blocks in the current CDR stream.
 int
-SFP::send_cdr_buffer (void)
+TAO_SFP::send_cdr_buffer (TAO_OutputCDR &cdr,ACE_Message_Block *mb)
 {
   // This is a good maximum, because Dgrams cannot be longer than
   // 64K and the usual size for a CDR fragment is 512 bytes.
   // @@ TODO In the future we may need to allocate some memory
   // from the heap.
-  const int TAO_WRITEV_MAX = 128;
   iovec iov[TAO_WRITEV_MAX];
-
   int iovcnt = 0;
-  for (const ACE_Message_Block* b = this->encoder_->begin ();
-       b != this->encoder_->end () && iovcnt < TAO_WRITEV_MAX;
+  for (const ACE_Message_Block* b = cdr.begin ();
+       b != cdr.end () && iovcnt < TAO_WRITEV_MAX;
        b = b->cont ())
     {
       iov[iovcnt].iov_base = b->rd_ptr ();
       iov[iovcnt].iov_len =  b->length ();
+      //      ACE_DEBUG ((LM_DEBUG,"send_cdr_buffer:length=%d\n",b->length ()));
+      // print the buffer.
+      //      DUMP_BUF (b->rd_ptr (),b->length ());
+      iovcnt++;
+    }
+  for (b = mb; b!=0 && iovcnt < TAO_WRITEV_MAX; b=b->cont ())
+    {
+      iov [iovcnt].iov_base = b->rd_ptr ();
+      iov [iovcnt].iov_len = b->length ();
       iovcnt++;
     }
   // send the message.
@@ -577,66 +511,30 @@ SFP::send_cdr_buffer (void)
 }
 
 int
-SFP::send_start (void)
+TAO_SFP::send_start (void)
 {
   int result;
-  // Start message is in network byte order.
-  // construct the start message
-  flowProtocol::Start start;
-
   // copy the magic number into the message
-  start.magic_number [0] = ACE_HTONS ('=');
-  start.magic_number [1] = ACE_HTONS ('S');
-  start.magic_number [2] = ACE_HTONS ('T');
-  start.magic_number [3] = ACE_HTONS ('A');
-
-  // put the version number into the field
-  start.major_version = ACE_HTONS (TAO_SFP_MAJOR_VERSION);
-  start.minor_version = ACE_HTONS (TAO_SFP_MINOR_VERSION);
-
-  // flags field is all zeroes
-  start.flags = ACE_HTONS (0);
-
   this->state_ = ACTIVE_START;
-
   // Now send the network byte ordered start message.
-  int n = this->dgram_.send ((char *)&start,
-                             sizeof (start),
+  int n = this->dgram_.send ((char *)&this->start_,
+                             this->start_len_,
                              this->receiver_inet_addr_);
-  if (n!= sizeof (start))
+  if (n!= this->start_len_)
     ACE_ERROR_RETURN ((LM_ERROR,"start send failed\n"),-1);
 
   ACE_DEBUG ((LM_DEBUG," Start sent\n"));
-//   // non-interval timer.
-//   result = this->reactor_->schedule_timer (this,
-//                                            0,
-//                                            this->timeout1_);
-//   if (result != 0)
-//     return result;
-
   return 0;
 }
 
 int
-SFP::send_startReply (void)
+TAO_SFP::send_startReply (void)
 {
   int result;
-
-  flowProtocol::StartReply start_reply;
-
-  // copy the magic number into the message
-  start_reply.magic_number [0] = ACE_HTONS ('=');
-  start_reply.magic_number [1] = ACE_HTONS ('S');
-  start_reply.magic_number [2] = ACE_HTONS ('T');
-  start_reply.magic_number [3] = ACE_HTONS ('R');
-
-  start_reply.flags = ACE_HTONS (0);
-
-  // Now send the network byte ordered start message.
-  int n = this->dgram_.send ((char *)&start_reply,
-                             sizeof (start_reply),
+  int n = this->dgram_.send ((char *)&this->start_reply_,
+                             this->start_reply_len_,
                              this->receiver_inet_addr_);
-  if (n!= sizeof (start_reply))
+  if (n!= this->start_reply_len_)
     ACE_ERROR_RETURN ((LM_ERROR,"startreply send failed\n"),-1);
 
   ACE_DEBUG ((LM_DEBUG," startReply sent\n"));
@@ -644,7 +542,7 @@ SFP::send_startReply (void)
 }
 
 int
-SFP::handle_timeout (const ACE_Time_Value &tv,
+TAO_SFP::handle_timeout (const ACE_Time_Value &tv,
                      const void *arg)
 {
   int result;
@@ -681,51 +579,44 @@ SFP::handle_timeout (const ACE_Time_Value &tv,
 // Handle_input is called when data arrives on the  dgram
 // socket. Currently both the receiver and sender side input is
 // handled in this same handle_input ().
-int
-SFP::handle_input (ACE_HANDLE fd)
+int 
+TAO_SFP::handle_input (ACE_HANDLE fd)
 {
+  ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
   flowProtocol::MsgType msg_type;
   ACE_INET_Addr sender;
-  char magic_number[4];
-  ssize_t n =this->dgram_.recv (magic_number,
-                                sizeof(magic_number),
+  char magic_number[MAGIC_NUMBER_LEN];
+  ssize_t n =this->dgram_.recv (this->magic_number_,
+                                this->magic_number_len_,
                                 sender,
                                 MSG_PEEK);
+  this->magic_number_[this->magic_number_len_] = 0;
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),-1);
   else if (n==0)
     ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
 
-  // convert from network byte order to host order.
-
-  magic_number [0] = ACE_NTOHS (magic_number [0]);
-  magic_number [1] = ACE_NTOHS (magic_number [1]);
-  magic_number [2] = ACE_NTOHS (magic_number [2]);
-  magic_number [3] = ACE_NTOHS (magic_number [3]);
-
-  char *magic_string = this->magic_number_to_string (magic_number);
-
-  if (ACE_OS::strcmp (magic_string,TAO_SFP_START_MAGIC_NUMBER) == 0)
+  if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_START_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)Start message received\n"));
       msg_type = flowProtocol::start;
     }
-  else if (ACE_OS::strcmp (magic_string,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
+  else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)StartReply message received\n"));
       msg_type = flowProtocol::startReply;
     }
-  else if (ACE_OS::strcmp (magic_string,TAO_SFP_MAGIC_NUMBER) == 0)
+  else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) frameHeader received\n"));
       msg_type = flowProtocol::SimpleFrame;
     }
-  else if (ACE_OS::strcmp (magic_string,TAO_SFP_FRAGMENT_MAGIC_NUMBER) == 0)
+  else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_FRAGMENT_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) fragment Header received\n"));
       msg_type = flowProtocol::Fragment;
     }
-  else if (ACE_OS::strcmp (magic_string,TAO_SFP_CREDIT_MAGIC_NUMBER) == 0)
+  else if (ACE_OS::strcmp (this->magic_number_,TAO_SFP_CREDIT_MAGIC_NUMBER) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) credit message received\n"));
       msg_type = flowProtocol::Credit;
@@ -752,7 +643,7 @@ SFP::handle_input (ACE_HANDLE fd)
                                    sender);
             if (n != sizeof (credit))
               ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input - Credit\n"),0);
-            this->credit_ += credit.cred_num;
+            this->credit_num_ += credit.cred_num;
             break;
           }
         case flowProtocol::start:
@@ -766,14 +657,34 @@ SFP::handle_input (ACE_HANDLE fd)
               ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input - Start\n"),0);
             else
               ACE_DEBUG ((LM_DEBUG,"Start message consumed\n"));
-            //          ACE_DEBUG ((LM_DEBUG,"Unexpected message while
-            // Credit expected\n"));
             break;
           }
         case flowProtocol::SimpleFrame:
           {
             ACE_Message_Block * mb =this->read_simple_frame ();
-            this->callback_->receive_frame (mb);
+            if (mb != 0)
+              this->callback_->receive_frame (mb);
+            else
+              {
+                if (!this->more_fragments_)
+                  {
+                    char buf[BUFSIZ];
+                    // consume the wrong UDP frame.
+                    this->dgram_.recv (buf,
+                                       BUFSIZ,
+                                       sender);
+                  }
+              }
+            break;
+          }
+        case flowProtocol::Fragment:
+          {
+            ACE_DEBUG ((LM_DEBUG,"Fragment received\n"));
+            ACE_Message_Block *result = this->read_fragment ();
+            // no more fragments.
+            if (result != 0)
+              this->callback_->receive_frame (result);
+            break;
           }
         }
       break;
@@ -797,33 +708,41 @@ SFP::handle_input (ACE_HANDLE fd)
   return 0;
 }
 
-char *
-SFP::magic_number_to_string (char *magic_number)
+int
+TAO_SFP::end_stream (void)
 {
-  char *buf;
-  ACE_NEW_RETURN (buf,
-                  char [5],
-                  0);
-  for (int i=0;i<4;i++)
+  ACE_TRY_NEW_ENV
     {
-      buf [i] = magic_number [i];
-      ACE_DEBUG ((LM_DEBUG,"%c ",buf [i]));
+      ACE_DEBUG ((LM_DEBUG,"SFP - ending the stream\n"));
+      // send the EndofStream message.
+      this->frame_header_.flags = TAO_ENCAP_BYTE_ORDER;
+      this->frame_header_.message_type = flowProtocol::EndofStream;
+      this->frame_header_.message_type = 0;
+      this->output_cdr_.reset ();
+      this->output_cdr_.encode (flowProtocol::_tc_frameHeader,
+                                &this->frame_header_,
+                                0,
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+//       ssize_t n = this->dgram_.send (this->output_cdr_.begin ()->rd_ptr (),
+//                                      this->output_cdr_.begin ()->length (),
+//                                      this->receiver_inet_addr_);
+//       if ((n==-1) || (n==0))
+//         ACE_ERROR_RETURN ((LM_ERROR,"Error sending endofstream message:%p",""),-1);
+      int result = this->reactor_->remove_handler (this,
+                                                   ACE_Event_Handler::READ_MASK);
+      return result;
     }
-  buf[i] = 0;
-  return buf;
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("TAO_SFP::end_stream ()\n");
+      return -1;
+    }
+  ACE_ENDTRY;
 }
-
+                                  
 int
-SFP::end_stream (void)
-{
-  ACE_DEBUG ((LM_DEBUG,"SFP - ending the stream\n"));
-  int result = this->reactor_->remove_handler (this,
-                                               ACE_Event_Handler::READ_MASK);
-  return result;
-}
-
-int
-SFP::register_dgram_handler (void)
+TAO_SFP::register_dgram_handler (void)
 {
   int result;
   result = this->reactor_->register_handler (this,
@@ -832,87 +751,289 @@ SFP::register_dgram_handler (void)
 }
 
 ACE_HANDLE
-SFP::get_handle (void) const
+TAO_SFP::get_handle (void) const
 {
   return this->dgram_.get_handle ();
 }
 
 ACE_Message_Block *
-SFP::read_simple_frame (void)
+TAO_SFP::read_simple_frame (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"Reading simple frame\n"));
-  // Check to see what the length of the message is.
+  ACE_TRY_NEW_ENV
+    {
+      ACE_DEBUG ((LM_DEBUG,"Reading simple frame\n"));
+      // Check to see what the length of the message is.
 
-  flowProtocol::frameHeader frame_header;
-  char *buf;
-  ssize_t firstlen =sizeof (frame_header.magic_number)+sizeof (frame_header.flags);
-  ssize_t buflen =firstlen+2*sizeof (CORBA::ULong)+3;// hack to ensure
-  //  that buffer is aligned for CDR.
+      flowProtocol::frameHeader frame_header;
+      ACE_INET_Addr sender;
+      char *buf;
+      ACE_NEW_RETURN (buf,
+                      char [this->frame_header_len_+CDR::MAX_ALIGNMENT],
+                      0);
+      ssize_t n =this->dgram_.recv (buf,
+                                    this->frame_header_len_,
+                                    sender,
+                                    MSG_PEEK);
+      if (n == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame -peek:%p",""),0);
+      else if (n==0)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame -peek:%p",""),0);
+      else if (n != this->frame_header_len_)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame - not able to peek\n"),0);
+      // print the buffer.
+      //      DUMP_BUF (buf,n);
+      ACE_Message_Block mb (n+CDR::MAX_ALIGNMENT);
+      CDR::mb_align (&mb);
+      int result
+        = mb.copy (buf,n);
+      if (result == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"Message_Block::copy failed\n"),0);
+      // buf[4] is the byte order.
+      int byte_order = buf[4] & 0x1;
+      ACE_DEBUG ((LM_DEBUG,"mb len = %d,byte_order=%d\n",mb.length (),byte_order));
+      TAO_InputCDR cdr (&mb,byte_order);
+      //  cdr >>= frame_header;
+      cdr.decode (flowProtocol::_tc_frameHeader,
+                  &frame_header,
+                  0,
+                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG,"firstlen = %d,buflen =%d\n",firstlen,buflen));
-  ACE_NEW_RETURN (buf,
-                  char [buflen],
-                  0);
+      ACE_DEBUG ((LM_DEBUG,"message_type = %d, message_size = %d,message_flags = %d\n",
+                  frame_header.message_type,frame_header.message_size,frame_header.flags));
 
-  ACE_INET_Addr sender;
+      int message_len = frame_header.message_size;
+      if (frame_header.message_size < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"Negative message size\n"),0);
+      ACE_Message_Block *message_block;
+      ACE_NEW_RETURN (message_block,
+                      ACE_Message_Block (message_len),
+                      0);
+      n = this->dgram_.recv (message_block->wr_ptr (),message_len,sender);
+      if (n == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
+      else if (n==0)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
+      else if (n != message_len)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame:message truncated\n"),0);
+      // print the buffer.
+      //      DUMP_BUF (message,n);
+      // skip over the frame header.
+      message_block->rd_ptr (this->frame_header_len_);
+      message_block->wr_ptr (n);
+      if (frame_header.flags & 0x2)
+        {
+          ACE_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));
+          this->more_fragments_ = 1;
+          // read the frame info.
+          ACE_Message_Block frame_info_mb (message_len-this->frame_header_len_+CDR::MAX_ALIGNMENT);
+          CDR::mb_align (&frame_info_mb);
+          frame_info_mb.copy (message_block->rd_ptr (),
+                              message_block->length ());
+          // print the buffer.
+          //          DUMP_BUF (message_block->rd_ptr (),16);
+          TAO_InputCDR frame_info_cdr (&frame_info_mb,byte_order);
+          flowProtocol::frame frame_info;
+          frame_info_cdr.decode (flowProtocol::_tc_frame,
+                                 &frame_info,
+                                 0,
+                                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          ACE_DEBUG ((LM_DEBUG,"frame.timestamp = %d, frame.synchsource = %d, frame.sequence_num = %d\n",
+                      frame_info.timestamp,
+                      frame_info.synchSource,
+                      frame_info.sequence_num));
+          // The remaining message in the CDR stream is the fragment data for frag.0
+          ACE_Message_Block *data = 
+            frame_info_cdr.start ()->clone ();
+          ACE_DEBUG ((LM_DEBUG,"Length of 0th fragment= %d\n",data->length ()));
+          TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
+          TAO_SFP_Fragment_Node *new_node;
+          ACE_NEW_RETURN (new_node,
+                          TAO_SFP_Fragment_Node,
+                          0);
+          new_node->fragment_info_.frag_sz = data->length ();
+          new_node->fragment_info_.frag_number = 0;
+          new_node->fragment_info_.source_id = frame_info.source_ids [0];
+          new_node->data_ = data;
+          if (this->fragment_table_.find (frame_info.sequence_num,fragment_entry) == 0)
+            {
+              // This case can happen where a nth (n > 0)fragment is received before the 0th fragment.
+              ACE_DEBUG ((LM_DEBUG,"fragment table entry found for 0th fragment:\n"));
+              result = fragment_entry->fragment_set_.insert (*new_node);
+              if (result != 0)
+                ACE_ERROR_RETURN ((LM_ERROR,"insert for 0th fragment failed\n"),0);
+              // check if all the fragments have been received.
+              return check_all_fragments (fragment_entry);
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,"fragment table entry not found for 0th fragment\n"));
+              TAO_SFP_Fragment_Table_Entry *new_entry;
+              ACE_NEW_RETURN (new_entry,
+                              TAO_SFP_Fragment_Table_Entry,
+                              0);
+              result = new_entry->fragment_set_.insert (*new_node);
+              if (result != 0)
+                ACE_ERROR_RETURN ((LM_ERROR,"insert for 0th fragment failed\n"),0);
+              // not found. so bind a new entry.
+              result = this->fragment_table_.bind (frame_info.sequence_num,new_entry);
+              if (result != 0)
+                ACE_ERROR_RETURN ((LM_ERROR,"fragment table bind failed\n"),0);
+            }
+        }
+      else
+          return message_block;
+    }
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("read_simple_frame");
+      return 0;
+    }
+  ACE_ENDTRY;
+}
 
-  buf +=3;
-  ssize_t n =this->dgram_.recv (buf,
-                                buflen,
-                                sender,
-                                MSG_PEEK);
-  if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-  else if (n==0)
-    ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-  for (int i=0;i<4;i++)
-    ACE_DEBUG ((LM_DEBUG,"%c ",buf[i]));
-  //skip the magic_number..
-  buf += 4 ;
+ACE_Message_Block *
+TAO_SFP::read_fragment (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      flowProtocol::fragment fragment;
+      ACE_INET_Addr sender;
+      char *buf;
+      ACE_NEW_RETURN (buf,
+                      char [this->fragment_len_+CDR::MAX_ALIGNMENT],
+                      0);
+      ssize_t n =this->dgram_.recv (buf,
+                                    this->fragment_len_,
+                                    sender,
+                                    MSG_PEEK);
+      if (n == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_fragment -peek:%p",""),0);
+      else if (n==0)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame -peek:%p",""),0);
+      else if (n != this->fragment_len_)
+        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame - not able to peek\n"),0);
+      // print the buffer.
+      DUMP_BUF (buf,n);
+      ACE_Message_Block mb (n+CDR::MAX_ALIGNMENT);
+      CDR::mb_align (&mb);
+      int result
+        = mb.copy (buf,n);
+      if (result == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"read_fragment::Message_Block::copy failed\n"),0);
+      // buf[4] is the byte order.
+      int byte_order = buf[4] & 0x1;
+      ACE_DEBUG ((LM_DEBUG,"mb len = %d,byte_order=%d\n",mb.length (),byte_order));
+      TAO_InputCDR cdr (&mb,byte_order);
+      //  cdr >>= frame_header;
+      cdr.decode (flowProtocol::_tc_fragment,
+                  &fragment,
+                  0,
+                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Get the byte order from the flags.
+      ACE_DEBUG ((LM_DEBUG,"frag number = %d, frag size = %d,source id  = %d\n",
+                  fragment.frag_number,fragment.frag_sz,fragment.source_id));
 
-  int byte_order = buf[0];
-  ACE_DEBUG ((LM_DEBUG,"byte_order = %d\n",byte_order));
-  // move past the flags.
-  buf += 1;
-  //  CORBA::ULong *header = (CORBA::ULong *) (buf+firstlen);
-  //  ACE_DEBUG ((LM_DEBUG,"first ulong = %d, second ulong = %d",*(CORBA::ULong*)(buf+firstlen),
-  //              *(CORBA::ULong *)(buf+firstlen+sizeof (CORBA::ULong))));
+      if (fragment.frag_sz < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"negative fragment size:\n"),0);
+      ACE_Message_Block *data;
+      ACE_NEW_RETURN (data,
+                      ACE_Message_Block(fragment.frag_sz),
+                      0);
+                       
+      // Read the fragment.
+      n = this->dgram_.recv (data->wr_ptr (),fragment.frag_sz,sender);
+      if ((n == -1) || (n==0))
+        ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP::read_fragment:%p",""),0);
+      // move past the fragment header.
+      data->rd_ptr (this->fragment_len_);
+      data->wr_ptr (n);
+      ACE_DEBUG ((LM_DEBUG,"length of %dth fragment is: %d\n",
+                  fragment.frag_number,
+                  data->length ()));
+      TAO_SFP_Fragment_Table_Entry *fragment_entry;
+      TAO_SFP_Fragment_Node *new_node;
+      ACE_NEW_RETURN (new_node,
+                      TAO_SFP_Fragment_Node,
+                      0);
+      new_node->fragment_info_ = fragment;
+      new_node->data_ = data;
+      if (this->fragment_table_.find (fragment.sequence_num,fragment_entry) == 0)
+        {
+          // Already an entry exists. Traverse the list and insert it at the right place.
+          result = fragment_entry->fragment_set_.insert (*new_node);
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,"insert for %dth node failed\n",fragment.frag_number),0);
+          // check if all the fragments have been received.
+        }
+      else 
+        {
+          ACE_NEW_RETURN (fragment_entry,
+                          TAO_SFP_Fragment_Table_Entry,
+                          0);
+          fragment_entry->fragment_set_.insert (*new_node);
+          // bind a new entry for this sequence number.
+          result = this->fragment_table_.bind (fragment.sequence_num,fragment_entry);
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,"bind for %dth fragment failed\n",
+                               fragment.frag_number),0);
+        }
+      if (!(fragment.flags & 0x2))
+        {
+          ACE_DEBUG ((LM_DEBUG,"Last fragment received\n"));
+          // if bit 1 is not set then there are 
+          // no more fragments.
+          fragment_entry->last_received_ = 1;
+          // since fragment number starts from 0 to n-1 we add 1.
+          fragment_entry->num_fragments_ = fragment.frag_number + 1;
+        }
+      return check_all_fragments (fragment_entry);
+    }
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("TAO_SFP::read_fragment");
+      return 0;
+    }
+  ACE_ENDTRY;
+}
 
-  //  ACE_DEBUG ((LM_DEBUG,"first ulong = %d, second ulong = %d",header [0],header[1]));
+ACE_Message_Block*
+TAO_SFP::check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry)
+{
+  ACE_DEBUG ((LM_DEBUG,"table size: %d, num_fragments: %d\n",fragment_entry->fragment_set_.size (),fragment_entry->num_fragments_));
+  // check to see if all the frames have been received.
+  if (fragment_entry->fragment_set_.size () == fragment_entry->num_fragments_)
+    {
+      ACE_DEBUG ((LM_DEBUG,"all fragments have been received\n"));
+      // all the fragments have been received
+      // we can now chain the ACE_Message_Blocks in the fragment_set_ and then return them 
+      // back.
+      ACE_Message_Block *frame = 0,*head = 0;
+      FRAGMENT_SET_ITERATOR frag_iterator (fragment_entry->fragment_set_);
+      TAO_SFP_Fragment_Node *node;
+      for (;frag_iterator.next (node) != 0;frag_iterator.advance ())
+        {
+//           ACE_Message_Block *block = node->data_;
+//           char *buf =block->rd_ptr ();
+//           ACE_DEBUG ((LM_DEBUG,"length of buf = %d\n",block->length ()));
+//           for (int i=0;i<block->length ();i++)
+//             ACE_DEBUG ((LM_DEBUG,"%c ",buf[i]));
+//           ACE_DEBUG ((LM_DEBUG,"\n"));
 
-
-  ACE_Message_Block mb (buf,buflen-firstlen + ACE_CDR::MAX_ALIGNMENT);
-  ACE_CDR::mb_align (&mb);
-  mb.wr_ptr (buflen-firstlen);
-  ACE_DEBUG ((LM_DEBUG,"mb len = %d\n",mb.length ()));
-  TAO_InputCDR cdr (&mb,byte_order);
-  cdr.read_octet (frame_header.message_type);
-  cdr.read_ulong (frame_header.message_size);
-
-  ACE_DEBUG ((LM_DEBUG,"message_type = %d, message_size = %d",
-              frame_header.message_type,frame_header.message_size));
-
-  char *message;
-  int message_len = buflen+frame_header.message_size;
-  ACE_NEW_RETURN (message,
-                  char [message_len],
-                  0);
-
-  ACE_DEBUG ((LM_DEBUG,"message_len = %d\n",message_len));
-  n = this->dgram_.recv (message,message_len,sender);
-  if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-  else if (n==0)
-    ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-
-  ACE_Message_Block *message_block;
-  ACE_NEW_RETURN (message_block,
-                  ACE_Message_Block (message+buflen,
-                                     message_len-buflen),
-                  0);
-  message_block->wr_ptr (message_len-buflen);
-  ACE_DEBUG ((LM_DEBUG,"messageblock length: ",message_block ->length ()));
-  return message_block;
+          if (!head)
+            {
+              frame = node->data_;
+              head = frame;
+            }
+          else
+            {
+              frame->cont (node->data_);
+              frame = node->data_;
+            }
+        }
+      return head;
+    }
+  return 0;
 }

@@ -32,8 +32,8 @@
   ACE_DEBUG ((LM_DEBUG,"\n========================================\n"));\
 }
 
-//#define SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
-#define SFP_MAX_PACKET_SIZE 100
+#define SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
+//#define SFP_MAX_PACKET_SIZE 100
 
 // default arguments to pass to use for the ORB
 const char *TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
