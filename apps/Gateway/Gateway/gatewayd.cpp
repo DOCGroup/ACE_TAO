@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 #include "Gateway.h"
 
 ACE_RCSID(Gateway, gatewayd, "$Id$")
