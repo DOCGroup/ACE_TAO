@@ -19,7 +19,7 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF 
   // is only a sanity check.
 
-#if defined (VXWORKS) || defined (CHORUS)
+#if defined (ACE_LACKS_U_LONGLONG_T)
   this->attr_utc_time_.inacchi = 0;
 #else
   this->attr_utc_time_.inacchi = (CORBA::UShort) (inaccuracy >> 32) & (0xFFFF); 
