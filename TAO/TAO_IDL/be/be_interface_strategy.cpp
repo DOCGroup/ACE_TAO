@@ -43,21 +43,52 @@ be_interface_strategy::be_interface_strategy (be_interface *node,
 be_interface_strategy::~be_interface_strategy (void)
 {
   if (this->local_name_ != 0)
-    delete [] this->local_name_;
+    {
+      delete [] this->local_name_;
+      this->local_name_ = 0;
+    }
+
   if (this->full_name_ != 0)
-    delete [] this->full_name_;
+    {
+      delete [] this->full_name_;
+      this->full_name_ = 0;
+    }
+
   if (this->flat_name_ != 0)
-    delete [] this->flat_name_;
+    {
+      delete [] this->flat_name_;
+      this->flat_name_ = 0;
+    }
+
   if (this->repoID_ != 0)
-    delete [] this->repoID_;
+    {
+      delete [] this->repoID_;
+      this->repoID_ = 0;
+    }
+
   if (this->full_skel_name_ != 0)
-    delete [] this->full_skel_name_;
+    {
+      delete [] this->full_skel_name_;
+      this->full_skel_name_ = 0;
+    }
+
   if (this->full_coll_name_ != 0)
-    delete [] this->full_coll_name_;
+    {
+      delete [] this->full_coll_name_;
+      this->full_coll_name_ = 0;
+    }
+
   if (this->local_coll_name_ != 0)
-    delete [] this->local_coll_name_;
+    {
+      delete [] this->local_coll_name_;
+      this->local_coll_name_ = 0;
+    }
+
   if (this->relative_skel_name_ != 0)
-    delete [] this->relative_skel_name_;
+    {
+      delete [] this->relative_skel_name_;
+      this->relative_skel_name_ = 0;
+    }
 }
 
 // Interface Type Strategy Base Class
@@ -347,8 +378,8 @@ be_interface_ami_handler_strategy::next_state (
 // ****************************************************************
 // AMI Exception Holder Strategy
 
-be_interface_ami_exception_holder_strategy
-::be_interface_ami_exception_holder_strategy (be_interface *node)
+be_interface_ami_exception_holder_strategy::
+be_interface_ami_exception_holder_strategy (be_interface *node)
   : be_interface_default_strategy (node,
                                    AMI_EXCEPTION_HOLDER)
 {
@@ -514,6 +545,113 @@ be_interface_default_strategy::be_interface_default_strategy (
 
 be_interface_default_strategy::~be_interface_default_strategy (void)
 {
+  if (this->base_proxy_impl_name_ != 0)
+    {
+      delete this->base_proxy_impl_name_;
+      this->base_proxy_impl_name_ = 0;
+    }
+
+  if (this->remote_proxy_impl_name_ != 0)
+    {
+      delete this->remote_proxy_impl_name_;
+      this->remote_proxy_impl_name_ = 0;
+    }
+
+  if (this->thruPOA_proxy_impl_name_ != 0)
+    {
+      delete this->thruPOA_proxy_impl_name_;
+      this->thruPOA_proxy_impl_name_ = 0;
+    }
+
+  if (this->direct_proxy_impl_name_ != 0)
+    {
+      delete this->direct_proxy_impl_name_;
+      this->direct_proxy_impl_name_ = 0;
+    }
+
+  if (this->full_base_proxy_impl_name_ != 0)
+    {
+      delete this->full_base_proxy_impl_name_;
+      this->full_base_proxy_impl_name_ = 0;
+    }
+
+  if (this->full_remote_proxy_impl_name_ != 0)
+    {
+      delete this->full_remote_proxy_impl_name_;
+      this->full_remote_proxy_impl_name_ = 0;
+    }
+
+  if (this->full_thruPOA_proxy_impl_name_ != 0)
+    {
+      delete this->full_thruPOA_proxy_impl_name_;
+      this->full_thruPOA_proxy_impl_name_ = 0;
+    }
+
+  if (this->full_direct_proxy_impl_name_ != 0)
+    {
+      delete this->full_direct_proxy_impl_name_;
+      this->full_direct_proxy_impl_name_ = 0;
+    }
+
+  if (this->base_proxy_broker_ != 0)
+    {
+      delete this->base_proxy_broker_;
+      this->base_proxy_broker_ = 0;
+    }
+
+  if (this->remote_proxy_broker_ != 0)
+    {
+      delete this->remote_proxy_broker_;
+      this->remote_proxy_broker_ = 0;
+    }
+
+  if (this->strategized_proxy_broker_ != 0)
+    {
+      delete this->strategized_proxy_broker_;
+      this->strategized_proxy_broker_ = 0;
+    }
+
+  if (this->full_base_proxy_broker_name_ != 0)
+    {
+      delete this->full_base_proxy_broker_name_;
+      this->full_base_proxy_broker_name_ = 0;
+    }
+
+  if (this->full_remote_proxy_broker_name_ != 0)
+    {
+      delete this->full_remote_proxy_broker_name_;
+      this->full_remote_proxy_broker_name_ = 0;
+    }
+
+  if (this->full_strategized_proxy_broker_name_ != 0)
+    {
+      delete this->full_strategized_proxy_broker_name_;
+      this->full_strategized_proxy_broker_name_ = 0;
+    }
+
+  if (this->client_scope_ != 0)
+    {
+      delete this->client_scope_;
+      this->client_scope_ = 0;
+    }
+
+  if (this->flat_client_scope_ != 0)
+    {
+      delete this->flat_client_scope_;
+      this->flat_client_scope_ = 0;
+    }
+
+  if (this->server_scope_ != 0)
+    {
+      delete this->server_scope_;
+      this->server_scope_ = 0;
+    }
+
+  if (this->flat_server_scope_ != 0)
+    {
+      delete this->flat_server_scope_;
+      this->flat_server_scope_ = 0;
+    }
 }
 
 const char *
@@ -639,7 +777,9 @@ be_interface_default_strategy::create_with_prefix_suffix (
     ACE_OS::strlen (separator) +
     1; // The '/0'
 
-  ACE_NEW_RETURN (cat_string, char[length], 0);
+  ACE_NEW_RETURN (cat_string, 
+                  char[length], 
+                  0);
 
   ACE_OS::strcpy (cat_string, prefix);
   ACE_OS::strcat (cat_string, str);
@@ -653,7 +793,9 @@ const char *
 be_interface_default_strategy::base_proxy_impl_name (void)
 {
   if (this->base_proxy_impl_name_ != 0)
-    return this->base_proxy_impl_name_;
+    {
+      return this->base_proxy_impl_name_;
+    }
 
   this->base_proxy_impl_name_ =
     this->create_with_prefix_suffix (this->tag_table_[GC_PREFIX],
@@ -668,14 +810,18 @@ const char *
 be_interface_default_strategy::client_scope (void)
 {
   if (this->client_scope_ != 0)
-    return this->client_scope_;
+    {
+      return this->client_scope_;
+    }
 
   const char *full_name = this->full_name ();
   const char *name = this->local_name ();
 
   int offset = ACE_OS::strlen (name);
   int length = ACE_OS::strlen (full_name) - offset;
-  this->client_scope_ = new char[length+1];
+  ACE_NEW_RETURN (this->client_scope_,
+                  char[length + 1],
+                  0);
 
   ACE_OS::strncpy (this->client_scope_, full_name, length);
   this->client_scope_[length] = '\0';
@@ -686,14 +832,18 @@ const char *
 be_interface_default_strategy::flat_client_scope (void)
 {
   if (this->flat_client_scope_ != 0)
-    return this->flat_client_scope_;
+    {
+      return this->flat_client_scope_;
+    }
 
   const char *full_name = this->flat_name ();
   const char *name = this->local_name ();
 
   int offset = ACE_OS::strlen (name);
   int length = ACE_OS::strlen (full_name) - offset;
-  this->flat_client_scope_ = new char[length+1];
+  ACE_NEW_RETURN (this->flat_client_scope_,
+                  char[length + 1],
+                  0);
 
   ACE_OS::strncpy (this->flat_client_scope_, full_name, length);
   this->flat_client_scope_[length] = '\0';
@@ -706,7 +856,9 @@ const char *
 be_interface_default_strategy::server_scope (void)
 {
   if (this->server_scope_ != 0)
-    return this->server_scope_;
+    {
+      return this->server_scope_;
+    }
 
   const char *full_name =
     this->node_->full_coll_name (be_interface::DIRECT);
@@ -715,7 +867,9 @@ be_interface_default_strategy::server_scope (void)
 
   int offset = ACE_OS::strlen (name);
   int length = ACE_OS::strlen (full_name) - offset;
-  this->server_scope_ = new char[length+1];
+  ACE_NEW_RETURN (this->server_scope_,
+                  char[length + 1],
+                  0);
 
   ACE_OS::strncpy (this->server_scope_, full_name, length);
   this->server_scope_[length] = '\0';
@@ -727,14 +881,18 @@ const char *
 be_interface_default_strategy::flat_server_scope (void)
 {
   if (this->flat_server_scope_ != 0)
-    return this->flat_server_scope_;
+    {
+      return this->flat_server_scope_;
+    }
 
   const char *full_name = this->flat_name ();
   const char *name = this->local_name ();
 
   int offset = ACE_OS::strlen (name);
   int length = ACE_OS::strlen (full_name) - offset;
-  this->flat_client_scope_ = new char[length+1];
+  ACE_NEW_RETURN (this->flat_client_scope_,
+                  char[length + 1],
+                  0);
 
   ACE_OS::strncpy (this->flat_server_scope_, full_name, length);
   this->flat_server_scope_[length] = '\0';
@@ -748,12 +906,17 @@ const char *
 be_interface_default_strategy::full_base_proxy_impl_name (void)
 {
   if (this->full_base_proxy_impl_name_ != 0)
-    return this->full_base_proxy_impl_name_;
+    {
+      return this->full_base_proxy_impl_name_;
+    }
 
   const char *scope = this->client_scope ();
   const char *base_name = this->base_proxy_impl_name ();
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  this->full_base_proxy_impl_name_ = new char[length+1];
+  ACE_NEW_RETURN (this->full_base_proxy_impl_name_,
+                  char[length + 1],
+                  0);
+
   ACE_OS::strcpy (this->full_base_proxy_impl_name_, scope);
   ACE_OS::strcat (this->full_base_proxy_impl_name_, base_name);
 
@@ -766,7 +929,9 @@ const char *
 be_interface_default_strategy::remote_proxy_impl_name (void)
 {
   if (this->remote_proxy_impl_name_ != 0)
-    return this->remote_proxy_impl_name_;
+    {
+      return this->remote_proxy_impl_name_;
+    }
 
 
   this->remote_proxy_impl_name_ =
@@ -782,12 +947,17 @@ const char *
 be_interface_default_strategy::full_remote_proxy_impl_name (void)
 {
   if (this->full_remote_proxy_impl_name_ != 0)
-    return this->full_remote_proxy_impl_name_;
+    {
+      return this->full_remote_proxy_impl_name_;
+    }
 
   const char *scope = this->client_scope ();
   const char *base_name = this->remote_proxy_impl_name ();
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  this->full_remote_proxy_impl_name_ = new char[length+1];
+  ACE_NEW_RETURN (this->full_remote_proxy_impl_name_,
+                  char[length + 1],
+                  0);
+
   ACE_OS::strcpy (this->full_remote_proxy_impl_name_, scope);
   ACE_OS::strcat (this->full_remote_proxy_impl_name_, base_name);
 
@@ -798,7 +968,9 @@ const char *
 be_interface_default_strategy::thru_poa_proxy_impl_name (void)
 {
   if (this->thruPOA_proxy_impl_name_ != 0)
-    return this->thruPOA_proxy_impl_name_;
+    {
+      return this->thruPOA_proxy_impl_name_;
+    }
 
   this->thruPOA_proxy_impl_name_ =
     this->create_with_prefix_suffix (this->tag_table_[GC_PREFIX],
@@ -813,12 +985,17 @@ const char *
 be_interface_default_strategy::full_thru_poa_proxy_impl_name (void)
 {
   if (this->full_thruPOA_proxy_impl_name_ != 0)
-    return this->full_thruPOA_proxy_impl_name_;
+    {
+      return this->full_thruPOA_proxy_impl_name_;
+    }
 
   const char *scope = this->server_scope ();
   const char *base_name = this->thru_poa_proxy_impl_name ();
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  this->full_thruPOA_proxy_impl_name_ = new char[length+1];
+  ACE_NEW_RETURN (this->full_thruPOA_proxy_impl_name_,
+                  char[length + 1],
+                  0);
+
   ACE_OS::strcpy (this->full_thruPOA_proxy_impl_name_, scope);
   ACE_OS::strcat (this->full_thruPOA_proxy_impl_name_, base_name);
 
@@ -830,7 +1007,9 @@ const char *
 be_interface_default_strategy::direct_proxy_impl_name (void)
 {
   if (this->direct_proxy_impl_name_ != 0)
-    return this->direct_proxy_impl_name_;
+    {
+      return this->direct_proxy_impl_name_;
+    }
 
   this->direct_proxy_impl_name_ =
     this->create_with_prefix_suffix (this->tag_table_[GC_PREFIX],
@@ -846,13 +1025,18 @@ const char *
 be_interface_default_strategy::full_direct_proxy_impl_name (void)
 {
   if (this->full_direct_proxy_impl_name_ != 0)
-    return this->full_direct_proxy_impl_name_;
+    {
+      return this->full_direct_proxy_impl_name_;
+    }
 
   const char *scope = this->server_scope ();
   const char *base_name = this->direct_proxy_impl_name ();
 
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  this->full_direct_proxy_impl_name_ = new char[length+1];
+  ACE_NEW_RETURN (this->full_direct_proxy_impl_name_,
+                  char[length + 1],
+                  0);
+
   ACE_OS::strcpy (this->full_direct_proxy_impl_name_, scope);
   ACE_OS::strcat (this->full_direct_proxy_impl_name_, base_name);
 
@@ -864,7 +1048,9 @@ const char *
 be_interface_default_strategy::base_proxy_broker_name (void)
 {
   if (this->base_proxy_broker_ != 0)
-    return this->base_proxy_broker_;
+    {
+      return this->base_proxy_broker_;
+    }
 
   this->base_proxy_broker_ =
     this->create_with_prefix_suffix (this->tag_table_[GC_PREFIX],
@@ -879,12 +1065,17 @@ const char *
 be_interface_default_strategy::full_base_proxy_broker_name (void)
 {
   if (this->full_base_proxy_broker_name_ != 0)
-    return this->full_base_proxy_broker_name_;
+    {
+      return this->full_base_proxy_broker_name_;
+    }
 
   const char *scope = this->client_scope ();
   const char *base_name = this->base_proxy_broker_name ();
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  this->full_base_proxy_broker_name_ = new char[length+1];
+  ACE_NEW_RETURN (this->full_base_proxy_broker_name_,
+                  char[length + 1],
+                  0);
+
   ACE_OS::strcpy (this->full_base_proxy_broker_name_, scope);
   ACE_OS::strcat (this->full_base_proxy_broker_name_, base_name);
 
@@ -895,7 +1086,9 @@ const char *
 be_interface_default_strategy::remote_proxy_broker_name (void)
 {
   if (this->remote_proxy_broker_ != 0)
-    return this->remote_proxy_broker_;
+    {
+      return this->remote_proxy_broker_;
+    }
 
   this->remote_proxy_broker_ =
     this->create_with_prefix_suffix (this->tag_table_[GC_PREFIX],
@@ -911,12 +1104,17 @@ const char *
 be_interface_default_strategy::full_remote_proxy_broker_name (void)
 {
   if (this->full_remote_proxy_broker_name_ != 0)
-    return this->full_remote_proxy_broker_name_;
+    {
+      return this->full_remote_proxy_broker_name_;
+    }
 
   const char *scope = this->client_scope ();
   const char *base_name = this->remote_proxy_broker_name ();
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  this->full_remote_proxy_broker_name_ = new char[length+1];
+  ACE_NEW_RETURN (this->full_remote_proxy_broker_name_,
+                  char[length + 1],
+                  0);
+
   ACE_OS::strcpy (this->full_remote_proxy_broker_name_, scope);
   ACE_OS::strcat (this->full_remote_proxy_broker_name_, base_name);
 
@@ -928,7 +1126,9 @@ const char *
 be_interface_default_strategy::strategized_proxy_broker_name (void)
 {
   if (this->strategized_proxy_broker_ != 0)
-    return this->strategized_proxy_broker_;
+    {
+      return this->strategized_proxy_broker_;
+    }
 
   this->strategized_proxy_broker_ =
     this->create_with_prefix_suffix (this->tag_table_[GC_PREFIX],
@@ -943,12 +1143,17 @@ const char *
 be_interface_default_strategy::full_strategized_proxy_broker_name (void)
 {
   if (this->full_strategized_proxy_broker_name_ != 0)
-    return this->full_strategized_proxy_broker_name_;
+    {
+      return this->full_strategized_proxy_broker_name_;
+    }
 
   const char *scope = this->server_scope ();
   const char *base_name = this->strategized_proxy_broker_name ();
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  this->full_strategized_proxy_broker_name_ = new char[length+1];
+  ACE_NEW_RETURN (this->full_strategized_proxy_broker_name_,
+                  char[length + 1],
+                  0);
+
   ACE_OS::strcpy (this->full_strategized_proxy_broker_name_, scope);
   ACE_OS::strcat (this->full_strategized_proxy_broker_name_, base_name);
 

@@ -139,6 +139,12 @@ AST_Type::ast_accept (ast_visitor *visitor)
   return visitor->visit_type (this);
 }
 
+void
+AST_Type::destroy (void)
+{
+  this->AST_Decl::destroy ();
+}
+
 // Narrowing.
 IMPL_NARROW_METHODS1(AST_Type, AST_Decl)
 IMPL_NARROW_FROM_DECL(AST_Type)

@@ -23,7 +23,9 @@
 #include "be.h"
 #include "be_visitor_argument.h"
 
-ACE_RCSID(be_visitor_argument, post_upcall_ss, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           post_upcall_ss, 
+           "$Id$")
 
 // ************************************************************************
 //  visitor for doing any post-processing after the upcall is made
@@ -53,7 +55,7 @@ int be_visitor_args_post_upcall_ss::visit_argument (be_argument *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_compiled_args_post_upcall::"
+                         "be_visitor_args_post_upcall::"
                          "visit_argument - "
                          "Bad argument type\n"),
                         -1);
@@ -65,7 +67,7 @@ int be_visitor_args_post_upcall_ss::visit_argument (be_argument *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_compiled_args_post_upcall::"
+                         "be_visitor_args_post_upcall::"
                          "visit_argument - "
                          "cannot accept visitor\n"),
                         -1);
@@ -116,7 +118,7 @@ int be_visitor_args_post_upcall_ss::visit_typedef (be_typedef *node)
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_compiled_args_post_upcall::"
+                         "be_visitor_args_post_upcall::"
                          "visit_typedef - "
                          "accept on primitive type failed\n"),
                         -1);

@@ -27,7 +27,7 @@
 // generic operation visitor for docall, upcall, pre/post
 // ************************************************************
 
-class be_compiled_visitor_operation_argument_invoke
+class be_visitor_operation_argument_invoke
   : public be_visitor_operation_argument
 {
   //
@@ -39,10 +39,10 @@ class be_compiled_visitor_operation_argument_invoke
   //   return type
   //
 public:
-  be_compiled_visitor_operation_argument_invoke (be_visitor_context *ctx);
+  be_visitor_operation_argument_invoke (be_visitor_context *ctx);
   // constructor
 
-  ~be_compiled_visitor_operation_argument_invoke (void);
+  ~be_visitor_operation_argument_invoke (void);
   // destructor
 
   virtual int pre_process (be_decl *bd);

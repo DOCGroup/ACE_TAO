@@ -78,17 +78,118 @@ ACE_RCSID(ast, ast_predefined_type, "$Id$")
 
 // Constructor(s).
 AST_PredefinedType::AST_PredefinedType (void)
-        : pd_pt (PT_long)
+  : pd_pt (PT_long)
 {
 }
 
 AST_PredefinedType::AST_PredefinedType (PredefinedType t,
                                         UTL_ScopedName *n)
- : AST_Decl (AST_Decl::NT_pre_defined,
-             n,
-             I_TRUE),
-         pd_pt (t)
+  : AST_Decl (AST_Decl::NT_pre_defined,
+              n,
+              I_TRUE),
+    pd_pt (t)
 {
+  UTL_ScopedName *new_name = 0;
+  Identifier *id = 0;
+
+  // Generate a new Scoped Name for us such that we belong to the CORBA
+  // namespace.
+  if (t == AST_PredefinedType::PT_void)
+    {
+      ACE_NEW (id,
+               Identifier (n->last_component ()->get_string ()));
+
+      ACE_NEW (new_name,
+               UTL_ScopedName (id,
+                               0));
+    }
+  else
+    {
+      Identifier *corba_id = 0;
+      ACE_NEW (corba_id,
+               Identifier ("CORBA"));
+
+      ACE_NEW (new_name,
+               UTL_ScopedName (corba_id,
+                               0));
+
+      UTL_ScopedName *conc_name = 0;
+
+      switch (this->pt ())
+        {
+        case AST_PredefinedType::PT_long:
+          ACE_NEW (id,
+                   Identifier ("Long"));
+          break;
+        case AST_PredefinedType::PT_ulong:
+          ACE_NEW (id,
+                   Identifier ("ULong"));
+          break;
+        case AST_PredefinedType::PT_short:
+          ACE_NEW (id,
+                   Identifier ("Short"));
+          break;
+        case AST_PredefinedType::PT_ushort:
+          ACE_NEW (id,
+                   Identifier ("UShort"));
+          break;
+        case AST_PredefinedType::PT_float:
+          ACE_NEW (id,
+                   Identifier ("Float"));
+          break;
+        case AST_PredefinedType::PT_double:
+          ACE_NEW (id,
+                   Identifier ("Double"));
+          break;
+        case AST_PredefinedType::PT_char:
+          ACE_NEW (id,
+                   Identifier ("Char"));
+          break;
+        case AST_PredefinedType::PT_octet:
+          ACE_NEW (id,
+                   Identifier ("Octet"));
+          break;
+        case AST_PredefinedType::PT_wchar:
+          ACE_NEW (id,
+                   Identifier ("WChar"));
+          break;
+        case AST_PredefinedType::PT_boolean:
+          ACE_NEW (id,
+                   Identifier ("Boolean"));
+          break;
+        case AST_PredefinedType::PT_longlong:
+          ACE_NEW (id,
+                   Identifier ("LongLong"));
+          break;
+        case AST_PredefinedType::PT_ulonglong:
+          ACE_NEW (id,
+                   Identifier ("ULongLong"));
+          break;
+        case AST_PredefinedType::PT_longdouble:
+          ACE_NEW (id,
+                   Identifier ("LongDouble"));
+          break;
+        case AST_PredefinedType::PT_any:
+          ACE_NEW (id,
+                   Identifier ("Any"));
+          break;
+        case AST_PredefinedType::PT_pseudo:
+          ACE_NEW (id,
+                   Identifier (n->last_component ()->get_string ()));
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      "AST_PredefinedType - bad enum value\n"));
+        }
+
+      ACE_NEW (conc_name,
+               UTL_ScopedName (id,
+                               0));
+
+      new_name->nconc (conc_name);
+    }
+
+  this->set_name (new_name);
 }
 
 AST_PredefinedType::~AST_PredefinedType (void)
@@ -108,6 +209,12 @@ int
 AST_PredefinedType::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_predefined_type (this);
+}
+
+void
+AST_PredefinedType::destroy (void)
+{
+  this->AST_Type::destroy ();
 }
 
 // Data accessors.

@@ -77,7 +77,7 @@ ACE_RCSID(ast, ast_module, "$Id$")
 
 // Constructor(s) and destructor.
 
-AST_Module::AST_Module ()
+AST_Module::AST_Module (void)
 {
 }
 
@@ -802,7 +802,7 @@ AST_Module::be_add_interface (AST_Interface *i,
 void
 AST_Module::add_CORBA_members (void)
 {
-  UTL_ScopedName *sn = 0;
+ UTL_ScopedName *sn = 0;
   Identifier *id = 0;
 
   ACE_NEW (id,
@@ -895,6 +895,7 @@ AST_Module::look_in_previous (Identifier *e)
 void
 AST_Module::destroy (void)
 {
+  this->AST_Decl::destroy ();
 }
 
 int

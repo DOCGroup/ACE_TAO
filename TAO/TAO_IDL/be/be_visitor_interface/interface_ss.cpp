@@ -18,18 +18,19 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_interface.h"
 #include "ace/SString.h"
 
-ACE_RCSID(be_visitor_interface, interface_ss, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           interface_ss, 
+           "$Id$")
 
 
 // ************************************************************
-// Interface visitor for server skeletons
+// Interface visitor for server skeletons.
 // ************************************************************
 
 be_visitor_interface_ss::be_visitor_interface_ss (be_visitor_context *ctx)
@@ -53,7 +54,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       if (this->is_amh_rh_node (node))
         {
-          // Create amh_rh_visitors
+          // Create amh_rh_visitors.
           be_visitor_amh_rh_interface_ss amh_rh_ss_intf (this->ctx_);
           amh_rh_ss_intf.visit_interface (node);
         }
@@ -62,20 +63,24 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   if (this->generate_amh_classes (node) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
-  // Generate the normal skeleton as usual
+  // Generate the normal skeleton as usual.
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent (); // start with whatever indentation level we are at
+  os->indent ();
 
   ACE_CString full_skel_name_holder =
     this->generate_full_skel_name (node);
+
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
   ACE_CString flat_name_holder =
     this->generate_flat_name (node);
+
   const char *flat_name = flat_name_holder.c_str ();
 
   if (node->gen_operation_table (flat_name, full_skel_name) == -1)
@@ -103,6 +108,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // pre-compute the prefix that must be added to the local name in
   // each case.
   const char *local_name_prefix = "";
+
   if (!node->is_nested ())
     {
       local_name_prefix = "POA_";
@@ -110,6 +116,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   ACE_CString node_local_name_holder =
     this->generate_local_name (node);
+
   const char *node_local_name = node_local_name_holder.c_str ();
 
   *os << full_skel_name << "::"
@@ -149,7 +156,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{" << be_nl;
   *os << "}\n\n";
 
-  // generate code for elements in the scope (e.g., operations)
+  // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -228,9 +235,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << be_idt_nl;
 
   if (be_global->use_raw_throw ())
-    *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+    {
+      *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+    }
   else
-    *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+    {
+      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+    }
+
   *os << "}\n\n";
 
   // Generate code for the _interface skeleton.
@@ -283,6 +295,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _is_a override.
   os->indent ();
+
   *os << "CORBA::Boolean " << full_skel_name
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* value" << be_nl
@@ -302,6 +315,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   os->indent ();
+
   *os << "(!ACE_OS::strcmp ((char *)value, base_id)))"
       << be_idt_nl << "return 1;" << be_uidt_nl
       << "else" << be_idt_nl
@@ -339,7 +353,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  // Print out dispatch method
+  // Print out dispatch method.
   this->dispatch_method (node);
 
   *os << be_nl;
@@ -357,7 +371,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // the _this () operation
+  // the _this () operation.
   *os << node->full_name () << "*" << be_nl
       << node->full_skel_name ()
       << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
@@ -393,7 +407,6 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // now the dispatch method
   *os << "void " << node->full_skel_name ()
       << "::_dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
@@ -417,6 +430,7 @@ be_visitor_interface_ss::generate_amh_classes (be_interface *node)
       be_visitor_amh_interface_ss amh_intf (this->ctx_);
       return amh_intf.visit_interface (node);
     }
+
   return 0;
 }
 
@@ -425,15 +439,14 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Strategized Proxy Broker Implementation
+  // Strategized Proxy Broker Implementation.
   be_visitor_context ctx = *this->ctx_;
 
   ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_interface_interceptors_ss ii_visitor (&ctx);
 
-  if (!visitor || (node->accept (visitor) == -1))
+  if (node->accept (&ii_visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_cs::"
                          "generate_proxy_classes - "
@@ -441,27 +454,21 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
                         -1);
     }
 
-  delete visitor;
-  visitor = 0;
-
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
       ctx =  (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_interface_strategized_proxy_broker_ss ispb_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&ispb_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_cs::"
                              "generate_proxy_classes - "
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
-
-      delete visitor;
 
       // Proxy Broker  Factory Function.
       *os << be_nl
@@ -513,42 +520,34 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
   // Proxy Impl Implementations.
   if (be_global->gen_thru_poa_collocation ())
     {
-      visitor = 0;
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_interface_thru_poa_proxy_impl_ss itppi_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&itppi_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_cs::"
                              "generate_proxy_classes - "
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   if (be_global->gen_direct_collocation ())
     {
-      visitor = 0;
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_interface_direct_proxy_impl_ss idpi_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&idpi_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_cs::"
                              "generate_proxy_classes - "
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   os->decr_indent (0);

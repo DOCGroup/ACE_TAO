@@ -78,73 +78,73 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 // Forward declaration of active iterator for UTL_ScopeStack
-class   UTL_ScopeStackActiveIterator;
+class UTL_ScopeStackActiveIterator;
 
 class TAO_IDL_FE_Export UTL_ScopeStack
 {
 public:
   // Operations
 
-  // Constructor and destructor
-  UTL_ScopeStack();
-  virtual ~UTL_ScopeStack();
+  // Constructor and destructor.
+  UTL_ScopeStack (void);
+  virtual ~UTL_ScopeStack (void);
 
-  // Return top element
-  virtual UTL_Scope             *top();
+  // Return top element.
+  virtual UTL_Scope *top (void);
 
-  // Pop top element
-  virtual void                  pop();
+  // Pop top element.
+  virtual void pop (void);
 
-  // Clear entire stack
-  virtual void                  clear();
+  // Clear entire stack.
+  virtual void clear (void);
 
-  // Push an element on the stack and return stack
-  virtual UTL_ScopeStack        *push(UTL_Scope *el);
+  // Push an element on the stack and return stack.
+  virtual UTL_ScopeStack *push (UTL_Scope *el);
 
   // How deep is the stack now?
-  virtual unsigned long         depth();
+  virtual unsigned long depth (void);
 
-  // Return bottom element
-  virtual UTL_Scope             *bottom();
+  // Return bottom element.
+  virtual UTL_Scope *bottom (void);
 
-  // Return (top - 1) element
-  virtual UTL_Scope             *next_to_top();
+  // Return (top - 1) element.
+  virtual UTL_Scope *next_to_top (void);
 
-  // return topmost non-NULL element
-  virtual UTL_Scope             *top_non_null();
+  // return topmost non-NULL element.
+  virtual UTL_Scope *top_non_null (void);
 
 private:
-  // Data
-  UTL_Scope                     **pd_stack_data;        // Store scopes stack
-  unsigned long                 pd_stack_data_nalloced; // How many allocated?
-  unsigned long                 pd_stack_top;           // How many used?
+  // Data.
+  UTL_Scope **pd_stack_data;            // Store scopes stack
+  unsigned long pd_stack_data_nalloced; // How many allocated?
+  unsigned long pd_stack_top;           // How many used?
 
-  // Friend active iterator class for UTL_ScopeStack
-  friend class                  UTL_ScopeStackActiveIterator;
+  // Friend active iterator class for UTL_ScopeStack.
+  friend class UTL_ScopeStackActiveIterator;
 };
 
-// Active iterator for UTL_ScopeStack
+// Active iterator for UTL_ScopeStack.
 class TAO_IDL_FE_Export UTL_ScopeStackActiveIterator
 {
 public:
   // Operations
 
   // Constructor
-  UTL_ScopeStackActiveIterator(UTL_ScopeStack *s);
+  UTL_ScopeStackActiveIterator( UTL_ScopeStack &s);
 
-  // Advance to next element
-  virtual void                  next();
+  // Advance to next element.
+  virtual void next (void);
 
-  // Get current item
-  virtual UTL_Scope             *item();
+  // Get current item.
+  virtual UTL_Scope*item (void);
 
   // Is the iteration finished?
-  virtual long                  is_done();
+  virtual long is_done (void);
 
 private:
-  // Data
-  UTL_ScopeStack                *source;        // On what to iterate?
-  long                          il;             // Where are we in iteration?
+  // Data.
+  UTL_ScopeStack &source;          // On what to iterate?
+  long il;                        // Where are we in iteration?
 };
 
 #endif           // _UTL_STACK_UTL_STACK_HH

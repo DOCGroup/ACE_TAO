@@ -111,16 +111,21 @@ Identifier::Identifier (const char *s)
 
   if (shift)
     {
-      this->pv_string = ACE_OS::strdup (s + 1);
+      this->pv_string = ACE::strnew (s + 1);
     }
   else
     {
-      this->pv_string = ACE_OS::strdup (s);
+      this->pv_string = ACE::strnew (s);
     }
 }
 
 Identifier::~Identifier (void)
 {
+  if (this->pv_string != 0)
+    {
+      delete this->pv_string;
+      this->pv_string = 0;
+    }
 }
 
 // Operations.
@@ -134,12 +139,12 @@ Identifier::get_string (void)
 void
 Identifier::replace_string (const char * s)
 {
-  if (this->pv_string)
+  if (this->pv_string != 0)
     {
-      ACE_OS::free (this->pv_string);
+      delete [] this->pv_string;
     }
 
-  this->pv_string = ACE_OS::strdup (s);
+  this->pv_string = ACE::strnew (s);
 }
 
 // Compare two Identifier *
@@ -179,7 +184,7 @@ long
 Identifier::case_compare_quiet (Identifier *o)
 {
   UTL_String member (this->pv_string);
-  UTL_String other (o->get_string ());
+  UTL_String other (o->pv_string);
 
   long result = member.compare_quiet (&other);
 
@@ -217,15 +222,10 @@ Identifier::dump (ACE_OSTREAM_TYPE &o)
       return;
     }
 
-  o << get_string ();
+  o << this->pv_string;
 }
 
 void
 Identifier::destroy (void)
 {
-  if (this->pv_string)
-    {
-      ACE_OS::free (this->pv_string);
-      this->pv_string = 0;
-    }
 }

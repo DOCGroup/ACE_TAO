@@ -18,26 +18,30 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, operation_smart_proxy_cs, "$Id$")
+ACE_RCSID (be_visitor_operation, 
+           operation_smart_proxy_cs, 
+           "$Id$")
 
 
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************
 
-be_visitor_operation_smart_proxy_cs::be_visitor_operation_smart_proxy_cs
-(be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+be_visitor_operation_smart_proxy_cs::be_visitor_operation_smart_proxy_cs (
+    be_visitor_context *ctx
+  )
+  : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_smart_proxy_cs::~be_visitor_operation_smart_proxy_cs (void)
+be_visitor_operation_smart_proxy_cs::~be_visitor_operation_smart_proxy_cs (
+    void
+  )
 {
 }
 
@@ -49,9 +53,8 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 
       // We need the interface node in which this operation was defined. However,
       // if this operation node was an attribute node in disguise, we get this
-      // information from the context
-      be_interface *intf;
-      intf = this->ctx_->attribute ()
+      // information from the context.
+      be_interface *intf = this->ctx_->attribute ()
         ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
         : be_interface::narrow_from_scope (node->defined_in ());
 
@@ -64,8 +67,8 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
                             -1);
         }
 
-      // retrieve the operation return type
       be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,30 +78,19 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
                             -1);
         }
 
-      // STEP 2: generate the return type mapping (same as in the header file)
+      // STEP 2: generate the return type mapping (same as in the header file).
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_operation_rettype oro_visitor (&ctx);
 
-      if (!visitor)
+      if (bt->accept (&oro_visitor) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_operation_smart_proxy_cs::"
-                             "visit_operation - "
-                             "Bad visitor for return type\n"),
-                            -1);
-        }
-
-      if (bt->accept (visitor) == -1)
-        {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_smart_proxy_cs::"
                              "visit_operation - "
                              "codegen for return type failed\n"),
                             -1);
         }
-      delete visitor;
 
       // Its necessary to take care of the nested case. The smart proxy classes
       // are in the same scope as the proxy (i.e. interface) but here the
@@ -121,26 +113,16 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       // in the header file)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_operation_ss::"
-                             "visit_operation - "
-                             "Bad visitor to return type\n"),
-                            -1);
-        }
+      be_visitor_operation_arglist oao_visitor (&ctx);
 
-      if (node->accept (visitor) == -1)
+      if (node->accept (&oao_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_ss::"
                              "visit_operation - "
                              "codegen for argument list failed\n"),
                             -1);
         }
-      delete visitor;
 
       *os << "{" << be_idt << "\n";
 
@@ -167,11 +149,10 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
     }
 
   return 0;
-
 }
 
 int be_visitor_operation_smart_proxy_cs::gen_invoke (be_visitor_context &ctx,
-                                                    be_operation *node)
+                                                     be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -180,10 +161,10 @@ int be_visitor_operation_smart_proxy_cs::gen_invoke (be_visitor_context &ctx,
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
+  be_visitor_operation_argument visitor (&ctx);
+
+  if (node->accept (&visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_smart_proxy_cs::"
                          "gen_invoke - "
@@ -191,21 +172,9 @@ int be_visitor_operation_smart_proxy_cs::gen_invoke (be_visitor_context &ctx,
                         -1);
     }
 
-  // end the upcall
   *os << be_uidt_nl
       << ");\n" << be_uidt;
+
   return 0;
 }
 
-int
-be_visitor_operation_smart_proxy_cs::void_return_type (be_type *bt)
-{
-  // is the operation return type void?
-
-  if (bt->node_type () == AST_Decl::NT_pre_defined
-      && (be_predefined_type::narrow_from_decl (bt)->pt ()
-          == AST_PredefinedType::PT_void))
-    return 1;
-  else
-    return 0;
-}

@@ -116,6 +116,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Cleanup.
+  virtual void destroy (void);
+
 private:
   // Data.
   AST_Expression *pd_constant_value;

@@ -156,7 +156,7 @@ public:
                                UTL_NameList *supports = 0);
 
   virtual idl_bool is_abstract (void);
-  // See if we are a local interface.
+  // See if we are an abstract interface.
 };
 
 class FE_obv_header : public FE_InterfaceHeader

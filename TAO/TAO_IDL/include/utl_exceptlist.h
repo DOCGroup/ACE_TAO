@@ -89,7 +89,7 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_ExceptList(AST_Exception *s, UTL_ExceptList *cdr);
+  UTL_ExceptList (AST_Exception *s, UTL_ExceptList *cdr);
 
   // Get list item
   AST_Exception         *head();

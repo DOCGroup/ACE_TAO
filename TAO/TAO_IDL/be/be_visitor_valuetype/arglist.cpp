@@ -20,23 +20,24 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "be.h"
 #include "be_visitor_operation.h"
+#include "be_visitor_argument.h"
 
-ACE_RCSID(be_visitor_valuetype, arglist, "$Id$")
+ACE_RCSID (be_visitor_valuetype, 
+           arglist, 
+           "$Id$")
 
 
 // ************************************************************
-//   operation visitor  to generate the argument list.
+//   Operation visitor to generate the argument list.
 //   We have separated code generation for this from the 4 main
-//   visitors to avoid code duplication and tight coupling
+//   visitors to avoid code duplication and tight coupling.
 // ************************************************************
 
-be_visitor_obv_operation_arglist::be_visitor_obv_operation_arglist (be_visitor_context
-                                                            *ctx)
+be_visitor_obv_operation_arglist::be_visitor_obv_operation_arglist (
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -67,8 +68,9 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     {
       // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
       // whether the operation node has parameters.
-      const char *env_decl = (node->argument_count () > 0 ?
-                              " ACE_ENV_ARG_DECL" : "ACE_ENV_SINGLE_ARG_DECL");
+      const char *env_decl = (node->argument_count () > 0 
+                                ? " ACE_ENV_ARG_DECL" 
+                                : "ACE_ENV_SINGLE_ARG_DECL");
 
       switch (this->ctx_->state ())
         {
@@ -95,8 +97,11 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 
   be_visitor_context ctx = *this->ctx_;
   be_visitor_operation operation_visitor (&ctx);
+
   if (operation_visitor.gen_throw_spec (node) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   switch (this->ctx_->state ())
     {
@@ -122,17 +127,14 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 int
 be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
 {
-  // TAO_OutStream *os = this->ctx_->stream ();
-
-  // get the visitor that will dump the argument's mapping in the operation
-  // signature.
   be_visitor_context ctx (*this->ctx_);
 
-  // first grab the interface definition inside which this operation is
+  // First grab the interface definition inside which this operation is
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op = this->ctx_->be_scope_as_operation ();
+
   if (!op)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -144,10 +146,9 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
-  // information from the context
+  // information from the context.
   // %! use AST_Interface
-  be_valuetype *intf;
-  intf = this->ctx_->attribute ()
+  be_valuetype *intf = this->ctx_->attribute ()
     ? be_valuetype::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_valuetype::narrow_from_scope (op->defined_in ());
 
@@ -159,14 +160,13 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
                          "Bad interface\n"),
                         -1);
     }
-  ctx.scope (intf); // set new scope
 
-  //  snipped from
-  //  be_visitor_args_arglist::visit_argument (be_argument *node)
+  ctx.scope (intf);
   ctx.node (node); // save the argument node
 
-  // retrieve the type
+  // Retrieve the type.
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -176,24 +176,27 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  // os->indent (); // start with current indentation level
-
-  // Different types have different mappings when used as in/out or
-  // inout parameters. Let this visitor deal with the type
-
-  // end of be_visitor_args_arglist::visit_argument ()
+  int status = 0;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
+        be_visitor_args_arglist visitor (&ctx);
+        status = bt->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
+        be_visitor_args_arglist visitor (&ctx);
+        status = bt->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -204,26 +207,15 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
       }
     }
 
-  // grab a visitor
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
+  if (status == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_arglist::"
-                         "visit_argument - "
-                         "Bad visitor\n"),
-                        -1);
-    }
-  if (bt->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
                          "visit_argument - "
                          "codegen for argument failed\n"),
                         -1);
     }
-  delete visitor;
+
   return 0;
 }
 
@@ -233,21 +225,26 @@ be_visitor_obv_operation_arglist::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-      switch (this->ctx_->state ())
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_SH:
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
+      if (!this->last_node (bd))
         {
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_SH:
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
-        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
-          if (!this->last_node (bd))
-            *os << ", "; // "\n";
-          else
-            *os << "";  // "\n";
-          break;
-        default:
-          break;
+          *os << ", ";
         }
+      else
+        {
+          *os << "";
+        }
+ 
+      break;
+    default:
+      break;
+    }
 
   return 0;
 }

@@ -217,14 +217,14 @@ void
 AST_Factory::dump (ostream &o)
 {
   AST_Decl *d = 0;
-  UTL_ScopeActiveIterator i (this,
-                             IK_decls);
 
   o << "factory ";
   this->local_name ()->dump (o);
   o << "(";
 
-  while (!i.is_done())
+  // Iterator must be explicitly advanced inside the loop.
+  for (UTL_ScopeActiveIterator i (this, IK_decls);
+       !i.is_done();)
     {
       d = i.item ();
       d->dump (o);

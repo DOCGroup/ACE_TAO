@@ -14,7 +14,7 @@ AST_Native::AST_Native (void)
 {
 }
 
-AST_Native::AST_Native(UTL_ScopedName *n)
+AST_Native::AST_Native (UTL_ScopedName *n)
   : AST_Decl (AST_Decl::NT_native,
               n)
 {

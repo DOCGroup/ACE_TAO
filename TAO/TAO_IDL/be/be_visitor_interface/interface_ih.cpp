@@ -16,16 +16,17 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_interface.h"
 
-ACE_RCSID(be_visitor_interface, interface_ih, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           interface_ih, 
+           "$Id$")
 
 // ************************************************************
-// Interface visitor for implementation header
+// Interface visitor for implementation header.
 // ************************************************************
 
 be_visitor_interface_ih::be_visitor_interface_ih (be_visitor_context *ctx)
@@ -40,30 +41,34 @@ be_visitor_interface_ih::~be_visitor_interface_ih (void)
 int
 be_visitor_interface_ih::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
-  static char namebuf [NAMEBUFSIZE]; // holds the class name
+  TAO_OutStream *os = this->ctx_->stream ();
+  static char namebuf [NAMEBUFSIZE];
 
 
   if (node->impl_hdr_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  os = this->ctx_->stream ();
+  // Generate the skeleton class name.
 
-  // generate the skeleton class name
-
-  os->indent (); // start with whatever indentation level we are at
+  os->indent ();
 
   ACE_OS::sprintf (namebuf, "%s", node->flat_name ());
 
   *os << "//Class " << be_global->impl_class_prefix ()
       << namebuf << be_global->impl_class_suffix () << be_nl;
-  // now generate the class definition
+
+  // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
       << " " << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " : ";
-  //inherit from the base skeleton file
+
+  // Inherit from the base skeleton file.
   *os <<"public virtual "<< node->full_skel_name ();
 
   *os << be_nl
@@ -97,7 +102,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       << be_global->impl_class_suffix () << " (void);" << be_nl << be_uidt_nl;
 
 
-  // generate code for elements in the scope (e.g., operations)
+  // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -107,31 +112,15 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
                         -1);
     }
 
-  /*
- if (node->n_inherits () > 0)
-    {
-      // this interface inherits from other interfaces
-      be_interface *intf; // inherited interface
 
-      for (i = 0; i < node->n_inherits (); i++)
-	{
-	  intf = be_interface::narrow_from_decl (node->inherits ()[i]);
-	  // generate code for elements in the scope (e.g., operations)
-	  if (this->visit_scope (intf) ==  -1)
-	    {
-	      ACE_ERROR_RETURN ((LM_ERROR,
-				 "be_visitor_interface_ih::"
-				 "visit_interface - "
-			     "codegen for scope failed\n"),
-				-1);
-	    }
-	}
+  // Generate the code for the members of the derived classes.
+  int status = 
+    node->traverse_inheritance_graph (
+              be_visitor_interface_ih::method_helper, 
+              os
+            );
 
-    }
-  */
-
-  //Generate the code for the members of the derived classes
-  if (node->traverse_inheritance_graph (be_visitor_interface_ih::method_helper, os) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh_ss::"
@@ -146,11 +135,11 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 }
 
 
-//Helper method to generate members within the scope of the base classes
+// Helper method to generate members within the scope of the base classes.
 int
 be_visitor_interface_ih::method_helper (be_interface *derived,
-					    be_interface *node,
-					    TAO_OutStream *os)
+					                              be_interface *node,
+					                              TAO_OutStream *os)
 {
 
   if (strcmp (derived->flat_name (), node->flat_name ()) != 0)
@@ -159,16 +148,15 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
       ctx.state (TAO_CodeGen::TAO_INTERFACE_IH);
       ctx.interface (derived);
       ctx.stream (os);
+      be_visitor_interface_ih visitor (&ctx);
 
-      be_visitor* visitor = tao_cg->make_visitor (&ctx);
-      if (visitor == 0 || visitor->visit_scope (node) == -1)
+      if (visitor.visit_scope (node) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_is::"
                              "method_helper\n"), -1);
         }
-      delete visitor;
     }
+
   return 0;
 }

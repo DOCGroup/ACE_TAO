@@ -116,14 +116,14 @@ AST_Decl::AST_Decl (void)
     pd_node_type (NT_module),
     pd_line (-1),
     pd_file_name (0),
-    pd_name (0),
     pd_local_name (0),
     pd_original_local_name (0),
     pd_added (I_FALSE),
     full_name_ (0),
     prefix_ (0),
     version_ (0),
-    anonymous_ (I_FALSE)
+    anonymous_ (I_FALSE),
+    typeid_set_ (I_FALSE)
 {
 }
 
@@ -133,19 +133,21 @@ AST_Decl::AST_Decl (NodeType nt,
   : repoID_ (0),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
-    pd_defined_in (idl_global->scopes ()->depth () > 0
-                     ? idl_global->scopes ()->top ()
+    pd_defined_in (idl_global->scopes ().depth () > 0
+                     ? idl_global->scopes ().top ()
                      : 0),
     pd_node_type (nt),
     pd_line (idl_global->lineno ()),
     pd_file_name (idl_global->filename ()),
     pd_name (0),
     pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
+    pd_original_local_name (0),
     pd_added (I_FALSE),
     full_name_ (0),
     prefix_ (0),
     version_ (0),
-    anonymous_ (anonymous)
+    anonymous_ (anonymous),
+    typeid_set_ (I_FALSE)
 {
   this->compute_full_name (n);
 
@@ -161,10 +163,10 @@ AST_Decl::AST_Decl (NodeType nt,
       this->prefix_ = ACE::strnew (prefix);
     }
 
-  // Keep the name _cxx_ removed, if any.
   if (n != 0)
     {
-      this->original_local_name (n->last_component ()->copy ());
+      // The function body creates its own copy.
+      this->original_local_name (n->last_component ());
     }
 }
 
@@ -178,6 +180,14 @@ AST_Decl::~AST_Decl (void)
 void
 AST_Decl::compute_full_name (UTL_ScopedName *n)
 {
+  // This should happen only when we are a non-void predefined type,
+  // in which case our scoped name has already been created by the
+  // AST_PredefinedType constructor.
+  if (n == 0)
+    {
+      return;
+    }
+
   UTL_ScopedName *cn = 0;
   AST_Decl *d = 0;
 
@@ -185,9 +195,9 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   this->pd_name = 0;
 
   // Global scope?
-  if (defined_in () == 0)
+  if (this->defined_in () == 0)
     {
-      this->pd_name = n;
+      this->pd_name = (UTL_IdList *) n->copy ();
       return;
     }
 
@@ -202,7 +212,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
 
   if (cn != 0)
     {
-      this->pd_name = (UTL_ScopedName *) cn->copy ();
+      this->pd_name = (UTL_IdList *) cn->copy ();
     }
 
   if (this->pd_local_name != 0)
@@ -224,7 +234,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
         }
     }
   else
-    {
+    {/*
       if (this->pd_name == 0)
         {
           ACE_NEW (this->pd_name,
@@ -239,6 +249,42 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
                                    0));
 
           this->pd_name->nconc (conc_name);
+        }*/
+    }
+}
+
+void
+AST_Decl::set_prefix_with_typeprefix_r (char *value)
+{
+  if (this->typeid_set_)
+    {
+      return;
+    }
+
+  delete [] this->repoID_;
+  this->repoID_ = 0;
+  this->prefix (value);
+  this->compute_repoID ();
+  UTL_Scope *s = DeclAsScope (this);
+
+  if (s != 0)
+    {
+      AST_Decl *d = 0;
+
+      for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_decls); 
+           !i.is_done (); 
+           i.next ())
+        {
+          d = i.item ();
+
+          if (d->typeid_set_)
+            {
+              continue;
+            }
+          else
+            {
+              d->set_prefix_with_typeprefix_r (value);
+            }
         }
     }
 }
@@ -249,7 +295,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
 void
 AST_Decl::compute_full_name (void)
 {
-  if (this->full_name_ != 0)
+ if (this->full_name_ != 0)
     {
       return;
     }
@@ -260,7 +306,9 @@ AST_Decl::compute_full_name (void)
       long second = I_FALSE;
       char *name = 0;
 
-      for (UTL_IdListActiveIterator i (this->name ());!i.is_done ();i.next ())
+      for (UTL_IdListActiveIterator i (this->name ()); 
+           !i.is_done (); 
+           i.next ())
         {
           if (!first)
             {
@@ -296,7 +344,9 @@ AST_Decl::compute_full_name (void)
       first = I_TRUE;
       second = I_FALSE;
 
-      for (UTL_IdListActiveIterator j (this->name ());!j.is_done ();j.next ())
+      for (UTL_IdListActiveIterator j (this->name ()); 
+           !j.is_done (); 
+           j.next ())
         {
           if (!first)
             {
@@ -325,15 +375,13 @@ AST_Decl::compute_full_name (void)
             }
         }
     }
-
-  return;
 }
 
 // Compute stringified repository ID.
 void
 AST_Decl::compute_repoID (void)
 {
-  if (this->repoID_ != 0)
+ if (this->repoID_ != 0)
     {
       return;
     }
@@ -358,7 +406,9 @@ AST_Decl::compute_repoID (void)
           namelen += 4;
         }
 
-      for (UTL_IdListActiveIterator i (this->name ());!i.is_done ();i.next ())
+      for (UTL_IdListActiveIterator i (this->name ()); 
+           !i.is_done (); 
+           i.next ())
         {
           if (!first)
             {
@@ -371,7 +421,16 @@ AST_Decl::compute_repoID (void)
 
           // Print the identifier.
           name = i.item ()->get_string ();
-          namelen += ACE_OS::strlen (name);
+          size_t item_len = ACE_OS::strlen (name);
+
+          if (ACE_OS::strstr (name, "_cxx_") == name)
+            {
+              namelen += (item_len - ACE_OS::strlen ("_cxx_"));
+            }
+          else
+            {
+              namelen += item_len;
+            }
 
           if (first)
             {
@@ -408,7 +467,9 @@ AST_Decl::compute_repoID (void)
       first = I_TRUE;
       second = I_FALSE;
 
-      for (UTL_IdListActiveIterator j (this->name ());!j.is_done ();j.next ())
+      for (UTL_IdListActiveIterator j (this->name ()); 
+           !j.is_done (); 
+           j.next ())
         {
           if (!first)
             {
@@ -421,8 +482,17 @@ AST_Decl::compute_repoID (void)
 
           // Print the identifier.
           name = j.item ()->get_string ();
-          ACE_OS::strcat (this->repoID_,
-                          name);
+
+          if (ACE_OS::strstr (name, "_cxx_") == name)
+            {
+              ACE_OS::strcat (this->repoID_,
+                              name + ACE_OS::strlen ("_cxx_"));
+            }
+          else
+            {
+              ACE_OS::strcat (this->repoID_,
+                              name);
+            }
 
           if (first)
             {
@@ -510,17 +580,27 @@ AST_Decl::ast_accept (ast_visitor *visitor)
 void
 AST_Decl::destroy (void)
 {
-  this->pd_name->destroy ();
-  delete this->pd_name;
-  this->pd_name = 0;
+  // These are not set for the root node.
+  if (this->pd_name != 0)
+    {
+      this->pd_name->destroy ();
+      delete this->pd_name;
+      this->pd_name = 0;
+    }
 
-  this->pd_local_name->destroy ();
-  delete this->pd_local_name;
-  this->pd_local_name = 0;
+  if (this->pd_local_name != 0)
+    {
+      this->pd_local_name->destroy ();
+      delete this->pd_local_name;
+      this->pd_local_name = 0;
+    }
 
-  this->pd_original_local_name->destroy ();
-  delete this->pd_original_local_name;
-  this->pd_original_local_name = 0;
+  if (this->pd_original_local_name != 0)
+    {
+      this->pd_original_local_name->destroy ();
+      delete this->pd_original_local_name;
+      this->pd_original_local_name = 0;
+    }
 
   delete [] this->full_name_;
   this->full_name_ = 0;
@@ -534,6 +614,8 @@ AST_Decl::destroy (void)
   delete [] this->version_;
   this->version_ = 0;
 }
+
+// Data accessors.
 
 const char *
 AST_Decl::full_name (void)
@@ -585,7 +667,8 @@ AST_Decl::prefix (void)
 void
 AST_Decl::prefix (char *value)
 {
-  this->prefix_ = value;
+  delete [] this->prefix_;
+  this->prefix_ = ACE::strnew (value);
 }
 
 const char *
@@ -627,6 +710,7 @@ AST_Decl::version (char *value)
   if (this->version_ == 0 && this->repoID_ == 0
       || ACE_OS::strcmp (this->version_, value) == 0)
     {
+      delete [] this->version_;
       this->version_ = value;
     }
   else
@@ -641,7 +725,93 @@ AST_Decl::anonymous (void) const
   return this->anonymous_;
 }
 
-// Data accessors.
+idl_bool
+AST_Decl::typeid_set (void) const
+{
+  return this->typeid_set_;
+}
+
+void
+AST_Decl::typeid_set (idl_bool val)
+{
+  this->typeid_set_ = val;
+}
+
+void
+AST_Decl::set_id_with_typeid (char *value)
+{
+  // Can't call 'typeid' twice, even with the same value.
+  if (this->typeid_set ())
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_TYPEID_RESET,
+                                  this);
+    }
+
+  // Are we a legal type for 'typeid'?
+  switch (this->pd_node_type)
+  {
+    case AST_Decl::NT_field:
+      {
+        AST_Interface *iface = 
+          AST_Interface::narrow_from_scope (this->defined_in ());
+
+        if (iface == 0 || iface->is_valuetype () == 0)
+          {
+            idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID,
+                                        this);
+
+            return;
+          }
+
+        break;
+      }
+    case AST_Decl::NT_module:
+    case AST_Decl::NT_interface:
+    case AST_Decl::NT_const:
+    case AST_Decl::NT_typedef:
+    case AST_Decl::NT_except:
+    case AST_Decl::NT_attr:
+    case AST_Decl::NT_op:
+    case AST_Decl::NT_enum:
+    case AST_Decl::NT_factory:
+    case AST_Decl::NT_component:
+    case AST_Decl::NT_home:
+    case AST_Decl::NT_finder:
+    case AST_Decl::NT_eventtype:
+      break;
+    default:
+      idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID,
+                                  this);
+
+      return;
+  }
+
+  delete [] this->repoID_;
+  this->repoID_ = 0;
+  this->repoID (value);
+  this->typeid_set (I_TRUE);
+}
+
+void
+AST_Decl::set_prefix_with_typeprefix (char *value)
+{
+  // Are we a legal type for 'typeprefix'? This is checked only at
+  // the top level.
+  switch (this->pd_node_type)
+  {
+    case AST_Decl::NT_module:
+    case AST_Decl::NT_interface:
+    case AST_Decl::NT_eventtype:
+      break;
+    default:
+      idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEPREFIX,
+                                  this);
+
+      return;
+  }
+
+  this->set_prefix_with_typeprefix_r (value);
+}
 
 idl_bool
 AST_Decl::imported (void)
@@ -803,14 +973,32 @@ AST_Decl::compute_name (const char *prefix,
 void
 AST_Decl::set_name (UTL_ScopedName *n)
 {
+  if (this->pd_name != 0)
+    {
+      this->pd_name->destroy ();
+      delete this->pd_name;
+    }
+
   this->pd_name = n;
 
-  if (n != NULL)
+  if (n != 0)
     {
+      if (this->pd_local_name != 0)
+        {
+          this->pd_local_name->destroy ();
+          delete this->pd_local_name;
+        }
+
       this->pd_local_name = n->last_component ()->copy ();
 
       // The name without _cxx_ prefix removed, if there was any.
-      this->original_local_name (n->last_component ()->copy ());
+      if (this->pd_original_local_name != 0)
+        {
+          this->pd_original_local_name->destroy ();
+          delete this->pd_original_local_name;
+        }
+
+      this->original_local_name (n->last_component ());
     }
 }
 

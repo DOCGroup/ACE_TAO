@@ -76,9 +76,9 @@ FE_Declarator::FE_Declarator (UTL_ScopedName *n,
                               DeclaratorType dt,
 			                        AST_Decl *cp)
  : pd_complex_part (cp),
-	 pd_name (n),
 	 pd_decl_type (dt)
 {
+  this->pd_name = n;
 }
 
 // Public operations.
@@ -135,6 +135,14 @@ FE_Declarator::compose (AST_Decl *d)
 
   // We shouldn't get here.
   return 0;
+}
+
+void
+FE_Declarator::destroy (void)
+{
+  this->pd_name->destroy ();
+  delete this->pd_name;
+  this->pd_name = 0;
 }
 
 // Data accessors.

@@ -48,9 +48,6 @@ public:
 
   virtual int gen_invoke (be_visitor_context &ctx, be_operation *node);
   // A helper method to generate operation invocation code.
-
-  virtual int void_return_type (be_type *bt);
-  // is my return type void?
 };
 
 #endif /* _BE_VISITOR_OPERATION_THRU_POA_PROXY_IMPL_OPERATION_THRU_POA_PROXY_IMPL_SS_H_ */

@@ -83,13 +83,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export Identifier
 {
 public:
-  Identifier ();
+  Identifier (void);
   // Default Constructor.
 
   Identifier (const char *s);
   // Constructor.
 
-  virtual ~Identifier ();
+  virtual ~Identifier (void);
   // Destructor.
 
   // Operations

@@ -101,7 +101,7 @@ public:
   void nconc (UTL_List *l);
 
   // Copy the list starting at "this"
-  virtual UTL_List *copy ();
+  virtual UTL_List *copy (void);
 
   // Get next list
   UTL_List *tail ();
@@ -110,7 +110,10 @@ public:
   void set_tail (UTL_List *l);
 
   // How long is this list?
-  long length ();
+  long length (void);
+
+  // Cleanup.
+  virtual void destroy (void);
 
 private:
   // Data
@@ -136,7 +139,7 @@ public:
   virtual void next ();
 
   // Are we at the end of this list?
-  virtual long is_done ();
+  virtual idl_bool is_done (void);
 
 protected:
   // Data

@@ -100,16 +100,16 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &);
 
   // Look up an AST_EnumVal by value
-  virtual AST_EnumVal *lookup_by_value (const AST_Expression *v);
+  AST_EnumVal *lookup_by_value (const AST_Expression *v);
 
   // Get value to be assigned to next enumerator.
-  virtual unsigned long next_enum_val (void);
+  unsigned long next_enum_val (void);
 
   // Return the count of members
   virtual int member_count (void);
 
   // Convert a numeric value to the enum's string name for it.
-  virtual UTL_ScopedName *value_to_name (const unsigned long v);
+  UTL_ScopedName *value_to_name (const unsigned long v);
 
   // Cleanup function.
   virtual void destroy (void);

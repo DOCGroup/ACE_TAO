@@ -241,19 +241,18 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -GC \t\tGenerate the code for using AMI Call back model\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gd \t\tGenerate the code for direct collocation. Default")
+      ACE_TEXT ("is thru-POA collocation\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
       ACE_TEXT (" CORBA::Environment arguments (disabled by default")
       ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
-      ACE_TEXT (" (unopt by default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Gv\t\t\tenable OBV (Valuetype) support")
-      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -281,11 +280,27 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GC \t\tGenerate the code for using AMI Call back model\n")
+      ACE_TEXT (" -Gm \t\tEnable support for CORBA components\n")
+      ACE_TEXT (" (default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gp \t\tGenerate the code for thru-POA collocation")
+      ACE_TEXT (" (default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gsp \t\tGenerate the code for Smart Proxies\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
+      ACE_TEXT (" (unopt by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gv\t\t\tenable OBV (Valuetype) support")
+      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -1059,6 +1074,11 @@ DRV_parse_args (long ac, char **av)
                 {
                   // enable OBV (Valuetype) support
                   idl_global->obv_support (1);
+                }
+              else if (av[i][2] == 'm')
+                {
+                  // enable CORBA component support
+                  idl_global->component_support (1);
                 }
               else if (av[i][2] == 'I')
                 {

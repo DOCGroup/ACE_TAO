@@ -128,13 +128,3 @@ FE_new_UTL_Indenter (void)
   return retval;
 }
 
-UTL_String *
-FE_new_UTL_String (char *str)
-{
-  UTL_String *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  UTL_String (str),
-                  0);
-
-  return retval;
-}

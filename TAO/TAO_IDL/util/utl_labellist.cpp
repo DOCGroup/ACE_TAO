@@ -114,8 +114,8 @@ UTL_LabelList::head()
  * Constructor
  */
 
-UTL_LabellistActiveIterator::UTL_LabellistActiveIterator(UTL_LabelList *s)
-			   : UTL_ListActiveIterator(s)
+UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
+			   : UTL_ListActiveIterator (s)
 {
 }
 
@@ -129,11 +129,14 @@ UTL_LabellistActiveIterator::UTL_LabellistActiveIterator(UTL_LabelList *s)
 
 // Get current item
 AST_UnionLabel *
-UTL_LabellistActiveIterator::item()
+UTL_LabellistActiveIterator::item (void)
 {
-  if (source == NULL)
-    return NULL;
-  return ((UTL_LabelList *) source)->head();
+  if (source == 0)
+    {
+      return 0;
+    }
+
+  return ((UTL_LabelList *) source)->head ();
 }
 
 /*

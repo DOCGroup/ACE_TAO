@@ -18,11 +18,11 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_enum.h"
+#include "be_visitor_typecode/typecode_decl.h"
 
 ACE_RCSID(be_visitor_enum, enum_ch, "$Id$")
 
@@ -79,9 +79,9 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
           // will be based on the command line options. This is still TO-DO.
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          be_visitor *visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_typecode_decl visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_enum_ch::"

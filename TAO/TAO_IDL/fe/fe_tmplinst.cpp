@@ -6,6 +6,7 @@
 
 class AST_Decl;
 class AST_Field;
+class Identifier;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -25,6 +26,10 @@ template class ACE_Unbounded_Set_Iterator<AST_Decl *>;
 template class ACE_Node<AST_Field *>;
 template class ACE_Unbounded_Queue<AST_Field *>;
 template class ACE_Unbounded_Queue_Iterator<AST_Field *>;
+
+template class ACE_Node<Identifier *>;
+template class ACE_Unbounded_Queue<Identifier *>;
+template class ACE_UnboundedQueue_Iterator<Identifier *>;
 
 template class ACE_Unbounded_Stack<char *>;
 template class ACE_Unbounded_Stack_Iterator<char *>;

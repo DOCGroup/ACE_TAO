@@ -212,7 +212,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      be_compiled_visitor_operation_argument_invoke visitor (&ctx);
+      be_visitor_operation_argument_invoke visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
         {

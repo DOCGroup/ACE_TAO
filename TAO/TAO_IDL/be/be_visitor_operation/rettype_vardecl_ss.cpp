@@ -104,7 +104,7 @@ visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-// like be_compiled_visitor_operation_rettype_vardecl_ss
+// Like be_visitor_operation_rettype_vardecl_ss.
 int
 be_visitor_operation_rettype_vardecl_ss::visit_valuetype (be_valuetype *node)
 {

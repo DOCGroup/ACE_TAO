@@ -18,13 +18,15 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_interface.h"
+#include "be_visitor_typecode/typecode_defn.h"
 
-ACE_RCSID(be_visitor_interface, interface_cs, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           interface_cs, 
+           "$Id$")
 
 
 // ************************************************************
@@ -61,6 +63,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Initialize the static narrrowing helper variable.
   *os << "int " << node->full_name () << "::_tao_class_id = 0;"
@@ -141,7 +146,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  be_visitor *visitor = 0;
   be_visitor_context ctx;
 
   // Interceptor classes.  The interceptors helper classes must be
@@ -149,14 +153,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // the implementation of said operations.
 
   ctx = (*this->ctx_);
-  visitor = 0;
 
   ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_interface_interceptors_cs ii_visitor (&ctx);
 
-  if (!visitor || (node->accept (visitor) == -1))
+  if (node->accept (&ii_visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_cs::"
                          "visit_interface - "
@@ -164,18 +166,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  delete visitor;
-  visitor = 0;
-
   if (!node->is_local ())
     {
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_interface_remote_proxy_impl_cs irpi_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&irpi_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_cs::"
                              "visit_interface - "
@@ -183,24 +181,18 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                             -1);
         }
 
-      delete visitor;
-
-      visitor = 0;
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&irpb_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_cs::"
                              "visit_interface - "
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
    // Generate the destructor and default constructor.
@@ -534,9 +526,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       be_visitor *visitor = 0;
 
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_interface_smart_proxy_cs isp_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&isp_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_cs::"
@@ -544,18 +536,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                              "codegen for smart proxy classes failed\n"),
                             -1);
         }
+    }
 
-      delete visitor;
-      visitor = 0;
-
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
+  if (be_global->tc_support ())
+    {
       ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_typecode_defn tc_visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&tc_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
@@ -563,8 +552,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                              "TypeCode definition failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;

@@ -18,17 +18,17 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "be.h"
 #include "be_visitor_union.h"
+#include "be_visitor_enum/enum_ch.h"
 
-ACE_RCSID(be_visitor_union, discriminant_ch, "$Id$")
+ACE_RCSID (be_visitor_union, 
+           discriminant_ch, 
+           "$Id$")
 
 
 // *************************************************************************
-// be_visitor_discriminant_ch - visitor for discriminant in client header file
+// Visitor for discriminant in client header file.
 // *************************************************************************
 
 be_visitor_union_discriminant_ch::be_visitor_union_discriminant_ch
@@ -71,27 +71,16 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
 
       // First generate the enum declaration.
       ctx.state (TAO_CodeGen::TAO_ENUM_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_enum_ch visitor (&ctx);
 
-      if (!visitor)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_discriminant_ch::"
                              "visit_enum - "
-                             "Bad visitor\n"
-                             ), -1);
+                             "codegen failed\n"), 
+                            -1);
         }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_discriminant_ch::"
-                             "visit_enum - "
-                             "codegen failed\n"
-                             ), -1);
-        }
-
-      delete visitor;
     }
 
   // The set method.
@@ -143,8 +132,8 @@ be_visitor_union_discriminant_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_discriminant_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"
-                         ), -1);
+                         "Bad primitive type\n"), 
+                        -1);
     }
 
   this->ctx_->alias (0);

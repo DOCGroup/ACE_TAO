@@ -203,16 +203,12 @@ AST_Operation::compute_argument_attr (void)
   if (this->nmembers () > 0)
     {
       // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator *si = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
           // Get the next AST decl node.
-          d = si->item ();
+          d = si.item ();
 
           if (d->node_type () == AST_Decl::NT_argument)
             {
@@ -227,11 +223,7 @@ AST_Operation::compute_argument_attr (void)
                   this->has_native_ = 1;
                 }
             }
-
-          si->next ();
         }
-
-      delete si;
     }
 
   type = AST_Type::narrow_from_decl (this->return_type ());

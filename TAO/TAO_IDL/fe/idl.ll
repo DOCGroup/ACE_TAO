@@ -117,6 +117,19 @@ static int scan_obv_token (int token)
     return IDENTIFIER;
 }
 
+static int scan_ccm_token (int token)
+{
+  if (idl_global->component_support ())
+    {
+      return token;
+    }
+  else
+    {
+      yylval.strval = ACE_OS::strdup (ace_yytext);
+      return IDENTIFIER;
+    }
+}
+
 %}
 
 /* SO we don't choke on files that use \r\n */
@@ -167,6 +180,23 @@ public          return scan_obv_token (IDL_PUBLIC);
 supports        return scan_obv_token (IDL_SUPPORTS);
 truncatable     return scan_obv_token (IDL_TRUNCATABLE);
 valuetype       return scan_obv_token (IDL_VALUETYPE);
+component       return scan_ccm_token (IDL_COMPONENT);
+consumes        return scan_ccm_token (IDL_CONSUMES);
+emits           return scan_ccm_token (IDL_EMITS);
+eventtype       return scan_ccm_token (IDL_EVENTTYPE);
+finder          return scan_ccm_token (IDL_FINDER);
+getraises       return scan_ccm_token (IDL_GETRAISES);
+home            return scan_ccm_token (IDL_HOME);
+import          return scan_ccm_token (IDL_IMPORT);
+multiple        return scan_ccm_token (IDL_MULTIPLE);
+primarykey      return scan_ccm_token (IDL_PRIMARYKEY);
+provides        return scan_ccm_token (IDL_PROVIDES);
+publishes       return scan_ccm_token (IDL_PUBLISHES);
+setraises       return scan_ccm_token (IDL_SETRAISES);
+typeid          return scan_ccm_token (IDL_TYPEID);
+typeprefix      return scan_ccm_token (IDL_TYPEPREFIX);
+uses            return scan_ccm_token (IDL_USES);
+manages         return scan_ccm_token (IDL_MANAGES);
 
 TRUE		return IDL_TRUETOK;
 FALSE		return IDL_FALSETOK;
@@ -468,7 +498,9 @@ idl_parse_line_and_file (char *buf)
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
     }
-  else if (is_main_filename && idl_global->pragma_prefixes ().size () > 1)
+  else if (is_main_filename 
+           && idl_global->pragma_prefixes ().size () > 1
+           && idl_global->scopes ().depth () == 1)
     {
       // If we're here, we have come to the end of an included file, so we
       // pop its prefix.
@@ -533,12 +565,12 @@ idl_store_pragma (char *buf)
 
       if (new_prefix != 0)
         {
-          unsigned long depth = idl_global->scopes ()->depth ();
+          unsigned long depth = idl_global->scopes ().depth ();
 
           // At global scope, we always replace the prefix. For all
           // other scopes, we replace only if there is a prefix already
           // associated with that scope, otherwise we add the prefix.
-          if (depth == 1 || idl_global->scopes ()->top ()->has_prefix ())
+          if (depth == 1 || idl_global->scopes ().top ()->has_prefix ())
             {
               char *trash = 0;
               idl_global->pragma_prefixes ().pop (trash);
@@ -547,7 +579,7 @@ idl_store_pragma (char *buf)
 
           if (depth > 1)
             {
-              idl_global->scopes ()->top ()->has_prefix (1);
+              idl_global->scopes ().top ()->has_prefix (1);
             }
 
           idl_global->pragma_prefixes ().push (new_prefix);
@@ -917,7 +949,7 @@ idl_find_node (char *s)
 
   if (node != 0)
     {
-      d = idl_global->scopes ()->top_non_null ()->lookup_by_name (node,
+      d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
                                                                   I_TRUE);
     }
 

@@ -52,4 +52,6 @@
 #include "be_visitor_sequence/gen_bounded_str_sequence_cs.cpp"
 #include "be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp"
 
-ACE_RCSID(be, be_visitor_sequence, "$Id$")
+ACE_RCSID (be, 
+           be_visitor_sequence, 
+           "$Id$")

@@ -19,11 +19,10 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
-// individual visitors included only here
 #include "be_visitor_factory.h"
 
 #include "be_visitor_argument.h"
@@ -83,7 +82,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
   // create a new context so that ownership issues are not confused. This newly
   // created context is a copy of what was sent by the caller. The newly
   // created visitor will own this new copy.
-  be_visitor_context *new_ctx = new be_visitor_context (*ctx);
+  be_visitor_context *new_ctx = ctx;
   switch (st)
     {
     case TAO_CodeGen::TAO_ROOT_CH:
@@ -484,14 +483,19 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_IH:
     case TAO_CodeGen::TAO_ATTRIBUTE_SS:
     case TAO_CodeGen::TAO_ATTRIBUTE_IS:
+
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
+
     case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
+
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
+
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
+
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SH:
@@ -544,7 +548,6 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_array_cdr_op_cs (new_ctx);
     default:
       // an error
-      delete new_ctx;
       return 0;
     }
   return 0;
@@ -569,7 +572,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
   // create a new context so that ownership issues are not confused. This newly
   // created context is a copy of what was sent by the caller. The newly
   // created visitor will own this new copy.
-  be_visitor_context *new_ctx = new be_visitor_context (*ctx);
+  be_visitor_context *new_ctx = ctx;
 
   switch (st)
     {
@@ -657,9 +660,6 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
       return new be_visitor_operation_rettype_assign_ss (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_INVOKE_ARG_LIST:
-      return new be_visitor_operation_inv_arglist (new_ctx);
-
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
@@ -698,7 +698,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
-      return new be_compiled_visitor_operation_argument_marshal (new_ctx);
+      return new be_visitor_operation_argument_marshal (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_TIE_SH:
       return new be_visitor_operation_tie_sh (new_ctx);
@@ -707,7 +707,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_tie_si (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS:
-      return new be_compiled_visitor_operation_argument_invoke (new_ctx);
+      return new be_visitor_operation_argument_invoke (new_ctx);
 
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH:
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH:
@@ -759,13 +759,13 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_ami_handler_reply_stub_operation_ch (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CS:
-      return new be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs (new_ctx);
+      return new be_visitor_operation_ami_handler_reply_stub_operation_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_SENDC_OPERATION_CH:
       return new be_visitor_operation_ami_ch (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_SENDC_OPERATION_CS:
-      return new be_compiled_visitor_operation_ami_cs (new_ctx);
+      return new be_visitor_operation_ami_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS:
       return new be_visitor_operation_ami_exception_holder_operation_cs (new_ctx);
@@ -790,7 +790,6 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     default:
       // cannot handle it; delegate it to the common visitor factory
-      delete new_ctx;
       return TAO_COMMON_VISITOR_FACTORY::instance ()->make_visitor (ctx);
     }
 }

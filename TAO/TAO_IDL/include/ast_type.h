@@ -115,6 +115,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Cleanup.
+  virtual void destroy (void);
+
 protected:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.

@@ -20,68 +20,24 @@
 // ============================================================================
 
 #include	"be.h"
-
 #include "be_visitor_sequence.h"
 
-ACE_RCSID(be_visitor_sequence, gen_bounded_str_sequence_ch, "$Id$")
+ACE_RCSID (be_visitor_sequence, 
+           gen_bounded_str_sequence_ch, 
+           "$Id$")
 
 
 int
 be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
+  const char *class_name = node->instance_name ();
 
-  // Retrieve the base type since we may need to do some code
-  // generation for the base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  *os << be_nl << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
-                         "visit_sequence - "
-                         "Bad element type\n"), -1);
-    }
-
-  // Generate the class name.
-  be_type *pt;
-
-  if (bt->node_type () == AST_Decl::NT_typedef)
-    {
-      // Get the primitive base type of this typedef node.
-      be_typedef *t = be_typedef::narrow_from_decl (bt);
-      pt = t->primitive_base_type ();
-    }
-  else
-    {
-      pt = bt;
-    }
-
-  const char * class_name = node->instance_name ();
-
-  // get the visitor for the type of the sequence
-  be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  // !! branching in either compile time template instantiation
-  // or manual template instatiation
   os->gen_ifdef_AHETI();
-
   os->gen_ifdef_macro (class_name);
-
-  // The accept is used here the first time and if an
-  // error occurs, it will occur here. Later no check
-  // for errors will be done.
-  if (pt->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
-                         "visit_sequence - "
-                         "base type visit failed\n"),
-                         -1);
-    }
 
   *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
       << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
@@ -156,7 +112,5 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   // generate #endif for AHETI
   os->gen_endif_AHETI();
 
-
-  delete visitor;
   return 0;
 }

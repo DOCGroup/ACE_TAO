@@ -96,6 +96,9 @@ public:
     EIDL_ILLEGAL_VERSION,       // Bad number in #pragma version statement
     EIDL_VERSION_RESET,         // Can't reset version, even to same number
     EIDL_ID_RESET,              // Tried to set id to a different string
+    EIDL_TYPEID_RESET,          // Can't set repo id with 'typeid' twice
+    EIDL_INVALID_TYPEID,        // Can't use 'typeid' on this type.
+    EIDL_INVALID_TYPEPREFIX,    // Can't use 'typeprefix on this type
     EIDL_DISC_TYPE,             // Illegal discriminator type in union
     EIDL_LABEL_TYPE,            // Mismatch with discriminator type in union
     EIDL_ILLEGAL_ADD,           // Illegal add action

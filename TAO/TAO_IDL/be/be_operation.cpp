@@ -118,9 +118,13 @@ be_operation::compute_size_type (void)
 void
 be_operation::destroy (void)
 {
+  delete this->strategy_;
+  this->strategy_ = 0;
+
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_decl::destroy ();
+  this->be_scope::destroy ();
+  this->be_decl::destroy ();
+  this->AST_Operation::destroy ();
 }
 
 int

@@ -18,12 +18,13 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
 #include "be.h"
 #include "be_visitor_exception.h"
+#include "be_visitor_typecode/typecode_decl.h"
 
-ACE_RCSID(be_visitor_exception, exception_ch, "$Id$")
+ACE_RCSID (be_visitor_exception, 
+           exception_ch, 
+           "$Id$")
 
 
 // ******************************************************
@@ -77,8 +78,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << node->local_name () << " &operator= (const "
           << node->local_name () << " &);\n" << be_nl;
 
-      if (!node->is_local ())
-        *os << "static void _tao_any_destructor (void*);\n" << be_nl;
+      *os << "static void _tao_any_destructor (void*);\n" << be_nl;
 
       *os << "static " << node->local_name ()
           << " *_downcast (CORBA::Exception *);" << be_nl;
@@ -103,44 +103,38 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
         {
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_CH);
-          be_visitor *visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_exception_ctor visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_exception::"
                                  "visit_exception - "
-                                 "codegen for ctor failed\n"), -1);
+                                 "codegen for ctor failed\n"), 
+                                -1);
             }
-
-          delete visitor;
         }
 
-      if (!node->is_local () && be_global->tc_support ())
+      if (be_global->tc_support ())
         {
           *os << be_nl <<"virtual CORBA::TypeCode_ptr _type (void) const;";
         }
 
       *os << be_uidt_nl << "};\n\n";
 
-      if (!node->is_local ())
+      if (be_global->tc_support ())
         {
-          // By using a visitor to declare and define the TypeCode, we
-          // have the added advantage to conditionally not generate
-          // any code. This will be based on the command line
-          // options. This is still TO-DO.
-          be_visitor *visitor = 0;
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_typecode_decl visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_exception_ch::"
                                  "visit_exception - "
-                                 "TypeCode declaration failed\n"
-                                 ), -1);
+                                 "TypeCode declaration failed\n"), 
+                                -1);
             }
         }
 

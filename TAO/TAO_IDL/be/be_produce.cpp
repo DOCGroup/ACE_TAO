@@ -79,16 +79,12 @@ ACE_RCSID(be, be_produce, "$Id$")
 TAO_IDL_BE_Export void
 BE_cleanup (void)
 {
-  AST_Decl *d = idl_global->root ();
-  be_root *root = be_root::narrow_from_decl (d);
-
-  root->destroy ();
-  delete root;
-  root = 0;
-
   idl_global->destroy ();
   delete idl_global;
   idl_global = 0;
+
+  delete be_global;
+  be_global = 0;
 }
 
 // Abort this run of the BE.
@@ -109,9 +105,6 @@ BE_produce (void)
 {
   // Root of the AST made up of BE nodes.
   be_root *root = 0;
-
-  // Visitor for root.
-  be_visitor *visitor = 0;
 
   // Context information for the visitor root.
   be_visitor_context ctx;
@@ -136,158 +129,143 @@ BE_produce (void)
     {
       // Make a first pass over the AST and introduce
       // AMI specific interfaces, methods and valuetypes.
-      be_visitor_context *local_ctx = 0;
-      ACE_NEW (local_ctx,
-               be_visitor_context (ctx));
+      be_visitor_ami_pre_proc ami_preproc_visitor (&ctx);
 
-      ACE_NEW (visitor,
-               be_visitor_ami_pre_proc (local_ctx));
-
-      if (root->accept (visitor) == -1)
+      if (root->accept (&ami_preproc_visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_produce - "
                       "client header for Root failed\n"));
           BE_abort ();
         }
-
-      delete visitor;
     }
 
   if (be_global->gen_amh_classes () == I_TRUE)
     {
       // Make a first pass over the AST and introduce
       // AMH specific code
-      be_visitor_context *local_ctx = 0;
-      ACE_NEW (local_ctx,
-               be_visitor_context (ctx));
+      be_visitor_amh_pre_proc amh_pre_proc_visitor (&ctx);
 
-      ACE_NEW (visitor,
-               be_visitor_amh_pre_proc (local_ctx));
-
-      if (root->accept (visitor) == -1)
+      if (root->accept (&amh_pre_proc_visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_produce - "
                       "client header for Root failed\n"));
           BE_abort ();
         }
-
-      delete visitor;
     }
 
   // Code generation involves six steps because of the six files that we
   // generate.
 
-  // (1) Generate client header,
-  // instantiate a visitor context, and set the codegen state
-  ctx.state (TAO_CodeGen::TAO_ROOT_CH);
+  {
+    // (1) Generate client header,
+    // instantiate a visitor context, and set the codegen state
+    ctx.state (TAO_CodeGen::TAO_ROOT_CH);
 
-  // Get a root visitor.
-  visitor = tao_cg->make_visitor (&ctx);
+    // Get a root visitor.
+    be_visitor_root_ch root_ch_visitor (&ctx);
 
-  // Generate code for the client header
-  if (root->accept (visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "client header for Root failed\n"));
-      BE_abort ();
-    }
+    // Generate code for the client header
+    if (root->accept (&root_ch_visitor) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "(%N:%l) be_produce - "
+                    "client header for Root failed\n"));
+        BE_abort ();
+      }
+  }
 
-  delete visitor;
+  {
+    // (2) Generate client inline and
+    // set the context information.
+    ctx.reset ();
+    ctx.state (TAO_CodeGen::TAO_ROOT_CI);
 
-  // (2) Generate client inline and
-  // set the context information.
-  ctx.reset ();
-  ctx.state (TAO_CodeGen::TAO_ROOT_CI);
+    // Create a visitor.
+    be_visitor_root_ci root_ci_visitor (&ctx);
 
-  // Create a visitor.
-  visitor = tao_cg->make_visitor (&ctx);
+    // Generate code for the client inline file.
+    if (root->accept (&root_ci_visitor) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "(%N:%l) be_produce - "
+                    "client inline for Root failed\n"));
+        BE_abort ();
+      }
+  }
 
-  // Generate code for the client inline file.
-  if (root->accept (visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "client inline for Root failed\n"));
-      BE_abort ();
-    }
+  {
+    // (3) Generate client stubs.
+    ctx.reset ();
+    ctx.state (TAO_CodeGen::TAO_ROOT_CS);
 
-  delete visitor;
+    // Create a visitor.
+    be_visitor_root_cs root_cs_visitor (&ctx);
 
+    // Generate code for the client stubs.
+    if (root->accept (&root_cs_visitor) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "(%N:%l) be_produce - "
+                    "client stubs for Root failed\n"));
+        BE_abort ();
+      }
+  }
 
-  // (3) Generate client stubs.
-  ctx.reset ();
-  ctx.state (TAO_CodeGen::TAO_ROOT_CS);
+  {
+    // (4) Generate server header.
+    ctx.reset ();
+    ctx.state (TAO_CodeGen::TAO_ROOT_SH);
 
-  // Create a visitor.
-  visitor = tao_cg->make_visitor (&ctx);
+    // Create a visitor.
+    be_visitor_root_sh root_sh_visitor (&ctx);
 
-  // Generate code for the client stubs.
-  if (root->accept (visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "client stubs for Root failed\n"));
-      BE_abort ();
-    }
+    // Generate code for the server header file.
+    if (root->accept (&root_sh_visitor) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "(%N:%l) be_produce - "
+                    "server header for Root failed\n"));
+        BE_abort ();
+      }
+  }
 
-  delete visitor;
+  {
+    // (5) Generate server inline.
+    ctx.reset ();
+    ctx.state (TAO_CodeGen::TAO_ROOT_SI);
 
-  // (4) Generate server header.
-  ctx.reset ();
-  ctx.state (TAO_CodeGen::TAO_ROOT_SH);
+    // Create a visitor.
+    be_visitor_root_si root_si_visitor (&ctx);
 
-  // Create a visitor.
-  visitor = tao_cg->make_visitor (&ctx);
+    // Generate code for the server inline file.
+    if (root->accept (&root_si_visitor) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "(%N:%l) be_produce - "
+                    "server inline for Root failed\n"));
+        BE_abort ();
+      }
+  }
 
-  // Generate code for the server header file.
-  if (root->accept (visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "server header for Root failed\n"));
-      BE_abort ();
-    }
+  {
+    // (6) Generate server skeletons
+    ctx.reset ();
+    ctx.state (TAO_CodeGen::TAO_ROOT_SS);
 
-  delete visitor;
+    // Create a visitor.
+    be_visitor_root_ss root_ss_visitor (&ctx);
 
-  // (5) Generate server inline.
-  ctx.reset ();
-  ctx.state (TAO_CodeGen::TAO_ROOT_SI);
-
-  // Create a visitor.
-  visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the server inline file.
-  if (root->accept (visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "server inline for Root failed\n"));
-      BE_abort ();
-    }
-
-  delete visitor;
-
-  // (6) Generate server skeletons
-  ctx.reset ();
-  ctx.state (TAO_CodeGen::TAO_ROOT_SS);
-
-  // Create a visitor.
-  visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the server skeletons.
-  if (root->accept (visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "server skeletons for Root failed\n"));
-      BE_abort ();
-    }
-
-  delete visitor;
+    // Generate code for the server skeletons.
+    if (root->accept (&root_ss_visitor) == -1)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "(%N:%l) be_produce - "
+                    "server skeletons for Root failed\n"));
+        BE_abort ();
+      }
+  }
 
   // (7) Generated server template header.
   if (be_global->gen_tie_classes ())
@@ -317,36 +295,32 @@ BE_produce (void)
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);
 
       // Create a visitor.
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_root_ih root_ih_visitor (&ctx);
 
       // Generate code for the implementation header.
-      if (root->accept (visitor) == -1)
+      if (root->accept (&root_ih_visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_produce - "
                       "implementation skeletons for Root failed\n"));
           BE_abort ();
         }
-
-      delete visitor;
 
       // (9) Generate implementation source.
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IS);
 
       // Create a visitor.
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_root_is root_is_visitor (&ctx);
 
       // Generate code for the implementation source.
-      if (root->accept (visitor) == -1)
+      if (root->accept (&root_is_visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_produce - "
                       "implementation skeletons for Root failed\n"));
           BE_abort ();
         }
-
-      delete visitor;
     }
 
   // Clean up.

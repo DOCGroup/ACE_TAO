@@ -18,13 +18,15 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_typedef.h"
+#include "be_visitor_typecode/typecode_defn.h"
 
-ACE_RCSID(be_visitor_typedef, typedef_cs, "$Id$")
+ACE_RCSID (be_visitor_typedef, 
+           typedef_cs, 
+           "$Id$")
 
 
 // ******************************************************
@@ -68,82 +70,82 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
 
   if (this->ctx_->tdef ())
     {
-      // the fact that we are here indicates that we were generating code for a
+      // The fact that we are here indicates that we were generating code for a
       // typedef node whose base type also happens to be another typedef-ed
-      // (i.e. an alias) node for another (possibly alias) node
+      // (i.e. an alias) node for another (possibly alias) node.
 
       this->ctx_->alias (node); // save this alias
 
-      // grab the most primitive base type in the chain to avoid recusrsively
-      // going thru this visit method
+      // Grab the most primitive base type in the chain to avoid recusrsively
+      // going thru this visit method.
       bt = node->primitive_base_type ();
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"
-                             ),  -1);
+                             "bad primitive base type\n"),  
+                            -1);
         }
-      // accept on this base type
+      // Accept on this base type.
       if (bt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"
-                             ),  -1);
+                             "failed to accept visitor\n"),  
+                            -1);
         }
+
       this->ctx_->alias (0);
     }
   else
     {
-      // the context has not stored any "tdef" node. So we must be in here for
-      // the first time
-      this->ctx_->tdef (node); // save the typedef node
+      // The context has not stored any "tdef" node. So we must be in here for
+      // the first time.
+      this->ctx_->tdef (node);
 
-      // grab the immediate base type node
+      // Grab the immediate base type node.
       bt = be_type::narrow_from_decl (node->base_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad base type\n"
-                             ),  -1);
+                             "bad base type\n"),  
+                            -1);
         }
-      // accept on this base type
+
+      // Accept on this base type.
       if (bt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"
-                             ),  -1);
+                             "failed to accept visitor\n"), 
+                            -1);
         }
 
-      // @@ NW: !bt->is_local () is a hack.  There should be a way to
-      // propagate bt's info up to typedef.
-      if (!node->imported () && !node->is_local () && !bt->is_local ())
+      if (!node->imported () && be_global->tc_support ())
         {
-          // by using a visitor to declare and define the TypeCode, we have the
-          // added advantage to conditionally not generate any code. This will be
-          // based on the command line options. This is still TO-DO
-          be_visitor *visitor;
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
           ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor || (node->accept (visitor) == -1))
+          be_visitor_typecode_defn visitor (&ctx);
+
+          if (node->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_typedef_cs::"
                                  "visit_typedef - "
-                                 "TypeCode definition failed\n"
-                                 ), -1);
+                                 "TypeCode definition failed\n"), 
+                                -1);
             }
 
         }
+
       this->ctx_->tdef (0);
     }
 

@@ -80,7 +80,11 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
                                         UTL_NameList *nl,
                                         UTL_NameList *supports,
                                         idl_bool compile_now)
-  : pd_interface_name (n)
+  : pd_interface_name (n),
+    pd_inherits (0),
+    pd_n_inherits (0),
+    pd_inherits_flat (0),
+    pd_n_inherits_flat (0)
 {
   if (compile_now)
     {
@@ -231,7 +235,7 @@ void
 FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
 {
   // Check for badly formed interface.
-  if (i == NULL)
+  if (i == 0)
     {
       return;
     }
@@ -291,21 +295,21 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
   // Loop twice if nl and supports are nonempty.
   for (int loops = 0; loops < 2; ++loops)
     {
-      if (nl != NULL)
+      if (nl != 0)
         {
           for (UTL_NamelistActiveIterator l (nl); !l.is_done (); l.next ())
             {
               item = l.item ();
 
               // Check that scope stack is valid.
-              if (idl_global->scopes ()->top () == 0)
+              if (idl_global->scopes ().top () == 0)
                 {
                   idl_global->err ()->lookup_error (item);
                   return;
                 }
 
               // Look it up.
-              UTL_Scope *s = idl_global->scopes ()->top ();
+              UTL_Scope *s = idl_global->scopes ().top ();
 
               d = s->lookup_by_name  (item,
                                       I_TRUE);
@@ -397,25 +401,32 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
   // OK, install in interface header.
   // First the flat list (all ancestors).
-  this->pd_inherits_flat = new AST_Interface *[iused_flat];
-
-  for (j = 0; j < iused_flat; j++)
+  if (iused_flat > 0)
     {
-      this->pd_inherits_flat[j] = iseen_flat[j];
-    }
+      ACE_NEW (this->pd_inherits_flat,
+               AST_Interface *[iused_flat]);;
 
-  this->pd_n_inherits_flat = iused_flat;
+      for (j = 0; j < iused_flat; j++)
+        {
+          this->pd_inherits_flat[j] = iseen_flat[j];
+        }
+
+      this->pd_n_inherits_flat = iused_flat;
+    }
 
   // Then the list of immediate ancestors.
-  ACE_NEW (this->pd_inherits,
-           AST_Interface *[iused]);
-
-  for (k = 0; k < iused; k++)
+  if (iused > 0)
     {
-      this->pd_inherits[k] = iseen[k];
-    }
+      ACE_NEW (this->pd_inherits,
+               AST_Interface *[iused]);
 
-  this->pd_n_inherits = iused;
+      for (k = 0; k < iused; k++)
+        {
+          this->pd_inherits[k] = iseen[k];
+        }
+
+      this->pd_n_inherits = iused;
+    }
 }
 
 // check_ methods called from compile_inheritance()
