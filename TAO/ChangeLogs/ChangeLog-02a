@@ -1,5 +1,13 @@
 Tue Jun 19 14:35:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
+	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
+
+	  Added the GIOP version info in creation of TAO_InputCDR object
+	  in more_messages(). This is due to the changes made regarding the 
+	  WChar implementation of GIOP 1.2.
+
+Tue Jun 19 14:35:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
         * tests/DSI_Gateway/README:
 
           Added reminder that ACE must be compiled with
