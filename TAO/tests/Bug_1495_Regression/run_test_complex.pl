@@ -35,7 +35,7 @@ if (PerlACE::waitforfile_timed ($middleserverfile, 2) == -1) {
     exit 1;
 }
 
-$SV->SpawnWaitKill (50);
+$server = $SV->SpawnWaitKill (50);
 
 $client = $CL->WaitKill (5);
 
@@ -43,8 +43,6 @@ if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
-
-$server = $SV->WaitKill (5);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
