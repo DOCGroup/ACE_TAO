@@ -12,7 +12,6 @@
 
 #include "tao/Stub.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 #include "tao/Object.h"
 #include "tao/GIOP.h"
 #include "tao/NVList.h"

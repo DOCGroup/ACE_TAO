@@ -164,6 +164,9 @@ private:
 class TAO_Export TAO_Policy_Current : public POA_CORBA::PolicyCurrent
 {
 public:
+  TAO_Policy_Current (void);
+  // Constructor
+
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =

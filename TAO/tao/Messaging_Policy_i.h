@@ -39,8 +39,11 @@ class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public POA_Messaging::Re
   //
 public:
   TAO_RelativeRoundtripTimeoutPolicy_i (PortableServer::POA_ptr poa,
-                                      const TimeBase::TimeT& relative_expiry);
+                                        const TimeBase::TimeT& relative_expiry);
   // Constructor
+
+  TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i& rhs);
+  // Copy constructor
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,

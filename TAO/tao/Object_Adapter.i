@@ -1,5 +1,11 @@
 // $Id$
 
+
+ACE_INLINE
+TAO_POA_Current::TAO_POA_Current (void)
+{
+}
+
 ACE_INLINE ACE_Lock &
 TAO_Object_Adapter::lock (void)
 {

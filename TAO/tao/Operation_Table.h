@@ -29,7 +29,7 @@ class TAO_operation_db_entry
   //   corresponding skeleton.  A table of such entries is used to
   //   initialize the different lookup strategies.
 public:
-  CORBA::String opname_;
+  const char* opname_;
   // operation name
 
   TAO_Skeleton skel_ptr_;

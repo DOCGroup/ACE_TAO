@@ -48,6 +48,8 @@ class TAO_POA_Current_Impl;
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
 public:
+  TAO_POA_Current (void);
+  // Constructor
 
   PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
   // Returns the POA on which the current request is being invoked.

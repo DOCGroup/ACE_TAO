@@ -31,7 +31,6 @@
 #include "tao/Environment.h"
 #include "tao/Context.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 
 class TAO_Export CORBA_Request
 {
