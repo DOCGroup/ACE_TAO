@@ -402,10 +402,10 @@ AV_Server_Sig_Handler::clear_child (int sig)
 void
 AV_Server_Sig_Handler::int_handler (int sig)
 {
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) killed by signal %d",
               sig));
-  exit (0);
 }
 
 // AV_Server routines
@@ -414,9 +414,9 @@ AV_Server_Sig_Handler::int_handler (int sig)
 AV_Server::AV_Server (void)
 {
   // @@ Sumedh, why are these allocated dynamically?
-  this->signal_handler_ = new AV_Server_Sig_Handler ;
-  this->orb_manager_ = new TAO_ORB_Manager ;
-  this->video_control_ = new Video_Control_i;
+  //  this->signal_handler_ = new AV_Server_Sig_Handler ;
+  //  this->orb_manager_ = new TAO_ORB_Manager ;
+  //  this->video_control_ = new Video_Control_i;
 }
 
 // %% move to the destructor or sig handler
@@ -492,21 +492,21 @@ AV_Server::init (int argc,
   int result;
 
   // Initialize the orb_manager
-  this->orb_manager_->init_child_poa (argc,
+  this->orb_manager_.init_child_poa (argc,
                                       argv,
                                       "child_poa",
                                       env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
-  this->orb_manager_->activate_under_child_poa ("Video_Control",
-                                                this->video_control_,
+  this->orb_manager_.activate_under_child_poa ("Video_Control",
+                                                &this->video_control_,
                                                 env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
   CORBA::ORB_var orb = 
-    this->orb_manager_->orb ();
+    this->orb_manager_.orb ();
   PortableServer::POA_var child_poa = 
-    this->orb_manager_->child_poa ();
+    this->orb_manager_.child_poa ();
   // Initialize the Naming Server
   this->naming_server_.init (orb,child_poa);
 
@@ -516,7 +516,7 @@ AV_Server::init (int argc,
   video_control_name[0].id = CORBA::string_dup ("Video_Control");
   // Register the video control object with the naming server.
   this->naming_server_->bind (video_control_name,
-                              this->video_control_->_this (env),
+                              this->video_control_._this (env),
                               env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
@@ -525,7 +525,7 @@ AV_Server::init (int argc,
     return result;
 
   // Register the various signal handlers with the reactor.
-  result = this->signal_handler_->register_handler ();
+  result = this->signal_handler_.register_handler ();
 
   if (result < 0)
     return result;
@@ -587,7 +587,7 @@ AV_Server::run (CORBA::Environment& env)
     //  ACE_Reactor::instance ()->run_event_loop (); 
 
   // Run the ORB event loop
-  this->orb_manager_->run (env);
+  this->orb_manager_.run (env);
 
   TAO_CHECK_ENV_RETURN (env,-1);
 
@@ -600,8 +600,8 @@ AV_Server::run (CORBA::Environment& env)
 
 AV_Server::~AV_Server (void)
 {
-  if (this->signal_handler_ != 0)
-    delete this->signal_handler_;
+  //  if (this->signal_handler_ != 0)
+  //    delete this->signal_handler_;
 
   // @@ Shouldn't you delete the orb_manager_ and other objects you
   // allocated dynamically?
