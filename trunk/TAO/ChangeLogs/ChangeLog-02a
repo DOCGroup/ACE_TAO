@@ -1,3 +1,24 @@
+Thu Nov 16 09:57:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+
+	  Removed the environment argument from init_reply() - it's
+	  not used.
+
+	* tao/PortableServer/DomainS.cpp:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/MessagingS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/orbsvcs/IFR_Service/InterfaceS.cpp:
+
+	  Modified these files to conform to the change above.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+	  Modified code generation to conform to the change above.
+
 Thu Nov 16 08:15:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/InterfaceC.cpp:
