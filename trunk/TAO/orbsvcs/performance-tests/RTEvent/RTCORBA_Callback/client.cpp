@@ -1,15 +1,18 @@
 // $Id$
 
+#include "Callback.h"
+
 #include "RT_Class.h"
 #include "ORB_Holder.h"
 #include "Servant_var.h"
 #include "RIR_Narrow.h"
 #include "RTServer_Setup.h"
 #include "Client_Options.h"
-#include "Callback.h"
 #include "Implicit_Deactivator.h"
 #include "Shutdown.h"
 #include "Auto_Functor.h"
+#include "ORB_Task.h"
+#include "ORB_Task_Activator.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
@@ -91,6 +94,13 @@ public:
 
     for (int i = 0; i != this->iterations_; ++i)
       {
+        if ((i + 1) % 1000 == 0)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) - Thread has sent %d messages @ %T\n",
+                        i + 1));
+          }
+
         ACE_Time_Value period (0, this->period_in_usecs_);
         ACE_OS::sleep (period);
 
@@ -152,10 +162,11 @@ public:
         ACE_Time_Value period (0, this->period_in_usecs_);
         ACE_OS::sleep (period);
 
-        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-        if (this->stopped_)
-          return;
-
+        {
+          ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+          if (this->stopped_)
+            return;
+        }
 
         ACE_TRY {
           CORBA::ULongLong dummy = 0;
@@ -230,6 +241,12 @@ int main (int argc, char *argv[])
 
       PortableServer::POA_var the_poa (rtserver_setup.poa ());
 
+      ORB_Task orb_task (orb);
+      ORB_Task_Activator orb_task_activator (rt_class.priority_high (),
+                                             rt_class.thr_sched_class (),
+                                             options.nthreads,
+                                             &orb_task);
+
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
       CORBA::Object_var object =
@@ -293,7 +310,7 @@ int main (int argc, char *argv[])
       history.collect_basic_stats (high_priority_stats);
       high_priority_stats.dump_results ("High Priority", gsf);
 
-      low_priority.thr_mgr ()->wait ();
+      low_priority.wait ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - all task(s) joined\n"));
 

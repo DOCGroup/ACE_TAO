@@ -3,8 +3,9 @@
 # $Id$
 #
 
-LOW_PRIORITY="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28"
-#"1 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32"
+LOW_PRIORITY="1 4 8 12 16 20 24 28 32"
+
+ITERATIONS=10000
 
 #IOR=/project/amras/coryan/IOR/roundtrip.ior
 IOR=test.ior
@@ -19,7 +20,7 @@ for c in $LOW_PRIORITY; do
   while [ ! -f $IOR ]; do
     sleep 1
   done
-  ./client -ORBSvcConf realtime.conf -r -d -h 10000 -l 10000 -i 20000 -n $c -k file://$IOR > rtcorba.$c.txt 2>&1
+  ./client -ORBSvcConf realtime.conf -g -r -d -h 0 -l 0 -w 9000 -i $ITERATIONS -n $c -k file://$IOR > rtcorba.$c.txt 2>&1
   sleep 5
   wait
 
@@ -32,7 +33,7 @@ for c in $LOW_PRIORITY; do
   while [ ! -f $IOR ]; do
     sleep 1
   done
-  ./client -d -h 10000 -l 10000 -i 20000 -n $c -k file://$IOR > reactive.$c.txt 2>&1
+  ./client -g -d -h 0 -l 0 -w 9000 -i $ITERATIONS -n $c -k file://$IOR > reactive.$c.txt 2>&1
   sleep 5
   wait
 

@@ -62,11 +62,13 @@ public:
   High_Priority_Task (Test::Roundtrip_ptr roundtrip,
                       ACE_Barrier *barrier,
                       int iterations,
-                      int period_in_usecs)
+                      int period_in_usecs,
+                      int workload)
     : Roundtrip_Task (roundtrip, barrier)
     , sample_history (iterations)
     , iterations_ (iterations)
     , period_in_usecs_ (period_in_usecs)
+    , workload_ (workload)
   {
   }
 
@@ -79,7 +81,8 @@ public:
 
         ACE_TRY {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
-          (void) this->roundtrip_->test_method (start
+          (void) this->roundtrip_->test_method (start,
+                                                this->workload_
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_hrtime_t elapsed = ACE_OS::gethrtime () - start;
@@ -97,6 +100,8 @@ private:
   int iterations_;
 
   int period_in_usecs_;
+
+  int workload_;
 };
 
 class Low_Priority_Task : public Roundtrip_Task
@@ -104,10 +109,12 @@ class Low_Priority_Task : public Roundtrip_Task
 public:
   Low_Priority_Task (Test::Roundtrip_ptr roundtrip,
                      ACE_Barrier *barrier,
-                     int period_in_usecs)
+                     int period_in_usecs,
+                     int workload)
     : Roundtrip_Task (roundtrip, barrier)
     , stopped_ (0)
     , period_in_usecs_ (period_in_usecs)
+    , workload_ (workload)
   {
   }
 
@@ -124,14 +131,16 @@ public:
         ACE_Time_Value period (0, this->period_in_usecs_);
         ACE_OS::sleep (period);
 
-        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-        if (this->stopped_)
-          return;
-
+        {
+          ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+          if (this->stopped_)
+            return;
+        }
 
         ACE_TRY {
           CORBA::ULongLong dummy = 0;
-          (void) this->roundtrip_->test_method (dummy
+          (void) this->roundtrip_->test_method (dummy,
+                                                this->workload_
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -146,6 +155,8 @@ private:
   int stopped_;
 
   int period_in_usecs_;
+
+  int workload_;
 };
 
 int main (int argc, char *argv[])
@@ -213,7 +224,8 @@ int main (int argc, char *argv[])
       if (options.global_low_priority_rate)
         per_thread_period = options.low_priority_period * options.nthreads;
       Low_Priority_Task low_priority (roundtrip.in (), &barrier,
-                                      per_thread_period);
+                                      per_thread_period,
+                                      options.low_priority_workload);
       low_priority.activate (rt_class.thr_sched_class ()
                              | THR_NEW_LWP | THR_JOINABLE,
                              options.nthreads, 1,
@@ -221,7 +233,8 @@ int main (int argc, char *argv[])
 
       High_Priority_Task high_priority (roundtrip.in (), &barrier,
                                         options.iterations,
-                                        options.high_priority_period);
+                                        options.high_priority_period,
+                                        options.high_priority_workload);
       high_priority.activate (rt_class.thr_sched_class ()
                               | THR_NEW_LWP | THR_JOINABLE,
                               1, 1,

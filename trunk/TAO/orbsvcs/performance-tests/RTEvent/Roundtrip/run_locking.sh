@@ -3,23 +3,23 @@
 # $Id$
 #
 
-LOW_PRIORITY="1 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30"
+. parameters
 
-#IOR=/project/amras/coryan/IOR/roundtrip.ior
-IOR=test.ior
+for n in $NTHREADS; do
+  for c in $NCONSUMERS; do
+    for t in $LOCKING_TYPES; do
+      date
+      echo $t $c $n
 
-for c in $LOW_PRIORITY; do
-  for t in copy_on_write copy_on_read delayed immediate; do
-    date
-    echo $t $c
+      /bin/rm -f $IOR
+#     ssh $REMOTE_HOST "cd $REMOTE_LOCATION ; ./server -ORBSvcConf ec.locking_${t}.conf -r -o $IOR" >server.log 2>&1 </dev/null &
+      ./server -ORBSvcConf ec.locking_${t}.conf -o $IOR -n $n >server.log 2>&1 </dev/null &
+      while [ ! -f $IOR ]; do
+        sleep 1
+      done
+      ./client -d -u -h 10000 -l 10000 -i $ITERATIONS -c $c -n $n -k file://$IOR > ec_locking.${t}.$c.txt 2>&1
 
-    /bin/rm -f $IOR
-#   ssh celegorm "cd /project/celegorm/coryan/EC_Roundtrip ; ./server -ORBSvcConf ec.dispatching_rtcorba.conf -r -o $IOR" >server.log 2>&1 </dev/null &
-    ./server -ORBSvcConf ec.locking_${t}.conf -o $IOR >server.log 2>&1 </dev/null &
-    while [ ! -f $IOR ]; do
-      sleep 1
+      wait
     done
-    ./client -d -h 10000 -l 10000 -i 25000 -n $c -k file://$IOR > ec_locking_${t}.$c.txt 2>&1
-    wait
   done
 done

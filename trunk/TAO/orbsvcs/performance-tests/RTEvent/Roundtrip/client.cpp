@@ -62,7 +62,7 @@ int main (int argc, char *argv[])
       RTServer_Setup rtserver_setup (options.use_rt_corba,
                                      orb,
                                      rt_class,
-                                     options.nthreads
+                                     1 // options.nthreads
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -79,10 +79,7 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var supplier_poa (rtserver_setup.poa ());
-      PortableServer::POA_var consumer_poa (rtserver_setup.poa ());
-
-      ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
+      PortableServer::POA_var the_poa (rtserver_setup.poa ());
 
       ACE_Thread_Manager my_thread_manager;
 
@@ -93,7 +90,7 @@ int main (int argc, char *argv[])
                                              1,
                                              &orb_task);
 
-      ACE_DEBUG ((LM_DEBUG, "ORB is active\n"));
+      ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
       CORBA::Object_var object =
         orb->string_to_object (options.ior ACE_ENV_ARG_PARAMETER);
@@ -111,7 +108,7 @@ int main (int argc, char *argv[])
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Finished EC configuration and activation\n"));
+      ACE_DEBUG ((LM_DEBUG, "Found EC, validated connection\n"));
 
       int thread_count = 1 + options.nthreads;
 
@@ -123,9 +120,38 @@ int main (int argc, char *argv[])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
+      CORBA::Long event_range = 1;
+      if (options.funky_supplier_publication)
+        {
+          if (options.unique_low_priority_event)
+            event_range = 1 + options.low_priority_consumers;
+          else
+            event_range = 2;
+        }
+
+      Client_Group high_priority_group;
+      high_priority_group.init (experiment_id,
+                                ACE_ES_EVENT_UNDEFINED,
+                                event_range,
+                                options.iterations,
+                                options.high_priority_workload,
+                                gsf,
+                                the_poa.in (),
+                                the_poa.in ());
+
+      Auto_Disconnect<Client_Group> high_priority_disconnect;
+
+      if (!options.high_priority_is_last)
+        {
+          high_priority_group.connect (ec.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          high_priority_disconnect = &high_priority_group;
+        }
+
       int per_thread_period = options.low_priority_period;
       if (options.global_low_priority_rate)
-        per_thread_period = options.low_priority_period * options.low_priority_consumers;
+        per_thread_period = options.low_priority_period * options.nthreads;
 
       Low_Priority_Setup<Client_Group> low_priority_setup (
           options.low_priority_consumers,
@@ -139,31 +165,25 @@ int main (int argc, char *argv[])
           rt_class.priority_low (),
           rt_class.thr_sched_class (),
           per_thread_period,
-          supplier_poa.in (),
-          consumer_poa.in (),
+          the_poa.in (),
+          the_poa.in (),
           ec.in (),
           &barrier
           ACE_ENV_ARG_PARAMETER);
 
-      Client_Group high_priority_group;
-      high_priority_group.init (experiment_id,
-                                ACE_ES_EVENT_UNDEFINED,
-                                options.iterations,
-                                options.high_priority_workload,
-                                gsf,
-                                supplier_poa.in (),
-                                consumer_poa.in ());
-      high_priority_group.connect (ec.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      Auto_Disconnect<Client_Group> high_priority_disconnect (&high_priority_group);
-
+      if (options.high_priority_is_last)
+        {
+          high_priority_group.connect (ec.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          high_priority_disconnect = &high_priority_group;
+        }
       Send_Task high_priority_task;
       high_priority_task.init (options.iterations,
                                options.high_priority_period,
                                0,
                                ACE_ES_EVENT_UNDEFINED,
-                               1,
+                               experiment_id,
                                high_priority_group.supplier (),
                                &barrier);
       high_priority_task.thr_mgr (&my_thread_manager);
@@ -210,19 +230,5 @@ int main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class Servant_var<Supplier>;
-template class Servant_var<Consumer>;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >;
-template class ACE_Auto_Basic_Array_Ptr<Send_Task>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate Servant_var<Supplier>
-#pragma instantiate Servant_var<Consumer>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Send_Task>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
