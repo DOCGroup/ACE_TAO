@@ -28,6 +28,7 @@
 #include "CIAO_ServersS.h"
 #include "Object_Set_T.h"
 
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/SString.h"
 
 
