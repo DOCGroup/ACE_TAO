@@ -51,6 +51,8 @@ Thread_Pool::shutdown (void)
       // this sleep helps to shutdown correctly -> was an error!
       ACE_OS::sleep (1);
     }
+
+  return 0;
 }
 
 // Simply enqueue the Message_Block into the end of the queue.
