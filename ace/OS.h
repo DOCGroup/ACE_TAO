@@ -2314,11 +2314,11 @@ extern "C" int sigwait (sigset_t *set);
 #endif /* !RTLD_LAZY */
   const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #elif defined (__hpux)
-# if __cplusplus >= 199707L
+# if defined(__GNUC__) || __cplusplus >= 199707L
 #   include /**/ <dl.h>
 # else
 #   include /**/ <cxxdl.h>
-# endif /* HP aC++ vs. HP C++ */
+# endif /* (g++ || HP aC++) vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
   const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
 #else
