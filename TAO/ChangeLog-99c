@@ -1,3 +1,8 @@
+Wed Jan 20 23:32:47 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
+	Added the ACE_U64_TO_U32 macros to fix the warnings by g++386.
+
 Wed Jan 20 20:52:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Removed Win32
