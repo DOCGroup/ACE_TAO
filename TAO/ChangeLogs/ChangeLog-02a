@@ -1,4 +1,10 @@
-Sun May  6 10:02:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Sun May  6 10:33:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Replicated the
+	  changes from IIOP to these protocols.
+
+Sun May  6 10:27:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_Handler.cpp:
@@ -24,7 +30,7 @@ Sun May  6 10:02:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  loop. The other strategies used a reactor and adhered to the
 	  reactor semantics. The Wait_On_Read did not use a reactor and
 	  followed a different semantics for success and failure. This
-	  created confusion at the protocol implementation level. 
+	  created confusion at the protocol implementation level.
 
 	* tao/Strategies/SHMIOP_Transport.cpp:
 	* tao/Strategies/UIOP_Transport.cpp: Replicated the changes from
@@ -35,25 +41,25 @@ Sun May  6 9:49:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
 
 	  Changed the order of connection to senders and receivers so that
-	  when switiching distributers the old distributer is disconnected 
+	  when switiching distributers the old distributer is disconnected
 	  from the sender before the new distributer is connected.
-	
+
 Sat May  5 20:31:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
-        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:	
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
 
 	  Made changes to avoid compiling and running the test on VxWorks.
-	
+
 Sat May  5 16:24:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/TIE/server.cpp: Guarded some more portions using
 	  the ACE_HAS_USING_KEYWORD macros. This should prevent compile
-	  errors in the two Lynx builds. 
+	  errors in the two Lynx builds.
 
 Sat May  5 13:27:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile: 
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
 	* orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
@@ -71,12 +77,12 @@ Fri May  4 14:11:36 2001  Chad Elliott  <elliott_c@ociweb.com>
         * tao/Transport.h:
         * tao/Transport_Cache_Manager.cpp:
         * tao/Transport_Cache_Manager.h:
-        * tao/Transport_Cache_Manager.inl:  
+        * tao/Transport_Cache_Manager.inl:
 
           Added code to clean up unregistered connection handlers at ORB
           shutdown.
 
-        * tao/Wait_On_Read.cpp: 
+        * tao/Wait_On_Read.cpp:
 
           Close the transport if we get a -1 from the call to
           read_process_message() on the transport.  This indicates an error,
@@ -115,7 +121,7 @@ Fri May  4 12:08:55 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu May  3 14:56:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply): 
+	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply):
 	* tao/Asynch_Reply_Dispatcher.cpp:
 	* tao/GIOP_Message_Generator_Parser_10.cpp:
 	* tao/GIOP_Message_Generator_Parser_12.cpp: Changed the call
@@ -133,13 +139,13 @@ Thu May  3 11:55:42 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 	  Modified the TAO_CodeGen::TAO_CDR_INPUT case to perform octet
 	  sequence optimization only if its safe. This check was absent
 	  previously, forcing us to always use locked input cdr allocators.
-	
+
 	* tao/IOPC.cpp:
 	* tao/MessagingC.cpp:
 	* tao/Services.cpp:
 	* tao/PortableServer/PortableServerC.cpp:
-	  Files affected by the IDL compiler changes had to be redone. 
-	
+	  Files affected by the IDL compiler changes had to be redone.
+
 	* tao/diffs/IOPC.cpp.diff:
 	* tao/diffs/MessagingC.cpp.diff:
 	* tao/diffs/PortableServerC.cpp.diff:
