@@ -11,9 +11,10 @@ ACE_RCSID (tao,
 
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc)
-  : value_destructor_ (destructor),
-    type_ (CORBA::TypeCode::_duplicate (tc)),
-    refcount_ (1)
+  : value_destructor_ (destructor)
+  , type_ (CORBA::TypeCode::_duplicate (tc))
+  , mutex_ ()
+  , refcount_ (1)
 {
 }
 
@@ -93,12 +94,20 @@ TAO::Any_Impl::_tao_any_wstring_destructor (void *x)
 void
 TAO::Any_Impl::_add_ref (void)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             guard,
+             this->mutex_);
+
   ++this->refcount_;
 }
 
 void
 TAO::Any_Impl::_remove_ref (void)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             guard,
+             this->mutex_);
+
   if (--this->refcount_ != 0)
     {
       return;
@@ -139,4 +148,3 @@ TAO::Any_Impl::to_abstract_base (CORBA::AbstractBase_ptr &) const
 {
   return 0;
 }
-
