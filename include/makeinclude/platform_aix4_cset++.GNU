@@ -39,6 +39,7 @@ CCFLAGS     += $(CFLAGS) -qtempinc -qinfo
 # number of the compiler.
 XLCVERSION := $(shell echo "__xlC__" > ./testAIXCompilerVersion.cpp)
 XLCVERSION := $(shell $(CXX) -E ./testAIXCompilerVersion.cpp | tail -1')
+ACE_AIX_CLEAN := $(shell $(RM) ./testAIXCompilerVersion.cpp)
 ifeq ($(XLCVERSION),0x0306)
  CCFLAGS    += -qflag=e:e
 else
