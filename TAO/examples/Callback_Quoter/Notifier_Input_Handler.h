@@ -55,6 +55,10 @@ public:
   // Handle the user input.
 
 private:
+
+  TAO_ORB_Manager orb_manager_;
+  // The tao orb manager object.
+
   int parse_args (void);
   // Parses the command line arguments.
 
@@ -77,9 +81,6 @@ private:
   TAO_Naming_Server naming_server_;
   // An instance of the name server, wherein the naming context
   // containg the factory of objects will be registered.
-
-  TAO_ORB_Manager orb_manager_;
-  // The tao orb manager object.
 
   Notifier_i notifier_i_;
   // The servant object registered with the orb.

@@ -111,8 +111,7 @@ public:
 
   int notifier_exited_;
   //This marks the exit of the notifier. This should be taken care of
-  // before the consumer tries to unregister after the notifier quits.
- 
+  // before the consumer tries to unregister after the notifier quits. 
 
   
 };

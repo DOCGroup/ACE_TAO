@@ -43,15 +43,22 @@ This is the callback feature in this example.
 Running the application:
 ________________________
 
-There are 3  parts to it:
+CASE I: USing the Naming Service
+================================
 
-----------------------------------------------------------------------------
+a) Non-interactive
+
+  SImply execute the ./run_test.pl, ofcourse after you start off the Naming Service.
+
+b) Interactive
+
+There are 3  parts to it:
 
 1) shell 1: type at the command prompt:
 
 ./notifier
 
-------------------------------------------------------------------------------
+
 
 2) shell 2: type at the command prompt:
 
@@ -63,7 +70,7 @@ Now wait for information to arrive.
 
 You can  unregister by typing 'u' and quit by typing 'q'.
 
------------------------------------------------------------------------------
+
 
 3) shell 3: type at the command prompt:
 
@@ -71,6 +78,42 @@ You can  unregister by typing 'u' and quit by typing 'q'.
 
 The -i option simply tells the daemon where to pick information from.
 TIP:: the contents of the input file per line should be: stockname and its price. 
+      Sample: ./example.stocks
+
+The other option includes setting the period for the stock feed.
+
+----------------------------------------------------------------------------
+
+CASE II: Without using the Naming Service.
+=========================================
+
+There are 3  parts to it:
+
+1) shell 1: type at the command prompt:
+
+./notifier -fior_file -s
+
+
+
+2) shell 2: type at the command prompt:
+
+./consumer -fior_file -s
+
+register yourself with 'r'
+Enter the stockname and value.
+Now wait for information to arrive.
+
+You can  unregister by typing 'u' and quit by typing 'q'.
+
+
+
+3) shell 3: type at the command prompt:
+
+./supplier -ifilename -fior_file -s
+
+The -i option simply tells the daemon where to pick information from.
+TIP:: the contents of the input file per line should be: stockname and its price. 
+      Sample: ./example.stocks
 
 The other option includes setting the period for the stock feed.
 

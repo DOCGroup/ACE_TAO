@@ -28,9 +28,9 @@ Supplier::Supplier (void)
   : ior_ (0),
     use_naming_service_ (1),
     notifier_ (),
+    f_ptr_ (0),
     loop_count_ (10),
-    period_value_ (1),
-    f_ptr_(0)
+    period_value_ (1)
 {
   // No-op.
 }
@@ -57,8 +57,8 @@ Supplier::read_ior (char *filename)
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
-                        filename,"file_open"),
+                       "Unable to open %s for reading\n",
+                        filename),
                         -1);
 
   ACE_Read_Buffer ior_buffer (f_handle);
@@ -66,8 +66,7 @@ Supplier::read_ior (char *filename)
 
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to read ior: %p\n",
-                       "read_file"),
+                       "Unable to read ior\n"),
                       -1);
 
   this->ior_ = ACE_OS::strdup (data);
@@ -157,17 +156,22 @@ Supplier::send_market_status (const char *stock_name,
 
   ACE_TRY
     {
+      
       // Make the RMI.
       this->notifier_->market_status (stock_name,
                                       value,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Exception raised!\n"),
-                        -1);
+      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::send_market_status");
+      return -1;
+    }
+  ACE_CATCH (CORBA::UserException, userex)
+    {
+      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::send_market_status");
+      return -1;
     }
   ACE_ENDTRY;
   return 0;
@@ -197,11 +201,6 @@ Supplier::run (void)
                            "%p\n",
                            "schedule_timer"),
                           -1);
-
-   // ACE_DEBUG ((LM_DEBUG,
-   //               "cancelling timer\n"));
-   //  this->reactor_used ()->cancel_timer (timer_id);
-
 
   // The reactor starts executing in a loop.
    this->reactor_used ()->run_event_loop ();
@@ -239,14 +238,18 @@ Supplier::via_naming_service (void)
                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_TRY_ENV.print_exception ("Supplier::via_naming_service\n");
+      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::via_naming_service\n");
+      return -1;
+    }
+  ACE_CATCH (CORBA::UserException, userex)
+    {
+      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::via_naming_service\n");
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-  
+    
   return 0;
 }
 
@@ -279,6 +282,7 @@ Supplier::init (int argc, char **argv)
                                               this->reactor_used (),
                                               this->f_ptr_),
                       -1);
+
       if (this->use_naming_service_)
         return via_naming_service ();
 
@@ -303,13 +307,18 @@ Supplier::init (int argc, char **argv)
                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_TRY_ENV.print_exception ("Supplier::init");
+      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::init");
+      return -1;
+    }
+  ACE_CATCH (CORBA::UserException, userex)
+    {
+      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::init");
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+ 
   return 0;
 }
 

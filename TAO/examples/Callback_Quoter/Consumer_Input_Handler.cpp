@@ -31,8 +31,6 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  //  CORBA::Environment TAO_IN_ENV;
-
   // The string could read contains \n\0 hence using ACE_OS::read
   // which returns the no of bytes read and hence i can manipulate
   // and remove the devil from the picture i.e '\n' ! ;)
@@ -108,9 +106,7 @@ Consumer_Input_Handler::register_consumer ()
 
   ACE_TRY
     {
-      // @@ The following code should be part of the Consumer_Handler
-      // class...
-
+     
       // Register with the server.
       this->consumer_handler_->server_->register_callback (this->consumer_handler_->stock_name_,
                                                            this->consumer_handler_->threshold_value_,
@@ -145,8 +141,6 @@ Consumer_Input_Handler::unregister_consumer ()
 {
   // Only if the consumer is registered can the
   // unregistration take place.
-
-  //CORBA::Environment ACE_TRY_ENV;
 
   if (consumer_handler_->registered_ == 1)
     {
@@ -192,16 +186,15 @@ Consumer_Input_Handler::quit_consumer_process ()
       this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-
   ACE_CATCHANY
     {
+      this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
+
       // There would be an exception only if there is a communication
       // failure between the notifier and consumer. On catching the
       // exception proclaim the problem and do a graceful exit.
-      ACE_DEBUG ((LM_DEBUG,
-                  "Communication failed!\n"));
-      this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
-
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Communication failed!\n");
       return -1;
     }
   ACE_ENDTRY;
