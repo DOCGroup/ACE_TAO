@@ -40,6 +40,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_QOS_Info;
+class TAO_EC_ProxyPushSupplier;
 
 class TAO_EC_Dispatching
 {
@@ -64,8 +65,12 @@ public:
 
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env) = 0;
+  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                            RtecEventComm::EventSet& event,
+                            const TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env) = 0;
   // The consumer represented by <proxy> should receive <event>.
   // It can use the information in <qos_info> to determine the event
   // priority (among other things).
@@ -83,8 +88,7 @@ class TAO_EC_Reactive_Dispatching
   //   thread to push the event to the consumer.
   //
 public:
-  TAO_EC_Priority_Dispatching (RtecScheduler::Scheduler_ptr
-                               scheduler);
+  TAO_EC_Reactive_Dispatching (void);
   // The scheduler is used to find the range of priorities and similar
   // info.
 
@@ -93,10 +97,12 @@ public:
   virtual void shutdown (void);
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env);
-  // @@ proxy->consumer ()->push (event, env);
-
+  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                            RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env);
 };
 
 // ****************************************************************

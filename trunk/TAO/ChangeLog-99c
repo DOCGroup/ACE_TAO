@@ -5,6 +5,21 @@ Tue Jan 26 16:24:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Added some documentation about the new Event Channel
 	  implementation.
 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
+	* orbsvcs/orbsvcs/Event/EC_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.i: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
+	  Added the implementation of a null filter and the corresponding
+	  filter builder. Also implemented the reactive dispatching
+	  strategy.
+
 Mon Jan 25 17:24:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Timer_Module.h: 

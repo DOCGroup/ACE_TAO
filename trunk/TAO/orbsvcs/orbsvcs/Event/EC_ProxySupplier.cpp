@@ -98,21 +98,41 @@ TAO_EC_ProxyPushSupplier::resume_connection (CORBA::Environment &ACE_TRY_ENV)
 
 int
 TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
-                                  const TAO_EC_QOS_Info& qos_info,
+                                  TAO_EC_QOS_Info& qos_info,
                                   CORBA::Environment& ACE_TRY_ENV)
 {
   return this->child_->filter (event, qos_info, ACE_TRY_ENV);
 }
 
+int
+TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
+                                         TAO_EC_QOS_Info& qos_info,
+                                         CORBA::Environment& ACE_TRY_ENV)
+{
+  return this->child_->filter_nocopy (event, qos_info, ACE_TRY_ENV);
+}
+
 void
 TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
-                                const TAO_EC_QOS_Info& qos_info,
+                                TAO_EC_QOS_Info& qos_info,
                                 CORBA::Environment& ACE_TRY_ENV)
 {
   this->event_channel_->dispatching ()->push (this,
                                               event,
                                               qos_info,
                                               ACE_TRY_ENV);
+  this->child_->clear ();
+}
+
+void
+TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
+                                       TAO_EC_QOS_Info& qos_info,
+                                       CORBA::Environment& ACE_TRY_ENV)
+{
+  this->event_channel_->dispatching ()->push_nocopy (this,
+                                                     event,
+                                                     qos_info,
+                                                     ACE_TRY_ENV);
   this->child_->clear ();
 }
 

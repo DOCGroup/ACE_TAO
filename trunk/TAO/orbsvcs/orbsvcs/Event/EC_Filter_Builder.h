@@ -37,6 +37,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_EC_Filter;
+
 class TAO_EC_Filter_Builder
 {
   // = TITLE
@@ -58,19 +60,19 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Default_Filter_Builder
+class TAO_EC_Null_Filter_Builder
 {
   // = TITLE
   //   A simple implementation of the filter builder.
   //
   // = DESCRIPTION
-  //   Defines the default filter builder.
+  //   Simply creates a Null_Filter in every case.
   //
 public:
-  TAO_EC_Default_Filter_Builder (void);
+  TAO_EC_Null_Filter_Builder (void);
   // constructor.
 
-  virtual ~TAO_EC_Default_Filter_Builder (void);
+  virtual ~TAO_EC_Null_Filter_Builder (void);
   // destructor...
 
   // = The TAO_EC_Filter_Builder methods...
