@@ -1,3 +1,9 @@
+Tue Nov  9 15:47:10 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/XtReactor.cpp (TimerCallbackProc):
+
+	  Fixed "unused argument" warning.
+
 Tue Nov  9 14:57:51 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
