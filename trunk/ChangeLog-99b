@@ -1,3 +1,8 @@
+Fri Jul  9 10:52:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Caching_Utility_T.cpp (minimum): Checked the state of the
+	  Refcounted_Hash_Address with ACE_Recyclable::IDLE_AND_PURGABLE.
+
 Fri Jul 09 10:49:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Message_Queue_Test.cpp (main): changed success
