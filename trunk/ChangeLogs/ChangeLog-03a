@@ -1,3 +1,9 @@
+Wed Aug 30 10:20:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/run_all_list.pm:
+          Enable the Trading Service tests under Minimum CORBA, since now
+          they are compiled in that configuration too.
+
 Tue Aug 29 14:27:37 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_chorus4.x_g++.GNU
