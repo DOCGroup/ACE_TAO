@@ -1,9 +1,9 @@
-// $Id$
-
-
 #include "Request.h"
 
-ACE_RCSID(DynamicInterface, Request, "$Id$")
+
+ACE_RCSID (DynamicInterface,
+           Request,
+           "$Id$")
 
 
 #include "ExceptionList.h"
@@ -11,14 +11,22 @@ ACE_RCSID(DynamicInterface, Request, "$Id$")
 #include "tao/Object.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+#include "DII_ClientRequestInfo.h"
+#include "tao/ClientInterceptorAdapter.h"
+#include "tao/Stub.h"
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
 #if !defined (__ACE_INLINE__)
 # include "Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
-  // Reference counting for DII Request object.
 
-  CORBA::ULong
-CORBA_Request::_incr_refcnt (void)
+// Reference counting for DII Request object.
+
+CORBA::ULong
+CORBA::Request::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
@@ -29,7 +37,7 @@ CORBA_Request::_incr_refcnt (void)
 }
 
 CORBA::ULong
-CORBA_Request::_decr_refcnt (void)
+CORBA::Request::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -50,22 +58,22 @@ CORBA_Request::_decr_refcnt (void)
 }
 
 // The pseudo-object _nil method.
-CORBA_Request_ptr
-CORBA_Request::_nil (void)
+CORBA::Request_ptr
+CORBA::Request::_nil (void)
 {
-  return (CORBA_Request_ptr)0;
+  return (CORBA::Request_ptr)0;
 }
 
 // DII Request class implementation
 
-CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
-                              CORBA::ORB_ptr orb,
-                              const CORBA::Char *op,
-                              CORBA::NVList_ptr args,
-                              CORBA::NamedValue_ptr result,
-                              CORBA::Flags flags,
-                              CORBA::ExceptionList_ptr exceptions
-                              ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::Request::Request (CORBA::Object_ptr obj,
+                         CORBA::ORB_ptr orb,
+                         const CORBA::Char *op,
+                         CORBA::NVList_ptr args,
+                         CORBA::NamedValue_ptr result,
+                         CORBA::Flags flags,
+                         CORBA::ExceptionList_ptr exceptions
+                         ACE_ENV_ARG_DECL_NOT_USED)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     args_ (CORBA::NVList::_duplicate (args)),
     result_ (CORBA::NamedValue::_duplicate (result)),
@@ -92,10 +100,10 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     }
 }
 
-CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
-                              CORBA::ORB_ptr orb,
-                              const CORBA::Char *op
-                              ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::Request::Request (CORBA::Object_ptr obj,
+                         CORBA::ORB_ptr orb,
+                         const CORBA::Char *op
+                         ACE_ENV_ARG_DECL_NOT_USED)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     flags_ (0),
     // env_ (env),
@@ -122,7 +130,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
            CORBA::NamedValue);
 }
 
-CORBA_Request::~CORBA_Request (void)
+CORBA::Request::~Request (void)
 {
   ACE_ASSERT (refcount_ == 0);
 
@@ -141,7 +149,7 @@ CORBA_Request::~CORBA_Request (void)
 // flow in some exotic situations.
 
 void
-CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
 
@@ -153,6 +161,17 @@ CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
                                 this,
                                 this->byte_order_);
 
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  int _invoke_status;
+  TAO_ClientRequestInterceptor_Adapter _tao_vfr (
+    this->target_->_stubobj()->orb_core ()->client_request_interceptors (),
+    &call,
+    _invoke_status);
+
+  TAO_DII_ClientRequestInfo _tao_ri (&call,this->target_ ,this);
+#endif  /* TAO_HAS_INTERCEPTORS */
+
   // Loop as needed for forwarding.
   for (;;)
     {
@@ -160,6 +179,13 @@ CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+
+#if TAO_HAS_INTERCEPTORS == 1
+      _tao_vfr.send_request (&_tao_ri
+                             ACE_ENV_ARG_PARAMETER);
+
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
       call.prepare_header (ACE_static_cast (CORBA::Octet,
                                             flag)
@@ -185,6 +211,10 @@ CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
       if (status == TAO_INVOKE_EXCEPTION)
         {
           // Shouldn't happen.
+#if TAO_HAS_INTERCEPTORS == 1
+          _tao_vfr.receive_exception (&_tao_ri
+                                      ACE_ENV_ARG_PARAMETER);
+#endif
           return;
         }
 
@@ -196,9 +226,9 @@ CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 
       // The only case left is status == TAO_INVOKE_OK, exit the
       // loop.  We cannot retry because at this point we either
-      // got a reply or something with an status of
-      // COMPLETED_MAYBE, thus we cannot reissue the request if we
-      // are to satisfy the "at most once" semantics.
+      // got a reply or something with n status of COMPLETED_MAYBE,
+      // thus we cannot reissue the request if we are to satisfy the
+      // "at most once" semantics.
       break;
     }
 
@@ -225,10 +255,18 @@ CORBA_Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
                                   CORBA::ARG_OUT | CORBA::ARG_INOUT,
                                   this->lazy_evaluation_
                                   ACE_ENV_ARG_PARAMETER);
+
+#if TAO_HAS_INTERCEPTORS == 1
+  _tao_ri.result (_invoke_status);
+
+  _tao_ri.reply_status (_invoke_status);
+  _tao_vfr.receive_reply (&_tao_ri
+                          ACE_ENV_ARG_PARAMETER);
+#endif  /* TAO_HAS_INTERCEPTORS */
 }
 
 void
-CORBA_Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
 
@@ -288,7 +326,7 @@ CORBA_Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CORBA_Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -298,7 +336,7 @@ CORBA_Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
     this->response_received_ = 0;
   }
 
-  CORBA::Boolean argument_flag = this->args_->count () ? 1: 0;
+  CORBA::Boolean argument_flag = this->args_->count () ? 1 : 0;
 
   TAO_GIOP_DII_Deferred_Invocation call (this->target_->_stubobj (),
                                          this->orb_->orb_core (),
@@ -349,7 +387,7 @@ CORBA_Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CORBA_Request::get_response (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::get_response (ACE_ENV_SINGLE_ARG_DECL)
 {
   while (!this->response_received_)
     {
@@ -364,7 +402,7 @@ CORBA_Request::get_response (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Boolean
-CORBA_Request::poll_response (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
@@ -375,9 +413,9 @@ CORBA_Request::poll_response (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-CORBA_Request::handle_response (TAO_InputCDR &incoming,
-                                CORBA::ULong reply_status
-                                ACE_ENV_ARG_DECL)
+CORBA::Request::handle_response (TAO_InputCDR &incoming,
+                                 CORBA::ULong reply_status
+                                 ACE_ENV_ARG_DECL)
 {
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
@@ -422,25 +460,25 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
 
 // Constructor.
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request,CORBA_Request_var> (max)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA::Request,CORBA::Request_var> (max)
 {
   // No-op.
 }
 
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request,CORBA_Request_var> (rhs)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA::Request,CORBA::Request_var> (rhs)
 {
   // No-op.
 }
 
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max,
                                             CORBA::ULong length,
-                                            CORBA_Request **data,
+                                            CORBA::Request **data,
                                             CORBA::Boolean release)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request,CORBA_Request_var> (max,
-                                                                     length,
-                                                                     data,
-                                                                     release)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA::Request,CORBA::Request_var> (max,
+                                                                       length,
+                                                                       data,
+                                                                       release)
 {
   // No-op.
 }
@@ -454,12 +492,12 @@ CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>;
-template class TAO_Pseudo_Object_Manager<CORBA_Request,CORBA_Request_var>;
+template class TAO_Unbounded_Pseudo_Sequence<CORBA::Request,CORBA::Request_var>;
+template class TAO_Pseudo_Object_Manager<CORBA::Request,CORBA::Request_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>
-#pragma instantiate TAO_Pseudo_Object_Manager<CORBA_Request,CORBA_Request_var>
+#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA::Request,CORBA::Request_var>
+#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::Request,CORBA::Request_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
