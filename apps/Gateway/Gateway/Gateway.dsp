@@ -82,6 +82,10 @@ SOURCE=.\Event_Forwarding_Discriminator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\File_Parser.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Gateway.cpp
 # End Source File
 # Begin Source File
