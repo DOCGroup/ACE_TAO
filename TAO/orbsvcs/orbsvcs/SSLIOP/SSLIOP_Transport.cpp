@@ -46,6 +46,12 @@ TAO_SSLIOP_Transport::event_handler_i (void)
   return this->connection_handler_;
 }
 
+TAO_Connection_Handler *
+TAO_SSLIOP_Transport::connection_handler_i (void)
+{
+  return this->connection_handler_;
+}
+
 TAO_Pluggable_Messaging *
 TAO_SSLIOP_Transport::messaging_object (void)
 {

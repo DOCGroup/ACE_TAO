@@ -71,6 +71,7 @@ protected:
   //@{
 
   virtual ACE_Event_Handler * event_handler_i (void);
+  virtual TAO_Connection_Handler *connection_handler_i (void);
   virtual ACE_Event_Handler * invalidate_event_handler_i (void);
 
   virtual TAO_Pluggable_Messaging *messaging_object (void);
