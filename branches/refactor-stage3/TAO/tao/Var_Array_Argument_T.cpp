@@ -87,18 +87,19 @@ TAO::Inout_Var_Array_Argument_T<S,S_forany>::interceptor_replace (
 
 // ==============================================================
 
-template<typename S_var, typename S_out, typename S_life, typename S_forany>
-TAO::Out_Var_Array_Argument_T<S_var,S_out,S_life,S_forany>::
+template<typename S, typename S_var, typename S_out, typename S_forany>
+TAO::Out_Var_Array_Argument_T<S,S_var,S_out,S_forany>::
 Out_Var_Array_Argument_T (S_out x)
 {
+  typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
   ACE_ALLOCATOR (x.ptr (),
-                 S_life::tao_alloc ());
+                 ARRAY_TRAITS::tao_alloc ());
   this->x_ = x.ptr ();
 }
 
-template<typename S_var, typename S_out, typename S_life, typename S_forany>
+template<typename S, typename S_var, typename S_out, typename S_forany>
 CORBA::Boolean
-TAO::Out_Var_Array_Argument_T<S_var,S_out,S_life,S_forany>::demarshal (
+TAO::Out_Var_Array_Argument_T<S,S_var,S_out,S_forany>::demarshal (
     TAO_InputCDR & cdr
   )
 {
@@ -108,19 +109,20 @@ TAO::Out_Var_Array_Argument_T<S_var,S_out,S_life,S_forany>::demarshal (
 
 // ============================================================
 
-template<typename S_slice, typename S_var, typename S_life, typename S_forany>
-TAO::Ret_Var_Array_Argument_T<S_slice,S_var,S_life,S_forany>::
+template<typename S, typename S_slice, typename S_var, typename S_forany>
+TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::
 Ret_Var_Array_Argument_T (void)
 {
+  typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
   S_slice * tmp = 0;
   ACE_ALLOCATOR (tmp,
-                 S_life::tao_alloc ());
+                 ARRAY_TRAITS::tao_alloc ());
   this->x_ = tmp;
 }
 
-template<typename S_slice, typename S_var, typename S_life, typename S_forany>
+template<typename S, typename S_slice, typename S_var, typename S_forany>
 CORBA::Boolean
-TAO::Ret_Var_Array_Argument_T<S_slice,S_var,S_life,S_forany>::demarshal (
+TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::demarshal (
     TAO_InputCDR & cdr
   )
 {
@@ -128,33 +130,33 @@ TAO::Ret_Var_Array_Argument_T<S_slice,S_var,S_life,S_forany>::demarshal (
   return cdr >> tmp;
 }
 
-template<typename S_slice, typename S_var, typename S_life, typename S_forany>
+template<typename S, typename S_slice, typename S_var, typename S_forany>
 void
-TAO::Ret_Var_Array_Argument_T<S_slice,S_var,S_life,S_forany>::
+TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::
 interceptor_result (CORBA::Any * any)
 {
   (*any) <<= S_forany (this->x_.ptr ());
 }
 
-template<typename S_slice, typename S_var, typename S_life, typename S_forany>
+template<typename S, typename S_slice, typename S_var, typename S_forany>
 CORBA::Boolean
-TAO::Ret_Var_Array_Argument_T<S_slice,S_var,S_life,S_forany>::
+TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::
 interceptor_replace (CORBA::Any & any)
 {
   S_forany tmp (this->x_.ptr ());
   return any >>= tmp;
 }
 
-template<typename S_slice, typename S_var, typename S_life, typename S_forany>
+template<typename S, typename S_slice, typename S_var, typename S_forany>
 S_slice *
-TAO::Ret_Var_Array_Argument_T<S_slice,S_var,S_life,S_forany>::excp (void)
+TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::excp (void)
 {
   return this->x_.ptr ();
 }
 
-template<typename S_slice, typename S_var, typename S_life, typename S_forany>
+template<typename S, typename S_slice, typename S_var, typename S_forany>
 S_slice *
-TAO::Ret_Var_Array_Argument_T<S_slice,S_var,S_life,S_forany>::retn (void)
+TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::retn (void)
 {
   return this->x_._retn ();
 }

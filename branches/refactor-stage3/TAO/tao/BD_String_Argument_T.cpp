@@ -11,7 +11,7 @@ ACE_RCSID (tao,
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::In_BD_String_Argument_T (
-    S * const & x
+    const S * x
   )
   : x_ (x)
 {}
@@ -197,7 +197,11 @@ TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
 In_BD_String_SArgument_T (void)
 {}
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
 TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
     TAO_InputCDR & cdr

@@ -21,9 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// This set of classes is also used by valuetype arguments. If the
+// specialization is done using S * for the parameter, the semantics
+// are the same as for interfaces, so there's no need for another
+// set of classes.
+
 namespace TAO
 {
-
   /**
    * @class In_Object_Argument_T
    *
