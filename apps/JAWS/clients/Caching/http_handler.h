@@ -31,7 +31,10 @@ public:
   int connect (const char * url);
 
 private:
-  int parseurl (const char *url, char *host, unsigned short *port, char *path);
+  int parseurl (const char *url,
+		char *host,
+		u_short *port,
+		char *path);
 
 private:
   ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR> connector_;
