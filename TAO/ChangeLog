@@ -1,3 +1,16 @@
+Wed Aug 13 17:16:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+
+          In the CDR extraction operator for CORBA::Any, when calling
+          the constructor for TAO::Unknown_IDL_Type, the optional
+          boolean release argument for the type code has been added and
+          set to TRUE. The type code that is passed to this constructor
+          is the result of extraction from the input CDR stream, and so
+          must be ultimately released. Thanks to Sunil Rottoo
+          <srottoo@adacelcanada.com> for reporting the memory leak and
+          suggesting the fix.
+
 Wed Aug 13 16:33:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
