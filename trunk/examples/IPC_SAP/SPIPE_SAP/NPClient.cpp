@@ -7,7 +7,7 @@
 ACE_RCSID(SPIPE_SAP, NPClient, "$Id$")
 
 #if defined (ACE_WIN32)
-#define MAKE_PIPE_NAME(X) \\\\.\\pipe\\#X
+#define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\"#X
 #else
 #define MAKE_PIPE_NAME(X) X
 #endif
