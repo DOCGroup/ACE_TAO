@@ -1,3 +1,12 @@
+Fri Aug 14 10:01:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h (ACE_UINT64_DBLCAST_ADAPTER): with
+          ACE_LACKS_LONGLONG_T, only use low 32 bits.  We could devise
+          a conversion from ACE_U_LongLong to double that uses all
+          64 bits; but, it's probably easier for users to upgrade
+          their hardware and/or compilers to ones that support 64
+          bit ints :-)
+
 Thu Aug 13 19:29:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Message_Queue_T.i: Changed the is_empty_i() method to check
