@@ -26,6 +26,7 @@
 
 #include "UIPMC_Connection_Handler.h"
 #include "portablegroup_export.h"
+#include "ace/Null_Mutex.h"
 
 // ****************************************************************
 
