@@ -1,3 +1,8 @@
+Fri Nov 28 15:34:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Added missing # before include.
+
 Fri Nov 28 15:11:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/ace_flags.bor:
