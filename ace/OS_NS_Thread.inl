@@ -3391,9 +3391,14 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
 # if (defined (__FreeBSD__) && (__FreeBSD__ < 3)) || defined (CHORUS) || defined (ACE_PSOS)
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
-# elif (defined (ACE_HAS_STHREADS) && !defined (_POSIX_PTHREAD_SEMANTICS))
-    *sig = ::sigwait (sset);
-    return *sig;
+# elif defined (ACE_HAS_STHREADS)
+   # if (_POSIX_C_SOURCE - 0 >= 199506L) || defined(_POSIX_PTHREAD_SEMANTICS)
+     errno = ::sigwait (sset, sig);
+     return errno == 0  ?  *sig  :  -1;
+   #else
+     *sig = ::sigwait (sset);
+     return *sig;
+   #endif /* _POSIX_C_SOURCE - 0 >= 199506L || _POSIX_PTHREAD_SEMANTICS */
 # elif defined (ACE_HAS_PTHREADS)
   // LynxOS and Digital UNIX have their own hoops to jump through.
 #   if defined (__Lynx__)
