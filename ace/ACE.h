@@ -469,8 +469,8 @@ public:
   // @@ UNICODE what about buffer?
   /// Format buffer into printable format.  This is useful for
   /// debugging.
-  static int format_hexdump (const char *buffer, int size,
-                             ACE_TCHAR *obuf, int obuf_sz);
+  static size_t format_hexdump (const char *buffer, size_t size,
+                                ACE_TCHAR *obuf, size_t obuf_sz);
 
   /// Computes the hash value of <str> using the "Hash PJW" routine.
   static u_long hash_pjw (const char *str);

@@ -536,7 +536,7 @@ public:
    */
   int log_hexdump (ACE_Log_Priority log_priority,
                    const char *buffer,
-                   int size,
+                   size_t size,
                    const ACE_TCHAR *text = 0);
 
   static void init_hook (ACE_OS_Log_Msg_Attributes &attributes

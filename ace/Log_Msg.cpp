@@ -1774,7 +1774,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 int
 ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
                           const char *buffer,
-                          int size,
+                          size_t size,
                           const ACE_TCHAR *text)
 {
   ACE_TCHAR buf[ACE_Log_Record::MAXLOGMSGLEN -
@@ -1782,17 +1782,15 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   // 58 for the HEXDUMP header;
 
   ACE_TCHAR *msg_buf;
-  size_t text_sz = text ? ACE_OS::strlen(text) : 0;
+  size_t text_sz = text ? ACE_OS_String::strlen(text) : 0;
   ACE_NEW_RETURN (msg_buf,
                   ACE_TCHAR[text_sz + 58],
                  -1);
 
   buf[0] = 0; // in case size = 0
 
-  int len = ACE::format_hexdump (buffer,
-                                 size,
-                                 buf,
-                                 sizeof (buf) / sizeof (ACE_TCHAR) - text_sz);
+  size_t len = ACE::format_hexdump
+    (buffer, size, buf, sizeof (buf) / sizeof (ACE_TCHAR) - text_sz);
 
   int sz = 0;
 
