@@ -12,8 +12,8 @@ $ior_file = "cubit_ior";
 $SV = Process::Create ("server".$Process::EXE_EXT, 
                        "-s -ORBport ".$server_port." -o ".$ior_file." -ORBobjrefstyle url");
 
-sleep (2);
+sleep (5);
 
-system ("client".$Process::EXE_EXT." -s -f ".$ior_file." -ORBport ".$client_port);
+system ("client".$Process::EXE_EXT." -x -s -f ".$ior_file." -ORBport ".$client_port );
 
 $SV->Kill ();
