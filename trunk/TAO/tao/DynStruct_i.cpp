@@ -409,7 +409,9 @@ TAO_DynStruct_i::current_component (CORBA::Environment &ACE_TRY_ENV)
       this->da_members_[this->current_index_] = dp;
     }
 
-  return this->da_members_[this->current_index_].in ();
+  return CORBA_DynAny::_duplicate (
+             this->da_members_[this->current_index_].in ()
+           );
 }
 
 CORBA::Boolean

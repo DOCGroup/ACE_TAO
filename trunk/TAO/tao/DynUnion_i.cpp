@@ -393,7 +393,7 @@ TAO_DynUnion_i::type (CORBA::Environment &)
 CORBA_DynAny_ptr
 TAO_DynUnion_i::current_component (CORBA::Environment &)
 {
-  return this->member_.in ();
+  return CORBA_DynAny::_duplicate (this->member_.in ());
 }
 
 CORBA::Boolean
