@@ -16,13 +16,14 @@
 #define ACE_NULL_MUTEX_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+// All methods in this class are inline, so there is no
+// need to import or export on Windows. -- CAE 12/18/2003
+#include "ace/os_include/os_errno.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_errno.h"
 #include "ace/Global_Macros.h"
 
 class ACE_Time_Value;
@@ -33,7 +34,7 @@ class ACE_Time_Value;
  * @brief Implement a do nothing <ACE_Mutex>, i.e., all the methods are
  * no ops.
  */
-class ACE_Export ACE_Null_Mutex
+class ACE_Null_Mutex
 {
 public:
   ACE_Null_Mutex (const ACE_TCHAR * = 0)
@@ -92,7 +93,7 @@ public:
  * This class is obsolete and should be replaced by
  * ACE_Guard<ACE_Null_Mutex>.
  */
-class ACE_Export ACE_Null_Mutex_Guard
+class ACE_Null_Mutex_Guard
 {
 public:
   ACE_Null_Mutex_Guard (ACE_Null_Mutex &) {}
@@ -124,7 +125,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * This specialization is useful since it helps to speedup
  * performance of the "Null_Mutex" considerably.
  */
-class ACE_Export ACE_Guard<ACE_Null_Mutex>
+class ACE_Guard<ACE_Null_Mutex>
 {
 public:
   // = Initialization and termination methods.
@@ -157,7 +158,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * @class ACE_Write_Guard<ACE_Null_Mutex>
  *
  */
-class ACE_Export ACE_Write_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
+class ACE_Write_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
   ACE_Write_Guard (ACE_Null_Mutex &m)
@@ -180,7 +181,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * @class ACE_Read_Guard<ACE_Null_Mutex>
  *
  */
-class ACE_Export ACE_Read_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
+class ACE_Read_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
   ACE_Read_Guard (ACE_Null_Mutex &m)

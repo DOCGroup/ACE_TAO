@@ -1,29 +1,48 @@
+Thu Dec 18 11:55:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Null_Barrier.h:
+        * ace/Null_Condition.h:
+        * ace/Null_Mutex.h:
+        * ace/Null_Semaphore.h:
+
+          All methods in both of these files are inline and therefor do not
+          need ACE_Export.
+
+        * ace/ace.mpc:
+
+          Updated the Inline_Files and Header_Files sections.
+
+        * examples/TMCast/Member/member.cpp:
+
+          Added #include of OS_NS_string.h to get ACE_OS::strlen and added a
+          return value for main.
+
 Thu Dec 18 09:53:31 2003  Balachandran  <bala@dre.vanderbilt.edu>
 
         * ACE version 5.3.6 released.
 
 Thu Dec 18 08:45:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Generate vc71 for the ace alone. We used to generate vc7 project
-	  files. But now we generate vc71. Theoretically we shouldn't need
-	  to generate this. But this is not the time to argue with Steve H
-	  ;)! Will do after the beta goes out!
+          Generate vc71 for the ace alone. We used to generate vc7 project
+          files. But now we generate vc71. Theoretically we shouldn't need
+          to generate this. But this is not the time to argue with Steve H
+          ;)! Will do after the beta goes out!
 
 Wed Dec 17 12:54:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TMCast/Group.cpp:
-	* ace/TMCast/LinkListener.hpp:
+        * ace/TMCast/Group.cpp:
+        * ace/TMCast/LinkListener.hpp:
 
-	  More fixes for VC 71. Thanks to Chad Elliott for helping
-	  me checking the results.
+          More fixes for VC 71. Thanks to Chad Elliott for helping
+          me checking the results.
 
 Wed Dec 17 09:52:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TMCast/LinkListener.hpp:
+        * ace/TMCast/LinkListener.hpp:
 
-	  Fixed errors in VC71 builds.
+          Fixed errors in VC71 builds.
 
 Wed Dec 17 15:21:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -34,7 +53,7 @@ Wed Dec 17 15:21:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           static_libs_only, since users may override it in
           platform_macros.GNU.  Thanks to John Zorko <jmzorko@mac.com> for
           tracking this down and supplying the patch.  This fixed the
-          MacOSX compile errors on the scoreboard. 
+          MacOSX compile errors on the scoreboard.
 
 Wed Dec 17 11:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
