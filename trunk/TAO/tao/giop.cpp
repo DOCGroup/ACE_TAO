@@ -341,27 +341,35 @@ TAO_GIOP::read_message (ACE_SOCK_Stream &connection,
   msg.remaining = TAO_GIOP_HEADER_LEN;
 
   char *bufptr = (char _FAR *) msg.buffer;
-  int len = read_buffer (connection, bufptr, TAO_GIOP_HEADER_LEN);
+  ssize_t len = read_buffer (connection, bufptr, TAO_GIOP_HEADER_LEN);
   // Read the header into the buffer.
 
-  if (len != TAO_GIOP_HEADER_LEN) 
+  if (len != TAO_GIOP_HEADER_LEN)
     {
-      if (len == 0) 
-	{			// EOF
-	  ACE_DEBUG ((LM_DEBUG,
-		      " (%P|%t) Header EOF ... peer probably aborted connection %d\n", 
+      switch (len)
+        {
+        case 0:
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%P|%t) Header EOF ... peer probably aborted connection %d\n", 
                       connection.get_handle ()));
-	  return TAO_GIOP_EndOfFile;
-	  // XXX should probably find some way to report this without
-	  // an exception, since for most servers it's not an error.
-	  // Is it _never_ an error?  Not sure ...
-	} 
-      else if (len < 0) // error
-	ACE_DEBUG ((LM_ERROR,
-		    " (%P|%t) GIOP::read_message header socket error %p\n"));
-      else // short read ... 
-	ACE_DEBUG ((LM_ERROR,
-		    " (%P|%t) GIOP::read_message header failed (short)\n"));
+          return TAO_GIOP_EndOfFile;
+          // XXX should probably find some way to report this without
+          // an exception, since for most servers it's not an error.
+          // Is it _never_ an error?  Not sure ...
+          /* NOTREACHED */
+        case -1: // error
+          ACE_DEBUG ((LM_ERROR,
+                      " (%P|%t) GIOP::read_message header socket error %p\n",
+                      "read_buffer"));
+          break;
+          /* NOTREACHED */
+        default:
+          ACE_DEBUG ((LM_ERROR,
+                      " (%P|%t) GIOP::read_message header read failed, only %d of %d bytes\n",
+                      len, TAO_GIOP_HEADER_LEN));
+          break;
+          /* NOTREACHED */
+        }
 
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_MessageError;
@@ -423,17 +431,28 @@ TAO_GIOP::read_message (ACE_SOCK_Stream &connection,
 
   len = read_buffer (connection, bufptr, (size_t) message_size);
 
-  if (len != (int) message_size) 
+  if (len != (ssize_t) message_size) 
     {
-      if (len == 0) 
-	ACE_DEBUG ((LM_DEBUG,
-		    " (%P|%t) TAO_GIOP::read_message body, EOF on handle %d\n", connection.get_handle ()));
-      else if (len < 0) 
-	ACE_DEBUG ((LM_ERROR,
-		    " (%P|%t) TAO_GIOP::read_message () body %p\n"));
-      else 
-	ACE_DEBUG ((LM_ERROR,
-		    " (%P|%t) short read, only %d of %d bytes\n", len, message_size));
+      switch (len)
+        {
+        case 0:
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%P|%t) TAO_GIOP::read_message body, EOF on handle %d\n",
+                      connection.get_handle ()));
+          break;
+          /* NOTREACHED */
+        case -1:
+          ACE_DEBUG ((LM_ERROR,
+                      " (%P|%t) TAO_GIOP::read_message () body %p\n",
+                      "read_buffer"));
+          break;
+          /* NOTREACHED */
+        default:
+          ACE_DEBUG ((LM_ERROR,
+                      " (%P|%t) short read, only %d of %d bytes\n", len, message_size));
+          break;
+          /* NOTREACHED */
+        }
 
       // clean up, and ...
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));	// body
@@ -601,6 +620,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   assert (data_ != 0);
 
+  // @@ Why is this lock here, i.e., what is it protecting?  Can
+  // we remove it?
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, guard, lock_));
 
   // Get a CORBA::Object_ptr from _data using QueryInterface ()
@@ -614,24 +635,27 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // Get a reference to the client connector
   //  TAO_Client_Factory::CONNECTOR* con = 0;
   TAO_Client_Strategy_Factory::CONNECTOR* con = 0;
-  con = (orb->client_factory ())->connector ();
+  con = orb->client_factory ()->connector ();
 
-  // Determine the object key and the address to which we'll need a connection
+  // Determine the object key and the address to which we'll need a
+  // connection.
   ACE_INET_Addr server_addr;
     
   if (data_->fwd_profile != 0)
     {
       key = &data_->fwd_profile->object_key;
-      server_addr.set (data_->fwd_profile->port, data_->fwd_profile->host);
+      server_addr.set (data_->fwd_profile->port,
+		       data_->fwd_profile->host);
     }
   else
     {
       key = &data_->profile.object_key;
-      server_addr.set (data_->profile.port, data_->profile.host);
+      server_addr.set (data_->profile.port,
+		       data_->profile.host);
     }
     
   // Establish the connection and get back a Client_Connection_Handler
-  if (con->connect (handler_, server_addr) == -1)
+  if (con->connect ((handler_, server_addr) == -1)
     // @@ Need to figure out which exception to set...this one is
     // pretty vague.
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -680,7 +704,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // unverified user ID, and then verifying the message (i.e. a dummy
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
-  //
+
   static CORBA::Principal_ptr anybody = 0;
   static TAO_GIOP_ServiceContextList svc_ctx;	// all zeroes
 
