@@ -468,7 +468,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
     {
       int r = ACE_Service_Config::process_directive
         (
-         "dynamic CORBANAME_Parser Service_Object * TAO :_make_TAO_CORBANAME_Parser()"
+         "dynamic CORBANAME_Parser Service_Object * TAO:_make_TAO_CORBANAME_Parser()"
          );
 
       if (r != 0)
@@ -478,7 +478,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
         }
     }
 
-  this->parser_names_[index] = CORBA::string_dup ("CORBALOC_Parser");
+  this->parser_names_[index] = CORBA::string_dup ("CORBANAME_Parser");
   index++;
 
   // MCAST_Parser
@@ -489,7 +489,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
     {
       int r = ACE_Service_Config::process_directive
         (
-         "dynamic MCAST_Parser Service_Object * TAO :_make_TAO_MCAST_Parser()"
+         "dynamic MCAST_Parser Service_Object * TAO:_make_TAO_MCAST_Parser()"
          );
 
       if (r != 0)
