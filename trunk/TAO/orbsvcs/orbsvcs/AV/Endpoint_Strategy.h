@@ -53,13 +53,13 @@ public:
 
 protected:
   /// The "A" stream endpoint
-  AVStreams::StreamEndPoint_A_ptr stream_endpoint_a_;
+  AVStreams::StreamEndPoint_A_var stream_endpoint_a_;
 
   /// The "B" stream endpoint
-  AVStreams::StreamEndPoint_B_ptr stream_endpoint_b_;
+  AVStreams::StreamEndPoint_B_var stream_endpoint_b_;
 
   /// The vdev
-  AVStreams::VDev_ptr vdev_;
+  AVStreams::VDev_var vdev_;
 
 };
 

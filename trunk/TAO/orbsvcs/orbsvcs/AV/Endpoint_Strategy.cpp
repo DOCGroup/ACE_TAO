@@ -35,14 +35,6 @@ TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy (void)
 // Destructor.
 TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
 {
-//   if (CORBA::is_nil (this->stream_endpoint_a_) == 0)
-//     CORBA::release (this->stream_endpoint_a_);
-
-//   if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
-//     CORBA::release (this->stream_endpoint_b_);
-
-//   if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
-//     CORBA::release (this->vdev_);
 
 }
 
@@ -246,7 +238,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev (ACE_ENV_SINGLE_ARG_DECL)
       ACE_TRY_CHECK;
 
       // Check if valid
-      if (CORBA::is_nil (this->vdev_))
+      if (CORBA::is_nil (this->vdev_.in() ))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
@@ -289,8 +281,8 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
                       -1);
 
   // return the object references
-  stream_endpoint = this->stream_endpoint_a_;
-  vdev = this->vdev_;
+  stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
+  vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   return 0;
 
 }
@@ -329,7 +321,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL
       ACE_TRY_CHECK;
 
       // Check for validity
-      if (CORBA::is_nil (this->stream_endpoint_a_))
+      if (CORBA::is_nil (this->stream_endpoint_a_.in() ))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve Stream_Endpoint_A in Naming service <%s>\n"),
                           -1);
@@ -376,8 +368,8 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
                 TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_
                                                                     ACE_ENV_ARG_PARAMETER)));
     ACE_TRY_CHECK;
-    stream_endpoint = this->stream_endpoint_b_;
-    vdev = this->vdev_;
+    stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate ( this->stream_endpoint_b_.in() );
+    vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   }
   ACE_CATCHANY
     {
