@@ -1,8 +1,7 @@
 // main.cpp
 
 #include "ace/Service_Config.h"
-
- #include "HTTP_Server.h"
+#include "JAWS/server/HTTP_Server.h"
 
 ACE_STATIC_SVC_REQUIRE(HTTP_Server)
 

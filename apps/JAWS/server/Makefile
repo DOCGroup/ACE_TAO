@@ -10,7 +10,13 @@
 
 BIN   	= main
 
-FILES  	= HTTP_Server HTTP_Handler HTTP_Helpers HTTP_VFS
+FILES  	= \
+	HTTP_Server \
+	HTTP_Handler \
+	HTTP_Helpers \
+	HTTP_Request \
+	VFS \
+	IO 
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
@@ -20,7 +26,7 @@ SHOBJ	= $(addsuffix .so,$(FILES))
 #CPPFLAGS += -DACE_HAS_STL
 #CPPFLAGS += -DACE_INLINE
 
-INCLDIRS += -I./STL
+INCLDIRS += -I..
 
 LDLIBS	= $(addprefix .shobj/,$(SHOBJ))
  
