@@ -1,3 +1,8 @@
+Fri May 14 17:14:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	  Removed bogus ACE_INLINE, left over when moved from .i file.
+
 Fri May 14 16:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler.{cpp, h}: more on a 
