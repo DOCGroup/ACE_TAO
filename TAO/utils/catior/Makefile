@@ -12,6 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+LDLIBS = -lTAO
+
 BIN   	= catior
 
 BUILD	= $(VBIN)
