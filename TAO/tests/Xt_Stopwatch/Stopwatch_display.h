@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -11,6 +12,7 @@
 //   Balachandran  Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
+
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
 #include "tao/corba.h"
@@ -20,36 +22,26 @@
 
 class Stopwatch_display
 {
-  //  friend Control; // Let Control call protected Stopwatch_display functions
-
-  public:
+public:
   
   Stopwatch_display (Widget &parent);
   // Stopwatch_display constructor
   
-  virtual ~Stopwatch_display();
+  virtual ~Stopwatch_display (void);
   // Destructor
 
-  virtual void manage();   
+  virtual void manage (void);   
   // Manage the widget
 
   void set_time (CORBA::Float value);
   // Change the displayed time
 
-  //virtual void unmanage();
-
-  // Unmanage the widget
-    
- private:
+private:
   Widget frame_;
   // A frame widget...
+
   Widget label_;
   // Label Widget that is used to display time..
-  
- protected:
-    
-  //  virtual void timerStarted();   // Subclass hooks called when
-  //virtual void timerStopped();   // timer starts and stops
-  //float elapsedTime() { return _timer->elapsedTime(); }
 };
-#endif
+
+#endif /* STOPWATCH_H */

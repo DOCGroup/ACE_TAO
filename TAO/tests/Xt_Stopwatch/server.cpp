@@ -7,7 +7,8 @@ ACE_RCSID(Xt_Stopwatch, server, "$Id$")
 
 #if !defined (ACE_HAS_XT)
 
-int main (int, char *[])
+int 
+main (int, char *[])
 {
   ACE_ERROR ((LM_INFO,
               "Xt not supported on this platform\n"));
@@ -20,7 +21,6 @@ int main (int, char *[])
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
 #include "timer.h"
-
 
 const char *ior_output_file = 0;
 
@@ -57,9 +57,16 @@ main (int argc, char *argv[])
   if (parse_args (argc, argv) != 0)
     return 1;
 
-  XtAppContext  app;
-  Widget        toplevel = XtAppInitialize ( &app, "Stopwatch", NULL, 0,
-                                             &argc, argv, NULL, NULL, 0 );
+  XtAppContext app;
+  Widget toplevel = XtAppInitialize (&app,
+                                     "Stopwatch",
+                                     NULL,
+                                     0,
+                                     &argc,
+                                     argv,
+                                     NULL,
+                                     NULL,
+                                     0);
 
   TAO_XT_Resource_Factory::set_context (app);
 

@@ -1,7 +1,7 @@
 // $Id$
 #include "Control.h"
 
-Control::Control (Widget &parent )
+Control::Control (Widget &parent)
 {
   // Instantiate the  sub-components of the Control
   this->frame_ = XmCreateFrame (parent, 
@@ -25,7 +25,7 @@ Control::Control (Widget &parent )
                                           0);
 }
 
-Control::~Control ( )
+Control::~Control (void)
 {
 }
 

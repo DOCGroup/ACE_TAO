@@ -53,8 +53,9 @@ Timer_imp::tick_callback (XtPointer client_data,
                           XtIntervalId * )
 {
   // Get the object pointer and call the corresponding tick function
-  Timer_imp *obj = ACE_static_cast (Timer_imp *, client_data);
-  obj->tick();
+  Timer_imp *obj = ACE_static_cast (Timer_imp *,
+                                    client_data);
+  obj->tick ();
 }
 
 
@@ -65,20 +66,19 @@ Timer_imp::tick (void)
   counter_++;  
   
   // Call derived class function to report time
-  this->report_time (this->elapsed_time());
+  this->report_time (this->elapsed_time ());
            
   // Reinstall the timeout callback
   this->id_ = XtAppAddTimeOut (app_, 
                                interval_, 
                                &Timer_imp::tick_callback, 
-                               (XtPointer) this );
+                               (XtPointer) this);
 }
 
-
 void 
-Timer_imp::report_time (CORBA::Float time )
+Timer_imp::report_time (CORBA::Float time)
 {
-    stopwatch_->set_time ( time );
+  stopwatch_->set_time (time);
 }
 
 

@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -11,6 +12,7 @@
 //   Balachandran  Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
+
 #ifndef CLIENT_H
 #define CLIENT_H
 
@@ -20,7 +22,7 @@ class Control;
 
 class Client  
 {
- public:
+public:
   
   Client (CORBA::ORB_ptr orb);
   // ctor
@@ -45,7 +47,7 @@ class Client
 
   void parse_args (int argc, char *argv[],
                    CORBA::Environment &ACE_TRY_ENV);
- private:
+private:
 
   CORBA::ORB_var orb_;
   // The ORB
@@ -53,4 +55,5 @@ class Client
   Stopwatch_var server_;
   // The server.
 };
-#endif
+
+#endif /* CLIENT_H */

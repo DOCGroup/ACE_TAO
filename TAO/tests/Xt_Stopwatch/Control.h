@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -11,6 +12,7 @@
 //   Balachandran  Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
+
 #ifndef CONTROL_H
 #define CONTROL_H
 #include <Xm/Xm.h>
@@ -26,10 +28,10 @@ class Control
   Control (Widget &parent);
   // Stopwatch constructor
   
-  virtual ~Control ();
+  virtual ~Control (void);
   // Destructor
 
-  virtual void manage();   
+  virtual void manage (void);   
   // Manage the widget
 
   Widget& startwidget (void);
@@ -53,4 +55,5 @@ class Control
   // Pushbutton widget that is used to stop the timer..
 
 };
-#endif
+
+#endif /* CONTROL_H */
