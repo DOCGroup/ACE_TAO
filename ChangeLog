@@ -1,3 +1,9 @@
+Tue Nov  4 08:18:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_NS_signal.h:
+          Removed include of OS_export and changed ACE_OS_Export ot
+          ACE_Export to fix compile errors.
+
 Wed Nov  4 06:15:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         The following list of changes fixes build errors in the Borland builds
