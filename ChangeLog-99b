@@ -1,3 +1,82 @@
+Thu Jun 24 15:47:32 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_pharlap_tests.bat: One-button script for running the tests
+          built for PharLap ETS.
+
+        * tests/tests_pharlap_msvc.lnk: PharLap ETS LinkLoc input file for
+          building test for ETS. Very possible that local sites will need to
+          adjust this for the target environment.
+
+        * tests/Atomic_Op_Test.dsp:
+        * tests/Barrier_Test.dsp:
+        * tests/Basic_Types_Test.dsp:
+        * tests/Buffer_Stream_Test.dsp:
+        * tests/CDR_Test_Test.dsp:
+        * tests/Collection_Test.dsp:
+        * tests/Conn_Test.dsp:
+        * tests/DLList_Test.dsp:
+        * tests/Dynamic_Priority_Test.dsp:
+        * tests/Enum_Interfaces_Test.dsp:
+        * tests/Env_Value_Test.dsp:
+        * tests/Future_Test.dsp:
+        * tests/Handle_Set_Test.dsp:
+        * tests/Hash_Map_Manager_Test.dsp:
+        * tests/High_Res_Timer_Test.dsp:
+        * tests/IOStream_Test.dsp:
+        * tests/Map_Manager_Test.dsp:
+        * tests/Map_Test.dsp:
+        * tests/Mem_Map_Test.dsp:
+        * tests/Message_Block_Test.dsp:
+        * tests/Message_Queue_Notifications_Test.dsp:
+        * tests/Message_Queue_Test.dsp:
+        * tests/MM_Shared_Memory_Test.dsp:
+        * tests/MT_Reactor_Timer_Test.dsp:
+        * tests/MT_SOCK_Test.dsp:
+        * tests/Naming_Test.dsp:
+        * tests/New_Fail_Test.dsp:
+        * tests/Notify_Performance_Test.dsp:
+        * tests/OrdMultiSet_Test.dsp:
+        * tests/Pipe_Test.dsp:
+        * tests/Priority_Buffer_Test.dsp:
+        * tests/Priority_Reactor_Test.dsp:
+        * tests/Priority_Task_Test.dsp:
+        * tests/Process_Mutex_Test.dsp:
+        * tests/Process_Strategy_Test.dsp:
+        * tests/RB_Tree_Test.dsp:
+        * tests/Reactor_Exceptions_Test.dsp:
+        * tests/Reactor_Notify_Test.dsp:
+        * tests/Reactor_Performance_Test.dsp:
+        * tests/Reactor_Timer_Test.dsp:
+        * tests/Reactors_Test.dsp:
+        * tests/Reader_Writer_Test.dsp:
+        * tests/Recursive_Mutex_Test.dsp:
+        * tests/Reverse_Lock_Test.dsp:
+        * tests/Semaphore_Test.dsp:
+        * tests/Service_Config_Test.dsp:
+        * tests/Sigset_Ops_Test.dsp:
+        * tests/Simple_Message_Block_Test.dsp:
+        * tests/SOCK_Connector_Test.dsp:
+        * tests/SOCK_Send_Recv_Test.dsp:
+        * tests/SOCK_Test.dsp:
+        * tests/SPIPE_Test.dsp:
+        * tests/SString_Test.dsp:
+        * tests/SV_Shared_Memory_Test.dsp:
+        * tests/Svc_Handler_Test.dsp:
+        * tests/Task_Test.dsp:
+        * tests/Thread_Manager_Test.dsp:
+        * tests/Thread_Mutex_Test.dsp:
+        * tests/Thread_Pool_Reactor_Test.dsp:
+        * tests/Thread_Pool_Test.dsp:
+        * tests/Time_Service_Test.dsp:
+        * tests/Time_Value_Test.dsp:
+        * tests/Timeprobe_Test.dsp:
+        * tests/Timer_Queue_Test.dsp:
+        * tests/Tokens_Test.dsp:
+        * tests/TSS_Test.dsp:
+        * tests/Upgradeable_RW_Test.dsp:
+        * tests/UPIPE_SAP_Test.dsp:
+          Added "PharLap ETS Debug" configurations.
+
 Thu Jun 24 14:10:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/libsize.pl: use appropriate size command for all of
