@@ -6,6 +6,13 @@ Wed Mar 25 10:10:04 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_chorus_ghs.GNU: if debug is enabled,
           link with crth_d.s.o instead of crth.s.o.
 
+        * ace/config-g++common.h: don't #define
+          ACE_HAS_TEMPLATE_SPECIALIZATION with egcs 2.91.  Thanks to
+          Sudish Joseph <sj@eng.mindspring.net> and
+          Loren Rittle <rittle@comm.mot.com> for reporting this
+          apparent bug with egcs 2.91.  (egcs 2.90 builds ACE cleanly
+          with ACE_HAS_TEMPLATE_SPECIALIZATION.)
+
 Tue Mar 24 19:48:44 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Proactor.cpp (timeout): Changed comparison from || to
