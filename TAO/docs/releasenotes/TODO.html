@@ -43,18 +43,6 @@
 	</P>
       </LI>
 
-      <LI><P>The nested upcall support must be strategized,
-	  some applications don't need this feature,
-	  other applications are single threaded or use an
-	  ORB-per-thread concurrency policy,
-	  so using a full-blown leader follower in all cases can
-	  result in a significant slow down.
-	  It seems like the right way to
-	  strategize this by changing the Client_Connection_Handlers.
-	  <BR>[STATUS] Irfan and Carlos are working on this.
-	</P>
-      </LI>
-
     </OL>
 
     <HR>
@@ -70,10 +58,6 @@
 	</P>
       </LI>
 
-      <LI>Further optimize memory allocation by using a memory pool
-	for the incoming CDR stream.
-      <P></LI>
-      
       <LI>Further optimize the outgoing memory allocation by adding
 	support for message blocks allocated from a pool (the
 	Message_Block class itself not the Data_Block or the buffer it
@@ -791,6 +775,26 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>Further optimize memory allocation by using a memory pool
+	  for the incoming CDR stream.
+	  <BR>[DONE] The pool is configurable for the users that may
+	  want to steal the CDR buffer.
+	</P>
+      </LI>
+      
+      <LI><P>The nested upcall support must be strategized,
+	  some applications don't need this feature,
+	  other applications are single threaded or use an
+	  ORB-per-thread concurrency policy,
+	  so using a full-blown leader follower in all cases can
+	  result in a significant slow down.
+	  It seems like the right way to
+	  strategize this by changing the Client_Connection_Handlers.
+	  <BR>[STATUS] Irfan and Carlos are working on this.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
       <LI><P>Use active demuxing in the POA to locate servants in
           constant time, as well as active demuxing
           in the skeletons to locate operations in constant time.
