@@ -37,7 +37,7 @@ public:
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
   // The copy constructor (performs initialization). 
 
-  void operator= (const ACE_Bounded_Stack<T> &s);
+  const ACE_Bounded_Stack<T> &operator= (const ACE_Bounded_Stack<T> &s);
   // Assignment operator (performs assignment). 
 
   ~ACE_Bounded_Stack (void); 
@@ -46,18 +46,18 @@ public:
   // = Classic Stack operations.
 
   int push (const T &new_item);
-  // Place a new item on top of the stack.  Returns 0 if the stack
-  // is already full, 1 if the stack is not already full, and -1 if
+  // Place a new item on top of the stack.  Returns -1 if the stack
+  // is already full, 0 if the stack is not already full, and -1 if
   // failure occurs.
 
   int pop (T &item);
-  // Remove and return the top stack item.  Returns 0 if the stack is
-  // already empty, 1 if the stack is not already empty, and -1 if
+  // Remove and return the top stack item.  Returns -1 if the stack is
+  // already empty, 0 if the stack is not already empty, and -1 if
   // failure occurs.
 
   int top (T &item) const; 
-  // Return top stack item without removing it.  Returns 0 if the
-  // stack is already empty, 1 if the stack is not already empty, and
+  // Return top stack item without removing it.  Returns -1 if the
+  // stack is already empty, 0 if the stack is not already empty, and
   // -1 if failure occurs.
 
   // = Check boundary conditions.
@@ -107,7 +107,7 @@ public:
   ACE_Fixed_Stack (const ACE_Fixed_Stack<T, SIZE> &s);
   // The copy constructor (performs initialization). 
 
-  void operator= (const ACE_Fixed_Stack<T, SIZE> &s);
+  const ACE_Fixed_Stack<T, SIZE> &operator= (const ACE_Fixed_Stack<T, SIZE> &s);
   // Assignment operator (performs assignment). 
 
   ~ACE_Fixed_Stack (void); 
@@ -116,18 +116,18 @@ public:
   // = Classic Stack operations.
 
   int push (const T &new_item);
-  // Place a new item on top of the stack.  Returns 0 if the stack
-  // is already full, 1 if the stack is not already full, and -1 if
+  // Place a new item on top of the stack.  Returns -1 if the stack
+  // is already full, 0 if the stack is not already full, and -1 if
   // failure occurs.
 
   int pop (T &item);
-  // Remove and return the top stack item.  Returns 0 if the stack is
-  // already empty, 1 if the stack is not already empty, and -1 if
+  // Remove and return the top stack item.  Returns -1 if the stack is
+  // already empty, 0 if the stack is not already empty, and -1 if
   // failure occurs.
 
   int top (T &item) const; 
-  // Return top stack item without removing it.  Returns 0 if the
-  // stack is already empty, 1 if the stack is not already empty, and
+  // Return top stack item without removing it.  Returns -1 if the
+  // stack is already empty, 0 if the stack is not already empty, and
   // -1 if failure occurs.
 
   // = Check boundary conditions.
@@ -212,7 +212,7 @@ public:
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
   // The copy constructor (performs initialization). 
 
-  void operator= (const ACE_Unbounded_Stack<T> &s);
+  const ACE_Unbounded_Stack<T> &operator= (const ACE_Unbounded_Stack<T> &s);
   // Assignment operator (performs assignment). 
 
   ~ACE_Unbounded_Stack (void); 
@@ -221,18 +221,18 @@ public:
   // = Classic Stack operations.
 
   int push (const T &new_item);
-  // Place a new item on top of the stack.  Returns 0 if the stack
-  // is already full, 1 if the stack is not already full, and -1 if
+  // Place a new item on top of the stack.  Returns -1 if the stack
+  // is already full, 0 if the stack is not already full, and -1 if
   // failure occurs.
 
   int pop (T &item);
-  // Remove and return the top stack item.  Returns 0 if the stack is
-  // already empty, 1 if the stack is not already empty, and -1 if
+  // Remove and return the top stack item.  Returns -1 if the stack is
+  // already empty, 0 if the stack is not already empty, and -1 if
   // failure occurs.
 
   int top (T &item) const; 
-  // Return top stack item without removing it.  Returns 0 if the
-  // stack is already empty, 1 if the stack is not already empty, and
+  // Return top stack item without removing it.  Returns -1 if the
+  // stack is already empty, 0 if the stack is not already empty, and
   // -1 if failure occurs.
 
   // = Check boundary conditions.
@@ -251,11 +251,11 @@ public:
   // present, else 0.
   
   int remove (const T &item);
-  // Remove <item> from the Stack.  Returns 1 if it removes the item,
-  // 0 if it can't find the item, and -1 if a failure occurs.
+  // Remove <item> from the Stack.  Returns 0 if it removes the item,
+  // -1 if it can't find the item, and -1 if a failure occurs.
 
   int find (const T &item) const;
-  // Finds if <item> occurs the set.  Returns 1 if finds, else 0.
+  // Finds if <item> occurs the set.  Returns 0 if finds, else -1.
 
   size_t size (void) const;
   // The number of items in the stack.
@@ -373,7 +373,7 @@ public:
   ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
   // Copy constructor. 
 
-  void operator= (const ACE_Unbounded_Queue<T> &);
+  const ACE_Unbounded_Queue<T> &operator= (const ACE_Unbounded_Queue<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Queue (void);
@@ -407,14 +407,14 @@ public:
   // Reset the <ACE_Unbounded_Queue> to be empty.
 
   int get (T *&item, size_t index = 0) const;
-  // Get the <index>th element in the set.  Returns 0 if the element
-  // isn't in the range <0..size() - 1>, else 1.
+  // Get the <index>th element in the set.  Returns -1 if the element
+  // isn't in the range <0..size() - 1>, else 0.
 
   int set (const T &item, size_t index);
   // Set the <index>th element in the set.  Will pad out the set with
   // empty nodes if <index> is beyond the range <0..size() - 1>.
   // Returns -1 on failure, 0 if <index> isn't initially in range, and
-  // 1 otherwise.
+  // 0 otherwise.
 
   size_t size (void) const;
   // The number of items in the queue.
@@ -494,7 +494,7 @@ public:
   ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
   // Copy constructor. 
 
-  void operator= (const ACE_Unbounded_Set<T> &);
+  const ACE_Unbounded_Set<T> &operator= (const ACE_Unbounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Set (void);
@@ -516,12 +516,13 @@ public:
   // 0.
   
   int remove (const T &item);
-  // Remove first occurrence of <item> from the set.  Returns 1 if
-  // it removes the item, 0 if it can't find the item, and -1 if a
+  // Remove first occurrence of <item> from the set.  Returns 0 if
+  // it removes the item, -1 if it can't find the item, and -1 if a
   // failure occurs.
 
   int find (const T &item) const;
-  // Finds if <item> occurs in the set.  Returns 1 if finds, else 0.
+  // Finds if <item> occurs in the set.  Returns 0 if find succeeds,
+  // else -1.
 
   size_t size (void) const;
   // Size of the set.
@@ -615,7 +616,7 @@ public:
   ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &);
   // Copy constructor. 
 
-  void operator = (const ACE_Fixed_Set<T, SIZE> &);
+  const ACE_Fixed_Set<T, SIZE> &operator= (const ACE_Fixed_Set<T, SIZE> &);
   // Assignment operator.
 
   ~ACE_Fixed_Set (void);
@@ -637,12 +638,12 @@ public:
   // 0.
   
   int remove (const T &item);
-  // Remove first occurrence of <item> from the set.  Returns 1 if
-  // it removes the item, 0 if it can't find the item, and -1 if a
+  // Remove first occurrence of <item> from the set.  Returns 0 if
+  // it removes the item, -1 if it can't find the item, and -1 if a
   // failure occurs.
   
   int find (const T &item) const;
-  // Finds if <item> occurs in the set.  Returns 1 if finds, else 0.
+  // Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
 
   size_t size (void) const;
   // Size of the set.
@@ -742,7 +743,7 @@ public:
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
   // Copy constructor. 
 
-  void operator= (const ACE_Bounded_Set<T> &);
+  const ACE_Bounded_Set<T> &operator= (const ACE_Bounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Bounded_Set (void);
@@ -764,12 +765,12 @@ public:
   // 0.
   
   int remove (const T &item);
-  // Remove first occurrence of <item> from the set.  Returns 1 if it
-  // removes the item, 0 if it can't find the item, and -1 if a
+  // Remove first occurrence of <item> from the set.  Returns 0 if it
+  // removes the item, -1 if it can't find the item, and -1 if a
   // failure occurs.
   
   int find (const T &item) const;
-  // Finds if <item> occurs in the set.  Returns 1 if finds, else 0.
+  // Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
 
   size_t size (void) const;
   // Size of the set.
