@@ -35,33 +35,46 @@ int
 Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *arg)
 {
+  // Print some information here (note that this is not strictly
+  // signal-safe since the ACE logging mechanism uses functions that
+  // aren't guaranteed to work in all signal handlers).
   ACE_DEBUG ((LM_DEBUG,
 	      "handle_timeout() = (%d, %d) %d\n",
 	      tv.sec (),
 	      tv.usec (),
 	      arg));
+
+  // Commit suicide!
   delete this;
   return 0;
 }
 
-// Create a helpful typedef.
-class Async_Timer_Queue : public ACE_Async_Timer_Queue_Adapter<ACE_Timer_List>
+class Async_Timer_Queue 
   // = TITLE
-  //     Asynchronous Timer Queue Singleton, instantiated by an <ACE_Timer_List>.
+  //     Asynchronous Timer Queue Singleton.
 {
 public:
   static Async_Timer_Queue *instance (void);
   // Singleton access point.
 
+  void schedule (u_int microsecs);
+  // Schedule a timer to expire <microsecs> in the future.
+
+  void cancel (long timer_id);
+  // Cancel a timer with <timer_id>.
+
   void dump (void);
   // Dump the contents of the queue.
 
 private:
-  Async_Timer_Queue (void);
+  Async_Timer_Queue (ACE_Sig_Set *);
   // Private constructor enforces the Singleton.
 
   static Async_Timer_Queue *instance_;
   // Pointer to the timer queue.
+
+  ACE_Async_Timer_Queue_Adapter<ACE_Timer_List> tq_;
+  // The adapter is instantiated by an <ACE_Timer_List>.
 };
 
 // Initialize the Singleton pointer.
@@ -76,23 +89,33 @@ Async_Timer_Queue::instance (void)
       // Initialize with all signals enabled.
       ACE_Sig_Set ss (1);
 
-      // Don't block out SIGQUIT.
+      // But, don't block out SIGQUIT since we always want to be able
+      // to interrupt the program with that signal.
       ss.sig_del (SIGQUIT);
 
       ACE_NEW_RETURN (Async_Timer_Queue::instance_,
-		      ACE_Async_Timer_Queue_Adapter<ACE_Timer_List> (&ss),
+		      Async_Timer_Queue (&ss),
 		      0);
     }
   return Async_Timer_Queue::instance_;
 }
 
-// Dump the contents of the queue.
+Async_Timer_Queue::Async_Timer_Queue (ACE_Sig_Set *ss)
+  : tq_ (ss)
+{
+}
+
+// Dump the contents of the queue when we receive ^C.
+
 void
 Async_Timer_Queue::dump (void)
 {
   ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
 
-  for (ACE_Timer_List_Iterator iter (Async_Timer_Queue::instance ()->timer_queue ());
+  // This iterator is implicitly protected since SIGINT and SIGALRM
+  // signals cannot occur while it is running.
+
+  for (ACE_Timer_List_Iterator iter (this->tq_.timer_queue ());
        iter.item () != 0;
        iter.next ())
     iter.item ()->dump ();
@@ -100,10 +123,47 @@ Async_Timer_Queue::dump (void)
   ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
 }
 
+// Schedule a timer.
+
+void
+Async_Timer_Queue::schedule (u_int microsecs)
+{
+  ACE_Time_Value tv (0, microsecs);
+
+  // Create a new Event_Handler for our timer.
+
+  ACE_Event_Handler *eh;
+  ACE_NEW (eh, Timer_Handler);
+
+  // Schedule the timer to run in the future.
+  long tid = this->tq_.schedule
+    (eh, 0, ACE_OS::gettimeofday () + tv);
+
+  if (tid == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
+}	
+
+// Cancel a timer.
+
+void
+Async_Timer_Queue::cancel (long timer_id)
+{
+  ACE_DEBUG ((LM_DEBUG, "canceling %d\n", timer_id));
+
+  const void *act;
+
+  if (this->tq_.cancel (timer_id, &act) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "cancel_timer"));
+
+  // In this case, the act will be 0, but it could be a real pointer
+  // in other cases.
+  delete (ACE_Event_Handler *) act;
+}
+
 // Command-line API.
 
 static int
-parse_commands (char *buf)
+parse_commands (const char *buf)
 {
   u_int choice;
   long value;
@@ -114,39 +174,21 @@ parse_commands (char *buf)
   switch (choice)
     {
     case 1: // Schedule a timer.
-      {
-	ACE_Time_Value tv (0, value);
-	ACE_Event_Handler *eh;
-	ACE_NEW_RETURN (eh, Timer_Handler, -1);
+      Async_Timer_Queue::instance ()->schedule (value);
 
-	long tid = Async_Timer_Queue::instance ()->schedule 
-	  (eh, 0, ACE_OS::gettimeofday () + tv);
+      break;
+      /* NOTREACHED */
 
-	if (tid == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
-	
-	break;
-	/* NOTREACHED */
-      }
     case 2: // Cancel a timer.
-      {
-	const void *act;
-
-	if (Async_Timer_Queue::instance ()->cancel (value, &act) == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cancel_timer"), -1);
-
-	// In this case, the act will be 0, but it might be a real
-	// pointer.
-	delete (ACE_Event_Handler *) act;
-
-	ACE_DEBUG ((LM_DEBUG, "canceling %d\n", value));
-	break;
-	/* NOTREACHED */
-      }
+      Async_Timer_Queue::instance ()->cancel (value);
+      break;
+      /* NOTREACHED */      
     }
 
   return 0;
 }
+
+// Handler for the SIGINT and SIGQUIT signals.
 
 static void 
 signal_handler (int signum)
@@ -155,19 +197,21 @@ signal_handler (int signum)
 
   switch (signum)
     {
-    /* NOTREACHED */
     case SIGINT:
-      {
-        Async_Timer_Queue::instance ()->dump ();
-	break;
-	/* NOTREACHED */
-      }
+      Async_Timer_Queue::instance ()->dump ();
+      break;
+      /* NOTREACHED */
+
     case SIGQUIT:
       ACE_DEBUG ((LM_DEBUG, "shutting down on SIGQUIT%a\n", 1));
       /* NOTREACHED */
       break;
     }
 }
+
+// Register the signal handlers for SIGQUIT and SIGINT.  We must
+// ensure that the SIGINT handler isn't interrupted by SIGALRM.
+// However, SIGQUIT is never blocked...
 
 static void
 register_signal_handlers (void)
@@ -181,12 +225,16 @@ register_signal_handlers (void)
   ACE_Sig_Set ss;
   ss.sig_add (SIGALRM);
 
-  ACE_Sig_Action sigint ((ACE_SignalHandler) handler,
+  // Register SIGINT (note that system calls will be restarted
+  // automatically).
+  ACE_Sig_Action sigint ((ACE_SignalHandler) signal_handler,
 			 SIGINT,
 			 ss,
 			 SA_RESTART);
   ACE_UNUSED_ARG (sigint);
 }
+
+// The menu of options provided to the user.
 
 static char menu[] = 
 "****\n"
@@ -202,15 +250,20 @@ main (int, char *[])
 
   register_signal_handlers ();
 
+  // Run until the user types ^\.
+
   for (;;)
     {
       ACE_DEBUG ((LM_DEBUG, "%s", menu));
 
       char buf[BUFSIZ];
 
+      // Wait for user to type commands.  This call is automatically
+      // restarted when SIGINT or SIGALRM signals occur.
       if (ACE_OS::read (ACE_STDIN, buf, sizeof buf) <= 0)
 	break;
 
+      // Run the command.
       parse_commands (buf);
     }
 

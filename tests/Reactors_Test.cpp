@@ -26,7 +26,7 @@
 
 ACE_Thread_Manager *tm;
 
-static const int MAX_TASKS = 5;
+static const int MAX_TASKS = 3;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
