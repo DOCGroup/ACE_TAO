@@ -67,23 +67,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * DRV_pre_proc.cc - pass an IDL file through the C preprocessor
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
-#include	"drv_private.h"
-#include	"drv_link.h"
+#include "drv_private.h"
+#include "drv_link.h"
 
 #include "ace/Process_Manager.h"
 #include "ace/Env_Value_T.h"
 
-#include	<stdio.h>
-#include	<fcntl.h>
+#undef  MAX_ARGLIST
+#define MAX_ARGLIST     128
 
-#undef	MAX_ARGLIST
-#define	MAX_ARGLIST	128
-
-static	char	*arglist[MAX_ARGLIST];
-static	long	argcount = 0;
+static  char    *arglist[MAX_ARGLIST];
+static  long    argcount = 0;
 
 /*
  * Push the new CPP location if we got a -Yp argument
@@ -103,8 +100,8 @@ DRV_cpp_putarg(char *str)
   if (argcount >= MAX_ARGLIST) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": More than ")
-	 << MAX_ARGLIST
-	 << GTDEVEL(" arguments to preprocessor\n");
+         << MAX_ARGLIST
+         << GTDEVEL(" arguments to preprocessor\n");
     exit (99);
   }
   arglist[argcount++] = str;
@@ -135,8 +132,8 @@ DRV_cpp_init()
 /*
  * lines can be 1024 chars long
  */
-#define	LINEBUF_SIZE	1024
-static	char	drv_line[LINEBUF_SIZE + 1];
+#define LINEBUF_SIZE    1024
+static  char    drv_line[LINEBUF_SIZE + 1];
 
 /*
  * Get a line from stdin
@@ -144,18 +141,18 @@ static	char	drv_line[LINEBUF_SIZE + 1];
 static long
 DRV_get_line(FILE *f)
 {
-    char	*l = fgets(drv_line, LINEBUF_SIZE, f);
-    long	i;
+    char        *l = fgets(drv_line, LINEBUF_SIZE, f);
+    long        i;
 
     if (l == NULL)
-	return I_FALSE;
+        return I_FALSE;
     if (*l == '\0' && feof(f))
-	return I_FALSE;
+        return I_FALSE;
     if (*l == '\0')
-	return I_TRUE;
+        return I_TRUE;
     i = strlen(l) - 1;
     if (l[i] == '\n')
-	l[i] = '\0';
+        l[i] = '\0';
     return I_TRUE;
 }
 
@@ -165,13 +162,13 @@ DRV_get_line(FILE *f)
 static void
 DRV_copy_input(FILE *fin, char *fn)
 {
-  FILE	*f = fopen(fn, "w");
+  FILE  *f = fopen(fn, "w");
 
   if (f == NULL) {
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": cannot open temp file ")
-	 << fn
-	 << GTDEVEL(" for writing\n");
+         << GTDEVEL(": cannot open temp file ")
+         << fn
+         << GTDEVEL(" for writing\n");
     exit(99);
   }
   if (fin == NULL) {
@@ -191,11 +188,11 @@ DRV_copy_input(FILE *fin, char *fn)
 static char *
 DRV_stripped_name(char *fn)
 {
-    char	*n = fn;
-    long	l;
+    char        *n = fn;
+    long        l;
 
     if (n == NULL)
-	return NULL;
+        return NULL;
     l = strlen(n);
     for (n += l; l > 0 && *n != '/'; l--, n--);
     if (*n == '/') n++;
@@ -205,8 +202,8 @@ DRV_stripped_name(char *fn)
 /*
  * File names
  */
-static char	tmp_file[128];
-static char	tmp_ifile[128];
+static char     tmp_file[128];
+static char     tmp_ifile[128];
 
 /*
  * Pass input through preprocessor
@@ -214,8 +211,8 @@ static char	tmp_ifile[128];
 void
 DRV_pre_proc(char *myfile)
 {
-  long	readfromstdin = I_FALSE;
-  char	catbuf[512];
+  long  readfromstdin = I_FALSE;
+  char  catbuf[512];
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (readfromstdin);
@@ -240,8 +237,8 @@ DRV_pre_proc(char *myfile)
   ACE_OS::strcat (tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
   ACE_OS::strcat (tmp_ifile, "idli_XXXXXX");
 
-  (void) mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
-  (void) mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
+  (void) ACE_OS::mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
+  (void) ACE_OS::mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
   if (strcmp(myfile, "standard input") == 0) {
     idl_global->set_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
     idl_global->set_main_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
@@ -276,17 +273,17 @@ DRV_pre_proc(char *myfile)
   ACE_HANDLE fd = ACE_OS::open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
   if (fd == ACE_INVALID_HANDLE) {
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": cannot open temp file ")
-	 << tmp_file << " for writing\n";
+         << GTDEVEL(": cannot open temp file ")
+         << tmp_file << " for writing\n";
     return;
   }
   cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
   if (manager.spawn (cpp_options) == -1)
     {
       cerr << idl_global->prog_name()
-	   << GTDEVEL(": spawn of ")
-	   << arglist[0]
-	   << GTDEVEL(" failed\n");
+           << GTDEVEL(": spawn of ")
+           << arglist[0]
+           << GTDEVEL(" failed\n");
       return;
     }
 
@@ -294,8 +291,8 @@ DRV_pre_proc(char *myfile)
   if (ACE_OS::close (fd) == -1)
     {
       cerr << idl_global->prog_name ()
-	   << GTDEVEL(": cannot close temp file")
-	   << tmp_file << " on parent\n";
+           << GTDEVEL(": cannot close temp file")
+           << tmp_file << " on parent\n";
       return;
     }
 
@@ -306,7 +303,7 @@ DRV_pre_proc(char *myfile)
   if (manager.wait () == -1)
     {
       cerr << idl_global->prog_name ()
-	   << GTDEVEL(": wait for child process failed\n");
+           << GTDEVEL(": wait for child process failed\n");
       return;
     }
   // TODO: Manage problems in the pre-processor, in the previous
@@ -317,9 +314,9 @@ DRV_pre_proc(char *myfile)
   FILE * yyin = fopen(tmp_file, "r");
   if (yyin == NULL) {
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": Could not open cpp output file ")
-	 << tmp_file
-	 << "\n";
+         << GTDEVEL(": Could not open cpp output file ")
+         << tmp_file
+         << "\n";
     exit(99);
   }
   (*DRV_FE_set_yyin)((File *) yyin);
@@ -333,8 +330,8 @@ DRV_pre_proc(char *myfile)
   if (ACE_OS::unlink(tmp_ifile) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp input file ")
-	 << tmp_ifile
-	 << "\n";
+         << tmp_ifile
+         << "\n";
     exit(99);
   }
 #if !defined (ACE_WIN32)
@@ -342,9 +339,9 @@ DRV_pre_proc(char *myfile)
   // cannot remove an open file under that OS?
   if (ACE_OS::unlink(tmp_file) == -1) {
     cerr << idl_global->prog_name()
-	 << GTDEVEL(": Could not remove cpp output file ")
-	 << tmp_file
-	 << "\n";
+         << GTDEVEL(": Could not remove cpp output file ")
+         << tmp_file
+         << "\n";
     exit(99);
   }
 #endif /* !ACE_WIN32 */
