@@ -2651,6 +2651,7 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
     input_cdr_msgblock_allocator_ (0),
+    transport_message_buffer_allocator_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     lane_ (0),
@@ -2688,6 +2689,14 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
   if (this->input_cdr_buffer_allocator_ != 0)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
+
+    if (this->input_cdr_msgblock_allocator_ != 0)
+    this->input_cdr_msgblock_allocator_->remove ();
+  delete this->input_cdr_msgblock_allocator_;
+
+  if (this->transport_message_buffer_allocator_ != 0)
+    this->transport_message_buffer_allocator_->remove ();
+  delete this->transport_message_buffer_allocator_;
 
 #if TAO_HAS_INTERCEPTORS == 1
   CORBA::release (this->client_request_info_);

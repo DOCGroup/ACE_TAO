@@ -452,6 +452,8 @@ protected:
   // we're trying to lock down! (CJC)
   virtual ACE_Event_Handler * event_handler_i (void) = 0;
 
+  virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
+
   /// Called by <code>connection_handler_closing()</code> to signal
   /// that the protocol-specific transport should dissociate itself
   /// with the protocol-specific connection handler.
@@ -820,10 +822,18 @@ private:
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
-  /// Process the message that is in the head of the incoming queue.
-  /// If there are more messages in the queue, this method sends a
-  /// notify () to the reactor to send a next thread along.
+  /*
+   * Process the message that is in the head of the incoming queue.
+   * If there are more messages in the queue, this method calls
+   * this->notify_reactor () to wake up a thread
+   */
   int process_queue_head (TAO_Resume_Handle &rh);
+
+  /*
+   * This call prepares a new handler for the notify call and sends a
+   * notify () call to the reactor.
+   */
+  int notify_reactor (void);
 
   /// Grab the mutex and then call invalidate_event_handler_i()
   ACE_Event_Handler * invalidate_event_handler (void);

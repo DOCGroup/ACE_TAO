@@ -65,6 +65,12 @@ TAO_DIOP_Transport::event_handler_i (void)
   return this->connection_handler_;
 }
 
+TAO_Connection_Handler *
+TAO_DIOP_Transport::connection_handler_i (void)
+{
+  return this->connection_handler_;
+}
+
 TAO_Pluggable_Messaging *
 TAO_DIOP_Transport::messaging_object (void)
 {
