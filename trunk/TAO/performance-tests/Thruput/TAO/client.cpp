@@ -4,7 +4,7 @@
 //
 // = TAO tests
 //    Throughput measurement using the TTCP benchmark adapted to work
-//    using TAO 
+//    using TAO
 //
 // = FILENAME
 //   client.cpp
@@ -47,7 +47,7 @@ CORBA::Long buflen = 8 * 1024;  // length of buffer, default 8,192 bytes
 CORBA::Char *buf;               // ptr to dynamic buffer
 CORBA::Long nbuf;               // number of buffers to send in sinkmode
 CORBA::Short port = TAO_DEFAULT_SERVER_PORT;    // TCP port number
-CORBA::Char *host = "localhost";              // ptr to name of host
+const char* host = "localhost";              // ptr to name of host
 CORBA::Long verbose = 0;        // 0=print basic info, 1=print cpu
                                 // rate, proc resource usage.
 CORBA::Char fmt = 'K';          // output
@@ -76,7 +76,7 @@ main (int argc, char *argv[])
 
   int c;
   CORBA::ORB_ptr        orb_ptr;   // underlying ORB
-  CORBA::String  objkey = "TTCP_IIOP_test"; // name of the TTCP object on the
+  const char* objkey = "TTCP_IIOP_test"; // name of the TTCP object on the
                                             // server
   CORBA::Object_ptr     objref = CORBA::Object::_nil(); // object reference
   ttcp_sequence_ptr     ttcp_seq = 0;  // obj reference to TTCP object

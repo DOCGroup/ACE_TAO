@@ -56,7 +56,7 @@ private:
   // Parses the arguments passed on the command line.
 
 private:
-  char *nested_up_calls_reactor_key_;
+  const char *nested_up_calls_reactor_key_;
   // Key of reactor obj ref.
 
   int shutdown_;

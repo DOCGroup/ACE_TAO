@@ -25,7 +25,7 @@ ACE_RCSID(TAO, utils, "$Id$")
 
 // the error function.
 // displays the error message and exits
-int err (CORBA::String s)
+int err (const char* s)
 {
   ACE_OS::fprintf (stderr, "ttcp%s: ", trans ? "-t" : "-r");
   ACE_OS::perror (s);
@@ -34,7 +34,7 @@ int err (CORBA::String s)
 }
 
 // prints a message indicating if it is a transmitter or a receiver
-void mes (CORBA::String s)
+void mes (const char* s)
 {
   ACE_OS::fprintf (stderr, "ttcp%s: %s\n", trans ? "-t" : "-r", s);
 }
@@ -152,7 +152,7 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
            SeqPtr[i].o = (unsigned char)(c++ & 0x7f);
        }
        Sseq = new ttcp_sequence::StructSeq(num, num, SeqPtr);
-       
+
     }
     break;
   case SEND_COMPOSITE:
@@ -171,10 +171,10 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
        SeqPtr [i].packetHeader.federationHandle = 2;
        SeqPtr [i].packetHeader.channelHandle = 3;
        SeqPtr [i].packetHeader.packetColor = 4;
-       
+
        SeqPtr [i].msgs.length (numUpdates);
-       
-       for (int j = 0; j < numUpdates; ++j) 
+
+       for (int j = 0; j < numUpdates; ++j)
 	 {
 	   SeqPtr [i].msgs[j].oumh (RtiObjectUpdateMessageHeader ());
 	   RtiObjectUpdateMessageHeader & oumh = SeqPtr [i].msgs[j].oumh ();
@@ -190,8 +190,8 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
 	   oumh.transportationHandle = 1;
 	   oumh.orderingHandle = 1;
 	   oumh.messagePayload.length (numAttrs);
-  	   
-	   for (int k = 0; k < numAttrs; ++k) 
+
+	   for (int k = 0; k < numAttrs; ++k)
 	     {
 	       oumh.messagePayload[k] = HandleValuePair ();
 	       HandleValuePair &hvp = oumh.messagePayload[k];
@@ -208,8 +208,8 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
      }
      rtipacketSeq = new ttcp_sequence::RtiPacketSeq (num, num, SeqPtr);
 
-   }*/ 
- 
+   }*/
+
     break;
   case SEND_OCTET:
   default:
@@ -339,17 +339,17 @@ read_timer (CORBA::Char *str, CORBA::Long len)
 {
   char line[132];
   ACE_Profile_Timer::ACE_Elapsed_Time et;
- 
+
   ru0.stop ();
   ru0.elapsed_time (et);
 
   prusage (line);
   (void) strncpy (str, line, len);
-  
-  //Get real time 
+
+  //Get real time
   realt = et.real_time;
- 
-  //Get CPU time (user+sys) 
+
+  //Get CPU time (user+sys)
   cput = et.user_time + et.system_time;
   if (cput < 0.00001)
     cput = 0.00001;
@@ -361,24 +361,24 @@ void
 prusage (char *outp)
 {
   register ACE_timer_t t, ms;
-  register char *cp;
+  register const char *cp;
   register int i;
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   ACE_Profile_Timer::Rusage rusage;
   ru0.elapsed_time (et);
   ru0.elapsed_rusage (rusage);
-  
+
   t = et.user_time + et.system_time;
-  ms = et.real_time; 
-  
+  ms = et.real_time;
+
 #define END(x)  {while(*x) x++;}
 #if defined(SYSV)
   cp = "%Uuser %Ssys %Ereal %P";
 #else
 #if defined(sgi)                /* IRIX 3.3 will show 0 for %M,%F,%R,%C */
   cp = "%Uuser %Ssys %Ereal %P %Mmaxrss %F+%Rpf %Ccsw";
-#else 
+#else
   cp = "%Uuser %Ssys %Ereal %P %Xi+%Dd %Mmaxrss %F+%Rpf %Ccsw";
 #endif
 #endif
@@ -394,7 +394,7 @@ prusage (char *outp)
             ACE_OS::sprintf (outp, "%f ", et.user_time);
             END (outp);
             break;
-	    
+
           case 'S':
 	    ACE_OS::sprintf (outp, "%f ", et.system_time);
             END (outp);
@@ -411,7 +411,7 @@ prusage (char *outp)
             break;
 
 	    /*possible thing to add in is the equivalent for case X, D, K, M, F, and R for prusage_t*/
-#if !defined(SYSV) 
+#if !defined(SYSV)
 #   if defined (ACE_HAS_PRUSAGE_T)
           case 'W':
             i = rusage.pr_nswap;;
@@ -513,7 +513,7 @@ prusage (char *outp)
             ACE_OS::sprintf (outp, "%d", rusage.ru_oublock);
             END (outp);
             break;
-          
+
 	  case 'C':
 	    ACE_OS::sprintf (outp, "%d+%d", rusage.ru_nvcsw, rusage.ru_nivcsw);
             END (outp);
@@ -588,12 +588,3 @@ read_timer (CORBA::Char *str, CORBA::Long len)
 }
 
 #endif /* ! ACE_HAS_PRUSAGE_T || ! ACE_HAS_GETRUSAGE */
-
-
-
-
-
-
-
-
-

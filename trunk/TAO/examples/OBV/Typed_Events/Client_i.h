@@ -46,7 +46,7 @@ public:
   virtual  ~Checkpoint_Client_i (void);
   // Destructor
 
-  virtual int run (char *,int, char** );
+  virtual int run (const char *,int, char** );
   // Execute the methods
 
 private:
