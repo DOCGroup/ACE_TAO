@@ -245,7 +245,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "//             We have to think about this case." << be_nl
       << "break;" << be_uidt_nl
       << "}" << be_uidt_nl;
-  *os << be_uidt_nl << "};" << be_nl << be_nl;
+  *os << be_uidt_nl << "}" << be_nl << be_nl;
 
   return 0;
 }
