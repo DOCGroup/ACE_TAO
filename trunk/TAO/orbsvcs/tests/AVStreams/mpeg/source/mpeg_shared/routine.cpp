@@ -386,7 +386,7 @@ void setsignal(int sig, void (func)(int))
 {
 #ifdef _HPUX_SOURCE
   struct sigvec sv;
-    
+
   sv.sv_handler = func;
   sv.sv_mask    = 0;
   sv.sv_flags   = 0;
@@ -408,9 +408,10 @@ void setsignal(int sig, void (func)(int))
 #ifdef FreeBSD
     act.sa_flags = SV_INTERRUPT;
 #else
-    act.sa_flags = SA_INTERRUPT;
+    act.sa_flags =/* SA_INTERRUPT;*/ SA_RESTART;
 #endif
-    act.sa_mask = 0;
+    // @@ Naga commented this line.
+    //    act.sa_mask = 0;
     if (!sigaction(sig, &act, NULL)) return;
     fprintf(stderr, "sigaction(%d,...) error", sig);
     perror("");
