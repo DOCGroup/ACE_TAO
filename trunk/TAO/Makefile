@@ -25,7 +25,8 @@ DIRS    = tao \
           orbsvcs \
           examples \
           performance-tests \
-          utils
+          utils \
+	  docs/tutorials/Quoter
 
 CLONE   = Makefile \
           tao \
@@ -34,7 +35,8 @@ CLONE   = Makefile \
           orbsvcs \
           examples \
           performance-tests \
-          utils
+          utils \
+	  docs/tutorials/Quoter
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
