@@ -201,7 +201,7 @@ test_functionality (ACE_Timer_Queue *tq)
   timer_id2 = tq->schedule (&eh,
                             timer_act,
                             tq->gettimeofday ());
-  ACE_ASSERT (timer_id != -1);
+  ACE_ASSERT (timer_id2 != -1);
 
   // The following method will trigger a call to <handle_close>.
   ACE_ASSERT (eh.close_count_ == 2);
