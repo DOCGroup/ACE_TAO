@@ -1703,7 +1703,15 @@ typedef int LPSECURITY_ATTRIBUTES;
 #if defined (ACE_HAS_BROKEN_IF_HEADER)
 struct ifafilt;
 #endif
-#include /**/ <sys/socket.h>
+
+#if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
+  #undef __cplusplus
+  #include /**/ <sys/socket.h>
+  #define __cplusplus
+#else
+  #include /**/ <sys/socket.h>
+#endif
+
 extern "C" {
 #if defined (VXWORKS)
   struct  hostent {
