@@ -14,9 +14,12 @@ if ($ARGV[0] eq ''){
     die "provide list of directories";
 }       
 
+my $make = $ARGV[0];
+shift;
+
 @BUILD_LIST = @ARGV;
 
 
 foreach $i (reverse (@BUILD_LIST)) {
-    system ("make -k -C $i realclean");
+    system ("$make -k -C $i realclean");
 }
