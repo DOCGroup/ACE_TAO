@@ -148,6 +148,10 @@
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
+// By default connection purging and recycling are done to provide robust
+// connection management in TAO.
+#define TAO_USES_ROBUST_CONNECTION_MGMT 
+
 // This deals with the strategies for connection caching. By default
 // it is the Null Strategy. Although it shall be Least Recently Used
 // (LRU) with the default purging percentage of 20% once this feature
