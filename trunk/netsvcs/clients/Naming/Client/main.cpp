@@ -36,7 +36,7 @@ main (int argc, char *argv[])
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
-  ACE_Service_Config::run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop ();
 
   return 0;
 }

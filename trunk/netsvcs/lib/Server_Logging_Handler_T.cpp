@@ -139,7 +139,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::init (int argc, char *argv[])
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
   if (this->open (this->service_addr_, 
-		  ACE_Service_Config::reactor (),
+		  ACE_Reactor::instance (),
 		  0, 0, 0, 
 		  &this->scheduling_strategy(),
 		  "Logging Server", "ACE logging service") == -1)
@@ -198,7 +198,7 @@ template<class SLH, class LMR, class SS> int
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SS>::make_svc_handler (SLH *&handler)
 {
   ACE_NEW_RETURN (handler, 
-		  SLH (ACE_Service_Config::thr_mgr (), this->receiver()), 
+	  SLH (ACE_Thread_Manager::instance (), this->receiver()), 
 		  -1);
   return 0;
 }
@@ -226,7 +226,7 @@ ACE_Server_Logging_Handler<LMR>::open (void *)
 
   // Register ourselves with the Reactor to enable subsequent
   // dispatching.
-  if (ACE_Service_Config::reactor ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     return -1;
   return 0;
@@ -253,7 +253,7 @@ ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
 
   // Spawn a new thread of control to handle logging records with the
   // client.  Note that this implicitly uses the
-  // ACE_Service_Config::thr_mgr () to control all the threads.
+  // ACE_Thread_Manager::instance () to control all the threads.
   if (this->activate (THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);    
   return 0;

@@ -41,7 +41,7 @@ static int remote = 0;
 static void *
 run_thread (void *vp)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_Token_Proxy *collection = (ACE_Token_Proxy *) vp;
 
   int count = iterations;
@@ -176,7 +176,7 @@ main (int argc, char* argv[])
   collectionBR.insert (*R);
 
   // Spawn off three threads.
-  ACE_Thread_Manager *mgr = ACE_Service_Config::thr_mgr ();
+  ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
 		 (void *) &collectionAR, THR_BOUND | THR_SUSPENDED) == -1)

@@ -18,7 +18,7 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (const char rendezvous[])
   // Register message FIFO to receive input from clients.  Note that
   // we need to put the EXCEPT_MASK here to deal with SVR4 MSG_BAND
   // data correctly...
-  else if (ACE_Service_Config::reactor ()->register_handler
+  else if (ACE_Reactor::instance ()->register_handler
 	   (this->message_fifo_.get_handle (), this,
 	    ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%n: %p\n", 
@@ -48,7 +48,7 @@ ACE_Client_Logging_Handler::open (void *)
   // Register ourselves to receive SIGPIPE so we can attempt
   // reconnections.
 #if !defined (ACE_WIN32)
-  if (ACE_Service_Config::reactor ()->register_handler (SIGPIPE, this) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGPIPE, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
 		       "register_handler (SIGPIPE)"), -1);
 #endif /* ACE_WIN32 */
@@ -116,7 +116,7 @@ ACE_Client_Logging_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "shutting down!!!\n"));
 
-  if (ACE_Service_Config::reactor ()->remove_handler
+  if (ACE_Reactor::instance ()->remove_handler
       (this->message_fifo_.get_handle (), 
        ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR, "%n: %p\n", 

@@ -99,13 +99,13 @@ ACE_TS_Clerk_Handler::open (void *)
   // Register ourselves to receive SIGPIPE so we can attempt
   // reconnections.
 #if !defined (ACE_WIN32)
-  if (ACE_Service_Config::reactor ()->register_handler (SIGPIPE, this) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGPIPE, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
 		       "register_handler (SIGPIPE)"), -1);
 #endif
 
   // Register ourselves with the reactor to receive input
-  if (ACE_Service_Config::reactor ()->register_handler (this->get_handle (), 
+  if (ACE_Reactor::instance ()->register_handler (this->get_handle (), 
 							this,
 							ACE_Event_Handler::READ_MASK | 
 							ACE_Event_Handler::EXCEPT_MASK) == -1)
@@ -156,7 +156,7 @@ ACE_TS_Clerk_Handler::reinitiate_connection (void)
       ACE_DEBUG ((LM_DEBUG, "(%t) Scheduling reinitiation of connection\n"));
 
       // Reschedule ourselves to try and connect again.
-      if (ACE_Service_Config::reactor ()->schedule_timer (this, 0, 
+      if (ACE_Reactor::instance ()->schedule_timer (this, 0, 
 							  this->timeout ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "schedule_timer"), -1);
     }
@@ -397,7 +397,7 @@ ACE_TS_Clerk_Processor::fini (void)
 
   // Cancel the timer
   if (this->timer_id_ != -1)
-    ACE_Service_Config::reactor ()->cancel_timer (this->timer_id_);
+    ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
 
   // Destroy all the handlers
   ACE_TS_Clerk_Handler **handler = 0;
@@ -459,7 +459,7 @@ ACE_TS_Clerk_Processor::init (int argc, char *argv[])
     }
   // Now set up timer to receive updates from server
   // set the timer to go off after timeout value
-  this->timer_id_ = ACE_Service_Config::reactor ()->schedule_timer (this, 
+  this->timer_id_ = ACE_Reactor::instance ()->schedule_timer (this, 
 								    NULL, 
 								    ACE_Time_Value (this->timeout_),
 								    ACE_Time_Value (this->timeout_));
@@ -494,7 +494,7 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
 	  // Reschedule ourselves to try and connect again.
 	  if (synch_options[ACE_Synch_Options::USE_REACTOR])
 	    {
-	      if (ACE_Service_Config::reactor ()->schedule_timer (handler, 
+	      if (ACE_Reactor::instance ()->schedule_timer (handler, 
 								  0, 
 								  handler->timeout ()) == -1)
 		ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "schedule_timer"), -1);

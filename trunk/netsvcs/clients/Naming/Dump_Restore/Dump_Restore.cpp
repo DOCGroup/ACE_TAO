@@ -35,15 +35,15 @@ Dump_Restore::Dump_Restore (int argc, char *argv[])
   this->display_menu ();
 
   if (ACE::register_stdin_handler (this,
-				  ACE_Service_Config::reactor (),
-				  ACE_Service_Config::thr_mgr ()) == -1)
+				  ACE_Reactor::instance (),
+				  ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 }
 
 Dump_Restore::~Dump_Restore (void)
 {
   // Deregister this handler with the ACE_Reactor.
-  ACE_Service_Config::reactor ()->remove_handler 
+  ACE_Reactor::instance ()->remove_handler 
     (ACE_STDIN,
      ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 
@@ -264,7 +264,7 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
       // reset file pointer
       ACE_OS::rewind (this->infile_);
       
-      ACE_Allocator *allocator = ACE_Service_Config::alloc ();
+      ACE_Allocator *allocator = ACE_Allocator::instance ();
       ACE_Read_Buffer read_buffer (this->infile_, 0, allocator);
 
       for (char *temp; (temp = read_buffer.read ('\n')) != 0; )

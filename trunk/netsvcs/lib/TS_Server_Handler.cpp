@@ -46,7 +46,7 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
 
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
-  if (this->open (this->service_addr_, ACE_Service_Config::reactor (),
+  if (this->open (this->service_addr_, ACE_Reactor::instance (),
 		  0, 0, 0, 
 		  &this->scheduling_strategy_,
 		  "Time Server", "ACE time service") == -1)

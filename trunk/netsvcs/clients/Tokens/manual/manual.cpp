@@ -146,7 +146,7 @@ STDIN_Token::open (int argc, char *argv[])
     return -1;
 
   // Register for signals.
-  if (ACE_Service_Config::reactor ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (SIGINT, this) == -1)
     ACE_DEBUG ((LM_DEBUG, "Can't register signal handler\n"));
 
@@ -154,7 +154,7 @@ STDIN_Token::open (int argc, char *argv[])
   
 #else
   // Register for STDIN events with Reactor.
-  if (ACE_Service_Config::reactor ()->register_handler
+  if (ACE_Reactor::instance ()->register_handler
       (ACE_STDIN, this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "Can't register signal handler\n"), 0);
     
@@ -167,7 +167,7 @@ STDIN_Token::open (int argc, char *argv[])
 #if (ACE_WIN32)
   
 #else
-  ACE_Service_Config::run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop ();
 #endif /* ACE_WIN32 */
 
   ACE_OS::printf ("Exiting...\n");
@@ -260,7 +260,7 @@ STDIN_Token::handle_exception (ACE_HANDLE fd)
 {
   ACE_UNUSED_ARG (fd);
 
-  ACE_Service_Config::run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop ();
   return -1;
 }
 
