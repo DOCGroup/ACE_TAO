@@ -74,9 +74,13 @@ public:
   // a service context list and would like to pass on their contents
   // without a copy.
 
+  CORBA::Boolean argument_flag_;
+  // A flag that indicates if there is any data is going to get
+  // marshalled in the reply
+
 private:
   IOP::ServiceContextList *service_context_;
-  // The service context list that we don't own. 
+  // The service context list that we don't own.
 };
 
 // @@ Bala: this is a GIOPism too, there is no such thing as locate

@@ -449,6 +449,9 @@ TAO_GIOP_Message_Acceptors::send_reply_exception (
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
 
+  // We are going to send some data
+  reply_params.argument_flag_ = 1;
+
   // Send back the service context we received.  (RTCORBA relies on
   // this).
   reply_params.service_context_notowned (svc_info);

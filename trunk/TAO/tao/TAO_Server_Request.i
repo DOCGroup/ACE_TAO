@@ -145,3 +145,15 @@ TAO_ServerRequest::dsi_nvlist_align (ptr_arith_t alignment)
 {
   this->dsi_nvlist_align_ = alignment;
 }
+
+ACE_INLINE CORBA::Boolean
+TAO_ServerRequest::argument_flag (void)
+{
+  return this->argument_flag_;
+}
+
+ACE_INLINE void
+TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
+{
+  this->argument_flag_ = flag;
+}

@@ -659,11 +659,15 @@ TAO_GIOP_Message_Accept_State_12::write_reply_header (
     }
 #endif /*TAO_HAS_MINIMUM_CORBA */
 
-  if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+  if (reply.argument_flag_)
     {
-      return 0;
+      // If we have some data to be marshalled, then we align the
+      // pointer to a 8 byte boundary.  Else, we just leave it throu
+      if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+        {
+          return 0;
+        }
     }
-
   return 1;
 }
 
@@ -679,9 +683,14 @@ TAO_GIOP_Message_Accept_State_12::write_locate_reply_mesg (
   // Make the header for the locate request
   output.write_ulong (status_info.status);
 
-  if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+  if (status_info.status == TAO_GIOP_OBJECT_FORWARD ||
+      status_info.status == TAO_GIOP_OBJECT_FORWARD_PERM)
     {
-      return 0;
+      // We have to send some data, so align the pointer
+      if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+        {
+          return 0;
+        }
     }
 
   switch (status_info.status)

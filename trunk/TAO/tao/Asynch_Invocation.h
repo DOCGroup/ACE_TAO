@@ -33,7 +33,7 @@
 #include "tao/MessagingC.h"
 #include "tao/Asynch_Reply_Dispatcher.h"
 
-class TAO_Export TAO_GIOP_Asynch_Invocation 
+class TAO_Export TAO_GIOP_Asynch_Invocation
   : public TAO_GIOP_Invocation
 {
   // = TITLE
@@ -51,6 +51,7 @@ public:
   TAO_GIOP_Asynch_Invocation (TAO_Stub *stub,
                               const char *operation,
                               CORBA::ULong opname_len,
+                              CORBA::Boolean argument_flag,
                               TAO_ORB_Core *orb_core);
   // Constructor.
 
@@ -68,7 +69,7 @@ protected:
   // Reply dispatcher for the current asynchronous invocation.
 };
 
-class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation 
+class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation
   : public TAO_GIOP_Asynch_Invocation
 {
   // = TITLE
@@ -85,6 +86,7 @@ public:
       TAO_Stub *stub,
       const char *operation,
       CORBA::ULong opname_len_,
+      CORBA::Boolean argument_flag,
       TAO_ORB_Core* orb_core,
       const TAO_Reply_Handler_Skeleton &reply_handler_skel,
       Messaging::ReplyHandler_ptr reply_handler_ptr
@@ -102,8 +104,8 @@ protected:
 #  include "tao/Asynch_Invocation.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 
-          || TAO_HAS_AMI_POLLER == 1 
+#endif /* TAO_HAS_AMI_CALLBACK == 1
+          || TAO_HAS_AMI_POLLER == 1
           || TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "ace/post.h"

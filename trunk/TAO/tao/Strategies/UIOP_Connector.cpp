@@ -27,6 +27,12 @@ TAO_UIOP_Connect_Creation_Strategy::
 {
 }
 
+TAO_UIOP_Connect_Creation_Strategy::
+  ~TAO_UIOP_Connect_Creation_Strategy (void)
+{
+}
+
+
 int
 TAO_UIOP_Connect_Creation_Strategy::make_svc_handler
   (TAO_UIOP_Client_Connection_Handler *&sh)
@@ -50,6 +56,10 @@ TAO_UIOP_Connector::TAO_UIOP_Connector (CORBA::Boolean flag)
     connect_strategy_ (),
     base_connector_ (),
     lite_flag_ (flag)
+{
+}
+
+TAO_UIOP_Connector::~TAO_UIOP_Connector (void)
 {
 }
 
