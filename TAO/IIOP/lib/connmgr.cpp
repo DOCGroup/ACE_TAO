@@ -27,24 +27,28 @@
 //
 
 #include	<assert.h>
+#if !defined (VXWORKS)
 #include	<memory.h>
+#endif
 #include	<string.h>
 
 #include <ace/OS.h>
 
-#if	unix
+#if defined (unix)
 #	include	<netdb.h>
 #	include	<unistd.h>
-
 #	include	<sys/types.h>
 #	include	<sys/socket.h>
 #	include	<sys/time.h>
-
 #	include	<netinet/in.h>
-
+#elif defined (VXWORKS)
+#	include	<unistd.h>
+#	include	<sys/types.h>
+#	include	<sys/socket.h>
+#	include	<time.h>
+#	include	<netinet/in.h>
 #else	// unix
 #	include	<winsock.h>
-
 #endif	// unix
 
 #include	<orb.hh>
@@ -74,7 +78,7 @@ static client_endpoint	*client_list;
 static server_endpoint	*server_list;
 
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 //
 // If POSIX threads are available, set up locks covering access to
 // both client and server side connection lists.  They're separate
@@ -107,7 +111,7 @@ static ACE_HANDLE			signal_in_fd;
 void
 client_endpoint::release ()
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&client_lock);
 #endif	// _POSIX_THREADS
 
@@ -130,7 +134,7 @@ client_endpoint::lookup (
     client_endpoint	*list;
     hostent		*hp = 0;
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&client_lock);
 #endif	// _POSIX_THREADS
 
@@ -188,6 +192,7 @@ client_endpoint::lookup (
     // accept dotted-decimal hostnames.
     //
     if (hp == 0) {
+#if defined (DECLARED_H_ERRNO)
 	while ((hp = ACE_OS::gethostbyname (host)) == 0) {
 	    switch (h_errno) {
 	      case TRY_AGAIN:		// soft error
@@ -207,6 +212,14 @@ client_endpoint::lookup (
 		return 0;
 	    }
 	}
+#else
+        // If gethostbyname returns 0, assume host doesn't exist
+	if ((hp = ACE_OS::gethostbyname (host)) == 0) {
+	        dmsg1 ("gethostbyname '%s' --> No such host", host);
+	        env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
+		return 0;
+	    }
+#endif
 	//
 	// Here we found the address associated with the hostname.
 	//
@@ -284,7 +297,7 @@ client_endpoint::dump (FILE *file)
 {
     client_endpoint	*list;
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     //
     // NOTE that although this lock is held for a _very_ long time
     // (terminal/stderr I/O is much slower than network I/O and this
@@ -323,14 +336,14 @@ client_endpoint::dump (FILE *file)
 void
 server_endpoint::release ()
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&server_lock);
 #endif	// _POSIX_THREADS
 
     assert (refcount == 1);
     refcount--;
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     //
     // Tell whoever's in block_for_input() that they can look again
     // at this connection, reading messages off of it and replying
@@ -355,7 +368,7 @@ server_endpoint::initialize (
     CORBA_Environment	&env
 )
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&server_lock);
 #endif	// _POSIX_THREADS
 
@@ -468,7 +481,7 @@ server_endpoint::initialize (
 	port = list->port = ntohs (addr.sin_port);
     }
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     //
     // We need a clean way to have other threads signal ones that
     // are select()ing that there's another connection they need to
@@ -512,9 +525,9 @@ server_endpoint::block_for_connection (
     CORBA_Environment	&env
 )
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&server_lock);
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
     //
     // Head of the list is a passive file descriptor.  The rest is a list
@@ -582,7 +595,7 @@ server_endpoint::block_for_connection (
 #  define FDSET_CAST
 #endif
 		FD_SET (FDSET_CAST list->fd, &read_fdset);
-		if (list->fd > max_fd)
+		if (FDSET_CAST list->fd > max_fd)
 		    max_fd = FDSET_CAST list->fd;
 	    }
 	}
@@ -602,7 +615,7 @@ server_endpoint::block_for_connection (
 	// We add the pipe file descriptor to the list so that when other
 	// threads release connections, we can learn about this.
 	//
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 	static int		doing_select;	// = 0
 
 	if (doing_select) {
@@ -617,7 +630,7 @@ server_endpoint::block_for_connection (
 	FD_SET (signal_in_fd, &read_fdset);
 	if (signal_in_fd > max_fd)
 	    max_fd = signal_in_fd;
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
 	// This cheap hack needs to be changed later...of course,
 	// we won't need it when everything becomes ACE-ified. ;-)
@@ -633,10 +646,10 @@ server_endpoint::block_for_connection (
 				  (fd_set*)NULL, (fd_set*)NULL, NULL);
 	
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 	region.enter ();
 	doing_select = 0;
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
 	if (value < 0) {
 	    dsockerr ("server select");
@@ -656,14 +669,14 @@ server_endpoint::block_for_connection (
 	// THREADING NOTE:  we read any byte written by another thread
 	// to wake us up.  Rare to have more than one such byte!
 	//
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 	if (FD_ISSET (signal_in_fd, &read_fdset)) {
 	    char	b;
 	    (void) ACE_OS::read (signal_in_fd, &b, 1);
 	    if (debug_level >= 5)
 		dmsg ("block_for_input() woken up");
 	}
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
 	for (list = this; list; list = list->next) {
 	    if (   list->fd == ACE_INVALID_HANDLE
@@ -735,9 +748,9 @@ server_endpoint::shutdown_connections (
 {
     server_endpoint	*list, *successor;
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&server_lock);
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
     for (list = this; list != 0; list = successor) {
 	if (list->is_passive)
@@ -758,12 +771,12 @@ server_endpoint::dump (FILE *file)
 {
     server_endpoint	*list;
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     //
     // NOTE the comment in client_endpoint::dump() re long lock times.
     //
     Critical		region (&client_lock);
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
     ACE_OS::fprintf (file, "List of server-side connections:\n");
 

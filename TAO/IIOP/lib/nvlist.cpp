@@ -14,12 +14,12 @@
 #include	"thread.hh"
 
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 //
 // If POSIX threads are available, set up lock covering refcounts.
 //
 static pthread_mutex_t		nvlist_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
 
 
@@ -36,7 +36,7 @@ ULONG
 __stdcall
 CORBA_NamedValue::AddRef ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&nvlist_lock);
 #endif
  
@@ -47,7 +47,7 @@ ULONG
 __stdcall
 CORBA_NamedValue::Release ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&nvlist_lock);
 #endif
  
@@ -115,7 +115,7 @@ ULONG
 __stdcall
 CORBA_NVList::AddRef ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&nvlist_lock);
 #endif
  
@@ -126,7 +126,7 @@ ULONG
 __stdcall
 CORBA_NVList::Release ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&nvlist_lock);
 #endif
  

@@ -35,10 +35,10 @@
 
 
 
-#ifndef	ACE_HAS_THREADS		// _POSIX_THREAD_SAFE_FUNCTIONS implied
+#ifndef	_POSIX_THREADS		// _POSIX_THREAD_SAFE_FUNCTIONS implied
 #define	flockfile(f)
 #define funlockfile(f)
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
 unsigned	debug_level	= 0;
 char		*debug_filter	= "l";
@@ -62,9 +62,9 @@ static FILE	*debug_stream = stderr;
 //
 static pid_t	my_pid;
 
-#if	unix
+#if defined (unix) || defined (VXWORKS)
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 //
 // Use POSIX initialization support to initialize just once.
 //
@@ -86,7 +86,7 @@ emit_prefix (FILE *stream)
     ACE_OS::fprintf (stream, "p%ld t%ld:  ", (long) my_pid, (long) self);
 }
 
-#else	// !defined (ACE_HAS_THREADS)
+#else	// !defined (_POSIX_THREADS)
 
 //
 // Without threads, guard initialization so it can be repeated,
@@ -102,7 +102,7 @@ setup ()
 }
 
 #define	emit_prefix(stream) fprintf (stream, "p%ld:  ", (long) my_pid)
-#endif	// !ACE_HAS_THREADS
+#endif	// !_POSIX_THREADS
 
 #elif	defined (_WIN32)
 
