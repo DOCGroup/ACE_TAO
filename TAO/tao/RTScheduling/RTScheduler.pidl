@@ -152,10 +152,10 @@ module RTScheduling
 	raises (PortableInterceptor::ForwardRequest);
 
 	void receive_request (in PortableInterceptor::ServerRequestInfo ri,
-				in Current::IdType guid,
-			      	in string name,
-				in CORBA::Policy sched_param,
-				in CORBA::Policy implicit_sched_param)
+				out Current::IdType guid,
+			      	out string name,
+				out CORBA::Policy sched_param,
+				out CORBA::Policy implicit_sched_param)
 	raises (PortableInterceptor::ForwardRequest);
 
 	void send_reply (in PortableInterceptor::ServerRequestInfo ri);
