@@ -5,15 +5,15 @@
 # Locations of Green Hills installation, MVME installation, etc.  The
 # ifndef protection allows setting via environment variables.
 ifndef GHS_DIR
-  GHS_DIR=/project/doc/green68k/GreenHills/releases/chorus-m68k
+  GHS_DIR=/project/doc/mvme/green68k/GreenHills/releases/chorus-m68k
 endif # GHS_DIR
 
 ifndef COOL_DIR
-  COOL_DIR=/project/doc/miniCOOL/minicool.r4.3/classix-r3-flm-mvme177-gh
+  COOL_DIR=/project/doc/mvme/miniCOOL/minicool.r4.3/classix-r3-flm-mvme177-gh
 endif # COOL_DIR
 
 ifndef MVME_DIR
-  MVME_DIR=/project/doc/mvme177/appl
+  MVME_DIR=/project/doc/mvme/mvme177/appl
 endif # MVME_DIR
 
 ifndef MVME_INCL
