@@ -1,3 +1,12 @@
+Fri Jun 28 16:32:12 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCode.cpp:
+	* tao/TypeCode.h:
+
+	  Added missing methods member_visibility() and type_modifier(), 
+	  both for TypeCodes containing a valuetype. Thanks to Andy
+	  Alvarez <andy_alvarez@baxter.com> for pointing this out.
+
 Fri Jun 28 16:28:51 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* Manager.cpp:
