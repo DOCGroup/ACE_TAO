@@ -61,7 +61,7 @@ write_iors_to_file (const char *first_ior)
   char ior_output_file_1[BUFSIZ];
 
 
-  ACE_OS::sprintf (ior_output_file_1, "%s_1", ior_output_file);
+  ACE_OS::sprintf (ior_output_file_1, "%s", ior_output_file);
 
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
@@ -229,7 +229,7 @@ main (int argc, char **argv)
   // Its factory_method@library_name whihc is then used by the servant activator to 
   // obtain and load the right servant.
   PortableServer::ObjectId_var first_dir_service_oid =
-    PortableServer::string_to_ObjectId ("create_dir_service@libDirService.so");
+    PortableServer::string_to_ObjectId ("DirService:create_dir_service");
 
   CORBA::Object_var first_dir_service =
     first_poa->create_reference_with_id (first_dir_service_oid.in (), "IDL:Dir_Service:1.0", env);
