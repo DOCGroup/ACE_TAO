@@ -483,8 +483,14 @@ DRV_pre_proc (const char *myfile)
 
   cpp_options.command_line (arglist);
 
+  /// Remove any existing output file.
+  (void) ACE_OS::unlink (tmp_file);
+
+  // If the following open() fails, then we're either being hit with a
+  // symbolic link attack, or another process opened the file before
+  // us.
   ACE_HANDLE fd = ACE_OS::open (tmp_file,
-                                O_WRONLY | O_CREAT | O_TRUNC,
+                                O_WRONLY | O_CREAT | O_EXCL,
                                 ACE_DEFAULT_FILE_PERMS);
 
   if (fd == ACE_INVALID_HANDLE)
