@@ -63,7 +63,7 @@ template class ACE_Unbounded_Queue_Iterator<AST_Component::port_description>;
 
 template class ACE_Node<Identifier *>;
 template class ACE_Unbounded_Queue<Identifier *>;
-template class ACE_UnboundedQueue_Iterator<Identifier *>;
+template class ACE_Unbounded_Queue_Iterator<Identifier *>;
 
 template class ACE_Unbounded_Stack<char *>;
 template class ACE_Unbounded_Stack_Iterator<char *>;
@@ -116,7 +116,7 @@ template class ACE_Unbounded_Stack_Iterator<char *>;
 
 #pragma instantiate ACE_Node<Identifier *>;
 #pragma instantiate ACE_Unbounded_Queue<Identifier *>;
-#pragma instantiate ACE_UnboundedQueue_Iterator<Identifier *>;
+#pragma instantiate ACE_Unbounded_Queue_Iterator<Identifier *>;
 
 #pragma instantiate ACE_Unbounded_Stack<char *>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<char *>
