@@ -40,6 +40,9 @@ public:
   // Set the number of children or writer threads we will be running,
   // when they are all gone we terminate the reactor loop.
 
+  static int get_countdown (void);
+  // Get the number of children we are still waiting for.
+
   virtual int open (void *);
   virtual int handle_input (ACE_HANDLE h);
   // The Svc_Handler callbacks.
