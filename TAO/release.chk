@@ -1,42 +1,57 @@
 # $Id$
 
-Platform:
-	[] Solaris/CC
-	[] NT (MSVC++ 5.0)
-	[] Solaris/g++
-	[] IRIX
-	[] Linux/g++
-	[] Other (Linux/egcs, Solaris/egcs, etc.)
 
-[]   libTAO and TAO_IDL compile.
-[]   IDL_Cubit compiles
-	[] Runs
-[]   Param_Test compiles and runs for
-	[] DII short
-	[] DII ubstring
-	[] DII fixed_struct
-	[] DII strseq
-	[] DII var_struct
-	[] DII nested_struct
-	[] DII struct_seq
-	[] DII objref
+Legend:
+	Platforms are indicated by position within square brackets, i.e.,
+	[ABCDEF] where
 
-	[] SII short
-	[] SII ubstring
-	[] SII fixed_struct
-	[] SII strseq
-	[] SII var_struct
-	[] SII nested_struct
-	[] SII struct_seq
-	[] SII objref
-[] MT_Test compiles
-	[] runs for Octet
-	[] runs for Short
-	[] runs for Long
-	[] runs for Struct
-[] orbsvcs compiles
-	[] Event_Latency runs
-	[] Simple_Naming runs
-	[] Logger runs
+	A = Solaris/CC
+	B = NT (MSVC++ 5.0)
+	C = Solaris/g++
+	D = IRIX
+	E = Linux/g++
+	F = Other (Linux/egcs, Solaris/egcs, etc.)
+
+	The state is indicated as a tri-state value, e.g.,
+
+	0 = doesn't work
+	1 = works
+	x = not attempted or unknown
 
 
+[111   ]   libTAO and TAO_IDL compile.
+[111   ]   IDL_Cubit compiles
+        [11    ] Runs
+[11x   ]   Param_Test compiles and runs for
+        [x1    ] DII short
+        [x1    ] DII ubstring
+        [x0    ] DII fixed_struct
+        [x1    ] DII strseq
+        [x1    ] DII var_struct
+        [x1    ] DII nested_struct
+        [x0    ] DII struct_seq
+        [x0    ] DII objref
+   
+        [11    ] SII short
+        [11    ] SII ubstring
+        [10    ] SII fixed_struct
+        [11    ] SII strseq
+        [11    ] SII var_struct
+        [11    ] SII nested_struct
+        [00    ] SII struct_seq
+        [00    ] SII objref
+[110   ] MT_Test compiles
+        [10    ] runs for Octet
+        [10    ] runs for Short
+        [10    ] runs for Long
+        [10    ] runs for Struct
+[110   ] orbsvcs compiles
+        [10    ] Event_Latency runs
+	[0x    ] Simple_Naming runs
+	[xx    ] Logger runs
+	  
+
+# Local Variables:
+# mode:indented-text
+# eval:(overwrite-mode nil)
+# End:
