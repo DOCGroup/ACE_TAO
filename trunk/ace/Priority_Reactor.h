@@ -71,6 +71,11 @@ private:
   /// A small helper to initialize the bucket.
   void init_bucket (void);
 
+  /// Build the bucket from the given dispatch_mask
+  void build_bucket (ACE_Handle_Set& dispatch_mask,
+                     int &min_priority,
+                     int &max_priority);
+
   /// There is a queue per-priority, which simply holds the
   /// Event_Handlers until we know who goes first.
   typedef ACE_Unbounded_Queue<ACE_Event_Tuple> QUEUE;

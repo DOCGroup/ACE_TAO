@@ -1,3 +1,44 @@
+Fri Aug 20 15:20:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	Fixes for Bug 1890. Please see
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1890
+
+	for details of this bug. What follows are the individual changes. 
+
+	* ace/Select_Reactor_Base.cpp:
+	* ace/Select_Reactor_Base.h:
+
+	  Added a new method clear_dispatch_mask (), which as the name
+	  indicates clears the masks in the dispatch_set. The dispatch set
+	  is a new addition, which keeps track of the handles that can be
+	  used for dispatching.
+
+	* ace/Select_Reactor_Base.inl:
+	* ace/Select_Reactor_T.cpp:
+	* ace/Select_Reactor_T.h: Modified dispatch_io_set () so that it
+	  doesn't break the loop when state_changes occur. This is the
+	  crux of the 1890 bug report. If unbinding occurs as part of an
+	  upcall, the bit_ops () calls clear_dispatch_mask (), which
+	  prevents dispatching to already removed (and potentially
+	  rebounded) handles. 
+
+	  Additional cosmetic changes. 
+	
+	* ace/Priority_Reactor.cpp:
+	* ace/Priority_Reactor.h:
+	* ace/TP_Reactor.cpp:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.inl:
+	
+	  Replicate changes to the above reactors. 
+	  
+	* ace/Signal.h:
+	* ace/Signal.inl:
+
+	  Added a default argument to the ACE_Signal class, which is used
+	  by the ACE_Select_Reactor.
+
 Fri Aug 20 14:26:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * tests/Process_Mutex_Test.cpp:

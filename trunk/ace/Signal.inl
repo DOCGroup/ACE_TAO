@@ -228,10 +228,14 @@ ACE_Sig_Action::restore_action (int signum, ACE_Sig_Action &oaction)
 // Block out the signal MASK until the destructor is called.
 
 ACE_INLINE
-ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
+ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
+                              bool condition)
   : omask_ ()
+  , condition_ (condition)
 {
   //ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
+  if (!this->condition_)
+    return;
 
 #if defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (mask);
@@ -270,6 +274,9 @@ ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
+  if (!this->condition_)
+    return;
+
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
   ACE_OS::sigprocmask (SIG_SETMASK,
