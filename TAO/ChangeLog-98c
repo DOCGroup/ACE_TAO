@@ -1,5 +1,8 @@
 Thu May 28 00:08:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tao/orbconf.h (TAO_NAMESPACE_STORAGE_CLASS): Changed it from
+ 	  extern to static.
+
 	* orbsvcs/orbsvcs/Naming/Entries.h: Removed the default for the
  	  binding type in the constructor of NS_IntId.  It was breaking
  	  VC5.0 if CosNaming was a namespace.
