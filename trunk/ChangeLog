@@ -4,6 +4,19 @@ Wed Mar  8 15:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  to 2.  The alignment computing macros didn't work in this case.
 	  Thanks to Steve H. for reporting this.
 
+Wed Mar 08 15:26:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: On AIX, the shared lib is now libACE.o and the
+          associated archive is libACE.a. Attempting to unify ACE with the
+          screwy way AIX does libraries. When the static library gets built,
+          it'll be called libACEns.a.
+
+        * tests/vacpp_setup.icc: On AIX, link libACE.a, not libACEshr.a
+
+        * tests/libDLL_Test.icc: New file to build the library required for
+          DLL_Test. Can't be built from DLL_Test.icc because the codestore
+          will complain that main() is already defined.
+
 Wed Mar 08 14:46:52 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h:
