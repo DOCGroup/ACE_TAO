@@ -3950,6 +3950,7 @@ param_type_spec
             }
           else
             {
+              d->last_referenced_as ($1);
               AST_Decl::NodeType nt = d->node_type ();
 
               if (nt == AST_Decl::NT_struct_fwd 
