@@ -1,3 +1,8 @@
+Thu Mar 04 16:29:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	  Added new Event Channel to the orbsvcs project file.
+
 Thu Mar 04 16:08:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: removed unused LSRC2 macro definition.
