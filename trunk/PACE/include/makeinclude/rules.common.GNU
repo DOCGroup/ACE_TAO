@@ -8,7 +8,7 @@ ifndef PACE_ROOT
   PACE_ROOT = $(ACE_ROOT)/PACE
 endif # ! PACE_ROOT
 
-VPATH:=common:arpa:config:netinet:sys
+VPATH:=config:sys
 
 ifeq ($(PACE_SYSNAME),)
   PACE_SYSNAME = $(shell uname -s)
