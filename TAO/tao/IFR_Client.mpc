@@ -22,4 +22,8 @@ project : taolib, core {
   Resource_Files {
     IFR_Client
   }
+
+  PIDL_Files {
+    IFR_Client
+  }
 }

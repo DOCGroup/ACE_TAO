@@ -22,4 +22,7 @@ project : taolib, core, messaging, minimum_corba {
   Resource_files {
     DynamicInterface
   }
+
+  PIDL_Files {
+  }
 }

@@ -22,4 +22,8 @@ project : valuetype, core {
   Resource_Files {
     ObjRefTemplate
   }
+
+  PIDL_Files {
+    ObjRefTemplate
+  }
 }

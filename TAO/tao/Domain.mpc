@@ -22,4 +22,7 @@ project : taolib, core, ifr_client, portableserver {
   Resource_Files {
     Domain
   }
+
+  PIDL_Files {
+  }
 }

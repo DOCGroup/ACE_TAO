@@ -22,4 +22,8 @@ project : taolib, core {
   Resource_Files {
     IORManipulation
   }
+
+  PIDL_Files {
+    IORManipulation
+  }
 }

@@ -22,4 +22,8 @@ project : taolib, core, portableserver {
   Resource_Files {
     Messaging
   }
+
+  PIDL_Files {
+    Messaging
+  }
 }
