@@ -1299,7 +1299,7 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
-    return 0;                 
+    return 0;
 
   // Go upto <len>
   size_t len = len1 - len2;
@@ -4493,16 +4493,16 @@ ACE_OS::recvfrom (ACE_HANDLE handle, char *buf, int len,
                                    (struct sockaddr_in *) addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #elif defined (ACE_WIN32)
-  int result = ::recvfrom ((ACE_SOCKET) handle, 
-                           buf, 
-                           (ACE_SOCKET_LEN) len, 
+  int result = ::recvfrom ((ACE_SOCKET) handle,
+                           buf,
+                           (ACE_SOCKET_LEN) len,
                            flags,
-                           addr, 
+                           addr,
                            (ACE_SOCKET_LEN *) addrlen);
   if (result == SOCKET_ERROR)
     {
       errno = ::WSAGetLastError ();
-      if (errno == WSAEMSGSIZE && 
+      if (errno == WSAEMSGSIZE &&
           ACE_BIT_ENABLED (flags, MSG_PEEK))
         return len;
       else
@@ -7304,6 +7304,14 @@ ACE_INLINE void
 ACE_OS::exit (int status)
 {
   // ACE_TRACE ("ACE_OS::exit");
+
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+  // Shut down the ACE_Object_Manager.  With
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
+  // instantiated on the main's stack.  ::exit () doesn't destroy it.
+  ACE_Object_Manager::fini ();
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
 #if !defined (ACE_HAS_WINCE)
 # if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
@@ -9773,7 +9781,7 @@ ACE_OS::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
-    return 0;                 
+    return 0;
 
   // Go upto <len>
   size_t len = len1 - len2;
@@ -10441,6 +10449,13 @@ fflush (FILE *fp)
 ACE_INLINE void
 exit (int status)
 {
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+  // Shut down the ACE_Object_Manager.  With
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
+  // instantiated on the main's stack.  ::exit () doesn't destroy it.
+  ACE_Object_Manager::fini ();
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
   ACE_OS::exit (status);
 }
 
