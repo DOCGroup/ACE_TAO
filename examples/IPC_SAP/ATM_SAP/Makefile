@@ -24,7 +24,10 @@ INSTALL =
 #----------------------------------------------------------------------------
 
 LDFLAGS  += -R$(FORE_ROOT)/lib -L$(FORE_ROOT)/lib
-LIBS     += -lans -lpmp
+
+# These are the libraries that FORE used to use. These might be different
+#  when FORE actually supports Solaris 7
+#LIBS     += -lans -lpmp
 include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
