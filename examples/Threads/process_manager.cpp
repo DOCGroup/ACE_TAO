@@ -169,7 +169,7 @@ respawn_self (const ACE_TCHAR *myname,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon;
 

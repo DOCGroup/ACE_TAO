@@ -155,7 +155,7 @@ writer (void *)
 
 // Spawn off threads.
 
-int main (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
   parse_args (argc, argv);
@@ -191,7 +191,7 @@ template class ACE_Write_Guard<ACE_RW_Mutex>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

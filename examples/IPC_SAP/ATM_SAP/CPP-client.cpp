@@ -13,7 +13,7 @@ ACE_RCSID(ATM_SAP, CPP_client, "$Id$")
 
 /* ACE_ATM Client */
 
-int main (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if ( argc < 2 )
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -192,7 +192,7 @@ int main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
 		     "your platform isn't configured to support ATM\n"),

@@ -496,7 +496,7 @@ run_server (ACE_INET_Addr &addr)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int c, dstport = DEFPORT;
   int priority =

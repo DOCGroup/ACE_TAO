@@ -26,7 +26,7 @@ static void print_context (ACE_Registry::Naming_Context &parent,
 static void indent (u_long indentation);
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result;
   ACE_Registry::Naming_Context naming_context;

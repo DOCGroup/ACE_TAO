@@ -25,7 +25,7 @@ ACE_RCSID(tests, Reverse_Lock_Test, "$Id$")
 typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reverse_Lock_Test"));
 

@@ -51,11 +51,29 @@ bgcolor="#ffffff">
         <strong><code>-?</code></strong> command line argument, are
         provided to the program.<p>
 
-    <li>The program <strong><code>main</code></strong> function must
+    <li>A program entry poing <code>main</code> can take any of the
+        three forms:
+        <p><pre>
+        int main (int argc, char *argv[])
+        int wmain (int argc, wchar_t *argv[])
+        int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+        </pre></p>
+        Of them, the entry point <code>main</code> always gives you
+        the command line arguemnt in char strings form.  The entry
+        point <code>wmain</code> currently can only be used under
+        Win32 and it returns the command line arguments in wchar
+        strings format.  Defining the <code>ACE_TMAIN</code> as the
+        program entry point is the more portable form.  The command
+        line arguments are given in char strings in most cases,
+        or wchar strings when <code>ACE_USES_WCHAR</code> is defined.
+        See <code>$ACE_ROOT/docs/wchar.txt</code> for more information
+        on ACE support on wchar.
+
+    <li>The program entry point function, in any form mentioned above, must
         always be declared with arguments, <em>e.g.</em>,
         <pre>
         int
-        main (int argc, ACE_TCHAR *argv[])
+        ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           [...]
 
@@ -67,7 +85,7 @@ bgcolor="#ffffff">
         arguments, don't declare them, <em>e.g.</em>,
         <pre>
         int
-        main (int, ACE_TCHAR *[])
+        ACE_TMAIN (int, ACE_TCHAR *[])
         {
           [...]
 
@@ -76,7 +94,8 @@ bgcolor="#ffffff">
         </pre><p>
 
         Please declare the second argument as <code>ACE_TCHAR *[]</code>
-        instead of <code>ACE_TCHAR **</code> or <code>char *[]</CODE>.  Ancient versions of MSC
+        instead of <code>ACE_TCHAR **</code> or <code>char *[]</CODE>.
+        Ancient versions of MSC
         complained about <code>ACE_TCHAR **</code> and <code>char
         *[]</CODE> is not Unicode-compliant.<p>
 

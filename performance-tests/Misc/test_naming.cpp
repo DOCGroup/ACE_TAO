@@ -177,7 +177,7 @@ void do_testing (int argc, ACE_TCHAR *argv[], int light)
 
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Do testing with SYNC on
   ACE_DEBUG ((LM_DEBUG, "SYNC is ON\n"));

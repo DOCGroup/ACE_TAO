@@ -4,20 +4,20 @@
 
 #define ACE_YYBISON 1  /* Identify Bison output.  */
 
-#define	ACE_DYNAMIC	257
-#define	ACE_STATIC	258
-#define	ACE_SUSPEND	259
-#define	ACE_RESUME	260
-#define	ACE_REMOVE	261
-#define	ACE_USTREAM	262
-#define	ACE_MODULE_T	263
-#define	ACE_STREAM_T	264
-#define	ACE_SVC_OBJ_T	265
-#define	ACE_ACTIVE	266
-#define	ACE_INACTIVE	267
-#define	ACE_PATHNAME	268
-#define	ACE_IDENT	269
-#define	ACE_STRING	270
+#define ACE_DYNAMIC     257
+#define ACE_STATIC      258
+#define ACE_SUSPEND     259
+#define ACE_RESUME      260
+#define ACE_REMOVE      261
+#define ACE_USTREAM     262
+#define ACE_MODULE_T    263
+#define ACE_STREAM_T    264
+#define ACE_SVC_OBJ_T   265
+#define ACE_ACTIVE      266
+#define ACE_INACTIVE    267
+#define ACE_PATHNAME    268
+#define ACE_IDENT       269
+#define ACE_STRING      270
 
 
 // $Id$
@@ -55,9 +55,9 @@ int ace_yyerrno = 0;
 
 
 
-#define	ACE_YYFINAL		66
-#define	ACE_YYFLAG		-32768
-#define	ACE_YYNTBASE	23
+#define ACE_YYFINAL             66
+#define ACE_YYFLAG              -32768
+#define ACE_YYNTBASE    23
 
 #define ACE_YYTRANSLATE(x) ((unsigned)(x) <= 270 ? ace_yytranslate[x] : 43)
 
@@ -225,7 +225,7 @@ static const short ace_yypgoto[] = {-32768,
 };
 
 
-#define	ACE_YYLAST		61
+#define ACE_YYLAST              61
 
 
 static const short ace_yytable[] = {    23,
@@ -298,7 +298,7 @@ static const short ace_yycheck[] = {     8,
    since that symbol is in the user namespace.  */
 #if (defined (_MSDOS) || defined (_MSDOS_)) && !defined (__TURBOC__)
 #if 0 /* No need for malloc.h, which pollutes the namespace;
-	 instead, just don't use alloca.  */
+         instead, just don't use alloca.  */
 #include <malloc.h>
 #endif
 #else /* not MSDOS, or __TURBOC__ */
@@ -311,7 +311,7 @@ static const short ace_yycheck[] = {     8,
 #else /* not MSDOS, or __TURBOC__, or _AIX */
 #if 0
 #ifdef __hpux /* haible@ilog.fr says this works for HPUX 9.05 and up,
-		 and on HPUX 10.  Eventually we can turn this on.  */
+                 and on HPUX 10.  Eventually we can turn this on.  */
 #define ACE_YYSTACK_USE_ALLOCA
 #define alloca __builtin_alloca
 #endif /* __hpux */
@@ -333,50 +333,50 @@ static const short ace_yycheck[] = {     8,
    It is replaced by the list of actions, each action
    as one case of the switch.  */
 
-#define ace_yyerrok		(ace_yyerrstatus = 0)
-#define ace_yyclearin	(ace_yychar = ACE_YYEMPTY)
-#define ACE_YYEMPTY		-2
-#define ACE_YYEOF		0
-#define ACE_YYACCEPT	goto ace_yyacceptlab
-#define ACE_YYABORT 	goto ace_yyabortlab
-#define ACE_YYERROR		goto ace_yyerrlab1
+#define ace_yyerrok             (ace_yyerrstatus = 0)
+#define ace_yyclearin   (ace_yychar = ACE_YYEMPTY)
+#define ACE_YYEMPTY             -2
+#define ACE_YYEOF               0
+#define ACE_YYACCEPT    goto ace_yyacceptlab
+#define ACE_YYABORT     goto ace_yyabortlab
+#define ACE_YYERROR             goto ace_yyerrlab1
 /* Like ACE_YYERROR except do call ace_yyerror.
    This remains here temporarily to ease the
    transition to the new meaning of ACE_YYERROR, for GCC.
    Once GCC version 2 has supplanted version 1, this can go.  */
-#define ACE_YYFAIL		goto ace_yyerrlab
+#define ACE_YYFAIL              goto ace_yyerrlab
 #define ACE_YYRECOVERING()  (!!ace_yyerrstatus)
 #define ACE_YYBACKUP(token, value) \
-do								\
-  if (ace_yychar == ACE_YYEMPTY && ace_yylen == 1)				\
-    { ace_yychar = (token), ace_yylval = (value);			\
-      ace_yychar1 = ACE_YYTRANSLATE (ace_yychar);				\
-      ACE_YYPOPSTACK;						\
-      goto ace_yybackup;						\
-    }								\
-  else								\
-    { ace_yyerror (ACE_LIB_TEXT("syntax error: cannot back up")); ACE_YYERROR; }	\
+do                                                              \
+  if (ace_yychar == ACE_YYEMPTY && ace_yylen == 1)                              \
+    { ace_yychar = (token), ace_yylval = (value);                       \
+      ace_yychar1 = ACE_YYTRANSLATE (ace_yychar);                               \
+      ACE_YYPOPSTACK;                                           \
+      goto ace_yybackup;                                                \
+    }                                                           \
+  else                                                          \
+    { ace_yyerror (ACE_LIB_TEXT("syntax error: cannot back up")); ACE_YYERROR; }        \
 while (0)
 
-#define ACE_YYTERROR	1
-#define ACE_YYERRCODE	256
+#define ACE_YYTERROR    1
+#define ACE_YYERRCODE   256
 
 #ifndef ACE_YYPURE
-#define ACE_YYLEX		ace_yylex()
+#define ACE_YYLEX               ace_yylex()
 #endif
 
 #ifdef ACE_YYPURE
 #ifdef ACE_YYLSP_NEEDED
 #ifdef ACE_YYLEX_PARAM
-#define ACE_YYLEX		ace_yylex(&ace_yylval, &ace_yylloc, ACE_YYLEX_PARAM)
+#define ACE_YYLEX               ace_yylex(&ace_yylval, &ace_yylloc, ACE_YYLEX_PARAM)
 #else
-#define ACE_YYLEX		ace_yylex(&ace_yylval, &ace_yylloc)
+#define ACE_YYLEX               ace_yylex(&ace_yylval, &ace_yylloc)
 #endif
 #else /* not ACE_YYLSP_NEEDED */
 #ifdef ACE_YYLEX_PARAM
-#define ACE_YYLEX		ace_yylex(&ace_yylval, ACE_YYLEX_PARAM)
+#define ACE_YYLEX               ace_yylex(&ace_yylval, ACE_YYLEX_PARAM)
 #else
-#define ACE_YYLEX		ace_yylex(&ace_yylval)
+#define ACE_YYLEX               ace_yylex(&ace_yylval)
 #endif
 #endif /* not ACE_YYLSP_NEEDED */
 #endif
@@ -385,27 +385,27 @@ while (0)
 
 #ifndef ACE_YYPURE
 
-int	ace_yychar;			/*  the lookahead symbol		*/
-ACE_YYSTYPE	ace_yylval;			/*  the semantic value of the		*/
-				/*  lookahead symbol			*/
+int     ace_yychar;                     /*  the lookahead symbol                */
+ACE_YYSTYPE     ace_yylval;                     /*  the semantic value of the           */
+                                /*  lookahead symbol                    */
 
 #ifdef ACE_YYLSP_NEEDED
-ACE_YYLTYPE ace_yylloc;			/*  location data for the lookahead	*/
-				/*  symbol				*/
+ACE_YYLTYPE ace_yylloc;                 /*  location data for the lookahead     */
+                                /*  symbol                              */
 #endif
 
-int ace_yynerrs;			/*  number of parse errors so far       */
+int ace_yynerrs;                        /*  number of parse errors so far       */
 #endif  /* not ACE_YYPURE */
 
 #if ACE_YYDEBUG != 0
-int ace_yydebug;			/*  nonzero means print parse trace	*/
+int ace_yydebug;                        /*  nonzero means print parse trace     */
 /* Since this is uninitialized, it does not stop multiple parsers
    from coexisting.  */
 #endif
 
-/*  ACE_YYINITDEPTH indicates the initial size of the parser's stacks	*/
+/*  ACE_YYINITDEPTH indicates the initial size of the parser's stacks   */
 
-#ifndef	ACE_YYINITDEPTH
+#ifndef ACE_YYINITDEPTH
 #define ACE_YYINITDEPTH 200
 #endif
 
@@ -425,9 +425,9 @@ int ace_yydebug;			/*  nonzero means print parse trace	*/
    definitions require.  With GCC, __builtin_memcpy takes an arg
    of type size_t, but it can handle unsigned int.  */
 
-#if __GNUC__ > 1		/* GNU C and GNU C++ define this.  */
-#define __ace_yy_memcpy(TO,FROM,COUNT)	__builtin_memcpy(TO,FROM,COUNT)
-#else				/* not GNU C or C++ */
+#if __GNUC__ > 1                /* GNU C and GNU C++ define this.  */
+#define __ace_yy_memcpy(TO,FROM,COUNT)  __builtin_memcpy(TO,FROM,COUNT)
+#else                           /* not GNU C or C++ */
 #ifndef __cplusplus
 
 /* This is the most reliable way to avoid incompatibilities
@@ -502,17 +502,17 @@ ace_yyparse(ACE_YYPARSE_PARAM_ARG)
   register int ace_yyn;
   register short *ace_yyssp;
   register ACE_YYSTYPE *ace_yyvsp;
-  int ace_yyerrstatus;	/*  number of tokens to shift before error messages enabled */
-  int ace_yychar1 = 0;		/*  lookahead token as an internal (translated) token number */
+  int ace_yyerrstatus;  /*  number of tokens to shift before error messages enabled */
+  int ace_yychar1 = 0;          /*  lookahead token as an internal (translated) token number */
 
-  short	ace_yyssa[ACE_YYINITDEPTH];	/*  the state stack			*/
-  ACE_YYSTYPE ace_yyvsa[ACE_YYINITDEPTH];	/*  the semantic value stack		*/
+  short ace_yyssa[ACE_YYINITDEPTH];     /*  the state stack                     */
+  ACE_YYSTYPE ace_yyvsa[ACE_YYINITDEPTH];       /*  the semantic value stack            */
 
-  short *ace_yyss = ace_yyssa;		/*  refer to the stacks thru separate pointers */
-  ACE_YYSTYPE *ace_yyvs = ace_yyvsa;	/*  to allow ace_yyoverflow to reallocate them elsewhere */
+  short *ace_yyss = ace_yyssa;          /*  refer to the stacks thru separate pointers */
+  ACE_YYSTYPE *ace_yyvs = ace_yyvsa;    /*  to allow ace_yyoverflow to reallocate them elsewhere */
 
 #ifdef ACE_YYLSP_NEEDED
-  ACE_YYLTYPE ace_yylsa[ACE_YYINITDEPTH];	/*  the location stack			*/
+  ACE_YYLTYPE ace_yylsa[ACE_YYINITDEPTH];       /*  the location stack                  */
   ACE_YYLTYPE *ace_yyls = ace_yylsa;
   ACE_YYLTYPE *ace_yylsp;
 
@@ -533,9 +533,9 @@ ace_yyparse(ACE_YYPARSE_PARAM_ARG)
 #endif
 #endif
 
-  ACE_YYSTYPE ace_yyval;		/*  the variable used to return		*/
-				/*  semantic values from the action	*/
-				/*  routines				*/
+  ACE_YYSTYPE ace_yyval;                /*  the variable used to return         */
+                                /*  semantic values from the action     */
+                                /*  routines                            */
 
   int ace_yylen;
 
@@ -547,7 +547,7 @@ ace_yyparse(ACE_YYPARSE_PARAM_ARG)
   ace_yystate = 0;
   ace_yyerrstatus = 0;
   ace_yynerrs = 0;
-  ace_yychar = ACE_YYEMPTY;		/* Cause a token to be read.  */
+  ace_yychar = ACE_YYEMPTY;             /* Cause a token to be read.  */
 
   /* Initialize stack pointers.
      Waste one element of value and location stack
@@ -582,20 +582,20 @@ ace_yynewstate:
 
 #ifdef ace_yyoverflow
       /* Each stack pointer address is followed by the size of
-	 the data in use in that stack, in bytes.  */
+         the data in use in that stack, in bytes.  */
 #ifdef ACE_YYLSP_NEEDED
       /* This used to be a conditional around just the two extra args,
-	 but that might be undefined if ace_yyoverflow is a macro.  */
+         but that might be undefined if ace_yyoverflow is a macro.  */
       ace_yyoverflow(ACE_LIB_TEXT("parser stack overflow"),
-		 &ace_yyss1, size * sizeof (*ace_yyssp),
-		 &ace_yyvs1, size * sizeof (*ace_yyvsp),
-		 &ace_yyls1, size * sizeof (*ace_yylsp),
-		 &ace_yystacksize);
+                 &ace_yyss1, size * sizeof (*ace_yyssp),
+                 &ace_yyvs1, size * sizeof (*ace_yyvsp),
+                 &ace_yyls1, size * sizeof (*ace_yylsp),
+                 &ace_yystacksize);
 #else
       ace_yyoverflow(ACE_LIB_TEXT("parser stack overflow"),
-		 &ace_yyss1, size * sizeof (*ace_yyssp),
-		 &ace_yyvs1, size * sizeof (*ace_yyvsp),
-		 &ace_yystacksize);
+                 &ace_yyss1, size * sizeof (*ace_yyssp),
+                 &ace_yyvs1, size * sizeof (*ace_yyvsp),
+                 &ace_yystacksize);
 #endif
 
       ace_yyss = ace_yyss1; ace_yyvs = ace_yyvs1;
@@ -605,34 +605,34 @@ ace_yynewstate:
 #else /* no ace_yyoverflow */
       /* Extend the stack our own way.  */
       if (ace_yystacksize >= ACE_YYMAXDEPTH)
-	{
-	  ace_yyerror(ACE_LIB_TEXT("parser stack overflow"));
-	  if (ace_yyfree_stacks)
-	    {
-	      free (ace_yyss);
-	      free (ace_yyvs);
+        {
+          ace_yyerror(ACE_LIB_TEXT("parser stack overflow"));
+          if (ace_yyfree_stacks)
+            {
+              free (ace_yyss);
+              free (ace_yyvs);
 #ifdef ACE_YYLSP_NEEDED
-	      free (ace_yyls);
+              free (ace_yyls);
 #endif
-	    }
-	  return 2;
-	}
+            }
+          return 2;
+        }
       ace_yystacksize *= 2;
       if (ace_yystacksize > ACE_YYMAXDEPTH)
-	ace_yystacksize = ACE_YYMAXDEPTH;
+        ace_yystacksize = ACE_YYMAXDEPTH;
 #ifndef ACE_YYSTACK_USE_ALLOCA
       ace_yyfree_stacks = 1;
 #endif
       ace_yyss = (short *) ACE_YYSTACK_ALLOC (ace_yystacksize * sizeof (*ace_yyssp));
       __ace_yy_memcpy ((ACE_TCHAR *)ace_yyss, (ACE_TCHAR *)ace_yyss1,
-		   size * (unsigned int) sizeof (*ace_yyssp));
+                   size * (unsigned int) sizeof (*ace_yyssp));
       ace_yyvs = (ACE_YYSTYPE *) ACE_YYSTACK_ALLOC (ace_yystacksize * sizeof (*ace_yyvsp));
       __ace_yy_memcpy ((ACE_TCHAR *)ace_yyvs, (ACE_TCHAR *)ace_yyvs1,
-		   size * (unsigned int) sizeof (*ace_yyvsp));
+                   size * (unsigned int) sizeof (*ace_yyvsp));
 #ifdef ACE_YYLSP_NEEDED
       ace_yyls = (ACE_YYLTYPE *) ACE_YYSTACK_ALLOC (ace_yystacksize * sizeof (*ace_yylsp));
       __ace_yy_memcpy ((ACE_TCHAR *)ace_yyls, (ACE_TCHAR *)ace_yyls1,
-		   size * (unsigned int) sizeof (*ace_yylsp));
+                   size * (unsigned int) sizeof (*ace_yylsp));
 #endif
 #endif /* no ace_yyoverflow */
 
@@ -644,11 +644,11 @@ ace_yynewstate:
 
 #if ACE_YYDEBUG != 0
       if (ace_yydebug)
-	ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Stack size increased to %d\n"), ace_yystacksize);
+        ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Stack size increased to %d\n"), ace_yystacksize);
 #endif
 
       if (ace_yyssp >= ace_yyss + ace_yystacksize - 1)
-	ACE_YYABORT;
+        ACE_YYABORT;
     }
 
 #if ACE_YYDEBUG != 0
@@ -678,21 +678,21 @@ ace_yynewstate:
     {
 #if ACE_YYDEBUG != 0
       if (ace_yydebug)
-	ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Reading a token: "));
+        ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Reading a token: "));
 #endif
       ace_yychar = ACE_YYLEX;
     }
 
   /* Convert token to internal form (in ace_yychar1) for indexing tables with */
 
-  if (ace_yychar <= 0)		/* This means end of input. */
+  if (ace_yychar <= 0)          /* This means end of input. */
     {
       ace_yychar1 = 0;
-      ace_yychar = ACE_YYEOF;		/* Don't call ACE_YYLEX any more */
+      ace_yychar = ACE_YYEOF;           /* Don't call ACE_YYLEX any more */
 
 #if ACE_YYDEBUG != 0
       if (ace_yydebug)
-	ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Now at end of input.\n"));
+        ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Now at end of input.\n"));
 #endif
     }
   else
@@ -701,15 +701,15 @@ ace_yynewstate:
 
 #if ACE_YYDEBUG != 0
       if (ace_yydebug)
-	{
-	  ACE_OS::fprintf (stderr, ACE_LIB_TEXT("Next token is %d (%s"), ace_yychar, ace_yytname[ace_yychar1]);
-	  /* Give the individual parser a way to print the precise meaning
-	     of a token, for further debugging info.  */
+        {
+          ACE_OS::fprintf (stderr, ACE_LIB_TEXT("Next token is %d (%s"), ace_yychar, ace_yytname[ace_yychar1]);
+          /* Give the individual parser a way to print the precise meaning
+             of a token, for further debugging info.  */
 #ifdef ACE_YYPRINT
-	  ACE_YYPRINT (stderr, ace_yychar, ace_yylval);
+          ACE_YYPRINT (stderr, ace_yychar, ace_yylval);
 #endif
-	  ACE_OS::fprintf (stderr, ACE_LIB_TEXT(")\n"));
-	}
+          ACE_OS::fprintf (stderr, ACE_LIB_TEXT(")\n"));
+        }
 #endif
     }
 
@@ -729,7 +729,7 @@ ace_yynewstate:
   if (ace_yyn < 0)
     {
       if (ace_yyn == ACE_YYFLAG)
-	goto ace_yyerrlab;
+        goto ace_yyerrlab;
       ace_yyn = -ace_yyn;
       goto ace_yyreduce;
     }
@@ -780,11 +780,11 @@ ace_yyreduce:
       int i;
 
       ACE_OS::fprintf (stderr, ACE_LIB_TEXT("Reducing via rule %d (line %d), "),
-	       ace_yyn, ace_yyrline[ace_yyn]);
+               ace_yyn, ace_yyrline[ace_yyn]);
 
       /* Print the symbols being reduced, and their result.  */
       for (i = ace_yyprhs[ace_yyn]; ace_yyrhs[i] > 0; i++)
-	ACE_OS::fprintf (stderr, ACE_LIB_TEXT("%s "), ace_yytname[ace_yyrhs[i]]);
+        ACE_OS::fprintf (stderr, ACE_LIB_TEXT("%s "), ace_yytname[ace_yyrhs[i]]);
       ACE_OS::fprintf (stderr, ACE_LIB_TEXT(" -> %s\n"), ace_yytname[ace_yyr1[ace_yyn]]);
     }
 #endif
@@ -1053,7 +1053,7 @@ case 41:
       short *ssp1 = ace_yyss - 1;
       ACE_OS::fprintf (stderr, ACE_LIB_TEXT("state stack now"));
       while (ssp1 != ace_yyssp)
-	ACE_OS::fprintf (stderr, ACE_LIB_TEXT(" %d"), *++ssp1);
+        ACE_OS::fprintf (stderr, ACE_LIB_TEXT(" %d"), *++ssp1);
       ACE_OS::fprintf (stderr, ACE_LIB_TEXT("\n"));
     }
 #endif
@@ -1103,44 +1103,44 @@ ace_yyerrlab:   /* here on detecting error */
       ace_yyn = ace_yypact[ace_yystate];
 
       if (ace_yyn > ACE_YYFLAG && ace_yyn < ACE_YYLAST)
-	{
-	  int size = 0;
-	  ACE_TCHAR *msg;
-	  int x, count;
+        {
+          int size = 0;
+          ACE_TCHAR *msg;
+          int x, count;
 
-	  count = 0;
-	  /* Start X at -ace_yyn if nec to avoid negative indexes in ace_yycheck.  */
-	  for (x = (ace_yyn < 0 ? -ace_yyn : 0);
-	       x < (sizeof(ace_yytname) / sizeof(ACE_TCHAR *)); x++)
-	    if (ace_yycheck[x + ace_yyn] == x)
-	      size += ACE_OS::strlen(ace_yytname[x]) + 15, count++;
-	  msg = new ACE_TCHAR[size + 15];
-	  if (msg != 0)
-	    {
-	      ACE_OS::strcpy(msg, ACE_LIB_TEXT("parse error"));
+          count = 0;
+          /* Start X at -ace_yyn if nec to avoid negative indexes in ace_yycheck.  */
+          for (x = (ace_yyn < 0 ? -ace_yyn : 0);
+               x < (sizeof(ace_yytname) / sizeof(ACE_TCHAR *)); x++)
+            if (ace_yycheck[x + ace_yyn] == x)
+              size += ACE_OS::strlen(ace_yytname[x]) + 15, count++;
+          msg = new ACE_TCHAR[size + 15];
+          if (msg != 0)
+            {
+              ACE_OS::strcpy(msg, ACE_LIB_TEXT("parse error"));
 
-	      if (count < 5)
-		{
-		  count = 0;
-		  for (x = (ace_yyn < 0 ? -ace_yyn : 0);
-		       x < (sizeof(ace_yytname) / sizeof(ACE_TCHAR *)); x++)
-		    if (ace_yycheck[x + ace_yyn] == x)
-		      {
-			ACE_OS::strcat(msg, count == 0 ? ACE_LIB_TEXT(", expecting `") : ACE_LIB_TEXT(" or `"));
-			ACE_OS::strcat(msg, ACE_TEXT_CHAR_TO_TCHAR (ace_yytname[x]));
-			ACE_OS::strcat(msg, ACE_LIB_TEXT("'"));
-			count++;
-		      }
-		}
-	      ace_yyerror(msg);
-	      delete [] msg;
-	    }
-	  else
-	    ace_yyerror (ACE_LIB_TEXT("parse error; also virtual memory exceeded"));
-	}
+              if (count < 5)
+                {
+                  count = 0;
+                  for (x = (ace_yyn < 0 ? -ace_yyn : 0);
+                       x < (sizeof(ace_yytname) / sizeof(ACE_TCHAR *)); x++)
+                    if (ace_yycheck[x + ace_yyn] == x)
+                      {
+                        ACE_OS::strcat(msg, count == 0 ? ACE_LIB_TEXT(", expecting `") : ACE_LIB_TEXT(" or `"));
+                        ACE_OS::strcat(msg, ACE_TEXT_CHAR_TO_TCHAR (ace_yytname[x]));
+                        ACE_OS::strcat(msg, ACE_LIB_TEXT("'"));
+                        count++;
+                      }
+                }
+              ace_yyerror(msg);
+              delete [] msg;
+            }
+          else
+            ace_yyerror (ACE_LIB_TEXT("parse error; also virtual memory exceeded"));
+        }
       else
 #endif /* ACE_YYERROR_VERBOSE */
-	ace_yyerror(ACE_LIB_TEXT("parse error"));
+        ace_yyerror(ACE_LIB_TEXT("parse error"));
     }
 
   goto ace_yyerrlab1;
@@ -1152,11 +1152,11 @@ ace_yyerrlab1:   /* here on error raised explicitly by an action */
 
       /* return failure if at end of input */
       if (ace_yychar == ACE_YYEOF)
-	ACE_YYABORT;
+        ACE_YYABORT;
 
 #if ACE_YYDEBUG != 0
       if (ace_yydebug)
-	ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Discarding token %d (%s).\n"), ace_yychar, ace_yytname[ace_yychar1]);
+        ACE_OS::fprintf(stderr, ACE_LIB_TEXT("Discarding token %d (%s).\n"), ace_yychar, ace_yytname[ace_yychar1]);
 #endif
 
       ace_yychar = ACE_YYEMPTY;
@@ -1165,7 +1165,7 @@ ace_yyerrlab1:   /* here on error raised explicitly by an action */
   /* Else will try to reuse lookahead token
      after shifting the error token.  */
 
-  ace_yyerrstatus = 3;		/* Each real token shifted decrements this */
+  ace_yyerrstatus = 3;          /* Each real token shifted decrements this */
 
   goto ace_yyerrhandle;
 
@@ -1193,7 +1193,7 @@ ace_yyerrpop:   /* pop the current state because it cannot handle the error toke
       short *ssp1 = ace_yyss - 1;
       ACE_OS::fprintf (stderr, ACE_LIB_TEXT("Error: state stack now"));
       while (ssp1 != ace_yyssp)
-	ACE_OS::fprintf (stderr, ACE_LIB_TEXT(" %d"), *++ssp1);
+        ACE_OS::fprintf (stderr, ACE_LIB_TEXT(" %d"), *++ssp1);
       ACE_OS::fprintf (stderr, ACE_LIB_TEXT("\n"));
     }
 #endif
@@ -1212,7 +1212,7 @@ ace_yyerrhandle:
   if (ace_yyn < 0)
     {
       if (ace_yyn == ACE_YYFLAG)
-	goto ace_yyerrpop;
+        goto ace_yyerrpop;
       ace_yyn = -ace_yyn;
       goto ace_yyreduce;
     }
@@ -1393,7 +1393,7 @@ ACE_TCHAR *program_name;
 // Main driver program.
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Svc_Conf_Param param (stdin);
 

@@ -108,7 +108,7 @@ do_client_processing (ACE_LSOCK_Stream &sc)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
@@ -137,7 +137,7 @@ main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform must support sendmsg/recvmsg to run this test\n"),

@@ -311,7 +311,7 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Performance_Test"));
 
@@ -440,7 +440,7 @@ template class ACE_Auto_Array_Ptr <ACE_INET_Addr>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Performance_Test"));
 

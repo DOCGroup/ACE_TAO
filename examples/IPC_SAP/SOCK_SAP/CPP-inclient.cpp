@@ -402,7 +402,7 @@ run_client (void)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the logger.
   ACE_LOG_MSG->open (argv[0]);

@@ -74,7 +74,7 @@ writer (void *arg)
 }
 
 int
-main (int argc, ACE_TCHAR **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   // Shared data: set by writer, read by reader.
   int data;
@@ -111,7 +111,7 @@ template class ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

@@ -57,7 +57,7 @@ parse_arguments (int argc, char *argv[])
 }
 
 int
-main(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   parse_arguments (argc, argv);
 
@@ -95,7 +95,7 @@ main(int argc, ACE_TCHAR *argv[])
 #else
 #include <stdio.h>
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "This feature is not supported\n"),

@@ -1143,7 +1143,7 @@ get_options (int argc, ACE_TCHAR *argv[])
 ///////////////////////////////////////////////////////////////////////////////
 
 int
-main (int argc, ACE_TCHAR *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   ACE_LOG_MSG->open (argv[0] > 0  ?  argv[0]  :  ACE_TEXT("context_switch_time"));
 

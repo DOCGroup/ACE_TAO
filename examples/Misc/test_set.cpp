@@ -4,7 +4,7 @@
 #include "ace/Log_Msg.h"
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Unbounded_Set<int> s1;
 

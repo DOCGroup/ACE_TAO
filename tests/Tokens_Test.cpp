@@ -201,7 +201,7 @@ run_test (ACE_Token_Proxy *A,
 #endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Tokens_Test"));
 #if defined (ACE_HAS_THREADS)

@@ -119,7 +119,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 #endif /* !ACE_LACKS_MMAP */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Mem_Map_Test"));
 

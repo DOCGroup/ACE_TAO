@@ -187,7 +187,7 @@ run_test (u_short localport,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Estabish call backs and socket names.
 

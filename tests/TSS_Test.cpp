@@ -259,7 +259,7 @@ template class ACE_TSS<ACE_TSS_Type_Adapter<u_int> >;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("TSS_Test"));
 

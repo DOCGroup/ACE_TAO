@@ -87,7 +87,7 @@ template class ACE_Auto_IncDec<int>;
 // Spawn off threads.
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Auto_IncDec_Test"));
 

@@ -12,7 +12,7 @@ const int MAX_KEY_LEN = 1000;
 typedef ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX> MAP_MANAGER;
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 4)
     ACE_ERROR_RETURN ((LM_ERROR, "usage: %s tablesize file1 file2\n",

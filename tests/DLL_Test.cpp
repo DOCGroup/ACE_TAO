@@ -39,7 +39,7 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 typedef Hello *(*Hello_Factory)(void);
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("DLL_Test"));
 

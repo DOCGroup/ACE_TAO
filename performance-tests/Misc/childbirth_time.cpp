@@ -333,7 +333,7 @@ prof_mutex_base (size_t iteration)
 }
 
 int
-main (int argc, ACE_TCHAR* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:l:pftahmxe"));
   int c;

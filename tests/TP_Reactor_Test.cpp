@@ -1148,7 +1148,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("TP_Reactor_Test"));
 

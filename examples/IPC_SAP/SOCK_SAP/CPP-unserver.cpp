@@ -150,7 +150,7 @@ main (int argc, char *argv[])
   return run_event_loop (argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS);
 }
 #else
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "this platform does not support UNIX-domain sockets\n"), -1);

@@ -25,7 +25,7 @@ void dump_utf16 (const ACEXML_UTF16 *data,
 }
 
 int
-main (int, ACE_TCHAR*[])
+ACE_TMAIN (int, ACE_TCHAR*[])
 {
   ACEXML_UTF16 org [18];
 //  =  { 1, 2, 4, 8, 0x10, 0x20, 0x40,

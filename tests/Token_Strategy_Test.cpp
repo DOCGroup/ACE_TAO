@@ -209,7 +209,7 @@ int run_test (ACE_Token::QUEUEING_STRATEGY strategy, int threads = 5,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Token_Strategy_Test"));
   int retval = 0;
@@ -258,7 +258,7 @@ template class ACE_Guard<ACE_Token>;
 
 #else /* ACE_HAS_THREADS */
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Token_Strategy_Test: your platform doesn't support threads\n")), 1);
 }

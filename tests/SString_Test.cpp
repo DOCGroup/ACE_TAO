@@ -25,7 +25,7 @@
 ACE_RCSID(tests, SString_Test, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SString_Test"));
 

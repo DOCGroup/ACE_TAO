@@ -7,7 +7,7 @@ ACE_RCSID(SOCK_SAP, C_inclient, "$Id$")
 /* BSD socket client */
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize WinSock DLL on Win32...
   ACE_OS::socket_init (ACE_WSOCK_VERSION);

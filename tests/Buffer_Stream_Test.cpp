@@ -200,7 +200,7 @@ Consumer::svc (void)
 // Main driver function.
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Buffer_Stream_Test"));
 

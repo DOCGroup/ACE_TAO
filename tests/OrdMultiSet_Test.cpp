@@ -28,7 +28,7 @@
 ACE_RCSID(tests, OrdMultiSet_Test, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int ret = 0;
   int *ptr = 0;

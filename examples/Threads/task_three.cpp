@@ -172,7 +172,7 @@ handler (int)
 }
 
 int
-main (int argc, ACE_TCHAR **)
+ACE_TMAIN (int argc, ACE_TCHAR **)
 {
   if (argc > 1)
     {
@@ -242,7 +242,7 @@ main (int argc, ACE_TCHAR **)
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "threads not supported on this platform\n"));

@@ -198,7 +198,7 @@ test_canceling_odd_timers (void)
 // If any command line arg is given, run the test with high res timer
 // queue. Else run it normally.
 int
-main (int argc, ACE_TCHAR *[])
+ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Timer_Test"));
 
@@ -228,7 +228,7 @@ main (int argc, ACE_TCHAR *[])
 #else
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Timer_Test"));
 

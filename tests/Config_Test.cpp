@@ -1143,7 +1143,7 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Config_Test"));
 

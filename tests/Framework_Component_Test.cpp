@@ -59,7 +59,7 @@ My_Singleton::instance (void)
 
 
 int
-main (int, ACE_TCHAR *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_LIB_TEXT("Framework_Component_Test"));
   ACE_UNUSED_ARG (argv);

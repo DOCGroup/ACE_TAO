@@ -20,7 +20,7 @@
 ACE_RCSID(tests, ARGV_Test, "$Id$")
 
 int
-main (int, ACE_TCHAR *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("ARGV_Test"));
 
