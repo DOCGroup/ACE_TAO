@@ -436,8 +436,7 @@ TAO_SCIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   TAO_SCIOP_Endpoint *sciop_endpoint =
-    ACE_dynamic_cast (TAO_SCIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast<TAO_SCIOP_Endpoint *> (endpoint );
   if (sciop_endpoint == 0)
     return 0;
 

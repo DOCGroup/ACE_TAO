@@ -54,7 +54,7 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
       if (ret == 1)    // there was a previous factory
         {
           factory = prev_factory;
-          CORBA::string_free (ACE_const_cast(char*,prev_repo_id));
+          CORBA::string_free (const_cast<char*> (prev_repo_id));
         }
     }
 
@@ -73,7 +73,7 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
     {
       // set factory to the previous factory,
       factory = prev_entry->int_id_;
-      char *temp = ACE_const_cast (char *, prev_entry->ext_id_);
+      char *temp = const_cast<char *> (prev_entry->ext_id_);
       ret = this->map_.unbind (prev_entry);
 
       if (ret == 0)

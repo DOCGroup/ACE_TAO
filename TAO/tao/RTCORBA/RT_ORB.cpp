@@ -110,8 +110,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RT_Mutex *tao_mutex =
-    ACE_dynamic_cast (TAO_RT_Mutex *,
-                      mutex);
+    dynamic_cast<TAO_RT_Mutex *> (mutex);
 
   // If this mutex is named, then we need to remove it from our table.
   // Otherwise, we don't have to do anything.

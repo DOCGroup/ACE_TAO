@@ -132,7 +132,7 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::operator[] (
   ) const
 {
   ACE_ASSERT (slot < this->maximum_);
-  T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
+  T ** const tmp = reinterpret_cast<T ** ACE_CAST_CONST> (this->buffer_);
   return TAO_Valuetype_Manager<T,T_var> (tmp + slot, this->release_);
 }
 
@@ -168,6 +168,6 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::operator[] (
   ) const
 {
   ACE_ASSERT (slot < this->maximum_);
-  T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
+  T ** const tmp = reinterpret_cast<T ** ACE_CAST_CONST> (this->buffer_);
   return TAO_Valuetype_Manager<T,T_var> (tmp + slot, this->release_);
 }

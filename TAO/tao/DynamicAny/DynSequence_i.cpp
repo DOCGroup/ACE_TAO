@@ -28,8 +28,7 @@ TAO_DynSequence_i::init_common (void)
   this->has_components_ = 1;
   this->destroyed_ = 0;
   this->current_position_ = -1;
-  this->component_count_ = ACE_static_cast (CORBA::ULong,
-                                            this->da_members_.size ());
+  this->component_count_ = static_cast<CORBA::ULong> (this->da_members_.size ());
 }
 
 void
@@ -229,15 +228,13 @@ TAO_DynSequence_i::set_length (CORBA::ULong length
       if (this->current_position_ == -1)
         {
           // Set it to the first new slot.
-          this->current_position_ = ACE_static_cast (CORBA::Long,
-                                                     this->component_count_);
+          this->current_position_ = static_cast<CORBA::Long> (this->component_count_);
         }
     }
   else if (length < this->component_count_)
     {
       // If the current position will no longer exist..
-      if (this->current_position_ >= ACE_static_cast (CORBA::Long,
-                                                      length))
+      if (this->current_position_ >= static_cast<CORBA::Long> (length))
         {
           this->current_position_ = -1;
         }
@@ -288,8 +285,7 @@ TAO_DynSequence_i::get_elements (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
-                                         this->da_members_.size ());
+  CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
   DynamicAny::AnySeq *elements;
   ACE_NEW_THROW_EX (elements,
@@ -754,8 +750,7 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
-      rhs->seek (ACE_static_cast (CORBA::Long,
-                                  i)
+      rhs->seek (static_cast<CORBA::Long> (i)
                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -823,8 +818,7 @@ TAO_DynSequence_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
       return DynamicAny::DynAny::_nil ();
     }
 
-  CORBA::ULong index = ACE_static_cast (CORBA::ULong,
-                                        this->current_position_);
+  CORBA::ULong index = static_cast<CORBA::ULong> (this->current_position_);
 
   this->set_flag (this->da_members_[index].in (),
                   0

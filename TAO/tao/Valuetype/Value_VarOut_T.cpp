@@ -160,14 +160,14 @@ TAO_Value_Out_T<T>::TAO_Value_Out_T (TAO_Value_Var_T<T> & p)
 
 template <typename T>
 TAO_Value_Out_T<T>::TAO_Value_Out_T (const TAO_Value_Out_T<T> & p)
-  : ptr_ (ACE_const_cast (THIS_OUT_TYPE &, p).ptr_)
+  : ptr_ (const_cast<THIS_OUT_TYPE &> (p).ptr_)
 {}
 
 template <typename T>
 TAO_Value_Out_T<T> &
 TAO_Value_Out_T<T>::operator= (const TAO_Value_Out_T<T> & p)
 {
-  this->ptr_ = ACE_const_cast (THIS_OUT_TYPE &, p).ptr_;
+  this->ptr_ = const_cast<THIS_OUT_TYPE &> (p).ptr_;
   return *this;
 }
 

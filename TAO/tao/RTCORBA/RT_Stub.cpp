@@ -219,8 +219,7 @@ TAO_RT_Stub::effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   TAO_PriorityBandedConnectionPolicy *override_policy =
-    ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
-                     override_policy_var.in ());
+    static_cast<TAO_PriorityBandedConnectionPolicy *> (override_policy_var.in ());
 
   RTCORBA::PriorityBandedConnectionPolicy_var exposed_policy_var =
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (exposed.in ()
@@ -228,8 +227,7 @@ TAO_RT_Stub::effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   TAO_PriorityBandedConnectionPolicy *exposed_policy =
-    ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
-                      exposed_policy_var.in ());
+    static_cast<TAO_PriorityBandedConnectionPolicy *> (exposed_policy_var.in ());
 
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.
@@ -272,8 +270,7 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   TAO_ClientProtocolPolicy *override_policy =
-    ACE_static_cast (TAO_ClientProtocolPolicy *,
-                     override_policy_var.in ());
+    static_cast<TAO_ClientProtocolPolicy *> (override_policy_var.in ());
 
   RTCORBA::ClientProtocolPolicy_var exposed_policy_var =
     RTCORBA::ClientProtocolPolicy::_narrow (exposed.in ()
@@ -281,8 +278,7 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   TAO_ClientProtocolPolicy *exposed_policy =
-    ACE_static_cast (TAO_ClientProtocolPolicy *,
-                     exposed_policy_var.in ());
+    static_cast<TAO_ClientProtocolPolicy *> (exposed_policy_var.in ());
 
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.

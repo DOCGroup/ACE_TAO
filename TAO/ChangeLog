@@ -1,3 +1,52 @@
+Thu Feb 24 22:19:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Sequence.cpp:
+	* tao/Sequence_T.cpp:
+	* tao/DynamicAny/DynAny_i.cpp:
+	* tao/DynamicAny/DynArray_i.cpp:
+	* tao/DynamicAny/DynCommon.cpp:
+	* tao/DynamicAny/DynSequence_i.cpp:
+	* tao/DynamicAny/DynUnion_i.cpp:
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+	* tao/PortableServer/Active_Object_Map.cpp:
+	* tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.i:
+	* tao/RTCORBA/Priority_Mapping_Manager.i:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+	* tao/RTCORBA/RT_ORB.cpp:
+	* tao/RTCORBA/RT_Policy_i.cpp:
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/RTCORBA/RT_Stub.cpp:
+	* tao/RTCORBA/RT_Transport_Descriptor.cpp:
+	* tao/RTCORBA/RT_Transport_Descriptor_Property.cpp:
+	* tao/RTPortableServer/RT_Policy_Validator.cpp:
+	* tao/RTScheduling/Current.cpp:
+	* tao/RTScheduling/RTScheduler_Manager.i:
+	* tao/RTScheduling/Request_Interceptor.cpp:
+	* tao/Strategies/DIOP_Acceptor.cpp:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Endpoint.cpp:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/SCIOP_Acceptor.cpp:
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/SCIOP_Endpoint.cpp:
+	* tao/Strategies/SCIOP_Profile.cpp:
+	* tao/Strategies/SCIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Endpoint.cpp:
+	* tao/Strategies/sciop_endpoints.cpp:
+	* tao/Strategies/sciop_endpoints.i:
+	* tao/Strategies/uiop_endpoints.cpp:
+	* tao/Strategies/uiop_endpoints.i:
+	* tao/Valuetype/AbstractBase.cpp:
+	* tao/Valuetype/Sequence_T.inl:
+	* tao/Valuetype/ValueBase.cpp:
+	* tao/Valuetype/ValueFactory_Map.cpp:
+	* tao/Valuetype/Value_VarOut_T.cpp:
+
+          Converting remaining deprecated ACE cast macro calls to their
+	  standard C++ counterparts.
+
 Thu Feb 24 22:09:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Upcall_Wrapper.cpp (upcall):

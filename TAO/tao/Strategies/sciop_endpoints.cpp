@@ -34,7 +34,7 @@ CORBA::TypeCode_ptr _tc_TAO_SCIOP_Endpoint_Info = &_tc_TAO_tc_TAO_SCIOP_Endpoint
 
 void TAO_SCIOP_Endpoint_Info::_tao_any_destructor (void *x)
 {
-  TAO_SCIOP_Endpoint_Info *tmp = ACE_static_cast (TAO_SCIOP_Endpoint_Info*,x);
+  TAO_SCIOP_Endpoint_Info *tmp = static_cast<TAO_SCIOP_Endpoint_Info*> (x);
   delete tmp;
 }
 
@@ -52,7 +52,7 @@ void TAO_SCIOP_Endpoint_Info::_tao_any_destructor (void *x)
 
     if (this->buffer_ != 0)
     {
-      TAO_SCIOP_Endpoint_Info *old = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info *,this->buffer_);
+      TAO_SCIOP_Endpoint_Info *old = reinterpret_cast<TAO_SCIOP_Endpoint_Info *> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
@@ -70,7 +70,7 @@ void TAO_SCIOP_Endpoint_Info::_tao_any_destructor (void *x)
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
 
-    TAO_SCIOP_Endpoint_Info *tmp = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info *,this->buffer_);
+    TAO_SCIOP_Endpoint_Info *tmp = reinterpret_cast<TAO_SCIOP_Endpoint_Info *> (this->buffer_);
 
     _TAO_Unbounded_Sequence_TAO_SCIOPEndpointSequence::freebuf (tmp);
     this->buffer_ = 0;
@@ -127,7 +127,7 @@ TAO_SCIOPEndpointSequence::~TAO_SCIOPEndpointSequence (void) // dtor
 {}
 void TAO_SCIOPEndpointSequence::_tao_any_destructor (void *x)
 {
-  TAO_SCIOPEndpointSequence *tmp = ACE_static_cast (TAO_SCIOPEndpointSequence*,x);
+  TAO_SCIOPEndpointSequence *tmp = static_cast<TAO_SCIOPEndpointSequence*> (x);
   delete tmp;
 }
 

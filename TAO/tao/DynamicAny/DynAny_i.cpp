@@ -70,23 +70,23 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       this->any_._tao_set_typecode (CORBA::_tc_void);
       break;
     case CORBA::tk_short:
-      this->any_ <<= ACE_static_cast (CORBA::Short, 0);
+      this->any_ <<= static_cast<CORBA::Short> (0);
       break;
     case CORBA::tk_long:
-      this->any_ <<= ACE_static_cast (CORBA::Long, 0);
+      this->any_ <<= static_cast<CORBA::Long> (0);
       break;
     case CORBA::tk_ushort:
-      this->any_ <<= ACE_static_cast (CORBA::UShort, 0);
+      this->any_ <<= static_cast<CORBA::UShort> (0);
       break;
     case CORBA::tk_ulong:
-      this->any_ <<= ACE_static_cast (CORBA::ULong, 0);
+      this->any_ <<= static_cast<CORBA::ULong> (0);
       break;
 #if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
-      this->any_ <<= ACE_static_cast (CORBA::LongLong, 0);
+      this->any_ <<= static_cast<CORBA::LongLong> (0);
       break;
     case CORBA::tk_ulonglong:
-      this->any_ <<= ACE_static_cast (CORBA::ULongLong, 0);
+      this->any_ <<= static_cast<CORBA::ULongLong> (0);
       break;
 #endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_boolean:
@@ -102,10 +102,10 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       this->any_ <<= CORBA::Any::from_wchar (0);
       break;
     case CORBA::tk_float:
-      this->any_ <<= ACE_static_cast (CORBA::Float, 0);
+      this->any_ <<= static_cast<CORBA::Float> (0);
       break;
     case CORBA::tk_double:
-      this->any_ <<= ACE_static_cast (CORBA::Double, 0);
+      this->any_ <<= static_cast<CORBA::Double> (0);
       break;
     case CORBA::tk_any:
       this->any_._tao_set_typecode (CORBA::_tc_null);

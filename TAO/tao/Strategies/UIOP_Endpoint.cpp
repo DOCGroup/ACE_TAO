@@ -70,8 +70,7 @@ TAO_UIOP_Endpoint::duplicate (void)
 CORBA::Boolean
 TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
-                                        other_endpoint);
+  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
   TAO_UIOP_Endpoint *endpoint = dynamic_cast<TAO_UIOP_Endpoint *> (endpt);
 
