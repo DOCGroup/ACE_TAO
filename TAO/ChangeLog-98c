@@ -1,7 +1,9 @@
 Mon Jul 13 14:37:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Event_Latency.cpp: use ACE_CU64_TO_CU32 to convert const
-          64-bit u_ints to 32-bits happily with Sun C++.
+          64-bit u_ints to 32-bits happily with Sun C++.  Also, replaced
+          a function-style cast and some other old casts with ACE
+          ANSI-style casts.
 
 Mon Jul 13 13:59:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
