@@ -32,7 +32,7 @@ module ImplementationRepository
     unsigned short port;
   };
 
-  typedef sequence<EnvironmentVariable> Environment;
+  typedef sequence<EnvironmentVariable> EnvironmentList;
   // Complete Environment.
 
   struct StartupOptions
@@ -41,7 +41,7 @@ module ImplementationRepository
     string command_line;
     // Startup command (program name and arguments).
     
-    Environment environment;
+    EnvironmentList environment;
     // Environment Variables.
     
     string working_directory;
