@@ -176,6 +176,8 @@
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
 
