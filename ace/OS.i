@@ -7919,7 +7919,10 @@ ACE_INLINE int
 ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::dlclose");
-#if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
+#if defined (ACE_LACKS_DLCLOSE)
+  ACE_UNUSED_ARG (handle);
+  return 0;
+#elif defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 
 # if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   // SunOS4 does not automatically call _fini()!

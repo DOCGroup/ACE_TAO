@@ -134,10 +134,19 @@ Priority_Task::svc (void)
   int prio;
 
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
+  {
+    if (errno == ENOTSUP)
+    {
+      ACE_DEBUG((LM_DEBUG, 
+                 ACE_TEXT ("getprior not supported on this platform\n")
+               ));
+      return 0;
+    }
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("getprio failed")),
                       -1);
+  }
 
   if (prio == this->priority_)
     ACE_DEBUG ((LM_DEBUG,

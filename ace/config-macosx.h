@@ -164,16 +164,22 @@
 #define ACE_LACKS_SIGINFO_H 
 #define ACE_HAS_UCONTEXT_T 
 #define ACE_HAS_GETIFADDRS 
+#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES 
+#define ACE_LACKS_UNNAMED_SEMAPHORE
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
+// You may download directly from sourceforge and install or use fink
 // Fink installer puts libraries in /sw/lib and headers in /sw/include
 // In order to install dlcompat do the following:
 //   - download fink from http://fink.sf.net
 //   - type:
 //        fink install dlcompat
+// as of Dec 2002, if you use fink you will need to uncomment the next line
+//#define ACE_NEEDS_DL_UNDERSCORE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dylib")
+#define ACE_LACKS_DLCLOSE
 
 // gperf seems to need this
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
