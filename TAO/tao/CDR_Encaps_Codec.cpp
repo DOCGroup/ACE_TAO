@@ -12,6 +12,7 @@
 #include "Marshal.h"
 #include "Any_Unknown_IDL_Type.h"
 #include "ORB_Constants.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (TAO_CodecFactory,
            CDR_Encaps_Codec,
@@ -76,7 +77,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
            i = i->cont ())
         {
           size_t len = i->length ();
-          ACE_OS_String::memcpy (buf, i->rd_ptr (), len);
+          ACE_OS::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
 
@@ -217,9 +218,9 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
            i = i->cont ())
         {
           size_t len = i->length ();
-          ACE_OS_String::memcpy (buf,
-                                 i->rd_ptr (),
-                                 len);
+          ACE_OS::memcpy (buf,
+                          i->rd_ptr (),
+                          len);
           buf += len;
         }
 

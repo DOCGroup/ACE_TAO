@@ -93,6 +93,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_factory.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
+#include "ace/OS_NS_wchar.h"
 
 #include "ast_generator.h"
 

@@ -113,12 +113,12 @@ Any_String (const CORBA::Any& any)
     }
   else if (any >>= str)
     {
-      ACE_OS_String::strcpy (out, str);
+      ACE_OS::strcpy (out, str);
     }
   else if (any >>= ull)
     {
 #if defined (ACE_LACKS_LONGLONG_T)
-      ACE_OS_String::strcpy (out, ull.as_string (out));
+      ACE_OS::strcpy (out, ull.as_string (out));
 #else
       double temp =
 # if defined (ACE_CONFIG_WIN32_H)
@@ -132,7 +132,7 @@ Any_String (const CORBA::Any& any)
     }
   else
     {
-      ACE_OS_String::strcpy (out, "Unsupported Any Type");
+      ACE_OS::strcpy (out, "Unsupported Any Type");
     }
 
   return out;

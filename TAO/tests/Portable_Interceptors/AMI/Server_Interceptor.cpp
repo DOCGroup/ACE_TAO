@@ -44,7 +44,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
     ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceId id = ::service_id;

@@ -4,6 +4,7 @@
 #include "debug.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Adapter.i"

@@ -4,11 +4,11 @@
 
 #include "tao/Service_Context.h"
 
-#include "ace/OS_String.h"
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Service_Context.inl"
 #endif /* ! __ACE_INLINE__ */
+
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
            Service_Context, 
@@ -30,7 +30,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id,
        i != 0;
        i = i->cont ())
     {
-      ACE_OS_String::memcpy (buf, i->rd_ptr (), i->length ());
+      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 
@@ -50,7 +50,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
        i != 0;
        i = i->cont ())
     {
-      ACE_OS_String::memcpy (buf, i->rd_ptr (), i->length ());
+      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 }

@@ -23,6 +23,7 @@
 
 #include "tao/ORB.h"
 #include "testC.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
 

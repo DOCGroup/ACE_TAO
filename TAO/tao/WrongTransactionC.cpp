@@ -44,6 +44,8 @@
 #include "WrongTransactionC.i"
 #endif /* !defined INLINE */
 
+#include "ace/OS_NS_string.h"
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
 
@@ -92,8 +94,8 @@ void CORBA::WrongTransaction::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::WrongTransaction *
 CORBA::WrongTransaction::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS_String::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", 
-                              _tao_excp->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", 
+                       _tao_excp->_rep_id ()))
     {
       return ACE_dynamic_cast (WrongTransaction *, _tao_excp);
     }

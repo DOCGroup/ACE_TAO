@@ -2,7 +2,7 @@
 #include "Activity.h"
 
 #include "ace/High_Res_Timer.h"
-#include "ace/Synch.h"
+#include "ace/Barrier.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Service_Config.h"
 #include "ace/Arg_Shifter.h"

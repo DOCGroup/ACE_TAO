@@ -116,7 +116,21 @@ THREADS_FILES = \
   Atomic_Op \
   Process \
   Process_Manager \
-  Synch \
+  TSS_Adapter \
+  Auto_Event \
+  Manual_Event \
+  Barrier \
+  Condition_Thread_Mutex \
+  Condition_Recursive_Thread_Mutex \
+  Event \
+  Lock \
+  Mutex \
+  RW_Mutex \
+  RW_Thread_Mutex \
+  Recursive_Thread_Mutex \
+  Semaphore \
+  Thread_Mutex \
+  Thread_Semaphore \
   Synch_Options \
   Process_Semaphore \
   Process_Mutex \

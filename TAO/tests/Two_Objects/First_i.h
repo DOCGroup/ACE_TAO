@@ -7,7 +7,7 @@
 #define TAO_TWO_OBJECTS_FIRST_I_H
 
 #include "Two_ObjectsS.h"
-#include "ace/Synch.h"
+#include "ace/Auto_Event.h"
 
 /// Implement the Two_Objects_Test::First interface
 class First_i

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "CC_Lock.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (Concurrency, 
            CC_Lock, 

@@ -6,6 +6,7 @@
 #include "Push_Iterator_Factory_i.h"
 #include "Callback_Handler.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (AMI_Observer, Push_Iterator_Factory_i, "$Id$")
 

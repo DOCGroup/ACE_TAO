@@ -13,6 +13,7 @@
 #include "tao/Protocols_Hooks.h"
 
 #include "UIPMC_Profile.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (tao, 
 

@@ -26,6 +26,7 @@
 #include "ace/Sched_Params.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/streams.h"
+#include "ace/Barrier.h"
 
 #if defined (ACE_HAS_QUANTIFY)
 # include "quantify.h"

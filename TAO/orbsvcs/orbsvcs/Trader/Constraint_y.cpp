@@ -13,7 +13,7 @@
 //
 // ========================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 #include "Constraint_Interpreter.h"
 #include "Constraint_Nodes.h"
 
@@ -279,7 +279,7 @@ char * yyreds[] =
 #define YYRECOVERING()	(!!yyerrflag)
 #define YYNEW(type)	malloc(sizeof(type) * yynewmax)
 #define YYCOPY(to, from, type) \
-	(type *) memcpy(to, (char *) from, yynewmax * sizeof(type))
+	(type *) ACE_OS::memcpy(to, (char *) from, yynewmax * sizeof(type))
 #define YYENLARGE( from, type) \
 	(type *) realloc((char *) from, yynewmax * sizeof(type))
 #ifndef YYDEBUG

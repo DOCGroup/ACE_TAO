@@ -23,6 +23,7 @@
 #include "unionC.h"
 #include "repo_id_modC.h"
 #include "ace/streams.h"
+#include "ace/OS_NS_string.h"
 
 class hello_i : public virtual POA_hello
 {

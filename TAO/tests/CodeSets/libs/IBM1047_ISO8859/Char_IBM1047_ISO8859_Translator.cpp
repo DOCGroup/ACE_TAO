@@ -19,7 +19,8 @@
 // ============================================================================
 
 #include "Char_IBM1047_ISO8859_Translator.h"
-#include "ace/OS.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (IBM1047_ISO8859, 
            Char_IBM1047_ISO8859_Translator, 

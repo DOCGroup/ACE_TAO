@@ -3,6 +3,7 @@
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Component,

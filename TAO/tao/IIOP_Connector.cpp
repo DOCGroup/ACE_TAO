@@ -8,6 +8,7 @@
 #include "Thread_Lane_Resources.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"
+#include "ace/OS_NS_strings.h"
 
 //#include "ace/Strategies_T.h"
 

@@ -59,7 +59,7 @@ void Object1_impl::method1(const char* activity,
 
 
 
-  if (strcmp(activity,"Client1") == 0)
+  if (ACE_OS::strcmp(activity,"Client1") == 0)
     {
        ACE_OS::sleep(5);
     }
@@ -77,7 +77,7 @@ void Object1_impl::method1(const char* activity,
                   ACE::timestamp(date_and_time, time_size),
                   activity);
   ACE_DEBUG((LM_DEBUG,"%s",buf2));
-  ACE_OS_String::strcat(buf,buf2);
-  output = ACE_OS_String::strdup(buf);
+  ACE_OS::strcat(buf,buf2);
+  output = ACE_OS::strdup(buf);
 
 }

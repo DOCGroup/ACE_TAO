@@ -410,7 +410,7 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
     const char *sn
     ACE_ENV_ARG_DECL)
 {
-  size_t addr_len = ACE_OS_String::strlen (addr);
+  size_t addr_len = ACE_OS::strlen (addr);
 
   // Check for invalid address
   if (addr_len == 0)

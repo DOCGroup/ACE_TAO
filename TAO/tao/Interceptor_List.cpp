@@ -4,6 +4,8 @@
 
 #include "tao/Interceptor_List.h"
 #include "tao/ORB_Constants.h"
+#include "ace/os_include/os_stddef.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Interceptor_List.inl"
@@ -41,7 +43,7 @@ TAO_Interceptor_List::add_interceptor_i (
 
       const size_t old_len = this->length ();
 
-      if (ACE_OS_String::strlen (name.in ()) != 0)
+      if (ACE_OS::strlen (name.in ()) != 0)
         {
           // @@ This simple search algorithm isn't the greatest thing
           //    in the world, but since we only register interceptors
@@ -63,8 +65,8 @@ TAO_Interceptor_List::add_interceptor_i (
               CORBA::String_var existing_name =
                 this->interceptor (i)->name ();
 
-              if (ACE_OS_String::strcmp (existing_name.in (),
-                                         name.in ()) == 0)
+              if (ACE_OS::strcmp (existing_name.in (),
+                                  name.in ()) == 0)
                 {
                   ACE_THROW_RETURN
                     (PortableInterceptor::ORBInitInfo::DuplicateName (),

@@ -328,7 +328,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceId id = ::service_id;

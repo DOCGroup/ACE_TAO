@@ -4,6 +4,8 @@
 #include "Offer_Iterators_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/os_include/os_ctype.h"
 
 // The following #include is needed only for the instantiation pragmas.
 #include "Trader_Interfaces.h"

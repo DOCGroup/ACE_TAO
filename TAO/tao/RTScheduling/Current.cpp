@@ -6,7 +6,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "ace/ACE.h"
-
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID (RTScheduling,
            Current,

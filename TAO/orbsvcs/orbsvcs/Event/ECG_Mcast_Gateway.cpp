@@ -14,6 +14,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ECG_Mcast_Gateway.i"

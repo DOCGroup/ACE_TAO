@@ -21,6 +21,7 @@
 #include "ace/Log_Msg.h"
 
 #include "tao/CDR.h"
+#include "ace/OS_NS_string.h"
 
 ACE_Message_Block * m1;
 ACE_Message_Block * m2;
@@ -44,13 +45,13 @@ int main(int, char*[])
   // setup mb's
   char buf[1024];
   m1=new ACE_Message_Block(1024);
-  memset(buf,'1',512);
+  ACE_OS::memset(buf,'1',512);
   m1->copy(buf,512);
   m2=new ACE_Message_Block(1024);
-  memset(buf,'2',512);
+  ACE_OS::memset(buf,'2',512);
   m2->copy(buf,512);
   m3=new ACE_Message_Block(1024);
-  memset(buf,'3',512);
+  ACE_OS::memset(buf,'3',512);
   m3->copy(buf,512);
 
   m1->cont(m2);

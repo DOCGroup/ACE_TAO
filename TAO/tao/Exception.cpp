@@ -143,8 +143,8 @@ CORBA::Exception::_type (void) const
 int
 CORBA::Exception::_is_a (const char* repository_id) const
 {
-  return ACE_OS_String::strcmp (repository_id,
-                                "IDL:omg.org/CORBA/Exception:1.0") == 0;
+  return ACE_OS::strcmp (repository_id,
+                         "IDL:omg.org/CORBA/Exception:1.0") == 0;
 }
 
 
@@ -219,8 +219,8 @@ CORBA::UserException::operator= (const CORBA::UserException &src)
 int
 CORBA::UserException::_is_a (const char* interface_id) const
 {
-  return ACE_OS_String::strcmp (interface_id,
-                                "IDL:omg.org/CORBA/UserException:1.0") == 0
+  return ACE_OS::strcmp (interface_id,
+                         "IDL:omg.org/CORBA/UserException:1.0") == 0
     || this->Exception::_is_a (interface_id);
 }
 
@@ -319,9 +319,9 @@ CORBA::SystemException::operator= (const CORBA::SystemException &src)
 int
 CORBA::SystemException::_is_a (const char* interface_id) const
 {
-  return ((ACE_OS_String::strcmp (interface_id, this->_rep_id ()) == 0) ||
-          (ACE_OS_String::strcmp (interface_id,
-                                  "IDL:omg.org/CORBA/SystemException:1.0") == 0)
+  return ((ACE_OS::strcmp (interface_id, this->_rep_id ()) == 0) ||
+          (ACE_OS::strcmp (interface_id,
+                           "IDL:omg.org/CORBA/SystemException:1.0") == 0)
           || this->Exception::_is_a (interface_id));
 }
 
@@ -619,7 +619,7 @@ CORBA::SystemException::_info (void) const
             // 7 bits of some other errno.
             ACE_OS::sprintf (unknown_errno,
                              "low 7 bits of errno: %3u %s",
-                             minor_code, ACE_OS_String::strerror(minor_code));
+                             minor_code, ACE_OS::strerror(minor_code));
 
             errno_indication = unknown_errno;
           }
@@ -1024,14 +1024,14 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   char * full_id =
     CORBA::string_alloc (sizeof prefix
                          + ACE_static_cast (CORBA::ULong,
-                                            ACE_OS_String::strlen (name))
+                                            ACE_OS::strlen (name))
                          + sizeof suffix);
 
   CORBA::String_var safe_full_id = full_id;
 
-  ACE_OS_String::strcpy (full_id, prefix);
-  ACE_OS_String::strcat (full_id, name);
-  ACE_OS_String::strcat (full_id, suffix);
+  ACE_OS::strcpy (full_id, prefix);
+  ACE_OS::strcat (full_id, name);
+  ACE_OS::strcat (full_id, suffix);
 
   CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
     || stream.write_string (full_id) == 0
@@ -1223,7 +1223,7 @@ TAO_Exceptions::create_system_exception (const char *id
        i < array_sz;
        ++i)
     {
-      if (ACE_OS_String::strcmp (id, repo_id_array[i]) == 0)
+      if (ACE_OS::strcmp (id, repo_id_array[i]) == 0)
         return (*(excp_array[i])) ();
     }
 

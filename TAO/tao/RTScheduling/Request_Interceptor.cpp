@@ -8,6 +8,7 @@
 #include "tao/Any.h"
 #include "tao/Typecode.h"
 #include "tao/ORB_Constants.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (RTScheduling,
            Request_Interceptor,
@@ -206,7 +207,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS_String::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
+      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
         {
           // Perform the necessary cleanup as the
           // thread was cancelled.

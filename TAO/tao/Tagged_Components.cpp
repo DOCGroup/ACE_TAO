@@ -2,11 +2,11 @@
 
 #include "tao/Tagged_Components.h"
 
-#include "ace/OS_String.h"
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"
 #endif /* ! __ACE_INLINE__ */
+
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
            Tagged_Components,
@@ -85,7 +85,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
        i != 0;
        i = i->cont ())
     {
-      ACE_OS_String::memcpy (buf, i->rd_ptr (), i->length ());
+      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 

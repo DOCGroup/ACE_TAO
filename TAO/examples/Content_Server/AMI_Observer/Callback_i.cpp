@@ -6,8 +6,8 @@
 #include "ace/FILE_Connector.h"
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
-#include "ace/Synch.h"
 #include "Callback_i.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (AMI_Observer, Callback_i, "$Id$")
 

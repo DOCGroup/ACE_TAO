@@ -30,7 +30,7 @@
 
 
 #include "PollableC.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

@@ -18,6 +18,7 @@
 //=========================================================================
 
 #include "testS.h"
+#include "ace/OS_NS_string.h"
 
 class test_i : public POA_test
 {

@@ -15,6 +15,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Blocked_Connect_Strategy.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Connector,

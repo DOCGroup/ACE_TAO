@@ -18,7 +18,7 @@
 #define TAO_SINGLETON_MANAGER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,6 +26,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
+#include "ace/Object_Manager_Base.h"
 
 #if defined (ACE_HAS_EXCEPTIONS)
 typedef void (*TAO_unexpected_handler)(void);

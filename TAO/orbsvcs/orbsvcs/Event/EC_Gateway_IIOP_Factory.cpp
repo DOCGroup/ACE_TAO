@@ -12,6 +12,7 @@
 #include "ECG_Reactive_ConsumerEC_Control.h"
 #include "ECG_Reconnect_ConsumerEC_Control.h"
 #include "EC_Gateway_IIOP.h"
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 #include "EC_Gateway_IIOP_Factory.i"

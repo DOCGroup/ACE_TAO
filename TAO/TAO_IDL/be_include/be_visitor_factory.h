@@ -21,7 +21,7 @@
 #define TAO_BE_VISITOR_FACTORY_H
 
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 class be_visitor;
 class be_visitor_context;
