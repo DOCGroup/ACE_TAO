@@ -1,3 +1,23 @@
+Mon Feb 11 13:49:35 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/fuzz.pl (check_for_push_and_pop):
+
+	  New test that verifies the number of #pragma warning(push)
+	  pragmas matches the number of #pragma warning(pop) pragmas.
+
+	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp (shared_client_test): 
+	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp
+	  (shared_client_test):
+
+	  Do not convert the buffer length to network byte order when
+	  allocating the buffer.  Fixes excessive memory allocation.  This
+	  was apparently a cut-n-paste bug.  Thanks to M Schulze
+	  <m2.schulze@gmx.net>.
+
+	* THANKS:
+
+	  Added M Schulze to the Hall of Fame.
+
 Mon Feb 11 05:42:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Connector.h: Fixed a typo in the coments. Thanks to Miljenko

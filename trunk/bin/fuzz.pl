@@ -419,6 +419,44 @@ sub check_for_pre_and_post ()
     }
 }
 
+# This test verifies that the same number of "#pragma warning(push)" and
+# "#pragma warning(pop)" pragmas are used in a given header.
+sub check_for_push_and_pop ()
+{
+    print "Running #pragma warning(push)/(pop) test\n";
+    foreach $file (@files_h) {
+        my $push = 0;
+        my $pop = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_push_and_pop/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_push_and_pop/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    if (/^\s*#\s*pragma\s*warning\s*\(\s*push\s*\)/) {
+                        ++$push;
+                    }
+                    if (/^\s*#\s*pragma\s*warning\s*\(\s*pop\s*\)/) {
+                        ++$pop;
+                    }
+                }
+            }
+            close (FILE);
+
+            if ($disable == 0 && $push != $pop) {
+	        print_error ("#pragma warning(push)/(pop) mismatch in $file");
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
 
 # Check doxygen @file comments
 sub check_for_mismatched_filename ()
@@ -805,6 +843,7 @@ check_for_line_length () if ($opt_l >= 8);
 check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
 check_for_pre_and_post () if ($opt_l >= 4);
+check_for_push_and_pop () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
 check_for_bad_run_test () if ($opt_l >= 6);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
