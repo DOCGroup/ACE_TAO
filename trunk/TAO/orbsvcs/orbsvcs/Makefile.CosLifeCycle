@@ -69,8 +69,8 @@ realclean: clean
 
 
 .obj/CosLifeCycleS.o .obj/CosLifeCycleS.so .shobj/CosLifeCycleS.o .shobj/CosLifeCycleS.so: CosLifeCycleS.cpp CosLifeCycleS.h \
- $(ACE_ROOT)/ace/pre.h CosNamingS.h \
- CosNamingC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosNamingS.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -416,8 +416,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.so .shobj/LifeCycleServiceS.o .shobj/LifeCycleServiceS.so: LifeCycleServiceS.cpp LifeCycleServiceS.h \
- $(ACE_ROOT)/ace/pre.h CosLifeCycleS.h \
- CosNamingS.h CosNamingC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosLifeCycleS.h CosNamingS.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
