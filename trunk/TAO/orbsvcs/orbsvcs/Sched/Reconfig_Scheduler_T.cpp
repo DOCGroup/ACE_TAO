@@ -1434,7 +1434,6 @@ recompute_scheduling (CORBA::Long minimum_priority,
       
     }
 
-
   // @@ TODO: record any scheduling anomalies in a set within the scheduler,
   //          storing the maximum severity level recorded so far.
   if (anomalies.ptr () == 0)
@@ -1445,6 +1444,19 @@ recompute_scheduling (CORBA::Long minimum_priority,
       ACE_CHECK;
     }
 
+  ACE_DEBUG ((LM_DEBUG, 
+              "cutil = %f, ncutil = %f\n", 
+              this->critical_utilization_,
+              this->noncritical_utilization_));
+
+  if (this->critical_utilization_ > critical_utilization_threshold_ || 
+      this->noncritical_utilization_ > noncritical_utilization_threshold_)
+    {
+      CORBA::ULong len = anomalies->length ();
+      anomalies->length (len + 1);
+      anomalies[len].description = CORBA::string_dup("Utilization Bound exceeded");
+      anomalies[len].severity =  RtecScheduler::ANOMALY_ERROR;
+    }
 
   // Set stability flags last.
   this->stability_flags_ = SCHED_ALL_STABLE;
@@ -2538,7 +2550,8 @@ detect_cycles_i (ACE_ENV_SINGLE_ARG_DECL)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     ACE_THROW_SPEC ((RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                      CORBA::SystemException,
                       RtecScheduler::INTERNAL))
 {
 #if defined (SCHEDULER_LOGGING)
@@ -2590,11 +2603,12 @@ perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
+
   // Store the values accumulated by the visitor.
   this->noncritical_utilization_ =
-    admit_visitor.noncritical_utilization ();
+    admit_visitor.total_noncritical_utilization ();
   this->critical_utilization_ =
-    admit_visitor.critical_utilization ();
+    admit_visitor.total_critical_utilization ();
 }
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void

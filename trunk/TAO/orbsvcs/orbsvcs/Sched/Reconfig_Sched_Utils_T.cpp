@@ -921,6 +921,8 @@ TAO_Tuple_Admission_Visitor (const CORBA::Double & critical_utilization_threshol
                                const CORBA::Double & noncritical_utilization_threshold)
   : critical_utilization_ (0.0),
     noncritical_utilization_ (0.0),
+    total_critical_utilization_ (0.0),
+    total_noncritical_utilization_ (0.0),    
     critical_utilization_threshold_ (critical_utilization_threshold),
     noncritical_utilization_threshold_ (noncritical_utilization_threshold)
 {
@@ -971,6 +973,8 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
 
   if (RECONFIG_SCHED_STRATEGY::is_critical (t))
     {
+      this->total_critical_utilization_ += delta_utilization;
+
       if (this->critical_utilization_ + this->noncritical_utilization_
           +delta_utilization
           < this->critical_utilization_threshold_)
@@ -982,6 +986,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
     }
   else
     {
+      this->total_noncritical_utilization_ += delta_utilization;
       if (this->critical_utilization_ + this->noncritical_utilization_
           +delta_utilization
           < this->noncritical_utilization_threshold_)
@@ -991,7 +996,6 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
           entry->actual_rt_info ()->period = t.period;
 	}
     }
-
   return 0;
 }
 
@@ -1011,6 +1015,21 @@ template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::noncritical_utilization ()
 {
   return this->noncritical_utilization_;
+}
+
+template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
+TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::total_critical_utilization ()
+{
+  return this->total_critical_utilization_;
+}
+
+
+// Accessor for utilization by noncritical operations.
+
+template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
+TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::total_noncritical_utilization ()
+{
+  return this->total_noncritical_utilization_;
 }
 
 // Accessor for utilization threshold for critical operations.

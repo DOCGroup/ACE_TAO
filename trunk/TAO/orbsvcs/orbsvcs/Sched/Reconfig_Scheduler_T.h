@@ -598,7 +598,8 @@ protected:
   // checks for loops, marks unresolved remote dependencies.
 
   void perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                     CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Compute aggregate execution times, then performs admission over
   // rate tuples.
