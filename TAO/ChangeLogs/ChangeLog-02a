@@ -1,3 +1,15 @@
+Wed Mar 13 14:39:06 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+
+          Another tweak to the #pragma prefix pushing and popping
+          logic to handle another use case with conditionally included
+          IDL files sent in by Frank Kuhlman <kuhlmann@materna.de>.
+          This closes [BUGID:1167].
+
 Wed Mar 13 14:51:32 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/Makefile:
