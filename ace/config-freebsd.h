@@ -24,7 +24,7 @@
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_CHARPTR_DL
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM
-#define ACE_LACKS_SIGSET  
+#define ACE_LACKS_SIGSET
 
 // This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
 #if defined(FreeBSD_2_1)
@@ -79,7 +79,7 @@ ange */
 #define ACE_HAS_SIN_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
@@ -163,7 +163,6 @@ ange */
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
