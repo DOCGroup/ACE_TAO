@@ -269,7 +269,7 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
     
 CORBA::Object_ptr 
 NS_NamingContext::resolve (const CosNaming::Name& n, 
-				       CORBA::Environment &IT_env) 
+			   CORBA::Environment &IT_env) 
 {
   // get the length of the name
   CORBA::ULong len = n.length ();
@@ -288,11 +288,9 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
   if (context_.find (name, entry) == -1) 
     {
       IT_env.clear ();
-      IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-      //      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_object, n));
+      IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_object, n));
       return 0;
     }
-  /* @@ *///    throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n);
   
   CORBA::Object_ptr item = entry.ref_;
 
@@ -313,11 +311,9 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       else
 	{
 	  IT_env.clear ();
-	  IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-	  //IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_context, n));
+	  IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_context, n));
 	  return 0;
 	}
-      /* @@ *///	throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, n);
       
       CosNaming::Name rest_of_name;
       rest_of_name.length (len - 1);
@@ -329,7 +325,7 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
 
   // if the name we had to resolve was simple, we just need
   // to return the result.
-  return (item->_duplicate (item));
+  return (ACE_NESTED_CLASS (CORBA,Object)::_duplicate (item));
 }
 
 void 
@@ -369,12 +365,9 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
       if (context_.unbind (name) == -1)
 	{
 	  IT_env.clear ();
-	  //IT_env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-
 	  IT_env.exception (new ACE_NESTED_CLASS (CosNaming,NamingContext)::NotFound (CosNaming::NamingContext::not_object, n));
 	  return;
 	}
-	/* @@ *///	throw CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n);
     }
 }
     
@@ -386,7 +379,7 @@ NS_NamingContext::new_context (CORBA::Environment &IT_env)
 
   NS_NamingContext *c = new NS_NamingContext;
 
-  return c->_duplicate (c);
+  return NS_NamingContext::_duplicate (c);
 }
     
 CosNaming::NamingContext_ptr 
@@ -443,10 +436,12 @@ NS_NamingContext::list (CORBA::ULong how_many,
      {
        NS_BindingIterator *bind_iter = new NS_BindingIterator (hash_iter);
        
+       // @@ ????
+
        ACE_UNUSED_ARG (bind_iter);
 	 
        //  bind_iter->initialize (bi); 
-       bi->_duplicate (bi);
+       ACE_NESTED_CLASS (CosNaming, BindingIterator)::_duplicate (bi);
        
        n = how_many;
     }
