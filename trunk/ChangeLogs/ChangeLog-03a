@@ -1,3 +1,10 @@
+Mon Sep 10 12:54:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
+	  Changed the condition  that checks for EWOULDBLOCK after a
+	  send. It was erroneously written. Thanks to Nick Pratt
+	  <npratt@microstrategy.com> for pointing this out.
+
 Mon Sep 10 12:36:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* apps/Gateway/Peer/Peer.cpp (nonblk_put): Changed the condition

@@ -70,15 +70,8 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
 
   ssize_t n = this->send (event);
 
-  if (n == -1)
-    {
-      // Things have gone wrong, let's try to close down and set up a
-      // new reconnection by calling handle_close().
-      this->state (Connection_Handler::FAILED);
-      this->handle_close ();
-      return -1;
-    }
-  else if (errno == EWOULDBLOCK) // Didn't manage to send everything.
+
+  if (n == -1 && errno == EWOULDBLOCK) // Didn't manage to send everything.
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) queueing activated on handle %d to routing id %d\n",
@@ -102,8 +95,16 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
                           -1);
       return 0;
     }
-  else
-    return n;
+  else if (n == -1)
+    {
+      // Things have gone wrong, let's try to close down and set up a
+      // new reconnection by calling handle_close().
+      this->state (Connection_Handler::FAILED);
+      this->handle_close ();
+      return -1;
+    }
+
+  return n;
 }
 
 ssize_t
@@ -170,12 +171,12 @@ Consumer_Handler::handle_output (ACE_HANDLE)
                       -1);
 
   // The list had better not be empty, otherwise there's a bug!
-  while (this->msg_queue ()->dequeue_head 
+  while (this->msg_queue ()->dequeue_head
          (event, (ACE_Time_Value *) &ACE_Time_Value::zero) != -1)
     {
       switch (this->nonblk_put (event))
         {
-        case -1:		// Error sending message to consumer.
+        case -1:                // Error sending message to consumer.
           {
             // We are responsible for releasing an ACE_Message_Block if
             // failures occur.
@@ -186,7 +187,7 @@ Consumer_Handler::handle_output (ACE_HANDLE)
                         ACE_TEXT ("transmission failure")));
             break;
           }
-        case 0:			// Partial Send - we got flow controlled by the receiver
+        case 0:                 // Partial Send - we got flow controlled by the receiver
           {
             ACE_ASSERT (errno == EWOULDBLOCK);
             ACE_DEBUG ((LM_DEBUG,
@@ -206,10 +207,10 @@ Consumer_Handler::handle_output (ACE_HANDLE)
             // Didn't write everything this time, come back later...
             return 0;
           }
-        default:		// Sent the whole thing
+        default:                // Sent the whole thing
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Sent message from message Q, Q size = %d\n"), 
+                        ACE_TEXT ("Sent message from message Q, Q size = %d\n"),
                         this->msg_queue()->message_count ()));
             break;
           }
@@ -400,7 +401,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
   ssize_t data_received =
-    !data_bytes_left_to_read 
+    !data_bytes_left_to_read
     ? 0 // peer().recv() should not be called when data_bytes_left_to_read is 0.
     : this->peer ().recv (this->msg_frag_->wr_ptr (), data_bytes_left_to_read);
 
