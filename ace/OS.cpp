@@ -86,17 +86,10 @@ void
 ACE_Time_Value::dump (void) const
 {
   // ACE_TRACE ("ACE_Time_Value::dump");
-#if 0
-  if (tv.usec () < 0 || tv.sec () < 0)
-    stream << "-";
-
-  stream << dec << abs (int (tv.sec ())) << "."
-//	 << setw (6) << setfill ('0') 
-	 << dec << abs (int (tv.usec ()));
-// I assume
-   inline int abs(int d) { return (d>0)?d:-d; }
-   is defined somewhere */
-#endif /* 0 */
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\ntv_sec_ = %d", this->tv_.tv_sec));
+  ACE_DEBUG ((LM_DEBUG, "\ntv_usec_ = %d\n", this->tv_.tv_usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 void

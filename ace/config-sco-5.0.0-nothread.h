@@ -49,6 +49,8 @@
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
 
+#define ACE_HAS_LONG_FDMASK
+
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
 

@@ -87,6 +87,10 @@ public:
 		  int signum,
 		  sigset_t *sigmask = 0,
 		  int flags = 0);
+  ACE_Sig_Action (ACE_SignalHandler handler,
+		  int signum,
+		  ACE_Sig_Set &sigmask,
+		  int flags = 0);
   ACE_Sig_Action (const ACE_Sig_Action &s);
   ACE_Sig_Action (struct sigaction *);
 
@@ -113,6 +117,7 @@ public:
 
   // = Set/get current signal mask.
   void mask (sigset_t *);
+  void mask (ACE_Sig_Set &);
   sigset_t *mask (void);
 
   // = Set/get current signal handler (pointer to function).

@@ -30,15 +30,80 @@ sig_atomic_t sigint = 0;
 
 // This is our main timer list.  Right now, it doesn't know anything
 // about signals. 
-static ACE_Timer_List timer_list;
+class Async_Timer_List : public ACE_Timer_List
+{
+public:
+  Async_Timer_List (void);
+  // Register the SIGALRM handler.
+
+  virtual long schedule (const TYPE &type, 
+			 const void *act, 
+			 const ACE_Time_Value &delay,
+			 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+
+private:
+  static void handler (int signum);
+  // Called back by SIGALRM handler.
+
+  static Async_Timer_List timer_list;
+  // Keep a static instance of ourselves (until we add Reactor
+  // support).
+};
+
+// Static instance.
+Async_Timer_List Async_Timer_List::timer_list;
+
+long 
+Async_Timer_List::schedule (const TYPE &type, 
+			    const void *act, 
+			    const ACE_Time_Value &delay,
+			    const ACE_Time_Value &interval = ACE_Time_Value::zero)
+{
+  long tid = ACE_Timer_List::schedule (eh,
+				       0,
+				       delay);
+
+  if (tid == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+
+  ACE_Time_Value tv = this->earliest_time () - this->gettimeofday ();
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "scheduling timer %d for (%d, %d)\n",
+	      tid, tv.sec (), tv.usec ()));
+
+  // Beware of negative times and zero times (which cause problems for
+  // ualarm()).
+  if (tv < ACE_Time_Value::zero)
+    tv = ACE_Time_Value (0, 1);
+
+  // Schedule a new timer.
+  ACE_OS::ualarm (tv);
+  return 0;
+}
+
+Async_Timer_List::Async_Timer_List (void)
+{
+  // The following code is necessary to selectively "block" all
+  // signals when SIGALRM is running.  Also, we always restart system
+  // calls that are interrupted by the signals.
+
+  // Block *all* signals when the SIGARLM handler is running!
+  ACE_Set_Set ss (1); 
+
+  ACE_Sig_Action sa ((ACE_SignalHandler) Async_Timer_List::handler,
+		     SIGALRM,
+		     ss,
+		     SA_RESTART);
+  ACE_UNUSED_ARG (sa);
+}
 
 // This is our signal handler function.  It gets invoked
 // asynchronously when SIGINT, SIGALRM, or SIGQUIT gets called.
 static void 
-handler (int signum)
+Async_Timer_Queue::handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "handling signal %S\n", signum));
-  sigint = signum == SIGINT;
 
   switch (signum)
     {
@@ -46,14 +111,8 @@ handler (int signum)
       {
 	int expired_timers;
 
-	ACE_Sig_Set ss;
-	ss.sig_add (SIGINT);
-
-	// Prevent SIGINT from occurring while we're handling SIGALRM.
-	ACE_Sig_Guard sg (&ss);
-
 	// Expire the pending timers.
-	expired_timers = timer_list.expire ();
+	expired_timers = Async_Timer_List::timer_list.expire ();
 
 	if (expired_timers > 0)
 	  ACE_DEBUG ((LM_DEBUG,
@@ -63,37 +122,15 @@ handler (int signum)
 		      expired_timers));
 
 	// Only schedule a new timer if there is one in the list.
-	if (timer_list.is_empty () == 0)
-	  ACE_OS::ualarm (timer_list.earliest_time () - timer_list.gettimeofday ());
+	if (Async_Timer_List::timer_list.is_empty () == 0)
+	  ACE_OS::ualarm (Async_Timer_List::timer_list.earliest_time () 
+			  - timer_list.gettimeofday ());
 	
 	break;
       }
+    default:
+      ACE_ERROR ((LM_ERROR, "unexpected signal %S\n", signum));
     /* NOTREACHED */
-    case SIGINT:
-      {
-	ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
-
-	ACE_Sig_Set ss;
-	ss.sig_add (SIGALRM);
-
-	// Prevent SIGALRM from occurring while we're handling
-	// SIGINT.
-	ACE_Sig_Guard sg (&ss);
-
-	for (ACE_Timer_List_Iterator iter (timer_list);
-	     iter.item () != 0;
-	     iter.next ())
-	  iter.item ()->dump ();
-
-	ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
-
-	break;
-	/* NOTREACHED */
-      }
-    case SIGQUIT:
-      ACE_DEBUG ((LM_DEBUG, "shutting down on SIGQUIT%a\n", 1));
-      /* NOTREACHED */
-      break;
     }
 }
 
@@ -143,50 +180,18 @@ parse_commands (char *buf)
 	ACE_Event_Handler *eh;
 	ACE_NEW_RETURN (eh, Timer_Handler, -1);
 
-	ACE_Sig_Set ss;
-	ss.sig_add (SIGALRM);
-	ss.sig_add (SIGINT);
+	long tid = timer_list.schedule (eh, 0,
+					timer_list.gettimeofday () + tv);
 
-	{
-	  // Prevent SIGALRM and SIGINT from occurring while we're
-	  // scheduling a timer.
-	  ACE_Sig_Guard sg (&ss);
-
-	  long tid = timer_list.schedule (eh, 0,
-					  timer_list.gettimeofday () + tv);
-
-	  if (tid == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
-
-	  tv = timer_list.earliest_time () - timer_list.gettimeofday ();
-
-	  ACE_DEBUG ((LM_DEBUG,
-		      "scheduling timer %d for (%d, %d)\n",
-		      tid, tv.sec (), tv.usec ()));
-	}
-
-	// Beware of negative times and zero times (which cause
-	// problems for ualarm()).
-	if (tv < ACE_Time_Value::zero)
-	  tv = ACE_Time_Value (0, 1);
-
-	// Schedule a new timer.
-	ACE_OS::ualarm (tv);
-
+	if (tid == -1)
+	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+	
 	break;
 	/* NOTREACHED */
       }
     case 2: // Cancel a timer.
       {
 	const void *act;
-
-	ACE_Sig_Set ss;
-	ss.sig_add (SIGALRM);
-	ss.sig_add (SIGINT);
-
-	// Prevent SIGALRM and SIGINT from occurring while we're
-	// scheduling a timer.
-	ACE_Sig_Guard sg (&ss);
 
 	if (timer_list.cancel (value, &act) == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cancel_timer"), -1);
@@ -202,6 +207,52 @@ parse_commands (char *buf)
   return 0;
 }
 
+static void 
+handler (int signum)
+{
+  ACE_DEBUG ((LM_DEBUG, "handling signal %S\n", signum));
+  sigint = signum == SIGINT;
+
+  switch (signum)
+    {
+    /* NOTREACHED */
+    case SIGINT:
+      {
+	ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
+
+	for (ACE_Timer_List_Iterator iter (Async_Timer_List::timer_list);
+	     iter.item () != 0;
+	     iter.next ())
+	  iter.item ()->dump ();
+
+	ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
+
+	break;
+	/* NOTREACHED */
+      }
+    case SIGQUIT:
+      ACE_DEBUG ((LM_DEBUG, "shutting down on SIGQUIT%a\n", 1));
+      /* NOTREACHED */
+      break;
+    }
+}
+
+static void
+register_signal_handlers (void)
+{
+  // Register SIGQUIT (never blocked).
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGQUIT);
+
+  // Don't let the SIGALRM interrupt the SIGINT handler!
+  ACE_Set_Set ss;
+  ss.add_sig (SIGALRM);
+
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler,
+		     SIGALRM,
+		     ss,
+		     SA_RESTART);
+}
+
 static char menu[] = 
 "****\n"
 "1) schedule_timer <usecs> \n"
@@ -215,15 +266,9 @@ main (int, char *[])
 {
   // ACE_START_TEST ("Timer_Queue_Test");
 #if defined (ACE_HAS_UALARM)
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler);
-  ACE_UNUSED_ARG (sa);
-
-  // Register the signal handlers.
-  sa.register_action (SIGINT);
-  sa.register_action (SIGALRM);
-  sa.register_action (SIGQUIT);
-
   ACE_DEBUG ((LM_DEBUG, "%s", menu));
+
+  register_signal_handler ();
 
   for (;;)
     {

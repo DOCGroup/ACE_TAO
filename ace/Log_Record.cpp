@@ -12,6 +12,20 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
+u_long
+ACE_Log_Record::priority (void) const
+{
+  ACE_TRACE ("ACE_Log_Record::priority");
+  return ACE::log2 (this->type_);
+}
+
+void
+ACE_Log_Record::priority (u_long p) 
+{
+  ACE_TRACE ("ACE_Log_Record::priority");
+  this->type_ = ACE::log2 (p);
+}
+
 void
 ACE_Log_Record::dump (void) const
 {
