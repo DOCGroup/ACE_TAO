@@ -1,3 +1,21 @@
+Tue Oct 19 13:19:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  Predicated the generation of the ACE_NESTED_CLASS
+	  macro for a member in the header file on whether
+	  or not the member was defined inside an interface
+	  or not. If it is not, the macro isn't needed, and
+	  causes problems when reused for code generation
+	  for valuetypes.
+
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	  Removed generation of ACE_NESTED_CLASS macro in
+	  set/get methods. It is not needed in arguments
+	  or return types in the header file.
+
+	Thanks to Brian Mason <bmason@oresis.com> for sending
+	in the example that exposed these bugs.
+
 Tue Oct 19 10:24:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
