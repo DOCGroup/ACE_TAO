@@ -10,19 +10,12 @@
 ACE_RCSID(ace, Stats, "$Id$")
 
 #if !defined ACE_LACKS_LONGLONG_T
-// 1) If ACE_LACKS_LONGLONG_T, then ACE_UINT64 is a user-defined class.
-//    To prevent having to construct a static of that class, declare it
-//    on the stack, and construct it in, each function that needs it.
-// 2) To avoid warnings from some compilers, split the 0x100000000ull
-//    constant into two pieces.
+  static const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET =
+    ACE_UINT64_LITERAL (0x100000000);
 
-// @@ David, do we need an ACE_UINT64_LITERAL(X) macro here?
-
-# if defined (ACE_WIN32)
-static const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET = 0x100000000ui64;
-# else
-static const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET = 0x10000ull * 0x10000ull;
-# endif
+// If ACE_LACKS_LONGLONG_T, then ACE_UINT64 is a user-defined class.
+// To prevent having to construct a static of that class, declare it
+// on the stack, and construct it in, each function that needs it.
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
 ACE_UINT32
