@@ -173,8 +173,13 @@ Key_List::set_output_types (void)
           return_type[struct_tag_length + 1] = '\0';
         }
 
-      struct_tag = new char[struct_tag_length + 1];
+      struct_tag = new char[struct_tag_length + 2];
       strncpy (struct_tag, array_type,  struct_tag_length);
+      if (struct_tag[struct_tag_length] != ' ')
+        {
+          struct_tag[struct_tag_length] = ' ';
+          struct_tag_length++;
+        }
       struct_tag[struct_tag_length] = '\0';
     }
   else if (option[POINTER])     // Return a char *.
@@ -709,8 +714,8 @@ Key_List::output_keyword_table (void)
 {
   char *l_brace = *head->rest ? "{" : "";
   char *r_brace = *head->rest ? "}," : "";
-  char *indent  = option[GLOBAL] ? "" : "  ";
-  int index   = 0;
+  char *indent = option[GLOBAL] ? "" : "  ";
+  int index = 0;
   List_Node *temp;
 
   printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
