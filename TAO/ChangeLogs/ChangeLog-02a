@@ -1,3 +1,12 @@
+Sat Jan 12 21:45:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FT_ORB.dsp (RSC): Added a new dsp file
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Made some slight changes. 
+
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw: Added the new dsp file to
+	  the workspace. 
+
 Sat Jan 12 21:14:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: A new file that contains
