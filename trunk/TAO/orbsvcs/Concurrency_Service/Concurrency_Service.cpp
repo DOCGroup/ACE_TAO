@@ -22,8 +22,11 @@
 #include "tao/debug.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Concurrency_Service, Concurrency_Service, "$Id$")
+ACE_RCSID(Concurrency_Service,
+          Concurrency_Service,
+          "$Id$")
 
 // Default Constructor.
 
@@ -118,10 +121,10 @@ Concurrency_Service::init (int argc,
               "The IOR is: <%s>\n",
               ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
-  if (this->ior_file_name_ != 0) 
+  if (this->ior_file_name_ != 0)
     {
       FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
-      if (iorf == 0) 
+      if (iorf == 0)
         {
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "Cannot open output file for writing IOR: %s",
@@ -133,10 +136,10 @@ Concurrency_Service::init (int argc,
       ACE_OS::fclose (iorf);
     }
 
-  if (this->pid_file_name_ != 0) 
+  if (this->pid_file_name_ != 0)
     {
       FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
-      if (pidf != 0) 
+      if (pidf != 0)
         {
 	  ACE_OS::fprintf (pidf,
                            "%ld\n",
