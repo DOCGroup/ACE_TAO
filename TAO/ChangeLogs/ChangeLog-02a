@@ -1,3 +1,13 @@
+Thu Mar  1 17:49:51 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.cpp: 
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+
+	  Removed unncessary ACE_DEBUGS and ensconced the others with
+	  TAO_debug_level checks. This should fix the tests from failing.
+
 Thu Mar  1 14:14:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
         And today's quote is.....
