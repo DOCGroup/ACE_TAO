@@ -1,3 +1,13 @@
+Tue Jan 13 13:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Profile_Timer.cpp (elapsed_time): use floating point
+          arithmetic for real_time calculation, in case delta_t is
+          less than ACE_ONE_SECOND_IN_NSECS (and for more precision
+          otherwise).  Thanks to Brian Mendel for tripping over this.
+
+        * ace/Basic_Types.{h,i} (ACE_U_LongLong): added
+          operator/ (const double).
+
 Mon Jan 12 20:19:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SString.i: Replaced all uses of NULL with 0 since NULL
