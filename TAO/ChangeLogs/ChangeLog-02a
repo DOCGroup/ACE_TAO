@@ -422,7 +422,6 @@ Tue Mar 27 15:56:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Protocols_Hooks.cpp: Added #includes to get it compile fine
           on platforms where messaging and RTCORBA has been turned off.
 
->>>>>>> 1.3007
 Tue Mar 27 15:08:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Wait_On_Leader_Follower.cpp: Added an ACE_TEXT () wrapper
