@@ -128,16 +128,16 @@ public:
 // easily.  Portability to these platforms requires
 // use of the following ACE_AUTO_PTR_RESET macro.
 # if defined (ACE_AUTO_PTR_LACKS_RESET)
-#   define ACE_AUTO_PTR_RESET(X,Y) \
+#   define ACE_AUTO_PTR_RESET(X,Y,Z) \
       do { \
         if (Y != X.get ()) \
           { \
             X.release (); \
-            X = Y; \
+            X = auto_ptr<Z> (Y); \
           } \
       } while (0)
 # else /* ! ACE_AUTO_PTR_LACKS_RESET */
-#   define ACE_AUTO_PTR_RESET(X,Y) \
+#   define ACE_AUTO_PTR_RESET(X,Y,Z) \
       do { \
          X.reset (Y); \
       } while (0)
