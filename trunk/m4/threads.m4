@@ -48,11 +48,8 @@ dnl Check if compiler accepts specific flag to enable threads
    [
     ace_cv_feature_thread_flag_set=no
 
-    save_CXXFLAGS="$CXXFLAGS"
-    save_CFLAGS="$CFLAGS"
-
-    CXXFLAGS="$CXXFLAGS -mt"
-    CFLAGS="$CFLAGS -mt"
+    ace_save_CXXFLAGS="$CXXFLAGS"
+    ace_save_CFLAGS="$CFLAGS"
 
     ACE_CACHE_CHECK(if compiler can use -mt flag,
       ace_cv_feature_has_mt_flag,
@@ -69,8 +66,8 @@ dnl Check if compiler accepts specific flag to enable threads
        ace_cv_feature_thread_flag_set=yes
       ],
       [
-       CXXFLAGS="$save_CXXFLAGS"
-       CFLAGS="$save_CFLAGS"
+       CXXFLAGS="$ace_save_CXXFLAGS"
+       CFLAGS="$ace_save_CFLAGS"
       ])
 
     if test "$ace_cv_feature_thread_flag_set" = no; then
@@ -93,8 +90,8 @@ dnl Check if compiler accepts specific flag to enable threads
          ace_cv_feature_thread_flag_set=yes
         ],
         [
-         CXXFLAGS="$save_CXXFLAGS"
-         CFLAGS="$save_CFLAGS"
+         CXXFLAGS="$ace_save_CXXFLAGS"
+         CFLAGS="$ace_save_CFLAGS"
         ])
 
     fi dnl test "$ace_cv_feature_thread_flag_set" = no
@@ -119,8 +116,8 @@ dnl Check if compiler accepts specific flag to enable threads
          ace_cv_feature_thread_flag_set=yes
         ],
         [
-         CXXFLAGS="$save_CXXFLAGS"
-         CFLAGS="$save_CFLAGS"
+         CXXFLAGS="$ace_save_CXXFLAGS"
+         CFLAGS="$ace_save_CFLAGS"
         ])
 
     fi dnl test "$ace_cv_feature_thread_flag_set" = no
@@ -145,8 +142,8 @@ dnl Check if compiler accepts specific flag to enable threads
          ace_cv_feature_thread_flag_set=yes
         ],
         [
-         CXXFLAGS="$save_CXXFLAGS"
-         CFLAGS="$save_CFLAGS"
+         CXXFLAGS="$ace_save_CXXFLAGS"
+         CFLAGS="$ace_save_CFLAGS"
         ])
 
     fi dnl test "$ace_cv_feature_thread_flag_set" = no
@@ -171,8 +168,8 @@ dnl Check if compiler accepts specific flag to enable threads
          ace_cv_feature_thread_flag_set=yes
         ],
         [
-         CXXFLAGS="$save_CXXFLAGS"
-         CFLAGS="$save_CFLAGS"
+         CXXFLAGS="$ace_save_CXXFLAGS"
+         CFLAGS="$ace_save_CFLAGS"
         ])
 
     fi dnl test "$ace_cv_feature_thread_flag_set" = no
@@ -197,8 +194,8 @@ dnl Check if compiler accepts specific flag to enable threads
          ace_cv_feature_thread_flag_set=yes
         ],
         [
-         CXXFLAGS="$save_CXXFLAGS"
-         CFLAGS="$save_CFLAGS"
+         CXXFLAGS="$ace_save_CXXFLAGS"
+         CFLAGS="$ace_save_CFLAGS"
         ])
 
     fi dnl test "$ace_cv_feature_thread_flag_set" = no

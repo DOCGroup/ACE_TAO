@@ -29,17 +29,17 @@ dnl Usage: ACE_TRY_COMPILE(COMPILER-FLAGS, INCLUDES, FUNCTION-BODY,
 dnl                        [ACTION-IF-FOUND [,ACTION-IF-NOT-FOUND]])
 AC_DEFUN(ACE_TRY_COMPILE, dnl
 [
- save_CXXFLAGS="$CXXFLAGS"
+ ace_pre_try_CXXFLAGS="$CXXFLAGS"
  CXXFLAGS="$CXXFLAGS $1"
 
- save_CFLAGS="$CFLAGS"
+ ace_pre_try_CFLAGS="$CFLAGS"
  CFLAGS="$CFLAGS $1"
 
  AC_TRY_COMPILE($2, $3, $4, $5)
 
  dnl Restore the C++ and C flags
- CXXFLAGS="$save_CXXFLAGS"
- CFLAGS="$save_CFLAGS"
+ CXXFLAGS="$ace_pre_try_CXXFLAGS"
+ CFLAGS="$ace_pre_try_CFLAGS"
 
 ])
 
@@ -79,7 +79,7 @@ dnl fail.  Some of the tests pass because the GNU C++ compiler issues
 dnl warnings instead of errors when errors should occur.
 dnl Other "treat warnings as errors" flags for other compilers should
 dnl be added if possible.
-  save_CXXFLAGS="$CXXFLAGS"
+  ace_pre_warning_CXXFLAGS="$CXXFLAGS"
 
   if test -n "$GXX"; then
     CXXFLAGS="$CXXFLAGS -Werror"
@@ -96,7 +96,7 @@ dnl be added if possible.
 
   $1
 
-  CXXFLAGS="$save_CXXFLAGS"
+  CXXFLAGS="$ace_pre_warning_CXXFLAGS"
 ])
 
 dnl Wrapper around AC_CACHE_VAL used to ensure "ACTION-IF" commands are run
@@ -119,7 +119,7 @@ ifelse([$4], , :, [$4])
   else
     ace_just_a_place_holder=fixme
 ifelse([$5], , , [$5
-])dnl
+])
   fi
 ])
 
