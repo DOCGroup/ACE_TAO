@@ -36,7 +36,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Client_Priority_Policy : public PortableServer::RefCountServantBase,
+class TAO_Export TAO_Client_Priority_Policy : public TAO_RefCountServantBase,
                                               public POA_TAO::ClientPriorityPolicy
 {
   // = TITLE
@@ -50,10 +50,8 @@ public:
                               const TAO::PrioritySpecification &priority_spec);
   // Constructor.
 
-#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs);
   // Copy constructor.
-#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,

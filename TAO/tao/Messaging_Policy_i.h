@@ -30,7 +30,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public PortableServer::RefCountServantBase,
+class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public TAO_RefCountServantBase,
                                                         public POA_Messaging::RelativeRoundtripTimeoutPolicy
 {
   // = TITLE
@@ -45,10 +45,8 @@ public:
                                         const TimeBase::TimeT& relative_expiry);
   // Constructor.
 
-#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs);
   // Copy constructor.
-#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,
@@ -90,7 +88,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_Sync_Scope_Policy : public PortableServer::RefCountServantBase,
+class TAO_Export TAO_Sync_Scope_Policy : public TAO_RefCountServantBase,
                                          public POA_Messaging::SyncScopePolicy
 
 {
@@ -106,10 +104,8 @@ public:
                          PortableServer::POA_ptr poa);
   // Constructor.
 
-#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
   // Copy constructor.
-#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
                                    const CORBA::Any& val,
