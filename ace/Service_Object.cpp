@@ -46,9 +46,9 @@ ACE_Service_Type::dump (void) const
 ACE_Service_Type::ACE_Service_Type (const void *so, 
 				    const char *s_name, 
 				    unsigned int f)
-  : obj_ (so), 
-    flags_ (f),
-    name_ (0)
+  : name_ (0),
+    obj_ (so), 
+    flags_ (f)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
   this->name (s_name);

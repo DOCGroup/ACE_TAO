@@ -308,10 +308,10 @@ ACE_Service_Record::ACE_Service_Record (const char *n,
 					ACE_Service_Type *t, 
 					const void *h, 
 					int active)
-  : type_ (t), 
+  : name_ (0),
+    type_ (t), 
     handle_ (h), 
-    active_ (active),
-    name_ (0)
+    active_ (active)
 {
   ACE_TRACE ("ACE_Service_Record::ACE_Service_Record");
   this->name (n);
