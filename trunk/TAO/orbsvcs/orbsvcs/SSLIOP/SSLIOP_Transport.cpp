@@ -25,7 +25,7 @@ ACE_RCSID (SSLIOP,
 TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
   TAO_SSLIOP_Connection_Handler *handler,
   TAO_ORB_Core *orb_core,
-  CORBA::Boolean /*flag*/)
+  CORBA::Boolean /* flag */)
   : TAO_Transport (IOP::TAG_INTERNET_IOP, orb_core),
     connection_handler_ (handler),
     messaging_object_ (0)
@@ -175,7 +175,8 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport ")
+                    ACE_TEXT ("%d after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
