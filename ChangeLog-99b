@@ -1,3 +1,13 @@
+
+Tue Aug 31 20:10:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* ace/OS.h: 
+	Added the ACE_HAS_NO_THROW_SPEC check in order to suppress the
+	generation of throw specs to placate some compilers
+	Thank to Andreas Geisler <Andreas.Geisler@erls.siemens.de> for
+	suggesting this addition
+
+
 1999-08-31  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	  Modified the test to use a single handler registered for
@@ -665,6 +675,7 @@ Tue Aug 24 10:02:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           to ACE_DEFAULT_SERVICE_REPOSITORY_SIZE, which defaults to
           1024.  Thanks to Ivan Murthy <Ivan.Murphy@med.siemens.de> for
           suggesting this.
+
 
 Tue Aug 24 16:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
