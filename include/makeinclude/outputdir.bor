@@ -58,8 +58,6 @@ MAKE_BINDIR=$(MKDIR) "$(BINDIR)"
 MAKE_BINDIR=if not exist "$(BINDIR)" mkdir "$(BINDIR)"
 !endif
 
-# PASCAL/non-PASCAL build configurations use the same object directory
-# since their compiler options are identical.
 !ifndef OBJDIR
 OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)
 !endif
