@@ -1,3 +1,4 @@
+
 // $Id$
 
 // ============================================================================
@@ -212,6 +213,8 @@ find_test_cache (MAP_CACHE &cache)
       ACE_DEBUG ((LM_DEBUG,
 		  ASYS_TEXT ("%d  "),
 		  j));
+      
+      ACE_UNUSED_ARG (result);
     }
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
@@ -232,13 +235,15 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
 
       VALUE j;
       int result = cache.find (key, j);
-
+      
       ACE_ASSERT (result != -1);
       ACE_ASSERT (j == key);
 
       ACE_DEBUG ((LM_DEBUG,
 		  ASYS_TEXT ("%d  "),
 		  j));
+      
+      ACE_UNUSED_ARG (result);
     }
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
@@ -259,6 +264,7 @@ purge_test_cache (MAP_CACHE &cache)
   // Purge from cache.
   int result = cache.purge ();
   ACE_ASSERT (result != -1);
+  ACE_UNUSED_ARG (result);
 
   size_t resultant_size = current_map_size - entries_to_remove;
   ACE_UNUSED_ARG (resultant_size);
@@ -270,8 +276,6 @@ purge_test_cache (MAP_CACHE &cache)
 static void
 purge_test_hash_cache (HASH_MAP_CACHE &cache)
 {
-
-
   // Get the number of entries in the container.
   size_t current_map_size = cache.current_size ();
 
@@ -284,6 +288,7 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
   // Purge from cache.
   int result = cache.purge ();
   ACE_ASSERT (result != -1);
+  ACE_UNUSED_ARG (result);
 
   size_t resultant_size = current_map_size - entries_to_remove;
   ACE_UNUSED_ARG (resultant_size);
@@ -307,7 +312,9 @@ functionality_test_cache (void)
     {
       int result = cache.bind (i, j);
       ACE_ASSERT (result != -1);
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
+      ACE_UNUSED_ARG (result);
+
+      ACE_DEBUG ((LM_DEBUG, "keys[%d]=%d value=[%d]=%d\n",
 		  i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
@@ -345,6 +352,8 @@ functionality_test_hash_cache (void)
     {
       int result = cache.bind (i, j);
       ACE_ASSERT (result != -1);
+      ACE_UNUSED_ARG (result);
+
       ACE_DEBUG ((LM_DEBUG,
 		  ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
 		  i, i, j, j));
