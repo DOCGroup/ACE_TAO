@@ -11,7 +11,8 @@ TAO_ClientRequestInterceptor_Adapter::TAO_ClientRequestInterceptor_Adapter
       invocation_ (invocation),
       invoke_status_ (invoke_status),
       len_ (0),
-      stack_size_ (0)
+      stack_size_ (0),
+      info_ (0)
 {
   this->len_ = interceptors.size ();
 }

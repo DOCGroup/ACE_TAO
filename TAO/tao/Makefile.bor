@@ -45,6 +45,7 @@ OBJFILES = \
 	$(OBJDIR)\Cleanup_Func_Registry.obj \
 	$(OBJDIR)\ClientInterceptorAdapter.obj \
 	$(OBJDIR)\ClientRequestInfo.obj \
+	$(OBJDIR)\ClientRequestInfo_i.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
