@@ -242,11 +242,24 @@ typedef int key_t;
 #endif /* ACE_LACKS_KEY_T */
 
 #if defined (VXWORKS)
-// GreenHills 1.8.8 needs the stdarg.h #include before #include of vxWorks.h.
-// Also, be sure that these #includes come _after_ the key_t typedef, and
-// before the #include of time.h.
-#include /**/ <stdarg.h>
-#include /**/ <vxWorks.h>
+  // GreenHills 1.8.8 needs the stdarg.h #include before #include of vxWorks.h.
+  // Also, be sure that these #includes come _after_ the key_t typedef, and
+  // before the #include of time.h.
+  #include /**/ <stdarg.h>
+  #include /**/ <vxWorks.h>
+
+  #if defined (__GNUC__)
+    // This horrible hack works around a problem with the <string.h> that
+    // is distributed with Tornado 1.0.1/VxWorks 5.3.1.  Some of the prototypes
+    // in that file "conflicts with [their] built-in declaration" in g++ 2.7.2.
+    // They use size_t, but the built-in declarations apparently use unsigned
+    // long.  So, temporarily #define size_t to be u_long.
+    #define size_t u_long
+    #include /**/ <string.h>
+    #undef size_t
+    // At this point, size_t reverts to its original:
+    // typedef unsigned int size_t;
+  #endif /* __GNUC__ */
 #endif /* VXWORKS */
 
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
