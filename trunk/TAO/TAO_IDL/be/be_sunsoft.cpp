@@ -3,7 +3,7 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
-#include        "be_sunsoft.h"
+#include  "be_sunsoft.h"
 
 ACE_RCSID(be, be_sunsoft, "$Id$")
 
