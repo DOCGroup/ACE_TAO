@@ -1,3 +1,56 @@
+Sun Dec  8 10:27:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor.cpp (handle_events): Added the new version of the
+ 	  ACE_Countdown_Time to simplify the code.
+
+	* ace/Time_Value: Added a new class called ACE_Countdown_Time,
+ 	  which is used by the Reactor, ReactorEx, and Proactor to keep
+ 	  track of how much time elapsed.
+
+	* ace/config-win32-msvc4.0.h: Added a change that forces the MSVC
+ 	  compiler to reference the proper Winsock - lib during linking of
+ 	  ACE.  This change is necessary because a) in the release version
+ 	  the link to the winsock.lib was completly missing and b) only
+ 	  wsock32.lib has been included (which is wrong when WinSock2 is
+ 	  used).  Thanks to Matthias for this.
+
+	* ace/Module.cpp (ACE_Module): Added code to zero-out the
+ 	  q_pair_[2] pointers.  Thanks to Matthias for this.
+
+	* tests: Removed the argv name from most main() functions so that
+ 	  we don't get warnings...
+
+        * examples/Threads: Fixed some errors in the threads examples
+ 	  directory, most of which are ambigious overloads.  Also included
+ 	  a (MSVC 4.1) makefile for all tests in this directory.  Thanks
+ 	  to Matthias for this.
+
+        * examples/Threads: Renamed all the files by removing the word
+ 	  "test_" at the beginning.  This is redundant!
+
+	* tests/TSS_Test.cpp: If we are running AIX (i.e., if
+ 	  ACE_TEMPLATES_REQUIRE_PRAGMA), then conditionally avoid
+ 	  compiling this test program because it doesn't work unless we
+ 	  split off class Errno due to AIX's rules for generating
+ 	  templates.  This is too much work to get right...
+
+	* ace/OS.i (thr_self): Updated the conditional compilation tests
+ 	  so that we check for ACE_HAS_THREAD_SELF first.  Thanks to Chris
+ 	  Lahey for this.
+
+	* ace/{config-osf1-3.2.h,config-aix-4.1.x.h}: Updated this file so
+ 	  that is has the new ACE_HAS_THREAD_SELF macro, which indicates
+ 	  that the platform uses thread_self() rather than pthread_self().
+
+	* ace/config-aix-4.1.x.h: According to Chris Lahey
+ 	  <Chris_Lahey@cccis.com>, AIX 4.1.x should have ACE_HAS_PTHREADS
+ 	  rather than ACE_HAS_DCETHREADS.
+
+	* ace/Thread_Manager: Removed the thread_descriptor_i() methods
+ 	  and replaced them by generalizing the find() method to become
+ 	  find_thread() and find_hthread().  Thanks to Hamutal Yanay
+ 	  <Hamutal_Yanay@mail.icomverse.com> for suggesting this.
+
 Sat Dec  7 16:55:37 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: Because thread_descriptor_i() only returns 
