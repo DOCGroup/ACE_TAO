@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_VECTOR_T_H
 #define ACE_VECTOR_T_H
 #include "ace/pre.h"
