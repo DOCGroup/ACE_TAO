@@ -54,6 +54,8 @@
 #  gtk_reactor      Build the GtkReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
+#  pipes            Build with pipe support, resulting in adding -pipe to the
+#                   compiler options.
 #  split            Build the library by first splitting up the ACE source
 #                   to several files, with one object code entity for each
 #                   source file. This allows an application that is linked
@@ -705,6 +707,17 @@ ifdef repo
 #  ace_lib_prelink := 1
 endif # repo
 
+# If pipes is not set, we default to 0
+ifeq (,$(pipes))
+  pipes = 0
+endif
+
+# If pipes is set to 1 then add the compiler flag -pipe. This uses pipe instead
+# of intermediate files. This can be disabled by setting pipes to 0 in the
+# platform_macros.GNU file.
+ifeq ($(pipes),1)
+   CFLAGS += -pipe
+endif # pipes
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
