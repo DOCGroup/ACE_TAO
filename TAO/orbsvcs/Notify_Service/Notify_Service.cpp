@@ -73,6 +73,9 @@ int
 TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                           ACE_ENV_ARG_DECL)
 {
+  if (this->parse_args(argc, argv) != 0)
+    return -1;
+
   // initalize the ORB.
   if (this->init_ORB (argc, argv
                       ACE_ENV_ARG_PARAMETER) != 0)
@@ -93,9 +96,6 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
   this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-
-  if (this->parse_args(argc, argv) != 0)
-    return -1;
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
@@ -354,7 +354,7 @@ TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
+TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -471,7 +471,7 @@ Worker::svc (void)
       return -1;
     }
 
-  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
+  ACE_DEBUG ((LM_DEBUG, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
