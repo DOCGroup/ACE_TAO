@@ -72,7 +72,7 @@ public:
 
 private:
   /// The dispatcher
-  Kokyu::Dispatcher* dispatcher_;
+  Kokyu::Dispatcher_Auto_Ptr dispatcher_;
 
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
