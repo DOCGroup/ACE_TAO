@@ -77,9 +77,8 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
       // contents have been *logically* copied to the request scope
       // current.
       //
-      // Only perform set the TSC's peer if a copy was actually
-      // performed.
-//       if (this->rs_pi_current_.dirty ())
+      // Only set the TSC's peer if a copy was actually performed.
+      if (this->rs_pi_current_.dirty ())
         tsc->pi_peer (&this->rs_pi_current_);
     }
 }
