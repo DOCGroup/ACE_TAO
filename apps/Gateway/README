@@ -71,6 +71,22 @@ To run the tests do the following:
    will print out some diagnostic info and then block awaiting
    connections from the Gateway.
 
+   BTW, if you want to set the port numbers of the Peers from
+   the command-line do the following:
+   
+   a. Change the svc.conf file in the ./Peer/ directory to
+      another name (e.g., foo.conf).  
+      
+   b. Then run the peers in different windows as
+   
+      # Window 1
+      % peerd -p 10003    
+
+      # Window 2
+      % peerd -p 10004
+
+      etc.
+
 4. Start up the Gateway (gatewayd).  This will print out a bunch of
    messages as it reads the config files and connects to all the Peers.
    By default, the Gateway is purely reactive, i.e., it handles
