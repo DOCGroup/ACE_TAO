@@ -1,3 +1,9 @@
+Thu Jan 15 16:47:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/rtcorbacommon.mpb:
+	  The rtcorbacommon library needs portableserver and doesn't build
+	  when minimum_corba is set
+
 Thu Jan 15 08:02:23 2004  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/INET_Addr.cpp (get_port_number_from_name): Changed
