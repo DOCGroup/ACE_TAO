@@ -13,7 +13,7 @@ Sat Nov 15 18:03:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sat Nov 15 17:33:15 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* TAO_IDL/be/be_operation.cpp: 
+	* TAO_IDL/be/be_operation.cpp:
 	  Fixed typo in generated code:
 	  s/_tao_enviroment/_tao_environment/
 
@@ -41,11 +41,14 @@ Sat Nov 15 17:33:15 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 Sat Nov 15 12:32:37 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
+	* TAO_IDL/be: Split be_state.cpp into a number of files based on
+	the IDL types, e.g., be_state_struct.cpp, be_state_union.cpp, ...
+
 	* TAO_IDL/be/be_typedef.cpp: Added code to generate the typecode
 	structure for typedefs. These use the tk_alias kind field.
 
 	* TAO_IDL/be/{be_union,be_state}.cpp: Improvements to union with
-	string members. However, this is still incomplete and the will be
+	string members. However, this is still incomplete and will be
 	done by the next couple of commits.
 
 	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Removed the ACE_DEBUG
