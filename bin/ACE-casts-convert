@@ -42,7 +42,9 @@ do
 
   if grep "ACE_\(static\|dynamic\|const\|reinterpret\)_cast" $arg > /dev/null 2>&1; then
     echo "  $arg"
-   sed -e :a -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*\([^ \t].*\)/\1_cast<\2> (\3/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*(/ba' $arg > ${arg}.new
+   sed -e :a -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*\([^ \t].*\)/\1_cast<\2> (\3/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*(/ba' \
+       -e :aa -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ref[ \t]*([ \t]*\([^,]*\)[ \t]*,\(.*\),[ \t]*\([^,]*\)/\1_cast<\2<\3> \&> (\4/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ref[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;baa;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ref[ \t]*([ \t]*$/{N;s/\n//;baa;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ref[ \t]*$/{N;s/\n//;baa;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ref[ \t]*(/baa' \
+       -e :aaa -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ptr[ \t]*([ \t]*\([^,]*\)[ \t]*,\(.*\),[ \t]*\([^,]*\)/\1_cast<\2<\3> \*> (\4/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ptr[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;baaa;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ptr[ \t]*([ \t]*$/{N;s/\n//;baaa;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ptr[ \t]*$/{N;s/\n//;baaa;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast_[1-5]_ptr[ \t]*(/baaa' $arg > ${arg}.new
     mv ${arg}.new $arg
   fi
 done
