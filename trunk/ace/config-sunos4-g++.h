@@ -11,6 +11,8 @@
 #endif /* ! __ACE_INLINE__ */
 
 #define ACE_NEEDS_SYSTIME_H
+#define ACE_HAS_CHARPTR_SPRINTF
+#define ACE_HAS_UNION_WAIT
 
 // Must specialize templates due to G++'s lame parameterized type
 // support...

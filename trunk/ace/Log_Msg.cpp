@@ -769,9 +769,9 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   int sz = 0;
 
   if (text)
-    sz = ::sprintf (msg_buf, "%s - ", text);
+    sz = ACE_OS::sprintf (msg_buf, "%s - ", text);
 
-  sz += ::sprintf (msg_buf + sz, "HEXDUMP %d bytes", size);
+  sz += ACE_OS::sprintf (msg_buf + sz, "HEXDUMP %d bytes", size);
 
   if (len < size)
     ::sprintf (msg_buf + sz, " (showing first %d bytes)", len);

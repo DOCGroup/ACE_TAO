@@ -204,14 +204,20 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &f)
 {
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
 #if !defined(ACE_WIN32)
+  // Loop until we've found the first non-zero bit or we run off the
+  // end of the bitset.
   for (; 
-	this->handles_.mask_.fds_bits[this->index_] == 0; 
+	this->handles_.mask_.fds_bits[this->index_] == 0
+	&& this->num_ < ACE_Handle_Set::MAXSIZE
 	this->index_++)
     this->num_ += ACE_Handle_Set::WORDSIZE;
 
-  for (this->val_ = this->handles_.mask_.fds_bits[this->index_];
-       (ACE_BIT_DISABLED (this->val_, 1)) && this->num_ < ACE_Handle_Set::MAXSIZE;
-       this->num_++)
-    this->val_ = (this->val_ >> 1) & MSB_MASK;
+  if (this->num_ >= ACE_Handle_Set::MAXSIZE)
+    this->num_ = this->handles_.max_handle + 1;
+  else
+    for (this->val_ = this->handles_.mask_.fds_bits[this->index_];
+	 (ACE_BIT_DISABLED (this->val_, 1)) && this->num_ < ACE_Handle_Set::MAXSIZE;
+	 this->num_++)
+      this->val_ = (this->val_ >> 1) & MSB_MASK;
 #endif /* !ACE_WIN32 */
 }
