@@ -85,6 +85,22 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::close (void)
   return this->queue_.close ();
 }
 
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::flush (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::flush");
+
+  return this->queue_.flush ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::flush_i (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::flush_i");
+
+  return this->queue_.flush_i ();
+}
+
 // Take a look at the first item without removing it.
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
@@ -484,6 +500,32 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
                 ACE_LIB_TEXT ("close")));
 }
 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
+{
+  size_t number_flushed = 0;
+
+  // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
+  // and <release> their memory.
+  for (this->tail_ = 0; this->head_ != 0; )
+    {
+      number_flushed++;
+      this->cur_count_--;
+
+      this->cur_bytes_ -= this->head_->total_size ();
+      this->cur_length_ -= this->head_->total_length ();
+
+      ACE_Message_Block *temp = this->head_;
+      this->head_ = this->head_->next ();
+
+      // Make sure to use <release> rather than <delete> since this is
+      // reference counted.
+      temp->release ();
+    }
+
+  return number_flushed;
+}
+
 // Don't bother locking since if someone calls this function more than
 // once for the same queue, we're in bigger trouble than just
 // concurrency control!
@@ -536,6 +578,16 @@ ACE_Message_Queue<ACE_SYNCH_USE>::activate_i (void)
   return current_status;
 }
 
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::flush (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::close");
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+
+  // Free up the remaining messages on the queue.
+  return this->flush_i ();
+}
+
 // Clean up the queue if we have not already done so!
 
 template <ACE_SYNCH_DECL> int
@@ -547,21 +599,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
   int result = this->deactivate_i ();
 
   // Free up the remaining messages on the queue.
-
-  for (this->tail_ = 0; this->head_ != 0; )
-    {
-      this->cur_count_--;
-
-      this->cur_bytes_ -= this->head_->total_size ();
-      this->cur_length_ -= this->head_->total_length ();
-
-      ACE_Message_Block *temp = this->head_;
-      this->head_ = this->head_->next ();
-
-      // Make sure to use <release> rather than <delete> since this is
-      // reference counted.
-      temp->release ();
-    }
+  this->flush_i ();
 
   return result;
 }

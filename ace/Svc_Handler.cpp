@@ -464,15 +464,8 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush_i (void)
   if (iterator.next (mblk) != 0)
     result = this->peer ().send_n (mblk);
 
-  // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
-  // and <release> their memory.
-  while (this->msg_queue ()->is_empty () == 0)
-    {
-      if (this->msg_queue ()->dequeue_head (mblk) == -1)
-        break;
-
-      mblk->release ();
-    }
+  // This method assumes the caller holds the queue's lock!
+  this->msg_queue ()->flush_i ();
 
   if (this->timeoutp_ != 0)
     // Update the next timeout period by adding the interval.
@@ -500,10 +493,7 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
                 "next_timeout_.sec = %d, next_timeout_.usec = %d\n",
                 this->next_timeout_.sec (),
                 this->next_timeout_.usec ()));
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "timeoutp_ == NULL"));
-}
+
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout (const ACE_Time_Value &,
