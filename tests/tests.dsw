@@ -3,18 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE_Init_Test"=.\ACE_Init_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Atomic_Op_Test"=.\Atomic_Op_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -339,18 +327,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "New_Fail_Test"=.\New_Fail_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Notify_Performance_Test"=.\Notify_Performance_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -532,18 +508,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Recursive_Mutex_Test"=.\Recursive_Mutex_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Reverse_Lock_Test"=.\Reverse_Lock_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

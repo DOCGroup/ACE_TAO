@@ -6,7 +6,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 #include "ace/Object_Manager.h"
-#include "ace/SString.h"
 #include "ace/Version.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
@@ -14,9 +13,6 @@
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, ACE, "$Id$")
-
-// Static data members.
-u_int ACE::init_fini_count_ = 0;
 
 // Keeps track of whether we're in some global debug mode.
 char ACE::debug_ = 0;
@@ -30,36 +26,16 @@ size_t ACE::pagesize_ = 0;
 // Size of allocation granularity.
 size_t ACE::allocation_granularity_ = 0;
 
-
 int
 ACE::init (void)
 {
-  // Don't use ACE_TRACE, because Object_Manager might not have been
-  // instantiated yet.
-  // ACE_TRACE ("ACE::init");
-
-  ++init_fini_count_;
-
-  return ACE_Object_Manager::instance ()->init ();
+  return ACE_Object_Manager::instance()->init ();
 }
 
 int
 ACE::fini (void)
 {
-  ACE_TRACE ("ACE::fini");
-
-  if (init_fini_count_ > 0)
-    {
-      if (--init_fini_count_ == 0)
-        return ACE_Object_Manager::instance ()->fini ();
-      else
-        // Wait for remaining fini () calls.
-        return 1;
-    }
-  else
-    // More ACE::fini () calls than ACE::init () calls.  Bad
-    // application!
-    return -1;
+  return ACE_Object_Manager::instance()->fini ();
 }
 
 u_int
@@ -1077,6 +1053,30 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 // Miscellaneous static methods used throughout ACE.
 
 ssize_t
+ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
+{
+  ACE_TRACE ("ACE::send_n");
+  size_t bytes_written;
+  ssize_t n;
+
+  for (bytes_written = 0; bytes_written < len; bytes_written += n)
+    {
+      n = ACE::send (handle,
+                     (const char *) buf + bytes_written,
+                     len - bytes_written);
+      if (n == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            n = 0; // Keep trying to send.
+          else
+            return -1;
+        }
+    }
+
+  return bytes_written;
+}
+
+ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const void *buf,
              size_t len,
@@ -1092,6 +1092,35 @@ ACE::send_n (ACE_HANDLE handle,
                         (const char *) buf + bytes_written,
                         len - bytes_written,
                         flags);
+      if (n == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            n = 0; // Keep trying to send.
+          else
+            return -1;
+        }
+    }
+
+  return bytes_written;
+}
+
+// Receive <len> bytes into <buf> from <handle> (uses the <write>
+// system call on UNIX and the <WriteFile> call on Win32).
+
+ssize_t
+ACE::write_n (ACE_HANDLE handle,
+              const void *buf,
+              size_t len)
+{
+  ACE_TRACE ("ACE::write_n");
+
+  size_t bytes_written;
+  ssize_t n;
+
+  for (bytes_written = 0; bytes_written < len; bytes_written += n)
+    {
+      n = ACE_OS::write (handle, (const char *) buf + bytes_written,
+                         len - bytes_written);
       if (n == -1)
         {
           if (errno == EWOULDBLOCK)
@@ -1158,6 +1187,39 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
   return bytes_read;
 }
 
+// Receive <len> bytes into <buf> from <handle> (uses the <read>
+// system call on UNIX and the <ReadFile> call on Win32).
+
+ssize_t
+ACE::read_n (ACE_HANDLE handle,
+             void *buf,
+             size_t len)
+{
+  ACE_TRACE ("ACE::read_n");
+
+  size_t bytes_read;
+  ssize_t n;
+
+  for (bytes_read = 0; bytes_read < len; bytes_read += n)
+    {
+      n = ACE_OS::read (handle,
+                        (char *) buf + bytes_read,
+                        len - bytes_read);
+
+      if (n == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            n = 0; // Keep trying to read.
+          else
+            return -1;
+        }
+      else if (n == 0)
+        break;
+    }
+
+  return bytes_read;
+}
+
 int
 ACE::enter_recv_timedwait (ACE_HANDLE handle,
                            const ACE_Time_Value *timeout,
@@ -1169,17 +1231,6 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
   if (timeout == 0)
     return 0;
 
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  struct pollfd fds;
-
-  fds.fd = handle;
-  fds.events = POLLIN;
-  fds.revents = 0;
-
-  int a = ACE_OS::poll (&fds, 1, *timeout);
-
-#else
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 
@@ -1189,8 +1240,6 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
                           (fd_set *) 0, // write_fds.
                           (fd_set *) 0, // exception_fds.
                           timeout);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
    switch ( a )
    {
    case 0:  // Timer expired.  return -1
@@ -1246,17 +1295,6 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
   if (timeout==0)
     return 0;
 
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  struct pollfd fds;
-
-  fds.fd = handle;
-  fds.events = POLLOUT;
-  fds.revents = 0;
-
-  int a = ACE_OS::poll (&fds, 1, *timeout);
-
-#else
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 
@@ -1269,8 +1307,6 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
                           (fd_set *) handle_set,
                           (fd_set *) 0,
                           timeout);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
    switch ( a )
    {
    case 0: // Timer expired.
@@ -1678,29 +1714,16 @@ ACE::handle_timed_complete (ACE_HANDLE h,
                             int is_tli)
 {
   ACE_TRACE ("ACE::handle_timed_complete");
-
-#if !defined (ACE_WIN32) && defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  struct pollfd fds;
-
-  fds.fd = h;
-  fds.events = POLLIN | POLLOUT;
-  fds.revents = 0;
-
-#else
   ACE_Handle_Set rd_handles;
   ACE_Handle_Set wr_handles;
-
-  rd_handles.set_bit (h);
-  wr_handles.set_bit (h);
-#endif /* !ACE_WIN32 && ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
+  int need_to_check;
 
 #if defined (ACE_WIN32)
   ACE_Handle_Set ex_handles;
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
-
-  int need_to_check;
+  rd_handles.set_bit (h);
+  wr_handles.set_bit (h);
 
 #if defined (ACE_WIN32)
   int n = ACE_OS::select (int (h) + 1,
@@ -1709,17 +1732,11 @@ ACE::handle_timed_complete (ACE_HANDLE h,
                           ex_handles,
                           timeout);
 #else
-# if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  int n = ACE_OS::poll (&fds, 1, timeout);
-
-# else
   int n = ACE_OS::select (int (h) + 1,
                           rd_handles,
                           wr_handles,
                           0,
                           timeout);
-# endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 #endif /* ACE_WIN32 */
 
   // If we failed to connect within the time period allocated by the
@@ -1746,24 +1763,14 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   need_to_check = 1;
 #else
   if (is_tli)
-
-# if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-    need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
-# else
     need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
-# endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
   else
 #if defined(AIX)
     // AIX is broken... both success and failed connect will set the
     // write handle only, so always check.
     need_to_check = 1;
 #else
-# if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-    need_to_check = (fds.revents & POLLIN);
-# else
     need_to_check = rd_handles.is_set (h);
-# endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 #endif /* AIX */
 #endif /* ACE_WIN32 */
 
@@ -1835,35 +1842,17 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
   if (listener == ACE_INVALID_HANDLE)
     return -1;
 
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  struct pollfd fds;
-
-  fds.fd = listener;
-  fds.events = POLLIN;
-  fds.revents = 0;
-
-#else
   // Use the select() implementation rather than poll().
   ACE_Handle_Set rd_handle;
   rd_handle.set_bit (listener);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
   // We need a loop here if <restart> is enabled.
 
   for (;;)
     {
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-      int n = ACE_OS::poll (&fds, 1, timeout);
-
-#else
-      int n = ACE_OS::select (int (listener) + 1,
+      switch (ACE_OS::select (int (listener) + 1,
                               rd_handle, 0, 0,
-                              timeout);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
-      switch (n)
+                              timeout))
         {
         case -1:
           if (errno == EINTR && restart)
@@ -2157,7 +2146,7 @@ int
 ACE::set_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::set_flags");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
+#if defined (ACE_WIN32) || defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:
@@ -2193,7 +2182,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::clr_flags");
 
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
+#if defined (ACE_WIN32) || defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:

@@ -76,7 +76,7 @@ main (int argc, char *argv[])
 	{
 	  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 	  if (output_file == 0)
-	    ACE_ERROR_RETURN ((LM_ERROR,
+	    ACE_ERROR_RETURN ((LM_DEBUG,
 			       "Cannot open output file for writing IOR: %s",
 			       ior_output_file),
 			      1);
@@ -93,8 +93,7 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+      ACE_TRY_ENV.print_exception ("Catched exception:");
       return 1;
     }
   ACE_ENDTRY;

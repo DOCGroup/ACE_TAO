@@ -470,19 +470,6 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_COMPLEX_ANY:
-      {
-        Param_Test_Client<Test_Complex_Any> *client = new
-          Param_Test_Client<Test_Complex_Any> (this->orb_.in (),
-                                               this->objref_.in(),
-                                               new Test_Complex_Any);
-        if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
-        else
-          retstatus = client->run_dii_test ();
-        delete client;
-      }
-      break;
 #if 0
     case Options::TEST_MULTDIM_ARRAY:
       {
@@ -549,7 +536,6 @@ template class Param_Test_Client<Test_Fixed_Array>;
 template class Param_Test_Client<Test_Var_Array>;
 template class Param_Test_Client<Test_Exception>;
 template class Param_Test_Client<Test_Big_Union>;
-template class Param_Test_Client<Test_Complex_Any>;
 #if 0
 template class Param_Test_Client<Test_Multdim_Array>;
 #endif
@@ -582,7 +568,6 @@ template class Param_Test_Client<Test_Multdim_Array>;
 #pragma instantiate Param_Test_Client<Test_Var_Array>
 #pragma instantiate Param_Test_Client<Test_Exception>
 #pragma instantiate Param_Test_Client<Test_Big_Union>
-#pragma instantiate Param_Test_Client<Test_Complex_Any>
 #if 0
 #pragma instantiate Param_Test_Client<Test_Multdim_Array>
 #endif

@@ -4,7 +4,6 @@
 #include "tao/Timeprobe.h"
 #include "tao/Operation_Table.h"
 #include "tao/ORB_Core.h"
-#include "tao/POA.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/Server_Request.h"
@@ -18,16 +17,16 @@ ACE_RCSID(tao, Servant_Base, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Servant_Base_Timeprobe_Description[] =
-{
-  "Servant_Base::_find - start",
-  "Servant_Base::_find - end"
-};
+  {
+    "Servant_Base::_find - start",
+    "Servant_Base::_find - end"
+  };
 
 enum
-{
-  TAO_SERVANT_BASE_FIND_START = 700,
-  TAO_SERVANT_BASE_FIND_END
-};
+  {
+    TAO_SERVANT_BASE_FIND_START = 700,
+    TAO_SERVANT_BASE_FIND_END
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
@@ -36,23 +35,17 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_ServantBase::TAO_ServantBase (void)
-  : optable_ (0),
-    single_threaded_poa_lock_ (0),
-    single_threaded_poa_lock_count_ (0)
+  :  optable_ (0)
 {
 }
 
-TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
-  : optable_ (rhs.optable_),
-    single_threaded_poa_lock_ (0),
-    single_threaded_poa_lock_count_ (0)
+TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &)
 {
 }
 
 TAO_ServantBase &
-TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
+TAO_ServantBase::operator= (const TAO_ServantBase &)
 {
-  this->optable_ = rhs.optable_;
   return *this;
 }
 
@@ -66,16 +59,6 @@ TAO_ServantBase::_default_POA (CORBA::Environment &env)
   return TAO_ORB_Core_instance ()->root_poa_reference (env);
 }
 
-void
-TAO_ServantBase::_add_ref (CORBA::Environment &)
-{
-}
-
-void
-TAO_ServantBase::_remove_ref (CORBA::Environment &)
-{
-}
-
 CORBA::Boolean
 TAO_ServantBase::_is_a (const char* logical_type_id,
 			CORBA::Environment &env)
@@ -84,12 +67,6 @@ TAO_ServantBase::_is_a (const char* logical_type_id,
     {
       return 1;
     }
-  return 0;
-}
-
-CORBA::Boolean
-TAO_ServantBase::_non_existent (CORBA::Environment &)
-{
   return 0;
 }
 
@@ -115,13 +92,13 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
   TAO_Stub *stub;
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current &poa_current = orb_core->poa_current ();
-  TAO_POA_Current_Impl *poa_current_impl = poa_current.implementation ();
+  TAO_POA_Current *poa_current = orb_core->poa_current ();
 
-  if (poa_current_impl != 0 &&
-      this == poa_current_impl->servant ())
+  if (poa_current != 0
+      && poa_current->in_upcall ()
+      && this == poa_current->servant ())
     {
-      stub = orb_core->orb ()->create_stub_object (poa_current_impl->object_key (),
+      stub = orb_core->orb ()->create_stub_object (poa_current->object_key (),
                                                    this->_interface_repository_id (),
                                                    env);
     }
@@ -144,160 +121,6 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
     }
 
   return stub;
-}
-
-ACE_SYNCH_MUTEX &
-TAO_ServantBase::_single_threaded_poa_lock (void)
-{
-  return *this->single_threaded_poa_lock_;
-}
-
-void
-TAO_ServantBase::_increment_single_threaded_poa_lock_count (void)
-{
-  // Only one thread at a time through this code (guarantee provided
-  // by the POA).
-  u_long current_count = this->single_threaded_poa_lock_count_++;
-  if (current_count == 0)
-    {
-      ACE_NEW (this->single_threaded_poa_lock_,
-               ACE_SYNCH_MUTEX);
-    }
-}
-
-void
-TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
-{
-  // Only one thread at a time through this code (guarantee provided
-  // by the POA).
-  u_long current_count = --this->single_threaded_poa_lock_count_;
-  if (current_count == 0)
-    {
-      delete this->single_threaded_poa_lock_;
-      this->single_threaded_poa_lock_ = 0;
-    }
-}
-
-TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
-{
-}
-
-void
-TAO_RefCountServantBase::_add_ref (CORBA::Environment &)
-{
-  ++this->ref_count_;
-}
-
-void
-TAO_RefCountServantBase::_remove_ref (CORBA::Environment &)
-{
-  CORBA::ULong new_count = --this->ref_count_;
-  if (new_count == 0)
-    {
-      delete this;
-    }
-}
-
-TAO_RefCountServantBase::TAO_RefCountServantBase (void)
-  : ref_count_ (1)
-{
-}
-
-TAO_RefCountServantBase::TAO_RefCountServantBase (const TAO_RefCountServantBase &)
-  : ref_count_ (1)
-{
-}
-
-TAO_RefCountServantBase &
-TAO_RefCountServantBase::operator= (const TAO_RefCountServantBase &)
-{
-  return *this;
-}
-
-TAO_ServantBase_var::TAO_ServantBase_var (void)
-  : ptr_ (0)
-{
-}
-
-TAO_ServantBase_var::TAO_ServantBase_var (TAO_ServantBase *p)
-  : ptr_ (p)
-{
-}
-
-TAO_ServantBase_var::TAO_ServantBase_var (const TAO_ServantBase_var &b)
-  : ptr_ (b.ptr_)
-{
-  if (this->ptr_ != 0)
-    this->ptr_->_add_ref ();
-}
-
-TAO_ServantBase_var::~TAO_ServantBase_var (void)
-{
-  if (this->ptr_ != 0)
-    this->ptr_->_remove_ref ();
-}
-
-TAO_ServantBase_var &
-TAO_ServantBase_var::operator= (TAO_ServantBase *p)
-{
-  if (this->ptr_ != 0)
-    this->ptr_->_remove_ref ();
-
-  this->ptr_ = p;
-
-  return *this;
-}
-
-TAO_ServantBase_var &
-TAO_ServantBase_var::operator= (const TAO_ServantBase_var &b)
-{
-  if (this->ptr_ != b.ptr_)
-  {
-    if (this->ptr_ != 0)
-      this->ptr_->_remove_ref ();
-
-    if ((this->ptr_ = b.ptr_) != 0)
-      this->ptr_->_add_ref ();
-  }
-
-  return *this;
-}
-
-TAO_ServantBase *
-TAO_ServantBase_var::operator->() const
-{
-  return this->ptr_;
-}
-
-TAO_ServantBase *
-TAO_ServantBase_var::in (void) const
-{
-  return this->ptr_;
-}
-
-TAO_ServantBase *&
-TAO_ServantBase_var::inout (void)
-{
-  return this->ptr_;
-}
-
-TAO_ServantBase *&
-TAO_ServantBase_var::out (void)
-{
-  if (this->ptr_ != 0)
-    this->ptr_->_remove_ref();
-
-  this->ptr_ = 0;
-
-  return this->ptr_;
-}
-
-TAO_ServantBase *
-TAO_ServantBase_var::_retn (void)
-{
-  TAO_ServantBase *retval = this->ptr_;
-  this->ptr_ = 0;
-  return retval;
 }
 
 TAO_Stub *
@@ -357,28 +180,28 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
   // by the DSI servant, it raises the PortableServer::WrongPolicy
   // exception.
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current &poa_current = orb_core->poa_current ();
-  TAO_POA_Current_Impl *poa_current_impl = poa_current.implementation ();
+  TAO_POA_Current *poa_current = orb_core->poa_current ();
 
-  if (poa_current_impl == 0 &&
-      this != poa_current_impl->servant ())
+  if (poa_current == 0
+      || !poa_current->in_upcall ()
+      || this != poa_current->servant ())
     {
       CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
       env.exception (exception);
       return 0;
     }
 
-  PortableServer::POA_var poa = poa_current_impl->get_POA (env);
+  PortableServer::POA_var poa = poa_current->get_POA (env);
   if (env.exception () != 0)
     return 0;
 
-  CORBA::RepositoryId interface = this->_primary_interface (poa_current_impl->object_id (),
+  CORBA::RepositoryId interface = this->_primary_interface (poa_current->object_id (),
                                                             poa.in (),
                                                             env);
   if (env.exception () != 0)
     return 0;
 
-  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (poa_current_impl->object_key (),
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (poa_current->object_key (),
                                                                interface,
                                                                env);
 }

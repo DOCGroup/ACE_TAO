@@ -503,9 +503,6 @@
 /* Platform supports IP multicast */
 #undef ACE_HAS_IP_MULTICAST
 
-/* Platform supports IPv6 */
-#undef ACE_HAS_IP6
-
 /* Platform supports the very odd IRIX 6.2 threads... */
 #undef ACE_HAS_IRIX62_THREADS
 
@@ -641,6 +638,9 @@
 /* pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
    PTHREAD_PROCESS_SHARED values */
 #undef ACE_HAS_PTHREAD_PROCESS_ENUM
+
+/* Platform has pthread_sigmask() defined. */
+#undef ACE_HAS_PTHREAD_SIGMASK
 
 /* Purify'ing.  Defined on command line. */
 #undef ACE_HAS_PURIFY
@@ -1085,9 +1085,6 @@
 /* Platform lacks pthread_mutexattr_setpshared(). */
 #undef ACE_LACKS_MUTEXATTR_PSHARED
 
-/* OS requires non-null status pointer for ::pthread_join () */
-#undef ACE_LACKS_NULL_PTHREAD_STATUS
-
 /* Platform lacks <sys/param.h> (e.g., MVS) */
 #undef ACE_LACKS_PARAM_H
 
@@ -1109,7 +1106,7 @@
    memory and message queues. */
 #undef ACE_LACKS_SOME_POSIX_PROTOTYPES
 
-/* Compiler complains about use of obsolete "#pragma once" */
+/* Compiler complains about "#pragma once" */
 #undef ACE_LACKS_PRAGMA_ONCE
 
 /* Platform lacks pri_t (e.g., Tandem NonStop UNIX). */
@@ -1118,11 +1115,8 @@
 /* Platform lack pthread_attr_setstackaddr() */
 #undef ACE_LACKS_THREAD_STACK_ADDR
 
-/* Platform lacks pthread_cancel() */
+/* Platform lacks pthread_cancel(). */
 #undef ACE_LACKS_PTHREAD_CANCEL
-
-/* Platform lacks pthread_sigmask () */
-#undef ACE_LACKS_PTHREAD_SIGMASK
 
 /* Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2) */
 #undef ACE_LACKS_PTHREAD_THR_SIGSETMASK
@@ -1224,9 +1218,6 @@
 /* Platform doesn't have netinet/tcp.h */
 #undef ACE_LACKS_TCP_H
 
-/* OS does not support TCP_NODELAY */
-#undef ACE_LACKS_TCP_NODELAY
-
 /* Platform lacks pthread_attr_setscope() */
 #undef ACE_LACKS_THREAD_PROCESS_SCOPING
 
@@ -1244,14 +1235,6 @@
 
 /* Platform/compiler lacks the ualarm() prototype (e.g., Solaris) */
 #undef ACE_LACKS_UALARM_PROTOTYPE
-
-/* Compiler does not have any istream operator>> for chars, u_chars, or
-   signed chars. */
-#undef ACE_LACKS_CHAR_RIGHT_SHIFTS
-
-/* Compiler does not have operator>> (istream &, u_char *) or
-   operator>> (istream &, signed char *) */
-#undef ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
 
 /* Platform lacks the ucontext.h file */
 #undef ACE_LACKS_UCONTEXT_H

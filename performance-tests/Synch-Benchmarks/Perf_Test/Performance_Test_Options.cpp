@@ -79,16 +79,16 @@ Performance_Test_Options::parse_args (int argc, char *argv[])
   while ((c = get_opt ()) != -1)
     switch (c)
       {
-      case 'a':                 // Not used. (do_ack ???)
+      case 'a':
         this->_ack = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
-      case 'A':                 // Not used. (set rendezvous point.)
+      case 'A':
         this->pipe_addr (get_opt.optarg);
         break;
-      case 'B':                 // Create thread with THR_BOUND.
+      case 'B':
         this->t_flags (THR_BOUND);
         break;
-      case 'c':                 // Not used. (# of connections.)
+      case 'c':
         {
           long connections = ACE_OS::atoi (get_opt.optarg);
 
@@ -101,79 +101,79 @@ Performance_Test_Options::parse_args (int argc, char *argv[])
 
           break;
         }
-      case 'C':                 // Not used.  (Toggle calculate checksum.)
+      case 'C':
         this->_checksum = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
-      case 'd':                 // Not used.  (Enable debugging.)
+      case 'd':
         this->_debugging = 1;
         break;
-      case 'D':                 // Create thread with THR_DETACHED.
+      case 'D':
         this->t_flags (THR_DETACHED);
         break;
-      case 'e':                 // Perform eager exit (without cleaning up.)
+      case 'e':
         this->_eager_exit = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
-      case 'F':                 // Not used.
+      case 'F':
         this->_free_memory = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
-      case 'g':                 // Not used.  (generate data ??)
+      case 'g':
         this->_generate = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
-      case 'H':                 // Not used.  (set high water mark)
+      case 'H':
         this->high_water_mark (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'i':                 // Not used.  (# of iterations)
+      case 'i':
         this->iterations (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'L':                 // Not used.  (set low water mark)
+      case 'L':
         this->low_water_mark (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'l':                 // Not used.  (set initial queue length)
+      case 'l':
         this->initial_queue_length (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'M':                 // Set message size in pipe_[proc|thr]_test.
+      case 'M':
         this->msg_size (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'm':                 // Not used.  (set mapped file name)
+      case 'm':
         this->mapped_file (get_opt.optarg);
         break;
-      case 'N':                 // Create thread with flag THR_NEW_LWP.
+      case 'N':
         this->t_flags (THR_NEW_LWP);
         break;
-      case 'n':                 // Set # of lwp's
+      case 'n':
         this->n_lwps (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'p':                 // Toggle whether summary is printed.
+      case 'p':
         this->_print_summary = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
-      case 'P':                 // Not used.
+      case 'P':
         this->consecutive_ports (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'S':                 // Not used  (set service_entry ???)
+      case 'S':
         this->service_entry (get_opt.optarg);
         break;
-      case 's':                 // Set testing duration.
+      case 's':
         this->sleep_time (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'T':                 // Enable/disable tracing.
+      case 'T':
         if (ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0)
           ACE_Trace::start_tracing ();
         else if (ACE_OS::strcasecmp (get_opt.optarg, "OFF") == 0)
           ACE_Trace::stop_tracing ();
         break;
-      case 't':                 // Set # of threads contending the lock.
+      case 't':
         this->thr_count (ACE_OS::atoi (get_opt.optarg));
         break;
-      case 'u':                 // Not used.  (use udp.)
+      case 'u':
         this->_udp = 1;
         break;
-      case 'v':                 // Not used.  (set display verbosely)
+      case 'v':
         this->_verbosity = 1;
         break;
-      case 'X':                 // Not used.  (Use xdr conversion.)
+      case 'X':
         this->_xdr = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
-      case 'Z':                 // Not used.  (Do zero copy.)
+      case 'Z':
         this->_zero_copy = ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0;
         break;
       default:

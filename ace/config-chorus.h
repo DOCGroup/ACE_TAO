@@ -21,13 +21,10 @@
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 # undef ACE_HAS_ANSI_CASTS
-# define ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
 #elif defined (ghs)
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
-
 # define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 # define ACE_HAS_TANDEM_SIGNALS
+# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_LACKS_ACE_IOSTREAM  /* MVME lacks signed and unsigned char */
 # define ACE_LACKS_FLOATING_POINT
@@ -52,7 +49,6 @@
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_LONG_MAP_FAILED
 #define ACE_HAS_MSG
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_SIGWAIT
@@ -106,7 +102,6 @@
 #define ACE_HAS_PTHREAD_PROCESS_ENUM
 #define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_LACKS_PTHREAD_CLEANUP
-#define ACE_LACKS_PTHREAD_SIGMASK
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 
 #if !defined (__ACE_INLINE__)

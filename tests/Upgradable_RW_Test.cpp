@@ -49,19 +49,16 @@ static size_t n_writers = 0;
 static u_int n_entries = 10;
 
 // Try to upgrade to a write lock, by default don't try.
-static u_int use_try_upgrade = 0;
+static u_long use_try_upgrade = 0;
 
 // number of readers, which were able to upgrade
-static u_int upgraded = 0;
+static u_long upgraded = 0;
 
 // count the number of find calls
-static u_int find_called = 0;
+static u_long find_called = 0;
 
 // number of readers, failing or not allowed to upgrade
 static u_int not_upgraded = 0;
-
-// Thread creation flags.
-static long thr_flags = THR_NEW_LWP;
 
 // Lock for shared_data (upgraded, not_upgraded, hash_Map)
 #if defined (RW_MUTEX)
@@ -111,15 +108,14 @@ print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("usage: %n [-r n_readers] [-w n_writers]\n"
-                         "   [-e max_entries] [-u try update] "
-                         "[-n iteration_count] [-f for FIFO threads]\n")));
+                         "   [-e max_entries] [-u try update] [-n iteration_count]\n")));
   ACE_OS::exit (1);
 }
 
 static void
 parse_args (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("e:fr:w:n:u"));
+  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("e:r:w:n:u"));
 
   int c;
 
@@ -128,9 +124,6 @@ parse_args (int argc, ASYS_TCHAR *argv[])
       {
       case 'e':
         n_entries = ACE_OS::atoi (get_opt.optarg);
-        break;
-      case 'f':
-        thr_flags = THR_BOUND | THR_SCHED_FIFO;
         break;
       case 'r':
         n_readers = ACE_OS::atoi (get_opt.optarg);
@@ -325,7 +318,7 @@ init (void)
                   Linked_List,
                   -1);
 
-  for (u_int i = 0; i < n_entries; i++)
+  for (u_long i = 0; i < n_entries; i++)
     {
       ACE_OS::sprintf (entry, "%d", i);
       ACE_NEW_RETURN (cString_ptr,
@@ -359,7 +352,6 @@ int
 main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
-  int status = 0;
 
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
@@ -398,8 +390,7 @@ main (int argc, ASYS_TCHAR *argv[])
                       Reader_Task (time_Calculation,
                                   barrier),
                       -1);
-
-      reader_tasks[i]->activate (thr_flags,
+      reader_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO,
                                  1,
                                  0,
                                  ACE_DEFAULT_THREAD_PRIORITY);
@@ -420,27 +411,13 @@ main (int argc, ASYS_TCHAR *argv[])
                       Writer_Task (time_Calculation,
                                   barrier),
                       -1);
-
-      writer_tasks[i]->activate (thr_flags,
+      writer_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO,
                                  1,
                                  0,
                                  ACE_DEFAULT_THREAD_PRIORITY);
     }
 
-  // Wait a maximum of 1 second per iteration.
-  const ACE_Time_Value max_wait (n_iterations * 1);
-  const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
-  if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
-    {
-      if (errno == ETIME)
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
-                               max_wait.msec ()));
-      else
-        ACE_OS::perror ("wait");
-
-      status = -1;
-    }
+  ACE_Thread_Manager::instance ()->wait ();
 
   // compute average time.
   time_Calculation.print_stats ();
@@ -497,7 +474,7 @@ main (int argc, ASYS_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
-  return status;
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

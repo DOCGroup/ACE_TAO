@@ -10,24 +10,23 @@
 
 LDLIBS  = -lnetsvcs
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-LSRC = $(addsuffix .cpp,$(BIN))
-
-BIN2 = main
-
-#### If the ACE library wasn't built with sufficient components, don't
-#### try to build here.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
-    BIN = $(BIN2)
-  endif # ! Token
-endif # ! Other
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the ACE library wasn't built with Token and Other components, don't
+#### try to build the server.
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
+    BIN = main
+    LSRC = $(addsuffix .cpp,$(BIN))
+  endif # ! Token
+endif # ! Other
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -226,10 +225,7 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler_T.h \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/TLI_Stream.h \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i \
  $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \

@@ -11,33 +11,32 @@
 #----------------------------------------------------------------------------
 
 ifndef OBJEXT
-  OBJEXT=o
+OBJEXT=o
 endif
 
 ifndef SOEXT
-  SOEXT=so
+SOEXT=so
 endif
 
 VSHLIB  = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VLOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file))))
 
 ifdef TEMPINCDIR
-  VSHOBJS1 =
-else  # ! TEMPINCDIR
-  LSRC    += $(LSRC2)
+VSHOBJS1 =
+else
+LSRC    += $(LSRC2)
 ifdef PRELIB
 ifdef PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
-else  # ! PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
-endif # ! PRELIB_USES_OBJ_ONLY
-  VSHOBJS1 = $(VSHOBJS)
-else  # ! PRELIB
-  VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
-  VSHOBJS1 = \
-    $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
-endif # ! PRELIB
-endif # ! TEMPINCDIR
+VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+else
+VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+endif
+VSHOBJS1 = $(VSHOBJS)
+else
+VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+VSHOBJS1 = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+endif
+endif
 
 # Comment out for now...
 # $(DEFS:%=$(INSINC)/%) \
@@ -93,9 +92,7 @@ ifdef TEMPINCDIR
 	fi
 endif
 	-chmod a+r $@
-ifneq (,$(RANLIB))
 	-$(RANLIB) $@
-endif # RANLIB
 
 # Note that if you don't want to build shared libraries, just remove the $(VSHOBJS)
 ifdef SHLIBBUILD
@@ -117,7 +114,5 @@ ifdef SHLIBA
 $(SHLIBA): $(VSHLIB)
 	$(AR) $(ARFLAGS) $@ $?
 	-chmod a+rx $@
-ifneq (,$(RANLIB))
 	-$(RANLIB) $@
-endif # RANLIB
 endif

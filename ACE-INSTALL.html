@@ -1,9 +1,9 @@
+<HTML>
 <!-- $Id$ -->
 
-<HTML>
 <HEAD>
-  <TITLE>Building and Installing ACE and Its Network Services</TITLE>
-  <link rev=made href="mailto:schmidt@cs.wustl.edu">
+<TITLE>Building and Installing ACE and Its Network Services</TITLE>
+<link rev=made href="mailto:schmidt@cs.wustl.edu">
 </HEAD>
 
 <BODY text = "#000000"
@@ -25,9 +25,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE.FAQ.html">FAQ</A> before
 building and installing ACE.  In addition, you might want to check out
 our <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE-development4.ps.gz">development
-process</A>, as well.  And as you start working with ACE, you might
-want to consult the <a href="docs/ACE-FMM.html">ACE Frequently Made
-Mistakes page</a>.<P>
+process</A>, as well.<P>
 
 <H4>Document Index</H4>
 
@@ -251,8 +249,8 @@ make: *** [libACE.so] Error 8
       HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both Intel
       and Alpha platforms.  If you use a RedHat 5.x distribution, it's best
       to use RedHat 5.1 or later.  ACE works without any modifications on
-      RedHat 5.1, 5.2, and 6.0, and on Debian 2.1 on both Intel and Alpha;
-      use the <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
+      RedHat 5.1, 5.2 and on Debian 2.1 on both Intel and Alpha; use the
+      <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
       and <code>ace/config-linux-lxpthreads.h</code> platform/config
       files.<p>
 
@@ -525,8 +523,8 @@ If you use the GNU GCC g++ compiler please note the following:
   <li>If you have problems building shared libraries with egcs 1.1 or 1.1.1
       on SunOS 2.5 or 2.5.1 that look like this:
       <pre>
-        /usr/ccs/lib/libgen.a(reg_compile.o): In function `_get_vars_storage':
-        reg_compile.o(.text+0x30): relocation truncated to fit: R_SPARC_GOT13 free
+	/usr/ccs/lib/libgen.a(reg_compile.o): In function `_get_vars_storage':
+	reg_compile.o(.text+0x30): relocation truncated to fit: R_SPARC_GOT13 free
       </pre>
       the suggested workaround is to comment out the <code>ACE_HAS_REGEX</code>
       <code>#define</code> in <code>ace/config-sunos5.5.h</code>.
@@ -674,16 +672,9 @@ If you use the GNU GCC g++ compiler please note the following:
       and 105490-07.<p>
 
       If you need or want to use egcs' shared libraries, build it
-      with the <code>--enable-shared</code> egcs config option.  The
-      <code>--enable-shared</code> option is <strong>not</strong> an
-      egcs run-time option.  Build egcs in a way similar to the
-      following example:
-      <pre><code>
-         $ ./configure --enable-shared
-         $ make bootstrap
-      </code></pre>
-      Be sure to set your <code>LD_LIBRARY_PATH</code> environment
-      variable, if necessary, to pick up those shared libraries.<p>
+      with the <code>--enable-shared</code> egcs config option.  Be
+      sure to set your <code>LD_LIBRARY_PATH</code> environment variable,
+      if necessary, to pick up those shared libraries.<p>
 
   <li>On DEC Alpha, egcs through version 1.03a, at least, may fail
       to build ACE if debugging (-g) is enabled.  The fix is to
@@ -792,10 +783,6 @@ need to do:<P>
 
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt correctly.
-You might have to manually go through the ACE directories and delete
-all *.obj, *.dll, *.lib, *.ilk, *.pdb, *.idb, *.ncb, *.opt, and *.exp
-files in order to start over from scratch (the Clean command in MSVC
-may not do this).
 <P>
 
 ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
@@ -904,20 +891,13 @@ the STL fixes.
       before the #include statement in ACE_ROOT\ace\config.h.
       Optionally but highly recommended, you can also add the line <BR>
       <BR>
-      <CODE>#define ACE_NO_INLINE</CODE><BR>
+      <CODE>#define __ACE_INLINE__ 0</CODE><BR>
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h to disable
       inline function and reduce the size of static libraries (and your
       executables.)  Notice that you need to use DLL version of
       run-time libraries even you are using ACE as a static library.
       That's the default behavior.<BR><BR>
-
-  <li><a href="http://www.panix.com/~hoggardb/index.shtml">Barry
-      Hoggard</a> maintains a <a
-      href="http://www.panix.com/~hoggardb/corba/">CORBA Page</a>
-      which contains very helpful information on setting MSVC project
-      settings.  You'll need to filter out stuff related to TAO if you
-      only use ACE.<br><br>
 </Ol>
 
 <B>ACE TESTS</B><P>
@@ -1139,30 +1119,6 @@ invocation when building them.  When they are loaded onto the target,
 the should load against the symbols from the ACE library from the
 first executable that was loaded.<p>
 
-<h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
-ACE now supports shared libraries for VxWorks, but only with the
-g++ compiler.  To build shared libraries instead of the default
-static libraries, added <code>static_libs_only=1</code> to either
-your <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
-or your <code>make</code> invocation.  Then, be sure to load
-the ACE (and any other) shared library before loading your
-executable(s).<p>
-
-A shared library for VxWorks uses the same code as for a static
-(non-shared) library.  However, calls to static constructors/
-destructors are added.  The code in the shared library <strong>must</strong>
-be reentrant if you shared it between programs (tasks).  The
-ACE library meets this requirement.<p>
-
-Shared libraries reduce build time, executable size, and load
-time of the executable.  But, you must manually load the shared
-library before loading your executable(s) with a command such as:
-<pre><code>
--&gt; ld &lt; libACE.so
-</code></pre>
-Shared libraries can be unloaded the same way an executable
-(module) is unloaded.<p>
-
 <h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
 <a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
@@ -1171,33 +1127,38 @@ Please submit corrections, additions, or clarifications to the
 the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
 
 A few additional Windows Notes, from Paul von Behren:<p>
-<ul>
-  <li>Cygnus has created a Win32 API which is compatible with a
+<UL>
+  <LI>Cygnus has created a Win32 API which is compatible with a
       ``generic'' Unix environment.  Using this library, they have ported a
       large collection of GNU tools to WinNT/95 - including a port of
       gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">
       http://www.cygnus.com/misc/gnu-win32/</A>
       WindRiver provides a subset of these tools - including make
       and gcc cross-compilers.<p>
-  <li>To set up the command-prompt build environemnt, run
+  <LI>To set up the command-prompt build environemnt, run
       <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
       implicitly within the Tornado IDE.<p>
-  <li>To run <code>ace_ld</code>, you still need perl installed -
+  <LI>To run <code>ace_ld</code>, you still need perl installed -
       see <A href="http://www.activestate.com/software/default.htm">
       http://www.activestate.com/software/default.htm</A> for Windows
       perl.<p>
-  <li>But make does work in "leaf" directories (those with no
-      subdirectories).  You can make the <code>ACE_ROOT\ace directory</code>
+  <LI>There's a bug in the windows port of Make (or at least an
+      incompatability) related to ACE Make's directory-spanning
+      logic (<code>ACE_ROOT\include\makeinclude\rules.nested.GNU</code>
+      (the error message says something about "dir unexpected").<p>
+  <LI>But make does work in "leaf" directories (those with no
+      subdirectries).  You can make the <code>ACE_ROOT\ace directory</code>
       creating the library libACE.a.  If perl is available, make also works
-      in the ACE_ROOT\tests directory.<p>
-  <li>The Tornado IDE will use a standard Makefile for project
+      in the ACE_ROOT\tests directory (ignore the final error
+      attempting to run /bin/true).<p>
+  <LI>The Tornado IDE will use a standard Makefile for project
       builds, but does not have a GUI interface for managing the
       Makefile.  By default, it will use rules from Makefile in the current
       directory and you can configure it to add certain Makefile
       targets to the project.  If you have <code>ACE_ROOT</code> defined
       before starting Tornado, you can specify an ACE Makefile as a Tornado
       target and Tornado will then call make from the menu.<p>
-</ul>
+</UL>
 
 And Chris Ryan's instructions for building for VxWorks targets
 on Windows NT hosts:

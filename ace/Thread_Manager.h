@@ -498,19 +498,14 @@ public:
   // treated as "absolute" time.  Returns 0 on success and -1 on
   // failure.  If <abandon_detached_threads> is set, wait will first
   // check thru its thread list for threads with THR_DETACHED or
-  // THR_DAEMON flags set and remove these threads.  Notice that
-  // unlike other wait_* function, by default, wait () does wait on
-  // all thread spawned by this thread_manager no matter the detached
-  // flags are set or not unless it is called with
-  // <abandon_detached_threads> flag set.
+  // THR_DAEMON flags set and remove these threads.
 
   int join (ACE_thread_t tid, void **status = 0);
-  // Join a thread specified by <tid>.  Do not wait on a detached thread.
+  // Join a thread specified by <tid>.
 
   int wait_grp (int grp_id);
   // Block until there are no more threads running in a group.
-  // Returns 0 on success and -1 on failure.  Notice that wait_grp
-  // will not wait on detached threads.
+  // Returns 0 on success and -1 on failure.
 
   // = Accessors for ACE_Thread_Descriptors.
   ACE_Thread_Descriptor *thread_desc_self (void);
@@ -600,8 +595,7 @@ public:
   // = Operations on ACE_Tasks.
   int wait_task (ACE_Task_Base *task);
   // Block until there are no more threads running in <task>.  Returns
-  // 0 on success and -1 on failure.  Notice that wait_task will not
-  // wait on detached threads.
+  // 0 on success and -1 on failure.
   int suspend_task (ACE_Task_Base *task);
   // Suspend all threads in an ACE_Task.
   int resume_task (ACE_Task_Base *task);

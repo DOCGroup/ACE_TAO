@@ -28,17 +28,6 @@ debug = 1
 distrib = 0
 threads = 1
 
-tk_reactor = 0
-ace_with_x11 = 0
-
-PLATFORM_TK_CPPFLAGS=
-PLATFORM_TK_LIBS=-ltk -ltcl
-PLATFORM_TK_LDFLAGS=
-
-PLATFORM_X11_CPPFLAGS=
-PLATFORM_X11_LIBS =-lX11
-PLATFORM_X11_LDFLAGS=
-
 ifeq ($(threads),1)
   CFLAGS += -mt
   LDFLAGS += -mt
@@ -97,12 +86,12 @@ ifdef orbix
   LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/corba2/lib \
                    -R $(ACE_ROOT)/ace -R./ -R $(ORBIX_ROOT)/corba2/lib
 ifeq ($(mt_orbix),1)
-  LIBS          += -lITinimt -liiopmt -lorbixmt -lthread
+  LIBS          += -lITinimt -liiopmt -lorbixmt
 else
   LIBS          += -lITini -liiop -lorbix
 endif
 
-  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
+  LIBS          += -lsocket -ldl -lnsl -lthread -lgen -lposix4
   CPPFLAGS      += -I$(ORBIX_ROOT)/corba2/include
 else
 ifeq ($(distrib),0)

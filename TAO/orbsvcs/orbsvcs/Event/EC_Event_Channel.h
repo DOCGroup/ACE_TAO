@@ -35,55 +35,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "EC_Factory.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Event_Channel_Attributes
-{
-  // = TITLE
-  //   Defines the construction time attributes for the Event
-  //   Channel.
-  //
-  // = DESCRIPTION
-  //   The event channel implementation is controlled by two
-  //   mechanisms:
-  //      The EC_Factory that provides the strategies for the EC
-  //      implementation.
-  //      The EC attributes that define constants and values required
-  //      by the EC construction.
-  //   This class encapsulates those constants and values, providing
-  //   an easy mechanism to extend the attributes without requiring
-  //   changes in the EC constructor.
-  //
-public:
-  TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr supplier_poa,
-                                   PortableServer::POA_ptr consumer_poa);
-  // The basic constructor.
-  // The attributes listed as arguments are *required* by the EC, and
-  // no appropiate defaults are available for them.
-
-  // Most fields are public, there is no need to protect them, in fact
-  // the user should be able to set any values she wants.
-
-  int consumer_reconnect;
-  int supplier_reconnect;
-  // Can consumers or suppliers invoke connect_push_* multiple times?
-
-  int busy_hwm;
-  int max_write_delay;
-  // Flags for the Consumer Admin
-
-  RtecScheduler::Scheduler_ptr scheduler;
-  // The scheduling service that we will use with this event channel.
-  // Notice that this is optional and will only take effect if the EC
-  // is configured with the right filtering strategies.
-
-private:
-  friend class TAO_EC_Event_Channel;
-  // Only the EC can read the private fields.
-
-  PortableServer::POA_ptr supplier_poa;
-  PortableServer::POA_ptr consumer_poa;
-  // The POAs
-};
-
 class TAO_ORBSVCS_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
 {
   // = TITLE
@@ -98,13 +49,8 @@ class TAO_ORBSVCS_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin
   //   interface to the EC_Factory.
   //
 public:
-  TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attributes,
-                        TAO_EC_Factory* factory = 0,
-                        int own_factory = 0);
+  TAO_EC_Event_Channel (TAO_EC_Factory* factory);
   // constructor
-  // If <own_factory> is not 0 it assumes ownership of the factory.
-  // If the factory is <nil> it uses the Service_Configurator to load
-  // the Factory, if not found it uses TAO_EC_Default_Resource_Factory
 
   virtual ~TAO_EC_Event_Channel (void);
   // destructor
@@ -123,9 +69,6 @@ public:
   TAO_EC_Filter_Builder* filter_builder (void) const;
   // Access the filter builder....
 
-  TAO_EC_Supplier_Filter_Builder* supplier_filter_builder (void) const;
-  // Access the filter builder....
-
   TAO_EC_ConsumerAdmin* consumer_admin (void) const;
   // Access the consumer admin implementation, useful for controlling
   // the activation...
@@ -136,9 +79,6 @@ public:
 
   TAO_EC_Timeout_Generator* timeout_generator (void) const;
   // Access the timer module...
-
-  TAO_EC_Scheduling_Strategy* scheduling_strategy (void) const;
-  // Access the scheduling strategy
 
   // = The factory methods, they delegate on the EC_Factory.
   TAO_EC_ProxyPushSupplier* create_proxy_push_supplier (void);
@@ -153,8 +93,8 @@ public:
   void destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
   // Create and destroy a ProxyPushSupplier_Set
 
-  PortableServer::POA_ptr supplier_poa (void);
-  PortableServer::POA_ptr consumer_poa (void);
+  PortableServer::POA_ptr supplier_poa (CORBA::Environment&);
+  PortableServer::POA_ptr consumer_poa (CORBA::Environment&);
   // Access the supplier and consumer POAs from the factory.
 
   ACE_Lock* create_consumer_lock (void);
@@ -163,13 +103,6 @@ public:
   void destroy_supplier_lock (ACE_Lock*);
   // Locking strategies for the ProxyPushConsumer and
   // ProxyPushSupplier objects
-
-  ACE_Lock* create_consumer_admin_lock (void);
-  void destroy_consumer_admin_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_admin_lock (void);
-  void destroy_supplier_admin_lock (ACE_Lock*);
-  // Locking strategies for the ConsumerAdmin and SupplierAdmin
-  // objects
 
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
@@ -184,23 +117,6 @@ public:
                              CORBA::Environment&);
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
-
-  // Simple flags to control the EC behavior, set by the application
-  // at construction time.
-
-  int consumer_reconnect (void) const;
-  // Can the consumers reconnect to the EC?
-
-  int supplier_reconnect (void) const;
-  // Can the suppliers reconnect to the EC?
-
-  RtecScheduler::Scheduler_ptr scheduler (void);
-  // Obtain the scheduler, the user must release
-
-  int busy_hwm (void) const;
-  int max_write_delay (void) const;
-  // Control the concurrency of the delayed connect/disconnect
-  // operations.
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
@@ -218,7 +134,7 @@ public:
 
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-                       CORBA::Environment &env)
+		       CORBA::Environment &env)
       TAO_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
                        RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
@@ -230,27 +146,16 @@ public:
                        RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER));
 
 private:
-  PortableServer::POA_var supplier_poa_;
-  PortableServer::POA_var consumer_poa_;
-  // The POAs used to activate "supplier-side" and "consumer-side"
-  // objects.
-
   TAO_EC_Factory *factory_;
   // This is the abstract factory that creates all the objects that
   // compose an event channel, the event channel simply acts as a
   // Mediator among them.
-
-  int own_factory_;
-  // Flag that indicates if we own the factory.
 
   TAO_EC_Dispatching *dispatching_;
   // The dispatching "module"
 
   TAO_EC_Filter_Builder *filter_builder_;
   // The filter builder
-
-  TAO_EC_Supplier_Filter_Builder *supplier_filter_builder_;
-  // The filter builder for suppliers
 
   TAO_EC_ConsumerAdmin *consumer_admin_;
   // The ConsumerAdmin implementation
@@ -263,21 +168,6 @@ private:
 
   TAO_EC_ObserverStrategy *observer_strategy_;
   // The observer strategy
-
-  RtecScheduler::Scheduler_var scheduler_;
-  // The scheduler (may be nil)
-
-  TAO_EC_Scheduling_Strategy *scheduling_strategy_;
-  // The scheduling strategy
-
-  int consumer_reconnect_;
-  int supplier_reconnect_;
-  // Consumer/Supplier reconnection flags
-
-  int busy_hwm_;
-  int max_write_delay_;
-  // Control the level of concurrency in the supplier sets with
-  // delayed operations
 };
 
 #if defined (__ACE_INLINE__)

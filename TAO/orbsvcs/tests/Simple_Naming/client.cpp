@@ -23,13 +23,7 @@
 
 ACE_RCSID(Simple_Naming, client, "$Id$")
 
-#if defined (_MSC_VER)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
-class My_Test_Object : 
-  public virtual PortableServer::RefCountServantBase,
-  public virtual POA_Test_Object
+class My_Test_Object : public POA_Test_Object
 {
 public:
   // = Initialization and termination methods.
@@ -349,17 +343,13 @@ MT_Test::execute (TAO_Naming_Client &root_context)
   // Create data which will be used by all threads.
 
   // Dummy object instantiation.
-  My_Test_Object *test_obj_impl =
-    new My_Test_Object (CosNaming_Client::OBJ1_ID);
+  My_Test_Object test_obj_impl (CosNaming_Client::OBJ1_ID);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       test_ref_ =
-        test_obj_impl->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      test_obj_impl->_remove_ref (ACE_TRY_ENV);
+        test_obj_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Get the IOR for the Naming Service.  Each thread
@@ -389,7 +379,6 @@ MT_Test::execute (TAO_Naming_Client &root_context)
   // Spawn threads, each of which will be executing svc ().
   int status = this->activate (THR_NEW_LWP | THR_JOINABLE,
                                size_);
-
   if (status == -1)
     return -1;
   else
@@ -400,19 +389,15 @@ int
 Loop_Test::execute (TAO_Naming_Client &root_context)
 {
   // Create a dummy object.
-  My_Test_Object * test_obj_impl = 
-    new My_Test_Object (CosNaming_Client::OBJ1_ID);
+  My_Test_Object test_obj_impl (CosNaming_Client::OBJ1_ID);
   Test_Object_var test_ref;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_EX (SETUP)
     {
       test_ref =
-        test_obj_impl->_this (ACE_TRY_ENV);
+        test_obj_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (SETUP);
-
-      test_obj_impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (SETUP);      
     }
   ACE_CATCHANY
     {
@@ -536,13 +521,9 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
   ACE_TRY
     {
       // Dummy object instantiation.
-      My_Test_Object *test_obj_impl = new My_Test_Object (CosNaming_Client::OBJ1_ID);
+      My_Test_Object test_obj_impl (CosNaming_Client::OBJ1_ID);
       Test_Object_var test_obj_ref =
-        test_obj_impl->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Give ownership of this object to POA.
-      test_obj_impl->_remove_ref (ACE_TRY_ENV);
+        test_obj_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Bind an object to the Naming Context.
@@ -613,13 +594,9 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
 
       // Instantiate a dummy object and bind it under the new context.
-      My_Test_Object *impl1 = 
-        new My_Test_Object (CosNaming_Client::OBJ1_ID);
-      Test_Object_var obj1 = impl1->_this (ACE_TRY_ENV);
+      My_Test_Object impl1 (CosNaming_Client::OBJ1_ID);
+      Test_Object_var obj1 = impl1._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      impl1->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       CosNaming::Name obj_name;
       obj_name.length (1);
       obj_name[0].id = CORBA::string_dup ("foo");
@@ -693,14 +670,9 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                           -1);
       ACE_TRY_CHECK;
 
-      My_Test_Object *impl2 =
-        new My_Test_Object (CosNaming_Client::OBJ2_ID);
-      Test_Object_var obj2 = impl2->_this (ACE_TRY_ENV);
+      My_Test_Object impl2 (CosNaming_Client::OBJ2_ID);
+      Test_Object_var obj2 = impl2._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      impl2->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       root_context->rebind (test_name,
                             obj2.in (),
                             ACE_TRY_ENV);
@@ -756,12 +728,9 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
 
       // Bind a dummy object foo under each context.
-      My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this (ACE_TRY_ENV);
+      My_Test_Object impl;
+      Test_Object_var obj = impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       CosNaming::Name object_name;
       object_name.length (1);
       object_name[0].id = CORBA::string_dup ("foo");
@@ -849,12 +818,9 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
       CosNaming::Name test_name;
       test_name.length (1);
       test_name[0].id = CORBA::string_dup ("foo");
-      My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this (ACE_TRY_ENV);
+      My_Test_Object impl;
+      Test_Object_var obj = impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      
       root_context->bind (test_name,
                           obj.in (),
                           ACE_TRY_ENV);
@@ -887,12 +853,9 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
       test_name.length (2);
       test_name[0].id = CORBA::string_dup ("level1_context");
       test_name[1].id = CORBA::string_dup ("foo");
-      My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this (ACE_TRY_ENV);
+      My_Test_Object impl;
+      Test_Object_var obj = impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       root_context->bind (test_name,
                           obj.in (),
                           ACE_TRY_ENV);
@@ -1045,10 +1008,17 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
   ACE_TRY
     {
       // Instantiate four dummy objects.
-      My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this (ACE_TRY_ENV);
+      My_Test_Object impl1;
+      Test_Object_var obj1 = impl1._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      impl->_remove_ref (ACE_TRY_ENV);
+      My_Test_Object impl2;
+      Test_Object_var obj2 = impl2._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      My_Test_Object impl3;
+      Test_Object_var obj3 = impl3._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      My_Test_Object impl4;
+      Test_Object_var obj4 = impl4._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Bind objects to the naming context.
@@ -1065,19 +1035,19 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       name4.length (1);
       name4[0].id = CORBA::string_dup ("foo4");
       root_context->bind (name1,
-                          obj.in (),
+                          obj1.in (),
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
       root_context->bind (name2,
-                          obj.in (),
+                          obj2.in (),
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
       root_context->bind (name3,
-                          obj.in (),
+                          obj3.in (),
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
       root_context->bind (name4,
-                          obj.in (),
+                          obj4.in (),
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1162,12 +1132,9 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
 
       // Bind a dummy object foo under my_context.
-      My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this (ACE_TRY_ENV);
+      My_Test_Object impl;
+      Test_Object_var obj = impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       CosNaming::Name object_name;
       object_name.length (1);
       object_name[0].id = CORBA::string_dup ("foo");
@@ -1190,7 +1157,6 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in Exceptions test");

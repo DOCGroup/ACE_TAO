@@ -242,34 +242,6 @@
 #define TAO_CONST
 #endif /* TAO_CONST */
 
-// The IDL compiler can generate the classes corresponding to IDL
-// sequences in two ways:
-// + Use the TAO templates for sequences,
-//   i.e. TAO_{Unb,B}ounded_Sequence<>
-// + Explicitly generate code for the sequence.
-//
-// The first approach can (potentially) produce smaller code, because
-// the code for a sequence over a particular type (say sequence<long>)
-// can be shared across multiple IDL files.
-// Unfortunately it is hard to manage the template instantiations on
-// platforms that do not automatically generate them, mainly because
-// it is hard to decide on which generated file are the templates
-// instantiated.  Thus the second approach is more convenient for most
-// applications.
-//
-// On platforms that support automatic template instantiation we use
-// the first approach.
-// On platforms that require explicit template instantiations we use
-// explicitly generated code for sequences if the platform does not.
-// If the application requires it (such as embedded systems) the
-// default can be changed, but then the application developer is
-// responsible for instantiating the templates.
-//
-#if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-    defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-#define TAO_USE_SEQUENCE_TEMPLATES
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
 // of course, no guarantees are made that the call will return
 // something useful.
@@ -284,17 +256,11 @@
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 
-// OBV is in experimental stage
-#define TAO_HAS_VALUETYPE
-
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
 // CORBA Messaging
-#if defined(ACE_WIN32)
-// In other platforms this is defined in the command-line
-#define TAO_HAS_CORBA_MESSAGING
-#endif /* ACE_WIN32 */
+// #define TAO_HAS_CORBA_MESSAGING
 
 // The maximum value for an standard PolicyType, we use this trick to
 // pack the standard policies and the TAO extension in a single
@@ -315,6 +281,6 @@
 // TAO may define its own policies, they are defined in a range far
 // from the standard policies.
 #define TAO_MIN_PROPIETARY_POLICY 1024
-#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT)
+#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT) 
 
 #endif  /* TAO_ORB_CONFIG_H */

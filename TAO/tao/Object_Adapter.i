@@ -1,21 +1,11 @@
 // $Id$
 
+#include "tao/ORB_Core.h"
+
 ACE_INLINE ACE_Lock &
 TAO_Object_Adapter::lock (void)
 {
   return *this->lock_;
-}
-
-ACE_INLINE ACE_SYNCH_MUTEX &
-TAO_Object_Adapter::thread_lock (void)
-{
-  return this->thread_lock_;
-}
-
-ACE_INLINE ACE_Reverse_Lock<ACE_Lock> &
-TAO_Object_Adapter::reverse_lock (void)
-{
-  return this->reverse_lock_;
 }
 
 /* static */
@@ -121,3 +111,4 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
   return this->hint_strategy_->unbind_persistent_poa (folded_name,
                                                       system_name);
 }
+

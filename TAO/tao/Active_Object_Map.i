@@ -98,11 +98,11 @@ TAO_Active_Object_Map::find_system_id_using_user_id (const PortableServer::Objec
 ACE_INLINE int
 TAO_Active_Object_Map::rebind_using_user_id_and_system_id (PortableServer::Servant servant,
                                                            const PortableServer::ObjectId &user_id,
-                                                           const PortableServer::ObjectId &system_id,
-                                                           TAO_Active_Object_Map::Map_Entry *&entry)
+                                                           const PortableServer::ObjectId &system_id)
 {
   ACE_UNUSED_ARG (system_id);
 
+  Map_Entry *entry = 0;
   return this->id_uniqueness_strategy_->bind_using_user_id (servant,
                                                             user_id,
                                                             entry);
@@ -139,11 +139,7 @@ TAO_Active_Object_Map::find_servant_using_user_id (const PortableServer::ObjectI
                                          entry);
   if (result == 0)
     {
-      if (entry->deactivated_)
-        {
-          result = -1;
-        }
-      else if (entry->servant_ == 0)
+      if (entry->servant_ == 0)
         {
           result = -1;
         }
@@ -157,15 +153,13 @@ TAO_Active_Object_Map::find_servant_using_user_id (const PortableServer::ObjectI
 }
 
 ACE_INLINE int
-TAO_Active_Object_Map::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                                 const PortableServer::ObjectId &user_id,
+TAO_Active_Object_Map::find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
                                                                  PortableServer::Servant &servant,
-                                                                 TAO_Active_Object_Map::Map_Entry *&entry)
+                                                                 PortableServer::ObjectId &user_id)
 {
-  return this->lifespan_strategy_->find_servant_using_system_id_and_user_id (system_id,
-                                                                             user_id,
+  return this->lifespan_strategy_->find_servant_and_user_id_using_system_id (system_id,
                                                                              servant,
-                                                                             entry);
+                                                                             user_id);
 }
 
 ACE_INLINE int
@@ -179,11 +173,7 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
 
   if (result == 0)
     {
-      if (entry->deactivated_)
-        {
-          result = -1;
-        }
-      else if (entry->servant_ == 0)
+      if (entry->servant_ == 0)
         {
           result = -1;
         }
@@ -196,14 +186,6 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
     }
 
   return result;
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
-                                                                 TAO_Active_Object_Map::Map_Entry *&entry)
-{
-  return this->user_id_map_->find (user_id,
-                                   entry);
 }
 
 ACE_INLINE int
@@ -222,26 +204,6 @@ TAO_Active_Object_Map::find_user_id_using_system_id (const PortableServer::Objec
     }
 
   return 0;
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
-                                                     PortableServer::ObjectId &user_id)
-{
-  return this->id_hint_strategy_->recover_key (system_id,
-                                               user_id);
-}
-
-ACE_INLINE CORBA::Boolean
-TAO_Active_Object_Map::remaining_activations (PortableServer::Servant servant)
-{
-  return this->id_uniqueness_strategy_->remaining_activations (servant);
-}
-
-ACE_INLINE size_t
-TAO_Active_Object_Map::current_size (void)
-{
-  return this->user_id_map_->current_size ();
 }
 
 /* static */

@@ -73,20 +73,20 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
                                 (void *) &sndbufsize,
                                 sizeof (sndbufsize)) == -1
       && errno != ENOTSUP)
-    return 0;
+    return -1;
   else if (this->tcp_stream_.set_option (SOL_SOCKET,
                                          SO_RCVBUF,
                                      (void *) &rcvbufsize,
                                      sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
-    return 0;
+    return -1;
   
   int one = 1;
   if (this->tcp_stream_.set_option (SOL_SOCKET,
                                     TCP_NODELAY,
                                 (char *)& one,
                                 sizeof (one)) == -1 )
-    return 0;
+    return -1;
 
   ACE_NEW_RETURN (this->stream_handler_,
                   ttcp_Stream_Handler (this->tcp_stream_.get_handle ()),

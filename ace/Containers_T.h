@@ -219,10 +219,8 @@ class ACE_DNode
 
 public:
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   ~ACE_DNode (void);
-  // This isn't necessary, but it keeps some compilers happy.
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
+  // This isn't necessary, but it keeps the compiler happy.
 
 private:
 
@@ -1400,13 +1398,10 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Array_Base (size_t size = 0,
-                  ACE_Allocator *alloc = 0);
+  ACE_Array_Base (size_t size = 0);
   // Dynamically create an uninitialized array.
 
-  ACE_Array_Base (size_t size,
-                  const T &default_value,
-                  ACE_Allocator *alloc = 0);
+  ACE_Array_Base (size_t size, const T &default_value);
   // Dynamically initialize the entire array to the <default_value>.
 
   ACE_Array_Base (const ACE_Array_Base<T> &s);
@@ -1481,9 +1476,6 @@ private:
   T *array_;
   // Pointer to the array's storage buffer.
 
-  ACE_Allocator *allocator_;
-  // Allocation strategy of the ACE_Array_Base.
-
   friend class ACE_Array_Iterator<T>;
 };
 
@@ -1508,13 +1500,10 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Array (size_t size = 0,
-             ACE_Allocator* alloc = 0);
+  ACE_Array (size_t size = 0);
   // Dynamically create an uninitialized array.
 
-  ACE_Array (size_t size,
-             const T &default_value,
-             ACE_Allocator* alloc = 0);
+  ACE_Array (size_t size, const T &default_value);
   // Dynamically initialize the entire array to the <default_value>.
 
   ACE_Array (const ACE_Array<T> &s);
