@@ -64,7 +64,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
 
   // set the length of the sequence
   this->in_.length (len);
@@ -79,18 +79,18 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
           env.print_exception ("make_coffee");
           return -1;
         }
-          // select a Coffee flavor at random
-          CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
-          desc.name = Coffee_Flavor [index];
-          // set the attribute for the in object
-          Coffee_ptr tmp = this->in_[i];
-          tmp->description (desc, env);
-
-          if (env.exception ())
-            {
-              env.print_exception ("set coffee attribute");
-              return -1;
-            }
+      // select a Coffee flavor at random
+      CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+      desc.name = Coffee_Flavor [index];
+      // set the attribute for the in object
+      Coffee_ptr tmp = this->in_[i];
+      tmp->description (desc, env);
+      
+      if (env.exception ())
+	{
+	  env.print_exception ("set coffee attribute");
+	  return -1;
+	}
     }
   return 0;
 }
@@ -109,6 +109,8 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref,
                                     CORBA::Environment &env)
 {
   Param_Test::Coffee_Mix_out out (this->out_.out ());
+  // ACE_DEBUG ((LM_DEBUG, "test_coffe_mix (IN):\n"));
+  // this->print_sequence (this->in_);
   this->ret_ = objref->test_coffe_mix (this->in_,
                                        this->inout_.inout (),
                                        out,
@@ -162,6 +164,15 @@ Test_ObjRef_Sequence::check_validity (void)
 {
   TAO_TRY
     {
+      // ACE_DEBUG ((LM_DEBUG, "IN: \n"));
+      // this->print_sequence (this->in_);
+
+      // ACE_DEBUG ((LM_DEBUG, "INOUT: \n"));
+      // this->print_sequence (this->inout_.in ());
+
+      // ACE_DEBUG ((LM_DEBUG, "OUT: \n"));
+      // this->print_sequence (this->out_.in ());
+
       if (this->compare (this->in_,
 			 this->inout_.in (),
 			 TAO_TRY_ENV))
@@ -239,23 +250,29 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
   for (CORBA::ULong i=0; i < s1.length (); i++)
     {
-      const Coffee_ptr vs1 = s1[i];
-      const Coffee_ptr vs2 = s2[i];
+      Coffee_ptr vs1 = s1[i];
+      Coffee_ptr vs2 = s2[i];
 
-      char* n1 = vs1->description (env)->name;
+      if (CORBA::is_nil (vs1) && CORBA::is_nil (vs2))
+	continue;
+
+      if (CORBA::is_nil (vs1) || CORBA::is_nil (vs2))
+	return 0;
+
+      CORBA::String_var n1 = vs1->description (env)->name;
       if (env.exception ())
-                {
-                  env.print_exception ("retrieving description for vs1");
-                  return 0;
-                }
-          char* n2 = vs2->description (env)->name;
-          if (env.exception ())
-            {
-              env.print_exception ("retrieving description for vs2");
-              return 0;
-            }
-          if (!ACE_OS::strcmp(n1, n2))
-            return 0;
+	{
+	  env.print_exception ("retrieving description for vs1");
+	  return 0;
+	}
+      CORBA::String_var n2 = vs2->description (env)->name;
+      if (env.exception ())
+	{
+	  env.print_exception ("retrieving description for vs2");
+	  return 0;
+	}
+      if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
+	return 0;
     }
 
   return 1; // success
@@ -272,12 +289,17 @@ Test_ObjRef_Sequence::print_sequence (const Param_Test::Coffee_Mix &s)
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
   for (CORBA::ULong i=0; i < s.length (); i++)
     {
-    /* const Coffee_ptr vs = s[i];
-
+      Coffee_ptr c = s[i];
+      if (CORBA::is_nil (c))
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Element #%d is nil\n", i));
+	  continue;
+	}
       ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
-                  "\tdesc = %d\n"
-                  i,
-                  vs.description(env).name)); */
+		  "Element #%d\n"
+		  "\ttype = <%s>\n",
+		  i,
+		  c->_interface_repository_id ()));
     }
 }
