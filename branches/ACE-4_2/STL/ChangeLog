@@ -1,0 +1,46 @@
+Thu Apr 03 08:58:05 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* STL/bool.h: added /**/ to #include <yvals.h>.  Thanks to
+	  Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting this.
+
+Sat Jan 25 11:34:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* STL/bstring.h: Fixed typo.
+
+Mon Jan 20 10:04:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* algobase.h: wrapped min/max templates with #if ! defined (VXWORKS)
+	  because it already has them.
+
+	* bstring.h: wrapped basic_string<char> template instantiation
+	  so that it's not used with GreenHills compiler.
+
+Tue Jan 14 15:46:31 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tree.h (iterator () and const_iterator ()): added cast
+	  of NULL to link_type before assigning it to NIL;
+	  GreenHills 1.8.8 fails to compile without it.
+
+Tue Dec 10 20:14:56 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* bstring.h: Fixed string_char_baggage::copy() so that the pointer
+	  are incremented correctly.
+
+Fri Dec  6 02:08:35 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* bool.h: Made the defines for bool, true, and false conditional.
+
+Wed Dec  4 00:17:11 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* vector.h: Modified to remove the default argument to the
+ 	  constructor.  This avoids the VC++4.0 compiler from failing to
+ 	  deal correctly with nested classes.
+	  
+	* bstring.h: Modified access to reserve and default_size to
+ 	  correctly use the std namespace.
+
+	* This version of STL was obtained from
+ 	  http://www.rahul.net/terris/.  This is a modified version of the
+ 	  implementation that comes with VC++4.0.  Please see README
+ 	  for details.
+

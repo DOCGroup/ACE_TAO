@@ -1,0 +1,19 @@
+This directory contains the source code and test examples for JAWS,
+which is a high-performance HTTP Web server written with ACE.  For
+more information on JAWS, please see
+
+http://www.cs.wustl.edu/~jxh/research/
+
+The subdirectories in this directory contain the following components
+
+	. client -- This contains the source code for an example
+	  application that exercises the file uploading and downloading
+	  features of JAWS
+
+	. server -- This contains the source code for the JAWS
+ 	  HTTP Web server.  It illustrates a number of sophisticated
+	  ACE concurrency and event demultiplexing strategies.
+
+	. stress-testing -- This is the http_tester suite, an ACE
+	  based HTTP benchmarking tool, used to evaluate the
+	  performance of JAWS and other HTTP servers.

@@ -1,0 +1,537 @@
+[This document is also available at the following URL:
+
+http://www.cs.wustl.edu/~schmidt/ACE.html.
+
+All software and documentation is available via both anonymous ftp and
+the World Wide Web.]
+
+THE ADAPTIVE COMMUNICATION ENVIRONMENT (ACE)
+
+An Object-Oriented Network Programming Toolkit
+
+Overview of ACE
+
+The ADAPTIVE Communication Environment (ACE) is an object-oriented
+(OO) toolkit that implements fundamental design patterns for
+communication software.  ACE provides a rich set of reusable C++
+wrappers, class categories, and frameworks that perform common
+communication software tasks across a range of operating system
+platforms.  The communication software tasks provided by ACE include
+event demultiplexing and event handler dispatching, service
+initialization, interprocess communication, shared memory management,
+message routing, dynamic (re)configuration of distributed services,
+multi-threading, and concurrency control.
+
+ACE is targeted for developers of high-performance and real-time
+communication services and applications on UNIX, POSIX, and Win32
+platforms.  ACE simplifies the development of OO network applications
+and services that utilize interprocess communication, event
+demultiplexing, explicit dynamic linking, and concurrency.  ACE
+automates system configuration and reconfiguration by dynamically
+linking services into applications at run-time and executing these
+services in one or more processes or threads.
+
+ACE has been ported to a wide range of uni-processor and multi-process
+OS platforms including Win32 (i.e., WinNT and Win95), most versions of
+UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, HP-UX, OSF/1, AIX, Linux,
+SCO, and FreeBSD), VxWorks, and MVS OpenEdition.  It is currently used
+in commercial products by dozens of companies including Ericsson,
+Bellcore, Siemens, Motorola, Kodak, and McDonnell Douglas.  There are
+both C++ and Java versions of ACE available.
+
+The remainder of this document outlines the structure and participants
+of the layers in this diagram.
+
+C++ Wrappers for OS Interfaces
+
+The lower-level portions of ACE provide a set of portable and
+type-secure C++ wrappers that encapsulate the following C language OS
+interfaces:
+
+        . IPC mechanisms 
+                -- e.g., Internet- and UNIX-domain sockets, TLI, Named
+		   Pipes (for UNIX and Win32) and STREAM pipes;
+
+        . Event demultiplexing
+                -- e.g., select(), poll(), and Win32
+		   WaitForMultipleObjects and I/O completion ports;
+
+        . Multi-threading and synchronization
+                -- e.g., Solaris threads, POSIX Pthreads, and Win32
+		   threads;  
+
+        . Explicit dynamic linking
+                -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc
+		   on Win32;
+
+        . Memory-mapped files and shared memory management
+		-- e.g., BSD mmap(), SYSV shared memory, and Win32
+		   shared memory;
+
+        . System V IPC 
+                -- e.g., shared memory, semaphores, message queues.
+
+The OS Adaptation Layer shields the upper levels of ACE from platform
+dependencies associated with the underlying OS interfaces.
+
+Frameworks and Class Categories
+
+ACE also contains a higher-level network programming framework that
+integrates and enhances the lower-level C++ wrappers.  This framework
+supports the dynamic configuration of concurrent distributed services
+into applications.  The framework portion of ACE contains the
+following class categories:
+
+        . The Reactor
+		-- Supports both Reactive and Proactive I/O;
+
+        . The Service Configurator
+		-- Support dynamic (re)configuration of objects;
+
+        . The ADAPTIVE Service Executive
+		-- A user-level implementation of System V STREAMS,
+		   that supports modular integration of
+		   hierarchically-related communicaion services;
+
+	. Concurrency
+		-- Various types of higher-level concurrency
+		   control and synchronization patterns (such as
+		   Polymorphic Futures and Active Objects);
+
+	. Shared Malloc
+		-- Components for managing dynamically allocation
+		   of shared and local memory;
+
+	. CORBA integration 
+		-- Integrates ACE with CORBA implementations 
+		   (such as single-threaded and multi-threaded
+		   Orbix and Visibroker for C++).
+
+Distributed Services and Components
+
+Finally, ACE provides a standard library of distributed services that
+are packaged as components.  These service components play two roles
+in ACE:
+
+	1. They provide reusable components for common distributed
+	   system tasks such as logging, naming, locking, and time 
+	   synchronization.
+
+	2. They illustrate how to utilize ACE features such as the
+	   Reactor, Service Configurator, Service Initialization,
+	   Concurrency, and IPC components.
+	   
+ACE is currently being used in many commercial products including the
+Bellcore Q.port ATM signaling software product, the Ericsson EOS
+family of telecom switch monitoring applications, the Motorola Iridium
+global mobile communications system, and enterprise-wide electronic
+medical imaging systems for Kodak Health Imaging Systems and Siemens
+medical engineering.
+
+OBTAINING ACE
+
+The current ACE release is provided as a tar file that is around 1.8
+Meg compressed using GNU gzip.  ACE may be obtained electronically
+from http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
+contains the source code, test drivers, and example applications for
+C++ wrapper libraries and the higher-level ACE network programming
+framework developed as part of the ADAPTIVE project at the University
+of California, Irvine and at Washington University.
+
+ACE DIRECTORY STRUCTURE
+
+The following subdirectories are included in C++_wrappers.tar.gz file:
+
+        . ace  -- the source code and binaries for C++ components (note that
+                  all of these are at the same "level" in order to work around
+                  Windows NT lack of symbolic links...)
+                . ASX -- higher-level C++ network programming
+                        framework based on System V STREAMs
+                . Collections -- stacks, sets, strings, etc.
+                . Concurrency -- wrappers for Solaris, POSIX, and Win32 threads
+                . Connection -- implementations of connection
+                        establishment patterns 
+                . CORBA -- C++ wrappers that make it easier to work with CORBA
+                . Debugging -- C++ assert macro, dump methods, method call tracing, etc.
+                . IPC_SAP -- C++ wrappers around UNIX communication mechanisms
+                        . Addr -- wrappers for various network addressing formats
+                        . DEV_SAP -- wrapper for UNIX device I/O
+                        . FIFO_SAP -- wrapper for FIFOS (named pipes)
+                        . FILE_SAP -- wrapper for UNIX FILE *s
+                        . IO_SAP -- wrapper for low-level serial-line I/O
+                        . SOCK_SAP -- wrapper for BSD sockets
+                        . SPIPE_SAP -- wrapper for SVR4 STREAM pipes and connld 
+                        . TLI_SAP -- wrapper for SVR4 TLI 
+        .               . UPIPE_SAP -- inter-thread communication mechanism
+                . Log_Msg -- library API for local/remote logging
+                . Memory
+                        . Mem_Map -- wrapper for BSD mmap() memory mapped files 
+                        . Shared_Malloc -- shared memory malloc/free classes
+                        . Shared_Memory -- wrapper for SysV/BSD shared memory
+                . Misc -- miscellaneous C++ wrappers for the GNU getopt utility,
+                        Obstacks, GoF-style patterns
+		. Name_Service -- client-side classes for distributed name service
+                . OS -- encapsulation of UNIX and Win32 OS APIs
+                . Reactor -- a framework for OO event demultiplexing and
+                        event handler dispatching 
+                . Service_Configurator -- a framework for dynamically
+                        linking/unlinking services into/from applications
+                        at run-time
+                . System V IPC
+                        . SV_Message_Queues -- wrapper for SysV message queues
+                        . SV_Semaphores -- wrapper for SysV semaphores
+                        . SV_Shared_Memory -- wrapper for SysV shared memory
+                . Timers -- High resolution timers and profile timers
+		. Token_Service -- client-side classes for distributed locking
+        . apps    -- Several example applications written using the ACE wrappers
+                . Gateway -- application-level gateway
+                . Orbix-Examples -- examples of how to integrate Orbix with ACE
+		. gperf -- a perfect hash function generator program written in C++
+		. Synch-Benchmarks -- benchmarks for OS IPC and synchronization mechanisms
+        . bin     -- utility programs for building this release, in
+                     particular, a set of scripts for automatically
+                     generating manual pages from C++ class headers.
+        . examples -- programs that illustrate how to use ACE components
+        . man   -- manual pages for ACE in nroff and HTML format
+                   generated automatically by OSE class2man
+	. netsvcs -- network services
+		. clients -- test programs that exercise the ACE network services
+		. lib -- network services implemented using the general ACE service
+		 	 framework:
+	                . Client Logger -- client-side for distributed logging service
+	                . Server Logger -- server-side for distributed logging service
+	                . Name Server -- a distributed name service
+	                . Token Server -- a distributed token service
+	                . Time Server -- a distributed time service
+		. servers -- dynamically linkable main programs that 
+			configure the services
+        . rpc++ -- C++ interface to Sun RPC developed by Michael Lipp
+                   (mnl@dtro.e-technik.th-darmstadt.de).  This code
+                   is distributed "as is" (under the GNU GPL) and is 
+                   not part of the ACE release that I maintain.
+        . tests -- a suite of automated regression tests to exercise ACE features
+
+ACE DOCUMENTATION AND TUTORIALS
+
+Many of the C++ wrappers and higher-level components have been
+described in issues of the C++ Report, as well as in proceedings of
+the following journals, conferences, and workshops:
+
+        . The OOPSLA '96 conference in San Jose, CA, October 1996
+        . 4th IEEE International Conference on Software Reuse in
+          Orlando, Florida, April 1996.
+        . The SIGS OOP conference in Munich, Germany, February, 1996
+        . The OOPSLA '95 conference in Austin, TX, October 1995
+        . The ECOOP '95 conference in Aarhus, Denmark, June 1995
+        . The SIGS Object Expo conference in New York, NY, June, 1995
+        . The 1st USENIX Conference on Object-Oriented Technologies
+                in Monterey, CA, June, 1995
+        . The SIGS OOP conference in Munich, Germany, February, 1995
+        . The Winter USENIX General Conference in January, 1995
+        . 3rd SIGS C++ World conference in November, 1994
+        . The 9th ACM OOPSLA Conference held in October, 1994 
+        . The 1st Conference on the Pattern Languages of Programs, 
+                August, 1994
+        . The 6th USENIX C++ Conference, April, 1994
+        . The 2nd IEEE International Workshop on Configurable Distributed
+                Systems, March, 1994
+        . The 11th and 12th Annual Sun Users Group Conference in
+                December, 1993 and June, 1994 
+        . The 2nd SIGS C++ World conference, October, 1993
+        . IEE Distributed Systems Engineering Journal, December 1994.
+
+A collection of white papers and tutorial handouts are included at
+ftp://wuarchive.wustl.edu/languages/c++/ACE/ACE-documentation.  This
+directory contains postscript versions of various papers that describe
+different aspects of ACE.  The documentation is approximately 6 meg
+compressed.
+
+I update these papers periodically to reflect changes to the ACE
+architecture.  Therefore, you might want to check the date on the
+files to make sure that you have read the most recent versions of
+these papers.
+
+This material is also available available via the WWW at URL:
+
+http://www.cs.wustl.edu/~schmidt/
+
+BUILDING AND INSTALLING ACE
+
+Please refer to the INSTALL file for information on how to build and
+test the ACE wrappers.  The overall ACE release is very large (~1
+Meg).  Therefore, I'm sorry, but I will be unable to distribute the
+ACE wrappers via email.  The BIBLIOGRAPHY file contains information on
+where to obtain articles that describe the ACE wrappers and the
+ADAPTIVE system in more detail.
+
+The current release has been tested extensively on Sun workstations
+running Sun OS 4.1.x and Solaris 2.x (on both SPARC and Intel
+platforms) using Sun C++ 4.x and GNU G++ 2.7.x.  The release has also
+been ported to SCO UNIX, HP-UX, SGI, OSF/1, AIX, Linux, Windows NT and
+Windows '95.  I expect that major portions of the release will port
+easily to other platforms.  If you can help port ACE to other
+platforms I'd appreciate it.
+
+ACE MAILING LIST
+
+A mailing list is available for discussing bug fixes, enhancements,
+and porting issues regarding ACE.  Please send mail to me at the
+ace-users-request@cs.wustl.edu if you'd like to join the mailing list.
+
+ACKNOWLEDGEMENTS
+        
+ACE has been deeply influenced and improved by the following members
+of my research group at Washington University:
+
+Aniruddha Gokhale <gokhale@cs.wustl.edu>
+Tim Harrison <harrison@cs.wustl.edu>
+James Hu <jxh@cs.wustl.edu>
+Prashant Jain <pjain@cs.wustl.edu>
+Irfan Pyarali <ip1@cs.wustl.edu>
+David Levine <levine@cs.wustl.edu>
+
+I would also like to thank all the following people who have also
+contributed to ACE over the years:
+
+Paul Stephenson <pstephenson@objectspace.com>
+Olaf Kruger <okruger@cssc-melb.tansu.com.au>
+Ed Brown <eebrown@netcom.com>
+Lee Baker <baker@ctis.af.mil>
+Alex Ranous <ranous@nsa.hp.com>
+Mark Patton <mark_patton@tx72.mot.com>
+Steffen Winther Sorensen <sts@dad.stibo.dk> for
+Chris Cleeland <chris@milo.st-louis.mo.us>
+Tim Harrison <harrison@cs.wustl.edu>
+Troy Warner <tnw1@core01.osi.com>
+Stacy Mahlon <mcs@contour.mayo.edu>
+Charles Eads <eads@synoptics.com>
+Mark Frutig <mfrutig@fnbc.com>
+Todd Hoff <thm@ictv.com>
+George <george@truffula.fp.trw.com>
+Aniruddha Gokhale <gokhale@cs.wustl.edu>
+Irfan Pyarali <ip1@cs.wustl.edu>
+Prashant Jain <pjain@cs.wustl.edu>
+Brad Needham <bneedham@ix.netcom.com>
+Leslee Xu <lxu@ics.uci.edu>
+Detlef Becker <beckerd@erlh.siemens.de>
+Bruce Worden <bruce@betsy.gps.caltech.edu>
+Chris Tarr <ctarr@objectspace.co>
+Bill Sears <wsears@world.std.com>
+Greg Lavendar <g.lavender@isode.com>
+Steve Warwick <sjw@aesthetic.com>
+Mats Sundvall <sundvall@perrier.embnet.se>
+Andreas Ueltschi <Andreas.Ueltschi@ska.com>
+Nigel Hooke <n.hooke@trl.oz.au>
+Medhi Tabatabai <Mehdi.Tabatabai@ed.nce.sita.int>
+Stuart Powell <stuartp@ot.com.au>
+Bin Mu <mubin@wfg.com>
+Andrew McGowan <mcgowan@wg2.waii.com>
+Ken Konecki <kenk@wfg.com>
+John P. Hearn <jph@ccrl.nj.nec.com>
+Giang Hoang Nguyen <yang@titan.com>
+Carlos Garcia Braschi <cgarcia@caramba.tid.es>
+Jam Hamidi <jh1@osi.com>
+Eric Vaughan <evaughan@arinc.com>
+Karl-Heinz Dorn <kdorn@erlh.siemens.de>
+Steve Ritter <ritter@titan.com>
+Chandra Venkatapathy <cvenkat@develop.bsis.com>
+Matt Stevens <mstevens@kirk.softeng.infonautics.com>
+Bob Vistica <robertv@ims.com>
+David Trumble <trumble@cvg.enet.dec.com>
+John Morey <jmorey@crl.com>
+George Reynolds <george@dvcorp.com>
+Hans Rohnert <Hans.Rohnert@zfe.siemens.de>
+Alex V. Maclinovsky <alexm@teltrunk1.tait.co.nz>
+Todd Blanchard <tblancha@evolving.com>
+Rob Clairmont <rclairmo@bnr.ca> 
+Christian Millour <chris@etca.fr>
+Neil Cohen <nbc@metsci.com>
+Dieter Quehl <quehl@csaserv.erlh.siemens.de>
+Reginald S. Perry <perry@zso.dec.com>
+James Morris <jmorris@aurora.apana.org.au>
+Mark Seaborn <mseaborn@itthp1.comm.mot.com>
+Phil Brooks <phil_brooks@mentorg.com>
+E. Jason Scheck <jasons@ims.com>
+Daniel Proulx <daproulx@qc.bell.ca>
+Bill Tang <tang@tekats.com>
+John Huchinson <hutchiso@epi.syr.ge.com>
+Jack Erickson <jack@cibc.com>
+Byron Walton <bwalton@hughes.scg.hac.com>
+Bill Lear <rael@anarchy.cybercom.net>
+Mark Zusman <marklz@topaz.technion.ac.il>
+Aurelio Nocerino <aurelio@irsipcs2-27-le0.irsip.na.cnr.it>
+Walt Akers <akers@cebaf.gov>
+Greg Baker <GBaker@p01.az15m.iac.honeywell.com>
+Alexandre Karev <karev@vxcern.cern.ch>
+Pramod Kumar Singh <pramod@saturn.miel.mot.com> 
+Bryon Rigg <bryon_rigg@mail.telecorpsys.com>
+Brad Brown <bbrown@rdxsunhost.aud.alcatel.com>
+Patty Genualdi <genualdp@agcs.com>
+Eshel Liran <liran@bimacs.cs.biu.ac.il> 
+Mick Adams <eeimas@eei.ericsson.se>
+Chris Eich <Chris_Eich@optilink.optilink.dsccc.com>
+Mike Flinn <mike.flinn@smtpgate.aws.waii.com>
+Audun Tornquist <Audun.Tornquist@iu.hioslo.no>
+Sandeep Joshi <sandeepj@emailbox.att.com>
+Kirk Sinnard <1764@mn.lawson.lawson.com>
+Bernd Hofner <hofner@pd.et-inf.uni-siegen.de> 
+Craig Perras <craigp@wolfenet.com>
+Kirk Sinnard <kirk.sinnard@lawson.com>
+Matthew Newhook <matthew@neweast.ca>
+Gerolf Wendland <wendland@hpp015.mch2.scn.de> 
+Phil Mesnier <phil@envision.com>
+Ross Dargahi <rossd@krinfo.com>
+Richard Orr <rorr@costello.den.csci.csc.com>
+Rich Ryan <rryan@mseng.kla.com>
+Jan Rychter <jwr@icm.edu.pl>
+Tom Marrs <0002104588@mcimail.com>
+Bob Olson <olson@mcs.anl.gov>
+Jean-Francois Ripouteau <Jean-Francois.Ripouteau@netsurf.org>
+Ajit Sagar <asagar@spdmail.spd.dsccc.com>
+Ashish Singhai <singhai@delirius.cs.uiuc.edu>
+David Sames <David.L.Sames.1@gsfc.nasa.gov>
+Gonzalo Diethelm <gonzo@ing.puc.cl>
+Raj <raj@itd.ssb.com>
+Darrin <darrin@jeeves.net>
+Steve Weismuller <spweismu@rsoc.rockwell.com>
+Eric C. Newton <ecn@clark.net>
+Andres Kruse <kruse@cern.ch>
+Ramesh Nagabushnam <rcn@nynexst.com>
+Antonio Tortorici <antonio@rh0011.roma.tlsoft.it>
+Nigel Lowe <nigel@nt.com>
+Tom Leith <trl@icon-stl.net>
+Greg Wilson <gvw@cs.toronto.edu>
+Michael Fortinsky <mike@vocaltec.com>
+Marco Sommerau <sommerau@matisse.informatik.uni-stuttgart.de>
+Gary Salsbery <gsalsber@simsun.atsc.allied.com>
+Eric Beser <beser@simsun.atsc.allied.com>
+Alfred Keller <kellera@pop.eunet.ch>
+John Lu <johnlu@f1.telekurs.ch>
+James Mansion <james@wgold.demon.co.uk>
+Jesper S. M|ller <Jesper.Moller@ameridata.dk>
+Chris Lahey <clahey@cccis.com>
+Michael R"uger <m_rueger@syscomp.de>
+Istvan Buki <istvan.buki@infoboard.be>
+Greg Wilson <gvwilson@vnet.ibm.com>
+Jack Erickson <jack@cibc.com>
+Garrett Conaty <gconaty@outbackinc.com>
+Brad Flood <BFLOOD@slc.unisysgsg.com>
+Marius Kjeldahl <marius@funcom.com>
+Steve Huston <shuston@riverace.com>
+Eugene K. Plaude <jec@r-style.msk.su>
+Joseph DeAngelis <bytor@faxint.com>
+Kim Gillies <gillies@noao.edu>
+Luca Priorelli <lucapri@mbox.vol.it>
+Alan Stewart <axs2@osi.com>
+Hani Yakan <hani@i-online.com>
+William L. Gerecke <gerecke@rayva.org>
+Craig Johnston <johnston@tortilla.ds.boeing.com>
+Pierre-Yves Duval <duval@cppm.in2p3.fr>
+Rochi Febo Dommarco <rocky@alter.it>
+Jonathan Biggar <jon@sems.com>
+Scott Shupe <shupes@mitre.org>
+Chuck Gehr <gehr@sweng.stortek.com>
+Avraham Nash <Avraham_Nash@praxisint.com>
+Padhu Ramalingam <padhu@magicnet.net>
+Jay Denkberg <jay_denkberg@comverse.com>
+Ayman Farahat <afarahat@CCGATE.HAC.COM>
+Tilo Christ <christ@swl.fh-heilbronn.de>
+Ari Erev <Ari_Erev@icomverse.com>
+Hamutal Yanay <Hamutal_Yanay@hub.comverse.com>
+Vital Aza <va3@cs.wustl.edu>
+Alex Villazon <villazon@cui.unige.ch>
+David Artus <david.artus@sbil.co.uk>
+Todd Barkalow <todd_barkalow@stortek.com>
+Alexander Smundak <sasha@migration.com>
+Thilo Kielmann <kielmann@informatik.uni-siegen.de>
+Matthias Kerkhoff <make@cs.tu-berlin.de>
+Fred LaBar <flabar@fallschurch.esys.com>
+Hanan Herzog <hanan@wallenda.stanford.edu> 
+Eric Parker <eparker@credence.com>
+James Michael Dwyer <jdwyer@knox.edu>
+Arun Katkere <katkere@praja.com>
+Bob Dunmire <bobd@titan.com>
+Sandro Doro <alex@aureus.sublink.org>
+Robert Lyng <RLyng@msmail.hsii.ccare.com>
+Phil Logan <phill@in.ot.com.au>
+John Cosby <John.D.Cosby@cpmx.saic.com>
+Wayne Vucenic <wvucenic@netgate.net>
+Harry Gunnarsson <hg@carmenta.se>
+James CE Johnson <jcej@lads.com>
+Samuel_Bercovici <Samuel_Bercovici_at_EFT__AD2@mail.icomverse.com>
+Per Andersson <Per.Andersson@hfera.ericsson.se>
+Anthony McConnell <Tonym@datel.demon.co.uk>
+Mark Rabotnikov <mark@usp.elscintcorp.co.il>
+John Bossom <John.Bossom@Cognos.COM>
+Rino Simioni <sir@necsy.it>
+Carlos O'Ryan <coryan@mat.puc.cl>
+Slawomir Kuzniar <kuzniar@Bear.COM>
+Nanbor Wang <nw1@cs.wustl.edu>
+Rob Jordan <jordan@hursley.ibm.com>
+Michael Maxie <maxie@acm.org>
+John Cosby <John.D.Cosby@cpmx.saic.com>
+Nigel Owen <Nigel@voicelink.co.nz>
+Jorn Jensen <jornj@funcom.com>
+Paul Roman <proman@npac.syr.edu>
+Dave Mayerhoefer <m210229@svappl36.mdc.com>
+Bert Craytor  <Bert_Craytor@peoplesoft.com>
+Joey Zhu <joey.zhu@wcom.com>
+Arthur J. Lewis <hfdh99a@prodigy.com>
+Michael R. MacFaden" <mrm@cisco.com>
+Eugene R. Somdahl <gene@endo.com>
+Paul Han <phan@CCGATE.HAC.COM>
+Jeff Morgan <jeff@audioactive.com>
+Arturo Montes <mitosys@colomsat.net.co>
+Elliot Lau <eeklau@post1.com>
+Mark Wright <markw@odi.com.au>
+Michael Newton <michaeln@in.ot.com.au>
+Kumar Neelakantan <kneelaka@painewebber.com>
+Scott Halstead <scott.halstead@gs.com>
+Jean-Marc Strauss <strauss@club-internet.fr>
+Adam Porter <aporter@cs.umd.edu>
+Hakan Kallberg <hk@simulina.se>
+Carlos O'Ryan <coryan@mat.puc.cl>
+Eric Dean Russell <edrusse@somnet.sandia.gov>
+Daniel Montalibet <daniel_montalibet@stortek.com>
+Norbert Rapp <norbert.rapp@nexus-informatics.de>
+Ganesh Pai <gpai@voicetek.com>
+Berni Merkle <merkle@io.freinet.de>
+Tom Wright <twright@gem-net.demon.co.uk>
+Torbjorn Lindgren <tl@funcom.no>
+Darrell Brunsch <brunsch@cs.wustl.edu>
+Mike Bernat <sagmb@sagus.com>
+Brian Mendel <bmendel@mdc.com>
+Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com>
+Jeremy Buch <davinci@nortel.ca>
+Kevin Boyle <kboyle@sanwafp.com>
+Kevin Martindale <kevin_martindale@stortek.com>
+Luis Lopes <llopes@tick.rcc.Ryerson.CA>
+Adrian Salt <acsalt@magi.com>
+Hongbo Xu <hxu@mas.co.nz>
+Michael Hartman <c62nt57@ibx.com>
+Tom Dobridge <dobridge@persimmon.com>
+Rich Christy <rchristy@cccis.com>
+Satoshi Ueno <satoshi.ueno@gs.com>
+Eugene R. Somdahl <gene@endo.com>
+Robert Head <rhead@mail.virtc.com>
+Ivan Murphy <Ivan.Murphy@med.siemens.de>
+
+I would particularly like to thank Paul Stephenson, who worked with me
+at Ericsson and is now at ObjectSpace.  Paul devised the recursive
+Makefile scheme that underlies this distribution and also spent
+countless hours with me discussing object-oriented techniques for
+developing distributed application frameworks. 
+
+Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
+fellow heavy metal head, for fulfilling his quest to get ACE to
+compile with GCC!
+
+In conclusion, my goal is to see ACE continue to evolve and become a
+more comprehensive, robust, and well-documented C++ class library that
+is freely available to researchers and developers.  If you have any
+improvements, suggestions, and or comments, I'd like to hear about it.
+
+        Thanks,
+        
+		Douglas C. Schmidt
+	        schmidt@cs.wustl.edu 
