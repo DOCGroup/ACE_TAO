@@ -83,6 +83,10 @@ namespace CIAO
       /// Process the UUID attribute
       void process_UUID (const XMLCh* UUID, ::Deployment::PackageConfiguration &pc);
 
+      /// Process the specializedConfig attribute
+      void process_specializedConfig
+        (const XMLCh* specializedConfig, ::Deployment::PackageConfiguratio &pc);
+
     private:
 
       DOMDocument* doc_;
@@ -97,9 +101,9 @@ namespace CIAO
 
     };
 
-  };
+  }
 
-};
+}
 
 #include /**/ "ace/post.h"
 
