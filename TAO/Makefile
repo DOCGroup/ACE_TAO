@@ -11,8 +11,7 @@
 INFO	= README \
 	  VERSION
 
-DIRS	= docs \
-	  TAO_IDL \
+DIRS	= TAO_IDL \
 	  tao \
 	  tests
 
