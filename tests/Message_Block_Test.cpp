@@ -339,8 +339,8 @@ main (int, ASYS_TCHAR *[])
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("Elapsed time using %s allocation strategy: %f sec\n"),
-                alloc_struct[i].name_, alloc_
-                struct[i].et_.real_time));
+                alloc_struct[i].name_,
+                alloc_struct[i].et_.real_time));
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) Exiting...\n")));
