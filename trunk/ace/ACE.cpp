@@ -422,7 +422,7 @@ ACE::hash_pjw (const wchar_t *str)
 
 namespace ACE
 {
-  u_long crc_table_[] =
+  const u_long crc_table_[] =
     {
       0x0,
       0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b,
