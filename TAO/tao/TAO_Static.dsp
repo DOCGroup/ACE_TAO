@@ -667,6 +667,10 @@ SOURCE=.\RT_ORB.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_ORB_Loader.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_ORBInitializer.h
 # End Source File
 # Begin Source File
@@ -1992,6 +1996,10 @@ SOURCE=.\RT_Mutex.cpp
 # Begin Source File
 
 SOURCE=.\RT_ORB.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_ORB_Loader.cpp
 # End Source File
 # Begin Source File
 
