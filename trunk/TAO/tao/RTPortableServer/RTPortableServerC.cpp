@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "RTPortableServerC.h"
@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTPortableServer::POA.
 
@@ -91,7 +91,7 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTPortableServer__TAO_POA_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -102,7 +102,7 @@ RTPortableServer::POA::POA (void)
 RTPortableServer::POA::~POA (void)
 {}
 
-void
+void 
 RTPortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
@@ -120,10 +120,10 @@ RTPortableServer::POA::_narrow (
     {
       return POA::_nil ();
     }
-
+  
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-
+  
   return POA::_duplicate (proxy);
 }
 
@@ -137,10 +137,10 @@ RTPortableServer::POA::_unchecked_narrow (
     {
       return POA::_nil ();
     }
-
+  
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-
+  
   return POA::_duplicate (proxy);
 }
 
@@ -151,7 +151,7 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -199,9 +199,43 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:284
+
+static const CORBA::Long _oc_RTPortableServer_POA[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  37,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254506f), 
+  ACE_NTOHL (0x72746162), 
+  ACE_NTOHL (0x6c655365), 
+  ACE_NTOHL (0x72766572), 
+  ACE_NTOHL (0x2f504f41), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTPortableServer/POA:1.0
+    4,
+  ACE_NTOHL (0x504f4100),  // name = POA
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_RTPortableServer_POA (
+    CORBA::tk_objref,
+    sizeof (_oc_RTPortableServer_POA),
+    (char *) &_oc_RTPortableServer_POA,
+    0,
+    sizeof (RTPortableServer::POA)
+  );
+
+namespace RTPortableServer
+{
+  ::CORBA::TypeCode_ptr _tc_POA =
+    &_tc_TAO_tc_RTPortableServer_POA;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -214,7 +248,7 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         RTPortableServer::POA
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTPortableServer::POA
@@ -231,10 +265,11 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         RTPortableServer::POA
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTPortableServer::POA
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+
