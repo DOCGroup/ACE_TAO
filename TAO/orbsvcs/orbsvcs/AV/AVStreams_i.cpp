@@ -95,12 +95,11 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
 // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
 // E.g., loss of flow, reestablishment of flow, etc..
 void
-TAO_Basic_StreamCtrl::push_event (const char *the_event,
+TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property & the_event,
                                   CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n(%P|%t) Recieved event \"%s\"",
-              the_event));
+              "\n(%P|%t) Recieved event \""));
   ACE_UNUSED_ARG (env);
 }
 
