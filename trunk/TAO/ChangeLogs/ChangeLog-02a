@@ -1,6 +1,21 @@
+Sat May 27 23:27:50 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+ 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	* orbsvcs/tests/Notify/Basic/Updates.h:
+ 	  This tests if offer_change and subscription_change received updates
+	  correctly.
+	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.h:
+	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.h:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+	* orbsvcs/tests/Notify/lib/notify_test_export.h:
+	  Minor restructuring of the test helper classes.
+
 Sat May 27 20:59:11 2000  Ossama Othman  <ossama@uci.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp: 
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
 
 	  Added missing "ace/Log_Msg.h" include.
 
