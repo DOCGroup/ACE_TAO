@@ -1,3 +1,18 @@
+Tue Feb 22 02:28:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Messaging/MessagingA.cpp:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.h:
+	* tao/Messaging/MessagingC.inl:
+	* tao/Messaging/MessagingS.cpp:
+	* tao/Messaging/MessagingS.h:
+	* tao/Messaging/MessagingS.inl:
+	* tao/Messaging/MessagingS_T.cpp:
+	* tao/Messaging/MessagingS_T.h:
+	* tao/Messaging/MessagingS_T.inl:
+
+	  Regenerated these stubs and skeletons.
+
 Tue Feb 22 02:03:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following changes were made in the course of refactoring the
