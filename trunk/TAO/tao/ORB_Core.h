@@ -256,9 +256,6 @@ public:
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
-  int add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table);
-  // Add the init_ref (objectID->IOR) to the Lookup Table
-
   ACE_Allocator *output_cdr_dblock_allocator (void);
   // This allocator is always TSS and has no locks. It is intended for
   // allocating the ACE_Data_Blocks used in *outgoing* CDR streams.

@@ -6,8 +6,6 @@
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/IOR_LookupTable.h"
-
 ACE_RCSID(tao, params, "$Id$")
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
@@ -19,7 +17,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     trading_service_port_ (0),
     implrepo_service_port_ (0),
     init_ref_ (),
-    ior_lookup_table_ (0),
+    ior_lookup_table_ (),
     default_init_ref_ (),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
@@ -32,9 +30,20 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
 
 TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
 {
-  // Delete the table.
-  delete this->ior_lookup_table_;
-  this->ior_lookup_table_ = 0;
+}
+
+int
+TAO_ORB_Parameters::add_to_ior_table (ACE_CString init_ref)
+{
+  int slot = init_ref.find ("=");
+  if (slot == ACE_CString::npos)
+    return -1;
+
+  ACE_CString object_id = init_ref.substr (0, slot);
+  ACE_CString ior = init_ref.substr (slot + 1);
+
+  // Add the objectID-IOR to the table and return the status.
+  return this->ior_lookup_table_.add_ior (object_id, ior);
 }
 
 int
