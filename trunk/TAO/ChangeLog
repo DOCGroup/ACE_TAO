@@ -1,3 +1,10 @@
+Tue Jan 21 19:28:12 UC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Makefile.av:
+        * Makefile.CosLoadBalancing:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Tue Jan 21 10:38:48 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed few
