@@ -1,3 +1,11 @@
+Tue Apr 10 17:21:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Made the TAO_Object_Adapter::close() method atomic (and
+          nil-potent), there was no synchronization on it.
+          Before using the root_ field make sure that it is not nil.
+	  This takes care of [BUGID:855]
+
 Tue Apr 10 16:19:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Reliable_Oneways/Reliable_Oneways.dsw:
