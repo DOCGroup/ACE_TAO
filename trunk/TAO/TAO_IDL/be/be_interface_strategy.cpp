@@ -978,7 +978,7 @@ be_interface_amh_strategy::~be_interface_amh_strategy (void)
 
 TAO_CodeGen::CG_STATE
 be_interface_amh_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
-                                       int is_extra_state)
+                                       int /*is_extra_state*/)
 {
   switch (current_state)
     {
