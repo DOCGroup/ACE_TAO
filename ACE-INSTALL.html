@@ -284,7 +284,10 @@ make: *** [libACE.so] Error 8
 
       If you run out of memory, it's easy to add virtual memory on
       Linux.  Please see the <code>mkswap</code> man page.  You'll
-      need around 256 to 300 MBs of swap space to compile ACE+TAO.<p>
+      need around 256 to 300 Mb of virtual memory (RAM + swap) to
+      compile all of ACE+TAO.  The <a href="#resource_requirements">System
+      Resource Requirements section</a> has some suggestions on how
+      to reduce the memory requirement.<p>
 
       The glibc 2.0 dynamic loader isn't thread safe. If you want to
       use the Invocation API you'll have to set
@@ -1532,8 +1535,8 @@ in your PATH.<P>
 The amount of system resources required to build ACE and TAO varies
 greatly.  Platform, build options, and components built primarily
 influence the required system resources.  As a rough guide, the
-typical peak memory requirement could be about 256 Mb (notably, for
-TAO's orbsvcs).  An <strong>entire</strong> build of ACE and TAO
+typical peak memory requirement could be well over 256 Mb (notably,
+for TAO's orbsvcs).  An <strong>entire</strong> build of ACE and TAO
 can use well over 1300 Mb of disk space.  It's usually not necessary
 to build <strong>all</strong> of ACE and TAO, though.<p>
 
