@@ -29,7 +29,7 @@
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_NONCONST_MSGSND
-#define ACE_HAS_LONG_FDMASK
+#define ACE_HAS_BIG_FD_SET
 // #define      ACE_LACKS_POSIX_PROTOTYPES
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI

@@ -1,3 +1,18 @@
+Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-linux-common.h,
+	  ace/config-sco-5.0.0-mit-pthread.h,
+	  ace/config-sco-5.0.0.h,
+	  ace/README:
+	  ACE_HAS_LONG_FDMASK macro has been changed to
+ 	  ACE_HAS_BIG_FD_SET.  Therefore, I updated these files.  Thanks
+ 	  to Ossama Othman <othman@astrosun.tn.cornell.edu> for reporting
+ 	  this.
+
+	* TAO/utils/catior/catior.cpp: Replaced the use of
+ 	  CORBA::B_{TRUE,FALSE} with 1 and 0 to be compatible with the
+ 	  CORBA spec.
+
 Tue Sep 01 10:21:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/TSS_Test.cpp (cleanup, worker): with ACE_HAS_PTHREADS_DRAFT4,
