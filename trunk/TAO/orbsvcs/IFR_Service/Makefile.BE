@@ -55,6 +55,17 @@ include $(TAO_ROOT)/taoconfig.mk
 CPPFLAGS += -I../../TAO_IDL/include -I../../TAO_IDL/fe
 LDFLAGS += -I$(TAO_ROOT)/tao
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTAO_IFR_BE_BUILD_DLL
+endif
+endif
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+endif
+endif
+
 realclean: clean
 
 #----------------------------------------------------------------------------

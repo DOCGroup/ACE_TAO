@@ -14,6 +14,7 @@ project(TAO_IFR_BE) : taolib, core {
   depends   += TAO_IDL_FE TAO_IFR_Client
   sharedname = TAO_IFR_BE
   libs      += TAO_IDL_FE TAO_IFR_Client TAO
+  dllflags   = TAO_IFR_BE_BUILD_DLL
   includes  += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
 
   Source_Files {
@@ -26,7 +27,7 @@ project(TAO_IFR_BE) : taolib, core {
     ifr_adding_visitor_union.cpp
     ifr_removing_visitor.cpp
     ifr_visitor.cpp
-  }  
+  }
 }
 
 
