@@ -23,6 +23,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     implrepo_service_port_ (0),
     init_ref_ (),
     ior_lookup_table_ (0),
+    default_init_ref_ (),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF),
