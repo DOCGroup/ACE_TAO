@@ -46,7 +46,7 @@ Legend:
 [111xx ] 	SII short
 [111xx ] 	SII ubstring
 [111xx ] 	SII fixed_struct
-[x0xxx ] 	SII strseq
+[10xxx ] 	SII strseq
 [000xx ] 	SII var_struct
 [000xx ] 	SII nested_struct
 [000xx ] 	SII struct_seq
