@@ -61,7 +61,6 @@ Mon Sep 22 11:57:42 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  as it was not used in the method. This should remove the warning
 	  on Redhat Explicit Template build.
 	
->>>>>>> 1.2560
 Fri Sep 19 07:49:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/RTScheduling/Current/Makefile (SRC):
