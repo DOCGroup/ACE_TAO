@@ -15,10 +15,12 @@
 //
 // ============================================================================
 
-#include "orbsvcs/LoadBalancingS.h"
-
 #ifndef LOAD_BALANCING_STRATEGY_H
 #define LOAD_BALANCING_STRATEGY_H
+
+#include "orbsvcs/LoadBalancingS.h"
+
+class ReplicaProxy_Impl;
 
 // The abstract load balancing strategy class.
 
@@ -47,8 +49,8 @@ public:
 };
 
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "orbsvcs/LoadBalancing/LoadBalancing_Strategy.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#if !defined (__ACE_INLINE__)
+#include "LoadBalancing_Strategy.i"
+#endif /* __ACE_INLINE__ */
 
 #endif  /* LOAD_BALANCING_STRATEGY_H */

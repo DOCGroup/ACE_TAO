@@ -3,7 +3,8 @@
 // $Id$
 
 
-#include "orbsvcs/LoadBalancing/Round_Robin_Strategy.h"
+#include "Round_Robin_Strategy.h"
+#include "ReplicaProxy.h"
 
 ACE_RCSID(orbsvcs, Round_Robin_Strategy, "$Id$")
 
@@ -12,7 +13,6 @@ Round_Robin_Strategy::Round_Robin_Strategy (void)
   : proxies_ (),
     next_replica_ (this->proxies_.end ())
 {
-  // Nothing else
 }
 
 Round_Robin_Strategy::~Round_Robin_Strategy (void)
@@ -56,7 +56,7 @@ Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 int
 Round_Robin_Strategy::insert (ReplicaProxy_Impl *proxy)
 {
-  return this->proxies_.insert (proxy)
+  return this->proxies_.insert (proxy);
 }
 
 int
@@ -64,4 +64,3 @@ Round_Robin_Strategy::remove (ReplicaProxy_Impl *proxy)
 {
   return this->proxies_.remove (proxy);
 }
-

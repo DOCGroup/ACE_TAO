@@ -2,8 +2,8 @@
 
 // $Id$
 
-#include "orbsvcs/LoadBalancing/DSI_ForwardingProxy.h"
-#include "orbsvcs/LoadBalancing/LoadBalancer_i.h"
+#include "DSI_ForwardingProxy.h"
+#include "LoadBalancer_i.h"
 
 ACE_RCSID(orbsvcs, DSI_ForwardingProxy, "$Id$")
 
@@ -24,7 +24,7 @@ DSI_ForwardingProxy::invoke (CORBA::ServerRequest_ptr /* request */,
   CORBA::Object_ptr replica =
     this->load_balancer_->replica (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   // Throw a forward exception to force the client to redirect its
   // requests to the Replica chosen by the LoadBalancer.
 

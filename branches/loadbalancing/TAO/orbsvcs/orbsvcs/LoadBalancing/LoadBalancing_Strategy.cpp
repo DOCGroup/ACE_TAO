@@ -3,11 +3,10 @@
 // $Id$
 
 
-#include "orbsvcs/LoadBalancing/LoadBalancing_Strategy.h"
-#include "orbsvcs/LoadBalancing/LoadBalancer_i.h"
+#include "LoadBalancing_Strategy.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "orbsvcs/LoadBalancing/LoadBalancing_Strategy.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#if defined (__ACE_INLINE__)
+#include "LoadBalancing_Strategy.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(orbsvcs, LoadBalancing_Strategy, "$Id$")

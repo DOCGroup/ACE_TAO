@@ -15,23 +15,20 @@
 //
 // ============================================================================
 
-#include "orbsvcs/LoadBalancingS.h"
-#include "orbsvcs/LoadBalancing/LoadBalancing_Strategy.h"
-
-
 #ifndef ROUND_ROBIN_STRATEGY_H
 #define ROUND_ROBIN_STRATEGY_H
 
+#include "LoadBalancing_Strategy.h"
+#include "orbsvcs/LoadBalancingS.h"
+#include "ace/Containers.h"
 
 // Forward declarations
 class ReplicaProxy_Impl;
-template class ACE_Unbounded_Set<ReplicaProxy_Impl *>;
 
-typedef ACE_Unbounded_Set<ReplicaProxy_Impl *>
-        ReplicaProxySet;
+typedef ACE_Unbounded_Set<ReplicaProxy_Impl *> ReplicaProxySet;
+typedef ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl *> ReplicaProxySetIterator;
 
-
-class Round_Robin_Strategy : public Load_Balancing_Strategy
+class TAO_LoadBalancing_Export Round_Robin_Strategy : public Load_Balancing_Strategy
 {
   // = TITLE
   //    Round Robin load balancing strategy
@@ -42,19 +39,22 @@ class Round_Robin_Strategy : public Load_Balancing_Strategy
   //    fashion.
 
 public:
-
   Round_Robin_Strategy (void);
   // Constructor.
 
+  ~Round_Robin_Strategy (void);
+  // Destructor
+
+  // = The Load_Balancing_Strategy methods
   virtual CORBA::Object_ptr replica (CORBA_Environment &ACE_TRY_ENV);
-  // Return the object reference to the Replica to which requests should
-  // be redirected.
+  virtual int insert (ReplicaProxy_Impl *);
+  virtual int remove (ReplicaProxy_Impl *);
 
 private:
-
   ReplicaProxySet proxies_;
   // Set containing the ReplicaProxy servants.
-};
 
+  ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl*> next_replica_;
+};
 
 #endif  /* ROUND_ROBIN_STRATEGY_H */
