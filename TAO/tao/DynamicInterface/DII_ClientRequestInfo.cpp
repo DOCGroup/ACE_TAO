@@ -15,7 +15,7 @@ TAO_DII_ClientRequestInfo::TAO_DII_ClientRequestInfo (
   CORBA::Object_ptr _tao_target,
   CORBA::Request * request)
   : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
-    request_ (request),
+    request_ (CORBA::Request::_duplicate (request)),
     result_ (0)
 {
 }

@@ -47,8 +47,10 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
    /// use existing transport as CDR have translators set.
    if (trans.is_tcs_set())
      {
-       if(TAO_debug_level > 0)
-         ACE_DEBUG((LM_DEBUG, "set_tcs skipping, cuz transport already bin set!\n"));
+       if(TAO_debug_level > 2)
+         ACE_DEBUG((LM_DEBUG,
+		    ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+		    ACE_LIB_TEXT("transport already set\n")));
        return;
      }
 
@@ -58,11 +60,14 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
    /// Get the codeset component
    if (theTaggedComp.get_code_sets(remote) == 0 )
    {
-     if(TAO_debug_level > 0)
-       ACE_DEBUG((LM_DEBUG, "[TAO_Codeset_Manager::set_client_tcs] No CodeSet Component present in the Profile, assuming defaults \n"));
+     if(TAO_debug_level > 2)
+       ACE_DEBUG((LM_DEBUG,
+		  ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+		  ACE_LIB_TEXT("No codeset componnet in profile\n")));
      remote.ForCharData.native_code_set =
        TAO_Codeset_Manager::default_char_codeset;
-     remote.ForWcharData.native_code_set = 0;
+     remote.ForWcharData.native_code_set =
+       TAO_Codeset_Manager::default_wchar_codeset;
    }
 
   CONV_FRAME::CodeSetId ncs =
@@ -70,19 +75,21 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
    CONV_FRAME::CodeSetId tcs = computeTCS (remote.ForCharData,
                                            this->codeset_info_->ForCharData);
    TAO_Resource_Factory *rf = trans.orb_core()->resource_factory();
-   if (TAO_debug_level > 0)
+   if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
-                 "setting transport char translator(%08x, %08x)\n",
-                 ncs,tcs));
+		 ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+                 ACE_LIB_TEXT("setting char translator(%08x, %08x)\n"),
+		ncs,tcs));
    trans.char_translator(rf->get_char_translator (ncs,tcs));
 
    ncs = this->codeset_info_->ForWcharData.native_code_set;
    tcs = computeTCS (remote.ForWcharData,
                      this->codeset_info_->ForWcharData);
 
-   if (TAO_debug_level > 0)
+   if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
-                 "setting transport wchar translator(%08x, %08x)\n",
+		 ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
+                 ACE_LIB_TEXT("setting wchar translator (%08x, %08x)\n"),
                  ncs,tcs));
    trans.wchar_translator(rf->get_wchar_translator (ncs,tcs));
    trans.wchar_allowed (ncs != 0 || tcs != 0);
@@ -91,13 +98,8 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
 void
 TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
 {
-  if(TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG, "IN CSM->process_service_context\n"));
-  /// Donot process if tcs is already set on the transport
   if( request.transport()->is_tcs_set())
     {
-      if(TAO_debug_level > 0)
-        ACE_DEBUG((LM_DEBUG, "process_service_context skipping, cuz transport already bin set\n"));
       return;
     }
 
@@ -107,11 +109,7 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
   IOP::ServiceContext context;
   context.context_id = IOP::CodeSets;
   CONV_FRAME::CodeSetId tcs_c = TAO_Codeset_Manager::default_char_codeset;
-  CONV_FRAME::CodeSetId tcs_w = 0;
-
-  const IOP::ServiceContextList& scl = service_cntx.service_info();
-  if (TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG,"PSC, scl.len = %d\n",scl.length()));
+  CONV_FRAME::CodeSetId tcs_w = TAO_Codeset_Manager::default_wchar_codeset;
 
   // Codeset Context is not available, no need to process service context
   if (service_cntx.get_context(context))
@@ -126,8 +124,11 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
       cdr >> tcs_w;
     }
 
-  if(TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG, "process_service_context using tcsc = %08x, tcsw = %08x\n",tcs_c,tcs_w));
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_LIB_TEXT("(%P|%t) Codeset_Manager::process_service_context ")
+		ACE_LIB_TEXT("using tcsc = %08x, tcsw = %08x\n"),
+		tcs_c,tcs_w));
 
   CONV_FRAME::CodeSetId ncs =
     this->codeset_info_->ForCharData.native_code_set;
@@ -158,8 +159,12 @@ TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
   tf = trans.wchar_translator();
   codeset_cntx.wchar_data = tf ? tf->tcs() :
     this->codeset_info_->ForWcharData.native_code_set;
-  if(TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG, "generate_service_context using tcs_c = %08x, tcs_w = %08x\n",codeset_cntx.char_data, codeset_cntx.wchar_data));
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+		ACE_LIB_TEXT("(%P|%t) Codeset_Manager::generate_service_context ")
+		ACE_LIB_TEXT("using tcs_c = %08x, tcs_w = %08x\n"),
+		codeset_cntx.char_data,
+		codeset_cntx.wchar_data));
 
   TAO_OutputCDR codeset_cdr;
   codeset_cdr << codeset_cntx;
@@ -172,9 +177,6 @@ TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
   cntx.context_data.length (length);
   CORBA::Octet *buf = cntx.context_data.get_buffer ();
 
-  if(TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG, "GSC, encapsulated buffer length = %d\n", length));
-
   for (const ACE_Message_Block *i = codeset_cdr.begin ();
        i != 0;
        i = i->cont ())
@@ -186,9 +188,6 @@ TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
   /// Append it to IIOP::ServiceContextList
   length = serv_cntxs.length ();
   serv_cntxs.length (length + 1);
-
-  if(TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG, "GSC, num contexts was %d\n",length));
 
   CORBA::ULong max = cntx.context_data.maximum ();
   CORBA::ULong len = cntx.context_data.length ();
@@ -207,9 +206,6 @@ TAO_Codeset_Manager::isElementOf (CONV_FRAME::CodeSetId id,
        i < cs_comp.conversion_code_sets.length();
        ++i )
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,"isElementOf comparing id = %x, ccsid[%d] = %x\n",
-                    id, i, cs_comp.conversion_code_sets[i]));
       if (id == cs_comp.conversion_code_sets[i])
         return true;
     }
@@ -242,9 +238,6 @@ CONV_FRAME::CodeSetId
 TAO_Codeset_Manager::computeTCS (CONV_FRAME::CodeSetComponent &remote,
                                  CONV_FRAME::CodeSetComponent &local )
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"compute TCS = rncs = %x, lncs = %x\n",
-                remote.native_code_set, local.native_code_set));
   if (remote.native_code_set == local.native_code_set)
     return local.native_code_set;
 
