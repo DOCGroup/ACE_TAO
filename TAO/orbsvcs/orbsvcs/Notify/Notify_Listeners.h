@@ -1,19 +1,16 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   Orbsvcs
-//
-// = FILENAME
-//   Notify_Resource_Manager.h
-//
-// = DESCRIPTION
-//   Internal "observer" interfaces for Notify.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Resource_Manager.h
+ *
+ *  $Id$
+ *
+ * Internal "observer" interfaces for Notify.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_LISTENERS_H
 #define TAO_NOTIFY_LISTENERS_H
@@ -39,99 +36,107 @@ class TAO_Notify_Worker_Task;
 
 // @@ Pradeep: if this class is what I think it is then it should be
 // in its own file..
+ /**
+  * @class TAO_Notify_RefCounted
+  *
+  * @brief TAO_Notify_RefCounted
+  *
+  * @@ Pradeep: what do you mean "often", is it used for something
+  * else sometimes?  Or is it that sometimes refcounting is done
+  * some other way?
+  * Often used interface for ref. counting.
+  */
 class TAO_Notify_Export TAO_Notify_RefCounted
 {
-  // = TITLE
-  //   TAO_Notify_RefCounted
-  //
-  // = DESCRIPTION
-  //   @@ Pradeep: what do you mean "often", is it used for something
-  //   else sometimes?  Or is it that sometimes refcounting is done
-  //   some other way?
-  //   Often used interface for ref. counting.
-  //
  public:
+  /// Increment the reference count.
   virtual CORBA::ULong _incr_refcnt (void) = 0;
+
+  /// Decrement the reference count.
   virtual CORBA::ULong _decr_refcnt (void) = 0;
-  // Increment and decrement the reference count.
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_Notify_EventListener
+ *
+ * @brief TAO_Notify_EventListener
+ *
+ * All entities interested in receiving events can implement this interface
+ * and subscribe with the Event Manager. During subscription, the Listener
+ * must specify what kind of events it is interested in.
+ */
 class  TAO_Notify_Export TAO_Notify_EventListener : virtual public TAO_Notify_RefCounted
 {
-  // = TITLE
-  //   TAO_Notify_EventListener
-  //
-  // = DESCRIPTION
-  //   All entities interested in receiving events can implement this interface
-  //   and subscribe with the Event Manager. During subscription, the Listener
-  //   must specify what kind of events it is interested in.
-  //
 
 public:
+  /// Callback methods to supply the event to the listener.
   virtual void dispatch_event (TAO_Notify_Event &event
                                ACE_ENV_ARG_DECL) = 0;
-  // Callback methods to supply the event to the listener.
 
+  /**
+   * Evaluates true if this event is acceptable by the listener.
+   * The <eval_parent> is a hint to the listener to help it determine
+   * if its wise to evaluate the parents filter too. This helps in
+   * implementing the "interfilter group operator" logic.
+   */
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event,
                                           CORBA::Boolean eval_parent
                                           ACE_ENV_ARG_DECL) = 0;
-  // Evaluates true if this event is acceptable by the listener.
-  // The <eval_parent> is a hint to the listener to help it determine
-  // if its wise to evaluate the parents filter too. This helps in
-  // implementing the "interfilter group operator" logic.
 
+  /// Ask the listener to relinquish any bindings and prepare to be
+  /// disposed.
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
-  // Ask the listener to relinquish any bindings and prepare to be
-  // disposed.
 
+  /// The Worker task associated with the event listener for event dispatching
   virtual TAO_Notify_Worker_Task* event_dispatch_task (void) = 0;
-  // The Worker task associated with the event listener for event dispatching
 
+  /// The Worker task associated with the event listener for filter evaluation.
   virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
-  // The Worker task associated with the event listener for filter evaluation.
 };
 
 // ****************************************************************
 
+ /**
+  * @class TAO_Notify_EventSource
+  *
+  * @brief TAO_Notify_EventSource
+  *
+  * The event source suppliers events to the Notify Manager.
+  */
 class TAO_Notify_Export TAO_Notify_EventSource : virtual public TAO_Notify_RefCounted
 {
-  // = TITLE
-  //   TAO_Notify_EventSource
-  //
-  // = DESCRIPTION
-  //   The event source suppliers events to the Notify Manager.
-  //
  public:
   // TODO: add a shutdown method to this interface!!
 
+  /// Evaluates true if this event is acceptable by the Source.
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event
                                           ACE_ENV_ARG_DECL) = 0;
-  // Evaluates true if this event is acceptable by the Source.
 
+  /// The Worker task associated with the event listener for filter evaluation.
   virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
-  // The Worker task associated with the event listener for filter evaluation.
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_Notify_UpdateListener
+ *
+ * @brief TAO_Notify_UpdateListener
+ *
+ * All entities interested in receiving subscription and publication
+ * change messages can implement this interface and register it with
+ * the Event Manager to receive updates.
+ */
 class TAO_Notify_Export TAO_Notify_UpdateListener : virtual public TAO_Notify_RefCounted
 {
-  // = TITLE
-  //   TAO_Notify_UpdateListener
-  //
-  // = DESCRIPTION
-  //   All entities interested in receiving subscription and publication
-  //   change messages can implement this interface and register it with
-  //   the Event Manager to receive updates.
-  //
 
  public:
+  /// Callback method to supply updates.
   virtual void dispatch_update (TAO_Notify_EventType_List& added,
                                 TAO_Notify_EventType_List& removed
                                 ACE_ENV_ARG_DECL) = 0;
-  // Callback method to supply updates.
 };
 
 #include "ace/post.h"

@@ -1,20 +1,17 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_ProxyPushConsumer_i.h
-//
-// = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::ProxyPushConsumer interface and
-//   CosEventChannelAdmin::ProxyPushConsumerx
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_ProxyPushConsumer_i.h
+ *
+ *  $Id$
+ *
+ * Implements the CosNotifyChannelAdmin::ProxyPushConsumer interface and
+ * CosEventChannelAdmin::ProxyPushConsumerx
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_PROXYPUSHCONSUMER_I_H
 #define TAO_NOTIFY_PROXYPUSHCONSUMER_I_H
@@ -38,21 +35,22 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_ProxyPushConsumer_i
+ *
+ * @brief TAO_Notify_ProxyPushConsumer_i
+ *
+ * Implements the CosNotifyChannelAdmin::ProxyPushConsumer interface.
+ */
 class TAO_Notify_Export TAO_Notify_ProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::ProxyPushConsumer>
 {
-  // = TITLE
-  //   TAO_Notify_ProxyPushConsumer_i
-  //
-  // = DESCRIPTION
-  //   Implements the CosNotifyChannelAdmin::ProxyPushConsumer interface.
-  //
 
 public:
+  /// Constructor
   TAO_Notify_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Notify_ProxyPushConsumer_i (void);
-  // Destructor
 
   // = Interface methods
   void push (const CORBA::Any & data ACE_ENV_ARG_DECL)
@@ -82,58 +80,61 @@ virtual void disconnect_push_consumer (
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL);
 
  // = Data members
+ /**
+  * True if the supplier supports the NotifySubscribe interface.
+  * If it does, we use the <notify_push_supplier_> else we use
+  * <cosec_push_supplier_>
+  */
  CORBA::Boolean notify_style_supplier_;
- // True if the supplier supports the NotifySubscribe interface.
- // If it does, we use the <notify_push_supplier_> else we use
- // <cosec_push_supplier_>
 
+ /// The supplier connected to us.
  CosEventComm::PushSupplier_var cosec_push_supplier_;
  CosNotifyComm::PushSupplier_var notify_push_supplier_;
- // The supplier connected to us.
 
  private:
  typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::ProxyPushConsumer>
    proxy_inherited;
 };
 
+/**
+ * @class TAO_Notify_CosEC_ProxyPushConsumer_i
+ *
+ * @brief TAO_Notify_CosEC_ProxyPushConsumer_i
+ *
+ * CosEventChannelAdmin::ProxyPushConsumer wrapper implementation.
+ * Delegates to TAO_Notify_ProxyPushConsumer_i.
+ */
 class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushConsumer_i : public virtual POA_CosEventChannelAdmin::ProxyPushConsumer, public virtual PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //   TAO_Notify_CosEC_ProxyPushConsumer_i
-  //
-  // = DESCRIPTION
-  //   CosEventChannelAdmin::ProxyPushConsumer wrapper implementation.
-  //   Delegates to TAO_Notify_ProxyPushConsumer_i.
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_Notify_CosEC_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmi);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Notify_CosEC_ProxyPushConsumer_i (void);
-  // Destructor.
 
+    /// init.
   void init (ACE_ENV_SINGLE_ARG_DECL);
-    // init.
 
+  /// Suppliers call this method to pass data to connected consumers.
   virtual void push (const CORBA::Any &data
                      ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  // Suppliers call this method to pass data to connected consumers.
 
+  /// Disconnects the supplier from the event communication.
   virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  // Disconnects the supplier from the event communication.
 
+  /// Connects a push supplier.
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier
                                      ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
-  // Connects a push supplier.
  protected:
   // = Data Members
+  /// Proxy to delegate to.
   TAO_Notify_ProxyPushConsumer_i notify_proxy_;
-  // Proxy to delegate to.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

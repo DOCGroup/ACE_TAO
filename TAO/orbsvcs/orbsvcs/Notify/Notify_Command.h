@@ -1,21 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Notification
-//
-// = FILENAME
-//   Notify_Command.h
-//
-// = DESCRIPTION
-//   Command Object base class used by Notify's Worker Task objects.
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Command.h
+ *
+ *  $Id$
+ *
+ * Command Object base class used by Notify's Worker Task objects.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_COMMAND_H
 #define TAO_NOTIFY_COMMAND_H
@@ -37,32 +33,33 @@
 class TAO_Notify_Event_Processor;
 class TAO_Notify_Event;
 
+ /**
+  * @class TAO_Notify_Command
+  *
+  * @brief TAO_Notify_Command
+  *
+  * Base class for Command Objects.
+  * Command objects are executed by the Notify_Worker_Task.
+  */
 class TAO_Notify_Export TAO_Notify_Command : public ACE_Message_Block
 {
-  // = TITLE
-  //   TAO_Notify_Command
-  //
-  // = DESCRIPTION
-  //   Base class for Command Objects.
-  //   Command objects are executed by the Notify_Worker_Task.
-  //
  public:
   TAO_Notify_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event);
   ~TAO_Notify_Command ();
 
+  /// Command callback
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
-  // Command callback
 
   virtual CORBA::Short priority (void) const;
 
 protected:
   // = Data Members
+  /// The command objects should notify the event processor once they have successfully
+  /// executed commands.
   TAO_Notify_Event_Processor* event_processor_;
-  // The command objects should notify the event processor once they have successfully
-  // executed commands.
 
+  /// The event that we "execute" this command on.
   TAO_Notify_Event* event_;
-  // The event that we "execute" this command on.
 };
 
 

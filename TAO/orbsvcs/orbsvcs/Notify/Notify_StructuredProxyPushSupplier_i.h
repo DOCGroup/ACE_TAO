@@ -1,20 +1,17 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_StructuredProxyPushSupplier_i.h
-//
-// = DESCRIPTION
-//   Implements the POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier
-//   interface.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_StructuredProxyPushSupplier_i.h
+ *
+ *  $Id$
+ *
+ * Implements the POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier
+ * interface.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef TAO_NOTIFY_STRUCTUREDPROXYPUSHSUPPLIER_I_H
 #define TAO_NOTIFY_STRUCTUREDPROXYPUSHSUPPLIER_I_H
 
@@ -36,21 +33,22 @@ class TAO_Notify_ConsumerAdmin_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_StructuredProxyPushSupplier_i
+ *
+ * @brief TAO_Notify_StructuredProxyPushSupplier_i
+ *
+ * Implements POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier
+ */
 class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier>
 {
-  // = TITLE
-  //   TAO_Notify_StructuredProxyPushSupplier_i
-  //
-  // = DESCRIPTION
-  //   Implements POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier
-  //
 
  public:
+  /// Constructor
   TAO_Notify_StructuredProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumer_admin);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Notify_StructuredProxyPushSupplier_i (void);
-  // Destructor
 
   virtual void connect_structured_push_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer
@@ -69,23 +67,23 @@ class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_No
     CORBA::SystemException
   ));
 
+  /// Shutdown.
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  // Shutdown.
 
  protected:
   // = Helper methods
+  /// Shutdown
   void shutdown_i (ACE_ENV_SINGLE_ARG_DECL);
-  // Shutdown
 
+  /// Deliver the event to the consumer.
   virtual void dispatch_event_i (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
-  // Deliver the event to the consumer.
 
+  /// Deliver the update to the consumer.
   virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL);
-  // Deliver the update to the consumer.
 
   // = Data Members
+  /// The consumer that we're connect to.
   CosNotifyComm::StructuredPushConsumer_var push_consumer_;
-  // The consumer that we're connect to.
 
  private:
   typedef TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier>

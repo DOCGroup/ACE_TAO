@@ -1,19 +1,16 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_FilterAdmin_i.h
-//
-// = DESCRIPTION
-//
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_FilterAdmin_i.h
+ *
+ *  $Id$
+ *
+ *
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_FILTERADMIN_H
 #define NOTIFY_FILTERADMIN_H
@@ -25,29 +22,29 @@
 #include "ace/Hash_Map_Manager.h"
 #include "notify_export.h"
 
+/**
+ * @class TAO_Notify_FilterAdmin_i
+ *
+ * @brief TAO_Notify_FilterAdmin_i
+ *
+ */
 class TAO_Notify_Export TAO_Notify_FilterAdmin_i
 {
-  // = TITLE
-  //   TAO_Notify_FilterAdmin_i
-  //
-  // = DESCRIPTION
-  //
-  //
 
 public:
+  /// Constructor
   TAO_Notify_FilterAdmin_i (void);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Notify_FilterAdmin_i (void);
-  // Destructor
 
   // = match operation on all the filters
+  /// See if any of the filters match.
   CORBA::Boolean match (TAO_Notify_Event &event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
-  // see if any of the filters match.
 
   virtual CosNotifyFilter::FilterID add_filter (
     CosNotifyFilter::Filter_ptr new_filter
@@ -90,12 +87,12 @@ public:
   ));
 
 private:
+  /// List of filters
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, TAO_SYNCH_MUTEX> FILTER_LIST;
   FILTER_LIST filter_list_;
-  // List of filters
 
+  /// Id generator for proxy suppliers
   TAO_Notify_ID_Pool_Ex<CosNotifyFilter::FilterID,CosNotifyFilter::FilterIDSeq> filter_ids_;
-  // Id generator for proxy suppliers
 };
 
 #include "ace/post.h"

@@ -1,19 +1,16 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_EventChannel_i.h
-//
-// = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::EventChannel interface.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_EventChannel_i.h
+ *
+ *  $Id$
+ *
+ * Implements the CosNotifyChannelAdmin::EventChannel interface.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_EVENTCHANNEL_I_H_
 #define TAO_NOTIFY_EVENTCHANNEL_I_H_
@@ -44,63 +41,64 @@ class TAO_Notify_EventListener;
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+ /**
+  * @class TAO_Notify_EventChannel_i
+  *
+  * @brief TAO_Notify_EventChannel_i
+  *
+  * This class handles all the object factory functionality.All the event
+  * routing is handled by its contained Event Manager class.
+  * = MISC. NOTES
+  * This class creates and owns 2 child POA's. one to contain CA's and the other for SA's.
+  * Now, a Channel object can be destoyed in 2 ways - as a side effect of its parent POA being
+  * destroyed or if this class's <destroy> method is invoked. If the object is being destroyed
+  * as a result of its Parent POA being destroyed, it is illegal to destroy  a childPOA
+  * because, the root poa destruction will destroy all child poa's.
+  * So in the destructor we conditionally check if the child POAs should be destroyed explicitly
+  * or not.
+  */
 class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotifyChannelAdmin::EventChannel, public PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //
-  //   TAO_Notify_EventChannel_i
-  //
-  // = DESCRIPTION
-  //   This class handles all the object factory functionality.All the event
-  //   routing is handled by its contained Event Manager class.
-  //
-  // = MISC. NOTES
-  //   This class creates and owns 2 child POA's. one to contain CA's and the other for SA's.
-  //   Now, a Channel object can be destoyed in 2 ways - as a side effect of its parent POA being
-  //   destroyed or if this class's <destroy> method is invoked. If the object is being destroyed
-  //   as a result of its Parent POA being destroyed, it is illegal to destroy  a childPOA
-  //   because, the root poa destruction will destroy all child poa's.
-  //   So in the destructor we conditionally check if the child POAs should be destroyed explicitly
-  //   or not.
-  //
  public:
+  /// Constructor.
+  /// <channel_factory> is the parent.
   TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFactory_i* channel_factory);
-  // Constructor.
-  // <channel_factory> is the parent.
 
+  /// Destructor
   virtual ~TAO_Notify_EventChannel_i (void);
-  // Destructor
 
+  /**
+   * Initialize this object.
+   * checks if the <initial_qos> and <initial admin> are valid.
+   * creates default filter, consumer admin and supplier admin.
+   */
   void init (CosNotifyChannelAdmin::ChannelID channel_id,
              const CosNotification::QoSProperties& initial_qos,
              const CosNotification::AdminProperties& initial_admin,
              PortableServer::POA_ptr default_POA,
              PortableServer::POA_ptr my_POA
              ACE_ENV_ARG_DECL);
-  // Initialize this object.
-  // checks if the <initial_qos> and <initial admin> are valid.
-  // creates default filter, consumer admin and supplier admin.
 
   // = Accessors
+  /// Get the default POA.
   PortableServer::POA_ptr get_default_POA (void);
-  // Get the default POA.
 
+  /// Get the CORBA object for this servant
   CosNotifyChannelAdmin::EventChannel_ptr get_ref (ACE_ENV_SINGLE_ARG_DECL);
-  // Get the CORBA object for this servant
 
+  /// Get the event manager.
   TAO_Notify_Event_Manager* get_event_manager (void);
-  // Get the event manager.
 
   // = Child destroyed notification.
+  /// This id is no longer in use.It can be reused by <consumer_admin_ids_>.
   void consumer_admin_destroyed (CosNotifyChannelAdmin::AdminID CA_ID);
-  // This id is no longer in use.It can be reused by <consumer_admin_ids_>.
 
+  /// This id is no longer in use.It can be reused by <supplier_admin_ids_>.
   void supplier_admin_destroyed (CosNotifyChannelAdmin::AdminID SA_ID);
-  // This id is no longer in use.It can be reused by <supplier_admin_ids_>.
 
+  /// Consumer Admin's are Group Listeners that are registered automatically with the EC when a ConsumerAdmin
+  /// is created. When a consumer is destroyed, it asks the EC to unregister itself.
   void unregister_listener (TAO_Notify_EventListener* group_listener ACE_ENV_ARG_DECL);
-  // Consumer Admin's are Group Listeners that are registered automatically with the EC when a ConsumerAdmin
-  // is created. When a consumer is destroyed, it asks the EC to unregister itself.
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
@@ -248,66 +246,68 @@ virtual CosNotification::QoSProperties * get_qos (
 
 protected:
   // = Data Members
+  /// The locking strategy.
   ACE_Lock* lock_;
-  // The locking strategy.
 
+  /**
+   * Flag to tell our destructor if we should destroy the CA and SA POA's.
+   * default is false, the parent poa destruction will remove these.
+   * set to true if the <destroy> method is invoked.
+   */
   CORBA::Boolean destory_child_POAs_;
-  // Flag to tell our destructor if we should destroy the CA and SA POA's.
-  // default is false, the parent poa destruction will remove these.
-  // set to true if the <destroy> method is invoked.
 
+  /// The factory that created us.
   TAO_Notify_EventChannelFactory_i* channel_factory_;
-  // The factory that created us.
 
+  /// The default POA in which we activate objects that don't have ids' pre-assigned.
   PortableServer::POA_var default_POA_;
-  // The default POA in which we activate objects that don't have ids' pre-assigned.
 
+  /// The POA in which i live.
   PortableServer::POA_var my_POA_;
-  // The POA in which i live.
 
+  /// The POA in which we should activate ConsumerAdmins in.
+  /// We create and own this.
   PortableServer::POA_var CA_POA_;
-  // The POA in which we should activate ConsumerAdmins in.
-  // We create and own this.
 
+  /// The POA in which we should activate SupplierAdmins in.
+  /// We create and own this.
   PortableServer::POA_var SA_POA_;
-  // The POA in which we should activate SupplierAdmins in.
-  // We create and own this.
 
+  /// The ID assigned to this channel.
   CosNotifyChannelAdmin::ChannelID channel_id_;
-  // The ID assigned to this channel.
 
+  /// The factory for channel objects.
   TAO_Notify_CO_Factory* channel_objects_factory_;
-  // The factory for channel objects.
 
+  /// The factory for POA based containers.
   TAO_Notify_POA_Factory* poa_factory_;
-  // The factory for POA based containers.
 
+  /// Event manager objects factory,
   TAO_Notify_EMO_Factory* event_manager_objects_factory_;
-  // Event manager objects factory,
 
+  /// Id generator for consumer admins.
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID,
     CosNotifyChannelAdmin::AdminIDSeq> consumer_admin_ids_;
-  // Id generator for consumer admins.
 
+  /// Id generator for supplier admins.
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID,
     CosNotifyChannelAdmin::AdminIDSeq> supplier_admin_ids_;
-  // Id generator for supplier admins.
 
+  /// Default InterFilterGroupOperator operator used when creating
+  /// the default ConsumerAdmin and SupplierAdmin.
   const CosNotifyChannelAdmin::InterFilterGroupOperator default_op_;
-  // Default InterFilterGroupOperator operator used when creating
-  // the default ConsumerAdmin and SupplierAdmin.
 
+  /// Default id's to CosEventChannelAdmin::ConsumerAdmin, SupplierAdmin.
   const CosNotifyChannelAdmin::AdminID default_id_;
-  // Default id's to CosEventChannelAdmin::ConsumerAdmin, SupplierAdmin.
 
+  /// Handle QoS admin methods.
   TAO_Notify_QoSAdmin_i qos_admin_;
-  // Handle QoS admin methods.
 
+  /// The event manager.
   TAO_Notify_Event_Manager* event_manager_;
-  // The event manager.
 
+  /// The list of group event listeners that have registered with us.
   TAO_Notify_EventListener_List* event_listener_list_;
-  // The list of group event listeners that have registered with us.
 };
 
 #if defined (_MSC_VER) && (_MSC_VER >= 1200)

@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   TAO_Notify_StructuredProxyPushConsumer_i.h
-//
-// = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::StructuredProxyPushConsumer
-//   interface.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   TAO_Notify_StructuredProxyPushConsumer_i.h
+ *
+ *  $Id$
+ *
+ * Implements the CosNotifyChannelAdmin::StructuredProxyPushConsumer
+ * interface.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
 #define TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
@@ -39,21 +36,22 @@ class TAO_Notify_SupplierAdmin_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_StructuredProxyPushConsumer_i
+ *
+ * @brief TAO_Notify_StructuredProxyPushConsumer_i
+ *
+ * Implements CosNotifyChannelAdmin::StructuredProxyPushConsumer
+ */
 class TAO_Notify_Export TAO_Notify_StructuredProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
 {
-  // = TITLE
-  //   TAO_Notify_StructuredProxyPushConsumer_i
-  //
-  // = DESCRIPTION
-  //   Implements CosNotifyChannelAdmin::StructuredProxyPushConsumer
-  //
 
 public:
+  /// Constructor
   TAO_Notify_StructuredProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Notify_StructuredProxyPushConsumer_i (void);
-  // Destructor
 
   // = interface methods
   virtual void connect_structured_push_supplier (
@@ -83,12 +81,12 @@ virtual void push_structured_event (
 
 protected:
   // = Helper methods
+  /// Dispatch updates to the supplier.
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL);
-  // dispatch updates to the supplier.
 
   // = Data members
+  /// The supplier that we're connected to.
   CosNotifyComm::StructuredPushSupplier_var push_supplier_;
-  // The supplier that we're connected to.
 
 private:
   typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>

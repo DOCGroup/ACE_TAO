@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   TAO_Notify_SequenceProxyPushConsumer_i.h
-//
-// = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::SequenceProxyPushConsumer
-//   interface.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   TAO_Notify_SequenceProxyPushConsumer_i.h
+ *
+ *  $Id$
+ *
+ * Implements the CosNotifyChannelAdmin::SequenceProxyPushConsumer
+ * interface.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_SEQUENCEPROXYPUSHCONSUMER_I_H
 #define TAO_NOTIFY_SEQUENCEPROXYPUSHCONSUMER_I_H
@@ -33,21 +30,22 @@ class TAO_Notify_SupplierAdmin_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_SequenceProxyPushConsumer_i
+ *
+ * @brief TAO_Notify_SequenceProxyPushConsumer_i
+ *
+ * Implements CosNotifyChannelAdmin::SequenceProxyPushConsumer
+ */
 class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
 {
-  // = TITLE
-  //   TAO_Notify_SequenceProxyPushConsumer_i
-  //
-  // = DESCRIPTION
-  //   Implements CosNotifyChannelAdmin::SequenceProxyPushConsumer
-  //
 
 public:
+  /// Constructor
   TAO_Notify_SequenceProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Notify_SequenceProxyPushConsumer_i (void);
-  // Destructor
 
   // = interface methods
   virtual void connect_sequence_push_supplier (
@@ -77,12 +75,12 @@ public:
 
 protected:
   // = Helper methods
+  /// Sends updates to the supplier.
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL);
-  // Sends updates to the supplier.
 
   // = Data members
+  /// The supplier that we're connected to.
   CosNotifyComm::SequencePushSupplier_ptr push_supplier_;
-  // The supplier that we're connected to.
 
 private:
   typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer> proxy_inherited;

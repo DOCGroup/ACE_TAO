@@ -1,21 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Notification
-//
-// = FILENAME
-//   Notify_Default_EMO_Factory.h
-//
-// = DESCRIPTION
-//   Default factory for event manager and its helper objects.
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Default_EMO_Factory.h
+ *
+ *  $Id$
+ *
+ * Default factory for event manager and its helper objects.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_DEFAULT_EMO_FACTORY_H
 #define NOTIFY_DEFAULT_EMO_FACTORY_H
@@ -62,22 +58,22 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
   TAO_Notify_Default_EMO_Factory (void);
   ~TAO_Notify_Default_EMO_Factory ();
 
+  /// Helper function to register the default factory into the service
+  /// configurator.
   static int init_svc (void);
-  // Helper function to register the default factory into the service
-  // configurator.
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
   virtual int fini (void);
 
+  /// Create an event manager.
   virtual TAO_Notify_Event_Manager* create_event_manager (TAO_Notify_EventChannel_i* channel ACE_ENV_ARG_DECL);
-  // Create an event manager.
 
+  /// Create the event map.
   virtual TAO_Notify_Event_Map* create_event_map (ACE_ENV_SINGLE_ARG_DECL);
-  // Create the event map.
 
+  /// Create event processor.
   virtual TAO_Notify_Event_Processor* create_event_processor (TAO_Notify_Event_Manager* event_manager ACE_ENV_ARG_DECL);
-  // Create event processor.
 
   // = Create processing tasks.
   virtual TAO_Notify_Worker_Task* create_source_eval_task (ACE_ENV_SINGLE_ARG_DECL);
@@ -97,8 +93,8 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
 
 protected:
   //= Protected Methods
+  /// Create a worker task, mt => is this a MT task, if so, tp_size is thread pool size.
   TAO_Notify_Worker_Task* create_task (int mt, int tp_size ACE_ENV_ARG_DECL);
-  // Create a worker task, mt => is this a MT task, if so, tp_size is thread pool size.
 
   int preallocate_tasks (void);
 

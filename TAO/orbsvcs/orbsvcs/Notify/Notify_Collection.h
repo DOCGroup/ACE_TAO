@@ -1,19 +1,16 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   Orbsvcs
-//
-// = FILENAME
-//   Notify_Collection.h
-//
-// = DESCRIPTION
-//   Collection types used by Notify
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Collection.h
+ *
+ *  $Id$
+ *
+ * Collection types used by Notify
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_COLLECTION_H
 #define TAO_NOTIFY_COLLECTION_H
@@ -36,46 +33,48 @@ class TAO_Notify_EventListener;
 class TAO_Notify_UpdateListener;
 class TAO_Notify_EventType;
 
+/// A list of event listeners that are looking for the same event type.
 typedef TAO_ESF_Proxy_Collection<TAO_Notify_EventListener> TAO_Notify_EventListener_List;
-// A list of event listeners that are looking for the same event type.
 
+/// A list of update listeners who want to be notified about publish/subscribe changes.
 typedef TAO_ESF_Proxy_Collection<TAO_Notify_UpdateListener> TAO_Notify_UpdateListener_List;
-// A list of update listeners who want to be notified about publish/subscribe changes.
 
+/**
+ * @class TAO_Notify_EventType_List
+ *
+ * @brief TAO_Notify_EventType_List
+ *
+ * Allows operations using the CosNotification::EventTypeSeq type.
+ */
 class TAO_Notify_Export TAO_Notify_EventType_List : public ACE_Unbounded_Set <TAO_Notify_EventType>
 {
-  // = TITLE
-  //   TAO_Notify_EventType_List
-  //
-  // = DESCRIPTION
-  //   Allows operations using the CosNotification::EventTypeSeq type.
-  //
 
   typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
 
 public:
+  /// Populate <event_type_seq> with the contents of this object.
   void populate (CosNotification::EventTypeSeq& event_type_seq);
-  // Populate <event_type_seq> with the contents of this object.
 
+  /// insert the contents of <event_type_seq> into this object.
   void insert_seq (const CosNotification::EventTypeSeq& event_type_seq);
-  // insert the contents of <event_type_seq> into this object.
 
+  /// remove the contents of <event_type_seq> from this object.
   void remove_seq (const CosNotification::EventTypeSeq& event_type_seq);
-  // remove the contents of <event_type_seq> from this object.
 };
 
 // ****************************************************************
 
 // = Collection Iterators.
 
+ /**
+  * @class TAO_Notify_Shutdown_Worker
+  *
+  * @brief TAO_Notify_Shutdown_Worker
+  *
+  * Shutdown each listener
+  */
 class TAO_Notify_Export TAO_Notify_Shutdown_Worker : public TAO_ESF_Worker<TAO_Notify_EventListener>
 {
-  // = TITLE
-  //   TAO_Notify_Shutdown_Worker
-  //
-  // = DESCRIPTION
-  //   Shutdown each listener
-  //
  public:
   TAO_Notify_Shutdown_Worker (void);
 

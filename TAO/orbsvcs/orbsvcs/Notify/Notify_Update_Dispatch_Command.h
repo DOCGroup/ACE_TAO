@@ -1,21 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Notification
-//
-// = FILENAME
-//   Notify_Update_Dispatch_Command.h
-//
-// = DESCRIPTION
-//
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Update_Dispatch_Command.h
+ *
+ *  $Id$
+ *
+ *
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_UPDATE_DISPATCH_COMMAND_H
 #define TAO_NOTIFY_UPDATE_DISPATCH_COMMAND_H
@@ -32,22 +28,22 @@
 
 class TAO_Notify_UpdateListener;
 
+ /**
+  * @class TAO_Notify_Update_Dispatch_Command
+  *
+  * @brief TAO_Notify_Update_Dispatch_Command
+  *
+  */
 class TAO_Notify_Export TAO_Notify_Update_Dispatch_Command : public TAO_Notify_Command
 {
-  // = TITLE
-  //   TAO_Notify_Update_Dispatch_Command
-  //
-  // = DESCRIPTION
-  //
-  //
  public:
   // = Initialization and termination code
   TAO_Notify_Update_Dispatch_Command (TAO_Notify_UpdateListener* listener, TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed);
 
   ~TAO_Notify_Update_Dispatch_Command ();
 
+  /// Command callback
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
-  // Command callback
 
 protected:
   // = Data Members
