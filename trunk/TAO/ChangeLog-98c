@@ -1,3 +1,8 @@
+Sun Mar 22 03:52:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp (open_services): "this" may only be used
+ 	inside a nonstatic member function.
+
 Sun Mar 22 02:58:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Makefile:

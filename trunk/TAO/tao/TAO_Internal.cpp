@@ -63,7 +63,7 @@ TAO_Internal::open_services (int& argc, char** argv)
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
       ACE_UNUSED_ARG (argc);
       ACE_UNUSED_ARG (argv);
-      return this->fake_service_entries_i ();
+      return fake_service_entries_i ();
 #else
       return ACE_Service_Config::open (argc, argv);
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
