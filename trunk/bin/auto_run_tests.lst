@@ -83,6 +83,10 @@ TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
 TAO/examples/Simple/time/run_test.pl
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM
 
+TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile.pl: !MINIMUM
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM
@@ -91,6 +95,8 @@ TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST
 TAO/orbsvcs/tests/EC_Basic/run_test.pl
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST
+
+
 # BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
 TAO/orbsvcs/tests/Event_Latency/run_test.pl
