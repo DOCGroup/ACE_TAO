@@ -4207,14 +4207,8 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 
 # if defined (ACE_HAS_CHARPTR_DL)
 typedef char * ACE_DL_TYPE;
-#   if defined (ACE_HAS_UNICODE)
-typedef wchar_t * ACE_WIDE_DL_TYPE;
-#   endif /* ACE_HAS_UNICODE */
 # else
 typedef const char * ACE_DL_TYPE;
-#   if defined (ACE_HAS_UNICODE)
-typedef const wchar_t * ACE_WIDE_DL_TYPE;
-#   endif /* ACE_HAS_UNICODE */
 # endif /* ACE_HAS_CHARPTR_DL */
 
 # if !defined (ACE_HAS_SIGINFO_T)
@@ -5082,9 +5076,10 @@ public:
   // WinCE only supports UNICODE, so we don't need these functions.
 # if !defined (ACE_HAS_WINCE)
   static char *dlerror (void);
-  static ACE_SHLIB_HANDLE dlopen (ACE_DL_TYPE filename,
+  static ACE_SHLIB_HANDLE dlopen (const char *filename,
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
-  static void *dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbol);
+  static void *dlsym (ACE_SHLIB_HANDLE handle,
+                      const char *symbol);
 # endif /* ! ACE_HAS_WINCE */
 
   // = A set of wrappers for the directory iterator.
@@ -6063,12 +6058,6 @@ public:
   static int rename (const wchar_t *oldname,
                      const wchar_t *newname);
   static int unlink (const wchar_t *path);
-#     if defined (ACE_HAS_WINCE)
-  static wchar_t *dlerror (void);
-#     endif /* !ACE_HAS_WINCE */
-  static ACE_SHLIB_HANDLE dlopen (ACE_WIDE_DL_TYPE filename,
-                                  int mode = ACE_DEFAULT_SHLIB_MODE);
-  static void *dlsym (ACE_SHLIB_HANDLE handle, ACE_WIDE_DL_TYPE symbol);
   static wchar_t *mktemp (wchar_t *t);
   static int mkdir (const wchar_t *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);
