@@ -6776,108 +6776,121 @@ ACE_CE_ARGV::ACE_CE_ARGV(ACE_TCHAR* cmdLine)
 : ce_argv_(0)
 , ce_argc_(0)
 {
-    // Note: ACE has argv parser and processor; however, they cannot be used because of
-    //       dependency.  ACE_OS is now separate from ACE, and ACE depends on ACE_OS.
-    //       Still, using all this array and complicated pointer manipulation should be
-    //       considered to be replaced and use STL (or something) for better readability
-    //       and code management.  Also, string_to_argv() does not work well for CE argv
-    //       because of incorrect '"' identification.
+  // Note: ACE has argv parser and processor; however, they cannot be
+  // used because of dependency.  ACE_OS is now separate from ACE, and
+  // ACE depends on ACE_OS. Still, using all this array and complicated
+  // pointer manipulation should be considered to be replaced and use STL
+  // (or something) for better readability and code management.  Also,
+  // string_to_argv() does not work well for CE argv because of incorrect
+  // '"' identification.
+  const ACE_TCHAR* dummyArgv = ACE_TEXT("root");  // dummy for the first argv
+  const ACE_TCHAR* separator = ACE_TEXT(" ");     // blank space is a separator
 
-    const ACE_TCHAR* dummyArgv = ACE_TEXT("root");  // dummy for the first argv
-    const ACE_TCHAR* separator = ACE_TEXT(" ");     // blank space is a separator
-
-    int formattedCmdLineLength = ACE_OS::strlen(dummyArgv) +
-                                 ACE_OS::strlen(separator) +
-                                 1;  // 1 is for the NULL at the end
-
-    if (ACE_OS::strlen(cmdLine) > 0) {
-        formattedCmdLineLength += ACE_OS::strlen(cmdLine);
-        formattedCmdLineLength += ACE_OS::strlen(separator);
+  int formattedCmdLineLength =
+    ACE_OS::strlen(dummyArgv) + ACE_OS::strlen(separator) + 1;  // for 0 term.
+  if (ACE_OS::strlen(cmdLine) > 0)
+    {
+      formattedCmdLineLength += ACE_OS::strlen(cmdLine);
+      formattedCmdLineLength += ACE_OS::strlen(separator);
     }
 
-    // formattedCmdLine will have dummyArgv and a separator at the beginning of cmdLine
-    // and a separator at the end to generalize format and reduce the amount of code
-    ACE_TCHAR* formattedCmdLine = 0;
-    ACE_NEW(formattedCmdLine, ACE_TCHAR[formattedCmdLineLength]);
+  // formattedCmdLine will have dummyArgv and a separator at the beginning
+  // of cmdLine and a separator at the end to generalize format and reduce
+  // the amount of code.
+  ACE_TCHAR* formattedCmdLine = 0;
+  ACE_NEW(formattedCmdLine, ACE_TCHAR[formattedCmdLineLength]);
 
-    ACE_OS::strcpy(formattedCmdLine, dummyArgv);
-    ACE_OS::strcat(formattedCmdLine, separator);
+  ACE_OS::strcpy(formattedCmdLine, dummyArgv);
+  ACE_OS::strcat(formattedCmdLine, separator);
 
-    int max_possible_argc = 1;  // start with 1 because of the dummyArgv at the beginning
+  // start with 1 because of the dummyArgv at the beginning
+  int max_possible_argc = 1;
+  if (ACE_OS::strlen(cmdLine) > 0)
+    {
+      int formattedPos  = ACE_OS::strlen(formattedCmdLine);
+      int cmdLineLength = ACE_OS::strlen(cmdLine);
 
-    if (ACE_OS::strlen(cmdLine) > 0) {
-        int formattedPos  = ACE_OS::strlen(formattedCmdLine);
-        int cmdLineLength = ACE_OS::strlen(cmdLine);
+      // Inside of this for loop, it does same thing as strcat except it
+      // checks and puts only one single white space between two argv entries.
+      for (int i = 0; i < cmdLineLength; ++i)
+        {
+          if (iswspace(cmdLine[i]) != 0)
+            ++max_possible_argc;  // counting the number of white spaces
 
-        // Inside of this for loop, it does same thing as strcat except it
-        // checks and puts only one single white space between two argv entries.
-        for (int i = 0; i < cmdLineLength; ++i) {
-            if (iswspace(cmdLine[i]) != 0) {
-                ++max_possible_argc;  // counting the number of white spaces
+          formattedCmdLine[formattedPos++] = cmdLine[i];
+
+          if (iswspace(cmdLine[i]) != 0)
+            {
+              // make sure there is only one white space between two
+              // argv entries.
+              while ((i < cmdLineLength) && (iswspace(cmdLine[i + 1]) != 0))
+                ++i;
             }
-
-            formattedCmdLine[formattedPos++] = cmdLine[i];
-
-            if (iswspace(cmdLine[i]) != 0) {
-                // make sure there is only one white space between two argv entries.
-                while ((i < cmdLineLength) && (iswspace(cmdLine[i + 1]) != 0)) {
-                    ++i;
-                }
-            }
         }
 
-        formattedCmdLine[formattedPos] = 0;
-        ACE_OS::strcat(formattedCmdLine, separator);  // make sure formattedCmdLine ends with a blank
+      formattedCmdLine[formattedPos] = 0;
+      // make sure formattedCmdLine ends with a blank
+      ACE_OS::strcat (formattedCmdLine, separator);
     }
 
-    int formattedCmdLength = ACE_OS::strlen(formattedCmdLine);
+  int formattedCmdLength = ACE_OS::strlen(formattedCmdLine);
 
-    bool insideQuotation = false;
-    int* argv_strlen = 0;
-    int entry_size = 0;
-    ACE_NEW(argv_strlen, int[max_possible_argc]);
+  bool insideQuotation = false;
+  int* argv_strlen = 0;
+  int entry_size = 0;
+  ACE_NEW (argv_strlen, int[max_possible_argc]);
 
-    // determine argc
-    for (int i = 0; i < formattedCmdLength; ++i) {
-        if (formattedCmdLine[i] == '\\') {
-            ++i; // ignore the following character
-            ++entry_size;
+  // determine argc
+  for (int i = 0; i < formattedCmdLength; ++i)
+    {
+      if (formattedCmdLine[i] == '\\')
+        {
+          ++i; // ignore the following character
+          ++entry_size;
         }
-        else if (formattedCmdLine[i] == '"') {
-            insideQuotation = !insideQuotation;
+      else if (formattedCmdLine[i] == '"')
+        {
+          insideQuotation = !insideQuotation;
         }
-        else if ((!insideQuotation) && (iswspace(formattedCmdLine[i]) != 0)) {
-            // new argv entry end found
-            argv_strlen[ce_argc_++] = entry_size;  // cache the size of this entry
-            entry_size = 0;
+      else if ((!insideQuotation) && (iswspace(formattedCmdLine[i]) != 0))
+        {
+          // new argv entry end found
+          argv_strlen[ce_argc_++] = entry_size;  // cache this entry size
+          entry_size = 0;
         }
-        else {
-            ++entry_size;
+      else
+        {
+          ++entry_size;
         }
     }
 
-    ACE_NEW(ce_argv_, ACE_TCHAR*[ce_argc_ + 1]);
+    ACE_NEW (ce_argv_, ACE_TCHAR*[ce_argc_ + 1]);
     ce_argv_[ce_argc_] = 0;  // Last command line entry is a NULL.
 
-    for (int j = 0, cmdLinePos = 0; j < ce_argc_; ++j, ++cmdLinePos) {
+    for (int j = 0, cmdLinePos = 0; j < ce_argc_; ++j, ++cmdLinePos)
+      {
         int length = argv_strlen[j];
 
-        ACE_NEW(ce_argv_[j], ACE_TCHAR[length + 1]);
+        ACE_NEW (ce_argv_[j], ACE_TCHAR[length + 1]);
         ce_argv_[j][length] = 0;  // string termination null
 
-        if (iswspace(formattedCmdLine[cmdLinePos]) != 0) {
+        if (iswspace (formattedCmdLine[cmdLinePos]) != 0)
+          {
             // This is where prior argv has trailing '"' at the end.
             ++cmdLinePos;
-        }
+          }
 
-        for (int n = 0; n < length; ++n, ++cmdLinePos) {
-            if ((formattedCmdLine[cmdLinePos] == '\\') || (formattedCmdLine[cmdLinePos] == '"')) {
+        for (int n = 0; n < length; ++n, ++cmdLinePos)
+          {
+            if ((formattedCmdLine[cmdLinePos] == '\\') ||
+                (formattedCmdLine[cmdLinePos] == '"')     )
+              {
                 ++cmdLinePos;
-            }
+              }
 
             ce_argv_[j][n] = formattedCmdLine[cmdLinePos];
-        }
-    }
+          }
+      }
 
     delete argv_strlen;
     delete formattedCmdLine;
@@ -6885,9 +6898,8 @@ ACE_CE_ARGV::ACE_CE_ARGV(ACE_TCHAR* cmdLine)
 
 ACE_CE_ARGV::~ACE_CE_ARGV(void)
 {
-    for (int i = 0; i < ce_argc_; ++i) {
-        delete [] ce_argv_[i];
-    }
+    for (int i = 0; i < ce_argc_; ++i)
+      delete [] ce_argv_[i];
 
     delete [] ce_argv_;
 }
