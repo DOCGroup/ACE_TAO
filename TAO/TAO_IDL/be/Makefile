@@ -86,9 +86,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 ifeq ($(CXX),g++)
 CCFLAGS += -Wno-switch
+PIC = -fPIC
 endif
 
-CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
+CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
+            -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
 #----------------------------------------------------------------------------
 #	Dependencies

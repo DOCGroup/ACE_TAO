@@ -89,8 +89,10 @@ struct TAO_Linear_ObjTable_Entry
 };
 
 class TAO_Linear_ObjTable: public TAO_Object_Table
-// @@ Please comment me.
 {
+  // = TITLE
+  //    Lookup strategy based on a simple linear search.  Not
+  //    efficient, but most likely will always work.
 public:
   TAO_Linear_ObjTable (CORBA::ULong size);
 
@@ -114,9 +116,9 @@ private:
 };
 
 struct TAO_Active_Demux_ObjTable_Entry
+{
   // = TITLE
   //   Active Demux lookup table entry.
-{
   CORBA::Object_ptr obj_;
   // CORBA::Object pointer corresponding to the key
 
@@ -128,8 +130,10 @@ struct TAO_Active_Demux_ObjTable_Entry
 };
 
 class TAO_Active_Demux_ObjTable : public TAO_Object_Table
-// @@ Please comment me.
 {
+  // = TITLE
+  //   An object table lookup strategy based on active
+  //   demultiplexing strategy.
 public:
   TAO_Active_Demux_ObjTable (CORBA::ULong size);
 
