@@ -9,6 +9,10 @@ Tue Dec 24 12:49:21 1996  David L. Levine  <levine@cs.wustl.edu>
 	  needed to be before the closing '}' of the block.  Thanks to
 	  James Johnson for pointing this out, also.
 
+	* ace/OS.cpp: don't include ace/ARGV.h except on WIN32 because
+	  it's only needed there, and don't compile ACE_Thread_Adapter on
+	  VxWorks to save space
+
 	* apps/Gateway/Peer/Gateway_Handler.h:  changed #include "Event.h"
 	  to be #include "Peer_Message.h" so that Peer_Header::ROUTING_ID
 	  can be referenced in the class declaration.  This subproject
