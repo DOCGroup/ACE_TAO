@@ -495,7 +495,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "failed to accept visitor\n"
                              ),  -1);
         }
-      this->ctx_->alias (0);
+      this->ctx_->alias (0); // reset
     }
   else
     {
@@ -540,6 +540,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                   << node->tc_name ()->last_component () << ";\n\n";
             }
         }
+      this->ctx_->tdef (0); // reset
     }
 
   return 0;
@@ -871,6 +872,16 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
                              "bad primitive base type\n"
                              ),  -1);
         }
+      // accept on this base type
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_typedef - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
+
       this->ctx_->alias (0);
     }
   else
@@ -889,17 +900,18 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
                              "bad base type\n"
                              ),  -1);
         }
-    }
-  // accept on this base type
-  if (bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typedef_ch::"
-                         "visit_typedef - "
-                         "failed to accept visitor\n"
-                         ),  -1);
-    }
+      // accept on this base type
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_typedef - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
 
+      this->ctx_->tdef (0);
+    }
   return 0;
 }
 
@@ -1142,6 +1154,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
               << node->flatname () << ";\n\n";
 
         }
+      this->ctx_->tdef (0);
     }
 
   return 0;
