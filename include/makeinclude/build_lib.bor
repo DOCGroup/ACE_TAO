@@ -13,8 +13,15 @@
 # UNICODE - if defined when building a unicode lib
 #
 
+# Check if the BASE_BINDIR variable was explicitly specified.
+!ifdef BASE_BINDIR
+EXPLICIT_BASE_BINDIR = 1
+!endif
+
 !ifdef INSTALL_THIS_TARGET
+!ifndef EXPLICIT_BASE_BINDIR
 BINDIR = $(CORE_BINDIR)
+!endif
 !endif
 
 !include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
@@ -65,8 +72,8 @@ USE_FULL_PATH = 1
 .cpp.obj:
 	@$(MAKE_OBJDIR)
 !ifdef USE_FULL_PATH
-	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
-	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
+	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
 !else
 	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 !endif
@@ -74,8 +81,8 @@ USE_FULL_PATH = 1
 .c.obj:
 	@$(MAKE_OBJDIR)
 !ifdef USE_FULL_PATH
-	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
-	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
+	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
 !else
 	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 !endif
