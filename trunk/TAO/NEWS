@@ -14,20 +14,21 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
   . ONGOING - ETA unknown
 
-PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
-============================================
-
 - (Ossama) Typecode overhaul
 
-  . ONGOING - ETA 10/31
+  . ONGOING - ETA 10/31 -- currently targeted for TAO 1.4.4.
+
+- (Ossama/Jeff) Skeleton refactoring
+
+  . ONGOING - ETA 10/30 -- currently targeted for TAO 1.4.4.
+
+
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
+============================================
 
 - (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
   . ONGOING - ETA 11/10
-
-- (Ossama/Jeff) Skeleton refactoring
-
-  . ONGOING - ETA 10/30
 
 - (Bala) Implementation Repository enhancements
 
