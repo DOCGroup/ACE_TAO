@@ -59,12 +59,16 @@ ifeq ($(RET),1)
   PTHREAD_CFLAGS = -D_THREAD_SAFE
   PTHREAD_LIBS   = -pthread
 else
-  PTHREAD_CFLAGS = -D_THREAD_SAFE
+  RET = $(shell test $(OSVERSION) -lt 502102 && printf 1)
+  ifeq ($(RET),1)
   PTHREAD_LIBS   = -lc_r
+  else
+  PTHREAD_LIBS   = -lpthread
+  endif
 endif # RET
 
 CFLAGS  += $(PTHREAD_CFLAGS)
-LDFLAGS += $(PTHREAD_LIBS)
+LIBS += $(PTHREAD_LIBS)
  
 endif # threads
 

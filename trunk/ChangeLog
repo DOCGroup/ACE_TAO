@@ -1,3 +1,10 @@
+Wed Feb  4 17:41:25 UTC 2004  Craig Rodrigues <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_freebsd.GNU:
+	  Change thread flags to reflect new changes in FreeBSD.
+	  KSE-based -lpthread is now the default library in
+	  FreeBSD-CURRENT.  
+
 Tue Feb  3 16:21:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* m4/compiler.m4: If --disable-rtti is specified on AIX, add
