@@ -77,8 +77,10 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   CORBA::Short header;
   ACE_UINT16 remote_port;
 
-  char * name;
-  ACE_NEW_RETURN (name, char [BUFSIZ], 0);
+  char *name;
+  ACE_NEW_RETURN (name,
+                  char [BUFSIZ],
+                  0);
   CORBA::String_var service_name (name);
 
   ACE_INET_Addr remote_addr;
@@ -88,14 +90,12 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                                        sizeof(header),
 				       remote_addr,
                                        MSG_PEEK);
-  
   if (n <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_IOR_Multicast::handle_input - peek %d\n",
 		       n), 
 		      0);
-  
-  if (header <= 0)
+  else if (header <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Header value < 1\n"),
                       0);
@@ -112,15 +112,16 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   iov[2].iov_len  = header - sizeof (ACE_UINT16);
   
   // Read the iovec.
-  n = this->mcast_dgram_.recv (iov, iovcnt, remote_addr);
+  n = this->mcast_dgram_.recv (iov,
+                               iovcnt,
+                               remote_addr);
   
   if (n <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_IOR_Multicast::handle_input recv = %d\n",
 		       n), 
 		      0);
-  
-  if (TAO_debug_level > 0)
+  else if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"(%P|%t) Received multicast.\n"
 		"Service Name received : %s\n"
@@ -133,13 +134,16 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // Null terminate.
   service_name [header - sizeof (ACE_UINT16)] = 0;
   
-  if (ACE_OS::strcmp (service_name.in (), "NameService") != 0)
+  if (ACE_OS::strcmp (service_name.in (),
+                      "NameService") != 0)
     {
-      // The client has requested an IOR other than for the Name Service.
-      // Lookup the table for the IOR. The call to find_ior will fill the
-      // ior for us if the service name is found in the table.
+      // The client has requested an IOR other than for the Name
+      // Service.  Lookup the table for the IOR. The call to find_ior
+      // will fill the ior for us if the service name is found in the
+      // table.
       
-      if (this->ior_lookup_table_.find_ior (service_name.in (), ior) != 0)
+      if (this->ior_lookup_table_.find_ior (service_name.in (),
+                                            ior) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "IOR_Multicast::find failed.\n"),
 			  0);
@@ -151,42 +155,26 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   ACE_SOCK_Stream stream;
   
   // Connect.
-  if (connector.connect (stream, peer_addr) == -1)
+  if (connector.connect (stream,
+                         peer_addr) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
 		       "IOR_Multicast::connect failed\n"),
 		      0);
-  
   // Send the IOR back to the client.
-  ssize_t retcode = stream.send_n (ior.c_str (),
-				   ACE_OS::strlen (ior.c_str ()) + 1);
-  
+  ssize_t result = stream.send_n (ior.c_str (),
+                                  ACE_OS::strlen (ior.c_str ()) + 1);
   // Check for error.
-  if (retcode == -1)
+  if (result == -1)
     return 0;
   
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) ior_: <%s>\n"
                 "sent to %s:%u.\n"
-                "retcode from send = %d\n",
+                "result from send = %d\n",
                 ior.c_str (),
                 peer_addr.get_host_name (),
 		peer_addr.get_port_number (),
-                retcode));
-  
+                result));
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

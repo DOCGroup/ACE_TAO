@@ -658,15 +658,17 @@ CORBA_ORB::multicast_query (char *buf,
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "Unable to open the Datagram!\n"),
 		      -1);
-    
+
+  // Vishal, please only print this stuff out if TAO_debug > 0.
   ACE_DEBUG ((LM_DEBUG,
 	      "\nPort sent |%u|\n",
 	      my_addr.get_port_number ()));
   
   // Convert the port that we are listening at to Network Byte Order.
-  ACE_UINT16 response_port = ACE_HTONS (my_addr.get_port_number ());
+  ACE_UINT16 response_port =
+    ACE_HTONS (my_addr.get_port_number ());
   
-  // Length of data to be sent. This is sent as a header. 
+  // Length of data to be sent. This is sent as a header.
   CORBA::Short data_len = 
     sizeof (ACE_UINT16) + ACE_OS::strlen (service_name);
   
@@ -690,20 +692,22 @@ CORBA_ORB::multicast_query (char *buf,
   ssize_t n_bytes = dgram.send (iovp,
 				iovcnt,
 				multicast_addr);
-  
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "\nsent multicast request."));
-  
+    ACE_DEBUG ((LM_DEBUG,
+                "\nsent multicast request."));
+
+  // Vishal, I moved this close() call up here.  Please make sure that
+  // this doesn't mess things up!!!
+
+  // We don't need the Dgram anymore.
+  dgram.close ();
+
   // Check for errors.
   if (n_bytes == -1)
-    {
-      dgram.close ();
-      ACE_ERROR_RETURN((LM_ERROR, 
-			"Error sending IIOP Multicast!\n"), 
-		       -1);
-    }
-  
-  if (TAO_debug_level > 0)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "Error sending IIOP Multicast!\n"), 
+                      -1);
+  else if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"\n%s; Sent multicast."
 		"# of bytes sent is %d.\n",
@@ -715,23 +719,22 @@ CORBA_ORB::multicast_query (char *buf,
 		     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
 		     : *timeout);
   
-  // We dont need the Dgram anymore.
-  dgram.close ();
-
   // Start listening.
   if (acceptor.accept (stream, 0, &tv) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
 		       "multicast_query : Unable to accept\n"),
 		      0);
   
-  // receive the IOR.  
-  n_bytes = stream.recv (buf, BUFSIZ, 0, timeout);
-  
-  // close socket now.
-  int retval = stream.close ();
+  // Receive the IOR.  
+  n_bytes = stream.recv (buf,
+                         BUFSIZ,
+                         0,
+                         timeout);
+  // Close socket now.
+  stream.close ();
   
   // Check for errors.
-  if (n_bytes == -1 || retval == -1)
+  if (n_bytes == -1)
     {
       if (TAO_debug_level > 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -750,7 +753,6 @@ CORBA_ORB::multicast_query (char *buf,
 		buf));
   
   return 0;
-  
 }
 
 // @@ This will have to be sanitized of transport specific calls
@@ -766,11 +768,11 @@ CORBA_ORB::multicast_to_service (const char * service_name,
                                  u_short port,
                                  ACE_Time_Value *timeout)
 {
-  char buf[BUFSIZ];
+  char buf[BUFSIZ + 1];
   
   // Use UDP multicast to locate the  service.
-  
-  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
+  CORBA_Object_ptr return_value =
+    CORBA_Object::_nil ();
   
   if (this->multicast_query (buf,
 			     service_name, 
@@ -790,7 +792,6 @@ CORBA_ORB::multicast_to_service (const char * service_name,
   
   // Return ior.
   return return_value;
-  
 }
 
 CORBA_Object_ptr
@@ -838,10 +839,15 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 	  // Used by the strtok_r.
 	  char *lasts[BUFSIZ];
 	  
-	  // Append the given object ID to all the end-points of Default Init Ref.
-	  for (char *str = ACE_OS::strtok_r (default_init_ref, ",",lasts);
+	  // Append the given object ID to all the end-points of
+	  // Default Init Ref.
+	  for (char *str = ACE_OS::strtok_r (default_init_ref,
+                                             ",",
+                                             lasts);
 	       str != 0 ;
-	       str = ACE_OS::strtok_r (0, ",",lasts))   
+	       str = ACE_OS::strtok_r (0, 
+                                       ",",
+                                       lasts))   
 	    {
 	      list_of_profiles += ACE_CString (str);
 	      list_of_profiles += ACE_CString ("/");
@@ -852,22 +858,28 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 	  // Replace the last extra comma with a null.
 	  list_of_profiles[list_of_profiles.length () - 1] = '\0';
 	  
-	  return_value = this->string_to_object (list_of_profiles.rep (), TAO_IN_ENV);
+	  return_value = this->string_to_object (list_of_profiles.rep (),
+                                                 TAO_IN_ENV);
 	  return CORBA_Object::_duplicate (return_value);
 	  
 	}
     }
   
-  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
+  if (ACE_OS::strcmp (name,
+                      TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_name_service (timeout);
-  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
+  else if (ACE_OS::strcmp (name,
+                           TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_trading_service (timeout);
-  else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
+  else if (ACE_OS::strcmp (name,
+                           TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_root_poa ();
-  else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
+  else if (ACE_OS::strcmp (name,
+                           TAO_OBJID_POACURRENT) == 0)
     return this->resolve_poa_current ();
   else
-    TAO_THROW_RETURN (CORBA_ORB::InvalidName (), CORBA_Object::_nil ());
+    TAO_THROW_RETURN (CORBA_ORB::InvalidName (),
+                      CORBA_Object::_nil ());
 
 }
 
@@ -902,7 +914,6 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                           orb_core->orb_params ()->addr ().get_port_number (),
                           key,
                           TAO_ORB_Core_instance ()->orb_params ()->addr ());
-  
   STUB_Object *data = 0;
   // @@ replace IIOP::Profile with something more appropriate!!
   data = new STUB_Object (id, pfile);
@@ -925,7 +936,6 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
       if (data == 0)
         env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-
     }
 
   return data;
