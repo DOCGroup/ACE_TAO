@@ -1,3 +1,9 @@
+Sun May 26 21:04:36 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/Makefile.EXE:
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.FE: Updated Makefile dependencies.
+
 Sun May 26 01:18:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object_Proxy_Impl.h:
