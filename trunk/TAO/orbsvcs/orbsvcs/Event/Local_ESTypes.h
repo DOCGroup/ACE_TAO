@@ -24,7 +24,6 @@
 
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/RtecEventCommC.h"

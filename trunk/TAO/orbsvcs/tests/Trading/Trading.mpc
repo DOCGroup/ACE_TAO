@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Test Lib): orbsvcslib, trading, naming, svc_utils, iortable, dynamicany, portableserver {
+project(*Test Lib): orbsvcslib, trading_serv, naming, svc_utils, iortable, dynamicany, portableserver {
   sharedname = TTest
   idlflags += -I..\..\.. -I..\..\..\orbsvcs -Sc -Wb,export_macro=TAO_TTest_Export -Wb,export_include=ttest_export.h
   dynamicflags = TAO_TTEST_BUILD_DLL

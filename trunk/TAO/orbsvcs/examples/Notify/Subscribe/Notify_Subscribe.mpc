@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, notification, naming, minimum_corba {
+project : orbsvcsexe, notification, notification_skel, naming, minimum_corba {
 }

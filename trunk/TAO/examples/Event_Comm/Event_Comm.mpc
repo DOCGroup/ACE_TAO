@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*notifier): namingexe {
+project(*notifier): namingexe, naming_serv {
   Source_Files {
     Event_Comm_i.cpp
     Notifier_Server.cpp
@@ -9,7 +9,7 @@ project(*notifier): namingexe {
   }
 }
 
-project(*consumer): namingexe {
+project(*consumer): namingexe, portableserver {
   Source_Files {
     Consumer_Input_Handler.cpp
     Consumer_Handler.cpp
@@ -18,7 +18,7 @@ project(*consumer): namingexe {
   }
 }
 
-project(*supplier): namingexe {
+project(*supplier): namingexe, portableserver {
   Source_Files {
     Event_Comm_i.cpp
     Supplier_Input_Handler.cpp

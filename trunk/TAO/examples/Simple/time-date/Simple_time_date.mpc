@@ -26,7 +26,7 @@ project(*server): taoserver {
   }
 }
 
-project(*client): taoclient, namingexe {
+project(*client): taoclient, iortable, namingexe {
   after    += *lib
   libs     += Time_Date
   libpaths += .

@@ -1,21 +1,21 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe {
+project(*server): namingexe, portableserver {
   Source_Files {
     status_i.cpp
     server.cpp
   }
 }
 
-project(*client): namingexe {
+project(*client): namingexe, portableserver {
   Source_Files {
     ior_corbaloc_client_i.cpp
     client.cpp
   }
 }
 
-project(*corbaname client): namingexe {
+project(*corbaname client): namingexe, portableserver {
   Source_Files {
     status_i.cpp
     corbaname_client.cpp

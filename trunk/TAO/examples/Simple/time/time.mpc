@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe {
+project(*server): namingexe, naming_serv {
   Source_Files {
     Time_i.cpp
     server.cpp
@@ -9,7 +9,7 @@ project(*server): namingexe {
   }
 }
 
-project(*client): namingexe {
+project(*client): namingexe, naming_serv {
   exename = client
 
   Source_Files {

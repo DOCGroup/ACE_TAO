@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, core, notification, naming {
+project : orbsvcsexe, core, notification_serv, naming, iortable {
   exename  = Notify_Service
   Source_Files {
     Notify_Server.cpp
@@ -12,7 +12,7 @@ project : orbsvcsexe, core, notification, naming {
   }
 }
 
-project(NT_Notify_Service) : orbsvcsexe, core, notification, naming {
+project(NT_Notify_Service) : orbsvcsexe, core, notification_serv, naming, iortable {
   exename  = NT_Notify_Service
   Source_Files {
     Notify_Service.cpp

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client) : orbsvcsexe, event {
+project(*Client) : orbsvcsexe, event, event_skel, naming {
   idlflags += -I ../../..
   source_files {
     FactoryClient.cpp

@@ -1,3 +1,126 @@
+Tue Sep  7 16:31:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+
+	  Removed #include of "orbsvcs/Notify/CosNotify_Initializer.h", as
+	  that requires the Notification Service implementation library to
+	  be pulled in.
+
+	* orbsvcs/TAO_Service/svc.conf:
+	* orbsvcs/examples/Notify/ThreadPool/notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/cos_notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/rt_notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/cos_notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/rt_notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/cos_notify.conf:
+	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/rt_notify.conf:
+
+	  Changed CosEvent, CosNaming, CosNotification, and CosTrading
+	  Service file/path names.
+
+	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+	* examples/Callback_Quoter/Callback_Quoter.mpc:
+	* examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+	* examples/Event_Comm/Event_Comm.mpc:
+	* examples/Logging/Logging.mpc:
+	* examples/Simple/bank/bank.mpc:
+	* examples/Simple/echo/echo.mpc:
+	* examples/Simple/grid/grid.mpc:
+	* examples/Simple/time-date/Simple_time_date.mpc:
+	* examples/Simple/time/time.mpc:
+	* examples/ior_corbaloc/ior_corbaloc.mpc:
+	* examples/mfc/client.mpc:
+	* examples/mfc/server.mpc:
+	* orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
+	* orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.mpc:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+	* orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+	* orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	* orbsvcs/Naming_Service/Naming_Service.mpc:
+	* orbsvcs/Notify_Service/Notify_Service.mpc:
+	* orbsvcs/Time_Service/Time_Service.mpc:
+	* orbsvcs/Trading_Service/Trading_Service.mpc:
+	* orbsvcs/examples/CosEC/Factory/CosEC_Factory.mpc:
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+	* orbsvcs/examples/CosEC/Simple/CosEC_Simple.mpc:
+	* orbsvcs/examples/Notify/Filter/Notify_Filter.mpc:
+	* orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
+	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
+	* orbsvcs/orbsvcs/CosTime.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
+	* orbsvcs/tests/FT_App/FT_App.mpc:
+	* orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
+	* orbsvcs/tests/Interoperable_Naming/Interoperable_Naming.mpc:
+	* orbsvcs/tests/Redundant_Naming/Redundant_Naming.mpc:
+	* orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
+	* orbsvcs/tests/Trading/Trading.mpc:
+	* orbsvcs/tests/ior_corbaname/ior_corbaname.mpc:
+	* performance-tests/POA/Demux/Demux.mpc:
+
+	  Update *.mpc and *.mpb files to reflect new libraries.  In many
+	  cases this required adding new base projects, as libraries were
+	  being linked in because of naming -- which was once the service
+	  implementation (and thus pulled in lots of other libraries) and
+	  is now just the Naming client stubs.
+
+	* orbsvcs/orbsvcs/Event/Local_ESTypes.h:
+
+	  Removed #include of "orbsvcs/CosNaming.h".  The Event Service
+	  does not use/depend on the Naming Service.
+
+	* orbsvcs/orbsvcs/CosEvent_Serv.rc:
+	* orbsvcs/orbsvcs/CosEvent_Skel.rc:
+	* orbsvcs/orbsvcs/CosNaming_Serv.rc:
+	* orbsvcs/orbsvcs/CosNaming_Skel.rc:
+	* orbsvcs/orbsvcs/CosNotification_Serv.rc:
+	* orbsvcs/orbsvcs/CosNotification_Skel.rc:
+	* orbsvcs/orbsvcs/CosTrading_Serv.rc:
+	* orbsvcs/orbsvcs/CosTrading_Skel.rc:
+
+	  New files, resource files for new libraries.
+
+	* orbsvcs/orbsvcs/ec_typed_events.mpb:
+
+	  Update to contain the additional source files, etc. for Event
+	  Service client stubs only.
+
+	* orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
+	* orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+
+	  New files, containing the additional source files, etc. for the
+	  Event Service implementation and servant skeletons.
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	  Split Event Service into three libraries:
+	  CosEvent, CosEvent_Skel, and CosEvent_Serv for client stubs,
+	  servant skeletons, and service implementation respectively.
+
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	  Split Naming Service into three libraries:
+	  CosNaming, CosNaming_Skel, and CosNaming_Serv for client stubs,
+	  servant skeletons, and service implementation respectively.
+
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	  Split Notification Service into three libraries:
+	  CosNotification, CosNotification_Skel, and CosNotification_Serv
+	  for client stubs, servant skeletons, and service implementation
+	  respectively.
+
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	  Split Trading Service into three libraries:
+	  CosTrading, CosTrading_Skel, and CosTrading_Serv for client stubs,
+	  servant skeletons, and service implementation respectively.
+
 Tue Sep  7 14:10:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * TAO/tao/Utils/Server_Main.cpp
