@@ -1,8 +1,28 @@
 // $Id$
 
-// Exercise the ACE_SOCK_Dgram wrapper along with the ACE_Reactor.
+// Exercise the <ACE_SOCK_Dgram> wrapper along with the <ACE_Reactor>.
 // This test simply ping-pongs datagrams back and forth between the
-// parent and child process.
+// peer1 and peer2 processes.  This test can be run in two ways:
+//
+// 1. Stand-alone -- e.g.,  
+//
+//    % ./Dgram
+//
+//    which will spawn a child process and run peer1 and peer2
+//    in different processes on the same machine.
+//
+// 2. Distributed -- e.g.,
+//
+//    # Peer1
+//    % ./Dgram 10002 tango.cs.wustl.edu 10003 peer1
+//
+//    # Peer1
+//    % ./Dgram 10003 tango.cs.wustl.edu 10002 peer2
+//  
+//    which will run peer1 and peer2 in different processes
+//    on the same or different machines.  Note that you MUST
+//    give the name "peer1" as the final argument to one and
+//    only one of the programs so that the test will work properly.
 
 #include "ace/Reactor.h"
 #include "ace/Process.h"
@@ -36,7 +56,9 @@ private:
 };
 
 int
-Dgram_Endpoint::send (const char *buf, size_t len, const ACE_INET_Addr &addr)
+Dgram_Endpoint::send (const char *buf,
+                      size_t len,
+                      const ACE_INET_Addr &addr)
 {
   return this->endpoint_.send (buf, len, addr);
 }
@@ -59,9 +81,7 @@ Dgram_Endpoint::handle_close (ACE_HANDLE handle,
   ACE_UNUSED_ARG (handle);
 
   this->endpoint_.close ();
-
   delete this;
-
   return 0;
 }
 
@@ -71,16 +91,24 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
   ACE_INET_Addr from_addr;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) activity occurred on handle %d!\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) activity occurred on handle %d!\n",
               this->endpoint_.get_handle ()));
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf, from_addr);
+  ssize_t n = this->endpoint_.recv (buf,
+                                    sizeof buf,
+                                    from_addr);
 
   if (n == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "handle_input"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "handle_input"));
   else
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) buf of size %d = %*s\n", n, n, buf));
-
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) buf of size %d = %*s\n",
+                n,
+                n,
+                buf));
   return 0;
 }
 
@@ -88,24 +116,31 @@ int
 Dgram_Endpoint::handle_timeout (const ACE_Time_Value &,
                                 const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) timed out for endpoint\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) timed out for endpoint\n"));
   return 0;
 }
 
 static int
 run_test (u_short localport,
           const char *remotehost,
-          u_short remoteport)
+          u_short remoteport,
+          const char *peer)
 {
   ACE_INET_Addr remote_addr (remoteport,
                              remotehost);
   ACE_INET_Addr local_addr (localport);
 
-  Dgram_Endpoint *endpoint = new Dgram_Endpoint (local_addr);
+  Dgram_Endpoint *endpoint;
+  
+  ACE_NEW_RETURN (endpoint,
+                  Dgram_Endpoint (local_addr),
+                  -1);
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler
-      (endpoint, ACE_Event_Handler::READ_MASK) == -1)
+      (endpoint,
+       ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::register_handler"),
                       -1);
@@ -114,22 +149,24 @@ run_test (u_short localport,
   ACE_OS::strcpy (buf, "Data to transmit");
   size_t len = ACE_OS::strlen (buf);
 
-  if (localport == port1)
+  if (ACE_OS::strncmp (peer, "peer1", 5) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) sending data\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) sending data\n"));
 
       for (size_t i = 0; i < 20; i++)
         {
           endpoint->send (buf, len, remote_addr);
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) .\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) .\n"));
           ACE_OS::sleep (1);
         }
     }
 
   for (int i = 0; i < 40; i++)
     {
-      // Wait up to 4 seconds for data.
-      ACE_Time_Value tv (4, 0);
+      // Wait up to 10 seconds for data.
+      ACE_Time_Value tv (10, 0);
 
       if (ACE_Reactor::instance ()->handle_events (tv) <= 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -147,13 +184,13 @@ run_test (u_short localport,
     }
 
   if (ACE_Reactor::instance ()->remove_handler
-      (endpoint, ACE_Event_Handler::READ_MASK) == -1)
+      (endpoint,
+       ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::remove_handler"),
                       -1);
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) exiting\n"));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) exiting\n"));
   return 0;
 }
 
@@ -166,24 +203,30 @@ main (int argc, char *argv[])
   const char *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
   const u_short port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;
 
-  if (argc > 4)                 // Providing the fourth command line argument
-    {                           // indicate we don't want to spawn a new process.
-                                // On Win32, we use this to exec the new program.
-      run_test (port1, remotehost, port2);
-    }
+  // Providing the fourth command line argument indicate we don't want
+  // to spawn a new process.  On Win32, we use this to exec the new
+  // program.
+  if (argc > 4)                 
+    run_test (port1, remotehost, port2, argv[4]);
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) local port = %d, remote host = %s, remote port = %d\n",
-                  port1, remotehost, port2));
+                  port1,
+                  remotehost,
+                  port2));
 
       ACE_Process_Options options;
-      options.command_line ("%s %d %s %d %c", argv[0], port1, remotehost, port2, 'c');
-      options.creation_flags (ACE_Process_Options::NO_EXEC); // This has no effect on
-                                                             // NT and will spawn a
-                                                             // process that exec
-                                                             // the above run_test
-                                                             // function.
+      options.command_line ("%s %d %s %d %c",
+                            argv[0],
+                            port1,
+                            remotehost,
+                            port2,
+                            'c');
+
+      // This has no effect on NT and will spawn a process that exec
+      // the above run_test function.
+      options.creation_flags (ACE_Process_Options::NO_EXEC); 
 
       ACE_Process new_process;
       switch (new_process.spawn (options))
@@ -192,11 +235,17 @@ main (int argc, char *argv[])
           return -1;
 
         case 0:
-          run_test (port1, remotehost, port2);
+          run_test (port1, 
+                    remotehost,
+                    port2,
+                    "peer1");
           break;
 
         default:
-          run_test (port2, remotehost, port1);
+          run_test (port2,
+                    remotehost, 
+                    port1,
+                    "peer2");
           new_process.wait ();
           break;
         }
