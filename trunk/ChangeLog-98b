@@ -1,3 +1,8 @@
+Fri Jul 17 14:51:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile (CONTROLLED_FILES): Added CE-status to distribution.
+  	  Thanks to David for reminding this.
+
 Fri Jul 17 12:48:26 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/Semaphore_Test.cpp: Removed unused variable, and disabled the
