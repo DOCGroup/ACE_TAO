@@ -1,3 +1,13 @@
+Wed Aug  4 09:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvs/orbsvcs/SSLIOP/SSLIOP_Connector.{h,cpp}:
+        * orbsvs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Updated for changes. These files wheren't added to my original
+          branch and they where recently changed by Ossame, so make a new
+          branch bug1476 on the head, so that I can merge all changes in one
+          action to the main
+
 Wed Aug  4 09:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp:
