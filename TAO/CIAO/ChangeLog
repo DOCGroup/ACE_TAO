@@ -1,3 +1,8 @@
+Sun Sep 21 17:15:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/generate_component_mpc.pl: Appended the value provided to
+	  the -p option to the project names.
+
 Sun Sep 21 17:07:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP_EC/BasicSP.mpc:

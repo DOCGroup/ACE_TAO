@@ -64,7 +64,7 @@ if (defined $opt_l) {
 if (defined $opt_c) {
     $client_def =
 '
-project ('."$com_name".'_client) : ciao_client {
+project ('."$opt_p"._."$com_name".'_client) : ciao_client {
   exename = client
   depends += '."$client_depend
   $lib_paths".'
@@ -88,7 +88,7 @@ if (defined $opt_i) {
 if (! defined $opt_n) {
     $component_def =
 '
-project('."$com_name".'_exec) : ciao_component {
+project('."$opt_p"._."$com_name".'_exec) : ciao_component {
   depends   += '."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
   libs      += '."$com_name".'_stub '."$com_name".'_svnt'." $lib_depend
@@ -111,7 +111,7 @@ project('."$com_name".'_exec) : ciao_component {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$com_name".'_stub): ciao_client {'."
+project('."$opt_p"._."$com_name".'_stub): ciao_client {'."
   $stub_depend".'
   sharedname = '."$com_name".'_stub
   idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export -Wb,stub_export_include='."$com_name".'_stub_export.h -Wb,skel_export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,skel_export_include='."$com_name".'_svnt_export.h
@@ -126,7 +126,7 @@ project('."$com_name".'_stub): ciao_client {'."
   }
 }
 
-project('."$com_name".'_svnt) : ciao_servant {
+project('."$opt_p"._."$com_name".'_svnt) : ciao_servant {
   depends += '."$svnt_depend $com_name".'_stub
   sharedname  = '."$com_name".'_svnt
   libs    += '."$com_name".'_stub'." $lib_depend
