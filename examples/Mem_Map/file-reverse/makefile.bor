@@ -2,15 +2,7 @@
 # Makefile for building the mem_map file-reserse ace examples
 #
 
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
-TESTS = \
-        file-reverse
-
-all_tests: $(TESTS)
-
-$(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
+NAME = file-reverse
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 

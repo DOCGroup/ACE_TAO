@@ -1,14 +1,12 @@
 #
- # Makefile for building the IPC_SAP SOCK_SAP ace examples
- #
+# Makefile for building the IPC_SAP SOCK_SAP ace examples
+#
 
- !include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
- TESTS = \
-        CPP-inclient \
+NAMES = \
+	CPP-inclient \
 	CPP-unclient \
 	CPP-inserver \
-        CPP-inserver-fancy \
+	CPP-inserver-fancy \
 	CPP-inserver-poll \
 	CPP-unserver \
 	FD-unclient \
@@ -16,21 +14,13 @@
 	C-inclient \
 	C-inserver
 
-all_tests: $(TESTS)
-
-LIBFILES = \
-	$(ACE_LIB) \
-
-$(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
-
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
 CFLAGS = $(ACE_CFLAGS)
 
 CPPDIR = .
 
-LIBFILES = \
-        $(ACE_LIB) \
+LIBFILES = $(ACE_LIB)
 
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

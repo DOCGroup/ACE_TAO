@@ -5,9 +5,14 @@
 # ~~~~~~~ 
 # DIRS - list of sub-directories to invoke make in
 # MAKEFILES - list of makefiles to be run
+# NAMES - list of names of targets to be built
 #
 
 !include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+# We want to avoid all of this recursion if this is a multi-target sub-make.
+!ifndef TARGET_NAME
+# This is not a multi-target sub-make ...
 
 !ifdef DIRS
 
@@ -131,5 +136,82 @@ install: $(MAKEFILES_INSTALL)
 
 $(MAKEFILES_INSTALL):
        $(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.Install=) install
+
+!endif
+
+!ifdef NAMES
+
+# This macro may be defined in the environment (e.g. the nightly build
+# scripts) so we need to remove it.
+!undef NAME
+
+# Multi-target recursion assumes Makefile.bor. For multiple targets in
+# makefiles with other names, you must set the MAKEFILE variable to the
+# name of the file.
+!ifndef MAKEFILE
+MAKEFILE = Makefile.bor
+!endif
+
+# This ugliness is to remove extra spaces from between the items in the list.
+NAMES_ALL_1 = $(NAMES) $(BLANK_SPACE)
+NAMES_ALL_2 = $(NAMES_ALL_1: =%)
+NAMES_ALL_3 = $(NAMES_ALL_2:%%=%)
+NAMES_ALL_4 = $(NAMES_ALL_3:%%=%)
+NAMES_ALL = $(NAMES_ALL_4:%=.All )
+
+all: $(NAMES_ALL)
+
+$(NAMES_ALL):
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.All=)
+
+# This ugliness is to remove extra spaces from between the items in the list.
+NAMES_CLEAN_1 = $(NAMES) $(BLANK_SPACE)
+NAMES_CLEAN_2 = $(NAMES_CLEAN_1: =%)
+NAMES_CLEAN_3 = $(NAMES_CLEAN_2:%%=%)
+NAMES_CLEAN_4 = $(NAMES_CLEAN_3:%%=%)
+NAMES_CLEAN = $(NAMES_CLEAN_4:%=.Clean )
+
+clean: $(NAMES_CLEAN)
+
+$(NAMES_CLEAN):
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.Clean=) clean
+
+# This ugliness is to remove extra spaces from between the items in the list.
+NAMES_REALCLEAN_1 = $(NAMES) $(BLANK_SPACE)
+NAMES_REALCLEAN_2 = $(NAMES_REALCLEAN_1: =%)
+NAMES_REALCLEAN_3 = $(NAMES_REALCLEAN_2:%%=%)
+NAMES_REALCLEAN_4 = $(NAMES_REALCLEAN_3:%%=%)
+NAMES_REALCLEAN = $(NAMES_REALCLEAN_4:%=.RealClean )
+
+realclean: $(NAMES_REALCLEAN)
+
+$(NAMES_REALCLEAN):
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.RealClean=) realclean
+
+# This ugliness is to remove extra spaces from between the items in the list.
+NAMES_INSTALL_1 = $(NAMES) $(BLANK_SPACE)
+NAMES_INSTALL_2 = $(NAMES_INSTALL_1: =%)
+NAMES_INSTALL_3 = $(NAMES_INSTALL_2:%%=%)
+NAMES_INSTALL_4 = $(NAMES_INSTALL_3:%%=%)
+NAMES_INSTALL = $(NAMES_INSTALL_4:%=.Install )
+
+install: $(NAMES_INSTALL)
+
+$(NAMES_INSTALL):
+       $(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.Install=) install
+
+!endif
+
+!else
+# This is a multi-target sub-make ...
+
+# Set the name of the current target.
+NAME = $(TARGET_NAME)
+
+# The list of object files defaults to the contents of a macro based on the
+# target name.
+!ifndef OBJFILES
+OBJFILES = $($(NAME)_OBJFILES)
+!endif
 
 !endif

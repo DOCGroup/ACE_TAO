@@ -1,16 +1,16 @@
 
-APPS = \
+NAMES = \
 	direct_logging \
 	indirect_logging
 
-build_apps: $(APPS)
-
-$(APPS):
-	$(MAKE) -f Makefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
-
-!ifdef NAME
 OBJFILES=$(OBJDIR)\$(NAME).obj
-!endif
 
-!include <$(ACE_ROOT)\netsvcs\build.bor>
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
