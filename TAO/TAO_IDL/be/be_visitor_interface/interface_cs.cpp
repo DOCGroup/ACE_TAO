@@ -59,7 +59,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   os->incr_indent ();
   *os << "if (!CORBA::is_nil (obj))\n";
   os->incr_indent ();
-  *os << "obj->AddRef ();\n";
+  *os << "obj->_incr_refcnt ();\n";
   os->decr_indent ();
   *os << be_nl;
   *os << "return obj;\n";
@@ -86,7 +86,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
   *os << node->name () << "_ptr new_obj = new "
-      << node->name () << "(obj->_get_parent ());" << be_nl
+      << node->name () << "(obj->_stubobj ());" << be_nl
       << "return new_obj;" << be_uidt_nl
       << "} // end of if" << be_nl;
 

@@ -170,8 +170,8 @@ public:
   // returns the alignment requirements for this typecode. used by the
   // IIOP marshaling engine.
 
-  CORBA::ULong  AddRef (void);
-  CORBA::ULong  Release (void);
+  CORBA::ULong  _incr_refcnt (void);
+  CORBA::ULong  _decr_refcnt (void);
 
   // = Following three are deprecated
 

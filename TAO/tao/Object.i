@@ -2,14 +2,14 @@
 
 // = methods for class CORBA_Object
 
-ACE_INLINE ULONG
-CORBA_Object::AddRef (void)
+ACE_INLINE CORBA::ULong
+CORBA_Object::_incr_refcnt (void)
 {
   return ++this->refcount_;
 }
 
-ACE_INLINE ULONG
-CORBA_Object::Release (void)
+ACE_INLINE CORBA::ULong
+CORBA_Object::_decr_refcnt (void)
 {
   if (--this->refcount_ != 0)
     return this->refcount_;
@@ -17,31 +17,11 @@ CORBA_Object::Release (void)
   return 0;
 }
 
-ACE_INLINE TAO_HRESULT
-CORBA_Object::QueryInterface (TAO_REFIID riid,
-                              void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_IIOP_Object == riid
-      || IID_STUB_Object == riid
-      || IID_TAO_IUnknown == riid)
-    *ppv = this->parent_;
-  else if (IID_CORBA_Object == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return TAO_ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) this->AddRef ();
-  return TAO_NOERROR;
-}
-
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_duplicate (CORBA::Object_ptr obj)
 {
   if (obj)
-    obj->AddRef ();
+    obj->_incr_refcnt ();
   return obj;
 }
 
@@ -59,26 +39,10 @@ CORBA::is_nil (CORBA::Object_ptr obj)
   return (CORBA::Boolean) (obj == 0);
 }
 
-ACE_INLINE void
-CORBA_Object::_set_parent (STUB_Object *p)
-{
-  if (p != 0 && p->AddRef () != 0)
-    {
-      // Release the one we had.
-      if (this->parent_)
-        this->parent_->Release ();
-
-      // Hold on to the new one
-      this->parent_ = p;
-    }
-
-  ACE_ASSERT (this->parent_ != 0);
-}
-
 ACE_INLINE STUB_Object *
-CORBA_Object::_get_parent (void) const
+CORBA_Object::_stubobj (void)
 {
-  return this->parent_;
+  return this->protocol_proxy_;
 }
 
 // DII hook to objref

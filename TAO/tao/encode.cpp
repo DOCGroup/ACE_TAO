@@ -280,20 +280,13 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       //
       // For now, the original code is minimally changed.
 
-      IIOP_Object *objdata;
-      IIOP::Profile *profile;
+      IIOP_Object *iiopobj =
+	ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
 
-      if (obj->QueryInterface (IID_IIOP_Object, (void **) &objdata)
-          != TAO_NOERROR)
-        {
-          env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-          return CORBA::TypeCode::TRAVERSE_STOP;
-        }
-      obj->Release ();
-      profile = &objdata->profile;
+      IIOP::Profile *profile = &iiopobj->profile;
 
       // STRING, a type ID hint
-      stream->encode (CORBA::_tc_string, &objdata->type_id, 0, env);
+      stream->encode (CORBA::_tc_string, &iiopobj->type_id, 0, env);
 
       // UNSIGNED LONG, value one, count of the sequence of
       // encapsulated protocol profiles;
@@ -1132,7 +1125,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
         retval = CORBA::TypeCode::TRAVERSE_STOP;
       }
   }
-  //  tc2->Release ();
+  //  tc2->_decr_refcnt ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_encoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;

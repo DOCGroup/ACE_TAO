@@ -7,13 +7,13 @@
 #endif /* ! __ACE_INLINE__ */
 
 CORBA::ULong
-CORBA_Request::AddRef (void)
+CORBA_Request::_incr_refcnt (void)
 {
   return refcount_++;
 }
 
 CORBA::ULong
-CORBA_Request::Release (void)
+CORBA_Request::_decr_refcnt (void)
 {
   ACE_ASSERT (this != 0);
 
@@ -30,7 +30,7 @@ void
 CORBA::release (CORBA::Request_ptr req)
 {
   if (req)
-    req->Release ();
+    req->_decr_refcnt ();
 }
 
 CORBA::Boolean
@@ -89,8 +89,8 @@ CORBA_Request::~CORBA_Request (void)
 void
 CORBA_Request::invoke (void)
 {
-  STUB_Object *stub = this->target_->_get_parent ();
-  stub->AddRef ();
+  STUB_Object *stub = this->target_->_stubobj ();
+  stub->_incr_refcnt ();
 
   stub->do_dynamic_call ((char *) opname_,
                          CORBA::B_TRUE,
@@ -99,14 +99,14 @@ CORBA_Request::invoke (void)
                          flags_,
                          exceptions_,
                          env_);
-  stub->Release ();
+  stub->_decr_refcnt ();
 }
 
 void
 CORBA_Request::send_oneway (void)
 {
-  STUB_Object *stub = this->target_->_get_parent ();
-  stub->AddRef ();
+  STUB_Object *stub = this->target_->_stubobj ();
+  stub->_incr_refcnt ();
 
   stub->do_dynamic_call ((char *) opname_,
                          CORBA::B_FALSE,
@@ -115,5 +115,5 @@ CORBA_Request::send_oneway (void)
                          flags_,
                          exceptions_,
                          env_);
-  stub->Release ();
+  stub->_decr_refcnt ();
 }

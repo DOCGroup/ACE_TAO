@@ -14,7 +14,7 @@ void
 CORBA::release (CORBA::Principal_ptr principal)
 {
   if (principal)
-    principal->Release ();
+    principal->_decr_refcnt ();
 }
 
 CORBA::Boolean
@@ -33,13 +33,13 @@ CORBA_Principal::~CORBA_Principal (void)
 }
 
 CORBA::ULong
-CORBA_Principal::AddRef (void)
+CORBA_Principal::_incr_refcnt (void)
 {
   return ++refcount_;
 }
 
 CORBA::ULong
-CORBA_Principal::Release (void)
+CORBA_Principal::_decr_refcnt (void)
 {
   {
     if (--refcount_ != 0)
