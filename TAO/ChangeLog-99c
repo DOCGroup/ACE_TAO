@@ -1,12 +1,28 @@
+Thu Mar 11 20:46:04 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.cpp
+	In the CosNaming_Client::init () changed
+	      // Initialize ORB.
+      		is->orbmgr_.init (argc,
+        	                  argv,
+                	          TAO_TRY_ENV);
+	 to
+	      // Initialize ORB.
+	      this->orbmgr_.init (this->argc_,
+        	                  this->argv_,
+                	          TAO_TRY_ENV);
+
+	to facilitate proper processing of the arguments.
+
 Thu Mar 11 19:55:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Object.cpp: 
+	* tao/Object.cpp:
 	  Fixed template instantiations and some warnings.
 
-	* tao/encode.cpp: 
+	* tao/encode.cpp:
 	  Removed unused variable.
 
-	* tests/Param_Test/run_test.pl: 
+	* tests/Param_Test/run_test.pl:
 	  Use IOR object references, they are actually easier than
 	  URL-style.
 
@@ -38,7 +54,7 @@ Thu Mar 11 19:07:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Removed several uses of interpretive marshaling, we can use
 	  compiled marshaling now.
 
-	* tests/Param_Test/run_test.pl: 
+	* tests/Param_Test/run_test.pl:
 	  The client cleanly shutdowns the server now.
 
 Thu Mar 11 16:36:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -50,10 +66,10 @@ Thu Mar 11 16:36:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Thu Mar 11 14:30:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
 	  Check for error in call to Repository::get_hostport
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
 	  Enabled test for unions and the RTI data structure.
 
 Thu Mar 11 13:59:05 1999  David L. Levine  <levine@cs.wustl.edu>
