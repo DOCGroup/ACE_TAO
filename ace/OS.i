@@ -5295,7 +5295,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   return *sig;
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_ONEARG_SIGWAIT)
-  *sig = ::sigwait (set);
+  *sig = sigwait (set);
   return *sig;
 #else /* ACE_HAS_ONEARG_SETWAIT */
 #  if defined (__Lynx__)
