@@ -1,3 +1,7 @@
+Thu Aug 12 16:03:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 5.0.1 released.
+
 Thu Aug 12 15:49:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile,bin/make_release: build kits in /tmp staging
