@@ -76,7 +76,6 @@ public:
   /// Free the sequence.
   static void freebuf (T *);
 
-  static void _tao_any_destructor (void *);
 
   /// Implement the TAO_Base_Sequence methods (see Sequence.h)
   virtual void _allocate_buffer (CORBA::ULong length);
@@ -180,8 +179,6 @@ public:
 
   /// Free the sequence.
   static void freebuf (T *);
-
-  static void _tao_any_destructor (void *);
 
   /// allocate a buffer of the requested length. The buffer is allocated for
   /// the right type
@@ -1272,8 +1269,6 @@ public:
   /// Release all the elements.
   static void freebuf (T *);
 
-  static void _tao_any_destructor (void *);
-
   /// allocate a buffer of the requested length. The buffer is allocated for the
   /// right type
   virtual void _allocate_buffer (CORBA::ULong length);
@@ -1370,8 +1365,6 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T * buffer);
-
-  static void _tao_any_destructor (void *);
 
   /// allocate a buffer of the requested length. The buffer is allocated for the
   /// right type
@@ -1522,8 +1515,6 @@ public:
    */
   static void freebuf (char ** buffer);
 
-  static void _tao_any_destructor (void *);
-
   // Functions to create, destroy, and adjust the underlying buffer.
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
@@ -1633,8 +1624,6 @@ public:
    * function will ignore null pointers passed to it.
    */
   static void freebuf (CORBA::WChar ** buffer);
-
-  static void _tao_any_destructor (void *);
 
   // Functions to create, destroy, and adjust the underlying buffer.
   virtual void _allocate_buffer (CORBA::ULong length);
