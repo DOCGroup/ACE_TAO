@@ -317,11 +317,11 @@ clean.  There are still some problems that need to be ironed out: <P>
 If you use the GNU GCC C++ compiler please note the following: <P>
 
 <UL>
- 	<LI> Earlier versions of G++ may not compile certain
+ 	<LI>Earlier versions of G++ may not compile certain
 	  parts of ACE correctly due to compiler bugs.  Please
 	  upgrade to G++ 2.7.2 or greater. <P>
 
-	<LI> Make sure to update your gcc <code>config.status</code>
+	<LI>Make sure to update your gcc <code>config.status</code>
         file.  This file is produced when installing gcc; it specifies
         where to install the binary files that gcc uses.  For example,
         it specifies whether to use Solaris's
@@ -331,24 +331,24 @@ If you use the GNU GCC C++ compiler please note the following: <P>
         the <code>--prefix</code> option to <code>configure</code> instead
         of hacking its output.<P>
 
-        <LI> If you are getting weird link errors when building libACE
+        <LI>If you are getting weird link errors when building libACE
              on Solaris you are probably using the GNU linker.  Try using
               the Sun linker (/usr/ccs/bin/ld) instead.  Note that gcc
             first looks for the GNU linker if it is installed along
             with gcc.  The only way to not use the GNU linker is to 
             delete it from the installation or to build your own
             compiler with no linker. Be aware that you still need the
-            libraries and includes of gcc. <P>
+            libraries and includes of gcc.<P>
 
-         <LI> Don't get too confused about contradictory statements in
+         <LI>Don't get too confused about contradictory statements in
              the gcc documentation. It was written by different
              people... <P>
 
-        <LI> Make sure that the linker invoked by gcc produces code
+        <LI>Make sure that the linker invoked by gcc produces code
 	  that initializes static objects.  Please see gcc's
 	  documentation for using <CODE>collect2</CODE>.<P>
 
-	<LI> By default, gcc (thru version 2.7.2, at least) uses
+	<LI>By default, gcc (thru version 2.7.2, at least) uses
 	  implicit template instantiation.  Besides wasting space,
 	  this breaks the use of ACE_Singleton:  instead of one
 	  singleton instance, there could be one instance per object
@@ -357,7 +357,7 @@ If you use the GNU GCC C++ compiler please note the following: <P>
 	  -fno-implicit-templates option to CCFLAGS in all
 	  include/makeinclude/platform_*.GNU files that set CXX to g++.<P>
 
-	<LI> The disadvantage of this approach is that you must
+	<LI>The disadvantage of this approach is that you must
 	  add template specializations for all templates that your
 	  application uses to your own code.  (The ACE libraries are
 	  self-contained:  you don't need to add the templates that
@@ -371,8 +371,9 @@ If you use the GNU GCC C++ compiler please note the following: <P>
 	  necessary, if the template instantiations themselves reference
 	  other templates.<P>
 
-	<LI> Alternatively, you could apply the Cygnus template repository
-	  patches and use the -repo option instead of
+	<LI>Alternatively, you could apply the
+          <a href="ftp://ftp.cygnus.com/pub/g++/">Cygnus template repository
+	  patches</a> and use the -repo option instead of
 	  -fno-implicit-templates.  Please see the g++ FAQ and gcc
 	  manual for more information.  The g++ FAQ indicates that
 	  a new implementation of templates planned for version 2.8
@@ -383,13 +384,13 @@ If you use the GNU GCC C++ compiler please note the following: <P>
 	  macro in your include/makeinclude/platform_macros.GNU, and
 	  thereby use the default g++ implicit template instantiation.<P>
 
-	<LI> Thanks to Thilo Kielmann &lt<A
+	<LI>Thanks to Thilo Kielmann &lt<A
 	  HREF="mailto:kielmann@informatik.uni-siegen.de">
 	  kielmann@informatik.uni-siegen.de</A>&gt;
 	  for reporting the problem with ACE_Singleton on g++, and
 	  for helping to find and implement these solutions.<P>
 
-	<LI> On VxWorks only, g++ (thru version 2.7.2, at least, distributed
+	<LI>On VxWorks only, g++ (thru version 2.7.2, at least, distributed
 	  with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
 	  broken.  In addition, -O2 is not supported on some targets.<P>
 
