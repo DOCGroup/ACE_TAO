@@ -1,3 +1,9 @@
+Wed Aug 06 17:02:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* RTConfig_Manager.h:
+	* RTConfig_Manager.cpp: Added support for keeping PriorityBands
+	  information.
+
 Sun Aug  3 23:12:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* RTConfig_Manager.cpp: Fixed mismatched throw specifications.

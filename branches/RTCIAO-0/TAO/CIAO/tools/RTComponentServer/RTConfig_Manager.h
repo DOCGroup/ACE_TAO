@@ -64,12 +64,11 @@ namespace CIAO
                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /*
-    /// Query a priority bands infor by name.
+
+    /// Query a priority bands info by name.
     RTCORBA::PriorityBands *find_priority_bands_by_name (const char *name
-                                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    // @@ THROW SPEC?
-    */
+                                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
     // Cached an RTORB reference.
@@ -82,8 +81,17 @@ namespace CIAO
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> TP_MAP;
 
-    /// Internal TP names to id map.
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    RTCORBA::PriorityBands_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> PB_MAP;
+
+    /// Internal TP name to id map.
     TP_MAP threadpool_map_;
+
+    /// Internal PB name to priority bands map.
+    PB_MAP priority_bands_map_;
   };
 
   /**
