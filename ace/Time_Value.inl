@@ -113,7 +113,7 @@ ACE_Time_Value::sec (long sec)
 
 // Converts from Time_Value format into milli-seconds format.
 
-ACE_INLINE long
+ACE_INLINE unsigned long
 ACE_Time_Value::msec (void) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");

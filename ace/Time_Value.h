@@ -157,7 +157,7 @@ public:
    *       usec() methods.  There is no analogous "millisecond"
    *       component in an ACE_Time_Value.
    */
-  long msec (void) const;
+  unsigned long msec (void) const;
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
   /**
