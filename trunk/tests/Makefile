@@ -34,6 +34,7 @@ BIN = 	Barrier_Test \
 	Reader_Writer_Test \
 	Recursive_Mutex_Test \
 	Service_Config_Test \
+	Sigset_Ops_Test \
 	SOCK_Test \
 	SPIPE_Test \
 	SString_Test \
