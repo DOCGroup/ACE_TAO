@@ -55,12 +55,31 @@ unlink $iorfile;
 
 $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-f $iorfile $extra_args");
 
-ACE::waitforfile ($iorfile);
+if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
 
-$status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $oneway -i $iterations -f $iorfile -x");
+$CL  = Process::Create ("../Generic_Servant/client$Process::EXE_EXT ",
+			" $extra_args $oneway -i $iterations -f $iorfile -x");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+$server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
-$SV->Wait ();
+if ($server != 0 || $client != 0){
+  exit 1;
+}
 
-exit $status;
+exit 0;
