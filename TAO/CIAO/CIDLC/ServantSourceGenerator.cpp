@@ -304,6 +304,40 @@ namespace
   private:
     std::ostream& os;
   };
+  
+  struct RepoIdEmitter : Traversal::Type
+  {
+    RepoIdEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << "\"" << t.context ().get<string> (STRS[REPO_ID]) << "\"";
+    }
+
+  private:
+    std::ostream& os;
+  };
+
+  struct ConsumerRepoIdEmitter : Traversal::Type
+  {
+    ConsumerRepoIdEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      string holder (t.context ().get<string> (STRS[REPO_ID]));
+      os << "\"" << holder.substr (0, holder.rfind (':')) 
+         << "Consumer:1.0\"";
+    }
+
+  private:
+    std::ostream& os;
+  };
 
   struct InterfaceEmitter : Traversal::UnconstrainedInterface,
                             EmitterBase
@@ -1830,12 +1864,14 @@ namespace
           simple_type_name_emitter_ (c.os ()),
           servant_type_name_emitter_ (c.os ()),
           enclosing_type_name_emitter_ (c.os ()),
+          repo_id_emitter_ (c.os ()),
           scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
         servant_belongs_.node_traverser (servant_type_name_emitter_);
         enclosing_belongs_.node_traverser (enclosing_type_name_emitter_);
+        repo_id_belongs_.node_traverser (repo_id_emitter_);
       }
 
       virtual void
@@ -1849,9 +1885,15 @@ namespace
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
-           << "if (::CORBA::is_nil (this->provide_"
+           << "if (! ::CORBA::is_nil (this->provide_"
            << p.name () << "_.in ()))" << endl
-           << "{";
+           << "{"
+           << "return ";
+
+        Traversal::ProviderData::belongs (p, belongs_);
+        
+        os << "::_duplicate (this->provide_" << p.name () << "_.in ());"
+           << "}";
 
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
 
@@ -1878,29 +1920,53 @@ namespace
         os << "::_nil ());" << endl
            << "}";
 
+        os << "::CORBA::Object_var obj =" << endl
+           << "this->provide_" << p.name () << "_i (" 
+           << STRS[ENV_SNGL_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+
+        Traversal::ProviderData::belongs (p, belongs_);
+
+        os << "::_nil ());" << endl;
+
         Traversal::ProviderData::belongs (p, servant_belongs_);
 
-        os << " *svt =" << endl
-           << "new ";
+        os << " *svt = 0;" << endl
+           << "ACE_NEW_RETURN (" << endl
+           << "svt," << endl;
 
         Traversal::ProviderData::belongs (p, servant_belongs_);
 
         os << " (" << endl
            << "fexe.in ()," << endl
-           << "this->context_);" << endl
+           << "this->context_)," << endl;
+           
+        Traversal::ProviderData::belongs (p, belongs_);
+
+        os << "::_nil ());" << endl
            << "PortableServer::ServantBase_var safe_servant (svt);"
            << endl
-           << "::CORBA::Object_var obj =" << endl
-           << "this->container_->install_servant (" << endl
+           << "PortableServer::ObjectId_var oid =" << endl
+           << "PortableServer::string_to_ObjectId (\"";
+           
+        ScopedName scoped (scope_.scoped_name ());
+        Name stripped (scoped.begin () + 1, scoped.end ());
+        string unique_obj_name =
+          regex::perl_s (stripped.str (), "/::/_/") + "_" + p.name ().str ();
+
+        os << unique_obj_name << "\");" << endl;
+           
+        os << "this->container_->_ciao_the_POA ()->activate_object_with_id ("
+           << endl
+           << "oid.in ()," << endl
            << "svt" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK_RETURN (";
 
         Traversal::ProviderData::belongs (p, belongs_);
 
-        os << "::_nil ());"
-           << endl;
-
+        os << "::_nil ());" << endl;
+        
         Traversal::ProviderData::belongs (p, belongs_);
 
         os << "_var fo =" << endl;
@@ -1914,16 +1980,50 @@ namespace
 
         Traversal::ProviderData::belongs (p, belongs_);
 
-        os << "::_nil ());"
-           << endl
-           << "this->provide_" << p.name () << "_ = fo;" << endl
-           << "}"
+        os << "::_nil ());" << endl
+           << "this->provide_" << p.name () << "_ = fo;"
            << "return ";
 
         Traversal::ProviderData::belongs (p, belongs_);
 
         os << "::_duplicate (this->provide_"
            << p.name () << "_.in ());" << endl
+           << "}";
+           
+        // Corresponding private provide_*_i() method.
+           
+        os << "::CORBA::Object_ptr" << endl
+           << scope_.name ()
+           << "_Servant::provide_" << p.name () << "_i (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "::CORBA::Object_ptr ret =" << endl
+           << "this->lookup_facet (\"" << p.name () << "\");" << endl;
+           
+        os << "if (! ::CORBA::is_nil (ret))" << endl
+           << "{" 
+           << "return ret;"
+           << "}";
+           
+        os << "::CORBA::Object_var obj =" << endl
+           << "this->container_->generate_reference (" << endl
+           << "\"" << unique_obj_name << "\"," << endl;
+           
+        Traversal::ProviderData::belongs (p, repo_id_belongs_);
+
+        os << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+
+        Traversal::ProviderData::belongs (p, belongs_);
+
+        os << "::_nil ());" << endl
+           << "this->add_facet (" << endl
+           << "\"" << p.name () << "\"," << endl
+           << "obj.in ());" << endl;
+           
+        os << "return obj._retn ();" << endl
            << "}";
       }
 
@@ -1932,10 +2032,12 @@ namespace
       SimpleTypeNameEmitter simple_type_name_emitter_;
       ServantTypeNameEmitter servant_type_name_emitter_;
       EnclosingTypeNameEmitter enclosing_type_name_emitter_;
+      RepoIdEmitter repo_id_emitter_;
       Traversal::Belongs belongs_;
       Traversal::Belongs simple_belongs_;
       Traversal::Belongs servant_belongs_;
       Traversal::Belongs enclosing_belongs_;
+      Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
     };
 
@@ -1946,10 +2048,12 @@ namespace
         : EmitterBase (c),
           type_name_emitter_ (c.os ()),
           simple_type_name_emitter_ (c.os ()),
+          repo_id_emitter_ (c.os ()),
           scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
+        repo_id_belongs_.node_traverser (repo_id_emitter_);
       }
 
       virtual void
@@ -2078,16 +2182,35 @@ namespace
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
-           << "if (CORBA::is_nil (this->consumes_" << c.name ()
+           << "if (! ::CORBA::is_nil (this->consumes_" << c.name ()
            << "_.in ()))" << endl
            << "{"
-           << scope_.name  () << "_Servant::";
+           << "return ";
+           
+        Traversal::ConsumerData::belongs (c, belongs_);
+
+        os << "Consumer::_duplicate (this->consumes_" 
+           << c.name () << "_.in ());"
+           << "}";
+           
+        os << "::Components::EventConsumerBase_var obj =" << endl
+           << "this->get_consumer_" << c.name () << "_i (" << endl
+           << STRS[ENV_SNGL_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+
+        Traversal::ConsumerData::belongs (c, belongs_);
+
+        os << "Consumer::_nil ());" << endl;
+
+        os << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
         os << "Consumer_" << c.name ()
-           << "_Servant *svt =" << endl
-           << "new " << scope_.name  ()
+           << "_Servant *svt = 0;"
+           << "ACE_NEW_RETURN (" << endl
+           << "svt," << endl
+           << scope_.name  ()
            << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
@@ -2095,11 +2218,27 @@ namespace
         os << "Consumer_" << c.name ()
            << "_Servant (" << endl
            << "this->executor_.in ()," << endl
-           << "this->context_);"
-           << "PortableServer::ServantBase_var safe_servant (svt);"
+           << "this->context_)," << endl;
+           
+        Traversal::ConsumerData::belongs (c, belongs_);
+
+        os << "Consumer::_nil ());" << endl;
+        
+        os << "PortableServer::ServantBase_var safe_servant (svt);" << endl;
+           
+        os << "PortableServer::ObjectId_var oid =" << endl
+           << "PortableServer::string_to_ObjectId (\"";
+           
+        ScopedName scoped (scope_.scoped_name ());
+        Name stripped (scoped.begin () + 1, scoped.end ());
+        string unique_obj_name =
+          regex::perl_s (stripped.str (), "/::/_/") + "_" + c.name ().str ();
+
+        os << unique_obj_name << "\");" << endl;
+           
+        os << "this->container_->_ciao_the_POA ()->activate_object_with_id ("
            << endl
-           << "CORBA::Object_var obj =" << endl
-           << "this->container_->install_servant (" << endl
+           << "oid.in ()," << endl
            << "svt" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK_RETURN (";
@@ -2107,7 +2246,7 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "Consumer::_nil ());" << endl;
-
+        
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "Consumer_var eco =" << endl;
@@ -2121,9 +2260,8 @@ namespace
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
-        os<< "Consumer::_nil ());" << endl
-           << "this->consumes_" << c.name () << "_ = eco;" << endl
-           << "}"
+        os << "Consumer::_nil ());" << endl
+           << "this->consumes_" << c.name () << "_ = eco;"
            << "return ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2131,13 +2269,62 @@ namespace
         os << "Consumer::_duplicate (this->consumes_" << c.name ()
            << "_.in ());" << endl
            << "}";
-      }
+           
+        // Corresponding private get_consumer_*_i() method.
+           
+        os << "::Components::EventConsumerBase_ptr" << endl
+           << scope_.name  () << "_Servant::"
+           << "get_consumer_" << c.name () << "_i (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "::Components::EventConsumerBase_ptr ret =" << endl
+           << "this->lookup_consumer (\"" << c.name () << "\");" << endl;
+           
+        os << "if (! ::CORBA::is_nil (ret))" << endl
+           << "{" 
+           << "return ret;"
+           << "}";
+           
+        os << "::CORBA::Object_var obj =" << endl
+           << "this->container_->generate_reference (" << endl
+           << "\"" << unique_obj_name << "\"," << endl;
+           
+        Traversal::ConsumerData::belongs (c, repo_id_belongs_);
+           
+        os << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+
+        Traversal::ConsumerData::belongs (c, belongs_);
+
+        os << "Consumer::_nil ());" << endl;
+        
+        os << "::Components::EventConsumerBase_var ecb =" << endl
+           << "::Components::EventConsumerBase::_narrow (" << endl
+           << "obj.in ()" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (";
+
+        Traversal::ConsumerData::belongs (c, belongs_);
+
+        os << "Consumer::_nil ());" << endl;
+        
+        os << "this->add_consumer (" << endl
+           << "\"" << c.name () << "\"," << endl
+           << "ecb.in ());" << endl;
+           
+        os << "return ecb._retn ();" << endl
+           << "}";
+     }
 
     private:
       TypeNameEmitter type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
+      ConsumerRepoIdEmitter repo_id_emitter_;
       Traversal::Belongs belongs_;
       Traversal::Belongs simple_belongs_;
+      Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
     };
 
@@ -2186,13 +2373,9 @@ namespace
       traverse (SemanticGraph::Provider& p)
       {
         os << "obj_var =" << endl
-           << "  this->provide_" << p.name () << " (" << endl
-           << "  " << STRS[ENV_SNGL_ARG] << ");"
+           << "this->provide_" << p.name () << "_i (" << endl
+           << STRS[ENV_SNGL_ARG] << ");"
            << "ACE_CHECK;" << endl;
-
-        os << "this->add_facet (" << endl
-           << "\"" << p.name () << "\"," << endl
-           << "obj_var.in ());" << endl;
       }
 
       virtual void
@@ -2213,14 +2396,10 @@ namespace
       virtual void
       traverse (SemanticGraph::Consumer& p)
       {
-        os << "ec_base_var =" << endl
-           << "  this->get_consumer_" << p.name () << " (" << endl
-           << "  " << STRS[ENV_SNGL_ARG] << ");"
+        os << "ecb_var =" << endl
+           << "this->get_consumer_" << p.name () << "_i (" << endl
+           << STRS[ENV_SNGL_ARG] << ");"
            << "ACE_CHECK;" << endl;
-
-        os << "this->add_consumer (" << endl
-           << "\"" << p.name () << "\"," << endl
-           << "ec_base_var.in ());" << endl;
       }
     };
     
@@ -2283,8 +2462,7 @@ namespace
          << "  : our_base (exe, c)" << endl
          << "{"
          << "this->context_ = "
-         << "new " << t.name () << "_Context (h, c, this);"
-         << endl
+         << "new " << t.name () << "_Context (h, c, this);" << endl
          << "ACE_TRY_NEW_ENV" << endl
          << "{"
          << "::Components::SessionComponent_var scom =" << endl
@@ -2299,6 +2477,9 @@ namespace
          << STRS[ENV_ARG] << ");"
          << "ACE_TRY_CHECK;"
          << "}"
+         << "this->populate_port_tables (" << endl
+         << STRS[ENV_SNGL_ARG] << ");"
+         << "ACE_TRY_CHECK;"
          << "}"
          << "ACE_CATCHANY" << endl
          << "{"
@@ -3004,12 +3185,7 @@ namespace
          << "if (! ::CORBA::is_nil (temp.in ()))" << endl
          << "{"
          << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");"
-//         << "ACE_CHECK;"
          << "}"
-// @@@ JP - This is commented out for now until other issues in
-// DaNCe get resolved
-//         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG]
-//         << ");"
          << "}";
 
       os << "void" << endl
@@ -3116,15 +3292,15 @@ namespace
       }
 
       os << "// Private method to populate the port tables."
-         << endl << endl;
+         << endl;
 
       os << "void" << endl
          << t.name () << "_Servant::populate_port_tables (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
-         << "::CORBA::Object_var obj_var;"
-         << "::Components::EventConsumerBase_var ec_base_var;" << endl;
+         << "::CORBA::Object_var obj_var;" 
+         << "::Components::EventConsumerBase_var ecb_var;" << endl;
 
       {
         Traversal::Component component_emitter;
