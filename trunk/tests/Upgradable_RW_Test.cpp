@@ -6,25 +6,21 @@
 //    tests
 //
 // = FILENAME
-//    Reader_Writer_Test.cpp
+//    Upgradable_RW_Test.cpp
 //
 // = DESCRIPTION
 //      This test program verifies the functionality of the ACE_OS
 //      implementation of readers/writer locks on Win32 and Posix
 //      pthreads.
+//      Use the RW_Mutex define switch to use readers/writer mutexes or
+//      regular mutexes.
 //
 // = AUTHOR
 //    Michael Kircher <mk1@cs.wustl.edu>
 //
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Synch.h"
-#include "ace/Thread.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Get_Opt.h"
-#include "ace/SString.h"
-#include "ace/Profile_Timer.h"
+#include "Upgradable_RW_Test.h"
 
 ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 
@@ -42,7 +38,7 @@ static size_t n_iterations = 50;
 #define MAX_STRING_SIZE 200
 
 // switch on RW mutexes, else use ordinary mutexes
-#define RW_MUTEX 1
+// #define RW_MUTEX 1
 
 // Default number of loops.
 static size_t n_loops = 1000;
@@ -79,33 +75,11 @@ static u_int not_upgraded = 0;
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_writers;
 
-class Element;
-
-class Element
-{
-  friend class ACE_Double_Linked_List<Element>;
-  friend class ACE_Double_Linked_List_Iterator<Element>;
-
-public:
-  Element (ACE_CString* item = 0, Element* p = 0, Element* n = 0)
-    : item_(item), prev_(p), next_(n)
-  { 
-  }
-
-  ACE_CString* value (void)
-  {
-    return this->item_;
-  }
-
-private:
-  Element* next_;
-  Element* prev_;
-  ACE_CString* item_;
-};
-
-typedef ACE_Double_Linked_List<Element>  Linked_List;
-
 Linked_List *linked_List_ptr;
+
+
+
+
 
 // Returns 1 if found,
 //         0 if not found,
@@ -177,10 +151,18 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 // Iterate <n_iterations> each time checking that nobody modifies the data
 // while we have a read lock.
 
-static void *
-reader (void *)
+int
+Reader_Task::svc ()
 {
-  // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) reader starting\n")));
+  ACE_Profile_Timer timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+
+  barrier_.wait();
+  // wait at the barrier
+
+
+  // We start an ACE_Profile_Timer here...
+  timer.start ();
 
 
   for (size_t iterations = 1;
@@ -239,15 +221,29 @@ reader (void *)
         }
     }
 
+  // Stop the timer.
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+
+  this->time_Calculation_.report_time (elapsed_time);
+
   return 0;
 }
 
 // Iterate <n_iterations> each time modifying the global data and
 // checking that nobody steps on it while we can write it.
 
-static void *
-writer (void *)
+int
+Writer_Task::svc ()
 {
+  ACE_Profile_Timer timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+
+  barrier_.wait();
+  // wait at the barrier
+
+  // We start an ACE_Profile_Timer here...
+  timer.start ();
 
   for (size_t iterations = 1;
        iterations <= n_iterations;
@@ -265,13 +261,35 @@ writer (void *)
 
       current_writers--;
     }
+
+       
+  // Stop the timer.
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+
+  this->time_Calculation_.report_time (elapsed_time);
+
   return 0;
 }
 
-static void
-print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
-             int iterations)
+void 
+Time_Calculation::report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
 {
+  ACE_Guard<ACE_Thread_Mutex> g (mutex_);
+
+  this->times_.real_time += elapsed_time.real_time;
+  this->times_.user_time += elapsed_time.user_time;
+  this->times_.system_time += elapsed_time.system_time;
+
+  this->reported_times_++;
+}
+
+void
+Time_Calculation ::print_stats ()
+{
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time = this->times_;  
+  unsigned int iterations = 1;
+
   if (iterations > 0)
     {
       elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
@@ -284,20 +302,26 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 
       double tmp = 1000 / elapsed_time.real_time;
 
-      ACE_DEBUG ((LM_DEBUG,"\n"
+      ACE_DEBUG ((LM_DEBUG,ASYS_TEXT ("\n"
 		  "\treal_time\t = %0.06f ms, \n"
 		  "\tuser_time\t = %0.06f ms, \n"
 		  "\tsystem_time\t = %0.06f ms, \n"
-		  "\t%0.00f calls/second\n",
+		  "\t%0.00f calls/second\n"),
 		  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
 		  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
 		  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
 		  tmp < 0.0 ? 0.0 : tmp));
-    }
+
+      ACE_DEBUG ((LM_DEBUG, 
+              ASYS_TEXT ("Number of reported times: %d\n"), 
+              this->reported_times_));
+
+  }
   else
     ACE_ERROR ((LM_ERROR,
 		"\tNo time stats printed.  Zero iterations or error ocurred.\n"));
 }
+
 
 int 
 init ()
@@ -326,11 +350,15 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Read_Guard<ACE_RW_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Mutex>;
 template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Double_Linked_List<Element>;
+template class ACE_Double_Linked_List_Iterator<Element>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
 #pragma instantiate ACE_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Double_Linked_List<Element>;
+#pragma instantiate ACE_Double_Linked_List_Iterator<Element>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
@@ -339,9 +367,10 @@ template class ACE_Guard<ACE_RW_Mutex>;
 
 int main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
+  // ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
 
 #if defined (ACE_HAS_THREADS)
+
   parse_args (argc, argv);
 
 #if !defined RW_MUTEX
@@ -358,35 +387,64 @@ int main (int argc, ASYS_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, 
               ASYS_TEXT ("(%t) main thread starting\n")));
 
-  ACE_Profile_Timer timer;
-  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+  Time_Calculation time_Calculation;
+  // for the time calculation
 
-  // We start an ACE_Profile_Timer here...
-  timer.start ();
+  ACE_Barrier barrier (n_readers + n_writers);
+  // for a nice start of all threads (for much contention)
 
-  if (ACE_Thread_Manager::instance ()->spawn_n (n_readers,
-                                                ACE_THR_FUNC (reader),
-                                                0,
-                                                THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ASYS_TEXT ("%p\n"), 
-                       ASYS_TEXT ("spawn_n")), 1);
-  else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
-                                                     ACE_THR_FUNC (writer),
-                                                     0,
-                                                     THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ASYS_TEXT ("%p\n"), 
-                       ASYS_TEXT ("spawn_n")), 1);
+  // Initialize the readers
+  Reader_Task** reader_tasks;
 
-  ACE_Thread_Manager::instance ()->wait ();
-  
-  // Stop the timer.
-  timer.stop ();
-  timer.elapsed_time (elapsed_time);
+  ACE_NEW_RETURN (reader_tasks, 
+                  Reader_Task*[n_readers],
+                  -1);
+
+  unsigned int i;
+
+  for (i = 0;
+       i < n_readers;
+       i++)
+       {
+         ACE_NEW_RETURN (reader_tasks[i], 
+                         Reader_Task(time_Calculation,
+                                     barrier), 
+                         -1);
+         reader_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 
+                                    1, 
+                                    0, 
+                                    ACE_DEFAULT_THREAD_PRIORITY);
+       }
+
+
+  // Create all the writers
+  Writer_Task** writer_tasks;
+
+  ACE_NEW_RETURN (writer_tasks, 
+                  Writer_Task*[n_writers],
+                  -1);
+
+
+  for (i = 0;
+       i < n_writers;
+       i++)
+       {
+         ACE_NEW_RETURN (writer_tasks[i], 
+                         Writer_Task(time_Calculation, 
+                                     barrier), 
+                         -1);
+         writer_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 
+                                    1, 
+                                    0, 
+                                    ACE_DEFAULT_THREAD_PRIORITY);
+       }
+
+
+
+  int result = ACE_Thread_Manager::instance ()->wait ();
 
   // compute average time.
-  print_stats (elapsed_time, 1);
+  time_Calculation.print_stats ();
 
   if (not_upgraded != 0 || upgraded != 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -404,7 +462,7 @@ int main (int argc, ASYS_TCHAR *argv[])
   // delete the memory of the Double_Linked_List
   ACE_CString* cString_ptr;
   Element* element_ptr;
-  for (unsigned int i = 0; 
+  for (i = 0; 
        i < n_entries;
        i++)
        {
@@ -423,7 +481,7 @@ int main (int argc, ASYS_TCHAR *argv[])
   ACE_ERROR ((LM_ERROR, 
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
-  ACE_END_TEST;
+  // ACE_END_TEST;
   return 0;
 }
 
