@@ -1,3 +1,16 @@
+Wed Dec 31 07:13:25 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/TMCast/MTQueue.hpp:
+
+          Added #include for ace/os_include/sys/os_types.h to get the
+          definition of size_t and changed references to std::size_t to
+          size_t.
+
+        * ace/config-win32-msvc.h:
+
+          Added a #pragma waring to disable warning #4800 which is a
+          conversion of integer to boolean warning.
+
 Wed Dec 31 06:46:36 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/JAWS3/jaws3.mwc:
