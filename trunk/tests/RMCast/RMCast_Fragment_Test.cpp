@@ -153,8 +153,11 @@ ACE_RMCast_Fragment_Tester::svc (void)
     const int n = 256;
     ACE_UINT32 total = 0;
 
+    ACE_hrtime_t current_hrtime = ACE_OS::gethrtime ();
+    ACE_UINT32 low_bits =
+      ACE_CU64_TO_CU32(current_hrtime);
     ACE_RANDR_TYPE seed =
-      ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::gethrtime ());
+      ACE_static_cast(ACE_RANDR_TYPE,low_bits);
 
     int size = 64 + ACE_OS::rand_r(seed) % 128;
     ACE_Message_Block small[n];
