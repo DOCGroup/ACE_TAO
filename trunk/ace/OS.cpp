@@ -1505,8 +1505,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_UNUSED_ARG (stack);
 #    endif /* !ACE_LACKS_THREAD_STACK_ADDR */
 
-
-
   // *** Deal with various attributes
   if (flags != 0)
     {
@@ -1785,27 +1783,29 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ::pthread_attr_destroy (&attr);
 #    endif /* ACE_HAS_SETKIND_NP */
 
-#    if defined (ACE_HAS_STHREADS)
-  // This is the Solaris implementation of pthreads, where
-  // ACE_thread_t and ACE_hthread_t are the same.
+  // This is a Solaris, POSIX, or DCE implementation of pthreads,
+  // where we assume that ACE_thread_t and ACE_hthread_t are the same.
+  // If this *isn't* correct on some platform, please let us know.
   if (result != -1)
     *thr_handle = *thr_id;
 
-  // If the priority is 0, then we might have to set it now because we couldn't
-  // set it with ::pthread_attr_setschedparam, as noted above.  This doesn't
-  // provide strictly correct behavior, because the thread was created
-  // (above) with the priority of its parent.  (That applies regardless
-  // of the inherit_sched attribute:  if it was PTHREAD_INHERIT_SCHED, then
-  // it certainly inherited its parent's priority.  If it was
-  // PTHREAD_EXPLICIT_SCHED, then "attr" was initialized by the Solaris
-  // ::pthread_attr_init () to contain NULL for the priority, which indicated
-  // to Solaris ::pthread_create () to inherit the parent priority.)
+#    if defined (ACE_HAS_STHREADS)
+  // If the priority is 0, then we might have to set it now because we
+  // couldn't set it with ::pthread_attr_setschedparam, as noted
+  // above.  This doesn't provide strictly correct behavior, because
+  // the thread was created (above) with the priority of its parent.
+  // (That applies regardless of the inherit_sched attribute: if it
+  // was PTHREAD_INHERIT_SCHED, then it certainly inherited its
+  // parent's priority.  If it was PTHREAD_EXPLICIT_SCHED, then "attr"
+  // was initialized by the Solaris ::pthread_attr_init () to contain
+  // NULL for the priority, which indicated to Solaris
+  // ::pthread_create () to inherit the parent priority.)
   if (priority == 0)
     {
       // Check the priority of this thread, which is the parent of the
-      // newly created thread.  If it is 0, then the newly created thread
-      // will have inherited the priority of 0, so there's no need to
-      // explicitly set it.
+      // newly created thread.  If it is 0, then the newly created
+      // thread will have inherited the priority of 0, so there's no
+      // need to explicitly set it.
       struct sched_param sparam;
       int policy = 0;
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_self (),
@@ -1830,8 +1830,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                              int, -1);
         }
     }
-#    else
-  *thr_handle = ACE_OS::NULL_hthread;
 #    endif /* ACE_HAS_STHREADS */
   return result;
 #  elif defined (ACE_HAS_STHREADS)
