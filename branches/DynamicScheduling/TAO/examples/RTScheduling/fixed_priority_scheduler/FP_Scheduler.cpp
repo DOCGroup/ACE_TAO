@@ -65,24 +65,24 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param = 
-    FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
+//    FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param = 
+//      FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
 
-  RTCORBA::Priority desired_priority = sched_param->value ();
-  this->current_->the_priority (desired_priority
-				ACE_ENV_ARG_PARAMETER);
+//    RTCORBA::Priority desired_priority = sched_param->value ();
+//    this->current_->the_priority (desired_priority
+//  				ACE_ENV_ARG_PARAMETER);
   
-  CORBA::Short priority = 
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+//    CORBA::Short priority = 
+//      this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
   
   
-  if (desired_priority != priority)
-    {
-      ACE_ERROR ((LM_ERROR,
-		  "ERROR: Unable to set thread "
-		  "priority to %d\n", desired_priority));
-      ACE_THROW ((CORBA::INTERNAL ()));
-    }
+//    if (desired_priority != priority)
+//      {
+//        ACE_ERROR ((LM_ERROR,
+//  		  "ERROR: Unable to set thread "
+//  		  "priority to %d\n", desired_priority));
+//        ACE_THROW ((CORBA::INTERNAL ()));
+//      }
 }
 
 void 

@@ -36,6 +36,8 @@ class DT_Creator : public ACE_Service_Object
 
   void check_ifexit (void);
 
+  void log_msg (char* msg);
+
  private:
   DT_LIST dt_list_;
   //Fixed_Priority_Scheduler* scheduler_;
@@ -44,7 +46,9 @@ class DT_Creator : public ACE_Service_Object
   CORBA::ORB_var orb_;
   /// Mutex to serialize access to our internal state.
   ACE_Lock* state_lock_;
+  ACE_Lock* shutdown_lock_;
   int active_dt_count_;
+  char** log;
 };
 
 

@@ -8,11 +8,14 @@
 #include "ace/High_Res_Timer.h"
 #include "Task.h"
 
+int log_index = 0;
 int
 DT_Creator::init (int argc, char *argv [])
 {
   state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
+  shutdown_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
   active_dt_count_ = 0;
+  ACE_NEW_RETURN (log, char*[BUFSIZ],-1);
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -24,13 +27,15 @@ DT_Creator::init (int argc, char *argv [])
   int load;
   int importance;
   Thread_Task *task;
-  
+  int total_load = 0;
+
   while (arg_shifter.is_anything_left ())
     {
       if ((current_arg = arg_shifter.get_the_parameter ("-DT_Count")))
         {
           dt_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (dt_list_, Thread_Task*[dt_count_], -1);
+	  active_dt_count_ = dt_count_;
           arg_shifter.consume_arg ();
         }
       if (arg_shifter.cur_arg_strncasecmp ("-DT_Task") == 0)
@@ -52,6 +57,7 @@ DT_Creator::init (int argc, char *argv [])
 	  if ((current_arg = arg_shifter.get_the_parameter ("-Load")))
 	    {
 	      load = ACE_OS::atoi (current_arg);
+	      total_load += load;
 	      arg_shifter.consume_arg ();
 	    }
 	  
@@ -65,6 +71,9 @@ DT_Creator::init (int argc, char *argv [])
 	  dt_list_ [dt_index++] = task;
 	}
     }
+  
+  TASK_STATS::instance ()->init (total_load);
+    
   return 0;
       
 }
@@ -89,51 +98,64 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
   sched_param = CORBA::Policy::_duplicate (this->sched_param (15));
   const char * name = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
-  this->current_->begin_scheduling_segment (name,
-					    sched_param_.in (),
-					    implicit_sched_param
-					    ACE_ENV_ARG_PARAMETER);
+  current->begin_scheduling_segment (name,
+				     sched_param.in (),
+				     implicit_sched_param
+				     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  ACE_hrtime_t now,elapsed_time,suspension_time;
-  ACE_hrtime_t base_time = ACE_OS::gethrtime ();
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  
+  ACE_Time_Value base_time (ACE_OS::gettimeofday ());
+
   for (int i = 0; i < this->dt_count_; i++)
     {
-      now = gethrtime ();
+      ACE_Time_Value now (ACE_OS::gettimeofday ());
       
-      // convert to microseconds
-#if !defined ACE_LACKS_LONGLONG_T
+      ACE_Time_Value elapsed_time = now - base_time;
       
-      ACE_UINT32 elapsed_microseconds = ACE_UINT32((after - before) / gsf);
+      char buf [BUFSIZ];
+      ACE_OS::sprintf (buf, "elapsed time = %d\n now = %d\n base_time = %d\n",
+		       elapsed_time.sec (),
+		       now.sec (),
+		       base_time.sec());
       
-#else  /* ! ACE_LACKS_LONGLONG_T */
+      log [log_index++] = ACE_OS::strdup (buf) ; 
       
-      ACE_UINT32 elapsed_microseconds = (after - before) / gsf;
-      
-#endif /* ! ACE_LACKS_LONGLONG_T */
-      
-#if defined (ACE_WIN32)
-      elapsed_microseconds*=1000; // convert to uSec on Win32
-#endif /* ACE_WIN32 */
-      
-      elapsed_microseconds = ACE_UINT32 (now - base_time) / gsf;
-      if (elapsed_time -> dt_list_[i]->start_time ())
+      ACE_hthread_t curr_thr;
+      ACE_Thread::self (curr_thr);
+     
+      /*
+	int priority;
+	if (ACE_Thread::getprio (curr_thr, priority) == -1)
 	{
-	  sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
-	  dt_list_ [i]->activate_task (current,
-				       sched_param.in (),
-				       flags,
-				       barrier_
-				       ACE_ENV_ARG_PARAMETER);
-	  active_dt_count_++;
 	}
-      else 
+      */
+
+      if (dt_list_ [i]->start_time () != 0 && (elapsed_time.sec () < dt_list_[i]->start_time ()))
+	{
+	  int suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
+	  ACE_OS::sprintf (buf,"suspension_tome = %d\n",
+			   suspension_time);
+	  log [log_index++] = ACE_OS::strdup (buf);
+	  yield (suspension_time);
+	}
+      
+      sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
+      dt_list_ [i]->activate_task (current,
+				   sched_param.in (),
+				   flags,
+				   barrier_
+				   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      //        {
+      //  	ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
+      //  	active_dt_count_++;
+      //        }
+      
     }
   
-  this->current_->end_scheduling_segment (name
-					  ACE_ENV_ARG_PARAMETER);
+  current->end_scheduling_segment (name
+				   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 //    ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch...\n"));
@@ -146,41 +168,61 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
 void
 DT_Creator::dt_ended (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_dt_count_));
   {
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
     --active_dt_count_;
+    //ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_dt_count_));
+    char buf [BUFSIZ];
+    ACE_OS::sprintf (buf,"Active job count = %d\n",active_dt_count_);
+    log [log_index++] = ACE_OS::strdup (buf);
   }
-  
   this->check_ifexit ();
 }
 
 void
 DT_Creator::check_ifexit (void)
 {
- // All tasks have finished and all jobs have been shutdown.
-  if (active_dt_count_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
-      // ask all tasks to dump stats.
+  static shutdown = 0;
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *shutdown_lock_); 
 
-      // TASK_LIST task_list;
-      //       int count = builder_->task_list (task_list);
-      
-      //       char msg[BUFSIZ];
-      //       ACE_OS::sprintf (msg, "# Stats generated on --\n");
-      
-      //       for (int i = 0; i < count; ++i)
-      //         {
-      //           task_list[i]->dump_stats (msg);
-      //         }
-      TASK_STATS::instance ()->dump_samples ("schedule",
-					     "Schedule Output",
-					     ACE_High_Res_Timer::global_scale_factor ());
-      
-      // shutdown the ORB
-      orb_->shutdown (0);
-    }
+    if (!shutdown)
+      {
+	// All tasks have finished and all jobs have been shutdown.
+	if (active_dt_count_ == 0)
+	  {
+	
+	
+	    ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
+	
+	    TASK_STATS::instance ()->dump_samples ("schedule",
+						   "Schedule Output",
+						   ACE_High_Res_Timer::global_scale_factor ());
+
+	    shutdown = 1;
+	    
+	    FILE* log_file = ACE_OS::fopen ("log_file", "w");
+
+	    if (log_file != NULL)
+	      {
+		// first dump what the caller has to say.
+		ACE_OS::fprintf (log_file, "Log File\n");
+		
+		for (int i = 0; i < log_index; i++)
+		  {
+		    ACE_OS::fprintf (log_file, "%s\n", log [i]);
+		  }
+		
+		ACE_OS::fclose (log_file);
+	      }
+
+	    // shutdown the ORB
+	    orb_->shutdown (0);
+
+	    
+	  }
+      }
+  }
 }
 
 int
@@ -195,3 +237,8 @@ DT_Creator::~DT_Creator (void)
 }
 
 
+void
+DT_Creator::log_msg (char* msg)
+{
+  log [log_index++] = ACE_OS::strdup (msg);
+}
