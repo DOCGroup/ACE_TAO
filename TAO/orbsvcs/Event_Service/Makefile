@@ -15,7 +15,9 @@ BIN2 = Event_Service
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    BIN = $(BIN2)
+  endif # ACE_HAS_GNUG_PRE_2_8
 endif # RTOLDEvent
 
 #----------------------------------------------------------------------------
