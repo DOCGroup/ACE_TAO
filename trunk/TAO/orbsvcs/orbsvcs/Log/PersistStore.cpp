@@ -40,11 +40,11 @@ TAO_PersistStore::open (const char * file_name)
     return -1;
   }
 
-  // Open the persistnet log file for reading.
+  // Open the persistent log file for reading.
   this->read_persistent_file_ = ACE_OS::open (file_name,
                                           O_RDONLY);
 
-  if (this->write_persistent_file_ == ACE_INVALID_HANDLE) {
+  if (this->read_persistent_file_ == ACE_INVALID_HANDLE) {
     perror ("open:read");
     return -1;
   }
@@ -93,7 +93,7 @@ TAO_PersistStore::log (DsLogAdmin::LogRecord &rec)
   CORBA::TypeCode_ptr tc;
   ACE_Message_Block *mb;
   struct PersistentData data;
-  char *rd_ptr;
+  char *rd_ptr = NULL;
 
   // Check if we are allowed to write...
   if (max_size_ !=0 && current_size_ >= max_size_)
@@ -114,11 +114,16 @@ TAO_PersistStore::log (DsLogAdmin::LogRecord &rec)
   mb = rec.info._tao_get_cdr ();  // TAO extension
   data.byte_order = rec.info._tao_byte_order ();
 
-  // Get a pointer to the actual data in the ACE_Message_Block.
-  rd_ptr = mb->rd_ptr ();
+  if (mb != NULL) {
+    // Get a pointer to the actual data in the ACE_Message_Block.
+    rd_ptr = mb->rd_ptr ();
 
-  // Get the size of the actual data in the ACE_Message_Block.
-  data.mb_size = mb->length ();
+    // Get the size of the actual data in the ACE_Message_Block.
+    data.mb_size = mb->length ();
+  } else {
+    ACE_DEBUG((LM_INFO, "Skipped empty Any\n"));
+    data.mb_size = 0;
+  }
 
   // Store the first chunk of persistent data.
   // Get the kind of the CORBA::Any stored in the record.
@@ -134,9 +139,11 @@ TAO_PersistStore::log (DsLogAdmin::LogRecord &rec)
   ACE_OS::write (this->write_persistent_file_, (void*) tc, sizeof (CORBA::TypeCode));
   this->current_size_ += sizeof (CORBA::TypeCode);
 
-  // Write the actual message block data to the file.
-  ACE_OS::write (this->write_persistent_file_, (void*) rd_ptr, data.mb_size);
-  this->current_size_ += data.mb_size;
+  if (rd_ptr != NULL) {
+    // Write the actual message block data to the file.
+    ACE_OS::write (this->write_persistent_file_, (void*) rd_ptr, data.mb_size);
+    this->current_size_ += data.mb_size;
+  }
 
   // Unlock the mutex
   write_lock_.release();
