@@ -62,10 +62,7 @@ DIRS += Concurrency \
   LoadBalancing \
   Log \
   Bug_1334_Regression \
-  Bug_1393_Regression \
   Bug_1395_Regression \
-  Bug_1436_Regression \
-  Bug_1437_Regression \
   Bug_1630_Regression \
 
 
