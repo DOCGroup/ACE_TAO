@@ -15,7 +15,7 @@ BIN   = CPP-inclient \
 	CPP-inserver \
 	CPP-inserver-fancy \
 	CPP-inserver-poll \
-	CPP-memclinet \
+	CPP-memclient \
 	CPP-memserver \
 	CPP-unserver \
 	FD-unclient \
