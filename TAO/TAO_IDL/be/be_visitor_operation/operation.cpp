@@ -209,7 +209,7 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
     {
       // Response handler operations don't use the environment arg
       // unless there are other args in the operation.
-      env_decl = "ACE_ENV_SINGLE_ARG_DECL_NOT_USED";
+      env_decl = "ACE_ENV_SINGLE_ARG_DECL";
       this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
     }
   else if (argument_emitted || node->argument_count () > 0)

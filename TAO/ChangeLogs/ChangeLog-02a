@@ -1,3 +1,11 @@
+Mon Jun 17 14:59:52 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_environment_decl): 
+	  Changed IDL genration of macro for AMH 'no-arguments' method
+	  definitions from ACE_ENV_SINGLE_ARG_DECL_NOT_USED to
+	  ACE_ENV_SINGLE_ARG_DECL.  Thanks to Craig Rodrigues
+	  <crodrigu@bbn.com> for picking this up and reporting it.
+
 Mon Jun 17 16:02:36 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Nested_Upcall_Crash/Makefile:
