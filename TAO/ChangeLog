@@ -1,13 +1,35 @@
-2002-09-25  D A Hanvey  <dhanvey@qub.ac.uk>
+2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
 
-	* /orbsvcs/Logging_Service/Makefile, README:
+	* /orbsvcs/examples/Log
 
-	  Updated to reflect Logging_Service division into 4 services
+	  Examples of the 4 Logging Services
 
-	  Basic_Logging_Service
-	  Event_Logging_Service
-	  Notify_Logging_Service
-	  RTEvent_Logging_Service
+	* /orbsvcs/examples/Log/Basic
+	* Basic/Makefile 
+	* Basic/TLS_Client.cpp
+	* Basic/TLS_Client.h 
+	* Basic/main.cpp
+
+	* /orbsvcs/examples/Log/Event
+	* Event/Event_Consumer.cpp
+	* Event/Event_Consumer.h
+	* Event/Event_Supplier.cpp
+	* Event/Event_Supplier.h
+	* Event/Makefile
+
+	* /orbsvcs/examples/Log/
+	* Notify/Makefile
+	* Notify/Notify_Consumer.cpp
+	* Notify/Notify_Consumer.h
+	* Notify/Notify_Supplier.cpp
+	* Notify/Notify_Supplier.h
+
+	* /orbsvcs/examples/Log/RTEvent 
+	* RTEvent/Makefile
+	* RTEvent/RTEvent_Consumer.cpp
+	* RTEvent/RTEvent_Consumer.h
+	* RTEvent/RTEvent_Supplier.cpp
+	* RTEvent/RTEvent_Supplier.h:
 
 Sat Sep 21 12:49:41 2002  Ossama Othman  <ossama@uci.edu>
 
