@@ -99,7 +99,8 @@ namespace TAO
   template<typename S,
            typename S_slice,
            typename S_var,
-           typename S_forany>
+           typename S_forany,
+           typename S_tag>
   class Ret_Fixed_Array_Argument_T : public Argument
   {
   public:
@@ -135,7 +136,8 @@ namespace TAO
   template<typename T,
            typename T_slice,
            typename T_var,
-           typename T_forany>
+           typename T_forany,
+           typename T_tag>
   struct Fixed_Array_Arg_Traits_T
   {
     typedef T_slice *                                   ret_type;
@@ -155,7 +157,8 @@ namespace TAO
     typedef Ret_Fixed_Array_Argument_T<T,
                                        T_slice,
                                        T_var,
-                                       T_forany>        ret_val;
+                                       T_forany,
+                                       T_tag>           ret_val;
 
     typedef Fixed_Array_Tag                             idl_tag;
   };
