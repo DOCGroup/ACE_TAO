@@ -17,6 +17,7 @@
 #define MT_SSLIOP_SERVER_WORKER_H
 #include "ace/pre.h"
 #include "ace/Task.h"
+#include "tao/corba.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -34,14 +35,14 @@ class Server_Worker : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run server threads
   //
 public:
-  Server_Worker (CORBA::ORB_ptr orb);
+  Server_Worker (CORBA_ORB_ptr orb);
   // ctor
 
   virtual int svc (void);
   // The thread entry point.
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA_ORB_var orb_;
   // The orb
 };
 
