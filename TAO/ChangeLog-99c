@@ -1,7 +1,8 @@
 Mon Sep 21 12:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/Makefile,
-	  TAO_IDL/tao_idl.dsp:
+	  TAO_IDL/tao_idl.dsp,
+	  TAO_IDL/tao_idl_static.dsp:
 	  Added the files be_visitor_ami_pre_proc.{h,cpp}.
 
 	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
