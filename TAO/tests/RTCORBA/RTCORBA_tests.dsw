@@ -51,6 +51,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Server_Declared Client"=.\Server_Declared\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Server_Declared Server"=.\Server_Declared\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Server_Protocol Client"=.\Server_Protocol\client.dsp - Package Owner=<4>
 
 Package=<5>
