@@ -46,8 +46,15 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
   non_amh_name += node->client_enclosing_scope ();
   non_amh_name += node->local_name ();
 
+  ACE_CString full_skel_name_holder =
+    this->generate_full_skel_name (node);
+  const char *full_skel_name = full_skel_name_holder.c_str ();
+
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl;
+
   *os << non_amh_name.c_str() << "*" << be_nl
-      << node->full_skel_name ()
+      << full_skel_name
       << "::_this (TAO_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl // idt = 1
       << "TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);"
@@ -66,8 +73,6 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << be_uidt_nl << be_nl // idt = 1
       << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
 
-//  *os << "(void) safe_stub.release ();" << be_nl << be_nl;
-
   *os << "return " << "::" << non_amh_name.c_str() << "::_unchecked_narrow (obj.in ());"
       << be_uidt_nl // idt = 0
       << "}" << be_nl;
@@ -79,15 +84,18 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // now the dispatch method
-  *os << "void " << node->full_skel_name () <<
+  ACE_CString full_skel_name_holder =
+    this->generate_full_skel_name (node);
+  const char *full_skel_name = full_skel_name_holder.c_str ();
+
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << "void " << full_skel_name <<
     "::_dispatch (TAO_ServerRequest &req, " <<
     "void *context TAO_ENV_ARG_DECL)" << be_nl;
   *os << "{" << be_idt_nl;
-  // @todo ACE_TRY_ENV without check;
   *os << "this->asynchronous_upcall_dispatch" << be_idt_nl
       << " (req, context, this TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
-//  *os << "this->asynchronous_upcall_reply (req);" << be_uidt_nl;
   *os << be_uidt_nl << "}" << be_nl;
 }
 
@@ -111,4 +119,21 @@ be_visitor_amh_interface_ss::generate_local_name (be_interface *node)
   ACE_CString local_name = "AMH_";
   local_name += node->local_name ();
   return local_name;
+}
+
+ACE_CString
+be_visitor_amh_interface_ss::generate_full_skel_name (be_interface *node)
+{
+  // @@ This whole thing would be more efficient if we could pass the
+  // ACE_CString to compute_full_name, after all it uses that
+  // internally.
+  ACE_CString result ("POA_");
+
+  // @@ The following code is *NOT* exception-safe.
+  char *buf = 0;
+  node->compute_full_name ("AMH_", "", buf);
+  result += buf;
+  delete[] buf;
+
+  return result;
 }

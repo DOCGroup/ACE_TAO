@@ -81,8 +81,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (this->generate_proxy_classes (node) == -1)
     return -1;
 
-  *os << "// TAO_IDL - Generated from " << __FILE__ << ":" << __LINE__ << "\n";
-  
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl;
+
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
   // each case.
@@ -96,7 +97,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     this->generate_local_name (node);
   const char *node_local_name = node_local_name_holder.c_str ();
 
-  *os << node->full_skel_name () << "::"
+  ACE_CString full_skel_name_holder =
+    this->generate_full_skel_name (node);
+  const char *full_skel_name = full_skel_name_holder.c_str ();
+
+  *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
       << " (void)\n";
 
@@ -107,7 +112,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "}\n\n";
 
   // find if we are at the top scope or inside some module
-  *os << node->full_skel_name () << "::"
+  *os << full_skel_name << "::"
       << local_name_prefix << node_local_name << " ("
       << "const " << local_name_prefix << node_local_name << "& rhs)";
   *os << be_idt_nl
@@ -121,12 +126,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
       << "{}" << be_nl << be_nl;
 
-  *os << node->full_skel_name () << "::~"
+  *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
       << " (void)" << be_nl;
   *os << "{" << be_nl;
   *os << "}\n\n";
-
 
   // generate code for elements in the scope (e.g., operations)
   if (this->visit_scope (node) == -1)
@@ -140,7 +144,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _is_a skeleton.
   os->indent ();
-  *os << "void " << node->full_skel_name ()
+  *os << "void " << full_skel_name
       << "::_is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
@@ -149,8 +153,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
-  *os << node->full_skel_name () << " *_tao_impl = ("
-      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
+  *os << full_skel_name << " *_tao_impl = ("
+      << full_skel_name << " *) _tao_object_reference;" << be_nl;
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "CORBA::String_var value;" << be_nl;
   *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl;
@@ -171,7 +175,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 
   // Generate code for the _non_existent skeleton.
-  *os << "void " << node->full_skel_name ()
+  *os << "void " << full_skel_name
       << "::_non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
@@ -179,8 +183,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << node->full_skel_name () << " *_tao_impl = ("
-      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
+  *os << full_skel_name << " *_tao_impl = ("
+      << full_skel_name << " *) _tao_object_reference;" << be_nl;
   *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply ();" << be_nl;
@@ -193,7 +197,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "}\n\n";
 
   // Generate code for the _interface skeleton.
-  *os << "void " << node->full_skel_name ()
+  *os << "void " << full_skel_name
       << "::_interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
@@ -201,8 +205,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << node->full_skel_name () << " *_tao_impl = ("
-      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl
+  *os << full_skel_name << " *_tao_impl = ("
+      << full_skel_name << " *) _tao_object_reference;" << be_nl
       << "CORBA_InterfaceDef_ptr _tao_retval = 0;" << be_nl
       << "CORBA::Boolean _tao_result = 0;" << be_nl << be_nl;
   *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
@@ -240,7 +244,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _is_a override.
   os->indent ();
-  *os << "CORBA::Boolean " << node->full_skel_name ()
+  *os << "CORBA::Boolean " << full_skel_name
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* value" << be_nl
       << "TAO_ENV_ARG_DECL" << be_uidt_nl
@@ -266,7 +270,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "}" << be_nl << be_nl;
 
   // the downcast method.
-  *os << "void* " << node->full_skel_name ()
+  *os << "void* " << full_skel_name
       << "::_downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -291,17 +295,17 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "return 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // Print out dispatch method
-  this->dispatch_method (node);
-
-  *os << be_nl;
-
-  *os << "const char* " << node->full_skel_name ()
+  *os << "const char* " << full_skel_name
       << "::_interface_repository_id (void) const"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
+
+  // Print out dispatch method
+  this->dispatch_method (node);
+
+  *os << be_nl;
 
   this->this_method (node);
 
@@ -515,4 +519,10 @@ ACE_CString
 be_visitor_interface_ss::generate_local_name (be_interface *node)
 {
   return ACE_CString (node->local_name ());
+}
+
+ACE_CString
+be_visitor_interface_ss::generate_full_skel_name (be_interface *node)
+{
+  return ACE_CString (node->full_skel_name ());
 }

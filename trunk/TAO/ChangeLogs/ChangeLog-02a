@@ -1,3 +1,14 @@
+Thu Jan 17 11:03:14 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	  Fixed code generation for the AMH_* classes, at this point the
+	  code for *S.h looks reasonable (and compiles!).
+	  Ditto for the _is_a(), _interface() and similar methods in the
+	  *S.cpp file, but we need to fix the generated skeletons.
+
 Thu Jan 17 10:40:57 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.cpp
