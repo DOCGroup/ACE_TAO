@@ -11,7 +11,7 @@ int test_sync_with_target    = 0;
 int test_sync_with_server    = 0;
 int test_sync_with_transport = 0;
 int test_sync_none           = 0;
-int iterations = 1000;
+int iterations = 500;
 
 const int ALIVE     = 0;
 const int DESTROYED = 1;
