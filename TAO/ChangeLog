@@ -1,3 +1,9 @@
+Wed Dec  4 13:00:53 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connect_Strategy.h:
+	* tao/Connect_Strategy.cpp (post_failed_connect): Improved
+	  documentation for this abstract class since it was outdated.
+
 Wed Dec  4 12:50:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.h:
