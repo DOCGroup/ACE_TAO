@@ -1,3 +1,16 @@
+Thu Mar  8 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	    * tests/AMI_Timeouts/timeout_client.cpp:
+		  Added more time to wait for asynch replies in case of local and 
+		  remote timer == 0ms.
+
+		* tests/AMI_Timeouts/client.cpp:
+		  Removed a memory leak caused by not deleting the client object.
+
+		* tests/AMI_Timeouts/timeout_i.cpp:
+		  Removed some confusing debugging messages. Also, added a check
+		  to accept only timeout exceptions and report others.
+
 Wed Mar  7 20:07:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/CosEvent_Service/Makefile:
