@@ -36,7 +36,7 @@ template <class T> class ACE_Future;
 /**
  * @class ACE_Future_Holder
  *
- * @brief Implementation of object which has holds ACE_Future.
+ * @brief Implementation of object that holds an ACE_Future.
  */
 template <class T>
 class ACE_Future_Holder
@@ -60,10 +60,9 @@ protected:
  * @brief ACE_Future_Observer<T>
  *
  * An ACE_Future_Observer object implements an object that is
- * subscribed with an ACE_Future object so that it may be
- * notified when the value of the ACE_Future object is
- * written to by a writer thread.
- * It uses the Observer pattern
+ * subscribed with an ACE_Future object so that it may be notified
+ * when the value of the ACE_Future object is written to by a writer
+ * thread.  It uses the Observer pattern. 
  */
 template <class T>
 class ACE_Future_Observer

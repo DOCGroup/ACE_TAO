@@ -1,3 +1,12 @@
+Mon Jul 14 11:16:25 2003  Craig Rodrigues <crodrigu@bbn.com>
+
+	* ace/POSIX_Proactor.cpp: FreeBSD defines the sysconf value
+	  for _SC_AIO_LISTIO_MAX to 16, and the sysconf value for
+ 	  _SC_AIO_MAX to be 1024.  The lower value must be assigned to
+ 	  aiocb_list_max_size_ otherwise aio_suspend() will fail.  There
+ 	  was already already some logic in here to support HPUX that also
+ 	  works for FreeBSD, so use that.
+
 Sat Jul 12 17:55:14 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\Conn_Test.cpp: 
@@ -760,6 +769,15 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  new changes by Bala to the TAO connection handlers.  New branch
 	  is Reactor_RefCount_2.
 
+Mon Jul  7 12:38:01 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Message_Queue_T.cpp: Updated the implementation of all the
+	  dequeue_*() methods so that the "next_" and "prev_" pointer of
+ 	  the dequeue'd message block are set to 0.  Failure to do this
+ 	  can cause weird behavior when a dequeue'd message block is
+ 	  passed to ACE::write_n().... Thanks to Wenlong Tang
+ 	  <tang_long@hotmail.com> for reporting this.
+
 Mon Jul  7 11:14:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp (visit_enum):
@@ -968,6 +986,12 @@ Sun Jun 29 01:31:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/UNIX_Addr.h:
           Added include of ace/os_include/sys/os_un.h to fix compile
           problems on VxWorks.
+
+Sat Jun 28 15:26:11 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS_Dirent.inl (readdir_r): Added defined (__FreeBSD__)
+	  here.  Thanks to Karim Fodil-Lemelin <kfl@xiphos.ca> for
+ 	  submitting a patch.
 
 Fri Jun 27 12:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
