@@ -14,9 +14,16 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Malloc_Base.h"
+
+#if (_MSC_VER == 1200)
+#  include <new>  /* For placement new() operator. */
+#endif  /* _MSC_VER == 1200 */
+
 #include "ace/os_include/os_errno.h"
 
-ACE_RCSID(ace, Array_Base, "$Id$")
+ACE_RCSID (ace,
+	   Array_Base,
+	   "$Id$")
 
 
 // Dynamically initialize an array.
