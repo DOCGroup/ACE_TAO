@@ -23,11 +23,14 @@
 class Ping_Recv_Callback : public TAO_AV_Callback
 {
 public:
+  Ping_Recv_Callback (void);
   virtual int handle_stop (void);
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info = 0,
                              const ACE_Addr &peer_address = ACE_Addr::sap_any);
   virtual int handle_destroy (void);
+ protected:
+  int count_;
 };
 
 class Ping_Recv : public TAO_FlowConsumer
