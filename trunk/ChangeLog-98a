@@ -1,3 +1,58 @@
+Thu Mar 19 02:47:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp: Link against user32.lib for all configurations
+	  for we now use Msg_WFMO and related APIs in ACE.  (We should do
+	  the same to ace_lib.dsp.)
+
+	* ace/config-WinCE.h: Added dummy definition of stdin and stdout.
+	  They don't have any real effect.
+	
+	* ace/ACE.{h,cpp} (ldopen,ldfind): Made these functions visible
+	  under CE.  Modified them to work under CE.
+
+	* ace/OS.cpp: Added scope name to day_of_week_name and
+	  month_name.  They are used only on CE.
+ 	
+	* ace/OS.{h,i}: Added some dummy C methods for CE.  Yacc and Lex
+	  generated codes use these functions, although we don't really
+	  use them in ACE.
+
+	* ace/OS.i (exit): Added implementation of ACE_OS::exit under CE.  Since
+	  there's no ExitProcess available, I use TerminateProcess, which
+	  is not exactly the same as using ExitProcess but that's the
+	  closest thing I can think of.
+	  (open): Made the char version unsupported under CE.
+	  (fread,fwrite,...): Added dummy C methods definition for CE.
+
+	* ace/Parse_Node.cpp: Regular CE stuff.  There's a boundary
+	  of char/wchar functions somewhere in this file.  Most Svc_Conf
+	  stuff uses char functions but the information gets converted to
+	  wchar later.
+
+	* ace/Service_Config.{h,i}: Added char version function for
+	  Service_Type under CE.  Service_Type (and its subclasses) are
+	  the boundary of char/wchar functions.
+	  
+	* ace/Service_Object.{h,i}: Added the chname method which always
+	  returns char value of a Service_Object under all platforms.
+
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf_y.cpp:
+	* ace/Object_Manager.{cpp}: Regular CE stuff.
+	
+	* ace/Svc_Conf_l.cpp: Regular CE stuff.  Haven't figure out a way
+	  to modify this from Svc_Conf.l yet.
+
+	* ace/Service_Config.cpp
+	* ace/Object_Manager.{cpp}: Ifdef'ed inclusion of Naming Context
+	  related header files out.  Naming context uses Registry which
+	  uses iostream and STL, both are not available on CE (yet?).
+
+	* ace/WFMO_Reactor.{h,cpp}:
+	* ace/Proactor.{h,i,cpp}:
+	* ace/Asynch_IO.{h,cpp}: Ifdef'ed the body so they are not visible
+	  under CE.  CE doesn't have asynchronous IO.
+
 Wed Mar 18 21:30:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.33, released Wed Mar 18 21:30:39 1998.
