@@ -1,15 +1,34 @@
-Tue Jan 14 21:01:36 1997  David L. Levine  <levine@cs.wustl.edu>
+Tue Jan 14 15:57:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.h: Replace "Linux" preprocessor symbol with "linux".
+	* ace/OS.h: Changed the default size of ACE_DEFAULT_TIMERS to
+ 	  _SC_TIMER_MAX (which is typically around 40 or so).
+	  Thanks to Stuart Powell <stuartp@in.ot.com.au> for
+	  suggesting this.
 
-Tue Jan 14 13:15:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* tests/Timer_Queue_Test.cpp (main): Added some additional logic
+ 	  so that we can test the performance of the preallocated and
+ 	  non-preallocated ACE_Timer_Heap.
+
+	* ace/Timer_Heap: Added a new "preallocate nodes" mechanism to the
+ 	  ACE_Timer_Heap.  If this is enabled by the constructor, then we
+ 	  preallocate as many ACE_Timer_Nodes as there are slots in the
+ 	  heap.  This allows us to completely remove the need for dynamic
+ 	  memory allocation, which is important for real-time systems.
+
+	* ace/Thread_Manager.cpp (remove_thr): Optimized the code just a
+ 	  tad by decrementing the current_count_ *first*.  Thanks to Per
+ 	  Andersson <Per.Andersson@hfera.ericsson.se> for suggesting this.
+
+	* ace/ReactorEx: Updated the implementation so that the
+ 	  handle_events() method now in fact *does* return the number of
+ 	  event handler's dispatched (i.e., the implementation matches the
+ 	  documentation...).  Thanks to Hamutal Yanay
+ 	  <Hamutal_Yanay@mail.icomverse.com> for reporting this.
 
 	* ace/Service_Repository.cpp (remove): Removed an extra call to
  	  ACE_OS::dlclose().  This is already being called in the
  	  destructor of ACE_Service_Record.  Thanks to Karlheinz for
  	  reporting this.
-
-Tue Jan 14 00:18:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* man: Updated all the nroff and html documentation.
 
@@ -17,6 +36,10 @@ Tue Jan 14 00:18:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  algorithm that requires only O(log N) time to remove a timer
  	  from the ACE_Timer_Heap.  This is about 50 to 100 times faster
  	  than using the ACE_Timer_List implementation.
+
+Tue Jan 14 21:01:36 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: Replace "Linux" preprocessor symbol with "linux".
 
 Mon Jan 13 17:57:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

@@ -385,32 +385,32 @@ ACE_ReactorEx::dispatch_callbacks (ACE_Event_Handler *wait_all_callback)
 	  this->handler_rep_.unbind_all ();
 	  return -1;
 	}
+      else
+	return 1;
     }
   else
     {
       int result = 0;
 
       for (int i = 0; i < this->handler_rep_.max_handlep1 (); i++)
-	if (this->dispatch_handler (i) == -1)
-	  result--;
+	if (this->dispatch_handler (i) != -1)
+	  result++;
 
-      // Return the number of bad handler dispatches (negated, of
-      // course!).
+      // Return the number of handler dispatches.
       return result;
     }
-
-  return 0;
 }
 
-// Dispatches any active handles from handles_[-index-] to
-// handles_[max_handlep1_] using WaitForMultipleObjects to poll
+// Dispatches any active handles from <handles_[index]> to
+// <handles_[max_handlep1_]> using <WaitForMultipleObjects> to poll
 // through our handle set looking for active handles.
 
 int
 ACE_ReactorEx::dispatch_handles (size_t index)
 {
-
-  for (;;)
+  for (int number_of_handlers_dispatched = 0;
+       ; 
+       number_of_handlers_dispatched++)
     {
       // If dispatch_handler returns -1 then a handler was removed and
       // index already points to the correct place.
@@ -419,7 +419,7 @@ ACE_ReactorEx::dispatch_handles (size_t index)
 
       // We're done.
       if (index >= this->handler_rep_.max_handlep1 ())
-	return 0;
+	return number_of_handlers_dispatched;
 
       DWORD wait_status = 
 	::WaitForMultipleObjects (this->handler_rep_.max_handlep1 () - index,
@@ -429,11 +429,11 @@ ACE_ReactorEx::dispatch_handles (size_t index)
 	{
 	case WAIT_FAILED: // Failure.
 	  errno = ::GetLastError ();
-	  return -1;
+	  /* FALLTHRU */
 	case WAIT_TIMEOUT:
 	  // There are no more handles ready, we can return.
-	  return 0;
-	default:  // Dispatch.
+	  return number_of_handlers_dispatched;
+	default: // Dispatch.
 	  // Check if a handle successfully became signaled.
 	  if (wait_status >= WAIT_OBJECT_0 
 	      && wait_status < WAIT_OBJECT_0 

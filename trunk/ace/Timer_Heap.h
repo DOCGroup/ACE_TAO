@@ -48,20 +48,28 @@ protected:
 
 class ACE_Timer_Heap : public ACE_Timer_Queue
   // = TITLE 
-  //      Provides an interface to timers.
+  //      Provides a very fast and predictable timer implementation.
   //
   // = DESCRIPTION
   //      This implementation uses a heap-based callout queue of
-  //      absolute times.  Therefore, in the average case, scheduling
-  //      and expiring <ACE_Event_Handler> timers is O(log N) (where N
-  //      is the total number of timers) and canceling timers is O(N)
-  //      (since we need to perform linear search for the timer id).
+  //      absolute times.  Therefore, in the average and worst case,
+  //      scheduling, canceling, and expiring <ACE_Event_Handler>
+  //      timers is O(log N) (where N is the total number of timers).
+  //      In addition, we can also preallocate as many <ACE_Timer_Nodes>
+  //      as there are slots in the heap.  This allows us to
+  //      completely remove the need for dynamic memory allocation,
+  //      which is important for real-time systems.
 {
   friend class ACE_Timer_Heap_Iterator;
 public:
   // = Initialization and termination methods.
-  ACE_Timer_Heap (size_t size = ACE_DEFAULT_MAX_TIMERS);
-  // Constructor.
+  ACE_Timer_Heap (size_t size = ACE_DEFAULT_TIMERS,
+		  int preallocated = 0);
+  // The Constructor creates a heap with <size> elements.  If
+  // <preallocated> is non-0 then we'll pre-allocate all the memory
+  // for the <ACE_Timer_Nodes>.  This saves time and is more
+  // predictable (though it requires more space).  Otherwise, we'll
+  // just allocate the nodes as we need them.
 
   virtual ~ACE_Timer_Heap (void);
   // Destructor.
@@ -112,6 +120,15 @@ protected:
 
   virtual ACE_Timer_Queue_Iterator &iterator (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+
+  virtual ACE_Timer_Node *alloc_node (void);
+  // Factory method that allocates a new node (uses operator new if
+  // we're *not* preallocating, otherwise uses an internal freelist).
+
+  virtual void free_node (ACE_Timer_Node *);
+  // Factory method that frees a previously allocated node (uses
+  // operatord delete if we're *not* preallocating, otherwise uses an
+  // internal freelist).
 
 private:
   ACE_Timer_Node *remove (size_t index);
@@ -164,9 +181,18 @@ private:
   // treated as "pointers" for the <freelist_>, whereas positive
   // values are treated as "pointers" into the <heap_> array.
 
-  int freelist_;
+  int timer_ids_freelist_;
   // "Pointer" to the first element in the freelist contained within
-  // the <timer_ids_> array.
+  // the <timer_ids_> array, which is organized as a stack.
+
+  ACE_Timer_Node *preallocated_nodes_;
+  // If this is non-0, then we preallocate <max_size_> number of
+  // <ACE_Timer_Node> objects in order to reduce dynamic allocation
+  // costs.
+
+  ACE_Timer_Node *preallocated_nodes_freelist_;
+  // This points to the head of the <preallocated_nodes_> freelist,
+  // which is organized as a stack.
 };
 
 #endif /* ACE_TIMER_HEAP_H */

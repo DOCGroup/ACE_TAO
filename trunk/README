@@ -22,22 +22,22 @@ initialization, interprocess communication, shared memory management,
 message routing, dynamic (re)configuration of distributed services,
 multi-threading, and concurrency control.
 
-ACE is targeted for developers of high-performance communication
-services and applications on UNIX, POSIX, and Win32 platforms.  ACE
-simplifies the development of OO network applications and services
-that utilize interprocess communication, event demultiplexing,
-explicit dynamic linking, and concurrency.  ACE automates system
-configuration and reconfiguration by dynamically linking services into
-applications at run-time and executing these services in one or more
-processes or threads.
+ACE is targeted for developers of high-performance and real-time
+communication services and applications on UNIX, POSIX, and Win32
+platforms.  ACE simplifies the development of OO network applications
+and services that utilize interprocess communication, event
+demultiplexing, explicit dynamic linking, and concurrency.  ACE
+automates system configuration and reconfiguration by dynamically
+linking services into applications at run-time and executing these
+services in one or more processes or threads.
 
 ACE has been ported to a wide range of uni-processor and multi-process
 OS platforms including Win32 (i.e., WinNT and Win95), most versions of
 UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, HP-UX, OSF/1, AIX, Linux, and
 SCO), VxWorks, and MVS OpenEdition.  It is currently used in
 commercial products by dozens of companies including Ericsson,
-Bellcore, Siemens, Motorola, and Kodak.  There are both C++ and Java
-versions of ACE available.
+Bellcore, Siemens, Motorola, Kodak, and McDonnell Douglas.  There are
+both C++ and Java versions of ACE available.
 
 The remainder of this document outlines the structure and participants
 of the layers in this diagram.
