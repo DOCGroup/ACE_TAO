@@ -88,8 +88,18 @@ private:
   /// Network Priority mapping type.
   int network_priority_mapping_type_;
 
-  /// Scheduling policy.
+  /** Scheduling policy.  This value is passed to ACE_OS::thr_setprio().
+    * For POSIX pthreads, it maps directly to the pthread_setschedparam() policy
+    * parameter.  Legal values are ACE_SCHED_RR, ACE_SCHED_FIFO, 
+    * ACE_SCHED_OTHER, ACE_SCHED_*, etc.
+    */
   long sched_policy_;
+
+  /** Scheduling policy flags.  This value is passed as part of the
+    * flags argument to ACE_Task_Base::activate().  Legal values are
+    * THR_SCHED_RR, THR_SCHED_FIFO, THR_SCHED_DEFAULT, etc.
+    */
+  long sched_policy_flags_;
 
   /// Scope policy.
   long scope_policy_;
