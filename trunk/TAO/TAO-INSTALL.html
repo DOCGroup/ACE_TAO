@@ -386,6 +386,21 @@ settings are used in the Project Settings.</P>
       TAOs.lib or TAOsd.lib
 </UL>
 
+<H4>MinGW and Cygwin</H4> <P>
+
+<P>First, follow the build instructions in the
+<A HREF="../ACE-INSTALL.html#mingw">ACE installation notes.</A>
+When building with MinGW and Cygwin you are using the GNU make under Windows.
+When you use make from the commandline, make sure that <code>TAO_ROOT</code> is 
+set to a full path or to <code>%ACE_ROOT%/TAO</code>, which will also result
+in setting a full path. Setting it with the Unix style to <code>$ACE_ROOT/TAO</code>
+will not work, setting it using the make style to <code>$(ACE_ROOT)/TAO</code> looks
+to work but will cause problems when building the TAO services, so don't do that.
+The correct way is:
+<BLOCKQUOTE><code>set TAO_ROOT=%ACE_ROOT%/TAO</code></BLOCKQUOTE>
+
+</P>
+
 <HR>
 <H3><A NAME="#VC">How to add IDL files into your Visual C++ projects</A></H3>
 Point of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>.
