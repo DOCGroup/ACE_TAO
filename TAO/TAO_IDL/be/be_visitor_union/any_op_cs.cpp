@@ -286,7 +286,7 @@ gen_const_extraction (TAO_OutStream *os,
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
       << "ACE_reinterpret_cast (void *, ACE_const_cast ("
-      << node->name () << " *, _tao_elem))," << be_nl
+      << node->name () << " *&, _tao_elem))," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
