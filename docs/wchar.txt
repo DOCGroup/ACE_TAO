@@ -4,18 +4,18 @@
 Here's a first stab at some sort of documentation for the magic wchar stuff
 in ACE.
 
-@subsection Overview
+@subsection wchar_overview Overview
 
 There are three different wchar configurations that ACE can use.  These are
 no support mode, regular support mode, and full support mode (well, those are
 the best names I can come up with for now).
 
-@subsection No Support
+@subsection wchar_nosupport No Support
 
 By default, ACE will not use wchar_t at all.  This is for platforms where 
 wchar_t does not exist or support for it is pretty flakey.  
 
-@subsection Regular Support
+@subsection wchar_regular Regular Support
 
 If ACE_HAS_WCHAR is defined, then ACE classes will be expanded to have extra
 methods which take in wchar_t strings.  Note that all the methods available
@@ -23,7 +23,7 @@ with No Support are also available here.  This is the default in Windows
 right now, and has been tested to work on Linux and VxWorks (well, only been
 tested to compile/link of VxWorks).  
 
-@subsection Full Support
+@subsection wchar_full Full Support
 
 Full support is turned on if ACE_HAS_WCHAR and ACE_USES_WCHAR are defined.
 Like Regular Support, both char and wchar_t versions of some methods are 
@@ -32,7 +32,7 @@ or return values may have wchar_t arguments or return values.
 
 This has only been tested in Windows, and is the default for Windows CE.
 
-@subsection Other Important Macros
+@subsection wchar_othermacros Other Important Macros
 
 In addition to the ACE_HAS_WCHAR and ACE_USES_WCHAR mentioned above, there
 are several other macros that are important when using wide character support
@@ -57,7 +57,7 @@ ACE_USES_WCHAR.  I'm hoping to remove these by adding a new ACE_OS_Win32
 class to perform the same task, but until then these ugly macros get the job
 done.
 
-@subsection Relation to Win32's UNICODE and _UNICODE macros
+@subsection wchar_win32macros Relation to Win32's UNICODE and _UNICODE macros
 
 It used to be that in previous versions of ACE that the Win32 macros affected
 ACE in some way.  This has been all removed in favor of the ACE_USES_WCHAR
@@ -68,7 +68,7 @@ they are needed on non-Win32 platforms.
 
 The way I'd recommend doing this is to add the typdefs to config.h.
 
-@subsection Legacy Support
+@subsection wcahr_legacy Legacy Support
 
 Most of the old macros (ACE_HAS_UNICODE, ACE_HAS_MOSTLY_UNICODE_APIS) are 
 ignored by default by ACE, since the new macros replaced them.  If 
