@@ -12,6 +12,7 @@ MAKEFILES = \
 	RTOLDEvent.bor \
 	RTSchedEvent.bor \
 	CosEvent.bor \
+        ETCL.bor \
 	CosNotification.bor \
 	Security.bor \
 	SSLIOP.bor \

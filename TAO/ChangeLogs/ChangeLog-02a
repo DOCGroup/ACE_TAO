@@ -1,3 +1,14 @@
+Wed Jan 16 08:19:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ETCL.bor:
+          Added BCB makefile for this new library
+
+        * orbsvcs/orbsvcs/CosNotification.bor:
+          Added ETCL and DynamicAny libraries, removed Trading
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Added ETCL
+
 Tue Jan 15 20:24:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
@@ -39,7 +50,7 @@ Tue Jan 15 17:59:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_PrincipalAuthenticator.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_PrincipalAuthenticator.h:
-	  
+
 	  Removed these files.  They have been superseded by the
 	  SSLIOP_Vault* files.
 
@@ -54,7 +65,7 @@ Tue Jan 15 17:59:46 2002  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator_Impl.h:
 
 	  Removed this file in favor of the standard
-	  SecurityReplaceable::Vault functionality.	
+	  SecurityReplaceable::Vault functionality.
 
 Tue Jan 15 16:22:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -69,7 +80,7 @@ Tue Jan 15 16:22:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 	* TAO_IDL/be/be_visitor_interface.cpp:
 	* TAO_IDL/be/be_visitor_operation.cpp:
 	  Enable compilation of AMH visitors by default.
-	  
+
 	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
 	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
@@ -108,62 +119,62 @@ Tue Jan 15 15:46:20 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Jan 15 15:01:48 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableServer/ServerRequestInfo.cpp : 
-	* tao/PortableServer/POA.i : 
-	* tao/PortableServer/ObjectReferenceTemplate.h : 
-	* tao/PortableServer/ObjectReferenceFactory.cpp : 
-	* tao/PortableServer/ObjectReferenceTemplate.cpp : 
-	* tao/PortableServer/IORInfo.cpp : 
+	* tao/PortableServer/ServerRequestInfo.cpp :
+	* tao/PortableServer/POA.i :
+	* tao/PortableServer/ObjectReferenceTemplate.h :
+	* tao/PortableServer/ObjectReferenceFactory.cpp :
+	* tao/PortableServer/ObjectReferenceTemplate.cpp :
+	* tao/PortableServer/IORInfo.cpp :
 	  Corrected the usage of TAO_ENV_ARG_DECL and
 	  TAO_ENV_ARG_PARAMETER
 
-	* tao/PortableServer/POA.h : 
-	* tao/PortableServer/POA.cpp : 
+	* tao/PortableServer/POA.h :
+	* tao/PortableServer/POA.cpp :
 	  In addition to correcting the usage of TAO_ENV_ARG_DECL, added a
 	  new protected method so that there is only a single ACE_TRY
 	  block in TAO_POA::establish_components method.
 
 Tue Jan 15 14:28:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableInterceptorC.h: 
+	* tao/PortableInterceptorC.h:
 	  Fixed by inserting a space where needed.
 
 Tue Jan 15 13:30:07 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h: 
-	* TAO_IDL/be_include/be_visitor_operation.h: 
-	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h: 
-	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h: 
-	* TAO_IDL/be_include/be_visitor_operation/amh_rh_sh.h: 
-	* TAO_IDL/be_include/be_visitor_operation/amh_rh_ss.h: 
-	* TAO_IDL/be_include/be_visitor_interface.h: 
-	* TAO_IDL/be_include/be_visitor_interface/amh_ch.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface/amh_sh.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface/amh_ss.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface/amh_rh_sh.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface/amh_rh_ss.cpp: 
-	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp: 
-	* TAO_IDL/be/be_visitor_factory.cpp: 
-	* TAO_IDL/be/be_visitor_operation.cpp: 
-	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp: 
-	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface/amh_ch.cpp: 
-	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_rh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_rh_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ch.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 	  This is a snap-shot of the changes to facilitate parallel
-	  working on AMH.  The new files and changes to old ones is 
+	  working on AMH.  The new files and changes to old ones is
 	  part of a new approach to generate AMh code from the IDL-compiler.
-	  In the new approach, only one new implied-idl node is added to the 
-	  main AST i.e. the ResponseHandler (RH) node.  With this node, code is 
+	  In the new approach, only one new implied-idl node is added to the
+	  main AST i.e. the ResponseHandler (RH) node.  With this node, code is
 	  generated in the following files:
 		- The Client Header (Base abstract RH class)
 		- The Skeleton Header (implementation RH class declaration)
@@ -173,31 +184,31 @@ Tue Jan 15 13:30:07 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  Also, in keeping with the new approach, AMH-skeleton code is generated
 	  'on the fly'.  In the interface_{ch/sh/ss} files, AMH_skeleton
 	  code is generated if the be_global->generate_amh_classes () is set.
-	  Currently, this code is commented out and the amh_{ch/sh/ss} files are 
-	  not included in the compiltation of TAO_IDL but once the code is in 
+	  Currently, this code is commented out and the amh_{ch/sh/ss} files are
+	  not included in the compiltation of TAO_IDL but once the code is in
 	  place  amd working, the IDL compiler will include these visitors.
 
 Tue Jan 15 13:35:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableInterceptorS.h: 
+	* tao/PortableInterceptorS.h:
 	  Committing the right one.
-	
-	* tests/Portable_Interceptors/ForwardRequest/Makefile: 
+
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
 	  Added -Gv to the TAO_IDLFLAGS since PortableInterceptor.pidl now
  	  has valuetypes.
 
 Tue Jan 15 12:33:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp: 
+	* tao/ORB_Core.cpp:
 	  Removed stray characters put in by mistake.
 
 Tue Jan 15 12:28:21 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableInterceptorC.i: 
+	* tao/PortableInterceptorC.i:
 	* tao/PortableInterceptorC.h:
 	* tao/PortableInterceptorC.cpp:
  	  Regenerated and applied patches.
-	
+
 Tue Jan 15 12:03:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:
