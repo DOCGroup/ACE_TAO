@@ -1,3 +1,9 @@
+Tue Oct 07 07:54:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-cygwin.h:
+          Removed ACE_LACKS_SENDMSG and ACE_LACKS_RECVMSG because Cygwin
+          supports these.
+
 Tue Oct 07 06:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
