@@ -1,3 +1,25 @@
+Fri Mar 26 12:51:07 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Context.{h, cpp}
+	  orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h, cpp}
+	  orbsvcs/orbsvcs/Naming/README
+	Added the files above.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h, cpp}
+	  orbsvcs/orbsvcs/Makefile
+	Update the files above.
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.{h, cpp}
+	Removed the files above.
+
+	Restructured the implementation of the Naming Service to follow
+	the bridge pattern.  This will allow to easily plug additional
+	implemenations of the Naming Service, as well as dynamically load
+	the appropriate implementation at run-time with Service_Config.
+
+	Please see orbsvcs/orbsvcs/Naming/README for details.
+
+
 Fri Mar 26 11:39:44 1999  Steve Huston  <shuston@riverace.com>
 
         * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.h: Replaced forward
@@ -44,11 +66,11 @@ Thu Mar 25 22:08:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/CDR.{h,cpp}:
           Changed TAO_TRY stuff to ACE_TRY;
-	
+
 Thu Mar 25 21:42:28 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* TAO_IDL/be/be_helper.cpp: Updated tao_idl's copyright message.
-	
+
 Thu Mar 25 21:11:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/tests/Dynany_Test/driver.cpp:
