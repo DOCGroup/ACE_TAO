@@ -173,8 +173,8 @@ module AVStreams
       // flow.
       
       void set_FPStatus (in flowSpec the_spec,
-                         in string fp_name,		
-                         in any fp_settings)		
+                         in string fp_name,             
+                         in any fp_settings)            
         raises (noSuchFlow, 
                 FPError);
       // Used to control the flow protocol parameters.
@@ -263,20 +263,20 @@ module AVStreams
   interface MCastConfigIf : CosPropertyService::PropertySet{
 
       // = DESCRIPTION
-      //   Multicasting operations are not supported yet.
+    // Interface for multicasting operations.
 
       boolean set_peer (in Object peer,
                         inout streamQoS the_qos,
                         in flowSpec the_spec)
         raises (QoSRequestFailed, 
                 streamOpFailed);
-      // Multicasting operations are not supported yet.
+      // Set a peer in the multicast tree.
       
       void configure (in CosPropertyService::Property a_configuration);
-      // Multicasting operations are not supported yet.
+      // Configure the multicast stream.
       
       void set_initial_configuration (in CosPropertyService::Properties initial);
-      // Multicasting operations are not supported yet.
+      // Sets the initial configuration to be used for all added peers.
       
       // Uses <format_name> standardised by OMG and IETF
       void set_format (in string flowName, 
@@ -646,7 +646,7 @@ module AVStreams
       // control, if one is required
       string go_to_listen(inout AVStreams::QoS the_qos,
                           in boolean is_mcast,
-                          in FlowProducer peer,
+                          in FlowEndPoint peer,
                           inout string flowProtocol)// syntax <flowProtocol>
         // The out value of flowProtocol contains SFP version
         // supported and all options including "Credit".
@@ -661,12 +661,11 @@ module AVStreams
                            in string address,
                            in string use_flow_protocol)
         raises (failedToConnect,
-		AVStreams::notSupported,
-		AVStreams::FPError,
-		AVStreams::QoSRequestFailed);
+                AVStreams::notSupported,
+                AVStreams::FPError,
+                AVStreams::QoSRequestFailed);
 
       string get_rev_channel(in string pcol_name);
-
       void set_key(in AVStreams::key the_key);
       void set_source_id(in long source_id);
     };
