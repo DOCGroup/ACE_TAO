@@ -1,3 +1,13 @@
+Fri Nov  7 20:11:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Time_Service/Server_i.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+	* orbsvcs//orbsvcs/Trader/Trading_Loader.cpp:
+
+	  #included "ace/os_include/os_netdb.h" to fix compile errors on
+	  Solaris 7 builds.  
+
 Fri Nov  7 19:40:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests//Latency/AMI/run_test.pl:

@@ -12,6 +12,7 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
 #include "UIPMC_Acceptor.i"
