@@ -1,3 +1,11 @@
+Wed Jan 12 23:46:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.h: Updated the
+	  ACE_Service_Config::close_singletons() method documentation to
+ 	  reflect the fact that it no longer deletes the Allocator, which
+ 	  is deleted by the ACE_Object_Manager now.  Thanks to Craig
+ 	  Perras <cperras@watchguard.com> for reporting this.
+
 Wed Jan 12 09:49:57 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: don't create diffs if not installing

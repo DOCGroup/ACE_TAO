@@ -211,7 +211,7 @@ public:
 
   static int close_singletons (void);
   // Delete the dynamically allocated Singletons (i.e., the <Reactor>,
-  // <Proactor>, <ReactorEx>, <Thread_Manager>, and <Allocator>).
+  // <Proactor>, <ReactorEx>, and <Thread_Manager>.
   // Returns 0.
 
   // = Reactor event loop management methods.
