@@ -390,3 +390,9 @@ Options::print_results (void)
     ACE_OS::_exit (0);
 }
 #endif /* ACE_HAS_THREADS */
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, size_t>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
