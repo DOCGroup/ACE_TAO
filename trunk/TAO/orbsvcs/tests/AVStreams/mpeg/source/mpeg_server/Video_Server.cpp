@@ -163,20 +163,30 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
     {
     case Video_Control_State::VIDEO_PLAY:
       VIDEO_SINGLETON::instance ()->GetFeedBack ();
-      // if (VIDEO_SINGLETON::instance ()->GetFeedBack () == -1)
-//         {
-//           ACE_DEBUG ((LM_DEBUG, "(%P|%t) Error reading feedback. Ending the reactor event loop\n"));
-//           //          TAO_ORB_Core_instance ()-> orb ()->shutdown ();
-//           // return -1;
-//           //          return 0;
-//         }
-        
-      VIDEO_SINGLETON::instance ()->play_send   (); // simulating the for loop in playvideo () in vs.cpp
+      //  if (VIDEO_SINGLETON::instance ()->GetFeedBack () == -1)
+//          {
+//            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Error reading feedback. Ending the reactor event loop\n"));
+//            TAO_ORB_Core_instance ()-> orb ()->shutdown ();
+//            return -1;
+//          }
+      if (VIDEO_SINGLETON::instance ()->play_send () == -1)
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Error sending packets. Ending the reactor event loop\n"));
+          //          TAO_ORB_Core_instance ()-> orb ()->shutdown ();
+          //          return -1;
+        }
+         // simulating the for loop in playvideo () in vs.cpp
       break;
     case Video_Control_State::VIDEO_FAST_FORWARD:
     case Video_Control_State::VIDEO_FAST_BACKWARD:
       VIDEO_SINGLETON::instance ()->GetFeedBack ();
-      VIDEO_SINGLETON::instance ()->fast_play_send   (); // simulating the for loop in fast_play
+      if (VIDEO_SINGLETON::instance ()->fast_play_send () == -1)
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Error sending packets. Ending the reactor event loop\n"));
+          //          TAO_ORB_Core_instance ()-> orb ()->shutdown ();
+          //          return -1;
+        }
+        // simulating the for loop in fast_play
       break;
     }
   return 0;

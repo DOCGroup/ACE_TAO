@@ -1494,6 +1494,8 @@ Video_Global::play_send (int debug)
           sendStatus = this->SendPacket (this->preHeader != curHeader,
                                          curGroup, curFrame,
                                          (this->currentUPF + this->addedUPF) * frameStep);
+          if (sendStatus == -1)
+            return -1;
           if (!sendStatus)
             {
               this->preHeader = curHeader;
@@ -1517,8 +1519,11 @@ Video_Global::fast_play_send (void)
 {
  if (this->fast_preGroup != Video_Timer_Global::timerGroup)
   {
-   this->SendPacket (this->fast_preHeader != Video_Timer_Global::timerHeader, Video_Timer_Global::timerGroup, 0,
-		 this->fast_para.usecPerFrame * this->patternSize >> 2);
+    int result;
+    result = this->SendPacket (this->fast_preHeader != Video_Timer_Global::timerHeader, Video_Timer_Global::timerGroup, 0,
+                               this->fast_para.usecPerFrame * this->patternSize >> 2);
+    if (result == -1)
+      return -1;
    this->fast_preHeader = Video_Timer_Global::timerHeader;
    this->fast_preGroup = Video_Timer_Global::timerGroup;
   }

@@ -233,8 +233,7 @@ static void CmdWrite(unsigned char * buf, int size)
 static void SocketRead(int s, char *buf, int size)
 { int val, remain = size;
   char * ptr = buf;
-  fprintf (stderr, "SocketRead: videoSocket = %d\n",
-           videoSocket);
+  //  fprintf (stderr, "SocketRead: videoSocket = %d\n",videoSocket);
   for (;;)
   {
     val = read(s, ptr, remain);
@@ -2991,10 +2990,10 @@ int CTRmain(void)
 //                   -1);
  
   //  if (command_handler->init () == -1)
-  if (command_handler.init () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) command_handler: init returned -1"),
-                      -1);
+   if (command_handler.init () == -1)
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%P|%t) command_handler: init returned -1"),
+                       -1);
  
   // .. and register it with the reactor.
   if (ACE_Reactor::instance ()->register_handler (&command_handler,

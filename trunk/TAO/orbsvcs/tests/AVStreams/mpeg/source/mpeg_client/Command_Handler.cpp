@@ -244,6 +244,11 @@ Command_Handler::init_av (void)
 
   int i, j;
 
+  //  if (this->orb_manager_ != 0)
+  //    delete this->orb_manager_;
+
+  // init the ORB manager.
+  //  this->init ();
   /* try to stop and close previous playing */
   if (audioSocket >= 0 || videoSocket >= 0)
     {
@@ -271,7 +276,7 @@ Command_Handler::init_av (void)
           }
           usleep(10000);
           this->close ();
-          ComCloseConn(videoSocket);
+          //          ComCloseConn(videoSocket);
           videoSocket = -1;
           while ((!VBbufEmpty()) || !VDbufEmpty()) {
             while (VDpeekMsg() != NULL) {
@@ -764,7 +769,7 @@ int
 Command_Handler::close (void)
 {
   // flag to call close only once.
-  static called = 0;
+  //  static called = 0;
 //    if (audioSocket >=0)
 //      {
 //        int result = 
@@ -782,9 +787,9 @@ Command_Handler::close (void)
 //            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
 //          }
 //      }
-  if (!called)
-    {
-      called =1;
+  //  if (!called)
+  //    {
+  //  called =1;
       TAO_TRY
         {
           if (CORBA::is_nil (this->audio_control_.in ()) == CORBA::B_FALSE)
@@ -811,8 +816,8 @@ Command_Handler::close (void)
         }
       TAO_ENDTRY;
       return 0;
-    }
-  return 0;
+      //    }
+      //  return 0;
 }
 
 
@@ -1516,6 +1521,7 @@ Command_Handler::connect_to_video_server (char *address,
   ACE_INET_Addr server_addr (VCR_TCP_PORT,
                              address);
 
+  this->video_stream_.close ();
   if (this->video_connector_.connect (this->video_stream_,
                                 server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1549,6 +1555,7 @@ Command_Handler::connect_to_video_server (char *address,
       ACE_NEW_RETURN (client_address_string,
                       char [BUFSIZ],
                       -1);
+      this->video_dgram_.close ();
       // Get the local UDP address
       if (this->video_dgram_.open (ACE_Addr::sap_any) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram open failed %p"),-1);
@@ -1629,6 +1636,7 @@ Command_Handler::connect_to_audio_server (char *address,
   ACE_INET_Addr server_addr (VCR_TCP_PORT,
                              address);
 
+  this->audio_stream_.close ();
   if (this->audio_connector_.connect (this->audio_stream_,
                                       server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1643,9 +1651,7 @@ Command_Handler::connect_to_audio_server (char *address,
   int ack;
   this->audio_stream_.recv_n (&ack, sizeof (ack));
 
-  //  ACE_DEBUG ((LM_DEBUG, 
-  //          "(%P|%t) got ack :%d\n", 
-  //          ack));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) got ack :%d\n",ack));
   
   // initialize the command handler , ORB
   if (this->resolve_audio_reference () == -1)
@@ -1661,6 +1667,7 @@ Command_Handler::connect_to_audio_server (char *address,
       ACE_NEW_RETURN (client_address_string,
                       char [BUFSIZ],
                       -1);
+      this->audio_dgram_.close ();
       // Get the local UDP address
       if (this->audio_dgram_.open (ACE_Addr::sap_any) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram open failed %p"),-1);
