@@ -1,3 +1,22 @@
+Mon Dec 13 00:36:44 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* bin/MakeProjectCreator/config/strategies.mpb (Module):
+	Removed explicite dependencies of TAO_Strategies on TAO_TkReactor.
+
+	* bin/MakeProjectCreator/config/tao_tkreactor.mpb (Module):
+	Creating base project for using TAO_TkReactor library.
+
+	* bin/MakeProjectCreator/config/strategies.mpb (Module):
+	Removed dependency on tao_tkreactor.
+
+	* tests/TkReactor_Test.cpp (Module):
+	* bin/MakeProjectCreator/config/ace_tk.mpb (Module):
+	* ace/config-doxygen.h (Module):
+	Removed ACE_HAS_TK macros.
+	* ace/TkReactor.h (Module):
+	* ace/TkReactor.cpp (Module):
+	Removed ACE_HAS_TK macros. Created factory method TkReactor in dll.
+
 Sun Dec 12 22:53:48 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/FlReactor_Test.cpp (Module):

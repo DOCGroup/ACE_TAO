@@ -60,9 +60,6 @@
 /// Enable support for the SSL wrappers
 #define ACE_HAS_SSL 1
 
-/// Several GUI Reactors that are only enabled in some platforms.
-#define ACE_HAS_TK
-
 /// Enable exceptions
 #define ACE_HAS_EXCEPTIONS
 

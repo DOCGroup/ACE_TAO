@@ -4,6 +4,7 @@
 #if !defined (__ACE_INLINE__)
 # include "fl_resource.i"
 #endif /* ! __ACE_INLINE__ */
+#include "ace/FlReactor.h"
 
 ACE_Reactor_Impl *
 TAO_FlResource_Factory::allocate_reactor_impl (void) const

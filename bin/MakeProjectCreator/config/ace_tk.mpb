@@ -3,7 +3,6 @@
 
 project {
   requires += tk
-  macros   += ACE_HAS_TK
   // Depends on configration from include/makeinclude/platform_*.GNU
   
   verbatim(gnuace,local) {

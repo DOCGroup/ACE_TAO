@@ -28,21 +28,6 @@ ACE_RCSID (tests,
            TkReactor_Test,
            "$Id$")
 
-#if !defined (ACE_HAS_TK)
-
-int run_main (int, ACE_TCHAR*[])
-{
-  ACE_START_TEST (ACE_TEXT ("TkReactor_Test"));
-
-  ACE_ERROR ((LM_ERROR,
-              "Tk not supported on this platform\n"));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#else
-
 #include "ace/Event_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
@@ -337,5 +322,3 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-
-#endif /* ACE_HAS_TK */
