@@ -436,184 +436,19 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Sequence::deep_free (CORBA::TypeCode_ptr  tc,
                                  const void *source,
                                  const void *dest,
-                                 CORBA::Environment &env)
-{
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
-  CORBA::TypeCode_ptr	tc2;  // typecode of the element
-  size_t  size; // size of element
-  CORBA::ULong  bounds;
-  char *value1;
-  CORBA::OctetSeq          *src;
-  CDR stream;  // used only to access the marshal_object factory
-
-  // Rely on binary format of sequences -- all are the same
-  // except for the type pointed to by "buffer"
+                                 CORBA::Environment &env){
+  // TAO implements sequences using inheritance from a base
+  // class. That class allocate  and deallocates the buffer, using
+  // virtual methods.
 
   if (tc)
     {
-      src = (CORBA::OctetSeq *) source;
+      TAO_Base_Sequence *src = ACE_reinterpret_cast(TAO_Base_Sequence*,source);
 
-      // get element typecode
-      tc2 = tc->content_type (env);
-      if (env.exception () == 0)
-        {
-          // get the size of the element
-          size = tc2->size (env);
-          if (env.exception () == 0)
-            {
-              // compute the length of the sequence
-              bounds = src->length;
-
-              value1 = (char *)src->buffer;
-              switch (tc2->kind_)
-                {
-                case CORBA::tk_null:
-                case CORBA::tk_void:
-                case CORBA::tk_short:
-                case CORBA::tk_ushort:
-                case CORBA::tk_long:
-                case CORBA::tk_ulong:
-                case CORBA::tk_float:
-                case CORBA::tk_double:
-                case CORBA::tk_longlong:
-                case CORBA::tk_ulonglong:
-                case CORBA::tk_boolean:
-                case CORBA::tk_char:
-                case CORBA::tk_octet:
-                case CORBA::tk_longdouble:
-                case CORBA::tk_wchar:
-                case CORBA::tk_enum:
-                  delete [] src->buffer;
-                  //		      CORBA::release (tc2);
-                  return CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-                  // handle all aggregate types here
-                case CORBA::tk_any:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Any::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_TypeCode:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_TypeCode::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_Principal:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Principal::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_objref:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_ObjRef::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_struct:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Struct::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_union:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Union::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_string:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_String::deep_free (tc2, (char **)value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_sequence:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Sequence::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_array:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Array::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_alias:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Alias::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_except:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_Except::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                case CORBA::tk_wstring:
-                  while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      retval = TAO_Marshal_WString::deep_free (tc2, value1, dest, env);
-                      value1 = (char *)value1 + size;
-                    }
-                  break;
-                default:
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
-                  break;
-                } // end of switch
-              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                {
-                  //                  CORBA::release (tc2);
-                  // XXXASG - need to release the typecode
-                  // deallocate the top level buffer
-                  delete [] src->buffer;
-                  return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                }
-              else
-                {
-                  // error exit
-                  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-                  dmsg ("marshaling TAO_Marshal_Sequence::deep_free detected error");
-                  return CORBA::TypeCode::TRAVERSE_STOP;
-                }
-            }
-          else // exception computing size
-            {
-              //	      CORBA::release (tc2);
-              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE));
-              dmsg ("marshaling TAO_Marshal_Sequence::deep_free detected error");
-              return CORBA::TypeCode::TRAVERSE_STOP;
-            }
-        }
-      else // exception computing content type
-        {
-          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE));
-          dmsg ("marshaling TAO_Marshal_Sequence::deep_free detected error");
-          return CORBA::TypeCode::TRAVERSE_STOP;
-        }
+      src->_deallocate_buffer ();
+      return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
-  else // no typecode
-    {
-      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Struct::deep_free detected error");
-      return CORBA::TypeCode::TRAVERSE_STOP;
-    }
+  return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
 // deep_free for Array

@@ -48,6 +48,9 @@ public:
   // operator= and then their destructors must be called.
   // Finally the old buffer must be released.
 
+  virtual void _deallocate_buffer (void) = 0;
+  // Must deallocate the buffer and then set it to zero.
+
 protected:
   TAO_Base_Sequence (void);
   // Default constructor.

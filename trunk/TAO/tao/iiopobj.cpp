@@ -58,7 +58,7 @@ IIOP::Profile::set (const char *h,
       key = buffer;
     }
 
-  this->object_key.length (ACE_OS::strlen (key));
+  this->object_key.length (ACE_OS::strlen (key) + 1);
 
   for (CORBA::ULong i = 0;
        i < this->object_key.length ();

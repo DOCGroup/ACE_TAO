@@ -954,17 +954,19 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
   // but we will accept them when it's clear how to do so.
 
   continue_decoding = stream->get_ulong (len);
-  // note that the encoded length is 1 more than the length of the string
-  // because it also accounts for the terminating NULL character
-  str = (*(char **) data) = CORBA::string_alloc (len - 1);
-
   if (len != 0)
     {
-    while (continue_decoding != CORBA::B_FALSE && len-- != 0)
-      {
-        continue_decoding = stream->get_char (*(CORBA::Char *) str);
-        str++;
-      }
+      // note that the encoded length is 1 more than the length of the string
+      // because it also accounts for the terminating NULL character
+      
+      str = (*(char **) data) = CORBA::string_alloc (len - 1);
+      // only allocate the string *after* the length was validated.
+
+      while (continue_decoding != CORBA::B_FALSE && len-- != 0)
+	{
+	  continue_decoding = stream->get_char (*(CORBA::Char *) str);
+	  str++;
+	}
     }
   if (continue_decoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
