@@ -1,3 +1,12 @@
+Fri Oct 11 10:38:26 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (locations_of_members):
+
+	  Made reference to TAO_PG_MemberInfoSet non-const once again
+	  since const iterators for the ACE_Unbounded_Set container are
+	  currently unimplemented.  Fixes a compile-time problem.
+
 Fri Oct 11 09:59:59 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp

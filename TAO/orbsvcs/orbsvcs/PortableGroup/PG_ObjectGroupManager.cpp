@@ -215,7 +215,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
 
   PortableGroup::Locations_var locations = temp;
 
-  const TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   locations->length (member_infos.size ());
 
