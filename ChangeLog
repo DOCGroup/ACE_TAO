@@ -1,3 +1,9 @@
+Thu Jun 19 07:50:04 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug with multiple 'specific' scopes in a single project.
+
 Thu Jun 19 07:13:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
