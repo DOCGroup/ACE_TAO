@@ -1,3 +1,11 @@
+Fri Feb 26 18:00:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/TAO.dsp:
+	  Removed file Align.h from the repository, the makefile
+	  and the project file. All that stuff moved to OS.h
+	  with the CDR classes.
+
 Fri Feb 26 17:37:04 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
 	* Added the function next_profile_retry to stub object.
