@@ -376,7 +376,7 @@ ACE_OutputCDR::adjust (size_t size,
                        size_t align,
                        char*& buf)
 {
-  buf = ptr_align_binary (this->current_->wr_ptr(),
+  buf = ptr_align_binary (this->current_->wr_ptr (),
                           align);
   char *end = buf + size;
 
@@ -424,6 +424,21 @@ ACE_OutputCDR::do_byte_swap (void) const
 {
   return this->do_byte_swap_;
 }
+
+ACE_INLINE int
+ACE_OutputCDR::align_write_ptr (size_t alignment)
+{
+  char *buf = ptr_align_binary (this->current_->wr_ptr (),
+				alignment);
+
+  if (buf <= this->current_->end ())
+    {
+      this->current_->wr_ptr (buf);
+      return 0;
+    }
+
+  return this->grow_and_adjust (0, alignment, buf);
+}  
 
 // ****************************************************************
 
@@ -1139,3 +1154,20 @@ ACE_InputCDR::do_byte_swap (void) const
 {
   return this->do_byte_swap_;
 }
+
+ACE_INLINE int
+ACE_InputCDR::align_read_ptr (size_t alignment)
+{
+  char *buf = ptr_align_binary (this->rd_ptr (),
+                                alignment);
+
+  if (buf <= this->end ())
+    {
+      this->start_.rd_ptr (buf);
+      return 0;
+    }
+
+  this->good_bit_ = 0;
+  return -1;
+}
+
