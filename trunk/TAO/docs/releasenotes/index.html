@@ -781,32 +781,51 @@ and transport protocols for a given platform.</li>
 
 <h3> <a NAME="rtcorba"></a>Real-Time CORBA </h3>
 
-<h4> Last Updated:  04/27/2000 </h4>
+<h4> Last Updated:  08/25/2000 </h4>
 
 Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
 Spivak</a> and <a href="mailto:irfan@cs.wustl.edu">Irfan
 Pyarali</a>
 <P>
 
-Work in Progress:
-<P>
 We are currently working on implementing RT CORBA 1.0 specification in
-TAO.  Features in progress include POA Threadpools, Client-Propagated
-and Server-Declared Priority Models, and Priority-Banded Connections.
-A version of TAO supporting these features is expected in July.
-<P>
-Our design is an extension of the <em>endpoint-per-priority</em>
+TAO.  Our design is an extension of the <em>endpoint-per-priority</em>
 architecture mentioned in the <tt>Recently Completed Work</tt> section
 below.  In this design, codenamed <em>reactor-per-lane</em>, each
 threadpool lane owns a set of I/O resources, i.e., <tt>Reactor</tt>,
-<tt>Acceptor</tt>, and <tt>Connector_Registry.</tt>  Each request is
-serviced by a single thread without context switches, i.e., the same thread
-performs I/O and runs the servant code.  Document
-describing the design in detail will be available this summer.
+<tt>Acceptor</tt>, and <tt>Connector_Registry.</tt> Each request is
+serviced by a single thread without context switches, i.e., the same
+thread performs I/O and runs the servant code.
 <P>
+
+Work in Progress:
+<ul>
+
+<li> Client Protocol Policy (expected ~ September 10) </li>
+<p>
+<li> Priority Banded Connections (expected ~ September 10) </li>
+<p>
+<li> TAO's RTCORBA Documentation web pages (expected ~ September 10) </li>
+<p>
+<li> POA Threadpools & SERVER_DECLARED Priority Model </li>
+</ul>
 
 Recently Completed Work:
 <ul>
+
+<li> CLIENT_PROPAGATED Priority Model  </li>
+<p>
+<li> Server Protocol Policy </li>
+<p>
+<li> RTORB, RTCurrent and ProrityMappingManger interfaces </li>
+<p>
+<li> Support for client-exposed policies </li>
+<p>
+<li> All RTCORBA, Policy and POA interfaces converted to local </li>
+<p>
+<li> Collocation-related  classes are restructured to support RTCORBA </li>
+<p>
+
 
 <li> Implemented Policy framework (defined in the Messaging
 specification, used in RT CORBA). </li>
@@ -872,9 +891,8 @@ href="http://www.cs.wustl.edu/~marina/boeing.pdf">this paper.</a>
 
 Known issues:
 <ul>
-<li> When using <em>endpoint-per-priority</em> model in TAO, the client
-ORB does not use a connection of the right priority if
-it encounters LOCATION_FORWARD.</li>
+<li> Location forwarding does not work properly with
+<em>endpoint-per-priority</em> model.</li>
 </ul>
 
 Future work:
@@ -1049,7 +1067,7 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status (as of August 27, 2000): 
+<p>Current Status (as of August 27, 2000):
 <ul>
 
 <LI><P>First pass implementing the new Dynamic Any interfaces.
@@ -1086,11 +1104,11 @@ code.</li><p>
 
 <p>Recent Work:
 <ul>
-<li> The Interface Repository Service has been added to TAO, in 
+<li> The Interface Repository Service has been added to TAO, in
 ACE_wrappers/TAO/orbsvcs/IFR_Service. The implementation follows the
 expanded IDL found in CORBA Components vol. III. The database used to store
 IR objects is an ACE tool called ACE_Configuration, written by
-<a href="mailto:chafey@stentorsoft.com">Chris Hafey</a>. This 
+<a href="mailto:chafey@stentorsoft.com">Chris Hafey</a>. This
 class represents its contents to the user as a tree of hash maps.
 By specifying a disk file to read from at startup, the storage may
 be made persistent. There is also an option to use a win32 registry
@@ -1670,7 +1688,7 @@ Please note the following:
       capture these patterns so that they might be used in other similar
       event communication senarios.
   </li>
-      
+
   <li>
       Concurrency:
       <ul>
@@ -1687,16 +1705,16 @@ Please note the following:
             ProxySuppliers will be evaluated in another thread, different
             from the delivering thread.
         </li>
-            
+
         <li>
             MT dispatching of updates - subscription/offer_change
             updates are delivered on another thread.
         </li>
-            
+
       </ul>
   </li>
 
-      
+
   <li>
       Memory Management
       <ul>
@@ -1706,12 +1724,12 @@ Please note the following:
 
         <li>
             Uses service configurator to load resource factories and
-            supply strartup options to the service. 
+            supply strartup options to the service.
         </li>
 
       </ul>
   </li>
-      
+
 </ul>
 
 <h3> Project Schedule </h3>
@@ -1732,7 +1750,7 @@ The TODO list runs like this:
             grammer in <tt> orbsvcs/orbsvcs/ETCL </tt> with Notify and
             remove dependency on the <tt>Trader </tt>.
         </li>
-            
+
         <li>
             Implement CosNotifyFilter::MappingFilter.
         </li>
