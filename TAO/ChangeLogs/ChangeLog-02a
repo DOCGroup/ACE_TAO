@@ -1,3 +1,9 @@
+Thu Feb  3 19:06:58 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/DSI_Gateway/test_dsi.cpp (invoke):
+
+	  Added missing ACE_CHECK after call to ORB::shutdown().
+
 Thu Feb  3 20:55:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
