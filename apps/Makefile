@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	$Id: Makefile	1.1	10/18/96
+#       $Id$
 #
 #	Makefile for the apps directory
 #----------------------------------------------------------------------------
@@ -11,13 +11,13 @@
 INFO  = README
 
 DIRS  = Gateway \
+        gperf \
 	JAWS
 
 # The following directories aren't compiled by default since haven't
 # finished integrating it into ACE...
 #
 # Orbix-Examples
-# gperf
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
