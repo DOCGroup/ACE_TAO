@@ -554,10 +554,14 @@ ACE_Log_Msg::open (const char *prog_name,
       else
 #if defined (ACE_WIN32)
 	{
+          if (message_queue_.get_handle () != ACE_INVALID_HANDLE)
+            message_queue_.close ();
 	  ACE_SPIPE_Connector con;
 	  status = con.connect (message_queue_, ACE_SPIPE_Addr (logger_key));
 	}
 #else
+        if (message_queue_.get_handle () != ACE_INVALID_HANDLE)
+          message_queue_.close ();
 	status = message_queue_.open (logger_key);
 #endif /* ACE_WIN32 */
 
