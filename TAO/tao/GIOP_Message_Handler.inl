@@ -16,6 +16,9 @@ TAO_GIOP_Message_Handler::data_block (void) const
 ACE_INLINE ACE_Data_Block *
 TAO_GIOP_Message_Handler::data_block_dup (void)
 {
+  if (this->supp_buffer_.length () >0)
+    return this->supp_buffer_.data_block ()->duplicate ();
+
   return this->current_buffer_.data_block ()->duplicate ();
 }
 
@@ -48,11 +51,9 @@ TAO_GIOP_Message_Handler::rd_pos (void) const
       return
         this->supp_buffer_.rd_ptr () - this->supp_buffer_.base ();
     }
-  else
-    {
-      return
-        this->current_buffer_.rd_ptr () - this->current_buffer_.base ();
-    }
+
+  return
+    this->current_buffer_.rd_ptr () - this->current_buffer_.base ();
 }
 
 ACE_INLINE size_t
@@ -63,9 +64,7 @@ TAO_GIOP_Message_Handler::wr_pos (void) const
       return
         this->supp_buffer_.wr_ptr () - this->supp_buffer_.base ();
     }
-  else
-    {
-      return
-        this->current_buffer_.wr_ptr () - this->current_buffer_.base ();
-    }
+
+  return
+    this->current_buffer_.wr_ptr () - this->current_buffer_.base ();
 }
