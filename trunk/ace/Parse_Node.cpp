@@ -88,8 +88,12 @@ ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
 ACE_Stream_Node::~ACE_Stream_Node (void)
 {
   ACE_TRACE ("ACE_Stream_Node::~ACE_Stream_Node");
-  delete (ACE_Static_Node *) this->node_;
-  delete (ACE_Parse_Node *) this->mods_;
+  ACE_Static_Node *n = ACE_const_cast (ACE_Static_Node *,
+                                       this->node_);
+  delete n;
+  ACE_Parse_Node *m = ACE_const_cast (ACE_Parse_Node *,
+                                      this->mods_);
+  delete m;
 }
 
 ACE_Parse_Node::ACE_Parse_Node (void)
@@ -278,7 +282,8 @@ ACE_Static_Node::record (void) const
   ACE_Service_Type *sr;
 
   if (ACE_Service_Repository::instance()->find
-      (ASYS_WIDE_STRING (this->name ()), (const ACE_Service_Type **) &sr) == -1)
+      (ASYS_WIDE_STRING (this->name ()),
+       (const ACE_Service_Type **) &sr) == -1)
     return 0;
   else
     return sr;
@@ -380,7 +385,8 @@ ACE_Location_Node::open_handle (void)
   ACE_TRACE ("ACE_Location_Node::open_handle");
 
   ASYS_TCHAR dl_pathname[MAXPATHLEN + 1];
-  const ASYS_TCHAR *name = ASYS_WIDE_STRING (this->pathname ());
+  const ASYS_TCHAR *name =
+    ASYS_WIDE_STRING (this->pathname ());
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ASYS_TCHAR dl_exppathname[MAXPATHLEN];
@@ -595,8 +601,12 @@ ACE_Dummy_Node::apply (void)
 ACE_Dummy_Node::~ACE_Dummy_Node (void)
 {
   ACE_TRACE ("ACE_Dummy_Node::~ACE_Dummy_Node");
-  delete (ACE_Static_Node *) this->node_;
-  delete (ACE_Parse_Node *) this->mods_;
+  ACE_Static_Node *n = ACE_const_cast (ACE_Static_Node *,
+                                       this->node_);
+  delete n;
+  ACE_Parse_Node *m = ACE_const_cast (ACE_Parse_Node *,
+                                      this->mods_);
+  delete m;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Static_Function_Node)

@@ -241,12 +241,14 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   int i;
 
+  // Check to see if this is a duplicate.
   for (i = 0; i < this->current_size_; i++)
     if (ACE_OS::strcmp (sr->name (), 
                         this->service_vector_[i]->name ()) == 0)
       break;
 
-  if (i < this->current_size_) // Replacing an existing entry
+  // Replacing an existing entry
+  if (i < this->current_size_) 
     {
       // Check for self-assignment...
       if (sr == this->service_vector_[i]) 
@@ -257,7 +259,8 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
       this->service_vector_[i] = sr;
       return 0;
     }
-  else if (i < this->total_size_) // Adding a new entry.
+  // Adding a new entry.
+  else if (i < this->total_size_) 
     {
       this->service_vector_[i] = sr;
       this->current_size_++;

@@ -66,9 +66,9 @@ public:
 
   // = Initialization and termination methods.
   ACE_Service_Type (const ASYS_TCHAR *n, 
-		      ACE_Service_Type_Impl *o, 
-		      const ACE_SHLIB_HANDLE handle, 
-		      int active);
+                    ACE_Service_Type_Impl *o, 
+                    const ACE_SHLIB_HANDLE handle, 
+                    int active);
   ~ACE_Service_Type (void);
 			 
   const ASYS_TCHAR *name (void) const;
