@@ -1,3 +1,19 @@
+Sat Nov  4 18:34:10 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAOACE.dsw:
+
+          Updated dependencies for TAO_Fault_Tolerance.
+
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+
+          Fixed library paths and libraries included.
+
+        * tests/DSI_Gateway/DSI_Gateway_Client.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Server.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Service.dsp:
+
+          Fixed tao_idl dependency.
+
 Sat Nov  4 18:59:00 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile: 
