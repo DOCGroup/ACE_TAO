@@ -221,8 +221,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) IIOP_Transport::handle_client_input -"
-                    " nil message state\n"));
+                    ASYS_TEXT ("TAO (%P|%t) IIOP_Transport::handle_client_input -")
+                    ASYS_TEXT (" nil message state\n")));
       return -1;
     }
 
@@ -234,8 +234,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "IIOP_Transport::handle_client_input, handle_input"));
+                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
+                    ASYS_TEXT ("IIOP_Transport::handle_client_input, handle_input")));
       return -1;
     }
   if (result == 0)
@@ -257,8 +257,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "IIOP_Transport::handle_client_input, parse reply"));
+                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
+                    ASYS_TEXT ("IIOP_Transport::handle_client_input, parse reply")));
       message_state->reset ();
       return -1;
     }
@@ -274,9 +274,9 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) : IIOP_Client_Transport::"
-                    "handle_client_input - "
-                    "dispatch reply failed\n"));
+                    ASYS_TEXT ("TAO (%P|%t) : IIOP_Client_Transport::")
+                    ASYS_TEXT ("handle_client_input - ")
+                    ASYS_TEXT ("dispatch reply failed\n")));
       message_state->reset ();
       return -1;
     }

@@ -197,7 +197,7 @@ CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "CORBA::ORB::destroy() has been called on ORB <%s>.\n",
+                  ASYS_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
                   this->orb_core ()->orbid ()));
     }
 
@@ -251,7 +251,7 @@ CORBA_ORB::create_list (CORBA::Long count,
                         CORBA::NVList_ptr &new_list,
                         CORBA_Environment &ACE_TRY_ENV)
 {
-  assert (CORBA::ULong (count) <= UINT_MAX);
+  ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
 
   // Create an empty list
   ACE_NEW_THROW_EX (new_list,
@@ -537,8 +537,8 @@ CORBA_ORB::multicast_query (char *&buf,
       || acceptor.get_local_addr (my_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "acceptor.open () || "
-                  "acceptor.get_local_addr () failed"));
+                  ASYS_TEXT ("acceptor.open () || ")
+                  ASYS_TEXT ("acceptor.get_local_addr () failed")));
       result = -1;
     }
   else
@@ -556,7 +556,7 @@ CORBA_ORB::multicast_query (char *&buf,
         if (multicast_addr.set (mde.c_str()) == -1)
           {
             ACE_ERROR ((LM_ERROR,
-                        "ORB.cpp: Multicast address setting failed\n"));
+                        ASYS_TEXT("ORB.cpp: Multicast address setting failed\n")));
             stream.close ();
             dgram.close ();
             acceptor.close ();
@@ -567,7 +567,7 @@ CORBA_ORB::multicast_query (char *&buf,
       if (dgram.open (ACE_Addr::sap_any) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Unable to open the Datagram!\n"));
+                      ASYS_TEXT ("Unable to open the Datagram!\n")));
           result = -1;
         }
       else
@@ -605,19 +605,19 @@ CORBA_ORB::multicast_query (char *&buf,
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "\nsent multicast request."));
+                        ASYS_TEXT ("\nsent multicast request.")));
 
           // Check for errors.
           if (result == -1)
             ACE_ERROR ((LM_ERROR,
-                        "%p\n",
-                        "error sending IIOP multicast"));
+                        ASYS_TEXT ("%p\n"),
+                        ASYS_TEXT ("error sending IIOP multicast")));
           else
             {
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "\n%s; Sent multicast."
-                            "# of bytes sent is %d.\n",
+                            ASYS_TEXT ("\n%s; Sent multicast.")
+                            ASYS_TEXT ("# of bytes sent is %d.\n"),
                             __FILE__,
                             result));
               // Wait for response until timeout.
@@ -632,8 +632,8 @@ CORBA_ORB::multicast_query (char *&buf,
                                    &tv) == -1)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "%p\n",
-                              "multicast_query: unable to accept"));
+                              ASYS_TEXT ("%p\n"),
+                              ASYS_TEXT ("multicast_query: unable to accept")));
                   result = -1;
                 }
               else
@@ -649,9 +649,9 @@ CORBA_ORB::multicast_query (char *&buf,
                   if (result != sizeof (ior_len))
                     {
                       ACE_ERROR ((LM_ERROR,
-                                  "%p\n",
-                                  "multicast_query: unable to receive "
-                                  "ior length"));
+                                  ASYS_TEXT ("%p\n"),
+                                  ASYS_TEXT ("multicast_query: unable to receive ")
+                                  ASYS_TEXT ("ior length")));
                       result = -1;
                     }
                   else
@@ -665,9 +665,9 @@ CORBA_ORB::multicast_query (char *&buf,
                           if (buf == 0)
                             {
                               ACE_ERROR ((LM_ERROR,
-                                          "%p\n",
-                                          "multicast_query: unable to "
-                                          "allocate memory"));
+                                          ASYS_TEXT ("%p\n"),
+                                          ASYS_TEXT ("multicast_query: unable to ")
+                                          ASYS_TEXT ("allocate memory")));
                               result = -1;
                             }
                         }
@@ -681,11 +681,11 @@ CORBA_ORB::multicast_query (char *&buf,
                                                   &tv);
                           if (result == -1)
                             ACE_ERROR ((LM_ERROR,
-                                        "%p\n",
-                                        "error reading ior"));
+                                        ASYS_TEXT ( "%p\n"),
+                                        ASYS_TEXT ("error reading ior")));
                           else if (TAO_debug_level > 0)
                             ACE_DEBUG ((LM_DEBUG,
-                                        "%s: service resolved to IOR <%s>\n",
+                                        ASYS_TEXT ("%s: service resolved to IOR <%s>\n"),
                                         __FILE__,
                                         buf));
                         }
@@ -1478,7 +1478,7 @@ CORBA::ORB_init (int &argc,
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) created new ORB <%s>\n",
+                ASYS_TEXT ("TAO (%P|%t) created new ORB <%s>\n"),
                 orbid));
 
   // Before returning remember to store the ORB into the table...
@@ -1579,8 +1579,8 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        "TAO_Stub pointer in CORBA::ORB::object_to_string() "
-                        "is zero.\n"));
+                        ASYS_TEXT ("TAO_Stub pointer in CORBA::ORB::object_to_string() ")
+                        ASYS_TEXT ("is zero.\n")));
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA_SystemException::_tao_minor_code (
@@ -1601,8 +1601,8 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        "TAO_Profile pointer in "
-                        "CORBA::ORB::object_to_string() is zero.\n"));
+                        ASYS_TEXT ("TAO_Profile pointer in ")
+                        ASYS_TEXT ("CORBA::ORB::object_to_string() is zero.\n")));
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA_SystemException::_tao_minor_code (
@@ -1992,7 +1992,7 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t): Cannot add nil object to table <%s>\n",
+                       ASYS_TEXT ("TAO (%P|%t): Cannot add nil object to table <%s>\n"),
                        object_id.c_str ()),
                       -1);
 
@@ -2006,7 +2006,7 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
 
   if (this->lookup_table_.add_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t): Unable to add IOR to table <%s>\n",
+                       ASYS_TEXT ("TAO (%P|%t): Unable to add IOR to table <%s>\n"),
                        object_id.c_str ()),
                       -1);
 
@@ -2127,7 +2127,7 @@ void
 CORBA_ORB::unregister_value_factory (const char * /* repository_id */,
                                      CORBA_Environment &)
 {
-  ACE_ERROR((LM_ERROR, "(%N:%l) function not implemented\n"));
+  ACE_ERROR((LM_ERROR, ASYS_TEXT ("(%N:%l) function not implemented\n")));
   // %! TODO
 }
 

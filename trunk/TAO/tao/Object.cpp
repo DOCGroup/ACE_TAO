@@ -223,7 +223,7 @@ CORBA::Object::_key (CORBA::Environment &)
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
     return this->_stubobj ()->profile_in_use ()->_key ();
 
-  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
+  ACE_ERROR_RETURN((LM_ERROR, ASYS_TEXT ("(%P|%t) Null stub obj!!!\n")), 0);
 }
 
 const TAO_ObjectKey &
@@ -630,7 +630,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "WARNING: extracting object from default ORB_Core\n"));
+                      ASYS_TEXT ("WARNING: extracting object from default ORB_Core\n")));
         }
     }
 
@@ -648,8 +648,8 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (mp.profile_count () != profile_count)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) could not create all "
-                  "the profiles\n"));
+                  ASYS_TEXT ("TAO (%P|%t) could not create all ")
+                  ASYS_TEXT ("the profiles\n")));
       return 0;
     }
 
