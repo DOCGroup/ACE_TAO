@@ -1,3 +1,10 @@
+Mon Jul 19 08:08:25 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-(10 11).x-hpc++.h: In the aC++ section, if __HP_aCC
+          is not set, set it. Some parts of TAO rely on it, but it's not set
+          until the most recent versions of the compiler. Thanks to Brian
+          Wallis <Brian.Wallis@sr.com.au> for helping figure this out.
+
 Mon Jul 19 07:53:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp (open): added unnecessary const_cast
