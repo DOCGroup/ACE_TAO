@@ -308,6 +308,9 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
       // Set the giop version of the out stream
       this->out_stream_.set_version (version.major, version.minor);
 
+      // @@Phil, cant we make a check on the transport with is_tcs_set
+      // () before making the call. This way we could avoid a function
+      // call?
       this->orb_core_->codeset_manager()->
         set_tcs(*this->profile_,*this->transport_);
 

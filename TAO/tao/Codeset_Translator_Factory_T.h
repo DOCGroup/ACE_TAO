@@ -15,6 +15,9 @@
 #include "ace/pre.h"
 #include "tao/Codeset_Translator_Factory.h"
 
+//@@Phil: The ususal pragma, documentation etc. Please see
+//Codeset_Manager.h for details.
+
 template<class NCS_TO_TCS>
 class TAO_Codeset_Translator_Factory_T
 : public TAO_Codeset_Translator_Factory
