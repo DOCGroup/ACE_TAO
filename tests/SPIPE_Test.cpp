@@ -139,6 +139,8 @@ main (int, char *[])
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
   spawn ();
 #else
+  if (spawn) /* null */;  // To avoid compiler about unused function spawn ().
+
   ACE_DEBUG ((LM_DEBUG, 
 	      "SPIPE is not supported on this platform\n"));
 #endif /* defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS) */
