@@ -1,3 +1,15 @@
+Wed Aug 30 11:32:18 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification: 
+	  Fixed a typo to remove a warning.
+
+	* orbsvcs/orbsvcs/Makefile.av: 
+	  Updated Makefile to remove the warnings and errors. 
+	  Thanks to Carlos.
+
+	* examples/POA/Generic_Servant/Makefile: 
+	  Updated dependencies
+
 Wed Aug 30 10:18:15 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Client_Propagated/client.cpp:
