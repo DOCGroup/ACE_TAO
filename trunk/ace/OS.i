@@ -5678,7 +5678,9 @@ ACE_OS::thr_yield (void)
 #elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
 #elif defined (VXWORKS)
-  ::taskDelay (0);
+  // An argument of 0 to ::taskDelay doesn't appear to yield the
+  // current thread.
+  ::taskDelay (1);
 #endif /* ACE_HAS_STHREADS */
 #else
   ;
