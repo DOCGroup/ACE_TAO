@@ -22,8 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
-#include "tao/GIOP_Message_Reactive_Handler.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_State.h"
+
 
 class TAO_Pluggable_Reply_Params;
 
@@ -41,7 +42,7 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
 public:
-  friend class TAO_GIOP_Message_Reactive_Handler;
+  //  friend class TAO_GIOP_Message_Reactive_Handler;
 
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
@@ -100,18 +101,31 @@ public:
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
   virtual TAO_Pluggable_Message_Type message_type (void);
 
+  /// @@Bala:Documentation please...
+  virtual int parse_incoming_messages (ACE_Message_Block &message_block);
 
+  /// @@Bala:Documentation please..
+  virtual int is_message_complete (ACE_Message_Block &message_block);
+
+  /// @@Bala:Documentation please..
+  virtual size_t missing_data (ACE_Message_Block &message_block);
+
+  virtual CORBA::Octet byte_order (void);
 
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_ORB_Core *orb_core);
+                                       TAO_ORB_Core *orb_core,
+                                       ACE_Message_Block &block,
+                                       CORBA::Octet byte_order);
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
-      TAO_Pluggable_Reply_Params &reply_info
-    );
+      TAO_Pluggable_Reply_Params &reply_info,
+      ACE_Message_Block &block,
+      CORBA::Octet byte_order);
+
 
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (
@@ -191,21 +205,10 @@ private:
 
   /// Thr message handler object that does reading and parsing of the
   /// incoming messages
-  TAO_GIOP_Message_Reactive_Handler message_handler_;
+  TAO_GIOP_Message_State message_state_;
 
   /// Output CDR
   TAO_OutputCDR *output_;
-
-  /// Allocators for the output CDR that we hold. As we cannot rely on
-  /// the resources from ORB Core we reserve our own resources. The
-  /// reason that we cannot believe the ORB core is that, for a
-  /// multi-threaded servers it dishes out resources cached in
-  /// TSS. This would be dangerous as TSS gets destroyed before we
-  /// would. So we have our own memory that we can rely on.
-  /// Implementations of GIOP that we have
-  ACE_Allocator *cdr_buffer_alloc_;
-  ACE_Allocator *cdr_dblock_alloc_;
-  ACE_Allocator *cdr_msgblock_alloc_;
 
   /// A buffer that we will use to initialise the CDR stream
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
@@ -214,9 +217,9 @@ private:
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
 
 protected:
-
   /// The generator and parser state.
   TAO_GIOP_Message_Generator_Parser *generator_parser_;
+
 };
 
 

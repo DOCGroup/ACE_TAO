@@ -1,5 +1,6 @@
 // $Id$
 
+
 // Portions of this file are:
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -17,6 +18,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Any, "$Id$")
+
 
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const

@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 //$Id$
+
 // ****************************************************************
 // @@ Bala: we use the stars to separate classes in ACE+TAO
 
