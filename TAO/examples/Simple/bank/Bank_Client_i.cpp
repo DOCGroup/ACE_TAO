@@ -33,6 +33,7 @@ Bank_Client_i::run (char *name,
       this->check_accounts ();
       if (client.shutdown () == 1)
         client->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -46,7 +47,7 @@ Bank_Client_i::run (char *name,
 
 int
 Bank_Client_i::check_accounts (void )
-{ 
+{
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -58,7 +59,7 @@ Bank_Client_i::check_accounts (void )
                   "\nTests for account with different names"));
       this->test_for_different_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "\nTests for overdrafts"));
       this->test_for_overdraft (ACE_TRY_ENV);
@@ -79,14 +80,14 @@ Bank_Client_i::check_accounts (void )
 void
 Bank_Client_i::test_for_same_name (CORBA::Environment &ACE_TRY_ENV)
 {
-  
+
   const char *name = "Name";
   CORBA::Float initial_bal = 0.00;
-  
+
   Bank::Account_var acct_id1 = client->open (name,
                                              initial_bal,
                                              ACE_TRY_ENV);
-               
+
   Bank::Account_var acct_id2 = client->open (name,
                                              initial_bal,
                                              ACE_TRY_ENV);
@@ -107,13 +108,13 @@ Bank_Client_i::test_for_different_name (CORBA::Environment &ACE_TRY_ENV)
 {
   const char *name1 = "Name1";
   const char *name2 = "Name2";
-  
+
   CORBA::Float initial_bal = 0.0;
 
   Bank::Account_var acct_id1 = client->open (name1,
                                              initial_bal,
                                              ACE_TRY_ENV);
-               
+
   Bank::Account_var acct_id2 = client->open (name2,
                                              initial_bal,
                                              ACE_TRY_ENV);
@@ -126,7 +127,7 @@ Bank_Client_i::test_for_different_name (CORBA::Environment &ACE_TRY_ENV)
                  ACE_TRY_ENV);
 }
 
-// This method tests the Overdraft exception. 
+// This method tests the Overdraft exception.
 
 void
 Bank_Client_i::test_for_overdraft (CORBA::Environment &ACE_TRY_ENV)
@@ -140,9 +141,9 @@ Bank_Client_i::test_for_overdraft (CORBA::Environment &ACE_TRY_ENV)
                                             ACE_TRY_ENV);
   acct_id->deposit (100.00,
                     ACE_TRY_ENV);
-  
+
   acct_id->withdraw (acct_id->balance (ACE_TRY_ENV) + 20);
-  
+
   client->close (acct_id.in (),
                  ACE_TRY_ENV);
 }
