@@ -12,8 +12,9 @@ CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 #----------------------------------------------------------------------------
 
 BIN =   Stdio_Test \
+	Pthreads_Test \
+	mqueue_test \
         Posix_SP_Test \
-	mqueue_test
 
 #### If the PACE library wasn't built with all components, don't
 #### try to build certain tests.
@@ -27,6 +28,10 @@ PSRC=$(addsuffix .c,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ACELIB =
+ifdef VXWORKS
+  ACELIB += -lPACE
+  LDFLAGS += -L$(PACE_ROOT)/pace/
+endif
 INCLDIRS += -I$(PACE_ROOT)
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
