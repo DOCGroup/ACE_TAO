@@ -1,3 +1,9 @@
+Thu Aug 23 22:01:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp: Reverted this change "Thu Aug
+	  23 05:24:57 2001  Douglas C. Schmidt" as this was giving
+	  warnings with MSVC 6.0
+
 Thu Aug 23 11:49:15 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
         * bin/msvc_auto_compile.pl:
