@@ -1,7 +1,7 @@
 Wed Mar 12 13:48:31 2003  Steve Huston  <shuston@riverace.com>
 
 	* bin/bootstrap: Changed PAGER to be set using ${name:-value} instead
-	  of test -z; HP-UX /bin/sh complained if the PAGE env var wasn't set.
+	  of test -z; HP-UX /bin/sh complained if the PAGER env var wasn't set.
 
 Wed Feb 19 17:02:42 2003  Ossama Othman  <ossama@uci.edu>
 
