@@ -16,11 +16,11 @@ IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
 BIN_UNCHECKED = client server scavenger
 
-SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Client_Peer Server_Peer) $(IDL_SRC)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Client_Peer Server_Peer Clock_Ticks) $(IDL_SRC)
 
-CLIENT_OBJS = client.o Client_Peer.o $(IDL_SRC:.cpp=.o)
-SERVER_OBJS = server.o Server_Peer.o $(IDL_SRC:.cpp=.o)
-SCAVENGER_OBJS = scavenger.o $(IDL_SRC:.cpp=.o)
+CLIENT_OBJS = client.o Client_Peer.o Clock_Ticks.o $(IDL_SRC:.cpp=.o)
+SERVER_OBJS = server.o Server_Peer.o Clock_Ticks.o $(IDL_SRC:.cpp=.o)
+SCAVENGER_OBJS = scavenger.o Clock_Ticks.o TestC.o
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_SRVR_LIBS) $(POSTLINK)
 
 scavenger: $(addprefix $(VDIR),$(SCAVENGER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), Test$(ext))
@@ -198,7 +198,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  TestS_T.h TestS_T.cpp TestS_T.i \
+  TestS_T.h TestS_T.cpp TestS_T.i Clock_Ticks.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -409,7 +409,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  TestS_T.h TestS_T.cpp TestS_T.i \
+  TestS_T.h TestS_T.cpp TestS_T.i Clock_Ticks.h \
   $(TAO_ROOT)/tao/Messaging/Messaging.h \
   $(TAO_ROOT)/tao/Messaging/messaging_export.h \
   $(TAO_ROOT)/tao/Messaging/MessagingC.h \
@@ -819,7 +819,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  TestS_T.h TestS_T.cpp TestS_T.i \
+  TestS_T.h TestS_T.cpp TestS_T.i Clock_Ticks.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
@@ -1022,6 +1022,27 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   TestS_T.h TestS_T.cpp TestS_T.i \
   $(TAO_ROOT)/tao/debug.h
+
+.obj/Clock_Ticks.o .obj/Clock_Ticks.so .shobj/Clock_Ticks.o .shobj/Clock_Ticks.so: Clock_Ticks.cpp Clock_Ticks.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h
 
 .obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h \
   $(TAO_ROOT)/tao/corba.h \

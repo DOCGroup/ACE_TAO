@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Client_Peer.h"
+#include "Clock_Ticks.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
@@ -121,7 +122,7 @@ main (int argc, char *argv[])
 
       Timer timer(local_peer.in (), peer.in ());
 
-      ACE_Time_Value interval(0, 50 * 1000000 / HZ);
+      ACE_Time_Value interval(0, 50 * Clock_Ticks::get_usecs_per_tick ());
       ACE_Reactor * reactor = orb->orb_core()->reactor();
       reactor->schedule_timer(&timer, 0, interval, interval);
 

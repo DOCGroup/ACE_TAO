@@ -7,6 +7,7 @@
  *
  */
 #include "Client_Peer.h"
+#include "Clock_Ticks.h"
 #include "tao/ORB_Core.h"
 
 ACE_RCSID(Nested_Upcall_Crash, Client_Peer, "$Id$")
@@ -53,7 +54,7 @@ Client_Peer::crash(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   Crasher * crasher = new Crasher;
 
-  ACE_Time_Value clk_tck (0, 1000000 / HZ);
+  ACE_Time_Value clk_tck (0, Clock_Ticks::get_usecs_per_tick ());
   ACE_Reactor * reactor = this->orb_->orb_core()->reactor();
   reactor->schedule_timer(crasher, 0, clk_tck);
 }
