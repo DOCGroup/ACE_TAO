@@ -26,7 +26,9 @@ public class ImageApp extends Applet
       {
 	this.tester_ = new Tester (testFile, this);
 	this.tester_.initialize ();
-      }    
+      }
+    // Initialize the DialogManager
+    DialogManager.initialize (this);
   }
 
   private void setupButtonPanel ()

@@ -154,15 +154,13 @@ class HelpButton extends BaseButton
   public HelpButton (String title, String desc, ImageApp parent)
   {
     super (title, desc, parent);
-    this.parent_ = parent;
   }
 
   public boolean action (Event e, Object arg)
   {
-    DialogManager.popDialog (DialogType.HELP, null, this.parent_);
+    DialogManager.popDialog (DialogType.HELP, null);
     return true;
   }
-  ImageApp parent_ = null;
 }
 
 class ChoicePanel extends Panel

@@ -9,10 +9,11 @@ import java.net.*;
 
 class DialogManager
 {
-  public static void popDialog (int type, String message, Applet parent)
+  public static void initialize (Applet parent)
   {
     codeBase_ = parent.getCodeBase ().toString ();
-    popDialog (type, message);
+    aboutFrame_ = new AboutFrame ();
+    helpFrame_ = new HelpFrame (codeBase_);
   }
 
   public static void popDialog (int type, String message)
@@ -22,10 +23,10 @@ class DialogManager
     switch (type)
       {
       case DialogType.ABOUT:
-	frame = new AboutFrame ();
+	aboutFrame_.show ();
 	break;
       case DialogType.HELP:
-	frame = new HelpFrame (codeBase_);
+	helpFrame_.show ();
 	break;
       case DialogType.MALFORMED_URL:
       case DialogType.NOT_SUPPORTED:
@@ -41,7 +42,10 @@ class DialogManager
 		(d.height - frame.size ().height)/2);
     frame.show ();
   }
+
   private static String codeBase_ = "";
+  private static AboutFrame aboutFrame_;
+  private static HelpFrame helpFrame_;
 }
 
 class MessageFrame extends Frame
@@ -114,7 +118,7 @@ class AboutFrame extends Frame
   {
     if (evt.id == Event.WINDOW_DESTROY)
       {
-	this.dispose ();
+	this.hide ();
 	return true;
       }
     return super.handleEvent (evt);
@@ -127,7 +131,7 @@ class AboutFrame extends Frame
       {
 	if (e.target == this.okButton_)
 	  {
-	    this.dispose ();
+	    this.hide ();
 	  }
 	return true;
       }
@@ -189,7 +193,7 @@ class HelpFrame extends Frame
   public HelpFrame (String codeBase)
   {
     super ("Help");
-    this.setBackground (Color.cyan);
+    this.setBackground (Color.white);
     this.text_.setEditable (false);
     Font defaultFont = new Font ("TimesRoman", Font.PLAIN, 14);
     this.text_.setFont (defaultFont);
@@ -245,7 +249,7 @@ class HelpFrame extends Frame
   {
     if (evt.id == Event.WINDOW_DESTROY)
       {
-	this.dispose ();
+	this.hide ();
 	return true;
       }
     return super.handleEvent (evt);
@@ -258,7 +262,7 @@ class HelpFrame extends Frame
       {
 	if (e.target == this.okButton_)
 	  {
-	    this.dispose ();
+	    this.hide ();
 	  }
 	return true;
       }
