@@ -3066,7 +3066,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- PortableGroup/PG_Location_Map.h
+ PortableGroup/PG_Location_Map.h \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/LB_MonitorMap.o .obj/LB_MonitorMap.so .shobj/LB_MonitorMap.o .shobj/LB_MonitorMap.so: LoadBalancing/LB_MonitorMap.cpp \
  LoadBalancing/LB_LoadMap.h $(ACE_ROOT)/ace/pre.h \
