@@ -10,6 +10,11 @@ Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
           It will only be created when a release is made in
           /project/adaptive/ACE_wrappers, and not put under CVS control.
 
+        * ace/OS.{h,cpp},Object_Manager.cpp (tss_open,tss_close): removed
+          tss_open () dynamic allocation option because it wasn't used.
+          Removed tss_close() because it was a no-op without tss_open ()
+          dynamic allocation.
+
 Thu Oct 30 03:25:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Can't use ACE_DES*
