@@ -145,40 +145,4 @@ TAO_Policy_Manager_Impl::get_policy (
 
 // ****************************************************************
 
-CORBA::PolicyList *
-TAO_Policy_Manager::get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts,
-        CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->impl_.get_policy_overrides (ts, ACE_TRY_ENV);
-}
-
-void
-TAO_Policy_Manager::set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV)
-{
-  this->impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
-}
-
-// ****************************************************************
-
-CORBA::PolicyList *
-TAO_Policy_Current::get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts,
-        CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->impl_.get_policy_overrides (ts, ACE_TRY_ENV);
-}
-
-void
-TAO_Policy_Current::set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV)
-{
-  this->impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
-}
-
 #endif /* TAO_HAS_CORBA_MESSAGING */

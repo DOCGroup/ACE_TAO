@@ -774,13 +774,9 @@ TAO_Stub::get_client_policy (
 
   if (CORBA::is_nil (result.in ()))
     {
-      TAO_Policy_Current *policy_current =
-        this->orb_core_->policy_current ();
-      if (policy_current != 0)
-        {
-          result = policy_current->get_policy (type, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-        }
+      TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
+      result = policy_current.get_policy (type, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
   if (CORBA::is_nil (result.in ()))

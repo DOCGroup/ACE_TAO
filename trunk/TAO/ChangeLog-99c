@@ -1,3 +1,19 @@
+Mon May 24 15:13:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Policy_Current: Made changes to this class such that the
+	  Policy_Current class is no longer TSS.  This object belongs to
+	  the ORB, but its implementation (TAO_Policy_Current_Impl) is in
+	  TSS.  These changes are similar to the ones made to the POA
+	  Current classes.  The following files were changed:
+
+	  - ORB.cpp
+	  - ORB_Core.cpp
+	  - ORB_Core.h
+	  - Policy_Manager.cpp
+	  - Policy_Manager.h
+	  - Policy_Manager.i
+	  - Stub.cpp
+
 Mon May 24 13:15:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h:
@@ -64,7 +80,7 @@ Mon May 24 07:59:45 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  union definition AND the case labels do not cover all the
 	  permissible values supported by the discriminant type. In such a
 	  scenario, the CORBA IDL->C++ mapping requires us to generate a
-	  method called "default ()". 
+	  method called "default ()".
 
 	  The compute_default_value () method provides the algorithm that
 	  takes care of computing the default value (if at all it is
@@ -83,9 +99,9 @@ Mon May 24 07:59:45 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  shared case labels. Thus, the first one will be fully specified
 	  and the rest will be indirections. No specific change was
 	  required for this part to work.
-	
+
 	  Another cosmetic change was for "tk_objref", there was an
-	  indentation missing. 
+	  indentation missing.
 
 	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
 	  TAO_IDL/be/be_visitor_union/union_ch.cpp:
@@ -93,18 +109,18 @@ Mon May 24 07:59:45 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
 	  TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
 	  TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
-	
+
 	  Provided support to handle shared case labels and default
 	  label. We now generate the "default ()" method whenever it is
 	  required as described in the scenario above.
 
 	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
-	
+
 	  Thanks to (name unknown) gwtovrea@west.raytheon.com for pointing
 	  out incorrectly generated code for enums in the CDR >>
 	  operator.  Rather than generating the actual type for the enum,
 	  we were generating CORBA::Long. This is now fixed.
-	
+
 Sun May 23 18:06:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Basic/Observer.h:
@@ -255,7 +271,7 @@ Sat May 22 14:07:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
  	  (TAO_Forward_FlowSpec_Entry): Prefixed the enumerations with
  	  TAO_AV to avoid name clash. Thanks to David Levine for reporting
  	  this error.
-	
+
 Fri May 21 22:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Modified the following files to make minimum CORBA work

@@ -242,11 +242,10 @@ public:
   TAO_Policy_Manager *policy_manager (void);
   // Return the Policy_Manager for this ORB.
 
-  TAO_Policy_Current *policy_current (void) const;
-  TAO_Policy_Current *policy_current (TAO_Policy_Current *);
+  TAO_Policy_Current &policy_current (void);
   // Accesors to the policy current, this object should be kept in TSS
-  // storage.
-  // The POA has to reset the policy current object on every upcall.
+  // storage.  The POA has to reset the policy current object on every
+  // upcall.
 
   CORBA::Policy_ptr get_default_policy (
       CORBA::PolicyType policy,
@@ -367,6 +366,9 @@ protected:
   // Note that this is a pointer in order to reduce the include file
   // dependencies.
   //
+
+  TAO_Policy_Current policy_current_;
+  // Policy current.
 };
 
 // ****************************************************************
@@ -409,11 +411,11 @@ public:
   // still holds one.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Current initial_policy_current_;
+  TAO_Policy_Current_Impl initial_policy_current_;
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
-  TAO_Policy_Current *policy_current_;
+  TAO_Policy_Current_Impl *policy_current_;
   // This pointer is reset by the POA on each upcall.
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
