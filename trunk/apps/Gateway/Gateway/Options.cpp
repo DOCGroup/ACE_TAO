@@ -2,9 +2,10 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/Get_Opt.h"
 #include "Event.h"
 #include "Options.h"
+#include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Gateway, Options, "$Id$")
 
@@ -210,7 +211,7 @@ Options::parse_args (int argc, char *argv[])
         case 'C': // Use a different proxy config filename.
           ACE_OS::strncpy (this->consumer_config_file_,
                            get_opt.optarg,
-                           sizeof this->consumer_config_file_ 
+                           sizeof this->consumer_config_file_
                              / sizeof (ACE_TCHAR));
           break;
         case 'c':
