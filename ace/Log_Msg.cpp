@@ -1232,7 +1232,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // Check that memory was not corrupted.
   if (bp >= this->msg_ + ACE_Log_Record::MAXLOGMSGLEN)
     {
-      abort_prog = true;
+      abort_prog = 1;
       ACE_OS::fprintf (stderr,
                        "The following logged message is too long!\n");
     }
