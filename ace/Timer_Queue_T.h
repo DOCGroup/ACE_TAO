@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Timer_Queue_T.h
@@ -196,7 +195,8 @@ public:
   /// True if queue is empty, else false.
   virtual int is_empty (void) const = 0;
 
-  /// Returns the time of the earlier node in the Timer_Queue.
+  /// Returns the time of the earlier node in the Timer_Queue.  Must
+  /// be called on a non-empty queue.
   virtual const ACE_Time_Value &earliest_time (void) const = 0;
 
   /**

@@ -413,6 +413,12 @@ ifneq ($(qt_reactor),)
   LDFLAGS += $(PLATFORM_QT_LDFLAGS)
 endif # qt_reactor
 
+ifneq ($(QTDIR),)
+  MOC = ${QTDIR}/bin/moc
+else
+  MOC = moc
+endif
+
 ifeq ($(gtk_reactor),0)
   override gtk_reactor =
 endif # gtk_reactor
