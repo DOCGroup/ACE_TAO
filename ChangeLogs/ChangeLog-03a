@@ -1,57 +1,63 @@
+Fri Oct 20 16:38:55 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Update MSVC projects
+
 Fri Oct 20 16:23:40 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/ACE.h: 
-	  Modified to include the renamed files.
+        * ace/ACE.h:
+          Modified to include the renamed files.
 
 Fri Oct 20 14:13:43 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Sock_Connect.i: 
-	* ace/Sock_Connect.h: 
-	* ace/Sock_Connect.cpp: 
+        * ace/Sock_Connect.i:
+        * ace/Sock_Connect.h:
+        * ace/Sock_Connect.cpp:
 
-	* ace/Lib_Find.i: 
-	* ace/Lib_Find.h: 
-	* ace/Lib_Find.cpp: 
+        * ace/Lib_Find.i:
+        * ace/Lib_Find.h:
+        * ace/Lib_Find.cpp:
 
-	* ace/Init_ACE.i: 
-	* ace/Init_ACE.h: 
-	* ace/Init_ACE.cpp: 
+        * ace/Init_ACE.i:
+        * ace/Init_ACE.h:
+        * ace/Init_ACE.cpp:
 
-	* ace/Handle_Ops.i: 
-	* ace/Handle_Ops.h: 
-	* ace/Handle_Ops.cpp: 
+        * ace/Handle_Ops.i:
+        * ace/Handle_Ops.h:
+        * ace/Handle_Ops.cpp:
 
-	* ace/Flag_Manip.i: 
-	* ace/Flag_Manip.h: 
-	* ace/Flag_Manip.cpp: 
-	  Renamed the recently added ACE_* files as above to follow 
-	  the naming convention.
+        * ace/Flag_Manip.i:
+        * ace/Flag_Manip.h:
+        * ace/Flag_Manip.cpp:
+          Renamed the recently added ACE_* files as above to follow
+          the naming convention.
 
-	* ace/IPC_SAP.h: 
-	* ace/IO_SAP.h: 
-	* ace/FILE_Connector.cpp: 
-	* ace/FILE_Addr.h: 
-	  Changed the include files to reflect the above change.
+        * ace/IPC_SAP.h:
+        * ace/IO_SAP.h:
+        * ace/FILE_Connector.cpp:
+        * ace/FILE_Addr.h:
+          Changed the include files to reflect the above change.
 
-	* ace/Makefile: 
-	  Added the new files and updated dependencies.
-	
+        * ace/Makefile:
+          Added the new files and updated dependencies.
+
 Fri Oct 20 11:40:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Makefile: 
-	  Updated dependencies.
+        * ace/Makefile:
+          Updated dependencies.
 
 Fri Oct 20 02:52:17 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added RTCORBA Server_Declared test.
+          Added RTCORBA Server_Declared test.
 
 Thu Oct 19 18:02:54 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/OS_Log_Msg_Attributes.h :
-	  Modified u_long to 'unsigned long' as the compiler was
-	  complaining.
+        * ace/OS_Log_Msg_Attributes.h :
+          Modified u_long to 'unsigned long' as the compiler was
+          complaining.
 
 Thu Oct 19 13:52:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -103,18 +109,18 @@ Thu Oct 19 13:17:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Oct 19 12:12:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
-	* ace/ACE_Lib_Find.h:
+        * ace/ACE_Lib_Find.h:
 
-	  Added missing static specifier for the wchar version of
+          Added missing static specifier for the wchar version of
           strrepl.
 
 Thu Oct 19 12:03:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
-	* apps/JAWS2/HTTPU/HTTPU.DSP:
-	* apps/JAWS2/JAWS/jaws.dsp:
+        * apps/JAWS2/HTTPU/HTTPU.DSP:
+        * apps/JAWS2/JAWS/jaws.dsp:
 
-	  These two projects were placing their DLL's in the wrong
-	  directory.
+          These two projects were placing their DLL's in the wrong
+          directory.
 
 Thu Oct 19 14:23:52 2000  Steve Huston  <shuston@riverace.com>
 
@@ -122,13 +128,13 @@ Thu Oct 19 14:23:52 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Oct 19 12:08:45 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.cpp: Fixed compile errors with old
-	  g++.
+        * ace/Cached_Connect_Strategy_T.cpp: Fixed compile errors with old
+          g++.
 
 Thu Oct 19 09:56:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/Basic_Types.h:
-	  Must #include stdio.h for platforms that lack 'long long'
+        * ace/Basic_Types.h:
+          Must #include stdio.h for platforms that lack 'long long'
 
 Thu Oct 19 09:50:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 

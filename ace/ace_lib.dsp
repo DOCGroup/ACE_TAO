@@ -215,101 +215,6 @@ SOURCE=.\ACE.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ACE_Flag_Manip.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Handle_Ops.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Init.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Lib_Find.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Sock_Connect.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Activation_Queue.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -1184,6 +1089,25 @@ SOURCE=.\Filecache.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Flag_Manip.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Functor.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -1204,6 +1128,25 @@ SOURCE=.\Functor.cpp
 # Begin Source File
 
 SOURCE=.\Get_Opt.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Handle_Ops.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
 
@@ -1298,6 +1241,25 @@ SOURCE=.\INET_Addr.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Init_ACE.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IO_Cntl_Msg.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -1356,6 +1318,25 @@ SOURCE=.\IOStream.cpp
 # Begin Source File
 
 SOURCE=.\IPC_SAP.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Lib_Find.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
 
@@ -2951,6 +2932,25 @@ SOURCE=.\SOCK_CODgram.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sock_Connect.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\SOCK_Connector.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -4183,26 +4183,6 @@ SOURCE=.\ACE_export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ACE_Flag_Manip.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Handle_Ops.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Init.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Lib_Find.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Sock_Connect.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ace_wchar.h
 # End Source File
 # Begin Source File
@@ -4467,6 +4447,10 @@ SOURCE=.\Filecache.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Flag_Manip.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Free_List.h
 # End Source File
 # Begin Source File
@@ -4484,6 +4468,10 @@ SOURCE=.\Future.h
 # Begin Source File
 
 SOURCE=.\Get_Opt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Handle_Ops.h
 # End Source File
 # Begin Source File
 
@@ -4515,6 +4503,10 @@ SOURCE=.\INET_Addr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Init_ACE.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IO_Cntl_Msg.h
 # End Source File
 # Begin Source File
@@ -4532,6 +4524,10 @@ SOURCE=.\IOStream_T.h
 # Begin Source File
 
 SOURCE=.\IPC_SAP.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Lib_Find.h
 # End Source File
 # Begin Source File
 
@@ -4947,6 +4943,10 @@ SOURCE=.\SOCK_CODgram.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sock_Connect.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SOCK_Connector.h
 # End Source File
 # Begin Source File
@@ -5283,26 +5283,6 @@ SOURCE=.\ACE.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ACE_Flag_Manip.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Handle_Ops.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Init.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Lib_Find.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ACE_Sock_Connect.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Activation_Queue.i
 # End Source File
 # Begin Source File
@@ -5507,6 +5487,10 @@ SOURCE=.\File_Lock.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Flag_Manip.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Free_List.i
 # End Source File
 # Begin Source File
@@ -5520,6 +5504,10 @@ SOURCE=.\Functor_T.i
 # Begin Source File
 
 SOURCE=.\Get_Opt.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Handle_Ops.i
 # End Source File
 # Begin Source File
 
@@ -5551,6 +5539,10 @@ SOURCE=.\INET_Addr.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Init_ACE.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IO_SAP.i
 # End Source File
 # Begin Source File
@@ -5560,6 +5552,10 @@ SOURCE=.\IOStream_T.i
 # Begin Source File
 
 SOURCE=.\IPC_SAP.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Lib_Find.i
 # End Source File
 # Begin Source File
 
@@ -5856,6 +5852,10 @@ SOURCE=.\SOCK_Acceptor.i
 # Begin Source File
 
 SOURCE=.\SOCK_CODgram.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sock_Connect.i
 # End Source File
 # Begin Source File
 
