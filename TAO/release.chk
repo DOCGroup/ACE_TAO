@@ -26,8 +26,8 @@ Legend:
         [1x1x0x] svr runs
         [1x1x1x] clnt runs
 [  x x ] POA/FindPOA compiles
-[  x x ] POA/NewPOA compiles
-[  x x ] POA/RootPOA compiles
+[1 x x ] POA/NewPOA compiles
+[1 x x ] POA/RootPOA compiles
 [1x1x1x]   Param_Test compiles
         [xxxxxx] DII short
         [xxxxxx] DII ubstring
