@@ -1090,6 +1090,52 @@ sub check_for_ptr_arith_t ()
     }
 }
 
+# This test checks for the #include <ace/...>
+# This check is suggested by Don Hinton to force user to use
+# " " instead of <> to avoid confict with Doxygen.
+sub check_for_include ()
+{
+    print "Running the include check\n";
+    foreach $file (@files_h, @files_cpp, @files_inl, @files_idl) {
+        my $bad_occurance = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_include/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_include/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    if (/^\s*#\s*include\s*<ace\/.*>/) {
+                        print_error ("<ace\/..> is used in $file.\n");
+                        ++$bad_occurance;
+                    }
+		    if (/^\s*#\s*include\s*<tao\/.*>/) {
+                        print_error ("<tao\/..> is used in $file.\n");
+                        ++$bad_occurance;
+                    }
+		    if (/^\s*#\s*include\s*<ciao\/.*>/) {
+                        print_error ("<ciao\/..> is used in $file.\n");
+                        ++$bad_occurance;
+                    }
+                }
+            }
+            close (FILE);
+
+            if ($disable == 0 && $bad_occurance > 0 ) {
+                print_error ("found #include <> usage of ace\/tao $file.\n");
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_m $opt_v/;
@@ -1149,6 +1195,7 @@ check_for_missing_rir_env () if ($opt_l >= 5);
 check_for_ace_check () if ($opt_l >= 3);
 check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
+check_for_include () if ($opt_l >= 8);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
