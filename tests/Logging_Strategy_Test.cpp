@@ -426,7 +426,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
     }
   else
     {
-      l_argv[0] = ACE_TEXT ("Logging_Strategy_Test");
+      l_argv[0] = (ACE_TCHAR *)ACE_TEXT ("Logging_Strategy_Test");
       l_argv[1] =
         (ACE_TCHAR *) ACE_TEXT ("-slog/Logging_Strategy_Test")
                       ACE_LOG_FILE_EXT_NAME;

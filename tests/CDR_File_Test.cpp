@@ -303,7 +303,7 @@ run_test (int write_file,
 }
 
 static void
-usage (ACE_TCHAR *cmd)
+usage (const ACE_TCHAR *cmd)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Usage: %s ")
@@ -345,15 +345,15 @@ run_main (int argc, ACE_TCHAR *argv[])
           break;
         case '?':
         default:
-          usage ("CDR_File_Test");
+          usage (ACE_TEXT("CDR_File_Test"));
         }
     }
 
   if ((!reading || !writing) && fn == 0)
-    usage ("CDR_File_Test");
+    usage (ACE_TEXT("CDR_File_Test"));
 
   if (!reading && !writing)
-    usage ("CDR_File_Test");
+    usage (ACE_TEXT("CDR_File_Test"));
 
   // Create a temporary filename.
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
