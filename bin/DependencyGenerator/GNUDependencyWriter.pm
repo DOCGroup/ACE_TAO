@@ -26,7 +26,8 @@ sub process {
   my($files)   = shift;
   my($dep)     = "@$objects: \\\n";
 
-  foreach my $file (@$files) {
+  ## Sort the dependencies to make them reproducible
+  foreach my $file (sort @$files) {
     $dep .= "  $file \\\n";
   }
   $dep =~ s/ \\$//;

@@ -24,18 +24,18 @@ sub process {
   my($self)    = shift;
   my($sources) = shift;
   my($files)   = shift;
-  my($count)   = scalar(@$files);
   my($total)   = 0;
 
   $$sources[0] =~ s/\//\\/g;
   $$sources[0] =~ s/\\\\/\\/g;
   my($dep) = "$$sources[0] :\\\n";
 
-  for(my $i = 0; $i < $count; ++$i) {
-    $$files[$i] =~ s/\//\\/g;
-    $$files[$i] =~ s/\\\\/\\/g;
-    if ($$files[$i] ne $$sources[0]) {
-      $dep .= "\t\"$$files[$i]\"\\\n";
+  ## Sort the dependencies to make them reproducible
+  foreach my $file (sort @$files) {
+    $file =~ s/\//\\/g;
+    $file =~ s/\\\\/\\/g;
+    if ($file ne $$sources[0]) {
+      $dep .= "\t\"$file\"\\\n";
       ++$total;
     }
   }

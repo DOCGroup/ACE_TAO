@@ -11,7 +11,6 @@ package DependencyGenerator;
 # ************************************************************
 
 use strict;
-use FileHandle;
 
 use Preprocessor;
 use DependencyWriterFactory;
@@ -60,10 +59,10 @@ sub process {
   my($replace) = $self->{'replace'};
   my(@repkeys) = keys %$replace;
   my($cwd)     = $self->{'cwd'};
-  my(@files)   = @{$self->{'pre'}->process($file, $self->{'noinline'})};
+  my($files)   = $self->{'pre'}->process($file, $self->{'noinline'});
 
   ## Go through each file
-  foreach my $finc (@files) {
+  foreach my $finc (@$files) {
     ## If we can remove the current working directory fromm the file
     ## then we do not need to check the repkeys array and that cuts
     ## the processing time for the ace directory almost in half.
@@ -81,16 +80,10 @@ sub process {
         }
       }
     }
-
-    ## Remove extra slashes
-    $finc =~ s/\/\//\\/g;
   }
 
-  ## Sort the dependencies to make them reproducible
-  @files = sort @files;
-
   ## Generate the dependency string
-  return $self->{'dwrite'}->process($objects, \@files);
+  return $self->{'dwrite'}->process($objects, $files);
 }
 
 
