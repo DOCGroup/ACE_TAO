@@ -3,6 +3,8 @@
 #include "FOO_IORInterceptor_ORBInitializer.h"
 #include "FOO_IORInterceptor.h"
 
+#include "tao/ORB_Constants.h"
+
 ACE_RCSID (IORInterceptor,
            FOO_IORInterceptor_ORBInitializer,
            "$Id$")

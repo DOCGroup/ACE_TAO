@@ -5,6 +5,8 @@
 #include "interceptors.h"
 #include "Server_ORBInitializer.h"
 
+#include "taO/ORBInitializer_Registry.h"
+
 ACE_RCSID (Service_Context_Manipulation,
            server,
            "$Id$")

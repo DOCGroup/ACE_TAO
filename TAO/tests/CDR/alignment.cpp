@@ -17,8 +17,9 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
 #include "tao/CDR.h"
+
+#include "ace/Log_Msg.h"
 
 int main(int, char*[])
 {

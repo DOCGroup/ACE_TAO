@@ -4,6 +4,9 @@
 #include "Server_ORBInitializer.h"
 #include "Interceptor_Type.h"
 #include "interceptors.h"
+
+#include "tao/ORBInitializer_Registry.h"
+
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Benchmark, server, "$Id$")

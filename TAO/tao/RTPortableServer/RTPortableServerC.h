@@ -229,10 +229,35 @@ namespace RTPortableServer
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_RTPORTABLESERVER_POA__TRAITS_CH_)
+#define _RTPORTABLESERVER_POA__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTPortableServer_Export Objref_Traits<RTPortableServer::POA>
+  {
+    static RTPortableServer::POA_ptr tao_duplicate (
+        RTPortableServer::POA_ptr
+      );
+    static void tao_release (
+        RTPortableServer::POA_ptr
+      );
+    static RTPortableServer::POA_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTPortableServer::POA_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52

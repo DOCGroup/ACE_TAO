@@ -1,5 +1,7 @@
 //$Id$
 
+#include "ace/Log_Msg.h"
+
 class test_impl :public test
 {
  public:

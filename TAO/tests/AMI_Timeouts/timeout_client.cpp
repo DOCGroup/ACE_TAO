@@ -13,6 +13,7 @@
 
 #include "timeout_client.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/PolicyC.h"
 
 TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
                               TimeoutObj_ptr timeoutObject,

@@ -1,6 +1,9 @@
 #include "Echo_Handler.h"
 #include "Client_ORBInitializer.h"
 #include "Client_Interceptor.h"
+
+#include "tao/ORBInitializer_Registry.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 

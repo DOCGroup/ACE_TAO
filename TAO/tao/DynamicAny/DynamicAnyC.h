@@ -2201,21 +2201,203 @@ namespace DynamicAny
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
-  // Hand crafted.
+
+#if !defined (_DYNAMICANY_DYNANY__TRAITS_CH_)
+#define _DYNAMICANY_DYNANY__TRAITS_CH_
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAny>
   {
-    static DynamicAny::DynAny_ptr tao_duplicate (DynamicAny::DynAny_ptr);
-    static void tao_release (DynamicAny::DynAny_ptr);
+    static DynamicAny::DynAny_ptr tao_duplicate (
+        DynamicAny::DynAny_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynAny_ptr
+      );
     static DynamicAny::DynAny_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (DynamicAny::DynAny_ptr p,
-                                       TAO_OutputCDR & cdr);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynAny_ptr p,
+        TAO_OutputCDR & cdr
+      );
   };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNFIXED__TRAITS_CH_)
+#define _DYNAMICANY_DYNFIXED__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynFixed>
+  {
+    static DynamicAny::DynFixed_ptr tao_duplicate (
+        DynamicAny::DynFixed_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynFixed_ptr
+      );
+    static DynamicAny::DynFixed_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynFixed_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNENUM__TRAITS_CH_)
+#define _DYNAMICANY_DYNENUM__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynEnum>
+  {
+    static DynamicAny::DynEnum_ptr tao_duplicate (
+        DynamicAny::DynEnum_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynEnum_ptr
+      );
+    static DynamicAny::DynEnum_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynEnum_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNSTRUCT__TRAITS_CH_)
+#define _DYNAMICANY_DYNSTRUCT__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynStruct>
+  {
+    static DynamicAny::DynStruct_ptr tao_duplicate (
+        DynamicAny::DynStruct_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynStruct_ptr
+      );
+    static DynamicAny::DynStruct_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynStruct_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNUNION__TRAITS_CH_)
+#define _DYNAMICANY_DYNUNION__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynUnion>
+  {
+    static DynamicAny::DynUnion_ptr tao_duplicate (
+        DynamicAny::DynUnion_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynUnion_ptr
+      );
+    static DynamicAny::DynUnion_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynUnion_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNSEQUENCE__TRAITS_CH_)
+#define _DYNAMICANY_DYNSEQUENCE__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynSequence>
+  {
+    static DynamicAny::DynSequence_ptr tao_duplicate (
+        DynamicAny::DynSequence_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynSequence_ptr
+      );
+    static DynamicAny::DynSequence_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynSequence_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNARRAY__TRAITS_CH_)
+#define _DYNAMICANY_DYNARRAY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynArray>
+  {
+    static DynamicAny::DynArray_ptr tao_duplicate (
+        DynamicAny::DynArray_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynArray_ptr
+      );
+    static DynamicAny::DynArray_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynArray_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNVALUE__TRAITS_CH_)
+#define _DYNAMICANY_DYNVALUE__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynValue>
+  {
+    static DynamicAny::DynValue_ptr tao_duplicate (
+        DynamicAny::DynValue_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynValue_ptr
+      );
+    static DynamicAny::DynValue_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynValue_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_DYNAMICANY_DYNANYFACTORY__TRAITS_CH_)
+#define _DYNAMICANY_DYNANYFACTORY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAnyFactory>
+  {
+    static DynamicAny::DynAnyFactory_ptr tao_duplicate (
+        DynamicAny::DynAnyFactory_ptr
+      );
+    static void tao_release (
+        DynamicAny::DynAnyFactory_ptr
+      );
+    static DynamicAny::DynAnyFactory_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DynamicAny::DynAnyFactory_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
 
+#endif /* _MSC_VER */
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
 

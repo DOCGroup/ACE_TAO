@@ -7,6 +7,9 @@
 
 #include "testC.h"
 
+#include "tao/PortableInterceptorC.h"
+#include "tao/LocalObject.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"

@@ -2197,10 +2197,308 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
+#if defined (_MSC_VER)
+
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_RTCORBA_PRIORITYMODELPOLICY__TRAITS_CH_)
+#define _RTCORBA_PRIORITYMODELPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PriorityModelPolicy>
+  {
+    static RTCORBA::PriorityModelPolicy_ptr tao_duplicate (
+        RTCORBA::PriorityModelPolicy_ptr
+      );
+    static void tao_release (
+        RTCORBA::PriorityModelPolicy_ptr
+      );
+    static RTCORBA::PriorityModelPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::PriorityModelPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_THREADPOOLPOLICY__TRAITS_CH_)
+#define _RTCORBA_THREADPOOLPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ThreadpoolPolicy>
+  {
+    static RTCORBA::ThreadpoolPolicy_ptr tao_duplicate (
+        RTCORBA::ThreadpoolPolicy_ptr
+      );
+    static void tao_release (
+        RTCORBA::ThreadpoolPolicy_ptr
+      );
+    static RTCORBA::ThreadpoolPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::ThreadpoolPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_PROTOCOLPROPERTIES__TRAITS_CH_)
+#define _RTCORBA_PROTOCOLPROPERTIES__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ProtocolProperties>
+  {
+    static RTCORBA::ProtocolProperties_ptr tao_duplicate (
+        RTCORBA::ProtocolProperties_ptr
+      );
+    static void tao_release (
+        RTCORBA::ProtocolProperties_ptr
+      );
+    static RTCORBA::ProtocolProperties_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::ProtocolProperties_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_SERVERPROTOCOLPOLICY__TRAITS_CH_)
+#define _RTCORBA_SERVERPROTOCOLPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ServerProtocolPolicy>
+  {
+    static RTCORBA::ServerProtocolPolicy_ptr tao_duplicate (
+        RTCORBA::ServerProtocolPolicy_ptr
+      );
+    static void tao_release (
+        RTCORBA::ServerProtocolPolicy_ptr
+      );
+    static RTCORBA::ServerProtocolPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::ServerProtocolPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY__TRAITS_CH_)
+#define _RTCORBA_CLIENTPROTOCOLPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ClientProtocolPolicy>
+  {
+    static RTCORBA::ClientProtocolPolicy_ptr tao_duplicate (
+        RTCORBA::ClientProtocolPolicy_ptr
+      );
+    static void tao_release (
+        RTCORBA::ClientProtocolPolicy_ptr
+      );
+    static RTCORBA::ClientProtocolPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::ClientProtocolPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY__TRAITS_CH_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PrivateConnectionPolicy>
+  {
+    static RTCORBA::PrivateConnectionPolicy_ptr tao_duplicate (
+        RTCORBA::PrivateConnectionPolicy_ptr
+      );
+    static void tao_release (
+        RTCORBA::PrivateConnectionPolicy_ptr
+      );
+    static RTCORBA::PrivateConnectionPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::PrivateConnectionPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES__TRAITS_CH_)
+#define _RTCORBA_TCPPROTOCOLPROPERTIES__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::TCPProtocolProperties>
+  {
+    static RTCORBA::TCPProtocolProperties_ptr tao_duplicate (
+        RTCORBA::TCPProtocolProperties_ptr
+      );
+    static void tao_release (
+        RTCORBA::TCPProtocolProperties_ptr
+      );
+    static RTCORBA::TCPProtocolProperties_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::TCPProtocolProperties_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES__TRAITS_CH_)
+#define _RTCORBA_GIOPPROTOCOLPROPERTIES__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::GIOPProtocolProperties>
+  {
+    static RTCORBA::GIOPProtocolProperties_ptr tao_duplicate (
+        RTCORBA::GIOPProtocolProperties_ptr
+      );
+    static void tao_release (
+        RTCORBA::GIOPProtocolProperties_ptr
+      );
+    static RTCORBA::GIOPProtocolProperties_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::GIOPProtocolProperties_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__TRAITS_CH_)
+#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::UnixDomainProtocolProperties>
+  {
+    static RTCORBA::UnixDomainProtocolProperties_ptr tao_duplicate (
+        RTCORBA::UnixDomainProtocolProperties_ptr
+      );
+    static void tao_release (
+        RTCORBA::UnixDomainProtocolProperties_ptr
+      );
+    static RTCORBA::UnixDomainProtocolProperties_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::UnixDomainProtocolProperties_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__TRAITS_CH_)
+#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>
+  {
+    static RTCORBA::SharedMemoryProtocolProperties_ptr tao_duplicate (
+        RTCORBA::SharedMemoryProtocolProperties_ptr
+      );
+    static void tao_release (
+        RTCORBA::SharedMemoryProtocolProperties_ptr
+      );
+    static RTCORBA::SharedMemoryProtocolProperties_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::SharedMemoryProtocolProperties_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__TRAITS_CH_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>
+  {
+    static RTCORBA::PriorityBandedConnectionPolicy_ptr tao_duplicate (
+        RTCORBA::PriorityBandedConnectionPolicy_ptr
+      );
+    static void tao_release (
+        RTCORBA::PriorityBandedConnectionPolicy_ptr
+      );
+    static RTCORBA::PriorityBandedConnectionPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::PriorityBandedConnectionPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_CURRENT__TRAITS_CH_)
+#define _RTCORBA_CURRENT__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::Current>
+  {
+    static RTCORBA::Current_ptr tao_duplicate (
+        RTCORBA::Current_ptr
+      );
+    static void tao_release (
+        RTCORBA::Current_ptr
+      );
+    static RTCORBA::Current_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::Current_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_MUTEX__TRAITS_CH_)
+#define _RTCORBA_MUTEX__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::Mutex>
+  {
+    static RTCORBA::Mutex_ptr tao_duplicate (
+        RTCORBA::Mutex_ptr
+      );
+    static void tao_release (
+        RTCORBA::Mutex_ptr
+      );
+    static RTCORBA::Mutex_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::Mutex_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_RTCORBA_RTORB__TRAITS_CH_)
+#define _RTCORBA_RTORB__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::RTORB>
+  {
+    static RTCORBA::RTORB_ptr tao_duplicate (
+        RTCORBA::RTORB_ptr
+      );
+    static void tao_release (
+        RTCORBA::RTORB_ptr
+      );
+    static RTCORBA::RTORB_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        RTCORBA::RTORB_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_ch.cpp:52

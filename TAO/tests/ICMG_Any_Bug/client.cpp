@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "TestC.h"
 #include <string>
 #include "tao/DynamicInterface/Request.h"

@@ -1,9 +1,12 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+
 #include "testC.h"
 #include "interceptors.h"
 #include "Echo_Client_ORBInitializer.h"
+
+#include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (Dynamic,
            client,

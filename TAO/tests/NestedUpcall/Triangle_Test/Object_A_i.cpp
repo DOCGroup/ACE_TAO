@@ -18,7 +18,6 @@
 // ============================================================================
 
 #include "Object_A_i.h"
-#include "tao/corba.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
