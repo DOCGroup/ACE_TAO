@@ -1,3 +1,8 @@
+Thu May 24 13:42:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst: We dont have Red Hat 7.0
+	  anymore. So changed it as Red Hat 7.1.
+
 Thu May 24 10:51:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Thread_Pool_Reactor_Resume_Test.dsp:
