@@ -12,7 +12,7 @@ Sat Dec 20 22:59:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION  for CORBA::is_nil ()
 	  and CORBA::release () for abstract interfaces. Thanks to  David
 	  Smith <dts@prismtechnologies.com> for reporting that the above
-	  problem occurs on HPUX. 
+	  shows up as problem on HPUX builds.
 
 Sat Dec 20 15:04:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
