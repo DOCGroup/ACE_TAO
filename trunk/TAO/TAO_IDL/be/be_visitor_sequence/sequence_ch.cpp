@@ -355,10 +355,9 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
       {
         AST_Type::SIZE_TYPE st = elem->size_type ();
         be_typedef *td = be_typedef::narrow_from_decl (elem);
-        AST_Decl::NodeType nt = elem->node_type ();
-
         if (td != 0)
           {
+            AST_Decl::NodeType nt = elem->node_type ();
             nt = td->base_node_type ();
           }
 

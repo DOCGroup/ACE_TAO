@@ -565,10 +565,13 @@ CORBA::Object::_validate_connection (
 
   inconsistent_policies = 0;
 
+  CORBA::Boolean retval = 0;
+
 #if (TAO_HAS_MINIMUM_CORBA == 1)
 
   ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
 
+  retval = false;
 #else
 
   // If the object is collocated then use non_existent to see whether
@@ -586,7 +589,7 @@ CORBA::Object::_validate_connection (
     {
       inconsistent_policies =
         tao_call.get_inconsistent_policies ();
-      return false;
+      retval = false;
     }
   ACE_CATCHANY
     {
@@ -595,10 +598,10 @@ CORBA::Object::_validate_connection (
   ACE_ENDTRY;
   ACE_CHECK_RETURN (false);
 
-  return true;
+  retval = true;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  return 0;
+  return retval;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
