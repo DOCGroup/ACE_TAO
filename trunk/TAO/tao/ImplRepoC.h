@@ -1571,40 +1571,86 @@ extern TAO_Export ImplementationRepository::ServerObject_ptr (*_TAO_collocation_
     CORBA::Object_ptr obj
   );
 // Any operators for interface ImplementationRepository::ServerObject
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerObject *&);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::EnvironmentVariable &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::EnvironmentVariable*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::EnvironmentVariable *&);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::EnvironmentList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::EnvironmentList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::EnvironmentList *&);
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ActivationMode);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ActivationMode &);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::StartupOptions &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::StartupOptions*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::StartupOptions *&);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::ServerInformation &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformation*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerInformation *&);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::ServerInformationList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformationList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerInformationList *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::ServerObject_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::ServerObject *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::EnvironmentVariable &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::EnvironmentVariable*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::EnvironmentVariable *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::EnvironmentVariable *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::EnvironmentList &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::EnvironmentList*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::EnvironmentList *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::EnvironmentList *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::ActivationMode);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::ActivationMode &);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::StartupOptions &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::StartupOptions*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::StartupOptions *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::StartupOptions *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::ServerInformation &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::ServerInformation*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::ServerInformation *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::ServerInformation *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::ServerInformationList &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::ServerInformationList*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::ServerInformationList *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::ServerInformationList *&);
 extern TAO_Export ImplementationRepository::Administration_ptr (*_TAO_collocation_ImplementationRepository_Administration_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface ImplementationRepository::Administration
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration *&);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::AlreadyRegistered &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::AlreadyRegistered*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::AlreadyRegistered *&);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::CannotActivate &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::CannotActivate*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::CannotActivate *&);
-TAO_Export void operator<<= (CORBA::Any &, const ImplementationRepository::Administration::NotFound &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration::NotFound*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration::NotFound *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::Administration_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::Administration *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::Administration::AlreadyRegistered &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::Administration::AlreadyRegistered*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::Administration::AlreadyRegistered *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::Administration::AlreadyRegistered *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::Administration::CannotActivate &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::Administration::CannotActivate*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::Administration::CannotActivate *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::Administration::CannotActivate *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const ImplementationRepository::Administration::NotFound &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             ImplementationRepository::Administration::NotFound*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       ImplementationRepository::Administration::NotFound *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const ImplementationRepository::Administration::NotFound *&);
 extern TAO_Export ImplementationRepository::ServerInformationIterator_ptr (*_TAO_collocation_ImplementationRepository_ServerInformationIterator_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );

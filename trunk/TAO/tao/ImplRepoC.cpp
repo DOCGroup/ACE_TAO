@@ -3024,8 +3024,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerObject_p
   {
     ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
     *_tao_obj_ptr = ImplementationRepository::ServerObject::_duplicate (_tao_elem);
-    _tao_any.replace (ImplementationRepository::_tc_ServerObject, _tao_obj_ptr, 1, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerObject, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
   }
   ACE_CATCHANY
   {
@@ -3037,34 +3052,49 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerObject_p
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerObject_ptr &_tao_elem)
 {
   CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = ImplementationRepository::ServerObject::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_ServerObject, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_ServerObject, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                         _tao_any._tao_byte_order ());
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
     CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
-    if (stream.decode (ImplementationRepository::_tc_ServerObject, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
-       == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    if (stream >> _tao_obj_var.out ())
     {
       _tao_elem = ImplementationRepository::ServerObject::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_ServerObject, tmp, 1, ACE_TRY_ENV);
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          ImplementationRepository::_tc_ServerObject,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
       ACE_TRY_CHECK;
       return 1;
     }
-    // failure
+    else    // failure
+    {
+      delete tmp;
+    }
   }
   ACE_CATCHANY
   {
     delete tmp;
+    _tao_elem = ImplementationRepository::ServerObject::_nil ();
     return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = ImplementationRepository::ServerObject::_nil ();
   return 0;
 }
 
@@ -3079,12 +3109,21 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
 
 void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::EnvironmentVariable &_tao_elem) // copying
 {
-  ImplementationRepository::EnvironmentVariable *_any_val;
+  ImplementationRepository::EnvironmentVariable *_any_val = 0;
   ACE_NEW (_any_val, ImplementationRepository::EnvironmentVariable (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_EnvironmentVariable, _any_val, 1, ACE_TRY_ENV); // copy the value
+    TAO_OutputCDR stream;
+    stream << *_any_val;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_EnvironmentVariable,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -3098,10 +3137,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::EnvironmentVar
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_EnvironmentVariable, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_EnvironmentVariable,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3110,7 +3162,62 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_EnvironmentVariable, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_EnvironmentVariable, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::EnvironmentVariable *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::EnvironmentVariable, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_EnvironmentVariable,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete _tao_elem;
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::EnvironmentVariable *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::_tc_EnvironmentVariable, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3120,25 +3227,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::EnvironmentVariable, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::_tc_EnvironmentVariable, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::EnvironmentVariable *)_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_EnvironmentVariable, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_EnvironmentVariable,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::EnvironmentVariable *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
-        delete _tao_elem;
+        delete ACE_const_cast (ImplementationRepository::EnvironmentVariable *&, _tao_elem);
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    return 0;
+    delete ACE_const_cast (ImplementationRepository::EnvironmentVariable *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3154,8 +3269,23 @@ void operator<<= (
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_EnvironmentList, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
-    ACE_TRY_CHECK;
+    TAO_OutputCDR stream;
+    if (stream << *_tao_any_val)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_any_val,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK; 
+    }
+    else
+    {
+      delete _tao_any_val;
+    }
   }
   ACE_CATCHANY
   {
@@ -3168,10 +3298,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::EnvironmentLis
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_EnvironmentList, _tao_elem, 0, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_EnvironmentList,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3180,7 +3323,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_EnvironmentList, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_EnvironmentList, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3190,25 +3337,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::EnvironmentList, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::_tc_EnvironmentList, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_EnvironmentList, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_EnvironmentList,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::EnvironmentList *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::_tc_EnvironmentList, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::EnvironmentList *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::EnvironmentList, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::EnvironmentList *)_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_EnvironmentList,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::EnvironmentList *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete ACE_const_cast (ImplementationRepository::EnvironmentList *&, _tao_elem);
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete ACE_const_cast (ImplementationRepository::EnvironmentList *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3216,18 +3422,27 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
 
 void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ActivationMode _tao_elem)
 {
-  ImplementationRepository::ActivationMode *_any_val;
-  ACE_NEW (_any_val, ImplementationRepository::ActivationMode (_tao_elem));
-  if (!_any_val) return;
+  ImplementationRepository::ActivationMode *_tao_any_val;
+  ACE_NEW (_tao_any_val, ImplementationRepository::ActivationMode (_tao_elem));
+  if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_ActivationMode, _any_val, 1, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_any_val;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_ActivationMode,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
     // free allocated storage
-    delete _any_val;
+    delete _tao_any_val;
   }
   ACE_ENDTRY;
 }
@@ -3237,14 +3452,19 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_ActivationMode, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_ActivationMode, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-    if (stream.decode (ImplementationRepository::_tc_ActivationMode, &_tao_elem, 0, ACE_TRY_ENV)
-      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    if (stream >> _tao_elem)
+    {
       return 1;
-    ACE_TRY_CHECK;
+    }
   }
   ACE_CATCHANY
   {
@@ -3256,12 +3476,21 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
 
 void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::StartupOptions &_tao_elem) // copying
 {
-  ImplementationRepository::StartupOptions *_any_val;
+  ImplementationRepository::StartupOptions *_any_val = 0;
   ACE_NEW (_any_val, ImplementationRepository::StartupOptions (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_StartupOptions, _any_val, 1, ACE_TRY_ENV); // copy the value
+    TAO_OutputCDR stream;
+    stream << *_any_val;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_StartupOptions,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -3275,10 +3504,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::StartupOptions
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_StartupOptions, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_StartupOptions,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3287,7 +3529,62 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_StartupOptions, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_StartupOptions, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::StartupOptions *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::StartupOptions, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_StartupOptions,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete _tao_elem;
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::StartupOptions *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::_tc_StartupOptions, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3297,25 +3594,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::StartupOptions, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::_tc_StartupOptions, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::StartupOptions *)_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_StartupOptions, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_StartupOptions,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::StartupOptions *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
-        delete _tao_elem;
+        delete ACE_const_cast (ImplementationRepository::StartupOptions *&, _tao_elem);
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    return 0;
+    delete ACE_const_cast (ImplementationRepository::StartupOptions *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3323,12 +3628,21 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
 
 void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::ServerInformation &_tao_elem) // copying
 {
-  ImplementationRepository::ServerInformation *_any_val;
+  ImplementationRepository::ServerInformation *_any_val = 0;
   ACE_NEW (_any_val, ImplementationRepository::ServerInformation (_tao_elem));
   if (!_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_ServerInformation, _any_val, 1, ACE_TRY_ENV); // copy the value
+    TAO_OutputCDR stream;
+    stream << *_any_val;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_ServerInformation,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -3342,10 +3656,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformat
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_ServerInformation, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_ServerInformation,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3354,7 +3681,62 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_ServerInformation, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_ServerInformation, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::ServerInformation *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::ServerInformation, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerInformation,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete _tao_elem;
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::ServerInformation *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::_tc_ServerInformation, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3364,25 +3746,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::ServerInformation, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::_tc_ServerInformation, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::ServerInformation *)_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_ServerInformation, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerInformation,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::ServerInformation *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
-        delete _tao_elem;
+        delete ACE_const_cast (ImplementationRepository::ServerInformation *&, _tao_elem);
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
-    delete _tao_elem;
-    return 0;
+    delete ACE_const_cast (ImplementationRepository::ServerInformation *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3398,8 +3788,23 @@ void operator<<= (
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_ServerInformationList, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
-    ACE_TRY_CHECK;
+    TAO_OutputCDR stream;
+    if (stream << *_tao_any_val)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_any_val,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK; 
+    }
+    else
+    {
+      delete _tao_any_val;
+    }
   }
   ACE_CATCHANY
   {
@@ -3412,10 +3817,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformat
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::_tc_ServerInformationList, _tao_elem, 0, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::_tc_ServerInformationList,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3424,7 +3842,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_ServerInformationList, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_ServerInformationList, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3434,25 +3856,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::ServerInformationList, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::_tc_ServerInformationList, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_ServerInformationList, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerInformationList,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::ServerInformationList *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::_tc_ServerInformationList, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::ServerInformationList *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::ServerInformationList, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::ServerInformationList *)_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerInformationList,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::ServerInformationList *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete ACE_const_cast (ImplementationRepository::ServerInformationList *&, _tao_elem);
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete ACE_const_cast (ImplementationRepository::ServerInformationList *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3468,8 +3949,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
   {
     ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
     *_tao_obj_ptr = ImplementationRepository::Administration::_duplicate (_tao_elem);
-    _tao_any.replace (ImplementationRepository::_tc_Administration, _tao_obj_ptr, 1, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_Administration, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
   }
   ACE_CATCHANY
   {
@@ -3481,34 +3977,49 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::Administration_ptr &_tao_elem)
 {
   CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = ImplementationRepository::Administration::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_Administration, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_Administration, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
     CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
-    if (stream.decode (ImplementationRepository::_tc_Administration, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
-       == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    if (stream >> _tao_obj_var.out ())
     {
       _tao_elem = ImplementationRepository::Administration::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_Administration, tmp, 1, ACE_TRY_ENV);
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          ImplementationRepository::_tc_Administration,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
       ACE_TRY_CHECK;
       return 1;
     }
-    // failure
+    else    // failure
+    {
+      delete tmp;
+    }
   }
   ACE_CATCHANY
   {
     delete tmp;
+    _tao_elem = ImplementationRepository::Administration::_nil ();
     return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = ImplementationRepository::Administration::_nil ();
   return 0;
 }
 
@@ -3525,12 +4036,22 @@ void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::Administ
 {
   ImplementationRepository::Administration::AlreadyRegistered *_tao_any_val = 0;
   ACE_NEW (_tao_any_val, ImplementationRepository::Administration::AlreadyRegistered (_tao_elem));
+  if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::Administration::_tc_AlreadyRegistered, _tao_any_val, 1, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_any_val;
+    _tao_any._tao_replace (
+        ImplementationRepository::Administration::_tc_AlreadyRegistered,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY
+  ACE_CATCHANY 
   {
     delete _tao_any_val;
   }
@@ -3541,10 +4062,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::Administration::_tc_AlreadyRegistered, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::Administration::_tc_AlreadyRegistered,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3553,7 +4087,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::Administration::_tc_AlreadyRegistered, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::Administration::_tc_AlreadyRegistered, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3563,25 +4101,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::Administration::AlreadyRegistered, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::Administration::_tc_AlreadyRegistered, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::Administration::_tc_AlreadyRegistered, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::Administration::_tc_AlreadyRegistered,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::Administration::AlreadyRegistered *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::Administration::_tc_AlreadyRegistered, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::Administration::AlreadyRegistered *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::Administration::AlreadyRegistered, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::Administration::AlreadyRegistered *)_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::Administration::_tc_AlreadyRegistered,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::Administration::AlreadyRegistered *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete ACE_const_cast (ImplementationRepository::Administration::AlreadyRegistered *&, _tao_elem);
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete ACE_const_cast (ImplementationRepository::Administration::AlreadyRegistered *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3591,12 +4188,22 @@ void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::Administ
 {
   ImplementationRepository::Administration::CannotActivate *_tao_any_val = 0;
   ACE_NEW (_tao_any_val, ImplementationRepository::Administration::CannotActivate (_tao_elem));
+  if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::Administration::_tc_CannotActivate, _tao_any_val, 1, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_any_val;
+    _tao_any._tao_replace (
+        ImplementationRepository::Administration::_tc_CannotActivate,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY
+  ACE_CATCHANY 
   {
     delete _tao_any_val;
   }
@@ -3607,10 +4214,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::Administration::_tc_CannotActivate, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::Administration::_tc_CannotActivate,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3619,7 +4239,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::Administration::_tc_CannotActivate, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::Administration::_tc_CannotActivate, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3629,25 +4253,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::Administration::CannotActivate, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::Administration::_tc_CannotActivate, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::Administration::_tc_CannotActivate, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::Administration::_tc_CannotActivate,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::Administration::CannotActivate *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::Administration::_tc_CannotActivate, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::Administration::CannotActivate *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::Administration::CannotActivate, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::Administration::CannotActivate *)_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::Administration::_tc_CannotActivate,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::Administration::CannotActivate *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete ACE_const_cast (ImplementationRepository::Administration::CannotActivate *&, _tao_elem);
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete ACE_const_cast (ImplementationRepository::Administration::CannotActivate *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3657,12 +4340,22 @@ void operator<<= (CORBA::Any &_tao_any, const ImplementationRepository::Administ
 {
   ImplementationRepository::Administration::NotFound *_tao_any_val = 0;
   ACE_NEW (_tao_any_val, ImplementationRepository::Administration::NotFound (_tao_elem));
+  if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::Administration::_tc_NotFound, _tao_any_val, 1, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_any_val;
+    _tao_any._tao_replace (
+        ImplementationRepository::Administration::_tc_NotFound,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY
+  ACE_CATCHANY 
   {
     delete _tao_any_val;
   }
@@ -3673,10 +4366,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::Administration
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (ImplementationRepository::Administration::_tc_NotFound, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        ImplementationRepository::Administration::_tc_NotFound,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
@@ -3685,7 +4391,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::Administration::_tc_NotFound, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::Administration::_tc_NotFound, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -3695,25 +4405,84 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
     else
     {
       ACE_NEW_RETURN (_tao_elem, ImplementationRepository::Administration::NotFound, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (ImplementationRepository::Administration::_tc_NotFound, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::Administration::_tc_NotFound, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::Administration::_tc_NotFound,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const ImplementationRepository::Administration::NotFound *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (ImplementationRepository::Administration::_tc_NotFound, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (ImplementationRepository::Administration::NotFound *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, ImplementationRepository::Administration::NotFound, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(ImplementationRepository::Administration::NotFound *)_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::Administration::_tc_NotFound,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (ImplementationRepository::Administration::NotFound *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete ACE_const_cast (ImplementationRepository::Administration::NotFound *&, _tao_elem);
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete ACE_const_cast (ImplementationRepository::Administration::NotFound *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
@@ -3729,8 +4498,23 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformat
   {
     ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
     *_tao_obj_ptr = ImplementationRepository::ServerInformationIterator::_duplicate (_tao_elem);
-    _tao_any.replace (ImplementationRepository::_tc_ServerInformationIterator, _tao_obj_ptr, 1, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationIterator, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
   }
   ACE_CATCHANY
   {
@@ -3742,34 +4526,49 @@ void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ServerInformat
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ServerInformationIterator_ptr &_tao_elem)
 {
   CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (ImplementationRepository::_tc_ServerInformationIterator, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (ImplementationRepository::_tc_ServerInformationIterator, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
     CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
-    if (stream.decode (ImplementationRepository::_tc_ServerInformationIterator, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
-       == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    if (stream >> _tao_obj_var.out ())
     {
       _tao_elem = ImplementationRepository::ServerInformationIterator::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (ImplementationRepository::_tc_ServerInformationIterator, tmp, 1, ACE_TRY_ENV);
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          ImplementationRepository::_tc_ServerInformationIterator,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
       ACE_TRY_CHECK;
       return 1;
     }
-    // failure
+    else    // failure
+    {
+      delete tmp;
+    }
   }
   ACE_CATCHANY
   {
     delete tmp;
+    _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
     return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
   return 0;
 }
 
