@@ -26,6 +26,7 @@ call %0 %dopure% Basic_Types_Test
 call %0 %dopure% Buffer_Stream_Test
 call %0 %dopure% Conn_Test
 call %0 %dopure% Enum_Interfaces_Test
+call %0 %dopure% Env_Value_Test
 call %0 %dopure% Future_Test
 call %0 %dopure% Handle_Set_Test
 call %0 %dopure% Hash_Map_Manager_Test
