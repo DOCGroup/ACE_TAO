@@ -214,7 +214,13 @@ ImplRepo_i::activate_server (const char *server,
       int starting_up;
       
       while ((starting_up = this->repository_.starting_up (server)) == 1)
+        {
+          if (OPTIONS::instance()->debug () >= 2)
+            ACE_DEBUG ((LM_DEBUG, "activate_server: Going into handle_events\n"));
           orb_core->reactor ()->handle_events ();
+        }
+      if (OPTIONS::instance()->debug () >= 2)
+        ACE_DEBUG ((LM_DEBUG, "activate_server: Got out of handle_events loop\n"));
       
       // Check to see if it disappeared on us
       if (starting_up == -1)
@@ -386,6 +392,8 @@ ImplRepo_i::server_is_running (const char *server,
                 "The new host/port is: %Lu:%hu\n",
                 new_addr->host_.inout (),
                 new_addr->port_));
+
+  this->repository_.starting_up (server, 0);
 
   return new_addr;
 }
