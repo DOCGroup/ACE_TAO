@@ -7,7 +7,8 @@ Tue Feb 16 17:08:53 1999  Steve Huston  <shuston@riverace.com>
 Tue Feb 16 16:42:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CORBA_macros.h (ACE_PRINT_EXCEPTION): A new macro that deal
-	  with printing out the exception for debugging.
+	  with printing out the exception for debugging.  Thanks to Lothar
+	  Werzinger <lwerzinger@krones.de> for suggesting this.
 
 	* docs/exceptions.html: Added documentation for the new macro
 	  ACE_PRINT_EXCEPTION.  Since there's no portable way to print out
