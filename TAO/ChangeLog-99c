@@ -1,3 +1,14 @@
+Sun Oct  3 16:16:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	  Removed an unused variable.
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Removed an extra semicolon.
+
+	* tests/Param_Test/recursive_union.cpp:
+	  Removed an unreachable statement.
+
 Sun Oct 03 13:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
