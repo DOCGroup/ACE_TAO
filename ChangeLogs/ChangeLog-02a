@@ -1,3 +1,12 @@
+Wed Mar 15 23:21:04 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Configuration.cpp: Changed from using ACE_TString::rep() to
+	  ACE_TString::fast_rep() to avoid memory leaks.  Thanks to for
+	  reporting this and suggesting the fix.
+
+	  Also removed  a call to add_ref() from the constructor of
+	  ACE_Section_Key_Win32.  It was causing another memory leak.
+
 Wed Mar 15 21:18:19 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: set
