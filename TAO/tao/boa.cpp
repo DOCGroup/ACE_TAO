@@ -70,7 +70,7 @@ CORBA_BOA::get_named_boa (CORBA_ORB_ptr orb,
         // ROA initialization with name specified; it'll come from
         // /etc/services if it's not a port number.
 
-        ACE_INET_Addr boa_name (name, INADDR_ANY);
+        ACE_INET_Addr boa_name (name, (ACE_UINT32) INADDR_ANY);
 
         tcp_oa = ROA::init (orb, boa_name, env);
 
@@ -109,7 +109,7 @@ CORBA_BOA::get_boa (CORBA_ORB_ptr orb,
 
         // ROA initialization with null name means anonymous OA
 
-        ACE_INET_Addr anonymous ((unsigned short) 0, INADDR_ANY);
+        ACE_INET_Addr anonymous ((u_short) 0, (ACE_UINT32) INADDR_ANY);
 
         tcp_oa = ROA::init (orb, anonymous, env);
 
