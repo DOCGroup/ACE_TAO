@@ -1,7 +1,10 @@
-Tue Apr  9 13:29:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Apr  9 15:02:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Containers_T.h:
           Fixed two small typos
+
+        * ace/Thread_Manager.h:
+          Doxygen-ized some of the comments
 
 Tue Apr  9 03:04:19 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
