@@ -31,8 +31,8 @@ Notify_Test_Client::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
 
 void
 Notify_Test_Client::init_ORB (int argc,
-                      char *argv []
-                      TAO_ENV_ARG_DECL)
+                              char *argv []
+                              TAO_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
@@ -76,7 +76,8 @@ Notify_Test_Client::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (naming_obj.in () 
+                                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -93,8 +94,10 @@ Notify_Test_Client::resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   this->notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ()
-                                                         TAO_ENV_ARG_PARAMETER);
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
+                                                    obj.in ()
+                                                    TAO_ENV_ARG_PARAMETER
+                                                  );
   ACE_CHECK;
 }
 
@@ -113,3 +116,78 @@ Notify_Test_Client::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->done_ = 1;
 }
+
+CORBA::ORB_ptr
+Notify_Test_Client::orb (void)
+{
+  return this->orb_.in ();
+}
+
+
+PortableServer::POA_ptr
+Notify_Test_Client::root_poa (void)
+{
+  return this->root_poa_.in ();
+}
+
+
+CosNaming::NamingContext_ptr
+Notify_Test_Client::naming_context (void)
+{
+  return this->naming_context_.in ();
+}
+
+  
+CosNotifyChannelAdmin::EventChannelFactory_ptr
+Notify_Test_Client::notify_factory (void)
+{
+  return this->notify_factory_.in ();
+}
+
+
+CosNotifyChannelAdmin::EventChannel_ptr
+Notify_Test_Client::create_event_channel (const char* cname,
+                                          int resolve
+                                          TAO_ENV_ARG_PARAMETER)
+{
+  CosNotifyChannelAdmin::EventChannel_var ec;
+  CosNaming::Name name (1);
+  name.length (1);
+  name[0].id = CORBA::string_dup (cname);
+
+  if (resolve)
+    {
+      CORBA::Object_var obj = naming_context_->resolve (name);
+      ec = CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
+
+      if (CORBA::is_nil (ec.in ()))
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      CosNotifyChannelAdmin::ChannelID id;
+      CosNotification::QoSProperties initial_qos;
+      CosNotification::AdminProperties initial_admin;
+
+      ec = notify_factory_->create_channel (initial_qos,
+                                            initial_admin,
+                                            id
+                                            TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      naming_context_->rebind(name, ec.in());
+    }
+
+  return ec._retn ();
+}
+
+
+CORBA::Boolean&
+Notify_Test_Client::done (void)
+{
+  return this->done_;
+}
+
+
