@@ -86,6 +86,8 @@ private:
   // The IOR string of the naming service.
 
   CORBA::String_var naming_context_name_;
+  // Name of the naming context (if different than
+  // "NameService").
 };
 
 #endif /* _NAMING_SERVER_H */
