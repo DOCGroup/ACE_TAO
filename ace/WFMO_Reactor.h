@@ -30,6 +30,7 @@
 #include "ace/Reactor_Impl.h"
 #include "ace/Message_Queue.h"
 
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 // If we don't have WinSOCK2, we need these defined
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 /*
@@ -67,6 +68,7 @@ int WSAEnumNetworkEvents (SOCKET s,
                           LPWSANETWORKEVENTS lpNetworkEvents);
 
 #endif /* !defined ACE_HAS_WINSOCK2 */
+#endif /* defined (ACE_WIN32) && !define (ACE_HAS_WINCE) */
 
 // Forward decl.
 class ACE_WFMO_Reactor;
