@@ -10,6 +10,8 @@
 #include "ace/Module.h"
 #include "ace/Task.h"
 
+#include "JAWS/Export.h"
+
 typedef ACE_Stream<ACE_NULL_SYNCH> JAWS_Pipeline_Stream;
 typedef ACE_Module<ACE_NULL_SYNCH> JAWS_Pipeline_Module;
 typedef ACE_Task<ACE_NULL_SYNCH> JAWS_Pipeline_Task;

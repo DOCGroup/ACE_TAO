@@ -4,6 +4,7 @@
 #if !defined (JAWS_PIPELINE_HANDLER_H)
 #define JAWS_PIPELINE_HANDLER_H
 
+#include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"
 
 template <class TYPE>
