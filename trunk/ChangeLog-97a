@@ -1,7 +1,13 @@
-Wed Feb 05 10:45:41 1997  David L. Levine  <levine@cs.wustl.edu>
+Wed Feb  5 01:45:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Dgram.cpp (send,recv): added casts of addr.get_addr ()
-	  to caddr_t so it will compile with Sun C++.
+	* tests/Naming_Test.cpp: Cleaned up a few minor things.
+
+	* ace/SOCK_Dgram.cpp: Added a new macro called
+ 	  ACE_HAS_SOCKADDR_MSG_NAME, which is used on platforms (e.g.,
+ 	  DG/UX) that require a cast to (struct sockaddr *) for the
+ 	  msg_name field of struct msghdr.
+
+Wed Feb 05 10:45:41 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/IOStream.h: replaced __*manip with expanded types, because
 	  Sun C++ doesn't have those typedefs, and added complete prototypes
