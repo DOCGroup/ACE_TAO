@@ -124,6 +124,8 @@
 # endif /* ACE_DEFAULT_MULTICAST_PORT */
 
 # if !defined (ACE_DEFAULT_MULTICAST_ADDR)
+// This address MUST be within the range for host group addresses:
+// 224.0.0.0 to 239.255.255.255.
 #   define ACE_DEFAULT_MULTICAST_ADDR "224.9.9.2"
 # endif /* ACE_DEFAULT_MULTICAST_ADDR */
 

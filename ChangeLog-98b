@@ -1,3 +1,10 @@
+Tue Aug  4 12:09:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Clarified the fact that the ACE_DEFAULT_MUITCAST_ADDR
+ 	  must be within the range for host group addresses: 224.0.0.0 to
+ 	  239.255.255.255.  Thanks to Christa Schwanninger
+ 	  <christa.schwanninger@mchp.siemens.de> for reporting this.
+
 Tue Aug 04 11:01:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/GenExportH.BAT: Moved from TAO/TAO_IDL/.
