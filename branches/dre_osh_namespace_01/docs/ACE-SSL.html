@@ -1,0 +1,51 @@
+<HTML>
+<!-- $Id$ -->
+<Title>ACE+SSL</TITLE>
+
+  <BODY text = "#000000"
+	link="#000fff"
+	vlink="#ff0f0f"
+	bgcolor="#ffffff">
+
+    <HR><P>
+    <H3>What is ACE+SSL?</H3>
+    <p>ACE plus SSL is an addition to the core classes which allow the use
+      of the Secure Socket Layer with the ACE framework. The following
+      are the core classes conditionally compiled in when you run
+      <code>make ssl=1</code>:</p>
+    <ul>
+      <li>ACE_SSL contains the interface to the ssl library OpenSSL.
+      <li><code>ACE_SSL_SOCK_Stream</code> uses an interface and
+	behavior nearly identical to <code>ACE_SOCK_Stream</code>,
+	only with the additional ssl layer functionality.
+      <li><code>ACE_SSL_SOCK_Acceptor</code>/<code>Connector</code>
+	are again similar to their <code>ACE_SOCK</code> counterparts.
+    </ul>
+
+    <p>The SSL/TLS library we use is OpenSSL which is available at
+      <A HREF="http://www.openssl.org/">http://www.openssl.org/</A>.
+      This library must be installed in order to use ACE+SSL.  We
+      cannot answer all of the questions you may have about OpenSSL,
+      but hopefully through using the ACE+SSL interface your questions
+      will be reduced.</p> 
+
+    <H3>What is the status of ACE+SSL</H3>
+    <p>ACE+SSL is currently still in early development. If forced to
+      name names, we would call the core functionality beta, while the
+      interface and niceties are still in an alpha stage of
+      development.</p> 
+
+    <H3>How do I get ACE+SSL?</H3>
+    <p>Due to the relaxation of export restrictions we have gained
+      permission to distribute ACE+SSL along with the normal ACE
+      distribution. It can be found in $ACE_ROOT/ace/SSL. An SSL
+      pluggable transport for can be found in
+      $ACE_ROOT/TAO/orbsvcs/orbsvcs/SSLIOP.
+
+
+    <HR><P>
+      Back to <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">
+	ACE</A> home page. <P>
+      <!--#include virtual="/~schmidt/cgi-sig.html" -->
+  </BODY>
+</HTML>

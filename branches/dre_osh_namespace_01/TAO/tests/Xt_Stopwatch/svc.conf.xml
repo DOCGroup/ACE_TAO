@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/Xt_Stopwatch/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <dynamic id="Resource_Factory" type="Service_Object">
+   <initializer path="TAO" init="_make_TAO_XT_Resource_Factory"/>
+ </dynamic>
+</ACE_Svc_Conf>

@@ -1,0 +1,6 @@
+project : ftclientorb, ftrtevent {
+  after     += FTRT_ClientORB
+  libs      += TAO_FTRT_ClientORB
+  comps     += FTRT_ClientORB
+  tagchecks += FTRT_ClientORB
+}

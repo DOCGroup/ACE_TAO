@@ -1,0 +1,48 @@
+#
+# Makefile for building the AMI timeout server
+#
+
+NAME = server
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -GC
+
+OBJFILES = \
+	$(OBJDIR)\timeoutS.obj \
+	$(OBJDIR)\timeoutC.obj \
+	$(OBJDIR)\timeout_i.obj \
+	$(OBJDIR)\timeout_client.obj \
+	$(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_VALUETYPE_CFLAGS) \
+	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_ORT_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_VALUETYPE_LIB) \
+	$(TAO_IORINTERCEPTOR_LIB) \
+	$(TAO_ORT_LIB) \
+        $(TAO_MESSAGING_LIB)
+
+CPPDIR = .
+
+IDLDIR = .
+
+IDLFILES = \
+        $(IDLDIR)\timeout.idl
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\timeoutS.cpp $(IDLDIR)\timeoutC.cpp: $(IDLDIR)\timeout.idl
+	$(TAO_IDL) $**
