@@ -1,3 +1,21 @@
+
+Wed Sep 23 22:13:04 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/006/server.cpp: 
+	Wrapped !defined(ACE_HAS_GNU_REPO) around the explicit template
+	instantiation.
+
+	* docs/tutorials/005/client_handler.cpp (handle_input):
+	* docs/tutorials/006/client_handler.cpp (svc): 
+	* docs/tutorials/006/client_handler.cpp (handle_input): 
+	* docs/tutorials/007/client_handler.cpp (svc): 
+	* docs/tutorials/007/client_handler.cpp (handle_input): 
+	Use ACE_OS::memset() instead of direct call to memset()
+
+	* docs/tutorials/005/Makefile: 
+	* docs/tutorials/007/Makefile: 
+	Touch .depend if it does not exist.
+
 Wed Sep 23 22:03:19 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
       * ace/config-sco-5.0.0.h: added ACE_LACKS_READDIR_R.

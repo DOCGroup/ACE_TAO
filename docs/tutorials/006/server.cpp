@@ -111,6 +111,7 @@ int main (int argc, char *argv[])
   return 0;
 }
 
+#if !defined(ACE_HAS_GNU_REPO)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor <Client_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
@@ -118,3 +119,4 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Acceptor <Client_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_GNU_REPO */
