@@ -29,6 +29,23 @@ Thu Nov 13 19:11:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Thu Nov 13 16:18:32 1997    <nw1@CHA-CHA>
 
+	* tao/orb_core.h:
+	* tao/default_client.h:
+	* tao/default_server.h:  Changed ACE_SVC_FACTORY_DECLARE to
+	  ACE_FACTORY_DECLARE.
+	
+	* tao/orb_core.cpp:
+	* tao/default_client.cpp:
+	* tao/default_server.cpp:  Changed ACE_SVC_FACTORY_DEFINE to
+	  ACE_FACTORY_DEFINE.
+
+	* tao/corba.h: Added include "tao/tao_internals.h".
+
+	* tao/tao_internals.h: Disable header file inclusions.  I've put
+ 	  this file into corba.h.
+
+	* tao/tao_internals.cpp: Changed to use "tao/corba.h".
+
 	* tao/TAO.mak:
 	* tao/TAO.dsp:  Replaced ACE_BUILD_SVC_DLL with TAO_BUILD_DLL.
 
