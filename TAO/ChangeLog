@@ -1,3 +1,8 @@
+Fri Apr 25 06:27:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp: Fixed a compile
+	  error in builds with no exceptions.
+
 Thu Apr 24 22:01:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CONV_FRAMEC.cpp:
