@@ -1,3 +1,8 @@
+Fri Mar 30 14:33:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/*/Makefile:
+	* utils/Makefile: Updated dependencies.
+
 Fri Mar 30 14:28:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/*/Makefile: Updated dependencies.
