@@ -9,7 +9,8 @@ Mon May 15 22:05:49 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
           Changed the Time Offset constant to 141427 days
           (0x2D8539C80 secs) instead of 141426.97 days
           (0x2D8539260 secs). I have put comments in the code on why
-          this offset is required.
+          this offset is required. Thanks to Matthew Newhook 
+	  <matthew@ooc.com> for pointing out the error.
 
 Mon May 15 20:03:11 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
         * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
