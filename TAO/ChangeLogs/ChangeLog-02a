@@ -1,3 +1,14 @@
+Fri Feb  9 18:11:35 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/README.txt:
+
+          Added a new page just for using the Naming Service with the
+          ImR.  THe page should show up on 
+
+          http://doc.ece.uci.edu/Doxygen/Current/html/tao/implrepo_service/pages.html
+
+          in the next couple of days.
+
 Fri Feb  9 11:38:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/Servant_Base.cpp:
