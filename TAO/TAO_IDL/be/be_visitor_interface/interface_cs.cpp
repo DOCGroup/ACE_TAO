@@ -67,27 +67,27 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->repoID () << "\", ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK_RETURN (" << node->full_name () << "::_nil ());" << be_nl
       << "if (is_a == 0)" << be_idt_nl
-      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
+      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
+      << "return " << node->full_name ()
+      << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << node->full_name () << "_ptr " << node->full_name ()
+      << "::_unchecked_narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj," << be_nl
+      << "CORBA::Environment &" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
 
   // This may be necessary to work around a GCC compiler bug!
-//  const char *skel_name = node->full_skel_name (); // unused at this time
-//    const char *coll_name = node->full_coll_name ();
-//    assert (coll_name != 0);
+  //  const char *skel_name = node->full_skel_name (); // unused at this time
+  //    const char *coll_name = node->full_coll_name ();
+  //    assert (coll_name != 0);
 
   // The _unchecked_narrow method
   if (!idl_global->gen_locality_constraint ())
     {
-      *os << "return " << node->full_name ()
-          << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-
-      *os << node->full_name () << "_ptr " << node->full_name ()
-          << "::_unchecked_narrow (" << be_idt << be_idt_nl
-          << "CORBA::Object_ptr obj," << be_nl
-          << "CORBA::Environment &" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "if (CORBA::is_nil (obj))" << be_idt_nl
+      *os << "if (CORBA::is_nil (obj))" << be_idt_nl
           << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
 
       *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
@@ -104,17 +104,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << node->full_name () << "_ptr retval = 0;" << be_nl
           << "ACE_NEW_RETURN (retval, " << node->full_name ()
           << " (stub), 0);" << be_nl
-          << "return retval;" <<  be_uidt_nl
-          << "}" << be_nl << be_nl;
-
-      // The _duplicate method
-      *os << node->full_name () << "_ptr " << be_nl
-          << node->full_name () << "::_duplicate ("
-          << node->full_name () << "_ptr obj)" << be_nl
-          << "{" << be_idt_nl
-          << "if (!CORBA::is_nil (obj))" << be_idt_nl
-          << "obj->_incr_refcnt ();" << be_uidt_nl
-          << "return obj;" << be_uidt_nl;
+          << "return retval;" <<  be_uidt_nl;
     }
   else
     {
@@ -139,7 +129,18 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "0" << be_uidt_nl << ");" << be_uidt_nl
           << "return retval;" << be_uidt_nl;
     }
-  *os << "}" << be_nl << be_nl;
+  *os << "}\n" << be_nl;
+
+
+  // The _duplicate method
+  *os << node->full_name () << "_ptr " << be_nl
+      << node->full_name () << "::_duplicate ("
+      << node->full_name () << "_ptr obj)" << be_nl
+      << "{" << be_idt_nl
+      << "if (!CORBA::is_nil (obj))" << be_idt_nl
+      << "obj->_incr_refcnt ();" << be_uidt_nl
+      << "return obj;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // generate code for the elements of the interface
   if (this->visit_scope (node) == -1)
