@@ -1,3 +1,19 @@
+Fri Sep 15 14:27:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  Changed some ACE_ERROR_RETURNs to ACE_ERROR, to avoid
+	  unreachable code.
+
+	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
+	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/tao_idl_static.dsp:
+
+	  Went through all the project setting and made them more
+	  self-consistent.
+
 Fri Sep 15 13:32:50 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Portable_Interceptors/Benchmark/test_i.cpp: Fixed more
