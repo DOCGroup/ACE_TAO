@@ -6,14 +6,25 @@ project(ACE_FlReactor) : acedefaults, aceversion, core, acelib, ace_fl{
   sharedname   = ACE_FlReactor
   dynamicflags = ACE_FLREACTOR_BUILD_DLL
 
-  Header_Files {
-    ACE_TkReactor_export.h
-    TkReactor.h
+  Source_Files {
+    FlReactor.cpp
   }
 
-  Source_Files(ACE_COMPONENTS) {
-    Demux {
-      FlReactor.cpp
-    }
+  Header_Files {
+    ACE_FlReactor_export.h
+    FlReactor.h
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  Pkgconfig_Files {
+    ACE_FlReactor.pc.in
   }
 }

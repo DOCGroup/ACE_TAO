@@ -1,3 +1,24 @@
+Sun Jan 23 02:22:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/ACE_FlReactor.pc.in:
+	* ace/ACE_QtReactor.pc.in:
+	* ace/ACE_TkReactor.pc.in:
+	* ace/ACE_XtReactor.pc.in:
+
+          New files, pkg-config *.pc templates.
+
+	* ace/ace_flreactor.mpc:
+	* ace/ace_qtreactor.mpc:
+	* ace/ace_tkreactor.mpc:
+	* ace/ace_xtreactor.mpc:
+
+	  Removed Demux subsection from Source_Files.
+
+	  Added empty Inline_Files, Template_Files, and Resource_Files
+	  sections.
+
+	  Added Pkgconfig_Files sections.
+
 Sun Jan 23 00:25:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
