@@ -73,9 +73,9 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_E
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *,
-                                                          ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
-                                                          ACE_Null_Mutex> &timer_queue,
-                                                          ACE_Event_Handler *handler)
+                                                              ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
+                                                              ACE_Null_Mutex> &timer_queue,
+                                                              ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
   return this->timer_hash_->upcall_functor ().cancellation (*this->timer_hash_,
@@ -401,13 +401,13 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
-                                               int dont_call)
+                                                           int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::cancel");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
-  size_t i; // loop variable
+  size_t i; // loop variable.
 
   Hash_Token **timer_ids;
 
@@ -427,18 +427,20 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
            !iter.isdone ();
            iter.next ())
         if (iter.item ()->get_type () == type)
-          timer_ids[pos++] = (Hash_Token *)iter.item ()->get_act ();
+          timer_ids[pos++] = ACE_reinterpret_cast (Hash_Token *,
+                                                   ACE_const_cast (void *,
+                                                                   iter.item ()->get_act ()));
     }
 
-  if (pos <= this->size_)
+  if (pos > this->size_)
     return -1;
 
   for (i = 0; i < pos; i++)
     {
-      this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_, 0, 1);
-
+      this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_,
+                                                0,
+                                                1);
       delete timer_ids[i];
-
       --this->size_;
     }
 
