@@ -1,3 +1,10 @@
+Thu Jun 29 11:53:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Interoperable_Naming/server.dsp:
+        * orbsvcs/tests/Interoperable_Naming/Interoperable_Naming.dsw:
+          Remove the server.dsp project file, the server was not needed
+          for this test, and was thus removed.
+
 Thu Jun 29 11:28:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/orbconf.h:
