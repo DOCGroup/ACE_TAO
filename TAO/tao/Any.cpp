@@ -72,11 +72,33 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
                       void *value,
                       CORBA::Boolean any_owns_data)
   : type_ (tc),
-    value_ (value),
     any_owns_data_ (any_owns_data),
     refcount_ (1)
 {
   tc->AddRef ();
+  // if the Any owns the data, we encode the "value" into a CDR stream and
+  // store it. We also destroy the "value" since we own it.
+  if (this->any_owns_data_)
+    {
+      CORBA::Environment env;
+      TAO_OutputCDR stream;
+
+      stream.encode (tc, value, 0, env);
+      // retrieve the start of the message block chain and duplicate it
+      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                   stream.start ());
+
+      // we own the data. So first do a deep free and then deallocate it.
+      DEEP_FREE (tc, value, 0, env);
+      // @@ - address the following
+      // delete this->value_;
+
+    }
+  else
+    {
+      // we don't own it. Maintain a pointer to the value
+      this->value_ = value;
+    }
 }
 
 // Copy constructor for "Any".
@@ -86,17 +108,25 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
     refcount_ (1)
 {
   CORBA::Environment env;
-  size_t size;
 
   this->type_->AddRef ();
 
-  size = this->type_->size (env);
+  // does the source own its data? If not, then it is not in the message block
+  // form and must be encoded. Else we must simply duplicate the message block
+  if (src.any_owns_data_)
+    {
+      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                   src.value_);
+    }
+  else
+    {
+      TAO_OutputCDR stream;
 
-  // allocate sufficient memory and deep copy the data
-  // @@ - the following allocation to be addressed by our memory management
-  // scheme
-  this->value_ = (char *) ACE_OS::calloc (1, size);
-  (void) DEEP_COPY (this->type_, src.value_, this->value_, env);
+      stream.encode (this->type_, src.value_, 0, env);
+      // retrieve the start of the message block chain and duplicate it
+      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                   stream.start ());
+    }
 }
 
 // assignment operator
@@ -116,26 +146,34 @@ CORBA_Any::operator= (const CORBA_Any &src)
   // if we own any previous data, deallocate it
   if (this->any_owns_data_)
     {
-      DEEP_FREE (this->type_, this->value_, 0, env);
-      // @@: The following needs to be addressed properly. We need to make
-      // sure if we use "delete" or "free"
-      //      delete this->value_;
+      // decrement the refcount on the Message_Block we hold
+      ACE_Message_Block::release ((ACE_Message_Block *) this->value_);
+      if (this->type_)
+        this->type_->Release ();
     }
 
   // Now copy the contents of the source to ourselves.
   this->type_ = (src.type_) != 0 ? src.type_ : CORBA::_tc_null;
-
   this->any_owns_data_ = CORBA::B_TRUE;
   this->refcount_ = 1;
-
   this->type_->AddRef ();
 
-  size = this->type_->size (env);
+  // does the source own its data? If not, then it is not in the message block
+  // form and must be encoded. Else we must simply duplicate the message block
+  if (src.any_owns_data_)
+    {
+      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                   src.value_);
+    }
+  else
+    {
+      TAO_OutputCDR stream;
 
-  // allocate sufficient storage and deep copy the data
-  // @@ - address the following
-  this->value_ = (char *) ACE_OS::calloc (1, size);
-  (void) DEEP_COPY (this->type_, src.value_, this->value_, env);
+      stream.encode (this->type_, src.value_, 0, env);
+      // retrieve the start of the message block chain and duplicate it
+      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                   stream.start ());
+    }
   return *this;
 }
 
@@ -156,10 +194,8 @@ CORBA_Any::~CORBA_Any (void)
 
   if (this->any_owns_data_)
     {
-      // we own the data. So first do a deep free and then deallocate it.
-      DEEP_FREE (this->type_, this->value_, 0, env);
-      // @@ - address the following
-      // delete this->value_;
+      // decrement the refcount on the Message_Block we hold
+      ACE_Message_Block::release ((ACE_Message_Block *) this->value_);
     }
 
   if (this->type_)
@@ -170,30 +206,44 @@ CORBA_Any::~CORBA_Any (void)
 
 void
 CORBA_Any::replace (CORBA::TypeCode_ptr tc,
-                    const void *v,
+                    const void *value,
                     CORBA::Boolean any_owns_data,
                     CORBA::Environment &env)
 {
   if (this->any_owns_data_)
     {
-      if (this->value_)
-        {
-          DEEP_FREE (this->type_, this->value_, 0, env);
-          // @@ - to be addressed
-          //          delete this->value_;
-        }
+      // decrement the refcount on the Message_Block we hold
+      ACE_Message_Block::release ((ACE_Message_Block *) this->value_);
     }
-
-  if (env.exception ())
-    return;
-
   if (this->type_ != 0)
     this->type_->Release ();
 
   this->type_ = tc;
   tc->AddRef ();
-  this->value_ = (void *) v;
   this->any_owns_data_ = any_owns_data;
+  // if the Any owns the data, we encode the "value" into a CDR stream and
+  // store it. We also destroy the "value" since we own it.
+  if (this->any_owns_data_)
+    {
+      CORBA::Environment env;
+      TAO_OutputCDR stream;
+
+      stream.encode (tc, value, 0, env);
+      // retrieve the start of the message block chain and duplicate it
+      this->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                   stream.start ());
+
+      // we own the data. So first do a deep free and then deallocate it.
+      DEEP_FREE (tc, value, 0, env);
+      // @@ - address the following
+      // delete this->value_;
+
+    }
+  else
+    {
+      // we don't own it. Maintain a pointer to the value
+      this->value_ = (void *)value;
+    }
 }
 
 // insertion of from_string

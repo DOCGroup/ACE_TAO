@@ -288,6 +288,8 @@ private:
   // 94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);
   CORBA::Boolean operator>>= (unsigned char&) const;
+
+  friend class TAO_Marshal_Any;
 };
 
 class TAO_Export CORBA_Any_var
