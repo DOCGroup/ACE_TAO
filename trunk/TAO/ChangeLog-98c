@@ -1,3 +1,9 @@
+Thu Mar 05 09:08:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * .../Makefile:  added $(POSTLINK) to link commands.
+          Please, if you don't use rules.bin.GNU, be sure to
+          follow it as closely as possible.
+
 Wed Mar 04 19:49:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orb_core (preconnect): changed type of loop index to
