@@ -1,3 +1,10 @@
+Tue Nov 11 16:13:42 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+
+          Updated files following Justin's IMR changes.
+
 Tue Nov 11 15:48:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reliable_Oneways/client.bor:
@@ -152,7 +159,7 @@ Mon Nov 10 13:19:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           to use 'extern' in the *C.h file and assign the value in
           the *C.cpp file. Assigning the value of such constants in
           the header file was causing a problem with pre-compiled
-          headers on BCB. Thanks to Mike Hepburn <mike@anvil.com> for 
+          headers on BCB. Thanks to Mike Hepburn <mike@anvil.com> for
           reporting the problem.
 
 Mon Nov 10 18:09:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
