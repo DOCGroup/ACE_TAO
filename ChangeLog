@@ -1,3 +1,28 @@
+Mon Aug 23 23:23:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Makefile.am (AUTOMAKE_OPTIONS):
+
+	  Removed required Automake version from `Makefile.am'.
+	  `configure.ac' already defines it.
+
+	* configure.ac:
+
+	  Updated required version of Automake to 1.9.
+
+	  Added test for partial template specialization.  Issue a warning
+	  if it isn't support by the compiler since ACE will require it in
+	  the near future.
+
+	* ace/ACE.h:
+
+	  Corrected ACE namespace documentation to describe the ACE
+	  namespace itself rather than summarizing the contents of this
+	  header (i.e. the value added global ACE functions).
+
+	* ace/If_Then_Else.h:
+
+	  Doxygen documentation corrections and improvements.
+
 Mon Aug 23 22:19:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/CDR_Test.cpp (run_main):

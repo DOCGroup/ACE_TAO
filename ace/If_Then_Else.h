@@ -4,8 +4,8 @@
 /**
  *  @file    If_Then_Else.h
  *
- *  ACE::If_Then_Else traits template based on the IfThenElse template
- *  described in the book "C++ Templates" by Vandevoorde and
+ *  @c ACE::If_Then_Else traits template based on the @c IfThenElse
+ *  template described in the book "C++ Templates" by Vandevoorde and
  *  Josuttis.
  *
  *  $Id$
@@ -36,7 +36,7 @@ namespace ACE
    *   class Foo
    *   {
    *   public:
-   *     // Set @c TheType to be the larger of @a T and @a int.
+   *     // Set "TheType" to be the larger of "T" and  "int".
    *     typedef typename If_Then_Else<(sizeof (T) > sizeof (int)),
    *                                   T,
    *                                   int>::result_type TheType;

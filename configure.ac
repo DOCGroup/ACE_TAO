@@ -22,8 +22,8 @@ AC_INIT([ACE],
 AC_REVISION([$Id$])
 
 AC_COPYRIGHT([ACE(TM) and TAO(TM) are copyrighted by Douglas C. Schmidt and
-his research group at Washington University, University of California,
-Irvine, and Vanderbilt University Copyright (c) 1993-2004, all rights
+his research group at Vanderbilt University, Washington University, and
+University of California, Irvine.  Copyright (c) 1993-2004, all rights
 reserved.  Since ACE and TAO are open-source, free software, you are
 free to use, modify, and distribute the ACE and TAO source code and
 object code produced from the source, as long as you include this
@@ -52,9 +52,8 @@ AC_CONFIG_MACRO_DIR([m4])
 dnl Check what platform we are running on.
 AC_CANONICAL_TARGET([])
 
-dnl Initialize GNU Automake, and require Automake 1.7 or better.
-AM_INIT_AUTOMAKE([1.7])
-
+dnl Initialize GNU Automake, and require Automake 1.9 or better.
+AM_INIT_AUTOMAKE([1.9])
 
 dnl Add maintainer mode option to the option list.
 dnl AM_MAINTAINER_MODE
@@ -991,8 +990,8 @@ dnl Check for ualarm prototype
 AC_CHECK_DECL([ualarm],
               [],
 	      [AC_DEFINE([ACE_LACKS_UALARM_PROTOTYPE], 1,
-	                 [Define to 1 if platform lacks the declaration 
-			 of ualarm().])], 
+	                 [Define to 1 if platform lacks the declaration
+			 of ualarm().])],
               [#include <unistd.h>])
 
 dnl Check for getrusage prototype in sys/resource.h
@@ -1003,13 +1002,13 @@ AC_CHECK_DECL([getrusage],
 	      [],
 	      [#include <sys/resource.h>])
 
-dnl Check for {get,set}rlimit prototypes 
+dnl Check for {get,set}rlimit prototypes
 AC_CHECK_DECL([getrlimit],[],[],[#include <sys/resource.h>])
 AC_CHECK_DECL([setrlimit],[],[],[#include <sys/resource.h>])
 if test "$ac_cv_have_decl_getrlimit" != yes ||
    test "$ac_cv_have_decl_setrlimit" != yes; then
   AC_DEFINE([ACE_LACKS_RLIMIT_PROTOTYPE], 1,
-            [Define to 1 if platform lacks the declaration of 
+            [Define to 1 if platform lacks the declaration of
             {get,set}rlimit().])
 fi
 
@@ -1054,7 +1053,7 @@ ACE_CHECK_TYPE([u_longlong_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_U_LONGLONG_T]
 ACE_CHECK_TYPE([pri_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_PRI_T])])
 
 dnl Some platforms define ucontext_t in <sys/ucontext.h>, but ACE
-dnl doesn't explicitly include that header.  However, it is very 
+dnl doesn't explicitly include that header.  However, it is very
 dnl likely that <signal.h> does, either directly or indirectly.
 AC_CHECK_TYPE([ucontext_t],
 	AC_DEFINE([ACE_HAS_UCONTEXT_T]),
@@ -1650,7 +1649,7 @@ if test "$cross_compiling" != yes; then
   dnl if test "$ac_cv_sizeof_char" != "0"; then
   dnl   AC_DEFINE([ACE_SIZEOF_CHAR],[SIZEOF_CHAR])
   dnl fi
-  AC_CHECK_SIZEOF([wchar_t]) 
+  AC_CHECK_SIZEOF([wchar_t])
   if test "$ac_cv_sizeof_wchar_t" != 0; then
     AC_DEFINE_UNQUOTED([ACE_SIZEOF_WCHAR],[$ac_cv_sizeof_wchar_t])
   fi
@@ -2095,7 +2094,12 @@ ACE_CACHE_CHECK([for C++ typename keyword],
                    ],[
                     ace_cv_feature_posix_typename_keyword=no
                    ])
-  ],[AC_DEFINE([ACE_HAS_TYPENAME_KEYWORD])],)
+  ],
+  [AC_DEFINE([ACE_HAS_TYPENAME_KEYWORD])],
+  [
+   AC_MSG_WARN([$CXX does not support the C++ \"typename\" keyword.
+ACE will require it in the near future.])
+  ])
 
 dnl Check if platform supports placement new operator
 ACE_CACHE_CHECK([for C++ placement new operator],
@@ -2740,7 +2744,10 @@ Vector<void *> vpv;
       ],[
        ace_cv_feature_cxx_std_template_specialization=no
       ])
-  ],[AC_DEFINE([ACE_HAS_STD_TEMPLATE_SPECIALIZATION])],)
+  ],
+  [AC_DEFINE([ACE_HAS_STD_TEMPLATE_SPECIALIZATION])],
+  [AC_MSG_WARN([$CXX does not support standard full template specialization.
+ACE will require it in the near future.])])
 
 if test "$ace_cv_feature_cxx_std_template_specialization" = yes; then
 
@@ -2750,7 +2757,7 @@ ACE_CACHE_CHECK([for standard template class member specialization],
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 // Some compilers have a hard time with this test since the syntax is
 // too "new" for them.
-
+1
 // general vector type
 template<class T>
 class Vector
@@ -2794,6 +2801,36 @@ Vector<void *>::operator[] (int i)
        ace_cv_feature_cxx_std_template_class_member_specialization=no
       ])
   ],[AC_DEFINE([ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION])],)
+
+
+dnl Check if platform supports partial template specialization
+ACE_CACHE_CHECK([for partial template specialization],
+  [ace_cv_feature_cxx_partial_template_specialization],[
+     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+template <bool C, typename Ta>
+struct Foo;
+
+template <typename Ta>
+struct Foo<true, Ta>
+{
+  typedef Ta result_type;
+};
+
+template <typename Ta>
+struct Foo<false, Ta>
+{
+  typedef void result_type;
+};
+       ]],[[
+  Foo<true, int>::result_type a = 2;
+       ]])],[
+        ace_cv_feature_cxx_partial_template_specialization=yes
+       ],[
+        ace_cv_feature_cxx_partial_template_specialization=no
+       ])
+  ],[],[AC_MSG_WARN([$CXX does not support partial template specialization.
+ACE will require it in the near future.])])
+
 fi  dnl test $ace_cv_feature_cxx_std_template_specialization = yes
 
 dnl Check if platform supports template typedefs
@@ -3353,7 +3390,7 @@ ACE_CHECK_LACKS_FUNCS(fork)
 
 AC_CHECK_FUNC([getrlimit])
 AC_CHECK_FUNC([setrlimit])
-if test "$ac_cv_func_getrlimit" != yes || 
+if test "$ac_cv_func_getrlimit" != yes ||
    test "$ac_cv_func_setrlimit" != yes; then
   AC_DEFINE([ACE_LACKS_RLIMIT])
 fi
@@ -3517,7 +3554,7 @@ dnl Although Darwin/OS X does not implement any of the SysV IPC API,
 dnl its C library contains stubs for all the system calls (probably
 dnl left over from the BSD libc).  This causes false positives from
 dnl AC_CHECK_FUNC which results in configure reporting that SysV IPC
-dnl is supported.  We avoid this problem by avoiding the function 
+dnl is supported.  We avoid this problem by avoiding the function
 dnl checks if the cooresponding headers were not detected earlier.
 dnl
 if test "$ac_cv_header_sys_msg_h" = yes; then
