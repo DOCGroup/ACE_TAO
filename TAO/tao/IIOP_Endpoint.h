@@ -24,9 +24,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/ORB.h"
-
+#include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
 
 
@@ -106,9 +104,6 @@ public:
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
-
-  //TAO_IIOP_Connection_Handler *&hint (void);
-  // Access to our <hint_>.
 
 private:
 

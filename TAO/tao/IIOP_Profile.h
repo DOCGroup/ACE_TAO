@@ -27,8 +27,6 @@
 #include "tao/Object_KeyC.h"
 #include "tao/IIOP_Endpoint.h"
 
-#include "ace/Synch.h"
-
 
 // TAO IIOP_Profile concrete Profile definitions
 /**
