@@ -1,7 +1,11 @@
 // $Id$
 
 #include "orbsvcs/Log/Log_i.h"
-#include "Iterator_i.h"
+#include "orbsvcs/Log/Iterator_i.h"
+#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
+#include "orbsvcs/Log/Log_Constraint_Visitors.h"
+
+#define QUERY_LANG_SUPPORTED_BY_LOG "TCL"
 
 Log_i::Log_i (DsLogAdmin::LogMgr_ptr factory,
               DsLogAdmin::LogId id,
@@ -15,7 +19,8 @@ Log_i::Log_i (DsLogAdmin::LogMgr_ptr factory,
     forward_state_ (DsLogAdmin::off),
     op_state_ (DsLogAdmin::disabled),
     reactor_ (reactor),
-    recordstore_ (max_size)
+    recordstore_ (max_size),
+    max_rec_list_len_ (LOG_DEFAULT_MAX_REC_LIST_LEN)
 {
   avail_status_.off_duty = 0;
   avail_status_.log_full = 0;
@@ -291,27 +296,204 @@ Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks,
 }
 
 DsLogAdmin::RecordList_ptr
+Log_i::query_i (const char *constraint,
+                DsLogAdmin::Iterator_out &iter_out,
+                CORBA::ULong how_many,
+                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidConstraint))
+{
+  // Use an Interpreter to build an expression tree.
+  TAO_Log_Constraint_Interpreter interpreter (constraint,
+                                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Sequentially iterate over all the records and pick the ones that
+  // meet the constraints.
+
+  // get the underlying storage.
+  LOG_RECORD_STORE &store =
+    this->recordstore_.get_storage ();
+
+  // Create an iterator
+  LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter (store);
+
+  CORBA::ULong len = store.current_size ();
+  // How many entries?
+
+  // Iterate over and populate the list.
+  LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+
+  DsLogAdmin::RecordList_ptr rec_list;
+  // Figure out the length of the list.
+
+  // Allocate the list of <how_many> length.
+  ACE_NEW_THROW_EX (rec_list,
+                    DsLogAdmin::RecordList (how_many),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong count = 0; // count of matches found.
+  CORBA::Boolean done = 0; // flag to end "for" operation.
+  for (CORBA::ULong i = 0;
+       i < len && count < how_many;
+       ++i)
+    {
+      if (iter.next (hash_entry) == -1 || iter.advance () == -1)
+        {
+          done = 1;
+          break;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,"Query::id = %ull, Time = %ull\n",
+                  hash_entry->int_id_.id,
+                  hash_entry->int_id_.time));
+
+      // Use an evaluator.
+      TAO_Log_Constraint_Evaluator evaluator (hash_entry->int_id_);
+
+      // Does it match the constraint?
+      if (interpreter.evaluate (evaluator) == 1)
+      {
+        ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %ull, Time = %ull\n",
+                    hash_entry->int_id_.id,
+                    hash_entry->int_id_.time));
+
+        (*rec_list)[count] = hash_entry->int_id_;
+        // copy the log record.
+        count++;
+      }
+    }
+
+  rec_list->length (count);
+
+  if (i < len && done == 0) // There are more records to process.
+    {
+      // Create an iterator to pass out.
+      Iterator_i *iter_query = 0;
+      ACE_NEW_THROW_EX (iter_query,
+                        Iterator_i (store,
+                                    i,
+                                    constraint,
+                                    len,
+                                    how_many),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (rec_list);
+
+      // Activate it.
+      iter_out = iter_query->_this (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (rec_list);
+
+      // Give ownership to the POA.
+      this->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (rec_list);
+    }
+
+  return rec_list;
+}
+
+DsLogAdmin::RecordList_ptr
 Log_i::query (const char *grammar,
               const char *constraint,
-              DsLogAdmin::Iterator_out i,
+              DsLogAdmin::Iterator_out iter_out,
               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  // @@ TODO: lots of things TBD here.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // Verify that the grammer is "TCL".
+  // The spec. asks for "extended TCL"
+  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
+    ACE_THROW_RETURN (DsLogAdmin::InvalidGrammar,
+                      0);
+
+  DsLogAdmin::RecordList_ptr rec_list =
+    this->query_i (constraint,
+                   iter_out,
+                   this->max_rec_list_len_,
+                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (rec_list);
+
+  return rec_list;
 }
 
 DsLogAdmin::RecordList_ptr
 Log_i::retrieve (DsLogAdmin::TimeT from_time,
                  CORBA::Long how_many,
-                 DsLogAdmin::Iterator_out i,
+                 DsLogAdmin::Iterator_out iter_out,
                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ NEEDS ITERATOR
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // Decide between forward vs backward retrieval.
+  char constraint[32];
+  if (how_many >= 0)
+    ACE_OS::sprintf (constraint, "time >= %ull", from_time);
+  else
+    ACE_OS::sprintf (constraint, "time < %ull", from_time);
+
+  DsLogAdmin::RecordList_ptr rec_list =
+    this->query_i (constraint,
+                   iter_out,
+                   how_many,
+                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (rec_list);
+
+  return rec_list;
+}
+
+CORBA::ULong
+Log_i::match_i (const char *constraint,
+                CORBA::Boolean delete_rec,
+                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidConstraint))
+{
+  // Use an Interpreter to build an expression tree.
+  TAO_Log_Constraint_Interpreter interpreter (constraint,
+                                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Get the underlying storage.
+  LogRecordStore::LOG_RECORD_STORE &store =
+    this->recordstore_.get_storage ();
+
+  // Create an iterator
+  LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
+
+  CORBA::ULong len = store.current_size ();
+  // How many entries?
+
+  // Iterate over and populate the list.
+  LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
+
+  DsLogAdmin::RecordList_ptr rec_list;
+  // Figure out the length of the list.
+
+  CORBA::ULong count = 0; // count of matches found.
+
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      if (iter.next (hash_entry) == -1 || iter.advance () == -1)
+        {
+          break;
+        }
+      // Use an evaluator.
+      TAO_Log_Constraint_Evaluator evaluator (hash_entry->int_id_);
+
+      // Does it match the constraint?
+      if (interpreter.evaluate (evaluator) == 1)
+      {
+        if (delete_rec == 1)
+          {
+            if (this->recordstore_.remove (hash_entry->int_id_.id) == 0)
+              count++;
+          }
+        else
+          count++;
+      }
+    }
+
+  return count;
 }
 
 CORBA::ULong
@@ -322,8 +504,17 @@ Log_i::match (const char* grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  // @@ NEEDS ITERATOR
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // Verify that the grammer is "TCL".
+  // The spec. asks for "extended TCL"
+  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
+    ACE_THROW_RETURN (DsLogAdmin::InvalidGrammar,
+                      0);
+
+  CORBA::ULong count =
+    this->match_i (constraint, 0, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (count);
+
+  return count;
 }
 
 CORBA::ULong
@@ -334,8 +525,17 @@ Log_i::delete_records (const char *grammar,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))
 {
-  // @@ NEEDS ITERATOR
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // Verify that the grammer is "TCL".
+  // The spec. asks for "extended TCL"
+  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
+    ACE_THROW_RETURN (DsLogAdmin::InvalidGrammar,
+                      0);
+
+  CORBA::ULong count =
+    this->match_i (constraint, 1, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (count);
+
+  return count;
 }
 
 CORBA::ULong
