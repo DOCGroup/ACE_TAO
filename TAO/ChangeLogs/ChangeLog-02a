@@ -1,3 +1,16 @@
+Mon Mar 12 13:33:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Moved the generation of the #ifndef guard to prevent the
+          inclusion of skeleton source code more than once in a 
+          build to come after the generation of the #include statement
+          for the pre-compiled header file (if any). Thanks to
+          Pedro Brandão <pbrandao@inescporto.pt> for pointing out
+          that the previous order of code generation could sometimes
+          cause the C++ compiler to think that there is an extra
+          #endif in the file.
+
 Mon Mar 12 13:20:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Lite.cpp (message_type): Added a fix to
