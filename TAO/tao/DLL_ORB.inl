@@ -2,7 +2,6 @@
 //
 // $Id$
 
-// $Id$
 
 ACE_INLINE CORBA::ORB_ptr
 TAO_DLL_ORB::orb (void)
