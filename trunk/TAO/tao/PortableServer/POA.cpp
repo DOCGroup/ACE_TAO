@@ -3932,19 +3932,32 @@ TAO_POA_Policies::priority_bands (TAO_PriorityBandedConnectionPolicy *policy)
 void
 TAO_POA_Policies::server_protocol (TAO_ServerProtocolPolicy *policy)
 {
-  if (this->server_protocol_)
+  ACE_TRY_NEW_ENV
     {
-      this->server_protocol_->destroy ();
-      CORBA::release (this->server_protocol_);
-      this->server_protocol_ = 0;
-    }
+      if (this->server_protocol_)
+        {
+          this->server_protocol_->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-  if (policy)
+          CORBA::release (this->server_protocol_);
+          this->server_protocol_ = 0;
+        }
+
+      if (policy)
+        {
+          ACE_NEW_THROW_EX (this->server_protocol_,
+                            TAO_ServerProtocolPolicy (*policy),
+                            CORBA::NO_MEMORY ());
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
     {
-      ACE_NEW (this->server_protocol_,
-               TAO_ServerProtocolPolicy (*policy));
+      if (TAO_debug_level > 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_POA_Policies::server_protocol");
     }
-
+  ACE_ENDTRY;
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -4039,10 +4052,16 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
         ACE_DEBUG ((LM_DEBUG,
                     "IMR IOR = \n%s\n",
                     imr_str.in ()));
-      char *pos = ACE_OS::strstr (imr_str.inout (),
-                                  "://");
-      pos = ACE_OS::strchr (pos + 3,
+
+      // Search for "corbaloc:" alone, without the protocol.  This code
+      // should be protocol neutral.
+      const char corbaloc[] = "corbaloc:";
+      char *pos = ACE_OS::strstr (imr_str.inout (), corbaloc);
+      pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
+
+      pos = ACE_OS::strchr (pos + 1,
                             imr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
+
       if (pos)
         pos[1] = 0;  // Crop the string.
       else
@@ -4318,9 +4337,13 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
     svr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
   ACE_CHECK;
 
-  char *pos = ACE_OS::strstr (svr_str.inout (), "://");
+  // Search for "corbaloc:" alone, without the protocol.  This code
+  // should be protocol neutral.
+  const char corbaloc[] = "corbaloc:";
+  char *pos = ACE_OS::strstr (svr_str.inout (), corbaloc);
+  pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
 
-  pos = ACE_OS::strchr (pos + 3,
+  pos = ACE_OS::strchr (pos + 1,
                         svr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
   if (pos)
