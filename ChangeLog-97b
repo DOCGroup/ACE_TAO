@@ -1,3 +1,7 @@
+Tue Nov 25 16:18:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.4, released Tue Nov 25 16:18:49 1997.
+
 Tue Nov 25 16:03:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: fixed Version.h generation to work properly when
