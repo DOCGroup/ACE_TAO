@@ -1,3 +1,9 @@
+Mon Oct 30 11:56:13 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+          Add missing files to the Borland and Automake makefiles.
+
 Mon Oct 30 11:38:07 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/Basic_Stats.cpp:
