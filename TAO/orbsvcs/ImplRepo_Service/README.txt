@@ -156,12 +156,13 @@ to start the Name Service).
 
 Now we should be able to run some client that uses the Name Service like this:
 
-<code>client -ORBDefaultInitRef corbaloc://doriath:5555/</code>
+<code>client -ORBDefaultInitRef corbaloc:iiop:doriath:5555/</code>
 
 When the client calls resolve_initial_reference("NameService"), the ORB will 
-resolve that to "corbaloc://doriath:5555/NameService".  The ImR recognizes this
-IOR as a pointer to the NameService, and will then start it up if necessary.  
-Finally, it will forward the client to the Name Service.
+resolve that to "corbaloc:iiop:doriath:5555/NameService".  The ImR
+recognizes this IOR as a pointer to the NameService, and will then
+start it up if necessary.  Finally, it will forward the client to the
+Name Service.
 
 Services used in this way have two requirements:
 
@@ -169,29 +170,31 @@ Services used in this way have two requirements:
   example, the Name Service is registered as the "NameService", and thus also
   contains a POA with the name "NameService".
 - The server must also be able to handle the INS name 
-  "corbaloc://machine:port/poa_name", where the poa_name is the same name as
-  above.  
+  "corbaloc:iiop:machine:port/poa_name", where the poa_name is the
+  same name as above.
 
 @subsection activationmodes What are activation modes
 
 Each server can have one of three different types of activation modes:
 
 <ul>
-  <li>NORMAL is the default.  The server can be started via tao_ImR, the command 
-      line, and with client requests.
-  <li>MANUAL specifies that the server shouldn't be  activated with a client request 
-      but can be activated through tao_ImR or via the command line.  
-  <li>PER_CLIENT specifies that each request to the ImplRepo will result in a new 
-      server process started up.  Because clients cache the forwarded reference, 
-      there is one server per client (more or less).  There are some exceptions, 
-      such as if the original IOR is used in different threads (each thread would 
-      get a different server).  <b>Note:</b> The Implementation Repository doesn't 
-      store any information about the started servers in this mode, so it cannot be 
-      used to shut down the servers.  So the servers must have an alternative way of 
-      shutting down. 
-  <li>AUTO_START specifies that a server should be activated when the Implementation 
-      Repository is started.  tao_ImR also has an autostart command to activate all 
-      servers marked AUTO_START
+  <li>NORMAL is the default.  The server can be started via tao_ImR,
+      the command line, and with client requests.
+  <li>MANUAL specifies that the server shouldn't be activated with a
+      client request but can be activated through tao_ImR or via the
+      command line.
+  <li>PER_CLIENT specifies that each request to the ImplRepo will
+      result in a new server process started up.  Because clients
+      cache the forwarded reference, there is one server per client
+      (more or less).  There are some exceptions, such as if the
+      original IOR is used in different threads (each thread would get
+      a different server).  <b>Note:</b> The Implementation Repository
+      doesn't store any information about the started servers in this
+      mode, so it cannot be used to shut down the servers.  So the
+      servers must have an alternative way of shutting down. 
+  <li>AUTO_START specifies that a server should be activated when the
+      Implementation Repository is started.  tao_ImR also has an
+      autostart command to activate all servers marked AUTO_START.
 </ul>
 
 @subsection taoImRior Using the tao_ImR ior command
@@ -222,9 +225,11 @@ Service is intended to be used in situations where an IOR could be created by
 hand.  Using the same information as above, it is not difficult to take the 
 endpoint information from the ImR and attach the POA name.  For example, 
 let's say that we are running the ImR on ringil.ece.uci.edu at port 5000.  
-The endpoint would be &quot;iioploc://1.1@ringil.ece.uci.edu:5000&quot;.  If 
-we are creating an IOR for the nestea server, we'd just need to attach 
-&quot;/nestea_server&quot; to the end of the endpoint.  Now we have an IOR.
+The endpoint would be
+&quot;corbaloc:iiop:1.2@ringil.ece.uci.edu:5000&quot;.  If we are
+creating an IOR for the nestea server, we'd just need to attach
+&quot;/nestea_server&quot; to the end of the endpoint.  Now we have an
+IOR.
 
 So what does this mean for the server?
 
@@ -260,8 +265,8 @@ Just one more thing, each object that needs an IOR needs to be registered
 with the IOR table.  But this raises the problem of uniqueness; they all 
 can't have the same name.  The ImR will actually only look at the name part 
 of the simplified IOR up to the first &quot;/&quot;.  So both 
-&quot;iioploc://1.1@ringil:5000/nestea_server/foo&quot; and 
-&quot;iioploc://1.1@ringil:5000/nestea_server/bar&quot; will be treated by 
+&quot;corbaloc:iiop:1.2@ringil:5000/nestea_server/foo&quot; and 
+&quot;corbaloc:iiop:1.2@ringil:5000/nestea_server/bar&quot; will be treated by 
 the ImR as objects in the &quot;nestea_server&quot; server.
 
 @subsection persistence Persistent Implementation Repository
@@ -286,19 +291,20 @@ or in a Perl script by adding<br>
 	use Sys::Hostname;<br>
 	$hostname = hostname();<br>
 
-There are even specific port numbers, assigned to the OMG by the IONA, which can be 
-used for this purpose. They are 683 (for IIOP) and 684 (for IIOP SSL). For more 
-information about this, see <a href="http://www.iana.org/">http://www.iana.org/</a> 
+There are even specific port numbers, assigned to the OMG by the IANA,
+which can be used for this purpose. They are 683 (for IIOP) and 684
+(for IIOP over SSL).  For more information about this, see
+<a href="http://www.iana.org/">http://www.iana.org/</a>
 and <a href="http://www.isi.edu/in-notes/iana/assignments/port-numbers">
 http://www.isi.edu/in-notes/iana/assignments/port-numbers</a>.<br><br>
 <li>
-Pass the ImR a filename to use for the backing store, specified by the command line 
-option<br>
+Pass the ImR a filename to use for the backing store, specified by the
+command line option<br>
 
 -p (filename)<br>
 
-This option must be used the first and every subsequent time the persistent ImR is 
-started up.
+This option must be used the first and every subsequent time the
+persistent ImR is started up.
 
 </ul>
 */
@@ -378,7 +384,7 @@ The Naming Service in TAO contains one persistant POA named "NameService".
 If -ORBUseIMR 1 is passed to it, it will communicate with the ImR as any 
 other persistent POA does.  Also, the Naming Service recognizes the INS
 object key "NameService".  This allows you to use the "tao_imr ior"
-command to create corbaloc IORS
+command to create corbaloc IORs.
 
 NameService was chosen because resolve_initial_references () uses that 
 name.  And that allows us to do interesting things with ORBDefaultInitRef

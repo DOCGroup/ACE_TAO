@@ -707,9 +707,13 @@ ImplRepo_i::server_is_running (const char *server,
     return new_location;
 
 
-  char *pos = ACE_OS::strstr (new_location, "://");
+  // Search for "corbaloc:" alone, without the protocol.  This code
+  // should be protocol neutral.
+  const char corbaloc[] = "corbaloc:";
+  char *pos = ACE_OS::strstr (new_location, corbaloc);
+  pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
 
-  pos = ACE_OS::strchr (pos + 3, profile->object_key_delimiter ());
+  pos = ACE_OS::strchr (pos + 1, profile->object_key_delimiter ());
 
   if (pos)
     *(pos + 1) = 0;  // Crop the string
