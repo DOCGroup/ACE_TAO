@@ -84,6 +84,7 @@ private:
    */
   TAO_LB_LoadAlert load_alert_;
 
+  /// Interceptor that counts requests.
   ServerRequestInterceptor * interceptor_;
 
 };

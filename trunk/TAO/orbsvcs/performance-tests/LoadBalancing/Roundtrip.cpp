@@ -16,20 +16,20 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 
 Test::Timestamp
 Roundtrip::test_method (Test::Timestamp send_time,
-                        Test::number cl_number,
-                        Test::number it_number
+                        Test::number /* cl_number */,
+                        Test::number /* it_number */
                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (it_number < 100)
-    {
-      printf("Client number is %d\n", cl_number);
-    }
+//   if (it_number < 100)
+//     {
+//       printf("Client number is %d\n", cl_number);
+//     }
 
-  if ((it_number % 2) == 0)
-    {
-      (void) ACE::is_prime (20000, 2, 10000);
-    }
+//   if ((it_number % 2) == 0)
+//     {
+//       (void) ACE::is_prime (20000, 2, 10000);
+//     }
 
   return send_time;
 }
