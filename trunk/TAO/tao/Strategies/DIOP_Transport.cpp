@@ -88,19 +88,12 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
   for (int i = 0; i < iovcnt; i++)
      bytes_to_send += iov[i].iov_len;
 
-  ssize_t n = this->connection_handler_->dgram ().send (iov,
-                                                        iovcnt,
-                                                        addr);
+  this->connection_handler_->dgram ().send (iov,
+                                            iovcnt,
+                                            addr);
   // @@ Michael:
   // Always return a positive number of bytes sent, as we do
   // not handle sending errors in DIOP.
-  if (n == -1 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO: (%P|%t|%N|%l) Send of %d bytes failed %p\n"),
-                  bytes_to_send,
-                  ACE_TEXT ("send_i ()\n")));
-    }
 
   bytes_transferred = bytes_to_send;
 
@@ -198,7 +191,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.wr_ptr (),
+  ssize_t n = this->recv (message_block.rd_ptr (),
                           message_block.space (),
                           max_wait_time);
 
@@ -206,7 +199,6 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   if (n <= 0)
     {
       if (n == -1)
-        // @@ Why not send_connection_closed_notifications() ?
         this->tms_->connection_closed ();
 
       return n;
@@ -215,43 +207,23 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  // Check the incoming message for validity. The check needs to be
+  // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->messaging_object ()->check_for_valid_header (message_block) == 0)
-    {
-      if (TAO_debug_level)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO: (%P|%t|%N|%l) failed to find a valid header on transport %d after fault %p\n"),
-                      this->id (),
-                      ACE_TEXT ("handle_input_i ()\n")));
-        }
-
-      return -1;
-    }
+  if (this->parse_incoming_messages (message_block) == -1)
+    return -1;
 
   // NOTE: We are not performing any queueing nor any checking for
-  // missing data. We are assuming that ALL the data arrives in a
+  // missing data. We are assuming that ALL the data would be got in a
   // single read.
 
   // Make a node of the message block..
-  //
-  // We could make this more efficient by having a fixed Queued Data
-  // allocator, i.e., it always gave back the same thing.  Actually,
-  // we *could* create an allocator that took a stack-allocated object
-  // as an argument and returned that when asked an allocation is
-  // done.  Something to contemplate...
-  TAO_Queued_Data* qd =
-    TAO_Queued_Data::make_completed_message (message_block,
-                                             *this->messaging_object ());
-  int retval = -1;
-  if (qd)
-    {
-      // Process the message
-      retval = this->process_parsed_messages (qd, rh);
-      TAO_Queued_Data::release (qd);
-    }
-  return retval;
+  TAO_Queued_Data qd (&message_block);
+
+  // Extract the data for the node..
+  this->messaging_object ()->get_message_data (&qd);
+
+  // Process the message
+  return this->process_parsed_messages (&qd, rh);
 }
 
 
@@ -337,176 +309,5 @@ TAO_DIOP_Transport::messaging_init (CORBA::Octet major,
                                  minor);
   return 1;
 }
-
-// @@ Frank: Hopefully DIOP doesn't need this
-/*
-int
-TAO_DIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
-{
-  CORBA::Boolean byte_order;
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    return -1;
-
-  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
-
-  DIOP::ListenPointList listen_list;
-  if ((cdr >> listen_list) == 0)
-    return -1;
-
-  // As we have received a bidirectional information, set the flag to
-  // 1
-  this->bidirectional_flag (1);
-  return this->connection_handler_->process_listen_point_list (listen_list);
-}
-*/
-
-
-
-// @@ Frank: Hopefully DIOP doesn't need this
-/*
-void
-TAO_DIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
-{
-
-  // Get a handle on to the acceptor registry
-  TAO_Acceptor_Registry * ar =
-    this->orb_core ()->acceptor_registry ();
-
-
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar->begin ();
-
-  DIOP::ListenPointList listen_point_list;
-
-  for (;
-       acceptor != ar->end ();
-       acceptor++)
-    {
-      // Check whether it is a DIOP acceptor
-      if ((*acceptor)->tag () == TAO_TAG_UDP_PROFILE)
-        {
-          this->get_listen_point (listen_point_list,
-                                  *acceptor);
-        }
-    }
-
-  // We have the ListenPointList at this point. Create a output CDR
-  // stream at this point
-  TAO_OutputCDR cdr;
-
-  // Marshall the information into the stream
-  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)== 0)
-      || (cdr << listen_point_list) == 0)
-    return;
-
-  // Add this info in to the svc_list
-  opdetails.service_context ().set_context (IOP::BI_DIR_DIOP,
-                                            cdr);
-
-  return;
-}
-
-
-int
-TAO_DIOP_Transport::get_listen_point (
-    DIOP::ListenPointList &listen_point_list,
-    TAO_Acceptor *acceptor)
-{
-  TAO_DIOP_Acceptor *iiop_acceptor =
-    ACE_dynamic_cast (TAO_DIOP_Acceptor *,
-                      acceptor );
-
-  // Get the array of endpoints serviced by <iiop_acceptor>
-  const ACE_INET_Addr *endpoint_addr =
-    iiop_acceptor->endpoints ();
-
-  // Get the count
-  size_t count =
-    iiop_acceptor->endpoint_count ();
-
-  // Get the local address of the connection
-  ACE_INET_Addr local_addr;
-
-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
-      == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" address in set_bidir_context_info () \n")),
-                        -1);
-    }
-
-
-  // Note: Looks like there is no point in sending the list of
-  // endpoints on interfaces on which this connection has not
-  // been established. If this is wrong, please correct me.
-  char *local_interface = 0;
-
-  // Get the hostname for the local address
-  if (iiop_acceptor->hostname (this->orb_core_,
-                               local_addr,
-                               local_interface) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" name \n")),
-                        -1);
-    }
-
-  ACE_INET_Addr *tmp_addr = ACE_const_cast (ACE_INET_Addr *,
-                                            endpoint_addr);
-
-  for (size_t index = 0;
-       index <= count;
-       index++)
-    {
-      // Get the listen point on that acceptor if it has the same
-      // interface on which this connection is established
-      char *acceptor_interface = 0;
-
-      if (iiop_acceptor->hostname (this->orb_core_,
-                                   tmp_addr[index],
-                                   acceptor_interface) == -1)
-          continue;
-
-      // @@ This is very bad for performance, but it is a one time
-      // affair
-      if (ACE_OS::strcmp (local_interface,
-                          acceptor_interface) == 0)
-        {
-          // We have the connection and the acceptor endpoint on the
-          // same interface
-          DIOP::ListenPoint point;
-          point.host = CORBA::string_dup (local_interface);
-          point.port = endpoint_addr[index].get_port_number ();
-
-          // Get the count of the number of elements
-          CORBA::ULong len = listen_point_list.length ();
-
-          // Increase the length by 1
-          listen_point_list.length (len + 1);
-
-          // Add the new length to the list
-          listen_point_list[len] = point;
-        }
-
-      // @@ This is bad....
-      CORBA::string_free (acceptor_interface);
-    }
-
-  CORBA::string_free (local_interface);
-  return 1;
-}
-*/
-
-#if 0
-TAO_Connection_Handler *
-TAO_DIOP_Transport::invalidate_event_handler_i (void)
-{
-  TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
-  return eh;
-}
-#endif
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
