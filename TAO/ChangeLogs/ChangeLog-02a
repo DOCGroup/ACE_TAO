@@ -1,3 +1,21 @@
+Mon Sep 24 11:47:34 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp:
+
+	  Fixed problem where ORBInitializer variables were not declared
+	  in builds where CORBA messaging was disabled.
+
+	* tao/PICurrent.cpp:
+
+	  Include "tao/debug.h" to pull in the declaration of the
+	  TAO_debug_level variable.
+
+	* tao/PICurrent_ORBInitializer.h:
+
+	  Moved `LocalObject.h' include outside of the
+	  TAO_HAS_INTERCEPTORS block to pull in TAO-specific configuration
+	  headers.  TAO_HAS_INTERCEPTORS was previously not pulled in.
+
 Mon Sep 24 11:03:17 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent_ORBInitializer.h:

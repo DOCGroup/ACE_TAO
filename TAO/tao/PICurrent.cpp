@@ -17,6 +17,7 @@ ACE_RCSID (tao,
 #include "ORB_Core.h"
 #include "Stub.h"
 #include "TAO_Server_Request.h"
+#include "debug.h"
 
 
 TAO_PICurrent::TAO_PICurrent (TAO_ORB_Core *orb_core)
