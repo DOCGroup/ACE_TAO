@@ -41,21 +41,11 @@ Mon Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           Added the ACE_RCSID.
 
 Tue Sep 21 23:29:30 1999  Mike Moran  <mm4@cs.wustl.edu>
-<<<<<<< ChangeLog
 
 	* tests/Explicit_Event_Loop:
-=======
 
-        * tests/Explicit_Event_Loop/:
->>>>>>> 1.2870
-
-<<<<<<< ChangeLog
 	  Added ACE_TRY macros so the test will run without exceptions=1,
 	  and enhanced the documentation and ACE-style compliance.
-=======
-          Added ACE_TRY macros so the test will run without exceptions=1,
-          and enhanced the documentation and ACE-style compliance.
->>>>>>> 1.2870
 
 Tue Sep 21 22:06:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
