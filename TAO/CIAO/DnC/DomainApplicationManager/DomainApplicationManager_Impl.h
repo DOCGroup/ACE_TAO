@@ -9,6 +9,7 @@
  *
  *  @author Gan Deng <gan.deng@vanderbilt.edu>
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *  @author Tao Lu <lu@dre.vanderbilt.edu>
  */
 //=====================================================================
 
@@ -187,19 +188,23 @@ namespace CIAO
     int split_plan (void);
 
 
-    /** 
+    /**
      * Cache the incoming connections, which is a sequence of Connections,
      * into the <all_connections_> list.
      */
     void add_connections (::Deployment::Connections & incoming_conn);
 
-    /** 
+    /**
      * Given a child deployment plan, find the <Connections> sequence
      * of the "providedReference" for the component instances in the
      * child deployment plan as Receiver side.
      */
-    void get_outgoing_connections (::Deployment::Connections_out outgoing_conn,
-                                   ::Deployment::DeploymentPlan &plan);
+    bool get_outgoing_connections (Deployment::Connections_out outgoing_conn,
+                                   const Deployment::DeploymentPlan &plan);
+
+    // This is a helper function to find the connection for a component.
+    bool
+    get_outgoing_connections_i (const char * instname, Deployment::Connections * retv);
 
   protected:
     /// location of the Domainapplication
@@ -255,7 +260,7 @@ namespace CIAO
     /// UUID from the Plan
     CORBA::String_var uuid_;
 
-    /// Maintain a list of <Connections>, each of which is obtained by 
+    /// Maintain a list of <Connections>, each of which is obtained by
     /// calling the startLaunch() method on the NodeApplicationManager object.
     ::Deployment::Connections_var all_connections_;
 
