@@ -13,7 +13,7 @@ CORBA_SEQUENCE<T>::CORBA_SEQUENCE (void)
 
 // XXX destructor should free buffer, elements!!
 template <class T> ACE_INLINE
-CORBA_SEQUENCE<T>~CORBA_SEQUENCE (void) 
+CORBA_SEQUENCE<T>::~CORBA_SEQUENCE (void) 
 { 
 }
 
