@@ -8,6 +8,14 @@ Thu Sep 17 09:54:56 1998  David L. Levine  <levine@cs.wustl.edu>
           Carlos and Doug for this suggestion, and Chris for the
           example :-).
 
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (run_event_loop):
+          added casts to ACE_THR_FUNC to please VxWorks.  Thanks to
+          Raja Ati <rati@montereynets.com> for reporting this problem.
+
+          It would probably be better to change the definition of
+          ACE_THR_FUNC on VxWorks (and PSOS) to be the same as on
+          other platforms.  That will require other changes, though.
+
 Thu Sep 17 09:23:01 1998  Carlos O'Ryan  <coryan@JIG>
 
         * ace/FIFO_Send_Msg.cpp:
