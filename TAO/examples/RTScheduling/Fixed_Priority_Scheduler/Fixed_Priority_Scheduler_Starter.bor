@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 # Makefile for building the Starter exe with Borland C++ Builder
 
 NAME = Starter
