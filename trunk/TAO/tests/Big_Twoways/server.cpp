@@ -91,11 +91,11 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (coordinator_impl,
                       Coordinator (peer_count),
                       1);
-      PortableServer::ServantBase_var coordinator_owner_transfer(coordinator_impl);
 
       Test::Coordinator_var coordinator =
         coordinator_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      coordinator_impl->_remove_ref();
 
       CORBA::String_var ior =
         orb->object_to_string (coordinator.in () ACE_ENV_ARG_PARAMETER);
@@ -136,11 +136,11 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
                       1);
-      PortableServer::ServantBase_var session_control_owner_transfer(session_control_impl);
 
       Test::Session_Control_var session_control =
         session_control_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      session_control_impl->_remove_ref();
 
       Test::Session_List session_list;
       coordinator_impl->create_session_list (session_control.in (),

@@ -29,9 +29,6 @@ public:
            CORBA::ULong message_count,
            CORBA::ULong peer_count);
 
-  /// Destructor
-  virtual ~Session (void);
-
   /// Run one of the experiment threads
   int svc (void);
 
@@ -48,6 +45,10 @@ public:
 
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+protected:
+  /// Protected destructor, call _remove_ref() to delete
+  virtual ~Session (void);
 
 private:
   /// Helper function used to report any problems and destroy local
