@@ -2,6 +2,8 @@
 
 #include "IOR_Multicast.h"
 
+#include "ace/SOCK_Connector.h"
+
 ACE_RCSID(orbsvcs, IOR_Multicast, "$Id$")
 
 ACE_HANDLE

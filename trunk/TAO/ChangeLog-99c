@@ -1,3 +1,8 @@
+Wed May 26 14:05:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+	  Added missing include file.
+
 Wed May 26 13:56:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Messaging_Policy_i.h: Disable VC warning 4250 for class
