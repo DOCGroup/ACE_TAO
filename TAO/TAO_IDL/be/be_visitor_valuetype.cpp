@@ -32,6 +32,8 @@
 #include "be_visitor_valuetype/valuetype_obv_cs.cpp"
 #include "be_visitor_valuetype/valuetype_ci.cpp"
 #include "be_visitor_valuetype/valuetype_cs.cpp"
+#include "be_visitor_valuetype/any_op_ch.cpp"
+#include "be_visitor_valuetype/any_op_cs.cpp"
 #include "be_visitor_valuetype/cdr_op_ch.cpp"
 #include "be_visitor_valuetype/cdr_op_ci.cpp"
 #include "be_visitor_valuetype/cdr_op_cs.cpp"
