@@ -142,17 +142,20 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  // Generate the proxy broker factory function pointer definition.
-  *os << be_nl << be_nl
-      << "// Function pointer for collocation factory initialization."
-      << be_nl
-      << "TAO::Collocation_Proxy_Broker * " << be_nl
-      << "(*" << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer) ("
-      << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ") = 0;" << be_uidt;
+  if (!node->is_local ())
+    {
+      // Generate the proxy broker factory function pointer definition.
+      *os << be_nl << be_nl
+          << "// Function pointer for collocation factory initialization."
+          << be_nl
+          << "TAO::Collocation_Proxy_Broker * " << be_nl
+          << "(*" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer) ("
+          << be_idt << be_idt_nl
+          << "CORBA::Object_ptr obj" << be_uidt_nl
+          << ") = 0;" << be_uidt;
+    }
 
   // Generate code for the elements of the interface.
   if (this->visit_scope (node) == -1)
@@ -587,7 +590,9 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
 {
-  if (!base->is_abstract ())
+  // If the derived interface is local, the abstract parent's operation
+  // was generated as pure virtual.
+  if (!base->is_abstract () || node->is_local ())
     {
       return 0;
     }

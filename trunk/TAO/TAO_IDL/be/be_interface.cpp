@@ -708,9 +708,10 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
       return 0;
     }
 
-  // A parent that's local will already have its operations declared
-  // as pure virtual.
-  if (base_interface->is_local ())
+  // If the parent is local, it will already have its operations declared
+  // as pure virtual, and if it's abstract, its operations will already
+  // be generated as pure virtual for the derived local interface.
+  if (base_interface->is_local () || base_interface->is_abstract ())
     {
       return 0;
     }
@@ -718,8 +719,8 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
   be_decl *d = 0;
 
   for (UTL_ScopeActiveIterator si (base_interface, UTL_Scope::IK_decls);
-        !si.is_done ();
-        si.next ())
+       !si.is_done ();
+       si.next ())
     {
       d = be_decl::narrow_from_decl (si.item ());
 
