@@ -994,7 +994,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
 void
 Test_ECG::wait_until_ready (void)
 {
-  ACE_GUARD (ACE_Thread_Mutex, ready_mon, this->ready_mtx_);
+  ACE_GUARD (ACE_SYNCH_MUTEX, ready_mon, this->ready_mtx_);
   while (!this->ready_)
     this->ready_cnd_.wait ();
 }
