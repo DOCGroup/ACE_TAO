@@ -155,7 +155,6 @@ fi
 test $chorus || test $LynxOS || run Tokens_Test # tests ACE_Token
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
-run Purgable_Map_Manager_Test           # tests ACE_Hash_Purgable_Map_Manager
 run Message_Queue_Notifications_Test    # tests ACE_Message_Queue + ACE_Reactor
 test $chorus || run Message_Queue_Test  # tests ACE_Message_Queue + Forward and Reverse Message Queue Iterators.
 test $chorus || run Simple_Message_Block_Test # tests ACE_Message_Block
