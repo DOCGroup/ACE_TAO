@@ -8,6 +8,7 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_RT_Notify_Service, "$Id$")
 
+#include "ace/Dynamic_Service.h"
 #include "Properties.h"
 #include "RT_Properties.h"
 #include "RT_Factory.h"
@@ -43,23 +44,23 @@ TAO_NS_RT_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTORB"
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
   RTCORBA::RTORB_var rt_orb =
     RTCORBA::RTORB::_narrow (object.in ()
                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
   // Resolve RTCurrent
   object =
     orb->resolve_initial_references ("RTCurrent"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
   RTCORBA::Current_var current =
     RTCORBA::Current::_narrow (object.in ()
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
  /// Set the properties
   properties->rt_orb (rt_orb.in ());
@@ -74,8 +75,8 @@ TAO_NS_RT_Notify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
   if (this->factory_ == 0)
     {
       ACE_NEW_THROW_EX (this->factory_,
-			TAO_NS_RT_Factory (),
-			CORBA::NO_MEMORY ());
+                        TAO_NS_RT_Factory (),
+                        CORBA::NO_MEMORY ());
       ACE_CHECK;
     }
 
