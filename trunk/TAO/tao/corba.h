@@ -70,7 +70,6 @@
 #include "tao/boa.h"
 
 #include "tao/params.h"
-//#include "tao/factories.h"
 #include "tao/client_factory.h"
 #include "tao/client_factory.h"
 #include "tao/server_factory.h"

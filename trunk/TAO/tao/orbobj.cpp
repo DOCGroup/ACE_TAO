@@ -49,7 +49,7 @@ DEFINE_GUID (IID_STUB_Object,
 	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 CORBA_ORB::CORBA_ORB (void)
-  : set_up_for_listening_called_(CORBA::B_FALSE),
+  : open_called_(CORBA::B_FALSE),
     client_factory_ (0),
     client_factory_from_service_config_ (CORBA::B_FALSE),
     server_factory_ (0),
@@ -72,27 +72,30 @@ CORBA_ORB::~CORBA_ORB (void)
   // assert (refcount_ == 0);
 }
 
-void
-CORBA_ORB::set_up_for_listening (void)
+int
+CORBA_ORB::open (void)
 {
-  if (this->set_up_for_listening_called_)
-    return;
+  if (this->open_called_)
+    return -1;
 
-  this->set_up_for_listening_called_ = CORBA::B_TRUE;
+  this->open_called_ = CORBA::B_TRUE;
   
   TAO_Server_Strategy_Factory *f = this->server_factory ();
 
   // Initialize the endpoint ... or try!
-  if (this->client_acceptor_.open (this->params()->addr (),
-                                   TAO_ORB_Core_instance()->reactor(),
-                                   f->creation_strategy (),
-                                   f->accept_strategy (),
-                                   f->concurrency_strategy (),
-                                   f->scheduling_strategy ()) == -1)
+  if (this->peer_acceptor_.open (this->params()->addr (),
+				 TAO_ORB_Core_instance()->reactor(),
+				 f->creation_strategy (),
+				 f->accept_strategy (),
+				 f->concurrency_strategy (),
+				 f->scheduling_strategy ()) == -1)
     // @@ CJC Need to return an error somehow!!  Maybe set do_exit?
-    ;
+    return -1;
 
-  client_acceptor_.acceptor ().get_local_addr (addr_);
+  if (this->peer_acceptor_.acceptor ().get_local_addr (this->addr_) == -1)
+    return -1;
+
+  return 0;
 }
 
 TAO_Client_Strategy_Factory *
@@ -506,30 +509,47 @@ CORBA_ORB::BOA_init (int &argc,
   return rp;
 }
 
-void
-CORBA_ORB::perform_work (void)
+int
+CORBA_ORB::perform_work (ACE_Time_Value *tv)
 {
-  TAO_ORB_Core_instance ()->reactor ()->handle_events ();
+  return TAO_ORB_Core_instance ()->reactor ()->handle_events (tv);
 }
 
-void
-CORBA_ORB::run (void)
+int
+CORBA_ORB::run (ACE_Time_Value *tv)
 {
-  ACE_Reactor* r = TAO_ORB_Core_instance ()->reactor ();
+  ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
   // This method should only be called by servers, so now we set up
   // for listening!
-  this->set_up_for_listening ();
+  if (this->open () == -1)
+    return -1;
   
-  while (1)
-    {
-      int result = r->handle_events ();
+  // Loop "forever" handling client requests.
 
-      if (result == -1)
-        return;
-    }
+  for (;;)
+    switch (r->handle_events (tv))
+      {
+      case 0: // Timed out, so we return to caller.
+	return 0;
+	/* NOTREACHED */
+      case -1: // Something else has gone wrong, so return to caller. 
+	return -1;
+	/* NOTREACHED */
+      default: // Some handlers were dispatched, so keep on processing
+	       // requests until we're told to shutdown .
+#if 0
+	// @@ How can we figure out how to get the right POA pointer
+	// to shutdown the ORB here?
+	if (poa->shutting_down ())
+	  return 1;
+#endif /* 0 */
+	break;
+	/* NOTREACHED */
+      }
+
   /* NOTREACHED */
-  return;
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -540,4 +560,4 @@ template class ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTO
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#endif
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

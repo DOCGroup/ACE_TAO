@@ -98,11 +98,14 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
   ACE_Profile_Timer::Rusage &begin = this->begin_usage_;
 
   this->subtract (td, end.pr_tstamp, begin.pr_tstamp);
-  et.real_time = td.tv_sec + ((double) td.tv_nsec) / (1000 * 1000 * 1000);
+  // Convert nanoseconds into seconds.
+  et.real_time = td.tv_sec + ((double) td.tv_nsec) / ACE_ONE_SECOND_IN_NSECS;
   this->subtract (td, end.pr_utime, begin.pr_utime);
-  et.user_time = td.tv_sec + ((double) td.tv_nsec) / (1000 * 1000 * 1000);
+  // Convert nanoseconds into seconds.
+  et.user_time = td.tv_sec + ((double) td.tv_nsec) / ACE_ONE_SECOND_IN_NSECS;
   this->subtract (td, end.pr_stime,  begin.pr_stime);
-  et.system_time = td.tv_sec + ((double) td.tv_nsec) / (1000 * 1000 * 1000);
+  // Convert nanoseconds into seconds.
+  et.system_time = td.tv_sec + ((double) td.tv_nsec) / ACE_ONE_SECOND_IN_NSECS;
 }
 
 // Determine the difference between T1 and T2. 
@@ -119,7 +122,7 @@ ACE_Profile_Timer::subtract (timespec_t &tdiff, timespec_t &t1, timespec_t &t0)
   while (tdiff.tv_nsec < 0)
     {
       tdiff.tv_sec--;
-      tdiff.tv_nsec += (1000 * 1000 * 1000);
+      tdiff.tv_nsec += ACE_ONE_SECOND_IN_NSECS;
     }
 }
 
@@ -172,27 +175,27 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
 
 #if defined (ACE_WIN32)
   ACE_Time_Value atv = this->end_time_ - this->begin_time_;
-  et.real_time = atv.sec () + ((double) atv.usec ()) / (1000 * 1000);
+  et.real_time = atv.sec () + ((double) atv.usec ()) / ACE_ONE_SECOND_IN_USECS;
 
   atv = ACE_Time_Value (this->end_usage_.ru_utime)
         - ACE_Time_Value (this->begin_usage_.ru_utime);
 
-  et.user_time = atv.sec () + ((double) atv.usec ()) / (1000 * 1000);
+  et.user_time = atv.sec () + ((double) atv.usec ()) / ACE_ONE_SECOND_IN_USECS;
 
   atv = ACE_Time_Value (this->end_usage_.ru_stime)
         - ACE_Time_Value (this->begin_usage_.ru_stime);
-  et.system_time = atv.sec () + ((double) atv.usec ()) / (1000 * 1000);
+  et.system_time = atv.sec () + ((double) atv.usec ()) / ACE_ONE_SECOND_IN_USECS;
 #else
   timeval td;
 
   this->subtract (td, this->end_time_, this->begin_time_);
-  et.real_time = td.tv_sec + ((double) td.tv_usec) / (1000 * 1000);
+  et.real_time = td.tv_sec + ((double) td.tv_usec) / ACE_ONE_SECOND_IN_USECS;
 
   this->subtract (td, this->end_usage_.ru_utime, this->begin_usage_.ru_utime);
-  et.user_time = td.tv_sec + ((double) td.tv_usec) / (1000 * 1000);
+  et.user_time = td.tv_sec + ((double) td.tv_usec) / ACE_ONE_SECOND_IN_USECS;
 
   this->subtract (td, this->end_usage_.ru_stime,  this->begin_usage_.ru_stime);
-  et.system_time = td.tv_sec + ((double) td.tv_usec) / (1000 * 1000);
+  et.system_time = td.tv_sec + ((double) td.tv_usec) / ACE_ONE_SECOND_IN_USECS;
 #endif /* ACE_WIN32 */
 }
 
@@ -210,7 +213,7 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
   while (tdiff.tv_usec < 0)
     {
       tdiff.tv_sec--;
-      tdiff.tv_usec += (1000 * 1000);
+      tdiff.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
 }
 
@@ -243,10 +246,10 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   timer_.elapsed_time (delta_t);
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  et.real_time = delta_t / 1000000000.0;
+  et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_USECS;
 #else
-  et.real_time = (double) ULONG_MAX / 1000000000.0 * (double) delta_t.hi () +
-                 (double) delta_t.lo () / 1000000000.0;
+  et.real_time = (double) ULONG_MAX / (double) ACE_ONE_SECOND_IN_USECS * (double) delta_t.hi () +
+                 (double) delta_t.lo () / (double) ACE_ONE_SECOND_IN_USECS;
 #endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
   et.user_time = 0;
   et.system_time = 0;

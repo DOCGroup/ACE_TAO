@@ -31,8 +31,8 @@
 
 class TAO_Client_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
-  //      <Svc_Handler> used on the client side and returned
-  //      by the <TAO_Client_Factory::CONNECTOR>.
+  //      <Svc_Handler> used on the client side and returned by the
+  //      <TAO_CONNECTOR>.  
   // @@ Should this be in here or in the default_client.*?
 {
 public:
@@ -55,6 +55,10 @@ private:
   // True value indicates that something is using this handler.
 };
 
+// This is equivalent to the TAO_ACCEPTOR.
+typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR> 
+	TAO_CONNECTOR;
+
 class TAO_Client_Strategy_Factory : public ACE_Service_Object
   // = TITLE
   //    Abstract factory used by the client to manufacture various
@@ -69,8 +73,6 @@ public:
   // Destructor
   
   // = Client-side strategy types.
-  typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR> 
-          CONNECTOR;
   typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler> 
           NULL_CREATION_STRATEGY;
 
@@ -82,7 +84,7 @@ public:
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 #endif /* TAO_HAS_CLIENT_CONCURRENCY */
   
-  virtual CONNECTOR *connector (void);
+  virtual TAO_CONNECTOR *connector (void);
   // Return a pointer to a connector using appropriate strategies.
 };
 

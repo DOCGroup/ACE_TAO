@@ -64,22 +64,29 @@ public:
   // Returns an indication of whether the ORB needs the <{main thread}> to
   // perform some work.
   
-  void perform_work (void);
+  int perform_work (ACE_Time_Value * = 0);
   // If called by the <{main thread}>, this operation performs an
   // implementation-defined unit of work. Otherwise, it does nothing.
   //
-  // It is platform specific how the application and ORB arrange to
+  // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
   
-  void run (void);
-  // Instructs the ORB to run its event loop in the current thread,
-  // not returning until the ORB has shut down.  <{Note that this
-  // differs from the POA specification, which is reproduced below:}>
+  int run (ACE_Time_Value *tv = 0);
+  // Instructs the ORB to initialize itself and run its event loop in
+  // the current thread, not returning until the ORB has shut down.
+  // If an error occurs during initialization or a run-time this
+  // method will return -1.  If <tv> is non-NULL then if no requests
+  // arrive at this thread before the timeout elapses we return to the
+  // caller with a value of 0 (this allows timeouts).  Otherwise, if
+  // we've returned since we've been asked to shut down the value of 1
+  // is returned.
   //
-  // Returns when the ORB has shut down. Different from the If called
-  // by the main thread, it enables the ORB to perform work using the
-  // main thread. Otherwise, it simply waits until the ORB has shut
-  // down.
+  // <{Note that this interface differs from the POA specification,
+  // which is reproduced below:}> 
+  //
+  // Returns when the ORB has shut down.  If called by the main
+  // thread, it enables the ORB to perform work using the main
+  // thread. Otherwise, it simply waits until the ORB has shut down.
   //
   // This operation can be used instead of perform_work() to give the
   // main thread to the ORB if there are no other activities that need
@@ -89,12 +96,11 @@ public:
 
   void shutdown (CORBA::Boolean wait_for_completion);
   // This operation instructs the ORB to shut down. Shutting down the
-  // ORB causes all object adapters to be shut down. If the
+  // ORB causes all Object Adapters to be shut down. If the
   // wait_for_completion parameter is TRUE, this operation blocks
   // until all ORB processing (including request processing and object
   // deactivation or other operations associated with object adapters)
   // has completed.
-
 
   // = <IUnknown> Support
   //
@@ -112,9 +118,11 @@ public:
   TAO_Client_Strategy_Factory *client_factory (void);
   TAO_Server_Strategy_Factory *server_factory (void);
   TAO_ORB_Parameters *params (void);
-  void set_up_for_listening (void);
+
+  int open (void);
   // Set up the internal acceptor to listen on the
-  // previously-specified port for requests.
+  // previously-specified port for requests.  Returns -1 on failure,
+  // else 0.
 
 protected:
   CORBA_ORB (void);
@@ -123,7 +131,7 @@ protected:
 private:
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
-  CORBA::Boolean set_up_for_listening_called_;
+  CORBA::Boolean open_called_;
 
   // @@ Quite possibly everything btw ORB_CORE_STUFF should go into
   // the TAO_ORB_Core class...
@@ -145,9 +153,11 @@ private:
   // The address of the endpoint on which we're listening for
   // connections and requests.
 
-  TAO_ACCEPTOR client_acceptor_;
-  // The acceptor listening for requests.
-  // ORB_CORE_STUFF
+  TAO_ACCEPTOR peer_acceptor_;
+  // The acceptor passively listening for connection requests.
+
+  TAO_CONNECTOR peer_connector_;
+  // The connector actively initiating connection requests.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);

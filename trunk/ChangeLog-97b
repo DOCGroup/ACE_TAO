@@ -1,18 +1,21 @@
-Sun Oct 12 16:45:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+Sun Oct 12 16:53:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Sched_Params.h: 
-	  Added some comments.
+	* ace/examples/Service_Configurator/IPC-tests/server: Reformatted
+	  and recommented the code a bit.
 
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
-	  Added some comments and template specializations.
+	* ace/OS: Added 3 new ACE #defines:
 
-Sun Oct 12 16:22:06 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+	  #define ACE_ONE_SECOND_IN_MSECS 1000L
+	  #define ACE_ONE_SECOND_IN_USECS 1000000L
+	  #define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
-	* examples/Naming/Makefile: 
-	  There is no need to set LDLIBS to add local object files
-	  anymore, using FILES is enough.
+	  This is much easier to read than trying to keep track of the
+ 	  000s!  Then, replaced all uses of the original values with the
+ 	  new symbolic constants.
 
-Sun Oct 12 14:18:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/Timer_List.cpp: Removed an explicit template instantiation
+ 	  of ACE_Async_Timer_Queue_Adapter<>.  Why was it here in the
+ 	  first place?
 
 	* ace: Created a new group of Timer_Queue_Adapters files and moved
  	  the Async and Thread adapters into this file. This reduces the
@@ -31,6 +34,18 @@ Sun Oct 12 14:18:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/Makefile (DIRS): Added Timer_Queue to the list of DIRS
  	  to build.
+
+Sun Oct 12 16:45:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Sched_Params.h: 
+	  Added some comments.
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
+	  Added some comments and template specializations.
+
+	* examples/Naming/Makefile: 
+	  There is no need to set LDLIBS to add local object files
+	  anymore, using FILES is enough.
 
 Sun Oct 12 03:35:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 

@@ -253,7 +253,6 @@
 //#define ACE_TIMER_SKEW 1000 * 10
 //#endif /* ACE_TIMER_SKEW */
 
-
 // Platform supports the getrusage() system call.
 //#define ACE_HAS_GETRUSAGE
 //Platform uses non-const char * in calls to gethostbyaddr, gethostbyname,
