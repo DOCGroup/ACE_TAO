@@ -51,8 +51,22 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-<P>Current status: (As of January 7th, 1998.)
+<P>Current status: (As of March 15th, 1998.)
 <UL>
+  <LI>
+      Completely redesigned the IDL compiler using the Visitor
+      patterns. Many incomplete issues have been resolved. These
+      include support for "sequence of typecodes", passing object
+      references as in, inout, and out parameters. Code generation for
+      sequences is also properly handled i.e., for a named sequence
+      such as "typedef sequence <char> CharSeq;", we now generate a
+      new class (and hence a type) called "class CharSeq". Arrays are
+      still being worked out and will be done soon.
+
+      An important difference in the generated code is that the
+      skeletons now use a table driven approach very similar to the
+      stubs.
+  </LI>
 <LI>
 Support for the "native" keyword added.</LI>
 
