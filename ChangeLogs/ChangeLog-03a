@@ -1,3 +1,10 @@
+Sun Jul 28 10:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Use -mcpu=$(TCPU) instead of -m$(TCPU), because MingW GCC 3.1
+          now gives warnings that -m is deprecated. Thanks to Craig Rodrigues
+          for confirming that -m was already deprecated in GCC 2.95.3
+
 Sat Jul 27 17:35:06 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_g++_common.GNU (SOFLAGS):
