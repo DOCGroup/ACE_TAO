@@ -110,7 +110,7 @@ ACE_ES_Dispatching_Base::shutdown (void)
 
 ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *channel)
   : ACE_ES_Dispatching_Base (channel),
-    notification_strategy_ (this, channel->task_manager ()),
+    notification_strategy_ (this, channel->timer_module ()),
     highest_priority_ (0),
     shutdown_ (0),
     threads_per_queue_ (0)

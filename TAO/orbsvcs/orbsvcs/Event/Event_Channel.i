@@ -112,16 +112,10 @@ ACE_EventChannel::for_consumers (CORBA::Environment &env)
   return consumer_module_->get_ref (env);
 }
 
-ACE_INLINE ACE_ES_Priority_Timer *
-ACE_EventChannel::timer (void)
+ACE_INLINE TAO_EC_Timer_Module*
+ACE_EventChannel::timer_module (void) const
 {
-  return timer_;
-}
-
-ACE_INLINE ACE_Task_Manager*
-ACE_EventChannel::task_manager (void) const
-{
-  return this->task_manager_;
+  return this->timer_module_;
 }
 
 // ************************************************************
@@ -395,21 +389,11 @@ ACE_RTU_Manager::should_preempt (void)
     return 0;
   else
     {
-#if 0
-      // Expire any timers.  Am I evil for putting this here?
-      ACE_Time_Value tv;
-      if (this->task_manager_->GetReactorTask (0)->
-	    get_reactor ().handle_events (&tv) == -1)
-	ACE_ERROR ((LM_ERROR, "%p.\n",
-		    "ACE_RTU_Manager::should_preempt"));
-#else
       // This routine was dead-code, but I'll leave it here until I
       // find out what it is supposed to do.
       ACE_ERROR ((LM_WARNING,
 		  "EC (%t) RTU_Manager::should_preempt - obsolete\n"));
 		 
-#endif
-
       int should_preempt = should_preempt_;
       should_preempt_ = 0;
       return should_preempt;
@@ -689,3 +673,73 @@ ACE_ES_Conjunction_Group::add_events (Event_Set *outbox,
 }
 
 // ************************************************************
+
+ACE_INLINE int
+ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
+				  const ACE_ES_Timer_ACT *act,
+				  RtecScheduler::Preemption_Priority preemption_priority,
+				  const RtecScheduler::Time &delta,
+				  const RtecScheduler::Time &interval)
+{
+  if (rt_info != 0)
+    {
+      // Add the timer to the task's dependency list.
+      RtecScheduler::handle_t timer_rtinfo =
+        this->timer_module ()->rt_info (preemption_priority);
+
+      TAO_TRY
+        {
+          ACE_Scheduler_Factory::server()->add_dependency
+            (rt_info,
+	     timer_rtinfo,
+	     1,
+	     RtecScheduler::ONE_WAY_CALL,
+	     TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+      TAO_CATCHANY
+        {
+          ACE_ERROR ((LM_ERROR, "add dependency failed"));
+        }
+      TAO_ENDTRY;
+    }
+
+  // @@ We're losing resolution here.
+  ACE_Time_Value tv_delta;
+  ORBSVCS_Time::TimeT_to_Time_Value (tv_delta, delta);
+
+  ACE_Time_Value tv_interval;
+  ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
+
+  return this->timer_module ()->schedule_timer (preemption_priority,
+						&this->timer_,
+						ACE_const_cast(ACE_ES_Timer_ACT*,act),
+						tv_delta, tv_interval);
+}
+
+ACE_INLINE int
+ACE_EventChannel::cancel_timer (RtecScheduler::OS_Priority preemption_priority,
+				int id,
+				ACE_ES_Timer_ACT *&act)
+{
+  const void *vp;
+
+  int result =
+    this->timer_module ()->cancel_timer (preemption_priority,
+					      id,
+					      vp);
+
+  if (result == 0)
+    {
+      ACE_ERROR ((LM_ERROR, "ACE_ES_Priority_Timer::cancel_timer: "
+                  "Tried to cancel nonexistent timer.\n"));
+      act = 0;
+    }
+  else
+    act = (ACE_ES_Timer_ACT *) vp;
+
+  return result;
+}
+
+// ************************************************************
+

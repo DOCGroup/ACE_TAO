@@ -248,7 +248,7 @@ class TAO_ORBSVCS_Export ACE_ES_ReactorEx_NS : public ACE_Notification_Strategy
 {
 public:
   ACE_ES_ReactorEx_NS (ACE_Event_Handler *eh,
-		       ACE_Task_Manager *tm);
+		       TAO_EC_Timer_Module *tm);
   // Stores away <eh> for when this->open is called.
 
   int open (void);
@@ -271,8 +271,8 @@ private:
   ACE_Auto_Event event_;
   // Registered with the ReactorEx.
 
-  ACE_Task_Manager *task_manager_;
-  // To gain access into the Reactor tasks.
+  TAO_EC_Timer_Module *timer_module_;
+  // To schedule timers.
 };
 
 typedef ACE_ES_ReactorEx_NS ACE_ES_Notification_Strategy;
@@ -289,7 +289,7 @@ class TAO_ORBSVCS_Export ACE_ES_Reactor_NS : public ACE_Reactor_Notification_Str
 {
 public:
   ACE_ES_Reactor_NS (ACE_Event_Handler *eh,
-		     ACE_Task_Manager *tm);
+		     TAO_EC_Timer_Module *tm);
   // Calls ACE_Reactor_Notification_Strategy with the ORB's reactor
   // and signal mask.
 
