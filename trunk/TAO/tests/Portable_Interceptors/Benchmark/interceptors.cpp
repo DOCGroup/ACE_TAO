@@ -3,7 +3,7 @@
 #include "interceptors.h"
 
 #include "tao/DynamicC.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (Benchmark,

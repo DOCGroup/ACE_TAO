@@ -1,6 +1,6 @@
 //$Id$
-#include "tao/RTScheduling/RTScheduler.pidl"
-#include "tao/RTCORBA/RTCORBA.pidl"
+#include "tao/RTScheduling/RTScheduler_include.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
 
 module MIF_Scheduling
 {

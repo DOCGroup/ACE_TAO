@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/ORB.h"
 #include "tao/debug.h"
 

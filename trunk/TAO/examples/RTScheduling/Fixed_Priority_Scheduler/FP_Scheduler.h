@@ -18,6 +18,13 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
   virtual void value (RTCORBA::Priority value
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
  private:
   RTCORBA::Priority value_;
 };
