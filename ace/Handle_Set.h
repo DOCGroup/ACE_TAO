@@ -48,6 +48,9 @@ public:
   // Constructor, initializes the bitmask to all 0s.
 
   ACE_Handle_Set (const ACE_FD_SET_TYPE &mask);
+  // Constructor, initializes the handle set from a given mask.
+  // <ACE_FD_SET_TYPE> is a <typedef> based on the platform's native
+  // type used for masks passed to <select>.
 
 #if defined (ACE_HAS_WINCE)
   ~ACE_Handle_Set (void);
@@ -78,16 +81,19 @@ public:
   // Returns the number of the large bit.
 
   void sync (ACE_HANDLE max);
-  // Synchronize the underlying <fd_set> with the <max_handle> and the
-  // <size>.
+  // Rescan the underlying <fd_set> up to handle <max> to find the new
+  // <max_handle> (highest bit set) and <size> (how many bits set) values.
+  // This is useful for evaluating the changes after the handle set has
+  // been manipulated in some way other than member functions; for example,
+  // after <select> modifies the <fd_set>.
 
   operator fd_set *();
   // Returns a pointer to the underlying <fd_set>.  Returns 0 if
-  // <size_> == 0.
+  // there are no handle bits set (<size_> == 0).
 
   fd_set *fdset (void);
   // Returns a pointer to the underlying <fd_set>.  Returns 0 if
-  // <size_> == 0.
+  // there are no handle bits set (<size_> == 0).
 
 #if defined (ACE_HAS_BIG_FD_SET)
   ACE_Handle_Set & operator= (const ACE_Handle_Set &);
