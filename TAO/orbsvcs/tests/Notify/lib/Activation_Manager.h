@@ -111,7 +111,7 @@ protected:
   int active_consumers_;
 
   // Condition that all active suppliers and consumers are done.
-  ACE_Condition_Thread_Mutex active_done_;
+  TAO_SYNCH_CONDITION active_done_;
 
   // Map that stores suppliers.
   TAO_NS_PeriodicSupplier_Map supplier_map_;
@@ -129,7 +129,7 @@ protected:
   CORBA::Boolean started_;
 
   // Condition that the start method has been called.
-  ACE_Condition_Thread_Mutex started_condition_;
+  TAO_SYNCH_CONDITION started_condition_;
 };
 
 #include "ace/post.h"

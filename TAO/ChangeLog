@@ -1,5 +1,10 @@
 Thu Apr 04 07:06:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
+	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
+	  Use TAO_SYNCH_MUTEX instead of ACE_Condition_Thread_Mutex
+
+Thu Apr 04 07:06:33 2003  Pradeep Gore  <pradeep@oomworks.com>
+
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.cpp:
 	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp:
 	  Added check for TAO_HAS_MINIMUM_CORBA in <handle_status>.
