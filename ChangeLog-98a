@@ -1,3 +1,15 @@
+Tue Dec 16 16:55:19 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/inc_user_config.h:  Added this file to prevent multiple
+	  inclusions of config.h file.  Replace `#include "ace/config.h"'
+	  with `#include "ace/inc_user_config.h"'.
+
+	* ace/Log_Msg.cpp:
+	* ace/OS.h:
+	* ace/Trace.cpp:
+	* ace/streams.h:
+	* ace/iosfwd.h:  Replace
+
 Tue Dec 16 08:30:41 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/IPC_SAP/FILE_SAP/client.cpp (main): Fixed "lines" to
