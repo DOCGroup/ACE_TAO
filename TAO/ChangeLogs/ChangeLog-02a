@@ -1,3 +1,14 @@
+Tue Sep 25 00:17:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* auto_run_tests.lst: The following tests were removed from the
+	  single threaded run list since they call
+	  RT_Protocols_Hooks::get_thread_priority is not supported on
+	  single threaded platforms:
+
+	  - tests/RTCORBA/Client_Protocol
+	  - tests/RTCORBA/Explicit_Binding
+	  - tests/RTCORBA/Private_Connection
+
 Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp (open_services_i):
