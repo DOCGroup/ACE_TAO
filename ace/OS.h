@@ -2182,7 +2182,17 @@ extern "C"
 #else
 #include /**/ <netdb.h>
 #endif /* VXWORKS */
+
+// This part if to avoid STL name conflict with the map structure
+// in net/if.h.
+#ifdef ACE_HAS_STL_MAP_CONFLICT
+#define map _Resource_Allocation_Map_
+#endif
 #include /**/ <net/if.h>
+#ifdef ACE_HAS_STL_MAP_CONFLICT
+#undef map
+#endif
+
 #include /**/ <netinet/in.h>
 #include /**/ <arpa/inet.h>
 }
