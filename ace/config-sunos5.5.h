@@ -29,6 +29,7 @@
 # endif /* __SUNPRO_CC >= 0x420 */
 # define ACE_CAST_CONST const
 # define ACE_HAS_HI_RES_TIMER
+# define ACE_HAS_SIG_C_FUNC /* Sun CC 5.0 needs this, 4.2 doesn't mind. */
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
