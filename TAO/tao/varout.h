@@ -615,35 +615,35 @@ class TAO_Object_out
   // =Description
   // _out class definition for Object
 public:
-  TAO_Object_out (T *&);
+  TAO_Object_out (T_ptr &);
   // constructor
 
   TAO_Object_out (T_var &);
   // constructor
 
-  TAO_Object_out (TAO_Object_out <T,T_var> &);
+  TAO_Object_out (TAO_Object_out <T_ptr,T_var> &);
   // copy constructor
 
-  TAO_Object_out<T,T_var> &operator= (TAO_Object_out<T,T_var> &);
+  TAO_Object_out<T_ptr,T_var> &operator= (TAO_Object_out<T_ptr,T_var> &);
   // assignment operator
 
-  TAO_Object_out<T,T_var> &operator= (T *);
+  TAO_Object_out<T_ptr,T_var> &operator= (const T_var &);
+  // assignment operator
+
+  TAO_Object_out<T_ptr,T_var> &operator= (T_ptr);
   // assignment
 
-  operator T *&();
+  operator T_ptr &();
   // cast
 
-  T *&ptr (void);
+  T_ptr &ptr (void);
   // ptr method, returns a pointer to class T
 
-  T *operator-> (void);
+  T_ptr operator-> (void);
   // arrow operator (smart pointer)
 
-  T::ElemType operator[] (CORBA::ULong);
-  // return the element at index i
-
 private:
-  T *&ptr_;
+  T_ptr &ptr_;
 };
 
 // *****************************************************
