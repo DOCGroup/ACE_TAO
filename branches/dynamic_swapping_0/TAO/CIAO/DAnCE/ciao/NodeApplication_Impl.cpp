@@ -442,6 +442,7 @@ CIAO::NodeApplication_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   this->component_map_.unbind_all ();
+
   // To this point the servant should have been destroyed. However,
   // if someone is still making calls on the servant, terrible thing
   // will happen.

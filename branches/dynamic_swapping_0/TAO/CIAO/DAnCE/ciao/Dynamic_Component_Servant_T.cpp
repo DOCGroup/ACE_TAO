@@ -48,11 +48,9 @@ namespace CIAO
     <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
      EXEC, EXEC_VAR, COMP>::destroy (PortableServer::ObjectId &oid)
   {
-    ACE_DEBUG ((LM_DEBUG, "i am being called to destroy\n"));
     COMP_SVNT *servant;
     if (this->servant_map_.find (oid, servant) == 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "i found the servant\n"));
         servant->remove ();
       }
   }

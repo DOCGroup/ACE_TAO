@@ -246,6 +246,21 @@ namespace CIAO
 
   }
 
+  void
+  Swapping_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref
+                                          ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    PortableServer::POA_ptr tmp = this->home_servant_poa_.in ();
+    PortableServer::ObjectId_var oid =
+      tmp->reference_to_id (homeref
+                            ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    tmp->deactivate_object (oid.in ()
+                            ACE_ENV_ARG_PARAMETER);
+  }
+
   CORBA::Object_ptr
   Swapping_Container::install_servant (PortableServer::Servant p,
                                       Container::OA_Type t

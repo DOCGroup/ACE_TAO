@@ -230,7 +230,6 @@ namespace CIAO
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am about to passivate\n"));
     // @@ Jai, could you please see why this is required?
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
