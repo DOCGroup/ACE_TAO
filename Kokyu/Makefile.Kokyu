@@ -25,7 +25,6 @@ SHLIB = $(SHLIB_UNCHECKED)
 #----------------------------------------------------------------------------
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 LSRC   = $(addsuffix .cpp, $(FILES))
-ACELIB = -lACE
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -35,6 +34,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS     += -I..
 LDFLAGS      += -L../ace
+
+ACE_SHLIBS  = $(ACELIB)
 
 #----------------------------------------------------------------------------
 #       Local targets
