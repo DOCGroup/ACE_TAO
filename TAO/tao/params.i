@@ -80,9 +80,3 @@ TAO_ORB_Parameters::addr (const ACE_INET_Addr &addr)
 {
   this->addr_ = addr;
 }
-
-ACE_INLINE void
-TAO_ORB_Parameters::name_service_ior (CORBA::String ns)
-{
-  this->name_service_ior_ = ns;
-}
