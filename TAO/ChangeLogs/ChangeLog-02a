@@ -1,3 +1,9 @@
+Thu Oct 26 13:58:42 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/examples/Notify/Filter/Filter.cpp:
+	  Reverted some code that had been inadvertently commented for
+	  debugging purposes.
+	
 Wed Oct 25 20:59:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/PortableServer/POA.cpp:
