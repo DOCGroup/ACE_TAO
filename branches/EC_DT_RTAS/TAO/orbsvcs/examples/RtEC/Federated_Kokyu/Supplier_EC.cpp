@@ -51,6 +51,20 @@ public:
   {
   }
 
+  ~Supplier_EC(void)
+  {
+    for(size_t i=0; i<suppliers_.size(); ++i) {
+      delete suppliers_[i];
+    }
+    for(size_t i=0; i<timeout_consumers_.size(); ++i) {
+      delete timeout_consumers_[i];
+    }
+    for(size_t i=0; i<consumers_.size(); ++i) {
+      delete consumers_[i];
+    }
+  } //~Supplier_EC()
+
+  ///Takes ownership of Supplier and Timeout_Consumer
   void add_supplier_with_timeout(
                                  Supplier * supplier_impl,
                                  const char * supp_entry_point,
@@ -105,6 +119,7 @@ public:
     this->timeout_consumers_.push_back(timeout_consumer_impl);
   } //add_supplier_with_timeout()
 
+  ///Takes ownership of Supplier
   void add_supplier(
                     Supplier * supplier_impl,
                     const char * entry_point,
@@ -141,6 +156,7 @@ public:
     this->suppliers_.push_back(supplier_impl);
   } //add_supplier()
 
+  ///Takes ownership of Consumer and Supplier
   void add_consumer_with_supplier(
                                   Consumer * consumer_impl,
                                   const char * cons_entry_point,
@@ -173,6 +189,7 @@ public:
     ACE_CHECK;
   } //add_consumer_with_supplier()
 
+  ///Takes ownership of Consumer
   void add_consumer(
                     Consumer * consumer_impl,
                     const char * entry_point,
