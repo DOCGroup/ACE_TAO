@@ -75,9 +75,11 @@ namespace ACE_TMCast
     LinkListener (ACE_SOCK_Dgram_Mcast& sock, MessageQueue& out)
         : sock_(sock), out_ (out)
     {
+      ACE_thread_t unused;
       if (ACE_OS::thr_create (&thread_thunk,
                               this,
                               THR_JOINABLE,
+                              &unused,
                               &thread_) != 0) ::abort ();
     }
 
@@ -160,7 +162,7 @@ namespace ACE_TMCast
   private:
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
 
-    ACE_thread_t thread_;
+    ACE_hthread_t thread_;
     ACE_SOCK_Dgram_Mcast& sock_;
     MessageQueue& out_;
     MessageQueue  control_;
