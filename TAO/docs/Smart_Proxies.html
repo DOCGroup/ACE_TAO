@@ -383,6 +383,16 @@ created from then on will be the default one.
 (1) TAO_HAS_SMART_PROXIES has to be defined in $TAO_ROOT/tao/orbconf.h
 and (2) Generate smart proxy classes using the IDL compiler option of
 -Gsp
+A new smart proxy option has been added to the design: one-shot or
+permanent versus per-object smart proxy.  The one-shot smart proxy
+option denotes that the smart proxy factory is registered permanently
+and so for all object instances the same kind of proxy is used.  On
+disabling this default option one can achieve the use of different
+smart proxies for every object instead of every interface.
+For details please see the paper on
+<a href="http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf">
+Meta-programming Mechanisms for ORB Middleware as well as the test at
+$TAO_ROOT/tests/Smart_Proxies/Policy.
 
 <Hr><P>
 <h3><a name="Acknowledgements">Acknowledgements</a></h3>
