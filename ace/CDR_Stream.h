@@ -433,6 +433,10 @@ public:
   // Argument MUST be a power of 2.
   // Returns 0 on success and -1 on failure.
 
+  ACE_Char_Codeset_Translator *char_translator (void) const;
+  ACE_WChar_Codeset_Translator *wchar_translator (void) const;
+  // Access the codeset translators. They can be nil!
+
 private:
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
   ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
@@ -737,6 +741,10 @@ public:
   int do_byte_swap (void) const;
   // If non-zero then this stream is writing in non-native byte order,
   // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+
+  ACE_Char_Codeset_Translator *char_translator (void) const;
+  ACE_WChar_Codeset_Translator *wchar_translator (void) const;
+  // Access the codeset translators. They can be nil!
 
 protected:
   ACE_Message_Block start_;
