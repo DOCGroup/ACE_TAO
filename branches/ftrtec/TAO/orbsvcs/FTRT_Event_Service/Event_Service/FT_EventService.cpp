@@ -7,7 +7,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
-#include "orbsvcs/Sched/Config_Scheduler.h" 
+#include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 
@@ -21,7 +21,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   FT_EventService event_service;
   return event_service.run (argc, argv);
 }
- 
+
 FT_EventService::FT_EventService()
 : global_scheduler_(0)
 , sched_impl_(0)
@@ -95,7 +95,7 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     TAO_FTEC_Event_Channel ec(orb, root_poa);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
-      ec.activate(membership_ 
+      ec.activate(membership_
         ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -135,65 +135,65 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   char* n_threads = ACE_OS::getenv("FTEC_NUM_THREAD");
 
   this->num_threads_ = 1;
-  if (n_threads) 
-    this->num_threads_ = ACE_OS::atoi(n_threads); 
+  if (n_threads)
+    this->num_threads_ = ACE_OS::atoi(n_threads);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("jn:ps:"));
-	int opt;
+  int opt;
 
-	while ((opt = get_opt ()) != EOF)
-	{
-		switch (opt)
-		{
-		case 'j':
+  while ((opt = get_opt ()) != EOF)
+  {
+    switch (opt)
+    {
+    case 'j':
       this->membership_ = TAO_FTEC_Event_Channel::BACKUP;
-			break;
-    case 'n':
-      this->num_threads_ = ACE_OS::atoi(get_opt.opt_arg ()); 
       break;
-		case 'p':
-			this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
-			break;
-		case 's':
-			// It could be just a flag (i.e. no "global" or "local"
-			// argument, but this is consistent with the EC_Multiple
-			// test and also allows for a runtime scheduling service.
+    case 'n':
+      this->num_threads_ = ACE_OS::atoi(get_opt.opt_arg ());
+      break;
+    case 'p':
+      this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
+      break;
+    case 's':
+      // It could be just a flag (i.e. no "global" or "local"
+      // argument, but this is consistent with the EC_Multiple
+      // test and also allows for a runtime scheduling service.
 
-			if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("global")) == 0)
-			{
-				this->global_scheduler_ = 1;
-			}
-			else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("local")) == 0)
-			{
-				this->global_scheduler_ = 0;
-			}
-			else
-			{
-				ACE_DEBUG ((LM_DEBUG,
-					ACE_LIB_TEXT("Unknown scheduling type <%s> ")
-					ACE_LIB_TEXT("defaulting to local\n"),
-					get_opt.opt_arg ()));
-				this->global_scheduler_ = 0;
-			}
-			break;
+      if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("global")) == 0)
+      {
+        this->global_scheduler_ = 1;
+      }
+      else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("local")) == 0)
+      {
+        this->global_scheduler_ = 0;
+      }
+      else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_LIB_TEXT("Unknown scheduling type <%s> ")
+          ACE_LIB_TEXT("defaulting to local\n"),
+          get_opt.opt_arg ()));
+        this->global_scheduler_ = 0;
+      }
+      break;
 
-		case '?':
-		default:
-			ACE_DEBUG ((LM_DEBUG,
-				ACE_LIB_TEXT("Usage: %s \n")
-				ACE_LIB_TEXT("  -j join the object group\n")
-				ACE_LIB_TEXT("  -p set as primary\n")
-				ACE_LIB_TEXT("  -s <global|local> \n")
-				ACE_LIB_TEXT("\n"),
-				argv[0]));
-			return -1;
-		}
-	}
+    case '?':
+    default:
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_LIB_TEXT("Usage: %s \n")
+        ACE_LIB_TEXT("  -j join the object group\n")
+        ACE_LIB_TEXT("  -p set as primary\n")
+        ACE_LIB_TEXT("  -s <global|local> \n")
+        ACE_LIB_TEXT("\n"),
+        argv[0]));
+      return -1;
+    }
+  }
 
-  if (this->num_threads_ < 1) 
+  if (this->num_threads_ < 1)
     ACE_ERROR_RETURN((LM_ERROR, "Invalid number of threads specified\n"), -1);
 
-	return 0;
+  return 0;
 }
 
 void
@@ -205,10 +205,10 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
         ACE_NEW_THROW_EX (this->sched_impl_,
             ACE_Config_Scheduler,
             CORBA::NO_MEMORY());
-        
+
         scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
-        
+
         if (ACE_Scheduler_Factory::server(scheduler.in()) == -1)
             ACE_ERROR((LM_ERROR,"Unable to install scheduler\n"));
     }
@@ -218,21 +218,21 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
         CosNaming::Name schedule_name (1);
         schedule_name.length (1);
         schedule_name[0].id = CORBA::string_dup ("ScheduleService");
-        
-        
-        if (1) 
+
+
+        if (1)
         {
             // We must find the scheduler object reference...
-            
+
             if (this->global_scheduler_ == 0)
             {
                 ACE_NEW_THROW_EX (this->sched_impl_,
                     ACE_Config_Scheduler,
                     CORBA::NO_MEMORY());
-                
+
                 scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_CHECK;
-                
+
                 // Register the servant with the Naming Context....
                 naming_context->rebind (schedule_name, scheduler.in ()
                     ACE_ENV_ARG_PARAMETER);
@@ -243,7 +243,7 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
                 CORBA::Object_var tmp =
                     naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK;
-                
+
                 scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
                     ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK;
@@ -252,14 +252,14 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
     }
 }
 
-int 
+int
 FT_EventService::report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec)
 {
     char* addr = ACE_OS::getenv("EventChannelFactoryAddr");
 
-		if (addr != NULL) {
-      // instaniated by object factory, report my ior back to the factory           
+    if (addr != NULL) {
+      // instaniated by object factory, report my ior back to the factory
       ACE_INET_Addr factory_addr(addr);
       ACE_SOCK_Connector connector;
       ACE_SOCK_Stream stream;
@@ -269,7 +269,7 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
         ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Invalid Factory Address\n"), -1);
 
       ACE_DEBUG((LM_DEBUG,"Factory connected\n"));
-      CORBA::String_var my_ior_string = orb->object_to_string(ec 
+      CORBA::String_var my_ior_string = orb->object_to_string(ec
         ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;

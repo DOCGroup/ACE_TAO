@@ -27,7 +27,7 @@ int parse_args(int argc, char* argv[])
       id = get_opt.opt_arg ();
       break;
     case 'k':
-      kind = get_opt.opt_arg (); 
+      kind = get_opt.opt_arg ();
       break;
     case 'o':
       output = get_opt.opt_arg ();
@@ -55,39 +55,39 @@ int parse_args(int argc, char* argv[])
 int main(int argc, ACE_TCHAR* argv[])
 {
 
-	ACE_DECLARE_NEW_CORBA_ENV;
-	ACE_TRY {
-		CORBA::ORB_var orb = CORBA::ORB_init(argc, argv 
-			                                       ACE_ENV_ARG_PARAMETER);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY {
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv
+                                             ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-	
+  
     if (parse_args(argc, argv) == -1)
       return -1;
 
-		CORBA::Object_var obj = 
-			orb->resolve_initial_references("RootPOA"  
-			ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var obj =
+      orb->resolve_initial_references("RootPOA"
+      ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-		PortableServer::POA_var poa = 
-			PortableServer::POA::_narrow(obj.in()  
-			                             ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
-		
-		PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    PortableServer::POA_var poa =
+      PortableServer::POA::_narrow(obj.in()
+                                   ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    
+    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
-		
-		EventChannelFactory_i servant("factory.cfg", orb.in());
+    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    
+    EventChannelFactory_i servant("factory.cfg", orb.in());
 
-		FT::GenericFactory_var event_channel_factory = 
-			servant._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    FT::GenericFactory_var event_channel_factory =
+      servant._this(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		// register to the Event Service
+    // register to the Event Service
 
     if (id.length()) {
       CORBA::Object_var namng_contex_object =
@@ -95,7 +95,7 @@ int main(int argc, ACE_TCHAR* argv[])
         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CosNaming::NamingContext_var naming_context = 
+      CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow(namng_contex_object.in()
         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -135,7 +135,7 @@ int main(int argc, ACE_TCHAR* argv[])
           1);
         ACE_OS::fprintf (output_file, "%s", str.in ());
         ACE_OS::fclose (output_file);
-      } 
+      }
     }
 
     ACE_TRY_CHECK;
@@ -143,15 +143,15 @@ int main(int argc, ACE_TCHAR* argv[])
     orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
 
   }
-	ACE_CATCHANY
-	{
-		ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
-	}
-	ACE_ENDTRY;
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+  }
+  ACE_ENDTRY;
 
-	
-	ACE_CHECK_RETURN(1);
- 
-	return 0;
+  
+  ACE_CHECK_RETURN(1);
+
+  return 0;
 }
 

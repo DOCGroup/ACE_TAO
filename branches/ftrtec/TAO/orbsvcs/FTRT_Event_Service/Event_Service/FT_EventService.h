@@ -8,7 +8,8 @@
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================#ifndef FT_EVENTSERVICE_H
+//=============================================================================
+#ifndef FT_EVENTSERVICE_H
 #define FT_EVENTSERVICE_H
 
 #include "orbsvcs/CosNamingC.h"
@@ -16,11 +17,11 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 
 namespace POA_RtecScheduler
-{ 
+{
     class Scheduler;
 };
 
-class FT_EventService 
+class FT_EventService
 {
 public:
   FT_EventService();
@@ -35,9 +36,9 @@ public:
                    FtRtecEventChannelAdmin::EventChannel_ptr ec);
 private:
   int global_scheduler_;
-	// Should we use a global scheduler or a local one? 
-	POA_RtecScheduler::Scheduler *sched_impl_;
-	// The Scheduler implementation.
+  // Should we use a global scheduler or a local one?
+  POA_RtecScheduler::Scheduler *sched_impl_;
+  // The Scheduler implementation.
   TAO_FTEC_Event_Channel::MEMBERSHIP membership_;
   int num_threads_;
 };

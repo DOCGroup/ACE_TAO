@@ -6,4 +6,4 @@ project(FTRT_Event_Service) : orbsvcsexe,  rtschedevent, ftrtevent, ftorbutils {
   specific(gnuace) {
    lit_libs += TAO_Strategies
   }
-} 
+}

@@ -33,12 +33,12 @@ int parse_args(int argc, ACE_TCHAR** argv)
     {
       switch (opt)
       {
-      case 'i': 
+      case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg () 
+          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
                                                         ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in() 
+          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
                                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -47,7 +47,7 @@ int parse_args(int argc, ACE_TCHAR** argv)
         name[0].id = CORBA::string_dup(get_opt.opt_arg ());
         break;
       case 'o':
-        ior_file_name = get_opt.opt_arg (); 
+        ior_file_name = get_opt.opt_arg ();
         break;
       }
     }
@@ -72,13 +72,13 @@ int parse_args(int argc, ACE_TCHAR** argv)
   ACE_CATCHANY {
     ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
   }
-  ACE_ENDTRY;  
+  ACE_ENDTRY;
   return 0;
 }
 
 int main(int argc,  ACE_TCHAR** argv)
 {
-  ACE_TRY_NEW_ENV 
+  ACE_TRY_NEW_ENV
   {
     orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
@@ -87,12 +87,12 @@ int main(int argc,  ACE_TCHAR** argv)
       return 1;
 
     PortableServer::POA_var
-      root_poa =  resolve_init<PortableServer::POA>(orb.in(), "RootPOA"  
+      root_poa =  resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // create POAManager
-    PortableServer::POAManager_var 
+    PortableServer::POAManager_var
       mgr = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -102,11 +102,11 @@ int main(int argc,  ACE_TCHAR** argv)
 
     TAO_FTRTEC::FTEC_Gateway gateway_servant(orb.in(), ftec.in());
 
-    RtecEventChannelAdmin::EventChannel_var gateway = 
+    RtecEventChannelAdmin::EventChannel_var gateway =
       gateway_servant.activate(root_poa.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (ior_file_name.length()) 
+    if (ior_file_name.length())
     {
       CORBA::String_var str = orb->object_to_string(gateway.in()
         ACE_ENV_ARG_PARAMETER);
@@ -121,7 +121,7 @@ int main(int argc,  ACE_TCHAR** argv)
         ior_file_name.c_str()),
         1);
       ACE_OS::fprintf (output_file, "%s", str.in ());
-      ACE_OS::fclose (output_file); 
+      ACE_OS::fclose (output_file);
     }
 
     orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
