@@ -283,7 +283,7 @@ typedef unsigned __int64 ACE_UINT64;
                 // force multithreaded MFC DLL
                 #define _WINDLL
         #endif /* _AFXDLL */
-        #if !defined (_AFXDLL) && !define (ACE_USES_STATIC_MFC)
+        #if !defined (_AFXDLL) && !defined (ACE_USES_STATIC_MFC)
                 #define _AFXDLL
         #endif /* _AFXDLL */ 
 #endif
