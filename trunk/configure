@@ -859,7 +859,7 @@ fi
           cd objdir
           ../configure
 
-      This will create a build space in the directory `objdir'.
+      This will create a build space in the directory \`objdir'.
      " 1>&2; exit 1; }
  fi
 
