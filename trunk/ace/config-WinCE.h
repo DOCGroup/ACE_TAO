@@ -94,4 +94,5 @@ typedef long off_t;
 #define SEEK_CUR FILE_CURRENT
 #define SEEK_END FILE_END
 
+
 #endif /* ACE_CONFIG_WINCE_H */
