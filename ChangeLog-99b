@@ -1,3 +1,9 @@
+Fri May  7 19:39:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Message_Block_T.i:
+	  Found little buf in ACE_Locked_Data_Block<> default
+	  constructor.
+
 Fri May 07 16:54:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}: Reorganized and optimized internal methods,
