@@ -1,3 +1,10 @@
+Fri Aug 13 09:30:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/ior_corbaname/README:
+
+	  Fixed a typo in the instructions. Thanks to TG <groth dot th at
+	  nord-com dot net>.
+
 Fri Aug 13 12:48:48 2004  Simon McQueen  <sm@prismtechnologies.com>
 
         * TAO_IDL/fe/fe_lookup.cpp (lookup):
