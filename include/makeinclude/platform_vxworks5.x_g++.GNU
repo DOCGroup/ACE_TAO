@@ -30,9 +30,6 @@ endif # ! optimize
 ifndef rtti
   rtti = 1
 endif # ! rtti
-ifndef with_ld
-  with_ld = vxworks
-endif # ! with_ld
 
 shared_libs =
 static_libs = 1
@@ -265,15 +262,6 @@ else
 endif # simso
 endif # x86-win32
 
-# Test for template instantiation.
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-# TEMPLATES_FLAG is set by platform_g++_common.GNU
-ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
-  CCFLAGS += $(TEMPLATES_FLAG)
-endif
-
 ifeq ($(shared_libs),1)
   SHARED_LIBS = 1
 endif
@@ -353,6 +341,18 @@ LDFLAGS         += -X -r
 #### the i386 family.  And -O2 causes some compilation failures.
 OCFLAGS         += -O
 PIC             =
+
+SONAME =
+
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+# TEMPLATES_FLAG is set by platform_g++_common.GNU
+ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
+  CCFLAGS += $(TEMPLATES_FLAG)
+endif
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.

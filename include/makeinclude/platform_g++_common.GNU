@@ -50,11 +50,7 @@ ifneq ($(SONAME),)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
-    ifneq ($(with_ld),vxworks)
-      ifneq ($(with_ld),aix)
-        SOFLAGS += -Wl,-h -Wl,$(SONAME)
-      endif
-    endif
+    SOFLAGS += -Wl,-h -Wl,$(SONAME)
   endif
 endif
 
@@ -62,9 +58,27 @@ endif
 # for shared libraries. (see http://gcc.gnu.org/faq.html#dso)
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
-    LD_EXPORT_DEFINED := $(shell `$(CXX_FOR_VERSION_TEST) -print-prog-name=ld` -E 2>&1 | grep 'option' /dev/null; echo $$?)
-    ifeq ($(LD_EXPORT_DEFINED),1)
-      LDFLAGS += -Wl,-E
-    endif # LD_EXPORT_DEFINED
+
+    # Only modify LDFLAGS if DLD has been set.
+    ifneq ($(DLD),)
+      ifeq ($(DLD),$(CXX_FOR_VERSION_TEST)) # only try this is we are using ld through gcc
+        LD_FOR_VERSION_TEST = $(shell $(CXX_FOR_VERSION_TEST) -print-prog-name=ld)
+      else
+        LD_FOR_VERSION_TEST = $(DLD)
+      endif # DLD = CXX_FOR_VERSION_TEST
+
+      # The -E option is GNU ld specific 
+      ifeq (GNU ld, $(findstring GNU ld,$(shell $(LD_FOR_VERSION_TEST) -v)))
+
+        # Make sure this version of ld supports the -E option.
+        LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | grep -i -e "(option|flag)" /dev/null; echo $$?')
+        ifeq ($(LD_EXPORT_DEFINED),1)
+          LDFLAGS += -Wl,-E
+        endif # LD_EXPORT_DEFINED = 1
+
+      endif # GNU ld
+
+    endif # DLD
+
   endif # static_libs_only
 endif # shared_libs

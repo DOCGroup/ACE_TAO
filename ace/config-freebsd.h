@@ -7,6 +7,18 @@
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
 
+#if !defined (ACE_MT_SAFE)
+#  define ACE_MT_SAFE 1
+#endif
+
+#if ACE_MT_SAFE
+   // Yes, we do have threads.
+#  define ACE_HAS_THREADS 1
+#else
+   // Set to 0 since that's what config-posix.h checks for. 
+#  define ACE_HAS_THREADS 0
+#endif /* ACE_MT_SAFE */
+
 #include "ace/config-posix.h"
 
 #include <osreldate.h>
