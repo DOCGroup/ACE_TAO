@@ -364,7 +364,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
   CORBA::ULong num_properties = type_struct.props.length ();
 
   props.length (prop_index_begin + num_properties);
-  for (int i = 0; i < num_properties; i++)
+  for (CORBA::ULong i = 0; i < num_properties; i++)
     props[prop_index_begin++] = type_struct.props[i];
 
   // Insert the names of our own supertypes next
@@ -452,7 +452,7 @@ validate_inheritance (Prop_Map& prop_map,
 {
   CORBA::ULong num_super_types = super_types.length ();
   
-  for (int i = 0; i < num_super_types; i++)
+  for (CORBA::ULong i = 0; i < num_super_types; i++)
     {
       Service_Type_Map::ENTRY* super_type_entry = 0;
       TAO_String_Hash_Key super_type (super_types[i]);
@@ -465,7 +465,7 @@ validate_inheritance (Prop_Map& prop_map,
 				   place_holder);
 
       CORBA::ULong num_props = super_props.length ();
-      for (int j = 0; j < num_props; j++)
+      for (CORBA::ULong j = 0; j < num_props; j++)
 	{
 	  Prop_Map::ENTRY* existing_prop = 0;
 	  TAO_String_Hash_Key prop_name (super_props[j].name);

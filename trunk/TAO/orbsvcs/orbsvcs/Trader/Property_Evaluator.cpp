@@ -86,6 +86,7 @@ TAO_Property_Evaluator::property_value(int index,
 	    {
 	      // Retrieve the value of the dynamic property.
 	      prop_val = dp_eval->evalDP(name, type, info, TAO_TRY_ENV);
+	      TAO_CHECK_ENV;
 	    }
 	  TAO_CATCH (CORBA::SystemException, excp)
 	    {

@@ -24,7 +24,6 @@ template <class IF> CosTrading::Register_ptr
 TAO_Trader_Components<IF>::register_if (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Returning Register Interface.\n"));
   return CosTrading::Register::_duplicate (this->comps_.register_if ());
 }
 
@@ -80,7 +79,6 @@ template <class IF> CosTrading::TypeRepository_ptr
 TAO_Support_Attributes<IF>::type_repos (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Returning Service Type Repository.\n"));
   return CosTrading::TypeRepository::_duplicate (this->attrs_.type_repos ());
 }
 

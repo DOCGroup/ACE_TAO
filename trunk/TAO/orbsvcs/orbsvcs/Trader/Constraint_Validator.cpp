@@ -224,13 +224,16 @@ visit_div(TAO_Binary_Constraint* boolean_div)
       switch(right->expr_type())
 	{
 	case TAO_UNSIGNED:
-	  right_isnt_zero = (CORBA::ULong)(*((TAO_Literal_Constraint*)right));
+	  right_isnt_zero =
+	    ((CORBA::ULong) (*((TAO_Literal_Constraint*) right)) != 0);
 	  break;
 	case TAO_SIGNED:
-	  right_isnt_zero = (CORBA::Long)(*((TAO_Literal_Constraint*)right));
+	  right_isnt_zero =
+	    ((CORBA::Long) (*((TAO_Literal_Constraint*) right)) != 0);
 	  break;
 	case TAO_DOUBLE:
-	  right_isnt_zero = (CORBA::Double)(*((TAO_Literal_Constraint*)right));
+	  right_isnt_zero =
+	    ((CORBA::Double) (*((TAO_Literal_Constraint*) right)) != 0.0)
 	  break;
 	}
 
