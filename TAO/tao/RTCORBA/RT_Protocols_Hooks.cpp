@@ -61,6 +61,17 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
 						   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  object =
+    this->orb_core_->object_ref_table ().resolve_initial_references (
+								     "RTCurrent"
+								     ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  
+  this->current_ =
+    RTCORBA::Current::_narrow (object.in ()
+			       ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
 }
 
 int
@@ -333,22 +344,12 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
     {
       // Make several invocation, changing the priority of this thread
       // for each.
-      CORBA::Object_var object =
-	this->orb_core_->object_ref_table ().resolve_initial_references (
-          "RTCurrent"
-          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RTCORBA::Current_var current =
-	RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       RTCORBA::NetworkPriorityMapping *pm =
 	this->network_mapping_manager_->mapping ();
 
       CORBA::Short priority =
-	current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+	this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (pm->to_network (priority, codepoint) == 0)

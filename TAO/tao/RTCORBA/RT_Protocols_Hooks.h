@@ -180,6 +180,8 @@ protected:
   // Save a reference to the priority mapping manager.
   TAO_Priority_Mapping_Manager_var mapping_manager_;
   TAO_Network_Priority_Mapping_Manager_var network_mapping_manager_;
+
+  RTCORBA::Current_var current_;
 };
 
 #if defined (__ACE_INLINE__)
