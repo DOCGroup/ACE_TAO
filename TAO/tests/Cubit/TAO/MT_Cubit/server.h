@@ -53,12 +53,12 @@ class Cubit_Task : public ACE_Task<ACE_NULL_SYNCH>
 	      ACE_Barrier *barrier,
 	      u_int task_id);
   // Constructor.
-  
+
   virtual int svc (void);
   // Active Object entry point.
 
   CORBA::String get_servant_ior (u_int index);
-  
+
 protected:
   Cubit_Task (void);
   // No-op constructor.
@@ -101,14 +101,8 @@ private:
   // Barrier for the multiple servants to synchronize after
   // binding to the orb.
 
-#if defined (linux)
-public:
-#endif /* linux */
   CORBA::String *servants_iors_;
   // ior strings of the servants
-#if defined (linux)
-private:
-#endif /* linux */
 
   CosNaming::NamingContext_var naming_context_;
   // Object reference to the naming service
@@ -165,7 +159,7 @@ private:
 
   CORBA::String *cubits_;
   // Array of cubit ior strings
-  
+
   Cubit_Factory_i *cubit_factory_;
   // cubit factory object
 
