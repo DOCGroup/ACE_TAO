@@ -213,6 +213,8 @@ ACE_Object_Manager::init (void)
                                   ACE_TOKEN_MANAGER_CREATION_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                   ACE_TOKEN_INVARIANTS_CREATION_LOCK)
+          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
+                                  ACE_PROACTOR_EVENT_LOOP_LOCK)
 #     endif /* ACE_MT_SAFE */
         }
 
@@ -664,6 +666,8 @@ ACE_Object_Manager::fini (void)
                                       ACE_TOKEN_MANAGER_CREATION_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                       ACE_TOKEN_INVARIANTS_CREATION_LOCK)
+      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
+                                      ACE_PROACTOR_EVENT_LOOP_LOCK)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 

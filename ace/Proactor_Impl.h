@@ -85,7 +85,7 @@ public:
   // methods.
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void) = 0;
-    // Create the correct implementation class for doing Asynch_Read_Stream. 
+  // Create the correct implementation class for doing Asynch_Read_Stream. 
 
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void) = 0;
   // Create the correct implementation class for doing Asynch_Write_Stream. 
@@ -186,7 +186,12 @@ public:
                                                        int signal_number = 0) = 0;
   // Create the correct implementation object for the Timer
   // result. POSIX_SIG_Proactor will create a Timer object with a
-  // meaningful signal number, if you leave the signal number as 0. 
+  // meaningful signal number, if you leave the signal number as 0.
+
+  virtual int post_wakeup_completions (int how_many) = 0;
+  // Post <how_many> completions to the completion port so that all
+  // threads can wake up. This is used in conjunction with the
+  // <run_event_loop>. 
 };
 
 #endif /* (ACE_WIN32 && ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */

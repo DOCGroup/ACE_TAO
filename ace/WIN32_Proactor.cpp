@@ -16,6 +16,38 @@
 #include "ace/WIN32_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
+class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
+{
+  // = TITLE
+  // 
+  //     This is result object is used by the <end_event_loop> of the 
+  //     ACE_Proactor interface to wake up all the threads blocking
+  //     for completions.
+  // 
+  // = DESCRIPTION
+  // 
+  
+public:
+  ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
+                               const void *act = 0,
+                               ACE_HANDLE event = ACE_INVALID_HANDLE,
+                               int priority = 0,
+                               int signal_number = ACE_SIGRTMIN);
+  // Constructor.
+  
+  virtual ~ACE_WIN32_Wakeup_Completion (void);
+  // Destructor.
+  
+  
+  virtual void complete (u_long bytes_transferred = 0,
+                         int success = 1,
+                         const void *completion_key = 0,
+                         u_long error = 0);
+  // This method calls the <handler>'s <handle_wakeup> method.
+};
+
+// *********************************************************************
+
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         int used_with_reactor_event_loop)
   : completion_port_ (0),
@@ -469,6 +501,23 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 }
 
 int
+ACE_WIN32_Proactor::post_wakeup_completions (int how_many)
+{
+  ACE_WIN32_Wakeup_Completion *wakeup_completion = 0;
+  for (ssize_t ci = 0; ci < how_many; ci++)
+    {
+      ACE_NEW_RETURN (wakeup_completion,
+                      ACE_WIN32_Wakeup_Completion (this->wakeup_handler_),
+                      -1);
+      
+      if (wakeup_completion->post_completion (this) == -1)
+        return -1;
+    }
+  
+  return 0;
+}  
+
+int
 ACE_WIN32_Proactor::wake_up_dispatch_threads (void)
 {
   return 0;
@@ -513,12 +562,37 @@ ACE_WIN32_Asynch_Timer::complete (u_long bytes_transferred,
                                   const void *completion_key,
                                   u_long error)
 {
-    ACE_UNUSED_ARG (error);
+  ACE_UNUSED_ARG (error);
   ACE_UNUSED_ARG (completion_key);
   ACE_UNUSED_ARG (success);
   ACE_UNUSED_ARG (bytes_transferred);
 
   this->handler_.handle_time_out (this->time_, this->act ());
+}
+
+// *********************************************************************
+
+ACE_WIN32_Wakeup_Completion::ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
+                                                          const void *act,
+                                                          ACE_HANDLE event,
+                                                          int priority,
+                                                          int signal_number)
+  : ACE_Asynch_Result_Impl (),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number)
+{
+}
+
+ACE_WIN32_Wakeup_Completion::~ACE_WIN32_Wakeup_Completion (void)
+{
+}
+
+void
+ACE_WIN32_Wakeup_Completion::complete (u_long       /* bytes_transferred */,
+                                       int          /* success */,
+                                       const void * /* completion_key */,
+                                       u_long       /*  error */)
+{
+  this->handler_.handle_wakeup ();
 }
 
 #endif /* ACE_WIN32 */
