@@ -1,3 +1,9 @@
+Thu Oct 28 11:48:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Reactor/Misc/pingpong.cpp: Added missing includes
+	  "ace/Barrier.h" and "ace/Thread.h" for ACE_WIN32. Also added
+	  some missing ACE_TEXT() around string literals.
+
 Thu Oct 28 07:03:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:

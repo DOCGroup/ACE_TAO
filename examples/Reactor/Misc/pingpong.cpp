@@ -43,6 +43,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
+#if defined (ACE_WIN32) || defined (CHORUS)
+#  include "ace/Barrier.h"
+#  include "ace/Thread.h"
+#endif
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
@@ -273,8 +277,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             (void *) handles[1],
                             THR_DETACHED) == -1)
       ACE_ERROR ((LM_ERROR,
-                  "%p\n%a",
-                  "spawn",
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("spawn"),
                   1));
   barrier.wait ();
 #else
@@ -282,18 +286,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (pid == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                "fork",
+                ACE_TEXT ("%p\n%a"),
+                ACE_TEXT ("fork"),
                 1));
   run_svc (handles[pid == 0]);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) %n: shutting down tester\n"));
+              ACE_TEXT ("(%P|%t) %n: shutting down tester\n")));
 #endif /* ACE_WIN32 */
 
   if (pipe.close () == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "close"));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("close")));
   return 0;
 }
