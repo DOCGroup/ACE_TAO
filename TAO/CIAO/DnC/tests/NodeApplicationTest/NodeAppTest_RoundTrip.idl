@@ -22,6 +22,8 @@ module NodeAppTest
 
   component NodeAppTest_RoundTrip supports LatencyTest
   {
+    provides LatencyTest facet_1;
+    provides LatencyTest facet_2;
   };
 
   home NodeAppTest_RoundTripHome manages NodeAppTest_RoundTrip

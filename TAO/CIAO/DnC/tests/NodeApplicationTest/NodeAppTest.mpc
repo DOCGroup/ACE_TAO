@@ -44,11 +44,9 @@ project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
   dynamicflags   = NODEAPPTEST_ROUNDTRIP_EXEC_BUILD_DLL
 
   IDL_Files {
-    RoundTripEI.idl
   }
 
   Source_Files {
-    RoundTripEIC.cpp
     RoundTrip_exec.cpp
   }
 }
@@ -76,5 +74,18 @@ project (NodeAppTest_client) : ciao_server_dnc {
 
  Source_Files {
    NodeApp_test_client.cpp
+ }
+}
+
+project (NodeAppTest_client_ex) : ciao_server_dnc {
+ after += NodeAppTest_RoundTrip_exec
+ libs += NodeAppTest_RoundTrip_stub
+ exename += client_ex
+
+ IDL_Files {
+ }
+
+ Source_Files {
+   NodeApp_test_client_ex.cpp
  }
 }
