@@ -1,4 +1,6 @@
 //$Id$
+#ifndef SIMPLE_UTIL_C
+#define SIMPLE_UTIL_C
 # include "Simple_util.h"
 
 // Constructor.
@@ -150,7 +152,7 @@ Server<Servant>::register_name (void)
       CORBA::Object_var object = servant_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      namingClient->bind (bindName,
+      namingClient->rebind (bindName,
                           object.in(),       
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;  
@@ -235,18 +237,6 @@ Client<InterfaceObj, Var>::parse_args (void)
       case 'x': // read the flag for shutting down
         this->shutdown_ = 1;
         break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-n loopcount]"
-                           " [-f ior-file]"
-                           " [-k ior]"
-                           " [-x]"
-                           "\n",
-                           this->argv_ [0]),
-                          -1);
       }
   
   // Indicates successful parsing of command line.
@@ -322,3 +312,5 @@ Client<InterfaceObj, Var>::shutdown (int flag)
   // Fills the flag
   shutdown_ = flag;
 }
+
+#endif

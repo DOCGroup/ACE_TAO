@@ -37,7 +37,7 @@ public:
   Time_Client_i (void);
   // Constructor
 
-  ~Time_Client_i (void);
+  virtual ~Time_Client_i (void);
   // Destructor
 
   virtual int run (int, char** );
