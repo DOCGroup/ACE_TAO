@@ -276,6 +276,7 @@ be_visitor_root::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
