@@ -19,6 +19,10 @@ $am_ior = PerlACE::LocalFile ("am.ior");
 $ACE_ROOT=$ENV{'ACE_ROOT'};
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
+if ($CIAO_ROOT eq "") {
+    $CIAO_ROOT="$ACE_ROOT/TAO/CIAO";
+}
+
 unlink $daemon_ior;
 unlink $am_ior;
 
