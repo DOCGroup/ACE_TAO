@@ -1,3 +1,9 @@
+Tue Sep 21 16:49:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/ACE-subsets.html: Updated the document to point to the
+	  -frepo discussion.  Thanks to Timothy Canham
+ 	  <Timothy.Canham@jpl.nasa.gov> for motivating this.
+
 Tue Sep 21 16:07:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-subsets.html: fixed size comparison chart; the
