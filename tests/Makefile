@@ -24,6 +24,7 @@ BIN =	Env_Value_Test \
 	Map_Manager_Test \
 	MM_Shared_Memory_Test \
 	Mem_Map_Test \
+	MT_Reactor_Timer_Test \
 	MT_SOCK_Test \
 	Simple_Message_Block_Test \
 	Message_Block_Test \
