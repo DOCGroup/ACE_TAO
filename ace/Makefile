@@ -101,6 +101,7 @@ DEMUX_FILES = \
   Select_Reactor \
   Select_Reactor_Base \
   SUN_Proactor \
+  Dev_Poll_Reactor \
   TP_Reactor \
   TkReactor \
   WFMO_Reactor \
@@ -5724,6 +5725,87 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl
+
+.obj/Dev_Poll_Reactor.o .obj/Dev_Poll_Reactor.so .shobj/Dev_Poll_Reactor.o .shobj/Dev_Poll_Reactor.so: Dev_Poll_Reactor.cpp \
+ Dev_Poll_Reactor.h \
+ pre.h \
+ Reactor_Impl.h \
+ Timer_Queue.h \
+ Synch.h \
+ ACE_export.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ OS.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Dirent.inl \
+ OS_String.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
+ Default_Constants.h \
+ Global_Macros.h \
+ Min_Max.h \
+ streams.h \
+ Trace.h \
+ OS.i \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
+ Timer_Queue_T.h \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Test_and_Set.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Test_and_Set.i \
+ Test_and_Set.cpp \
+ Timer_Queue_T.i \
+ Timer_Queue_T.cpp \
+ Signal.h \
+ Signal.i \
+ Pipe.h \
+ Pipe.i \
+ Dev_Poll_Reactor.inl \
+ Handle_Set.h \
+ Handle_Set.i \
+ Reactor.h \
+ Reactor.i \
+ Timer_Heap.h \
+ Timer_Heap_T.h \
+ Unbounded_Set.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Malloc_Base.h \
+ Timer_Heap_T.cpp
 
 .obj/TP_Reactor.o .obj/TP_Reactor.so .shobj/TP_Reactor.o .shobj/TP_Reactor.so: TP_Reactor.cpp \
  TP_Reactor.h \

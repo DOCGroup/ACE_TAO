@@ -993,16 +993,14 @@ protected:
    * signal events.  Returns the total number of ACE_Event_Handlers
    * that were dispatched or -1 if something goes wrong.
    */
-  int dispatch (struct pollfd *pfds, int active_handle_count);
+  int dispatch (void);
 
   ///
   int dispatch_timer_handlers (int &number_of_handlers_dispatched);
 
   /// Dispatch all IO related events to their corresponding event
   /// handlers.
-  int dispatch_io_events (struct pollfd *pfds,
-                          int nfds,
-                          int &io_handlers_dispatched);
+  int dispatch_io_events (int &io_handlers_dispatched);
 
   /// Register the given event handler with the reactor.
   int register_handler_i (ACE_HANDLE handle,

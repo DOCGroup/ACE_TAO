@@ -1185,7 +1185,7 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::handle_events_i");
 
   int result = 0;
-  int active_handle_count = 0;
+  // int active_handle_count = 0;
 
   // Poll for events
   //
@@ -1208,7 +1208,7 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
 }
 
 int
-ACE_Dev_Poll_Reactor::dispatch (int active_handle_count)
+ACE_Dev_Poll_Reactor::dispatch (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dispatch");
 
@@ -1239,7 +1239,7 @@ ACE_Dev_Poll_Reactor::dispatch (int active_handle_count)
       // Perform the Template Method for dispatching all the handlers.
 
       // First check for interrupts.
-      if (active_handle_count == -1)
+      if (0 /* active_handle_count == -1 */)
         {
           // Bail out -- we got here since the poll (i.e. ioctl()) was
           // interrupted.
@@ -1247,11 +1247,13 @@ ACE_Dev_Poll_Reactor::dispatch (int active_handle_count)
             {
               ACE_Sig_Handler::sig_pending (0);
 
+#if 0
               // If any HANDLES in the <ready_set_> are activated as a
               // result of signals they should be dispatched since
               // they may be time critical...
               pfds = this->ready_set_.pfds;
               active_handle_count = this->ready_set_.nfds;
+#endif  /* 0 */
 
               // Record the fact that the Reactor has dispatched a
               // handle_signal() method.  We need this to return the
@@ -1271,7 +1273,7 @@ ACE_Dev_Poll_Reactor::dispatch (int active_handle_count)
 
       // Check to see if there are no more I/O handles left to
       // dispatch AFTER we've handled the timers.
-      else if (active_handle_count == 0)
+      else if (0 /* active_handle_count == 0 */)
         return io_handlers_dispatched
           + other_handlers_dispatched
           + signal_occurred;
@@ -1294,7 +1296,7 @@ ACE_Dev_Poll_Reactor::dispatch (int active_handle_count)
         // State has changed, so exit loop.
         break;
     }
-  while (active_handle_count > 0);
+  while (0 /* active_handle_count > 0 */);
 
   return io_handlers_dispatched + other_handlers_dispatched + signal_occurred;
 }
@@ -1377,8 +1379,6 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
 
       ACE_Event_Handler *eh = this->handler_rep_.find (handle);
 
-      int status = 0;
-
       {
         // Modify the reference count in an exception-safe way.
         ACE_Dev_Poll_Handler_Guard (this->handler_rep_, handle);
@@ -1396,7 +1396,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
             ACE_DEBUG ((LM_DEBUG, "GOT POLLOUT EVENT\n"));
 
             int status =
-              this->upcall (eh, ACE_Event_Handler::handle_output, handle);
+              this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
 
             if (status < 0)
               {
@@ -1415,7 +1415,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
             ACE_DEBUG ((LM_DEBUG, "GOT POLLPRI EVENT\n"));
 
             int status =
-              this->upcall (eh, ACE_Event_Handler::handle_exception, handle);
+              this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
 
             if (status < 0)
               {
@@ -1436,7 +1436,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
 //                         handle));
 
             int status =
-              this->upcall (eh, ACE_Event_Handler::handle_input, handle);
+              this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
 
             if (status < 0)
               {
@@ -1595,7 +1595,7 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Handle_Set &handle_set,
 
   return 0;
 }
-
+
 int
 ACE_Dev_Poll_Reactor::register_handler (int signum,
                                         ACE_Event_Handler *new_sh,
