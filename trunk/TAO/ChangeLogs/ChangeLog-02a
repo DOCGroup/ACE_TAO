@@ -1,3 +1,9 @@
+Thu Jul  5 22:04:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/LongUpcalls/run_ami_test.pl: Adding a new perl script to
+	  this test. This is supposed to fail in the daily builds as this
+	  needs bug fix 575.
+
 Thu Jul  5 21:16:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
          * orbsvcs/orbsvcs/AV/AV_Core.h
