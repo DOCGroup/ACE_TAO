@@ -124,7 +124,7 @@ namespace TMCast
         auto_ptr<LinkListener> ll (new LinkListener (sock_, in_link_data_));
 
         {
-		  ACE_MT (AutoLock lock (mutex_));
+          AutoLock lock (mutex_);
 
           // Loop
           //
@@ -298,10 +298,10 @@ namespace TMCast
   private:
     ACE_thread_t thread_;
 
-    ACE_SYNCH_MUTEX mutex_;
-    ACE_SYNCH_CONDITION cond_;
+    ACE_Thread_Mutex mutex_;
+    ACE_Condition<ACE_Thread_Mutex> cond_;
 
-    typedef ACE_Guard<ACE_SYNCH_MUTEX> AutoLock;
+    typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
 
     char id_[Protocol::MEMBER_ID_LENGTH];
 
@@ -461,11 +461,11 @@ namespace TMCast
     }
 
   private:
-    ACE_SYNCH_MUTEX mutex_;
-    ACE_SYNCH_CONDITION send_cond_;
-    ACE_SYNCH_CONDITION recv_cond_;
+    ACE_Thread_Mutex mutex_;
+    ACE_Condition<ACE_Thread_Mutex> send_cond_;
+    ACE_Condition<ACE_Thread_Mutex> recv_cond_;
 
-    typedef ACE_Guard<ACE_SYNCH_MUTEX> AutoLock;
+    typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
 
     bool failed_;
 
