@@ -106,8 +106,10 @@ be_sequence::gen_name (void)
   // append the size (if any)
   if (!this->unbounded_)
     {
-      ACE_OS::sprintf (namebuf, "%s_%d", namebuf, this->max_size ()->ev
-                       ()->u.ulval);
+      ACE_OS::sprintf (namebuf, 
+                       "%s_%lu", 
+                       namebuf, 
+                       this->max_size ()->ev ()->u.ulval);
     }
   return ACE_OS::strdup (namebuf);
 }
@@ -279,7 +281,7 @@ be_sequence::instance_name ()
                          this->flatname());
       else
         ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_Object_Sequence_%s_%d",
+                         "_TAO_Bounded_Object_Sequence_%s_%lu",
                          this->flatname(),
                          this->max_size ()->ev()->u.ulval);
       break;
@@ -313,7 +315,7 @@ be_sequence::instance_name ()
 	}
       else
         ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_Sequence_%s_%d",
+                         "_TAO_Bounded_Sequence_%s_%lu",
                           this->flatname(),
                           //prim_type->flatname (),
                           this->max_size()->ev()->u.ulval);
