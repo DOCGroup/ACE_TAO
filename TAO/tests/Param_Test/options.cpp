@@ -25,7 +25,7 @@ ACE_RCSID(Param_Test, options, "$Id$")
 
 // Constructor.p
 Options::Options (void)
-  : ior_ (0),
+  : ior_ (CORBA::string_dup ("file://test.ior")),
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
     loop_count_ (1),

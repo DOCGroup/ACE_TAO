@@ -18,10 +18,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Param_Test, server, "$Id$")
+ACE_RCSID (Param_Test, 
+           server, 
+           "$Id$")
 
 // Parses the command line arguments and returns an error status.
 static FILE *ior_output_file = 0;
+static char *ior_output_filename = "test.ior";
 
 static int
 parse_args (int argc, char *argv[])
@@ -36,11 +39,7 @@ parse_args (int argc, char *argv[])
         TAO_debug_level++;
         break;
       case 'o':
-        ior_output_file = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (ior_output_file == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+        ior_output_filename = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -140,12 +139,26 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) The IOR is <%s>\n", str.in ()));
-      if (ior_output_file)
         {
-          ACE_OS::fprintf (ior_output_file, "%s", str.in());
-          ACE_OS::fclose (ior_output_file);
+          ACE_DEBUG ((LM_DEBUG, 
+                      "(%P|%t) The IOR is <%s>\n", 
+                      str.in ()));
         }
+
+      FILE *ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
+
+      if (ior_output_file == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             ior_output_filename), 
+                            -1);
+        }
+
+      ACE_OS::fprintf (ior_output_file, 
+                       "%s", 
+                       str.in ());
+      ACE_OS::fclose (ior_output_file);
 
 
       // Make the POAs controlled by this manager active

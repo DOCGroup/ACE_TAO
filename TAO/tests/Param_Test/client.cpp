@@ -26,7 +26,9 @@
 
 #include "tao/DynamicInterface/Request.h"
 
-ACE_RCSID(Param_Test, client, "$Id$")
+ACE_RCSID (Param_Test, 
+           client, 
+           "$Id$")
 
 // Constructor.p
 template <class T>
