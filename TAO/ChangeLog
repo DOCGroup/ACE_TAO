@@ -1,3 +1,11 @@
+Mon Mar 21 09:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+          Regenerated
+
 Sun Mar 20 08:53:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RT_Stub.cpp:
