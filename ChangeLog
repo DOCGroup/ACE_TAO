@@ -1,3 +1,62 @@
+Sat Nov 10 19:27:36 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+
+	  If data is still buffered within OpenSSL's internal buffer, then
+	  force the Reactor to invoke the event handler (with
+	  the appropriate mask) before waiting for more events
+	  (e.g. blocking on select()) by returning a value greater than
+	  one.  All pending data must be processed before waiting for more
+	  events to come in on the SSL handle.
+
+	* ace/SSL/SSL_SOCK_Stream.h (reactor, handler, notify):
+
+	  These methods are no longer needed.  Removed them.
+
+	  (sendv):
+
+	  Added missing timeout parameter.
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+	* ace/SSL/SSL_SOCK_Stream.i (notify, recv_i, send_i, close):
+
+	  Reverted code that notify()ed the Reactor if data was still
+	  pending in OpenSSL's internal buffers.  The idea was to force
+	  the reactor to call the appropriate event handler before polling
+	  for events (e.g. blocking on select()).  However, notifications
+	  are not dispatched until after events are polled which meant
+	  that there is no point in notify()ing the Reactor.
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (reactor, handler):
+
+	  These methods are no longer needed.  Removed them.
+
+	  (sendv):
+
+	  Fixed/improved the writev() semantics and emulation in this
+	  method.  Previously, if an iov_base buffer was successfully
+	  sent, that success was not reported to the caller if subsequent
+	  sends in the emulation loop failed.  The caller would end up
+	  thinking that no part of the message was sent.  The improved
+	  semantics are now the following if the underlying send() call
+	  returns with an EWOULDBLOCK or ETIME error condition:
+
+		- If no data was sent, then return -1.
+		- If some data was sent on a previous loop iteration then
+	          return the number of bytes successfully sent.
+
+	  In both cases, errno is unchanged.
+
+	  Incidentally, this fixes a problem in TAO's SSLIOP pluggable
+	  protocol when sending very large requests.  Thanks to Andrew
+	  Finnell <Andrew.Finnell@esecurityinc.com> for providing an
+	  example that exhibited the problem.
+
+	  Lastly, the missing timeout support has been added.  The timeout
+	  is decremented on each loop iteration.
+
 Sat Nov 10 17:16:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (fopen): Removed redundant parentheses.

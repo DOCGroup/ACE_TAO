@@ -48,6 +48,8 @@ ACE_SSL_Connect_Handler::handle_close (ACE_HANDLE /* handle */,
 int
 ACE_SSL_Connect_Handler::ssl_connect (void)
 {
+  SSL *ssl = this->ssl_stream_.ssl ();
+
   // A race condition exists where data may be sent over an SSL
   // session after the SSL active connection is completed but before
   // this event handler is deregistered from the Reactor.
@@ -55,12 +57,12 @@ ACE_SSL_Connect_Handler::ssl_connect (void)
   // being handled by the SSL_connect() call below, resulting in an SSL
   // protocol error (i.e. "SSL_ERROR_SSL" error status).  The
   // following check avoids the race condition.
-  if (SSL_is_init_finished (this->ssl_stream_.ssl ()))
+  if (SSL_is_init_finished (ssl))
     return 0;
 
-  int status = ::SSL_connect (this->ssl_stream_.ssl ());
+  int status = ::SSL_connect (ssl);
 
-  switch (::SSL_get_error (this->ssl_stream_.ssl (), status))
+  switch (::SSL_get_error (ssl, status))
     {
     case SSL_ERROR_NONE:
       // Start out with non-blocking disabled on the SSL stream.
@@ -71,6 +73,15 @@ ACE_SSL_Connect_Handler::ssl_connect (void)
 
     case SSL_ERROR_WANT_WRITE:
     case SSL_ERROR_WANT_READ:
+      // If data is still buffered within OpenSSL's internal buffer,
+      // then force the Reactor to invoke the SSL connect event handler
+      // (with the appropriate mask) before waiting for more events
+      // (e.g. blocking on select()).  All pending data must be
+      // processed before waiting for more events to come in on the
+      // SSL handle.
+      if (::SSL_pending (ssl))
+        return 1;
+
       break;
 
     case SSL_ERROR_ZERO_RETURN:

@@ -77,15 +77,17 @@ ssize_t
 TAO_SSLIOP_Transport::send_i (iovec *iov,
                               int iovcnt,
                               size_t &bytes_transferred,
-                              const ACE_Time_Value * /* max_wait_time */)
+                              const ACE_Time_Value *max_wait_time)
 {
   // @@ We should not be attempting to send an iovec with an iovcnt
   //    greater than 1!  Proper iovec non-blocking send semantics
   //    cannot be maintained with SSL.  Either send an iovec with an
   //    iovcnt of one or just send a single buffer.
   //        -Ossama
+
   ssize_t retval =
-    this->connection_handler_->peer ().sendv (iov, iovcnt /*, max_wait_time*/);
+    this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
+
   if (retval > 0)
     bytes_transferred = retval;
 
@@ -152,13 +154,6 @@ TAO_SSLIOP_Transport::register_handler_i (void)
 
   // Set the flag in the Connection Handler
   this->ws_->is_registered (1);
-
-  // Set the reactor and handler in the ACE_SSL_SOCK_Stream so that
-  // the reactor is notified if data is still pending for read or
-  // write.  This is necessary since SSL is record-oriented, and the
-  // underlying SSL implementation may buffer data.
-  this->connection_handler_->peer ().reactor (r);
-  this->connection_handler_->peer ().handler (this->connection_handler_);
 
   // Register the handler with the reactor.
   return r->register_handler (this->connection_handler_,

@@ -54,7 +54,6 @@ public:
   int connect (TAO_GIOP_Invocation *invocation,
                TAO_Transport_Descriptor_Interface *desc,
                CORBA::Environment &ACE_TRY_ENV);
-  int preconnect (const char *preconnections);
 
 public:
 

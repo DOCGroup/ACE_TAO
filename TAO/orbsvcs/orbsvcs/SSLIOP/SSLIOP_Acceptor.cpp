@@ -215,7 +215,7 @@ TAO_SSLIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
-      if (pfile->tag () == TAO_TAG_IIOP_PROFILE)
+      if (pfile->tag () == IOP::TAG_INTERNET_IOP)
         {
           ssliop_profile = ACE_dynamic_cast (TAO_SSLIOP_Profile *,
                                              pfile);

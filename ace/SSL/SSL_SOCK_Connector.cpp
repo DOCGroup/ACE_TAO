@@ -118,22 +118,6 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   // the Reactor is used, this isn't a busy wait.
   while (SSL_in_connect_init (ssl))
     {
-      // If data is still buffered within OpenSSL's internal buffer,
-      // then enable the handle in the Reactor's "ready set" in order
-      // to force the Reactor to invoke the SSL connect event handler
-      // before waiting for more data (e.g. blocking on select()).
-      // All pending data must be processed before waiting for more
-      // data to come in on the SSL handle.
-      if (::SSL_pending (ssl)
-          && this->reactor_->notify (&eh,
-                                     reactor_mask,
-                                     timeout) != 0)
-        {
-          (void) this->reactor_->remove_handler (&eh, reactor_mask);
-          (void) this->reactor_->owner (old_owner);
-          return -1;
-        }
-
       if (this->reactor_->handle_events (timeout) == -1
           || new_stream.get_handle () == ACE_INVALID_HANDLE)
         {
@@ -142,6 +126,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           return -1;
         }
     }
+
+  ACE_ASSERT (::SSL_pending (ssl) == 0);
 
   // SSL active connection was completed.  Deregister the event
   // handler from the Reactor, but don't close it.

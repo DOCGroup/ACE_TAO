@@ -17,7 +17,7 @@ ACE_RCSID (TAO_SSLIOP,
 static const char prefix_[] = "iiop";
 
 TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_IIOP_PROFILE),
+  :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR),
      no_protection_ (0)

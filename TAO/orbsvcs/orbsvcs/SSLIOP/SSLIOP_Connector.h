@@ -28,7 +28,6 @@
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "IIOP_SSL_Connector.h"
 #include "SSLIOP_Connection_Handler.h"
-#include "tao/Resource_Factory.h"
 
 
 /// Forward declarations.
@@ -38,7 +37,7 @@ class TAO_SSLIOP_Endpoint;
 /**
  * @class TAO_SSLIOP_Connector
  *
- * @brief IIOP-specific Connector bridge for pluggable protocols.
+ * @brief SSLIOP-specific Connector bridge for pluggable protocols.
  *
  * Concrete instance of the TAO_Connector class.  Responsible
  * for establishing a connection with a server and is called from
