@@ -5,16 +5,9 @@
 
 ACE_RCSID(Notify, Notify_Worker_Task, "$Id$")
 
-TAO_Notify_Worker_Task::TAO_Notify_Worker_Task (TAO_Notify_Event_Manager* event_manager, CORBA::Boolean activate_object)
-  :event_manager_ (event_manager),
-   activate_object_ (activate_object)
+TAO_Notify_Worker_Task::TAO_Notify_Worker_Task (CORBA::Boolean activate_object)
+  :activate_object_ (activate_object)
 {
-}
-
-TAO_Notify_Event_Manager*
-TAO_Notify_Worker_Task::event_manager (void)
-{
-  return this->event_manager_;
 }
 
 int
@@ -61,7 +54,7 @@ TAO_Notify_Worker_Task::process_event (TAO_Notify_Command *mb, CORBA::Environmen
   // @@ Create Reactive_Worker and MT_Worker
   if (this->activate_object_ == 0)
     {
-      int result = mb->execute (this, ACE_TRY_ENV);
+      int result = mb->execute (ACE_TRY_ENV);
       ACE_Message_Block::release (mb);
       return result;
     }
@@ -95,7 +88,7 @@ TAO_Notify_Worker_Task::svc (void)
               continue;
             }
 
-          int result = command->execute (this, ACE_TRY_ENV);
+          int result = command->execute (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           ACE_Message_Block::release (mb);
@@ -115,22 +108,14 @@ TAO_Notify_Worker_Task::svc (void)
 
 /**************************************************************************/
 
-int
-TAO_Notify_Shutdown_Command::execute (TAO_Notify_Worker_Task* parent_task,
-                                      CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Shutdown_Command::TAO_Notify_Shutdown_Command (void)
+  :TAO_Notify_Command (0,0)
 {
-  if (parent_task->next()) // if there are other tasks, tell them!.
-    {
-      TAO_Notify_Worker_Task* next_task =
-        ACE_static_cast (TAO_Notify_Worker_Task*, parent_task->next());
+}
 
-      TAO_Notify_Shutdown_Command * mb = new TAO_Notify_Shutdown_Command ();
-      // ACE_Message_Block::duplicate (this); // increment our ref count.
-      // @@ investigate crash due to duplicate.
-
-      next_task->process_event (mb, ACE_TRY_ENV);
-    }
-
+int
+TAO_Notify_Shutdown_Command::execute (CORBA::Environment& /*ACE_TRY_ENV*/)
+{
   return -1;
 }
 /**************************************************************************/

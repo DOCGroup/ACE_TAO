@@ -80,9 +80,6 @@ TAO_Notify_EventChannelFactory_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_Notify_EventChannelFactory_i::event_channel_destroyed (CosNotifyChannelAdmin::ChannelID channel_id)
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-
-  this->ec_ids_.put (channel_id);
   ACE_DEBUG ((LM_DEBUG, "event_channel_destroyed %d\n", channel_id));
 }
 
@@ -114,8 +111,6 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
                    CosNotification::UnsupportedAdmin
                    ))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "In TAO_Notify_EventChannelFactory_i::create_channel\n"));
   TAO_Notify_EventChannel_i* channel =
     this->channel_objects_factory_->create_event_channel (this,
                                                           ACE_TRY_ENV);
@@ -131,21 +126,18 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
     ec_id = this->ec_ids_.get ();
 
     ACE_DEBUG ((LM_DEBUG, "event_channel created %d\n", ec_id));
-    channel->init (ec_id, initial_qos, initial_admin, this->my_POA_.in (), this->ec_POA_.in (),
-                   ACE_TRY_ENV);
-    ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
-
-    CORBA::Object_var obj = this->poa_factory_->
-      activate_object_with_id (ec_id,
-                               this->ec_POA_.in (),
-                               channel,
-                               ACE_TRY_ENV);
-    ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
-
-    this->ec_ids_.next ();
-
-    return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
   }
+
+  channel->init (ec_id, initial_qos, initial_admin, this->my_POA_.in (), this->ec_POA_.in (),
+                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
+
+  CORBA::Object_var obj = this->poa_factory_->
+    activate_object_with_id (ec_id, this->ec_POA_.in (), channel,
+                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
+
+  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
 }
 
 CosNotifyChannelAdmin::ChannelIDSeq*

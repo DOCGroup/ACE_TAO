@@ -38,11 +38,11 @@ TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_
    collection_factory_ (TAO_Notify_Factory::get_collection_factory ()),
    event_manager_ (event_channel->get_event_manager ()),
    event_listener_list_ (0),
-   filter_eval_task_ (0),
-   dispatching_task_ (0)
+   dispatching_task_ (0),
+   filter_eval_task_ (0)
 {
   // @@ Pradeep: don't forget the this-> stuff for local variables.
-  event_channel_->_add_ref (); // we don't want our parent to go away!
+  this->event_channel_->_add_ref (); // we don't want our parent to go away!
 }
 
 // Implementation skeleton destructor
@@ -58,6 +58,9 @@ TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
 
    this->event_channel_->consumer_admin_destroyed (this->my_id_);
    event_channel_->_remove_ref ();
+
+   delete this->dispatching_task_;
+   delete this->filter_eval_task_;
 }
 
 CORBA::ULong
@@ -97,7 +100,7 @@ void
 TAO_Notify_ConsumerAdmin_i::dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV)
 {
   // Dispatch the event to all the registered listeners.
-  TAO_Notify_Dispatch_Command_Worker worker (&event, this->dispatching_task_);
+  TAO_Notify_Dispatch_Command_Worker worker (&event, this->event_manager_->event_processor ());
   // Propogate the filter command.
 
   this->event_listener_list_->for_each (&worker, ACE_TRY_ENV);
@@ -116,7 +119,7 @@ TAO_Notify_ConsumerAdmin_i::evaluate_filter (TAO_Notify_Event &event, CORBA::Boo
     // If the filter operator requires that each listener attached to this admin be evaluated,
     // we feed the listeners to the "listener filter evaluation" task.
 
-    TAO_Notify_Filter_Command_Worker worker (&event, this->filter_eval_task_, 0);
+    TAO_Notify_Filter_Command_Worker worker (&event, this->event_manager_->event_processor (), 0);
     // note the last param. we ask that the parent filter *not* be evaluated again
     // because we've done it here.
 
@@ -145,11 +148,8 @@ TAO_Notify_ConsumerAdmin_i::evaluate_filter (TAO_Notify_Event &event, CORBA::Boo
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID proxyID)
+TAO_Notify_ConsumerAdmin_i::proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID /*proxyID*/)
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-
-  this->proxy_pushsupplier_ids_.put (proxyID);
 }
 
 void
@@ -174,10 +174,20 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
 
   this->event_listener_list_ =
     this->collection_factory_->create_event_listener_list (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Save the task to forward filtering/dispatching commands to:
-  this->filter_eval_task_ = this->event_manager_->event_processor ()->get_listener_filter_eval_task ();
-  this->dispatching_task_ = this->event_manager_->event_processor ()->get_dispatching_task ();
+  // Create the task to forward filtering/dispatching commands to:
+  this->dispatching_task_ =
+    this->event_manager_objects_factory_->create_dispatching_task (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->filter_eval_task_ =
+    this->event_manager_objects_factory_->create_listener_eval_task (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // open the tasks
+  this->dispatching_task_->open (0);
+  this->filter_eval_task_->open (0);
 
   // Initially we set up things so that all listeners are subscribed for
   // all the events so that things "work" even if we don't twiddle with
@@ -227,6 +237,12 @@ TAO_Notify_ConsumerAdmin_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
   this->poa_factory_->destroy_POA (this->proxy_pushsupplier_POA_.in (),
                                    ACE_TRY_ENV);
   ACE_CHECK;
+
+  this->dispatching_task_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->filter_eval_task_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -246,6 +262,18 @@ void
 TAO_Notify_ConsumerAdmin_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   this->destroy_i (ACE_TRY_ENV);
+}
+
+TAO_Notify_Worker_Task*
+TAO_Notify_ConsumerAdmin_i::event_dispatch_task (void)
+{
+  return this->dispatching_task_;
+}
+
+TAO_Notify_Worker_Task*
+TAO_Notify_ConsumerAdmin_i::filter_eval_task (void)
+{
+  return this->filter_eval_task_;
 }
 
 void
@@ -442,48 +470,35 @@ TAO_Notify_ConsumerAdmin_i::obtain_notification_push_supplier (CosNotifyChannelA
     ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxySupplier::_nil ());
 
     proxy_id = this->proxy_pushsupplier_ids_.get ();
-    this->proxy_pushsupplier_ids_.next ();
   }
 
-  ACE_TRY
+  switch (ctype)
     {
-      switch (ctype)
-        {
-        case CosNotifyChannelAdmin::ANY_EVENT:
-          {
-            obj = this->obtain_proxy_pushsupplier_i (proxy_id, ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-          break;
-        case CosNotifyChannelAdmin::STRUCTURED_EVENT:
-          {
-            obj = this->obtain_struct_proxy_pushsupplier_i (proxy_id, ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-          break;
+    case CosNotifyChannelAdmin::ANY_EVENT:
+      {
+        obj = this->obtain_proxy_pushsupplier_i (proxy_id, ACE_TRY_ENV);
+        ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxySupplier::_nil ());
+      }
+      break;
+    case CosNotifyChannelAdmin::STRUCTURED_EVENT:
+      {
+        obj = this->obtain_struct_proxy_pushsupplier_i (proxy_id, ACE_TRY_ENV);
+        ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxySupplier::_nil ());
+      }
+      break;
 
-        case CosNotifyChannelAdmin::SEQUENCE_EVENT:
-          {
-            obj = this->obtain_sequence_proxy_pushsupplier_i (proxy_id,
-                                                              ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-          break;
+    case CosNotifyChannelAdmin::SEQUENCE_EVENT:
+      {
+        obj = this->obtain_sequence_proxy_pushsupplier_i (proxy_id,
+                                                          ACE_TRY_ENV);
+        ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxySupplier::_nil ());
+      }
+      break;
 
-        default:
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                            CosNotifyChannelAdmin::ProxySupplier::_nil ());
-        }
-
-      //    this->proxy_pushsupplier_ids_.next ();
+    default:
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        CosNotifyChannelAdmin::ProxySupplier::_nil ());
     }
-  ACE_CATCHALL
-    {
-      this->proxy_pushsupplier_ids_.put (proxy_id);
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxySupplier::_nil ());
 
   return CosNotifyChannelAdmin::ProxySupplier::_narrow (obj.in (),
                                                         ACE_TRY_ENV);
@@ -663,32 +678,25 @@ TAO_Notify_ConsumerAdmin_i::pull_suppliers (CORBA::Environment &ACE_TRY_ENV)
 
 /****************************************************************************************************/
 
-TAO_Notify_Filter_Command_Worker::TAO_Notify_Filter_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Worker_Task* task, CORBA::Boolean eval_parent)
-  :event_ (event),
-   task_ (task),
-   eval_parent_ (eval_parent)
+TAO_Notify_Filter_Command_Worker::TAO_Notify_Filter_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Event_Processor* event_processor, CORBA::Boolean eval_parent)
+  : event_ (event),
+    event_processor_ (event_processor),
+    eval_parent_ (eval_parent)
 {
 }
 
 void
 TAO_Notify_Filter_Command_Worker::work (TAO_Notify_EventListener* event_listener, CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Pradeep: you should use ACE_NEW here....
-  // @@ Pradeep: do you really need to allocate this guy from the
-  // heap? Maybe you can just allocate it from the stack and only if
-  // somebody really wants to keep it around you make a copy?  The
-  // idea is to save allocations in the good case.
-  TAO_Notify_Listener_Filter_Eval_Command* mb =
-    new TAO_Notify_Listener_Filter_Eval_Command (this->event_, event_listener, this->eval_parent_);
-
-  this->task_->process_event (mb, ACE_TRY_ENV);
+  this->event_processor_->evaluate_listener_filter (this->event_, event_listener,
+                                                    this->eval_parent_, ACE_TRY_ENV);
 }
 
 /****************************************************************************************************/
 
-TAO_Notify_Dispatch_Command_Worker::TAO_Notify_Dispatch_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Worker_Task* task)
-  :event_ (event),
-   task_ (task)
+TAO_Notify_Dispatch_Command_Worker::TAO_Notify_Dispatch_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Event_Processor* event_processor)
+  : event_ (event),
+    event_processor_ (event_processor)
 {
 }
 
@@ -699,10 +707,7 @@ TAO_Notify_Dispatch_Command_Worker::~TAO_Notify_Dispatch_Command_Worker ()
 void
 TAO_Notify_Dispatch_Command_Worker::work (TAO_Notify_EventListener* event_listener, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Notify_Event_Dispatch_Command* dispatch =
-    new TAO_Notify_Event_Dispatch_Command (this->event_, event_listener);
-
-  task_->process_event (dispatch, ACE_TRY_ENV);
+  this->event_processor_->dispatch_event (this->event_, event_listener, ACE_TRY_ENV);
 }
 
 /****************************************************************************************************/

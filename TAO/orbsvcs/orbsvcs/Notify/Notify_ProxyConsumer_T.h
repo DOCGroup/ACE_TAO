@@ -59,6 +59,9 @@ public:
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
   // Evaluates true if this event is acceptable by the Source.
 
+  TAO_Notify_Worker_Task* filter_eval_task (void);
+  // The Worker task associated with the event listener for filter evaluation.
+
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -82,14 +85,17 @@ virtual void offer_change (
     CosNotifyComm::InvalidEventType
   ));
 
- protected:
-// = Helper methods
- void on_connected (CORBA::Environment &ACE_TRY_ENV);
- // Derived classes should call this when their suppliers connect.
+protected:
+  // = Helper methods
+  void on_connected (CORBA::Environment &ACE_TRY_ENV);
+  // Derived classes should call this when their suppliers connect.
 
- // = Data members
- TAO_Notify_SupplierAdmin_i* supplier_admin_;
- // My parent supplier admin.
+  // = Data members
+  TAO_Notify_SupplierAdmin_i* supplier_admin_;
+  // My parent supplier admin.
+
+  TAO_Notify_Worker_Task* filter_eval_task_;
+  // The filter evaluation task for this listener.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

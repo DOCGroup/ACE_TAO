@@ -1,6 +1,10 @@
 // $Id$
 #include "Notify_Event.h"
 
+#if ! defined (__ACE_INLINE__)
+#include "Notify_Event.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(Notify, Notify_Event, "$Id$")
 
 // @@ Pradeep: David is going to give you a hard time from having a
@@ -114,7 +118,12 @@ TAO_Notify_EventType::get_native (void) const
 
 TAO_Notify_Event::TAO_Notify_Event (void)
   :lock_ (0),
-   refcount_ (1)
+   refcount_ (1),
+   event_reliability_ (CosNotification::BestEffort),
+   priority_ (CosNotification::DefaultPriority),
+   //   start_time_ (0),
+   // stop_time_ (0),
+   timeout_ (0)
 {
   lock_ = new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
 }
@@ -258,6 +267,8 @@ TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (CosNotification::Structu
    event_type_ (notification->header.fixed_header.event_type),
    is_owner_ (1)
 {
+
+  this->init_QoS ();
 }
 
 TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent * notification)
@@ -271,6 +282,34 @@ TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
 {
   if (this->is_owner_)
     delete this->data_;
+}
+
+void
+TAO_Notify_StructuredEvent::init_QoS (void)
+{
+  CosNotification::PropertySeq& qos = data_->header.variable_header;
+
+  for (CORBA::ULong index = 0; index < qos.length (); ++index)
+    {
+      ACE_CString property_name(qos[index].name);
+
+      if (property_name.compare (CosNotification::Priority) == 0)
+        {
+          qos[index].value >>= this->priority_;
+        }
+      else if (property_name.compare (CosNotification::StartTime))
+        {
+          // qos[index].value >>= this->start_time_;
+        }
+      else if (property_name.compare (CosNotification::StopTime))
+        {
+          // qos[index].value >>= this->stop_time_;
+        }
+      else if (property_name.compare (CosNotification::Timeout))
+        {
+          qos[index].value >>= this->timeout_;
+        }
+    }
 }
 
 TAO_Notify_Event*

@@ -6,7 +6,8 @@
 ACE_INLINE void
 TAO_Notify_Event_Manager::process_event  (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV)
 {
-  this->event_processor_->process_event (event, event_source, ACE_TRY_ENV);
+  this->event_processor_->evaluate_source_filter (event, event_source, ACE_TRY_ENV);
+  // Start by checking if the event passes through the Source's filter.
 }
 
 ACE_INLINE void

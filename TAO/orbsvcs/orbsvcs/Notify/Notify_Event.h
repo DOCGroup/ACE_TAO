@@ -129,6 +129,29 @@ public:
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   // Push self to <consumer>
 
+  // = QoS Properties.
+  //
+
+  CORBA::Short event_reliability (void);
+  void event_reliability (CORBA::Short event_reliability);
+  // Not implemented.
+
+  CORBA::Short priority (void);
+  void priority (CORBA::Short priority);
+  // Event priority
+
+  TimeBase::UtcT start_time (void);
+  void start_time (TimeBase::UtcT start_time);
+  // Earliest delivery time.
+
+  TimeBase::UtcT stop_time (void);
+  void stop_time (TimeBase::UtcT stop_time);
+  // Latest absolute expiry time for this event.
+
+  TimeBase::TimeT timeout (void);
+  void timeout (TimeBase::TimeT timeout);
+  // Relative expiry time.
+
   // = Refcounted lifetime
   void _incr_refcnt (void);
   void _decr_refcnt (void);
@@ -139,6 +162,13 @@ public:
 
   CORBA::ULong refcount_;
   // The reference count.
+
+  // = QoS properties
+  CORBA::Short event_reliability_;
+  CORBA::Short priority_;
+  TimeBase::UtcT start_time_;
+  TimeBase::UtcT stop_time_;
+  TimeBase::TimeT timeout_;
 };
 
 // ****************************************************************
@@ -204,6 +234,11 @@ public:
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
 
 protected:
+
+  void init_QoS (void);
+  // Load the QoS properties specified for this event from <data_>.
+
+  // = Data Members
   CosNotification::StructuredEvent* data_;
   // The data
 
@@ -213,6 +248,11 @@ protected:
   CORBA::Boolean is_owner_;
   // Do we own the data.
 };
+
+
+#if defined (__ACE_INLINE__)
+#include "Notify_Event.i"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 

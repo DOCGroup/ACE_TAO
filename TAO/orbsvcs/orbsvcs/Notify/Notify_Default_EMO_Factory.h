@@ -58,10 +58,10 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
   // Create event processor.
 
   // = Create processing tasks.
-  virtual TAO_Notify_Worker_Task* create_source_eval_task (TAO_Notify_Event_Manager* event_manager, CORBA::Environment &ACE_TRY_ENV);
-  virtual TAO_Notify_Worker_Task* create_lookup_task (TAO_Notify_Event_Manager* event_manager, CORBA::Environment &ACE_TRY_ENV);
-  virtual TAO_Notify_Worker_Task* create_listener_eval_task (TAO_Notify_Event_Manager* event_manager, CORBA::Environment &ACE_TRY_ENV);
-  virtual TAO_Notify_Worker_Task* create_dispatching_task (TAO_Notify_Event_Manager* event_manager, CORBA::Environment &ACE_TRY_ENV);
+  virtual TAO_Notify_Worker_Task* create_source_eval_task (CORBA::Environment &ACE_TRY_ENV);
+  virtual TAO_Notify_Worker_Task* create_lookup_task (CORBA::Environment &ACE_TRY_ENV);
+  virtual TAO_Notify_Worker_Task* create_listener_eval_task ( CORBA::Environment &ACE_TRY_ENV);
+  virtual TAO_Notify_Worker_Task* create_dispatching_task (CORBA::Environment &ACE_TRY_ENV);
 
 protected:
   // = Params read via the svc.conf

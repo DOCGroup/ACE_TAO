@@ -3,11 +3,12 @@
 #include "Notify_Event_Dispatch_Command.h"
 #include "Notify_Listeners.h"
 #include "Notify_Event.h"
+#include "Notify_Event_Processor.h"
 
 ACE_RCSID(Notify, TAO_Notify_Event_Dispatch_Command, "$Id$")
 
-TAO_Notify_Event_Dispatch_Command::TAO_Notify_Event_Dispatch_Command (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener)
-  :event_ (event),
+TAO_Notify_Event_Dispatch_Command::TAO_Notify_Event_Dispatch_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener)
+  :TAO_Notify_Command (event_processor, event),
    event_listener_ (event_listener)
 {
   event_listener_->_incr_refcnt ();
@@ -22,7 +23,7 @@ TAO_Notify_Event_Dispatch_Command::~TAO_Notify_Event_Dispatch_Command ()
 }
 
 int
-TAO_Notify_Event_Dispatch_Command::execute (TAO_Notify_Worker_Task* /*parent_task*/, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Event_Dispatch_Command::execute (CORBA::Environment& ACE_TRY_ENV)
 {
   this->event_listener_->dispatch_event (*this->event_, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
