@@ -54,8 +54,8 @@
 class ACEXML_Export ACEXML_Mem_Map_Stream
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> Svc_Handler;
-  typedef ACE_Connector<Svc_Handler, ACE_SOCK_Connector> Connector;
+  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
+  typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;
   /// Default constructor
   ACEXML_Mem_Map_Stream (void);
 

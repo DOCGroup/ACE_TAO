@@ -1,3 +1,10 @@
+Tue Jun 04 13:45:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/Mem_Map_Stream.h: Fixed typedefs of template
+	  classes.
+
+	* ACEXML/common/XML_Common.dsp: Added new files to project files.
+
 Tue Jun  4 12:35:12 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Message_Queue*: Moved the state_ member and the accessor method
@@ -28,7 +35,7 @@ Tue Jun  4 06:46:27 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  "1" parameter to the call to deactivate() method to simply
 	  "pulse" the queue.  Also, changed the AC_Output_Handler::open()
 	  method to check if thr_count() == 0 when determining if to
-	  activate the service handler.	  
+	  activate the service handler.
 
 	* ace/Message_Queue_T.h: Added new pulse parameter to
 	  ACE_Message_Queue::deactivate() so that callers can decide
