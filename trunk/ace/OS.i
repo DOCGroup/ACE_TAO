@@ -9145,7 +9145,13 @@ ACE_OS::sigaction (int signum,
   if (osa == 0)
     osa = &sa;
 
-  osa->sa_handler = ::signal (signum, nsa->sa_handler);
+  if (nsa == 0)
+    {
+      osa->sa_handler = ::signal (signum, SIG_IGN);
+      ::signal (signum, osa->sa_handler);
+    }
+  else
+    osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
 #elif defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS_TM)
   ACE_UNUSED_ARG (signum);
