@@ -198,6 +198,7 @@
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_SWAB
+#define ACE_LACKS_TEMPNAM
 
 #if defined (_WIN32_WCE_EMULATION)
 // @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)
