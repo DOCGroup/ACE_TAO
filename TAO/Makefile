@@ -49,6 +49,8 @@ RELEASE_FILES = TAO/ChangeLog \
 		TAO/COPYING \
 		TAO/COPYING.sun \
 		TAO/release.chk \
+		TAO/rules.tao.GNU \
+		TAO/taoconfig.mk \
 		TAO/docs \
 		TAO/LICENSE.sun \
 		TAO/Makefile \
