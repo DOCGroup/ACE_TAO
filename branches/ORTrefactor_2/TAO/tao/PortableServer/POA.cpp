@@ -735,7 +735,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   CORBA::ULong i = 0;
 
-  //  Remove all children POAs
+  // Gather all ObjectReferenceTemplates and change all adapter states
+  // to inactivate
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end ();
        ++iterator)
@@ -754,27 +755,33 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       child_poa->adapter_state_ = PortableInterceptor::INACTIVE;
 
-      // @@ Johnny, this looks cranky to me. Why would anyone
-      // call adapter_state_changed over and over again. Shouldn't
-      // this be outside the loop? I know this looks busted in the
-      // main trunk too. Grr..
-      child_poa->adapter_state_changed (array_obj_ref_template,
-                                        child_poa->adapter_state_
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       ++i;
+    }
 
-      child_poa->destroy_i (etherealize_objects,
-                            wait_for_completion
-                            ACE_ENV_ARG_PARAMETER);
+  // Notify the state changes to the IORInterceptors
+  this->adapter_state_changed (array_obj_ref_template,
+                               PortableInterceptor::INACTIVE
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Destroy all child POA's now.
+  for (CHILDREN::iterator destroy_iterator = this->children_.begin ();
+       destroy_iterator != this->children_.end ();
+       ++destroy_iterator)
+    {
+      TAO_POA *destroy_child_poa = (*destroy_iterator).int_id_;
+
+      destroy_child_poa->destroy_i (etherealize_objects,
+                                    wait_for_completion
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   //
   // ImplRepo related.
   //
-#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (this->cached_policies_.lifespan () == PortableServer::PERSISTENT)
     {
       this->imr_notify_shutdown ();
@@ -827,6 +834,18 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       (non_servant_upcall_in_progress == 0 ||
        &non_servant_upcall_in_progress->poa () != this))
     {
+      TAO::ORT_Array my_array_obj_ref_template;
+
+      // Get the adapter template
+      PortableInterceptor::ObjectReferenceTemplate *adapter =
+        this->get_adapter_template ();
+
+      // Add it to the sequence of object reference templates, we just notify
+      // for ourselves that we are now non_existent, our childs will do it
+      // for themselves.
+      array_obj_ref_template.size (1);
+      array_obj_ref_template[0] = adapter;
+
       // According to the ORT spec, after a POA is destroyed, its state
       // has to be changed to NON_EXISTENT and all the registered
       // interceptors are to be informed. Since, the POA is destroyed

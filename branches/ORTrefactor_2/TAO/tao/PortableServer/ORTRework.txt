@@ -1,3 +1,13 @@
+Tue Aug 24 14:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp (destroy_i):
+          Changed the logic of informing the IORInterceptors of state changed,
+          first iterate through all the child_poa's, set their state to
+          inactive and gather the ort adapters, then in one call inform all
+          IORInterceptors, then destroy the child poa's and as last step
+          destroy ourself and only notify that this poa has changed to
+          non_existent, each child POA will have done this already for itself.
+
 Tue Aug 24 13:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ORT_Adapter_Impl.{h,cpp}
