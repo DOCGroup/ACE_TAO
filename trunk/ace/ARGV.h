@@ -52,7 +52,7 @@ public:
             int substitute_env_args = 1);
 
   /**
-   * Converts <argv> into a linear string.  If <substitute_env_args>
+   * Converts @a argv into a linear string.  If @a substitute_env_args
    * is enabled then we'll substitute the environment variables for
    * each $ENV encountered in the string.  The <buf> operation is not
    * allowed on an ACE_ARGV created this way.
@@ -86,18 +86,18 @@ public:
   const ACE_TCHAR *operator[] (size_t index);
 
   /**
-   * Returns the <argv> array.  Caller should not delete this memory
-   * since the <ARGV> destructor will delete it.  If the caller
+   * Returns the @c argv array.  Caller should not delete this memory
+   * since the ACE_ARGV destructor will delete it.  If the caller
    * modifies the array in the iterative mode, the changes are not
    * saved to the queue.
    */
   ACE_TCHAR **argv (void);
 
-  /// Returns <argc>.
+  /// Returns @c argc.
   int argc (void) const;
 
-  /// Returns the <buf>.  Caller should not delete this memory since
-  /// the <ARGV> destructor will delete it.
+  /// Returns the @c buf.  Caller should not delete this memory since
+  /// the ACE_ARGV destructor will delete it.
   const ACE_TCHAR *buf (void);
 
   /// Dump the state of an object.
@@ -114,7 +114,7 @@ public:
   int add (const ACE_TCHAR *next_arg);
 
   /**
-   * Add another <argv> array.  The <argv> parameter must be NULL
+   * Add another @a argv array.  The @a argv parameter must be NULL
    * terminated.  This only works in the <ITERATIVE> state.  Returns
    * -1 on failure and 0 on success.
    */
