@@ -6778,6 +6778,10 @@ ACE_OS::mmap (void *addr,
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
 
+#if defined (ACE_OS_EXTRA_MMAP_FLAGS)
+  nt_flags |= ACE_OS_EXTRA_MMAP_FLAGS;
+#endif
+
 #if !defined (ACE_HAS_WINCE)
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping, nt_flags, 0,
                                           off, len, addr);
@@ -6831,6 +6835,9 @@ ACE_OS::mmap (void *addr,
         }
       else
         {
+#if defined (ACE_OS_EXTRA_MMAP_FLAGS)
+          flags |= ACE_OS_EXTRA_MMAP_FLAGS;
+#endif
           char *map = (char *) ::mmap ((ACE_MMAP_TYPE) addr, len,
                                        prot, flags, *file_mapping, off);
           if (map == MAP_FAILED)
@@ -6847,6 +6854,11 @@ ACE_OS::mmap (void *addr,
     }
 #elif !defined (ACE_LACKS_MMAP)
   ACE_UNUSED_ARG (sa);
+
+# if defined (ACE_OS_EXTRA_MMAP_FLAGS)
+  flags |= ACE_OS_EXTRA_MMAP_FLAGS;
+# endif
+
   file_mapping = file_mapping;
   ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr, len,
                                       prot, flags, file_handle, off),
