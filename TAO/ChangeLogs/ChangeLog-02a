@@ -1,3 +1,8 @@
+Thu Mar 23 09:23:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Acceptors.cpp (process_client_request): Fixed a
+	  warning in KAI compiler.
+
 Wed Mar 22 21:02:07 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Acceptor.cpp (hostname):
