@@ -45,21 +45,8 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-#if 1
   be_interface *intf = 
     this->ctx_->interface ();
-#else
-  // We need the interface node in which this operation was
-  // defined. However, if this operation node was an attribute node in
-  // disguise, we get this information from the context
-  be_interface *intf = 
-    be_interface::narrow_from_scope (node->defined_in ());
-  if (this->ctx_->atttribute () != 0)
-    {
-      intf = 
-	be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ());
-    }
-#endif
 
   if (!intf)
     {
@@ -164,11 +151,9 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
   if (node->argument_count () > 0)
     *os << ",\n";
   os->indent ();
-  *os << "_tao_environment";
-  // end the upcall
-  *os << be_uidt_nl;
-  *os << ");" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "_tao_environment" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "}\n\n";
 
   return 0;
 }
