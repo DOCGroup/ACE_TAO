@@ -159,7 +159,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 {
   if (!CORBA::is_nil (src.type_.in ()))
     this->type_ =
-      CORBA::TypeCode::_duplicate (src.type_);
+      CORBA::TypeCode::_duplicate (src.type_.in ());
   else
     this->type_ =
       CORBA::TypeCode::_duplicate (CORBA::_tc_null);
@@ -195,7 +195,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   if (!CORBA::is_nil (src.type_.in ()))
     {
       this->type_ =
-        CORBA::TypeCode::_duplicate (src.type_);
+        CORBA::TypeCode::_duplicate (src.type_.in ());
     }
   else
     {
@@ -1364,7 +1364,7 @@ CORBA_Any::operator>>= (to_string s) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+        CORBA::TypeCode::_duplicate (this->type_.in ());
 
       while (kind == CORBA::tk_alias)
         {
@@ -1426,7 +1426,7 @@ CORBA_Any::operator>>= (to_wstring ws) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+        CORBA::TypeCode::_duplicate (this->type_.in ());
 
       while (kind == CORBA::tk_alias)
         {
@@ -1488,7 +1488,7 @@ CORBA_Any::operator>>= (to_object obj) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+        CORBA::TypeCode::_duplicate (this->type_.in ());
       while (kind == CORBA::tk_alias)
         {
           tcvar = tcvar->content_type (ACE_TRY_ENV);
