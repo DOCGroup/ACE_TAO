@@ -1,3 +1,9 @@
+Fri Dec 07 14:28:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/ACE_Init_Test.cpp:
+	* tests/ACE_Init_TestDlg.cpp:
+	  Fix order of #includes to work under unicode builds.
+
 Fri Dec 07 15:42:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Registry_Name_Space.cpp: Changed to conditionally use

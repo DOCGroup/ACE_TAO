@@ -14,9 +14,9 @@
 //
 // ACE_Init_Test.cpp : Defines the class behaviors for the application.
 
-#include "test_config.h"
+#if !defined(ACE_HAS_MFC)
 
-#if !defined(ACE_WIN32)
+#include "test_config.h"
 
 // If this is not a WIN32 platform do not even try to compile the
 // test, many of the #includes make little sense.
@@ -35,6 +35,8 @@ main (int, char*[])
 #include "ACE_Init_Test_StdAfx.h"
 #include "ACE_Init_Test.h"
 #include "ACE_Init_TestDlg.h"
+#include "test_config.h"
+
 #include "ace/Thread_Manager.h"
 
 
@@ -126,4 +128,4 @@ wait_and_kill_dialog (void *pBox)
 
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_MFC */

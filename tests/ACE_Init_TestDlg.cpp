@@ -2,9 +2,7 @@
 // ACE_Init_TestDlg.cpp : implementation file
 //
 
-#include "ace/config.h"
-
-#if defined(ACE_WIN32)
+#if defined(ACE_HAS_MFC)
 
 #include "ACE_Init_Test_StdAfx.h"
 #include "ACE_Init_Test.h"
@@ -97,4 +95,4 @@ HCURSOR CACE_Init_TestDlg::OnQueryDragIcon()
         return (HCURSOR) m_hIcon;
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_MFC */
