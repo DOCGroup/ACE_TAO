@@ -21,7 +21,7 @@
 #include "pace/defines.h"
 #include <grp.h>
 
-/* Linux wants to use sys/types.h to define gid_t.
+/* Linux wants to use sys/types.h to define pace_gid_t.
  * Sun is happy with grp.h. */
 # if defined (linux)
 #include "pace/sys/types.h"
@@ -32,9 +32,9 @@
 extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
-  PACE_INLINE struct group * pace_getgrgid (gid_t gid);
+  PACE_INLINE struct group * pace_getgrgid (pace_gid_t gid);
 
-  PACE_INLINE int pace_getgrgid_r (gid_t gid,
+  PACE_INLINE int pace_getgrgid_r (pace_gid_t gid,
                                    struct group * grp,
                                    char * buffer,
                                    size_t bufsize,

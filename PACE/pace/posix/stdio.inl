@@ -124,7 +124,7 @@ pace_fseek (FILE * stream, long offset, int whence)
 
 PACE_INLINE
 int
-pace_fseeko (FILE * stream, off_t offset, int whence)
+pace_fseeko (FILE * stream, pace_off_t offset, int whence)
 {
   return fseeko (stream, offset, whence);
 }
@@ -137,7 +137,7 @@ pace_ftell (FILE * stream)
 }
 
 PACE_INLINE
-off_t
+pace_off_t
 pace_ftello (FILE * stream)
 {
   return ftello (stream);

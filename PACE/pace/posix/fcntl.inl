@@ -16,7 +16,7 @@
 
 PACE_INLINE
 int
-pace_creat (const char * path, mode_t mode)
+pace_creat (const char * path, pace_mode_t mode)
 {
   return creat (path, mode);
 }

@@ -30,7 +30,7 @@
 extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
-  PACE_INLINE int pace_creat (const char * path, mode_t mode);
+  PACE_INLINE int pace_creat (const char * path, pace_mode_t mode);
 
   # define pace_fcntl(X) fcntl X
   /* int fcntl (int fildes, int cmd, *//* arg *//* ... );
@@ -41,7 +41,7 @@ extern "C" {
    */
 
   # define pace_open(X) open X
-  /* int open (const char *path, int oflag, *//* mode_t mode *//* ... );
+  /* int open (const char *path, int oflag, *//* pace_mode_t mode *//* ... );
    *
    * PLEASE PAY SPECIAL ATTENTION HERE!
    * This is a macro and requires an additional set of parenthesis

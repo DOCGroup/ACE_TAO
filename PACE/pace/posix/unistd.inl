@@ -48,7 +48,7 @@ pace_chdir (const char * path)
 
 PACE_INLINE
 int
-pace_chown (const char * path, uid_t owner, gid_t group)
+pace_chown (const char * path, uid_t owner, pace_gid_t group)
 {
   return chown (path, owner, group);
 }
@@ -132,7 +132,7 @@ pace_fsync (int fildes)
 
 PACE_INLINE
 int
-pace_ftruncate (int fildes, off_t length)
+pace_ftruncate (int fildes, pace_off_t length)
 {
   return ftruncate (fildes, length);
 }
@@ -160,7 +160,7 @@ pace_geteuid ()
 
 PACE_INLINE
 int
-pace_getgroups (int gidsetsize, gid_t grouplist[])
+pace_getgroups (int gidsetsize, pace_gid_t grouplist[])
 {
   return getgroups (gidsetsize, grouplist);
 }
@@ -234,8 +234,8 @@ pace_link (const char * existing, const char * new_link)
 }
 
 PACE_INLINE
-off_t
-pace_lseek (int fildes, off_t offset, int whence)
+pace_off_t
+pace_lseek (int fildes, pace_off_t offset, int whence)
 {
   return lseek (fildes, offset, whence);
 }
@@ -277,7 +277,7 @@ pace_rmdir (const char * path)
 
 PACE_INLINE
 int
-pace_setgid (gid_t gid)
+pace_setgid (pace_gid_t gid)
 {
   return setgid (gid);
 }
