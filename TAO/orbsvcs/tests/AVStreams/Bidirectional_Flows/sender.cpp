@@ -450,9 +450,13 @@ main (int argc,
       ACE_TRY_CHECK;
 
       // Initialize the AV Stream components.
-      TAO_AV_CORE::instance ()->init (orb.in (),
+/*      TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in (),
-                                      ACE_TRY_ENV);
+                                      ACE_TRY_ENV); */
+      ACE_TRY_CHECK;
+
+      // Initialize the AVStreams components.
+      TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Initialize the Sender.
