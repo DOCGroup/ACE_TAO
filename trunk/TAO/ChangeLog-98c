@@ -1,3 +1,7 @@
+Mon Oct 05 21:43:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.17 released.
+
 Mon Oct  5 20:35:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
