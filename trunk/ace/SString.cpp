@@ -249,6 +249,7 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
+    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -265,7 +266,9 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
       this->release_ = 1;
 
       this->len_ = ACE_WString::strlen (s);
+      //@@ Can this fail, and we will segfault later?
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->buf_len_ = this->len_ + 1;
 
       // Copy the ACE_USHORT16 * string byte-by-byte into the char *
       // string.
@@ -276,63 +279,67 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
     }
 }
 
+// this method might benefit from a little restructuring.
 void
 ACE_CString::set (const char *s,
                   size_t len,
                   int release)
 {
-  // Free memory if necessary
+  // Case 1. Going from memory to more memory
+  size_t new_buf_len = len + 1;
+  if (s != 0 && len != 0 && s[0] != '\0' && release
+      && this->buf_len_ < new_buf_len)
+    {
+      char *temp;
+      ACE_ALLOCATOR (temp,
+                     (char *) this->allocator_->malloc (new_buf_len));
 
-  // Going from memory to no memory
-  if ((!release || s == 0 || s[0] == '\0' || len == 0)
-      && this->release_)
-    {
-      this->allocator_->free (this->rep_);
-    }
-  // Going from memory to more memory
-  else if (this->len_ < len
-           && this->release_)
-    {
-      this->allocator_->free (this->rep_);
-    }
+      if (this->release_)
+        this->allocator_->free (this->rep_);
 
-  // Figure out future ownership
-  if (!release || s == 0 || s[0] == '\0' || len == 0)
-    {
-      this->release_ = 0;
-    }
-  else
-    {
+      this->rep_ = temp;
+      this->buf_len_ = new_buf_len;
+      this->len_ = len;
       this->release_ = 1;
-    }
-
-  // Allocate memory if owner and necessary
-
-  // Len is greater than 0, so must allocate space for it.
-  if (this->release_ && this->len_ < len)
-    {
-      this->rep_ = (char *) this->allocator_->malloc (len + 1);
-    }
-
-  // set new length
-  this->len_ = len;
-
-  // If no string or null string is specified by the user.
-  if (s == 0 || s[0] == '\0' || len == 0)
-    {
-      this->rep_ = &ACE_CString::NULL_CString_;
-    }
-  // If we don't own the string.
-  else if (!this->release_)
-    {
-      this->rep_ = (char *) s;
-    }
-  // We own the string.
-  else
-    {
       ACE_OS::memcpy (this->rep_, s, len);
       // NUL terminate.
-      this->rep_[len] = 0;
+      this->rep_[len] = '\0';
+    }
+
+  // Case 2. No memory allocation is necessary.
+  else
+    {
+      // Free memory if necessary and figure out future ownership
+      if (!release || s == 0 || s[0] == '\0' || len == 0)
+        if (this->release_)
+          {
+            this->allocator_->free (this->rep_);
+            this->release_ = 0;
+          }
+      // else - stay with whatever value for release_ we have.
+
+      // Populate data.
+      if (s == 0 || s[0] == '\0' || len == 0)
+        {
+          this->buf_len_ = 0;
+          this->len_ = 0;
+          this->rep_ = &ACE_CString::NULL_CString_;
+        }
+      else if (!release)
+        {
+          this->buf_len_ = len;
+          this->len_ = len;
+          //@@ Do we need null terminate? No null is a problem for <<
+          // and if user expects null.
+          this->rep_ = (char *) s;
+        }
+      else
+        {
+          ACE_OS::memcpy (this->rep_, s, len);
+          // NUL terminate.
+          this->rep_[len] = 0;
+          this->len_ = len;
+        }
     }
 }
 
@@ -372,30 +379,43 @@ ACE_CString::operator+= (const ACE_CString &s)
 
   if (s.len_ > 0)
     {
-      size_t oldlen = this->len_;
-      size_t newlen = oldlen + s.len_ + 1;
+      size_t new_buf_len = this->len_ + s.len_ + 1;
+
+      // case 1. No memory allocation needed.
+      if (this->buf_len_ >= new_buf_len)
+        // Copy in data from new string.
+        ACE_OS::memcpy (this->rep_ + this->len_,
+                        s.rep_,
+                        s.len_);
+
+      // case 2. Memory reallocation is needed
+      else
+        {
+          char *t = 0;
+
+          ACE_ALLOCATOR_RETURN (t,
+                                (char *) this->allocator_->malloc (new_buf_len),
+                                *this);
+
+          // Copy memory from old string into new string.
+          ACE_OS::memcpy (t,
+                          this->rep_,
+                          this->len_);
+
+          ACE_OS::memcpy (t + this->len_,
+                          s.rep_,
+                          s.len_);
+
+          if (this->release_)
+            this->allocator_->free (this->rep_);
+
+          this->release_ = 1;
+          this->rep_ = t;
+          this->buf_len_ = new_buf_len;
+        }
+
       this->len_ += s.len_;
-      char *t = 0;
-
-      // Allocate memory for the new string.
-      ACE_ALLOCATOR_RETURN (t,
-                            (char *) this->allocator_->malloc (newlen),
-                            *this);
-      // Copy memory from old string into new string.
-      ACE_OS::memcpy (t,
-                      this->rep_,
-                      oldlen);
-
-      ACE_OS::memcpy (t + oldlen,
-                      s.rep_,
-                      s.len_);
-      t[this->len_] = '\0';
-
-      if (this->release_)
-        this->allocator_->free (this->rep_);
-
-      this->release_ = 1;
-      this->rep_ = t;
+      this->rep_[this->len_] = '\0';
     }
 
   return *this;
