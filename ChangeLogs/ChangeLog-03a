@@ -27,7 +27,8 @@ Thu Jun 21 08:00:01 2001  Chad Elliott  <elliott_c@ociweb.com>
 
          Moved #include "ace/Connector.h" to be after #include
          "ace/SOCK_Connector.h" to fix compile error on AIX, Visual
-          Age C++ 5.
+          Age C++ 5.  Thanks to David Sperry <sperryd@res.raytheon.com>
+ 	  for reporting this.
 
         * apps/JAWS/server/Makefile:
 
