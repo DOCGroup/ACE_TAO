@@ -363,7 +363,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr discrim_tc;
   CORBA::TypeCode_ptr member_tc;
   CORBA::Any_ptr member_label;
-  CORBA::Long discrim_val;
+  CORBA::ULongLong discrim_val;
   CORBA::ULong member_count;
   CORBA::Long  default_index;
   CORBA::ULong i;
