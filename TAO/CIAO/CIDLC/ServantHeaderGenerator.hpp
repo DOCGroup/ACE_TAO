@@ -23,7 +23,7 @@ protected:
   std::ostream& os;
 };
 
-// Emitter generates the servant source mapping for declarations collected
+// Emitter generates the servant header mapping for declarations collected
 // by Collectors. Note that the original structure of modules is preserved.
 //
 

@@ -406,8 +406,7 @@ namespace
   // FacetServantEmitter generates facet servant class definitions.
   //
   class FacetServantEmitter : public SourceEmitterBase,
-                              public Traversal::UnconstrainedInterfaceDef,
-                              public Traversal::AttributeDecl
+                              public Traversal::UnconstrainedInterfaceDef
   {
   public:
     FacetServantEmitter (ostream& os_)
@@ -440,12 +439,6 @@ namespace
          << "_Servant (void)" << endl
          << "{"
          << "}" << endl << endl;
-    }
-
-    virtual void
-    traverse (AttributeDeclPtr const& a)
-    {
-      // TODO
     }
 
     virtual void
@@ -498,10 +491,24 @@ namespace
                          public Traversal::PublishesDecl,
                          public Traversal::EmitsDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    ContextEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    ContextEmitter (ostream& os_,
+                    Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -868,15 +875,22 @@ namespace
   class ServantFabricEmitter : public SourceEmitterBase,
                                public Traversal::ComponentDef
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    ServantFabricEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    ServantFabricEmitter (ostream& os_,
+                          Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
     }
 
     virtual void
     traverse (ComponentDefPtr const& c)
     {
+      if (!declarations_.find (c)) return;
+    
       // If we are at file scope, we create a namespace anyway.
       if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
       {
@@ -952,10 +966,24 @@ namespace
                             public Traversal::ComponentDef,
                             public Traversal::ProvidesDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    NavigationEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    NavigationEmitter (ostream& os_,
+                       Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -1037,9 +1065,55 @@ namespace
          << "the_other.in ()" << endl
          << STRS[ENV_ARG] << ");" << endl
          << "}" << endl << endl;
+
+      os << "::Components::EmitterDescriptions *" << endl
+         << c->name ().simple () << "_Servant::get_all_emitters ("
+         << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[EXCP_SNGL] << endl
+         << "{"
+         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
+         << "}" << endl << endl;
+
+      os << "::Components::EmitterDescriptions *" << endl
+         << c->name ().simple () << "_Servant::get_named_emitters ("
+         << endl
+         << "const " << STRS[COMP_NAMES] << endl
+         << STRS[ENV_SRC] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "))" << endl
+         << "{"
+         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
+         << "}" << endl << endl;
     }
   };
-
+  
+  //
+  // Specialized from Traversal::ComponentDef so we can override
+  // traverse() and skip components not used in a composition.
+  // Individual port emitters can then be scope delegates of this.
+  //
+  class SelectedComponentEmitter : public Traversal::ComponentDef
+  {
+  private:
+    Declarations const& declarations_;
+      
+  public:
+    SelectedComponentEmitter (Declarations const& declarations)
+      : declarations_ (declarations)
+    {
+    }
+    
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
+    }   
+  };
 
   //
   // Generates each of the provide_XXX operations.
@@ -1116,10 +1190,24 @@ namespace
       public Traversal::ComponentDef,
       public Traversal::UsesDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    ReceptaclesGenericConnectionEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    ReceptaclesGenericConnectionEmitter (ostream& os_,
+                                         Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -1221,10 +1309,24 @@ namespace
       public Traversal::ComponentDef,
       public Traversal::UsesDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    ReceptaclesGenericDisconnectionEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    ReceptaclesGenericDisconnectionEmitter (ostream& os_,
+                                            Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -1338,10 +1440,24 @@ namespace
                                  public Traversal::ComponentDef,
                                  public Traversal::ConsumesDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    ConsumerGenericEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    ConsumerGenericEmitter (ostream& os_,
+                            Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -1584,10 +1700,24 @@ namespace
       public Traversal::ComponentDef,
       public Traversal::PublishesDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    PublishesGenericSubscribeEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    PublishesGenericSubscribeEmitter (ostream& os_,
+                                      Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -1650,10 +1780,24 @@ namespace
       public Traversal::ComponentDef,
       public Traversal::PublishesDecl
   {
+  private:
+    Declarations const& declarations_;
+    
   public:
-    PublishesGenericUnsubscribeEmitter (ostream& os_)
-      : SourceEmitterBase (os_)
+    PublishesGenericUnsubscribeEmitter (ostream& os_,
+                                        Declarations const& declarations)
+      : SourceEmitterBase (os_),
+        declarations_ (declarations)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -1819,34 +1963,6 @@ namespace
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl << endl;
     }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      // @@ (diego) These are not implemented. Whenever they are,
-      // they'll require a treatment as all the other ports above.
-
-      os << "::Components::EmitterDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_all_emitters ("
-         << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
-
-      os << "::Components::EmitterDescriptions *" << endl
-         << c->name ().simple () << "_Servant::get_named_emitters ("
-         << endl
-         << "const " << STRS[COMP_NAMES] << endl
-         << STRS[ENV_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl << endl;
-    }
   };
 
   //
@@ -1857,24 +1973,38 @@ namespace
       public Traversal::ComponentDef
   {
   private:
+    Declarations const& declarations_;
+    
     ReturnTypeNameEmitter* return_type_name_emitter_;
     INArgTypeNameEmitter* inarg_type_name_emitter_;
     OUTArgTypeNameEmitter* outarg_type_name_emitter_;
     INOUTArgTypeNameEmitter* inoutarg_type_name_emitter_;
 
   public:
-    ServantCommonFinalizingEmitter
-    (ostream& os_,
-     ReturnTypeNameEmitter* return_type_name_emitter,
-     INArgTypeNameEmitter* inarg_type_name_emitter,
-     OUTArgTypeNameEmitter* outarg_type_name_emitter,
-     INOUTArgTypeNameEmitter* inoutarg_type_name_emitter)
+    ServantCommonFinalizingEmitter (
+        ostream& os_,
+        Declarations const& declarations,
+        ReturnTypeNameEmitter* return_type_name_emitter,
+        INArgTypeNameEmitter* inarg_type_name_emitter,
+        OUTArgTypeNameEmitter* outarg_type_name_emitter,
+        INOUTArgTypeNameEmitter* inoutarg_type_name_emitter
+      )
       : SourceEmitterBase (os_),
+        declarations_ (declarations),
         return_type_name_emitter_ (return_type_name_emitter),
         inarg_type_name_emitter_ (inarg_type_name_emitter),
         outarg_type_name_emitter_ (outarg_type_name_emitter),
         inoutarg_type_name_emitter_ (inoutarg_type_name_emitter)
     {
+    }
+
+    virtual void
+    traverse (ComponentDefPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::ComponentDef::traverse (c);
+      }
     }
 
     virtual void
@@ -2028,7 +2158,7 @@ namespace
          << "}" << endl
          << "}" << endl << endl;
 
-      os << "// Supported operations." << endl << endl;
+      os << "// Supported operations." << endl;
 
       SupportedOperationEmitter supported_operation_emitter (
           os,
@@ -2065,6 +2195,8 @@ namespace
                       public Traversal::AttributeDecl //@@ will disappear
   {
   private:
+    Declarations const& declarations_;
+    
     ReturnTypeNameEmitter* return_type_name_emitter_;
     INArgTypeNameEmitter* inarg_type_name_emitter_;
     OUTArgTypeNameEmitter* outarg_type_name_emitter_;
@@ -2072,16 +2204,27 @@ namespace
 
   public:
     HomeEmitter (ostream& os_,
+                 Declarations const& declarations,
                  ReturnTypeNameEmitter* return_type_name_emitter,
                  INArgTypeNameEmitter* inarg_type_name_emitter,
                  OUTArgTypeNameEmitter* outarg_type_name_emitter,
                  INOUTArgTypeNameEmitter* inoutarg_type_name_emitter)
       : SourceEmitterBase (os_),
+        declarations_ (declarations),
         return_type_name_emitter_ (return_type_name_emitter),
         inarg_type_name_emitter_ (inarg_type_name_emitter),
         outarg_type_name_emitter_ (outarg_type_name_emitter),
         inoutarg_type_name_emitter_ (inoutarg_type_name_emitter)
     {
+    }
+
+    virtual void
+    traverse (HomeDefPtr const& h)
+    {
+      if (declarations_.find (h))
+      {
+        Traversal::HomeDef::traverse (h);
+      }
     }
 
     virtual void
@@ -2366,18 +2509,23 @@ namespace
   {
   private:
     string export_macro_;
+    Declarations const& declarations_;
 
   public:
     ServantSourceFinalizingEmitter (ostream& os_,
-                                    string export_macro)
+                                    string export_macro,
+                                    Declarations const& declarations)
       : SourceEmitterBase (os_),
-        export_macro_ (export_macro)
+        export_macro_ (export_macro),
+        declarations_ (declarations)
     {
     }
 
     virtual void
     traverse (HomeDefPtr const& h)
     {
+      if (!declarations_.find (h)) return;
+    
       os << "extern \"C\" " << export_macro_ << " ::PortableServer::Servant"
          << endl
          << "create" << h->name ().simple () << "_Servant (" << endl
@@ -2418,10 +2566,11 @@ SourceEmitterBase::SourceEmitterBase (ostream& os_)
 }
 
 ServantSourceEmitter::ServantSourceEmitter (
-  ostream& os_,
-  string export_macro,
-  CommandLine const& cl,
-  Declarations const& declarations)
+    ostream& os_,
+    string export_macro,
+    CommandLine const& cl,
+    Declarations const& declarations
+  )
   : SourceEmitterBase (os_),
     export_macro_ (export_macro),
     cl_ (cl),
@@ -2478,28 +2627,29 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
 
   FactoryEmitter factory_emitter (os, &inarg_type_name);
 
-  ServantFabricEmitter servant_fabric_emitter (os);
+  ServantFabricEmitter servant_fabric_emitter (os, declarations_);
 
-  NavigationEmitter navigation_emitter (os);
+  NavigationEmitter navigation_emitter (os, declarations_);
 
   FacetProvidesEmitter facet_provides_emitter (os);
 
   ReceptaclesGenericConnectionEmitter
-      receptacles_generic_connection_emitter (os);
+    receptacles_generic_connection_emitter (os, declarations_);
 
   ReceptaclesGenericDisconnectionEmitter
-      receptacles_generic_disconnection_emitter (os);
+    receptacles_generic_disconnection_emitter (os, declarations_);
 
   ReceptaclesEmitter receptacles_emitter (os);
 
-  ConsumerGenericEmitter consumer_generic_emitter (os);
+  ConsumerGenericEmitter consumer_generic_emitter (os, declarations_);
 
   ConsumerEmitter consumer_emitter (os);
 
-  PublishesGenericSubscribeEmitter publishes_generic_subscribe_emitter (os);
+  PublishesGenericSubscribeEmitter 
+    publishes_generic_subscribe_emitter (os, declarations_);
 
-  PublishesGenericUnsubscribeEmitter
-      publishes_generic_unsubscribe_emitter (os);
+  PublishesGenericUnsubscribeEmitter 
+    publishes_generic_unsubscribe_emitter (os, declarations_);
 
   PublishesEmitter publishes_emitter (os);
 
@@ -2511,14 +2661,16 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
   FacetSelector facet_selector (os, declarations_);
   facet_selector.add_delegate (&facet_servant_emitter);
 
-  ContextEmitter context_emitter (os);
+  ContextEmitter context_emitter (os, declarations_);
 
   ServantCommonFinalizingEmitter
-      servant_common_finalizing_emitter (os,
-                                         &return_type_name,
-                                         &inarg_type_name,
-                                         &outarg_type_name,
-                                         &inoutarg_type_name);
+    servant_common_finalizing_emitter (os,
+                                       declarations_,
+                                       &return_type_name,
+                                       &inarg_type_name,
+                                       &outarg_type_name,
+                                       &inoutarg_type_name);
+                                         
   servant_common_finalizing_emitter.add_scope_delegate (&get_attribute_emitter);
   servant_common_finalizing_emitter.add_scope_delegate (&set_attribute_emitter);
 
@@ -2530,17 +2682,21 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
   d.add (&factory_emitter);
 
   HomeEmitter home_emitter (os,
+                            declarations_,
                             &return_type_name,
                             &inarg_type_name,
                             &outarg_type_name,
                             &inoutarg_type_name);
   home_emitter.add_scope_delegate (&d);
+  home_emitter.add_scope_delegate (&get_attribute_emitter);
+  home_emitter.add_scope_delegate (&set_attribute_emitter);
 
-  Traversal::ComponentDef component;
+  SelectedComponentEmitter component (declarations_);
   component.add_scope_delegate (&facet_provides_emitter);
   component.add_scope_delegate (&receptacles_emitter);
   component.add_scope_delegate (&consumer_emitter);
   component.add_scope_delegate (&publishes_emitter);
+  component.add_scope_delegate (&emits_emitter);
 
   Traversal::FileScope fs;
   NamespaceEmitter m (os, declarations_);
@@ -2556,7 +2712,6 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
   fs.add_scope_delegate (&consumer_generic_emitter);
   fs.add_scope_delegate (&publishes_generic_subscribe_emitter);
   fs.add_scope_delegate (&publishes_generic_unsubscribe_emitter);
-  fs.add_scope_delegate (&emits_emitter);
   fs.add_scope_delegate (&home_emitter);
   fs.add_scope_delegate (&facet_selector);
   fs.add_scope_delegate (&servant_common_finalizing_emitter);
@@ -2570,7 +2725,6 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
   m.add_scope_delegate (&consumer_generic_emitter);
   m.add_scope_delegate (&publishes_generic_subscribe_emitter);
   m.add_scope_delegate (&publishes_generic_unsubscribe_emitter);
-  m.add_scope_delegate (&emits_emitter);
   m.add_scope_delegate (&home_emitter);
   m.add_scope_delegate (&facet_selector);
   m.add_scope_delegate (&servant_common_finalizing_emitter);
@@ -2582,7 +2736,9 @@ ServantSourceEmitter::generate (TranslationUnitPtr const& u)
   dispatch (u);
 
   // Start the finalizing phase
-  ServantSourceFinalizingEmitter finalizing_emitter (os, export_macro_);
+  ServantSourceFinalizingEmitter finalizing_emitter (os,
+                                                     export_macro_,
+                                                     declarations_);
   finalizing_emitter.dispatch (u);
 }
 
