@@ -171,7 +171,7 @@ extern int yyleng;
                  /* OBV tokens  see OMG ptc/98-10-04 3.2.4 */
 %token          IDL_ABSTRACT
 %token          IDL_CUSTOM
-%token          IDL_INIT
+%token          IDL_FACTORY
 %token          IDL_PRIVATE
 %token          IDL_PUBLIC
 %token          IDL_SUPPORTS
@@ -1627,37 +1627,11 @@ struct_type :
         }
         ;
 
-at_least_one_member
-        : member members
-        | /* EMPTY */
-        {
-          idl_global->err()->syntax_error(idl_global->parse_state());
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-          yyerrok;
-        }
-        | error
-        {
-          idl_global->err()->syntax_error(idl_global->parse_state());
-        }
-        ';'
-        {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-          yyerrok;
-        }
-        ;
+at_least_one_member : member members ;
 
 members
         : members member
         | /* EMPTY */
-        | error
-        {
-          idl_global->err()->syntax_error(idl_global->parse_state());
-        }
-        ';'
-        {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-          yyerrok;
-        }
         ;
 
 member  :
@@ -2612,14 +2586,14 @@ op_type_spec
         ;
 
 init_decl
-        : IDL_INIT
+        : IDL_FACTORY IDENTIFIER parameter_list
         {
+           // TODO: replace parameter_list with rule that accepts only IN args
            cerr << "error in " << idl_global->filename()->get_string()
                 << " line " << idl_global->lineno() << ":\n" ;
-           cerr << "Sorry, I (TAO_IDL) can't handle init yet\n";
+           cerr << "Sorry, I (TAO_IDL) can't handle factory yet\n";
         }
         ;
-
 
 parameter_list
         : '('
