@@ -288,12 +288,14 @@ main (int argc, char *argv[])
     exit (1);
   }
   // set up callback
-  Tcl_CreateCommand (tcl_interp, "pressme", inc_count, "label_var", 0);
+  char label_var_name[] = "label_var";
+  Tcl_CreateCommand (tcl_interp, "pressme", inc_count,
+                     label_var_name, 0);
 
   // Register callback for X Timer
   (void) Tk_CreateTimerHandler (1000,
                                 inc_tmo,
-                                "label_var");
+                                label_var_name);
 
   // It will perform Tk Main Loop
   ACE_TkReactor reactor;
