@@ -197,7 +197,7 @@ Event_Handler::handle_exception (ACE_HANDLE)
 void
 Event_Handler::send_notifications (void)
 {
-  for (unsigned long i = 0; i != notifications_curr_; ++i)
+  for (int i = 0; i != notifications_curr_; ++i)
   {
     if(reactor()->notify (this) == -1)
     {
