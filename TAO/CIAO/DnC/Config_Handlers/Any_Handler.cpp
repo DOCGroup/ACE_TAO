@@ -30,8 +30,6 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
   // Get name of the current element
   XStr name (node->getNodeName ());
 
-
-
   // Initialize the ORB so that CORBA::Any will work
   int argc = 0;
   char ** argv = 0;
@@ -161,7 +159,11 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "string");
           // Process the string value
-          any_obj <<= Utils::parse_string (iter);
+          {
+            char * temp = Utils::parse_string (iter);
+            any_obj <<= temp;
+            XMLString::release (&temp); 
+          }
           break;
 
         case CORBA::tk_longlong:

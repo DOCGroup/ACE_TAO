@@ -18,7 +18,9 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
   char* event_publisher = XMLString::transcode (XStr ("EventPublisher"));
   char* event_consumer = XMLString::transcode (XStr ("EventConsumer"));
 
-  XStr kind_str = XStr (Utils::parse_string (iter));
+  char * temp = Utils::parse_string (iter);
+  XStr kind_str = XStr (temp);
+  XMLString::release (&temp);
 
   char* kind_str_tr = XMLString::transcode (kind_str);
 
@@ -61,6 +63,7 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
                 "Config_Handler::CPK_Handler::process_CCMComponentPortKing illegal <CCMComponentPortKind> value found \n"));
     ACE_THROW (CORBA::INTERNAL ());
   }
+
   XMLString::release (&kind_str_tr);
   XMLString::release (&facet);
   XMLString::release (&simplex_receptacle);

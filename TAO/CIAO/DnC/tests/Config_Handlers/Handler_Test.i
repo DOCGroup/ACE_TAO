@@ -4,6 +4,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+#include "ace/Auto_Ptr.h"
 #include "tao/Exception.h"
 #include "Config_Handlers/XercesString.h"
 #include <xercesc/util/XMLUniDefs.hpp>
@@ -96,9 +97,13 @@ int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&))
       DOMImplementation* impl
         = DOMImplementationRegistry::getDOMImplementation(gLS);
 
+      auto_ptr<DOMImplementation> cleanup_impl (impl);
+
       // Create a DOMBuilder
       DOMBuilder* parser =
         ((DOMImplementationLS*)impl)->createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
+
+      auto_ptr<DOMBuilder> cleanup_builder (parser);
 
       // Discard comment nodes in the document
       parser->setFeature (XMLUni::fgDOMComments, false);
@@ -122,7 +127,7 @@ int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&))
       // Do not include ignorable whitespace in the DOM tree.
       parser->setFeature (XMLUni::fgDOMWhitespaceInElementContent, false);
 
-      // Enable the parser's schema support.
+      // Enable the parser schema support.
       parser->setFeature (XMLUni::fgXercesSchema, true);
 
       // Enable full schema constraint checking, including checking which
@@ -138,6 +143,7 @@ int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&))
       parser->setErrorHandler(&handler);
 
       DOMDocument* doc = parser->parseURI(url);
+      auto_ptr<DOMDocument> cleanup_doc (doc);
 
       if (handler.getErrors())
         {

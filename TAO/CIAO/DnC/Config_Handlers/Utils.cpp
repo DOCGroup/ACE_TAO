@@ -53,6 +53,7 @@ CIAO::Config_Handler::Utils::parse_long (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
   CORBA::ULong ret_val = ACE_OS::strtol (temp, 0, 10);
+  XMLString::release (&temp);
   return ret_val;
 }
 

@@ -2,6 +2,7 @@
 
 #include "DT_Handler.h"
 #include "tao/Typecode.h"
+#include "ace/Auto_Ptr.h"
 #include "Utils.h"
 
 void
@@ -11,6 +12,7 @@ CIAO::Config_Handler::DT_Handler::process_basic_tc (DOMNodeIterator * iter,
 
     // For all types defined return the appropriate typecode
     char * code_value = Utils::parse_string (iter);
+    auto_ptr<char> cleanup_char (code_value);
 
     // For this piece of code to work, it is necessary that ORB_init
     // be called by the top level handler which calls the
