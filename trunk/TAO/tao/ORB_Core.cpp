@@ -2806,13 +2806,26 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                         0);
       if (this->ior_interceptor_adapter_ == 0)
         {
-          TAO_IORInterceptor_Adapter_Factory * the_ior_interceptor_adapter_factory =
-            ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance (
-              TAO_ORB_Core::iorinterceptor_adapter_factory_name ()
-              );
-          this->ior_interceptor_adapter_ =
-            the_ior_interceptor_adapter_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              TAO_IORInterceptor_Adapter_Factory * ior_ap_factory =
+                ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance (
+                    TAO_ORB_Core::iorinterceptor_adapter_factory_name ());
+
+              if (ior_ap_factory)
+                {
+                  this->ior_interceptor_adapter_ =
+                    ior_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                }
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "(%P|%t) Cannot initialize the ior_interceptor_adapter \n");
+            }
+          ACE_ENDTRY;
         }
     }
   return this->ior_interceptor_adapter_;
