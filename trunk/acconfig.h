@@ -14,15 +14,6 @@
   autoheader may encounter.
 */
 
-/* Name of package */
-#ifndef PACKAGE
-# undef PACKAGE
-#endif
-
-/* Version of package */
-#ifndef VERSION
-# undef VERSION
-#endif
 
 /* Define _REENTRANT if reentrant functions should be used. */
 #ifndef _REENTRANT
