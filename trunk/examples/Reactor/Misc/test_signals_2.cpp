@@ -112,36 +112,61 @@ public:
       reactor_ (reactor)
   {
     // Register the signal handlers.
-    this->quit_sigkey_ = reactor.register_handler (SIGQUIT, this);
-    this->int_sigkey_ = reactor.register_handler (SIGINT, this);
+    this->quit_sigkey_ =
+      reactor.register_handler (SIGQUIT, this);
+    this->int_sigkey_ =
+      reactor.register_handler (SIGINT, this);
 
     if (this->quit_sigkey_ == -1 || this->int_sigkey_ == -1)
-      ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "register_handler"));
   }
 
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *)
+  virtual int handle_signal (int signum,
+                             siginfo_t *,
+                             ucontext_t *)
   {
     this->count_++;
     ACE_DEBUG ((LM_DEBUG, 
 	       "\nsignal %S occurred in Sig_Handler_1 (%s, %d, %d) with count = %d",
-	       signum, this->msg_, this->int_sigkey_, this->quit_sigkey_, this->count_));
+	       signum,
+                this->msg_,
+                this->int_sigkey_,
+                this->quit_sigkey_,
+                this->count_));
+
     if (this->count_ != 1 && signum == SIGQUIT)
       {
-	if (this->reactor_.remove_handler (SIGQUIT, 0, 0,
+	if (this->reactor_.remove_handler (SIGQUIT,
+                                           0,
+                                           0,
 					   this->quit_sigkey_) == -1)
-	  ACE_ERROR ((LM_ERROR, "\n%p", "remove_handler"));
+	  ACE_ERROR ((LM_ERROR,
+                      "\n%p",
+                      "remove_handler"));
 	else
-	  ACE_DEBUG ((LM_DEBUG, "\nshutting down SIGQUIT in Sig_Handler_1 (%s, %d, %d)",
-		     this->msg_, this->int_sigkey_, this->quit_sigkey_));
+	  ACE_DEBUG ((LM_DEBUG,
+                      "\nshutting down SIGQUIT in Sig_Handler_1 (%s, %d, %d)",
+                      this->msg_,
+                      this->int_sigkey_,
+                      this->quit_sigkey_));
       }
     else if (this->count_ != 2 && signum == SIGINT)
       {
-	if (this->reactor_.remove_handler (SIGINT, 0, 0,
+	if (this->reactor_.remove_handler (SIGINT,
+                                           0,
+                                           0,
 					   this->int_sigkey_) == -1)
-	  ACE_ERROR ((LM_ERROR, "\n%p", "remove_handler"));
+	  ACE_ERROR ((LM_ERROR,
+                      "\n%p",
+                      "remove_handler"));
 	else
-	  ACE_DEBUG ((LM_DEBUG, "\nshutting down SIGINT in Sig_Handler_1 (%s, %d, %d)",
-		     this->msg_, this->int_sigkey_, this->quit_sigkey_));
+	  ACE_DEBUG ((LM_DEBUG,
+                      "\nshutting down SIGINT in Sig_Handler_1 (%s, %d, %d)",
+		     this->msg_,
+                      this->int_sigkey_,
+                      this->quit_sigkey_));
       }
     return 0;
   }
@@ -162,20 +187,31 @@ public:
   {
   }
 
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *)
+  virtual int handle_signal (int signum,
+                             siginfo_t *,
+                             ucontext_t *)
   {
     this->count_++;
     ACE_DEBUG ((LM_DEBUG, 
 	       "\nsignal %S occurred in Sig_Handler_2 (%s, %d, %d) with count = %d",
-	       signum, this->msg_, this->int_sigkey_, this->quit_sigkey_, this->count_));
+	       signum,
+                this->msg_,
+                this->int_sigkey_,
+                this->quit_sigkey_,
+                this->count_));
     if (this->count_ != 0 && signum == SIGQUIT)
       {
 	if (this->reactor_.remove_handler (SIGQUIT, 0, 0,
 					   this->quit_sigkey_) == -1)
-	  ACE_ERROR ((LM_ERROR, "\n%p", "remove_handler"));
+	  ACE_ERROR ((LM_ERROR,
+                      "\n%p",
+                      "remove_handler"));
 	else
-	  ACE_DEBUG ((LM_DEBUG, "\nshutting down SIGQUIT in Sig_Handler_2 (%s, %d, %d)",
-		     this->msg_, this->int_sigkey_, this->quit_sigkey_));
+	  ACE_DEBUG ((LM_DEBUG,
+                      "\nshutting down SIGQUIT in Sig_Handler_2 (%s, %d, %d)",
+                      this->msg_,
+                      this->int_sigkey_,
+                      this->quit_sigkey_));
       }
     return 0;
   }
@@ -184,7 +220,9 @@ public:
 static void
 external_handler (int signum)
 {
-  ACE_DEBUG ((LM_DEBUG, "\nsignal %S occurred in external handler!", signum));
+  ACE_DEBUG ((LM_DEBUG,
+              "\nsignal %S occurred in external handler!",
+              signum));
 }
 
 #if !defined (HPUX)
@@ -196,9 +234,13 @@ main (int argc, char *[])
   ACE_Sig_Handlers multi_handlers;
 
 #if defined (ACE_WIN32)
-  ACE_WFMO_Reactor reactor_impl (argc > 1 ? &multi_handlers : (ACE_Sig_Handler *) 0);
+  ACE_WFMO_Reactor reactor_impl (argc > 1 
+                                 ? &multi_handlers 
+                                 : (ACE_Sig_Handler *) 0);
 #else
-  ACE_Select_Reactor reactor_impl (argc > 1 ? &multi_handlers : (ACE_Sig_Handler *) 0);
+  ACE_Select_Reactor reactor_impl (argc > 1 
+                                   ? &multi_handlers 
+                                   : (ACE_Sig_Handler *) 0);
 #endif /* ACE_WIN32 */
   ACE_Reactor reactor (&reactor_impl);
 
@@ -207,31 +249,40 @@ main (int argc, char *[])
       // Register an "external" signal handler so that the
       // ACE_Sig_Handlers code will have something to incorporate!
 
-      ACE_SignalHandler eh = ACE_SignalHandler (external_handler);
+      ACE_SignalHandler eh = 
+        ACE_SignalHandler (external_handler);
       ACE_Sig_Action sa (eh);
 
       sa.register_action (SIGINT);
     }
 
   // Create a bevy of handlers.
-  Sig_Handler_1 h1 (reactor, "howdy"), h2 (reactor, "doody");
-  Sig_Handler_2 h3 (reactor, "tutty"), h4 (reactor, "fruity");
+  Sig_Handler_1 h1 (reactor, "howdy");
+  Sig_Handler_1 h2 (reactor, "doody");
+  Sig_Handler_2 h3 (reactor, "tutty");
+  Sig_Handler_2 h4 (reactor, "fruity");
 
   // Wait for user to type SIGINT and SIGQUIT.
 
   for (;;)
     {
-      ACE_DEBUG ((LM_DEBUG, "\nwaiting for SIGINT or SIGQUIT\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nwaiting for SIGINT or SIGQUIT\n"));
 
       if (reactor.handle_events () == -1)
-	ACE_ERROR ((LM_ERROR, "%p\n", "handle_events"));
+	ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "handle_events"));
     }
-  ACE_NOTREACHED(return 0);
+
+  ACE_NOTREACHED (return 0);
 }
 #else
 int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "The HP C++ compiler is too lame to support this feature\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "The HP C++ compiler is too lame to support this feature\n"),
+                    -1);
 }
 #endif /* HPUX */
