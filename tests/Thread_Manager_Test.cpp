@@ -16,7 +16,7 @@
 //
 // = AUTHOR
 //    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
+//    <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -99,9 +99,9 @@ worker (int iterations)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Cache this thread's ID.
   const ACE_thread_t t_id = ACE_OS::thr_self ();
+#endif /* ! ACE_LACKS_UNIX_SIGNAL */
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
-#endif /* ! ACE_LACKS_UNIX_SIGNAL */
 
   // After setting up the signal catcher, block on the start barrier.
   thread_start->wait ();
@@ -129,6 +129,15 @@ worker (int iterations)
                               i));
                   break;
                 }
+            }
+#else
+          if (thr_mgr->testcancel (ACE_Thread::self ()) != 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("(%t) has been cancelled "
+                                     "before iteration %d!\n"),
+                          i));
+              break;
             }
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
           ACE_OS::sleep (1);
@@ -266,8 +275,13 @@ main (int, ASYS_TCHAR *[])
   thr_mgr->kill_grp (grp_id,
                      SIGINT);
 #elif !defined (ACE_HAS_PTHREADS_DRAFT4)
+#if defined (CHORUS)
+  ACE_ASSERT (thr_mgr->kill_grp (grp_id,
+                                 SIGTHREADKILL) != -1);
+#else
   ACE_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGINT) != -1);
+#endif /* CHORUS */
 #else
   if (thr_mgr->kill_grp (grp_id,
                          SIGINT) == -1)

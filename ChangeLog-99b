@@ -1,3 +1,17 @@
+Mon Oct 11 17:36:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Thanks to Wei Chiang <wei.chiang@nokia.com> for the following
+	  patches.
+
+	* ace/Thread_Manager.cpp (kill_thr):  Chorus only supports
+	  SIGTHREADKILL here.  Made sure we remove the killed thread from
+	  the managed thread list.
+
+	* tests/Thread_Manager_Test.cpp: Changed the test to check for
+	  cooperative cancellation even if the platform doesn't support
+	  sending signaling to a specific thread.  On Chorus, this signal
+	  has to be SIGTHREADKILL.
+
 Mon Oct 11 17:35:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-kcc-common.h: Added
