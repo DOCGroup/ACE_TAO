@@ -12,7 +12,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 TAO_Trader (TAO_Trader_Base::Trader_Components components)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;  
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
     this->ifs_[i] = 0;
@@ -20,7 +20,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   if (ACE_BIT_ENABLED (components, LOOKUP))
     {
       TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup;
-      
+
       ACE_NEW (lookup,
                (TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
@@ -34,7 +34,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   if (ACE_BIT_ENABLED (components, REGISTER))
     {
       TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg;
-      
+
       ACE_NEW (reg,
                (TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
@@ -48,7 +48,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   if (ACE_BIT_ENABLED (components, ADMIN))
     {
       TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin;
-      
+
       ACE_NEW (admin,
                (TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
@@ -62,7 +62,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   if (ACE_BIT_ENABLED (components, PROXY))
     {
       TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy;
-      
+
       ACE_NEW (proxy,
                (TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
@@ -317,20 +317,11 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
   TAO_Element_Equal<OPERAND_TYPE> functor;
   TAO_DynSequence_i dyn_seq (sequence);
 
-  ACE_TRY_NEW_ENV
-    {
-      // @@ Irfan, can you please check the exception design here.
-      CORBA::ULong length = dyn_seq.length (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  CORBA::ULong length = dyn_seq.length ();
 
-      for (CORBA::ULong i = 0; i < length && ! return_value; i++)
-        if (functor (dyn_seq, element))
-          return_value = 1;
-    }
-  ACE_CATCHANY 
-    {
-    } 
-  ACE_ENDTRY;
+  for (CORBA::ULong i = 0; i < length && ! return_value; i++)
+    if (functor (dyn_seq, element))
+      return_value = 1;
 
   return return_value;
 }

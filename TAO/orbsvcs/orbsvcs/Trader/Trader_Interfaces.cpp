@@ -151,24 +151,27 @@ query (const char *type,
                          pref_inter,
                          offer_filter);
 
-  if (! policies.exact_type_match (ACE_TRY_ENV))
+  CORBA::Boolean result = policies.exact_type_match (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!result)
     {
-      // If the importer hasn't demanded an exact match search, we search
-      // all the subtypes of the supplied type. NOTE: Only the properties
-      // belonging to the provided type are considered on
+      // If the importer hasn't demanded an exact match search, we
+      // search all the subtypes of the supplied type. NOTE: Only the
+      // properties belonging to the provided type are considered on
       // subtypes. Additional properties on the subtype are generally
-      // ignored. This is as it should be, consistent with the notions of
-      // type inheritence.
-      ACE_CHECK;
+      // ignored. This is as it should be, consistent with the notions
+      // of type inheritence.
       this->lookup_all_subtypes (type,
                                  type_struct->incarnation,
                                  offer_database,
                                  rep,
                                  constr_inter,
                                  pref_inter,
-                                 offer_filter);
+                                 offer_filter,
+                                 ACE_TRY_ENV);
+      ACE_CHECK;
     }
-  ACE_CHECK;
 
   // Take note of the limits applied in this query.
   returned_limits_applied = offer_filter.limits_applied ();
@@ -280,7 +283,8 @@ lookup_all_subtypes (const char* type,
                      CosTradingRepos::ServiceTypeRepository_ptr rep,
                      TAO_Constraint_Interpreter& constr_inter,
                      TAO_Preference_Interpreter& pref_inter,
-                     TAO_Offer_Filter& offer_filter)
+                     TAO_Offer_Filter& offer_filter,
+                     CORBA::Environment& ACE_TRY_ENV)
 {
   // BEGIN SPEC
   // The trader may return a service offer of a subtype of the "type"
@@ -301,8 +305,8 @@ lookup_all_subtypes (const char* type,
   // types with lower incarnation numbers.
   sst.incarnation (inc_num);
 
-  ACE_DECLARE_NEW_CORBA_ENV;  
   all_types = rep->list_types (sst, ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Scan all types inserted after the super types. If the transitive
   // closure of a type's super type relation includes the super type
@@ -313,39 +317,30 @@ lookup_all_subtypes (const char* type,
        i < num_types && offer_filter.ok_to_consider_more ();
        i++)
     {
-      ACE_TRY
+      // Obtain a description of the prospective type.
+      type_struct = rep->fully_describe_type (all_types[i],
+                                              ACE_TRY_ENV);
+      ACE_CHECK;
+
+      CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq&
+        super_types = type_struct->super_types;
+      CORBA::ULong num_super_types = super_types.length ();
+
+      for (CORBA::ULong j = 0; j < num_super_types; j++)
         {
-          // @@ Irfan, can you please check the exception design here?
-
-          // Obtain a description of the prospective type.
-          type_struct = rep->fully_describe_type (all_types[i],
-                                                  ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq&
-            super_types = type_struct->super_types;
-          CORBA::ULong num_super_types = super_types.length ();
-
-          for (CORBA::ULong j = 0; j < num_super_types; j++)
+          if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
             {
-              if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
-                {
-                  // Egads, a subtype! This type has the type passed
-                  // to query in its list of super_types.
-                  offer_filter.configure_type (type_struct.ptr ());
-                  this->lookup_one_type (all_types[i],
-                                         offer_database,
-                                         constr_inter,
-                                         pref_inter,
-                                         offer_filter);
-                  break;
-                }
+              // Egads, a subtype! This type has the type passed
+              // to query in its list of super_types.
+              offer_filter.configure_type (type_struct.ptr ());
+              this->lookup_one_type (all_types[i],
+                                     offer_database,
+                                     constr_inter,
+                                     pref_inter,
+                                     offer_filter);
+              break;
             }
         }
-      ACE_CATCHANY
-        {
-        }
-      ACE_ENDTRY;
     }
 }
 
@@ -389,14 +384,14 @@ fill_receptacles (const char* /* type */,
   CORBA::ULong offers_in_iterator = size - offers_in_sequence;
 
   // Ensure the total number of offers returned doesn't exceed return_card.
-  offers_in_sequence = offers_in_sequence > return_card 
-    ? return_card 
+  offers_in_sequence = offers_in_sequence > return_card
+    ? return_card
     : offers_in_sequence;
 
   return_card -= offers_in_sequence;
 
   offers_in_iterator = offers_in_iterator > return_card
-    ? return_card 
+    ? return_card
     : offers_in_iterator;
 
   CORBA::ULong total_offers = offers_in_sequence + offers_in_iterator;
@@ -538,8 +533,8 @@ retrieve_links (TAO_Policies& policies,
           ACE_CHECK_RETURN (should_follow);
 
           // Determine if the link follow rule applies.
-          if (link_rule == CosTrading::always 
-              || (link_rule == CosTrading::if_no_local 
+          if (link_rule == CosTrading::always
+              || (link_rule == CosTrading::if_no_local
                   && offers_returned == 0))
             {
               // Add the link to the list of links to follow.
@@ -618,8 +613,6 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
       ACE_TRY
         {
-          // @@ Irfan, can you please check the exception design.
-
           // Obtain information about the link we're traversing.
           CosTrading::Link::LinkInfo_var link_info =
             link_interface->describe_link (links[i], ACE_TRY_ENV);
@@ -685,7 +678,10 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
   // Return the collection of offer iterators.
   offer_iter = offer_iter_collection->_this (ACE_TRY_ENV);
+  ACE_CHECK;
+
   offer_iter_collection->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

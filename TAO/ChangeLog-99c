@@ -1,3 +1,15 @@
+Mon Jun 28 19:28:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Generic_Servant/MyFooServant.cpp: Removed #define
+	  ACE_BUILD_SVC_EXPORT. I don't know what it was for.
+
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp
+	* orbsvcs/orbsvcs/Trader/Trader_T.cpp
+
+	  Fixed exception handling.
+
 Mon Jun 28 19:16:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile:
@@ -23,12 +35,12 @@ Mon Jun 28 18:35:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* examples/README: Updated this to describe all the examples.
 
 Mon Jun 28 18:06:20 1999 Fred Kuhns <fredk@cs.wustl.edu>
-  
+
         * tao: Commited fixes for type codes in IOR exceptions
-          IORS.cpp and IORC.cpp	
-  
+          IORS.cpp and IORC.cpp
+
 Mon Jun 28 18:04:54 1999 Fred Kuhns <fredk@cs.wustl.edu>
-  
+
         * TAO/tests/IORManipultion: Added test for IORManipultion.
 
 Mon Jun 28 17:50:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>

@@ -13,7 +13,6 @@
 //     Irfan Pyarali
 //
 // ================================================================
-#define ACE_BUILD_SVC_EXPORT
 
 #include "MyFooServant.h"
 

@@ -74,21 +74,13 @@ next_n (CORBA::ULong n,
       CosTrading::OfferId id;
       this->offer_ids_.dequeue_head (id);
 
-      ACE_TRY
-        {
-          // @@ Irfan, can you please check this out for exception design?
-          CosTrading::OfferId_var offerid_var (id);
-          CosTrading::Offer* offer = this->db_.lookup_offer (id, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+      CosTrading::OfferId_var offerid_var (id);
+      CosTrading::Offer* offer = this->db_.lookup_offer (id, ACE_TRY_ENV);
+      ACE_CHECK;
 
-          if (offer != 0)
-            this->pfilter_.filter_offer (offer,
-                                         offers[ret_offers++]);
-        }
-      ACE_CATCHANY 
-        {
-        }
-      ACE_ENDTRY;
+      if (offer != 0)
+        this->pfilter_.filter_offer (offer,
+                                     offers[ret_offers++]);
     }
 
   // Reset the length to the correct value
