@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //      This is a test that makes sure various classes in
-//      <ACE_Configuration> work correctly.  
+//      <ACE_Configuration> work correctly.
 //
 // = AUTHOR
 //    Michael Searles <msearles@base16.com> and Chris Hafey <chafey@stentor.com>
@@ -32,28 +32,28 @@ test (ACE_Configuration *config)
   ACE_Configuration_Section_Key testsection;
 
   if (config->open_section (root,
-                            "test",
+                            ACE_TEXT ("test"),
                             1,
                             testsection))
     return -2;
 
   // Set some values.
   else if (config->set_string_value (testsection,
-                                "stvalue",
-                                "stvaluetest"))
+                                     ACE_TEXT ("stvalue"),
+                                     ACE_TEXT ("stvaluetest")))
     return -3;
 
   else if (config->remove_value (testsection,
-                            "stvalue"))
+                                 ACE_TEXT ("stvalue")))
     return -4;
 
   else if (config->set_string_value (testsection,
-                                     "stvalue",
-                                     "stvaluetest"))
+                                     ACE_TEXT ("stvalue"),
+                                     ACE_TEXT ("stvaluetest")))
     return -3;
 
   else if (config->set_integer_value (testsection,
-                                      "intvalue",
+                                      ACE_TEXT ("intvalue"),
                                       42))
     return -4;
 
@@ -63,7 +63,7 @@ test (ACE_Configuration *config)
     data[i] = i + 128;
 
   if (config->set_binary_value (testsection,
-                                "binvalue",
+                                ACE_TEXT ("binvalue"),
                                 data,
                                 80))
     return -5;
@@ -72,7 +72,7 @@ test (ACE_Configuration *config)
   ACE_TString stvalue;
 
   if (config->get_string_value (testsection,
-                                "stvalue",
+                                ACE_TEXT ("stvalue"),
                                 stvalue))
     return -6;
   else if (stvalue != "stvaluetest")
@@ -81,7 +81,7 @@ test (ACE_Configuration *config)
   u_int intvalue;
 
   if (config->get_integer_value (testsection,
-                                 "intvalue",
+                                 ACE_TEXT ("intvalue"),
                                  intvalue))
     return -8;
   else if (intvalue != 42)
@@ -91,7 +91,7 @@ test (ACE_Configuration *config)
   u_int length = 0;
 
   if (config->get_binary_value (testsection,
-                                "binvalue",
+                                ACE_TEXT ("binvalue"),
                                 (void*&) data_out,
                                 length))
     return -10;
@@ -145,17 +145,17 @@ test (ACE_Configuration *config)
   ACE_Configuration_Section_Key test4;
 
   if (config->open_section (testsection,
-                            "test2",
+                            ACE_TEXT ("test2"),
                             1,
                             test2))
     return -16;
   else if (config->open_section (testsection,
-                                 "test3",
+                                 ACE_TEXT ("test3"),
                                  1,
                                  test3))
     return -17;
   else if (config->open_section (testsection,
-                                 "test4",
+                                 ACE_TEXT ("test4"),
                                  1,
                                  test4))
     return -18;
@@ -167,11 +167,11 @@ test (ACE_Configuration *config)
                                       index,
                                       name))
     {
-      if (name == "test2")
+      if (name == ACE_TEXT ("test2"))
         count++;
-      else if (name == "test3")
+      else if (name == ACE_TEXT ("test3"))
         count++;
-      else if (name == "test4")
+      else if (name == ACE_TEXT ("test4"))
         count++;
       index++;
     }
@@ -181,20 +181,20 @@ test (ACE_Configuration *config)
 
   // Remove a subsection
   if (config->remove_section (testsection,
-                              "test2",
+                              ACE_TEXT ("test2"),
                               0))
     return -20;
 
   // Try to remove it again
   if (!config->remove_section (testsection,
-                               "test2",
+                               ACE_TEXT ("test2"),
                                0))
     return -21;
 
   // Try to remove the testsection root, it should fail since it still
   // has subkeys
   if (!config->remove_section (root,
-                               "test",
+                               ACE_TEXT ("test"),
                                0))
     return -22;
 
@@ -202,20 +202,20 @@ test (ACE_Configuration *config)
   ACE_Configuration_Section_Key result;
 
   if (config->open_section (root,
-                            "test",
+                            ACE_TEXT ("test"),
                             0,
                             result))
     return -23;
 
   // Now test the recursive remove.
   if (config->remove_section (root,
-                              "test",
+                              ACE_TEXT ("test"),
                               1))
     return -24;
 
   // Make sure its not there
   if (!config->open_section (root,
-                             "test",
+                             ACE_TEXT ("test"),
                              0,
                              testsection))
     return -25;
@@ -232,7 +232,7 @@ test_io (ACE_Configuration *config)
   ACE_Configuration_Section_Key test;
 
   if (config->open_section(root,
-                           "test",
+                           ACE_TEXT ("test"),
                            1,
                            test))
     return -1;
@@ -240,44 +240,44 @@ test_io (ACE_Configuration *config)
   ACE_TString value ("string value");
 
   if (config->set_string_value (test,
-                                "stvalue",
+                                ACE_TEXT ("stvalue"),
                                 value))
     return -2;
   else if (config->set_string_value (test,
-                                     "stvalue1",
+                                     ACE_TEXT ("stvalue1"),
                                      value))
     return -3;
   else if (config->set_integer_value (test,
-                                      "intvalue",
+                                      ACE_TEXT ("intvalue"),
                                       42))
     return -4;
 
   ACE_Configuration_Section_Key test2;
 
   if (config->open_section (test,
-                            "test2",
+                            ACE_TEXT ("test2"),
                             1,
                             test2))
     return -5;
   else if (config->set_string_value (test2,
-                                     "2stvalue",
+                                     ACE_TEXT ("2stvalue"),
                                      value))
     return -6;
   else if (config->set_string_value (test2,
-                                     "2stvalue1",
+                                     ACE_TEXT ("2stvalue1"),
                                      value))
     return -7;
   else if (config->set_integer_value (test2,
-                                      "2intvalue",
+                                      ACE_TEXT ("2intvalue"),
                                       42))
     return -8;
 
   // Export it to a file
-  if(config->export_config ("config.ini"))
+  if(config->export_config (ACE_TEXT ("config.ini")))
     return -9;
   // reimport
 
-  if (config->import_config ("config.ini"))
+  if (config->import_config (ACE_TEXT ("config.ini")))
     return -10;
 
   return 0;
@@ -290,7 +290,7 @@ run_tests (void)
   // test win32 registry implementation.
   HKEY root =
     ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
-                                                  "Software\\ACE\\test");
+                                                  ACE_TEXT ("Software\\ACE\\test"));
   if (!root)
     return -1;
 
@@ -320,10 +320,10 @@ run_tests (void)
   }
 
   // Test persistent heap version
-  ACE_OS::unlink ("test.reg");
+  ACE_OS::unlink (ACE_TEXT ("test.reg"));
   ACE_Configuration_Heap pers_config;
 
-  if (pers_config.open ("test.reg"))
+  if (pers_config.open (ACE_TEXT ("test.reg")))
     return 0;
   {
     int result = test (&pers_config);
@@ -356,33 +356,35 @@ Config_Test::read_config (void)
 {
   if (m_ConfigurationHeap.open () == 0)
     {
-      if (m_ConfigurationHeap.import_config_as_strings ("Config_Test.ini") == 0)
+      if (m_ConfigurationHeap.import_config_as_strings (ACE_TEXT ("Config_Test.ini")) == 0)
         {
           ACE_Configuration_Section_Key root = m_ConfigurationHeap.root_section ();
           // Process [network] section
           ACE_Configuration_Section_Key NetworkSection;
-          if (m_ConfigurationHeap.open_section (root, "network", 1,
+          if (m_ConfigurationHeap.open_section (root, 
+                                                ACE_TEXT ("network"), 
+                                                1,
                                                 NetworkSection) == 0)
             {
               this->get_section_integer (NetworkSection,
-                                         "TimeToLive",
+                                         ACE_TEXT ("TimeToLive"),
                                          &m_nTimeToLive,
                                          1,
                                          20);
               this->get_section_boolean (NetworkSection,
-                                         "Delay",
+                                         ACE_TEXT ("Delay"),
                                          &m_bDelay);
               this->get_section_string (NetworkSection,
-                                        "DestIPAddress",
+                                        ACE_TEXT ("DestIPAddress"),
                                         m_pszDestIPAddress,
                                         TEST_MAX_STRING);
               this->get_section_integer (NetworkSection,
-                                         "DestPort",
+                                         ACE_TEXT ("DestPort"),
                                          &m_nDestPort,
                                          0,
                                          65535);
               this->get_section_integer (NetworkSection,
-                                         "ReconnectInterval",
+                                         ACE_TEXT ("ReconnectInterval"),
                                          &m_nReconnectInterval,
                                          0,
                                          65535);
@@ -392,28 +394,29 @@ Config_Test::read_config (void)
           ACE_Configuration_Section_Key LoggerSection;
 
           if (m_ConfigurationHeap.open_section (root,
-                                                "logger", 1,
+                                                ACE_TEXT ("logger"), 
+                                                1,
                                                 LoggerSection) == 0)
             {
-              this->get_section_string (LoggerSection, 
-                                        "Heading",
+              this->get_section_string (LoggerSection,
+                                        ACE_TEXT ("Heading"),
                                         m_pszHeading,
                                         TEST_MAX_STRING);
               this->get_section_integer (LoggerSection,
-                                         "TraceLevel",
+                                         ACE_TEXT ("TraceLevel"),
                                          &m_nTraceLevel,
                                          1,
                                          20);
               this->get_section_string (LoggerSection,
-                                        "Justification",
+                                        ACE_TEXT ("Justification"),
                                         m_pszJustification,
                                         TEST_MAX_STRING);
               this->get_section_string (LoggerSection,
-                                        "LogFilePath",
+                                        ACE_TEXT ("LogFilePath"),
                                         m_pszLogFilePath,
                                         TEST_MAX_STRING);
               this->get_section_string (LoggerSection,
-                                        "TransactionFilePath",
+                                        ACE_TEXT ("TransactionFilePath"),
                                         m_pszTransactionFilePath,
                                         TEST_MAX_STRING);
             }
@@ -436,7 +439,7 @@ Config_Test::get_section_string (ACE_Configuration_Section_Key& SectionKey,
       ACE_OS::strncpy (pszVariable,
                        StringValue.c_str (),
                        nMaxLength);
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
                   pszName,
                   pszVariable));
@@ -452,7 +455,7 @@ Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
 {
   ACE_TString StringValue;
   ACE_TCHAR pszString[30];
-  ACE_OS::strcpy(pszString, "0");
+  ACE_OS::strcpy(pszString, ACE_TEXT ("0"));
   int IntegerValue = 0;
 
   if (m_ConfigurationHeap.get_string_value (SectionKey,
@@ -463,7 +466,7 @@ Config_Test::get_section_integer (ACE_Configuration_Section_Key& SectionKey,
                        StringValue.c_str (),
                        30);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s = %s\n"),
+                  "%s = %s\n",
                   pszName,
                   pszString));
     }
@@ -483,8 +486,8 @@ Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
                                   int* pVariable)
 {
   ACE_TString StringValue;
-  char pszString[10];
-  ACE_OS::strcpy (pszString, "0");
+  ACE_TCHAR pszString[10];
+  ACE_OS::strcpy (pszString, ACE_TEXT ("0"));
 
   if (m_ConfigurationHeap.get_string_value (SectionKey,
                                             pszName,
@@ -494,7 +497,7 @@ Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
                        StringValue.c_str (),
                        10);
       for (ACE_TCHAR* pSrc = pszString;
-           *pSrc != '\0';
+           *pSrc != ACE_TEXT ('\0');
            pSrc++)
         // Convert to uppercase
         if (islower (*pSrc))
@@ -506,10 +509,10 @@ Config_Test::get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
                   pszString));
 
       if (ACE_OS::strcmp (pszString,
-                          "TRUE") == 0)
+                          ACE_TEXT ("TRUE")) == 0)
         *pVariable = 1;
       else if (ACE_OS::strcmp (pszString,
-                               "FALSE") == 0)
+                               ACE_TEXT ("FALSE")) == 0)
         *pVariable = 0;
     }
 }
