@@ -413,11 +413,11 @@ TAO_Connector::make_mprofile (const char *string,
           TAO_Profile *profile = 0;
           // Must initialize since pointer is passed as a reference!
 
-          int mp_result = this->make_profile (endpoint.c_str (),
-                                              profile,
-                                              ACE_TRY_ENV);
+          this->make_profile (endpoint.c_str (),
+                              profile,
+                              ACE_TRY_ENV);
 
-          ACE_CHECK_RETURN (mp_result);
+          ACE_CHECK_RETURN (-1);
           // Failure:  Problem during profile creation
 
           // Create a Profile using the individual endpoint string

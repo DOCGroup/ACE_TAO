@@ -426,9 +426,9 @@ public:
   // encapsulation in <cdr>
 
 protected:
-  virtual int make_profile (const char *endpoint,
-                            TAO_Profile *&,
-                            CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void make_profile (const char *endpoint,
+                             TAO_Profile *&,
+                             CORBA::Environment &ACE_TRY_ENV) = 0;
   // Create a profile with a given endpoint.
 
   virtual int check_prefix (const char *endpoint) = 0;
