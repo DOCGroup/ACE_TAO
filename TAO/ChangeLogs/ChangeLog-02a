@@ -1,3 +1,12 @@
+Fri Feb 18 19:21:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  Removed IDL compiler item about relaxing the rule in IDL of 
+	  defining forward declared interfaces in the same
+	  file (until it gets implemented) and added one about the
+	  new command line option -Sc to suppress generation of
+	  tie classes.
+
 Fri Feb 18 19:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/idl_global.h:
