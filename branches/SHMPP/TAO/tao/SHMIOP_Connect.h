@@ -42,11 +42,11 @@ class TAO_ORB_Core_TSS_Resources;
 
 
 typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
-        TAO_SVC_HANDLER;
+        TAO_SHMIOP_SVC_HANDLER;
 
 // ****************************************************************
 
-class TAO_SHMIOP_Handler_Base : public TAO_SVC_HANDLER
+class TAO_SHMIOP_Handler_Base : public TAO_SHMIOP_SVC_HANDLER
 {
 public:
   TAO_SHMIOP_Handler_Base (ACE_Thread_Manager *t);
