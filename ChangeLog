@@ -1,3 +1,10 @@
+Tue Jul  3 14:44:00 2001  Craig Rodrigues  <crodrigues@bbn.com>
+
+        * ace/config-win32-common.h: Borland C++ apparently
+          does not support the "extern template class" Microsoft VC++
+          proprietary extension.  Thanks to Chris Kohloff <chris@kohlhoff.com>
+          for the fix.
+
 Tue Jul 03 12:26:33 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch_T.h (class ACE_Reverse_Lock): Added a parameter to the
