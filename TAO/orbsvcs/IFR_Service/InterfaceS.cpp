@@ -188,71 +188,12 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
   POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *)_tao_object_reference;
 
   IR::DefinitionKind _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->def_kind (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_def_kind",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->def_kind (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_def_kind",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_def_kind",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -261,7 +202,6 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_CORBA::IRObject::destroy_skel (
@@ -273,75 +213,15 @@ void POA_CORBA::IRObject::destroy_skel (
 {
   POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *)_tao_object_reference;
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->destroy (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "destroy",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->destroy (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "destroy",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "destroy",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_CORBA::IRObject::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -764,71 +644,12 @@ void POA_IR::Contained::_get_id_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->id (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_id",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->id (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_id",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_id",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -837,7 +658,6 @@ void POA_IR::Contained::_get_id_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Contained::_set_id_skel (
@@ -856,76 +676,16 @@ void POA_IR::Contained::_set_id_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->id (
+      id.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_id",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->id (
-        id.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_id",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_id",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::Contained::_get_name_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -937,71 +697,12 @@ void POA_IR::Contained::_get_name_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->name (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->name (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_name",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1010,7 +711,6 @@ void POA_IR::Contained::_get_name_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Contained::_set_name_skel (
@@ -1029,76 +729,16 @@ void POA_IR::Contained::_set_name_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->name (
+      name.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->name (
-        name.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_name",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::Contained::_get_version_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -1110,71 +750,12 @@ void POA_IR::Contained::_get_version_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->version (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_version",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->version (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_version",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_version",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1183,7 +764,6 @@ void POA_IR::Contained::_get_version_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Contained::_set_version_skel (
@@ -1202,76 +782,16 @@ void POA_IR::Contained::_set_version_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->version (
+      version.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_version",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->version (
-        version.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_version",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_version",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::Contained::_get_defined_in_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -1283,71 +803,12 @@ void POA_IR::Contained::_get_defined_in_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *)_tao_object_reference;
 
   IR::Container_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->defined_in (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_defined_in",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->defined_in (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_defined_in",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_defined_in",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1356,7 +817,6 @@ void POA_IR::Contained::_get_defined_in_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Contained::_get_absolute_name_skel (
@@ -1369,71 +829,12 @@ void POA_IR::Contained::_get_absolute_name_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->absolute_name (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_absolute_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->absolute_name (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_absolute_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_absolute_name",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1442,7 +843,6 @@ void POA_IR::Contained::_get_absolute_name_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Contained::_get_containing_repository_skel (
@@ -1455,71 +855,12 @@ void POA_IR::Contained::_get_containing_repository_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *)_tao_object_reference;
 
   IR::Repository_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->containing_repository (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_containing_repository",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->containing_repository (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_containing_repository",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_containing_repository",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1528,7 +869,6 @@ void POA_IR::Contained::_get_containing_repository_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Contained::describe_skel (
@@ -1541,71 +881,12 @@ void POA_IR::Contained::describe_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *)_tao_object_reference;
 
   IR::Contained::Description_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->describe (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "describe",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->describe (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "describe",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "describe",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1614,7 +895,6 @@ void POA_IR::Contained::describe_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Contained::move_skel (
@@ -1637,78 +917,18 @@ void POA_IR::Contained::move_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->move (
+      new_container.in (),
+      new_name.in (),
+      new_version.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "move",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->move (
-        new_container.in (),
-        new_name.in (),
-        new_version.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "move",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "move",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::Contained::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -2415,72 +1635,12 @@ void POA_IR::Container::lookup_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
-  ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+  _tao_retval = _tao_impl->lookup (
+      search_name.in (),
+      ACE_TRY_ENV
+    );
+
       ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->lookup (
-        search_name.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2489,7 +1649,6 @@ void POA_IR::Container::lookup_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::contents_skel (
@@ -2511,73 +1670,13 @@ void POA_IR::Container::contents_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->contents (
+      limit_type,
+      exclude_inherited,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "contents",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->contents (
-        limit_type,
-        exclude_inherited,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "contents",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "contents",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2586,7 +1685,6 @@ void POA_IR::Container::contents_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::lookup_name_skel (
@@ -2612,75 +1710,15 @@ void POA_IR::Container::lookup_name_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->lookup_name (
+      search_name.in (),
+      levels_to_search,
+      limit_type,
+      exclude_inherited,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->lookup_name (
-        search_name.in (),
-        levels_to_search,
-        limit_type,
-        exclude_inherited,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup_name",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup_name",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2689,7 +1727,6 @@ void POA_IR::Container::lookup_name_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::describe_contents_skel (
@@ -2713,74 +1750,14 @@ void POA_IR::Container::describe_contents_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->describe_contents (
+      limit_type,
+      exclude_inherited,
+      max_returned_objs,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "describe_contents",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->describe_contents (
-        limit_type,
-        exclude_inherited,
-        max_returned_objs,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "describe_contents",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "describe_contents",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2789,7 +1766,6 @@ void POA_IR::Container::describe_contents_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_module_skel (
@@ -2813,74 +1789,14 @@ void POA_IR::Container::create_module_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_module (
+      id.in (),
+      name.in (),
+      version.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_module",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_module (
-        id.in (),
-        name.in (),
-        version.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_module",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_module",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2889,7 +1805,6 @@ void POA_IR::Container::create_module_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_constant_skel (
@@ -2917,76 +1832,16 @@ void POA_IR::Container::create_constant_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_constant (
+      id.in (),
+      name.in (),
+      version.in (),
+      type.in (),
+      value,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_constant",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_constant (
-        id.in (),
-        name.in (),
-        version.in (),
-        type.in (),
-        value,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_constant",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_constant",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2995,7 +1850,6 @@ void POA_IR::Container::create_constant_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_struct_skel (
@@ -3021,75 +1875,15 @@ void POA_IR::Container::create_struct_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_struct (
+      id.in (),
+      name.in (),
+      version.in (),
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_struct",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_struct (
-        id.in (),
-        name.in (),
-        version.in (),
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_struct",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_struct",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3098,7 +1892,6 @@ void POA_IR::Container::create_struct_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_union_skel (
@@ -3126,76 +1919,16 @@ void POA_IR::Container::create_union_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_union (
+      id.in (),
+      name.in (),
+      version.in (),
+      discriminator_type.in (),
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_union",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_union (
-        id.in (),
-        name.in (),
-        version.in (),
-        discriminator_type.in (),
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_union",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_union",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3204,7 +1937,6 @@ void POA_IR::Container::create_union_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_enum_skel (
@@ -3230,75 +1962,15 @@ void POA_IR::Container::create_enum_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_enum (
+      id.in (),
+      name.in (),
+      version.in (),
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_enum",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_enum (
-        id.in (),
-        name.in (),
-        version.in (),
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_enum",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_enum",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3307,7 +1979,6 @@ void POA_IR::Container::create_enum_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_alias_skel (
@@ -3333,75 +2004,15 @@ void POA_IR::Container::create_alias_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_alias (
+      id.in (),
+      name.in (),
+      version.in (),
+      original_type.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_alias",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_alias (
-        id.in (),
-        name.in (),
-        version.in (),
-        original_type.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_alias",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_alias",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3410,7 +2021,6 @@ void POA_IR::Container::create_alias_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_interface_skel (
@@ -3440,77 +2050,17 @@ void POA_IR::Container::create_interface_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_interface (
+      id.in (),
+      name.in (),
+      version.in (),
+      base_interfaces,
+      is_abstract,
+      is_local,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_interface",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_interface (
-        id.in (),
-        name.in (),
-        version.in (),
-        base_interfaces,
-        is_abstract,
-        is_local,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_interface",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_interface",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3519,7 +2069,6 @@ void POA_IR::Container::create_interface_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_value_skel (
@@ -3557,81 +2106,21 @@ void POA_IR::Container::create_value_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_value (
+      id.in (),
+      name.in (),
+      version.in (),
+      is_custom,
+      is_abstract,
+      base_value.in (),
+      is_truncatable,
+      abstract_base_values,
+      supported_interfaces,
+      initializers,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_value (
-        id.in (),
-        name.in (),
-        version.in (),
-        is_custom,
-        is_abstract,
-        base_value.in (),
-        is_truncatable,
-        abstract_base_values,
-        supported_interfaces,
-        initializers,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3640,7 +2129,6 @@ void POA_IR::Container::create_value_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_value_box_skel (
@@ -3666,75 +2154,15 @@ void POA_IR::Container::create_value_box_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_value_box (
+      id.in (),
+      name.in (),
+      version.in (),
+      original_type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value_box",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_value_box (
-        id.in (),
-        name.in (),
-        version.in (),
-        original_type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value_box",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value_box",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3743,7 +2171,6 @@ void POA_IR::Container::create_value_box_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_exception_skel (
@@ -3769,75 +2196,15 @@ void POA_IR::Container::create_exception_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_exception (
+      id.in (),
+      name.in (),
+      version.in (),
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_exception",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_exception (
-        id.in (),
-        name.in (),
-        version.in (),
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_exception",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_exception",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3846,7 +2213,6 @@ void POA_IR::Container::create_exception_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::create_native_skel (
@@ -3870,74 +2236,14 @@ void POA_IR::Container::create_native_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_native (
+      id.in (),
+      name.in (),
+      version.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_native",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_native (
-        id.in (),
-        name.in (),
-        version.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_native",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_native",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -3946,7 +2252,6 @@ void POA_IR::Container::create_native_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Container::_is_a_skel (
@@ -4849,71 +3154,12 @@ void POA_IR::IDLType::_get_type_skel (
   POA_IR::IDLType *_tao_impl = (POA_IR::IDLType *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -4922,7 +3168,6 @@ void POA_IR::IDLType::_get_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::IDLType::_is_a_skel (
@@ -5348,72 +3593,12 @@ void POA_IR::Repository::lookup_id_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->lookup_id (
+      search_id.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup_id",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->lookup_id (
-        search_id.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup_id",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "lookup_id",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -5422,7 +3607,6 @@ void POA_IR::Repository::lookup_id_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::get_canonical_typecode_skel (
@@ -5442,72 +3626,12 @@ void POA_IR::Repository::get_canonical_typecode_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->get_canonical_typecode (
+      tc.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "get_canonical_typecode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->get_canonical_typecode (
-        tc.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "get_canonical_typecode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "get_canonical_typecode",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -5516,7 +3640,6 @@ void POA_IR::Repository::get_canonical_typecode_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::get_primitive_skel (
@@ -5536,72 +3659,12 @@ void POA_IR::Repository::get_primitive_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->get_primitive (
+      kind,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "get_primitive",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->get_primitive (
-        kind,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "get_primitive",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "get_primitive",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -5610,7 +3673,6 @@ void POA_IR::Repository::get_primitive_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::create_string_skel (
@@ -5630,72 +3692,12 @@ void POA_IR::Repository::create_string_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_string (
+      bound,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_string",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_string (
-        bound,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_string",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_string",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -5704,7 +3706,6 @@ void POA_IR::Repository::create_string_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::create_wstring_skel (
@@ -5724,72 +3725,12 @@ void POA_IR::Repository::create_wstring_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_wstring (
+      bound,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_wstring",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_wstring (
-        bound,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_wstring",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_wstring",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -5798,7 +3739,6 @@ void POA_IR::Repository::create_wstring_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::create_sequence_skel (
@@ -5820,73 +3760,13 @@ void POA_IR::Repository::create_sequence_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_sequence (
+      bound,
+      element_type.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_sequence",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_sequence (
-        bound,
-        element_type.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_sequence",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_sequence",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -5895,7 +3775,6 @@ void POA_IR::Repository::create_sequence_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::create_array_skel (
@@ -5917,73 +3796,13 @@ void POA_IR::Repository::create_array_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+   _tao_retval = _tao_impl->create_array (
+      length,
+      element_type.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_array",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_array (
-        length,
-        element_type.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_array",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_array",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -5992,7 +3811,6 @@ void POA_IR::Repository::create_array_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::create_fixed_skel (
@@ -6014,73 +3832,13 @@ void POA_IR::Repository::create_fixed_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_fixed (
+      digits,
+      scale,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_fixed",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_fixed (
-        digits,
-        scale,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_fixed",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_fixed",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -6089,7 +3847,6 @@ void POA_IR::Repository::create_fixed_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::Repository::_is_a_skel (
@@ -6753,76 +4510,16 @@ void POA_IR::ComponentRepository::create_component_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_component (
+      id.in (),
+      name.in (),
+      version.in (),
+      base_component.in (),
+      supports_interfaces,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_component",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_component (
-        id.in (),
-        name.in (),
-        version.in (),
-        base_component.in (),
-        supports_interfaces,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_component",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_component",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -6831,7 +4528,6 @@ void POA_IR::ComponentRepository::create_component_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentRepository::create_home_skel (
@@ -6861,77 +4557,17 @@ void POA_IR::ComponentRepository::create_home_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_home (
+      id.in (),
+      name.in (),
+      version.in (),
+      base_home.in (),
+      managed_component.in (),
+      primary_key.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_home",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_home (
-        id.in (),
-        name.in (),
-        version.in (),
-        base_home.in (),
-        managed_component.in (),
-        primary_key.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_home",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_home",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -6940,7 +4576,6 @@ void POA_IR::ComponentRepository::create_home_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentRepository::_is_a_skel (
@@ -7795,71 +5430,12 @@ void POA_IR::ConstantDef::_get_type_skel (
   POA_IR::ConstantDef *_tao_impl = (POA_IR::ConstantDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -7868,7 +5444,6 @@ void POA_IR::ConstantDef::_get_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ConstantDef::_get_type_def_skel (
@@ -7881,71 +5456,12 @@ void POA_IR::ConstantDef::_get_type_def_skel (
   POA_IR::ConstantDef *_tao_impl = (POA_IR::ConstantDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -7954,7 +5470,6 @@ void POA_IR::ConstantDef::_get_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ConstantDef::_set_type_def_skel (
@@ -7973,76 +5488,16 @@ void POA_IR::ConstantDef::_set_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->type_def (
+      type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->type_def (
-        type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ConstantDef::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -8054,71 +5509,12 @@ void POA_IR::ConstantDef::_get_value_skel (
   POA_IR::ConstantDef *_tao_impl = (POA_IR::ConstantDef *)_tao_object_reference;
 
   CORBA::Any_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->value (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->value (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -8127,7 +5523,6 @@ void POA_IR::ConstantDef::_get_value_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ConstantDef::_set_value_skel (
@@ -8146,76 +5541,16 @@ void POA_IR::ConstantDef::_set_value_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->value (
+      value,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->value (
-        value,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ConstantDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -9132,71 +6467,12 @@ void POA_IR::StructDef::_get_members_skel (
   POA_IR::StructDef *_tao_impl = (POA_IR::StructDef *)_tao_object_reference;
 
   IR::StructMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->members (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->members (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -9205,7 +6481,6 @@ void POA_IR::StructDef::_get_members_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::StructDef::_set_members_skel (
@@ -9224,76 +6499,16 @@ void POA_IR::StructDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->members (
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->members (
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::StructDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -9767,71 +6982,12 @@ void POA_IR::UnionDef::_get_discriminator_type_skel (
   POA_IR::UnionDef *_tao_impl = (POA_IR::UnionDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->discriminator_type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_discriminator_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->discriminator_type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_discriminator_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_discriminator_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -9840,7 +6996,6 @@ void POA_IR::UnionDef::_get_discriminator_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::UnionDef::_get_discriminator_type_def_skel (
@@ -9853,71 +7008,12 @@ void POA_IR::UnionDef::_get_discriminator_type_def_skel (
   POA_IR::UnionDef *_tao_impl = (POA_IR::UnionDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->discriminator_type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_discriminator_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->discriminator_type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_discriminator_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_discriminator_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -9926,7 +7022,6 @@ void POA_IR::UnionDef::_get_discriminator_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::UnionDef::_set_discriminator_type_def_skel (
@@ -9945,76 +7040,16 @@ void POA_IR::UnionDef::_set_discriminator_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->discriminator_type_def (
+      discriminator_type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_discriminator_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->discriminator_type_def (
-        discriminator_type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_discriminator_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_discriminator_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::UnionDef::_get_members_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -10026,71 +7061,12 @@ void POA_IR::UnionDef::_get_members_skel (
   POA_IR::UnionDef *_tao_impl = (POA_IR::UnionDef *)_tao_object_reference;
 
   IR::UnionMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->members (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->members (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -10099,7 +7075,6 @@ void POA_IR::UnionDef::_get_members_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::UnionDef::_set_members_skel (
@@ -10118,76 +7093,16 @@ void POA_IR::UnionDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->members (
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->members (
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::UnionDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -10727,71 +7642,12 @@ void POA_IR::EnumDef::_get_members_skel (
   POA_IR::EnumDef *_tao_impl = (POA_IR::EnumDef *)_tao_object_reference;
 
   IR::EnumMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->members (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->members (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -10800,7 +7656,6 @@ void POA_IR::EnumDef::_get_members_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::EnumDef::_set_members_skel (
@@ -10819,76 +7674,16 @@ void POA_IR::EnumDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->members (
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->members (
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::EnumDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -11337,71 +8132,12 @@ void POA_IR::AliasDef::_get_original_type_def_skel (
   POA_IR::AliasDef *_tao_impl = (POA_IR::AliasDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->original_type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->original_type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_original_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -11410,7 +8146,6 @@ void POA_IR::AliasDef::_get_original_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::AliasDef::_set_original_type_def_skel (
@@ -11429,76 +8164,16 @@ void POA_IR::AliasDef::_set_original_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->original_type_def (
+      original_type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->original_type_def (
-        original_type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_original_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::AliasDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -12290,71 +8965,12 @@ void POA_IR::PrimitiveDef::_get_kind_skel (
   POA_IR::PrimitiveDef *_tao_impl = (POA_IR::PrimitiveDef *)_tao_object_reference;
 
   IR::PrimitiveKind _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->kind (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_kind",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->kind (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_kind",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_kind",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -12363,7 +8979,6 @@ void POA_IR::PrimitiveDef::_get_kind_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::PrimitiveDef::_is_a_skel (
@@ -12762,71 +9377,12 @@ void POA_IR::StringDef::_get_bound_skel (
   POA_IR::StringDef *_tao_impl = (POA_IR::StringDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->bound (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->bound (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -12835,7 +9391,6 @@ void POA_IR::StringDef::_get_bound_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::StringDef::_set_bound_skel (
@@ -12854,76 +9409,16 @@ void POA_IR::StringDef::_set_bound_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->bound (
+      bound,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->bound (
-        bound,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::StringDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -13350,71 +9845,12 @@ void POA_IR::WstringDef::_get_bound_skel (
   POA_IR::WstringDef *_tao_impl = (POA_IR::WstringDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->bound (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->bound (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -13423,7 +9859,6 @@ void POA_IR::WstringDef::_get_bound_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::WstringDef::_set_bound_skel (
@@ -13442,76 +9877,16 @@ void POA_IR::WstringDef::_set_bound_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->bound (
+      bound,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->bound (
-        bound,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::WstringDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -13940,71 +10315,12 @@ void POA_IR::FixedDef::_get_digits_skel (
   POA_IR::FixedDef *_tao_impl = (POA_IR::FixedDef *)_tao_object_reference;
 
   CORBA::UShort _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->digits (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_digits",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->digits (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_digits",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_digits",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -14013,7 +10329,6 @@ void POA_IR::FixedDef::_get_digits_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::FixedDef::_set_digits_skel (
@@ -14032,76 +10347,16 @@ void POA_IR::FixedDef::_set_digits_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->digits (
+      digits,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_digits",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->digits (
-        digits,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_digits",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_digits",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::FixedDef::_get_scale_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -14113,71 +10368,12 @@ void POA_IR::FixedDef::_get_scale_skel (
   POA_IR::FixedDef *_tao_impl = (POA_IR::FixedDef *)_tao_object_reference;
 
   CORBA::Short _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->scale (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_scale",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->scale (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_scale",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_scale",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -14186,7 +10382,6 @@ void POA_IR::FixedDef::_get_scale_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::FixedDef::_set_scale_skel (
@@ -14205,76 +10400,16 @@ void POA_IR::FixedDef::_set_scale_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->scale (
+      scale,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_scale",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->scale (
-        scale,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_scale",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_scale",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::FixedDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -14762,71 +10897,12 @@ void POA_IR::SequenceDef::_get_bound_skel (
   POA_IR::SequenceDef *_tao_impl = (POA_IR::SequenceDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->bound (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->bound (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_bound",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -14835,7 +10911,6 @@ void POA_IR::SequenceDef::_get_bound_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::SequenceDef::_set_bound_skel (
@@ -14854,76 +10929,16 @@ void POA_IR::SequenceDef::_set_bound_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->bound (
+      bound,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->bound (
-        bound,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_bound",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::SequenceDef::_get_element_type_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -14935,71 +10950,12 @@ void POA_IR::SequenceDef::_get_element_type_skel (
   POA_IR::SequenceDef *_tao_impl = (POA_IR::SequenceDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->element_type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->element_type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -15008,7 +10964,6 @@ void POA_IR::SequenceDef::_get_element_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::SequenceDef::_get_element_type_def_skel (
@@ -15021,71 +10976,12 @@ void POA_IR::SequenceDef::_get_element_type_def_skel (
   POA_IR::SequenceDef *_tao_impl = (POA_IR::SequenceDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->element_type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->element_type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -15094,7 +10990,6 @@ void POA_IR::SequenceDef::_get_element_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::SequenceDef::_set_element_type_def_skel (
@@ -15113,76 +11008,16 @@ void POA_IR::SequenceDef::_set_element_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->element_type_def (
+      element_type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->element_type_def (
-        element_type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_element_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::SequenceDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -15699,71 +11534,12 @@ void POA_IR::ArrayDef::_get_length_skel (
   POA_IR::ArrayDef *_tao_impl = (POA_IR::ArrayDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->length (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_length",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->length (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_length",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_length",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -15772,7 +11548,6 @@ void POA_IR::ArrayDef::_get_length_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ArrayDef::_set_length_skel (
@@ -15791,76 +11566,16 @@ void POA_IR::ArrayDef::_set_length_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->length (
+      length,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_length",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->length (
-        length,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_length",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_length",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ArrayDef::_get_element_type_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -15872,71 +11587,12 @@ void POA_IR::ArrayDef::_get_element_type_skel (
   POA_IR::ArrayDef *_tao_impl = (POA_IR::ArrayDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->element_type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->element_type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -15945,7 +11601,6 @@ void POA_IR::ArrayDef::_get_element_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ArrayDef::_get_element_type_def_skel (
@@ -15958,71 +11613,12 @@ void POA_IR::ArrayDef::_get_element_type_def_skel (
   POA_IR::ArrayDef *_tao_impl = (POA_IR::ArrayDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->element_type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->element_type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_element_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -16031,7 +11627,6 @@ void POA_IR::ArrayDef::_get_element_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ArrayDef::_set_element_type_def_skel (
@@ -16050,76 +11645,16 @@ void POA_IR::ArrayDef::_set_element_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->element_type_def (
+      element_type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->element_type_def (
-        element_type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_element_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_element_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ArrayDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -16662,71 +12197,12 @@ void POA_IR::ExceptionDef::_get_type_skel (
   POA_IR::ExceptionDef *_tao_impl = (POA_IR::ExceptionDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -16735,7 +12211,6 @@ void POA_IR::ExceptionDef::_get_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ExceptionDef::_get_members_skel (
@@ -16748,71 +12223,12 @@ void POA_IR::ExceptionDef::_get_members_skel (
   POA_IR::ExceptionDef *_tao_impl = (POA_IR::ExceptionDef *)_tao_object_reference;
 
   IR::StructMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->members (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->members (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -16821,7 +12237,6 @@ void POA_IR::ExceptionDef::_get_members_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ExceptionDef::_set_members_skel (
@@ -16840,76 +12255,16 @@ void POA_IR::ExceptionDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->members (
+      members,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->members (
-        members,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_members",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ExceptionDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -17383,71 +12738,12 @@ void POA_IR::AttributeDef::_get_type_skel (
   POA_IR::AttributeDef *_tao_impl = (POA_IR::AttributeDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -17456,7 +12752,6 @@ void POA_IR::AttributeDef::_get_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::AttributeDef::_get_type_def_skel (
@@ -17469,71 +12764,12 @@ void POA_IR::AttributeDef::_get_type_def_skel (
   POA_IR::AttributeDef *_tao_impl = (POA_IR::AttributeDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -17542,7 +12778,6 @@ void POA_IR::AttributeDef::_get_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::AttributeDef::_set_type_def_skel (
@@ -17561,76 +12796,16 @@ void POA_IR::AttributeDef::_set_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->type_def (
+      type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->type_def (
-        type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::AttributeDef::_get_mode_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -17642,71 +12817,12 @@ void POA_IR::AttributeDef::_get_mode_skel (
   POA_IR::AttributeDef *_tao_impl = (POA_IR::AttributeDef *)_tao_object_reference;
 
   IR::AttributeMode _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->mode (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->mode (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_mode",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -17715,7 +12831,6 @@ void POA_IR::AttributeDef::_get_mode_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::AttributeDef::_set_mode_skel (
@@ -17734,76 +12849,17 @@ void POA_IR::AttributeDef::_set_mode_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_impl->mode (
+      mode,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->mode (
-        mode,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_mode",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::AttributeDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -18386,71 +13442,12 @@ void POA_IR::OperationDef::_get_result_skel (
   POA_IR::OperationDef *_tao_impl = (POA_IR::OperationDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->result (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_result",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->result (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_result",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_result",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -18459,7 +13456,6 @@ void POA_IR::OperationDef::_get_result_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::OperationDef::_get_result_def_skel (
@@ -18472,71 +13468,12 @@ void POA_IR::OperationDef::_get_result_def_skel (
   POA_IR::OperationDef *_tao_impl = (POA_IR::OperationDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->result_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_result_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->result_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_result_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_result_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -18545,7 +13482,6 @@ void POA_IR::OperationDef::_get_result_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::OperationDef::_set_result_def_skel (
@@ -18564,76 +13500,16 @@ void POA_IR::OperationDef::_set_result_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->result_def (
+      result_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_result_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->result_def (
-        result_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_result_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_result_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::OperationDef::_get_params_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -18645,71 +13521,12 @@ void POA_IR::OperationDef::_get_params_skel (
   POA_IR::OperationDef *_tao_impl = (POA_IR::OperationDef *)_tao_object_reference;
 
   IR::ParDescriptionSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->params (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_params",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->params (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_params",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_params",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -18718,7 +13535,6 @@ void POA_IR::OperationDef::_get_params_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::OperationDef::_set_params_skel (
@@ -18737,76 +13553,16 @@ void POA_IR::OperationDef::_set_params_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->params (
+      params,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_params",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->params (
-        params,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_params",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_params",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::OperationDef::_get_mode_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -18818,71 +13574,12 @@ void POA_IR::OperationDef::_get_mode_skel (
   POA_IR::OperationDef *_tao_impl = (POA_IR::OperationDef *)_tao_object_reference;
 
   IR::OperationMode _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->mode (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->mode (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_mode",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -18891,7 +13588,6 @@ void POA_IR::OperationDef::_get_mode_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::OperationDef::_set_mode_skel (
@@ -18910,76 +13606,16 @@ void POA_IR::OperationDef::_set_mode_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->mode (
+      mode,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->mode (
-        mode,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_mode",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_mode",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::OperationDef::_get_contexts_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -18991,71 +13627,12 @@ void POA_IR::OperationDef::_get_contexts_skel (
   POA_IR::OperationDef *_tao_impl = (POA_IR::OperationDef *)_tao_object_reference;
 
   IR::ContextIdSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->contexts (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_contexts",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->contexts (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_contexts",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_contexts",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -19064,7 +13641,6 @@ void POA_IR::OperationDef::_get_contexts_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::OperationDef::_set_contexts_skel (
@@ -19083,76 +13659,16 @@ void POA_IR::OperationDef::_set_contexts_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->contexts (
+      contexts,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_contexts",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->contexts (
-        contexts,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_contexts",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_contexts",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::OperationDef::_get_exceptions_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -19164,71 +13680,12 @@ void POA_IR::OperationDef::_get_exceptions_skel (
   POA_IR::OperationDef *_tao_impl = (POA_IR::OperationDef *)_tao_object_reference;
 
   IR::ExceptionDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->exceptions (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_exceptions",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->exceptions (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_exceptions",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_exceptions",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -19237,7 +13694,6 @@ void POA_IR::OperationDef::_get_exceptions_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::OperationDef::_set_exceptions_skel (
@@ -19256,76 +13712,16 @@ void POA_IR::OperationDef::_set_exceptions_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->exceptions (
+      exceptions,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_exceptions",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->exceptions (
-        exceptions,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_exceptions",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_exceptions",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::OperationDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -20051,71 +14447,12 @@ void POA_IR::InterfaceDef::_get_base_interfaces_skel (
   POA_IR::InterfaceDef *_tao_impl = (POA_IR::InterfaceDef *)_tao_object_reference;
 
   IR::InterfaceDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->base_interfaces (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->base_interfaces (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -20124,7 +14461,6 @@ void POA_IR::InterfaceDef::_get_base_interfaces_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::InterfaceDef::_set_base_interfaces_skel (
@@ -20143,76 +14479,16 @@ void POA_IR::InterfaceDef::_set_base_interfaces_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->base_interfaces (
+      base_interfaces,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_base_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->base_interfaces (
-        base_interfaces,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_base_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_base_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::InterfaceDef::_get_is_abstract_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -20224,71 +14500,12 @@ void POA_IR::InterfaceDef::_get_is_abstract_skel (
   POA_IR::InterfaceDef *_tao_impl = (POA_IR::InterfaceDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_abstract (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_abstract (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_abstract",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -20297,7 +14514,6 @@ void POA_IR::InterfaceDef::_get_is_abstract_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::InterfaceDef::_set_is_abstract_skel (
@@ -20316,76 +14532,16 @@ void POA_IR::InterfaceDef::_set_is_abstract_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->is_abstract (
+      is_abstract,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->is_abstract (
-        is_abstract,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_abstract",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::InterfaceDef::_get_is_local_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -20397,71 +14553,12 @@ void POA_IR::InterfaceDef::_get_is_local_skel (
   POA_IR::InterfaceDef *_tao_impl = (POA_IR::InterfaceDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_local (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_local",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_local (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_local",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_local",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -20470,7 +14567,6 @@ void POA_IR::InterfaceDef::_get_is_local_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::InterfaceDef::_set_is_local_skel (
@@ -20489,76 +14585,16 @@ void POA_IR::InterfaceDef::_set_is_local_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->is_local (
+      is_local,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_local",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->is_local (
-        is_local,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_local",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_local",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::InterfaceDef::is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -20577,72 +14613,12 @@ void POA_IR::InterfaceDef::is_a_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->is_a (
+      interface_id.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_a (
-        interface_id.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -20651,7 +14627,6 @@ void POA_IR::InterfaceDef::is_a_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::InterfaceDef::create_attribute_skel (
@@ -20683,78 +14658,18 @@ void POA_IR::InterfaceDef::create_attribute_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_attribute (
+      id.in (),
+      name.in (),
+      version.in (),
+      type.in (),
+      mode,
+      get_exceptions,
+      put_exceptions,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_attribute",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_attribute (
-        id.in (),
-        name.in (),
-        version.in (),
-        type.in (),
-        mode,
-        get_exceptions,
-        put_exceptions,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_attribute",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_attribute",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -20763,7 +14678,6 @@ void POA_IR::InterfaceDef::create_attribute_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::InterfaceDef::create_operation_skel (
@@ -20797,79 +14711,19 @@ void POA_IR::InterfaceDef::create_operation_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_operation (
+      id.in (),
+      name.in (),
+      version.in (),
+      result.in (),
+      mode,
+      params,
+      exceptions,
+      contexts,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_operation",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_operation (
-        id.in (),
-        name.in (),
-        version.in (),
-        result.in (),
-        mode,
-        params,
-        exceptions,
-        contexts,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_operation",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_operation",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -20878,7 +14732,6 @@ void POA_IR::InterfaceDef::create_operation_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::InterfaceDef::_is_a_skel (
@@ -21563,71 +15416,12 @@ void POA_IR::ValueMemberDef::_get_type_skel (
   POA_IR::ValueMemberDef *_tao_impl = (POA_IR::ValueMemberDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -21636,7 +15430,6 @@ void POA_IR::ValueMemberDef::_get_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueMemberDef::_get_type_def_skel (
@@ -21649,71 +15442,12 @@ void POA_IR::ValueMemberDef::_get_type_def_skel (
   POA_IR::ValueMemberDef *_tao_impl = (POA_IR::ValueMemberDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -21722,7 +15456,6 @@ void POA_IR::ValueMemberDef::_get_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueMemberDef::_set_type_def_skel (
@@ -21741,76 +15474,16 @@ void POA_IR::ValueMemberDef::_set_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->type_def (
+      type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->type_def (
-        type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueMemberDef::_get_access_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -21822,71 +15495,12 @@ void POA_IR::ValueMemberDef::_get_access_skel (
   POA_IR::ValueMemberDef *_tao_impl = (POA_IR::ValueMemberDef *)_tao_object_reference;
 
   CORBA::Visibility _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->access (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_access",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->access (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_access",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_access",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -21895,7 +15509,6 @@ void POA_IR::ValueMemberDef::_get_access_skel (
     (_tao_out << _tao_retval)
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueMemberDef::_set_access_skel (
@@ -21914,76 +15527,16 @@ void POA_IR::ValueMemberDef::_set_access_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->access (
+      access,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_access",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->access (
-        access,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_access",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_access",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueMemberDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -22546,71 +16099,12 @@ void POA_IR::ValueDef::_get_supported_interfaces_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *)_tao_object_reference;
 
   IR::InterfaceDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->supported_interfaces (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->supported_interfaces (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_supported_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -22619,7 +16113,6 @@ void POA_IR::ValueDef::_get_supported_interfaces_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_set_supported_interfaces_skel (
@@ -22638,76 +16131,16 @@ void POA_IR::ValueDef::_set_supported_interfaces_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->supported_interfaces (
+      supported_interfaces,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->supported_interfaces (
-        supported_interfaces,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_supported_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueDef::_get_initializers_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -22719,71 +16152,12 @@ void POA_IR::ValueDef::_get_initializers_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *)_tao_object_reference;
 
   IR::InitializerSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->initializers (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_initializers",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->initializers (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_initializers",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_initializers",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -22792,7 +16166,6 @@ void POA_IR::ValueDef::_get_initializers_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_set_initializers_skel (
@@ -22811,76 +16184,16 @@ void POA_IR::ValueDef::_set_initializers_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->initializers (
+      initializers,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_initializers",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->initializers (
-        initializers,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_initializers",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_initializers",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueDef::_get_base_value_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -22892,71 +16205,12 @@ void POA_IR::ValueDef::_get_base_value_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *)_tao_object_reference;
 
   IR::ValueDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->base_value (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->base_value (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -22965,7 +16219,6 @@ void POA_IR::ValueDef::_get_base_value_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_set_base_value_skel (
@@ -22984,76 +16237,16 @@ void POA_IR::ValueDef::_set_base_value_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->base_value (
+      base_value.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_base_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->base_value (
-        base_value.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_base_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_base_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueDef::_get_abstract_base_values_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -23065,71 +16258,12 @@ void POA_IR::ValueDef::_get_abstract_base_values_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *)_tao_object_reference;
 
   IR::ValueDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->abstract_base_values (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_abstract_base_values",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->abstract_base_values (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_abstract_base_values",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_abstract_base_values",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -23138,7 +16272,6 @@ void POA_IR::ValueDef::_get_abstract_base_values_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_set_abstract_base_values_skel (
@@ -23157,76 +16290,16 @@ void POA_IR::ValueDef::_set_abstract_base_values_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->abstract_base_values (
+      abstract_base_values,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_abstract_base_values",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->abstract_base_values (
-        abstract_base_values,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_abstract_base_values",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_abstract_base_values",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueDef::_get_is_abstract_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -23238,71 +16311,12 @@ void POA_IR::ValueDef::_get_is_abstract_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_abstract (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_abstract (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_abstract",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -23311,7 +16325,6 @@ void POA_IR::ValueDef::_get_is_abstract_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_set_is_abstract_skel (
@@ -23330,76 +16343,16 @@ void POA_IR::ValueDef::_set_is_abstract_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->is_abstract (
+      is_abstract,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->is_abstract (
-        is_abstract,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_abstract",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_abstract",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueDef::_get_is_custom_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -23411,71 +16364,12 @@ void POA_IR::ValueDef::_get_is_custom_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_custom (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_custom",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_custom (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_custom",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_custom",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -23484,7 +16378,6 @@ void POA_IR::ValueDef::_get_is_custom_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_set_is_custom_skel (
@@ -23503,76 +16396,16 @@ void POA_IR::ValueDef::_set_is_custom_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->is_custom (
+      is_custom,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_custom",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->is_custom (
-        is_custom,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_custom",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_custom",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueDef::_get_is_truncatable_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -23584,71 +16417,12 @@ void POA_IR::ValueDef::_get_is_truncatable_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_truncatable (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_truncatable",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_truncatable (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_truncatable",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_truncatable",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -23657,7 +16431,6 @@ void POA_IR::ValueDef::_get_is_truncatable_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_set_is_truncatable_skel (
@@ -23676,76 +16449,16 @@ void POA_IR::ValueDef::_set_is_truncatable_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->is_truncatable (
+      is_truncatable,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_truncatable",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->is_truncatable (
-        is_truncatable,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_truncatable",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_is_truncatable",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueDef::is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -23764,72 +16477,12 @@ void POA_IR::ValueDef::is_a_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->is_a (
+      id.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_a (
-        id.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -23838,7 +16491,6 @@ void POA_IR::ValueDef::is_a_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::create_value_member_skel (
@@ -23866,76 +16518,16 @@ void POA_IR::ValueDef::create_value_member_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_value_member (
+      id.in (),
+      name.in (),
+      version.in (),
+      type.in (),
+      access,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value_member",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_value_member (
-        id.in (),
-        name.in (),
-        version.in (),
-        type.in (),
-        access,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value_member",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_value_member",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -23944,7 +16536,6 @@ void POA_IR::ValueDef::create_value_member_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::create_attribute_skel (
@@ -23976,78 +16567,18 @@ void POA_IR::ValueDef::create_attribute_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_attribute (
+      id.in (),
+      name.in (),
+      version.in (),
+      type.in (),
+      mode,
+      get_exceptions,
+      put_exceptions,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_attribute",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_attribute (
-        id.in (),
-        name.in (),
-        version.in (),
-        type.in (),
-        mode,
-        get_exceptions,
-        put_exceptions,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_attribute",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_attribute",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -24056,7 +16587,6 @@ void POA_IR::ValueDef::create_attribute_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::create_operation_skel (
@@ -24090,79 +16620,19 @@ void POA_IR::ValueDef::create_operation_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_operation (
+      id.in (),
+      name.in (),
+      version.in (),
+      result.in (),
+      mode,
+      params,
+      exceptions,
+      contexts,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_operation",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_operation (
-        id.in (),
-        name.in (),
-        version.in (),
-        result.in (),
-        mode,
-        params,
-        exceptions,
-        contexts,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_operation",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_operation",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -24171,7 +16641,6 @@ void POA_IR::ValueDef::create_operation_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueDef::_is_a_skel (
@@ -25127,71 +17596,12 @@ void POA_IR::ValueBoxDef::_get_original_type_def_skel (
   POA_IR::ValueBoxDef *_tao_impl = (POA_IR::ValueBoxDef *)_tao_object_reference;
 
   IR::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->original_type_def (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->original_type_def (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_original_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -25200,7 +17610,6 @@ void POA_IR::ValueBoxDef::_get_original_type_def_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ValueBoxDef::_set_original_type_def_skel (
@@ -25219,76 +17628,16 @@ void POA_IR::ValueBoxDef::_set_original_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->original_type_def (
+      original_type_def.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->original_type_def (
-        original_type_def.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_original_type_def",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_original_type_def",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ValueBoxDef::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request, 
@@ -25733,71 +18082,12 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
   POA_IR::ProvidesDef *_tao_impl = (POA_IR::ProvidesDef *)_tao_object_reference;
 
   IR::InterfaceDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->interface_type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_interface_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->interface_type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_interface_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_interface_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -25806,7 +18096,6 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ProvidesDef::_is_a_skel (
@@ -26216,71 +18505,12 @@ void POA_IR::UsesDef::_get_interface_type_skel (
   POA_IR::UsesDef *_tao_impl = (POA_IR::UsesDef *)_tao_object_reference;
 
   IR::InterfaceDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->interface_type (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_interface_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->interface_type (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_interface_type",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_interface_type",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -26289,7 +18519,6 @@ void POA_IR::UsesDef::_get_interface_type_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::UsesDef::_get_is_multiple_skel (
@@ -26302,71 +18531,12 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
   POA_IR::UsesDef *_tao_impl = (POA_IR::UsesDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_multiple (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_multiple",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_multiple (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_multiple",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_multiple",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -26375,7 +18545,6 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::UsesDef::_is_a_skel (
@@ -26821,72 +18990,12 @@ void POA_IR::EventDef::is_a_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->is_a (
+      event_id.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_a (
-        event_id.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -26895,7 +19004,6 @@ void POA_IR::EventDef::is_a_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::EventDef::_get_event_skel (
@@ -26908,71 +19016,12 @@ void POA_IR::EventDef::_get_event_skel (
   POA_IR::EventDef *_tao_impl = (POA_IR::EventDef *)_tao_object_reference;
 
   IR::ValueDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->event (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_event",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->event (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_event",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_event",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -26981,7 +19030,6 @@ void POA_IR::EventDef::_get_event_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::EventDef::_is_a_skel (
@@ -28584,71 +20632,12 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   IR::InterfaceDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->supported_interfaces (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->supported_interfaces (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_supported_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -28657,7 +20646,6 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_set_supported_interfaces_skel (
@@ -28676,76 +20664,16 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_impl->supported_interfaces (
+      supported_interfaces,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_impl->supported_interfaces (
-        supported_interfaces,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_supported_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_set_supported_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  }
+}
 
 void POA_IR::ComponentDef::_get_base_component_skel (
     CORBA::ServerRequest &_tao_server_request,
@@ -28757,71 +20685,12 @@ void POA_IR::ComponentDef::_get_base_component_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   IR::ComponentDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->base_component (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_component",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->base_component (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_component",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_component",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -28830,7 +20699,6 @@ void POA_IR::ComponentDef::_get_base_component_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_get_provides_interfaces_skel (
@@ -28843,71 +20711,12 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   IR::ProvidesDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->provides_interfaces (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_provides_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->provides_interfaces (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_provides_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_provides_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -28916,7 +20725,6 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_get_uses_interfaces_skel (
@@ -28929,71 +20737,12 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   IR::UsesDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->uses_interfaces (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_uses_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->uses_interfaces (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_uses_interfaces",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_uses_interfaces",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29002,7 +20751,6 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_get_emits_events_skel (
@@ -29015,71 +20763,12 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   IR::EmitsDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->emits_events (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_emits_events",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->emits_events (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_emits_events",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_emits_events",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29088,7 +20777,6 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_get_publishes_events_skel (
@@ -29101,71 +20789,12 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   IR::PublishesDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->publishes_events (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_publishes_events",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->publishes_events (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_publishes_events",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_publishes_events",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29174,7 +20803,6 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_get_consumes_events_skel (
@@ -29187,71 +20815,12 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   IR::ConsumesDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->consumes_events (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_consumes_events",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->consumes_events (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_consumes_events",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_consumes_events",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29260,7 +20829,6 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_get_is_basic_skel (
@@ -29273,71 +20841,12 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_basic (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_basic",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_basic (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_basic",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_basic",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29346,7 +20855,6 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::create_provides_skel (
@@ -29372,75 +20880,15 @@ void POA_IR::ComponentDef::create_provides_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_provides (
+      id.in (),
+      name.in (),
+      version.in (),
+      interface_type.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_provides",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_provides (
-        id.in (),
-        name.in (),
-        version.in (),
-        interface_type.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_provides",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_provides",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29449,7 +20897,6 @@ void POA_IR::ComponentDef::create_provides_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::create_uses_skel (
@@ -29477,76 +20924,16 @@ void POA_IR::ComponentDef::create_uses_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_uses (
+      id.in (),
+      name.in (),
+      version.in (),
+      interface_type.in (),
+      is_multiple,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_uses",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_uses (
-        id.in (),
-        name.in (),
-        version.in (),
-        interface_type.in (),
-        is_multiple,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_uses",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_uses",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29555,7 +20942,6 @@ void POA_IR::ComponentDef::create_uses_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::create_emits_skel (
@@ -29581,75 +20967,15 @@ void POA_IR::ComponentDef::create_emits_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_emits (
+      id.in (),
+      name.in (),
+      version.in (),
+      value.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_emits",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_emits (
-        id.in (),
-        name.in (),
-        version.in (),
-        value.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_emits",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_emits",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29658,7 +20984,6 @@ void POA_IR::ComponentDef::create_emits_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::create_publishes_skel (
@@ -29684,84 +21009,23 @@ void POA_IR::ComponentDef::create_publishes_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_publishes (
+      id.in (),
+      name.in (),
+      version.in (),
+      value.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
 
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_publishes",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_publishes (
-        id.in (),
-        name.in (),
-        version.in (),
-        value.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_publishes",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_publishes",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-  _tao_server_request.init_reply (ACE_TRY_ENV);
+ _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::create_consumes_skel (
@@ -29787,75 +21051,15 @@ void POA_IR::ComponentDef::create_consumes_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_consumes (
+      id.in (),
+      name.in (),
+      version.in (),
+      value.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_consumes",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_consumes (
-        id.in (),
-        name.in (),
-        version.in (),
-        value.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_consumes",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_consumes",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -29864,7 +21068,6 @@ void POA_IR::ComponentDef::create_consumes_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::ComponentDef::_is_a_skel (
@@ -30712,72 +21915,12 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->is_a (
+      primary_key_id.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_a (
-        primary_key_id.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "is_a",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -30786,7 +21929,6 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
@@ -30799,71 +21941,12 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
   POA_IR::PrimaryKeyDef *_tao_impl = (POA_IR::PrimaryKeyDef *)_tao_object_reference;
 
   IR::ValueDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->primary_key (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_primary_key",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->primary_key (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_primary_key",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_primary_key",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -30872,7 +21955,6 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::PrimaryKeyDef::_is_a_skel (
@@ -32214,71 +23296,12 @@ void POA_IR::HomeDef::_get_base_home_skel (
   POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *)_tao_object_reference;
 
   IR::HomeDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->base_home (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_home",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->base_home (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_home",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_base_home",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -32287,7 +23310,6 @@ void POA_IR::HomeDef::_get_base_home_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::_get_managed_component_skel (
@@ -32300,80 +23322,19 @@ void POA_IR::HomeDef::_get_managed_component_skel (
   POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *)_tao_object_reference;
 
   IR::ComponentDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->managed_component (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
 
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_managed_component",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->managed_component (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_managed_component",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_managed_component",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-  _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
@@ -32391,71 +23352,12 @@ void POA_IR::HomeDef::_get_primary_key_skel (
   POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *)_tao_object_reference;
 
   IR::PrimaryKeyDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->primary_key (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_primary_key",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->primary_key (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_primary_key",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_primary_key",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -32464,7 +23366,6 @@ void POA_IR::HomeDef::_get_primary_key_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::_get_factories_skel (
@@ -32477,71 +23378,12 @@ void POA_IR::HomeDef::_get_factories_skel (
   POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *)_tao_object_reference;
 
   IR::FactoryDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->factories (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_factories",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->factories (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_factories",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_factories",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -32550,7 +23392,6 @@ void POA_IR::HomeDef::_get_factories_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::_get_finders_skel (
@@ -32563,71 +23404,12 @@ void POA_IR::HomeDef::_get_finders_skel (
   POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *)_tao_object_reference;
 
   IR::FinderDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->finders (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_finders",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->finders (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_finders",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_finders",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -32636,7 +23418,6 @@ void POA_IR::HomeDef::_get_finders_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::_get_is_basic_skel (
@@ -32649,71 +23430,12 @@ void POA_IR::HomeDef::_get_is_basic_skel (
   POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+
+  _tao_retval = _tao_impl->is_basic (
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_basic",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->is_basic (
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_basic",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_is_basic",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -32722,7 +23444,6 @@ void POA_IR::HomeDef::_get_is_basic_skel (
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::create_primary_key_skel (
@@ -32748,75 +23469,15 @@ void POA_IR::HomeDef::create_primary_key_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_primary_key (
+      id.in (),
+      name.in (),
+      version.in (),
+      primary_key.in (),
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_primary_key",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_primary_key (
-        id.in (),
-        name.in (),
-        version.in (),
-        primary_key.in (),
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_primary_key",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_primary_key",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -32825,7 +23486,6 @@ void POA_IR::HomeDef::create_primary_key_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::create_factory_skel (
@@ -32853,76 +23513,16 @@ void POA_IR::HomeDef::create_factory_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_factory (
+      id.in (),
+      name.in (),
+      version.in (),
+      params,
+      exceptions,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_factory",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_factory (
-        id.in (),
-        name.in (),
-        version.in (),
-        params,
-        exceptions,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_factory",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_factory",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -32931,7 +23531,6 @@ void POA_IR::HomeDef::create_factory_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::create_finder_skel (
@@ -32959,76 +23558,16 @@ void POA_IR::HomeDef::create_finder_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+  _tao_retval = _tao_impl->create_finder (
+      id.in (),
+      name.in (),
+      version.in (),
+      params,
+      exceptions,
+      ACE_TRY_ENV
+    );
+
   ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_finder",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      _tao_retval = _tao_impl->create_finder (
-        id.in (),
-        name.in (),
-        version.in (),
-        params,
-        exceptions,
-        ACE_TRY_ENV
-      );
-
-      TAO_INTERCEPTOR_CHECK;
-
-#if defined (TAO_HAS_INTERCEPTORS)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_finder",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "create_finder",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -33037,7 +23576,6 @@ void POA_IR::HomeDef::create_finder_skel (
     (_tao_out << _tao_retval.in ())
   ))
     ACE_THROW (CORBA::MARSHAL () );
-
 }
 
 void POA_IR::HomeDef::_is_a_skel (
