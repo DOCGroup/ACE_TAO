@@ -24,8 +24,8 @@ Tue Jun  1 13:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Sun May 30 22:09:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tao/ tao/* tao/IIOP_Transport.cpp
-	* tao/ tao/Request_Mux_Strategy.cpp:
+	* tao/IIOP_Transport.cpp
+	* tao/Request_Mux_Strategy.cpp:
 			
 	Just a few indentations. Nothing else.		
 
