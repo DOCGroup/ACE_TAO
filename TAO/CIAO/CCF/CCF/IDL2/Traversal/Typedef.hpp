@@ -21,7 +21,7 @@ namespace CCF
       struct TypedefDecl : Traverser
       {
         typedef
-        SyntaxTree::StrictPtr<T>
+        SyntaxTree::TypedefDeclPtr
         NodePtr;
 
         TypedefDecl ()
@@ -35,7 +35,7 @@ namespace CCF
           //@@ gcc bug
           if (n->template is_a<T> ())
           {
-            traverse (n->template dynamic_type<T> ());
+            traverse (n);
             return true;
           }
           else

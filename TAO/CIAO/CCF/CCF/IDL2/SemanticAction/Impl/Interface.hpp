@@ -259,6 +259,8 @@ namespace CCF
               }
 
               scope_->insert (decl);
+
+              name_ = SimpleName ("::"); //indicate that we are done
             }
             else
             {

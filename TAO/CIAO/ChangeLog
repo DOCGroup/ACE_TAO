@@ -1,9 +1,51 @@
+Thu Oct 16 16:45:35 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Makefile.archive:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction.hpp:
+	* CCF/CCF/IDL2/SyntaxTree.hpp:
+	* CCF/CCF/IDL2/Traversal.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Member.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Struct.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
+	* CCF/CCF/IDL2/SyntaxTree/Member.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Member.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Operation.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Struct.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
+	* CCF/CCF/IDL2/Traversal/Makefile.alt:
+	* CCF/CCF/IDL2/Traversal/Member.cpp:
+	* CCF/CCF/IDL2/Traversal/Member.hpp:
+	* CCF/CCF/IDL2/Traversal/Struct.cpp:
+	* CCF/CCF/IDL2/Traversal/Struct.hpp:
+	* CCF/CCF/IDL2/Traversal/Typedef.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/Operation.hpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	  Added support for struct.
+	
+
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+	  Added a few structs for testing.
+
+	* CCF/Documentation/TODO: Marked some items as done or 
+	  partially done.
+
 Thu Oct 16 12:55:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/SyntaxTree/ElementsCtor.cpp:
 	* CCF/CCF/IDL2/SyntaxTree/InterfaceCtor.cpp:
 	* CCF/CCF/IDL2/SyntaxTree/ValueTypeCtor.cpp: Added fake ctor
-	  definition for some compilers (like MSVC) that insist it 
+	  definition for some compilers (like MSVC) that insist they
 	  should be defined (even though never used).
 
 Thu Oct 16 12:07:01 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>

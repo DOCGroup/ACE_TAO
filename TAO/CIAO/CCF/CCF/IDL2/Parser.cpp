@@ -32,22 +32,23 @@ namespace CCF
 
           error_handler (context, dout),
 
-          ABSTRACT   ("abstract"),
-          ATTRIBUTE  ("attribute"),
-          FACTORY    ("factory"),
-          IN         ("in"),
-          INCLUDE    ("include"),
-          INOUT      ("inout"),
-          INTERFACE  ("interface"),
-          LOCAL      ("local"),
-          MODULE     ("module"),
-          OUT        ("out"),
-          SEQUENCE   ("sequence"),
-          SINCLUDE   ("sinclude"),
-          SUPPORTS   ("supports"),
-          TYPEDEF    ("typedef"),
-          TYPEID     ("typeid"),
-          TYPEPREFIX ("typeprefix"),
+          ABSTRACT   ("abstract"   ),
+          ATTRIBUTE  ("attribute"  ),
+          FACTORY    ("factory"    ),
+          IN         ("in"         ),
+          INCLUDE    ("include"    ),
+          INOUT      ("inout"      ),
+          INTERFACE  ("interface"  ),
+          LOCAL      ("local"      ),
+          MODULE     ("module"     ),
+          OUT        ("out"        ),
+          SEQUENCE   ("sequence"   ),
+          SINCLUDE   ("sinclude"   ),
+          STRUCT     ("struct"     ),
+          SUPPORTS   ("supports"   ),
+          TYPEDEF    ("typedef"    ),
+          TYPEID     ("typeid"     ),
+          TYPEPREFIX ("typeprefix" ),
 
           COLON  (":"),
           COMMA  (","),
@@ -101,6 +102,19 @@ namespace CCF
           act_interface_end (f.interface (), &SemanticAction::Interface::end),
 
 
+          // Member
+          //
+          //
+          act_member_begin (
+            f.member (), &SemanticAction::Member::begin),
+
+          act_member_declarator (
+            f.member (), &SemanticAction::Member::declarator),
+
+          act_member_end (
+            f.member (), &SemanticAction::Member::end),
+
+
           // Module
           //
           //
@@ -125,6 +139,19 @@ namespace CCF
             this, &Parser::act_operation_parameter_core),
 
           act_operation_end (f.operation (), &SemanticAction::Operation::end),
+
+          // Struct
+          //
+          //
+          act_struct_begin (f.struct_ (), &SemanticAction::Struct::begin),
+
+          act_struct_open_scope (
+            f.struct_ (), &SemanticAction::Scope::open_scope),
+
+          act_struct_close_scope (
+            f.struct_ (), &SemanticAction::Scope::close_scope),
+
+          act_struct_end (f.struct_ (), &SemanticAction::Struct::end),
 
 
           // Typedef
@@ -189,6 +216,7 @@ namespace CCF
         | extension
         | local_type_decl
         | module_decl
+        | struct_decl
         | typedef_
         | type_id
         | type_prefix
@@ -283,8 +311,8 @@ namespace CCF
         ;
 
 
-      //
       // interface
+      //
       //
       abstract_interface_decl =
         guard
@@ -383,8 +411,8 @@ namespace CCF
         )
         ;
 
-      //
       // attribute
+      //
       //
       attribute_decl =
            ATTRIBUTE
@@ -394,8 +422,8 @@ namespace CCF
         ;
 
 
-      //
       // direction specifier
+      //
       //
       direction_specifier =
            IN
@@ -404,8 +432,27 @@ namespace CCF
         ;
 
 
+      // member
       //
+      //
+      member_decl =
+           identifier[act_member_begin]
+        >> member_declarator_list
+        >> SEMI[act_member_end]
+        ;
+
+
+      member_declarator_list =
+           identifier[act_member_declarator]
+        >> *(
+                 COMMA
+              >> identifier[act_member_declarator]
+            )
+        ;
+
+
       // operation
+      //
       //
       operation_decl =
            (identifier >> simple_identifier)[act_operation_begin]
@@ -430,6 +477,57 @@ namespace CCF
         )[act_operation_parameter]
         ;
 
+
+      // struct
+      //
+      //
+      struct_decl =
+        guard
+        (
+             STRUCT
+          >> assertion ("struct name expected")
+             (
+               simple_identifier[act_struct_begin]
+             )
+          >> struct_decl_trailer
+
+        )[error_handler]
+        ;
+
+
+      struct_decl_trailer =
+        assertion ("\';\' or \'{\' expected",
+                   f.struct_ (),
+                   &SemanticAction::Struct::end)
+        (
+            SEMI[act_struct_end]
+          | (
+                 LBRACE[act_struct_open_scope]
+              >> struct_body
+              >> assertion ("member or \'}\' expected",
+                            f.struct_ (),
+                            &SemanticAction::Struct::close_scope,
+                            &SemanticAction::Struct::end,
+                            RecoveryMethod::STANDARD,
+                            DiagnosticType::BEFORE)
+                 (
+                   RBRACE[act_struct_close_scope]
+                 )
+              >> assertion ("\';\' is missing",
+                            f.struct_ (),
+                            &SemanticAction::Struct::end,
+                            RecoveryMethod::NONE)
+                 (
+                   SEMI[act_struct_end]
+                 )
+            )
+        )
+        ;
+
+
+      struct_body =
+        +member_decl
+        ;
 
       // typedef
       //
