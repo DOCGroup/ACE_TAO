@@ -1095,12 +1095,12 @@ ACE_Fixed_Set_Iterator<T, SIZE>::advance (void)
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::advance");
 
   for (++this->next_;
-       size_t (this->next_) < this->s_.cur_size_
+       ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
        && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     continue;
 
-  return size_t (this->next_) < this->s_.cur_size_;
+  return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
 }
 
 template <class T, size_t SIZE> int
@@ -1108,14 +1108,14 @@ ACE_Fixed_Set_Iterator<T, SIZE>::done (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::done");
 
-  return size_t (this->next_) >= this->s_.cur_size_;
+  return ACE_static_cast(size_t, this->next_) >= this->s_.cur_size_;
 }
 
 template <class T, size_t SIZE> int
 ACE_Fixed_Set_Iterator<T, SIZE>::next (T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::next");
-  if (size_t (this->next_) < this->s_.cur_size_)
+  if (ACE_static_cast(size_t, this->next_) < this->s_.cur_size_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       return 1;
@@ -1142,7 +1142,7 @@ ACE_Bounded_Set<T>::~ACE_Bounded_Set (void)
 template <class T>
 ACE_Bounded_Set<T>::ACE_Bounded_Set (void)
   : cur_size_ (0),
-    max_size_ (size_t (ACE_Bounded_Set<T>::DEFAULT_SIZE))
+    max_size_ (ACE_static_cast(size_t, ACE_Bounded_Set<T>::DEFAULT_SIZE))
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
 
@@ -1299,12 +1299,12 @@ ACE_Bounded_Set_Iterator<T>::advance (void)
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::advance");
 
   for (++this->next_;
-       size_t (this->next_) < this->s_.cur_size_
+       ACE_static_cast(size_t, this->next_) < this->s_.cur_size_
        && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     continue;
 
-  return size_t (this->next_) < this->s_.cur_size_;
+  return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
 }
 
 template <class T> int
@@ -1312,14 +1312,14 @@ ACE_Bounded_Set_Iterator<T>::done (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::done");
 
-  return size_t (this->next_) >= this->s_.cur_size_;
+  return ACE_static_cast(size_t, this->next_) >= this->s_.cur_size_;
 }
 
 template <class T> int
 ACE_Bounded_Set_Iterator<T>::next (T *&item)
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::next");
-  if (size_t (this->next_) < this->s_.cur_size_)
+  if (ACE_static_cast(size_t, this->next_) < this->s_.cur_size_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       return 1;
