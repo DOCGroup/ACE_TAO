@@ -1,3 +1,10 @@
+Wed Feb 18 16:07:14 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/ACE.cpp (ldfind): modified the code to allow it to
+ 	  consistently return a status indicating whether or not a
+ 	  potential shared library file was found.  Thanks to Patrick
+ 	  J. McNerthney <pat@thememedia.com> for reporting this.
+
 Wed Feb 18 15:30:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/rules.lib.GNU: 
