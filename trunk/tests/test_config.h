@@ -287,7 +287,14 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  int flags = ios::out;
+# if defined (__USE_STD_IOSTREAM)
+  // Compaq cxx X6.3/Linux needs this.
+  std::ios_base::openmode
+# else  /* ! __USE_STD_IOSTREAM */
+  int
+# endif /* ! __USE_STD_IOSTREAM */
+  flags = ios::out;
+
   if (append)
     flags |= ios::app;
   else
