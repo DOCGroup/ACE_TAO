@@ -18,6 +18,7 @@
 #define ACE_ReactorEx_H
 
 #include "ace/Time_Value.h"
+#include "ace/Timer_Queue.h"
 #include "ace/Event_Handler.h"
 #include "ace/Message_Queue.h"
 #include "ace/Token.h"
@@ -123,7 +124,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_ReactorEx (ACE_Timer_Queue * = 0);
+  ACE_ReactorEx (ACE_Timer_Queue *tq = 0);
   // Initialize the new ACE_ReactorEx with the default size.
 
   virtual ~ACE_ReactorEx (void);
@@ -134,7 +135,15 @@ public:
   // returning (will return earlier if I/O or signal events occur).
   // Note that -how_long- can be 0, in which case this method blocks
   // until I/O events or signals occur.  Returns 0 if timed out, 1 if
-  // an event occurred, and -1 if an error occured.
+  // an event occurred, and -1 if an error occured.  -how_long- is
+  // decremented to reflect how much time the call to handle_events
+  // took.  For instance, if a time value of 3 seconds is passed to
+  // handle_events and an event occurs after 2 seconds, -how_long-
+  // will equal 1 second.  This can be used if an application wishes
+  // to handle events for some fixed amount of time.  If wait_all is
+  // TRUE, then handle_events will only dispatch the handlers if *all*
+  // handles become active.  If a timeout occurs, then no handlers
+  // will be dispatched.
   virtual int handle_events (ACE_Time_Value *how_long = 0,
 			     int wait_all = 0);
   virtual int handle_events (ACE_Time_Value &how_long,
@@ -195,6 +204,15 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+  int dispatch_all (int index, int wait_all);
+  // Dispatches any active handles from handles_[-index-] to
+  // handles_[active_handles_] using WaitForMultipleObjects to poll
+  // through our handle set looking for active handles.
+
+  int dispatch_handler (int index);
+  // Dispatches a single handler.  Returns 0 on success, -1 if the
+  // handler was removed.
+
   ACE_Timer_Queue *timer_queue_;
   // Defined as a pointer to allow overriding by derived classes...
 
@@ -202,13 +220,10 @@ protected:
   // Keeps track of whether we should delete the timer queue (if we
   // didn't create it, then we don't delete it).
 
-  ACE_Time_Value timer_skew_;
-  // Adjusts for timer skew in various clocks.
-
   ACE_HANDLE handles_[MAX_SIZE];
   // Array of handles passed to WaitForMultipleObjects.
 
-  ACE_Event_Handler *handlers_[MAX_SIZE];
+  ACE_Event_Handler *event_handlers_[MAX_SIZE];
   // Array of Event_Handler pointers that store the handlers to
   // dispatch when the corresponding handles_ entry becomes signaled.
 

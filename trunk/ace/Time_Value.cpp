@@ -239,6 +239,12 @@ ACE_Countdown_Time::start (void)
 }
 
 int
+ACE_Countdown_Time::update (void)
+{
+  return (this->stop () == 0) && this->start ();
+}
+
+int
 ACE_Countdown_Time::stop (void)
 {
   if (this->max_wait_time_ != 0 && this->stopped_ == 0)

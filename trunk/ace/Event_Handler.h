@@ -83,7 +83,7 @@ public:
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   // Called when execption events occur (e.g., SIGURG).
 
-  virtual int handle_timeout (const ACE_Time_Value &tv, 
+  virtual int handle_timeout (const ACE_Time_Value &tv,
 			      const void *arg = 0);
   // Called when timer expires.
 
