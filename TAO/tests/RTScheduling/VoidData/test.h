@@ -1,9 +1,11 @@
 //$Id$
-#include "testC.h"
 
 class test_impl :public test
 {
-  void bar (CORBA::VoidData something)
+ public:
+  virtual void bar (CORBA::VoidData something)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+
   {
     ACE_DEBUG ((LM_DEBUG,
 		"%d\n",
