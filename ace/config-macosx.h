@@ -169,6 +169,9 @@
 #define ACE_HAS_GETIFADDRS 
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES 
 
+// gperf seems to need this
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+
 // Remove the following when Apple fixes static template member problem in their
 // compiler
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 0
