@@ -1,3 +1,9 @@
+Mon Dec 01 07:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/examples/RtEC/Simple/RtEC_Simple.mpc:
+          This examples is using the Naming Service, so added this to the
+          MPC file.
+
 Sun Nov 30 15:53:49 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
