@@ -54,6 +54,10 @@ LINK32=link.exe
 # Name "Peer - Win32 Debug"
 # Begin Source File
 
+SOURCE=.\Options.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Peer.cpp
 # End Source File
 # End Target
