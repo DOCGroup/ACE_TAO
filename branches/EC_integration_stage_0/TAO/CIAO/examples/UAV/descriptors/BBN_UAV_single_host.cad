@@ -111,7 +111,7 @@
           </registercomponent>
         </componentinstantiation>
       </homeplacement>      
-     <destination>SatelliteHost</destination>
+     <destination>EngagementBattleHost</destination>
     </processcollocation>      
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 
