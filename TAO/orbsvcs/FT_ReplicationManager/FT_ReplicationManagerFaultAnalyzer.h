@@ -109,6 +109,14 @@ namespace TAO
       const FT::Properties & properties,
       FT::InitialNumberReplicasValue & initial_number_replicas);
 
+    // Is the replica at location the primary member of iogr?
+    // Sets is_primary and returns 0 on success.
+    // Returns -1 on failure.
+    int is_primary_member (
+      const FT::ObjectGroup_ptr iogr,
+      const FT::Location_var & location,
+      int & object_is_primary);
+
     ///////////////
     // Data Members
   private:

@@ -17,6 +17,7 @@
 #include "orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include <tao/debug.h>
 
 #define INTEGRATED_WITH_REPLICATION_MANAGER 1
@@ -143,15 +144,18 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   //   property and MembershipStyle of the object group is FT::MEMB_INF_CTRL,
   //   create and add a new member.
 
-  //@@ Q: How do we get the ObjectGroup from the ObjectGroupId?
-  //@@ A: Use TAO-specific extension to PortableGroup::ObjectGroupManager
-  // interface (get_object_group_ref_from_id()).
 #if (INTEGRATED_WITH_REPLICATION_MANAGER == 1)
-  if ((fault_event_desc.object_at_location_failed == 1) && (result == 0))
+  // If a specific object at a location failed, we need to determine
+  // if it was the primary replica.
+  if ((result == 0) &&
+      (fault_event_desc.object_at_location_failed == 1))
   {
     FT::ObjectGroup_var the_object_group = FT::ObjectGroup::_nil();
     ACE_TRY_NEW_ENV
     {
+      //@@ Q: How do we get the ObjectGroup from the ObjectGroupId?
+      //@@ A: Use TAO-specific extension to PortableGroup::ObjectGroupManager
+      // interface (get_object_group_ref_from_id()).
       the_object_group =
         this->replication_manager_->get_object_group_ref_from_id (
           fault_event_desc.object_group_id
@@ -160,8 +164,12 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
     }
     ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-        "TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event: ");
+      ACE_PRINT_EXCEPTION (
+        ex,
+        ACE_TEXT (
+          "TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event: ")
+      );
+      result = -1;
     }
     ACE_ENDTRY;
 
@@ -177,8 +185,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
     }
 
     //@@ Q: How do we get the properties of the ObjectGroup to
-    // figure out the ReplicationStyle, current primary,
-    // MinimumNumberReplicas, etc.?
+    // figure out the ReplicationStyle, MinimumNumberReplicas, etc.?
     //@@ A: FT::PropertyManager::get_properties().
 
     // Get the properties associated with this ObjectGroup.
@@ -214,7 +221,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
             ACE_TEXT (
               "TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type: "
               "MembershipStyleValue = <%d>"),
-              fault_event_desc.membership_style 
+              fault_event_desc.membership_style
           ));
         }
       }
@@ -243,7 +250,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
             ACE_TEXT (
               "TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type: "
               "ReplicationStyleValue = <%d>"),
-              fault_event_desc.replication_style 
+              fault_event_desc.replication_style
           ));
         }
       }
@@ -273,7 +280,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
             ACE_TEXT (
               "TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type: "
               "MinimumNumberReplicas = <%d>"),
-              fault_event_desc.minimum_number_replicas 
+              fault_event_desc.minimum_number_replicas
           ));
         }
       }
@@ -303,11 +310,26 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
             ACE_TEXT (
               "TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type: "
               "InitialNumberReplicas = <%d>"),
-              fault_event_desc.initial_number_replicas 
+              fault_event_desc.initial_number_replicas
           ));
         }
       }
     }
+
+    // If the ReplicationStyle is COLD_PASSIVE, WARM_PASSIVE, or
+    // SEMI_ACTIVE, we can see if it was the primary replica that
+    // failed.
+    if ((result == 0) &&
+        (fault_event_desc.replication_style == FT::COLD_PASSIVE ||
+         fault_event_desc.replication_style == FT::WARM_PASSIVE ||
+         fault_event_desc.replication_style == FT::SEMI_ACTIVE))
+    {
+      result = this->is_primary_member (
+        the_object_group.in(),
+        fault_event_desc.location,
+        fault_event_desc.object_is_primary);
+    }
+
   }
 #endif /* (INTEGRATED_WITH_REPLICATION_MANAGER == 1) */
 
@@ -540,3 +562,110 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_replicas (
   return result;
 }
 
+int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
+  const FT::ObjectGroup_ptr iogr,
+  const FT::Location_var & location,
+  int & object_is_primary)
+{
+
+  //@@ Q: How do we determine if this was a primary that faulted?
+  //@@ A: Get the TagFTGroupTaggedComponent from the IOGR and search
+  // for the primary, using the TAO_FT_IOGR_Property helper class.
+  // Then, compare the TypeId and Location of the failed object with
+  // those of the primary.  If they match, it was a primary fault.
+
+  int result = 0;
+  object_is_primary = 0;
+
+  ACE_TRY_NEW_ENV
+  {
+    // Create an "empty" TAO_FT_IOGR_Property and use it to get the
+    // tagged component.
+    TAO_FT_IOGR_Property temp_ft_prop;
+    FT::TagFTGroupTaggedComponent ft_group_tagged_component;
+    CORBA::Boolean got_tagged_component =
+      temp_ft_prop.get_tagged_component (
+          iogr, ft_group_tagged_component ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    if (got_tagged_component)
+    {
+      // Create a new TAO_FT_IOGR_Property with the tagged
+      // component.
+      TAO_FT_IOGR_Property ft_prop (ft_group_tagged_component);
+
+      // Check to see if a primary is set.
+      CORBA::Boolean primary_is_set = ft_prop.is_primary_set (
+        iogr ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (primary_is_set)
+      {
+        // Get the primary object.
+        CORBA::Object_var primary_obj = ft_prop.get_primary (
+          iogr ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (CORBA::is_nil (primary_obj.in()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT (
+              "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
+              "Could not get primary IOR from IOGR.\n")),
+            -1);
+        }
+
+        // Get the object reference of the failed member.
+        CORBA::Object_var failed_obj =
+          this->replication_manager_->get_member_ref (
+            iogr, location.in() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (CORBA::is_nil (failed_obj.in()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT (
+              "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
+              "Could not get IOR of failed member from IOGR.\n")),
+            -1);
+        }
+
+        // Are the two object refs (primary and failed) equivalent?
+        CORBA::Boolean equiv = primary_obj->_is_equivalent (
+          failed_obj.in() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (equiv)
+        {
+          object_is_primary = 1;
+          result = 0;
+        }
+      }
+      else  // primary is not set
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
+            "Primary is not set on IOGR.\n")
+        ));
+        result = -1;
+      }
+    }
+    else // could not get tagged component
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT (
+          "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
+          "Could not get tagged component from IOGR.\n")
+      ));
+      result = -1;
+    }
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (
+      ACE_ANY_EXCEPTION,
+      ACE_TEXT (
+        "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+    );
+    result = -1;
+  }
+  ACE_ENDTRY;
+
+  return result;
+}
