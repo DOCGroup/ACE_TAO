@@ -256,7 +256,7 @@ public:
   /// Report if the ACE_Proactor event loop is finished.
   virtual int proactor_event_loop_done (void);
 
-  /// Resets the <ACE_Reactor::end_event_loop_> static so that the
+  /// Resets the <ACE_Proactor::end_event_loop_> static so that the
   /// <run_event_loop> method can be restarted.
   virtual int proactor_reset_event_loop (void);
 
