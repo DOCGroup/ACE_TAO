@@ -1,3 +1,46 @@
+Fri Jul  7 17:22:56 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/aio.h:
+	* pace/posix/aio.h:
+	* pace/assert.h:
+	* pace/posix/assert.h:
+	* pace/ctype.h:
+	* pace/posix/ctype.h:
+	* pace/dirent.h:
+	* pace/posix/dirent.h:
+	* pace/fcntl.h:
+	* pace/posix/fcntl.h:
+	* pace/grp.h:
+	* pace/posix/grp.h:
+	* pace/math.h:
+	* pace/posix/math.h:
+	* pace/mqueue.h:
+	* pace/posix/mqueue.h:
+	* pace/pthread.h:
+	* pace/posix/pthread.h:
+	* pace/pwd.h:
+	* pace/posix/pwd.h:
+	* pace/sched.h:
+	* pace/posix/sched.h:
+	* pace/semaphore.h:
+	* pace/posix/semaphore.h:
+	* pace/setjmp.h:
+	* pace/posix/setjmp.h:
+	* pace/signal.h:
+	* pace/posix/signal.h:
+
+	  Changed the protection includes. Eg:
+	    ROOT directory PACE_ASSERT_H
+	    POSIX directory PACE_ASSERT_H_POSIX.
+
+	  Changed the #if defined (PACE_HAS_POSIX) to #if PACE_HAS_POSIX
+	  per our recent conversation regarding all macros being assigned a
+	  value.
+
+	  Moved the prototype function signatures to the root directory *.h file.
+
+	  Changed the form the *.inl file was included.
+
 Fri Jul  7 16:23:57 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/errno.h:
