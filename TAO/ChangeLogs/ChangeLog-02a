@@ -1,3 +1,15 @@
+Sat Jul 22 17:36:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/ArrayDef_i.cpp:
+	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
+	* orbsvcs/IFR_Service/Contained_i.cpp:
+	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+	* orbsvcs/IFR_Service/ModuleDef_i.cpp:
+
+	  Fixed several places where wrapper function (instead of
+	  the '_i' unlocked wrapped version) was called from inside 
+	  a critical section.
+
 Sat Jul 22 16:30:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
