@@ -13,7 +13,7 @@ LIBNAME  = libTAO_RTScheduler
 MAKEFILE = Makefile
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
-ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA -lTAO_PortableServer
+ACE_SHLIBS = -lTAO_RTCORBA -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -33,7 +33,7 @@ CPP_SRCS += \
    Current \
    Request_Interceptor \
    Distributable_Thread
-   
+
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

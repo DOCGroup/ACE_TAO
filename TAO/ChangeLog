@@ -1,3 +1,11 @@
+Sun Aug 17 12:19:08 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/RTScheduling/Makefile (ACE_SHLIBS):
+
+	  Corrected library link order.
+
+	  Nuked trailing whitespace.
+
 Sun Aug 17 12:12:22 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Stub.h:
