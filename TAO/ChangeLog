@@ -1,3 +1,14 @@
+Wed Dec 17 11:17:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Domain/DomainS.cpp:
+	* tao/Messaging/MessagingS.cpp:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+
+	  Fixed the generated code to fix the typo problem that was fixed.
+
+
 Wed Dec 17 11:08:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
