@@ -1,7 +1,6 @@
 /* Tests out the UNIX domain IPC-SAP abstraction. */
 // $Id$
 
-
 #include "ace/LSOCK_CODgram.h"
 #include "ace/LSOCK_Dgram.h"
 #include "ace/UNIX_Addr.h"
@@ -12,9 +11,6 @@
 /* Name of the program. */
 static char *program_name;
 
-/* Number of seconds to sleep. */
-static int seconds = 3;
-
 /* Name of rendezvous point. */
 static char *rendezvous_codgram = "/tmp/foo_codgram";
 static char *rendezvous_dgram	= "/tmp/foo_dgram";
@@ -24,23 +20,20 @@ static char *file_name = "local_data";
 
 static void print_usage_and_die (void)
 {
-  ACE_ERROR ((LM_ERROR, "usage: %s [-r rendezvous_dgram] [-c rendezvous_codgram] [-f file] [-n seconds]\n%a", 
+  ACE_ERROR ((LM_ERROR, "usage: %s [-r rendezvous_dgram] [-c rendezvous_codgram] [-f file]\n%a",
 	      program_name, -1));
 }
 
 void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "c:f:n:r:");
+  ACE_Get_Opt get_opt (argc, argv, "c:f:r:");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
     {
     case 'f':
       file_name = get_opt.optarg;
-      break;
-    case 'n':
-      seconds = atoi (get_opt.optarg);
       break;
     case 'r':
       rendezvous_dgram = get_opt.optarg;

@@ -43,14 +43,15 @@ AAL_CP::get_handle () const
 int
 AAL_CP::handle_input (int)
 {
-  char buf[128];
-  int n;
+  char buf[BUFSIZ];
+  ssize_t n;
+
   ACE_DEBUG ((LM_DEBUG, "Activity occurred on handle %d!\n",
 	      ACE_SOCK_CODgram::get_handle ()));
   if ((n = ACE_SOCK_CODgram::recv (buf, sizeof buf)) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "handle_input"));
   else
-    ACE_DEBUG ((LM_DEBUG, "got buf = %s\n", buf));
+    ACE_DEBUG ((LM_DEBUG, "got buf = %*s\n", n, buf));
   
   return 0;
 }

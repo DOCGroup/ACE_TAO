@@ -45,12 +45,13 @@ Pipe_Proc_Test::init (int, char **)
 void
 Pipe_Proc_Test::reader (ACE_HANDLE handle)
 {
-  int  ni     = this->thr_id ();
-  int  length = options.msg_size ();
-  char *to    = new char[length];
-  int  n;
+  int  ni = this->thr_id ();
+  int length = options.msg_size ();
+  char *to;
+  
+  ACE_NEW (to, char[length]);
 
-  while ((n = ACE_OS::read (handle, to, length)) > 0)
+  while (ACE_OS::read (handle, to, length) > 0)
     options.thr_work_count[ni]++;
 }
 
@@ -59,9 +60,11 @@ int
 Pipe_Proc_Test::svc (void)
 {
   ssize_t length = options.msg_size ();
-  char *from  = new char[length];
   int ni = this->thr_id ();
   ACE_HANDLE handle = this->pipe_handles[1];
+  char *from; 
+
+  ACE_NEW (from, char[length]);
 
   while (!this->done ())
     if (ACE_OS::write (handle, from, length) == length)

@@ -1,4 +1,4 @@
-# Irix 6.2 with SGI C++
+# Irix 6.2 with the CC compiler (not NCC or the MipsProcompiler).
 
 # This suppresses common compiler warnings which appear in the 
 # ACE code but should not matter.  The warnings can be turned on

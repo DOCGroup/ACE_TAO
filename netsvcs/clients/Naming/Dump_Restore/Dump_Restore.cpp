@@ -63,22 +63,21 @@ Dump_Restore::handle_input (ACE_HANDLE)
       return 0;
     }
   
-  int result = -1;
   switch (option[0])
     {
     case 'P' :
     case 'p' :
-      result = set_proc_local ();
+      set_proc_local ();
       break;
     case 'N' :
     case 'n' :
-      result = set_node_local ();
+      set_node_local ();
       break;
     case 'H' :
     case 'h' :
       if (::scanf ("%s %hu", buf1, &port) <= 0)
 	break;
-      result = set_host (buf1, port);
+      set_host (buf1, port);
       break;
     case 'F':
     case 'f':
@@ -90,15 +89,15 @@ Dump_Restore::handle_input (ACE_HANDLE)
       break;
     case 'B' :
     case 'b' :
-      result = populate (Dump_Restore::BIND);
+      populate (Dump_Restore::BIND);
       break;
     case 'U' :
     case 'u' :
-      result = populate (Dump_Restore::UNBIND);
+      populate (Dump_Restore::UNBIND);
       break;
     case 'R' :
     case 'r' :
-      result = populate (Dump_Restore::REBIND);
+      populate (Dump_Restore::REBIND);
       break;
     case 'D':
     case 'd':
@@ -108,15 +107,11 @@ Dump_Restore::handle_input (ACE_HANDLE)
       break;
     case 'Q' :
     case 'q' :
-      result = quit ();
+      quit ();
       break;
     default :
       cout << "Unrecognized command." << endl;
     }
-//  if (result == 0)
-//    cout << "Last operation was successful!" << endl;
-//  else
-//    cout << "Last operation returned: " << result << endl;
 
   display_menu ();
   return 0;
