@@ -107,6 +107,9 @@ public:
             size_t len,
             int release);
 
+  /// Clear this string. Memory is _not_ freed is <release> is 0.
+  void clear (int release = 0);
+
   /**
    * Return a substring given an offset and length, if length == -1
    * use rest of str.  Return empty substring if offset or
