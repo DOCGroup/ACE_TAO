@@ -97,7 +97,6 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="#logging">TAO's Logging Service</a></li>
 
-
 </UL>
 </TD>
 <TD>
@@ -120,6 +119,8 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 <li>
 <a href="#locate">Locate requests</a></li>
+
+<li><a href="#localobject">Local Interfaces</a></li>
 
 <li>
 <a href="TODO.html">Our TODO list</a></li>
@@ -1908,6 +1909,33 @@ Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>,
 <p>For more information see <a href="../interceptors.html">Portable
 Interceptors</a>
 </p>
+<hr>
+
+<h3><a name="localobject"></a>Local Interfaces</h3>
+
+<p>Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor
+Wang</a>.</p>
+
+<p>Local interfaces are first defined in the CORBA Component Model
+specification.  For more information on using the local interfaces,
+please refers to Section 11.1.1 to 11.1.4 of the
+<a href="http://www.omg.org/cgi-bin/doc?orbos/99-07-01/">spec</a> and
+our short <a href="../LocalObject.html">guideline</a> on implementing
+local objects.</p>
+
+<p>Future Work (aka. known problems):</p>
+<ul>
+  <li>Supposedly, any constructed types that contains local types
+      become local automatically.  TAO_IDL currently doesn't perform
+      this automatic conversion very well when a contructed type is
+      defined outside of a local interface.</li>
+  <li>TAO_IDL needs to support more comprehensive semantic check on
+      conflicts of using local types as operation arguments of a
+      regular (remote) interface.</li>
+  <li>Need to test local object support more systematically and
+      comprehensively. (Does TAO throw a MARSHAL exception when trying
+      to marshal a local type?)
+</ul>
 <hr>
 
 <p>Back to the TAO <a href="../index.html">documentation index</a>.<!--#include virtual="/~schmidt/cgi-sig.html" -->
