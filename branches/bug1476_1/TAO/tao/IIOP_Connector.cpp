@@ -274,7 +274,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (transport->wait_strategy ()->register_handler () != 0)
+  if (transport->is_connected () &&
+      transport->wait_strategy ()->register_handler () != 0)
     {
       // Registration failures.
 

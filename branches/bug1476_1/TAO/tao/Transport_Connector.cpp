@@ -264,7 +264,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     "connect, "
                     "wait for completion failed\n"));
 
-  if (base_transport->wait_strategy ()->register_handler () != 0)
+  if (base_transport->is_connected () &&
+      base_transport->wait_strategy ()->register_handler () != 0)
     {
       // Registration failures.
 
