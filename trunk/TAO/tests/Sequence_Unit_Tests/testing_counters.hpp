@@ -12,7 +12,7 @@
  * @author Carlos O'Ryan
  */
 
-#include <boost/noncopyable.hpp>
+#include <boost/utility.hpp>
 
 #include <iostream>
 

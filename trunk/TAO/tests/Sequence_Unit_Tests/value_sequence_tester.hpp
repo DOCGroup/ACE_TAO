@@ -12,53 +12,13 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <boost/weak_ptr.hpp>
 
 template<class tested_sequence,
     class tested_allocation_traits>
 struct value_sequence_tester
-  : public boost::enable_shared_from_this<
-               value_sequence_tester<
-                   tested_sequence,tested_allocation_traits> >
 {
   typedef typename tested_sequence::value_type value_type;
-
-  void add_all(boost::unit_test_framework::test_suite * ts)
-  {
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_default_constructor,
-                shared_from_this()));
-
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_copy_constructor_from_default,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_index_accessor,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_index_modifier,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_index_checking,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_copy_constructor_values,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_assignment_from_default,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_assignment_values,
-                shared_from_this()));
-
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_exception_in_copy_constructor,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &value_sequence_tester::test_exception_in_assignment,
-                shared_from_this()));
-  }
-
 
   void test_default_constructor()
   {
@@ -230,6 +190,60 @@ struct value_sequence_tester
     BOOST_CHECK_MESSAGE(f.expect(2), f);
   }
 
+  void add_all(boost::unit_test_framework::test_suite * ts)
+  {
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_default_constructor,
+                shared_from_this()));
+
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_copy_constructor_from_default,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_index_accessor,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_index_modifier,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_index_checking,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_copy_constructor_values,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_assignment_from_default,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_assignment_values,
+                shared_from_this()));
+
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_exception_in_copy_constructor,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_exception_in_assignment,
+                shared_from_this()));
+  }
+
+  static boost::shared_ptr<value_sequence_tester> allocate()
+  {
+    boost::shared_ptr<value_sequence_tester> ptr(
+        new value_sequence_tester);
+    ptr->self_ = ptr;
+
+    return ptr;
+  }
+
+private:
+  value_sequence_tester() {}
+
+  boost::shared_ptr<value_sequence_tester> shared_from_this()
+  {
+    return boost::shared_ptr<value_sequence_tester>(self_);
+  }
+
+  boost::weak_ptr<value_sequence_tester> self_;
 };
 
 #endif // guard_value_sequence_tester_hpp
