@@ -1,3 +1,37 @@
+Thu Mar  2 21:03:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CONV_FRAMEC.h:
+	* tao/CONV_FRAMEC.cpp:
+	* tao/CurrentC.h:
+	* tao/CurrentC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.cpp:
+	* tao/GIOPC.h:
+	* tao/GIOPC.cpp:
+	* tao/IOPC.h:
+	* tao/IOPC.cpp:
+	* tao/IORC.h:
+	* tao/IORC.cpp:
+	* tao.ImplRepoC.h:
+	* tao.ImplRepoC.cpp:
+	* tao/InterceptorC.h:
+	* tao/InterceptorC.i:
+	* tao/InterceptorC.cpp:
+	* tao/InterfaceC.h:
+	* tao/InterfaceC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.h:
+	* tao/Pollable.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.cpp:
+	  Replaced the Any operators with new versions using 
+	  compiled marshaling, and added the new CORBA 2.3 
+	  overload for the extraction operator having an rhs of
+	  pointer to const. Also put back some CDR stream
+	  operators into Interceptor needed by the new Any
+	  operators.
+
 Thu Mar  2 11:58:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
