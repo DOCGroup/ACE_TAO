@@ -1,3 +1,10 @@
+Tue May 23 07:06:29 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * CM_Server.cpp (receive): changed type of local sin_len
+          from size_t to u_int, so that it will compile with Compaq
+          cxx on Tru 64.  See
+          Mon May 22 21:10:24 2000  David L. Levine  <levine@cs.wustl.edu>
+
 Mon May 22 21:10:24 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * CM_Server.cpp (receive): changed type of local sin_len
