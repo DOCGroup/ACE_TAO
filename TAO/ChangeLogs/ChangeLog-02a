@@ -1,3 +1,10 @@
+Wed Apr 18 12:10:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp (read_messages): Reverted the
+	  change from this "Wed Apr 18 10:56:30 2001  Balachandran
+	  Natarajan  <bala@cs.wustl.edu>". Going over the fix from
+	  scratch as the fix is wrong. 
+
 Wed Apr 18 10:56:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional_NestedUpcall/run_test.pl: Fixed the
