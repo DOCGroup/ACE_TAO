@@ -1,0 +1,40 @@
+#
+# $Id$
+#
+
+NAME = server
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Gv -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\FactoryC.obj \
+	$(OBJDIR)\FactoryS.obj \
+	$(OBJDIR)\FactoryC_impl.obj \
+	$(OBJDIR)\FactoryS_impl.obj \
+	$(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Factory.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\FactoryS.cpp $(IDLDIR)\FactoryC.cpp: $(IDLDIR)\Factory.idl
+	$(TAO_IDL) $**
