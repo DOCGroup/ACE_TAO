@@ -132,8 +132,15 @@ int main (int argc, char *argv[])
   cin.width (ACE_Log_Record::MAXLOGMSGLEN);
 
   for (;;) {
+
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && (ACE_USES_STD_NAMESPACE_ FOR_STDCPP_LIB == 0)
+    string user_input;
+    getline (cin, user_input, '\n');
+#else
     std::string user_input;
     std::getline (cin, user_input, '\n');
+
+#endif
 
     if (!cin || cin.eof ()) break;
 
