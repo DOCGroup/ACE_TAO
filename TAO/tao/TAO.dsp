@@ -982,6 +982,10 @@ SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport.cpp
 # End Source File
 # Begin Source File
@@ -1991,6 +1995,14 @@ SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
@@ -2735,6 +2747,14 @@ SOURCE=.\TimeBaseC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
@@ -2935,6 +2955,11 @@ SOURCE=.\Special_Basic_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\Special_Basic_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

@@ -1,3 +1,13 @@
+Fri Sep  5 12:00:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+
+          Added TimeBaseS* files to the project.
+
+        * tao/Domain/DomainS.h:
+
+          Removed includes of the proxy impl classes.
+
 Fri Sep  5 11:45:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (start_server_header): Removed

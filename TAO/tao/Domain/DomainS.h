@@ -44,8 +44,6 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Collocated_Object.h"
-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
 #include "tao/IFR_Client/IFR_ExtendedC.h"
 
 #if defined(_MSC_VER)
@@ -212,7 +210,6 @@ namespace POA_CORBA
 // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_Domain_Export _TAO_DomainManager_ThruPOA_Proxy_Impl
-  : public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
 public:
   _TAO_DomainManager_ThruPOA_Proxy_Impl (void);
@@ -247,7 +244,6 @@ public:
 //
 
 class TAO_Domain_Export _TAO_DomainManager_Direct_Proxy_Impl
-  : public virtual TAO_Direct_Object_Proxy_Impl
 {
 public:
   _TAO_DomainManager_Direct_Proxy_Impl (void);
