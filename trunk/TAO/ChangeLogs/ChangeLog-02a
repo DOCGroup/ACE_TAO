@@ -1,5 +1,6 @@
 Fri Mar 17 14:17:00 2000  Shawn Hannan  <hannan@cs.wustl.edu>
-	
+
+	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
 	* orbsvcs/tests/Property/client.cpp: changed _ptr's to *'s.
 
 Fri Mar 17 13:04:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
