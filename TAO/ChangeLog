@@ -1,19 +1,25 @@
+Thu Mar 10 09:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.cpp:
+          Removed a debug statement that seems to be added for testing
+          purposes.
+
 Thu Mar 10 03:37:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Leader_Follower.cpp:
 
-	  Fixed some typos. 
+	  Fixed some typos.
 
 Wed Mar  9 23:04:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Leader_Follower.cpp (wait_for_event):
-	  
+
 	  Propogate the result of failure of handle_event () to the
-	  application. 
+	  application.
 
 	* tao/Leader_Follower.h:
 
-	  Added some documention for wait_for_event ()'s return value. 
+	  Added some documention for wait_for_event ()'s return value.
 
 Wed Mar  9 14:20:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
