@@ -167,6 +167,7 @@ Worker::run_test (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::Object_var object =
     this->orb_->string_to_object (ior, ACE_TRY_ENV);
+  ACE_CHECK;
 
   Simple_Server_var server =
     Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
