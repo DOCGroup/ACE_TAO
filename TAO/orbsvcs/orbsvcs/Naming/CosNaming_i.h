@@ -20,8 +20,11 @@
 
 #include "orbsvcs/CosNamingS.h"
 #include "Entries.h"
+
+// Forward declaration.
+class NS_BindingIterator;
   
-class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
+class TAO_ORBSVCS_Export TAO_NamingContext : public POA_CosNaming::NamingContext
 {
   // = TITLE
   //     This class implements the <NamingContext> interface that is
@@ -31,18 +34,20 @@ class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
   //     Extensive comments can be found in the Naming IDL file.
 
 public:
-  typedef ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex> 
+  typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex> 
           HASH_MAP;
          
   // = Initialization and termination methods.
-  NS_NamingContext (size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE);
-  // Default constructor, which initializes the <size> of the table.
+  TAO_NamingContext (size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE,
+		    int root = 0);
+  // Default constructor, which initializes the <size> of the table,
+  // and sets a root flag.
 
   int init (void);
   // Initialize the lock.  The ORB must be initialized when this
   // constructor is called.
 
-  ~NS_NamingContext (void);
+  ~TAO_NamingContext (void);
   // destructor.
 
   virtual void bind (const CosNaming::Name &n, 
@@ -107,11 +112,8 @@ public:
   virtual void destroy (CORBA::Environment &IT_env);
   // Delete the naming context.  NOTE: the user should <unbind> any
   // bindings in which the given context is bound to some names before
-  // invoking <destroy> operation on it.  Ignoring this rule may cause
-  // unexpected behaviour.  <destroy> deletes the context object if it
-  // is not bound to any names in the given address space.  <destroys>
-  // decrements the reference count of the context if bindings to it
-  // exist.
+  // invoking <destroy> operation on it. 
+  // NOTE: this operation is a no-op on the root context.
   
   virtual void list (CORBA::ULong how_many, 
 		     CosNaming::BindingList_out bl, 
@@ -138,10 +140,29 @@ protected:
   // Check to see if we've got a valid name and raise an exception if
   // we don't.
 
+  void bind_new_context_helper (const CosNaming::Name &n,
+					   CosNaming::NamingContext_ptr result,
+					   CORBA::Environment &_env);
+  // This a helper function for <bind_new_context> method.
+  // This is necessary due to limitations of exception macros 
+  // (no more than one TRY block per function).
+
+  void list_helper (TAO_BindingIterator* &bind_iter,
+		     TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter,
+		     CORBA::Environment &_env);
+		    
+  // This is a helper function for <list> method.
+  // It is necessary due to inability to have 2 TRY blocks in one function.
+
 private:    
   HASH_MAP context_;
   // This implementation of <NamingContext> uses <ACE_Hash_Map> for
   // storage and manipulation of name-object bindings.
+  
+  int root_;
+  // Flag indicating whether the context is a root or not.  It allows
+  // to do things like have <destroy> be a no-op on root context.
+  // Values: 1 indicates root, 0 indicates not a root.
   
   ACE_Lock *lock_;
   // Lock to serialize access to the underlying data structure.  This
@@ -149,23 +170,23 @@ private:
   // null lock if the ORB decides threading is not necessary.
 };
 
-class TAO_ORBSVCS_Export NS_BindingIterator : public POA_CosNaming::BindingIterator
+class TAO_ORBSVCS_Export TAO_BindingIterator : public POA_CosNaming::BindingIterator
 {
   // = TITLE
   //     This class implements the <BindingIterator> interface that is
   //     part of the <CosNaming> idl module.
   //
   // = DESCRIPTION
-  //     <NS_BindingIterator> constructor expects a pointer to a
+  //     <TAO_BindingIterator> constructor expects a pointer to a
   //     dynamically allocated hash map iterator. Destructor
   //     deallocates hash map iterator.
 public:
   // = Intialization and termination methods.
-  NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter,
+  TAO_BindingIterator (TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter,
                       ACE_Lock *lock);
   // Constructor.
 
-  ~NS_BindingIterator (void);
+  ~TAO_BindingIterator (void);
   // Destructor.
 
   CORBA::Boolean next_one (CosNaming::Binding_out b, 
@@ -182,11 +203,11 @@ public:
   // This operation destroys the iterator.
    
 private:
-  NS_NamingContext::HASH_MAP::ITERATOR *hash_iter_;
+  TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter_;
   // A pointer to the hash map iterator.
 
   ACE_Lock *lock_;
-  // Lock passed on from <NS_NamingContext> to serialize access to the
+  // Lock passed on from <TAO_NamingContext> to serialize access to the
   // internal data structure.
 }; 
 
