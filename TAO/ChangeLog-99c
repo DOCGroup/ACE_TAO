@@ -1,3 +1,12 @@
+Thu Sep 30 18:21:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/ast_expression.h:
+	* TAO_IDL/ast/ast_expression.cpp:
+	  Extended the EvalKind enum and added some code to fix
+	  the behavior of the '~' operator in constant literals.
+	  Thanks to Irfan for pointing out that this didn't work
+	  correctly for all relevant arithmetic types.
+
 Thu Sep 30 16:25:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB.cpp:
