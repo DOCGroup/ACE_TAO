@@ -154,8 +154,7 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 
 public:
   TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-                               Messaging::ReplyHandler_ptr reply_handler_ptr,
-                               IOP::ServiceContextList &sc);
+                               Messaging::ReplyHandler_ptr reply_handler_ptr);
  // Constructor.
 
   virtual ~TAO_Asynch_Reply_Dispatcher (void);
@@ -180,8 +179,12 @@ public:
   // Return the message state.
 
 protected:
-  IOP::ServiceContextList &reply_service_info_;
+  IOP::ServiceContextList reply_service_info_;
   // The service context list
+  // Note, that this is not a reference as in
+  // the synchronous case. We own the reply_service_info
+  // because our TAO_Asynch_Invocation will go out
+  // of scope before we are done.
 
 private:
   CORBA::ULong reply_status_;
@@ -193,7 +196,7 @@ private:
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
   // @@ Carlos : message_state should go away. All we need is the reply
-  //    cdr. Is that rite? (Alex).
+  //    cdr. Is that right? (Alex).
 
   const TAO_Reply_Handler_Skeleton reply_handler_skel_;
   // Skeleton for the call back method in the Reply Handler.

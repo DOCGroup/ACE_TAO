@@ -1,3 +1,17 @@
+Sat Sep 03 18:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Asynch_Invocation.i,
+	  tao/Reply_Dispatcher.cpp,
+	  tao/Reply_Dispatcher.h:
+	  Changed the Asynch Reply Dispatcher to own its own 
+	  reply_service_info. This is different from the synchronous 
+	  case, in which the Invocation object holds it and just 
+	  gives the Reply Dispatcher a reference to it.
+
+	* tao/TAO.dsp:
+	  Added Asynch_Invocation.i and Invocation.i to the inline files.
+
+
 Sat Sep 03 16:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/ami_test.idl,
