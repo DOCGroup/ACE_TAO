@@ -502,16 +502,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -712,8 +712,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -765,16 +763,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -888,18 +886,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Stub.h \
  Pluggable.h \
@@ -935,6 +921,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -975,6 +966,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -1025,16 +1021,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1124,16 +1120,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1321,8 +1317,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -1382,16 +1376,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1591,8 +1585,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -1665,16 +1657,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1789,16 +1781,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1886,16 +1878,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2010,16 +2002,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2256,8 +2248,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -2336,16 +2326,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2582,8 +2572,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -2666,16 +2654,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2885,8 +2873,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -2934,16 +2920,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3203,8 +3189,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -3259,16 +3243,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -3541,8 +3525,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  Parser_Registry.h \
@@ -3607,16 +3589,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3852,8 +3834,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -3942,16 +3922,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -4188,8 +4168,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -4253,16 +4231,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -4496,16 +4474,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -4620,16 +4598,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -4870,8 +4848,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -4948,16 +4924,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5198,8 +5174,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -5278,16 +5252,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5537,8 +5511,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -5586,16 +5558,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -5861,8 +5833,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -5917,16 +5887,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6206,8 +6176,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  Parser_Registry.h \
@@ -6271,16 +6239,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6520,8 +6488,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -6608,16 +6574,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -6853,8 +6819,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -6922,16 +6886,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7152,16 +7116,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7412,8 +7376,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -7490,16 +7452,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7712,8 +7674,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -7760,16 +7720,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8045,8 +8005,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -8100,16 +8058,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8399,8 +8357,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  Parser_Registry.h \
@@ -8445,16 +8401,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -8704,8 +8660,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -8772,16 +8726,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9030,8 +8984,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -9097,16 +9049,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9354,16 +9306,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -9553,8 +9505,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -9612,16 +9562,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9810,8 +9760,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -9855,16 +9803,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -10055,8 +10003,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -10148,16 +10094,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -10329,16 +10275,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -10509,16 +10455,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10647,16 +10593,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10756,8 +10702,7 @@ realclean:
  ORB.i \
  Marshal.i
 
-.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp \
- Marshal.h \
+.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -10784,16 +10729,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -10922,16 +10867,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11053,16 +10998,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11252,8 +11197,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -11298,16 +11241,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11397,16 +11340,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11506,16 +11449,16 @@ realclean:
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11640,16 +11583,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11746,16 +11689,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -11942,8 +11885,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -11987,16 +11928,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12198,8 +12139,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -12277,16 +12216,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12488,8 +12427,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -12544,16 +12481,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12678,16 +12615,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -12925,8 +12862,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -12980,8 +12915,7 @@ realclean:
  Messaging_ORBInitializer.h \
  ValueFactory_Map.h \
  ValueFactory_Map.i \
- Object_KeyC.h \
- Object_KeyC.i
+ Object_KeyC.h Object_KeyC.i
 
 .obj/corbafwd.o .obj/corbafwd.so .shobj/corbafwd.o .shobj/corbafwd.so: corbafwd.cpp \
  corbafwd.h \
@@ -13010,16 +12944,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13109,16 +13043,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13318,8 +13252,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -13388,16 +13320,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13485,16 +13417,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13582,16 +13514,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13680,16 +13612,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13780,16 +13712,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13877,16 +13809,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14001,18 +13933,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  TAO_Server_Request.h \
@@ -14067,6 +13987,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -14105,6 +14030,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -14193,16 +14123,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14308,18 +14238,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -14359,6 +14277,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -14409,6 +14332,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -14480,16 +14408,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14603,16 +14531,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14722,16 +14650,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14831,16 +14759,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -14932,16 +14860,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -15108,8 +15036,7 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i
 
-.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
- Endpoint.h \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -15136,16 +15063,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15349,8 +15276,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -15459,16 +15384,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -15599,16 +15524,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15795,8 +15720,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -15840,16 +15763,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -15937,16 +15860,16 @@ realclean:
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -16083,8 +16006,7 @@ realclean:
  PolicyC.i \
  ORB.i
 
-.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp \
- Timeprobe.h \
+.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp Timeprobe.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16113,16 +16035,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16309,8 +16231,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -16353,16 +16273,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -16370,8 +16290,7 @@ realclean:
  $(ACE_ROOT)/ace/Service_Object.i \
  TAO_Export.h
 
-.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp \
- debug.h \
+.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp debug.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -16398,16 +16317,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16495,16 +16414,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16607,16 +16526,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -16841,8 +16760,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -16919,16 +16836,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17171,8 +17088,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -17221,16 +17136,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17367,18 +17282,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Asynch_Reply_Dispatcher.h \
  Asynch_Reply_Dispatcher.i \
@@ -17419,6 +17322,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -17455,6 +17363,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -17507,16 +17420,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17666,18 +17579,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  DII_Invocation.i \
@@ -17715,6 +17616,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -17745,6 +17651,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -17798,16 +17709,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -17912,16 +17823,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18026,18 +17937,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  Interceptor_List.h \
@@ -18071,16 +17970,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18184,18 +18083,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -18230,16 +18117,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18323,9 +18210,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- DynamicC.i MessagingC.h \
- ValueBase.h \
+ Sequence_T.cpp DynamicC.i \
+ MessagingC.h ValueBase.h \
  ValueBase.i \
  ValueFactory.h \
  ValueFactory.i \
@@ -18339,20 +18225,8 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- MessagingC.i PortableInterceptorC.i \
+ PollableC.i MessagingC.i \
+ PortableInterceptorC.i \
  CORBA_String.h \
  CORBA_String.inl
 
@@ -18383,16 +18257,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18476,8 +18350,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- DynamicC.i StringSeqC.h \
+ Sequence_T.cpp DynamicC.i \
+ StringSeqC.h \
  StringSeqC.i
 
 .obj/OctetSeqC.o .obj/OctetSeqC.so .shobj/OctetSeqC.o .shobj/OctetSeqC.so: OctetSeqC.cpp OctetSeqC.h \
@@ -18507,16 +18381,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18581,8 +18455,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- OctetSeqC.i Any.h \
+ Sequence_T.cpp OctetSeqC.i \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -18629,16 +18503,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18703,8 +18577,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- StringSeqC.i Any.h \
+ Sequence_T.cpp StringSeqC.i \
+ Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -18753,16 +18627,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -18855,16 +18729,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19051,8 +18925,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -19191,16 +19063,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -19389,8 +19261,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -19435,16 +19305,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19631,8 +19501,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -19677,16 +19545,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19776,16 +19644,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -19975,8 +19843,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -20023,16 +19889,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -20225,8 +20091,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  Parser_Registry.h \
@@ -20270,16 +20134,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -20376,16 +20240,16 @@ realclean:
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -20573,8 +20437,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -20619,16 +20481,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -20720,16 +20582,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -20943,8 +20805,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -20989,16 +20849,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -21190,13 +21050,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  TAO_Server_Request.h \
@@ -21231,6 +21084,11 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -21362,16 +21220,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -21582,8 +21440,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -21630,16 +21486,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -21754,18 +21610,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -21807,16 +21651,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -21905,16 +21749,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22083,16 +21927,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22280,8 +22124,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -22326,16 +22168,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22523,8 +22365,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -22574,16 +22414,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22687,16 +22527,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -22874,16 +22714,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23060,16 +22900,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23172,16 +23012,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23374,8 +23214,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -23425,16 +23263,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23532,18 +23370,6 @@ realclean:
  PolicyC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Asynch_Reply_Dispatcher.i \
  GIOP_Message_State.h \
@@ -23597,6 +23423,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -23623,6 +23454,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -23679,16 +23515,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -23865,13 +23701,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  debug.h
@@ -23904,16 +23733,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24025,16 +23854,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24131,16 +23960,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24342,8 +24171,6 @@ realclean:
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -24409,16 +24236,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24521,16 +24348,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24646,16 +24473,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24761,16 +24588,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -24966,8 +24793,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -24983,8 +24808,7 @@ realclean:
  Interceptor_List.inl \
  ORB_Core.i
 
-.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp \
- GIOPC.h \
+.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp GIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -25011,16 +24835,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25138,16 +24962,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25253,16 +25077,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25368,16 +25192,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25512,16 +25336,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25609,16 +25433,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -25742,16 +25566,16 @@ realclean:
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -25839,16 +25663,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -26050,16 +25874,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26248,8 +26072,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -26295,16 +26117,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26422,16 +26244,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26548,16 +26370,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26748,8 +26570,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -26795,16 +26615,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -26920,16 +26740,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27009,8 +26829,8 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- DLL_Parser.i Object_Loader.h Object_Loader.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h DLL_Parser.i \
+ Object_Loader.h Object_Loader.i \
  Object.h \
  Abstract_Servant_Base.h \
  Object_Proxy_Broker.h \
@@ -27055,16 +26875,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27144,8 +26964,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- FILE_Parser.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h FILE_Parser.i \
  Object_Loader.h \
  Object_Loader.i \
  Object.h \
@@ -27212,16 +27031,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27427,8 +27246,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -27510,16 +27327,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27639,18 +27456,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  TAO_Server_Request.h \
@@ -27701,6 +27506,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -27739,6 +27549,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -27832,16 +27647,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -27944,16 +27759,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -28149,8 +27964,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -28191,16 +28004,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28304,18 +28117,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  Interceptor_List.inl \
@@ -28350,16 +28151,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28463,18 +28264,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -28524,6 +28313,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -28550,6 +28344,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -28567,8 +28366,7 @@ realclean:
  ORB_Core.i
 
 .obj/ORBInitializer_Registry.o .obj/ORBInitializer_Registry.so .shobj/ORBInitializer_Registry.o .shobj/ORBInitializer_Registry.so: ORBInitializer_Registry.cpp \
- ORBInitializer_Registry.h \
- $(ACE_ROOT)/ace/pre.h \
+ ORBInitializer_Registry.h $(ACE_ROOT)/ace/pre.h \
  TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -28596,16 +28394,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28688,9 +28486,8 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- DynamicC.i MessagingC.h \
- ValueBase.h \
+ Sequence_T.cpp DynamicC.i \
+ MessagingC.h ValueBase.h \
  ValueBase.i \
  ValueFactory.h \
  ValueFactory.i \
@@ -28704,9 +28501,8 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
+ PollableC.i MessagingC.i \
+ PortableInterceptorC.i \
  TAO_Singleton.h \
  TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -28717,7 +28513,6 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
- MessagingC.i PortableInterceptorC.i \
  ORBInitializer_Registry.inl \
  ORB.h Services.h \
  Services.i \
@@ -28753,16 +28548,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -28866,18 +28661,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -28928,6 +28711,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -28954,6 +28742,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  Parser_Registry.h \
@@ -28994,16 +28787,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29132,16 +28925,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29251,18 +29044,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  Stub.h \
@@ -29299,6 +29080,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -29345,6 +29131,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -29395,16 +29186,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29518,16 +29309,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29680,16 +29471,16 @@ realclean:
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -29827,16 +29618,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -29933,20 +29724,8 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- MessagingC.i Stub.h \
+ PollableC.i MessagingC.i \
+ Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -29980,6 +29759,11 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -30032,6 +29816,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -30106,16 +29895,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30300,8 +30089,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -30379,16 +30166,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30486,18 +30273,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  LocalObject.h \
  LocalObject.i \
@@ -30561,16 +30336,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30702,16 +30477,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30815,18 +30590,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -30874,16 +30637,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -30987,18 +30750,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -31035,16 +30786,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31168,16 +30919,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31310,16 +31061,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31450,16 +31201,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31593,16 +31344,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -31817,8 +31568,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -31871,16 +31620,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32023,16 +31772,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32175,16 +31924,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32325,16 +32074,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32533,8 +32282,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -32588,16 +32335,16 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32718,23 +32465,22 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i RTCORBAS.h orbconf.h \
- IOPS.h IOPC.h \
- TAO_Export.h \
+ IOPS.h IOPC.h TAO_Export.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32858,16 +32604,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -32971,18 +32717,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -33035,16 +32769,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33148,18 +32882,6 @@ realclean:
  IOPC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  MessagingC.i \
  PortableInterceptorC.i \
  LocalObject.h \
@@ -33194,16 +32916,16 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -33333,16 +33055,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33513,16 +33235,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33627,16 +33349,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33826,16 +33548,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -33990,16 +33712,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34207,8 +33929,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -34258,16 +33978,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34411,16 +34131,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34614,8 +34334,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -34663,16 +34381,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34777,16 +34495,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -34890,16 +34608,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35104,8 +34822,6 @@ realclean:
  ValueFactory.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -35172,16 +34888,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35371,8 +35087,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -35419,16 +35133,16 @@ realclean:
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -35618,8 +35332,6 @@ realclean:
  TimeBaseC.i \
  PollableC.h \
  PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
