@@ -326,7 +326,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "virtual void " << node->flat_name ()
           << "_setup_collocation (int collocated);" << be_nl << be_nl;
     }
-  else
+
+  if (node->is_abstract ())
     {
       // Protected default constructor for abstract interfaces.
       *os << node->local_name () << " (void);" << be_nl;
