@@ -268,6 +268,7 @@ ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
 ACE_HAS_EXCEPTIONS                      Compiler supports C++
                                         exception handling
+ACE_HAS_EXPLICIT_KEYWORD                Compiler support explicit constructors.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
                                         instantiation mechanism
                                         supports the use of explicit
@@ -798,7 +799,7 @@ ACE_LACKS_SOME_POSIX_PROTOTYPES         Platform lacks POSIX
                                         prototypes for certain System
                                         V functions like shared memory
                                         and message queues.
-ACE_LACKS_NATIVE_STRPTIME               Platform/compiler lacks the strptime() 
+ACE_LACKS_NATIVE_STRPTIME               Platform/compiler lacks the strptime()
                                         function.
 ACE_LACKS_STRRCHR                       Platform/compiler lacks
                                         strrchr () function.
