@@ -29,7 +29,9 @@ class ECCL_Consumer
 {
 public:
   /// Constructor
-  ECCL_Consumer (int iterations);
+  ECCL_Consumer (int iterations,
+                 int workload_in_usecs,
+                 ACE_UINT32 gsf);
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -61,6 +63,12 @@ private:
 
   /// The history of latency samples
   ACE_Sample_History sample_history_;
+
+  /// The amount of work to do for each event
+  int workload_in_usecs_;
+
+  /// The global scale factor for the high resolution timer
+  ACE_UINT32 gsf_;
 };
 
 #endif /* ECCL_CONSUMER_H */
