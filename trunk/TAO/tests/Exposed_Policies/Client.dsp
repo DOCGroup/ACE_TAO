@@ -93,6 +93,18 @@ SOURCE=.\client.cpp
 
 SOURCE=.\CounterC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Tester.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Verifier.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Properties.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -100,6 +112,10 @@ SOURCE=.\CounterC.cpp
 # Begin Source File
 
 SOURCE=.\CounterC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Verifier.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

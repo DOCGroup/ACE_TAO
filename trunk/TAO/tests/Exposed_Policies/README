@@ -58,21 +58,25 @@ the same priority that where specified when the POA was created, while
 the other ovverride some of them as prescribed in the config file
 specified with the option "-ObjectConfigFile".
 
+The config file are used by the client side to verify that what is
+embedded in the IOR is correct.
+
 
 USAGE:
 
    server -POAConfigFile <config_file_name>
           -ObjectConfigFile <config_file_name>
  
-   client -IORSource <ior_source>
+   client -POAConfigFile <config_file_name>
+          -ObjectConfigFile <config_file_name>
 
 
 EXAMPLE:
 
       $ server -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg
       
-      $ client -IORSource file://default.ior  
+      $ client -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg  
 
-      $ client -IORSource file://overridden.ior
+      $ client -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg
 
 
