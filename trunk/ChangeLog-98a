@@ -11,6 +11,11 @@ Wed Feb 25 10:50:17 1998  David L. Levine  <levine@cs.wustl.edu>
           "no corresponding delete" warning, until that is fixed in libTAO.
           Added -lm to LIBS for MT_Cubit client.
 
+        * include/makeinclude/platform_chorus_ghs.GNU: we can link now.
+
+        * ACE-INSTALL.html: added information on Linux v. 2.0.x
+          getsockname () bug.
+
 Tue Feb 24 15:07:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/test.{mdp,mak}: Added Env_Value_Test and OrdMultiSet_Test
