@@ -1,3 +1,7 @@
+Tue Jan 11 17:22:21 2000  bala  <bala@cs.wustl.edu>
+
+        * ACE version 5.0.12 released.
+
 Mon Jan 10 12:50:10 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Select_Reactor_T.h (class ACE_Select_Reactor_T): Reformatted the
