@@ -12,6 +12,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch_T.h"
+#include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "tao/TAO_Singleton_Manager.h"
 
