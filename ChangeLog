@@ -1,3 +1,9 @@
+Mon Mar 22 14:10:12 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/POSIX_Proactor.cpp: Fix "unused argument" warning. The code
+	  that really uses the signal_number argument_may_ need to be
+	  re-enabled again, so the name is left in the signature.
+
 Mon Mar 22 13:45:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Timers/CB.cpp (handle_timeout): The reset_interval()
