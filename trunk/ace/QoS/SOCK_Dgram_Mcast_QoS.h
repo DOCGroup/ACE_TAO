@@ -1,10 +1,11 @@
+//$Id$
 /* -*- C++ -*- */
 
 //=============================================================================
 /**
  *  @file    SOCK_Dgram_Mcast_QoS.h
  *
- *  $Id$
+ *  SOCK_Dgram_Mcast_QoS.h,v 1.2 2001/08/05 04:50:19 yamuna Exp
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
@@ -110,6 +111,22 @@ public:
             ACE_SOCK_GROUP g = 0,
             u_long flags = 0,
             int reuse_addr = 0);
+
+  /// Initialize the <multicast_address_> IP address.
+  int make_multicast_address (const ACE_INET_Addr &mcast_addr,
+                              const ACE_TCHAR *net_if = ACE_LIB_TEXT ("le0"));
+
+  /// Initialize a multicast address.  This method factors out common
+  /// code called by <make_multicast_address> and <subscribe>.
+  int make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
+                                ip_mreq& multicast_address,
+                                const ACE_TCHAR *net_if = ACE_LIB_TEXT ("le0"));
+
+  /// The addr and port# of the most recent subscription.
+  ACE_INET_Addr mcast_addr_;
+
+  /// The interface used for the most recent subscription.
+  ip_mreq mcast_request_if_;
 
 private:
   // = Disable public <open> method to ensure class used properly.
