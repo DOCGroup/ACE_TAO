@@ -19,7 +19,6 @@ $ACE_ROOT/tests:
 1.  Use appropriate ACE_START_TEST and ACE_END_TEST macros in main ()
 2.  Add test to Makefile
 3.  Add test to MS project files (tests.dsp and version_tests/version_tests.dsp)
-    (... and tests.mdp and version_tests/version_tests.mdp (for MSVC 4.2))
 4.  Add test to all or most of these:
 
     run_tests.bat, run_tests.psosim, run_tests.sh, and run_tests.vxworks.
