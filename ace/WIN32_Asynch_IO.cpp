@@ -394,14 +394,14 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      // @@ Alex, shouldn't this only print an error if the ACE
-      // debugging level is above a certain value?
+      if (ACE::debug ())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("ReadFile")));
+        }
 
-      // Return error
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("ReadFile")),
-                        -1);
+      return -1;
     }
 }
 
@@ -634,13 +634,13 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      // @@ Alex, shouldn't this only print an error if the ACE
-      // debugging level is above a certain value?
-
-      // Return error
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("WriteFile")), -1);
+      if (ACE::debug ())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("WriteFile")));
+        }
+      return -1;
     }
 }
 
@@ -1311,12 +1311,15 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
                                       SOCK_STREAM,
                                       0);
       if (accept_handle == ACE_INVALID_HANDLE)
-        // @@ Alex, shouldn't this only print an error if the ACE
-        // debugging level is above a certain value?
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_OS::socket")),
-                          -1);
+        {
+          if (ACE::debug ())
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          ASYS_TEXT ("ACE_OS::socket")));
+            }
+          return -1;
+        }
       else
         // Remember to close the socket down if failures occur.
         close_accept_handle = 1;
@@ -1370,14 +1373,14 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
 
       // Cleanup dynamically allocated Asynch_Result.
       delete result;
-
-      // @@ Alex, shouldn't this only print an error if the ACE
-      // debugging level is above a certain value?
-
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("ReadFile")),
-                        -1);
+      
+      if (ACE::debug ())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("ReadFile")));
+        }
+      return -1;
     }
 #else /* ACE_HAS_WINNT4 .......|| ACE_HAS_AIO_CALLS */
   ACE_NOTSUP_RETURN (-1);
@@ -1653,14 +1656,14 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
       // Cleanup dynamically allocated Asynch_Result
       delete result;
-
-      // @@ Alex, shouldn't this only print an error if the ACE
-      // debugging level is above a certain value?
-
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("TransmitFile")),
-                        -1);
+      
+      if (ACE::debug ())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("TransmitFile")));
+        }
+      return -1;
     }
 #else /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
   ACE_NOTSUP_RETURN (-1);

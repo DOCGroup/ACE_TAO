@@ -94,12 +94,15 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
       // already registered.
       if (errno != ERROR_INVALID_PARAMETER)
-        // @@ Alex, shouldn't this only be printed if ACE_debug is
-        // beyond a certain level?
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("CreateIoCompletionPort")),
-                          -1);
+        {
+          if (ACE::debug ())
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          ASYS_TEXT ("CreateIoCompletionPort")));           
+            }
+          return -1;
+        }
     }
   return 0;
 }
@@ -427,13 +430,15 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
           return 0;
         }
       else
-        // @@ Alex, shouldn't this only be printed if ACE_debug is
-        // beyond a certain level?
-
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("GetQueuedCompletionStatus")),
-                          -1);
+        {
+          if (ACE::debug ())
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          ASYS_TEXT ("GetQueuedCompletionStatus")));
+            }
+          return -1;
+        }
     }
   else
     {
@@ -496,12 +501,14 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
                                     ) == FALSE)
     {
       delete result;
-        // @@ Alex, shouldn't this only be printed if ACE_debug is
-        // beyond a certain level?
 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "PostQueuedCompletionStatus failed\n"),
-                        -1);
+      if (ACE::debug ())
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("PostQueuedCompletionStatus failed")));
+        }
+      return -1;
     }
 
   return 0;
