@@ -1,3 +1,22 @@
+Mon May 24 16:03:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests: Modified/fixed the following NT makefiles:
+
+	  - TAO_Tests.dsw
+	  - DynAny_Test/DynAny_Test.dsw
+	  - DynAny_Test/basic_test.dsp
+	  - InterOp-Naming/InterOp_test.dsp
+	  - MT_Client/client.dsp
+	  - MT_Client/orb_creation.dsp
+	  - MT_Client/server.dsp
+	  - NestedUpcall/MT_Client_Test/client.dsp
+	  - NestedUpcall/MT_Client_Test/server.dsp
+	  - NestedUpcall/Reactor/client.dsp
+	  - NestedUpcall/Reactor/server.dsp
+	  - NestedUpcall/Triangle_Test/initiator.dsp
+	  - NestedUpcall/Triangle_Test/server_A.dsp
+	  - NestedUpcall/Triangle_Test/server_B.dsp
+
 Mon May 24 15:58:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/CDR_Interpreter.cpp:

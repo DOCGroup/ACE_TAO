@@ -39,6 +39,66 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DynAny Basics"=.\DynAny_Test\basic_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InterOperable Naming Service"=".\InterOp-Naming\InterOp_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_Client Client"=.\MT_Client\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_Client ORB Creation"=.\MT_Client\orb_creation.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_Client Server"=.\MT_Client\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Multiple Inheritance Client"=.\Multiple_Inheritance\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -63,7 +123,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NU MT_Client_Test Client"=.\NestedUpcall\MT_Client_Test\client.dsp - Package Owner=<4>
+Project: "Nested Upcall MT_Client Client"=.\NestedUpcall\MT_Client_Test\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +135,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NU MT_Client_Test Server"=.\NestedUpcall\MT_Client_Test\server.dsp - Package Owner=<4>
+Project: "Nested Upcall MT_Client Server"=.\NestedUpcall\MT_Client_Test\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -87,7 +147,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NU Reactor Client"=.\NestedUpcall\Reactor\client.dsp - Package Owner=<4>
+Project: "Nested Upcall Reactor Client"=.\NestedUpcall\Reactor\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -99,7 +159,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NU Reactor Server"=.\NestedUpcall\Reactor\server.dsp - Package Owner=<4>
+Project: "Nested Upcall Reactor Server"=.\NestedUpcall\Reactor\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -111,7 +171,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NU Triangle Initiator"=.\NestedUpcall\Triangle_Test\initiator.dsp - Package Owner=<4>
+Project: "Nested Upcall Triangle Initiator"=.\NestedUpcall\Triangle_Test\initiator.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -123,7 +183,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NU Triangle Server_A"=.\NestedUpcall\Triangle_Test\server_A.dsp - Package Owner=<4>
+Project: "Nested Upcall Triangle Server_A"=.\NestedUpcall\Triangle_Test\server_A.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -135,7 +195,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NU Triangle Server_B"=.\NestedUpcall\Triangle_Test\server_B.dsp - Package Owner=<4>
+Project: "Nested Upcall Triangle Server_B"=.\NestedUpcall\Triangle_Test\server_B.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
