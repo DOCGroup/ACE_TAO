@@ -53,3 +53,20 @@ project(*Notify MultiTypes): notifytest {
   }
 }
 
+project(*Notify Filter): notifytest {
+  Source_Files {
+    Filter.cpp
+  }
+}
+
+project(*Notify Updates): notifytest {
+  Source_Files {
+    Updates.cpp
+  }
+}
+
+project(*Notify Sequence): notifytest {
+  Source_Files {
+    Sequence.cpp
+  }
+}
