@@ -1,0 +1,13 @@
+project: orbsvcslib, notify, rtcorba, rtportableserver, notifytest {
+
+  sharedname = TAO_RT_NotifyTests
+
+  dynamicflags    = TAO_RT_NOTIFY_TEST_BUILD_DLL
+
+  Source_Files{
+   RT_Application_Command.cpp
+   RT_POA_Command.cpp
+   RT_Priority_Mapping.cpp
+   RT_Factories_Define.cpp
+  }
+}

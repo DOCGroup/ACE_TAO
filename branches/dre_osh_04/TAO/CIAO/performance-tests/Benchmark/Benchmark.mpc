@@ -1,0 +1,29 @@
+// $Id$ 
+
+project(Benchmark_stub): ciao_client {
+
+  sharedname = Benchmark_stub
+  idlflags += -Wb,stub_export_macro=BENCHMARK_STUB_Export -Wb,stub_export_include=Benchmark_stub_export.h -Wb,skel_export_macro=BENCHMARK_SVNT_Export -Wb,skel_export_include=Benchmark_svnt_export.h
+  dynamicflags   = BENCHMARK_STUB_BUILD_DLL
+
+  IDL_Files {
+    Benchmark.idl
+  }
+
+  Source_Files {
+    BenchmarkC.cpp
+  }
+}
+
+project(Benchmark_svnt) : ciao_server {
+  after +=  Benchmark_stub
+  sharedname = Benchmark_svnt
+  libs    += Benchmark_stub
+
+  idlflags  +=  -Wb,export_macro=BENCHMARK_SVNT_Export -Wb,export_include=Benchmark_svnt_export.h
+  dynamicflags = BENCHMARK_SVNT_BUILD_DLL
+
+  Source_Files {
+    BenchmarkS.cpp
+  }
+}

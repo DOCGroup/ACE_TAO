@@ -1,0 +1,18 @@
+project(*Server): taoserver {
+  Source_Files {
+    Coordinator.cpp
+    Session_Control.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoserver {
+  exename  = client
+  Source_Files {
+    Peer.cpp
+    Session.cpp
+    Session_Task.cpp
+    client.cpp
+  }
+}
+

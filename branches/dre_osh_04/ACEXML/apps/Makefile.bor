@@ -1,0 +1,8 @@
+#
+# Makefile for building the ACE XML Library
+#
+
+DIRS = \
+        svcconf
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

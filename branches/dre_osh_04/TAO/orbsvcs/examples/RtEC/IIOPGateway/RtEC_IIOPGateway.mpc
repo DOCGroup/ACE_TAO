@@ -1,0 +1,24 @@
+project(*Consumer): messaging, rteventexe, naming {
+  Source_Files {
+    Consumer.cpp
+  }
+}
+
+project(*Supplier): messaging, rteventexe, naming {
+  Source_Files {
+    Supplier.cpp
+  }
+}
+
+project(*): messaging, rteventexe, naming {
+  Source_Files {
+    Gateway.cpp
+  }
+}
+
+project(*EC): messaging, rteventexe, naming {
+  Source_Files {
+    EC.cpp
+  }
+}
+
