@@ -1,3 +1,10 @@
+Thu Oct 16 17:56:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          When using the new Borland compiler from CBuilderX get
+          ptrdiff_t out of the std namespace. This fixes hundreds
+          of compile errors in our CBX Preview build.
+
 Thu Oct 16 09:03:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
