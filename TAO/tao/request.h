@@ -21,7 +21,7 @@
 #if !defined (TAO_REQUEST_H)
 #  define TAO_REQUEST_ H
 
-class TAO_Export CORBA_Request : public TAO_IUnknown
+class TAO_Export CORBA_Request
 {
 public:
   CORBA::Object_ptr target (void) const { return target_; }
@@ -54,10 +54,8 @@ public:
 
   // = Stuff required for COM IUnknown support
 
-  ULONG AddRef (void);
-  ULONG Release (void);
-  TAO_HRESULT QueryInterface (REFIID riid,
-                              void **ppv);
+  CORBA::ULong AddRef (void);
+  CORBA::ULong Release (void);
 
 private:
   friend class CORBA_Object;
@@ -71,7 +69,7 @@ private:
   CORBA_Request (CORBA::Object_ptr obj,
 		 const CORBA::Char *op);
 
-  virtual ~CORBA_Request (void);
+  ~CORBA_Request (void);
 
   CORBA::Object_ptr target_;
   const CORBA::Char *opname_;
@@ -81,8 +79,7 @@ private:
   CORBA::Environment env_;
   CORBA::ExceptionList exceptions_;
 
-  ACE_SYNCH_MUTEX lock_;
-  u_int refcount_;
+  CORBA::ULong refcount_;
 };
 
 #endif /* TAO_REQUEST_H */

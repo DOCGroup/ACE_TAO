@@ -1,3 +1,41 @@
+Thu Mar  5 13:15:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/cdr.h: 
+	* tao/cdr.i: 
+	  Added a error flag to the class and some << and >> operators to
+	  start a more useable interface for the CDR streams.
+
+	* tao/any.h: 
+	* tao/any.cpp: 
+	* tao/except.h: 
+	* tao/except.cpp: 
+	* tao/nvlist.h: 
+	* tao/nvlist.cpp: 
+	* tao/principa.h: 
+	* tao/principa.cpp: 
+	* tao/request.h: 
+	* tao/request.cpp: 
+	* tao/typecode.h: 
+	* tao/typecode.i: 
+	* tao/typecode.cpp: 
+	  They don't inherit from IUnknown any more. Removed the
+	  QueryInterface method, but kept AddRef and Release to keep the
+	  change propagation to a minimum.
+	  In accordance to the new memory managment scheme the locks were
+	  also removed, the agument is:
+	  + In the common case the locks are *not* needed.
+	  + When needed a lock at that level does *not* work.
+	  + The application can add its own locking for the objects that
+	  are effectively shared among threads.
+
+	* tao/sequence.h: 
+	* tao/sequence.cpp: 
+	* tao/sequence_T.h: 
+	* tao/sequence_T.cpp: 
+	  Sequences of objects require some post processing *after*
+	  demarshalling: the object references must be narrowed to the
+	  right type; a new virtual method was added for that purpose.
+
 Thu Mar 05 09:08:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * .../Makefile:  added $(POSTLINK) to link commands.

@@ -31,47 +31,20 @@ CORBA_Principal::~CORBA_Principal (void)
     delete [] id.buffer;
 }
 
-// For COM -- IUnKnown operations
-
-// {A201E4C0-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_Principal,
-0xa201e4c0, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-
-ULONG
+CORBA::ULong
 CORBA_Principal::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->lock_, 0));
-
   return ++refcount_;
 }
 
-ULONG
+CORBA::ULong
 CORBA_Principal::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
-
     if (--refcount_ != 0)
       return refcount_;
   }
 
   delete this;
   return 0;
-}
-
-TAO_HRESULT
-CORBA_Principal::QueryInterface (REFIID riid,
-				 void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_Principal == riid || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
-  (void) AddRef ();
-  return TAO_NOERROR;
 }

@@ -9,18 +9,6 @@
 
 #include "tao/corba.h"
 
-// {77420082-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_Exception,
-0x77420082, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-// {77420083-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_UserException,
-0x77420083, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-// {77420084-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_SystemException,
-0x77420084, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : type_ (tc),
     refcount_ (0)
@@ -87,26 +75,19 @@ CORBA_Exception::_is_a (const char* repository_id) const
   return (ACE_OS::strcmp (repository_id, "IDL:CORBA/Exception:1.0")==0);
 }
 
-// For COM -- IUnKnown operations
-
-ULONG
+CORBA::ULong
 CORBA_Exception::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
   return ++refcount_;
 }
 
-ULONG
+CORBA::ULong
 CORBA_Exception::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
     refcount_--;
     if (refcount_ != 0)
       return refcount_;
-
   }
 
   // CORBA::TypeCode_ptr		tc = type_->_duplicate ();
@@ -116,25 +97,6 @@ CORBA_Exception::Release (void)
   // tc->Release ();
 
   return 0;
-}
-
-TAO_HRESULT
-CORBA_Exception::QueryInterface (REFIID	riid,
-				 void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_Exception == riid || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  // XXX this approach needs modifying to enable returning
-  // UserException, SystemException, and other kinds of pointers.
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) AddRef ();
-  return TAO_NOERROR;
 }
 
 // Avoid zillions of not-quite-inlined copies of utilities.
