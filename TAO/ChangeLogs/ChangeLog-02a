@@ -1,29 +1,42 @@
+Fri Dec  1 09:15:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+          Use _duplicate() to return the consumer connected to the
+          ProxyPushSupplier.  It used to be the case that this method was
+          invoked in the critical path, where the locking overhead of
+          calling _duplicate() was excessive.  But the method is not used
+          anymore, so using the standard CORBA memory management rules is
+          a better idea.
+          Thanks to Paul Calabrese <calabrese_p@ociweb.com> for pointing
+          this out.
+
 Thu Nov 30 22:51:34 2000  pradeep@cs.wustl.edu  <pradeep@cs.wustl.edu>
 
         * TAO version 1.1.11 released.
 
 Thu Nov 30 20:05:35 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Private_Connection/run_test.pl:
+        * tests/RTCORBA/Private_Connection/run_test.pl:
 
-	  Fixed the script to unlink ior files at the end.  This fixes
-	  TRANSIENT exception in builds where ior files from previous
-	  runs weren't cleaned up.
+          Fixed the script to unlink ior files at the end.  This fixes
+          TRANSIENT exception in builds where ior files from previous
+          runs weren't cleaned up.
 
 Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
-	  Fixed link errors due to multiple template instantiations.
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+          Fixed link errors due to multiple template instantiations.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
- 	  Changed <get_primary> to throw TAO_IOP::NotFound () instead of
-	  Invalid_IOR ()
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+          Changed <get_primary> to throw TAO_IOP::NotFound () instead of
+          Invalid_IOR ()
 
 Wed Nov 29 17:59:10 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
-	  Fixed more link errors re. template instantiation.
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+          Fixed more link errors re. template instantiation.
 
 Wed Nov 29 09:19:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
