@@ -184,6 +184,7 @@
 
 # define ACE_HAS_EXPLICIT_KEYWORD
 # define ACE_HAS_MUTABLE_KEYWORD
+# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 
 # endif /* defined(__BORLANDC__) */
 
