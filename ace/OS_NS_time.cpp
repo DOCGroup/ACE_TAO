@@ -9,6 +9,10 @@ ACE_RCSID(ace, OS_NS_time, "$Id$")
 # include "ace/OS_NS_time.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined (ACE_LACKS_NATIVE_STRPTIME)
+# include "ace/os_include/os_ctype.h"
+#endif /* ACE_LACKS_NATIVE_STRPTIME */
+
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
 
