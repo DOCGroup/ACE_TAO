@@ -87,7 +87,8 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
@@ -216,6 +217,16 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
@@ -239,16 +250,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
-  $(TAO_ROOT)/tao/Any_T.h \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -265,7 +266,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -303,7 +303,8 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(ACE_ROOT)/ace/INET_Addr.h \
-  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -321,7 +322,8 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/nsconf.h
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client.h $(ACE_ROOT)/ace/Synch.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client.h \
+  $(ACE_ROOT)/ace/Synch.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -347,7 +349,8 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
@@ -531,6 +534,16 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
@@ -554,16 +567,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
-  $(TAO_ROOT)/tao/Any_T.h \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -580,7 +583,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -618,7 +620,8 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(ACE_ROOT)/ace/INET_Addr.h \
-  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
+  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
