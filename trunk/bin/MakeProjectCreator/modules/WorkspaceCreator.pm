@@ -16,15 +16,20 @@ use File::Path;
 use File::Basename;
 
 use Creator;
+use Options;
 
 use vars qw(@ISA);
-@ISA = qw(Creator);
+@ISA = qw(Creator Options);
 
 # ************************************************************
 # Data Section
 # ************************************************************
 
 my($wsext) = 'mwc';
+
+## Valid names for assignments within a workspace
+my(%validNames) = ('cmdline' => 1,
+                  );
 
 # ************************************************************
 # Subroutine Section
@@ -86,6 +91,7 @@ sub parse_line {
           my($gstat, $generator) = $self->generate_project_files();
           if ($gstat) {
             $self->write_workspace($generator, 1);
+            $self->{'assign'} = {};
           }
           else {
             $errorString = 'ERROR: Unable to ' .
@@ -134,14 +140,40 @@ sub parse_line {
         $self->{$typecheck} = 1;
       }
     }
+    elsif ($values[0] eq 'assignment') {
+      if (defined $validNames{$values[1]}) {
+        $self->process_assignment($values[1], $values[2]);
+      }
+      else {
+        $errorString = "ERROR: Invalid assignment name: $values[1]";
+        $status = 0;
+      }
+    }
+    elsif ($values[0] eq 'assign_add') {
+      if (defined $validNames{$values[1]}) {
+        $self->process_assignment_add($values[1], $values[2]);
+      }
+      else {
+        $errorString = "ERROR: Invalid addition name: $values[1]";
+        $status = 0;
+      }
+    }  
+    elsif ($values[0] eq 'assign_sub') {
+      if (defined $validNames{$values[1]}) {
+        $self->process_assignment_sub($values[1], $values[2]);
+      }
+      else {
+        $errorString = "ERROR: Invalid subtraction name: $values[1]";
+        $status = 0;
+      }
+    }  
     else {
       $errorString = "ERROR: Unrecognized line: $line";
       $status = 0;
     }
   }
   elsif ($status == -1) {
-    my($project_files) = $self->{'project_files'};
-    push(@$project_files, $line);
+    push(@{$self->{'project_files'}}, $line);
     $status = 1;
   }
 
@@ -423,6 +455,72 @@ sub sort_dependencies {
 }
 
 
+sub optionError {
+  my($self) = shift;
+  my($str)  = shift;
+  print 'WARNING: ' . $self->get_current_input() . ": $str\n";
+}
+ 
+
+sub process_cmdline {
+  my($self)       = shift;
+  my($parameters) = shift;
+
+  my($cmdline) = $self->get_assignment('cmdline');
+  if (defined $cmdline && $cmdline ne '') {
+    my($args) = $self->create_array($cmdline);
+
+    ## Look for environment variables
+    foreach my $arg (@$args) {
+      while($arg =~ /\$(\w+)/) {
+        my($name) = $1;
+        my($val)  = undef;
+        if ($name eq 'PWD') {
+          $val = $self->getcwd();
+        }
+        elsif (defined $ENV{$name}) {
+          $val = $ENV{$name};
+        }
+        $arg =~ s/\$\w+/$val/;
+      }
+    }
+
+    my($options) = $self->options('MWC', {}, 0, @$args);
+    if (defined $options) {
+      foreach my $key (keys %$options) {
+        if (UNIVERSAL::isa($options->{$key}, 'ARRAY')) {
+          if (defined $options->{$key}->[0]) {
+            push(@{$parameters->{$key}}, @{$options->{$key}});
+          }
+        }
+        elsif (UNIVERSAL::isa($options->{$key}, 'HASH')) {
+          my(@keys) = keys %{$options->{$key}};
+          if (defined $keys[0]) {
+            foreach my $hk (keys %{$options->{$key}}) {
+              $parameters->{$key}->{$hk} = $options->{$key}->{$hk};
+            }
+          }
+        }
+        elsif (defined $options->{$key}) {
+          $parameters->{$key} = $options->{$key};
+        }
+      }
+
+      ## Issue warnings for these options
+      if (defined $options->{'recurse'}) {
+        $self->optionError('-recurse is ignored');
+      }
+      if (defined $options->{'reldefs'}) {
+        $self->optionError('-noreldefs is ignored');
+      }
+      if (defined $options->{'input'}->[0]) {
+        $self->optionError('Command line files ' .
+                           'specified in a workspace are ignored');
+      }
+    }
+  }
+}
+
 sub project_creator {
   my($self) = shift;
   my($str)  = "$self";
@@ -435,19 +533,36 @@ sub project_creator {
   $str =~ s/Workspace/Project/;
   $str =~ s/=HASH.*//;
 
-  ## For the toplevel parameter, we always pass 1 since the workspace
-  ## creator always wants the ProjectCreator to generate projects.
-  return $str->new($self->get_global_cfg(),
-                   $self->get_include_path(),
-                   $self->get_template_override(),
-                   $self->get_ti_override(),
-                   $self->get_dynamic(),
-                   $self->get_static(),
-                   $self->get_relative(),
-                   $self->get_addtemp(),
-                   $self->get_addproj(),
-                   $self->get_progress_callback(),
-                   1);
+  ## Set up values for each project creator
+  ## If we have command line arguments in the workspace, then
+  ## we process them before creating the project creator
+  my(%parameters) = ('global'   => $self->get_global_cfg(),
+                     'include'  => $self->get_include_path(),
+                     'template' => $self->get_template_override(),
+                     'ti'       => $self->get_ti_override(),
+                     'dynamic'  => $self->get_dynamic(),
+                     'static'   => $self->get_static(),
+                     'relative' => $self->get_relative(),
+                     'addtemp'  => $self->get_addtemp(),
+                     'addproj'  => $self->get_addproj(),
+                     'progress' => $self->get_progress_callback(),
+                     'toplevel' => 1,
+                    );
+
+  $self->process_cmdline(\%parameters);
+
+  ## Create the new project creator with the updated parameters
+  return $str->new($parameters{'global'},
+                   $parameters{'include'},
+                   $parameters{'template'},
+                   $parameters{'ti'},
+                   $parameters{'dynamic'},
+                   $parameters{'static'},
+                   $parameters{'relative'},
+                   $parameters{'addtemp'},
+                   $parameters{'addproj'},
+                   $parameters{'progress'},
+                   $parameters{'toplevel'});
 }
 
 
