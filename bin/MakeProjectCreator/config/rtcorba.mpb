@@ -1,5 +1,0 @@
-project : taolib {
-  after   += RTCORBA
-  libs    += TAO_RTCORBA
-  requires += rt_corba
-}

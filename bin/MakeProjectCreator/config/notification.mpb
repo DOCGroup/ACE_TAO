@@ -1,6 +1,0 @@
-project : etcl, dynamicany, portableserver {
-  after     += CosNotification
-  libs      += TAO_CosNotification
-  comps     += Notify
-  tagchecks += Notify
-}
