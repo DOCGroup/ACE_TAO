@@ -42,19 +42,15 @@ class IOR_corbaloc_Client_i
   int run (CORBA::Environment &ACE_TRY_ENV);
   // Execute the client example code.
 
-  int init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
+  int init (int& argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
   // Initialize the client communication endpoint with the server.
 
  private:
+  /// corbaloc url to test
+  ACE_CString corbaloc_url_;
 
-  int argc_;
-  // # of arguments on the command line.
-
-  char **argv_;
-  // arguments from command line.
-
+  /// Naming context
   CosNaming::NamingContextExt_var naming_context_;
-  // Naming context
 
 };
 
