@@ -1,4 +1,6 @@
-project: rt_client {
+// $Id$
+
+project (ORB_init_RT) : rt_client {
   exename = ORB_init
 }
 
