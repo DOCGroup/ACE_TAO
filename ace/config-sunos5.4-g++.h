@@ -135,6 +135,9 @@
 //     int *' to argument 1 of `rand_r(unsigned int)' lacks a cast
 // #define ACE_HAS_SVR4_SIGNAL_T
 
+// Platform lacks pthread_sigaction
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+
 // Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff)...
 #define ACE_HAS_SVR4_TLI
 
