@@ -38,7 +38,7 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_IDL_FE_DLL.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_IFR_BE_DLL.dll" /libpath:"..\..\TAO_IDL" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO.lib TAO_IDL_FE_DLL.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_IFR_BE_DLL.dll" /libpath:"..\..\tao" /libpath:"..\..\TAO_IDL" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "TAO_IFR_BE_DLL - Win32 Debug"
 
