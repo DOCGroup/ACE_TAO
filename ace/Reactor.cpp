@@ -191,10 +191,28 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
 
       if (eh != 0 && (*eh)(0))
         continue;
-      else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
-      else if (result <= 0)
-        return result;
+      else if (result == -1)
+        {
+          if (this->implementation_->deactivated ())
+            result = 0;
+          return result;
+        }
+      else if (result == 0)
+        {
+          // handle_events timed out without dispatching anything.
+          // Because of rounding and conversion errors and such, it could
+          // be that the wait loop (WFMO, select, etc.) timed out, but
+          // the timer queue said it wasn't quite ready to expire a
+          // timer. In this case, the ACE_Time_Value we passed into
+          // handle_events won't have quite been reduced to 0, and we
+          // need to go around again. If we are all the way to 0, just
+          // return, as the entire time the caller wanted to wait has been
+          // used up.
+          if (tv.usec () > 0)
+            continue;
+          return 0;
+        }
+      // Else there were some events dispatched; go around again
     }
 
   ACE_NOTREACHED (return 0;)
