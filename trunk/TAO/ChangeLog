@@ -1,3 +1,21 @@
+Wed Apr  2 18:28:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any_T.cpp:
+        * tao/Any_T.h:
+        * tao/Any_T.inl:
+        * tao/NVList.cpp:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+        * tao/DynamicInterface/Request.inl:
+
+          Changes to fix runtime errors in the DII version of Param_Test.
+
+        * tests/Param_Test/bd_string.cpp:
+
+          Cosmetic changes.
+
 Wed Apr  2 11:53:14 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.mpc:

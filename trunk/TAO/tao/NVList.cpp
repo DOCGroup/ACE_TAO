@@ -424,8 +424,6 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
         }
 
       CORBA::Any_ptr any = nv->value ();
-
-      // We can be sure that the impl is a TAO::Unknown_IDL_Type.
       any->impl ()->_tao_decode (incoming
                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;

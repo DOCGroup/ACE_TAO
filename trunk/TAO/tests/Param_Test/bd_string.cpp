@@ -89,7 +89,7 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req
 
 int
 Test_Bounded_String::init_parameters (Param_Test_ptr
-                                                              ACE_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
