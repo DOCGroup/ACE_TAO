@@ -1191,7 +1191,7 @@ TAO_Offer_Modifier::affect_change (void)
   // add operations performed, and place this property list in the
   // offer.
 
-  int index = 0, num_modified = 0;
+  int num_modified = 0;
   CORBA::ULong i = 0,   
     total_length = this->props_.current_size ();
 

@@ -1163,12 +1163,12 @@ template CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const c
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::StringSeq>
-#pragma instantiate TAO_find (const CosTradingSequences::DoubleSeq&, const CORBA::Double)
-#pragma instantiate TAO_find (const CosTradingSequences::FloatSeq&, const CORBA::Double)
-#pragma instantiate TAO_find (const CosTradingSequences::BooleanSeq&, const CORBA::Boolean)
-#pragma instantiate TAO_find (const CosTradingSequences::ULongSeq&, const CORBA::ULong)
-#pragma instantiate TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long)
-#pragma instantiate TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long)
-#pragma instantiate TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong)
-#pragma instantiate TAO_find (const CosTradingSequences::StringSeq&, const char*)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::DoubleSeq&, const CORBA::Double)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::FloatSeq&, const CORBA::Double)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::BooleanSeq&, const CORBA::Boolean)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::ULongSeq&, const CORBA::ULong)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char*)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
