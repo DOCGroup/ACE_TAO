@@ -1,3 +1,8 @@
+Fri Aug 11 17:49:36 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/TP_Reactor.cpp: Add #include "ace/Thread.h" to pick up the
+          definition of ACE_Thread::self ().
+
 Fri Aug 11 16:24:13 2000  Shawn Hannan  <hannan@tango.cs.wustl.edu>
 
 	* ace/OS.i: For VXWORKS, changed checks of errno against
