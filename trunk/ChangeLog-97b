@@ -1,9 +1,13 @@
 Wed Oct 01 14:11:03 1997    <nw1@CHA-CHA>
 
-	* Remote_Name_Space.cpp (resolve): We need to allocate one more
+	* ace/Remote_Name_Space.cpp (resolve): We need to allocate one more
  	  space than what strlen reports.
 
 Wed Oct 01 12:45:51 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/ACE.cpp (count_interfaces, get_handle): changed "unix" to
+	  "__unix" because DEC CXX doesn't #define "unix".  Thanks to
+	  Billy Quinn <bquinn@lads.com> for reporting this.
 
 	* tests/run_tests.vxworks: added console printout before each test.
 
