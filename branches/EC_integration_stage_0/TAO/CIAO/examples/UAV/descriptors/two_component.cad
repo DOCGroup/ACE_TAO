@@ -1,0 +1,55 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+<!DOCTYPE componentassembly SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/componentassembly.dtd">
+
+<componentassembly id="Collocated component test">
+  <componentfiles>
+    <componentfile id="com-Satellite">
+      <fileinarchive name="Satellite.csd"/>
+    </componentfile>
+    <componentfile id="com-CAOC">
+      <fileinarchive name="CAOC.csd"/>
+    </componentfile>
+  </componentfiles>
+
+  <partitioning>
+
+      <homeplacement id="a_SatelliteHome">
+        <componentfileref idref="com-Satellite"/>
+          <componentinstantiation id="a_Satellite">
+          <registercomponent>
+            <!-- writeiortofile is a non-standard CIAO extension.  -->
+            <writeiortofile name="sat.ior"/>
+          </registercomponent>
+        </componentinstantiation>
+      </homeplacement>
+
+    <processcollocation>  
+      <homeplacement id="a_CAOCHome">
+        <componentfileref idref="com-CAOC"/>
+          <componentinstantiation id="a_CAOC">
+        </componentinstantiation>
+      </homeplacement>
+     <destination>CAOCSHost</destination>
+    </processcollocation> 
+
+  </partitioning>
+	
+  <connections>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>target_located</consumesidentifier>
+        <componentinstantiationref idref="a_CAOC"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>target_located</publishesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </publishesport>
+    </connectevent>
+
+  </connections>
+
+</componentassembly>
