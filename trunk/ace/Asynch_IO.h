@@ -574,7 +574,7 @@ public:
     ACE_Asynch_Read_File_Result_Impl *implementation_;
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (void operator= (Result &));
+    ACE_UNIMPLEMENTED_FUNC (void operator= (Result &))
   };
 };
 
@@ -691,7 +691,7 @@ public:
     ACE_Asynch_Write_File_Result_Impl *implementation_;
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (void operator= (Result &));
+    ACE_UNIMPLEMENTED_FUNC (void operator= (Result &))
   };
 };
 
