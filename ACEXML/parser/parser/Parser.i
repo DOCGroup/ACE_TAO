@@ -84,7 +84,7 @@ ACEXML_Parser::isBasechar (const ACEXML_Char c) const
 #if defined (ACE_USES_WCHAR)
   return ACEXML_ParserInt::isBasechar_i (c);
 #else
-  return ACEXML_ParserInt::base_char_table_[c];
+  return ACEXML_ParserInt::base_char_table_[(int) c];
 #endif /* ACE_USES_WCHAR */
 }
 
