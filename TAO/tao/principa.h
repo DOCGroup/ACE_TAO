@@ -23,16 +23,6 @@
 #if !defined (TAO_PRINCIPAL_H)
 #  define TAO_PRINCIPAL_H
 
-#if 0
-#  include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#  include <objbase.h>
-#  include <initguid.h>
-
-#  include "ace/Synch.h"
-
-#  include "tao/sequence.h"
-#endif
-
 class ACE_Svc_Export CORBA_Principal : public IUnknown
 {
 public:

@@ -25,12 +25,12 @@
 
 template <class T>
 class TAO_Fixed_var
-{
   // =TITLE
   //  template<class T> TAO_Fixed_var
   // =DESCRIPTION
   //  Provides a parametrized version of the _var class for fixed length data
   //  structs and unions.
+{
 public:
   // =Operations
 

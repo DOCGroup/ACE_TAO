@@ -19,16 +19,6 @@
 #if !defined (TAO_MARSHAL_H)
 #define TAO_MARSHAL_H
 
-#if 0
-#include "ace/OS.h"
-#include "ace/Synch.h"
-#include "ace/Singleton.h"
-
-#include "tao/typecode.h"
-#include "tao/object.h"  // CORBA::Object::_duplicate() needed by inline method
-#include "tao/principa.h"
-#endif /* 0 */
-
 CORBA::TypeCode::traverse_status
 DEEP_COPY (CORBA::TypeCode_ptr  param,
 	   const void *source,
