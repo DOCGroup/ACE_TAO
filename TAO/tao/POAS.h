@@ -19,56 +19,11 @@
 #define TAO_IDL_POAS_H
 
 #include "tao/POAC.h"
-#include "tao/PolicyS.h"
+#include "tao/POA_CORBA.h"
 
 class POA_PortableServer
 {
 public:
-  class CurrentBase;
-  typedef CurrentBase *CurrentBase_ptr;
-  class CurrentBase :  public virtual PortableServer::ServantBase
-  {
-  protected:
-    CurrentBase (void);
-      public:
-    virtual ~CurrentBase (void);
-    virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &_tao_environment);
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
-
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
-
-    PortableServer::CurrentBase *_this (CORBA::Environment &_tao_environment);
-    virtual const char* _interface_repository_id (void) const;
-  };
-
-
-#if !defined (_PORTABLESERVER_CURRENTBASE___COLLOCATED_SH_)
-#define _PORTABLESERVER_CURRENTBASE___COLLOCATED_SH_
-
-  class _tao_collocated_CurrentBase    : public virtual PortableServer::CurrentBase
-  {
-  public:
-    _tao_collocated_CurrentBase (
-        CurrentBase_ptr  servant,
-        STUB_Object *stub
-      );
-    CurrentBase_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &_tao_environment
-      );
-  
-  private:
-    CurrentBase_ptr servant_;
-  };
-
-
-#endif // end #if !defined
 
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
@@ -134,7 +89,7 @@ public:
       );
     virtual CORBA::PolicyType policy_type (
         CORBA::Environment &_tao_environment
-       );  
+       );
   private:
     ThreadPolicy_ptr servant_;
   };
@@ -208,8 +163,8 @@ public:
       );
     virtual CORBA::PolicyType policy_type (
         CORBA::Environment &_tao_environment
-       );  
-  
+       );
+
   private:
     LifespanPolicy_ptr servant_;
   };
@@ -283,8 +238,8 @@ public:
       );
     virtual CORBA::PolicyType policy_type (
         CORBA::Environment &_tao_environment
-       );  
-  
+       );
+
   private:
     IdUniquenessPolicy_ptr servant_;
   };
@@ -358,8 +313,8 @@ public:
       );
     virtual CORBA::PolicyType policy_type (
         CORBA::Environment &_tao_environment
-       );  
-  
+       );
+
   private:
     IdAssignmentPolicy_ptr servant_;
   };
@@ -433,8 +388,8 @@ public:
       );
     virtual CORBA::PolicyType policy_type (
         CORBA::Environment &_tao_environment
-       );  
-  
+       );
+
   private:
     ImplicitActivationPolicy_ptr servant_;
   };
@@ -508,8 +463,8 @@ public:
       );
     virtual CORBA::PolicyType policy_type (
         CORBA::Environment &_tao_environment
-       );  
-  
+       );
+
   private:
     ServantRetentionPolicy_ptr servant_;
   };
@@ -583,8 +538,8 @@ public:
       );
     virtual CORBA::PolicyType policy_type (
         CORBA::Environment &_tao_environment
-       );  
-  
+       );
+
   private:
     RequestProcessingPolicy_ptr servant_;
   };
@@ -655,7 +610,7 @@ public:
         CORBA::Boolean wait_for_completion,
         CORBA::Environment &_tao_environment
       );
-  
+
   private:
     POAManager_ptr servant_;
   };
@@ -709,7 +664,7 @@ public:
         const char* name,
         CORBA::Environment &_tao_environment
       );
-  
+
   private:
     AdapterActivator_ptr servant_;
   };
@@ -756,7 +711,7 @@ public:
         const char *logical_type_id,
         CORBA::Environment &_tao_environment
       );
-  
+
   private:
     ServantManager_ptr servant_;
   };
@@ -821,7 +776,7 @@ public:
         CORBA::Boolean remaining_activations,
         CORBA::Environment &_tao_environment
       );
-  
+
   private:
     ServantActivator_ptr servant_;
   };
@@ -844,10 +799,10 @@ public:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid, 
-                                               PortableServer::POA_ptr adapter, 
-                                               const char *operation, 
-                                               PortableServer::ServantLocator::Cookie & the_cookie,  
+    virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
+                                               PortableServer::POA_ptr adapter,
+                                               const char *operation,
+                                               PortableServer::ServantLocator::Cookie & the_cookie,
                                                CORBA::Environment &env) = 0; // pure virtual
 
     virtual void postinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, PortableServer::Servant the_servant,  CORBA::Environment &env) = 0; // pure virtual
@@ -892,7 +847,7 @@ public:
         PortableServer::Servant the_servant,
         CORBA::Environment &_tao_environment
       );
-  
+
   private:
     ServantLocator_ptr servant_;
   };
@@ -1118,7 +1073,7 @@ public:
         const PortableServer::ObjectId & oid,
         CORBA::Environment &_tao_environment
       );
-  
+
   private:
     POA_ptr servant_;
   };
@@ -1129,7 +1084,7 @@ public:
 
   class Current;
   typedef Current *Current_ptr;
-  class Current : public virtual CurrentBase
+  class Current : public virtual POA_CORBA::Current
   {
   protected:
     Current (void);
@@ -1160,7 +1115,7 @@ public:
 #define _PORTABLESERVER_CURRENT___COLLOCATED_SH_
 
   class _tao_collocated_Current    : public virtual PortableServer::Current,
-      public virtual _tao_collocated_CurrentBase
+      public virtual POA_CORBA::_tao_collocated_Current
   {
   public:
     _tao_collocated_Current (
@@ -1178,7 +1133,7 @@ public:
     virtual PortableServer::ObjectId * get_object_id (
         CORBA::Environment &_tao_environment
       );
-  
+
   private:
     Current_ptr servant_;
   };

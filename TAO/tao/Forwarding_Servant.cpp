@@ -9,24 +9,24 @@ TAO_Forwarding_Servant::TAO_Forwarding_Servant (CORBA::Object_ptr forward_to,
 {
 }
 
-void 
+void
 TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
                                 CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (request);
 
   // Throw forward exception
-  CORBA::Exception *exception 
+  CORBA::Exception *exception
     = new PortableServer::ForwardRequest (this->forward_to_.in ());
 
   CORBA::Any any (exception->_type (), exception);
-  
+
   request->set_exception (any, env);
-                   
+
   return;
 }
 
-PortableServer::RepositoryId 
+CORBA::RepositoryId
 TAO_Forwarding_Servant::_primary_interface (const PortableServer::ObjectId &oid,
                                             PortableServer::POA_ptr poa,
                                             CORBA::Environment &env)

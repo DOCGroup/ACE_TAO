@@ -17,20 +17,20 @@
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
-static const char *TAO_ORB_Timeprobe_Description[] = 
-{ 
+static const char *TAO_ORB_Timeprobe_Description[] =
+{
   "CORBA_ORB::run - start",
   "CORBA_ORB::run - end",
 };
 
-enum 
+enum
 {
   TAO_CORBA_ORB_RUN_START = 0,
   TAO_CORBA_ORB_RUN_END
 };
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description, 
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
                                   TAO_CORBA_ORB_RUN_START);
 
 // Static initialization.
@@ -149,7 +149,7 @@ CORBA_ORB::shutdown (CORBA::Boolean /* wait_for_completion */)
     }
   else
       this->should_shutdown_ = 1;
-    
+
   TAO_ORB_Core_instance ()->reactor ()->wakeup_all_threads ();
   return;
 }
@@ -209,7 +209,7 @@ int
 CORBA_ORB::run (ACE_Time_Value *tv)
 {
   if (this->shutdown_lock_ == 0)
-    this->shutdown_lock_ = 
+    this->shutdown_lock_ =
       TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
 
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
