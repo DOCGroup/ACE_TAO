@@ -3,7 +3,7 @@
 #include "ThreadStrategyORBControl.h"
 
 ACE_RCSID (PortableServer,
-           ThreadStrategy,
+           ThreadStrategyORBControl,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -12,18 +12,18 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ORBControl_Thread_Strategy::~ORBControl_Thread_Strategy()
+    ThreadStrategyORBControl::~ThreadStrategyORBControl()
     {
     }
 
     int
-    ORBControl_Thread_Strategy::enter ()
+    ThreadStrategyORBControl::enter ()
     {
       return 0;
     }
 
     int
-    ORBControl_Thread_Strategy::exit ()
+    ThreadStrategyORBControl::exit ()
     {
       return 0;
     }

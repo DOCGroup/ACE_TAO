@@ -25,14 +25,14 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Unique_Id_Uniqueness_Strategy
+    class TAO_PortableServer_Export IdUniquenessStrategyUnique
       : public virtual IdUniquenessStrategy
     {
     public:
 
-      Unique_Id_Uniqueness_Strategy (void);
+      IdUniquenessStrategyUnique (void);
 
-      virtual ~Unique_Id_Uniqueness_Strategy (void);
+      virtual ~IdUniquenessStrategyUnique (void);
 
       virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL);
 

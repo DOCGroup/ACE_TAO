@@ -12,17 +12,17 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Unique_Id_Uniqueness_Strategy::Unique_Id_Uniqueness_Strategy (void) :
+    IdUniquenessStrategyUnique::IdUniquenessStrategyUnique (void) :
       poa_ (0)
     {
     }
 
-    Unique_Id_Uniqueness_Strategy::~Unique_Id_Uniqueness_Strategy()
+    IdUniquenessStrategyUnique::~IdUniquenessStrategyUnique()
     {
     }
 
     void
-    Unique_Id_Uniqueness_Strategy::strategy_init (
+    IdUniquenessStrategyUnique::strategy_init (
       TAO_POA *poa
       ACE_ENV_ARG_DECL_NOT_USED)
     {
@@ -30,14 +30,14 @@ namespace TAO
     }
 
     void
-    Unique_Id_Uniqueness_Strategy::strategy_cleanup(
+    IdUniquenessStrategyUnique::strategy_cleanup(
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       poa_ = 0;
     }
 
     bool
-    Unique_Id_Uniqueness_Strategy::is_servant_activation_allowed (
+    IdUniquenessStrategyUnique::is_servant_activation_allowed (
       PortableServer::Servant servant,
       int &wait_occurred_restart_call)
     {
@@ -58,7 +58,7 @@ namespace TAO
     }
 
     bool
-    Unique_Id_Uniqueness_Strategy::allow_multiple_activations (void) const
+    IdUniquenessStrategyUnique::allow_multiple_activations (void) const
     {
       return false;
     }

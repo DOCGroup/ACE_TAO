@@ -27,13 +27,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Transient_Lifespan_Strategy
+    class TAO_PortableServer_Export LifespanStrategyTransient
       : public virtual LifespanStrategy
     {
     public:
-      Transient_Lifespan_Strategy (void);
+      LifespanStrategyTransient (void);
 
-      virtual ~Transient_Lifespan_Strategy (void);
+      virtual ~LifespanStrategyTransient (void);
 
       virtual void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
 

@@ -28,12 +28,12 @@ namespace TAO
       {
         case ::PortableServer::RETAIN :
         {
-          ACE_NEW_RETURN (strategy, Retain_Servant_Retention_Strategy, 0);
+          ACE_NEW_RETURN (strategy, ServantRetentionStrategyRetain, 0);
           break;
         }
         case ::PortableServer::NON_RETAIN :
         {
-          ACE_NEW_RETURN (strategy, Non_Retain_Servant_Retention_Strategy, 0);
+          ACE_NEW_RETURN (strategy, ServantRetentionStrategyNonRetain, 0);
           break;
         }
       }

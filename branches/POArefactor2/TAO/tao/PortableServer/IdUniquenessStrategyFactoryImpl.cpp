@@ -25,12 +25,12 @@ namespace TAO
       {
         case ::PortableServer::MULTIPLE_ID :
         {
-          ACE_NEW_RETURN (strategy, Multiple_Id_Uniqueness_Strategy, 0);
+          ACE_NEW_RETURN (strategy, IdUniquenessStrategyMultiple, 0);
           break;
         }
         case ::PortableServer::UNIQUE_ID :
         {
-          ACE_NEW_RETURN (strategy, Unique_Id_Uniqueness_Strategy, 0);
+          ACE_NEW_RETURN (strategy, IdUniquenessStrategyUnique, 0);
           break;
         }
       }

@@ -30,13 +30,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Non_Retain_Servant_Retention_Strategy
+    class TAO_PortableServer_Export ServantRetentionStrategyNonRetain
        : public virtual ServantRetentionStrategy
     {
     public:
-      Non_Retain_Servant_Retention_Strategy (void);
+      ServantRetentionStrategyNonRetain (void);
 
-      virtual ~Non_Retain_Servant_Retention_Strategy (void);
+      virtual ~ServantRetentionStrategyNonRetain (void);
 
       virtual void strategy_init (TAO_POA *poa ACE_ENV_ARG_DECL);
 

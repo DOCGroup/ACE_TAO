@@ -28,12 +28,12 @@ namespace TAO
       {
         case ::PortableServer::IMPLICIT_ACTIVATION :
         {
-          ACE_NEW_RETURN (strategy, Implicit_Activation_Strategy, 0);
+          ACE_NEW_RETURN (strategy, ImplicitActivationStrategyImplicit, 0);
           break;
         }
         case ::PortableServer::NO_IMPLICIT_ACTIVATION :
         {
-          ACE_NEW_RETURN (strategy, Explicit_Activation_Strategy, 0);
+          ACE_NEW_RETURN (strategy, ImplicitActivationStrategyExplicit, 0);
           break;
         }
       }

@@ -10,12 +10,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Explicit_Activation_Strategy::~Explicit_Activation_Strategy (void)
+    ImplicitActivationStrategyExplicit::~ImplicitActivationStrategyExplicit (void)
     {
     }
 
     bool
-    Explicit_Activation_Strategy::allow_implicit_activation (void) const
+    ImplicitActivationStrategyExplicit::allow_implicit_activation (void) const
     {
       return false;
     }

@@ -241,3 +241,8 @@ TAO_POA::thread_pool (void) const
   return 0;
 }
 
+ACE_INLINE TAO_SYNCH_CONDITION &
+TAO_POA::servant_deactivation_condition (void)
+{
+  return servant_deactivation_condition_;
+}

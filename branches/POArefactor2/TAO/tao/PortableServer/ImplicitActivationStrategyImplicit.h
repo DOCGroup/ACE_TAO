@@ -27,11 +27,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Implicit_Activation_Strategy
+    class TAO_PortableServer_Export ImplicitActivationStrategyImplicit
       : public virtual ImplicitActivationStrategy
     {
     public:
-      virtual ~Implicit_Activation_Strategy (void);
+      virtual ~ImplicitActivationStrategyImplicit (void);
 
       virtual bool allow_implicit_activation (void) const;
 

@@ -81,7 +81,6 @@ namespace TAO
   {
     class Servant_Upcall;
     class POA_Current_Impl;
-    class Retain_Servant_Retention_Strategy;
     class Temporary_Creation_Time;
   }
 }
@@ -111,9 +110,6 @@ public:
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
   friend class TAO_IORInfo;
-
-  // this is temporarily
-  friend class TAO::Portable_Server::Retain_Servant_Retention_Strategy;
 
   typedef ACE_CString String;
 
@@ -546,6 +542,16 @@ public:
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongPolicy));
 
+  PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant
+                                             ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantNotActive,
+                     PortableServer::POA::WrongPolicy));
+
+  TAO_SYNCH_CONDITION &servant_deactivation_condition (void);
+
+  int is_poa_generated_id (const PortableServer::ObjectId &id);
+
 protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -688,14 +694,7 @@ protected:
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
-public:
-// @todo Johnny made temporarily public for lifespan strategy
-  PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant
-                                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
-protected:
+
   PortableServer::Servant reference_to_servant_i (
       CORBA::Object_ptr reference
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -739,8 +738,6 @@ protected:
   void set_id (void);
 
   TAO::ObjectKey *create_object_key (const PortableServer::ObjectId &id);
-
-  int is_poa_generated_id (const PortableServer::ObjectId &id);
 
   static int parse_key (const TAO::ObjectKey &key,
                         TAO_Object_Adapter::poa_name &poa_system_name,

@@ -29,7 +29,7 @@ namespace TAO
   namespace Portable_Server
   {
     bool
-    Persistent_Lifespan_Strategy::validate (
+    LifespanStrategyPersistent::validate (
       CORBA::Boolean is_persistent,
       const TAO::Portable_Server::Temporary_Creation_Time& /*creation_time*/) const
     {
@@ -37,7 +37,7 @@ namespace TAO
     }
 
     char
-    Persistent_Lifespan_Strategy::key_type (void) const
+    LifespanStrategyPersistent::key_type (void) const
     {
       // @@ Johnny, why can;t use the enum's defined within
       // PortableServer IDL? Wouldn't they make life much simpler?
@@ -50,13 +50,13 @@ namespace TAO
     }
 
     CORBA::Boolean
-    Persistent_Lifespan_Strategy::is_persistent (void) const
+    LifespanStrategyPersistent::is_persistent (void) const
     {
       return true;
     }
 
     void
-    Persistent_Lifespan_Strategy::create_key (
+    LifespanStrategyPersistent::create_key (
       CORBA::Octet *buffer,
       CORBA::ULong& starting_at)
     {
@@ -66,19 +66,19 @@ namespace TAO
     }
 
     CORBA::ULong
-    Persistent_Lifespan_Strategy::key_length () const
+    LifespanStrategyPersistent::key_length () const
     {
       return this->key_type_length ();
     }
 
     void
-    Persistent_Lifespan_Strategy::notify_startup (ACE_ENV_SINGLE_ARG_DECL)
+    LifespanStrategyPersistent::notify_startup (ACE_ENV_SINGLE_ARG_DECL)
     {
       (void) this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
     void
-    Persistent_Lifespan_Strategy::notify_shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    LifespanStrategyPersistent::notify_shutdown (ACE_ENV_SINGLE_ARG_DECL)
     {
       (void) this->imr_notify_shutdown ();
 
@@ -106,7 +106,7 @@ namespace TAO
     }
 
     void
-    Persistent_Lifespan_Strategy::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
+    LifespanStrategyPersistent::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
@@ -209,7 +209,7 @@ namespace TAO
     }
 
     void
-    Persistent_Lifespan_Strategy::imr_notify_shutdown (void)
+    LifespanStrategyPersistent::imr_notify_shutdown (void)
     {
       // Notify the Implementation Repository about shutting down.
       CORBA::Object_var imr = this->poa_->orb_core ().implrepo_service ();
@@ -239,13 +239,13 @@ namespace TAO
       ACE_ENDTRY;
     }
 
-    Persistent_Lifespan_Strategy::Persistent_Lifespan_Strategy() :
+    LifespanStrategyPersistent::LifespanStrategyPersistent() :
       server_object_ (0),
       use_imr_ (true)
     {
     }
 
-    Persistent_Lifespan_Strategy::~Persistent_Lifespan_Strategy ()
+    LifespanStrategyPersistent::~LifespanStrategyPersistent ()
     {
     }
   } /* namespace Portable_Server */

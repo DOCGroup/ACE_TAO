@@ -26,12 +26,12 @@ namespace TAO
       {
         case ::PortableServer::PERSISTENT :
         {
-          ACE_NEW_RETURN (strategy, Persistent_Lifespan_Strategy, 0);
+          ACE_NEW_RETURN (strategy, LifespanStrategyPersistent, 0);
           break;
         }
         case ::PortableServer::TRANSIENT :
         {
-          ACE_NEW_RETURN (strategy, Transient_Lifespan_Strategy, 0);
+          ACE_NEW_RETURN (strategy, LifespanStrategyTransient, 0);
           break;
         }
       }

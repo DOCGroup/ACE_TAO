@@ -25,12 +25,12 @@ namespace TAO
       {
         case ::PortableServer::SYSTEM_ID :
         {
-          ACE_NEW_RETURN (strategy, System_Id_Assignment_Strategy, 0);
+          ACE_NEW_RETURN (strategy, IdAssignmentStrategySystem, 0);
           break;
         }
         case ::PortableServer::USER_ID :
         {
-          ACE_NEW_RETURN (strategy, User_Id_Assignment_Strategy, 0);
+          ACE_NEW_RETURN (strategy, IdAssignmentStrategyUser, 0);
           break;
         }
       }

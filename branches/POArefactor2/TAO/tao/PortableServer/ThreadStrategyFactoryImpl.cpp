@@ -29,12 +29,12 @@ namespace TAO
       {
         case ::PortableServer::SINGLE_THREAD_MODEL :
         {
-          ACE_NEW_RETURN (strategy, Single_Thread_Strategy, 0);
+          ACE_NEW_RETURN (strategy, ThreadStrategySingle, 0);
           break;
         }
         case ::PortableServer::ORB_CTRL_MODEL :
         {
-          ACE_NEW_RETURN (strategy, ORBControl_Thread_Strategy, 0);
+          ACE_NEW_RETURN (strategy, ThreadStrategyORBControl, 0);
           break;
         }
       }

@@ -30,11 +30,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ORBControl_Thread_Strategy
+    class TAO_PortableServer_Export ThreadStrategyORBControl
        : public virtual ThreadStrategy
     {
     public:
-      virtual ~ORBControl_Thread_Strategy (void);
+      virtual ~ThreadStrategyORBControl (void);
 
       virtual int enter ();
 

@@ -3,7 +3,7 @@
 #include "ThreadStrategySingle.h"
 
 ACE_RCSID (PortableServer,
-           ThreadStrategy,
+           ThreadStrategySingle,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -12,18 +12,18 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Single_Thread_Strategy::~Single_Thread_Strategy()
+    ThreadStrategySingle::~ThreadStrategySingle()
     {
     }
 
     int
-    Single_Thread_Strategy::enter ()
+    ThreadStrategySingle::enter ()
     {
       return lock_.acquire();
     }
 
     int
-    Single_Thread_Strategy::exit ()
+    ThreadStrategySingle::exit ()
     {
       return lock_.release();
     }

@@ -36,11 +36,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Single_Thread_Strategy :
+    class TAO_PortableServer_Export ThreadStrategySingle :
        public virtual ThreadStrategy
     {
     public:
-      virtual ~Single_Thread_Strategy (void);
+      virtual ~ThreadStrategySingle (void);
 
       virtual int enter ();
 

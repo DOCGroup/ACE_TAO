@@ -23,33 +23,33 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Transient_Lifespan_Strategy::Transient_Lifespan_Strategy () :
+    LifespanStrategyTransient::LifespanStrategyTransient () :
       creation_time_ (ACE_OS::gettimeofday ())
     {
     }
 
-    Transient_Lifespan_Strategy::~Transient_Lifespan_Strategy ()
+    LifespanStrategyTransient::~LifespanStrategyTransient ()
     {
     }
 
     void
-    Transient_Lifespan_Strategy::notify_startup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    LifespanStrategyTransient::notify_startup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
     }
 
     void
-    Transient_Lifespan_Strategy::notify_shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    LifespanStrategyTransient::notify_shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
     }
 
     CORBA::Boolean
-    Transient_Lifespan_Strategy::is_persistent (void) const
+    LifespanStrategyTransient::is_persistent (void) const
     {
       return false;
     }
 
     bool
-    Transient_Lifespan_Strategy::validate (
+    LifespanStrategyTransient::validate (
       CORBA::Boolean is_persistent,
       const TAO::Portable_Server::Temporary_Creation_Time &creation_time) const
     {
@@ -57,7 +57,7 @@ namespace TAO
     }
 
     CORBA::ULong
-    Transient_Lifespan_Strategy::key_length (void) const
+    LifespanStrategyTransient::key_length (void) const
     {
       CORBA::ULong keylength = sizeof (char);
 
@@ -70,7 +70,7 @@ namespace TAO
     }
 
     void
-    Transient_Lifespan_Strategy::create_key (
+    LifespanStrategyTransient::create_key (
       CORBA::Octet *buffer,
       CORBA::ULong& starting_at)
     {
@@ -88,7 +88,7 @@ namespace TAO
     }
 
     char
-    Transient_Lifespan_Strategy::key_type (void) const
+    LifespanStrategyTransient::key_type (void) const
     {
       // @@ Johnny, why can;t use the enum's defined within
       // PortableServer IDL? Wouldn't they make life much simpler?
