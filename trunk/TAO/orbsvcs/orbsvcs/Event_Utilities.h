@@ -121,15 +121,18 @@ public:
   ~ACE_ConsumerQOS_Factory (void);
   // Death and destruction.
 
-  int start_conjunction_group (void);
-  // This signifies that the consumer needs the AND of all following
-  // insert calls (up until the next start_XX_group call).  Returns 0
-  // on success, -1 on failure.
+  int start_conjunction_group (int nchildren = 0);
+  // The Event Channel waits until all the children have accepted at
+  // least one event, and then send them all as a single event to the
+  // consumer.
 
-  int start_disjunction_group (void);
-  // This signifies that the consumer needs the OR of all following
-  // insert calls (up until the next start_XX_group call).  Returns 0
-  // on success, -1 on failure.
+  int start_disjunction_group (int nchildren = 0);
+  // The consumer accepts any event that is accepted by at least one
+  // child.
+
+  int start_logical_and_group (int nchildren = 0);
+  // The consumer only accepts events that pass all the filter
+  // expressions defined by the children.
 
   int start_negation (void);
   // The consumer wants all the events *except* the group that

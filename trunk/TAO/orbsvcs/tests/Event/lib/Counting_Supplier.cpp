@@ -34,7 +34,7 @@ EC_Counting_Supplier::activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consume
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
 
   ACE_ConsumerQOS_Factory consumer_qos;
-  consumer_qos.start_disjunction_group ();
+  consumer_qos.start_disjunction_group (1);
   consumer_qos.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
                             time,
                             0);
