@@ -135,7 +135,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-      , FT::InvalidProperty
+      , PortableGroup::InvalidProperty
     ));
 
   virtual void shutdown ()
@@ -152,11 +152,11 @@ public:
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , FT::NoFactory
-    , FT::ObjectNotCreated
-    , FT::InvalidCriteria
-    , FT::InvalidProperty
-    , FT::CannotMeetCriteria
+    , PortableGroup::NoFactory
+    , PortableGroup::ObjectNotCreated
+    , PortableGroup::InvalidCriteria
+    , PortableGroup::InvalidProperty
+    , PortableGroup::CannotMeetCriteria
   ));
 
   virtual void delete_object (
@@ -164,7 +164,7 @@ public:
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , FT::ObjectNotFound
+    , PortableGroup::ObjectNotFound
   ));
 
   //////////////////////////////////////////

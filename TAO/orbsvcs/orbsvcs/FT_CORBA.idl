@@ -13,6 +13,7 @@
 #include "orbsvcs/FT_CORBA_ORB.idl"
 
 #define FT_USES_PORTABLE_GROUP
+
 #ifdef FT_USES_PORTABLE_GROUP
 # include "orbsvcs/PortableGroup.idl"
 #else // FT_USES_PORTABLE_GROUP
@@ -29,6 +30,36 @@ module FT
   /// Forward declarations
   interface FaultNotifier;
 
+  typedef long ReplicationStyleValue;
+  const ReplicationStyleValue STATELESS = 0;
+  const ReplicationStyleValue COLD_PASSIVE = 1;
+  const ReplicationStyleValue WARM_PASSIVE = 2;
+  const ReplicationStyleValue ACTIVE = 3;
+  const ReplicationStyleValue ACTIVE_WITH_VOTING = 4;
+  const ReplicationStyleValue SEMI_ACTIVE = 5;
+  
+  typedef long ConsistencyStyleValue;
+  const ConsistencyStyleValue CONS_APP_CTRL = 0;
+  const ConsistencyStyleValue CONS_INF_CTRL = 1;
+  
+  typedef long FaultMonitoringStyleValue;
+  const FaultMonitoringStyleValue PULL = 0;
+  const FaultMonitoringStyleValue PUSH = 1;
+  const FaultMonitoringStyleValue NOT_MONITORED = 2;
+  
+  typedef long FaultMonitoringGranularityValue;
+  const FaultMonitoringGranularityValue MEMB = 0;
+  const FaultMonitoringGranularityValue LOC = 1;
+  const FaultMonitoringGranularityValue LOC_AND_TYPE = 2;
+
+  struct FaultMonitoringIntervalAndTimeoutValue {
+    TimeBase::TimeT monitoring_interval;
+    TimeBase::TimeT timeout;
+  };
+
+  exception BadReplicationStyle {};
+  exception PrimaryNotSet {};
+
 #ifdef FT_USES_PORTABLE_GROUP
   /////////////////////////////////////////
   // The following typedefs "import"
@@ -39,6 +70,8 @@ module FT
   // of PortableGroup module rather than defining
   // everything itself.
 
+  // this typedef trick doesn't work for exceptions, so they must
+  // use the PortableGroup:: prefix
   typedef PortableGroup::_TypeId _TypeId;
   typedef PortableGroup::ObjectGroup ObjectGroup;
   typedef PortableGroup::Name Name;
@@ -48,8 +81,39 @@ module FT
   typedef PortableGroup::Location Location;
   typedef PortableGroup::Locations Locations;
   typedef PortableGroup::Criteria Criteria;
+
   typedef PortableGroup::FactoryInfo FactoryInfo;
   typedef PortableGroup::FactoryInfos FactoryInfos;
+  typedef PortableGroup::MembershipStyleValue MembershipStyleValue;
+
+  typedef PortableGroup::FactoriesValue FactoriesValue;
+  typedef PortableGroup::InitialNumberMembersValue InitialNumberMembersValue;
+  typedef PortableGroup::MinimumNumberMembersValue MinimumNumberMembersValue;
+  typedef PortableGroup::PropertyManager PropertyManager;
+  typedef PortableGroup::ObjectGroupManager ObjectGroupManager;
+  typedef PortableGroup::GenericFactory GenericFactory;
+
+  // Specification of FTObjectGroupManager Interface
+  // which ReplicationManager Inherits
+  interface FTObjectGroupManager : PortableGroup::ObjectGroupManager {
+
+    ObjectGroup set_primary_member(in ObjectGroup object_group,
+                                   in Location the_location)
+      raises(PortableGroup::ObjectGroupNotFound,
+             PortableGroup::MemberNotFound,
+             PrimaryNotSet,
+             BadReplicationStyle);
+  };
+
+  // Specification of ReplicationManager Interface
+  interface ReplicationManager : PropertyManager,
+                                 FTObjectGroupManager,
+                                 GenericFactory {
+    void register_fault_notifier(in FaultNotifier fault_notifier);
+    FaultNotifier get_fault_notifier()
+      raises (PortableGroup::InterfaceNotFound);
+  };
+
 #else // (not) FT_USES_PORTABLE_GROUP
   interface GenericFactory;
 
@@ -90,39 +154,17 @@ module FT
   };
 
   typedef sequence<FactoryInfo> FactoryInfos;
-#endif // FT_USES_PORTABLE_GROUP
-
-
-  typedef long ReplicationStyleValue;
-  const ReplicationStyleValue STATELESS = 0;
-  const ReplicationStyleValue COLD_PASSIVE = 1;
-  const ReplicationStyleValue WARM_PASSIVE = 2;
-  const ReplicationStyleValue ACTIVE = 3;
-  const ReplicationStyleValue ACTIVE_WITH_VOTING = 4;
+  
   typedef long MembershipStyleValue;
   const MembershipStyleValue MEMB_APP_CTRL = 0;
   const MembershipStyleValue MEMB_INF_CTRL = 1;
-  typedef long ConsistencyStyleValue;
-  const ConsistencyStyleValue CONS_APP_CTRL = 0;
-  const ConsistencyStyleValue CONS_INF_CTRL = 1;
-  typedef long FaultMonitoringStyleValue;
-  const FaultMonitoringStyleValue PULL = 0;
-  const FaultMonitoringStyleValue PUSH = 1;
-  const FaultMonitoringStyleValue NOT_MONITORED = 2;
-  typedef long FaultMonitoringGranularityValue;
-  const FaultMonitoringGranularityValue MEMB = 0;
-  const FaultMonitoringGranularityValue LOC = 1;
-  const FaultMonitoringGranularityValue LOC_AND_TYPE = 2;
+
   typedef FactoryInfos FactoriesValue;
   typedef unsigned short InitialNumberReplicasValue;
   typedef unsigned short MinimumNumberReplicasValue;
 
-  struct FaultMonitoringIntervalAndTimeoutValue {
-    TimeBase::TimeT monitoring_interval;
-    TimeBase::TimeT timeout;
-  };
-
   typedef TimeBase::TimeT CheckpointIntervalValue;
+
   exception InterfaceNotFound {};
   exception ObjectGroupNotFound {};
   exception MemberNotFound {};
@@ -151,13 +193,6 @@ module FT
   exception CannotMeetCriteria {
     Criteria unmet_criteria; };
 
-
-#ifdef FT_USES_PORTABLE_GROUP
-  typedef PortableGroup::PropertyManager PropertyManager;
-  typedef PortableGroup::ObjectGroupManager ObjectGroupManager;
-  typedef PortableGroup::GenericFactory GenericFactory;
-
-#else // FT_USES_PORTABLE_GROUP
   // Specification of PropertyManager Interface
   // which ReplicationManager Inherits
 
@@ -252,7 +287,6 @@ module FT
     void delete_object(in FactoryCreationId factory_creation_id)
       raises (ObjectNotFound);
   };
-#endif // FT_USES_PORTABLE_GROUP
 
   // Specification of ReplicationManager Interface
   interface ReplicationManager : PropertyManager,
@@ -262,6 +296,7 @@ module FT
     FaultNotifier get_fault_notifier()
       raises (InterfaceNotFound);
   };
+#endif // FT_USES_PORTABLE_GROUP
 
   // Specifications for Fault Management moved to FT_Replica.idl
   // Specification of FaultNotifier Interface: moved to FT_Notifier.idl

@@ -1,3 +1,16 @@
+Wed Aug 06 14:40:00 2003  Curt Hibbs <hibbs_c@ociweb.com>
+
+	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
+	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h
+	* orbsvcs/orbsvcs/FT_CORBA.idl
+	* orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl
+	
+	  Completed the conditional use of PortableGroups in FT_CORBA.idl
+	  that was begun by Dale Wilson. The typedef trick used by Dale
+	  to allow PortableGroup symbols to be used in the FT namespace
+	  does not work for exceptions, so I also had to modify the
+	  existing code to use "PortableGroup::" scoping on exceptions.
+
 Wed Jul  9 22:31:54 2003  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint): Valgrind
