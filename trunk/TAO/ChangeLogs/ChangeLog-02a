@@ -1,3 +1,10 @@
+Wed Feb 27 20:24:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/RT_Class.inl: Fixed fuzz
+	  errors.  
+	
+
 Wed Feb 27 15:20:19 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
 	* tao/Messaging/Messaging.cpp:
