@@ -19,11 +19,13 @@
 #ifndef IFR_SERVANT_LOCATOR_H
 #define IFR_SERVANT_LOCATOR_H
 
-#include "Repository_i.h"
+#include "tao/PortableServer/PortableServerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_Repository_i;
 
 class IFR_ServantLocator : public PortableServer::ServantLocator
 {

@@ -20,11 +20,11 @@ TAO_EnumDef_i::~TAO_EnumDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_EnumDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Enum;
+  return CORBA::dk_Enum;
 }
 
 CORBA::TypeCode_ptr 
@@ -50,7 +50,7 @@ TAO_EnumDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                             "name",
                                             name);
 
-  IR_EnumMemberSeq_var members = this->members_i (ACE_TRY_ENV);
+  CORBA_EnumMemberSeq_var members = this->members_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_enum_tc (id.c_str (),
@@ -59,7 +59,7 @@ TAO_EnumDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                                      ACE_TRY_ENV);
 }
 
-IR_EnumMemberSeq *
+CORBA_EnumMemberSeq *
 TAO_EnumDef_i::members (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -68,7 +68,7 @@ TAO_EnumDef_i::members (CORBA::Environment &ACE_TRY_ENV)
   return this->members_i (ACE_TRY_ENV);
 }
 
-IR_EnumMemberSeq *
+CORBA_EnumMemberSeq *
 TAO_EnumDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -77,9 +77,9 @@ TAO_EnumDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
                                              "count",
                                              count);
 
-  IR_EnumMemberSeq *retval = 0;
+  CORBA_EnumMemberSeq *retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    IR_EnumMemberSeq (count),
+                    CORBA_EnumMemberSeq (count),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -106,7 +106,7 @@ TAO_EnumDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void 
-TAO_EnumDef_i::members (const IR_EnumMemberSeq &members,
+TAO_EnumDef_i::members (const CORBA_EnumMemberSeq &members,
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -117,7 +117,7 @@ TAO_EnumDef_i::members (const IR_EnumMemberSeq &members,
 }
 
 void 
-TAO_EnumDef_i::members_i (const IR_EnumMemberSeq &members,
+TAO_EnumDef_i::members_i (const CORBA_EnumMemberSeq &members,
                           CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

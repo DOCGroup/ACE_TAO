@@ -45,18 +45,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TypeCodeFactory_DLL"=.\TypeCodeFactory_DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "tao_ifr"=.\tao_ifr.dsp - Package Owner=<4>
 
 Package=<5>

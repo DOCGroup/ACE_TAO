@@ -23,10 +23,13 @@ OBJFILES = \
 	$(OBJDIR)\FixedDef_i.obj \
 	$(OBJDIR)\HomeDef_i.obj	\
 	$(OBJDIR)\IDLType_i.obj	\
+	$(OBJDIR)\IFR_BaseS.obj \
+	$(OBJDIR)\IFR_BasicS.obj \
+	$(OBJDIR)\IFR_ComponentsS.obj \
+	$(OBJDIR)\IFR_ExtendedS.obj \
 	$(OBJDIR)\IFR_Server.obj \
 	$(OBJDIR)\IFR_Service.obj \
 	$(OBJDIR)\InterfaceDef_i.obj \
-	$(OBJDIR)\InterfaceS.obj \
 	$(OBJDIR)\IRObject_i.obj \
 	$(OBJDIR)\ModuleDef_i.obj \
 	$(OBJDIR)\NativeDef_i.obj \

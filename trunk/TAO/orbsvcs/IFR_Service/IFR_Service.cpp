@@ -5,6 +5,7 @@
 #include "ComponentRepository_i.h"
 #include "Servant_Locator.h"
 #include "Options.h"
+#include "IFR_ComponentsS.h"
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/Auto_Ptr.h"
@@ -16,7 +17,7 @@ IFR_Service::IFR_Service (void)
     ior_multicast_ (0),
     config_ (0),
     repo_impl_ (0),
-    repository_ (IR_Repository::_nil ())
+    repository_ (CORBA_Repository::_nil ())
 {
 }
 

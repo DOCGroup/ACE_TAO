@@ -11,7 +11,7 @@
 #include "DomainS.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Operation_Table.h"
-#include "tao/IFR_Client/InterfaceC.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
@@ -318,9 +318,12 @@ CORBA::Boolean POA_CORBA_DomainManager::_is_a (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  const char *_tao_id = CORBA::_tc_Object->id (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/DomainManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, _tao_id)))
       return 1;
     else
       return 0;
@@ -791,7 +794,7 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_CORBA_ConstructionPolicy *_tao_impl = (POA_CORBA_ConstructionPolicy *)_tao_object_reference;
 
-  IR_InterfaceDef_var object_type;
+  CORBA_InterfaceDef_var object_type;
   CORBA::Boolean constr_policy;
 
   if (!(
@@ -892,10 +895,13 @@ CORBA::Boolean POA_CORBA_ConstructionPolicy::_is_a (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  const char *_tao_id = CORBA::_tc_Object->id (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/ConstructionPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, _tao_id)))
       return 1;
     else
       return 0;
@@ -1016,7 +1022,7 @@ CORBA::Boolean POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::_non_exist
 
 
 void POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::make_domain_manager  (
-    IR_InterfaceDef* object_type,
+    CORBA_InterfaceDef_ptr object_type,
     CORBA::Boolean constr_policy,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1053,7 +1059,7 @@ void POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::make_domain_manager 
 POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
     TAO_ServerRequest &tao_server_request,
     POA_CORBA_ConstructionPolicy *tao_impl,
-    IR_InterfaceDef *object_type,
+    CORBA_InterfaceDef_ptr object_type,
     CORBA::Boolean &constr_policy,
     CORBA::Environment &
   )

@@ -29,7 +29,7 @@ ifneq ($(CROSS-COMPILE),)
 	@echo Nothing to clean in IFR_Service on CROSS-COMPILE platforms.
 else  # ! CROSS-COMPILE
 
-MKLIST = Makefile.TypeCodeFactory Makefile.IFR_Service Makefile.tao_ifr
+MKLIST = Makefile.IFR_Service Makefile.tao_ifr
 
 all debug profile optimize install deinstall clean realclean clobber depend:
 ifeq (Windows,$(findstring Windows,$(OS)))

@@ -10,7 +10,7 @@
 //    InterfaceDef_i.h
 //
 // = DESCRIPTION
-//    IR_InterfaceDef servant class.
+//    InterfaceDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -20,6 +20,7 @@
 #ifndef TAO_INTERFACEDEF_I_H
 #define TAO_INTERFACEDEF_I_H
 
+#include "Container_i.h"
 #include "Contained_i.h"
 #include "IDLType_i.h"
 
@@ -52,7 +53,7 @@ public:
   virtual ~TAO_InterfaceDef_i (void);
   // Destructor  
 
-  virtual IR_DefinitionKind def_kind (
+  virtual CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -72,14 +73,14 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_Contained::Description *describe (
+  virtual CORBA_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR_Contained::Description *describe_i (
+  virtual CORBA_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -100,79 +101,27 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual IR_InterfaceDefSeq *base_interfaces (
+  virtual CORBA_InterfaceDefSeq *base_interfaces (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_InterfaceDefSeq *base_interfaces_i (
+  CORBA_InterfaceDefSeq *base_interfaces_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_interfaces (
-      const IR_InterfaceDefSeq &base_interfaces,
+      const CORBA_InterfaceDefSeq &base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void base_interfaces_i (
-      const IR_InterfaceDefSeq &base_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::Boolean is_abstract (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Boolean is_abstract_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void is_abstract (
-      CORBA::Boolean is_abstract,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void is_abstract_i (
-      CORBA::Boolean is_abstract,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::Boolean is_local (
-     CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Boolean is_local_i (
-     CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void is_local (
-      CORBA::Boolean is_local,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void is_local_i (
-      CORBA::Boolean is_local,
+      const CORBA_InterfaceDefSeq &base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -192,64 +141,72 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_AttributeDef_ptr create_attribute (
+  virtual CORBA_InterfaceDef::FullInterfaceDescription *describe_interface (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));      
+
+  CORBA_InterfaceDef::FullInterfaceDescription *describe_interface_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));      
+
+  virtual CORBA_AttributeDef_ptr create_attribute (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr type,
-      IR_AttributeMode mode,
-      const IR_ExceptionDefSeq &get_exceptions,
-      const IR_ExceptionDefSeq &put_exceptions,
+      CORBA_IDLType_ptr type,
+      CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_AttributeDef_ptr create_attribute_i (
+  CORBA_AttributeDef_ptr create_attribute_i (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr type,
-      IR_AttributeMode mode,
-      const IR_ExceptionDefSeq &get_exceptions,
-      const IR_ExceptionDefSeq &put_exceptions,
+      CORBA_IDLType_ptr type,
+      CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_OperationDef_ptr create_operation (
+  virtual CORBA_OperationDef_ptr create_operation (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr result,
-      IR_OperationMode mode,
-      const IR_ParDescriptionSeq &params,
-      const IR_ExceptionDefSeq &exceptions,
-      const IR_ContextIdSeq &contexts,
+      CORBA_IDLType_ptr result,
+      CORBA::OperationMode mode,
+      const CORBA_ParDescriptionSeq &params,
+      const CORBA_ExceptionDefSeq &exceptions,
+      const CORBA_ContextIdSeq &contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_OperationDef_ptr create_operation_i (
+  CORBA_OperationDef_ptr create_operation_i (
       const char *id,
       const char *name,
       const char *version,
-      IR_IDLType_ptr result,
-      IR_OperationMode mode,
-      const IR_ParDescriptionSeq &params,
-      const IR_ExceptionDefSeq &exceptions,
-      const IR_ContextIdSeq &contexts,
+      CORBA_IDLType_ptr result,
+      CORBA::OperationMode mode,
+      const CORBA_ParDescriptionSeq &params,
+      const CORBA_ExceptionDefSeq &exceptions,
+      const CORBA_ContextIdSeq &contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void interface_contents (
-      ACE_Unbounded_Queue<IR_DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      IR_DefinitionKind limit_type,
+      CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()

@@ -243,7 +243,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  // generate code for the _is_a skeleton
+  // Generate code for the _is_a skeleton.
   os->indent ();
   *os << "void " << node->full_skel_name ()
       << "::_is_a_skel (" << be_idt << be_idt_nl
@@ -275,7 +275,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "}" << be_nl << be_nl;
 
 
-      // generate code for the _non_existent skeleton
+  // Generate code for the _non_existent skeleton.
   *os << "void " << node->full_skel_name ()
       << "::_non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
@@ -297,6 +297,53 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   *os << "}\n\n";
 
+  // Generate code for the _interface skeleton.
+  *os << "void " << node->full_skel_name ()
+      << "::_interface_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &_tao_server_request, " << be_nl
+      << "void * _tao_object_reference," << be_nl
+      << "void * /* context */," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl;
+  *os << "{" << be_idt_nl;
+  *os << node->full_skel_name () << " *_tao_impl = ("
+      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl
+      << "CORBA_InterfaceDef_ptr _tao_retval = 0;" << be_nl 
+      << "CORBA::Boolean _tao_result = 0;" << be_nl << be_nl;
+  *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
+      << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (" 
+      << be_idt << be_idt_nl
+      << "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
+      << ");" << be_uidt_nl << be_uidt_nl;
+  *os << "if (_tao_adapter == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "ACE_THROW (CORBA::INTF_REPOS ());" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
+  *os << "ACE_TRY" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_retval = _tao_impl->_get_interface (ACE_TRY_ENV);" << be_nl
+      << "ACE_TRY_CHECK;" << be_nl << be_nl
+      << "_tao_server_request.init_reply ();" << be_nl << be_nl
+      << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" 
+      << be_nl << be_nl
+      << "_tao_result =" << be_idt_nl
+      << "_tao_adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
+      << "_tao_out," << be_nl
+      << "_tao_retval" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_CATCHALL" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_adapter->dispose (_tao_retval);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_ENDTRY;" << be_nl << be_nl;
+  *os << "if (_tao_result == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
+  *os << "}\n\n";
+
+  // Generate code for the _is_a override.
   os->indent ();
   *os << "CORBA::Boolean " << node->full_skel_name ()
       << "::_is_a (" << be_idt << be_idt_nl
@@ -304,6 +351,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
+      << "const char *base_id = CORBA::_tc_Object->id (ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "if (\n" << be_idt;
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
@@ -315,8 +364,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   os->indent ();
-  *os << "(!ACE_OS::strcmp ((char *)value, "
-      << "CORBA::_tc_Object->id (ACE_TRY_ENV))))"
+  *os << "(!ACE_OS::strcmp ((char *)value, base_id)))"
       << be_idt_nl << "return 1;" << be_uidt_nl
       << "else" << be_idt_nl
       << "return 0;" << be_uidt << be_uidt << be_uidt_nl

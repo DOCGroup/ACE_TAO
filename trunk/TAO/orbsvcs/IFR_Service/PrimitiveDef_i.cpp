@@ -19,11 +19,11 @@ TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_PrimitiveDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Primitive;
+  return CORBA::dk_Primitive;
 }
 
 void 
@@ -58,67 +58,67 @@ TAO_PrimitiveDef_i::type_i (CORBA::Environment &)
                                              "pkind",
                                              pkind);
 
-  switch (ACE_static_cast (IR_PrimitiveKind, pkind))
+  switch (ACE_static_cast (CORBA::PrimitiveKind, pkind))
   {
-    case pk_null:
+    case CORBA::pk_null:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-    case pk_void:
+    case CORBA::pk_void:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_void);
-    case pk_short:
+    case CORBA::pk_short:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_short);
-    case pk_long:
+    case CORBA::pk_long:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_long);
-    case pk_ushort:
+    case CORBA::pk_ushort:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
-    case pk_ulong:
+    case CORBA::pk_ulong:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
-    case pk_float:
+    case CORBA::pk_float:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_float);
-    case pk_double:
+    case CORBA::pk_double:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_double);
-    case pk_boolean:
+    case CORBA::pk_boolean:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
-    case pk_char:
+    case CORBA::pk_char:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_char);
-    case pk_octet:
+    case CORBA::pk_octet:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
-    case pk_any:
+    case CORBA::pk_any:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_any);
-    case pk_TypeCode:
+    case CORBA::pk_TypeCode:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
-    case pk_Principal:
+    case CORBA::pk_Principal:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_Principal);
-    case pk_string:
+    case CORBA::pk_string:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_string);
-    case pk_objref:
+    case CORBA::pk_objref:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_Object);
-    case pk_longlong:
+    case CORBA::pk_longlong:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
-    case pk_ulonglong:
+    case CORBA::pk_ulonglong:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
-    case pk_longdouble:
+    case CORBA::pk_longdouble:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
-    case pk_wchar:
+    case CORBA::pk_wchar:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
-    case pk_wstring:
+    case CORBA::pk_wstring:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
-    case pk_value_base:
+    case CORBA::pk_value_base:
       // TODO - we haven't added this typecode constant yet.
     default:
       return CORBA::TypeCode::_duplicate (CORBA::_tc_null);
   }
 }
 
-IR_PrimitiveKind 
+CORBA::PrimitiveKind 
 TAO_PrimitiveDef_i::kind (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (pk_null);
+  TAO_IFR_READ_GUARD_RETURN (CORBA::pk_null);
 
   return this->kind_i (ACE_TRY_ENV);
 }
 
-IR_PrimitiveKind 
+CORBA::PrimitiveKind 
 TAO_PrimitiveDef_i::kind_i (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -127,6 +127,6 @@ TAO_PrimitiveDef_i::kind_i (CORBA::Environment &)
                                              "pkind",
                                              pkind);
 
-  return ACE_static_cast (IR_PrimitiveKind, pkind);
+  return ACE_static_cast (CORBA::PrimitiveKind, pkind);
 }
 

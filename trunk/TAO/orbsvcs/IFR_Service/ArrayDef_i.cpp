@@ -19,11 +19,11 @@ TAO_ArrayDef_i::~TAO_ArrayDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_ArrayDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Array;
+  return CORBA::dk_Array;
 }
 
 void 
@@ -156,16 +156,16 @@ TAO_ArrayDef_i::element_type_i (CORBA::Environment &ACE_TRY_ENV)
   return impl->type_i (ACE_TRY_ENV);
 }
 
-IR_IDLType_ptr 
+CORBA_IDLType_ptr 
 TAO_ArrayDef_i::element_type_def (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_IDLType::_nil ());
 
   return this->element_type_def_i (ACE_TRY_ENV);
 }
 
-IR_IDLType_ptr 
+CORBA_IDLType_ptr 
 TAO_ArrayDef_i::element_type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -185,8 +185,8 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::Environment &ACE_TRY_ENV)
                                              "def_kind",
                                              kind);
 
-  IR_DefinitionKind def_kind = 
-    ACE_static_cast (IR_DefinitionKind, kind);
+  CORBA::DefinitionKind def_kind = 
+    ACE_static_cast (CORBA::DefinitionKind, kind);
 
   CORBA::Object_var obj = 
     this->repo_->servant_factory ()->create_objref (def_kind,
@@ -194,12 +194,12 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::Environment &ACE_TRY_ENV)
                                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR_IDLType::_nil ());
 
-  return IR_IDLType::_narrow (obj.in (),
-                               ACE_TRY_ENV);
+  return CORBA_IDLType::_narrow (obj.in (),
+                                 ACE_TRY_ENV);
 }
 
 void 
-TAO_ArrayDef_i::element_type_def (IR_IDLType_ptr element_type_def,
+TAO_ArrayDef_i::element_type_def (CORBA_IDLType_ptr element_type_def,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -210,7 +210,7 @@ TAO_ArrayDef_i::element_type_def (IR_IDLType_ptr element_type_def,
 }
 
 void 
-TAO_ArrayDef_i::element_type_def_i (IR_IDLType_ptr element_type_def,
+TAO_ArrayDef_i::element_type_def_i (CORBA_IDLType_ptr element_type_def,
                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -251,19 +251,19 @@ TAO_ArrayDef_i::destroy_element_type (
                                              "def_kind",
                                              kind);
 
-  IR_DefinitionKind def_kind =
-    ACE_static_cast (IR_DefinitionKind, kind);
+  CORBA::DefinitionKind def_kind =
+    ACE_static_cast (CORBA::DefinitionKind, kind);
 
   switch (def_kind)
   {
     // These exist only as our elements, so the type should
     // be destroyed when we are destroyed or our element type
     // is mutated.
-    case dk_String:
-    case dk_Wstring:
-    case dk_Fixed:
-    case dk_Array:
-    case dk_Sequence:
+    case CORBA::dk_String:
+    case CORBA::dk_Wstring:
+    case CORBA::dk_Fixed:
+    case CORBA::dk_Array:
+    case CORBA::dk_Sequence:
     {
       TAO_IDLType_i *impl =
         this->repo_->servant_factory ()->create_idltype (element_key,

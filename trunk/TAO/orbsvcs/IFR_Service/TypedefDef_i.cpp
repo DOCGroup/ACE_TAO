@@ -20,7 +20,7 @@ TAO_TypedefDef_i::~TAO_TypedefDef_i (void)
 {
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_TypedefDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29,22 +29,22 @@ TAO_TypedefDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_TypedefDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IR_Contained::Description *desc_ptr = 0;
+  CORBA_Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
-                    IR_Contained::Description,
+                    CORBA_Contained::Description,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  IR_Contained::Description_var retval = desc_ptr;
+  CORBA_Contained::Description_var retval = desc_ptr;
 
   retval->kind = this->def_kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  IR_TypeDescription td;
+  CORBA_TypeDescription td;
 
   ACE_CHECK_RETURN (0);
   td.name = this->name_i (ACE_TRY_ENV);

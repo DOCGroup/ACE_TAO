@@ -27,7 +27,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // just return 0. The IDL file must be legal, otherwise the IDL
       // compiler front end would have told us.
 
-      IR_Contained_var prev_def =
+      CORBA_Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -74,7 +74,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           length = 0;
         }
 
-      IR_ExceptionDefSeq exceptions (length);
+      CORBA_ExceptionDefSeq exceptions (length);
       exceptions.length (length);
 
       UTL_ExceptlistActiveIterator ex_iter (excepts);
@@ -90,7 +90,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          exceptions[i++] = IR_ExceptionDef::_narrow (prev_def.in (),
+          exceptions[i++] = CORBA_ExceptionDef::_narrow (prev_def.in (),
                                                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -111,7 +111,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           length = 0;
         }
 
-      IR_ContextIdSeq contexts (length);
+      CORBA_ContextIdSeq contexts (length);
       contexts.length (length);
 
       UTL_StrlistActiveIterator ctx_iter (ctx_list);
@@ -140,12 +140,12 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // been declared.
       if (return_type->node_type () == AST_Decl::NT_interface)
         {
-          IR_Contained_var prev_def =
+          CORBA_Contained_var prev_def =
             be_global->repository ()->lookup_id (return_type->repoID (),
                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          this->ir_current_ = IR_IDLType::_narrow (prev_def.in (),
+          this->ir_current_ = CORBA_IDLType::_narrow (prev_def.in (),
                                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -168,22 +168,22 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
         }
 
       // Is the operation oneway?
-      IR_OperationMode mode = node->flags () == AST_Operation::OP_oneway 
-                                 ? OP_ONEWAY 
-                                 : OP_NORMAL;
+      CORBA::OperationMode mode = node->flags () == AST_Operation::OP_oneway 
+                                 ? CORBA::OP_ONEWAY 
+                                 : CORBA::OP_NORMAL;
 
       // Create the repository entry.
 
-      IR_Container_ptr current_scope = IR_Container::_nil ();
+      CORBA_Container_ptr current_scope = CORBA_Container::_nil ();
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          IR_InterfaceDef_var iface = 
-            IR_InterfaceDef::_narrow (current_scope,
+          CORBA_InterfaceDef_var iface = 
+            CORBA_InterfaceDef::_narrow (current_scope,
                                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR_OperationDef_var new_def =
+          CORBA_OperationDef_var new_def =
             iface->create_operation (node->repoID (),
                                      node->local_name ()->get_string (),
                                      this->gen_version (node),
@@ -241,12 +241,12 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
       // been declared.
       if (arg_type->node_type () == AST_Decl::NT_interface)
         {
-          IR_Contained_var prev_def =
+          CORBA_Contained_var prev_def =
             be_global->repository ()->lookup_id (arg_type->repoID (),
                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          this->ir_current_ = IR_IDLType::_narrow (prev_def.in (),
+          this->ir_current_ = CORBA_IDLType::_narrow (prev_def.in (),
                                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -267,12 +267,12 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
         }
 
       this->params_[this->index_].type_def = 
-        IR_IDLType::_duplicate (this->ir_current_.in ());
+        CORBA_IDLType::_duplicate (this->ir_current_.in ());
 
-      // Fortunately, AST_Field::Direction and IR_ParameterMode 
+      // Fortunately, AST_Field::Direction and CORBA_ParameterMode 
       // are ordered identically.
       this->params_[this->index_].mode = 
-        (IR_ParameterMode) node->direction ();
+        (CORBA::ParameterMode) node->direction ();
 
       // IfR method create_operation does not use this - it just needs
       // to be non-null for marshaling.

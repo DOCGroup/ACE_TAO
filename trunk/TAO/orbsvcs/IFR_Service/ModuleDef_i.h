@@ -10,7 +10,7 @@
 //    ModuleDef_i.h
 //
 // = DESCRIPTION
-//    IR_ModuleDef servant class.
+//    ModuleDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -20,6 +20,7 @@
 #ifndef TAO_MODULEDEF_I_H
 #define TAO_MODULEDEF_I_H
 
+#include "Container_i.h"
 #include "Contained_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -50,7 +51,7 @@ public:
   virtual ~TAO_ModuleDef_i (void);
   // Destructor
 
-  virtual IR_DefinitionKind def_kind (
+  virtual CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -71,14 +72,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual IR_Contained::Description *describe (
+  virtual CORBA_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR_Contained::Description *describe_i (
+  virtual CORBA_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

@@ -26,7 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IFR_Client/ifrfwd.h"
 #include "ace/Configuration.h"
 
 class TAO_IDLType_i;
@@ -67,7 +66,7 @@ public:
                                       CORBA::Environment &ACE_TRY_ENV);
   // Used by the servant locator to create a servant.
 
-  CORBA::Object_ptr create_objref (IR_DefinitionKind def_kind,
+  CORBA::Object_ptr create_objref (CORBA::DefinitionKind def_kind,
                                    const char *obj_id,
                                    CORBA::Environment &ACE_TRY_ENV);
   // Used to create return values.

@@ -111,8 +111,8 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
       for (u_int i = 0; i < num_pkinds; i++)
         {
           ACE_Configuration_Section_Key key;
-          IR_PrimitiveKind pkind = ACE_static_cast (IR_PrimitiveKind,
-                                                     i);
+          CORBA::PrimitiveKind pkind = ACE_static_cast (CORBA::PrimitiveKind,
+                                                        i);
 
           this->config_->open_section (this->pkinds_key_,
                                        this->pkind_to_string (pkind),
@@ -121,7 +121,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
 
           this->config_->set_integer_value (key,
                                             "def_kind",
-                                            dk_Primitive);
+                                            CORBA::dk_Primitive);
 
           this->config_->set_integer_value (key,
                                             "pkind",
@@ -205,7 +205,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
 
   this->config_->set_integer_value (this->section_key_,
                                     "def_kind",
-                                    dk_Repository);
+                                    CORBA::dk_Repository);
 }
 
 TAO_Repository_i::~TAO_Repository_i (void)
@@ -214,11 +214,11 @@ TAO_Repository_i::~TAO_Repository_i (void)
   delete this->lock_;
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_Repository_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Repository;
+  return CORBA::dk_Repository;
 }
 
 void
@@ -228,18 +228,18 @@ TAO_Repository_i::destroy (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW (CORBA::BAD_INV_ORDER (2, CORBA::COMPLETED_NO));
 }
 
-IR_Contained_ptr
+CORBA_Contained_ptr
 TAO_Repository_i::lookup_id (const char *search_id,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_Contained::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_Contained::_nil ());
 
   return this->lookup_id_i (search_id,
                             ACE_TRY_ENV);
 }
 
-IR_Contained_ptr
+CORBA_Contained_ptr
 TAO_Repository_i::lookup_id_i (const char *search_id,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -250,7 +250,7 @@ TAO_Repository_i::lookup_id_i (const char *search_id,
                                        path)
        != 0)
     {
-      return IR_Contained::_nil ();
+      return CORBA_Contained::_nil ();
     }
 
   ACE_Configuration_Section_Key key;
@@ -263,15 +263,16 @@ TAO_Repository_i::lookup_id_i (const char *search_id,
                                     "def_kind",
                                     kind);
 
-  IR_DefinitionKind def_kind = ACE_static_cast (IR_DefinitionKind, kind);
+  CORBA::DefinitionKind def_kind = 
+    ACE_static_cast (CORBA::DefinitionKind, kind);
 
   CORBA::Object_var obj =
     this->servant_factory_->create_objref (def_kind,
                                            path.c_str (),
                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_Contained::_nil ());
+  ACE_CHECK_RETURN (CORBA_Contained::_nil ());
 
-  return IR_Contained::_narrow (obj.in (),
+  return CORBA_Contained::_narrow (obj.in (),
                                  ACE_TRY_ENV);
 }
 
@@ -391,8 +392,8 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc,
   }
 }
 
-IR_PrimitiveDef_ptr
-TAO_Repository_i::get_primitive (IR_PrimitiveKind kind,
+CORBA_PrimitiveDef_ptr
+TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind,
                                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -401,27 +402,27 @@ TAO_Repository_i::get_primitive (IR_PrimitiveKind kind,
   obj_id += this->pkind_to_string (kind);
 
   CORBA::Object_var obj =
-    this->servant_factory_->create_objref (dk_Primitive,
+    this->servant_factory_->create_objref (CORBA::dk_Primitive,
                                            obj_id.c_str (),
                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_PrimitiveDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_PrimitiveDef::_nil ());
 
-  return IR_PrimitiveDef::_narrow (obj.in (),
+  return CORBA_PrimitiveDef::_narrow (obj.in (),
                                     ACE_TRY_ENV);
 }
 
-IR_StringDef_ptr
+CORBA_StringDef_ptr
 TAO_Repository_i::create_string (CORBA::ULong bound,
                                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_StringDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_StringDef::_nil ());
 
   return this->create_string_i (bound,
                                 ACE_TRY_ENV);
 }
 
-IR_StringDef_ptr
+CORBA_StringDef_ptr
 TAO_Repository_i::create_string_i (CORBA::ULong bound,
                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -449,7 +450,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound,
 
   this->config_->set_integer_value (new_key,
                                     "def_kind",
-                                    dk_String);
+                                    CORBA::dk_String);
 
   this->config_->set_string_value (new_key,
                                    "name",
@@ -460,27 +461,27 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound,
   obj_id += name.in ();
 
   CORBA::Object_var obj =
-    this->servant_factory_->create_objref (dk_String,
+    this->servant_factory_->create_objref (CORBA::dk_String,
                                            obj_id.c_str (),
                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_StringDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_StringDef::_nil ());
 
-  return IR_StringDef::_narrow (obj.in (),
+  return CORBA_StringDef::_narrow (obj.in (),
                                  ACE_TRY_ENV);
 }
 
-IR_WstringDef_ptr
+CORBA_WstringDef_ptr
 TAO_Repository_i::create_wstring (CORBA::ULong bound,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_WstringDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_WstringDef::_nil ());
 
   return this->create_wstring_i (bound,
                                  ACE_TRY_ENV);
 }
 
-IR_WstringDef_ptr
+CORBA_WstringDef_ptr
 TAO_Repository_i::create_wstring_i (CORBA::ULong bound,
                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -508,7 +509,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound,
 
   this->config_->set_integer_value (new_key,
                                     "def_kind",
-                                    dk_Wstring);
+                                    CORBA::dk_Wstring);
 
   this->config_->set_string_value (new_key,
                                    "name",
@@ -519,38 +520,38 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound,
   obj_id += name.in ();
 
   CORBA::Object_var obj =
-    this->servant_factory_->create_objref (dk_Wstring,
+    this->servant_factory_->create_objref (CORBA::dk_Wstring,
                                            obj_id.c_str (),
                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_WstringDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_WstringDef::_nil ());
 
-  return IR_WstringDef::_narrow (obj.in (),
+  return CORBA_WstringDef::_narrow (obj.in (),
                                   ACE_TRY_ENV);
 }
 
-IR_SequenceDef_ptr
+CORBA_SequenceDef_ptr
 TAO_Repository_i::create_sequence (CORBA::ULong bound,
-                                   IR_IDLType_ptr element_type,
+                                   CORBA_IDLType_ptr element_type,
                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_SequenceDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_SequenceDef::_nil ());
 
   return this->create_sequence_i (bound,
                                   element_type,
                                   ACE_TRY_ENV);
 }
 
-IR_SequenceDef_ptr
+CORBA_SequenceDef_ptr
 TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
-                                     IR_IDLType_ptr element_type,
+                                     CORBA_IDLType_ptr element_type,
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
     this->ir_poa_->reference_to_id (element_type,
                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_SequenceDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_SequenceDef::_nil ());
 
   CORBA::String_var element_path =
     PortableServer::ObjectId_to_string (oid.in ());
@@ -580,7 +581,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   // Set the def_kind attribute.
   this->config_->set_integer_value (new_key,
                                     "def_kind",
-                                    dk_Sequence);
+                                    CORBA::dk_Sequence);
 
   // Set the "name" for destroy to use.
   this->config_->set_string_value (new_key,
@@ -597,38 +598,38 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   obj_id += name.in ();
 
   CORBA::Object_var obj =
-    this->servant_factory_->create_objref (dk_Sequence,
+    this->servant_factory_->create_objref (CORBA::dk_Sequence,
                                            obj_id.c_str (),
                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_SequenceDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_SequenceDef::_nil ());
 
-  return IR_SequenceDef::_narrow (obj.in (),
+  return CORBA_SequenceDef::_narrow (obj.in (),
                                    ACE_TRY_ENV);
 }
 
-IR_ArrayDef_ptr
+CORBA_ArrayDef_ptr
 TAO_Repository_i::create_array (CORBA::ULong length,
-                                IR_IDLType_ptr element_type,
+                                CORBA_IDLType_ptr element_type,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_ArrayDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_ArrayDef::_nil ());
 
   return this->create_array_i (length,
                                element_type,
                                ACE_TRY_ENV);
 }
 
-IR_ArrayDef_ptr
+CORBA_ArrayDef_ptr
 TAO_Repository_i::create_array_i (CORBA::ULong length,
-                                  IR_IDLType_ptr element_type,
+                                  CORBA_IDLType_ptr element_type,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
     this->ir_poa_->reference_to_id (element_type,
                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_ArrayDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ArrayDef::_nil ());
 
   CORBA::String_var element_path =
     PortableServer::ObjectId_to_string (oid.in ());
@@ -658,7 +659,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   // Set the def_kind attribute.
   this->config_->set_integer_value (new_key,
                                     "def_kind",
-                                    dk_Array);
+                                    CORBA::dk_Array);
 
   // Set the "name" for destroy to use.
   this->config_->set_string_value (new_key,
@@ -675,35 +676,35 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   obj_id += name.in ();
 
   CORBA::Object_var obj =
-    this->servant_factory_->create_objref (dk_Array,
+    this->servant_factory_->create_objref (CORBA::dk_Array,
                                            obj_id.c_str (),
                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR_ArrayDef::_nil ());
+  ACE_CHECK_RETURN (CORBA_ArrayDef::_nil ());
 
-  return IR_ArrayDef::_narrow (obj.in (),
+  return CORBA_ArrayDef::_narrow (obj.in (),
                                 ACE_TRY_ENV);
 }
 
-IR_FixedDef_ptr
+CORBA_FixedDef_ptr
 TAO_Repository_i::create_fixed (CORBA::UShort digits,
                                 CORBA::Short scale,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_FixedDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_FixedDef::_nil ());
 
   return this->create_fixed_i (digits,
                                scale,
                                ACE_TRY_ENV);
 }
 
-IR_FixedDef_ptr
+CORBA_FixedDef_ptr
 TAO_Repository_i::create_fixed_i (CORBA::UShort /* digits */,
                                   CORBA::Short /* scale */,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), IR_FixedDef::_nil ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA_FixedDef::_nil ());
 }
 
 PortableServer::POA_ptr
@@ -730,14 +731,14 @@ TAO_Repository_i::tc_factory (void) const
   return this->tc_factory_.in ();
 }
 
-IR_Repository_ptr
+CORBA_Repository_ptr
 TAO_Repository_i::repo_objref (void) const
 {
-  return IR_Repository::_duplicate (this->repo_objref_);
+  return CORBA_Repository::_duplicate (this->repo_objref_);
 }
 
 void
-TAO_Repository_i::repo_objref (IR_Repository_ptr objref)
+TAO_Repository_i::repo_objref (CORBA_Repository_ptr objref)
 {
   this->repo_objref_ = objref;
 }
@@ -829,7 +830,7 @@ const char *TAO_Repository_i::TAO_IFR_primitive_kinds[] =
   };
 
 const char *
-TAO_Repository_i::pkind_to_string (IR_PrimitiveKind pkind) const
+TAO_Repository_i::pkind_to_string (CORBA::PrimitiveKind pkind) const
 {
   return TAO_Repository_i::TAO_IFR_primitive_kinds[pkind];
 }
