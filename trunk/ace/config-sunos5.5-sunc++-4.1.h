@@ -10,6 +10,10 @@
 #define ACE_HAS_EXCEPTIONS
 #define ACE_HAS_UNICODE
 
+#if defined (__ACE_INLINE__)
+#define ACE_HAS_INLINED_OSCALLS
+#endif /* __ACE_INLINE__ */
+
 // Note that SunC++ 4.1 fixes template bugs that prevented earlier
 // versions from supporting template typedefs correctly.
 // #define ACE_HAS_TEMPLATE_TYPEDEFS
