@@ -892,8 +892,9 @@ Gilbert Grosdidier <Gilbert.Grosdidier@in2p3.fr>
 James Briggs <James.Briggs@dsto.defence.gov.au>
 Herbert Wang <herb@nowsol.com>
 Anders Olsson <epkanol@s1.epk.ericsson.se>x
-Sergey Gnilitsky <SGnilitsky@telesens.com.ua> 
-David Wicks <wicks@swbell.net> 
+Sergey Gnilitsky <SGnilitsky@telesens.com.ua>
+David Wicks <wicks@swbell.net>
+Girish Birajdar <birajdar@lucent.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
