@@ -1,3 +1,17 @@
+Tue Jan  4 12:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOPC.{h,cpp,i,inl}:
+          Regenerated and replaced .i with .inl file
+
+        * tao/IIOPA.cpp:
+          Regenerated
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/diffs/IIOP.diff
+          Removed this file, not needed anymore
+
 Tue Jan  4 12:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Transport.{h,cpp,i}:
