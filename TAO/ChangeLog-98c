@@ -1,3 +1,11 @@
+Thu Oct 30 03:40:26 1997    <nw1@COYOTE>
+
+	* tests/Cubit/TAO/DII_Cubit/client.dsp:
+	* tests/Cubit/TAO/DII_Cubit/server.dsp:  Updated include files
+	  path and libarary path. 
+
+	* tao/giop.cpp (close_connection): Use ACE_HANDLE instead of int.
+
 Thu Oct 30 02:53:20 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.19, released Thu Oct 30 02:53:20 1997.
