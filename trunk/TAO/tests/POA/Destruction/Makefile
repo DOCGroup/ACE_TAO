@@ -43,7 +43,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: testC.h testC.i testC.cpp testS.h testS.i testS.cpp testS_T.h testS_T.i testS_T.cpp
 
-Destruction:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
+Destruction:	$(addprefix $(VDIR),$(SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
