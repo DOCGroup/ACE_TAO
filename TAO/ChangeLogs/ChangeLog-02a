@@ -1,3 +1,12 @@
+Wed Apr  3 13:20:58 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_visitor_interface/amh_ch.cpp:
+        * TAO_IDL/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be_visitor_structure/structure_ch.cpp:
+
+          Fixed indentation of _ptr_type and _var_type typedef
+          generation.
+
 Tue Apr  2 16:17:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_field/field_ch.cpp:
