@@ -67,7 +67,7 @@ y.tab.h y.tab.cpp: idl.yy
 
 lex.yy.cpp: idl.ll y.tab.h
 	$(LEX) $(LFLAGS) idl.ll > $@
-	sed -e "s/unistd/stdio/g" -e "s@#include <@#include /**/ <@" < $@ >> /tmp/$@
+	sed -e "s/unistd/stdio/g" -e "s@#include <@#include /**/ <@" -e "s/ECHO/TAO_ECHO/g" < $@ >> /tmp/$@
 	cp /tmp/$@ $@
 	$(RM) -f /tmp/$@
 

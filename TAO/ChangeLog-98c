@@ -1,3 +1,31 @@
+Thu Oct 30 14:06:54 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* TAO_IDL/fe/Makefile: 
+	Added an expression to the sed command in the rule to construct 
+	lex.yy.cpp, that replaces ECHO with TAO_ECHO, because a 
+	different ECHO macro is already defined in 
+	/usr/include/sys/termios.h
+
+	* TAO_IDL/fe/idl.ll: 
+	Fixed some warnings about nested comments.
+	Changed the declaration of variable i to outside of 
+	the 'for' initialization to avoid obsolete binding warnings.
+	
+	* TAO_IDL/be/be_interface_fwd.cpp (gen_client_header): 
+	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
+	for variable i.
+
+	* TAO_IDL/be/be_constant.cpp (exprtype_to_string): 
+	* TAO_IDL/ast/ast_expression.cpp (exprtype_to_string): 
+	Added case statements to handle the rest of un-handled
+	enumerations from AST_Expression::ExprType.  These will
+	handle a default value (i.e. NULL).  Enumerations added are:
+	AST_Expression::EV_wstring
+	AST_Expression::EV_wchar
+	AST_Expression::EV_longdouble
+	AST_Expression::EV_ulonglong
+	AST_Expression::EV_longlong
+
 Thu Oct 30 09:56:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/giop.h: Added comments to TAO_GIOP class explicitly pointing
