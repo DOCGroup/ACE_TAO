@@ -84,8 +84,7 @@ public:
   // Recv a buffer of exactly <n> bytes from the message queue.
   // Returns -1 on error, else the number of bytes read.
 
-  int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
-	       void *val);
+  int control (int cmd, void *val) const;
   // Perform control operations on the UPIPE_Stream.
 
   int get_remote_addr (ACE_UPIPE_Addr &remote_sap) const;

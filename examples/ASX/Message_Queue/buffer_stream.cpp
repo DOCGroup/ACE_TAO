@@ -62,6 +62,22 @@ private:
   ACE_Time_Value timeout_;
 };
 
+class Filter : public MT_Task
+  // = TITLE
+  //    Defines a Filter that prepends a line number in front of each
+  //    line.  
+{
+public:
+  Filter (void): count_ (1) {}
+
+  // Change the size of the message before passing it downstream.
+  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+
+private:
+  size_t count_;
+  // Count the number of lines passing through the filter.
+};
+
 // Spawn off a new thread.
 
 int 
@@ -159,9 +175,9 @@ Consumer::svc (void)
 	break;
 
       int length = mb->length ();
-
+      
       if (length > 0)
-	ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);
+	ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), ACE_OS::strlen (mb->rd_ptr ()));
 
       mb->release ();
 
@@ -174,6 +190,33 @@ Consumer::svc (void)
   return 0;
 }
 
+// The filter prepends a line number in front of each line.
+
+int
+Filter::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
+{ 
+  if (mb->length () == 0)
+    return this->put_next (mb, tv);
+  else
+    {
+      char buf[BUFSIZ];
+
+      // Stash a copy of the buffer away.
+      ACE_OS::strncpy (buf, mb->rd_ptr (), sizeof buf);
+
+      // Increase the size of the buffer large enough that it will be
+      // reallocated.
+
+      mb->size (mb->length () + BUFSIZ);
+      mb->length (mb->size ());
+
+      // Prepend the line count in front of the buffer.
+      ACE_OS::sprintf (mb->rd_ptr (), "%d: %s", 
+		       this->count_++, buf);
+      return this->put_next (mb, tv);
+    }
+}
+
 // Main driver function.
 
 int 
@@ -184,12 +227,15 @@ main (int, char *argv[])
   // Control hierachically-related active objects
   MT_Stream stream;
   MT_Module *pm = new MT_Module ("Consumer", new Consumer);
+  MT_Module *fm = new MT_Module ("Filter", new Filter);
   MT_Module *cm = new MT_Module ("Producer", new Producer);
 
   // Create Producer and Consumer Modules and push them onto the
   // STREAM.  All processing is performed in the STREAM.
 
   if (stream.push (pm) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), 1);
+  else if (stream.push (fm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), 1);
   else if (stream.push (cm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), 1);
