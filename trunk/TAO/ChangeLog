@@ -1,3 +1,12 @@
+Wed Jun 18 18:15:33 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * performance-tests/Sequence_Latency/DSI/*: 
+
+          New test for the sequence of different data types for DSI. This
+          is based on performance-tests/Latency/DSI, but uses different 
+          data types.
+
+
 Wed Jun 18 17:47:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/RTEvent.dsp:
