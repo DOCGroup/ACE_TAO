@@ -1,3 +1,11 @@
+Mon Aug 26 17:33:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/msvc_auto_compile.pl (Build_Core):
+
+	  Build the Messaging, PortableGroup and CosLoadBalancing
+	  libraries in a specific order.  CosLoadBalancing depends on the
+	  first two.  Fixes automated Win32 static builds.
+
 Mon Aug 26 17:14:20 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/TkReactor_Test.cpp:
