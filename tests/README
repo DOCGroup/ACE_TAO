@@ -63,12 +63,11 @@ these exceptions:
     Mem_Map_Test                            ENOTSUP: unknown (mmap)
     Naming_Test                             failed: (uses mmap?)
     Pipe_Test                               failed: fork
-    Process_Mutex_Test                      (not run: requires processes)
-    Process_Strategy_Test                   (not run: requires processes)
+    Process_Mutex_Test                      ?
+    Process_Strategy_Test                   ?
     Reactor_Notify_Test                     unknown
     SPIPE_Test                              ENOTSUP: ace_pipe_name not found
     Service_Config_Test                     failed: page fault
-    Sigset_Ops_Test                         failed: line 109 assertion
     Time_Service_Test                       failed: uses spawn (fork)
     Tokens_Test                             (not run: uses fork)
 
