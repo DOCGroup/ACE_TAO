@@ -1,3 +1,27 @@
+Sun Aug  4 15:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation.h:
+        * tao/Service_Context.h:
+        * tao/ValueBase.h:
+        * tao/corbafwd.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        * orbsvcs/orbsvcs/AV/RTP.h:
+          Fixed incorrect doxygen commands
+
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/distributer.bor
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/receiver.bor
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/sender.bor
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/ftp.bor
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/server.bor
+        * TAO/orbsvcs/tests/AVStreams/Multicast/ftp.bor
+        * TAO/orbsvcs/tests/AVStreams/Multicast/server.bor
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.bor
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.bor
+          Added missing ACE_QoS library, this is needed for static builds.
+
 Sat Aug  3 20:44:51 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* examples/AMH/Sink_Server/Base_Server.cpp:
@@ -6,7 +30,7 @@ Sat Aug  3 20:44:51 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  in essense, complaining about uninitialised variables
 	  (start_test, end_test) in Base_Server.cpp.  Thanks to Bala for
 	  already fixing the return-warning in client.cpp
-	
+
 Sat Aug 03 18:50:11 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/PSS/PSDL.dsp:
@@ -20,7 +44,7 @@ Sat Aug  3 18:20:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/examples/PSS/Server.dsp:
 	* orbsvcs/examples/PSS/PSS.dsw: Removed these files from the
 	  repo. The Win32 builds had problems groking these files and were
-	  giving a tough time to the builds. 
+	  giving a tough time to the builds.
 
 Sat Aug  3 14:34:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -33,7 +57,7 @@ Sat Aug 03 12:42:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  lane only after closing down the Reactor and Transport
 	  cache. Contents of Reactor or Transport cache, like the event
 	  handler and the transport could be using the allocators to
-	  release memory. The allocator needs to be around till then! 
+	  release memory. The allocator needs to be around till then!
 
 Sat Aug  3 09:15:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -79,7 +103,7 @@ Fri Aug  2 15:13:28 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Fri Aug  2 16:17:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp: Added a
-	  missing template instantiation. Should fix problems in 
+	  missing template instantiation. Should fix problems in
 
 Fri Aug  2 11:35:17 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -89,11 +113,11 @@ Fri Aug  2 11:35:17 2002  Ossama Othman  <ossama@uci.edu>
 
 Fri Aug  2 08:44:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/PSS/PSDL_Struct_Visitor.cpp (gen_code_for_si): 
+	* orbsvcs/PSS/PSDL_Struct_Visitor.cpp (gen_code_for_si):
 	  Filled in information to the structure that will be
 	  generated.
 
-	* orbsvcs/examples/PSS/client.cpp (main): 
+	* orbsvcs/examples/PSS/client.cpp (main):
 	  Fixed the warning in GCC 3.0 build.
 
 Fri Aug  2 07:38:00 2002  Ossama Othman  <ossama@uci.edu>
@@ -107,15 +131,15 @@ Fri Aug  2 09:11:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/ValueFactory_Map.h:
 	* tao/ORB_Core.h: Removed a ; that was not required after
-	  TAO_SINGLETON_DECLARE.  TRU64 gives warnings with that extra ;. 
+	  TAO_SINGLETON_DECLARE.  TRU64 gives warnings with that extra ;.
 
 Fri Aug  2 00:29:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Bind_Dispatcher_Guard.i : 
+	* tao/Bind_Dispatcher_Guard.i :
 	* tao/Bind_Dispatcher_Guard.cpp: Moved the destructor from the
 	  inline file to the cpp file. Sounds crazy, but true. g++ seems
 	  to miss calling the destructor of this object (which was in the
-	  inlined file) created on the stack of the GIOP_Invocation object. 
+	  inlined file) created on the stack of the GIOP_Invocation object.
 
 	  When a timeout occurs the stack unwinds but the destrcutor which
 	  unbinds the reply dispatcher never gets called. This leaves the
@@ -124,7 +148,7 @@ Fri Aug  2 00:29:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  builds on sirion which resulted in the failure of the Timeout
 	  test. My testing on sirion with this change seems to work
 	  fine. Let us wait and watch our daily builds to see the actual
-	  results. 
+	  results.
 
 Thu Aug  1 21:00:03 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -163,7 +187,7 @@ Thu Aug  1 21:00:03 2002  Ossama Othman  <ossama@uci.edu>
 Thu Aug  1 21:09:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/PSS/PSDL_Node.cpp: Fixed a compile error in Win32
-	  builds.  
+	  builds.
 
 Thu Aug  1 13:26:40 2002  Ossama Othman  <ossama@uci.edu>
 
