@@ -5,7 +5,7 @@ Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	  for reporting these.
 
 	* ace/OS.cpp (writev, readv): changed type of local variable "i"
-	  from size_t to int to avoid signed/unsigned mismatch.  Thanks
+	  from size_t to int to avoid signed/unsigned mismatch.	 Thanks
 	  to Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting this.
 
 	* ace/OS.cpp (readv), SOCK_Dgram.cpp (recv): added casts of
@@ -13,6 +13,20 @@ Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	  size_t on others.  This avoids compiler (MSVC 4.1) warnings.
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting
 	  this.
+
+	* include/makeinclude/platform_sco5.0.0-nothread.GNU:
+	  updated CCFLAGS and added LD=$(CXX)'.	 Thanks to
+	  "Ganesh M. Pai" <gpai@voicetek.com> for these fixes.
+
+	* ace/OS.h: added #include of <sys/regset.h> for SCO only.
+	  Thanks to "Ganesh M. Pai" <gpai@voicetek.com> for this fix.
+
+	* ace/config-sco-5.0.0*.h: added #define ACE_HAS_IP_MULTICAST.
+	  Thanks to "Ganesh M. Pai" <gpai@voicetek.com> for this fix.
+
+	* ace/config-{chorus,linux*,sco*}.h: removed #define of
+	  ACE_HAS_INLINED_OSCALLS because it's no longer needed in the
+	  config files:	 it's #defined in OS.h if needed.
 
 Thu Apr  3 01:48:01 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
