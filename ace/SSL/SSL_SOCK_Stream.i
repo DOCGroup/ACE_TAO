@@ -78,8 +78,6 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
       switch (::SSL_get_error (this->ssl_, status))
         {
         case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_X509_LOOKUP:
           errno = EWOULDBLOCK;
           break;
         default:
@@ -115,14 +113,21 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   int status = ::SSL_read (this->ssl_,
                            ACE_static_cast (char *, buf),
                            n);
+
   if (status <= 0) 
     {
       switch (::SSL_get_error (this->ssl_, status))
         {
-        case SSL_ERROR_WANT_WRITE:
         case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_X509_LOOKUP:
           errno = EWOULDBLOCK;
+          break;
+        case SSL_ERROR_ZERO_RETURN:
+          // @@ This appears to be the right/expected thing to do.
+          //    However, it'd be nice if someone could verify this.
+          //
+          // The peer has notified us that it is shutting down via the
+          // SSL "close_notify" message so we need to shutdown, too.
+          (void) ::SSL_shutdown (this->ssl_);
           break;
         default:
 #ifndef ACE_NDEBUG
@@ -152,8 +157,6 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
       switch (::SSL_get_error (this->ssl_, status))
         {
         case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_X509_LOOKUP:
           errno = EWOULDBLOCK;
           break;
         default:
@@ -183,10 +186,16 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
     {
       switch (::SSL_get_error (this->ssl_, status))
         {
-        case SSL_ERROR_WANT_WRITE:
         case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_X509_LOOKUP:
           errno = EWOULDBLOCK;
+          break;
+        case SSL_ERROR_ZERO_RETURN:
+          // @@ This appears to be the right/expected thing to do.
+          //    However, it'd be nice if someone could verify this.
+          //
+          // The peer has notified us that it is shutting down via the
+          // SSL "close_notify" message so we need to shutdown, too.
+          (void) ::SSL_shutdown (this->ssl_);
           break;
         default:
 #ifndef ACE_NDEBUG

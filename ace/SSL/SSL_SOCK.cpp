@@ -1,11 +1,12 @@
 // -*- C++ -*-
+//
 // $Id$
 
 
-#include "ace/SSL/SSL_SOCK.h"
+#include "SSL_SOCK.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SSL/SSL_SOCK.i"
+#include "SSL_SOCK.i"
 #endif
 
 ACE_RCSID(ACE_SSL, SSL_SOCK, "$Id$")
@@ -65,5 +66,3 @@ ACE_SSL_SOCK::disable (int value) const
     }
   return 0;
 }
-
-

@@ -1,28 +1,13 @@
 // -*- C++ -*-
+//
 // $Id$
 
-// ==========================================================================
-//
-// = LIBRARY
-//    ACE_SSL
-//
-// = FILENAME
-//    SSL_Context.cpp
-//
-// = AUTHOR
-//    Chris Zimman
-//    Carlos O'Ryan <coryan@ece.uci.edu>
-//    Ossama Othman <ossama@ece.uci.edu>
-//
-// ==========================================================================
+#include "SSL_Context.h"
 
-
-#include "ace/SSL/SSL_Context.h"
-
-#include "ace/SSL/sslconf.h"
+#include "sslconf.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ace/SSL/SSL_Context.i"
+#include "SSL_Context.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Synch.h"
@@ -32,6 +17,7 @@
 #include <openssl/err.h>
 #include <openssl/rand.h>
 
+ACE_RCSID (ACE_SSL, SSL_Context, "$Id$")
 
 #ifdef ACE_HAS_THREADS
 ACE_mutex_t * ACE_SSL_Context::lock_ = 0;
@@ -229,12 +215,15 @@ ACE_SSL_Context::set_mode (int mode)
   if (cert_dir == 0)
     cert_dir = ACE_DEFAULT_SSL_CERT_DIR;
 
-  // SSL_CTX_load_verify_locations() returns 0 on error.
+  // Load the trusted certificate authorities.
+  //
+  // NOTE: SSL_CTX_load_verify_locations() returns 0 on error.
   if (::SSL_CTX_load_verify_locations (this->context_,
                                        cert_file,
                                        cert_dir) <= 0)
     {
 #ifndef ACE_NDEBUG
+      // @@ For some reason, this call causes a seg fault.
       // ::ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
 
