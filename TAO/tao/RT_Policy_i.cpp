@@ -85,29 +85,13 @@ TAO_PriorityModelPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
   // the order specified in the RTCORBA 1.0 spec (ptc/99-05-03)
   // section 4.7.3.
 
-  // @@ Angelo: how is the temporary useful?  What is wrong with
-  //
-  // if ((out_cdr << XXX) && (out_cdr << YYY))
-  //
-  // ????
-  CORBA::Boolean b = (out_cdr << priority_model_);
-  if (b  && (out_cdr << server_priority_))
-    return 1;
-
-  return 0;
+  return ((out_cdr << priority_model_) && (out_cdr << server_priority_));
 }
 
 CORBA::Boolean
 TAO_PriorityModelPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  CORBA::Boolean b = (in_cdr >> priority_model_);
-  if (b  && (in_cdr >> server_priority_))
-    return 1;
-
-  priority_model_ = RTCORBA::SERVER_DECLARED;
-  server_priority_ = 0;
-
-  return 0;
+  return ((in_cdr >> priority_model_) && (in_cdr >> server_priority_));
 }
 
 // ****************************************************************
@@ -455,6 +439,21 @@ TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Long recv_buffer_size,
   this->recv_buffer_size_ = recv_buffer_size;
 }
 
+
+CORBA::Boolean
+TAO_Unix_Domain_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
+{
+  return ((out_cdr << this->send_buffer_size_)
+          && (out_cdr << this->recv_buffer_size_));
+}
+
+CORBA::Boolean 
+TAO_Unix_Domain_Properties::_tao_decode (TAO_InputCDR &in_cdr)
+{
+  return ((in_cdr >> this->send_buffer_size_)
+          && (in_cdr >> this->recv_buffer_size_));
+}
+    
 // ****************************************************************
 
 TAO_SMEM_Properties::TAO_SMEM_Properties (void)
@@ -514,6 +513,26 @@ TAO_SMEM_Properties::mmap_lockname (const char * mmap_lockname,
   this->mmap_lockname_.set (mmap_lockname);
 }
 
+CORBA::Boolean
+TAO_SMEM_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
+{
+  return ((out_cdr << this->preallocate_buffer_size_)
+          &&
+          (out_cdr << this->mmap_filename_)
+          &&
+          (out_cdr << this->mmap_lockname_));
+}
+
+CORBA::Boolean 
+TAO_SMEM_Properties::_tao_decode (TAO_InputCDR &in_cdr)
+{
+  return ((in_cdr >> this->preallocate_buffer_size_) 
+          &&
+          (in_cdr >> this->mmap_filename_)
+          &&
+          (in_cdr >> this->mmap_lockname_));
+}
+      
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
@@ -687,12 +706,12 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
         (this->protocols_[i].protocol_type);
 
       if (is_read_ok
-          && (this->protocols_[i].orb_protocol_properties.ptr () == 0))
+          && (this->protocols_[i].orb_protocol_properties.ptr () != 0))
         is_read_ok =
           this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
 
       if (is_read_ok
-          && (this->protocols_[i].transport_protocol_properties.ptr () == 0))
+          && (this->protocols_[i].transport_protocol_properties.ptr () != 0))
         is_read_ok =
           this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
 
@@ -728,11 +747,14 @@ TAO_GIOP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 
 RTCORBA::ProtocolProperties*
 TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id)
-{
+{                    
   RTCORBA::ProtocolProperties* property = 0;
 
   if (id == IOP::TAG_INTERNET_IOP)
-    ACE_NEW_RETURN (property, TAO_TCP_Properties, 0);
+
+    ACE_NEW_RETURN (property, 
+                    TAO_TCP_Properties, 
+                    0);
 
   return property;
 }
@@ -743,7 +765,10 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
   RTCORBA::ProtocolProperties* property = 0;
 
   if (id == IOP::TAG_INTERNET_IOP)
-    ACE_NEW_RETURN (property, TAO_GIOP_Properties, 0);
+    ACE_NEW_RETURN (property, 
+                    TAO_GIOP_Properties, 
+                    0);
+  
 
   return property;
 }

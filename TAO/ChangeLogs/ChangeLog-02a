@@ -1,3 +1,12 @@
+Tue Aug 29 20:09:44 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/RT_Policies.cpp:
+	* tao/RT_Policies.h:
+
+	  Added support for CDR encoding/decoding of TAO specific 
+	  Protocol Properties <TAO_Unix_Domain_Properties>
+	  and <TAO_SMEM_Properties>.
+
 Tue Aug 29 19:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
