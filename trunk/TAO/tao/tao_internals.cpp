@@ -33,13 +33,13 @@ TAO_Internal::fake_service_entries_i (void)
                   TAO_Resource_Factory,
                   0,
                   rfactory_args);
-  
+
   char *client_args[] = { 0 };
   FAKE_SVC_ENTRY ("Client_Strategy_Factory",
                   TAO_Default_Client_Strategy_Factory,
                   0,
                   client_args);
-  
+
   char* server_args[] = {
     "-ORBconcurrency", "reactive",
     "-ORBdemuxstrategy", "dynamic", "-ORBtablesize", "128" };
@@ -60,8 +60,10 @@ TAO_Internal::open_services (int& argc, char** argv)
   if (TAO_Internal::service_open_count_++ == 0)
     {
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+      ACE_UNUSED_ARG (argc);
+      ACE_UNUSED_ARG (argv);
       return fake_service_entries_i ();
-#else      
+#else
       return ACE_Service_Config::open (argc, argv);
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
     }
@@ -80,10 +82,9 @@ TAO_Internal::close_services (void)
 
   if (service_open_count_ == 0)
     return -1;
-  
+
   if (--service_open_count_ == 0)
     return ACE_Service_Config::close ();
 
   return 0;
 }
-
