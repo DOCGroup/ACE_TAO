@@ -1,40 +1,47 @@
+Fri Apr 16 17:16:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simulator/{DOVEMIB,Event_Supplier}/Makefile:
+          only build if the orbsvcs library was built with the necessary
+          TAO_ORBSVCS components.  Also, ran make depend on DOVEMIB
+          Makefile.
+
 Fri Apr 16 17:02:43 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/bank
-	* examples/Simple/time
-	Update the README files
+        * examples/Simple/bank
+        * examples/Simple/time
+        Update the README files
 
 Fri Apr 16 15:31:04 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
-	
-	* orbsvcs/orbsvcs/Trader/Trader.h :
-	  Added TAO_ORBSVCS_Export to TAO_String_Hash_Key as it is used in
-	  AVStreams implemtation. 
+
+        * orbsvcs/orbsvcs/Trader/Trader.h :
+          Added TAO_ORBSVCS_Export to TAO_String_Hash_Key as it is used in
+          AVStreams implemtation.
 
 Fri Apr 16 14:49:04 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* tests/InterOp-Naming/Makefile (LDLIBS): 
-	  Removed the -lorbsvcs.
+        * tests/InterOp-Naming/Makefile (LDLIBS):
+          Removed the -lorbsvcs.
 
 Fri Apr 16 14:17:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
-	  Added a visit_typedef() method to 
-	  be_visitor_cdr_op_field_decl, so that we can
-	  generate cdr operations for typedef'd members
-	  of structs as well as anonymous ones. Previously,
-	  cdr operation code for this type of struct member
-	  would just be missing. Thanks to Torsten Kuepper 
-	  <kuepper2@uni-wuppertal.de> for pointing out the
-	  problem and suggesting a fix.
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+          Added a visit_typedef() method to
+          be_visitor_cdr_op_field_decl, so that we can
+          generate cdr operations for typedef'd members
+          of structs as well as anonymous ones. Previously,
+          cdr operation code for this type of struct member
+          would just be missing. Thanks to Torsten Kuepper
+          <kuepper2@uni-wuppertal.de> for pointing out the
+          problem and suggesting a fix.
 
 Fri Apr 16 13:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp
           examples/Simulator/Event_Supplier/Logging_Sup.cpp
           examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
-	  changed a number of instances of ORBSVCS_Time::zero
-	  to ORBSVCS_Time::zero ()
+          changed a number of instances of ORBSVCS_Time::zero
+          to ORBSVCS_Time::zero ()
 
 Fri Apr 16 09:39:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
