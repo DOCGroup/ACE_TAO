@@ -1,61 +1,70 @@
+Wed May 23 11:13:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Removed TAO/performance-tests/Latency from the nightly builds.
+          This test has been superseeded by Single_Threaded_Latency and
+          friends.  In fact it is no longer used to generate performance
+          results.
+          This is part of the fixes for [BUGID:324]
+
 Tue May 23 11:53:24 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
         * docs/exceptions.html: Fix bad reference to OCI devguide:
           the link was broken and the chapter # was incorrect.
 
 Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-	
-	* ace/QoS/QoS_Session.h:
-	* ace/QoS/QoS_Session_Impl.h: 	
-	* ace/QoS/QoS_Session_Impl.cpp: 	
 
-	  Added a method to propagate the rsvp event type to the application.
-	
+        * ace/QoS/QoS_Session.h:
+        * ace/QoS/QoS_Session_Impl.h:
+        * ace/QoS/QoS_Session_Impl.cpp:
+
+          Added a method to propagate the rsvp event type to the application.
+
 Wed May 23 06:52:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Moved the FORTE builds to ace.
+        * bin/nightlybuilds/builds.lst: Moved the FORTE builds to ace.
 
 Tue May 22 21:57:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Added NO_AMI_MESSAGING to the
-	  builds.
+        * bin/nightlybuilds/builds.lst: Added NO_AMI_MESSAGING to the
+          builds.
 
 Mon May 21 16:37:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/Timer_Queue_Adapters.cpp:
-	* bin/make_pretty.pl:
+        * ace/OS.h:
+        * ace/Timer_Queue_Adapters.cpp:
+        * bin/make_pretty.pl:
 
-	Changed the make_pretty script to remove the false warning on
-	SunCC5. Added documentation in the affected files. This fixes
-	Bug Id 879.
+        Changed the make_pretty script to remove the false warning on
+        SunCC5. Added documentation in the affected files. This fixes
+        Bug Id 879.
 
 Sun May 20 08:48:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Added FORTE 6.1 to the list.
+        * bin/nightlybuilds/builds.lst: Added FORTE 6.1 to the list.
 
 Sun May 20 07:37:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/POSIX_Proactor.cpp: Fixed a compile error with g++.
+        * ace/POSIX_Proactor.cpp: Fixed a compile error with g++.
 
 Sun May 20 01:38:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h:
-	* ace/POSIX_Proactor.cpp: Applied patches from Russell L. Carter
-	  <rcarter@pinyon.org> that introduce FreeBSD 4.3 to AIO
-	  (compiling at least).                        [Bug 917]
+        * ace/config-freebsd-pthread.h:
+        * ace/POSIX_Proactor.cpp: Applied patches from Russell L. Carter
+          <rcarter@pinyon.org> that introduce FreeBSD 4.3 to AIO
+          (compiling at least).                        [Bug 917]
 
 Sat May 19 10:28:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/make_pretty.pl: Ignore the mktemp () messages on Linux.
+        * bin/make_pretty.pl: Ignore the mktemp () messages on Linux.
 
 Fri May 18 20:58:59 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added TAO's security tests to the list of tests to run in the
-	  nightly builds.  They will only be run on platforms that support
-	  the "SSL" build configuration.
+          Added TAO's security tests to the list of tests to run in the
+          nightly builds.  They will only be run on platforms that support
+          the "SSL" build configuration.
 
 Fri May 18 14:39:31 2001  Steve Huston  <shuston@riverace.com>
 
@@ -80,115 +89,115 @@ Fri May 18 10:50:55 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri May 18 06:11:49 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/config-cxx-common.h: Changed
-	  #   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40F
-	  to:
-	  #   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40D
-	  This gets rid of a very annoying informational message.  Thanks
- 	  to Steve Vranyes <steve.vranyes@veritas.com> for reporting this
+        * ace/config-cxx-common.h: Changed
+          #   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40F
+          to:
+          #   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40D
+          This gets rid of a very annoying informational message.  Thanks
+          to Steve Vranyes <steve.vranyes@veritas.com> for reporting this
 
-	* ace/config-tru64.h: Changed 0x40E to 0x40D in the check for
-	  DIGITAL_UNIX to disable the use of systime.h.  Thanks to
-	  Steve Vranyes <steve.vranyes@veritas.com> for reporting this
-	  and for David Levine for suggesting the fix.
+        * ace/config-tru64.h: Changed 0x40E to 0x40D in the check for
+          DIGITAL_UNIX to disable the use of systime.h.  Thanks to
+          Steve Vranyes <steve.vranyes@veritas.com> for reporting this
+          and for David Levine for suggesting the fix.
 
 Thu May 17 23:36:18 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added TAO's Request_Interceptor_Flow test to the list of tests
-	  to run in the nightly builds.
+          Added TAO's Request_Interceptor_Flow test to the list of tests
+          to run in the nightly builds.
 
 Fri May 18 01:31:47 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe.h: Reordered the include files: Timeprobe_T.h
-	  should come after Synch.h.  Thanks to Bruce McIntosh
-	  <Bruce.McIntosh@Australia.Boeing.com> for reporting this
-	  problem.
+        * ace/Timeprobe.h: Reordered the include files: Timeprobe_T.h
+          should come after Synch.h.  Thanks to Bruce McIntosh
+          <Bruce.McIntosh@Australia.Boeing.com> for reporting this
+          problem.
 
 Fri May 18 00:36:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Map_Manager.cpp (unbind_all): Added a new method that
-	  unbinds all entries in the map.  Also, refactored out some code
-	  into unbind_slot().
+        * ace/Map_Manager.cpp (unbind_all): Added a new method that
+          unbinds all entries in the map.  Also, refactored out some code
+          into unbind_slot().
 
-	  BTW, this functionality is somewhat redundant since one can also
-	  do the following:
+          BTW, this functionality is somewhat redundant since one can also
+          do the following:
 
-	  // Unbind one at a time.
-	  MAP_MANAGER::iterator end = map.end ();
-	  while (1)
-	    {
-	        MAP_MANAGER::iterator iter = map.begin ();
-		if (iter == end)
-		  break;
-		map.unbind ((*iter).ext_id_);
-	    }
+          // Unbind one at a time.
+          MAP_MANAGER::iterator end = map.end ();
+          while (1)
+            {
+                MAP_MANAGER::iterator iter = map.begin ();
+                if (iter == end)
+                  break;
+                map.unbind ((*iter).ext_id_);
+            }
 
-	  However, the following should be much faster:
+          However, the following should be much faster:
 
-	  // Unbind in one swoop.
-	  map.unbind_all ();
+          // Unbind in one swoop.
+          map.unbind_all ();
 
-	  Another reason to add the unbind_all() is that the method is
-	  available on the other map_managers and that it is now easier to
-	  convert a hash map to a normal map and back without changing any
-	  real code.
+          Another reason to add the unbind_all() is that the method is
+          available on the other map_managers and that it is now easier to
+          convert a hash map to a normal map and back without changing any
+          real code.
 
-	* tests/Map_Manager_Test.cpp (test_map_manager): Added test for
-	  unbind.
+        * tests/Map_Manager_Test.cpp (test_map_manager): Added test for
+          unbind.
 
-	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
-	  suggesting this.
+          Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
+          suggesting this.
 
 Thu May 17 21:34:28 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.cpp: Added an ACE_UNUSED_ARG to keep G++
-	  happy.
+        * ace/POSIX_Asynch_IO.cpp: Added an ACE_UNUSED_ARG to keep G++
+          happy.
 
 Thu May 17 16:52:17 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/CDR_File_Test.cpp (run_test):
-	  Modified ACE_OutputCDR instantiation to follow the new modified
-	  constructor.
+        * tests/CDR_File_Test.cpp (run_test):
+          Modified ACE_OutputCDR instantiation to follow the new modified
+          constructor.
 
 Thu May 17 17:01:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Re-enabled Core and Full builds on
-	  RedHat 7.1.
+        * bin/nightlybuilds/builds.lst: Re-enabled Core and Full builds on
+          RedHat 7.1.
 
 Thu May 17 14:36:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Asynch_IO.cpp
-	  ace/Asynch_IO.h
-	  ace/Asynch_IO_Impl.cpp
-	  ace/Asynch_IO_Impl.h
-	  ace/Asynch_IO_Impl.i
-	  ace/POSIX_Asynch_IO.cpp
-	  ace/POSIX_Asynch_IO.h
-	  ace/POSIX_Asynch_IO.i
-	  ace/POSIX_Proactor.cpp
-	  ace/POSIX_Proactor.h
-	  ace/POSIX_Proactor.i
-	  ace/Proactor.cpp
-	  ace/Proactor.h
-  	  ace/Proactor_Impl.h
-	  ace/WIN32_Asynch_IO.cpp
-	  ace/WIN32_Asynch_IO.h
-	  ace/WIN32_Proactor.cpp
-	  ace/WIN32_Proactor.h: Added more fixes and improved comments
-	  from Roger Tragin <rtragin@cuseeme.com>.
+        * ace/Asynch_IO.cpp
+          ace/Asynch_IO.h
+          ace/Asynch_IO_Impl.cpp
+          ace/Asynch_IO_Impl.h
+          ace/Asynch_IO_Impl.i
+          ace/POSIX_Asynch_IO.cpp
+          ace/POSIX_Asynch_IO.h
+          ace/POSIX_Asynch_IO.i
+          ace/POSIX_Proactor.cpp
+          ace/POSIX_Proactor.h
+          ace/POSIX_Proactor.i
+          ace/Proactor.cpp
+          ace/Proactor.h
+          ace/Proactor_Impl.h
+          ace/WIN32_Asynch_IO.cpp
+          ace/WIN32_Asynch_IO.h
+          ace/WIN32_Proactor.cpp
+          ace/WIN32_Proactor.h: Added more fixes and improved comments
+          from Roger Tragin <rtragin@cuseeme.com>.
 
-	* ace/SString.cpp: Fixed a bug in the check_allocate() method.
-	  Thanks to Wayne Erchak <wayne@stentor.com> for reporting this.
+        * ace/SString.cpp: Fixed a bug in the check_allocate() method.
+          Thanks to Wayne Erchak <wayne@stentor.com> for reporting this.
 
 Thu May 17 12:16:57 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR):
-	* ace/CDR_Stream.cpp:
-	  Modified so that even the Message_Block_Allocators are also
-	  allocated from TSS memory. The constructor of ACE_OutputCDR
-	  changes.
+        * ace/CDR_Stream.h (ACE_InputCDR):
+        * ace/CDR_Stream.cpp:
+          Modified so that even the Message_Block_Allocators are also
+          allocated from TSS memory. The constructor of ACE_OutputCDR
+          changes.
 
 Thu May 17 11:51:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -237,33 +246,33 @@ Thu May 17 10:00:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Proactor_Impl.h: Added two missing factory methods to
- 	  ACE_Proactor_Impl.  Thanks to Bala for reporting this.
+        * ace/Proactor_Impl.h: Added two missing factory methods to
+          ACE_Proactor_Impl.  Thanks to Bala for reporting this.
 
-	* ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number
+        * ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number
           parameter was missing.  Thanks to Andy Gokhale for reporting this.
 
 Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Asynch_IO.cpp
-	  ace/Asynch_IO.h
-	  ace/Asynch_IO_Impl.cpp
-	  ace/Asynch_IO_Impl.h
-	  ace/Asynch_IO_Impl.i
-	  ace/POSIX_Asynch_IO.cpp
-	  ace/POSIX_Asynch_IO.h
-	  ace/POSIX_Asynch_IO.i
-	  ace/POSIX_Proactor.cpp
-	  ace/POSIX_Proactor.h
-	  ace/POSIX_Proactor.i
-	  ace/Proactor.cpp
-	  ace/Proactor.h
-	  ace/WIN32_Asynch_IO.cpp
-	  ace/WIN32_Asynch_IO.h
-	  ace/WIN32_Proactor.cpp
-	  ace/WIN32_Proactor.h: Added Async IO support for UDP dgrams
-	  on NT so they can be used via the Proactor.  Thanks to
-	  Roger Tragin <rtragin@cuseeme.com> for contributing this.
+        * ace/Asynch_IO.cpp
+          ace/Asynch_IO.h
+          ace/Asynch_IO_Impl.cpp
+          ace/Asynch_IO_Impl.h
+          ace/Asynch_IO_Impl.i
+          ace/POSIX_Asynch_IO.cpp
+          ace/POSIX_Asynch_IO.h
+          ace/POSIX_Asynch_IO.i
+          ace/POSIX_Proactor.cpp
+          ace/POSIX_Proactor.h
+          ace/POSIX_Proactor.i
+          ace/Proactor.cpp
+          ace/Proactor.h
+          ace/WIN32_Asynch_IO.cpp
+          ace/WIN32_Asynch_IO.h
+          ace/WIN32_Proactor.cpp
+          ace/WIN32_Proactor.h: Added Async IO support for UDP dgrams
+          on NT so they can be used via the Proactor.  Thanks to
+          Roger Tragin <rtragin@cuseeme.com> for contributing this.
 
 Wed May 16 22:43:19 2001  Steve Huston  <shuston@riverace.com>
 
