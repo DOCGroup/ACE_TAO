@@ -139,12 +139,7 @@ private:
   // <request_id> and <response_required> are set as part of the
   // message processing.
 
-  void find_ior_in_table (TAO_ObjectKey &object_key,
-                          TAO_ORB_Core *orb_core,
-                          CORBA::Environment &ACE_TRY_ENV);
-  // Find the IOR in table
-
-    int parse_request_header (TAO_GIOP_ServerRequest &request);
+  int parse_request_header (TAO_GIOP_ServerRequest &request);
   // Parse the Request Message header
 
   int parse_locate_header (TAO_GIOP_Locate_Request_Header &request);

@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.
 
-ACE_SHLIBS = -lTAO -lACE
+ACE_SHLIBS = -lTAO -lTAO_PortableServer -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

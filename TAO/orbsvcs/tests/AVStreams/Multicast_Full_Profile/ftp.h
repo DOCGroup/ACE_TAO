@@ -5,7 +5,7 @@
 #define TAO_AV_FTP_H
 
 #include "ace/Get_Opt.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Flows_T.h"

@@ -193,10 +193,6 @@ BuildCmds= \
 
 SOURCE=.\testC.i
 # End Source File
-# Begin Source File
-
-SOURCE=.\testS.i
-# End Source File
 # End Group
 # End Target
 # End Project

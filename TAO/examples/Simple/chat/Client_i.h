@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 
 class Client_i : public ACE_Event_Handler
 {

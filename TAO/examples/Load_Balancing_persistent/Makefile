@@ -8,7 +8,7 @@ ifndef TAO_ROOT
 endif
 
 override TAO_IDLFLAGS += -Ge 1
-LDLIBS = -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO
 
 IDL_FILES = Load_Balancer Identity
 IDL_SRC = \
@@ -94,7 +94,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Load_BalancerC.o .obj/Load_BalancerC.o .obj/Load_BalancerC.o .obj/Load_BalancerC.o: Load_BalancerC.cpp Load_BalancerC.h \
+.obj/Load_BalancerC.o .obj/Load_BalancerC.so .shobj/Load_BalancerC.o .shobj/Load_BalancerC.so: Load_BalancerC.cpp Load_BalancerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -117,16 +117,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -134,6 +124,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -250,7 +244,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -266,7 +259,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
@@ -281,40 +273,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServerC.i \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -327,6 +285,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -352,9 +312,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -363,12 +320,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -383,6 +345,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -393,24 +357,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
  Load_BalancerC.i
 
-.obj/Load_BalancerS.o .obj/Load_BalancerS.o .obj/Load_BalancerS.o .obj/Load_BalancerS.o: Load_BalancerS.cpp Load_BalancerS.h Load_BalancerC.h \
+.obj/Load_BalancerS.o .obj/Load_BalancerS.so .shobj/Load_BalancerS.o .shobj/Load_BalancerS.so: Load_BalancerS.cpp Load_BalancerS.h Load_BalancerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -433,16 +390,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -450,6 +397,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -566,7 +517,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -582,7 +532,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
@@ -597,40 +546,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServerC.i \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -643,6 +558,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -668,9 +585,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -679,12 +593,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -699,6 +618,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -709,25 +630,48 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- Load_BalancerC.i Load_BalancerS_T.h Load_BalancerS_T.i \
- Load_BalancerS_T.cpp Load_BalancerS.i
+ Load_BalancerC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ Load_BalancerS_T.h Load_BalancerS_T.i Load_BalancerS_T.cpp \
+ Load_BalancerS.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
+ $(TAO_ROOT)/tao/PortableServer/poa_macros.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/IdentityC.o .obj/IdentityC.o .obj/IdentityC.o .obj/IdentityC.o: IdentityC.cpp IdentityC.h \
+.obj/IdentityC.o .obj/IdentityC.so .shobj/IdentityC.o .shobj/IdentityC.so: IdentityC.cpp IdentityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -750,16 +694,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -767,6 +701,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -883,7 +821,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -899,7 +836,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
@@ -914,40 +850,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServerC.i \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -960,6 +862,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -985,9 +889,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -996,12 +897,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -1016,6 +922,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1026,24 +934,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
  IdentityC.i
 
-.obj/IdentityS.o .obj/IdentityS.o .obj/IdentityS.o .obj/IdentityS.o: IdentityS.cpp IdentityS.h IdentityC.h \
+.obj/IdentityS.o .obj/IdentityS.so .shobj/IdentityS.o .shobj/IdentityS.so: IdentityS.cpp IdentityS.h IdentityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1066,16 +967,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1083,6 +974,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1199,7 +1094,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -1215,7 +1109,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
@@ -1230,40 +1123,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServerC.i \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -1276,6 +1135,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -1301,9 +1162,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1312,12 +1170,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -1332,6 +1195,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1342,36 +1207,61 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- IdentityC.i IdentityS_T.h IdentityS_T.i IdentityS_T.cpp IdentityS.i
+ IdentityC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ IdentityS_T.h IdentityS_T.i IdentityS_T.cpp IdentityS.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
+ $(TAO_ROOT)/tao/PortableServer/poa_macros.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.o: Load_Balancing_Service.cpp \
+.obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.so .shobj/Load_Balancing_Service.o .shobj/Load_Balancing_Service.so: Load_Balancing_Service.cpp \
  Load_Balancing_Service.h \
- $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1387,19 +1277,13 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1457,7 +1341,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/PortableServerC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -1482,7 +1365,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1523,7 +1406,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -1534,7 +1416,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -1553,38 +1434,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -1597,6 +1446,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -1622,9 +1473,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1633,12 +1481,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -1653,6 +1506,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1663,23 +1518,22 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- Load_BalancerC.i Load_BalancerS_T.h Load_BalancerS_T.i \
- Load_BalancerS_T.cpp Load_BalancerS.i \
+ Load_BalancerC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ Load_BalancerS_T.h Load_BalancerS_T.i Load_BalancerS_T.cpp \
+ Load_BalancerS.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
@@ -1688,18 +1542,20 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i
 
-.obj/Identity_Server.o .obj/Identity_Server.o .obj/Identity_Server.o .obj/Identity_Server.o: Identity_Server.cpp Identity_Server.h \
- $(TAO_ROOT)/tao/TAO.h \
+.obj/Identity_Server.o .obj/Identity_Server.so .shobj/Identity_Server.o .shobj/Identity_Server.so: Identity_Server.cpp Identity_Server.h \
+ $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1715,19 +1571,13 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1785,7 +1635,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/PortableServerC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -1810,7 +1659,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1851,7 +1700,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -1862,7 +1710,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  Load_BalancerC.h \
@@ -1879,38 +1726,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -1923,6 +1738,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -1948,9 +1765,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1959,12 +1773,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -1979,6 +1798,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -1989,28 +1810,26 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
  Load_BalancerC.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
- Identity_i.h IdentityS.h IdentityC.h IdentityC.i IdentityS_T.h \
- IdentityS_T.i IdentityS_T.cpp IdentityS.i
+ Identity_i.h IdentityS.h IdentityC.h IdentityC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ IdentityS_T.h IdentityS_T.i IdentityS_T.cpp IdentityS.i
 
-.obj/Identity_Client.o .obj/Identity_Client.o .obj/Identity_Client.o .obj/Identity_Client.o: Identity_Client.cpp \
+.obj/Identity_Client.o .obj/Identity_Client.so .shobj/Identity_Client.o .shobj/Identity_Client.so: Identity_Client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2034,25 +1853,21 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  Identity_Client.h \
- $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2110,7 +1925,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/PortableServerC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -2135,7 +1949,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2176,7 +1990,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -2187,7 +2000,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  IdentityC.h \
@@ -2204,38 +2016,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2248,6 +2028,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -2273,9 +2055,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -2284,12 +2063,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -2304,6 +2088,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -2314,28 +2100,21 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
  IdentityC.i Load_BalancerC.h Load_BalancerC.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Stats.i
 
-.obj/Load_Balancer_i.o .obj/Load_Balancer_i.o .obj/Load_Balancer_i.o .obj/Load_Balancer_i.o: Load_Balancer_i.cpp Load_Balancer_i.h \
+.obj/Load_Balancer_i.o .obj/Load_Balancer_i.so .shobj/Load_Balancer_i.o .shobj/Load_Balancer_i.so: Load_Balancer_i.cpp Load_Balancer_i.h \
  Load_BalancerS.h Load_BalancerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2359,16 +2138,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2376,6 +2145,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2492,7 +2265,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -2508,7 +2280,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
@@ -2523,40 +2294,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServerC.i \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2569,6 +2306,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -2594,9 +2333,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -2605,12 +2341,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -2625,6 +2366,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -2635,23 +2378,25 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- Load_BalancerC.i Load_BalancerS_T.h Load_BalancerS_T.i \
- Load_BalancerS_T.cpp Load_BalancerS.i \
+ Load_BalancerC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ Load_BalancerS_T.h Load_BalancerS_T.i Load_BalancerS_T.cpp \
+ Load_BalancerS.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
@@ -2663,7 +2408,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Identity_i.o .obj/Identity_i.o .obj/Identity_i.o .obj/Identity_i.o: Identity_i.cpp Identity_i.h IdentityS.h IdentityC.h \
+.obj/Identity_i.o .obj/Identity_i.so .shobj/Identity_i.o .shobj/Identity_i.so: Identity_i.cpp Identity_i.h IdentityS.h IdentityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2686,16 +2431,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Thread_Hook.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Exit.h \
- $(ACE_ROOT)/ace/Thread_Control.h \
- $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2703,6 +2438,10 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2819,7 +2558,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
@@ -2835,7 +2573,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
@@ -2850,40 +2587,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/POA.h \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServerC.i \
- $(TAO_ROOT)/tao/Key_Adapters.i \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/Active_Object_Map.h \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBAC.i \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2896,6 +2599,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
@@ -2921,9 +2626,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -2932,12 +2634,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/Adapter.h \
+ $(TAO_ROOT)/tao/Adapter.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
@@ -2952,6 +2659,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -2962,21 +2671,23 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/tao/MessagingS_T.h \
- $(TAO_ROOT)/tao/MessagingS_T.i \
- $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- IdentityC.i IdentityS_T.h IdentityS_T.i IdentityS_T.cpp IdentityS.i
+ IdentityC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ IdentityS_T.h IdentityS_T.i IdentityS_T.cpp IdentityS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

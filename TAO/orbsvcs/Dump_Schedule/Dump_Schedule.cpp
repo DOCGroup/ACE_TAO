@@ -21,26 +21,11 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
-      if (CORBA::is_nil(poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in(), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil(naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           " (%P|%t) Unable to find the Naming Service\n"),
                           1);
 
       CosNaming::NamingContext_var naming_context =
@@ -49,9 +34,9 @@ main (int argc, char *argv[])
 
       const char *name = 0;
       if (argc > 1)
-	{
-	  name = argv[1];
-	}
+        {
+          name = argv[1];
+        }
       ACE_Scheduler_Factory::use_config (naming_context.in (), name);
 
       RtecScheduler::RT_Info_Set_var infos;
@@ -80,11 +65,11 @@ main (int argc, char *argv[])
          infos_out, configs_out, anomalies_out, ACE_TRY_ENV);
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
-	(ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-					 ACE_SCOPE_THREAD),
-	 ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-					 ACE_SCOPE_THREAD),
-	 infos.out (), configs.out (), anomalies.out (), ACE_TRY_ENV);
+        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         infos.out (), configs.out (), anomalies.out (), ACE_TRY_ENV);
 #endif /* ! __SUNPRO_CC */
 
       ACE_TRY_CHECK;

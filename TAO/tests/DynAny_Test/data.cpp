@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "data.h"
+#include "tao/PortableServer/PortableServer.h"
 
 Data::Data (CORBA::ORB_var orb)
   : m_bool1 (1),                                m_bool2 (0),
@@ -60,8 +61,8 @@ Data::Data (CORBA::ORB_var orb)
       labels[15] = "type objref";
 
       // Getting the RootPOA so we can generate object references.
-      CORBA::Object_var obj = 
-        this->orb_->resolve_initial_references ("RootPOA", 
+      CORBA::Object_var obj =
+        this->orb_->resolve_initial_references ("RootPOA",
                                                 ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
@@ -74,20 +75,20 @@ Data::Data (CORBA::ORB_var orb)
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (), 
+        PortableServer::POA::_narrow (obj.in (),
                                       ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
 
       // Generate values for the member variables.
      this->m_objref1 =
-        root_poa->create_reference ("foo", 
+        root_poa->create_reference ("foo",
                                     ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
 
       this->m_objref2 =
-        root_poa->create_reference ("foo", 
+        root_poa->create_reference ("foo",
                                     ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
@@ -115,4 +116,3 @@ Data::~Data (void)
   CORBA::release (m_typecode1);
   CORBA::release (m_typecode2);
 }
-

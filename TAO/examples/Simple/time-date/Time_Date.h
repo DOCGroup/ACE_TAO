@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Task.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "tao/default_resource.h"
 #include "Time_Date_i.h"
 #include "Alt_Resource_Factory.h"
@@ -10,7 +10,7 @@ class Alt_Resource_Factory_Export My_Resource_Factory : public TAO_Default_Resou
 {
   // = TITLE
   //   Illustrates how to select the appropriate <ACE_Reactor>.
-  // 
+  //
   // = DESCRIPTION
   //   If we're running in a single-threaded configuration this will
   //   be the <ACE_Reactor::instance> singleton.  Otherwise, it'll be
@@ -18,7 +18,7 @@ class Alt_Resource_Factory_Export My_Resource_Factory : public TAO_Default_Resou
   //   <TAO_Default_Resource_Factory>.
 public:
   virtual ACE_Reactor *get_reactor (void);
-  // Return the <ACE_Reactor> that will be utilized by the ORB.  
+  // Return the <ACE_Reactor> that will be utilized by the ORB.
 };
 
 ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)

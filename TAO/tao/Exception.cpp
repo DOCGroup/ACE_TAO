@@ -911,7 +911,7 @@ TAO_Exceptions::fini (void)
 {
   delete TAO_Exceptions::system_exceptions;
   TAO_Exceptions::system_exceptions = 0;
-  
+
 #define TAO_SYSTEM_EXCEPTION(name) \
   CORBA::release (CORBA::_tc_ ## name); \
   CORBA::_tc_ ## name = 0;

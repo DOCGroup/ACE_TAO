@@ -31,8 +31,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS.h"
-#include "tao/TAO.h"
-#include "tao/POAManager.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "Logger_i.h"

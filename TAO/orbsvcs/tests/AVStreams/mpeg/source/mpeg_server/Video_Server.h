@@ -37,7 +37,7 @@
 
 #include "ace/Event_Handler.h"
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "include/common.h"
 #include "mpeg_shared/fileio.h"
 #include "mpeg_shared/com.h"

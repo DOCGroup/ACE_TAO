@@ -20,8 +20,8 @@
 #ifndef TAO_IMR_I_H
 #define TAO_IMR_I_H
 
+#include "tao/PortableServer/ImplRepoC.h"
 #include "tao/corba.h"
-#include "tao/ImplRepoC.h"
 
 class TAO_IMR_Op;
 // Forward Declaration

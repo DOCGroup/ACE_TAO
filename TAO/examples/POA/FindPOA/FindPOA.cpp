@@ -17,6 +17,8 @@
 //===========================================================================
 
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/POA.h"
 
 ACE_RCSID(FindPOA, FindPOA, "$Id$")
 

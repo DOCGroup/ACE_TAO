@@ -1,26 +1,26 @@
 # Microsoft Developer Studio Project File - Name="CosLifeCycle" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** NICHT BEARBEITEN **
+# ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
 CFG=CosLifeCycle - Win32 MFC Debug
-!MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
-!MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
 !MESSAGE 
 !MESSAGE NMAKE /f "CosLifeCycle.mak".
 !MESSAGE 
-!MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
-!MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
 !MESSAGE NMAKE /f "CosLifeCycle.mak" CFG="CosLifeCycle - Win32 MFC Debug"
 !MESSAGE 
-!MESSAGE Für die Konfiguration stehen zur Auswahl:
+!MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "CosLifeCycle - Win32 Release" (basierend auf  "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "CosLifeCycle - Win32 Debug" (basierend auf  "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "CosLifeCycle - Win32 MFC Debug" (basierend auf  "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "CosLifeCycle - Win32 MFC Release" (basierend auf  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_CosNaming.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCycle.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNaming.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCycle.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 Debug"
 
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_CosNamingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCycled.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNamingd.lib TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCycled.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 MFC Debug"
 
@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib TAO_CosNamingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCycled.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_CosNamingmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCyclemfcd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_CosNamingmfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCyclemfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 MFC Release"
 
@@ -141,7 +141,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_CosNaming.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCycle.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acemfc.lib TAOmfc.lib TAO_CosNamingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCyclemfc.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLifeCyclemfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 

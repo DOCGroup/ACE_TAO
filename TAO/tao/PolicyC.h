@@ -99,7 +99,7 @@ public:
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_INVALIDPOLICIES__TAO_SEQ_USHORT_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_INVALIDPOLICIES__TAO_SEQ_USHORT_CH_
 
@@ -107,9 +107,9 @@ public:
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (void); // Default constructor.
-    _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (CORBA::ULong maximum,
       CORBA::ULong length,
       CORBA::UShort *data,
@@ -126,7 +126,7 @@ public:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     CORBA::UShort *get_buffer (CORBA::Boolean orphan = 0);
     const CORBA::UShort *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -138,7 +138,7 @@ public:
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_INVALIDPOLICIES__TAO_SEQ_USHORT_CH_)
 #define _CORBA_INVALIDPOLICIES__TAO_SEQ_USHORT_CH_
@@ -150,20 +150,20 @@ class _tao_seq_UShort_var;
 // _tao_seq_UShort
 // *************************************************************
 
-class TAO_Export _tao_seq_UShort : public 
+class TAO_Export _tao_seq_UShort : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::UShort>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   _tao_seq_UShort (void); // default ctor
   _tao_seq_UShort (CORBA::ULong max); // uses max size
   _tao_seq_UShort (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA::UShort *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::UShort *buffer,
     CORBA::Boolean release=0
   );
   _tao_seq_UShort (const _tao_seq_UShort &); // copy ctor
@@ -194,19 +194,19 @@ public:
   _tao_seq_UShort_var (const _tao_seq_UShort_var &); // copy constructor
   _tao_seq_UShort_var (const _tao_seq_UShort &); // fixed-size base types only
   ~_tao_seq_UShort_var (void); // destructor
-  
+
   _tao_seq_UShort_var &operator= (_tao_seq_UShort *);
   _tao_seq_UShort_var &operator= (const _tao_seq_UShort_var &);
   _tao_seq_UShort_var &operator= (const _tao_seq_UShort &); // fixed-size base types only
   _tao_seq_UShort *operator-> (void);
   const _tao_seq_UShort *operator-> (void) const;
-  
+
   operator const _tao_seq_UShort &() const;
   operator _tao_seq_UShort &();
   operator _tao_seq_UShort &() const;
-  
+
   CORBA::UShort &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const _tao_seq_UShort &in (void) const;
   _tao_seq_UShort &inout (void);
   _tao_seq_UShort *&out (void);
@@ -236,7 +236,7 @@ public:
   _tao_seq_UShort *&ptr (void);
   _tao_seq_UShort *operator-> (void);
   CORBA::UShort &operator[] (CORBA::ULong index);
-  
+
 private:
   _tao_seq_UShort *&ptr_;
   // assignment from T_var not allowed
@@ -302,17 +302,17 @@ class TAO_Export CORBA_Policy_var : public TAO_Base_var
 {
 public:
   CORBA_Policy_var (void); // default constructor
-  CORBA_Policy_var (CORBA_Policy_ptr p) : ptr_ (p) {} 
+  CORBA_Policy_var (CORBA_Policy_ptr p) : ptr_ (p) {}
   CORBA_Policy_var (const CORBA_Policy_var &); // copy constructor
   ~CORBA_Policy_var (void); // destructor
-  
+
   CORBA_Policy_var &operator= (CORBA_Policy_ptr);
   CORBA_Policy_var &operator= (const CORBA_Policy_var &);
   CORBA_Policy_ptr operator-> (void) const;
-  
+
   operator const CORBA_Policy_ptr &() const;
   operator CORBA_Policy_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_Policy_ptr in (void) const;
   CORBA_Policy_ptr &inout (void);
   CORBA_Policy_ptr &out (void);
@@ -345,7 +345,7 @@ public:
   operator CORBA_Policy_ptr &();
   CORBA_Policy_ptr &ptr (void);
   CORBA_Policy_ptr operator-> (void);
-  
+
 private:
   CORBA_Policy_ptr &ptr_;
 };
@@ -369,12 +369,12 @@ public:
   static CORBA_Policy_ptr _duplicate (CORBA_Policy_ptr obj);
   static CORBA_Policy_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_Policy_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_Policy_ptr _nil (void)
@@ -385,7 +385,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::PolicyType policy_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -393,7 +393,7 @@ public:
     ));
 
   virtual CORBA_Policy_ptr copy (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -401,7 +401,7 @@ public:
     ));
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -409,12 +409,12 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -427,8 +427,7 @@ public:
 
 protected:
   CORBA_Policy (void);
-  CORBA_Policy (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_Policy (TAO_Stub *objref,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_Policy (void);
@@ -444,7 +443,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_Policy;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CH_
 
@@ -452,7 +451,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_Policy;
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_CORBA_PolicyList (void);
     _TAO_Unbounded_Object_Sequence_CORBA_PolicyList (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_CORBA_PolicyList (CORBA::ULong maximum,
@@ -474,17 +473,17 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_Policy;
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_POLICYLIST_CH_)
 #define _CORBA_POLICYLIST_CH_
@@ -496,20 +495,20 @@ class CORBA_PolicyList_var;
 // CORBA_PolicyList
 // *************************************************************
 
-class TAO_Export CORBA_PolicyList : public 
+class TAO_Export CORBA_PolicyList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   CORBA_PolicyList (void); // default ctor
   CORBA_PolicyList (CORBA::ULong max); // uses max size
   CORBA_PolicyList (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA_Policy_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA_Policy_ptr *buffer,
     CORBA::Boolean release=0
   );
   CORBA_PolicyList (const CORBA_PolicyList &); // copy ctor
@@ -539,19 +538,19 @@ public:
   CORBA_PolicyList_var (CORBA_PolicyList *);
   CORBA_PolicyList_var (const CORBA_PolicyList_var &); // copy constructor
   ~CORBA_PolicyList_var (void); // destructor
-  
+
   CORBA_PolicyList_var &operator= (CORBA_PolicyList *);
   CORBA_PolicyList_var &operator= (const CORBA_PolicyList_var &);
   CORBA_PolicyList *operator-> (void);
   const CORBA_PolicyList *operator-> (void) const;
-  
+
   operator const CORBA_PolicyList &() const;
   operator CORBA_PolicyList &();
   operator CORBA_PolicyList &() const;
   operator CORBA_PolicyList *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<CORBA_Policy, CORBA_Policy_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const CORBA_PolicyList &in (void) const;
   CORBA_PolicyList &inout (void);
   CORBA_PolicyList *&out (void);
@@ -581,7 +580,7 @@ public:
   CORBA_PolicyList *&ptr (void);
   CORBA_PolicyList *operator-> (void);
   TAO_Object_Manager<CORBA_Policy, CORBA_Policy_var> operator[] (CORBA::ULong index);
-  
+
 private:
   CORBA_PolicyList *&ptr_;
   // assignment from T_var not allowed
@@ -595,7 +594,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_PolicyList;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_POLICYTYPESEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_POLICYTYPESEQ_CH_
 
@@ -603,9 +602,9 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_PolicyList;
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       CORBA::ULong *data,
@@ -622,7 +621,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_PolicyList;
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     CORBA::ULong *get_buffer (CORBA::Boolean orphan = 0);
     const CORBA::ULong *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -634,7 +633,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_PolicyList;
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_POLICYTYPESEQ_CH_)
 #define _CORBA_POLICYTYPESEQ_CH_
@@ -646,20 +645,20 @@ class CORBA_PolicyTypeSeq_var;
 // CORBA_PolicyTypeSeq
 // *************************************************************
 
-class TAO_Export CORBA_PolicyTypeSeq : public 
+class TAO_Export CORBA_PolicyTypeSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ULong>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   CORBA_PolicyTypeSeq (void); // default ctor
   CORBA_PolicyTypeSeq (CORBA::ULong max); // uses max size
   CORBA_PolicyTypeSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA::ULong *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::ULong *buffer,
     CORBA::Boolean release=0
   );
   CORBA_PolicyTypeSeq (const CORBA_PolicyTypeSeq &); // copy ctor
@@ -690,19 +689,19 @@ public:
   CORBA_PolicyTypeSeq_var (const CORBA_PolicyTypeSeq_var &); // copy constructor
   CORBA_PolicyTypeSeq_var (const CORBA_PolicyTypeSeq &); // fixed-size base types only
   ~CORBA_PolicyTypeSeq_var (void); // destructor
-  
+
   CORBA_PolicyTypeSeq_var &operator= (CORBA_PolicyTypeSeq *);
   CORBA_PolicyTypeSeq_var &operator= (const CORBA_PolicyTypeSeq_var &);
   CORBA_PolicyTypeSeq_var &operator= (const CORBA_PolicyTypeSeq &); // fixed-size base types only
   CORBA_PolicyTypeSeq *operator-> (void);
   const CORBA_PolicyTypeSeq *operator-> (void) const;
-  
+
   operator const CORBA_PolicyTypeSeq &() const;
   operator CORBA_PolicyTypeSeq &();
   operator CORBA_PolicyTypeSeq &() const;
-  
+
   CORBA::PolicyType &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const CORBA_PolicyTypeSeq &in (void) const;
   CORBA_PolicyTypeSeq &inout (void);
   CORBA_PolicyTypeSeq *&out (void);
@@ -732,7 +731,7 @@ public:
   CORBA_PolicyTypeSeq *&ptr (void);
   CORBA_PolicyTypeSeq *operator-> (void);
   CORBA::PolicyType &operator[] (CORBA::ULong index);
-  
+
 private:
   CORBA_PolicyTypeSeq *&ptr_;
   // assignment from T_var not allowed
@@ -761,17 +760,17 @@ class TAO_Export CORBA_PolicyManager_var : public TAO_Base_var
 {
 public:
   CORBA_PolicyManager_var (void); // default constructor
-  CORBA_PolicyManager_var (CORBA_PolicyManager_ptr p) : ptr_ (p) {} 
+  CORBA_PolicyManager_var (CORBA_PolicyManager_ptr p) : ptr_ (p) {}
   CORBA_PolicyManager_var (const CORBA_PolicyManager_var &); // copy constructor
   ~CORBA_PolicyManager_var (void); // destructor
-  
+
   CORBA_PolicyManager_var &operator= (CORBA_PolicyManager_ptr);
   CORBA_PolicyManager_var &operator= (const CORBA_PolicyManager_var &);
   CORBA_PolicyManager_ptr operator-> (void) const;
-  
+
   operator const CORBA_PolicyManager_ptr &() const;
   operator CORBA_PolicyManager_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_PolicyManager_ptr in (void) const;
   CORBA_PolicyManager_ptr &inout (void);
   CORBA_PolicyManager_ptr &out (void);
@@ -804,7 +803,7 @@ public:
   operator CORBA_PolicyManager_ptr &();
   CORBA_PolicyManager_ptr &ptr (void);
   CORBA_PolicyManager_ptr operator-> (void);
-  
+
 private:
   CORBA_PolicyManager_ptr &ptr_;
 };
@@ -828,12 +827,12 @@ public:
   static CORBA_PolicyManager_ptr _duplicate (CORBA_PolicyManager_ptr obj);
   static CORBA_PolicyManager_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_PolicyManager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_PolicyManager_ptr _nil (void)
@@ -843,7 +842,7 @@ public:
 
   virtual CORBA_PolicyList * get_policy_overrides (
       const CORBA_PolicyTypeSeq & ts,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -853,7 +852,7 @@ public:
   virtual void set_policy_overrides (
       const CORBA_PolicyList & policies,
       CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -862,7 +861,7 @@ public:
     )) = 0;
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
@@ -893,17 +892,17 @@ class TAO_Export CORBA_PolicyCurrent_var : public TAO_Base_var
 {
 public:
   CORBA_PolicyCurrent_var (void); // default constructor
-  CORBA_PolicyCurrent_var (CORBA_PolicyCurrent_ptr p) : ptr_ (p) {} 
+  CORBA_PolicyCurrent_var (CORBA_PolicyCurrent_ptr p) : ptr_ (p) {}
   CORBA_PolicyCurrent_var (const CORBA_PolicyCurrent_var &); // copy constructor
   ~CORBA_PolicyCurrent_var (void); // destructor
-  
+
   CORBA_PolicyCurrent_var &operator= (CORBA_PolicyCurrent_ptr);
   CORBA_PolicyCurrent_var &operator= (const CORBA_PolicyCurrent_var &);
   CORBA_PolicyCurrent_ptr operator-> (void) const;
-  
+
   operator const CORBA_PolicyCurrent_ptr &() const;
   operator CORBA_PolicyCurrent_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_PolicyCurrent_ptr in (void) const;
   CORBA_PolicyCurrent_ptr &inout (void);
   CORBA_PolicyCurrent_ptr &out (void);
@@ -936,7 +935,7 @@ public:
   operator CORBA_PolicyCurrent_ptr &();
   CORBA_PolicyCurrent_ptr &ptr (void);
   CORBA_PolicyCurrent_ptr operator-> (void);
-  
+
 private:
   CORBA_PolicyCurrent_ptr &ptr_;
 };
@@ -960,12 +959,12 @@ public:
   static CORBA_PolicyCurrent_ptr _duplicate (CORBA_PolicyCurrent_ptr obj);
   static CORBA_PolicyCurrent_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_PolicyCurrent_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_PolicyCurrent_ptr _nil (void)
@@ -974,7 +973,7 @@ public:
     }
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
@@ -1015,7 +1014,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_PolicyTyp
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::SetOverrideType &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::SetOverrideType &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::SetOverrideType &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_PolicyError &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_PolicyError &);

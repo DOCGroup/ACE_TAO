@@ -95,10 +95,6 @@ SOURCE=.\OctetSeq.cpp
 
 SOURCE=.\testC.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\testS.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -106,10 +102,6 @@ SOURCE=.\testS.cpp
 # Begin Source File
 
 SOURCE=.\testC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

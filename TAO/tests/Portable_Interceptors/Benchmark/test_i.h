@@ -26,13 +26,13 @@ class Secure_Vault_i : public POA_Test_Interceptors::Secure_Vault
 public:
   Secure_Vault_i (CORBA::ORB_ptr orb);
   // ctor
-  
-  virtual CORBA::Short ready (CORBA::Environment &ACE_TRY_ENV = 
+
+  virtual CORBA::Short ready (CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void authenticate (const char * user,
-                             CORBA::Environment &ACE_TRY_ENV = 
+                             CORBA::Environment &ACE_TRY_ENV =
                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test_Interceptors::Invalid));
@@ -40,14 +40,14 @@ public:
 
   virtual CORBA::Long update_records (CORBA::Long id,
                                       const Test_Interceptors::Secure_Vault::Record & val,
-                                      CORBA::Environment &ACE_TRY_ENV = 
+                                      CORBA::Environment &ACE_TRY_ENV =
                                       TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV = 
+  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
                          TAO_default_environment ())
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
  private:
   CORBA::ORB_var orb_;
   // The ORB pointer (for shutdown.)

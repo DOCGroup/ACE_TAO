@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 
 CORBA::ORB_var orb;
@@ -54,7 +54,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
       Name[0].id =
         CORBA::string_dup (bl[i].binding_name[0].id);
       Name[0].kind =
-        CORBA::string_dup (bl[i].binding_name[0].kind); 
+        CORBA::string_dup (bl[i].binding_name[0].kind);
 
       CORBA::Object_var obj = nc->resolve (Name);
 

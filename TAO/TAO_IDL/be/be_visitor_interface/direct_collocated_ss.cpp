@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -69,9 +69,9 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
       be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
       *os << ": ACE_NESTED_CLASS ("
-	        << scope->name () << ","
-	        << node->local_name ()
-	        << ") ()" << be_nl;
+                << scope->name () << ","
+                << node->local_name ()
+                << ") ()" << be_nl;
     }
   else
     {

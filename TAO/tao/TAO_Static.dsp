@@ -87,11 +87,19 @@ LIB32=link.exe -lib
 # PROP Default_Filter "h"
 # Begin Source File
 
+SOURCE=.\Acceptor_Filter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Registry.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Adapter.h
 # End Source File
 # Begin Source File
 
@@ -283,18 +291,6 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
@@ -456,10 +452,6 @@ SOURCE=.\PortableInterceptor.h
 # Begin Source File
 
 SOURCE=.\PortableInterceptorC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\PortableServerC.h
 # End Source File
 # Begin Source File
 
@@ -719,11 +711,19 @@ SOURCE=.\WrongTransactionC.h
 # PROP Default_Filter "i"
 # Begin Source File
 
+SOURCE=.\Acceptor_Filter.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Registry.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Adapter.i
 # End Source File
 # Begin Source File
 
@@ -843,18 +843,6 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
@@ -964,10 +952,6 @@ SOURCE=.\PortableInterceptor.i
 # Begin Source File
 
 SOURCE=.\PortableInterceptorC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\PortableServerC.i
 # End Source File
 # Begin Source File
 
@@ -1147,11 +1131,15 @@ SOURCE=.\TAO_Singleton.cpp
 # PROP Default_Filter "cpp"
 # Begin Source File
 
+SOURCE=.\Acceptor_Filter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Active_Object_Map.cpp
+SOURCE=.\Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -1251,10 +1239,6 @@ SOURCE=.\DomainC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DomainS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\DynamicC.cpp
 # End Source File
 # Begin Source File
@@ -1275,15 +1259,7 @@ SOURCE=.\Exclusive_TMS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Forwarding_Servant.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\FT_CORBAC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\FT_CORBAS.cpp
 # End Source File
 # Begin Source File
 
@@ -1355,18 +1331,6 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
@@ -1392,10 +1356,6 @@ SOURCE=.\IORC.cpp
 # Begin Source File
 
 SOURCE=.\IORManipulation.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Key_Adapters.cpp
 # End Source File
 # Begin Source File
 
@@ -1427,10 +1387,6 @@ SOURCE=.\MessagingC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MessagingS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\MProfile.cpp
 # End Source File
 # Begin Source File
@@ -1447,10 +1403,6 @@ SOURCE=.\Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Adapter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Object_KeyC.cpp
 # End Source File
 # Begin Source File
@@ -1464,10 +1416,6 @@ SOURCE=.\ObjectIDList.cpp
 # Begin Source File
 
 SOURCE=.\operation_details.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Operation_Table.cpp
 # End Source File
 # Begin Source File
 
@@ -1495,14 +1443,6 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\POA.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\POAManager.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Policy_Factory.cpp
 # End Source File
 # Begin Source File
@@ -1512,10 +1452,6 @@ SOURCE=.\Policy_Manager.cpp
 # Begin Source File
 
 SOURCE=.\PolicyC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PolicyS.cpp
 # End Source File
 # Begin Source File
 
@@ -1532,14 +1468,6 @@ SOURCE=.\Pool_Per_Endpoint.cpp
 # Begin Source File
 
 SOURCE=.\PortableInterceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PortableInterceptorC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PortableServerC.cpp
 # End Source File
 # Begin Source File
 
@@ -1619,10 +1547,6 @@ SOURCE=.\Sequence.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Servant_Base.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Server_Request.cpp
 # End Source File
 # Begin Source File
@@ -1688,10 +1612,6 @@ SOURCE=.\Tagged_Components.cpp
 # Begin Source File
 
 SOURCE=.\Tagged_Profile.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAO.cpp
 # End Source File
 # Begin Source File
 

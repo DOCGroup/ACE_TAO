@@ -20,7 +20,7 @@
 #ifndef TAO_NAMING_SERVICE_H
 #define TAO_NAMING_SERVICE_H
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
 class TAO_Naming_Service

@@ -2,7 +2,7 @@
 
 // -- App. Specific Include --
 #include "CounterC.h"
-#include "util.h"
+// #include "util.h"
 
 // -- App. Specific Include --
 #include "Policy_Verifier.h"
@@ -20,7 +20,7 @@ main (int argc, char *argv[])
 
       policy_verifier.init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       policy_verifier.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

@@ -19,7 +19,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
@@ -41,8 +41,8 @@ public:
   // Destructor.
 
   int init (int argc,
-	    char *argv[],
-	    CORBA::Environment &env);
+            char *argv[],
+            CORBA::Environment &env);
   // Initialize the Server state.
 
   int run (CORBA::Environment &env);
