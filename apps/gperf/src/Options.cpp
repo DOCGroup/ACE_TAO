@@ -303,7 +303,7 @@ Options::parse_args (int argc, char *argv[])
           {
             ACE_SET_BITS (option_word_, DEBUGGING);
             ACE_ERROR ((LM_ERROR,
-                        "Starting program %n, version %s, with debuggin on.\n",
+                        "Starting program %n, version %s, with debugging on.\n",
                         version_string));
             break;
           }
