@@ -1,118 +1,123 @@
+Sat Sep 11 00:44:34 2004  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/ast/ast_module.cpp:
+          Changed NULL to 0 to silence compile time warning.
+
 Fri Sep 10 12:28:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Trading/Trading.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
 
-	  Changed colocated_test project to inherit from trading_serv.
+          Changed colocated_test project to inherit from trading_serv.
 
-	  Changed import_test and export_test projects to inherit from
-	  portableserver.
+          Changed import_test and export_test projects to inherit from
+          portableserver.
 
-	* orbsvcs/tests/Notify/Test_Filter/Test_Filter.mpc:
+        * orbsvcs/tests/Notify/Test_Filter/Test_Filter.mpc:
 
-	  Changed project to inherit from notification_skel.
+          Changed project to inherit from notification_skel.
 
-	* orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
 
-	  Changed project to inherit from naming.
+          Changed project to inherit from naming.
 
 Fri Sep 10 09:06:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
-	* orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+        * orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
+        * orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
 
-	  Moved dependency on dynamicinterface and ifr_client from _skel
-	  to _serv.
+          Moved dependency on dynamicinterface and ifr_client from _skel
+          to _serv.
 
 Thu Sep  9 19:26:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
+        * orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
 
-	  Changed project to inherit from event_skel.
+          Changed project to inherit from event_skel.
 
 Thu Sep  9 19:21:21 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Notify/lib/Notify_lib.mpc:
+        * orbsvcs/tests/Notify/lib/Notify_lib.mpc:
 
-	  Changed project to inherit from svc_utils.
+          Changed project to inherit from svc_utils.
 
 Thu Sep  9 19:18:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
 
-	  Changed project to inherit from notify_serv.  Removed
-	  unused dependency on dynamicany and svc_utils.
+          Changed project to inherit from notify_serv.  Removed
+          unused dependency on dynamicany and svc_utils.
 
 Thu Sep  9 19:13:30 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/examples/Log/Event/Log_Event.mpc:
+        * orbsvcs/examples/Log/Event/Log_Event.mpc:
 
-	  Changed projects to inherit from naming.
+          Changed projects to inherit from naming.
 
 Thu Sep  9 19:09:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:
+        * orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:
 
-	  Changed projects to inherit from event_skel and naming.
+          Changed projects to inherit from event_skel and naming.
 
 Thu Sep  9 18:46:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.mpc:
 
-	  Changed project to inherit from event_skel.
+          Changed project to inherit from event_skel.
 
 Thu Sep  9 18:30:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Simple/time-date/Simple_time_date.mpc:
+        * examples/Simple/time-date/Simple_time_date.mpc:
 
-	  Changed client project to inherit from portableserver.  It
-	  doesn't really use it, but Simple_util.h #includes
-	  "PortableServer/PortableServer.h", which forces it
-	  to be resolved.
+          Changed client project to inherit from portableserver.  It
+          doesn't really use it, but Simple_util.h #includes
+          "PortableServer/PortableServer.h", which forces it
+          to be resolved.
 
-	* orbsvcs/examples/CosEC/Factory/CosEC_Factory.mpc:
+        * orbsvcs/examples/CosEC/Factory/CosEC_Factory.mpc:
 
-	  Added exename definitions so that programs, not libraries, are
-	  built.
+          Added exename definitions so that programs, not libraries, are
+          built.
 
-	  Added main.cpp to FactoryServer project's Source_Files.
+          Added main.cpp to FactoryServer project's Source_Files.
 
-	  Changed FactoryServer project to inherit from event_serv.
+          Changed FactoryServer project to inherit from event_serv.
 
 Thu Sep  9 17:24:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
 
-	  Revert change:
-	  Wed Sep  8 12:15:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+          Revert change:
+          Wed Sep  8 12:15:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	  for this file only.  This is actually part of the notication
-	  client stub library.
+          for this file only.  This is actually part of the notication
+          client stub library.
 
 Thu Sep  9 16:16:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB.cpp:
-	* tao/TAO_Singleton_Manager.h:
-	* tao/TAO_Singleton_Manager.cpp:
+        * tao/ORB.cpp:
+        * tao/TAO_Singleton_Manager.h:
+        * tao/TAO_Singleton_Manager.cpp:
 
-	  Reintroduced TAO's unexpected exception handler.  It will be
-	  removed once again once the skeleton refactoring work is
-	  committed.
+          Reintroduced TAO's unexpected exception handler.  It will be
+          removed once again once the skeleton refactoring work is
+          committed.
 
 Thu Sep  9 15:57:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/DLL_ORB.h:
-	* tao/DLL_ORB.inl:
-	* tao/DLL_ORB.cpp:
+        * tao/DLL_ORB.h:
+        * tao/DLL_ORB.inl:
+        * tao/DLL_ORB.cpp:
 
-	  Removed these files.  They have been deprecated for a few
-	  years.  See the `tests/DLL_ORB' test to get an idea of how to
-	  use DLL ORB functionality without explicitly linking the TAO
-	  library.  Thanks to Bala for the reminder.
+          Removed these files.  They have been deprecated for a few
+          years.  See the `tests/DLL_ORB' test to get an idea of how to
+          use DLL ORB functionality without explicitly linking the TAO
+          library.  Thanks to Bala for the reminder.
 
-	* tao/Makefile.am (ORB_Core):
-	* tao/tao.mpc (Source_Files):
+        * tao/Makefile.am (ORB_Core):
+        * tao/tao.mpc (Source_Files):
 
-	  Removed `DLL_ORB.cpp' from the source file list.
+          Removed `DLL_ORB.cpp' from the source file list.
 
 Thu Sep  9 11:53:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -124,298 +129,298 @@ Thu Sep  9 11:53:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Sep  9 07:16:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
 
-	  Updated inheritance.
+          Updated inheritance.
 
 Thu Sep  9 07:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Notify/lib/Notify_lib.mpc:
+        * orbsvcs/tests/Notify/lib/Notify_lib.mpc:
 
-	  Changed to inherit from notification_skel.
+          Changed to inherit from notification_skel.
 
 Thu Sep  9 06:46:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
 
-	  Changed CosNotification_Skel project to inherit from event_skel.
+          Changed CosNotification_Skel project to inherit from event_skel.
 
 Thu Sep  9 06:15:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
 
-	  Updated library project to inherit from naming_skel.
+          Updated library project to inherit from naming_skel.
 
 Thu Sep  9 05:49:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Concurrency_Service/Makefile.am:
-	* orbsvcs/CosEvent_Service/Makefile.am:
-	* orbsvcs/Dump_Schedule/Makefile.am:
-	* orbsvcs/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/Fault_Detector/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/LifeCycle_Service/Makefile.am:
-	* orbsvcs/LoadBalancer/Makefile.am:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/Naming_Service/Makefile.am:
-	* orbsvcs/Notify_Service/Makefile.am:
-	* orbsvcs/Scheduling_Service/Makefile.am:
-	* orbsvcs/Time_Service/Makefile.am:
-	* orbsvcs/Trading_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/Concurrency_Service/Makefile.am:
+        * orbsvcs/CosEvent_Service/Makefile.am:
+        * orbsvcs/Dump_Schedule/Makefile.am:
+        * orbsvcs/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/Fault_Detector/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+        * orbsvcs/LoadBalancer/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/Naming_Service/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/Scheduling_Service/Makefile.am:
+        * orbsvcs/Time_Service/Makefile.am:
+        * orbsvcs/Trading_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated for orbsvcs library refactor.
+          Updated for orbsvcs library refactor.
 
 Thu Sep  9 05:08:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/PortableGroup.mpc:
-	* orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
 
-	  Updated.  Missing some dependencies now that naming.mpb is just
-	  client stub library.
+          Updated.  Missing some dependencies now that naming.mpb is just
+          client stub library.
 
 Wed Sep  8 22:08:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
-	  Added exename definition so that programs, not libraries, are built.
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+          Added exename definition so that programs, not libraries, are built.
 
 Wed Sep  8 21:31:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/ec_typed_events.mpb:
+        * orbsvcs/orbsvcs/ec_typed_events.mpb:
 
-	  Added idlflags setting for stub and skeleton export headers and
-	  macros.  Fixed typos in the lists of source, header, and inline
-	  files.
+          Added idlflags setting for stub and skeleton export headers and
+          macros.  Fixed typos in the lists of source, header, and inline
+          files.
 
 Wed Sep  8 21:36:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Typecode.cpp:
-	* tao/Typecode.h:
-	* tao/Typecode.i:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+        * tao/Typecode.i:
 
-	  For long we got away with wrong typecode memory
-	  manipulation. The fundamental problem was that somewhere
-	  inbetween we started manipulating the lifetimes of stack based
-	  typecodes that are generated in the stub and skeleton code. This
-	  fix basically makes sure that we don't do that. The changes are
-	  as follows.
+          For long we got away with wrong typecode memory
+          manipulation. The fundamental problem was that somewhere
+          inbetween we started manipulating the lifetimes of stack based
+          typecodes that are generated in the stub and skeleton code. This
+          fix basically makes sure that we don't do that. The changes are
+          as follows.
 
-	  - Made _incr_ref () and _decr_ref () protected since
-	    clients should not be using this directly.
+          - Made _incr_ref () and _decr_ref () protected since
+            clients should not be using this directly.
 
-	  - The _duplicate () will check for stack based typecodes,
+          - The _duplicate () will check for stack based typecodes,
             allocate a typecode off the heap if the incoming tyoecodes are
-	    stack based. If the typecode is heap allocated we just increment
-	    the refcount.
+            stack based. If the typecode is heap allocated we just increment
+            the refcount.
 
-	  - The _release () decrements the ref count if it is off the heap
+          - The _release () decrements the ref count if it is off the heap
             and is a no-op otherwise.
 
-	  The Typecode had a boolean flag orb_owns_ which was supposed to
-	  be used for the above, but we never used it for some reason.
+          The Typecode had a boolean flag orb_owns_ which was supposed to
+          be used for the above, but we never used it for some reason.
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 
-	  Set the orb_owns_ flag while creating a new typecode off the
-	  heap.
+          Set the orb_owns_ flag while creating a new typecode off the
+          heap.
 
-	  Thanks to JT Conklin for pointing out the problem.
+          Thanks to JT Conklin for pointing out the problem.
 
 Wed Sep  8 12:51:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
 
-	  Added #include "event_serv_export.h".
+          Added #include "event_serv_export.h".
 
 Wed Sep  8 12:15:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h:
-	* orbsvcs/orbsvcs/Naming/Entries.h:
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Server.h:
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
-	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h:
-	* orbsvcs/orbsvcs/Notify/Admin.h:
-	* orbsvcs/orbsvcs/Notify/AdminProperties.h:
-	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
-	* orbsvcs/orbsvcs/Notify/Builder.h:
-	* orbsvcs/orbsvcs/Notify/Consumer.h:
-	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Notify/Consumer_Map.h:
-	* orbsvcs/orbsvcs/Notify/Container_T.h:
-	* orbsvcs/orbsvcs/Notify/CosNotify_Initializer.h:
-	* orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
-	* orbsvcs/orbsvcs/Notify/CosNotify_Service.h:
-	* orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Notify/Default_Factory.h:
-	* orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
-	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
-	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
-	* orbsvcs/orbsvcs/Notify/Event.h:
-	* orbsvcs/orbsvcs/Notify/EventChannel.h:
-	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
-	* orbsvcs/orbsvcs/Notify/EventType.h:
-	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
-	* orbsvcs/orbsvcs/Notify/Event_Manager.h:
-	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
-	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
-	* orbsvcs/orbsvcs/Notify/Factory.h:
-	* orbsvcs/orbsvcs/Notify/FilterAdmin.h:
-	* orbsvcs/orbsvcs/Notify/FilterFactory.h:
-	* orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
-	* orbsvcs/orbsvcs/Notify/ID_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Event.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
-	* orbsvcs/orbsvcs/Notify/Object.h:
-	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
-	* orbsvcs/orbsvcs/Notify/Peer.h:
-	* orbsvcs/orbsvcs/Notify/Properties.h:
-	* orbsvcs/orbsvcs/Notify/Property.h:
-	* orbsvcs/orbsvcs/Notify/PropertySeq.h:
-	* orbsvcs/orbsvcs/Notify/Property_Boolean.h:
-	* orbsvcs/orbsvcs/Notify/Property_T.h:
-	* orbsvcs/orbsvcs/Notify/Proxy.h:
-	* orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h:
-	* orbsvcs/orbsvcs/Notify/ProxySupplier.h:
-	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.h:
-	* orbsvcs/orbsvcs/Notify/Proxy_T.h:
-	* orbsvcs/orbsvcs/Notify/QoSProperties.h:
-	* orbsvcs/orbsvcs/Notify/Reactive_Task.h:
-	* orbsvcs/orbsvcs/Notify/Refcountable.h:
-	* orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
-	* orbsvcs/orbsvcs/Notify/Seq_Worker_T.h:
-	* orbsvcs/orbsvcs/Notify/Service.h:
-	* orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h:
-	* orbsvcs/orbsvcs/Notify/Supplier.h:
-	* orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
-	* orbsvcs/orbsvcs/Notify/Supplier_Map.h:
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
-	* orbsvcs/orbsvcs/Notify/Timer.h:
-	* orbsvcs/orbsvcs/Notify/Timer_Queue.h:
-	* orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
-	* orbsvcs/orbsvcs/Notify/Worker_Task.h:
-	* orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
-	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
-	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
-	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
-	* orbsvcs/orbsvcs/Trader/Interpreter.h:
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
-	* orbsvcs/orbsvcs/Trader/Trader.h:
-	* orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.h:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.h:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h:
+        * orbsvcs/orbsvcs/Naming/Entries.h:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h:
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/Consumer_Map.h:
+        * orbsvcs/orbsvcs/Notify/Container_T.h:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Initializer.h:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+        * orbsvcs/orbsvcs/Notify/Factory.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterFactory.h:
+        * orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/Peer.h:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/Property.h:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.h:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h:
+        * orbsvcs/orbsvcs/Notify/Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.h:
+        * orbsvcs/orbsvcs/Notify/Proxy_T.h:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
+        * orbsvcs/orbsvcs/Notify/Seq_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Service.h:
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h:
+        * orbsvcs/orbsvcs/Notify/Supplier.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/Supplier_Map.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/Timer.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h:
 
-	  Changed #include "*_export.h" to "*_serv_export.h"; Renamed
-	  TAO_*_Export to TAO_*_Serv_Export.
+          Changed #include "*_export.h" to "*_serv_export.h"; Renamed
+          TAO_*_Export to TAO_*_Serv_Export.
 
-	* orbsvcs/orbsvcs/CosEvent/event_serv_export.h:
-	* orbsvcs/orbsvcs/Naming/naming_serv_export.h:
-	* orbsvcs/orbsvcs/Notify/notify_serv_export.h:
-	* orbsvcs/orbsvcs/Trader/trading_serv_export.h:
+        * orbsvcs/orbsvcs/CosEvent/event_serv_export.h:
+        * orbsvcs/orbsvcs/Naming/naming_serv_export.h:
+        * orbsvcs/orbsvcs/Notify/notify_serv_export.h:
+        * orbsvcs/orbsvcs/Trader/trading_serv_export.h:
 
-	  New files.
+          New files.
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
 
-	  Changed to use different export macros service implementations.
+          Changed to use different export macros service implementations.
 
 Wed Sep  8 11:03:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent/event_skel_export.h:
-	* orbsvcs/orbsvcs/Naming/naming_skel_export.h:
-	* orbsvcs/orbsvcs/Notify/notify_skel_export.h:
-	* orbsvcs/orbsvcs/Trader/trading_skel_export.h:
+        * orbsvcs/orbsvcs/CosEvent/event_skel_export.h:
+        * orbsvcs/orbsvcs/Naming/naming_skel_export.h:
+        * orbsvcs/orbsvcs/Notify/notify_skel_export.h:
+        * orbsvcs/orbsvcs/Trader/trading_skel_export.h:
 
-	  New files.
+          New files.
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
 
-	  Changed to use different export macros and export includes for
-	  stub and skeleton libraries.
+          Changed to use different export macros and export includes for
+          stub and skeleton libraries.
 
 Wed Sep  8 12:55:30 2004  Dale Wilson  <wilson_d@ociweb.com>
 
