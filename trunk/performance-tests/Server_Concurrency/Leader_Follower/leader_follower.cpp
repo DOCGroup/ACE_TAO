@@ -153,7 +153,7 @@ Leader_Follower_Task::svc (void)
             {
               // Eat a little CPU
               /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-              u_long n = 3UL;
+              u_long n = 11UL;
               ACE::is_prime (n, 2, n / 2);
             }
 
@@ -244,6 +244,9 @@ main (int argc, ASYS_TCHAR *argv[])
                   Leader_Follower_Task *[number_of_threads],
                   -1);
 
+  ACE_Rusage begin_rusage;
+  ACE_OS::getrusage (RUSAGE_SELF, &begin_rusage);
+
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
@@ -283,6 +286,9 @@ main (int argc, ASYS_TCHAR *argv[])
   // Wait for all threads to terminate.
   result = ACE_Thread_Manager::instance ()->wait ();
 
+  ACE_Rusage end_rusage;
+  ACE_OS::getrusage (RUSAGE_SELF, &end_rusage);
+
   Latency_Stats latency;
   Throughput_Stats throughput;
   for (i = 0; i < number_of_threads; ++i)
@@ -296,6 +302,10 @@ main (int argc, ASYS_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals for throughput:\n"));
   throughput.dump_results (argv[0], "throughput");
+
+  ACE_DEBUG ((LM_DEBUG, "\nRusage %d/%d\n",
+              end_rusage.ru_nvcsw - begin_rusage.ru_nvcsw,
+              end_rusage.ru_nivcsw - begin_rusage.ru_nivcsw));
 
   for (i = 0; i < number_of_threads; ++i)
     {
