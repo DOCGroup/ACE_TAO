@@ -46,6 +46,11 @@ if [ $# -ne 1 ]; then
 fi
 threads=`expr $1 + 1`
 
+if [ $threads -ge 40 ]; then
+  echo $0: limit of 40 threads
+  exit 0
+fi
+
 
 ########
 ######## Make sure that the executables have been built.

@@ -93,7 +93,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 override TAO_IDLFLAGS += -hc Cli.h -hs Ser.h -hT Ser_T.h \
 			 -cs Cli.cpp -ci Cli.i \
-			 -ss Ser.cpp -sT Ser_T.cpp  
+			 -ss Ser.cpp -sT Ser_T.cpp
 
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 CPPFLAGS += -I$(TAO_ROOT) $(TSS_ORB_FLAG)
@@ -106,11 +106,8 @@ server:	$(addprefix $(VDIR),$(PARAM_TEST_SVR_OBJS))
 client:	$(addprefix $(VDIR),$(PARAM_TEST_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clean:
-	-/bin/rm -rf $(VDIR)/*.o $(BIN) obj.* core Templates.DB .make.state
-
 realclean: clean
-	-/bin/rm -rf param_testCli.* param_testSer.* param_testSer_T.*
+	-$(RM) param_testCli.* param_testSer.* param_testSer_T.*
 
 endif # ! ACE_HAS_GNUG_PRE_2_8
 

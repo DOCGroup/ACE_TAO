@@ -46,7 +46,7 @@ ifeq ($(CROSS-COMPILE),)
   include $(TAO_ROOT)/taoconfig.mk
 
   realclean: clean
-	-/bin/rm -rf $(DOVE_BROWSER_JAVA) \
+	-$(RM) $(DOVE_BROWSER_JAVA) \
          $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA)) NavWeap.idl \
          Navigation.java NavigationH*.java \
          Weapons.java WeaponsH*.java *.class CosNaming \

@@ -57,11 +57,8 @@ LDFLAGS +=  -lsocket -lnsl -ldl
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
 CPPFLAGS += -DSH_MEM  -I/project/doc/pkg/X11/include
 
-clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
-
 realclean: clean
-	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
+	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

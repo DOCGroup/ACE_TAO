@@ -64,9 +64,6 @@ octet_sequence: $(addprefix $(VDIR),$(OCTET_SEQUENCE_OBJS))
 allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clean:
-	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

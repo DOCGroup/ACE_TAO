@@ -77,11 +77,8 @@ TAO_VR.module: Video_Repository.idl
 	$(JAVA_ROOT)/bin/idltojava Video_Repository.idl
 	touch TAO_VR.module
 
-clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
-
 realclean: clean
-	-/bin/rm -rf Video_Repository.idl $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
+	-$(RM) Video_Repository.idl $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
 	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES)) 
 
 IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp

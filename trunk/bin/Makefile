@@ -47,10 +47,10 @@ else   # Not building envinfo
 
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
-CFILES		= clone.cpp 
+CFILES		= clone.cpp
 OFILES		= clone.o
 DFLAGS		= -b elf
-CCFLAGS		+= -I$(ACE_ROOT) 
+CCFLAGS		+= -I$(ACE_ROOT)
 
 #############################################################################
 # C++ directives
@@ -63,11 +63,8 @@ CCFLAGS		+= -I$(ACE_ROOT)
 clone: $(OFILES)
 	$(CXX) $(CCFLAGS) -o $@ $(OFILES)
 
-clean:
-	-/bin/rm -f *.o *.out *~ core
-
-realclean: clean 
-	-/bin/rm -fr clone
+realclean: clean
+	-$(RM) clone
 
 endif  # envinfo
 

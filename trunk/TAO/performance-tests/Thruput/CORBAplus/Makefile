@@ -49,8 +49,8 @@ CPPFLAGS += -I$(PBHOME)/include
 
 $(IDL_SRC): ttcp.idl
 	$(PBHOME)/bin/idlc ttcp.idl
-	-/bin/mv ttcp.C ttcp.cpp
-	-/bin/mv ttcp_s.C ttcp_s.cpp
+	-mv ttcp.C ttcp.cpp
+	-mv ttcp_s.C ttcp_s.cpp
 
 server:	$(addprefix $(VDIR),$(TTCP_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/iiop_s.o $(VLDLIBS) $(POSTLINK)
@@ -61,8 +61,5 @@ server:	$(addprefix $(VDIR),$(TTCP_SERVER_OBJS))
 client:	$(addprefix $(VDIR),$(TTCP_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clean:
-	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
-
 realclean: clean
-	-/bin/rm -rf ttcp.cpp ttcp.h ttcp_s.cpp ttcp_s.h
+	-$(RM) ttcp.cpp ttcp.h ttcp_s.cpp ttcp_s.h

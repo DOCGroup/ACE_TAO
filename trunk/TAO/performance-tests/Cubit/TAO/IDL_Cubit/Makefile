@@ -87,7 +87,7 @@ collocation/collocation_test: $(addprefix $(VDIR),$(COLLOCATION_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf cubitC.* cubitS.* cubitS_T.*
+	-$(RM) cubitC.* cubitS.* cubitS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

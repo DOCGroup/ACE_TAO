@@ -57,7 +57,7 @@ orb_creation: $(addprefix $(VDIR),$(ORB_CREATION_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf testC.* testS.* testS_T.*
+	-$(RM) testC.* testS.* testS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

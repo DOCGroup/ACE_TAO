@@ -50,7 +50,7 @@ client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf FileC.* FileS.* FileS_T.*
+	-$(RM) FileC.* FileS.* FileS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
