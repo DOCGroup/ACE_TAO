@@ -301,6 +301,31 @@ library by patching linuxthreads/Makefile:
 With that and the above configuration/pathes, all ACE tests run
 perfectly cleanly on Alpha!<p>
 
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+There is a bug in <code>getsockname ()</code> on versions of Linux
+through 2.0.30, at least.  <code>getsockname ()</code> returns an
+Internet host address of 127.0.0.1 (localhost) instead of 0.0.0.0 for
+sockets that aren't connected.  This bug prevents TAO servers from
+working correctly.  To fix it, comment out these two lines in function
+<code>inet_getname ()</code> in
+<code>/usr/src/linux/net/ipv4/af_inet.c</code>:
+
+<pre>
+	} else {
+		__u32 addr = sk-&gt;rcv_saddr;
+		if (!addr) {
+			addr = sk-&gt;saddr;
+/* comment out this line:  if (!addr) */
+/* comment out this line:  	addr = ip_my_addr(); */
+		}
+		sin-&gt;sin_port = sk-&gt;dummy_th.source;
+		sin-&gt;sin_addr.s_addr = addr;
+	}
+</pre>
+
+and rebuild your kernel.  This fix has been implemented in 2.1.x
+versions of the kernel.<p>
+
 
 <DT> <B> SCO UNIX </B> <BR><BR>
 
@@ -420,14 +445,14 @@ for help with this port.<P>
 @@ -112,7 +112,11 @@
  static __inline__ int _name_fchmod(int nsid, mode_t mode)
  { return _name_server(_NS_FCHMOD, nsid, mode); }
- 
+
 +#if defined __cplusplus
 +static __inline__ int _name_fchown(int /* nsid */, uid_t owner, gid_t group)
 +#else
  static __inline__ int _name_fchown(int nsid, uid_t owner, gid_t group)
 +#endif /* __cplusplus */
  { return _name_server(_NS_FCHOWN, owner, group); }
- 
+
  static __inline__ int _name_close(int nsid)
 </pre>
 
@@ -476,29 +501,29 @@ That is the version that is shipped with Tornado 1.0.1/
 VxWorks 5.3.1.  The problems are:<P>
 
 <OL>
-  <LI> The program entry point cannot be called ``main'' with g++.  ACE
-       renames it to ``ace_main'' (configurable via ACE_MAIN) on VxWorks.
-       While this may seem trivial, it is important with legacy code.
-       ACE itself ran into this problem.<P>
+  <LI>The program entry point cannot be called ``main'' with g++.  ACE
+      renames it to ``ace_main'' (configurable via ACE_MAIN) on VxWorks.
+      While this may seem trivial, it is important with legacy code.
+      ACE itself ran into this problem.<P>
 
-  <LI> argc/argv isn't used with VxWorks entry points.  ACE provides
-       a wrapper function that transparently converts shell command
-       line arguments to argc/argv form.  See <A HREF="#spa">below</a>
-       for details.<P>
+  <LI>argc/argv isn't used with VxWorks entry points.  ACE provides
+      a wrapper function that transparently converts shell command
+      line arguments to argc/argv form.  See <A HREF="#spa">below</a>
+      for details.<P>
 
-  <LI> Unsigned long long support is not available with the g++ that
-       is distributed with Tornado 1.0.1/VxWorks 5.3.1, or with
-       GreenHills 1.8.8.  The documentation says that it is supported
-       by g++, but try using it :-)   Wind River technical support verified
-       that it doesn't work.  ACE provides its own 64-bit unsigned integer
-       type, ACE_hrtime_t, so you don't even have to worry about this
-       problem if you use it.<P>
+  <LI>Unsigned long long support is not available with the g++ that
+      is distributed with Tornado 1.0.1/VxWorks 5.3.1, or with
+      GreenHills 1.8.8.  The documentation says that it is supported
+      by g++, but try using it :-)   Wind River technical support verified
+      that it doesn't work.  ACE provides its own 64-bit unsigned integer
+      type, ACE_hrtime_t, so you don't even have to worry about this
+      problem if you use it.<P>
 
-  <LI> There a gory problem with munch that is severely aggravated
-       by the presence of a static in the Wind River/g++ iostream.h.
-       ACE hides this and provides an easy-to-use workaround in the
-       very unlikely situation where it becomes a problem.
-       Please see ace/config-vxworks5.2-g++.h for more information.<P>
+  <LI>There a gory problem with munch that is severely aggravated
+      by the presence of a static in the Wind River/g++ iostream.h.
+      ACE hides this and provides an easy-to-use workaround in the
+      very unlikely situation where it becomes a problem.
+      Please see ace/config-vxworks5.2-g++.h for more information.<P>
 </OL>
 
 In addition, as noted <A HREF="#g++">below</A> following the
@@ -556,13 +581,14 @@ If you use the GNU GCC g++ compiler please note the following:<P>
         <LI>ACE transparently supports egcs.  Please use the appropriate
         g++ config and platform files for the OS on which you will use egcs.
 
-        <strong><blink>WARNING:</blink></strong> The default behavior of
-        the ACE Makefiles is to add <code>-fno-exceptions</code> to egcs
-        (and g++ starting with version 2.8.0) invocations.  This disables
-        exception handling support.  On Solaris/sparc and Linux/alpha, it
-        results in a 25 percent reduction in the size of libACE.so.  To enable
-        exception handling, add <code>exceptions=1</code> to your
-        <code>make</code> command line invocation, or to your
+        <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+        The default behavior of the ACE Makefiles is to add
+        <code>-fno-exceptions</code> to egcs (and g++ starting with version
+        2.8.0) invocations.  This disables exception handling support.  On
+        Solaris/sparc and Linux/alpha, it results in a 25 percent reduction
+        in the size of libACE.so.  To enable exception handling, add
+        <code>exceptions=1</code> to your <code>make</code> command line
+        invocation, or to your
         <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.
 
         <LI>With g++ 2.8.0, an internal compiler error is raised when
@@ -942,14 +968,15 @@ But, that will make repeated testing more difficult on VxWorks.
 You'd either have to call static constructors and destructors
 manually or unload/load the program between runs.<p>
 
-<strong><blink>WARNING:</blink></strong> ACE on VxWorks assumes that
-your <code>main</code> function is named <code>main</code> when using
-ACE_HAS_NONSTATIC_OBJECT_MANAGER.  Any violation of this assumption is
-at your peril.  If you really need to call your entry point something
-other than <code>main</code>, you'll need to construct an
-ACE_Object_Manager.  Please see the <code>#define</code> of <code>main
-(int, char *[])</code> in <code>ace/OS.h</code> to see how ACE does
-that for entry points named <code>main</code>.<p>
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+ACE on VxWorks assumes that your <code>main</code> function is named
+<code>main</code> when using ACE_HAS_NONSTATIC_OBJECT_MANAGER.  Any
+violation of this assumption is at your peril.  If you really need to
+call your entry point something other than <code>main</code>, you'll
+need to construct an ACE_Object_Manager.  Please see the
+<code>#define</code> of <code>main (int, char *[])</code> in
+<code>ace/OS.h</code> to see how ACE does that for entry points named
+<code>main</code>.<p>
 
 ACE threads (VxWorks tasks) can be named, for example, by supplying a
 non-null argument to the Thread_Manager spawn routines.  However,
@@ -1009,24 +1036,23 @@ $ACE_ROOT/netsvcs/servers/main.cpp</A> should also be compiled and ready to run.
 % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
 </code></pre><P>
 
-<LI> By default, if the shared object library is built, the services
-     are linked into the <CODE>main</CODE> driver program dynamically.
-     To specify which services should be linked in and executed, edit the
+<LI>By default, if the shared object library is built, the services
+    are linked into the <CODE>main</CODE> driver program dynamically.
+    To specify which services should be linked in and executed, edit the
 <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/svc.conf">
 $ACE_ROOT/netsvcs/servers/svc.conf</A> file.  During your editing,
-     you should update information (such as the default service port
-     numbers) that affects the initialization of services in this
-     file.  Refer to the <A HREF="ACE-papers.html#config">Service Configurator</A>
-     documentation to learn how the configuration file is parsed and
-     how the services are dynamically linked and executed.  In
-     addition, refer to the <A HREF="ACE-netsvcs.html">Network
-     Services</A> documentation to learn more about how to configure
-     each network service.<P>
+    you should update information (such as the default service port
+    numbers) that affects the initialization of services in this
+    file.  Refer to the <A HREF="ACE-papers.html#config">Service Configurator</A>
+    documentation to learn how the configuration file is parsed and
+    how the services are dynamically linked and executed.  In
+    addition, refer to the <A HREF="ACE-netsvcs.html">Network
+    Services</A> documentation to learn more about how to configure
+    each network service.<P>
 
-<LI> If you only want to link the services statically, simply remove
-     or rename the svc.conf file.<P>
-
+<LI>If you only want to link the services statically, simply remove
+    or rename the svc.conf file.<P>
 </OL>
 
 <H4><A NAME="win32svcs">Building and Installing ACE Network Services on Win32</A></H4>
@@ -1208,8 +1234,8 @@ show_uninit        Lists all uninitialized in object files built for
 </PRE>
 <HR><P>
 
-Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">
-ACE</A> home page.
+Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
+home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
