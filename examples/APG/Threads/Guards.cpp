@@ -1,8 +1,29 @@
 // $Id$
 
 #include "ace/OS_main.h"
+#include "ace/OS_Memory.h"
+#include "ace/Guard_T.h"
+#include "ace/Log_Msg.h"
+#include "ace/Thread_Mutex.h"
+
+// This file exists primarily to get code into the book to show different
+// ways to do the same thing. For complete context and explanation, please
+// see APG chapter 12.
+
+class HA_Device_Repository {
+public:
+  int update_device (int device_id);
+
+private:
+  ACE_Thread_Mutex  mutex_;
+};
+
+class Object {
+};
+static Object *object;
 
 #if 0
+// This is less-desired way to do this...
 
 // Listing 1 code/ch12
 int
@@ -37,6 +58,8 @@ HA_Device_Repository::update_device (int device_id)
   // Guard is destroyed, automatically releasing the lock.
 }
 // Listing 2
+#endif /* 0 */
+
 // Listing 3 code/ch12
 int
 HA_Device_Repository::update_device (int device_id)
@@ -46,9 +69,13 @@ HA_Device_Repository::update_device (int device_id)
   ACE_NEW_RETURN (object, Object, -1);
   // Use the object.
   // ...
+  return 0;
 }
 // Listing 3
 
-#endif /* 0 */
 int ACE_TMAIN (int, ACE_TCHAR *[])
-{ return 0; }
+{
+  HA_Device_Repository rep;
+  rep.update_device (42);
+  return 0;
+}
