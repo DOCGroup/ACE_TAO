@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="POA DSI Client" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -17,12 +17,13 @@ CFG=POA DSI Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA DSI Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "POA DSI Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA DSI Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "POA DSI Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -171,7 +172,7 @@ InputPath=.\Database.idl
 InputName=Database
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
