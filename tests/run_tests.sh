@@ -24,7 +24,7 @@ run()
   if [ -f log/$1.log ]; then
     ./run_tests.check log/$1.log
   else
-    echo No log file (log/$1.log) is present
+    echo "No log file (log/$1.log) is present"
   fi
 }
 
