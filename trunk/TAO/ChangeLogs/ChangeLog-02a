@@ -1,3 +1,12 @@
+Mon Jun 12 13:24:43 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/client.dsp:
+	* orbsvcs/tests/LoadBalancing/server.dsp:
+
+	  Dropped warning level from 4 to 3.  Warning level 4 was too
+	  picky.  It caused warnings to show up in the Win32 headers,
+	  themselves!
+
 Mon Jun 12 10:38:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simulator/Event_Supplier/Makefile:
