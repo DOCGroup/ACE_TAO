@@ -110,7 +110,7 @@ REALCLEAN : CLEAN
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines macros)%>/D <%define%> <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%><%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dllflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c
+CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines macros)%>/D <%define%> <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%><%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -199,7 +199,7 @@ SOURCE=.\<%pch_source%>
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
-CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dllflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c
+CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c
 
 "$(INTDIR)\<%basenoextension(pch_source)%>.obj"	"$(INTDIR)\<%noextension(pch_header)%>.pch" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<

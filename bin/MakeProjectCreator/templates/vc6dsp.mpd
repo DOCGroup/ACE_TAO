@@ -52,7 +52,7 @@ RSC=rc.exe
 <%if(type_is_static)%>
 LINK32=link.exe -lib
 <%endif%>
-# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines macros)%>/D <%define%> <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%> <%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dllflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FD /c
+# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines macros)%>/D <%define%> <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%> <%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FD /c
 <%if(compile_flags_removed)%>
 # SUBTRACT CPP <%compile_flags_removed%>
 <%endif%>
