@@ -16,21 +16,10 @@
 
 ACE_RCSID(ace, OS, "$Id$")
 
-#if 0
-
-#if defined (ACE_WIN32)
-
-// = Static initialization.
-
-
-#endif /* WIN32 */
-
-
-#endif
-
 // include new cpps
 #include "ace/Cleanup.cpp"
 #include "ace/Object_Manager_Base.cpp"
+#include "ace/OS_main.cpp"
 #include "ace/OS_NS_arpa_inet.cpp"
 #include "ace/OS_NS_ctype.cpp"
 #include "ace/OS_NS_dirent.cpp"

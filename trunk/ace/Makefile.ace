@@ -23,6 +23,7 @@ OS_FILES = \
   Time_Value \
   Cleanup \
   Object_Manager_Base \
+  OS_main \
   OS_NS_arpa_inet \
   OS_NS_ctype \
   OS_NS_dirent \
@@ -934,6 +935,59 @@ endif # GHS
   os_include/os_fcntl.h \
   os_include/sys/os_stat.h
 
+.obj/OS_main.o .obj/OS_main.so .shobj/OS_main.o .shobj/OS_main.so: OS_main.cpp \
+  OS_main.h \
+  pre.h \
+  config-all.h \
+  config.h \
+  config-linux.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  Object_Manager.h \
+  ACE_export.h \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  Recursive_Thread_Mutex.h \
+  OS_NS_Thread.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  Default_Constants.h \
+  os_include/os_pthread.h \
+  Base_Thread_Adapter.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  os_include/sys/os_sem.h \
+  os_include/sys/os_ipc.h \
+  os_include/os_semaphore.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_signal.h \
+  Static_Object_Lock.h \
+  Managed_Object.h \
+  Managed_Object.cpp \
+  Managed_Object.i
+
 .obj/OS_NS_arpa_inet.o .obj/OS_NS_arpa_inet.so .shobj/OS_NS_arpa_inet.o .shobj/OS_NS_arpa_inet.so: OS_NS_arpa_inet.cpp \
   OS_NS_arpa_inet.h \
   pre.h \
@@ -1389,8 +1443,7 @@ endif # GHS
   OS_NS_wchar.h \
   os_include/os_wchar.h \
   os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_stdlib.h
+  os_include/os_ctype.h
 
 .obj/OS_NS_strings.o .obj/OS_NS_strings.so .shobj/OS_NS_strings.o .shobj/OS_NS_strings.so: OS_NS_strings.cpp \
   OS_NS_strings.h \
@@ -1407,27 +1460,7 @@ endif # GHS
   os_include/os_strings.h \
   os_include/os_stddef.h \
   ACE_export.h \
-  OS_NS_strings.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_stdio.h \
-  os_include/os_stdarg.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/sys/os_types.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
-  os_include/os_inttypes.h \
-  os_include/os_stdint.h \
-  os_include/os_float.h
+  OS_NS_strings.inl
 
 .obj/OS_NS_stropts.o .obj/OS_NS_stropts.so .shobj/OS_NS_stropts.o .shobj/OS_NS_stropts.so: OS_NS_stropts.cpp \
   OS_NS_stropts.h \
@@ -1998,8 +2031,7 @@ endif # GHS
   os_include/os_stdint.h \
   os_include/os_float.h \
   ACE_export.h \
-  OS_NS_wchar.inl \
-  OS_NS_ctype.h
+  OS_NS_wchar.inl
 
 .obj/OS_QoS.o .obj/OS_QoS.so .shobj/OS_QoS.o .shobj/OS_QoS.so: OS_QoS.cpp \
   OS_QoS.h \
@@ -3094,7 +3126,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -3214,8 +3245,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -3668,10 +3697,6 @@ endif # GHS
   OS_Memory.h \
   OS_NS_stdlib.h \
   OS_NS_signal.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -3856,10 +3881,6 @@ endif # GHS
   OS_Memory.h \
   OS_NS_stdlib.h \
   OS_NS_signal.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -3908,6 +3929,9 @@ endif # GHS
   TSS_T.h \
   TSS_T.cpp \
   TSS_T.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
   Singleton.cpp \
   Singleton.i \
   Framework_Component.h \
@@ -4407,8 +4431,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -4473,10 +4495,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -4599,7 +4617,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -5435,8 +5452,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Cleanup.h \
-  OS_NS_stdio.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -6541,7 +6556,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -6649,7 +6663,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -6713,10 +6726,6 @@ endif # GHS
   OS_Memory.h \
   OS_NS_stdlib.h \
   OS_NS_signal.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.cpp \
   Managed_Object.i \
@@ -6757,6 +6766,9 @@ endif # GHS
   TSS_T.h \
   TSS_T.cpp \
   TSS_T.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
   Singleton.cpp \
   Singleton.i \
   Framework_Component.h \
@@ -6857,7 +6869,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -7036,7 +7047,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -7239,7 +7249,6 @@ endif # GHS
   Singleton.i \
   Object_Manager.h \
   Object_Manager_Base.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -7443,7 +7452,6 @@ endif # GHS
   Singleton.i \
   Object_Manager.h \
   Object_Manager_Base.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -7730,7 +7738,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -8739,7 +8746,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -8969,7 +8975,6 @@ endif # GHS
   Singleton.i \
   Object_Manager.h \
   Object_Manager_Base.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -9112,7 +9117,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -12256,10 +12260,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Cleanup.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -13433,7 +13433,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -13612,7 +13611,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -13789,7 +13787,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -13965,7 +13962,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -14179,7 +14175,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -14332,7 +14327,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -14478,7 +14472,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -14623,7 +14616,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -14759,7 +14751,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Cleanup.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -15596,8 +15587,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -15885,7 +15874,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -16097,7 +16085,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -16413,10 +16400,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -16425,6 +16408,8 @@ endif # GHS
   Flag_Manip.h \
   Flag_Manip.i \
   OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16576,7 +16561,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -16772,7 +16756,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -16857,47 +16840,105 @@ endif # GHS
   ace_wchar.h \
   ace_wchar.inl \
   OS_main.h \
-  Object_Manager.h \
+  Cleanup.h \
   ACE_export.h \
   Object_Manager_Base.h \
-  Cleanup.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_signal.h \
   os_include/os_time.h \
   os_include/os_ucontext.h \
-  Global_Macros.h \
-  OS_Errno.h \
-  os_include/os_errno.h \
-  Recursive_Thread_Mutex.h \
-  OS_NS_Thread.h \
-  Basic_Types.h \
-  os_include/os_limits.h \
-  os_include/os_unistd.h \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  os_include/netinet/os_in.h \
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  os_include/os_limits.h \
+  os_include/os_unistd.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
-  os_include/os_float.h \
+  OS_NS_ctype.h \
+  OS_NS_dirent.h \
+  os_include/os_dirent.h \
+  OS_NS_dlfcn.h \
+  os_include/os_dlfcn.h \
+  OS_NS_errno.h \
+  os_include/os_errno.h \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_NS_math.h \
+  OS_NS_netdb.h \
+  os_include/os_netdb.h \
+  OS_NS_poll.h \
+  os_include/os_poll.h \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_regex.h \
+  OS_NS_signal.h \
+  OS_NS_stdio.h \
+  OS_NS_stdlib.h \
   os_include/os_stdlib.h \
   os_include/sys/os_wait.h \
   os_include/sys/os_resource.h \
   os_include/sys/os_time.h \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_float.h \
+  OS_NS_strings.h \
+  os_include/os_strings.h \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_msg.h \
+  os_include/sys/os_msg.h \
+  os_include/sys/os_ipc.h \
+  OS_NS_sys_resource.h \
+  OS_NS_sys_select.h \
+  os_include/sys/os_select.h \
+  OS_NS_sys_shm.h \
+  os_include/sys/os_shm.h \
+  OS_NS_sys_socket.h \
+  os_include/net/os_if.h \
+  OS_NS_sys_stat.h \
   Default_Constants.h \
+  OS_NS_sys_time.h \
+  Time_Value.h \
+  OS_NS_sys_uio.h \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_wait.h \
+  OS_NS_Thread.h \
   os_include/os_pthread.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
   iosfwd.h \
   os_include/sys/os_sem.h \
-  os_include/sys/os_ipc.h \
   os_include/os_semaphore.h \
   OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_signal.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
+  OS_NS_time.h \
+  OS_NS_unistd.h \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_Dirent.h \
+  OS_String.h \
+  OS_TLI.h \
+  os_include/sys/os_mman.h \
+  Min_Max.h \
+  os_include/netinet/os_tcp.h \
+  os_include/os_assert.h \
+  os_include/os_termios.h \
+  os_include/os_aio.h \
+  os_include/sys/os_un.h \
+  os_include/os_syslog.h \
+  Object_Manager.h \
+  Recursive_Thread_Mutex.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -16918,7 +16959,6 @@ endif # GHS
   Malloc_T.h \
   Malloc_Allocator.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Free_List.h \
   Free_List.cpp \
   Free_List.i \
@@ -16927,7 +16967,6 @@ endif # GHS
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
-  OS_NS_fcntl.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -16935,19 +16974,8 @@ endif # GHS
   Init_ACE.h \
   Init_ACE.i \
   Sock_Connect.h \
-  os_include/netinet/os_in.h \
-  os_include/sys/os_socket.h \
-  os_include/sys/os_uio.h \
   Sock_Connect.i \
   ACE.i \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  os_include/os_ctype.h \
-  OS_NS_sys_socket.h \
-  os_include/net/os_if.h \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_string.h \
   Memory_Pool.h \
   Event_Handler.h \
   Atomic_Op.h \
@@ -16982,7 +17010,6 @@ endif # GHS
   Auto_Ptr.cpp \
   Auto_Ptr.i \
   String_Base.i \
-  Min_Max.h \
   XML_Svc_Conf.h \
   Reactor.h \
   Timer_Queuefwd.h \
@@ -16990,7 +17017,6 @@ endif # GHS
   Svc_Conf_Tokens.h \
   Parse_Node.h \
   DLL.h \
-  os_include/os_dlfcn.h \
   Svc_Conf_Lexer_Guard.h
 
 .obj/Svc_Conf_y.o .obj/Svc_Conf_y.so .shobj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp \
@@ -17169,7 +17195,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -17896,7 +17921,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -18007,7 +18031,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -18130,8 +18153,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -18261,7 +18282,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -18275,6 +18295,21 @@ endif # GHS
   Process_Mutex.h \
   Synch_T.h \
   Synch.h \
+  Auto_Event.h \
+  Event.h \
+  Barrier.h \
+  OS_NS_errno.h \
+  Condition_Thread_Mutex.h \
+  Condition_Recursive_Thread_Mutex.h \
+  Manual_Event.h \
+  Mutex.h \
+  Null_Barrier.h \
+  Null_Condition.h \
+  Null_Mutex.h \
+  Null_Semaphore.h \
+  Semaphore.h \
+  Thread_Semaphore.h \
+  TSS_Adapter.h \
   Lock_Adapter_T.h \
   Lock_Adapter_T.cpp \
   Lock_Adapter_T.inl \
@@ -18338,10 +18373,6 @@ endif # GHS
   OS_Memory.h \
   OS_NS_stdlib.h \
   OS_NS_signal.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -18638,7 +18669,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -19220,7 +19250,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -19391,10 +19420,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -19463,10 +19488,6 @@ endif # GHS
   Object_Manager_Base.h \
   Cleanup.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_stdio.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \
@@ -20320,7 +20341,6 @@ endif # GHS
   Object_Manager.h \
   Object_Manager_Base.h \
   Recursive_Thread_Mutex.h \
-  OS_NS_ctype.h \
   Static_Object_Lock.h \
   Managed_Object.h \
   Managed_Object.cpp \

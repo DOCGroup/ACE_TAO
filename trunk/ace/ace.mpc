@@ -25,6 +25,7 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Time_Value.cpp
       Cleanup.cpp
       Object_Manager_Base.cpp
+      OS_main.cpp
       OS_NS_arpa_inet.cpp
       OS_NS_ctype.cpp
       OS_NS_dirent.cpp
