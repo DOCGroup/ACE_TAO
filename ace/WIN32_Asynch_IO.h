@@ -40,6 +40,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Handle_Set.h"
 #include "ace/Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 // Forward declaration
 class ACE_WIN32_Proactor;

@@ -3,15 +3,19 @@
 // Defines the Internet domain address family address format.
 
 #include "ace/MEM_Addr.h"
-#include "ace/Log_Msg.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
+#include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/MEM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, MEM_Addr, "$Id$")
+ACE_RCSID (ace,
+	   MEM_Addr,
+	   "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Addr)
 
