@@ -1,3 +1,10 @@
+Mon Sep 22 11:36:26 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/SString.cpp:
+
+          Added __Lynx__ to the special check for instantiating
+          ACE_String_Base<char>::NULL_String_.
+
 Mon Sep 22 11:04:03 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/portablegroup.mpb:
