@@ -1,3 +1,0 @@
-project(POA Default Servant): taoserver {
-  exename = Default_Servant
-}

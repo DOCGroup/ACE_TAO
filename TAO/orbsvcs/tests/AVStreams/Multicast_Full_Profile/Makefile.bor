@@ -1,7 +1,0 @@
-#
-# Makefile for building the avstreams multicast_full_profile test
-#
-
-MAKEFILES = ftp.bor server.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,7 +1,0 @@
-#
-# Makefile for building the avstreams simple_two_stage test
-#
-
-MAKEFILES = receiver.bor sender.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

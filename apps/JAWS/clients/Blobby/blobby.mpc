@@ -1,8 +1,0 @@
-project(blobby) : aceexe {
-  Source_Files {
-    Blob.cpp
-    Blob_Handler.cpp
-    Options.cpp
-  }
-}
-
