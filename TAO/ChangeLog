@@ -1,3 +1,9 @@
+Mon Jan  5 14:14:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+
+	  Applied patches from Dale Wilson for warnings in  g++ builds. 
+
 Mon Jan  5 13:54:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
