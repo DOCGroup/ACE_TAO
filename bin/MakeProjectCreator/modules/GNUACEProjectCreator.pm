@@ -47,16 +47,13 @@ sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
   my($value) = undef;
-  my($crlf)  = $self->crlf();
-  my($tag)   = 'source_files';
-  my($names) = $self->{$tag};
-  my($dcomp) = $self->get_default_component_name();
+  my($names) = $self->{'source_files'};
 
   if ($name eq 'vpath') {
     my(%vpath) = ();
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
-      foreach my $key (sort keys %$comps) {
+      foreach my $key (keys %$comps) {
         foreach my $item (@{$$comps{$key}}) {
           my($dname) = dirname($item);
           if ($dname ne '.' && $dname !~ /^\.\.\//) {
@@ -65,12 +62,13 @@ sub fill_value {
         }
       }
     }
-    my($str) = join(':', keys %vpath);
+    my($str) = join(':', sort keys %vpath);
     if ($str ne '') {
-      $value = 'VPATH = .:' . $str . $crlf;
+      $value = 'VPATH = .:' . $str . $self->crlf();
     }
   }
   elsif ($name eq 'comptarget') {
+    my($crlf)  = $self->crlf();
     foreach my $name (keys %$names) {
       if (defined $compscript{$name}) {
         if (!defined $value) {

@@ -44,7 +44,7 @@ sub fill_value {
     my($names) = $self->{'source_files'};
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
-      foreach my $key (sort keys %$comps) {
+      foreach my $key (keys %$comps) {
         foreach my $item (@{$$comps{$key}}) {
           my($dname) = dirname($item);
           if ($dname ne '.' && $dname !~ /^\.\.\//) {
@@ -53,7 +53,7 @@ sub fill_value {
         }
       }
     }
-    my($str) = join(':', keys %vpath);
+    my($str) = join(':', sort keys %vpath);
     if ($str ne '') {
       $value = 'VPATH = .:' . $str . $self->crlf();
     }

@@ -906,13 +906,14 @@ sub add_implicit_project_dependencies {
   ## append the dependency and remove the file in question from the
   ## project so that the next time around the foreach, we don't find it
   ## as a dependent on the one that we just modified.
-  foreach my $key (sort keys %{$self->{'project_file_list'}}) {
-    foreach my $ikey (keys %{$self->{'project_file_list'}}) {
+  my(@pflkeys) = keys %{$self->{'project_file_list'}};
+  foreach my $key (@pflkeys) {
+    foreach my $ikey (@pflkeys) {
       if ($key ne $ikey && 
-          (!defined $bidir{$ikey} ||
-           !$self->array_contains($bidir{$ikey}, [$key])) &&
           ($self->{'project_file_list'}->{$key}->[1] eq
-           $self->{'project_file_list'}->{$ikey}->[1])) {
+           $self->{'project_file_list'}->{$ikey}->[1]) &&
+          (!defined $bidir{$ikey} ||
+           !$self->array_contains($bidir{$ikey}, [$key]))) {
         my(@over) = ();
         if ($self->array_contains(
                       $self->{'project_file_list'}->{$key}->[2],
@@ -1276,9 +1277,6 @@ sub get_modified_workspace_name {
   my($self)   = shift;
   my($name)   = shift;
   my($ext)    = shift;
-  my($pwd)    = $self->getcwd();
-  my($type)   = $self->{'wctype'};
-  my($wsname) = $self->get_workspace_name();
 
   ## If this is a per project workspace, then we should not
   ## modify the workspace name.  It may overwrite another workspace
@@ -1286,6 +1284,10 @@ sub get_modified_workspace_name {
   if ($self->{'per_project_workspace_name'}) {
     return "$name$ext";
   }
+
+  my($pwd)    = $self->getcwd();
+  my($type)   = $self->{'wctype'};
+  my($wsname) = $self->get_workspace_name();
 
   if (!defined $previous_workspace_name{$type}->{$pwd}) {
     $previous_workspace_name{$type}->{$pwd} = $wsname;
@@ -1318,10 +1320,9 @@ sub generate_recursive_input_list {
 
 
 sub verify_build_ordering {
-  my($self)     = shift;
-  my($projects) = $self->get_projects();
+  my($self) = shift;
 
-  foreach my $project (@$projects) {
+  foreach my $project (@{$self->{'projects'}}) {
     $self->get_validated_ordering($project, 1);
   }
 }
@@ -1339,7 +1340,7 @@ sub get_validated_ordering {
     ($name, $deps) = @{$$pjs{$project}};
     if (defined $deps && $deps ne '') {
       my($darr)     = $self->create_array($deps);
-      my($projects) = $self->get_projects();
+      my($projects) = $self->{'projects'};
       foreach my $dep (@$darr) {
         my($found) = 0;
         ## Avoid circular dependencies
