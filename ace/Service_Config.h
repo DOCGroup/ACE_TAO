@@ -257,8 +257,8 @@ public:
 
 protected:
   static int process_directives (void);
-  // Process service configuration requests as indicated 
-  // in the <service_config_file>.
+  // Process service configuration requests as indicated in the
+  // <service_config_file>.  Returns -1 if errors occur, else 0.
 
   static void parse_args (int, char *[]);
   // Handle the command-line options intended for the <ACE_Service_Config>.

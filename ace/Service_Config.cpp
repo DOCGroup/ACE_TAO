@@ -484,9 +484,12 @@ ACE_Service_Config::process_directives (void)
       ace_yyparse ();
 
       if (ace_yyerrno > 0)
-	errno = EINVAL; // This is a hack, better errors should be provided... 
-
-      return ace_yyerrno;
+	{
+	  errno = EINVAL; // This is a hack, better errors should be provided... 
+	  return -1;
+	}
+      else
+	return 0;
     }
 }
 
