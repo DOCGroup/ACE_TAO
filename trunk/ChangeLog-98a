@@ -16,6 +16,14 @@ Thu Mar 12 02:19:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Thanks to Jonathan Biggar <jon@floorboard.com> for pointing this
  	  discrepancy out.
 
+	* ace/WFMO_Reactor.cpp (dispatch_handles): The correct range check is
+          {WAIT_OBJECT_0,WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 () - index}
+          and not 
+	  {WAIT_OBJECT_0,WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 ()}
+
+	  Thanks to Evgeny Beskrovny evgeny_beskrovny@icomverse.com for
+ 	  pointing this out.
+
 Wed Mar 11 15:20:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (thr_getspecific): Added comments to the code to

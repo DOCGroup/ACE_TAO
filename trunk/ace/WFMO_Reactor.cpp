@@ -1132,7 +1132,7 @@ ACE_WFMO_Reactor::dispatch_handles (size_t index)
 	default: // Dispatch.
 	  // Check if a handle successfully became signaled.
 	  if (wait_status >= WAIT_OBJECT_0 && 
-	      wait_status < WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 ())
+	      wait_status < WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 () - index)
 	    index += wait_status - WAIT_OBJECT_0;
 	  else
 	    // Otherwise, a handle was abandoned.
