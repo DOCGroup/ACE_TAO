@@ -342,7 +342,7 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 #  if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
 ACE_OS::realpath (const char *file_name,
-		  char *resolved_name)
+                  char *resolved_name)
 {
 #    if defined (ACE_WIN32)
   return ::_fullpath (resolved_name, file_name, PATH_MAX);
@@ -355,7 +355,7 @@ ACE_OS::realpath (const char *file_name,
 #  if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
 ACE_OS::realpath (const wchar_t *file_name,
-		  wchar_t *resolved_name)
+                  wchar_t *resolved_name)
 {
 #    if defined (ACE_WIN32)
   return ::_wfullpath (resolved_name, file_name, PATH_MAX);
