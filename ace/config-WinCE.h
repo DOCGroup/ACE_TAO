@@ -148,6 +148,23 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;
 #define stderr 0
 
+#if defined (ACE_WINCE_VERSION) && (ACE_WINCE_VERSION >= 0201)
+#define EMFILE WSAEMFILE
+#define EINTR  WSAEINTR
+#define EACCES ERROR_ACCESS_DENIED
+#define ENOSPC ERROR_HANDLE_DISK_FULL
+#define EEXIST ERROR_FILE_EXISTS
+#define EPIPE  ERROR_BROKEN_PIPE
+#define EFAULT WSAEFAULT
+#define ENOENT WSAEINVAL
+#define EINVAL WSAEINVAL
+#define ERANGE WSAEINVAL
+#define EAGAIN WSAEWOULDBLOCK
+#define ENOMEM ERROR_OUTOFMEMORY
+#define ENODEV ERROR_BAD_DEVICE
+#define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
+#endif /* UNDER_CE && UNDER_CE == 2.01 */
+
 #define SEEK_SET FILE_BEGIN
 #define SEEK_CUR FILE_CURRENT
 #define SEEK_END FILE_END
