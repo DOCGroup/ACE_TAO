@@ -7,8 +7,8 @@ Mon Nov 11 18:03:37 2002  Ossama Othman  <ossama@uci.edu>
 	  Updated CORBA spec URL to the 3.0.1 spec's URL.
 
 	* tao/Messaging/Makefile.bor:
-	* tao/Messaging/Messaging.dsp:
-	* tao/Messaging/Messaging_Static.dsp:
+	* tao/Messaging/TAO_Messaging.dsp:
+	* tao/Messaging/TAO_Messaging_Static.dsp:
 
 	  Added AMI_ClientRequestInfo_i.{h,cpp} to these Make/project
 	  files.
