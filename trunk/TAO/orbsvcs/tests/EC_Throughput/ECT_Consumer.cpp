@@ -232,10 +232,14 @@ Driver::push_consumer (void* consumer_cookie,
       ECT_Data other;
       cdr >> other;
 
+      if (!cdr.good_bit ())
+	ACE_ERROR ((LM_ERROR, "Problem demarshalling C++ data\n"));
+
       CORBA::ULong n = info.trajectory.length ();
-      ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
-      ACE_DEBUG ((LM_DEBUG, "Inventory contains <%d> elements\n",
-                  other.inventory.current_size ()));
+      // ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
+      // ACE_DEBUG ((LM_DEBUG, "Inventory <%s> contains <%d> elements\n",
+      // other.description.in (),
+      // other.inventory.current_size ()));
 
       for (CORBA::ULong i = 0; i < n; ++i)
         {
