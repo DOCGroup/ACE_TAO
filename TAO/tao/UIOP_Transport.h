@@ -73,7 +73,8 @@ public:
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0);
   virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
+                        const ACE_Time_Value *s = 0,
+			size_t *bytes_transferred = 0);
   virtual ssize_t send (const u_char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);
@@ -86,12 +87,12 @@ public:
                             int twoway,
                             ACE_Time_Value *max_wait_time);
 
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
-  
+
 protected:
   TAO_UIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
@@ -133,7 +134,7 @@ public:
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
@@ -145,11 +146,11 @@ public:
   // Register the handler with the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetail,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
-  
+
   int messaging_init (CORBA::Octet major,
                       CORBA::Octet minor);
   // Initialising the messaging object
@@ -164,10 +165,10 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // Our orb Core
-  
+
   CORBA::Boolean lite_flag_;
   // We using GIOP lite?
-  
+
   TAO_Pluggable_Reply_Params params_;
   // The reply data that is sent back by the server
 };

@@ -14,7 +14,8 @@
 //    IIOP specific acceptor processing
 //
 // = AUTHOR
-//    Fred Kuhns
+//    Fred Kuhns <fredk@cs.wustl.edu>
+//    Ossama Othman <ossama@uci.edu>
 //
 //============================================================================
 
@@ -68,6 +69,8 @@ public:
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            int version_major,
+                            int version_minor,
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
@@ -107,8 +110,9 @@ protected:
   // example, if the IP address is INADDR_ANY (0.0.0.0) then there
   // will be possibly a different hostname for each interface.
 
-  size_t num_hosts_;
-  // The number of host names cached in the hosts_ array.
+  size_t endpoint_count_;
+  // The number of host names cached in the hosts_ array (equivalent
+  // to the number of endpoints opened by this Acceptor).
 
   TAO_GIOP_Version version_;
   // The GIOP version for this endpoint
@@ -124,7 +128,7 @@ private:
   TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
-  
+
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
 

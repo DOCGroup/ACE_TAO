@@ -36,6 +36,12 @@ class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
+class TAO_PriorityModelPolicy;
+class TAO_ThreadpoolPolicy;
+class TAO_PrivateConnectionPolicy;
+class TAO_PriorityBandedConnectionPolicy;
+class TAO_ServerProtocolPolicy;
+class TAO_ClientProtocolPolicy;
 
 class TAO_Export TAO_Policy_Manager_Impl
 {
@@ -59,30 +65,27 @@ public:
   // Copy the state from <source>, it uses the copy() operator to
   // obtain independent copies of all the policies.
 
-  void set_policy_overrides (
-      const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  void set_policy_overrides (const CORBA::PolicyList & policies,
+                             CORBA::SetOverrideType set_add,
+                             CORBA::Environment &ACE_TRY_ENV =
+                             TAO_default_environment ()
     );
   // Modify the list of policies to include <policies>.
   // If <set_add> is CORBA::SET_OVERRIDE then we replace all the old
   // policies. If it is CORBA::ADD_OVERRIDE we simply add the policies
   // in <policies>.
-  // No attempt is made to validate the policies for consitency.
+  // No attempt is made to validate the policies for consistency.
 
-  CORBA::PolicyList * get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types,
+                                            CORBA::Environment &ACE_TRY_ENV =
+                                            TAO_default_environment ()
     );
   // Get the values (if any) for the policies in <types>, if <types>
   // is an empty list the method returns *all* the current policies.
 
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
+                                CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -112,6 +115,17 @@ public:
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_PriorityModelPolicy *priority_model (void) const;
+  TAO_ThreadpoolPolicy *threadpool (void) const;
+  TAO_PrivateConnectionPolicy *private_connection (void) const;
+  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
+  TAO_ServerProtocolPolicy *server_protocol (void) const;
+  TAO_ClientProtocolPolicy *client_protocol (void) const;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
@@ -150,6 +164,17 @@ private:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_PriorityModelPolicy *priority_model_;
+  TAO_ThreadpoolPolicy *threadpool_;
+  TAO_PrivateConnectionPolicy *private_connection_;
+  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
+  TAO_ServerProtocolPolicy *server_protocol_;
+  TAO_ClientProtocolPolicy *client_protocol_;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   CORBA::PolicyList other_policies_;
   // Other policies that are not optimized for fast querying
 
@@ -165,10 +190,9 @@ public:
   TAO_Policy_Manager (void);
   // constructor
 
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
+                                CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -179,12 +203,11 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  virtual void set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  virtual void set_policy_overrides (const CORBA::PolicyList & policies,
+                                     CORBA::SetOverrideType set_add,
+                                     CORBA::Environment &ACE_TRY_ENV =
+                                     CORBA::Environment::default_environment ()
+                                     );
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -210,6 +233,17 @@ public:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_PriorityModelPolicy *priority_model (void);
+  TAO_ThreadpoolPolicy *threadpool (void);
+  TAO_PrivateConnectionPolicy *private_connection (void);
+  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void);
+  TAO_ServerProtocolPolicy *server_protocol (void);
+  TAO_ClientProtocolPolicy *client_protocol (void);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 private:
   ACE_SYNCH_MUTEX mutex_;
   // Protect access
@@ -223,10 +257,9 @@ private:
 class TAO_Export TAO_Policy_Current_Impl
 {
 public:
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
+                                CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -237,12 +270,10 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  void set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  void set_policy_overrides (const CORBA::PolicyList & policies,
+                             CORBA::SetOverrideType set_add,
+                             CORBA::Environment &ACE_TRY_ENV =
+                             CORBA::Environment::default_environment ());
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -267,6 +298,14 @@ public:
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_PrivateConnectionPolicy *private_connection (void) const;
+  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
+  TAO_ClientProtocolPolicy *client_protocol (void) const;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
@@ -325,6 +364,14 @@ public:
   TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_PrivateConnectionPolicy *private_connection (void) const;
+  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
+  TAO_ClientProtocolPolicy *client_protocol (void) const;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;

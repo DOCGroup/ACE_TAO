@@ -1105,6 +1105,8 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   (0x0EU << 7)
 #define TAO_ORB_CORE_INIT_LOCATION_CODE            (0x0FU << 7)
 #define TAO_POLICY_NARROW_CODE                     (0x10U << 7)
+#define TAO_GUARD_FAILURE                          (0x11U << 7)
+#define TAO_POA_BEING_DESTROYED                    (0x12U << 7)
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 
 // errno encoding:  bottom 7 bits.
@@ -1145,6 +1147,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
 #define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
 
+#define TAO_INVALID_PRIORITY -1
 
 // An hash define for the regular two way operation
 #define TAO_TWOWAY_RESPONSE_FLAG 255

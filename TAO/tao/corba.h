@@ -55,7 +55,7 @@
 #include "tao/POA.h"
 
 // TAO specific files, avoid them as much as possible.
-#include "tao/Interceptor.h"
+#include "tao/PortableInterceptor.h"
 #if (TAO_HAS_SMART_PROXES == 1)
 #include "tao/Smart_Proxies.h"
 #endif /*TAO_HAS_SMART_PROXES == 1*/

@@ -47,7 +47,7 @@
 #include "tao/POAManager.h"
 
 // RT CORBA
-#include "tao/rtcorbafwd.h"
+#include "tao/RTCORBAC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -59,6 +59,7 @@
 #endif /* _MSC_VER */
 
 class TAO_POA;
+class TAO_ServerProtocolPolicy;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -233,14 +234,19 @@ class TAO_Export TAO_POA_Policies
 {
 public:
 
-  TAO_POA_Policies (void);
+  enum PriorityModel
+  {
+    CLIENT_PROPAGATED,
+    SERVER_DECLARED
+  };
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+  TAO_POA_Policies (TAO_ORB_Core &orb_core,
+                    CORBA::Environment &ACE_TRY_ENV);
+
+  ~TAO_POA_Policies (void);
 
   PortableServer::ThreadPolicyValue thread (void) const;
   void thread (PortableServer::ThreadPolicyValue value);
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicyValue lifespan (void) const;
   void lifespan (PortableServer::LifespanPolicyValue value);
@@ -260,8 +266,23 @@ public:
   PortableServer::RequestProcessingPolicyValue request_processing (void) const;
   void request_processing (PortableServer::RequestProcessingPolicyValue value);
 
+  PriorityModel priority_model (void) const;
+  void priority_model (PriorityModel value);
+
+  CORBA::Short server_priority (void) const;
+  void server_priority (CORBA::Short value);
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_ServerProtocolPolicy *server_protocol (void) const;
+  void server_protocol (TAO_ServerProtocolPolicy *policy);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   void parse_policies (const CORBA::PolicyList &policies,
                        CORBA_Environment &ACE_TRY_ENV);
+
+  CORBA::PolicyList &client_exposed_fixed_policies (void);
 
 protected:
 
@@ -269,6 +290,18 @@ protected:
                      CORBA_Environment &ACE_TRY_ENV);
 
   int validity_check (void);
+
+  int validate_priority_model (void);
+
+  int validate_server_protocol (void);
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  int validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr);
+
+  int validate_priority_bands (RTCORBA::PriorityBandedConnectionPolicy_ptr);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   PortableServer::ThreadPolicyValue thread_;
 
@@ -283,6 +316,18 @@ protected:
   PortableServer::ServantRetentionPolicyValue servant_retention_;
 
   PortableServer::RequestProcessingPolicyValue request_processing_;
+
+  PriorityModel priority_model_;
+
+  CORBA::Short server_priority_;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_ServerProtocolPolicy *server_protocol_;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  CORBA::PolicyList client_exposed_fixed_policies_;
 };
 
 class TAO_Temporary_Creation_Time;
@@ -351,6 +396,12 @@ public:
   friend class TAO_Object_Adapter::Servant_Upcall;
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  friend class TAO_Object_Adapter::Priority_Model_Processing;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   typedef ACE_CString String;
 
@@ -488,6 +539,11 @@ public:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+  CORBA::PolicyList *client_exposed_policies (CORBA::Short object_priority,
+                                              CORBA_Environment &ACE_TRY_ENV);
+  // This method gives the policies that are exposed to the client.
+  // These policies are shipped within the IOR.
+
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
   //
@@ -548,6 +604,12 @@ public:
   TAO_ORB_Core &orb_core (void) const;
   // ORB Core for POA.
 
+  CORBA::Boolean cleanup_in_progress (void);
+
+  TAO_Object_Adapter &object_adapter (void);
+
+  ACE_Lock &lock (void);
+
 protected:
 
   const ACE_CString &name (void) const;
@@ -599,10 +661,10 @@ protected:
 
   CORBA::Object_ptr key_to_object (const TAO_ObjectKey &key,
                                    const char *type_id,
-                                   TAO_ServantBase *servant = 0,
-                                   CORBA::Boolean collocated = 1,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
+                                   TAO_ServantBase *servant,
+                                   CORBA::Boolean collocated,
+                                   CORBA::Short priority,
+                                   CORBA_Environment &ACE_TRY_ENV);
   // Wrapper for the ORB's key_to_object that will alter the object pointer
   // if the ImplRepo is used.
 
@@ -652,9 +714,11 @@ protected:
                                              CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::ObjectId *servant_to_system_id (PortableServer::Servant p_servant,
+                                                  CORBA::Short &priority,
                                                   CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::ObjectId *servant_to_system_id_i (PortableServer::Servant p_servant,
+                                                    CORBA::Short &priority,
                                                     CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid,
@@ -673,8 +737,6 @@ protected:
                          CORBA_Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-  ACE_Lock &lock (void);
 
   TAO_POA_Policies &policies (void);
 
@@ -702,6 +764,7 @@ protected:
 
   void validate_priority_and_policies (RTCORBA::Priority priority,
                                        CORBA::Environment &ACE_TRY_ENV);
+
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -829,6 +892,17 @@ protected:
   ACE_SYNCH_CONDITION servant_deactivation_condition_;
 
   CORBA::ULong waiting_servant_deactivation_;
+};
+
+
+class TAO_POA_Guard
+{
+public:
+  TAO_POA_Guard (TAO_POA &poa,
+                 CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  ACE_Guard<ACE_Lock> guard_;
 };
 
 #if (TAO_HAS_MINIMUM_POA == 0)

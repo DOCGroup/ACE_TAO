@@ -26,7 +26,10 @@
 
 #include "tao/Tagged_Components.h"
 
+#include "tao/PolicyC.h"
+
 class TAO_MProfile;
+class TAO_Stub;
 
 class TAO_Export TAO_Profile
 {
@@ -116,7 +119,20 @@ public:
   // already been decoded. So this method will just make a
   // IOP::TaggedProfile struct from the existing information and
   // return the reference to that. This method is necessary for GIOP
-  // 1.2. 
+  // 1.2.
+
+  virtual void policies (CORBA::PolicyList *policy_list);
+  // This method sets the client exposed policies, i.e., the ones
+  // propagated in the IOR, for this profile.
+
+  virtual CORBA::PolicyList&  policies (void);
+  // Accessor for the client exposed policies of this profile.
+
+  virtual void the_stub (TAO_Stub *stub);
+  // Sets the TAO_Stub to which this profile is associated.
+
+  virtual TAO_Stub* the_stub (void);
+  // Gets the TAO_MProfile that holds the TAO_Profile instance.
 
 private:
   TAO_MProfile *forward_to_i (void);
@@ -129,6 +145,23 @@ private:
 protected:
   TAO_Tagged_Components tagged_components_;
   // The tagged components
+
+  CORBA::Boolean are_policies_parsed_;
+  // Flag indicating whether the lazy decoding of the client exposed
+  // policies has taken place.
+
+  TAO_Stub *stub_;
+  // Pointer to the TAO_Stub to which this profile is related.
+  
+  CORBA::PolicyList *policy_list_;
+  // Client exposed policies of this profile.
+  
+  // NOTE: In this implementation it is assumed that the <policy_list> 
+  // is exactly the same for each profile.
+  // So to save memory, each TAO_Profile has a pointer to the same
+  // PolicyList object. The life cycle of this object is managed
+  // by the TAO_MProfile class. 
+
 
 private:
   CORBA::ULong tag_;
@@ -179,7 +212,7 @@ public:
   virtual int addr_to_string(char *buffer, size_t length);
   virtual void reset_hint (void);
   virtual IOP::TaggedProfile &create_tagged_profile (void);
-  
+
 private:
   TAO_opaque body_;
   IOP::TaggedProfile tagged_profile_;

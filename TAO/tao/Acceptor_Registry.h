@@ -14,6 +14,7 @@
 //
 // = AUTHOR
 //     Fred Kuhns <fredk@cs.wustl.edu>
+//     Ossama Othman <ossama@uci.edu>
 //
 // ============================================================================
 
@@ -27,6 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 #include "tao/corbafwd.h"
 #include "tao/Resource_Factory.h"
 
@@ -83,20 +85,41 @@ public:
 
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
   // Return the acceptor bridges
-  
+
   // = Iterator.
   TAO_AcceptorSetIterator begin (void);
   TAO_AcceptorSetIterator end (void);
 
 private:
+
   int open_default (TAO_ORB_Core *orb_core,
                     const char *options);
   // Create a default acceptor for all loaded protocols.
 
   int open_default (TAO_ORB_Core *orb_core,
+                    int major,
+                    int minor,
                     TAO_ProtocolFactorySetItor &factory,
                     const char *options);
   // Create a default acceptor using the specified protocol factory.
+
+  void extract_endpoint_options (ACE_CString &addrs,
+                                 ACE_CString &options,
+                                 TAO_Protocol_Factory *factory);
+  // Extract endpoint-specific options from the endpoint string.
+
+  void extract_endpoint_version (ACE_CString &address,
+                                 int &major,
+                                 int &minor);
+  // Extract endpoint/address specific version from the endpoint
+  // string.
+
+  int open_i (TAO_ORB_Core *orb_core,
+              ACE_CString &address,
+              TAO_ProtocolFactorySetItor &factory,
+              CORBA::Environment &ACE_TRY_ENV);
+  // Iterator through addrs in the string <iop>, and create an
+  // acceptor for each one.
 
 private:
   // The acceptor registry should not be copied.

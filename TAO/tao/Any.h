@@ -27,6 +27,7 @@
 
 #include "tao/Environment.h"
 #include "tao/Object.h"
+#include "tao/Typecode.h"
 
 class TAO_Export CORBA_Any
 {
@@ -380,7 +381,7 @@ protected:
   // Release the <value_>.
 
 private:
-  CORBA::TypeCode_ptr type_;
+  CORBA::TypeCode_var type_;
   // Typecode for the <Any>.
 
   int byte_order_;
@@ -515,78 +516,78 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
 // Copying versions of insertion
 // operators which are defined as members of the Any class
 // must also be defined for Any_var.
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Short);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::UShort);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Long);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::ULong);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::LongLong);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::ULongLong);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Float);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Double);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              const CORBA_Any&);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              const char*);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::TypeCode_ptr);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              const CORBA::Object_ptr);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Any::from_boolean);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Any::from_char);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Any::from_wchar);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Any::from_octet);
-TAO_Export void operator<<= (CORBA_Any_var,
+TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Any::from_string);
 
 // These are not required by the spec, but will make users
 // of other ORBs that are used to them more comfortable.
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Short&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::UShort&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Long&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::ULong&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::LongLong&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::ULongLong&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Float&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Double&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA_Any&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::TypeCode_ptr&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        const char*&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        const CORBA::WChar*&);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_boolean);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_octet);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_char);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_wchar);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_string);
-TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var,
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_object);
 
 #endif /* __ACE_INLINE__ */
