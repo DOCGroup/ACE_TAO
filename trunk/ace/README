@@ -35,7 +35,6 @@ ACE_HAS_DLL				Build ACE using the frigging PC DLL nonsense...
 ACE_HAS_GETPAGESIZE			Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be defined, except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the getrusage() system call.
 ACE_HAS_GNU_CSTRING_H			Denotes that GNU has cstring.h as standard which redefines memchr() 
-ACE_HAS_GREENHILLS_SOCKETS		Platform is using GreenHills compiler with its weird socket headers.
 ACE_HAS_HI_RES_TIMER			Compiler/platform supports SunOS high resolution timers
 ACE_HAS_INLINED_OSCALLS			Inline all the static class OS methods to remove call overhead
 ACE_HAS_IP_MULTICAST			Platform supports IP multicast
