@@ -1,3 +1,20 @@
+Thu Jul 03 13:20:16 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/lib/Makefile.bor:
+	  
+	  Added TAO_DYNAMICANY to the EXTERNAL_LIBS to fix Borland static
+	  build problems.
+
+	* orbsvcs/tests/Notify/lib/Makefile:
+	* orbsvcs/tests/Notify/RT_lib/Makefile:
+	  
+	  Added BUILD_DLL option to CPPFLAGS. These are needed
+	  for the cygwin/mingw compiler to export the symbols from the DLL.
+
+	  Many thanks to Johnny Willemsen  <jwillemsen@remedy.nl> for all
+	  of the above.
+
+
 Thu Jul 03 17:03:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/lib/Makefile:
