@@ -1,3 +1,10 @@
+Tue Jan 23 17:02:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl:
+
+          Removed PACE until we figure out how to handle it in the
+          DLL builds.
+
 Tue Jan 23 16:50:35 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Dirent_Test.dsp:
