@@ -165,6 +165,32 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
       ACE_NEW (this->timer_queue_, ACE_Timer_Queue);
       this->delete_timer_queue_ = 1;
     }
+
+#if defined (ACE_WIN32)
+  // Create an IO completion port that is not associated with a file
+  // handle.  This will allow us to use GetQueuedCompletionStatus as a
+  // timer mechanism only.
+  ACE_HANDLE cp;
+
+  cp = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
+				 this->completion_port_,
+				 (u_long) 0, // 0 completion key
+				 this->number_of_threads_);
+
+  if (cp != 0)
+    // Success.
+    this->completion_port_ = cp;
+  else // Failure.
+    {
+      int error = ::GetLastError ();
+      // If errno == ERROR_INVALID_PARAMETER, then this handle was
+      // already registered.
+      if (error != ERROR_INVALID_PARAMETER)
+	ACE_ERROR ((LM_ERROR, 
+		    "%p CreateIoCompletionPort failed errno = %d.\n",
+		    "ACE_Proactor::initiate", error));
+    }
+#endif
 }
 
 ACE_Proactor::~ACE_Proactor (void)
