@@ -1,4 +1,10 @@
-Mon Mar 15 22:21:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Mar 15 23:51:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* server/svc.conf: Added example settings for using HTTP_Server as
+	  a dynamic service.
+
+	* server/HTTP_Server.{h,cpp}: Added macros to build dynamic
+	  HTTP_Server service.
 
 	* server/main.cpp (main): Since we use static service in JAWS, we
 	  must open the service configure without ignoring the static
