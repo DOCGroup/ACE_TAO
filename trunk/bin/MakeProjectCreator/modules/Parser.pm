@@ -168,6 +168,15 @@ sub search_include_path {
 }
 
 
+sub escape_regex_special {
+  my($self) = shift;
+  my($name) = shift;
+
+  $name =~ s/([\\\$\[\]\(\)\.])/\\$1/g;
+  return $name;
+}
+
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************

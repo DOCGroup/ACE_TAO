@@ -320,9 +320,17 @@ sub run {
         }
         $file = $base;
       }
-      print 'Generating output using ' .
-            ($file eq '' ? 'default input' : $file) . "\n";
-      print 'Start Time: ' . scalar(localtime(time())) . "\n";
+      print 'Generating output using ';
+      if ($file eq '') {
+        print 'default input';
+      }
+      else {
+        my($partial)  = $self->getcwd();
+        my($oescaped) = $self->escape_regex_special($orig_dir) . '(/)?';
+        $partial =~ s/^$oescaped//;
+        print '' . ($partial ne '' ? "$partial/" : '') . $file;
+      }
+      print "\n" . 'Start Time: ' . scalar(localtime(time())) . "\n";
       if (!$generator->generate($file)) {
         print STDERR "ERROR: Unable to process: " .
                      ($file eq '' ? 'default input' : $file) . "\n";
