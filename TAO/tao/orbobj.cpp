@@ -31,18 +31,12 @@
 extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA::Environment &env);
 
-#if defined (SIG_IGN_BROKEN)
-#	undef SIG_IGN 
-#	define SIG_IGN ((RETSIGTYPE (*) (int))1)
-#endif /* NeXT */
-
 // COM's IUnknown support
 
 // {A201E4C6-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_ORB,
 	     0xa201e4c6, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-// CJC Why was this commented out?
 // {A201E4C7-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_STUB_Object,
 	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
@@ -60,8 +54,8 @@ CORBA_ORB::CORBA_ORB (void)
 
 CORBA_ORB::~CORBA_ORB (void)
 {
-  TAO_Internal::close_services ();
-
+  TAO_ORB_Core_instance ()->fini ();
+  
   if (!this->client_factory_from_service_config_)
     delete client_factory_;
 
@@ -175,21 +169,10 @@ CORBA_ORB::Release (void)
 // registry.  Registry will be used to assign orb names and to
 // establish which is the default.
 
-// Little convenience function use in parsing arguments
-inline static void
-argvec_shift (int& argc, char *const *argv, int numslots)
-{
-  ACE_OS::memmove ((void *) &argv[0],
-                   (void *) &argv[numslots],
-                   (argc - numslots - 1) * sizeof argv[0]);
-
-  argc -= numslots;
-}
-  
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
 		 char *const *argv,
-		 char *orb_name,
+		 char * /* orb_name */,
 		 CORBA::Environment &env)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, TAO_Internal::orbinit_lock_, 0);
@@ -215,177 +198,15 @@ CORBA::ORB_init (int &argc,
       return 0;
     }
 
-  // Parse arguments to the ORB.  Typically the ORB is passed
-  // arguments straight from the command line, so we will simply pass
-  // through them and respond to the ones we understand and ignore
-  // those we don't.
-  //
-  // In some instances, we may actually build another vector of
-  // arguments and stash it for use initializing other components such
-  // as the ACE_Service_Config or the RootPOA.
-  //
-  // @@ Should we consume arguments we understand or leave all
-  // arguments in the vector?
-
-  // Prepare a copy of the argument vector
-  // XXXASG - compiler doesn't like this
-  char **svc_config_argv; // @@ Should this be a data member?
-  // Probably, but there's no object in which to scope it.
-
-  int svc_config_argc = 0;
-  ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], 0);
-
-  // Be certain to copy the program name.
-  // @@ I'm not sure that this convention makes sense.  Perhaps we
-  // @@ should use the ORB's name in place of argv[0]?
-  svc_config_argv[svc_config_argc++] = argv[0];
-
-  CORBA::String_var host = CORBA::string_dup ("");
-  CORBA::UShort port = TAO_DEFAULT_SERVER_PORT;
-
-  for (int i = 1; i < argc; )
-    {
-      if (ACE_OS::strcmp (argv[i], "-ORBsvcconf") == 0)
-        {
-          // Specify the name of the svc.conf file to be used
-          svc_config_argv[svc_config_argc++] = "-f";
-          
-          int shift_amount = 1;
-          
-	  if (i + 1 < argc)
-            {
-              // @@ Should we dup the string before assigning?
-              svc_config_argv[svc_config_argc++] = argv[i + 1];
-              shift_amount = 2;
-            }
-          
-          argvec_shift (argc, &argv[i], shift_amount);
-          
-        }
-      else if (ACE_OS::strcmp (argv[i], "-ORBdaemon") == 0)
-        {
-          // Be a daemon
-          svc_config_argv[svc_config_argc++] = "-b";
-
-          argvec_shift (argc, &argv[i], 1);
-        }
-      else if (ACE_OS::strcmp (argv[i], "-ORBdebug") == 0)
-        {
-          // Turn on debugging
-          svc_config_argv[svc_config_argc++] = "-d";
-          argvec_shift (argc, &argv[i], 1);
-        }
-      else if (ACE_OS::strcmp (argv[i], "-ORBhost") == 0)
-	{
-          // Specify the name of the host (i.e., interface) on which
-          // the server should listen
-
-          int shift_amount = 1;
-	  if (i + 1 < argc)
-            {
-              host = CORBA::string_dup (argv[i + 1]);
-              shift_amount = 2;
-            }
-          
-          argvec_shift (argc, &argv[i], shift_amount);
-	}
-      else if (ACE_OS::strcmp (argv[i], "-ORBport") == 0)
-	{
-          // Specify the port number/name on which we should listen
-          int shift_amount = 1;
-	  if (i + 1 < argc)
-            {
-              // @@ We shouldn't limit this to being specified as an int! --cjc
-              port = ACE_OS::atoi (argv[i + 1]);
-              shift_amount = 2;
-            }
-          argvec_shift (argc, &argv[i], shift_amount);
-	}
-      else if (ACE_OS::strcmp (argv[i], "-ORBrcvsock") == 0)
-	{
-          // Specify the size of the socket's receive buffer
-	}
-      else if (ACE_OS::strcmp (argv[i], "-ORBsndsock") == 0)
-	{
-          // Specify the size of the socket's send buffer
-	}
-      else
-        {
-          i++;
-        }
-    }
-
-#if defined (DEBUG)
-  // Make it a little easier to debug programs using this code.
-  {
-    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-    if (value != 0) 
-      {
-	TAO_debug_level = ACE_OS::atoi (value);
-	if (TAO_debug_level <= 0)
-	  TAO_debug_level = 1;
-	dmsg1 ("TAO_debug_level == %d", TAO_debug_level);
-      }
-  }
-#endif	/* DEBUG */
-
-  ACE_INET_Addr rendezvous;
-  char hbuf[MAXHOSTNAMELEN];
-
-  // Create a INET_Addr.
-  if (ACE_OS::strlen (host) == 0)
-    {
-      // hostname not provided, so use the default
-      if (ACE_OS::hostname (hbuf, sizeof(hbuf)-1) == -1)
-        ACE_DEBUG ((LM_ERROR, "(%P|%t) %p, unable to obtain host name\n"));
-
-      CORBA::String_var h = CORBA::string_dup(hbuf);
-      host = h;
-    }
-
-  // The conditional catches errors in hbuf
-  if (ACE_OS::strlen (host) > 0)
-    rendezvous.set (port, host);
-  else
-    rendezvous.set (port);
+  TAO_ORB_Core_instance ()->init (argc, argv);
   
-  // On Win32, we should be collecting information from the Registry
-  // such as what ORBs are configured, specific configuration details
-  // like whether they generate IOR or URL style stringified objrefs
-  // and which addresses they listen to (e.g. allowing multihomed
-  // hosts to implement firewalls), user-meaningful orb names (they
-  // will normally indicate domains), and more.
-  //
-  // On UNIX, we should collect that from some private config file.
-  //
-  // Instead, this just treats the "internet" ORB name specially and
-  // makes it always use URL-style stringified objrefs, where the
-  // hostname and TCP port number are explicit (and the whole objref
-  // is readable by mortals).
-  CORBA::Boolean use_ior;
-
-  if (orb_name != 0 && ACE_OS::strcmp (orb_name, "internet") == 0)
-    use_ior = CORBA::B_FALSE;
-  else
-    use_ior = CORBA::B_TRUE;
-
-#if defined (SIGPIPE)
-  // @@ Is there a better way to deal with this in a portable manner? --cjc
-  //
-  // Impractical to have each call to the ORB protect against the
-  // implementation artifact of potential writes to dead connections,
-  // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
-  // these kinds of applications, anyway?
-  (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
-#endif /* SIGPIPE */
-
-  ACE_OS::socket_init (ACE_WSOCK_VERSION);
-
   // Call various internal initialization routines.
   // @@ Why are these names prefixed with "__"?  Shouldn't they be in
   // a class someplace, or at least have the word "TAO" in front of
-  // them? 
+  // them?
+  // 
+  // @@ (CJC) Far more important that the name is whether or not it's
+  // OK to call these multiple times.  Andy, can you address this?
   __TC_init_table ();
   TAO_Marshal::initialize ();
   __TC_init_standard_exceptions (env);
@@ -393,25 +214,7 @@ CORBA::ORB_init (int &argc,
   if (env.exception () != 0)
     return 0;
 
-  // Initialize the Service Configurator
-  TAO_Internal::open_services (svc_config_argc, svc_config_argv);
-
-  // Inititalize the "ORB" pseudo-object now.
-  IIOP_ORB_ptr this_orb = 0;
-  ACE_NEW_RETURN (this_orb, IIOP_ORB, 0);
-
-  // Install the ORB * into the ORB Core instance.  Note that if we're
-  // running with a "thread-per-rate" concurrency model this ORB *
-  // will be located in thread-specific storage.
-  TAO_ORB_Core_instance ()->orb (this_orb);
-
-  // @@ Seems like the following should happen inside the ORB Core,
-  // not at this level.  Do we really need this stuff?  What is the
-  // alternative format (other than IOR)?  --cjc
-  this_orb->use_omg_ior_format (CORBA::Boolean (use_ior));
-  this_orb->params ()->addr (rendezvous);
-  
-  return this_orb;
+  return TAO_ORB_Core_instance()->orb();
 }
 
 void
@@ -463,33 +266,30 @@ CORBA_ORB::POA_init (int &argc,
       if (ACE_OS::strcmp (argv[i], "-OAid") == 0)
         {
           // Specify the name of the OA
-	  if (i + 1 < argc)
-	    id = CORBA::string_dup (argv[i + 1]);
-
-          argvec_shift (argc, &argv[i], 2);
+          i++;
+	  if (i < argc)
+            id = CORBA::string_dup (argv[i++]);
         }
       else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
 	{
           // Specify the demultiplexing strategy to be used for object
           // demultiplexing
-	  if (i + 1 < argc)
-	    demux = CORBA::string_dup (argv[i+1]);
-
-          argvec_shift (argc, &argv[i], 2);
+          i++;
+	  if (i < argc)
+	    demux = CORBA::string_dup (argv[i++]);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAtablesize") == 0)
 	{
           // Specify the size of the table used for object demultiplexing
-	  if (i + 1 < argc)
-	    tablesize = ACE_OS::atoi (argv[i+1]);
-
-          argvec_shift (argc, &argv[i], 2);
+          i++;
+	  if (i < argc)
+	    tablesize = ACE_OS::atoi (argv[i++]);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAthread") == 0)
 	{
           // Specify whether or not threads should be used.
 	  use_threads = CORBA::B_TRUE;
-          argvec_shift (argc, &argv[i], 1);
+          i++;
 	}
       else
 	i++;
@@ -547,6 +347,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   /* NOTREACHED */
   return 0;
 }
+
 
 #define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
