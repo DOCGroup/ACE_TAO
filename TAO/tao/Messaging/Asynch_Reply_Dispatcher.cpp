@@ -211,7 +211,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
   (void) this->decr_refcount ();
 }
 
-
+// AMI Timeout Handling Begin
 
 void
 TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
@@ -232,24 +232,10 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
       timeout_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // AMI Timeout Handling Begin
-      bool cont_dispatch =
-        this->try_dispatch_reply ();
-
-      if (this->timeout_handler_)
-        {
-          this->timeout_handler_->remove_reference ();
-          this->timeout_handler_ = 0;
-        }
-
-      // AMI Timeout Handling End
-
-      // A simple protocol that we follow. If the timeout had been handled
-      // by another thread, the last refcount for us will be held by the
-      // timeout handler. Hence the above call to remove_reference () will
-      // delete us. We then have to rely on the status of our stack
-      // variable to exit safely.
-      if (!cont_dispatch)
+      // This is okay here... Everything relies on our refcount being
+      // held by the timeout handler, whose refcount in turn is held
+      // by the reactor.
+      if (!this->try_dispatch_reply ())
         return;
 
       // Turn into an output CDR
