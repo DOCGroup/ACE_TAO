@@ -1,3 +1,22 @@
+Fri Feb  6 16:16:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Makefile:
+	* tests/Server_Port_Zero/Hello.cpp:
+	* tests/Server_Port_Zero/Hello.h:
+	* tests/Server_Port_Zero/Makefile:
+	* tests/Server_Port_Zero/README:
+	* tests/Server_Port_Zero/Server_Port_Zero.mpc:
+	* tests/Server_Port_Zero/Test.idl:
+	* tests/Server_Port_Zero/run_test.pl:
+	* tests/Server_Port_Zero/server.cpp:
+
+	  New test for a bug that Craig Rpdrigues reported. This test just
+	  tries starting up a CORBA server on TCP port 0. 
+
+        * tests/Makefile:
+
+          Added the new test to the Makefile.
+
 Fri Feb  6 14:59:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ExtAbstactInterfaceDef_i.cpp:
