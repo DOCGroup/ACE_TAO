@@ -1,3 +1,9 @@
+Fri Jul  9 16:24:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/run_all_win32.pl:
+	  Added experimental script to run all the tests under Win32, but
+	  it is still work in progress.
+
 Fri Jul  9 14:02:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Re-enabled ACE_LACKS_SETSCHED for AIX 4.3.
