@@ -17,7 +17,7 @@ Sun Jan 04 19:45:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i (rw_trywrlock_upgrade): added ACE_UNUSED_ARG (rw)
           to temporary code.
 
-        * ace/Basic_Types.{h,i}: replaced ACE_HAS_LONGLONG_T with
+        * ace/Basic_Types.{h,i},README: replaced ACE_HAS_LONGLONG_T with
           ACE_LACKS_LONGLONG_T.  ACE_HAS_LONGLONG_T was no longer
           being used on many platforms with the scheme in Basic_Types.h.
           From now on, we'll assume that a platform has long long
