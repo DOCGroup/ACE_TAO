@@ -29,7 +29,7 @@ public:
       );
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::CurrentBase *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -82,7 +82,7 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::Policy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -142,7 +142,7 @@ public:
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ThreadPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -200,7 +200,7 @@ public:
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::LifespanPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -258,7 +258,7 @@ public:
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::IdUniquenessPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -316,7 +316,7 @@ public:
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::IdAssignmentPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -374,7 +374,7 @@ public:
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ImplicitActivationPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -432,7 +432,7 @@ public:
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ServantRetentionPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -490,7 +490,7 @@ public:
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::RequestProcessingPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -553,7 +553,7 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::POAManager *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -619,7 +619,7 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::AdapterActivator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -671,7 +671,7 @@ public:
       );
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ServantManager *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -724,7 +724,7 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ServantActivator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -791,7 +791,7 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::ServantLocator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -944,7 +944,7 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::POA *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
@@ -1116,7 +1116,7 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
-    virtual void dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env);
 
     PortableServer::Current *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;

@@ -29,10 +29,11 @@ main (int argc, char **argv)
       return -1;
     }
   
-  // CORBA::PolicyList policies (1);
-  PortableServer::PolicyList policies (1);
-  policies.length (1);  
+  // CORBA::PolicyList policies (2);
+  PortableServer::PolicyList policies (2);
+  policies.length (2);  
   policies[0] = root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
+  policies[1] = root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
   
   ACE_CString name = "firstPOA";
   PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),

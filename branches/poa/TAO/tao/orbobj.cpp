@@ -305,7 +305,7 @@ CORBA_ORB::resolve_poa (void)
   // multiple threads using a global resource policy.
   if (poa == 0)
     {
-      TAO_POA_Manager *manager = new TAO_POA_Manager;
+      TAO_POA_Manager *manager = new TAO_Strategy_POA_Manager;
       TAO_POA_Policies root_poa_policies;
       root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
 
@@ -532,13 +532,15 @@ CORBA_ORB::key_to_object (const TAO::ObjectKey &key,
 
   // Return the CORBA::Object_ptr interface to this objref.
   CORBA::Object_ptr new_obj;
-
+  
   if (data->QueryInterface (IID_CORBA_Object,
-			    (void **) &new_obj) != TAO_NOERROR)
+                            (void **) &new_obj) != TAO_NOERROR)
     env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
-
+  
   data->Release ();
   return new_obj;
+  
+  // return new CORBA::Object (data);
 }
 
 

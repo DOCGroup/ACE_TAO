@@ -1,63 +1,4 @@
-Thu Jan 22 16:56:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	  Fixed some relative name problems for the server header file.
-
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
-	* TAO_IDL/be/be_visitor_root.cpp: 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	  Get rid of some "unused arg" warnings.
-
-Thu Jan 22 15:26:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
-
-	* tao/object.i: CORBA::Object --> CORBA_Object for internal stuff.
-	
-	* tao/object.i (CORBA_Object): Re-ordered member initialization to
- 	match declaration order.
-
-Thu Jan 22 14:40:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* tao/corbacom.h: 
-	  Fixed multiple definitions of ORB_var and ORB_out due to a
-	  simplistic merge.
-
-	* TAO_IDL/be/be_interface.cpp: 
-	  Generate _find() to locate operations; using just find() is not
-	  complaint.
-
-Thu Jan 22 10:40:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* Merged changes from main_to_poa_merge_10 up to
-	  main_to_poa_merge_11
-
-Wed Jan 21 00:31:40 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* tao/servant_base.cpp (_default_POA): Changed to use
- 	  TAO_ORB_Core_instance()->root_poa() instead of
- 	  TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA").
-
-	* tao/poaC: Added string_to_ObjectId and ObjectId_to_string
- 	  methods to PortableServer.
-
-	* tao/poa.cpp (TAO_Adapter_Activator::unknown_adapter): Changed
- 	  the implementation of this object so that it does not depend on
- 	  being friends with the POA and the POAManager.  Initially, this
- 	  was done to avoid recursive locks.  However, since user may want
- 	  to write their own implementations, recursive locks were deemed
- 	  necessary.
-
-	* tao/default_server.cpp (create_poa_lock): Changed implementation
- 	  to produce ACE_Recursive_Thread_Mutex instead of
- 	  ACE_Thread_Mutex.
-
-	* tests/POA/RootPOA/RootPOA.cpp (main) and
- 	  tests/POA/NewPOA/NewPOA.cpp (main): Added code to destroy the
- 	  rootPOA.  I am not sure this is the responsibility of the user
- 	  to destroy the rootPOA since they never really created it.  The
- 	  responsibility probably lies with the ORB, but since the spec
- 	  seems neutral about this, it is ok for now.
+Thu Jan 22 21:22:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poa: 
 
@@ -101,9 +42,116 @@ Wed Jan 21 00:31:40 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  
 	  - Added code to create_POA_i and find_POA_i_optimized to check
  	    when topmost_poa_name == this->name_.
+
+	  - Added the concept of creation time to a POA.  This way when a
+ 	    transient POA gets a object key from a previous incarnation,
+ 	    the OBJECT_NOT_EXISTS exception can be thrown.
+
+	  - Added a locator cookie field to TAO_POA_Current to keep track
+ 	    of the cookie produced by the servant locator.
+
+	  - Made all methods virtual.
+
+	  - Renamed active_object_table to active_object_map.
+
+	  - Added pre_invoke and post_invoke methods to setup the
+ 	    necessary state before doing the upcall to the servant.
+
+	  - Changed locate_servant to return 0 for success and -1 for
+ 	    failure instead of trying to return a servant.  This change is
+ 	    necessary since there may not be a servant available but there
+ 	    may be default servants or servant managers that could fill in
+ 	    for the servant.  Currently the locate_servant method takes an
+ 	    optimistic approach to return TRUE when the servant was not
+ 	    found but a default servant or servant manager was registered
+ 	    with the POA, hoping the default servant or servant manager
+ 	    will be able to fill in when the real request arrives.
+
+	  - Add a validity checks for POA policies.
+
+	  - Added support for servant managers (both servant locators and
+ 	    servant activators), default servants and DSI.
 	
+	* tao/poaC.h: Added DynamicImplementation class to the
+ 	  PortableServer.
+
+	* tao/poaS: Changed dispatch to _dispatch.
+
+	* tao/servant_base: 
+
+	  - Added TAO_DynamicImplementation class
+ 	    (a.k.a. PortableServer::DynamicImplementation).  Users will
+ 	    inherit from this to implement DSI.
+
+	  - Added prefix _ to all methods names in the ServantBase class
+ 	    to avoid potential crashes with user specified method names.
+	  
+	  - Made TAO_POA a friend of ServantBase.
+
+	* tao/connect.cpp (handle_locate): Changed to use latest version
+ 	  of TAO_POA::locate_servant.
+
+	* tao/servant_base.cpp (_default_POA): Changed to use
+ 	  TAO_ORB_Core_instance()->root_poa() instead of
+ 	  TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA").
+
+	* tao/poaC: Added string_to_ObjectId and ObjectId_to_string
+ 	  methods to PortableServer.
+
+	* tao/poa.cpp (TAO_Adapter_Activator::unknown_adapter): Changed
+ 	  the implementation of this object so that it does not depend on
+ 	  being friends with the POA and the POAManager.  Initially, this
+ 	  was done to avoid recursive locks.  However, since user may want
+ 	  to write their own implementations, recursive locks were deemed
+ 	  necessary.
+
+	* tao/default_server.cpp (create_poa_lock): Changed implementation
+ 	  to produce ACE_Recursive_Thread_Mutex instead of
+ 	  ACE_Thread_Mutex.
+
+	* tests/POA/RootPOA/RootPOA.cpp (main) and
+ 	  tests/POA/NewPOA/NewPOA.cpp (main): Added code to destroy the
+ 	  rootPOA.  I am not sure this is the responsibility of the user
+ 	  to destroy the rootPOA since they never really created it.  The
+ 	  responsibility probably lies with the ORB, but since the spec
+ 	  seems neutral about this, it is ok for now.
+
 	* tao/object.i (CORBA_Object::Release): We must delete the object
  	  when the parent_ refcount goes to zero.
+
+Thu Jan 22 16:56:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  Fixed some relative name problems for the server header file.
+
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be/be_visitor_root.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Get rid of some "unused arg" warnings.
+
+Thu Jan 22 15:26:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/object.i: CORBA::Object --> CORBA_Object for internal stuff.
+	
+	* tao/object.i (CORBA_Object): Re-ordered member initialization to
+ 	match declaration order.
+
+Thu Jan 22 14:40:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbacom.h: 
+	  Fixed multiple definitions of ORB_var and ORB_out due to a
+	  simplistic merge.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  Generate _find() to locate operations; using just find() is not
+	  complaint.
+
+Thu Jan 22 10:40:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from main_to_poa_merge_10 up to
+	  main_to_poa_merge_11
 
 Wed Jan 21 17:35:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
