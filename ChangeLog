@@ -1,10 +1,26 @@
+Sat Jan  3 23:10:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/APG/Proactor/HA_Proactive_Status.cpp:
+	* examples/APG/Processes/Spawn.cpp:
+	* examples/APG/Shared_Memory/Hash_Map.cpp:
+	* examples/APG/Signals/SigInfo.cpp:
+	* examples/APG/ThreadManagement/State.cpp:
+	* examples/APG/Threads/Activate.cpp:
+	* examples/APG/Timers/Alarm.cpp:
+	* examples/APG/Timers/CB.cpp:
+	* examples/APG/Timers/PCB.cpp:
+	* examples/APG/Timers/Task.cpp:
+
+	  Fixed more unused variable warnings and #included files that
+	  were needed to compile on SuSE.
+
 Sat Jan  3 19:31:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* APG/Reactor/Timer_State_Data.cpp:
-	* APG/Streams/Answerer.cpp:
-	* APG/Streams/Util.h:
-	* APG/ThreadManagement/Priorities.cpp:
-	* APG/ThreadSafety/Mutex.cpp:
+ 	* examples/APG/Reactor/Timer_State_Data.cpp:
+	* examples/APG/Streams/Answerer.cpp:
+	* examples/APG/Streams/Util.h:
+	* examples/APG/ThreadManagement/Priorities.cpp:
+	* examples/APG/ThreadSafety/Mutex.cpp:
 
 	  Fixed more unused variable warnings.
 

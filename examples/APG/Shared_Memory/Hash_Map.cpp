@@ -237,6 +237,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     ACE_ASSERT (handle_child () == 0);
 
+  ACE_UNUSED_ARG (argv);
   return 0;
 }
 // Listing 3

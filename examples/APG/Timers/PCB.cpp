@@ -13,8 +13,10 @@ int PCB::handleEvent (const void *arg)
 {
   ACE_TRACE (ACE_TEXT ("PCB::handle_timeout"));
 
-  const int *val = ACE_static_cast(const int*, arg);
+  const int *val = ACE_static_cast (const int*, arg);
   ACE_ASSERT ((*val) == timerID_); 
+
+  ACE_UNUSED_ARG (val);
 
   ACE_DEBUG ((LM_DEBUG, 
               ACE_TEXT("Timer %d expiry handled by thread %t\n"), 

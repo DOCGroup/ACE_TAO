@@ -19,6 +19,8 @@ public:
 
     const int *val = ACE_static_cast (const int*, arg);
     ACE_ASSERT ((*val) == id_);
+
+    ACE_UNUSED_ARG (val);
  
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Timer expired\n")));
     return 0;

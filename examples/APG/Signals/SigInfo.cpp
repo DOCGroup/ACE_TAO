@@ -4,6 +4,8 @@
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
+#include "ace/streams.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
