@@ -11,6 +11,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
+#include "ace/DLL.h"
 
 #include "ace/Service_Config.h"
 #include "ace/XML_Svc_Conf.h"

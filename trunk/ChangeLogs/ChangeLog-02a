@@ -1,3 +1,14 @@
+Tue Jun 04 16:47:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.h:
+
+	  No need to include "ace/DLL.h".  Forward declaring ACE_DLL is
+	  enough. 
+
+	* ace/Service_Config.cpp:
+
+	  Include "ace/DLL.h" to pull in ACE_DLL class declaration.
+
 Tue Jun 04 16:34:18 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Service_Config.cpp:
