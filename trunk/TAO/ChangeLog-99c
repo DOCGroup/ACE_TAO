@@ -1,94 +1,100 @@
+Tue Sep 07 22:25:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Load_Balancing/Makefile: don't build with repo=1,
+          because ld on Linux (RedHat 6.0) with egcs 2.91.66 seg faults
+          when trying to link load_balancer. [Bug 248]
+
 Tue Sep  7 20:26:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/params.h:
-	* tao/params.i:
-	* tao/params.cpp:
-	* tao/ORB.cpp:
-	* tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Removed references to init_ref(). It only held the argument of
-	  the last -ORBInitRef option, which is pointless if there are
-	  multiple -ORBInitRef options on the command line.
+          Removed references to init_ref(). It only held the argument of
+          the last -ORBInitRef option, which is pointless if there are
+          multiple -ORBInitRef options on the command line.
 
-	* tao/ORB.h:
+        * tao/ORB.h:
 
-	  Added a default exception argument to each of the
-	  run() methods.
+          Added a default exception argument to each of the
+          run() methods.
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Make sure an existing ORB hasn't been shutdown before returning
-	  it.  [Bug 274]
+          Make sure an existing ORB hasn't been shutdown before returning
+          it.  [Bug 274]
 
-	* tao/ORB.cpp (url_ior_string_to_object):
+        * tao/ORB.cpp (url_ior_string_to_object):
 
-	  Disabled use of TAO_Stub_Auto_Ptr.  A seg fault occurs whenever
-	  its destructor tries to get a lock on Linux.  This fixes some URL
-	  style IOR problems.  It's on my TODO list (see bug 307).
+          Disabled use of TAO_Stub_Auto_Ptr.  A seg fault occurs whenever
+          its destructor tries to get a lock on Linux.  This fixes some URL
+          style IOR problems.  It's on my TODO list (see bug 307).
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
 
-	  Initialize orb_ in the member initializer list with
-	  CORBA::ORB::_nil().
+          Initialize orb_ in the member initializer list with
+          CORBA::ORB::_nil().
 
-	  Corrected ACE_NEW_RETURN in init() that returned zero on error
-	  instead of the correct -1.
+          Corrected ACE_NEW_RETURN in init() that returned zero on error
+          instead of the correct -1.
 
-	  Implemented a destroy() method which is also the implementation
-	  for the CORBA::ORB::destroy() method.
+          Implemented a destroy() method which is also the implementation
+          for the CORBA::ORB::destroy() method.
 
-	  Added some missing ACE_THROW_SPEC specifications.
+          Added some missing ACE_THROW_SPEC specifications.
 
-	  Added an exception argument to the run() method.
+          Added an exception argument to the run() method.
 
-	  Deprecated the -ORBNameServiceIOR, -ORBTradingServiceIOR and
-	  -ORBImplRepoServiceIOR ORB initialization options.  They still
-	  exist for backward compatiblity.  Their functionality is fully
-	  supported by the -ORBInitRef option.  Using -ORBInitRef is also
-	  the standard way of setting such IORs.  [Bugs 300, 301, 302]
+          Deprecated the -ORBNameServiceIOR, -ORBTradingServiceIOR and
+          -ORBImplRepoServiceIOR ORB initialization options.  They still
+          exist for backward compatiblity.  Their functionality is fully
+          supported by the -ORBInitRef option.  Using -ORBInitRef is also
+          the standard way of setting such IORs.  [Bugs 300, 301, 302]
 
-	* tao/Exception.h:
+        * tao/Exception.h:
 
-	  Updated missing descriptions of some CORBA system exceptions.
+          Updated missing descriptions of some CORBA system exceptions.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
 
-	  Fixed format specifier mismatch warning.
+          Fixed format specifier mismatch warning.
 
-	* orbsvcs/Naming_Service/README:
-	* orbsvcs/tests/ImplRepo/run_test.pl:
-	* orbsvcs/tests/Simple_Naming/run_test.pl:
-	* orbsvcs/tests/Trading/run_test.pl:
+        * orbsvcs/Naming_Service/README:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Trading/run_test.pl:
 
-	  Updated with information about using -ORBInitRef instead of the
-	  now deprecated -ORB*ServiceIOR options.
+          Updated with information about using -ORBInitRef instead of the
+          now deprecated -ORB*ServiceIOR options.
 
 Tue Sep  7 19:15:24 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/RTCP.cpp (fmod): 
-	* orbsvcs/orbsvcs/AV/RTCP.h: 
-	Added the fmod(x,y) function to calculate the floating point
-	remainder of x/y. Thanks to David Levine for suggesting this.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp (fmod):
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        Added the fmod(x,y) function to calculate the floating point
+        remainder of x/y. Thanks to David Levine for suggesting this.
 
 Tue Sep  7 16:38:59 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Typecode.cpp: Fixed a bug that was a result of the
-	  duplication of the returned typecodes in the member_type ()
-	  method in the TypeCode class. Thanks to Nanbor for reporting
-	  that there was a bug and helping me to identify the problem with
-	  the Purify output.
+        * tao/Typecode.cpp: Fixed a bug that was a result of the
+          duplication of the returned typecodes in the member_type ()
+          method in the TypeCode class. Thanks to Nanbor for reporting
+          that there was a bug and helping me to identify the problem with
+          the Purify output.
 
 Tue Sep  7 11:25:04 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/ntp-time.h: 
-	Removed warnings on the Single Threaded build
-	* orbsvcs/orbsvcs/AV/UDP.cpp: 
-	Removed the IP_MULTICAST_LOOP undefined error on VXWorks
+        * orbsvcs/orbsvcs/AV/ntp-time.h:
+        Removed warnings on the Single Threaded build
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        Removed the IP_MULTICAST_LOOP undefined error on VXWorks
 
 Tue Sep  7 11:08:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
@@ -98,37 +104,37 @@ Tue Sep  7 11:08:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 Tue Sep  7 09:16:31 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB.cpp: Fixed a warning with g++. Thanks to Dr.Schmidt &
-	  Dr.Levine's build for reporting this.
+        * tao/ORB.cpp: Fixed a warning with g++. Thanks to Dr.Schmidt &
+          Dr.Levine's build for reporting this.
 
 Mon Sep  6 21:28:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp
-	  (disconnect_leaf,remove_fdev): Fixed throw-spec mismatch
-	  problems.  Thanks to KCC 3.3e for reporting them.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+          (disconnect_leaf,remove_fdev): Fixed throw-spec mismatch
+          problems.  Thanks to KCC 3.3e for reporting them.
 
 Mon Sep  6 21:07:34 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/Simple_Dynamic.h (class TAO_Simple_Dynamic_Property):
-	Changed data member from "T dp_" to "const T& dp_" to fix Sun g++
-	linking error.Thanks to Bala for helping out.
+        * orbsvcs/tests/Trading/Simple_Dynamic.h (class TAO_Simple_Dynamic_Property):
+        Changed data member from "T dp_" to "const T& dp_" to fix Sun g++
+        linking error.Thanks to Bala for helping out.
 
 Mon Sep  6 20:59:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/Options.html: Updated the documentation to point out that
-	  the various -ORB*ServiceIOR options are deprecated and should be
- 	  replaced by -ORBInitRef.  Thanks to Marina and Ossama for
- 	  pointing this out.
+        * docs/Options.html: Updated the documentation to point out that
+          the various -ORB*ServiceIOR options are deprecated and should be
+          replaced by -ORBInitRef.  Thanks to Marina and Ossama for
+          pointing this out.
 
 Mon Sep  6 16:41:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp: Also
-	  removed a redundant template instantiation for
-	  TAO_Bindings_Iterator<BLAH,BLAH,BLAH,<.....>>.
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp: Also
+          removed a redundant template instantiation for
+          TAO_Bindings_Iterator<BLAH,BLAH,BLAH,<.....>>.
 
 Mon Sep  6 15:06:52 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed warnings on HP-UX
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed warnings on HP-UX
 
 Mon Sep  6 13:32:30 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -270,17 +276,17 @@ Sat Sep 04 19:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Sat Sep  4 19:24:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
 
-	  Fixed "unhandled enumeration in switch statement" warnings by
-	  adding a no-op default case to each switch statement.
+          Fixed "unhandled enumeration in switch statement" warnings by
+          adding a no-op default case to each switch statement.
 
-	* TAO_IDL/Makefile:
+        * TAO_IDL/Makefile:
 
-	  Removed -Wno-switch warning surpression flag from g++ compile
-	  flags.  It is no longer needed, and we shouldn't have been using
-	  it.
+          Removed -Wno-switch warning surpression flag from g++ compile
+          flags.  It is no longer needed, and we shouldn't have been using
+          it.
 
 Sat Sep  4 18:47:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
