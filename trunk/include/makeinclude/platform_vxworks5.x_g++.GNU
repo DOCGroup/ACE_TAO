@@ -41,7 +41,7 @@ BIN_DIR		= $(HOST_DIR)/bin
 
 CC		= $(BIN_DIR)/g++$(TOOLENV)
 CXX		= $(CC)
-CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -nostdinc -O -fvolatile -nostdlib -fno-builtin -fno-defer-pop #### -Wall
+CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -nostdinc -O -fvolatile -nostdlib -fno-builtin -fno-defer-pop -Wall
 CCFLAGS		+= $(DCFLAGS) $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g
 INCLDIRS	+=
