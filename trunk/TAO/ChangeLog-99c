@@ -15,6 +15,7 @@ Tue Jun 22 17:45:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
 	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+	* tests/Param_Test/param_test_i.cpp:
 	  More unused variable/parameter warnings are removed.
 
 Tue Jun 22 17:14:48 1999  John Heitmann  <jwh1@cs.wustl.edu>

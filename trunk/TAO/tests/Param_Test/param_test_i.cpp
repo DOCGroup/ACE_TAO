@@ -825,7 +825,7 @@ CORBA::Any*
 Param_Test_i::test_complex_any (const CORBA::Any &a1,
                                 CORBA::Any &a2,
                                 CORBA::Any_out a3,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_var ret (new CORBA::Any (a1));
