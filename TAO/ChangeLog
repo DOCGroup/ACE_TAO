@@ -56,9 +56,7 @@ Wed Nov 13 14:15:33 2002  Ossama Othman  <ossama@uci.edu>
 	  Only register the connection handler with the reactor when
 	  creating a new connection.  Previously, the connection handler
 	  was registered each time an invocation was made even if a
-	  connection was previously established.  This caused a loop to
-	  occur in the active connection code if the server side was
-	  shutdown ungracefully.  [Bug 1299]
+	  connection was previously established.
 
 	* orbsvcs/tests/Security/Secure_Invocation/client.bor (TAO_IDL):
 	* orbsvcs/tests/Security/Secure_Invocation/server.bor (TAO_IDL):
