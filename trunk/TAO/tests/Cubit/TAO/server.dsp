@@ -100,6 +100,14 @@ SOURCE=.\svr.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# Begin Source File
+
+SOURCE=.\cubit_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cubitS.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
