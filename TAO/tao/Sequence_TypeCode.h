@@ -85,7 +85,8 @@ namespace TAO
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
       virtual CORBA::ULong length_i (ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual CORBA::TypeCode_ptr content_type (ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual CORBA::TypeCode_ptr content_type_i (
+        ACE_ENV_SINGLE_ARG_DECL) const;
 
     private:
 

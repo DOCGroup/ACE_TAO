@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:302
+// be/be_codegen.cpp:302
 
 
 #include "ObjectIdListC.h"
@@ -41,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be/be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +50,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_ORB_OBJECTIDLIST_CS_)
 #define _CORBA_ORB_OBJECTIDLIST_CS_
@@ -85,10 +85,19 @@ CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
 CORBA::ORB_ObjectIdList::~ORB_ObjectIdList (void)
 {}
 
+void CORBA::ORB_ObjectIdList::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  ORB_ObjectIdList * _tao_tmp_pointer =
+    static_cast<ORB_ObjectIdList *> (_tao_void_pointer);
+  delete _tao_tmp_pointer;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/cdr_op_cs.cpp:96
+// be/be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_
 #define _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_
@@ -161,7 +170,7 @@ return false;
 #endif /* _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1528
+// be/be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
