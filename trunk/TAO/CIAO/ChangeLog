@@ -1,6 +1,7 @@
 Wed Jan  5 14:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Assembly_Deployer/Deployment_Configuration.{h,cpp,inl}:
+        * tools/XML_Helpers/XML_Utils.{h,cpp,inl}:
           Removed inl file, updated h,cpp
 
 Wed Jan  5 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
