@@ -1,3 +1,9 @@
+Sun Nov 01 19:53:15 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO.h (TAO_ORB_Manager::run): Added default environment to
+ 	  this method.  Thanks to Terry Rosenbaum
+ 	  <Terry.Rosenbaum@Radiology.MSU.edu> for suggesting this.
+
 Sun Nov 01 09:03:40 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.39 released.
