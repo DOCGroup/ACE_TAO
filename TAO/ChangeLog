@@ -1,3 +1,8 @@
+Fri Aug 22 14:13:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+          Added #include Null_Mutex.h
+
 Fri Aug 22 14:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECM_Data.h:

@@ -20,6 +20,7 @@
 
 #include "ace/Singleton.h"
 #include "ace/Unbounded_Set.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_Base_StreamEndPoint;
 class TAO_AV_Connector_Registry;
