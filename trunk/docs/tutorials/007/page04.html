@@ -11,123 +11,86 @@
 <CENTER><B><FONT SIZE=+2>ACE Tutorial 007</FONT></B></CENTER>
 
 <CENTER><B><FONT SIZE=+2>Creating a thread-pool server</FONT></B></CENTER>
-
-
-<P>
-<HR WIDTH="100%">
+<HR>
 
 <P>Something new this time is <A HREF="client_acceptor.cpp">client_acceptor.cpp</A>.&nbsp;
 I finally had enough code to move it out of the header.
 
 <P>
 <HR WIDTH="100%">
-<BR><FONT FACE="Arial,Helvetica">// $Id: client_acceptor.cpp,v 1.1 1998/08/30
-16:04:11 jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<PRE>
 
-<P><FONT FACE="Arial,Helvetica">#include "client_acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>// $Id$</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Construct ourselves with
-the chosen concurrency strategy.&nbsp; Notice that we also</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; set our Thread_Pool reference
-to our private instance.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">Client_Acceptor::Client_Acceptor( int
-_concurrency )</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;:&nbsp; concurrency_(_concurrency)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ,the_thread_pool_(private_thread_pool_)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#include</font> "<font color=green>client_acceptor.h</font>"
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Construct ourselves with
-a reference to somebody else' Thread_Pool.&nbsp; Obvioulsy</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; our concurrency strategy
-is "thread_pool_" at this point.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">Client_Acceptor::Client_Acceptor( Thread_Pool
-&amp; _thread_pool )</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;:&nbsp; concurrency_(thread_pool_)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ,the_thread_pool_(_thread_pool)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Construct ourselves with the chosen concurrency strategy.  Notice that we also
+   set our Thread_Pool reference to our private instance.
+ */</font>
+<font color=#008888>Client_Acceptor::Client_Acceptor</font>( int _concurrency )
+ :  concurrency_(_concurrency)
+   ,the_thread_pool_(private_thread_pool_)
+{
+}
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; When we're destructed, we
-may need to cleanup after ourselves.&nbsp; If we're running</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; with a thread pool that we
-own, it is up to us to close it down.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">Client_Acceptor::~Client_Acceptor( void
-)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-if( this->concurrency() == thread_pool_ &amp;&amp; thread_pool_is_private()
-)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-thread_pool()->close();</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Construct ourselves with a reference to somebody else' Thread_Pool.  Obvioulsy
+   our concurrency strategy is "<font color=green>thread_pool_</font>" at this point.
+ */</font>
+<font color=#008888>Client_Acceptor::Client_Acceptor</font>( Thread_Pool & _thread_pool )
+ :  concurrency_(thread_pool_)
+   ,the_thread_pool_(_thread_pool)
+{
+}
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Similar to the destructor
-(and close() below) it is necessary for us to open the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; thread pool in some circumstances.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   When we're destructed, we may need to cleanup after ourselves.  If we're running
+   with a thread pool that we own, it is up to us to close it down.
+ */</font>
+<font color=#008888>Client_Acceptor::~Client_Acceptor</font>( void )
+{
+	if( this->concurrency() == thread_pool_ && thread_pool_is_private() )
+	{
+		thread_pool()->close();
+	}
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Notice how we delegate most
-of the open() work to the open() method of our baseclass.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">int Client_Acceptor::open( const ACE_INET_Addr
-&amp; _addr, ACE_Reactor * _reactor, int _pool_size )</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-if( this->concurrency() == thread_pool_ &amp;&amp; thread_pool_is_private()
-)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-thread_pool()->open(_pool_size);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Similar to the destructor (and close() below) it is necessary for us to open the
+   thread pool in some circumstances.
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return inherited::open(_addr,_reactor);</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+   Notice how we delegate most of the open() work to the open() method of our baseclass.
+ */</font>
+int <font color=#008888>Client_Acceptor::open</font>( const ACE_INET_Addr & _addr, ACE_Reactor * _reactor, int _pool_size )
+{
+	if( this->concurrency() == thread_pool_ && thread_pool_is_private() )
+	{
+		thread_pool()->open(_pool_size);
+	}
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Here again we find that we
-have to manage the thread pool.&nbsp; Like open() we also delegate</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; the other work to our baseclass.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">int Client_Acceptor::close(void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-if( this->concurrency() == thread_pool_ &amp;&amp; thread_pool_is_private()
-)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-thread_pool()->close();</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+	return <font color=#008888>inherited::open</font>(_addr,_reactor);
+}
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return inherited::close();</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT>
-<BR><FONT FACE="Arial,Helvetica"></FONT>&nbsp;<FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Here again we find that we have to manage the thread pool.  Like open() we also delegate
+   the other work to our baseclass.
+ */</font>
+int <font color=#008888>Client_Acceptor::close</font>(void)
+{
+	if( this->concurrency() == thread_pool_ && thread_pool_is_private() )
+	{
+		thread_pool()->close();
+	}
 
-<P>
+	return <font color=#008888>inherited::close</font>();
+}
+
+</PRE>
 <HR WIDTH="100%">
 
 <P>Nothing really surprising here.&nbsp; Most of it just manages the Thread_Pool.
 
 <P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>

@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (WinNT; I) [Netscape]">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="James CE Johnson">
    <TITLE>ACE Tutorial 008</TITLE>
 </HEAD>
@@ -14,8 +14,8 @@
 
 <P>
 <HR WIDTH="100%">
-<BR>&nbsp;
-<BR>&nbsp;In <A HREF="broadcast_client.cpp">broadcast_client.cpp</A> we
+
+In <A HREF="broadcast_client.cpp">broadcast_client.cpp</A> we
 find out how to send a single datagram to every host on our (sub)network.&nbsp;
 I have to say <I>(sub)network</I> because broadcast datagrams typically
 are not passed through routers.&nbsp; So, if your network admin has divided
@@ -23,113 +23,81 @@ up your network into subnets, your broadcasts will likey only stay on the
 subnet you're a part of.
 
 <P>I've only commented the parts that are different from the directed_client.
-
-<P>
 <HR WIDTH="100%">
+<PRE>
 
-<P><TT>#include "ace/SOCK_Dgram_Bcast.h"</TT>
-<BR><TT>#include "ace/INET_Addr.h"</TT>
+<font color=red>// $Id$</font>
 
-<P><TT>static const u_short PORT = ACE_DEFAULT_SERVER_PORT;</TT>
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Dgram_Bcast.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/INET_Addr.h</font>"
 
-<P><TT>int main(int argc,char *argv[] )</TT>
-<BR><TT>{</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_INET_Addr&nbsp;
-local((u_short)0);</TT>
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Instead
-of creating the ACE_SOCK_Dgram we created last time,</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; we'll
-create an ACE_SOCK_Dgram_Bcast.&nbsp; "Bcast" means, of course,</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Broadcast".&nbsp;
-This ACE object is clever enough to go out to the</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OS
-and find all of the network interfaces.&nbsp; When you send()</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; on
-a Dgram_Bcast, it will send the datagram out on all of those</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; interfaces.&nbsp;
-This is quiet handy if you do it on a multi-homed</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; host
-that plays router...</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_SOCK_Dgram_Bcast
-dgram;</TT>
+int main(int argc,char *argv[] )
+{
+	ACE_INET_Addr  local((u_short)0);
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if( dgram.open(local)
-== -1 )</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "datagram open"),-1);</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</TT>
+	<font color=red>/*
+	   Instead of creating the ACE_SOCK_Dgram we created last time,
+	   we'll create an ACE_SOCK_Dgram_Bcast.  "<font color=green>Bcast</font>" means, of course,
+	   "<font color=green>Broadcast</font>".  This ACE object is clever enough to go out to the
+	   OS and find all of the network interfaces.  When you send()
+	   on a Dgram_Bcast, it will send the datagram out on all of those
+	   interfaces.  This is quiet handy if you do it on a multi-homed
+	   host that plays router...
+	 */</font>
+	ACE_SOCK_Dgram_Bcast dgram;
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; char buf[512];</TT>
+	if( dgram.open(local) == -1 )
+	{
+		ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>datagram open</font>"),-1);
+	}
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sprintf(buf, "Hello World!");</TT>
+	char buf[512];
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The
-only other difference between us and the directed client</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; is
-that we don't specify a host to receive the datagram.</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Instead,
-we use the magic value "INADDR_BROADCAST".&nbsp; All hosts</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; are
-obliged to respond to datagrams directed to this address</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the
-same as they would to datagrams sent to their hostname.</TT>
+	sprintf(buf, "<font color=green>Hello World!</font>");
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Remember,
-the Dgram_Bcast will send a datagram to all interfaces</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; on
-the host.&nbsp; That's true even if the address is for a specific</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; host
-(and the host address makes sense for the interface).</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The
-real power is in using an INADDR_BROADCAST addressed datagram</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; against
-all interfaces.</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_INET_Addr&nbsp;
-remote(PORT,INADDR_BROADCAST);</TT>
+	<font color=red>/*
+	   The only other difference between us and the directed client
+	   is that we don't specify a host to receive the datagram.
+	   Instead, we use the magic value "<font color=green>INADDR_BROADCAST</font>".  All hosts
+	   are obliged to respond to datagrams directed to this address
+	   the same as they would to datagrams sent to their hostname.
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_DEBUG ((LM_DEBUG,
-"(%P|%t) Sending (%s) to the server.\n",buf));</TT>
-<BR><TT>&nbsp;</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if( dgram.send(buf,strlen(buf)+1,remote)
-== -1 )</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"),-1);</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</TT>
+	   Remember, the Dgram_Bcast will send a datagram to all interfaces
+	   on the host.  That's true even if the address is for a specific
+	   host (and the host address makes sense for the interface).
+	   The real power is in using an INADDR_BROADCAST addressed datagram
+	   against all interfaces.
+	 */</font>
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if( dgram.recv(buf,sizeof(buf),remote)
-== -1 )</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"),-1);</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</TT>
+	ACE_INET_Addr  remote(PORT,INADDR_BROADCAST);
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_DEBUG ((LM_DEBUG,
-"(%P|%t) The server said:&nbsp; %s\n",buf));</TT>
+	ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Sending (%s) to the server.\n</font>",buf));
 
-<P><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Using
-the <I>remote</I> object instance, find out where the server lives.</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We
-could then save this address and use directed datagrams to chat</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; with
-the server for a while.</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_DEBUG ((LM_DEBUG,
-"(%P|%t) The server can be found at:&nbsp; (%s:%d)\n",</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-remote.get_host_addr(), PORT ));</TT>
-<BR><TT>&nbsp;</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return(0);</TT>
-<BR><TT>}</TT>
+	if( dgram.send(buf,strlen(buf)+1,remote) == -1 )
+	{
+		ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>send</font>"),-1);
+	}
 
-<P>
+	if( dgram.recv(buf,sizeof(buf),remote) == -1 )
+	{
+		ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>recv</font>"),-1);
+	}
+
+	ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) The server said:  %s\n</font>",buf));
+
+	<font color=red>/*
+	   Using the "<font color=green>remote</font>" object instance, find out where the server lives.
+	   We could then save this address and use directed datagrams to chat
+	   with the server for a while.
+	 */</font>
+	ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) The server can be found at:  (%s:%d)\n</font>",
+		remote.get_host_name(), PORT ));
+
+	return(0);
+}
+</PRE>
 <HR WIDTH="100%">
 
 <P>&nbsp;About that subnet thing:
@@ -148,9 +116,5 @@ enable for this interface.: Unknown error</I>.&nbsp; There are some interfaces
 (ppp, slip) that don't support broadcast datagrams.&nbsp; That's what you're
 seeing here.</BLOCKQUOTE>
 
-<HR WIDTH="100%">
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>

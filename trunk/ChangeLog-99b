@@ -1,3 +1,30 @@
+Thu Jan 21 16:01:50 1999  James CE Johnson  <jcej@lads.com>
+
+        * docs/tutorials/007/Makefile:
+        * docs/tutorials/007/combine.shar:
+        * docs/tutorials/007/page01.html:
+        * docs/tutorials/007/page02.html:
+        * docs/tutorials/007/page03.html:
+        * docs/tutorials/007/page04.html:
+        * docs/tutorials/007/page05.html:
+        * docs/tutorials/007/page06.html:
+        * docs/tutorials/007/page07.html:
+        * docs/tutorials/007/page08.html:
+        * docs/tutorials/007/page09.html:
+        * docs/tutorials/007/thread_pool.cpp:
+        * docs/tutorials/008/Makefile:
+        * docs/tutorials/008/combine.shar:
+        * docs/tutorials/008/directed_client.cpp:
+        * docs/tutorials/008/page01.html:
+        * docs/tutorials/008/page02.html:
+        * docs/tutorials/008/page03.html:
+        * docs/tutorials/008/page04.html:
+        * docs/tutorials/008/page05.html:
+        * docs/tutorials/008/server.cpp:
+        * docs/tutorials/009/Makefile:
+	  Included Kirthika's abstract.
+	  Colorized both tutorials & convereted to new format.
+
 Thu Jan 21 14:25:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SString.h: changed !ACE_HAS_WINCE wrap of ostream

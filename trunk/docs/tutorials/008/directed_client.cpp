@@ -78,7 +78,7 @@ int main(int argc,char *argv[] )
 
 	/*
 	   Now we've turned around and put ourselves into "server mode" by 
-	   invoking the recv() method.  We now our server is going to send
+	   invoking the recv() method.  We know our server is going to send
 	   us something, so we hang out here and wait for it.  Because we
 	   know datagrams are unreliable, there is a chance that the server
 	   will respond but we won't hear.  You might consider providing a
