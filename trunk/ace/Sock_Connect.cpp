@@ -8,6 +8,10 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
+# if defined (ACE_HAS_GETIFADDRS)   
+#   include /**/ <ifaddrs.h>
+# endif /* ACE_HAS_GETIFADDRS */
+
 #if defined (VXWORKS)
 #include /**/ <inetLib.h>
 #include /**/ <netinet/in_var.h>

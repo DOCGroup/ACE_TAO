@@ -38,7 +38,7 @@ static ACE_TCHAR *shm_key;
 
 #if defined (ACE_LACKS_FORK)
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
-#elif defined (ACE_HAS_POSIX_SEM)
+#elif defined (ACE_HAS_POSIX_SEM) && defined(ACE_HAS_SYSV_IPC)
 class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
 {
   // = TITLE
@@ -112,6 +112,7 @@ parent (void * = 0)
 
   // Allow the child to proceed.
   result = synchronizer->release ();
+  ACE_DEBUG((LM_ERROR, "(%P|%t) %p\n", "release failed"));
   ACE_ASSERT (result != -1);
 
   // Perform a "busy wait" until the child sets the character to '*'.

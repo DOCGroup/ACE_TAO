@@ -2,6 +2,7 @@
 #define ACE_SYNCH_C
 
 #include "ace/Thread.h"
+#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -144,8 +145,18 @@ ACE_Semaphore::ACE_Semaphore (u_int count,
   : removed_ (0)
 {
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
+#if defined(ACE_LACKS_UNNAMED_SEMAPHORE)
+// if the user does not provide a name, we generate a unique name here
+  ACE_TCHAR iname[ACE_UNIQUE_NAME_LEN];
+  if (name == 0) 
+    ACE::unique_name (this, iname, ACE_UNIQUE_NAME_LEN);
+  if (ACE_OS::sema_init (&this->semaphore_, count, type,
+                         name ? name : iname, 
+                         arg, max) != 0)
+#else
   if (ACE_OS::sema_init (&this->semaphore_, count, type,
                          name, arg, max) != 0)
+#endif
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Semaphore::ACE_Semaphore")));
