@@ -1,3 +1,9 @@
+Tue Jun  6 17:57:14 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* examples/QOS/server.cpp: 
+	* examples/QOS/client.cpp:
+	  Changed these to reflect changes to the ACE QoS API.
+	
 Tue Jun 06 15:44:03 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: added support for LynxOS 3.1.0.
