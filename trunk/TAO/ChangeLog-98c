@@ -1,3 +1,14 @@
+Mon Nov  3 23:25:30 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL Compiler: Files be_sequence.cpp, be_typedef.cpp,
+	be_state.cpp: Lots of improvements to get sequences to
+	work. Support for sequences of strings or obj references is
+	limited. But for all other cases, this seems to be working fine.
+
+	There were some unnecessary lines of code in be_state.cpp that
+	were giving rise to multiple declarations errors. These are
+	removed.
+
 Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (main): compare with 
@@ -5,17 +16,17 @@ Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 	
 	* tests/Cubit/TAO/IDL_Cubit/cubit.idl (enum discrim): Deleted
 	enumerations not used.
-	
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (please_exit): Fixed 
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (please_exit): Fixed
 	unused variable.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h (Cubit_Factory_i): 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h (objrefs): Fixed invalid 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h (Cubit_Factory_i):
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h (objrefs): Fixed invalid
 	comparison between a signed and unsigned variable.
-	
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Fixed comparison of 
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Fixed comparison of
 	">=" on an unsigned variable to compare only ">".
-	
+
 Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
 
 	* tests/Cubit/TAO/MT_Cubit/MTCubit.dsw:
@@ -24,11 +35,11 @@ Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
 	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
 	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
 	* tests/Cubit/TAO/IDL_Cubit/test.dsw:  Added new workspace and
-	  project files. 
-	  
+	  project files.
+
 Mon Nov 03 18:43:37 1997  Carlos O'Ryan  <coryan@MILONGA>
 
-	* TAO_IDL/be/be_operation.cpp: 
+	* TAO_IDL/be/be_operation.cpp:
 	  "Fixed" skeleton generation code. Sometimes the formal parameter
 	  names for the skeleton can clash with the user defined names for
 	  the (IDL) method parameter names.
@@ -38,19 +49,19 @@ Mon Nov 03 18:43:37 1997  Carlos O'Ryan  <coryan@MILONGA>
 	  user defined parameter names and generate them using some
 	  numbering scheme.
 
-	* TAO_IDL/be/be_predefined_type.cpp: 
+	* TAO_IDL/be/be_predefined_type.cpp:
 	  Generate CORBA::_tc_Object as the TypeCode for all pseudo
 	  object, this is a hack but works for the files we are using
 	  right now (maybe it will fail for complex things, like the
 	  interface repository).
 
-	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_sequence.cpp:
 	  Fixed a number of minor problems:
 	  Missing _ptr type for sequences.
 	  The return type for T_var::operator-> was different in the
 	  .h and .i file.
 
-	* TAO_IDL/be/be_type.cpp: 
+	* TAO_IDL/be/be_type.cpp:
 	  tc_name_ and type_name_ were not initialized, producing some
 	  segfaults under NT.
 
@@ -64,7 +75,7 @@ Mon Nov  3 16:52:19 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 	* TAO_IDL/be/be_typedef.cpp (gen_client_stubs): Removed unused
 	variable warning.
 
-	* TAO_IDL/fe/y.tab.cpp (yytoks): Added brackets to the array 
+	* TAO_IDL/fe/y.tab.cpp (yytoks): Added brackets to the array
 	 of structures being initialized.
 
 Mon Nov 03 13:22:12 1997    <nw1@CHA-CHA>
@@ -74,9 +85,9 @@ Mon Nov 03 13:22:12 1997    <nw1@CHA-CHA>
 
 	* TAO_IDL/be/be.h: Added #ifdef'ed pragma to diable warning 4250
 	  on NT.  This is only temporary and should be fixed later.
-	
-	* TAO_IDL/be/be_union.cpp (gen_var_defn): 
-	* TAO_IDL/be/be_structure.cpp (gen_var_defn): 
+
+	* TAO_IDL/be/be_union.cpp (gen_var_defn):
+	* TAO_IDL/be/be_structure.cpp (gen_var_defn):
 	* TAO_IDL/be/be_array.cpp (gen_var_defn): Removed unused local
 	  variables declaration (s).
 
