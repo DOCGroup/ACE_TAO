@@ -325,10 +325,11 @@ TAO_ServantBase_var::~TAO_ServantBase_var (void)
 TAO_ServantBase_var &
 TAO_ServantBase_var::operator= (TAO_ServantBase *p)
 {
+  if (this->ptr_ == p)
+    return *this;
+
   if (this->ptr_ != 0)
-    {
-      this->ptr_->_remove_ref ();
-    }
+    this->ptr_->_remove_ref ();
 
   this->ptr_ = p;
 
