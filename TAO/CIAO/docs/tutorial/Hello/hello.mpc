@@ -50,7 +50,7 @@ project(hello_exec) : ciao_component {
   }
 }
 
-project (*client) : ciao_client {
+project (*normal_client) : ciao_client {
   exename = client
   after += hello_stub
   libs += hello_stub
@@ -66,7 +66,7 @@ project (*client) : ciao_client {
 // Client for interacting with the Simple_Component_Server
 project (*simple_client) : ciao_client {
   libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
-  after += hello_stub Simple_Server_Stbu
+  after += hello_stub Simple_Server_Stub
   libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
   libs += hello_stub CIAO_Simple_Server_Stub
   exename = simple_client
