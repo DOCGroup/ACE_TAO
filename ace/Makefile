@@ -4,7 +4,7 @@
 #       Makefile for the entire ACE release
 #----------------------------------------------------------------------------
 
-ifneq ($(ssl),0)
+ifneq ($(ssl),)
   DIRS += SSL
 endif # ssl
 
