@@ -1,3 +1,10 @@
+Mon May  3 09:58:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/rules.local.GNU:
+	* include/makeinclude/rules.nested.GNU:
+
+	  Changed references to "Makefile" to "GNUmakefile".
+
 Sun May  2 13:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task.cpp (svc_run):

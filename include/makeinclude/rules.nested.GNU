@@ -10,7 +10,7 @@
 # variable must be set to its actual name before including this
 # file to allow the recursive MAKE to work properly.
 
-MAKEFILE ?= Makefile
+MAKEFILE ?= GNUmakefile
 SUBDIR_MAKEFILE ?= $(MAKEFILE)
 
 # Make sure that we build directories with DIRS= in sequence instead of in
@@ -24,7 +24,7 @@ endif
 
 # A rule to build DIR.subdir from DIR by calling MAKE again, with
 # DIR as the new directory, SUBDIR_TARGET as the target to build, and
-# "Makefile" as the makefile to use in the new directory.
+# "GNUmakefile" as the makefile to use in the new directory.
 
 # Triggered by the $(TARGETS_NESTED) target, below.
 
