@@ -1,6 +1,14 @@
+Fri Oct  1 11:29:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Fault_Detector/Fault_Detector.mpc:
+	* orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+
+	  Changed to inherit from core so that executables will be
+	  installed.
+
 Fri Oct  1 18:22:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (get_policy_including_current): 
+	* tao/ORB_Core.cpp (get_policy_including_current):
 
 	  Some more problems that missed the last checkin.
 
@@ -16,7 +24,7 @@ Fri Oct  1 18:13:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Fri Oct  1 17:25:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RT_Policy_i.h (create_transport_protocol_property): 
+	* tao/RTCORBA/RT_Policy_i.h (create_transport_protocol_property):
 
 	  Made the second argument to defaul to zero. This fix may not be
 	  right. Need to run this by  Irfan. Until then some of the
@@ -24,53 +32,53 @@ Fri Oct  1 17:25:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Thu Sep 30 17:08:43 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
 
 	  Transport.h needs to be included.
 
 Thu Sep 30 16:53:48 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Protocols_Hooks.h: 
+	* tao/Protocols_Hooks.h:
 
 	  Added export directives to the class declarations.
 
-	* tao/Connection_Handler.{h,inl} (TAO_Connection_Handler): 
+	* tao/Connection_Handler.{h,inl} (TAO_Connection_Handler):
 
 	  Gave the set_dscp_codepoint() method a default no-op
 	  implementation.  This way local protocols will not have to
 	  bother overwriting this method.
 
-	* tao/Strategies/UIOP_Connection_Handler.{h,cpp}: 
-	* tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}: 
+	* tao/Strategies/UIOP_Connection_Handler.{h,cpp}:
+	* tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}:
 
 	  Removed no-op implementation of set_dscp_codepoint().
-	
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.{h,cpp}: 
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.{h,cpp}:
 
 	  SSLIOP::Util::setup_handler_state no longer needed.  However, a
 	  helper for resolving the current is needed and was added.
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.{h,cpp}: 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.{h,cpp}: 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.{h,cpp}: 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.{h,cpp}: 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.{h,cpp}: 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.{h,cpp}: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.{h,cpp}:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.{h,cpp}:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.{h,cpp}:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.{h,cpp}:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.{h,cpp}:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.{h,cpp}:
 
 	  The void * arg parameter that was being passed to
 	  TAO_Creation_Strategy is no longer necessary.  Service handlers
 	  now figure out protocol properties when they are created.
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.{h,cpp}: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.{h,cpp}:
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.{h,cpp}:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.{h,cpp}:
-	
+
 	  TAO_{Protocol Name}_Properties was removed.  <arg> parameter
 	  that was used to pass information between acceptor/connector and
 	  service handler was removed. open() was modified to get the
 	  protocol properties from the correct place.
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp: 
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
 
 	  Added missing semicolon.
 
