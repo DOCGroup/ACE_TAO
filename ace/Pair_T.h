@@ -26,7 +26,7 @@
 template <class T1, class T2>
 class ACE_Pair
 {
-  // = TITLE  
+  // = TITLE
   //     Defines a pair.
   //
   // = DESCRIPTION
@@ -38,7 +38,7 @@ public:
   typedef T2 second_type;
 
   // = Initialization and termination methods.
-  ACE_Pair (const T1 &t1, 
+  ACE_Pair (const T1 &t1,
             const T2 &t2);
   // Constructor.
 
@@ -46,10 +46,12 @@ public:
   // Default constructor.
 
   T1 &first (void);
+  const T1 &first (void) const;
   void first (const T1 &t1);
   // Get/Set first.
 
   T2 &second (void);
+  const T2 &second (void) const;
   void second (const T2 &t2);
   // Access second.
 
@@ -62,7 +64,7 @@ protected:
 template <class T1, class T2>
 class ACE_Reference_Pair
 {
-  // = TITLE  
+  // = TITLE
   //     Defines a pair that only hold references.
   //
   // = DESCRIPTION
@@ -75,14 +77,14 @@ public:
   typedef T2 second_type;
 
   // = Initialization and termination methods.
-  ACE_Reference_Pair (T1 &t1, 
+  ACE_Reference_Pair (T1 &t1,
                       T2 &t2);
   // Constructor.
 
-  T1 &first (void);
+  T1 &first (void) const;
   // Access first.
 
-  T2 &second (void);
+  T2 &second (void) const;
   // Access second.
 
 protected:
