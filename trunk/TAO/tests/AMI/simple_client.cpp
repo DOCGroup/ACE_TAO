@@ -19,8 +19,15 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+
+#ifdef TAO_HAS_AMI_EXCEPTIONS
+#include "ami_testC-hand.h"
+#include "ami_testS-hand.h"
+#else
 #include "ami_testC.h"
 #include "ami_testS.h"
+#endif
+
 
 ACE_RCSID(AMI, simple_client, "$Id$")
 
@@ -92,6 +99,15 @@ public:
         }
     };
 
+  void foo_excep (A::AMI_AMI_TestExceptionHolder *excep_holder,
+                  CORBA::Environment &ACE_TRY_ENV)
+    {
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Callback method <foo_excep> called: \n"));
+    };
+
+  
   void get_yadda (CORBA::Long result, 
                   CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
@@ -172,7 +188,7 @@ main (int argc, char *argv[])
       
 
       CORBA::Long l = 931247;
-      
+ 
       for (ssize_t ni = 0; ni < niterations; ni++)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -180,7 +196,7 @@ main (int argc, char *argv[])
                       ni));
                     
           ami_test_var->sendc_foo (the_handler_var.in (),
-                                   l,
+                                   0,
                                    "Let's talk AMI.",
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -202,7 +218,6 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // End test of attributes
-
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,

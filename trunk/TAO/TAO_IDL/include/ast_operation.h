@@ -118,6 +118,10 @@ public:
   // AST Dumping
   virtual void                  dump(ostream &o);
 
+  // Method to add exceptions
+  UTL_ExceptList *add_exceptions(UTL_ExceptList *t);
+
+
 private:
   // Data
   AST_Type                      *pd_return_type;        // Return type
