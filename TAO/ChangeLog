@@ -1,3 +1,12 @@
+Sat Feb  7 09:02:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/AMI_Buffering/client.cpp:
+	* tests/Blocking_Sync_None/client.cpp:
+	* tests/Oneway_Buffering/client.cpp:
+
+	  Fixed warnings that were caused by comparison between signed
+	  and unsigned integers.  
+
 Sat Feb  7 14:18:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Event_Service/client.cpp:
