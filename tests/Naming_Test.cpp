@@ -83,7 +83,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
       ACE_WString w_name (name);
       
       ACE_WString w_value;
-      char *type_out;
+      char *type_out = 0;
 
       if (sign == 1)
 	{
@@ -100,11 +100,16 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
       
       ACE_ASSERT (ns_context.resolve (w_name, w_value, type_out) == result);
 
-      if (w_value.char_rep ())
+      char *value = w_value.char_rep ();
+      if (value)
 	{
 	  ACE_ASSERT (w_value == val);
-	  ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
-		      name, w_value.char_rep (), type_out));
+	  if (type_out)
+	    ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
+			name, value, type_out));
+	  else
+	    ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\n",
+			name, value));
 
 	  if (type_out)
 	    {
@@ -112,6 +117,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 	      delete[] type_out;
 	    }
 	}
+      delete[] value;
     }  
 }
 
