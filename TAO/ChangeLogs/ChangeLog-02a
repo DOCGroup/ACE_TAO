@@ -1,3 +1,11 @@
+Thu Feb  1 09:36:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * examples/AMI/FL_Callback/peer.cpp:
+
+          Corrected typo in the usage message. Thanks to
+          Johnny Willemsen <johnny.willemsen@meco.nl> for
+          reporting it.
+
 Wed Jan 31 19:13:18 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tests/Multiple/Multiple.idl:
