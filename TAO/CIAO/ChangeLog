@@ -1,4 +1,13 @@
-Thu Jun 10 18:03:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+Thu Jun 10 18:12:44 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Process_Element.cpp:
+        * DnC/Config_Handlers/Property_Handler.cpp:
+        * DnC/Config_Handlers/RS_Handler.cpp:
+        * DnC/Config_Handlers/SP_Handler.cpp:
+
+          Finally, Config_Handler directory compiles correctly
+
+Thu Jun 10 18:06:52 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CAD_Handler.cpp:
         * DnC/Config_Handlers/CPK_Handler.cpp:

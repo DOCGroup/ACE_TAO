@@ -100,7 +100,7 @@ process_refs(DOMNode*& node,
           char* aceattrnodevalue_ch = XMLString::transcode
             (attribute_node->getNodeValue ());
           ACE_TString aceattrnodevalue = aceattrnodevalue_ch;
-          XMLString::release (aceattrnodevalue_ch);
+          XMLString::release (&aceattrnodevalue_ch);
           if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
               //index = index + 1;
@@ -131,7 +131,7 @@ process_ref(DOMNode*& node,
           char* aceattrnodevalue_ch = XMLString::transcode
             (attribute_node->getNodeValue ());
           ACE_TString aceattrnodevalue = aceattrnodevalue_ch;
-          XMLString::release (aceattrnodevalue_ch);
+          XMLString::release (&aceattrnodevalue_ch);
           if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
               //index = index + 1;
