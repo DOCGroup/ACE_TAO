@@ -126,7 +126,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\Debug\CosNaming"
+# PROP Intermediate_Dir "DLL\Debug\CosNamingMFC"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /FD /c
