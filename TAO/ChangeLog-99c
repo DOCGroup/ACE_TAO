@@ -1,3 +1,10 @@
+Fri Dec 24 12:28:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp (shutdown):
+          the CORBA::Environment argument needs to be declared without
+          native exceptions.  And, added an ACE_UNUSED_ARG to avoid
+          compile warning with native exceptions.
+
 Fri Dec 24 08:08:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simulator/Event_Supplier/Event_Con.{h,cpp},
