@@ -36,6 +36,10 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
     connection_handler_ (handler),
     messaging_object_ (0)
 {
+  // We'll set the id_ (from TAO_Transport) to the handle from our connection
+  if (connection_handler_ != 0)
+    this->id_ = ACE_static_cast (int, this->connection_handler_->get_handle ());
+
   if (flag)
     {
       // Use the lite version of the protocol
@@ -55,6 +59,7 @@ TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport (void)
   delete this->messaging_object_;
 }
 
+#if 0
 TAO_SHMIOP_SVC_HANDLER *
 TAO_SHMIOP_Transport::service_handler (void)
 {
@@ -66,30 +71,31 @@ TAO_SHMIOP_Transport::handle (void)
 {
   return this->connection_handler_->get_handle ();
 }
+#endif
 
 ACE_Event_Handler *
-TAO_SHMIOP_Transport::event_handler (void)
+TAO_SHMIOP_Transport::event_handler_i (void)
 {
   return this->connection_handler_;
 }
 
 ssize_t
-TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *)
+TAO_SHMIOP_Transport::send_i (const ACE_Message_Block *message_block,
+                              const ACE_Time_Value *max_wait_time,
+                              size_t *)
 {
-  return this->service_handler ()->peer ().send (message_block,
-                                                 max_wait_time);
+  return this->connection_handler_->peer ().send (message_block,
+                                                  max_wait_time);
 }
 
 ssize_t
-TAO_SHMIOP_Transport::recv (char *buf,
-                            size_t len,
-                            const ACE_Time_Value *max_wait_time)
+TAO_SHMIOP_Transport::recv_i (char *buf,
+                              size_t len,
+                              const ACE_Time_Value *max_wait_time)
 {
-  return this->service_handler ()->peer ().recv (buf,
-                                                 len,
-                                                 max_wait_time);
+  return this->connection_handler_->peer ().recv (buf,
+                                                  len,
+                                                  max_wait_time);
 }
 
 
@@ -129,7 +135,7 @@ TAO_SHMIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 
 
 int
-TAO_SHMIOP_Transport::register_handler (void)
+TAO_SHMIOP_Transport::register_handler_i (void)
 {
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
@@ -193,8 +199,8 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing conn %d after fault %p\n"),
-                    this->handle (),
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
       return -1;
@@ -206,8 +212,8 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
+                    ACE_TEXT ("EOF, closing transport %d\n"),
+                    this->id ()));
       return -1;
     }
 
@@ -355,8 +361,8 @@ TAO_SHMIOP_Transport::process_message (void)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) : SHMIOP_Client_Transport::")
-                        ACE_TEXT ("handle_client_input - ")
+                        ACE_TEXT ("TAO (%P|%t) : SHMIOP_Transport::")
+                        ACE_TEXT ("process_message - ")
                         ACE_TEXT ("dispatch reply failed\n")));
           this->messaging_object_->reset ();
           this->tms_->connection_closed ();
@@ -393,15 +399,17 @@ TAO_SHMIOP_Transport::process_message (void)
 }
 
 void
-TAO_SHMIOP_Transport::transition_handler_state (void)
+TAO_SHMIOP_Transport::transition_handler_state_i (void)
 {
   connection_handler_ = 0;
 }
 
+#if 0
 TAO_Connection_Handler*
 TAO_SHMIOP_Transport::connection_handler (void) const
 {
   return connection_handler_;
 }
+#endif
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

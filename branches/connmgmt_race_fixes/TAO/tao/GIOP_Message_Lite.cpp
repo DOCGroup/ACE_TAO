@@ -1290,8 +1290,8 @@ TAO_GIOP_Message_Lite::send_reply_exception (
 
       // Close the handle.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t|%N|%l) cannot marshal exception, handle = %d: %p\n"),
-                  transport->handle (),
+                  ACE_TEXT ("(%P|%t|%N|%l) cannot marshal exception on transport %lu: %p\n"),
+                  transport->id (),
                   ACE_TEXT ("send_reply_exception ()")));
       return -1;
     }
@@ -1355,8 +1355,6 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
                   (const u_char *) error_message,
                   TAO_GIOP_LITE_HEADER_LEN);
 
-  ACE_HANDLE which = transport->handle ();
-
   ACE_Data_Block data_block (TAO_GIOP_LITE_HEADER_LEN,
                              ACE_Message_Block::MB_DATA,
                              error_message,
@@ -1374,8 +1372,8 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
-              which
+              ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %lu, errno = %d\n"),
+              transport->id (), errno
             ));
         }
     }

@@ -61,33 +61,17 @@ public:
   /// Default destructor.
   ~TAO_IIOP_Transport (void);
 
-  /// Return the connection service handler
-  TAO_IIOP_SVC_HANDLER *service_handler (void);
-
+#if 0
   ///  The TAO_Transport methods, please check the documentation in
   ///  "tao/Pluggable.h" for more details.
   virtual ACE_HANDLE handle (void);
-
-  virtual ACE_Event_Handler *event_handler (void);
-
-  /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0,
-                        size_t *bytes_transferred = 0);
-
-
-  /// Read len bytes from into buf.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0);
+#endif
 
   /// Read and process the message from the connection. The processing
   /// of the message is done by delegating the work to the underlying
   /// messaging object
   virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
                                     int block =0);
-
-  virtual int register_handler (void);
 
   /// @@TODO: These methods IMHO should have more meaningful
   /// names. The names seem to indicate nothing.
@@ -116,10 +100,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
-  virtual CORBA::Boolean
-  send_request_header (TAO_Operation_Details &opdetails,
-                       TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg);
+  virtual CORBA::Boolean send_request_header (TAO_Operation_Details &opdetails,
+                                              TAO_Target_Specification &spec,
+                                              TAO_OutputCDR &msg);
 
   /// Initialising the messaging object
   virtual int messaging_init (CORBA::Octet major,
@@ -128,12 +111,35 @@ public:
   /// Open the service context list and process it.
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
+protected:
   /// Method to do whatever it needs to do when the connection
   /// handler is being closed and destroyed.
-  virtual void transition_handler_state (void);
+  virtual void transition_handler_state_i (void);
 
-  // Access the connection handler
-  virtual TAO_Connection_Handler* connection_handler (void) const;
+  /// Access connection_handler_ as an <code>ACE_Event_Handler</code>.
+  /// Must be called with transport's lock held.
+  virtual ACE_Event_Handler *event_handler_i (void);
+
+  /// Write the complete Message_Block chain to the connection.
+  /// Must be called with transport's lock held.
+  virtual ssize_t send_i (const ACE_Message_Block *mblk,
+                          const ACE_Time_Value *s = 0,
+                          size_t *bytes_transferred = 0);
+
+
+  /// Read len bytes from into buf.
+  /// Must be called with transport's lock held.
+  virtual ssize_t recv_i (char *buf,
+                          size_t len,
+                          const ACE_Time_Value *s = 0);
+
+  virtual int register_handler_i (void);
+
+#if 0
+  /// Access the connection handler as <code>TAO_Connection_Handler</code>.
+  /// Must be called with transport's lock held.
+  virtual TAO_Connection_Handler* connection_handler_i (void) const;
+#endif
 
 private:
 
