@@ -223,9 +223,9 @@ ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation (void)
 
 ACE_POSIX_Asynch_Operation::ACE_POSIX_Asynch_Operation (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
   : ACE_Asynch_Operation_Impl (),
+    posix_aiocb_proactor_ (posix_aiocb_proactor),
     handler_ (0),
-    handle_  (ACE_INVALID_HANDLE),
-    posix_aiocb_proactor_ (posix_aiocb_proactor)
+    handle_  (ACE_INVALID_HANDLE)
 {
 }
 
@@ -1598,6 +1598,9 @@ ACE_POSIX_Asynch_Accept::close ()
 int 
 ACE_POSIX_Asynch_Accept::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) 
 {
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (close_mask);
+
   ACE_TRACE(ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_close\n"));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
