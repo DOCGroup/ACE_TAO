@@ -2,7 +2,10 @@
 
 #include "Container_Base.h"
 #include "ace/DLL.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
+#include "Servant_Activator.h"
+
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
@@ -21,13 +24,13 @@ CIAO::Container::~Container ()
 }
 
 PortableServer::POA_ptr
-CIAO::Container::_ciao_the_POA (void)
+CIAO::Container::the_POA (void) const
 {
-  return this->poa_.in ();
+  return this->component_poa_.in ();
 }
 
 CORBA::ORB_ptr
-CIAO::Container::_ciao_the_ORB ()
+CIAO::Container::the_ORB (void) const
 {
   return this->orb_.in ();
 }
@@ -214,13 +217,13 @@ ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
 CIAO::Session_Container::serial_number_ (0);
 
 CIAO::Session_Container::Session_Container (CORBA::ORB_ptr o,
-                                            int static_config_flag,
-                                            const Static_Config_EntryPoints_Maps* maps
-                                            )
+                                            bool static_config_flag,
+                                            const Static_Config_EntryPoints_Maps* maps)
   : Container (o),
     number_ (0),
     static_config_flag_ (static_config_flag),
-    static_entrypts_maps_ (maps)
+    static_entrypts_maps_ (maps),
+    sa_ (0)
 {
 }
 
@@ -245,7 +248,8 @@ CIAO::Session_Container::init (const char *name,
     }
 
    CORBA::Object_var poa_object =
-     this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+     this->orb_->resolve_initial_references("RootPOA" 
+                                            ACE_ENV_ARG_PARAMETER);
    ACE_CHECK_RETURN (-1);
 
    if (CORBA::is_nil (poa_object.in ()))
@@ -254,27 +258,22 @@ CIAO::Session_Container::init (const char *name,
                        -1);
 
    PortableServer::POA_var root_poa =
-     PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+     PortableServer::POA::_narrow (poa_object.in () 
+                                   ACE_ENV_ARG_PARAMETER);
    ACE_CHECK_RETURN (-1);
 
-   // Set up proper poa policies here.  Default policies seems to be
-   // fine for session container.  If you add some other default
-   // policies here, then you need to "add" more_policies below
-   // instead of simply assigning more_policies to the init policy
-   // list.
-   CORBA::PolicyList policies (0);
+   this->create_component_POA (name,
+                               more_policies,
+                               root_poa.in ()
+                               ACE_ENV_ARG_PARAMETER);
+   ACE_CHECK_RETURN (-1);
 
-   if (more_policies != 0)
-     policies = *more_policies;
-
-   this->poa_ = root_poa->create_POA (name,
-                                      PortableServer::POAManager::_nil (),
-                                      policies
-                                      ACE_ENV_ARG_PARAMETER);
+   this->create_facet_consumer_POA (root_poa.in ()
+                                    ACE_ENV_ARG_PARAMETER);
    ACE_CHECK_RETURN (-1);
 
    PortableServer::POAManager_var poa_manager =
-     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+     root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
    ACE_CHECK_RETURN (-1);
 
    poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -289,19 +288,101 @@ CIAO::Session_Container::init (const char *name,
    return 0;
 }
 
+
+void
+CIAO::Session_Container::create_component_POA (const char *name,
+                                               const CORBA::PolicyList *p,
+                                               PortableServer::POA_ptr root
+                                               ACE_ENV_ARG_DECL)
+{
+  // Set up proper poa policies here.  Default policies seems to be
+  // fine for session container.  If you add some other default
+  // policies here, then you need to "add" more_policies below
+  // instead of simply assigning more_policies to the init policy
+  // list.
+  CORBA::PolicyList policies (0);
+
+  if (p != 0)
+    policies = *p;
+
+  PortableServer::POAManager_var poa_manager =
+    root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->component_poa_ =
+    root->create_POA (name,
+                      poa_manager.in (),
+                      policies
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+CIAO::Session_Container::create_facet_consumer_POA (
+    PortableServer::POA_ptr root
+    ACE_ENV_ARG_DECL)
+{
+  PortableServer::POAManager_var poa_manager =
+    root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO::Utils::PolicyList_Destroyer policies (3);
+  policies.length (3);
+
+  policies[0] =
+    root->create_id_assignment_policy (PortableServer::USER_ID
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  policies[1] =
+    root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Servant Retention Policy
+  policies[2] =
+    root->create_servant_retention_policy (PortableServer::RETAIN
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->facet_cons_poa_ =
+    root->create_POA ("facet_consumer_poa",
+                      poa_manager.in (),
+                      policies
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  ACE_NEW_THROW_EX (this->sa_,
+                    Servant_Activator (this->orb_.in ()),
+                    CORBA::NO_MEMORY ());
+
+  this->facet_cons_poa_->set_servant_manager (
+      this->sa_
+      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
 CORBA::Object_ptr
-CIAO::Session_Container::install_servant (PortableServer::Servant p
+CIAO::Session_Container::install_servant (PortableServer::Servant p,
+                                          Container::OA_Type t
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  PortableServer::POA_ptr tmp = 0;
+
+  if (t == Container::Component)
+    tmp = this->component_poa_.in ();
+  else
+    tmp = this->facet_cons_poa_.in ();
+
   PortableServer::ObjectId_var oid
-    = this->poa_->activate_object (p
-                                   ACE_ENV_ARG_PARAMETER);
+    = tmp->activate_object (p
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Object_var objref
-    = this->poa_->id_to_reference (oid.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+    = tmp->id_to_reference (oid.in ()
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return objref._retn ();
@@ -314,13 +395,13 @@ CIAO::Session_Container::install_component (PortableServer::Servant p,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var id
-    = this->poa_->activate_object (p
-                                   ACE_ENV_ARG_PARAMETER);
+    = this->component_poa_->activate_object (p
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Object_var objref
-    = this->poa_->id_to_reference (id.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+    = this->component_poa_->id_to_reference (id.in ()
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   oid = id._retn ();
@@ -415,8 +496,10 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
 
   PortableServer::ServantBase_var safe (home_servant);
 
-  CORBA::Object_var objref = this->install_servant (home_servant
-                                                    ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var objref =
+    this->install_servant (home_servant,
+                            Container::Component
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
   Components::CCMHome_var homeref =
@@ -433,36 +516,54 @@ CIAO::Session_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->uninstall (homeref
+  this->uninstall (homeref,
+                   Container::Component
                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
-CIAO::Session_Container::uninstall (CORBA::Object_ptr objref
+CIAO::Session_Container::uninstall (CORBA::Object_ptr objref,
+                                    Container::OA_Type t
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId_var oid
-    = this->poa_->reference_to_id (objref
-                                   ACE_ENV_ARG_PARAMETER);
+  PortableServer::POA_ptr tmp = 0;
+
+  if (t == Container::Component)
+    tmp = this->component_poa_.in ();
+  else
+    tmp = this->facet_cons_poa_.in ();
+
+  PortableServer::ObjectId_var oid =
+    tmp->reference_to_id (objref
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  tmp->deactivate_object (oid.in ()
+                          ACE_ENV_ARG_PARAMETER);
 }
 
 void
-CIAO::Session_Container::uninstall (PortableServer::Servant svt
+CIAO::Session_Container::uninstall (PortableServer::Servant svt,
+                                    Container::OA_Type t
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  PortableServer::POA_ptr tmp = 0;
+
+  if (t == Container::Component)
+    tmp = this->component_poa_.in ();
+  else
+    tmp = this->facet_cons_poa_.in ();
+
   PortableServer::ObjectId_var oid
-    = this->poa_->servant_to_id (svt
-                                 ACE_ENV_ARG_PARAMETER);
+    = tmp->servant_to_id (svt
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  tmp->deactivate_object (oid.in ()
+                          ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -472,12 +573,12 @@ CIAO::Session_Container::uninstall_component (Components::CCMObject_ptr objref,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var id
-    = this->poa_->reference_to_id (objref
-                                   ACE_ENV_ARG_PARAMETER);
+    = this->component_poa_->reference_to_id (objref
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  this->component_poa_->deactivate_object (id.in ()
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   oid = id._retn ();
@@ -485,17 +586,25 @@ CIAO::Session_Container::uninstall_component (Components::CCMObject_ptr objref,
 
 CORBA::Object_ptr
 CIAO::Session_Container::generate_reference (const char *obj_id,
-                                             const char *repo_id
+                                             const char *repo_id,
+                                             Container::OA_Type t
                                              ACE_ENV_ARG_DECL)
 {
+  PortableServer::POA_ptr tmp = 0;
+
+  if (t == Container::Component)
+    tmp = this->component_poa_.in ();
+  else
+    tmp = this->facet_cons_poa_.in ();
+
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (obj_id);
 
-  CORBA::Object_var objref = 
-    this->poa_->create_reference_with_id (oid.in (),
-                                          repo_id
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var objref =
+    tmp->create_reference_with_id (oid.in (),
+                                    repo_id
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return objref._retn ();
 }

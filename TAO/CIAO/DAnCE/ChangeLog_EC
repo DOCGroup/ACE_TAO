@@ -1,3 +1,23 @@
+Tue Sep 14 22:29:00 2004  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ciao/Port_Activator.cpp
+        * DAnCE/ciao/Port_Activator.h
+        * DAnCE/ciao/Port_Activator_T.cpp
+        * DAnCE/ciao/Port_Activator_T.h
+        * DAnCE/ciao/Servant_Activator.cpp
+        * DAnCE/ciao/Servant_Activator.h
+
+          Added these files, which are obtained from main trunk.
+
+        * DAnCE/ciao/CCM_Core.mpc
+        * DAnCE/ciao/Container_Base.cpp
+        * DAnCE/ciao/Container_Base.h
+        * DAnCE/ciao/Container_Base.inl
+        * DAnCE/ciao/Servant_Impl_Base.cpp
+
+          Merged above files from main trunk. The main trunk fixed
+          the long-lasting CIAO problem.
+
 Fri Sep 10 17:11:00 2004  Gan Deng <gan.deng@vanderbilt.edu>
 
         * DAnCE/Config_Handlers/CPK_Handler.cpp

@@ -108,8 +108,7 @@ namespace CIAO
   Servant_Impl_Base::_default_POA (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   {
-
     return
-      PortableServer::POA::_duplicate (container_->_ciao_the_POA ());
+     PortableServer::POA::_duplicate (container_->the_POA ());
   }
 }
