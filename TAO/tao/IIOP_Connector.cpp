@@ -464,6 +464,11 @@ TAO_IIOP_Connector::connect (TAO_Endpoint *endpoint,
                              ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
 {
+  if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                  ACE_TEXT ("looking for IIOP connection.\n")));
+
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
@@ -769,7 +774,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 {
 #if (TAO_HAS_RT_CORBA == 1)
 
-  // Connector protocol properties are obtained from ORB-level 
+  // Connector protocol properties are obtained from ORB-level
   // RTCORBA::ClientProtocolProperties policy override.
   // If the override doesn't exist or doesn't contain the
   // properties, we use ORB default.
@@ -787,7 +792,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   CORBA::Object_var auto_release = client_protocols;
   RTCORBA::TCPProtocolProperties_var tcp_properties =
     RTCORBA::TCPProtocolProperties::_nil ();
-  
+
     if (client_protocols != 0)
     {
       RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
@@ -808,7 +813,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
     {
       // No tcp properties in ORB-level override.  Use ORB defaults.
       // Orb defaults should never be null - they were initialized by
-      // the ORB_Core. 
+      // the ORB_Core.
       client_protocols = this->orb_core_->default_client_protocol ();
       auto_release = client_protocols;
       RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
@@ -835,7 +840,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 #else /* TAO_HAS_RT_CORBA == 1 */
 
   // Without RTCORBA, protocol configuration properties come from ORB
-  // options. 
+  // options.
   this->tcp_properties_.send_buffer_size =
     this->orb_core_->orb_params ()->sock_sndbuf_size ();
   this->tcp_properties_.recv_buffer_size =
