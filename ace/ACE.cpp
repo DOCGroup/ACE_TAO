@@ -1297,7 +1297,10 @@ ACE::recv_n_i (ACE_HANDLE handle,
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           // No timeouts in this version.
 
@@ -1305,7 +1308,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -1384,7 +1387,10 @@ ACE::recv_n_i (ACE_HANDLE handle,
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           // No timeouts in this version.
 
@@ -1392,7 +1398,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -1533,7 +1539,10 @@ ACE::recvv_n_i (ACE_HANDLE handle,
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           // No timeouts in this version.
 
@@ -1541,7 +1550,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
 
       for (bytes_transferred += n;
            s < iovcnt
@@ -1869,7 +1878,10 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           // No timeouts in this version.
 
@@ -1877,7 +1889,7 @@ ACE::send_n_i (ACE_HANDLE handle,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -1956,7 +1968,10 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           // No timeouts in this version.
 
@@ -1964,7 +1979,7 @@ ACE::send_n_i (ACE_HANDLE handle,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -2106,7 +2121,10 @@ ACE::sendv_n_i (ACE_HANDLE handle,
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           // No timeouts in this version.
 
@@ -2114,7 +2132,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
 
       for (bytes_transferred += n;
            s < iovcnt
