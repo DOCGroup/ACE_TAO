@@ -1,3 +1,14 @@
+Thu Mar  4 17:45:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_aix_ibm.GNU: For AIX 5.2, add a compile
+	  flag, -U__C99_RESTRICT, to work around a compiler problem that is
+	  tickled by aio.h. This can be removed when IBM supplies a compiler
+	  fix for Visual Age C++, which they intend to do in May 2004.
+
+	* ace/POSIX_Asynch_IO.cpp: Add #include "ace/ACE.h" to see
+	  ACE::set_flags(), and "ace/OS_NS_sys_stat.h" to see
+	  ACE_OS::filesize() on AIX.
+
 Thu Mar  4 07:39:52 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Node.h: Added ACE_Unbounded_Queue_Const_Iterator as a
