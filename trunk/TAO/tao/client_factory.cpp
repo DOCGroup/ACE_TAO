@@ -29,6 +29,7 @@ TAO_Client_Connection_Handler::open (void *)
   
   // @@ Chris, this should be changed to a macro that we put in the
   // ACE OS.h file.
+#if !defined (VXWORKS)
   const int MAX_SOCK_BUF_SIZE = 65536;
 
   if (this->peer ().set_option (SOL_SOCKET,
@@ -43,6 +44,7 @@ TAO_Client_Connection_Handler::open (void *)
 				     sizeof (MAX_SOCK_BUF_SIZE)) == -1)
     return -1;
   else
+#endif
     // For now, we just return success
     return 0;
 }
