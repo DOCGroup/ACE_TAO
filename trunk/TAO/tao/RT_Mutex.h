@@ -90,7 +90,6 @@ class TAO_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:
   /// Constructor.
-  /// @@ Frank, can you please change this to be "Unicode friendly"?  Please ask Nanbor or Irfan about this.
   TAO_Named_RT_Mutex (const char *name,
                       TAO_Named_RT_Mutex_Manager &mutex_mgr);
 
@@ -101,7 +100,6 @@ protected:
   // Don't allow unnamed named mutexes
   TAO_Named_RT_Mutex (void);
 
-  /// @@ Frank, this will also need to be changed.
   char *name_;
 
   TAO_Named_RT_Mutex_Manager &mutex_mgr_;
