@@ -72,11 +72,4 @@ TAO_UIOP_Profile::_nil (void)
   return (TAO_UIOP_Profile *) 0;
 }
 
-ACE_INLINE TAO_MProfile *
-TAO_UIOP_Profile::forward_to_i (void)
-{
-  return this->forward_to_;
-}
-
-
 #endif  /* !defined ACE_LACKS_UNIX_DOMAIN_SOCKETS */
