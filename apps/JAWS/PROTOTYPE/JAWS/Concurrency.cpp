@@ -66,6 +66,8 @@ JAWS_Concurrency_Base::svc (void)
 
   mb = this->singleton_mb ();
 
+  // A NULL data block indicates that the thread should shut
+  // itself down
   if (mb == 0)
     {
       JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty message block");
@@ -73,27 +75,20 @@ JAWS_Concurrency_Base::svc (void)
     }
 
   db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
-  if (db == 0)
-    {
-      JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty data block");
-      return -1;
-    }
-
-  // Thread specific message block and data block
-  JAWS_Data_Block *ts_db = new JAWS_Data_Block;
-  if (ts_db == 0)
-    {
-      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc"));
-      return -1;
-    }
-
-  ts_db->task (db->task ());
-  ts_db->policy  (db->policy ());
 
   for (;;)
     {
-      // A NULL data block indicates that the thread should shut
-      // itself down
+      // Thread specific message block and data block
+      JAWS_Data_Block *ts_db = new JAWS_Data_Block;
+      if (ts_db == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc"));
+          return -1;
+        }
+
+      ts_db->task (db->task ());
+      ts_db->policy  (db->policy ());
+
       policy = db->policy ();
 
       // Each time we iterate, we create a handler to maintain
@@ -107,6 +102,7 @@ JAWS_Concurrency_Base::svc (void)
 
       // Set the initial task in the handler
       handler->task (db->task ());
+      handler->message_block (ts_db);
       ts_db->io_handler (handler);
 
 
@@ -116,6 +112,7 @@ JAWS_Concurrency_Base::svc (void)
 
           //  handler maintains the state of the protocol
           task = handler->task ();
+          ts_db = handler->message_block ();
 
           // Use a NULL task to make the thread recycle now
           if (task == 0)
@@ -150,9 +147,9 @@ JAWS_Concurrency_Base::svc (void)
       result = 0;
 
       policy->ioh_factory ()->destroy_io_handler (handler);
+      ts_db->release ();
     }
 
-  ts_db->release ();
 
   return 0;
 }
