@@ -1,8 +1,13 @@
+Tue Jun  8 15:50:28 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	  Added duplicate for one return value.
+
 Tue Jun  8 15:00:30 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/TPD_Handler.h: 
-	* DnC/Config_Handlers/TPD_Handler.cpp: 
-	* DnC/RepositoryManager/RepositoryManager_Impl.cpp: 
+	* DnC/Config_Handlers/TPD_Handler.h:
+	* DnC/Config_Handlers/TPD_Handler.cpp:
+	* DnC/RepositoryManager/RepositoryManager_Impl.cpp:
 
 	Added TopLevelDescription handler.
 
@@ -23,7 +28,6 @@ Tue Jun  8 14:15:31 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	  Added "return" to those unimplemented functions to makde the
           compiler happy.
-
 
 Tue Jun  8 14:10:08 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 

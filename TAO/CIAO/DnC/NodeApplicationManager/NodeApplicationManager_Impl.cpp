@@ -177,7 +177,7 @@ create_node_application (const ACE_CString & options
       {
         //ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 	//@@ No Duplication here! so becareful.
-        this->nodeapp_ = retval.in ();
+        this->nodeapp_ = Deployment::NodeApplication::_duplicate (retval.in ());
       }
     }
   ACE_CATCHANY
@@ -323,7 +323,7 @@ startLaunch (const Deployment::Properties & configProperty,
   if (start) this->nodeapp_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->nodeapp_.in ();
+  return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }
 
 
