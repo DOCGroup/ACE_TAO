@@ -32,7 +32,7 @@
 
 ACE_RCSID(tests, Process_Manager_Test, "Process_Manager_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
-#if (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32)) && defined (ACE_HAS_THREADS)
+#if (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32))
 
 static u_int debug_test = 0;
 
@@ -286,7 +286,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Time_Value how_long (10);
 
-  ACE_Reactor::instance ()->owner (ACE_Thread::self ());
   ACE_Reactor::instance ()->run_event_loop (how_long);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -302,7 +301,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return test_status;
 }
 
-#else /* (!ACE_LACKS_FORK || ACE_WIN32) && ACE_HAS_THREADS */
+#else /* (!ACE_LACKS_FORK || ACE_WIN32) */
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -312,4 +311,4 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* (!ACE_LACKS_FORK || ACE_WIN32) && ACE_HAS_THREADS */
+#endif /* (!ACE_LACKS_FORK || ACE_WIN32) */
