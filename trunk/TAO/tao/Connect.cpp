@@ -211,7 +211,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
   // appropriate.
   IIOP_ServerRequest request (input,
                               output,
-			      this->orb_core_,
+                              this->orb_core_,
                               env);
 
   // The request_id_ field in request will be 0 if something went
@@ -236,9 +236,9 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
   // over the transport (as could happen using TCP).
 
   this->orb_core_->root_poa ()->dispatch_servant (request.object_key (),
-						  request,
-						  0,
-						  env);
+                                                  request,
+                                                  0,
+                                                  env);
 
 
   // Need to check for any errors present in <env> and set the return
@@ -350,13 +350,13 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
       // but we don't want to marshal it because it is no failure.
       // The proper Locacte_Reply will tell the client what is going on.
 
-    // Remove the exception
+      // Remove the exception
       env.clear ();
     }
     
   // Create the response.
   TAO_GIOP::start_message (TAO_GIOP::LocateReply, output,
-			   this->orb_core_);
+                           this->orb_core_);
   output.write_ulong (locateRequestHeader.request_id);
   output.write_ulong (status);
 
@@ -406,82 +406,82 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
 
       // Construct a REPLY header.
       TAO_GIOP::start_message (TAO_GIOP::Reply, output,
-			       this->orb_core_);
+             this->orb_core_);
 
       // A new try/catch block, but if something goes wrong now we
       // have no hope, just abort.
       TAO_TRY
-	{
-	  // create and write a dummy context
-	  TAO_GIOP_ServiceContextList resp_ctx;
-	  resp_ctx.length (0);
-	  output.encode (TC_ServiceContextList,
-			 &resp_ctx,
-			 0,
-			 TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-
+        {
+          // create and write a dummy context
+          TAO_GIOP_ServiceContextList resp_ctx;
+          resp_ctx.length (0);
+          output.encode (TC_ServiceContextList,
+                         &resp_ctx,
+                         0,
+                         TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        
           // Write the request ID
           output.write_ulong (request_id);
-
-	  // @@ TODO This is the place to conditionally compile
-	  // forwarding. It certainly seems easy to strategize too,
-	  // just invoke an strategy to finish marshalling the
-	  // response.
-
+        
+          // @@ TODO This is the place to conditionally compile
+          // forwarding. It certainly seems easy to strategize too,
+          // just invoke an strategy to finish marshalling the
+          // response.
+        
           // Now we check for Forwarding ***************************
-
+        
           // Try to narrow to ForwardRequest
           PortableServer::ForwardRequest_ptr forward_request_ptr =
             PortableServer::ForwardRequest::_narrow (x);
-
+        
           // If narrowing of exception succeeded
-          if (forward_request_ptr != 0 &&
-              !CORBA::is_nil (forward_request_ptr->forward_reference.in ()))
+          if (forward_request_ptr != 0
+              && !CORBA::is_nil (forward_request_ptr->forward_reference.in ()))
             {
               // write the reply_status
               output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
-
+          
               // write the object reference into the stream
               CORBA::Object_ptr object_ptr =
-		forward_request_ptr->forward_reference.in();
-
+                forward_request_ptr->forward_reference.in();
+          
               output.encode (CORBA::_tc_Object,
                              &object_ptr,
                              0,
                              TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
+              TAO_CHECK_ENV;
             }
-          // end of the forwarding code ****************************
+            // end of the forwarding code ****************************
           else
             {
-	      // Write the exception
-	      CORBA::TypeCode_ptr except_tc = x->_type ();
-
-	      CORBA::ExceptionType extype = CORBA::USER_EXCEPTION;
-	      if (CORBA::SystemException::_narrow (x) != 0)
-		extype = CORBA::SYSTEM_EXCEPTION;
-
+              // Write the exception
+              CORBA::TypeCode_ptr except_tc = x->_type ();
+          
+              CORBA::ExceptionType extype = CORBA::USER_EXCEPTION;
+              if (CORBA::SystemException::_narrow (x) != 0)
+                extype = CORBA::SYSTEM_EXCEPTION;
+          
               // write the reply_status
               output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (extype));
-	      
+          
               // write the actual exception
               output.encode (except_tc, x, 0, TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
+              TAO_CHECK_ENV;
             }
-	}
+        }
       TAO_CATCH (CORBA_Exception, ex)
-	{
-	  // now we know, that while handling the error an other error
-	  // happened -> no hope, close connection. 
-
-	  // close the handle
-	  ACE_DEBUG ((LM_DEBUG,"(%P|%t) closing conn %d after fault %p\n",
-		      this->peer().get_handle (),
-		      "TAO_Server_ConnectionHandler::send_error"));
-	  this->close ();
-	  return;
-	}
+        {
+          // now we know, that while handling the error an other error
+          // happened -> no hope, close connection. 
+        
+          // close the handle
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) closing conn %d after fault %p\n",
+                      this->peer().get_handle (),
+                      "TAO_Server_ConnectionHandler::send_error"));
+            this->close ();
+          return;
+        }
       TAO_ENDTRY;
 
       // hand it to the next lower layer
@@ -523,75 +523,75 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
     {
       // Try to recv a new request.
       TAO_GIOP::Message_Type type =
-	TAO_GIOP::recv_request (this_ptr, input, this->orb_core_);
+        TAO_GIOP::recv_request (this_ptr, input, this->orb_core_);
 
       // Check to see if we've been cancelled cooperatively.
       if (this->orb_core_->orb ()->should_shutdown () != 0)
-	error_encountered = 1;
+        error_encountered = 1;
       else
-	{
-	  switch (type)
-	    {
-	    case TAO_GIOP::Request:
-	      // Message was successfully read, so handle it.  If we
-	      // encounter any errors, <output> will be set appropriately
-	      // by the called code, and -1 will be returned.
-	      if (this->handle_message (input,
-					output,
-					response_required,
-					request_id,
-					TAO_TRY_ENV) == -1)
-		error_encountered = 1;
-	      TAO_CHECK_ENV;
-	      break;
+        {
+          switch (type)
+            {
+            case TAO_GIOP::Request:
+              // Message was successfully read, so handle it.  If we
+              // encounter any errors, <output> will be set appropriately
+              // by the called code, and -1 will be returned.
+              if (this->handle_message (input,
+                                        output,
+                                        response_required,
+                                        request_id,
+                                        TAO_TRY_ENV) == -1)
+                error_encountered = 1;
+              TAO_CHECK_ENV;
+              break;
 
-	    case TAO_GIOP::LocateRequest:
-	      if (this->handle_locate (input,
-				       output,
-				       response_required,
-				       request_id,
-				       TAO_TRY_ENV) == -1)
-		error_encountered = 1;
-	      TAO_CHECK_ENV;
-	      break;
+            case TAO_GIOP::LocateRequest:
+              if (this->handle_locate (input,
+                                       output,
+                                       response_required,
+                                       request_id,
+                                       TAO_TRY_ENV) == -1)
+                error_encountered = 1;
+          TAO_CHECK_ENV;
+          break;
 
-	    case TAO_GIOP::EndOfFile:
-	      // Got a EOF
-	      errno = EPIPE;
-	      response_required = error_encountered = 0;
-	      result = -1;
-	      break;
+        case TAO_GIOP::EndOfFile:
+          // Got a EOF
+          errno = EPIPE;
+          response_required = error_encountered = 0;
+          result = -1;
+          break;
 
-	      // These messages should never be sent to the server; it's an
-	      // error if the peer tries.  Set the environment accordingly, as
-	      // it's not yet been reported as an error.
-	    case TAO_GIOP::Reply:
-	    case TAO_GIOP::LocateReply:
-	    case TAO_GIOP::CloseConnection:
-	    default:                                    // Unknown message
-	      ACE_DEBUG ((LM_DEBUG,
-			  "(%P|%t) Illegal message received by server\n"));
-	      TAO_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-	      // FALLTHROUGH
+          // These messages should never be sent to the server; it's an
+          // error if the peer tries.  Set the environment accordingly, as
+          // it's not yet been reported as an error.
+        case TAO_GIOP::Reply:
+        case TAO_GIOP::LocateReply:
+        case TAO_GIOP::CloseConnection:
+        default:                                    // Unknown message
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Illegal message received by server\n"));
+          TAO_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+          // FALLTHROUGH
 
-	    case TAO_GIOP::MessageError:
-	      error_encountered = 1;
-	      break;
-	    }
-	}
+        case TAO_GIOP::MessageError:
+          error_encountered = 1;
+          break;
+        }
+      }
     }
   TAO_CATCH (CORBA_Exception, ex)
     {
       if (response_required)
-	this->send_error (request_id, &ex);
+        this->send_error (request_id, &ex);
       else
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "(%P|%t) exception thrown "
-		      "but client is not waiting a response\n"));
-	  this->close ();
-	  result = -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) exception thrown "
+                      "but client is not waiting a response\n"));
+          this->close ();
+          result = -1;
+        }
       return result;
     }
   TAO_CATCHANY
@@ -600,38 +600,40 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       // it? BTW, this cannot be detected if using the <env> mapping.
 
       ACE_ERROR ((LM_ERROR,
-		  "(%P|%t) closing conn %d after fault %p\n",
-		  this->peer().get_handle (),
-		  "TAO_Server_ConnectionHandler::handle_input"));
-      this->close ();
-      return -1;
+                  "(%P|%t) closing conn %d after fault %p\n",
+                  this->peer().get_handle (),
+                  "TAO_Server_ConnectionHandler::handle_input"));
+                  this->close ();
+        return -1;
     }
   TAO_ENDTRY;
 
   if (response_required)
     {
       if (!error_encountered)
-	this->send_response (output);
+        this->send_response (output);
       else
-	{
-	  // No exception but some kind of error, yet a response is
-	  // required.
-	  ACE_ERROR ((LM_ERROR,
-		      "(%P|%t) %s: closing conn, no exception, "
-		      "but expecting response\n",
-		      "TAO_Server_ConnectionHandler::handle_input"));
-	  this->close ();
-	  return -1;
-	}
+        {
+          // No exception but some kind of error, yet a response is
+          // required.
+          if (TAO_orbdebug)
+            ACE_ERROR ((LM_ERROR,
+                        "(%P|%t) %s: closing conn, no exception, "
+                        "but expecting response\n",
+                        "TAO_Server_ConnectionHandler::handle_input"));
+          this->close ();
+          return -1;
+        }
     }
   else if (error_encountered)
     {
       // No exception, no response expected, but an error ocurred,
       // close the socket.
-      ACE_ERROR ((LM_ERROR,
-		  "(%P|%t) %s: closing conn, no exception, "
-		  "but expecting response\n",
-		  "TAO_Server_ConnectionHandler::handle_input"));
+      if (TAO_orbdebug)  
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) %s: closing conn, no exception, "
+                    "but expecting response\n",
+                    "TAO_Server_ConnectionHandler::handle_input"));
       this->close ();
       return -1;
     }
@@ -724,7 +726,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   if (!is_twoway)
     {
       int success  = (int) TAO_GIOP::send_request (this, stream,
-						   orb_core);
+               orb_core);
     
       if (!success)
         return -1;
@@ -742,8 +744,8 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       // remember in which thread the client connection handler was running
       this->calling_thread_ = ACE_Thread::self ();
 
-      int success  = (int) TAO_GIOP::send_request (this, stream,
-						   orb_core);
+      int success = (int) TAO_GIOP::send_request (this, stream,
+                                                  orb_core);
       
       if (!success)
         {
@@ -777,7 +779,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
                                    "(%P|%t) TAO_Client_Connection_Handler::send_request: "
                                    "Failed to release the lock.\n"),
                                   -1);
-	      
+        
               // the following variables are safe, because we are not registered with 
               // the reactor any more.
               this->input_available_ = 0;
@@ -842,9 +844,9 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
 
   if (orb_Core_ptr->leader_follower_lock ().acquire () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
-		       "Failed to get the lock.\n"),
-		      -1);
+                       "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                       "Failed to get the lock.\n"),
+                      -1);
   
   if (!this->expecting_response_)
     {
@@ -873,7 +875,7 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
                       "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
                       this->peer().get_handle ()));
           break;
-	
+  
         case 1:
           // We weren't expecting input, so what should we do with it?
           // Log an error, and close the connection.
@@ -882,7 +884,7 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
                       "input while not expecting a response; closing connection on fd %d\n",
                       this->peer().get_handle ()));
           break;
-	
+  
         case 0:
           // This is an EOF, so we will return -1 and let
           // handle_close() take over.  As long as handle_close()

@@ -98,7 +98,7 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 void
 TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                             TAO_GIOP::Message_Type message_type,
-			    CORBA::Environment &env)
+                            CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
@@ -198,14 +198,15 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                       *server_addr_p) == -1)
       {
         // Give users a clue to the problem.
-        ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
-                    "%s (%s):%hu failed (%p)\n",
-                    __FILE__,
-                    __LINE__,
-                    server_addr_p->get_host_name (),
-                    server_addr_p->get_host_addr (),
-                    server_addr_p->get_port_number (),
-                    "errno"));
+        if (TAO_orbdebug)
+          ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
+                      "%s (%s):%hu failed (%p)\n",
+                      __FILE__,
+                      __LINE__,
+                      server_addr_p->get_host_name (),
+                      server_addr_p->get_host_addr (),
+                      server_addr_p->get_port_number (),
+                      "errno"));
 
         // There might be a better exception to set, but it's unclear
         // which one should be used.  This one applies, even if it's

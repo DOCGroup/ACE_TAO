@@ -205,7 +205,7 @@ writev_n (ACE_HANDLE h, ACE_IO_Vector *iov, int iovcnt)
 CORBA::Boolean
 TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                         TAO_OutputCDR &stream,
-			TAO_ORB_Core* orb_core)
+                        TAO_ORB_Core* orb_core)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
 
@@ -282,18 +282,20 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
           ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
           if (n == -1)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) closing conn %d after fault %p\n",
-                          peer.get_handle (), "GIOP::send_request"));
+              if (TAO_orbdebug)
+                ACE_DEBUG ((LM_DEBUG,
+                            "(%P|%t) closing conn %d after fault %p\n",
+                            peer.get_handle (), "GIOP::send_request"));
               handler->close ();
               return 0;
             }
           else if (n == 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) GIOP::send_request (): "
-                          "EOF, closing conn %d\n",
-                          peer.get_handle ()));
+              if (TAO_orbdebug)
+                ACE_DEBUG ((LM_DEBUG,
+                            "(%P|%t) GIOP::send_request (): "
+                            "EOF, closing conn %d\n",
+                            peer.get_handle ()));
               handler->close ();
               return 0;
             }
@@ -306,18 +308,20 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
       ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
       if (n == -1)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) closing conn %d after fault %p\n",
-                      peer.get_handle (), "GIOP::send_request"));
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) closing conn %d after fault %p\n",
+                        peer.get_handle (), "GIOP::send_request"));
           handler->close ();
           return 0;
         }
       else if (n == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) GIOP::send_request (): "
-                      "EOF, closing conn %d\n",
-                      peer.get_handle ()));
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) GIOP::send_request (): "
+                        "EOF, closing conn %d\n",
+                        peer.get_handle ()));
           handler->close ();
           return 0;
         }
@@ -403,7 +407,8 @@ TAO_GIOP::send_error (TAO_Client_Connection_Handler *&handler)
   ACE_HANDLE which = handler->peer ().get_handle ();
   handler->close ();
   handler = 0;
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", which));
+  if (TAO_orbdebug)
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", which));
 }
 
 ssize_t
@@ -498,15 +503,17 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
           // Is it _never_ an error?  Not sure ...
           /* NOTREACHED */
         case -1: // error
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) GIOP::recv_request header socket error %p\n",
-                      "read_buffer"));
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_ERROR,
+                        "(%P|%t) GIOP::recv_request header socket error %p\n",
+                        "read_buffer"));
           break;
           /* NOTREACHED */
         default:
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) GIOP::recv_request header read failed, only %d of %d bytes\n",
-                      len, header_len));
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_ERROR,
+                        "(%P|%t) GIOP::recv_request header read failed, only %d of %d bytes\n",
+                        len, header_len));
           break;
           /* NOTREACHED */
         }
@@ -558,26 +565,30 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       switch (len)
         {
         case 0:
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) TAO_GIOP::recv_request body, EOF on handle %d\n",
-                      connection.get_handle ()));
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) TAO_GIOP::recv_request body, EOF on handle %d\n",
+                        connection.get_handle ()));
           break;
           /* NOTREACHED */
         case -1:
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) TAO_GIOP::recv_request () body %p\n",
-                      "read_buffer"));
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_ERROR,
+                        "(%P|%t) TAO_GIOP::recv_request () body %p\n",
+                        "read_buffer"));
           break;
           /* NOTREACHED */
         default:
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) short read, only %d of %d bytes\n", len, message_size));
+          if (TAO_orbdebug)
+            ACE_DEBUG ((LM_ERROR,
+                        "(%P|%t) short read, only %d of %d bytes\n", len, message_size));
           break;
           /* NOTREACHED */
         }
 
       // clean up, and ...
-      ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
+      if (TAO_orbdebug)
+        ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
       return TAO_GIOP::MessageError;
     }
 

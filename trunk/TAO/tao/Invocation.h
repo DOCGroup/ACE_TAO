@@ -44,8 +44,8 @@ class TAO_Export TAO_GIOP_Invocation
 public:
   // = Initialization and termination methods.
   TAO_GIOP_Invocation (IIOP_Object *data,
-		       const char *operation,
-		       TAO_ORB_Core* orb_core);
+                       const char *operation,
+                       TAO_ORB_Core* orb_core);
   ~TAO_GIOP_Invocation (void);
 
   void put_param (CORBA::TypeCode_ptr tc,
@@ -60,13 +60,13 @@ public:
 protected:
   void start (CORBA::Boolean is_roundtrip,
               TAO_GIOP::Message_Type message_type,
-	      CORBA_Environment &_env = CORBA_Environment::default_environment ());
+              CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Locates the right Client_Connection_Handler and initializes the
   // CDR stream.
   // The message_type tells how to initialize the output CDR stream
 
   TAO_GIOP_ReplyStatusType invoke (CORBA::Boolean is_roundtrip,
-				   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Sends the request, does not wait for the response.
 
   TAO_GIOP_ReplyStatusType close_connection (void);
@@ -82,25 +82,25 @@ private:
 
   CORBA::Boolean 
   write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
-			CORBA::ULong request_id,
-			CORBA::Boolean is_roundtrip,
-			const TAO_opaque* key,
-			const char* opname,
-			CORBA::Principal_ptr principal);
+                        CORBA::ULong request_id,
+                        CORBA::Boolean is_roundtrip,
+                        const TAO_opaque* key,
+                        const char* opname,
+                        CORBA::Principal_ptr principal);
   CORBA::Boolean 
   write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
-			    CORBA::ULong request_id,
-			    CORBA::Boolean is_roundtrip,
-			    const TAO_opaque* key,
-			    const char* opname,
-			    CORBA::Principal_ptr principal);
+                            CORBA::ULong request_id,
+                            CORBA::Boolean is_roundtrip,
+                            const TAO_opaque* key,
+                            const char* opname,
+                            CORBA::Principal_ptr principal);
   CORBA::Boolean 
   write_request_header_lite (const TAO_GIOP_ServiceContextList& svc_ctx,
-			     CORBA::ULong request_id,
-			     CORBA::Boolean is_roundtrip,
-			     const TAO_opaque* key,
-			     const char* opname,
-			     CORBA::Principal_ptr principal);
+                             CORBA::ULong request_id,
+                             CORBA::Boolean is_roundtrip,
+                             const TAO_opaque* key,
+                             const char* opname,
+                             CORBA::Principal_ptr principal);
   // Encode the header for the Request, assuming that the GIOP header
   // is already there.
   // TAO support either the standard IIOP request header or a lighter
@@ -141,8 +141,8 @@ class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
 public:
   // = Initialization and termination methods.
   TAO_GIOP_Twoway_Invocation (IIOP_Object *data,
-			      const char *operation,
-			      TAO_ORB_Core* orb_core);
+                              const char *operation,
+                              TAO_ORB_Core* orb_core);
 
   void start (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Calls TAO_GIOP_Invocation::start.
@@ -181,8 +181,8 @@ class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
 public:
   // = Initialization and termination methods.
   TAO_GIOP_Oneway_Invocation (IIOP_Object *data,
-			      const char *operation,
-			      TAO_ORB_Core* orb_core);
+                              const char *operation,
+                              TAO_ORB_Core* orb_core);
 
   void start (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Call TAO_GIOP_Invocation::start()
@@ -200,7 +200,7 @@ class TAO_Export TAO_GIOP_Locate_Request_Invocation : public TAO_GIOP_Invocation
 public:
   // = Initialization and termination methods.
   TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data,
-				      TAO_ORB_Core* orb_core);
+                                      TAO_ORB_Core* orb_core);
 
   void start (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Calls TAO_GIOP_Invocation::start.
