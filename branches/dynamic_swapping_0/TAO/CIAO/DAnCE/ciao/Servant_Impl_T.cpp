@@ -18,6 +18,9 @@ namespace CIAO
       Session_Container * c
     )
     : Servant_Impl_Base (home, home_servant, c),
+      activated_ (0),
+      pre_activated_ (0),
+      post_activated_ (0),
       executor_ (EXEC::_duplicate (exe))
   {
   }
@@ -172,7 +175,11 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
-        temp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        if (this->pre_activated_ == 0)
+          {
+            this->pre_activated_ = 1;
+            temp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          }
       }
   }
 
@@ -194,7 +201,11 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
-        temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        if (this->activated_ == 0)
+          {
+            this->activated_ = 1;
+            temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          }
       }
   }
 
@@ -217,8 +228,25 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
-        temp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        if (this->post_activated_ == 0)
+          {
+            this->post_activated_ = 1;
+            temp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          }
       }
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename CONTEXT>
+  CORBA::Boolean
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::is_activated (
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return this->pre_activated_;
   }
 
   template <typename BASE_SKEL,

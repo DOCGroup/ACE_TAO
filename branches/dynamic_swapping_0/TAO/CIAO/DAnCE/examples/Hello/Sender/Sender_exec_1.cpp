@@ -35,7 +35,7 @@ Sender_Impl::Sender_exec_1_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Sender_Impl::Sender_exec.i::get_push_message called\n "));
+              "Sender_Impl::Sender_exec_1_i::get_push_message called\n"));
   return ( new Message_Impl_1 (*this) );
 }
 
@@ -110,7 +110,8 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ::Components::ConsumerDescriptions_var cons_desc =
     sender->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
-  // ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", cons_desc->length ()));
+
+  ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", cons_desc->length ()));
   this->base_exec_->consumers (cons_desc._retn ());
 }
 
