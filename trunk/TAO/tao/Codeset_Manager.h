@@ -25,6 +25,8 @@
 
 #include "ace/Unbounded_Set.h"
 
+class ACE_WChar_Codeset_Translator;
+
 class TAO_Profile;
 class TAO_Transport;
 class TAO_Operation_Details;
@@ -205,6 +207,13 @@ private:
   // The lists of available translators for both chars and wchars.
   TAO_CodesetFactorySet char_factories_;
   TAO_CodesetFactorySet wchar_factories_;
+
+  // The UTF16 BOM (Byte Order Marker) translator is unique in that it is
+  // required when UTF16 is used as both the native and transmitted codeset.
+  // It exists to insert or extract the BOM preceeding Wchar data in the
+  // stream.
+  TAO_Codeset_Translator_Factory *utf16_bom_translator_;
+
 };
 
 #include /**/ "ace/post.h"

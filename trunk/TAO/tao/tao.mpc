@@ -151,6 +151,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
       UShortSeqC.cpp
       Codeset_Manager.cpp
       Codeset_Translator_Factory.cpp
+      UTF16_BOM_Translator.cpp
+      UTF16_BOM_Factory.cpp
       ORB_Core.cpp
       ORB_Core_Auto_Ptr.cpp
       Collocation_Resolver.cpp

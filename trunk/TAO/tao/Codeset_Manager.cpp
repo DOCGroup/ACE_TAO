@@ -11,7 +11,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"
 #include "ace/OS_NS_string.h"
-
+#include "tao/UTF16_BOM_Factory.h"
 
 ACE_RCSID (tao,
            Codeset_Manager,
@@ -45,7 +45,8 @@ TAO_Codeset_Manager::default_wchar_codeset = TAO_DEFAULT_WCHAR_CODESET_ID;
 TAO_Codeset_Manager::TAO_Codeset_Manager ()
   : codeset_info_ (),
     char_factories_ (),
-    wchar_factories_ ()
+    wchar_factories_ (),
+    utf16_bom_translator_ (0)
 {
   this->codeset_info_.ForCharData.native_code_set =
     TAO_Codeset_Manager::default_char_codeset;
@@ -76,6 +77,8 @@ TAO_Codeset_Manager::~TAO_Codeset_Manager ()
     }
 
   this->wchar_factories_.reset ();
+
+  delete this->utf16_bom_translator_;
 }
 
 void
@@ -113,7 +116,7 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
-                      ACE_LIB_TEXT ("No codeset componnet in profile\n")));
+                      ACE_LIB_TEXT ("No codeset component in profile\n")));
         }
 
       remote.ForCharData.native_code_set =
@@ -121,31 +124,28 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
       remote.ForWcharData.native_code_set =
         TAO_Codeset_Manager::default_wchar_codeset;
     }
+   else
+     {
+       CONV_FRAME::CodeSetId tcs =
+         computeTCS (remote.ForCharData,
+                     this->codeset_info_.ForCharData);
+       if (TAO_debug_level > 2)
+         ACE_DEBUG ((LM_DEBUG,
+                     ACE_LIB_TEXT("TAO (%P|%t) -  Codeset_Manager::set_tcs ")
+                     ACE_LIB_TEXT("setting char translator(%08x)\n"),
+                     tcs));
+       trans.char_translator(this->get_char_trans (tcs));
 
-  CONV_FRAME::CodeSetId tcs = computeTCS (remote.ForCharData,
-                                          this->codeset_info_.ForCharData);
-  if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
-                  ACE_LIB_TEXT ("setting char translator(%08x)\n"),
-                  tcs));
-    }
+       tcs = computeTCS (remote.ForWcharData,
+                         this->codeset_info_.ForWcharData);
 
-  trans.char_translator (this->get_char_trans (tcs));
-
-  tcs = computeTCS (remote.ForWcharData,
-                   this->codeset_info_.ForWcharData);
-
-  if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
-                  ACE_LIB_TEXT ("setting wchar translator (%08x)\n"),
-                  tcs));
-    }
-
-  trans.wchar_translator (this->get_wchar_trans (tcs));
+       if (TAO_debug_level > 2)
+         ACE_DEBUG ((LM_DEBUG,
+                     ACE_LIB_TEXT("TAO (%P|%t) - Codeset_Manager::set_tcs ")
+                     ACE_LIB_TEXT("setting wchar translator (%08x)\n"),
+                     tcs));
+       trans.wchar_translator(this->get_wchar_trans (tcs));
+     }
 }
 
 void
@@ -161,9 +161,9 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
   TAO_Service_Context &service_cntx = request.request_service_context ();
   IOP::ServiceContext context;
   context.context_id = IOP::CodeSets;
+
   CONV_FRAME::CodeSetId tcs_c = TAO_Codeset_Manager::default_char_codeset;
   CONV_FRAME::CodeSetId tcs_w = TAO_Codeset_Manager::default_wchar_codeset;
-
   if (service_cntx.get_context(context))
     {
       // Convert the Service Context to Codeset Context
@@ -180,7 +180,13 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
           cdr >> tcs_w;
         }
     }
-
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT("TAO (%P|%t) - Codeset_Manager::process_service_context ")
+                    ACE_LIB_TEXT("no codeset context in request, inferring TAO backwards compatibility\n")));
+    }
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -447,7 +453,19 @@ TAO_Codeset_Manager::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (this->codeset_info_.ForCharData.native_code_set == tcs)
     {
-      return 0;
+      if (tcs != ACE_CODESET_ID_ISO_UTF_16)
+        return 0;
+      else
+        {
+          if (this->utf16_bom_translator_ == 0)
+            {
+              ACE_NEW_RETURN (this->utf16_bom_translator_,
+                              UTF16_BOM_Factory,
+                              0);
+              this->utf16_bom_translator_->init(0,0);
+            }
+          return this->utf16_bom_translator_;
+        }
     }
 
   return this->get_translator_i (this->char_factories_,tcs);
