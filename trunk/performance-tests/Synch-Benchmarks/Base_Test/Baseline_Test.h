@@ -27,12 +27,21 @@ public:
   virtual int test_try_lock () = 0;
   // Real test methods.
 
+  virtual int yield_method ();
+  // Query the yield method used.
+
+  virtual void yield ();
+  // Yield to other thread.
+
   size_t multiply_factor (void);
   size_t iteration (void);
   // Access methods.
 
 protected:
   Baseline_Test_Base (void);
+
+  int yield_method_;
+  // Should we your thr_yield or sleep (0).
 
   size_t multiply_factor_;
   // Number of operations before yielding to other threads.
@@ -48,13 +57,19 @@ class ACE_Svc_Export Baseline_Test_Options
 public:
   friend class Baseline_Test;
 
+  enum
+  {
+    USE_SLEEP_ZERO,
+    USE_THR_YIELD
+  };
+
   Baseline_Test_Options (void);
   // ctor.
 
   int parse_args (int argc, char *argv[]);
   // Parse and set the Baseline_Test options and flags.
 
-  int reset_params (size_t mulply_factor, size_t iteration);
+  int reset_params (size_t mulply_factor, size_t iteration, int yield);
   // Reset test parameters for next round.
 
   int test_try_lock (void);
@@ -65,11 +80,12 @@ public:
 
   int inc_loop_counter (void);
   // Added multiply_factor_ to total_iteration_.
+  // Returns
 
-  size_t multiply_factor (void);
+  size_t current_multiply_factor (void);
   // Return <multiply_factor_>.
 
-  size_t iteration (void);
+  size_t current_iteration (void);
   // Return <iteration_>.
 
   void print_result (void);
@@ -83,15 +99,17 @@ private:
   int verbose_;
   // Print out the result in verbose mode.
 
-  size_t multiply_factor_;
+  int current_yield_method_;
+  // yield or sleep.
+
+  size_t current_multiply_factor_;
   // Number loop before performing thread yield.
 
-  size_t iteration_;
+  size_t current_iteration_;
   // Number of iteration.
 
   size_t total_iteration_;
-  // Real iteration.  After performing a test,
-  // total_iteration_ < iteration_ + multiply_factor_.
+  // Total number of target iteration.
 
   ACE_timer_t real_;
   ACE_timer_t system_;

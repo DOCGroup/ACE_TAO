@@ -37,12 +37,45 @@ Baseline_Mutex_Test::release ()
 int
 Baseline_Mutex_Test::test_acquire_release ()
 {
+  ACE_Profile_Timer ptimer;
+  ACE_Profile_Timer::ACE_Elapsed_Time et;
+
+  for (; baseline_options.inc_loop_counter () ; )
+    {
+      this->yield ();
+      ptimer.start ();
+
+      for (size_t i=0; i < baseline_options.current_multiply_factor (); i++)
+        {
+          this->lock_.acquire ();
+          this->lock_.release ();
+        }
+
+      ptimer.stop ();
+      ptimer.elapsed_time (et);
+      baseline_options.add_time (et);
+    }
   return 0;
 }
 
 int
 Baseline_Mutex_Test::test_try_lock ()
 {
+  ACE_Profile_Timer ptimer;
+  ACE_Profile_Timer::ACE_Elapsed_Time et;
+
+  for (; baseline_options.inc_loop_counter () ; )
+    {
+      this->yield ();
+      ptimer.start ();
+
+      for (size_t i=0; i < baseline_options.current_multiply_factor (); i++)
+          this->lock_.tryacquire (); // This should always fail.
+
+      ptimer.stop ();
+      ptimer.elapsed_time (et);
+      baseline_options.add_time (et);
+    }
   return 0;
 }
 
