@@ -209,15 +209,22 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
             }
           else
             {
-              dest.set (9999, thost);
+              // No port was specified so assume that the port will be the
+              // IANA assigned port for IIOP.
+              //
+              //    IIOP:           683
+              //    IIOP over SSL:  684
+
+              dest.set (683, thost);
               dests.push (dest);
 
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) No port specified for <%s>.  "
-                              "Using <9999> as default port.\n",
-                              where));
+                              "Using <%d> as default port.\n",
+                              where,
+                              dest.get_port_number ()));
                 }
             }
         }
