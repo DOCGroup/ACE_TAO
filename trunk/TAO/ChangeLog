@@ -1,3 +1,10 @@
+Fri Feb  6 12:58:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/orbsvcs/Scheduler_Factory.h:
+        * orbsvcs/orbsvcs/Scheduler_Utilities.h:
+          Fixed include path
+
 Fri Feb  6 12:42:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event_Utilities.h:
