@@ -12,6 +12,7 @@ project (Config_Handlers) : taolib {
 
   Source_Files {
     Any_Handler.cpp
+    Basic_Handler.cpp
     DT_Handler.cpp
     SP_Handler.cpp
     Requirement_Handler.cpp

@@ -17,125 +17,74 @@
 using std::cerr;
 using std::endl;
 
-namespace CIAO
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/// handle the package configuration and populate it
+void CompPkgDesc_Handler::process_ComponentPackageDescription
+(::Deployment::ComponentPackageDescription &comppkgdesc)
 {
-  namespace Config_Handler
-  {
-    CompPkgDesc_Handler::CompPkgDesc_Handler (DOMDocument* doc, unsigned long filter)
-      : doc_ (doc),
-        root_ (doc->getDocumentElement()),
-        filter_ (filter),
-        iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
-        release_ (true)
-    {}
-
-    CompPkgDesc_Handler::CompPkgDesc_Handler (DOMNodeIterator* iter, bool release)
-      : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
-    {}
-
-
-    CompPkgDesc_Handler::~CompPkgDesc_Handler()
+  for (DOMNode* node = this->iter_->nextNode();
+       node != 0;
+       node = this->iter_->nextNode())
     {
-      if (this->release_)
-        this->iter_->release();
-    }
+      XStr node_name (node->getNodeName());
 
-    /// handle the package configuration and populate it
-    void CompPkgDesc_Handler::process_ComponentPackageDescription
-      (::Deployment::ComponentPackageDescription &comppkgdesc)
-    {
-      for (DOMNode* node = this->iter_->nextNode();
-           node != 0;
-           node = this->iter_->nextNode())
+      if (false);
+      else if
+        (process_string (this->iter_, node_name, "label", comppkgdesc.label));
+      else if
+        (process_string (this->iter_, node_name, "UUID", comppkgdesc.UUID));
+      else if
+        // TODO: Which id-map here?
+        (process_element_remote<Deployment::ComponentInterfaceDescription, CompIntrDesc_Handler>
+         (this->doc_, this->iter_, node,
+          node_name, "realizes", comppkgdesc.realizes,
+          &CompIntrDesc_Handler::process_ComponentInterfaceDescription,
+          this->id_map_));
+      else if
+        (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
+                                                       node_name, "configProperty", comppkgdesc.configProperty,
+                                                       &Property_Handler::process_Property,
+                                                       this->id_map_));
+      else if
+        (process_sequence_remote<Deployment::PackagedComponentImplementation, PCI_Handler>
+         (this->doc_, this->iter_, node,
+          node_name, "implementation", comppkgdesc.implementation,
+          this->id_map_));
+      else if
+        (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
+                                                       node_name, "infoProperty", comppkgdesc.infoProperty,
+                                                       &Property_Handler::process_Property,
+                                                       this->id_map_));
+      else
         {
-          XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("label")))
-            {
-              // Fetch the text node which contains the "label"
-              node = this->iter_->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_label (text->getNodeValue(), comppkgdesc);
-            }
-          else if (node_name == XStr (ACE_TEXT ("UUID")))
-            {
-              // Fetch the text node which contains the "UUID"
-              node = this->iter_->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_UUID (text->getNodeValue(), comppkgdesc);
-            }
-          else if (node_name == XStr (ACE_TEXT ("configProperty")))
-            {
-              // increase the length of the sequence
-              CORBA::ULong i (comppkgdesc.configProperty.length ());
-              comppkgdesc.configProperty.length (i + 1);
-
-              // delegate the populating process
-              Property_Handler::process_Property (this->iter_,
-                                                  comppkgdesc.configProperty[i]);
-            }
-          else if (node_name == XStr (ACE_TEXT ("infoProperty")))
-            {
-              // increase the length of the sequence
-              CORBA::ULong i (comppkgdesc.infoProperty.length ());
-              comppkgdesc.infoProperty.length (i + 1);
-
-              // delegate the populating process
-              Property_Handler::process_Property (this->iter_,
-                                                  comppkgdesc.infoProperty[i]);
-            }
-          else if (node_name == XStr (ACE_TEXT ("realizes")))
-            {
-              // fetch the component package reference handler
-              CCD_Handler compintrdesc_handler (iter_, false);
-
-              // delegate the populating process
-              compintrdesc_handler.process_ComponentInterfaceDescription (comppkgdesc.realizes);
-            }
-          else if (node_name == XStr (ACE_TEXT ("implementation")))
-            {
-              // fetch the component package description handler
-              PCI_Handler pci_handler (iter_, false);
-
-              // increase the length of the sequence
-              CORBA::ULong i (comppkgdesc.implementation.length ());
-              comppkgdesc.implementation.length (i + 1);
-
-              // delegate the populating process
-              pci_handler.process_PackagedComponentImplementation (comppkgdesc.implementation[i]);
-            }
-          else
-            {
-              // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
-            }
-        }
-      return;
-    }
-
-    /// handle label attribute
-    void CompPkgDesc_Handler::process_label
-      (const XMLCh* label, ::Deployment::ComponentPackageDescription &comppkgdesc)
-    {
-      if (label)
-        {
-          comppkgdesc.label = XMLString::transcode (label);
+          // ??? How did we get here ???
+          ACE_THROW (CORBA::INTERNAL());
         }
     }
-
-    /// handle UUID attribute
-    void CompPkgDesc_Handler::process_UUID
-      (const XMLCh* UUID, ::Deployment::ComponentPackageDescription &comppkgdesc)
-    {
-      if (UUID)
-        {
-          comppkgdesc.UUID = XMLString::transcode (UUID);
-        }
-    }
-
-  }
+  return;
 }
+
+/// handle label attribute
+void CompPkgDesc_Handler::process_label
+(const XMLCh* label, ::Deployment::ComponentPackageDescription &comppkgdesc)
+{
+  if (label)
+    {
+      comppkgdesc.label = XMLString::transcode (label);
+    }
+}
+
+/// handle UUID attribute
+void CompPkgDesc_Handler::process_UUID
+(const XMLCh* UUID, ::Deployment::ComponentPackageDescription &comppkgdesc)
+{
+  if (UUID)
+    {
+      comppkgdesc.UUID = XMLString::transcode (UUID);
+    }
+}
+
+END_DEPLOYMENT_NAMESPACE
 
 #endif /* COMPPKGDESC_HANDLER_C */

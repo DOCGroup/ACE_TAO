@@ -23,6 +23,7 @@
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "XercesString.h"
+#include "Basic_Handler.h"
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
@@ -43,63 +44,39 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/**
+ * @class CompPkgDesc_Handler
+ *
+ * @brief Handler class for <ComponentPackageDescription> type 
+ *
+ * This class is within the Component Data Model subpackage of the
+ * Deployment & Configuration package.
+ *
+ * This class defines handler methods to parse the aforementioned type
+ * in the description files. The corresponding CORBA IDL type for this
+ * element is returned.
+ */
+
+class CompPkgDesc_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
+public:
 
-    /**
-     * @class CompPkgDesc_Handler
-     *
-     * @brief Handler class for <ComponentPackageDescription> type 
-     *
-     * This class is within the Component Data Model subpackage of the
-     * Deployment & Configuration package.
-     *
-     * This class defines handler methods to parse the aforementioned type
-     * in the description files. The corresponding CORBA IDL type for this
-     * element is returned.
-     */
+  /// constructor
+  CompPkgDesc_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-    class CompPkgDesc_Handler
-    {
-    public:
+  /// constructor
+  CompPkgDesc_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      /// constructor
-      CompPkgDesc_Handler (DOMDocument* doc, unsigned long filter_);
-
-      /// constructor
-      CompPkgDesc_Handler (DOMNodeIterator* iter, bool release = false);
-
-      /// destructor
-      ~CompPkgDesc_Handler();
-
-      /// Process the component package description
-      void process_ComponentPackageDescription (::Deployment::ComponentPackageDescription &comppkgdesc);
-
-      /// Process the label attribute
-      void process_label (const XMLCh* label, ::Deployment::ComponentPackageDescription &comppkgdesc);
-
-      /// Process the UUID attribute
-      void process_UUID (const XMLCh* UUID, ::Deployment::ComponentPackageDescription &comppkgdesc);
-
-    private:
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-
-    };
-
-  };
+  /// Process the component package description
+  void process_ComponentPackageDescription (::Deployment::ComponentPackageDescription &comppkgdesc);
 
 };
+
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 
