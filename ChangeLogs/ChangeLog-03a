@@ -1,10 +1,21 @@
-Sun Sep 01 07:57:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sun Sep 01 08:18:37 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Task.cpp (svc_run):
+          The latest version of the Borland compiler doesn't like the
+          static cast, so only do the static cast when the compiler 
+          version is smaller than 0x570
+
+	* ace/Handle_Set.cpp:
+          When using Borland on Linux, we don't have fds_bits, but we have
+          __fds_bits.
+
+Sun Sep 01 07:57:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/config-win32-borland.h:
         * ace/config-borland-common.h:
           Improved Borland config files for Kylix support.
 
-Sun Sep 01 07:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sun Sep 01 07:25:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
           Added first version of platform .GNU file for the Borland Kylix
