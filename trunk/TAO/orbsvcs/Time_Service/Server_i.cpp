@@ -37,7 +37,7 @@ Server_i::parse_args (void)
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ =
-	  ACE_OS::fopen (get_opts.optarg, "a");
+	  ACE_OS::fopen (get_opts.optarg, "w");
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -109,7 +109,7 @@ Server_i::init_naming_service (CORBA::Environment& env)
 }
 
 // Initialize the Implementation Repository.
-
+/*
 int
 Server_i::init_IR (void)
 {
@@ -165,6 +165,7 @@ Server_i::init_IR (void)
 
   return 0;
 }
+*/
 
 // Create a new time server object.
 
@@ -382,7 +383,7 @@ Server_i::init (int argc,
       this->create_server ();
 
       // Initialize the IR.
-      this->init_IR ();
+      //      this->init_IR ();
 
       // Register the server object with the Naming Service.
       // ??this->register_server ();
