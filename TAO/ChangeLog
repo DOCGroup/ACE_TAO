@@ -1,3 +1,9 @@
+Tue Dec 30 08:15:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/performance-tests/LoadBalancing/Makefile:
+
+	  Fixed a link error. Thanks to Don for letting me know. 
+
 Tue Dec 30 14:09:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Portable_Interceptors_Service_Context_Manipulation.mpc:
