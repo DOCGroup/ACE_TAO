@@ -38,7 +38,7 @@ public:
 
 private:
   // Initialize the context of this class.
-  int init ();
+  int initialize ();
 
   // Run in a separate thread.
   virtual int svc (void );
