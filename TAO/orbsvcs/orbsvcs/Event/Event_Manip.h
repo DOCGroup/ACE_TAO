@@ -38,6 +38,10 @@ class TAO_ORBSVCS_Export TAO_EC_Event_Set
   //   EventSet.
   //
 public:
+  TAO_EC_Event_Set (CORBA::ULong length,
+                    RtecEventComm::Event* buffer);
+  // Constructor...
+
   ~TAO_EC_Event_Set (void);
   // destructor
   
@@ -56,10 +60,6 @@ public:
   // Reference counting.
 
 private:
-  TAO_EC_Event_Set (CORBA::ULong length,
-                    RtecEventComm::Event* buffer);
-  // Constructor...
-
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
   // Manipulate the reference count.
