@@ -1,3 +1,14 @@
+Wed Oct  7 21:44:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/try_macros.h: 
+	  Some compilers (MSVC++ 5.0) will complain about throwing an
+	  exception and not returning a value.
+
+	* tao/Object_Table.cpp: 
+	  The find() method on the object table was asserting that the
+	  entry ought to be in use, in fact if the entry was free the
+	  object was not found and we just have to return -1.
+
 Wed Oct 07 14:49:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Added property service

@@ -268,10 +268,10 @@ TAO_Active_Demux_ObjTable::find (const PortableServer::ObjectId &id,
 
   if (result != 0 ||
       index > this->tablesize_ ||
-      this->table_[index].generation_ != generation)
+      this->table_[index].generation_ != generation ||
+      this->table_[index].is_free_ != 0)
     return -1;
 
-  ACE_ASSERT (this->table_[index].is_free_ == 0);
   servant = this->table_[index].servant_;
 
   return 0;
