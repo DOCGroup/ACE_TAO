@@ -30,6 +30,10 @@ Wed Mar 03 21:49:58 1999  David L. Levine  <levine@cs.wustl.edu>
           to be #included by OS.cpp on NT, if ACE_NONSTATIC_OBJECT_MANAGER
           wasn't #defined.
 
+        * tests/Basic_Types_Test.cpp: hacked a bit to support building,
+          and running, with ACE_HAS_MINIMAL_ACE_OS.  Don't look,
+          unless you want to forever ruin all of your good coding habits.
+
 Wed Mar 03 19:08:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Map_T.h (ACE_Map): Further degraded my code to make it
