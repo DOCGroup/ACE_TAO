@@ -1,3 +1,18 @@
+Mon Dec  6 13:14:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Removed inherited .mpb files iortable, svc_utils, and 
+          typecodefactory, since they are already pulled in by
+          ifrservice. Also added empty IDL_Files block. Because
+          of all the inherited .mpb files, any IDL file in the
+          directory will automatically get added to the build
+          during regeneration, even though there is no need in
+          this particular case. Sometimes I have IDL files in
+          this directory for debugging purposes, and it was
+          easier to add the empty block than to try and refactory
+          the inherited .mpb files.
+
 Mon Dec  6 12:50:17 2004  Chad Elliott  <elliott_c@ociweb.com>
 
 
