@@ -172,6 +172,13 @@ PIC             =
 
 #### Tornado II uses egcs
 ifndef ACE_CC
+  ifndef COMSPEC
+    ifdef ComSpec
+      #### ACE+TAO use COMSPEC, but ComSpec is defined.
+      COMPSPEC = $(ComSpec)
+    endif # ComSpec
+  endif # ! COMPSPEC
+
   ifdef COMSPEC
     #### Assume we're on a WIN32 host.  Further, assume that $(CC)
     #### is on the user's PATH.
