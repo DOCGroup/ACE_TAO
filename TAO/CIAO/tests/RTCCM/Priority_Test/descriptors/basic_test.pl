@@ -40,8 +40,10 @@ unlink $daemon_ior;
 unlink $am_ior;
 unlink $cookie;
 
-$test_deploy = 0;
-$no_daemon = 0;
+$test_deploy = 0;               # Do not run client/controller at all
+$no_daemon = 0;                 # Do not start daemon process
+$no_stop = 0;                   # just invoke the start() operation in
+                                # client, no stop() invocation.
 
 # Parse command line argument
 while ( $#ARGV >= 0)
@@ -51,6 +53,9 @@ while ( $#ARGV >= 0)
     }
     elsif ($ARGV[0] =~ m/^-no_daemon/i) {
         $no_daemon = 1;
+    }
+    elsif ($ARGV[0] =~ m/^-no_stop/i) {
+        $no_stop = 1;
     }
     else {
         die "Invalid flag: $ARGV[0]\n";
@@ -122,14 +127,16 @@ if ($test_deploy == 0) {
                                     "-k file://$controller_ior -w $work");
         $CL->SpawnWaitKill(60);
 
+        if ($no_stop == 0) {
 ## Now wait for the test to complete.  Need to figure out a way to
 ## detect this.
-        sleep ($run_time);
+            sleep ($run_time);
 
 #Start the client to send the trigger message
-        $CL = new PerlACE::Process ("../Controllers/client",
-                                    "-k file://$controller_ior -f");
-        $CL->SpawnWaitKill(60);
+            $CL = new PerlACE::Process ("../Controllers/client",
+                                        "-k file://$controller_ior -f");
+            $CL->SpawnWaitKill(60);
+        }
     }
 }
 else {

@@ -1,3 +1,10 @@
+Sun Nov 30 22:10:26 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/descriptors/basic_test.pl: Added a new
+	  command line switch to prevent invoking client's "stop ()"
+	  method.  The basic controller runs a fixed number of iterations
+	  so it doesn't use stop operation at all.
+
 Sun Nov 30 19:20:44 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* docs/RT-Extension.html: Added documentation for RT extension in
