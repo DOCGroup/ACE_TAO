@@ -102,6 +102,10 @@ namespace CIAO
     Components::Deployment::ComponentServer_ptr
     get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
+    /// Get the cached ComponentInstallation object reference.
+    /// This operation does *NOT* increase the reference count.
+    Components::Deployment::ComponentInstallation_ptr
+    get_component_installation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
     /// Keep a pointer to the managing ORB serving this servant.
@@ -118,6 +122,9 @@ protected:
 
     /// Cache the object reference to ourselves.
     Components::Deployment::ComponentServer_var objref_;
+
+    /// And a reference to the ServerActivator that created us.
+    Components::Deployment::ComponentInstallation_var installation_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;

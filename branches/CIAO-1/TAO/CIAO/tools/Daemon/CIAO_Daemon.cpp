@@ -239,5 +239,8 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "CIAO_Daemon has closed\n"));
+
   return 0;
 }

@@ -1,5 +1,4 @@
 // $Id$
-// $Id$
 
 #include "CCM_DeploymentC.h"
 #include "Client_init.h"
@@ -73,34 +72,24 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // now install a fake home:
-      Components::ConfigValues com_config (4);
-      com_config.length (4);
+      Components::ConfigValues com_config (2);
+      com_config.length (2);
 
       Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
 
-      item->name (CORBA::string_dup ("CIAO-executor-path"));
-      item->value () <<= CORBA::string_dup ("bubba");
+      item->name (CORBA::string_dup ("CIAO-servant-UUID"));
+      item->value () <<= CORBA::string_dup ("DCE:05833d92-4783-4b85-ac14-e2575dac26f7");
       com_config[0] = item;
 
       item = new OBV_Components::ConfigValue ();
-      item->name (CORBA::string_dup ("CIAO-executor-entrypt"));
-      item->value () <<= CORBA::string_dup ("shrimps");
-      com_config[1] = item;
-
-      item = new OBV_Components::ConfigValue ();
-      item->name (CORBA::string_dup ("CIAO-servant-path"));
-      item->value () <<= CORBA::string_dup ("forest");
-      com_config[2] = item;
-
-      item = new OBV_Components::ConfigValue ();
       item->name (CORBA::string_dup ("CIAO-servant-entrypt"));
-      item->value () <<= CORBA::string_dup ("chocolate");
-      com_config[3] = item;
+      item->value () <<= CORBA::string_dup ("createHelloHome_Servant");
+      com_config[1] = item;
 
       //      ACE_OS::sleep (2);
 
-      container->install_home ("a",
-                               "b",
+      container->install_home ("DCE:530a6305-8181-47ca-bd82-0b834016db97",
+                               "createHelloHome_Impl",
                                com_config
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -8,7 +8,7 @@
 <!-- implementations. -->
 
 
-<softpkg name="CIAO-HelloWorld-Servant" version=="1.0">
+<softpkg name="CIAO-HelloWorld-Servant" version="1.0">
   <pkgtype>CIAO Servant</pkgtype>
   <title>Hello World Servants</title>
   <author>
@@ -27,7 +27,7 @@
     <fileinarchive name="hello.ccd"/>
   </descriptor>
 
-  <implementation id="DCE:530a6305-8181-47ca-bd82-0b834016db97">
+  <implementation id="DCE:05833d92-4783-4b85-ac14-e2575dac26f7">
     <!-- The following stuff should match those defined in csd file. -->
     <os name="WinNT" version="4.0"/>
     <os name="WinXP" version="5.0"/>

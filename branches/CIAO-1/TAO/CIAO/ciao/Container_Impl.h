@@ -34,7 +34,6 @@ namespace CIAO
   struct home_installation_info
   {
     CORBA::String_var executor_dll_;
-    CORBA::String_var executor_entrypt_;
     CORBA::String_var servant_dll_;
     CORBA::String_var servant_entrypt_;
   };
@@ -68,7 +67,8 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// Initialize the container with a name.
-    int init (const ::Components::ConfigValues &options
+    int init (const Components::ConfigValues &options,
+              Components::Deployment::ComponentInstallation_ptr installation
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -115,7 +115,8 @@ namespace CIAO
 
 protected:
     /// parse ConfigValues
-    void parse_config_values (const Components::ConfigValues &options,
+    void parse_config_values (const char *exe_id,
+                              const Components::ConfigValues &options,
                               struct home_installation_info &component_install_info
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -140,6 +141,9 @@ protected:
 
     /// Cached ComponentServer.
     Components::Deployment::ComponentServer_var comserv_;
+
+    /// And a reference to the ServerActivator that created us.
+    Components::Deployment::ComponentInstallation_var installation_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;

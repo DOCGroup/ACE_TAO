@@ -44,7 +44,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib CIAO_Server.lib TAO_PortableServer.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib CIAO_Client.lib ACE.lib /nologo /version:1.3 /subsystem:console /machine:I386 /out:"DaemonController.exe" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 advapi32.lib user32.lib CIAO_Server.lib TAO_PortableServer.lib TAO_Security.lib CIAO_Container.lib TAO.lib TAO_IFR_Client.lib CIAO_Client.lib ACE.lib  ACEXML.lib ACEXML_Parser.lib /nologo /version:1.3 /subsystem:console /machine:I386 /out:"DaemonController.exe" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\ACEXML\Common" /libpath:"..\..\..\..\ACEXML\parser\parser"
 
 !ELSEIF  "$(CFG)" == "DaemonController EXE - Win32 Debug"
 
@@ -52,6 +52,7 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "..\..\..\.." /I "..\..\.." /I "..\..\ciao" /I "..\..\..\orbsvcs\orbsvcs" /D _DEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # SUBTRACT CPP /YX
@@ -61,7 +62,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib ACEd.lib /nologo /version:1.3 /subsystem:console /incremental:no /debug /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 advapi32.lib user32.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_Securityd.lib CIAO_Containerd.lib TAOd.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib ACEd.lib  ACEXMLd.lib ACEXML_Parserd.lib /nologo /version:1.3 /subsystem:console /incremental:no /debug /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\ACEXML\Common" /libpath:"..\..\..\..\ACEXML\parser\parser"
 
 !ENDIF 
 
@@ -72,6 +73,10 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;cxx;c"
+# Begin Source File
+
+SOURCE=..\XML_Helpers\Cascadable_DocHandler.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\controller_i.cpp
@@ -88,10 +93,22 @@ SOURCE=.\DaemonController.cpp
 
 SOURCE=.\Softpkg_Commands.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\XML_Helpers\Softpkg_Handlers.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\XML_Helpers\XML_Utils.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hh"
+# Begin Source File
+
+SOURCE=..\XML_Helpers\Cascadable_DocHandler.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\controller_i.h
@@ -103,6 +120,14 @@ SOURCE=.\Daemon_Commands.h
 # Begin Source File
 
 SOURCE=.\Softpkg_Commands.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\XML_Helpers\Softpkg_Handlers.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\XML_Helpers\XML_Utils.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -119,6 +144,14 @@ SOURCE=.\Daemon_Commands.inl
 # Begin Source File
 
 SOURCE=.\Softpkg_Commands.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\XML_Helpers\Softpkg_Handlers.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\XML_Helpers\XML_Utils.inl
 # End Source File
 # End Group
 # End Target
