@@ -21,7 +21,7 @@
 
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
