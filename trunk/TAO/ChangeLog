@@ -1,3 +1,14 @@
+Sun Jun 20 12:45:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Advanced/ch_3/Advanced_ch_3.mpc:
+	* tests/Oneway_Buffering/Oneway_Buffering.mpc:
+	* tests/Policies/Policies.mpc:
+	* tests/Timeout/Timeout.mpc:
+
+	  Added missing "requires += corba_messaging" to projects that
+	  need it.  The clients require CORBA::Object methods only
+	  available when CORBA messaging support is enabled.
+
 Sun Jun 20 12:17:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
