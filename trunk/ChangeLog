@@ -1,5 +1,8 @@
 Fri Feb 16 05:37:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Logging_Strategy.h: Updated the documentation to explain what
+	  the various options mean.
+
 	* tests/Log_Msg_Test.cpp (test_log_msg_features): Added
 	  ACE_Log_Msg::PROCESS to a coupld or priority_mask() calls to
  	  make the test work correctly.  Thanks to Kitty for reporting
