@@ -1,0 +1,50 @@
+                        TNF client-side profile for MT-Orbix for 20000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+cond_wait            6.23     4250.242   1824    2.330  106.171    1.205   0.091
+mutex_lock           0.23      159.830  56662    0.003    1.215    0.002   0.000
+mutex_unlock         0.22      146.756  56663    0.003    0.326    0.002   0.000
+cond_signal          0.09       61.030   1825    0.033    0.475    0.009   0.000
+rw_rdlock            0.01        7.179   1826    0.004    0.014    0.003   0.000
+rw_unlock            0.01        6.548   1827    0.004    0.014    0.003   0.000
+rw_wrlock            0.00        0.004      1    0.004    0.004    0.004   0.000
+
+                        TNF server-side profile for MT-Orbix for 20000 calls
+
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+cond_timedwait       1.25      923.527    797    1.159   20.219    0.324   0.028
+mutex_lock           0.21      153.839  56435    0.003    4.342    0.002   0.000
+mutex_unlock         0.20      149.208  56433    0.003    3.559    0.002   0.000
+cond_signal          0.03       21.506    809    0.027    1.826    0.003   0.002
+rw_unlock            0.02       16.058   3224    0.005    2.915    0.003   0.001
+rw_rdlock            0.02       11.924   3221    0.004    0.087    0.003   0.000
+rw_wrlock            0.00        0.010      2    0.005    0.005    0.004   0.000
+
+Cubit results over Ethernet with 20,000 calls
+---------------------------------------------
+
+                                Latency (ms)            Calls/Sec
+
+MT-Orbix without filters        1.876                   533
+MT-Orbix Thread-Per-Request     2.173                   460
+MT-Orbix Thread-Pool (25)       1.903                   525
+MT-Orbix Thread-Per-Session     2.160                   462 
+        
+
+Cubit results over ATM with 20,000 calls
+----------------------------------------
+
+                                Latency (ms)            Calls/Sec
+
+MT-Orbix without filters        1.818                   550
+MT-Orbix Thread-Per-Request     2.075                   481
+MT-Orbix Thread-Pool (25)       1.880                   531
+MT-Orbix Thread-Per-Session     2.014                   496
+
+
+        
