@@ -129,6 +129,16 @@ Test_Supplier::disconnect (CORBA::Environment &_env)
 int
 Test_Supplier::svc ()
 {
+  int min_priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+
+  if (ACE_OS::thr_setprio (min_priority) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Test_Supplier::svc (%P|%t) "
+                  "thr_setprio failed\n"));
+    }
+
   TAO_TRY
     {
       ACE_Time_Value tv (0, this->burst_pause_);
