@@ -16,12 +16,15 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Message_Block.h"
 #include "ace/Sched_Params.h"
+#include "ace/Malloc_Allocator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "kokyu_export.h"
+
+class ACE_Allocator;
 
 namespace Kokyu
 {
@@ -63,6 +66,15 @@ namespace Kokyu
       VERY_HIGH_IMPORTANCE
     };
 
+  struct Reordering_Queue_Attributes
+  {
+    Reordering_Queue_Attributes ();
+    unsigned long static_bit_field_mask_;
+    unsigned long static_bit_field_shift_;
+    unsigned long dynamic_priority_max_;
+    unsigned long dynamic_priority_offset_;
+  };
+
   struct ConfigInfo
   {
     Priority_t preemption_priority_;
@@ -73,15 +85,30 @@ namespace Kokyu
     // type of dispatching queue
     Dispatching_Type_t dispatching_type_;
 
+    //allocator to be used for dynamic memory allocation. If each 
+    //thread gets its own memory pool, contention will be less
+    ACE_Allocator *allocator_;
+
+    Reordering_Queue_Attributes reordering_flags_;
   };
 
   typedef ACE_Array<ConfigInfo> ConfigInfoSet;
 
-  struct Kokyu_Export Dispatcher_Attributes
+  class Kokyu_Export Dispatcher_Attributes
   {
-    Dispatcher_Attributes();
+  public:
     ConfigInfoSet config_info_set_;
     int immediate_activation_;
+    void sched_policy (int);
+    void sched_scope (int);
+
+  public:
+    Dispatcher_Attributes ();
+    int thread_creation_flags () const;
+
+  private:
+    int base_thread_creation_flags_;
+    int thread_creation_flags_;
   };
 
 
@@ -94,17 +121,6 @@ namespace Kokyu
   };
 
   enum Block_Flag_t {BLOCK, UNBLOCK};
-
-  /*
-  struct DSRT_QoSDescriptor
-  {
-    long importance_;
-    long criticality_;
-    Priority_t priority_;
-    Deadline_t deadline_;
-    Execution_Time_t exec_time_;
-  };
-  */
 
   class Kokyu_Export Dispatch_Command
     {
