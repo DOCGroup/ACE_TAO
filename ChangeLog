@@ -1,3 +1,20 @@
+Fri Dec 27 20:06:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.h:
+	* ace/Malloc_T.i:
+	* ace/Malloc_T.cpp: Added a new ACE_Malloc_T::bad () method to
+	  query whether a Malloc_T object was constructed successfully.
+	  This approach, IMO, is sub-optimal compared to using an explicit
+	  init method approach.  The existing constructor signatures,
+	  however, prevent us from doing so without breaking backward
+	  compatibility.
+
+	* ace/MEM_SAP.cpp:  Now that there's a way to check whether the
+	  underlying Malloc is functioning or not.  Changed MEM_SAP to
+	  check for proper initialization of underlying Malloc object and
+	  clean up OS resources if the Malloc object is defected.  This
+	  change makes MEM_Stream transport mechanism more robust.
+
 Fri Dec 27 19:46:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ACEXML/apps/svcconf/Svcconf.cpp: Add a dummy entrypoint when
