@@ -1,3 +1,8 @@
+Tue Jan 21 10:38:48 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed few
+	  race conditions.
+
 Mon Jan 20 18:46:17 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/README.txt (ImplRepoService): Fixed
