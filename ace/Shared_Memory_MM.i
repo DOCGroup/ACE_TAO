@@ -6,7 +6,7 @@
 // Return the name of file that is mapped (if any).
 
 ACE_INLINE const TCHAR *
-ACE_Shared_Memory_MM::filename (void) const;	
+ACE_Shared_Memory_MM::filename (void) const
 {
   return this->shared_memory_.filename ();
 }

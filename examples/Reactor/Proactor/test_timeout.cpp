@@ -24,8 +24,8 @@
 #include "ace/Task.h"
 
 class Timeout_Handler : public ACE_Handler
-// = TITLE
-//     Generic timeout handler.
+  // = TITLE
+  //     Generic timeout handler.
 {
 public:
   Timeout_Handler (void) 
