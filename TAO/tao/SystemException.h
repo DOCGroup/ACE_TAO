@@ -80,17 +80,8 @@ namespace CORBA
   {
   public:
 
-    /// Default constructor.
-    SystemException (void);
-
-    /// Copy constructor.
-    SystemException (const SystemException & src);
-
     /// Destructor.
     ~SystemException (void);
-
-    /// Assignment operator.
-    SystemException &operator= (const SystemException &src);
 
     /// Get the minor status.
     ULong minor (void) const;
@@ -147,6 +138,15 @@ namespace CORBA
 
   protected:
 
+    /// Default constructor.
+    SystemException (void);
+
+    /// Copy constructor.
+    SystemException (const SystemException & src);
+
+    /// Assignment operator.
+    SystemException & operator= (const SystemException &src);
+
     /// Constructor using a repository id.
     SystemException (CORBA::ULong code,
                      CORBA::CompletionStatus completed);
@@ -185,6 +185,7 @@ namespace CORBA
       name (CORBA::ULong code, \
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \
+      static name const * _downcast (CORBA::Exception const * exception); \
       virtual void _raise (void) const; \
       virtual CORBA::TypeCode_ptr _type (void) const; \
       static void _tao_any_destructor (void*); \
