@@ -18,10 +18,10 @@ Baseline_Test_Options baseline_options;
 // and the test statistics.
 
 Baseline_Test_Base::Baseline_Test_Base (void)
-  : yield_method_ (Baseline_Test_Options::USE_SLEEP_ZERO),
+  : Benchmark_Base (Benchmark_Base::BASELINE),
+    yield_method_ (Baseline_Test_Options::USE_SLEEP_ZERO),
     multiply_factor_ (100),
-    iteration_ (10000),
-    Benchmark_Base (Benchmark_Base::BASELINE)
+    iteration_ (10000)
 {
 }
 
