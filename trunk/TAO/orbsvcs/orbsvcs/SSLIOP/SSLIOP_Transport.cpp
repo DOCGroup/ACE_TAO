@@ -65,9 +65,6 @@ TAO_SSLIOP_Transport::close_connection (void)
 {
   // First close the handle
   this->connection_handler_->handle_close ();
-
-  // Now, purge the entry
-  this->connection_handler_->purge_entry ();
 }
 
 int
@@ -457,7 +454,7 @@ TAO_SSLIOP_Transport::process_message (void)
       if (result == -1)
         {
           // Something really critical happened, we will forget about
-          // every reply on this connection. 
+          // every reply on this connection.
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) : SSLIOP_Transport::")
@@ -476,7 +473,7 @@ TAO_SSLIOP_Transport::process_message (void)
           // The reply dispatcher was no longer registered.
           // This can happened when the request/reply
           // times out.
-          // To throw away all registered reply handlers is 
+          // To throw away all registered reply handlers is
           // not the right thing, as there might be just one
           // old reply coming in and several valid new ones
           // pending. If we would invoke <connection_closed>
