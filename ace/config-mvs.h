@@ -4,11 +4,16 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// log is defined as a macro on MVS in math.h. :-(
+#if defined (log)
+#undef log
+#endif /* log */
+
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 
 // highest possible errno.
-#define ERRMAX 100              
+#define ERRMAX __sys_nerr
 
 // Platform does not define sys_nerr
 #define ACE_LACKS_SYS_NERR
