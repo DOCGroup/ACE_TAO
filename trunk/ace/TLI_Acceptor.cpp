@@ -163,6 +163,8 @@ open_new_endpoint (ACE_HANDLE listen_handle,
                                       ACE_const_cast (char *, "tirdwr"))
                                       == ACE_INVALID_HANDLE)
     fd = ACE_INVALID_HANDLE;
+#else
+  ACE_UNUSED_ARG(rwf);
 #endif /* I_PUSH */
 
   if (fd == ACE_INVALID_HANDLE)
