@@ -14,57 +14,6 @@ ACE_RCSID (IFRService,
            HomeDef_i, 
            "$Id$")
 
-// Specialization
-template<>
-void
-TAO_IFR_Desc_Utils<CORBA::OperationDescription,
-                   TAO_OperationDef_i>::fill_desc_begin_ex (
-    CORBA::OperationDescription &desc,
-    TAO_Repository_i *repo,
-    ACE_Configuration_Section_Key &key
-    ACE_ENV_ARG_DECL
-  )
-{
-  TAO_OperationDef_i impl (repo);
-  impl.section_key (key);
-
-  desc.name = impl.name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  desc.id = impl.id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_TString holder;
-  repo->config ()->get_string_value (key,
-                                     "container_id",
-                                     holder);
-  desc.defined_in = holder.fast_rep ();
-
-  desc.version = impl.version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_TString result_path;
-  repo->config ()->get_string_value (key,
-                                     "result",
-                                     result_path);
-  TAO_IDLType_i *result = 
-    TAO_IFR_Service_Utils::path_to_idltype (result_path,
-                                            repo);
-  desc.result = result->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
-
-// ==============================================================
-
 TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
     TAO_Container_i (repo),
@@ -840,12 +789,22 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
                                         0,
                                         op_key);
   TAO_IFR_Desc_Utils<CORBA::OperationDescription,
-                     TAO_OperationDef_i>::fill_desc_begin_ex (
+                     TAO_OperationDef_i>::fill_desc_begin (
       od,
       this->repo_,
       op_key
       ACE_ENV_ARG_PARAMETER
     );
+  ACE_CHECK;
+
+  ACE_TString result_path;
+  this->repo_->config ()->get_string_value (key,
+                                            "result",
+                                            result_path);
+  TAO_IDLType_i *result = 
+    TAO_IFR_Service_Utils::path_to_idltype (result_path,
+                                            this->repo_);
+  od.result = result->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_OperationDef_i impl (this->repo_);
@@ -1008,12 +967,17 @@ TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
                                        except_def_key,
                                        0);
   TAO_IFR_Desc_Utils<CORBA::ExceptionDescription,
-                     TAO_ExceptionDef_i>::fill_desc_begin_ex (
+                     TAO_ExceptionDef_i>::fill_desc_begin (
                                               ed,
                                               this->repo_,
                                               except_def_key
                                               ACE_ENV_ARG_PARAMETER
                                             );
+
+  TAO_IDLType_i *impl = 
+    TAO_IFR_Service_Utils::path_to_idltype (path,
+                                            this->repo_);
+  ed.type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void 
@@ -1065,7 +1029,7 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
                                         0,
                                         attr_key);
   TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription,
-                     TAO_AttributeDef_i>::fill_desc_begin_ex (
+                     TAO_AttributeDef_i>::fill_desc_begin (
                                               ead,
                                               this->repo_,
                                               attr_key
@@ -1075,5 +1039,8 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
 
   TAO_AttributeDef_i impl (this->repo_);
   impl.section_key (attr_key);
+  ead.type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   ead.mode = impl.mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }

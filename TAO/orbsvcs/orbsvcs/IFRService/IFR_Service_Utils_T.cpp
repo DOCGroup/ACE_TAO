@@ -81,36 +81,6 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
   ACE_CHECK;
 }
 
-template<typename T_desc, typename T_impl>
-void
-TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin_ex (
-    T_desc &desc,
-    TAO_Repository_i *repo,
-    ACE_Configuration_Section_Key &key
-    ACE_ENV_ARG_DECL
-  )
-{
-  T_impl impl (repo);
-  impl.section_key (key);
-
-  desc.name = impl.name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  desc.id = impl.id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_TString holder;
-  repo->config ()->get_string_value (key,
-                                     "container_id",
-                                     holder);
-  desc.defined_in = holder.fast_rep ();
-
-  desc.version = impl.version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  desc.type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
 template<typename T_strseq>                       
 void 
 TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
