@@ -255,16 +255,18 @@ TAO_Profile::verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV)
 {
   // If the ORB isn't configured to support tagged components, then
   // throw an exception.
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+  if (this->orb_core_->orb_params ()->std_profile_components () == 0
+      || !this->orb_core_->orb ()->_use_omg_ior_format ())
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot add ")
 		    ACE_TEXT ("IOP::TaggedComponent to profile.\n")
-		    ACE_TEXT ("(%P|%t) Standard profile components")
-		    ACE_TEXT ("have been disabled.\n")
-                    ACE_TEXT ("(%P|%t) Try")
-                    ACE_TEXT ("\"-ORBStdProfileComponents 1\"\n")));
+		    ACE_TEXT ("(%P|%t) Standard profile components ")
+		    ACE_TEXT ("have been disabled or URL style IORs\n")
+                    ACE_TEXT ("(%P|%t) are in use.  Try ")
+                    ACE_TEXT ("\"-ORBStdProfileComponents 1\" and/or\n")
+                    ACE_TEXT ("(%P|%t) \"-ORBObjRefStyle IOR\".\n")));
 
       // According to the Portable Interceptor specification, we're
       // supposed to throw a CORBA::BAD_PARAM exception if it isn't
