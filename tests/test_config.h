@@ -23,21 +23,21 @@
 
 #include "ace/stdcpp.h"
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-# include /**/ <fstream>
+// Make sure we have fstream
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+#  include /**/ <fstream>
 
-# if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-               (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-   using std::ofstream;
-   using std::ios;
-# endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#  if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+              (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+    using std::ofstream;
+    using std::ios;
+#  endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
-#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
-# include /**/ <fstream.h>
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-
-
-
+# else /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#  include /**/ <fstream.h>
+# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 class KEY
