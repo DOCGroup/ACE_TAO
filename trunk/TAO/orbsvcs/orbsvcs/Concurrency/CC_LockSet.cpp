@@ -70,7 +70,8 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
     }
   TAO_TRY
     {
-      lock_->lock (_env);
+      lock_->lock (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
@@ -90,7 +91,8 @@ CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
               "CC_LockSet::try_lock\n"));
   TAO_TRY
     {
-      return lock_->try_lock (_env);
+      return lock_->try_lock (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
@@ -111,7 +113,8 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
               "CC_LockSet::unlock\n"));
   TAO_TRY
     {
-      lock_->unlock (_env);
+      lock_->unlock (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
@@ -133,7 +136,8 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
               "CC_LockSet::change_mode\n"));
   TAO_TRY
     {
-      lock_->change_mode (new_mode, _env);
+      lock_->change_mode (new_mode, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
