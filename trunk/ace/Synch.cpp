@@ -9,7 +9,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 
@@ -870,6 +869,163 @@ ACE_RW_Thread_Mutex::dump (void) const
   ACE_RW_Mutex::dump ();
 }
 
+int
+ACE_recursive_mutex_state::reset (ACE_recursive_thread_mutex_t &m)
+{
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // On Windows NT && 2000 the recursive mutex is a CriticalSection. 
+  m.RecursionCount = 0;
+  m.OwningThread = 0;
+  return 0;
+#else
+  m.nesting_level_ = 0;
+  m.owner_id_ = ACE_OS::NULL_thread;
+  return 0;
+#endif /* ACE_HAS_RECURSIVE_THREAD_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  return 0;
+#endif /* ACE_HAS_THREADS */
+}
+
+int
+ACE_recursive_mutex_state::save (ACE_recursive_thread_mutex_t &m)
+{
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // On Windows NT && 2000 the recurisive mutex is a CriticalSection.
+  this->recursion_count_ = m.RecursionCount;
+  this->lock_count_ = m.LockCount;
+  this->owning_thread_ = m.OwningThread;
+  this->lock_semaphore_ = m.LockSemaphore;
+  return 0;
+#else
+  this->nesting_level_ = m.nesting_level_;
+  this->owner_id_ = m.owner_id_;
+  return 0;
+#endif /* ACE_HAS_RECURSIVE_THREAD_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  return 0;
+#endif /* ACE_HAS_THREADS */
+}
+
+int
+ACE_recursive_mutex_state::restore (ACE_recursive_thread_mutex_t &m)
+{
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // On Windows NT && 2000 the recurisive mutex is a CriticalSection.
+  m.RecursionCount = this->recursion_count_;
+  m.LockCount = this->lock_count_;
+  m.OwningThread = this->owning_thread_;
+  m.LockSemaphore = this->lock_semaphore_;
+  return 0;
+#else
+  m.nesting_level_ = this->nesting_level_;
+  m.owner_id_ = this->owner_id_;
+  return 0;
+#endif /* ACE_HAS_RECURSIVE_THREAD_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  return 0;
+#endif /* ACE_HAS_THREADS */
+}
+
+ACE_recursive_mutex_state::ACE_recursive_mutex_state (ACE_Recursive_Thread_Mutex &m)
+  : mutex_ (m)
+{
+  if (ACE_OS::mutex_lock (&mutex_.get_nesting_mutex ()) == 0)
+    {
+      this->save (mutex_.mutex ());
+      this->reset (mutex_.mutex ());
+    }
+}
+
+
+ACE_recursive_mutex_state::~ACE_recursive_mutex_state (void)
+{
+  this->restore (mutex_.mutex ());
+  ACE_OS::mutex_unlock (&mutex_.get_nesting_mutex ());
+}    
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION int
+ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
+{ 
+  return ACE_OS::cond_destroy (&this->cond_); 
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION 
+ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition (void) 
+{ 
+  this->remove (); 
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION 
+ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_Mutex &m)
+  : mutex_ (m)
+{ 
+  ACE_OS::cond_init (&this->cond_); 
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION int 
+ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
+{
+  return this->wait (this->mutex_, abstime);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION int
+ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mutex, 
+                                                 const ACE_Time_Value *abstime)
+{
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, mutex, -1);
+  ACE_recursive_mutex_state mutex_state_holder (mutex);
+
+  do 
+    {
+      // When we wait on our condition, we'll give up the <mutex> so
+      // that other threads can make progress and eventually signal
+      // us.
+
+      const int result = abstime == 0 
+        ? ACE_OS::cond_wait (&this->cond_,
+                             &mutex.get_nesting_mutex ())
+        : ACE_OS::cond_timedwait (&this->cond_,
+                                  &mutex.get_nesting_mutex (),
+                                  (ACE_Time_Value *) abstime);
+      if (result == -1)
+        return result;
+    }
+  while (mutex.get_nesting_level () > 0);
+
+  return 0;
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION int 
+ACE_Condition<ACE_Recursive_Thread_Mutex>::signal (void)
+{
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
+  ACE_recursive_mutex_state mutex_state_holder (this->mutex_);
+
+  return ACE_OS::cond_signal (&this->cond_);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION int 
+ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast (void)
+{
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
+  ACE_recursive_mutex_state mutex_state_holder (this->mutex_);
+
+  return ACE_OS::cond_broadcast (&this->cond_);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION ACE_Recursive_Thread_Mutex &
+ACE_Condition<ACE_Recursive_Thread_Mutex>::mutex (void)
+{
+  return this->mutex_;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These are only instantiated with ACE_HAS_THREADS.
 template class ACE_Guard<ACE_Thread_Mutex>;
@@ -878,6 +1034,7 @@ template class ACE_Read_Guard<ACE_RW_Thread_Mutex>;
 template class ACE_Read_Guard<ACE_Thread_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Thread_Mutex>;
 template class ACE_Write_Guard<ACE_Thread_Mutex>;
+template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // These are only instantiated with ACE_HAS_THREADS.
 #pragma instantiate ACE_Guard<ACE_Thread_Mutex>
@@ -886,17 +1043,8 @@ template class ACE_Write_Guard<ACE_Thread_Mutex>;
 #pragma instantiate ACE_Read_Guard<ACE_Thread_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Thread_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Thread_Mutex>
+#pragma instantiate ACE_Condition<ACE_Recursive_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
-
-//
-// These are instantiated both with and without ACE_HAS_THREADS.
-//
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_SYNCH_C */
