@@ -5,14 +5,18 @@
 #include "ace/Object_Manager.h"
 #include "ace/Service_Repository.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Object_Manager.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
+
 
 ACE_Object_Manager::ACE_Object_Manager ()
   : registered_objects_ (),
     registered_arrays_ ()
 {
 }
-
 
 ACE_Object_Manager::~ACE_Object_Manager ()
 {
@@ -35,7 +39,6 @@ ACE_Object_Manager::~ACE_Object_Manager ()
   ACE_Service_Config::close ();
 }
 
-
 ACE_Object_Manager *
 ACE_Object_Manager::instance ()
 {
@@ -50,18 +53,48 @@ ACE_Object_Manager::instance ()
   return instance_;
 }
 
-
-void
-ACE_Object_Manager::delete_at_exit (void *object)
+int
+ACE_Object_Manager::delete_at_exit_ (void *object)
 {
-  registered_objects_.enqueue_tail (object);
+  // Check for already in queue, and return 1 if so.
+  ACE_Unbounded_Queue_Iterator<void *> i (registered_objects_);
+  void **obj;
+
+  while (i.next (obj))
+    {
+      i.advance ();
+
+      if (obj == object)
+        {
+          // The object has already been registered.
+          return 1;
+        }
+    }
+
+  // Returns -1 if unable to allocate storage.
+  return registered_objects_.enqueue_tail (object);
 }
 
-
-void
-ACE_Object_Manager::delete_array_at_exit (void *array)
+int
+ACE_Object_Manager::delete_array_at_exit_ (void *array)
 {
-  registered_arrays_.enqueue_tail (array);
+  // Check for already in queue, and return 1 if so.
+  ACE_Unbounded_Queue_Iterator<void *> i (registered_arrays_);
+  void **obj;
+
+  while (i.next (obj))
+    {
+      i.advance ();
+
+      if (obj == array)
+        {
+          // The array has already been registered.
+          return 1;
+        }
+    }
+
+  // Returns -1 if unable to allocate storage.
+  return registered_arrays_.enqueue_tail (array);
 }
 
 
