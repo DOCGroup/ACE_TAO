@@ -204,7 +204,7 @@ Test_DynStruct::run_test (void)
 
 
       const DynAnyTests::test_struct* ts_out2 = 0;
-      CORBA_Any_var out_any2 ;
+      CORBA::Any_var out_any2 ;
       DynamicAny::DynStruct_var ftc2;
 
       ACE_TRY
@@ -228,7 +228,7 @@ Test_DynStruct::run_test (void)
         ts.l = data.m_long1;
         ts.es.f = data.m_float1;
         ts.es.s = data.m_short1;
-        CORBA_Any in_any3;
+        CORBA::Any in_any3;
         in_any3 <<= ts;
         ftc2->from_any (in_any3
                         ACE_ENV_ARG_PARAMETER);
