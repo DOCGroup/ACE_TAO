@@ -1,3 +1,17 @@
+Sat Jul  3 10:03:22 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Deployment_Base.idl:
+	* DAnCE/ciao/Deployment_Data.idl:
+	* DAnCE/ciao/Deployment.idl:
+	The original Deployment.idl is splited into the above 3 files to
+	get rid of the VC warning.
+
+	* DAnCE/ciao/Deployment_Ex.idl:
+	This file is removed due to the bad name.
+
+	* DAnCE/ciao/CCM_Core.idl:
+	The MPC file is changed to follow the above changes.
+
 Thu Jul  1 16:27:07 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * CIAOTAO.mwc:
