@@ -28,15 +28,7 @@ ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan 
 static const char *iorfile = "ior";
 static const char *filename = "big.txt";
 
-// Hack for Sun CC. Sun CC has problems when trying to get lots of
-// data. See bug 957 for details. If we have lots of threads getting
-// data we run into the problem again. To offset that, we have this
-// compiler specific hack:(
-# if !(defined (__SUNPRO_CC) && (__SUNPRO_CC > 0x500))
-static const int NUM_THREADS = 10;
-# else
-static const int NUM_THREADS = 6;
-#endif /*(__SUNPRO_CC) && (__SUNPRO_CC > 0x500) */
+static const int NUM_THREADS = 4;
 
 
 static CORBA::ORB_var orb;
@@ -110,7 +102,8 @@ MTTEST (void *args)
       ACE_TRY_CHECK;
 
       // Read back the written message
-      File::Descriptor::DataBuffer_var data_received = fd->read (1024*1024,
+      // Twice the size of the socket buffer
+      File::Descriptor::DataBuffer_var data_received = fd->read (128*1024,
                                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

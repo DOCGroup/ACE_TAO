@@ -24,15 +24,7 @@
 ACE_RCSID(Default_Servant, server, "server.cpp,v 1.13 2001/03/26 21:16:52 coryan Exp")
 
 static const char *ior_output_file = "ior";
-// Hack for Sun CC. Sun CC has problems when trying to get lots of
-// data. See bug 957 for details. If we have lots of threads getting
-// data we run into the problem again. To offset that, we have this
-// compiler specific hack:(
-# if !(defined (__SUNPRO_CC) && (__SUNPRO_CC > 0x500))
-static const int nthreads = 4;
-# else
 static const int nthreads = 2;
-#endif /*(__SUNPRO_CC) && (__SUNPRO_CC > 0x500) */
 
 
 class Worker : public ACE_Task_Base
@@ -234,7 +226,9 @@ Worker::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (ACE_TRY_ENV);
+      // Run the ORB for atmost 60 seconds
+      ACE_Time_Value tv (75, 0);
+      this->orb_->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
