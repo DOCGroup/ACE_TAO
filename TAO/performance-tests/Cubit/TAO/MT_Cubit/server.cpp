@@ -20,7 +20,7 @@
 static char hostname[BUFSIZ];
 static char *ior_file = 0;
 static int base_port = ACE_DEFAULT_SERVER_PORT;
-static int num_of_objs = 1;
+static int num_of_objs = 2;
 static u_int use_name_service = 1;
 
 Cubit_Task::Cubit_Task (void)
@@ -56,13 +56,14 @@ Cubit_Task::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t): Cubit_Task::svc; set my priority to %d\n",
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc; set my priority to %d\n",
               prio));
   ACE_OS::thr_setprio (prio);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Beginning Cubit task with args = '%s'\n",
               orbargs_));
+
   int rc = this->initialize_orb ();
   if (rc == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -80,9 +81,7 @@ Cubit_Task::svc (void)
       this->poa_manager_->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, wait on barrier\n"));
       this->barrier_->wait ();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, passed barrier\n"));
 
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
@@ -339,9 +338,11 @@ Cubit_Task::create_servants ()
                             buffer));
             }
 
+#if 0  /* The IOR gets printout out later, so we don't need this. */
           ACE_DEBUG ((LM_DEBUG,
                       " (%t) Object <%s> created\n",
                       this->servants_iors_[i]));
+#endif /* 0 */
         }
       delete [] buffer;
     }
@@ -427,7 +428,7 @@ Cubit_Factory_Task::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t): Cubit_Factor_Task::svc; set my priority to %d\n",
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Factor_Task::svc; set my priority to %d\n",
               prio));
   ACE_OS::thr_setprio (prio);
 
@@ -606,7 +607,6 @@ static int
 initialize (int argc, char **argv)
 {
 #if defined (VXWORKS)
-   hostAdd ("mv2604e", "130.38.183.178");
 #if defined (VME_DRIVER)
    STATUS status = vmeDrv ();
 
@@ -620,12 +620,11 @@ initialize (int argc, char **argv)
 #endif /* defined (VME_DRIVER) */
 
 #if defined (FORCE_ARGS)
-   int argc = 5;
-   char *argv[] = { "main",
-                    "-p",
-                    "10014",
-                    "-h",
-                    "130.38.183.132" };
+   int argc = 4;
+   char *argv[] = { "server",
+                    "-s",
+                    "-f",
+                    "ior.txt" };
 
 #endif /* defined (FORCE_ARGS) */
 #endif /* defined (VXWORKS) */
@@ -688,11 +687,11 @@ start_servants (ACE_Barrier &start_barrier)
                               0), //task id 0.
                   -1);
 
+#if defined (VXWORKS)
+  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 50;
+#else
   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Creating servant with high priority %d\n",
-              priority));
+#endif /* VXWORKS */
 
   // Make the high priority task an active object.
   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
@@ -741,10 +740,6 @@ start_servants (ACE_Barrier &start_barrier)
                       Cubit_Task (args, "internet", 1, &start_barrier, i+1),
                       -1);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Creating servant with low priority %d\n",
-                  priority));
-
       // Make the low priority task an active object.
       if (low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
                                            1,
@@ -771,11 +766,7 @@ start_servants (ACE_Barrier &start_barrier)
                    base_port + num_of_objs,
                    hostname);
 
-  Cubit_Factory_Task * factory_task;
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, wait on barrier\n"));
   start_barrier.wait ();
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, passed barrier\n"));
 
   cubits[0] = high_priority_task->get_servant_ior (0);
 
@@ -802,6 +793,8 @@ start_servants (ACE_Barrier &start_barrier)
     ACE_OS::fclose (ior_f);
 
 #if 0
+  Cubit_Factory_Task * factory_task;
+
   ACE_NEW_RETURN (factory_task,
                   Cubit_Factory_Task (args, "internet", cubits, num_of_objs),
                   -1);
@@ -827,14 +820,19 @@ start_servants (ACE_Barrier &start_barrier)
 // main routine.
 
 #if defined (VXWORKS)
+  // Rename main to server to make it easier to run both client and
+  // server on one target.
 extern "C"
 int
 server (int argc, char *argv[])
+{
+  ACE_Object_Manager ace_object_manager;
 #else
 int
 main (int argc, char *argv[])
-#endif
 {
+#endif
+
 #if defined (ACE_HAS_THREADS)
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (

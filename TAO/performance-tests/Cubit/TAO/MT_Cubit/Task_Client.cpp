@@ -5,8 +5,8 @@
 Task_State::Task_State (int argc, char **argv)
   : key_ ("Cubit"),
     start_count_ (0),
-    loop_count_ (5),
-    thread_count_ (5),
+    loop_count_ (1000),
+    thread_count_ (2),
     datatype_ (CB_OCTET),
     argc_ (argc),
     argv_ (argv),
@@ -143,8 +143,8 @@ Task_State::Task_State (int argc, char **argv)
            double *[thread_count_]);
 }
 
-Client::Client (Task_State *ts, u_int id)
-  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ())),
+Client::Client (ACE_Thread_Manager &thread_manager, Task_State *ts, u_int id)
+  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (&thread_manager)),
     ts_ (ts),
     id_ (id)
 {
@@ -162,11 +162,11 @@ Client::put_latency (double *jitter,
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) My latency was %u\n",
+              "(%t) My latency was %u msec\n",
               latency));
 #else
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) My latency was %f\n",
+              "(%t) My latency was %f msec\n",
               latency));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 }
@@ -234,8 +234,8 @@ Client::get_low_priority_jitter (void)
   for (u_int j = 1; j < ts_->thread_count_; j ++)
     for (u_int i = 0; i < ts_->loop_count_ / ts_->granularity_; i ++)
       {
-        double difference = 
-	  ts_->global_jitter_array_[j][i] - average;
+        double difference =
+          ts_->global_jitter_array_[j][i] - average;
         jitter += difference * difference;
       }
 fprintf(stderr, "jitter=%f, samples=%f\n", jitter,number_of_samples );
@@ -256,12 +256,9 @@ Client::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t): Client::svc; set my priority to %d\n",
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client::svc; set my priority to %d\n",
               prio));
   ACE_OS::thr_setprio (prio);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) Thread created\n"));
 
   Cubit_ptr cb = 0;
   CORBA::ORB_var orb;
@@ -325,14 +322,14 @@ Client::svc (void)
         if (this->id_ == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) Im the high priority client, my id is %d.\n",
+                        "(%t) I'm the high priority client, my id is %d.\n",
                         this->id_));
             frequency = CB_HIGH_PRIORITY_RATE;
           }
         else
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) Im a low priority client, my id is %d\n",
+                        "(%t) I'm a low priority client, my id is %d.\n",
                         this->id_));
             frequency = CB_LOW_PRIORITY_RATE;
           }
@@ -342,32 +339,32 @@ Client::svc (void)
         {
         case CB_40HZ_CONSUMER:
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) Im the high priority client, "
+                      "(%t) I'm the high priority client, "
                       "my id is %d.\n", this->id_));
           frequency = CB_40HZ_CONSUMER_RATE;
           break;
         case CB_20HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
                       "my id is %d.\n", this->id_));
           frequency = CB_20HZ_CONSUMER_RATE;
           break;
         case CB_10HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
                       "my id is %d.\n", this->id_));
           frequency = CB_10HZ_CONSUMER_RATE;
           break;
         case CB_5HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
                       "my id is %d.\n", this->id_));
           frequency = CB_5HZ_CONSUMER_RATE;
           break;
         case CB_1HZ_CONSUMER:
-          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+          ACE_DEBUG ((LM_DEBUG, "(%t) I'm the high priority client, "
                       "my id is %d.\n", this->id_));
           frequency = CB_1HZ_CONSUMER_RATE;
           break;
         default:
-          ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", this->id_));
+          ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID!!!!\n", this->id_));
         }
 
     TAO_TRY
@@ -562,6 +559,7 @@ Client::svc (void)
           env.print_exception ("shutdown() call failed.\n");
         }
     }
+
   return 0;
 }
 
@@ -583,7 +581,7 @@ Client::run_tests (Cubit_ptr cb,
                   -1);
 
   double latency = 0;
-  double sleep_time = (1 / frequency) * (1000 * 1000) * ts_->granularity_;
+  double sleep_time = (1 / frequency) * (1000 * 1000) * ts_->granularity_; // usec
   double delta = 0;
 
 #if defined (CHORUS)
@@ -606,22 +604,22 @@ Client::run_tests (Cubit_ptr cb,
       ACE_Time_Value delta_t;
 
       if ( (i % ts_->granularity_) == 0)
-	{
-	  ACE_Time_Value tv (0,
-			     (u_long) ((sleep_time - delta) < 0
-				       ? 0
-				       : (sleep_time - delta)));
-	  ACE_OS::sleep (tv);
-	  
+        {
+          ACE_Time_Value tv (0,
+                             (u_long) ((sleep_time - delta) < 0
+                                       ? 0
+                                       : (sleep_time - delta)));
+          ACE_OS::sleep (tv);
+
 #if defined (CHORUS)
-	  pstartTime = pccTime1Get();
+          pstartTime = pccTime1Get();
 #else /* CHORUS */
-	  ACE_NEW_RETURN (timer_,
-			  ACE_High_Res_Timer,
-			  -1);
-	  timer_->start ();
+          ACE_NEW_RETURN (timer_,
+                          ACE_High_Res_Timer,
+                          -1);
+          timer_->start ();
 #endif /* !CHORUS */
-	}
+        }
 
       if (ts_->oneway_ == 0)
         {
@@ -816,40 +814,40 @@ Client::run_tests (Cubit_ptr cb,
         }
 
       if ((i % ts_->granularity_) == (ts_->granularity_ - 1))
-	{
+        {
 #if defined (CHORUS)
           pstopTime = pccTime1Get();
 #else /* CHORUS */
-	  // if CHORUS is not defined just use plain timer_.stop ().
-	  timer_->stop ();
-	  timer_->elapsed_time (delta_t);
+          // if CHORUS is not defined just use plain timer_.stop ().
+          timer_->stop ();
+          timer_->elapsed_time (delta_t);
 #endif /* !CHORUS */
 
-	  // Calculate time elapsed
+          // Calculate time elapsed
 #if defined (ACE_LACKS_FLOATING_POINT)
 #   if defined (CHORUS)
-	  real_time = (pstopTime - pstartTime) / ts_->granularity_;
+          real_time = (pstopTime - pstartTime) / ts_->granularity_;
 #   else /* CHORUS */
-	  // Store the time in usecs.
-	  real_time = (delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-	    delta_t.usec ()) / ts_->granularity_;
+          // Store the time in usecs.
+          real_time = (delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
+            delta_t.usec ()) / ts_->granularity_;
 #   endif /* !CHORUS */
-	  delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
-	  latency += real_time * ts_->granularity_;
-	  my_jitter_array [i/ts_->granularity_] = real_time; // in units of microseconds.
+          delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
+          latency += real_time * ts_->granularity_;
+          my_jitter_array [i/ts_->granularity_] = real_time; // in units of microseconds.
           // update the latency array, correcting the index using the granularity
 #else /* ACE_LACKS_FLOATING_POINT */
-	  // Store the time in secs.
-	  real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
-	  real_time /= ts_->granularity_;
-	  delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
-	  latency += (real_time * ts_->granularity_);
-	  my_jitter_array [i/ts_->granularity_] = real_time * 1000;
-	  delete timer_;
+          // Store the time in secs.
+          real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
+          real_time /= ts_->granularity_;
+          delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
+          latency += (real_time * ts_->granularity_);
+          my_jitter_array [i/ts_->granularity_] = real_time * 1000;
+          delete timer_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
-	}
+        }
     }
-      
+
   if (call_count > 0)
     {
       if (error_count == 0)
@@ -890,8 +888,8 @@ Client::run_tests (Cubit_ptr cb,
                                  0,
                                  thread_id);
               ACE_DEBUG ((LM_DEBUG,
-                          "*** Warning: Latency is less than or equal to zero."
-                          "  Precision may have been lost.\n"));
+                          "*** Warning: Latency, %f, is less than or equal to zero."
+                          "  Precision may have been lost.\n, latency"));
             }
         }
       ACE_DEBUG ((LM_DEBUG,
@@ -990,7 +988,7 @@ Yield_Test::svc ()
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t): Yield_Test::svc; set my priority to %d\n",
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Yield_Test::svc; set my priority to %d\n",
               prio));
   ACE_OS::thr_setprio (prio);
 
