@@ -1300,8 +1300,9 @@ public:
   /// call to stop.
   int update (void);
 
-private:  ACE_Time_Value *max_wait_time_;
-  // Maximum time we were willing to wait.
+private:
+  /// Maximum time we were willing to wait.
+  ACE_Time_Value *max_wait_time_;
 
   /// Beginning of the start time.
   ACE_Time_Value start_time_;
