@@ -179,5 +179,9 @@ BuildCmds= \
 
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\server.conf
+# End Source File
 # End Target
 # End Project
