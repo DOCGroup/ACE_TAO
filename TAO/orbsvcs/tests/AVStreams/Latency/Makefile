@@ -6,7 +6,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
