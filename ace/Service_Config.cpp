@@ -48,7 +48,6 @@ ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = 0;
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 
   // = Set by command-line options.
-char ACE_Service_Config::debug_ = 1;
 char ACE_Service_Config::be_a_daemon_ = 0;
 char ACE_Service_Config::no_static_svcs_ = 1;
 
@@ -207,7 +206,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         ACE_Service_Config::be_a_daemon_ = 1;
         break;
       case 'd':
-        ACE_Service_Config::debug_ = 0;
+        ACE::debug (0);
         break;
       case 'f':
         ACE_Service_Config::service_config_file_ = getopt.optarg;
@@ -264,7 +263,7 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
   ACE_ARGV args (parameters);
   ACE_Service_Type *srp = 0;
 
-  if (ACE_Service_Config::debug_)
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("opening static service %s\n"),
                 svc_name));
@@ -299,7 +298,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
 
-  if (ACE_Service_Config::debug_)
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,  
                 ASYS_TEXT ("opening dynamic service %s\n"),
                 sr->name ()));
@@ -474,7 +473,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
   ACE_TRACE ("ACE_Service_Config::open");
 
   // Clear the LM_DEBUG bit from log messages if appropriate
-  if (!ACE_Service_Config::debug_)
+  if (ACE::debug () == 0)
     ACE_Log_Msg::disable_debug_messages ();
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
@@ -499,7 +498,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
     retval = -1;
   else
     {
-      if (ACE_Service_Config::debug_)
+      if (ACE::debug ())
         ACE_DEBUG ((LM_STARTUP,
                     ASYS_TEXT ("starting up daemon %n\n")));
 
@@ -534,7 +533,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
 #endif /* ACE_LACKS_UNIX_SIGNALS */
     }
   
-  if (!ACE_Service_Config::debug_)
+  if (ACE::debug () == 0)
     ACE_Log_Msg::enable_debug_messages ();
 
   return retval;
@@ -566,7 +565,7 @@ ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
                 sig, 
                 ACE_Service_Config::signum_));
 
-  if (ACE_Service_Config::debug_)
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,  
                 ASYS_TEXT ("signal %S occurred\n"), 
                 sig));
@@ -583,10 +582,10 @@ ACE_Service_Config::reconfigure (void)
 
   ACE_Service_Config::reconfig_occurred_ = 0;
 
-  if (ACE_Service_Config::debug_)
+  if (ACE::debug ())
     {
       time_t t = ACE_OS::time (0);
-      if (ACE_Service_Config::debug_)
+      if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,  
                     ASYS_TEXT ("beginning reconfiguration at %s"), 
                     ACE_OS::ctime (&t)));
@@ -676,12 +675,12 @@ ACE_Service_Config::fini_svcs (void)
   ACE_TRACE ("ACE_Service_Config::fini_svcs");
 
   // Clear the LM_DEBUG bit from log messages if appropriate
-  if (!ACE_Service_Config::debug_)
+  if (ACE::debug () == 0)
     ACE_Log_Msg::disable_debug_messages ();
 
   int result = ACE_Service_Repository::instance ()->fini ();
 
-  if (!ACE_Service_Config::debug_)
+  if (ACE::debug () == 0)
     ACE_Log_Msg::enable_debug_messages ();
   
   return result;

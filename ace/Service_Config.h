@@ -257,9 +257,6 @@ public:
   // Totally remove <svc_name> from the daemon by removing it
   // from the ACE_Reactor, and unlinking it if necessary.
 
-  static char debug (void);
-  // Returns the debug level.
-
 #if defined (ACE_HAS_WINCE)
   // We must provide these function to bridge the <Svc_Conf> parser
   // with ACE.
@@ -282,6 +279,9 @@ public:
   static int process_directive (const ASYS_TCHAR directive[]);
   // Process one service configuration <directive>, which is passed as
   // a string.  Returns the number of errors that occurred.
+
+  static void handle_signal (int sig, siginfo_t *, ucontext_t *);
+  // Handles signals to trigger reconfigurations.
 
 protected:
   static int process_directives (void);
@@ -310,10 +310,6 @@ protected:
   // Add the default statically-linked services to the
   // <ACE_Service_Repository>.
 
-public:
-  static void handle_signal (int sig, siginfo_t *, ucontext_t *);
-  // Handles signals to trigger reconfigurations.
-
 private:
   static const ASYS_TCHAR *service_config_file_;
   // Name of service configuration file.
@@ -331,9 +327,11 @@ private:
   // True if reconfiguration occurred.
 
   // = Set by command-line options.
-  static char debug_;
   static char be_a_daemon_;
+  // Shall we become a daemon process?
+
   static char no_static_svcs_;
+  // Should we avoid loading the static services?
 
   static int signum_;
   // Number of the signal used to trigger reconfiguration.
