@@ -3,6 +3,11 @@ Fri Nov 20 07:08:28 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/Timer_Module.cpp (cancel_timer): changed
           static_cast to const_cast + reinterpret_cast.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp (output_latency):
+          shortened name of latency_file as much as possible.  It appears
+          that VxWorks has a limitation of 100 characters for the full
+          path name to an NFS file.
+
 Fri Nov 20 07:48:54 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * tao/CDR.{h, i}:
