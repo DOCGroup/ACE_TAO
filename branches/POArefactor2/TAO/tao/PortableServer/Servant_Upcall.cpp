@@ -180,7 +180,7 @@ namespace TAO
           // Release the object adapter lock.
           this->object_adapter_->lock ().release ();
 
-          // We have release the object adapater lock.  Record this for
+          // We have release the object adapter lock.  Record this for
           // later use.
           this->state_ = OBJECT_ADAPTER_LOCK_RELEASED;
         }

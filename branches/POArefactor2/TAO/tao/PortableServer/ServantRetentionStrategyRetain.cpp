@@ -157,49 +157,25 @@ namespace TAO
       // have completed. If there is a ServantActivator, the Servant is
       // consumed by the call to ServantActivator::etherealize instead.
 
+  // @bala, is this order correct, see 11.3.9.17 of the spec, it says first
+  // remove from the map, then etherealize. not the other way around
+
       // First check for a non-zero servant.
       if (active_object_map_entry->servant_)
         {
 
     #if (TAO_HAS_MINIMUM_POA == 0)
-/*
-          if (this->etherealize_objects_ &&
-              this->poa_->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER &&
-              !CORBA::is_nil (this->poa_->servant_activator_.in ()))
+          if (this->etherealize_objects_)
             {
-              CORBA::Boolean remaining_activations =
-                this->active_object_map_->
-                remaining_activations (active_object_map_entry->servant_);
-
-              // A recursive thread lock without using a recursive thread
-              // lock.  Non_Servant_Upcall has a magic constructor and
-              // destructor.  We unlock the Object_Adapter lock for the
-              // duration of the servant activator upcalls; reacquiring
-              // once the upcalls complete.  Even though we are releasing
-              // the lock, other threads will not be able to make progress
-              // since <Object_Adapter::non_servant_upcall_in_progress_>
-              // has been set.
-              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
-              ACE_UNUSED_ARG (non_servant_upcall);
-
-              // If the cleanup_in_progress parameter is TRUE, the reason
-              // for the etherealize operation is that either the
-              // deactivate or destroy operation was called with an
-              // etherealize_objects parameter of TRUE. If the parameter
-              // is FALSE, the etherealize operation is called for other
-              // reasons.
-              this->servant_activator_->etherealize (active_object_map_entry->user_id_,
-                                                     this->poa_,
-                                                     active_object_map_entry->servant_,
-                                                     this->poa_->cleanup_in_progress_,
-                                                     remaining_activations
-                                                     ACE_ENV_ARG_PARAMETER);
+              this->request_processing_strategy_->cleanup_servant (
+                active_object_map_entry->user_id_,
+                active_object_map_entry->servant_,
+                this->poa_->cleanup_in_progress ()
+                ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
           else
-  */
     #endif
-
             {
               // A recursive thread lock without using a recursive thread
               // lock.  Non_Servant_Upcall has a magic constructor and
@@ -244,7 +220,6 @@ namespace TAO
           find_user_id_using_system_id (system_id,
                                         user_id.out()) != 0)
         {
-          // @johnny Shouldn't this be ObjectNotActive?
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
         }

@@ -80,6 +80,13 @@ namespace TAO
                         int &wait_occurred_restart_call
                         ACE_ENV_ARG_DECL);
 
+      virtual
+      void
+      cleanup_servant (const PortableServer::ObjectId& object_id,
+                       PortableServer::Servant servant,
+                       CORBA::Boolean cleanup_in_progress
+                       ACE_ENV_ARG_DECL);
+
     private:
       PortableServer::Servant
       incarnate_servant (
@@ -89,9 +96,9 @@ namespace TAO
       void
       etherealize_servant (
         const PortableServer::ObjectId& object_id,
-        PortableServer::Servant servant
+        PortableServer::Servant servant,
+        CORBA::Boolean cleanup_in_progress
         ACE_ENV_ARG_DECL);
-
 
     private:
       TAO_POA* poa_;

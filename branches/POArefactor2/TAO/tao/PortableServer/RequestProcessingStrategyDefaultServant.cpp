@@ -162,6 +162,21 @@ namespace TAO
           return result;
         }
     }
+
+    void
+    Default_Servant_Request_Processing_Strategy::cleanup_servant (
+      const PortableServer::ObjectId& object_id,
+      PortableServer::Servant servant,
+      CORBA::Boolean cleanup_in_progress
+      ACE_ENV_ARG_DECL)
+    {
+      ACE_UNUSED_ARG (object_id);
+      ACE_UNUSED_ARG (servant);
+      ACE_UNUSED_ARG (cleanup_in_progress);
+
+      // Just do nothing
+    }
+
   }
 }
 

@@ -1,3 +1,10 @@
+
+        * tao/PortableServer/RequestProcessingStrategy*:
+          Added cleanup_servant, used by the servant retention strategy. The
+          servant activator will then do the etherealize, other strategies to
+          nothing. The servant retention strategy then just calls this method
+          and doesn't know anything about servant activator anymore
+
 Thu Nov 11 11:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Upcall.cpp (servant_locator_cleanup):

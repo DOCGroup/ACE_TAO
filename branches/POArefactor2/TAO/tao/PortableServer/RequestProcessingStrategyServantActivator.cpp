@@ -175,7 +175,11 @@ namespace TAO
       // the incarnated servant.
       if (error || wait_occurred_restart_call)
         {
-          this->etherealize_servant (poa_current_impl.object_id (), servant ACE_ENV_ARG_PARAMETER);
+          CORBA::Boolean cleanup_in_progress = 0;
+          this->etherealize_servant (poa_current_impl.object_id (),
+                                     servant,
+                                     cleanup_in_progress
+                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           // If error, throw exception.
@@ -205,7 +209,8 @@ namespace TAO
     void
     Servant_Activator_Request_Processing_Strategy::etherealize_servant (
       const PortableServer::ObjectId& object_id,
-      PortableServer::Servant servant
+      PortableServer::Servant servant,
+      CORBA::Boolean cleanup_in_progress
       ACE_ENV_ARG_DECL)
     {
       CORBA::Boolean remaining_activations =
@@ -223,7 +228,9 @@ namespace TAO
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
-      CORBA::Boolean cleanup_in_progress = 0;
+      // @todo This is not according to the spec. According to 11.3.6.2 at the
+      // end when etherealize returns a system exception the POA ignores the
+      // exception
       this->servant_activator_->etherealize (object_id,
                                              this->poa_,
                                              servant,
@@ -272,6 +279,24 @@ namespace TAO
           return servant;
         }
     }
+
+    void
+    Servant_Activator_Request_Processing_Strategy::cleanup_servant (
+      const PortableServer::ObjectId& object_id,
+      PortableServer::Servant servant,
+      CORBA::Boolean cleanup_in_progress
+      ACE_ENV_ARG_DECL)
+    {
+      if (!CORBA::is_nil (this->servant_activator_))
+        {
+          this->etherealize_servant (object_id,
+                                     servant,
+                                     cleanup_in_progress
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
+    }
+
   }
 }
 

@@ -82,6 +82,13 @@ namespace TAO
                       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                       int &wait_occurred_restart_call
                       ACE_ENV_ARG_DECL);
+
+      virtual
+      void
+      cleanup_servant (const PortableServer::ObjectId& object_id,
+                       PortableServer::Servant servant,
+                       CORBA::Boolean cleanup_in_progress
+                       ACE_ENV_ARG_DECL);
     };
   }
 }
