@@ -99,6 +99,9 @@ protected:
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
   // Number of events received so far.
 
+  /// Use the default admins.
+  int use_default_admin_;
+
   int event_count_;
   // Number of events to send
 

@@ -121,3 +121,10 @@ TAO_NS_EventType::is_special (void) const
   else
     return 0;
 }
+
+void
+TAO_NS_EventType::dump (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%s,%s)", this->event_type_.domain_name.in (), this->event_type_.type_name.in ()));
+}
+

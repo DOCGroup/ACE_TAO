@@ -21,7 +21,8 @@ $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
                                 "-o $namingior");
 $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
                                       "-ORBInitRef NameService=file://$namingior " .
-                                      "-IORoutput $notifyior");
+                                      "-IORoutput $notifyior " .
+                                      "-ORBSvcConf ../../../Notify_Service/svc.conf");
 @tests = 
   (
    "AdminProperties",
@@ -30,6 +31,8 @@ $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
    "IdAssignment",
    "LifeCycle",
    "Simple",
+   "MultiTypes",
+   "Filter",
    "Updates",
   );
 

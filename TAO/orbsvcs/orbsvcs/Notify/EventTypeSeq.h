@@ -41,6 +41,9 @@ public:
   /// Preprocess the types added and removed.
   void init (TAO_NS_EventTypeSeq& added, TAO_NS_EventTypeSeq& removed);
 
+  /// Populate this sequence with the intersection of rhs and lhs.
+  void intersection (const TAO_NS_EventTypeSeq& rhs, const TAO_NS_EventTypeSeq& lhs);
+
   /// insert_seq the contents of <event_type_seq> into this object.
   void insert_seq (const CosNotification::EventTypeSeq& event_type_seq);
 
@@ -55,6 +58,13 @@ public:
 
   /// Populate <event_type_seq> with the contents of this object.
   void populate (CosNotification::EventTypeSeq& event_type) const;
+
+  /// Populate <event_type_seq> with the contents of this object.
+  // Excludes the special event type. This is used to avoid sending * type updates to proxys.
+  void populate_no_special (CosNotification::EventTypeSeq& event_type) const;
+
+  /// Print the contents.
+  void dump (void);
 };
 
 #if defined (__ACE_INLINE__)

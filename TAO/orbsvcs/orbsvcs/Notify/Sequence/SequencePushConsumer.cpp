@@ -15,7 +15,6 @@ ACE_RCSID(Notify, TAO_NS_SequencePushConsumer, "$id$")
 #include "../ProxySupplier.h"
 #include "../Worker_Task.h"
 #include "../Consumer.h"
-#include "../Dispatch_Observer_T.h"
 #include "Method_Request_Dispatch_EventBatch.h"
 #include "EventBatch.h"
 
@@ -186,34 +185,19 @@ TAO_NS_SequencePushConsumer::push (const TAO_NS_Event_Collection event_collectio
 
       this->push_consumer_->push_structured_events (event_batch ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      if (this->event_dispatch_observer_ != 0)
-        {
-          this->event_dispatch_observer_->dispatch_success (this ACE_ENV_ARG_PARAMETER);
-
-          ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-          this->retry_count_ = 0;
-        }
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_exist)
+    {
+      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      if (TAO_debug_level > 0)
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_NS_SequenceConsumer::push: error sending event. informing dispatch observer\n ");
-        }
-      //ACE_RE_THROW;
-
-      if (this->event_dispatch_observer_ != 0)
-        {
-          {
-            ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-
-            ++this->retry_count_;
-            this->event_batch_.insert (event_collection);
-          }
-
-          this->event_dispatch_observer_->dispatch_failure (this, this->retry_count_ ACE_ENV_ARG_PARAMETER);
-        }
     }
   ACE_ENDTRY;
 }

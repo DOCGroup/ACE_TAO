@@ -19,14 +19,20 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::broadcast_collection (void)
   return this->broadcast_entry_.collection ();
 }
 
-template <class PROXY, class ACE_LOCK> ACE_INLINE void
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::attach_observer (TAO_NS_Event_Map_Observer* observer)
+template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
+TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::updates_collection (void)
 {
-  this->observer_ = observer;
+  return this->updates_entry_.collection ();
 }
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE int
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::event_type_count (void)
+TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::proxy_count (void)
 {
-  return this->event_type_count_;
+  return this->proxy_count_;
+}
+
+template <class PROXY, class ACE_LOCK> ACE_INLINE const TAO_NS_EventTypeSeq&
+TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::event_types (void)
+{
+  return this->event_types_;
 }

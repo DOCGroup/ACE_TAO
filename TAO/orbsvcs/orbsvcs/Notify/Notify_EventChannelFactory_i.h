@@ -14,7 +14,6 @@
 #define NOTIFY_EVENTCHANNELFACTORY_I_H
 #include "ace/pre.h"
 
-#include "Notify_ID_Pool_T.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "notify_export.h"
 

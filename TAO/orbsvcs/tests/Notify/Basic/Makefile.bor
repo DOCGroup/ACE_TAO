@@ -10,7 +10,9 @@ NAMES = \
         IdAssignment \
         LifeCycle \
         Simple \
-        Updates
+        Updates \
+	MultiTypes \
+	Filter
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 

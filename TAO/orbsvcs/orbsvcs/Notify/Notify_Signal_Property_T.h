@@ -56,12 +56,8 @@ public:
   virtual int wait_for_change (const ACE_Time_Value* abstime);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_Notify_Signal_Property (
-         const TAO_Notify_Signal_Property<ACE_LOCK, TYPE> &rhs))
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_Notify_Signal_Property& operator= (
-         const TAO_Notify_Signal_Property<ACE_LOCK, TYPE> &rhs))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Notify_Signal_Property (const TAO_Notify_Signal_Property<ACE_LOCK, TYPE> &rhs))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Notify_Signal_Property& operator= (const TAO_Notify_Signal_Property<ACE_LOCK, TYPE> &rhs))
 
 
   ACE_Atomic_Op <ACE_LOCK, TYPE> value_;

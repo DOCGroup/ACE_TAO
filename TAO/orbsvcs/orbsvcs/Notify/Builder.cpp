@@ -36,7 +36,6 @@ ACE_RCSID(RT_Notify, TAO_NS_Builder, "$Id$")
 #include "Structured/StructuredProxyPushSupplier.h"
 #include "Sequence/SequenceProxyPushConsumer.h"
 #include "Sequence/SequenceProxyPushSupplier.h"
-#include "Dispatch_Observer_T.h"
 #include "ETCL_FilterFactory.h"
 
 TAO_NS_Builder::TAO_NS_Builder (void)
@@ -165,11 +164,6 @@ TAO_NS_Builder::build_event_channel (TAO_NS_EventChannelFactory* ecf, const CosN
 
   ec->event_manager_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ec_ret._retn ());
-
-  /* Disable Retry Attempts */
-  ec->event_manager_->event_dispatch_observer ()->max_retry_attempts (0);
-  ec->event_manager_->updates_dispatch_observer ()->max_retry_attempts (0);
-  /* Disable Retry Attempts */
 
   ec->set_qos (initial_qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ec_ret._retn ());

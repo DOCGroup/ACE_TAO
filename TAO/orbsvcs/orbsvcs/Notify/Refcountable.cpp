@@ -25,7 +25,7 @@ TAO_NS_Refcountable::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
-  if (TAO_debug_level > 0 )
+  if (TAO_debug_level > 1 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  incr refcount = %d\n", this, refcount_+1 ));
 
 
@@ -38,7 +38,7 @@ TAO_NS_Refcountable::_decr_refcnt (void)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
-    if (TAO_debug_level > 0 )
+    if (TAO_debug_level > 1 )
       ACE_DEBUG ((LM_DEBUG,"object:%x  decr refcount = %d\n", this, refcount_-1 ));
 
     this->refcount_--;
