@@ -398,6 +398,9 @@ TAO_UIOP_Profile::create_tagged_profile (void)
       // Create the profile body
       this->create_profile_body (encap);
 
+      CORBA::ULong length =
+        ACE_static_cast(CORBA::ULong, encap.total_length ());
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       // Place the message block in to the Sequence of Octets that we
       // have
