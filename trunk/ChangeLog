@@ -1,3 +1,12 @@
+Fri Jan  7 18:23:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Corrected the check for ACE_HAS_CONFLICTING_XTI_MACROS.
+	  We're checking for a conflict of macros from other places. The
+	  requirement for this macro originally came from HP-UX, and shows
+	  as a "Future error" (aka a warning) from aC++. Simply having
+	  the macros show up when the "wrong" header is included first isn't
+	  a problem - it's the compiler complaining that they conflict.
+
 Fri Jan  7 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/tests.mpc:
