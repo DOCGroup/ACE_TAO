@@ -1,3 +1,11 @@
+Tue Mar 31 13:34:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): dereference
+          cb_factory with .in ().
+
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants): declare
+          iorFile outside the conditional statement.
+
 Tue Mar 31 11:05:23 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h: 
