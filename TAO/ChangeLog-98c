@@ -1,8 +1,9 @@
 Wed Oct 21 13:09:54 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/README: Updated the
-	  instructions for running MT_Cubit on CHORUS.
-
+	* performance-tests/Cubit/TAO/MT_Cubit/README: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/README:
+	  Updated the instructions for running Cubit tests on CHORUS.
+	
 Wed Oct 21 12:32:37 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp
