@@ -146,9 +146,11 @@ be_generator::create_module (UTL_Scope *s,
           // supposed to create.
           if (d->local_name ()->compare (n->last_component ()))
             {
-              // If it's not from an included file, then return
-              // the one the iterator found.
-              if (!d->imported ())
+              // If the node in our scope and the one being created
+              // are either both #included or both not #included, just
+              // return the node from the scope and continue adding
+              // members to it as they're parsed.
+              if (d->imported () == idl_global->imported ())
                 {
                   delete iter;
                   delete retval;
@@ -156,6 +158,11 @@ be_generator::create_module (UTL_Scope *s,
                 }
               else
                 {
+                  // The node in our scope is #included (note that
+                  // because of the above case there will be only
+                  // one), but the one being created is not. We add
+                  // the #included module's members to the new node
+                  // and return it.
                   UTL_ScopeActiveIterator *i = 
                     new UTL_ScopeActiveIterator (DeclAsScope (d),
                                                  UTL_Scope::IK_decls);
