@@ -78,6 +78,9 @@ TAO_SHMIOP_Transport::close_connection (void)
 {
   // First  close the handler
   this->connection_handler_->handle_close ();
+
+  // Purge the entry too
+  this->connection_handler_->purge_entry ();
 }
 
 int

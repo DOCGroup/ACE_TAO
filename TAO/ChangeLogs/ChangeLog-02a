@@ -1,3 +1,24 @@
+Tue Feb 20 21:01:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.cpp: Added a new method mark_invalid (). 
+	
+	* tao/IIOP_Connection_Handler.cpp: Checked for any buffered
+	  messages in the socket before closing the socket during
+	  handle_close (). This fix should fix the errors in
+	  Timed_Buffered_Oneways test. 
+	
+	* tao/IIOP_Transport.cpp: Purged the handle during
+	  close_connection ().
+
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Replicated the
+          changes done for IIOP.
+
 Tue Feb 20 20:34:06 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Sequence_T.i:
