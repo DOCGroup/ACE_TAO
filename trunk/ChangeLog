@@ -1,3 +1,10 @@
+Wed Nov 24 09:05:45 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          Suppress warning 1039 about binary incompatibility with 3.33 to
+          3.50.
+
 Wed Nov 24 08:18:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/gperf/tests/Makefile.am:
