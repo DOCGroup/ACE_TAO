@@ -1,3 +1,8 @@
+Tue Sep  8 21:31:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-irix6.x-sgic++-nothreads.h: 
+	  Added ACE_HAS_DIRENT and support for the envinfo tool.
+
 Tue Sep 08 18:54:28 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h: Removed definitions of PTHREAD_DETACHED, PTHREAD_FLOAT,
