@@ -1,3 +1,12 @@
+Thu Jul 27 18:17:36 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Future.h: Added some comments to ACE_Future_Rep<>::set and
+          ACE_Future<>::set to say they only have an effect on the first
+          call for that object. Thanks to Andres Kruse <Andres.Kruse@cern.ch>,
+          Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
+          John Tucker <jtucker@infoglide.com> for their insight on the
+          original intentions.
+
 Thu Jul 27 08:32:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* ace/OS.i
