@@ -1,3 +1,18 @@
+Sat May 08 03:16:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl_static.dsp:
+	* examples/Simple/time/client_static.dsp:
+	* examples/Simple/time/server_static.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+	* performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+	* tao/TAO_Static.dsp: We should have used ACE_NO_INLINE instead of
+	  defining __ACE_INLINE__=0 to supress the use of inlining.
+	  Thanks to Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com> for
+	  reporting this.
+
 Sat May 08 02:36:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Identity/Identity.cpp (test_poas): Added testing
