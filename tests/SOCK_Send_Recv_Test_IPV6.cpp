@@ -381,7 +381,7 @@ spawn (void)
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("SOCK_Send_Recv_Test_IPv6"));
+  ACE_START_TEST (ACE_TEXT ("SOCK_Send_Recv_Test_IPV6"));
 
 #if defined (ACE_HAS_IPV6)
   spawn ();

@@ -59,7 +59,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ACE_TEXT ("INET_Addr_Test_IPv6"));
+  ACE_START_TEST (ACE_TEXT ("INET_Addr_Test_IPV6"));
 
   int status = 0;     // Innocent until proven guilty
 
