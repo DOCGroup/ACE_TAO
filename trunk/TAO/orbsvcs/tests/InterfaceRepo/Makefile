@@ -8,7 +8,8 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = IFR_Test
+DIRS  = IFR_Test \
+	Persistence_Test
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
