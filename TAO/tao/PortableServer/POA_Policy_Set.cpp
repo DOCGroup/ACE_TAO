@@ -16,7 +16,7 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 
-TAO_POA_Policy_Set::TAO_POA_Policy_Set ()
+TAO_POA_Policy_Set::TAO_POA_Policy_Set (void)
   :
     impl_ (TAO_POLICY_POA_SCOPE)
 {

@@ -1917,9 +1917,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POAList *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POAList *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POAList *&> (_tao_elem
     );
 }
 
@@ -2004,9 +2002,7 @@ CORBA::Boolean operator>>= (
     PortableServer::ForwardRequest *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::ForwardRequest *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::ForwardRequest *&> (_tao_elem
     );
 }
 
@@ -2093,9 +2089,7 @@ CORBA::Boolean operator>>= (
     PortableServer::NotAGroupObject *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::NotAGroupObject *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::NotAGroupObject *&> (_tao_elem
     );
 }
 
@@ -2155,9 +2149,7 @@ CORBA::Boolean operator>>= (
     PortableServer::IDs *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::IDs *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::IDs *&> (_tao_elem
     );
 }
 
@@ -2995,9 +2987,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POAManager::AdapterInactive *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POAManager::AdapterInactive *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POAManager::AdapterInactive *&> (_tao_elem
     );
 }
 
@@ -3476,9 +3466,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::AdapterAlreadyExists *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::AdapterAlreadyExists *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::AdapterAlreadyExists *&> (_tao_elem
     );
 }
 
@@ -3550,9 +3538,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::AdapterNonExistent *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::AdapterNonExistent *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::AdapterNonExistent *&> (_tao_elem
     );
 }
 
@@ -3626,9 +3612,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::InvalidPolicy *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::InvalidPolicy *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::InvalidPolicy *&> (_tao_elem
     );
 }
 
@@ -3702,9 +3686,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::NoServant *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::NoServant *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::NoServant *&> (_tao_elem
     );
 }
 
@@ -3778,9 +3760,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::ObjectAlreadyActive *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::ObjectAlreadyActive *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::ObjectAlreadyActive *&> (_tao_elem
     );
 }
 
@@ -3854,9 +3834,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::ObjectNotActive *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::ObjectNotActive *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::ObjectNotActive *&> (_tao_elem
     );
 }
 
@@ -3930,9 +3908,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::ServantAlreadyActive *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::ServantAlreadyActive *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::ServantAlreadyActive *&> (_tao_elem
     );
 }
 
@@ -4006,9 +3982,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::ServantNotActive *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::ServantNotActive *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::ServantNotActive *&> (_tao_elem
     );
 }
 
@@ -4082,9 +4056,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::WrongAdapter *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::WrongAdapter *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::WrongAdapter *&> (_tao_elem
     );
 }
 
@@ -4158,9 +4130,7 @@ CORBA::Boolean operator>>= (
     PortableServer::POA::WrongPolicy *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::POA::WrongPolicy *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::POA::WrongPolicy *&> (_tao_elem
     );
 }
 
@@ -4303,9 +4273,7 @@ CORBA::Boolean operator>>= (
     PortableServer::Current::NoContext *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const PortableServer::Current::NoContext *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const PortableServer::Current::NoContext *&> (_tao_elem
     );
 }
 

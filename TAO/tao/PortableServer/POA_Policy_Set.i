@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE CORBA::ULong

@@ -7,7 +7,6 @@ ACE_RCSID (PortableServer,
            Default_Acceptor_Filter,
            "$Id$")
 
-
 TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)
 {
 }
