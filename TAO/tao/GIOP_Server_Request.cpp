@@ -1,8 +1,8 @@
 // $Id$
 
-// Implementation of the Dynamic Server Skeleton Interface  (for IIOP)
+// Implementation of the Dynamic Server Skeleton Interface  (for GIOP)
 
-#include "tao/IIOP_Server_Request.h"
+#include "tao/GIOP_Server_Request.h"
 
 #include "tao/CDR.h"
 #include "tao/POAC.h"
@@ -14,17 +14,17 @@
 #include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/IIOP_Server_Request.i"
+# include "tao/GIOP_Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, IIOP_Server_Request, "$Id$")
+ACE_RCSID(tao, GIOP_Server_Request, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Server_Request_Timeprobe_Description[] =
   {
-    "Server_Request::Server_Request - start",
-    "Server_Request::Server_Request - end",
+    "GIOP_Server_Request::GIOP_Server_Request - start",
+    "GIOP_Server_Request::GIOP_Server_Request - end",
   };
 
 enum
@@ -40,7 +40,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
+GIOP_ServerRequest::GIOP_ServerRequest (TAO_InputCDR &input,
                                         TAO_OutputCDR &output,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Environment &env)
@@ -69,7 +69,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
 }
 
 void
-IIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
+GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 {
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
@@ -127,7 +127,7 @@ IIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-IIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
+GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_InputCDR& input = *this->incoming_;
 
@@ -170,7 +170,7 @@ IIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
 
 
 void
-IIOP_ServerRequest::parse_header (CORBA::Environment &env)
+GIOP_ServerRequest::parse_header (CORBA::Environment &env)
 {
   if (this->orb_core_->orb_params ()->use_lite_protocol ())
     this->parse_header_lite (env);
@@ -180,7 +180,7 @@ IIOP_ServerRequest::parse_header (CORBA::Environment &env)
 
 // This constructor is used, by the locate request code
 
-IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
+GIOP_ServerRequest::GIOP_ServerRequest (CORBA::ULong &request_id,
                                         CORBA::Boolean &response_expected,
                                         TAO_ObjectKey &object_key,
                                         const ACE_CString &operation,
@@ -209,7 +209,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
 {
 }
 
-IIOP_ServerRequest::~IIOP_ServerRequest (void)
+GIOP_ServerRequest::~GIOP_ServerRequest (void)
 {
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -224,13 +224,13 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
 }
 
 CORBA::ORB_ptr
-IIOP_ServerRequest::orb (void)
+GIOP_ServerRequest::orb (void)
 {
   return this->orb_core_->orb ();
 }
 
 TAO_POA *
-IIOP_ServerRequest::oa (void)
+GIOP_ServerRequest::oa (void)
 {
   return this->orb_core_->root_poa ();
 }
@@ -241,7 +241,7 @@ IIOP_ServerRequest::oa (void)
 // inout/out/return values later on.
 
 void
-IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
+GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
                                CORBA::Environment &env)
 {
   env.clear ();
@@ -280,7 +280,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
             param_name = "(no name given)";
 
           ACE_ERROR ((LM_ERROR,
-                      "IIOP_ServerRequest::arguments - problem while"
+                      "GIOP_ServerRequest::arguments - problem while"
                       " decoding parameter %d <%s>\n", i, param_name));
           return;
         }
@@ -315,7 +315,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
   if (incoming_->length () != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "IIOP_ServerRequest::arguments - "
+                  "GIOP_ServerRequest::arguments - "
                   "%d bytes left in buffer\n", incoming_->length ()));
       env.exception (new CORBA::BAD_PARAM ());
     }
@@ -326,7 +326,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 // only after the parameter list has been provided (maybe empty).
 
 void
-IIOP_ServerRequest::set_result (const CORBA::Any &value,
+GIOP_ServerRequest::set_result (const CORBA::Any &value,
                                 CORBA::Environment &env)
 {
   env.clear ();
@@ -344,7 +344,7 @@ IIOP_ServerRequest::set_result (const CORBA::Any &value,
 // Store the exception value.
 
 void
-IIOP_ServerRequest::set_exception (const CORBA::Any &value,
+GIOP_ServerRequest::set_exception (const CORBA::Any &value,
                                    CORBA::Environment &env)
 {
   if (this->retval_ || this->exception_)
@@ -381,7 +381,7 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
 // parameters
 
 void
-IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
+GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 {
   // NOTE: if "env" is set, it takes precedence over exceptions
   // reported using the mechanism of the ServerRequest.  Only system
@@ -444,7 +444,7 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 
 // Extension
 void
-IIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
+GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
                                // ORB related exception reporting
                                const TAO_Call_Data_Skel *info,
                                // call description
@@ -470,7 +470,7 @@ IIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 
       if (orb_env.exception ())
         {
-          orb_env.print_exception ("ServerRequest::demarshal - parameter decode failed");
+          orb_env.print_exception ("GIOP_ServerRequest::demarshal - parameter decode failed");
           return;
         }
     }
@@ -480,7 +480,7 @@ IIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 // Extension
 
 void
-IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
+GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
                              // ORB related exception reporting
                              //                             CORBA::Environment &skel_env,
                              // skeleton related exception reporting
@@ -554,7 +554,7 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
 
       if (orb_env.exception ())
         {
-          orb_env.print_exception ("ServerRequest::marshal - parameter encode failed");
+          orb_env.print_exception ("GIOP_ServerRequest::marshal - parameter encode failed");
           return;
         }
     }
@@ -563,7 +563,7 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
 }
 
 void
-IIOP_ServerRequest::init_reply (CORBA::Environment &env)
+GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
   TAO_GIOP::start_message (TAO_GIOP::Reply,
@@ -586,7 +586,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
       if ((*this->outgoing_ << object_ptr) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "ServerRequest::marshal - "
+                      "GIOP_ServerRequest::marshal - "
                       "encoding forwarded objref failed\n"));
           return;
         }
@@ -614,14 +614,14 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
 }
 
 CORBA::Object_ptr
-IIOP_ServerRequest::forward_location (void)
+GIOP_ServerRequest::forward_location (void)
 // get the forward_location
 {
   return CORBA::Object::_duplicate (this->forward_location_.in ());
 }
 
 CORBA::ULong
-IIOP_ServerRequest::exception_type (void)
+GIOP_ServerRequest::exception_type (void)
 // get the exception type
 {
   return this->exception_type_;
