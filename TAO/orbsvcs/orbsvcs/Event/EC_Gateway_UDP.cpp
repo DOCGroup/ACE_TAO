@@ -36,23 +36,28 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 
   this->dgram_ = dgram;
 
-  this->lcl_info_ =
-    lcl_sched->create (lcl_name, _env);
-  if (_env.exception () != 0) return;
+  this->lcl_info_ = lcl_sched->lookup (lcl_name, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  if (this->lcl_info_ == -1)
+    {
+      this->lcl_info_ =
+        lcl_sched->create (lcl_name, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  ACE_Time_Value tv (0, 500);
-  TimeBase::TimeT time;
-  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  lcl_sched->set (this->lcl_info_,
-                  RtecScheduler::VERY_HIGH_CRITICALITY,
-                  time, time, time,
-                  25000 * 10,
-                  RtecScheduler::VERY_LOW_IMPORTANCE,
-                  time,
-                  0,
-                  RtecScheduler::OPERATION,
-                  _env);
-  if (_env.exception () != 0) return;
+      ACE_Time_Value tv (0, 500);
+      TimeBase::TimeT time;
+      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+      lcl_sched->set (this->lcl_info_,
+                      RtecScheduler::VERY_HIGH_CRITICALITY,
+                      time, time, time,
+                      25000 * 10,
+                      RtecScheduler::VERY_LOW_IMPORTANCE,
+                      time,
+                      0,
+                      RtecScheduler::OPERATION,
+                      _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
 }
 
 void
