@@ -1,3 +1,29 @@
+Thu Nov 06 10:07:26 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Reactor.h: Added #include "ace/Handle_Set.h" - AIX needs the
+	  class definition when generating templates in programs.
+
+	* tests/Map_Manager_Test.cpp: Don't even try if the compiler doesn't
+	  have template specialization working correctly.
+
+	* tests/Priority_Reactor_Test.h: Added #include "ace/SOCK_Stream.h"
+	  so AIX could generate template code correctly.
+
+	* tests/Reactor_Performance_Test.cpp: Moved class definitions out to
+	  Reactor_Performance_Test.h (new file) to allow AIX to generate
+	  templates.
+
+	* tests/SOCK_Connector_Test.cpp: Added a couple more checks to make
+	  sure the local host is not the test target, and changed from using
+	  port 4242 to 42000 (there is actually a program on AIX which listens
+	  at port 4242).
+
+	* tests/Thread_Manager_Test.cpp: Moved a class definition out to
+	  Thread_Manager_Test.h (new file) to allow AIX to use it in template
+	  generation.
+
+	* tests/Timer_Queue_Test.cpp: Limit the number of iterations to 2000.
+
 Thu Nov 06 00:08:01 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.38, released Thu Nov 06 00:08:01 1997.
