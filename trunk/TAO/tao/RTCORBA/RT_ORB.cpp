@@ -3,6 +3,8 @@
 #include "RT_ORB.h"
 #include "RT_Policy_i.h"
 #include "RT_Mutex.h"
+#include "Priority_Mapping_Manager.h"
+#include "tao/ORB_Core.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_ORB.i"
@@ -10,11 +12,71 @@
 
 ACE_RCSID(TAO, RT_ORB, "$Id$")
 
+class TAO_RT_CORBA_Priority_Normalizer : public TAO_CORBA_Priority_Normalizer
+{
+public:
+  /// Constructor.
+  TAO_RT_CORBA_Priority_Normalizer (TAO_ORB_Core *orb_core);
+
+  /// Normalize CORBA Priority
+  CORBA::Boolean normalize (CORBA::Short corba_priority,
+                            CORBA::Short &normalized_corba_priority);
+
+private:
+  // Reference to the priority mapping.
+  RTCORBA::PriorityMapping *priority_mapping_;
+};
+
+TAO_RT_CORBA_Priority_Normalizer::TAO_RT_CORBA_Priority_Normalizer (TAO_ORB_Core *orb_core)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  // Save a reference to the priority mapping manager.
+  CORBA::Object_var obj =
+    orb_core->object_ref_table ().resolve_initial_references (
+      TAO_OBJID_PRIORITYMAPPINGMANAGER,
+      ACE_TRY_ENV);
+  ACE_CHECK;
+
+  TAO_Priority_Mapping_Manager_var mapping_manager =
+    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->priority_mapping_ =
+    mapping_manager->mapping ();
+}
+
+CORBA::Boolean
+TAO_RT_CORBA_Priority_Normalizer::normalize (CORBA::Short corba_priority,
+                                             CORBA::Short &normalized_corba_priority)
+{
+  CORBA::Short native_priority;
+
+  CORBA::Boolean result =
+    this->priority_mapping_->to_native (corba_priority,
+                                        native_priority);
+  if (result == 0)
+    return 0;
+
+  result =
+    this->priority_mapping_->to_CORBA (native_priority,
+                                       normalized_corba_priority);
+  if (result == 0)
+    return 0;
+
+  return 1;
+}
+
 TAO_RT_ORB::TAO_RT_ORB (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     mutex_mgr_ (),
     tp_manager_ (orb)
 {
+  TAO_RT_CORBA_Priority_Normalizer *corba_priority_normalizer = 0;
+  ACE_NEW (corba_priority_normalizer,
+           TAO_RT_CORBA_Priority_Normalizer (orb->orb_core ()));
+  orb->orb_core ()->corba_priority_normalizer (corba_priority_normalizer);
 }
 
 TAO_RT_ORB::~TAO_RT_ORB (void)
@@ -404,4 +466,3 @@ template class ACE_Hash_Map_Entry<ACE_CString, RTCORBA::Mutex_var>;
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

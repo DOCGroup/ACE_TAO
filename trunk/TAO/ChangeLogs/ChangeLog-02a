@@ -1,3 +1,42 @@
+Fri Jun 29 03:14:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Strategies/Reactor_Per_Priority.cpp (reactor): Changed to
+	  use the new CORBA_Priority_Normalizer class.
+	  
+	* tao/RTCORBA/RT_ORB.cpp (class TAO_RT_CORBA_Priority_Normalizer):
+	  Added new class.  The class does the correct corba priority
+	  normalization when RT CORBA is used.
+
+	* tao/ORB_Core (TAO_CORBA_Priority_Normalizer): Added new class
+	  TAO_CORBA_Priority_Normalizer.  This class is an abstract class
+	  used to prevent dependencies between the Strategies and the
+	  RTCORBA library.
+
+Thu Jun 28 23:49:13 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/RTCORBA/Linear_Priority_Mapping.cpp (TAO_Linear_Priority_Mapping): 
+	* tao/RTCORBA/Direct_Priority_Mapping.cpp (TAO_Direct_Priority_Mapping): 
+
+	  We have special behavior for SUNs.  This is because the results
+	  from ACE_Sched_Params::priority_min() and
+	  ACE_Sched_Params::priority_max() are not correct.
+
+	* tao/Strategies/Reactor_Per_Priority.cpp (reactor): We need to
+	  "normalize" the corba priority of the endpoint.  Here is the
+	  explanation for going from CORBA priority to Native
+	  and back again:
+
+	  Suppose the user specifies 20,000 as the (CORBA) priority for a
+	  endpoint.  20,000 will be mapped to the native priority (say 10)
+	  when the thread is created.  When the thread goes to access it's
+	  reactor, the native priority will be converted to the CORBA
+	  priority (say 19,000) which is used to look up the reactor.
+	  There is a loss of precision in this conversion.
+
+	  We use the same two step normalization here.  Otherwise, we'll
+	  get a reactor which is different than the one used by the
+	  endpoint thread(s).
+
 Thu Jun 28 18:56:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Container_i.cpp:

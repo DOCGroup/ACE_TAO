@@ -175,7 +175,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     transport_cache_ (0),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
-    flushing_strategy_ (0)
+    flushing_strategy_ (0),
+    corba_priority_normalizer_ (0)
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
@@ -208,6 +209,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
 
+  ACE_NEW (this->corba_priority_normalizer_,
+           TAO_CORBA_Priority_Normalizer);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -238,6 +241,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->transport_sync_strategy_;
 
   delete this->poa_extension_initializer_;
+
+  delete this->corba_priority_normalizer_;
 }
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -1239,6 +1244,31 @@ TAO_ORB_Core::fini (void)
   delete this;
 
   return 0;
+}
+
+TAO_CORBA_Priority_Normalizer::~TAO_CORBA_Priority_Normalizer (void)
+{
+}
+
+CORBA::Boolean
+TAO_CORBA_Priority_Normalizer::normalize (CORBA::Short corba_priority,
+                                          CORBA::Short &normalized_corba_priority)
+{
+  normalized_corba_priority = corba_priority;
+  return 1;
+}
+
+TAO_CORBA_Priority_Normalizer *
+TAO_ORB_Core::corba_priority_normalizer (void) const
+{
+  return this->corba_priority_normalizer_;
+}
+
+void
+TAO_ORB_Core::corba_priority_normalizer (TAO_CORBA_Priority_Normalizer *new_normalizer)
+{
+  delete this->corba_priority_normalizer_;
+  this->corba_priority_normalizer_ = new_normalizer;
 }
 
 void

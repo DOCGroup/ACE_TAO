@@ -78,37 +78,16 @@ TAO_Reactor_Per_Priority::reactor (TAO_Acceptor *acceptor)
   // get a reactor which is different than the one used by the
   // endpoint thread(s).
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
+  CORBA::Short normalized_corba_priority = 0;
   CORBA::Short user_specified_corba_priority =
     acceptor->priority ();
 
-  CORBA::Object_var obj =
-    this->orb_core ()->priority_mapping_manager ();
+  TAO_CORBA_Priority_Normalizer *corba_priority_normalizer =
+    this->orb_core ()->corba_priority_normalizer ();
 
-  TAO_Priority_Mapping_Manager_var mapping_manager =
-    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
-                                           ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  TAO_Priority_Mapping *priority_mapping =
-    mapping_manager.in ()->mapping ();
-
-  CORBA::Short native_priority;
-
-  int result =
-    priority_mapping->to_native (user_specified_corba_priority,
-                                 native_priority);
-
-  if (result == 0)
-    return 0;
-
-  CORBA::Short normalized_corba_priority;
-
-  result =
-    priority_mapping->to_CORBA (native_priority,
-                                normalized_corba_priority);
-
+  CORBA::Boolean result =
+    corba_priority_normalizer->normalize (user_specified_corba_priority,
+                                          normalized_corba_priority);
   if (result == 0)
     return 0;
 
