@@ -1,5 +1,8 @@
 Sun Sep 27 00:04:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src/Key_List: MAke sure that we don't generate the lookup table
+ 	  twice if we're forced to change to the switch format.
+
 	* src/Key_List: Replaced the use of "int" with "unsigned int" for
  	  parameters and hash values.
 

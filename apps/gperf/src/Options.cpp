@@ -57,7 +57,7 @@ static const char *const DEFAULT_DELIMITERS = ",\n";
 
 int Options::option_word_;
 int Options::total_switches_;
-int Options::total_keysig_size_;
+u_int Options::total_keysig_size_;
 int Options::size_;
 int Options::key_pos_;
 int Options::jump_;
