@@ -1,5 +1,5 @@
 Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-
+	* ace/ace_dll.dsp:	
 	* examples/Reactor/Proactor/test_proactor.dsp: 
 	* examples/Reactor/Proactor/test_proactor.cpp: 
 	Updated the files.
@@ -7,16 +7,16 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* ace/WIN32_Asynch_IO.h: 
 	* ace/WIN32_Asynch_IO.h:
 	Added the files
-
 	* ace/ace_dll.dsp:
 	* ace/ace_lib.dsp:
 	Updated these files
-
 	* examples/Reactor/Proactor/Makefile: 	
 	New make file which also compiles the test_aiosig_ace.cpp
 	program. 		
 	* ace/POSIX_Asynch_IO.i:
- 
+	Added the file.
+ 	
+	
 	rTagged the ACE_wrappers repository with <before_proactor>
 	After the following changes rtagged the repository with
 	<after_proactor> 
@@ -36,7 +36,6 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 		WIN32_Asynch_IO.{h,cpp}
 		Asynch_IO_Impl.{h,cpp,i}
 		Proactor_Impl.h			
-								
 	Applied Bridge pattern to the POSIX implementation of the Proactor
 	code. ACE_POSIX_AIOCB_Proactor works fine on Solaris
 	2.6. ACE_POSIX_SIG_Proactor works on LynxOS. Take a look at the tests
@@ -44,7 +43,6 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	
 	* tests/
 		Aio_Platform_Test.cpp
-						
 	*examples/Reactor/Proactor/:
 		test_proactor.cpp
 		test_aiocb.cpp
