@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -78,6 +77,7 @@ public:
   // = Initialization and termination methods.
   ACE_Timer_Queue (void);
   // Default constructor.
+
   virtual ~ACE_Timer_Queue (void);
 
   int is_empty (void) const;
@@ -85,6 +85,10 @@ public:
 
   const ACE_Time_Value &earliest_time (void) const;
   // Returns the time of the earlier node in the Timer_Queue.
+
+  // = Set/get the timer skew for the Timer_Queue.
+  void timer_skew (const ACE_Time_Value &skew);
+  const ACE_Time_Value &timer_skew (void) const;
 
   virtual int schedule (ACE_Event_Handler *event_handler, 
 		        const void *arg, 
@@ -113,6 +117,10 @@ public:
   // non-NULL then it will be set to point to the ``magic cookie''
   // argument passed in when the <Event_Handler> was registered.  This
   // makes it possible to free up the memory and avoid memory leaks.
+
+  virtual int expire (void);
+  // Expires all pending timers whose values are <=
+  // ACE_OS::gettimeofday.  Also accounts for timer_skew_.
 
   virtual int expire (const ACE_Time_Value &current_time);
   // Run the <handle_timeout> method for all Timers whose values are
@@ -143,12 +151,17 @@ private:
   // This id can be used to cancel a timer via the <cancel (int)>
   // method.
 
+  ACE_Time_Value timer_skew_;
+  // Adjusts for timer skew in various clocks.
+
 #if defined (ACE_MT_SAFE)
   ACE_Recursive_Thread_Mutex lock_; 
   // Synchronization variable for the MT_SAFE ACE_Reactor 
 #endif /* ACE_MT_SAFE */
 };
 
+#if defined (__ACE_INLINE__)
 #include "ace/Timer_Queue.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_TIMER_QUEUE_H */
