@@ -307,7 +307,7 @@ typedef long      id_t;
 # if !defined (ACE_DEFAULT_FILE_PERMS)
 #   if defined (ACE_WIN32)
 #     if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)
-#       define ACE_DEFAULT_OPEN_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE | \
+#       define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE | \
                                        FILE_SHARE_DELETE)
 #     else
 #       define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
