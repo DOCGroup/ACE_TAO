@@ -1,3 +1,8 @@
+Thu Sep  5 09:54:04 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/Options.cpp (Options): 
+	  Added a missing brace. Must have got deleted by mistake.
+
 Wed Sep  4 19:44:55 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
  	* tao/Messaging/MessagingC.h: 
