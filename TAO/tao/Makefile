@@ -93,9 +93,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 ifdef CHORUS
-  CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
+  override fakesvcconf = 1
 endif
 ifdef VXWORKS
+  override fakesvcconf = 1
+endif
+  
+ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 endif
 
