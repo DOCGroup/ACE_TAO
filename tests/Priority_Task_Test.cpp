@@ -71,21 +71,32 @@ Priority_Task::open (void *arg)
   // Become an active object.
   if (this->activate (flags, 1, 0, this->priority_) == -1)
     {
-      // On Linux, only the superuser can set the policy to other than
-      // ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER, there is only 1
-      // thread priority value, 0.  So, let the superuser run an
-      // interesting test, but for other users use priority 0.
+      // On Linux, for example, only the superuser can set the policy
+      // to other than ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER,
+      // there is only one thread priority value, for example, 0.  So,
+      // let the superuser run an interesting test, but for other
+      // users use the minimum ACE_SCHED_OTHER thread priority.
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) task activation at priority %d with flags "
-                            "%ld failed; retry at priority 0 with with flags "
-                            "%ld\n",
-                  this->priority_, flags, THR_NEW_LWP));
+      long fallback_priority =
+        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
+                                        ACE_SCOPE_THREAD);
+
+      ACE_DEBUG ((LM_DEBUG, "(%t) task activation at priority %d with "
+                            "flags 0x%X failed; retry at priority %d with "
+                            "flags 0x%X (errno is %d%p)\n",
+                  this->priority_,
+                  flags,
+                  fallback_priority,
+                  THR_NEW_LWP, errno, ""));
 
       flags = THR_NEW_LWP;
-      this->priority_ = 0;
+      this->priority_ = fallback_priority;
 
       if (this->activate (flags, 1, 1, this->priority_) == -1)
-        ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority 0 failed, exiting!\n%a", -1));
+        ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority %d failed, "
+                              "exiting!\n%a",
+                    this->priority_,
+                    -1));
     }
 
   return 0;
