@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Log_Msg.h"
 #include "pragmaS.h"
 
@@ -58,7 +54,7 @@ main (int, char *[])
 
       obj = h._this (ACE_TRY_ENV);
 
-      ACE_CHECK_RETURN (1);
+      ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/hello:1.0"))
@@ -73,7 +69,7 @@ main (int, char *[])
 
       obj = g._this (ACE_TRY_ENV);
 
-      ACE_CHECK_RETURN (1);
+      ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
@@ -88,7 +84,7 @@ main (int, char *[])
 
       obj = s._this (ACE_TRY_ENV);
 
-      ACE_CHECK_RETURN (1);
+      ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
@@ -103,7 +99,7 @@ main (int, char *[])
 
       obj = c._this (ACE_TRY_ENV);
 
-      ACE_CHECK_RETURN (1);
+      ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
@@ -118,7 +114,7 @@ main (int, char *[])
 
       obj = a._this (ACE_TRY_ENV);
 
-      ACE_CHECK_RETURN (1);
+      ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))
