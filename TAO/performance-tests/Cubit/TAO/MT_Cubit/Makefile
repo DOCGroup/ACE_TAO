@@ -290,8 +290,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubitC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubitC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
@@ -593,7 +593,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubitC.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubitC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -737,6 +738,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
+
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1026,10 +1029,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i Globals.h Timer.h \
- Util_Thread.h Cubit_Task.h
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ Globals.h Timer.h Util_Thread.h Cubit_Task.h
 
-.obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp $(TAO_ROOT)/tao/corba.h \
+.obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1213,8 +1217,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubit_i.h cubitS.h \
- cubitC.h cubitC.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubit_i.h cubitS.h cubitC.h cubitC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1317,7 +1321,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i Globals.h Timer.h
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ Globals.h Timer.h
 
 .obj/Task_Client.o .obj/Task_Client.so .shobj/Task_Client.o .shobj/Task_Client.so: Task_Client.cpp Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1499,8 +1504,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ cubitC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -1589,8 +1594,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubitC.i cubit_i.h \
- cubitS.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubitC.i cubit_i.h cubitS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1614,6 +1619,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Stats.inl \
  $(ACE_ROOT)/ace/Stats.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
+
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1639,8 +1646,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Sched_Params.i server.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ server.h $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1903,8 +1910,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i Globals.h Timer.h \
- Util_Thread.h Cubit_Task.h client.h
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ Globals.h Timer.h Util_Thread.h Cubit_Task.h client.h
 
 .obj/Util_Thread.o .obj/Util_Thread.so .shobj/Util_Thread.o .shobj/Util_Thread.so: Util_Thread.cpp Util_Thread.h Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2086,8 +2093,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ cubitC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -2176,8 +2183,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubitC.i cubit_i.h \
- cubitS.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubitC.i cubit_i.h cubitS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -2382,7 +2389,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubitC.i
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubitC.i
 
 .obj/Cubit_Task.o .obj/Cubit_Task.so .shobj/Cubit_Task.o .shobj/Cubit_Task.so: Cubit_Task.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
@@ -2410,8 +2418,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Sched_Params.i Globals.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ Globals.h $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -2451,8 +2459,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(TAO_ROOT)/tao/orbconf.h Cubit_Task.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ Cubit_Task.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2615,7 +2623,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i cubit_i.h cubitS.h cubitC.h \
+ $(TAO_ROOT)/tao/ORB.i cubit_i.h \
+ cubitS.h cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2658,7 +2667,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubitC.i \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubitC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
@@ -2671,7 +2681,8 @@ realclean: clean
  cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
-.obj/Globals.o .obj/Globals.so .shobj/Globals.o .shobj/Globals.so: Globals.cpp Globals.h $(ACE_ROOT)/ace/OS.h \
+.obj/Globals.o .obj/Globals.so .shobj/Globals.o .shobj/Globals.so: Globals.cpp Globals.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2739,7 +2750,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/orbconf.h
 
-.obj/Timer.o .obj/Timer.so .shobj/Timer.o .shobj/Timer.so: Timer.cpp Timer.h $(ACE_ROOT)/ace/OS.h \
+.obj/Timer.o .obj/Timer.so .shobj/Timer.o .shobj/Timer.so: Timer.cpp Timer.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2776,8 +2788,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/High_Res_Timer.i Task_Client.h \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
+ Task_Client.h $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -2918,8 +2930,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ cubitC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -3008,8 +3020,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i cubitC.i cubit_i.h \
- cubitS.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i \
+ cubitC.i cubit_i.h cubitS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
