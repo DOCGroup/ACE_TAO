@@ -1,3 +1,13 @@
+Fri Oct  1 10:23:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp:
+	  Fixed bit operators for constant literals. The original
+	  Sun code had just coerced everything to signed long,
+	  which breaks if a ulong value goes above LONG_MAX. We'll
+	  eventually need more work here to handle 64-bit ints, but
+	  it can't be done until all the arithmetic, logical and
+	  compare opertors are implemented.
+
 Fri Oct 01 07:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ch.cpp,
