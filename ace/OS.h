@@ -2715,6 +2715,7 @@ public:
   // = A set of wrappers for memory copying operations.
   static int memcmp (const void *s, const void *t, size_t len);
   static void *memcpy (void *s, const void *t, size_t len);
+  static void *memmove (void *s, const void *t, size_t len);
   static void *memset (void *s, int c, size_t len);
 
   // = A set of wrappers for System V message queues.
