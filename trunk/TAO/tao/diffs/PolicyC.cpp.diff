@@ -1,5 +1,5 @@
---- PolicyC.cpp	Wed Jul 05 08:47:48 2000
-+++ PolicyC.cpp.mod	Wed Jul 05 08:42:42 2000
+--- PolicyC.cpp	Fri Jul 14 06:06:05 2000
++++ PolicyC.cpp.mod	Fri Jul 14 06:02:43 2000
 @@ -7,52 +7,40 @@
  // Information about TAO is available at:
  //                 http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -103,7 +103,21 @@
        ACE_CHECK_RETURN (CORBA_Policy::_nil ());
        if (is_a == 0)
          return CORBA_Policy::_nil ();
-@@ -786,7 +774,7 @@
+@@ -409,12 +397,8 @@
+           default_proxy = _TAO_collocation_CORBA_Policy_Stub_Factory_function_pointer (obj);
+         }
+       if (CORBA::is_nil (default_proxy))
+-        ACE_NEW_RETURN (default_proxy, ::CORBA_Policy (stub), CORBA_Policy::_nil ());
+-      #if (TAO_HAS_SMART_PROXIES == 1)
+-        return TAO_CORBA_Policy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
+-      #else 
++        ACE_NEW_RETURN (default_proxy, CORBA_Policy (stub), CORBA_Policy::_nil ());
+         return default_proxy;
+-      #endif /*TAO_HAS_SMART_PROXIES == 1*/
+     }
+   else 
+     return
+@@ -786,7 +770,7 @@
  CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
  {
    if (
@@ -112,7 +126,7 @@
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
    return 1; // success using local knowledge
    else
-@@ -811,7 +799,19 @@
+@@ -811,7 +795,19 @@
  
  const char* CORBA_Policy::_interface_repository_id (void) const
  {
@@ -133,7 +147,7 @@
  }
  
  static const CORBA::Long _oc_CORBA_Policy[] =
-@@ -1156,75 +1156,7 @@
+@@ -1156,75 +1152,7 @@
  
  const char* CORBA_PolicyManager::_interface_repository_id (void) const
  {
@@ -210,7 +224,7 @@
  }
  
  
-@@ -1316,7 +1248,7 @@
+@@ -1316,7 +1244,7 @@
  
  const char* CORBA_PolicyCurrent::_interface_repository_id (void) const
  {
@@ -219,7 +233,7 @@
  }
  
  void operator<<= (CORBA::Any &_tao_any, CORBA::SetOverrideType _tao_elem)
-@@ -1419,7 +1351,7 @@
+@@ -1419,7 +1347,7 @@
          return 0;
        if (ACE_OS::strcmp (
            interface_repository_id.in (),
@@ -228,7 +242,7 @@
          return 0;
        if (stream >> *tmp)
        {
-@@ -1507,7 +1439,7 @@
+@@ -1507,7 +1435,7 @@
          return 0;
        if (ACE_OS::strcmp (
            interface_repository_id.in (),
@@ -237,7 +251,7 @@
          return 0;
        if (stream >> *tmp)
        {
-@@ -1782,13 +1714,6 @@
+@@ -1782,13 +1710,6 @@
  
  #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
      defined (ACE_HAS_GNU_REPO)
@@ -251,7 +265,7 @@
      template class TAO_Object_Manager<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>;
    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
    #  pragma instantiate TAO_Object_Manager<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>
-@@ -1905,4 +1830,3 @@
+@@ -1905,4 +1826,3 @@
    }
    return 0; // error
  }

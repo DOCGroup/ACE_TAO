@@ -60,7 +60,8 @@ public:
       const char *operation,
       PortableServer::ServantLocator::Cookie the_cookie,
       PortableServer::Servant the_servant
-      TAO_ENV_ARG_DECL);
+      TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   TAO_LB_LoadBalancer *load_balancer_;

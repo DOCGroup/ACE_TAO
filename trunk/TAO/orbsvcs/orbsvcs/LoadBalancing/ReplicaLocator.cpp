@@ -47,6 +47,7 @@ TAO_LB_ReplicaLocator::postinvoke (
     PortableServer::ServantLocator::Cookie /* the_cookie */,
     PortableServer::Servant /* the_servant */
     TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No-op
 }

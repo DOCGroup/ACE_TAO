@@ -66,12 +66,16 @@ public:
   TAO_POA_Current (void);
   // Constructor
 
-  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::Current::NoContext));
   // Returns the POA on which the current request is being invoked.
   // Can raise the <CORBA::NoContext> exception if this function is
   // not invoked in the context of an upcall.
 
-  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::Current::NoContext));
   // Returns the object id of the current request being invoked.  Can
   // raise the <CORBA::NoContext> exception if this function is not
   // invoked in the context of an upcall.
@@ -108,11 +112,15 @@ public:
 
   friend class TAO_POA;
 
-  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::Current::NoContext));
   // Return pointer to the invoking POA.  Raises the
   // <CORBA::NoContext> exception.
 
-  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::Current::NoContext));
   // Return pointer to the object id through which this was invoked.
   // This may be necessary in cases where a <Servant> is serving under
   // the guise of multiple object ids.  This has _out semantics Raises

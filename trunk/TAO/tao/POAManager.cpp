@@ -25,6 +25,8 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 
 void
 TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // This operation changes the state of the POA manager to active. If
   // issued while the POA manager is in the inactive state, the
@@ -45,6 +47,8 @@ void
 TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
                                CORBA::Boolean wait_for_completion,
                                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
@@ -115,6 +119,8 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
 void
 TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
                                   CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
@@ -168,6 +174,8 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
 void
 TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
                                      CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,

@@ -54,23 +54,32 @@ class TAO_Export TAO_POA_Manager :
 
 public:
 
-  void activate (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void activate (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   void hold_requests (CORBA::Boolean wait_for_completion,
-                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
   void discard_requests (CORBA::Boolean wait_for_completion,
-                         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+                         CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
   void deactivate (CORBA::Boolean etherealize_objects,
                    CORBA::Boolean wait_for_completion,
-                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter);
 
@@ -78,23 +87,32 @@ public:
 
 protected:
 
-  void activate_i (CORBA_Environment &ACE_TRY_ENV);
+  void activate_i (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
   void deactivate_i (CORBA::Boolean etherealize_objects,
                      CORBA::Boolean wait_for_completion,
-                     CORBA_Environment &ACE_TRY_ENV);
+                     CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   void hold_requests_i (CORBA::Boolean wait_for_completion,
-                        CORBA_Environment &ACE_TRY_ENV);
+                        CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
   void discard_requests_i (CORBA::Boolean wait_for_completion,
-                           CORBA_Environment &ACE_TRY_ENV);
+                           CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POAManager::AdapterInactive));
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  PortableServer::POAManager::State get_state_i ();
+  PortableServer::POAManager::State get_state_i ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_Lock &lock (void);
 
