@@ -77,17 +77,17 @@ ACE_Allocator::instance (void)
           // Have a seat.  We want to avoid ever having to delete the
           // ACE_Allocator instance, to avoid shutdown order
           // dependencies.  ACE_New_Allocator never needs to be
-          // destroyed:  it's destructor is empty and its instance
+          // destroyed:  its destructor is empty and its instance
           // doesn't have any state.  Therefore, sizeof
           // ACE_New_Allocator is equal to sizeof void *.  It's
           // instance just contains a pointer to its virtual function
           // table.
           //
-          // So, we allocation space for the ACE_New_Allocator
-          // instance in the data segment.  Because its size is the
-          // same as that of a pointer, we allocate it as a pointer so
-          // that it doesn't get constructed statically.  We never
-          // bother to destroy it.
+          // So, we allocate space for the ACE_New_Allocator instance
+          // in the data segment.  Because its size is the same as
+          // that of a pointer, we allocate it as a pointer so that it
+          // doesn't get constructed statically.  We never bother to
+          // destroy it.
           static void *allocator_instance = 0;
 
           // Check this critical assumption . . .
