@@ -1,8 +1,16 @@
+Thu Mar 16 13:40:53 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: just #define ACE_USES_OLD_IOSTREAMS,
+          don't #define it explicitly to 1.  This removes a source
+          of confusion:  changing the 1 to 0 didn't disable the feature.
+          Thanks to Charles Scott <Charles.P.Scott@jpl.nasa.gov> for
+          reporting this.
+
 Thu Mar 16 13:01:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Event_Handler.h: Clarified the comments for handle_timeout().
-	  Thanks to Jonathan Reis <reis@stentorsoft.com> for this
- 	  suggestion.
+        * ace/Event_Handler.h: Clarified the comments for handle_timeout().
+          Thanks to Jonathan Reis <reis@stentorsoft.com> for this
+          suggestion.
 
 Thu Mar 16 12:47:01 2000  David L. Levine  <levine@cs.wustl.edu>
 
