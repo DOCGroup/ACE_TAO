@@ -14,12 +14,12 @@
 ACE_RCSID(TAO_SSLIOP, SSLIOP_Connector, "$Id$")
 
 TAO_SSLIOP_Connect_Creation_Strategy::
-  TAO_SSLIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
-                                        TAO_ORB_Core *orb_core,
-                                        void *arg)
-    :  ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler> (t),
-       orb_core_ (orb_core),
-       arg_ (arg)
+TAO_SSLIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
+                                      TAO_ORB_Core *orb_core,
+                                      void *arg)
+  : ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler> (t),
+    orb_core_ (orb_core),
+    arg_ (arg)
 {
 }
 
@@ -95,11 +95,11 @@ TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
-
   TAO_SSLIOP_Endpoint *ssl_endpoint =
     ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
                       endpoint);
-  if (endpoint == 0)
+
+  if (ssl_endpoint == 0)
     return -1;
 
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();

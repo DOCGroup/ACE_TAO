@@ -1,3 +1,35 @@
+Wed Nov 22 16:24:52 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (connect):
+
+	  Fixed IIOP (non-SSL) connection problems due to a dynamic_cast
+	  that was failing.  The TAO_Endpoint pointer obtained from the
+	  Connection_Descriptor is actually a TAO_SSLIOP_Endpoint, so we
+	  need to downcast to a TAO_SSIOP_Endpoint and then access the
+	  non-SSL TAO_IIOP_Endpoint from it.  Previously we were
+	  downcasting straight to a TAO_IIOP_Endpoint, which of course
+	  will not work since the endpoint pointer actually points to
+	  TAO_SSLIOP_Endpoint.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+
+	  Corrected typo where base class pointer was checked for
+	  validity instead of the derived class pointer.  This fixes a
+	  potential problem where a failed dynamic_cast would not have
+	  beend etected.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
+	  (TAO_SSLIOP_Endpoint):
+
+	  If no SSL tagged component is available, then set the
+	  Security::NoProtection "target_supports" security association
+	  bit.  We can't be sure if the server supports SSL if an SSL
+	  tagged component is available in the IOR, and TAO's SSLIOP
+	  implementation must support IIOP over SSL and plain IIOP.  This
+	  fixes a connection permission problem where the client supported
+	  SSLIOP and the server didn't.  The SSLIOP_Connector was being
+	  too cautious about establishing the connection.
+
 Wed Nov 22 17:37:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	
 	* tests/Multiple/Collocation_Tester.cpp:
