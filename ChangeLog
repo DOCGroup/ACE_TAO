@@ -1,3 +1,11 @@
+Mon Jul 19 09:25:58 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Proactor.cpp (timeout):
+
+	  Fixed leaked ACE_Asynch_Result_Impl instance.  Thanks to
+	  Fukasawa Mitsuo <fukasawa_mitsuo@nifty.com> for reporting the
+	  problem.  [Bug 1879]
+
 Mon Jul 19 06:38:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
