@@ -100,7 +100,7 @@ be_array::tao_name (void)
         }
 
       char buf[16];
-      ACE_OS::sprintf (buf, "_%04.4x", ((int)expr->ev ()->u.ulval));
+      ACE_OS::sprintf (buf, "_%4.4x", ((int) expr->ev ()->u.ulval));
       ACE_OS::strcat (this->tao_name_, buf);
     }
   return this->tao_name_;
