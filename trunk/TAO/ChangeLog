@@ -1,3 +1,13 @@
+Fri Dec 10 13:35:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        
+          Put back exception throw removed in 
+          
+          Fri Dec 10 10:40:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since there is a use case where it is not redundant.
+
 Fri Dec 10 18:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object_KeyC.cpp:
