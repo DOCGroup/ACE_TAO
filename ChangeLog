@@ -1,3 +1,19 @@
+Fri May  9 16:10:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented and moved more code, as listed below.
+
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_STDINT_H.
+
+        * ace/os_include/stropts.h:
+          Moved includes of [sys/]timod.h, sys/filio.h, and sys/sockio.h
+          here.
+
+        * ace/os_include/sys/msg.h:
+          Moved ACE_HAS_BROKEN_MSG_H and ACE_LACKS_SYSV_MSQ_PROTOS
+          #ifdef's here.
+
 Fri May  9 01:20:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-cygwin32.h:
