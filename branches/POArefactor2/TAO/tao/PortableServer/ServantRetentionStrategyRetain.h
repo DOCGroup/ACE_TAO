@@ -42,8 +42,7 @@ namespace TAO
 
       virtual
       void strategy_init (
-        TAO_POA *poa,
-        RequestProcessingStrategy* request_processing_strategy
+        TAO_POA *poa
         ACE_ENV_ARG_DECL);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
@@ -117,12 +116,6 @@ namespace TAO
                                            ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
-
-      virtual
-      void
-      cleanup_servant (
-        TAO_Active_Object_Map_Entry *active_object_map_entry
-        ACE_ENV_ARG_DECL);
 
       virtual
       PortableServer::ObjectId *

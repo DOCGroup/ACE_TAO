@@ -37,8 +37,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class RequestProcessingStrategy;
-
     class TAO_PortableServer_Export ServantRetentionStrategy
       : public virtual Policy_Strategy
     {
@@ -48,11 +46,7 @@ namespace TAO
       virtual CORBA::ULong waiting_servant_deactivation (void) const = 0;
 
       virtual void strategy_init (
-        TAO_POA *poa) {};
-
-      virtual void strategy_init (
-        TAO_POA *poa,
-        RequestProcessingStrategy* request_processing_strategy
+        TAO_POA *poa
         ACE_ENV_ARG_DECL) = 0;
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
@@ -124,10 +118,6 @@ namespace TAO
         ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy)) = 0;
-
-      virtual void cleanup_servant (
-        TAO_Active_Object_Map_Entry *active_object_map_entry
-        ACE_ENV_ARG_DECL) = 0;
 
       virtual PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant

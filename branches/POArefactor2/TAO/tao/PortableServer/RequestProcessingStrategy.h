@@ -88,10 +88,9 @@ namespace TAO
                       ACE_ENV_ARG_DECL) = 0;
 
       virtual void cleanup_servant (
-        const PortableServer::ObjectId& object_id,
         PortableServer::Servant servant,
-        CORBA::Boolean cleanup_in_progress
-        ACE_ENV_ARG_DECL)= 0;
+        PortableServer::ObjectId user_id
+        ACE_ENV_ARG_DECL) = 0;
 
       /**
        * @todo Check usage of reference, it is not used, so it could be just

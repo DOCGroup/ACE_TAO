@@ -1572,6 +1572,16 @@ TAO_POA::unbind_using_user_id (const PortableServer::ObjectId &user_id)
     unbind_using_user_id  (user_id);
 }
 
+void
+TAO_POA::cleanup_servant (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId user_id
+  ACE_ENV_ARG_DECL)
+{
+  return this->active_policy_strategies_.request_processing_strategy()->
+    cleanup_servant (servant, user_id ACE_ENV_ARG_PARAMETER);
+}
+
 PortableServer::Servant
 TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id
                           ACE_ENV_ARG_DECL)

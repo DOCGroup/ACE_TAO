@@ -80,16 +80,16 @@ namespace TAO
         int &wait_occurred_restart_call
         ACE_ENV_ARG_DECL);
 
-      virtual void cleanup_servant (
-        const PortableServer::ObjectId& object_id,
-        PortableServer::Servant servant,
-        CORBA::Boolean cleanup_in_progress
-        ACE_ENV_ARG_DECL);
-
       virtual PortableServer::Servant reference_to_servant (
         CORBA::Object_ptr reference,
         PortableServer::ObjectId system_id
         ACE_ENV_ARG_DECL);
+
+      virtual void cleanup_servant (
+        PortableServer::Servant servant,
+        PortableServer::ObjectId user_id
+        ACE_ENV_ARG_DECL);
+
     private:
       TAO_POA* poa_;
       PortableServer::ServantBase_var default_servant_;

@@ -517,6 +517,11 @@ public:
 
   int unbind_using_user_id (const PortableServer::ObjectId &user_id);
 
+  void cleanup_servant (
+    PortableServer::Servant servant,
+    PortableServer::ObjectId user_id
+    ACE_ENV_ARG_DECL);
+
 protected:
 
   /// Template method for creating new POA's of this type.

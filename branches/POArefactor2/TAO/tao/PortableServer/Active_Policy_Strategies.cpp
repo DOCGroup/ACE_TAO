@@ -188,7 +188,7 @@ namespace TAO
         thread_strategy_->strategy_init (poa);
 
       if (servant_retention_strategy_ != 0)
-        servant_retention_strategy_->strategy_init (poa, request_processing_strategy_ ACE_ENV_ARG_PARAMETER);
+        servant_retention_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (id_assignment_strategy_ != 0)

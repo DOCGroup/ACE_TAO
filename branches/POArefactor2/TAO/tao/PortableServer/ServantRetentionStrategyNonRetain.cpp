@@ -10,7 +10,6 @@
 //=============================================================================
 
 #include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
-#include "tao/PortableServer/RequestProcessingStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
@@ -35,8 +34,7 @@ namespace TAO
   namespace Portable_Server
   {
     Non_Retain_Servant_Retention_Strategy::Non_Retain_Servant_Retention_Strategy (void) :
-      poa_ (0),
-      request_processing_strategy_ (0)
+      poa_ (0)
     {
     }
 
@@ -46,12 +44,10 @@ namespace TAO
 
     void
     Non_Retain_Servant_Retention_Strategy::strategy_init (
-      TAO_POA *poa,
-      RequestProcessingStrategy* request_processing_strategy
+      TAO_POA *poa
       ACE_ENV_ARG_DECL_NOT_USED)
     {
       poa_ = poa;
-      request_processing_strategy_ = request_processing_strategy;
     }
 
     void
@@ -197,13 +193,6 @@ namespace TAO
       ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
-    {
-    }
-
-    void
-    Non_Retain_Servant_Retention_Strategy::cleanup_servant (
-      TAO_Active_Object_Map_Entry */*active_object_map_entry*/
-      ACE_ENV_ARG_DECL_NOT_USED)
     {
     }
 

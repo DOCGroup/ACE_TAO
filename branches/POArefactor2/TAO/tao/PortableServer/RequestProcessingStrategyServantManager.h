@@ -59,6 +59,7 @@ namespace TAO
         CORBA::Object_ptr reference,
         PortableServer::ObjectId system_id
         ACE_ENV_ARG_DECL);
+
     protected:
       TAO_POA* poa_;
     };

@@ -11,6 +11,8 @@
 
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "tao/PortableServer/ServantManagerC.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/POA.h"
 
 ACE_RCSID (PortableServer,
@@ -125,14 +127,30 @@ namespace TAO
 
     void
     AOM_Only_Request_Processing_Strategy::cleanup_servant (
-      const PortableServer::ObjectId& /*object_id*/,
-      PortableServer::Servant /*servant*/,
-      CORBA::Boolean /*cleanup_in_progress*/
-      ACE_ENV_ARG_DECL_NOT_USED)
+      PortableServer::Servant servant,
+      PortableServer::ObjectId user_id
+      ACE_ENV_ARG_DECL)
     {
-      // Just do nothing
-    }
+      if (servant)
+        {
+          // ATTENTION: Trick locking here, see class header for details
+          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          ACE_UNUSED_ARG (non_servant_upcall);
 
+          servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      // This operation causes the association of the Object Id specified
+      // by the oid parameter and its servant to be removed from the
+      // Active Object Map.
+      int result = this->poa_->unbind_using_user_id (user_id);
+
+      if (result != 0)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
   }
 }
 

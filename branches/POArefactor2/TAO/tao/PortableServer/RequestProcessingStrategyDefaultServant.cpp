@@ -171,16 +171,6 @@ namespace TAO
         return servant;
     }
 
-    void
-    Default_Servant_Request_Processing_Strategy::cleanup_servant (
-      const PortableServer::ObjectId& /*object_id*/,
-      PortableServer::Servant /*servant*/,
-      CORBA::Boolean /*cleanup_in_progress*/
-      ACE_ENV_ARG_DECL_NOT_USED)
-    {
-      // Just do nothing
-    }
-
     PortableServer::Servant
     Default_Servant_Request_Processing_Strategy::reference_to_servant (
       CORBA::Object_ptr /*reference*/,
@@ -211,6 +201,33 @@ namespace TAO
         {
           return this->poa_->find_servant (system_id
                                            ACE_ENV_ARG_PARAMETER);
+        }
+    }
+
+    void
+    Default_Servant_Request_Processing_Strategy::cleanup_servant (
+      PortableServer::Servant servant,
+      PortableServer::ObjectId user_id
+      ACE_ENV_ARG_DECL)
+    {
+      if (servant)
+        {
+          // ATTENTION: Trick locking here, see class header for details
+          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          ACE_UNUSED_ARG (non_servant_upcall);
+
+          servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      // This operation causes the association of the Object Id specified
+      // by the oid parameter and its servant to be removed from the
+      // Active Object Map.
+      int result = this->poa_->unbind_using_user_id (user_id);
+
+      if (result != 0)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
         }
     }
 

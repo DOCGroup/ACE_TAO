@@ -1,3 +1,18 @@
+Mon Nov 22 14:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+        * tao/PortableServer/Servant_Upcall.cpp:
+          Changed the cleanup_servant, this is now called on the request
+          processing policy, which uses then unbind_using_user_id on the
+          servant retention strategy. Now the servant retention strategy is
+          not using the request processing strategy directly anymore. The only
+          thing is that we only have to move the etherealize_objects_ member
+          our of the retain servant retention strategy, it doesn't belong
+          there.
+
 Mon Nov 22 13:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:

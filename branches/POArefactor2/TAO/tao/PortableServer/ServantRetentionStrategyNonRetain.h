@@ -40,8 +40,7 @@ namespace TAO
 
       virtual
       void strategy_init (
-        TAO_POA *poa,
-        RequestProcessingStrategy* request_processing_strategy
+        TAO_POA *poa
         ACE_ENV_ARG_DECL);
 
       CORBA::ULong waiting_servant_deactivation (void) const;
@@ -120,10 +119,6 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      virtual void cleanup_servant (
-        TAO_Active_Object_Map_Entry *active_object_map_entry
-        ACE_ENV_ARG_DECL);
-
       virtual PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant
         ACE_ENV_ARG_DECL)
@@ -167,7 +162,6 @@ namespace TAO
 
     protected:
       TAO_POA *poa_;
-      RequestProcessingStrategy *request_processing_strategy_;
     };
   }
 }

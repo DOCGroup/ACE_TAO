@@ -12,6 +12,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
@@ -27,7 +28,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Servant_Activator_Request_Processing_Strategy::Servant_Activator_Request_Processing_Strategy (void)
+    Servant_Activator_Request_Processing_Strategy::Servant_Activator_Request_Processing_Strategy (void) :
+      etherealize_objects_ (1)
     {
     }
 
@@ -269,18 +271,59 @@ namespace TAO
 
     void
     Servant_Activator_Request_Processing_Strategy::cleanup_servant (
-      const PortableServer::ObjectId& object_id,
       PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress
+      PortableServer::ObjectId user_id
       ACE_ENV_ARG_DECL)
     {
-      if (!CORBA::is_nil (this->servant_activator_))
+      // If a servant manager is associated with the POA,
+      // ServantLocator::etherealize will be invoked with the oid and the
+      // servant. (The deactivate_object operation does not wait for the
+      // etherealize operation to complete before deactivate_object
+      // returns.)
+      //
+      // Note: If the servant associated with the oid is serving multiple
+      // Object Ids, ServantLocator::etherealize may be invoked multiple
+      // times with the same servant when the other objects are
+      // deactivated. It is the responsibility of the object
+      // implementation to refrain from destroying the servant while it is
+      // active with any Id.
+
+      // If the POA has no ServantActivator associated with it, the POA
+      // implementation calls _remove_ref when all operation invocations
+      // have completed. If there is a ServantActivator, the Servant is
+      // consumed by the call to ServantActivator::etherealize instead.
+
+  // @bala, is this order correct, see 11.3.9.17 of the spec, it says first
+  // remove from the map, then etherealize. not the other way around
+      if (servant)
         {
-          this->etherealize_servant (object_id,
-                                     servant,
-                                     cleanup_in_progress
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          if (this->etherealize_objects_ && !CORBA::is_nil (this->servant_activator_))
+            {
+              this->etherealize_servant (user_id,
+                                         servant,
+                                         this->poa_->cleanup_in_progress ()
+                                         ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
+          else
+            {
+              // ATTENTION: Trick locking here, see class header for details
+              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+              ACE_UNUSED_ARG (non_servant_upcall);
+
+              servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_CHECK;
+            }
+        }
+
+      // This operation causes the association of the Object Id specified
+      // by the oid parameter and its servant to be removed from the
+      // Active Object Map.
+      int result = this->poa_->unbind_using_user_id (user_id);
+
+      if (result != 0)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
         }
     }
 

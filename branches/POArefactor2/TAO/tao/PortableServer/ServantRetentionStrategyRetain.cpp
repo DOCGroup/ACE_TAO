@@ -13,7 +13,6 @@
 #include "tao/debug.h"
 #include "tao/TSS_Resources.h"
 #include "tao/PortableServer/ServantRetentionStrategyRetain.h"
-#include "tao/PortableServer/RequestProcessingStrategy.h"
 #include "tao/PortableServer/LifespanStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
@@ -48,12 +47,10 @@ namespace TAO
 
     void
     Retain_Servant_Retention_Strategy::strategy_init (
-      TAO_POA *poa,
-      RequestProcessingStrategy* request_processing_strategy
+      TAO_POA *poa
       ACE_ENV_ARG_DECL)
     {
       poa_ = poa;
-      request_processing_strategy_ = request_processing_strategy;
 
       // Create the active object map to be used
       TAO_Active_Object_Map *active_object_map = 0;
@@ -110,8 +107,9 @@ namespace TAO
 
       if (new_count == 0)
         {
-          this->cleanup_servant (active_object_map_entry
-                                 ACE_ENV_ARG_PARAMETER);
+          this->poa_->cleanup_servant (active_object_map_entry->servant_,
+                                       active_object_map_entry->user_id_
+                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
@@ -128,70 +126,6 @@ namespace TAO
 
           // Else mark entry as closed...
           active_object_map_entry->deactivated_ = 1;
-        }
-    }
-
-    void
-    Retain_Servant_Retention_Strategy::cleanup_servant (
-      TAO_Active_Object_Map_Entry *active_object_map_entry
-      ACE_ENV_ARG_DECL)
-    {
-      // If a servant manager is associated with the POA,
-      // ServantLocator::etherealize will be invoked with the oid and the
-      // servant. (The deactivate_object operation does not wait for the
-      // etherealize operation to complete before deactivate_object
-      // returns.)
-      //
-      // Note: If the servant associated with the oid is serving multiple
-      // Object Ids, ServantLocator::etherealize may be invoked multiple
-      // times with the same servant when the other objects are
-      // deactivated. It is the responsibility of the object
-      // implementation to refrain from destroying the servant while it is
-      // active with any Id.
-
-      // If the POA has no ServantActivator associated with it, the POA
-      // implementation calls _remove_ref when all operation invocations
-      // have completed. If there is a ServantActivator, the Servant is
-      // consumed by the call to ServantActivator::etherealize instead.
-
-  // @bala, is this order correct, see 11.3.9.17 of the spec, it says first
-  // remove from the map, then etherealize. not the other way around
-
-      // First check for a non-zero servant.
-      if (active_object_map_entry->servant_)
-        {
-
-    #if (TAO_HAS_MINIMUM_POA == 0)
-          if (this->etherealize_objects_)
-            {
-              this->request_processing_strategy_->cleanup_servant (
-                active_object_map_entry->user_id_,
-                active_object_map_entry->servant_,
-                this->poa_->cleanup_in_progress ()
-                ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-            }
-          else
-    #endif
-            {
-              // ATTENTION: Trick locking here, see class header for details
-              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
-              ACE_UNUSED_ARG (non_servant_upcall);
-
-              active_object_map_entry->servant_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
-            }
-        }
-
-      // This operation causes the association of the Object Id specified
-      // by the oid parameter and its servant to be removed from the
-      // Active Object Map.
-      int result = this->active_object_map_->
-        unbind_using_user_id (active_object_map_entry->user_id_);
-
-      if (result != 0)
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
         }
     }
 

@@ -428,7 +428,8 @@ namespace TAO
               ACE_DECLARE_NEW_CORBA_ENV;
               ACE_TRY
                 {
-                  this->poa_->active_policy_strategies().servant_retention_strategy()->cleanup_servant (this->active_object_map_entry_
+                  this->poa_->cleanup_servant (this->active_object_map_entry_->servant_,
+                                               this->active_object_map_entry_->user_id_
                                                ACE_ENV_ARG_PARAMETER);
 
                   ACE_TRY_CHECK;
