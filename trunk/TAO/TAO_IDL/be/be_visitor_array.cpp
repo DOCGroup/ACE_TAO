@@ -37,6 +37,9 @@
 
 #include "be_visitor_array.h"
 #include "be_visitor_context.h"
+#include "be_visitor_enum.h"
+#include "be_visitor_structure.h"
+#include "be_visitor_union.h"
 
 #include "be_visitor_array/array.cpp"
 #include "be_visitor_array/array_ch.cpp"

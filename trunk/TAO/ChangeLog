@@ -1,3 +1,28 @@
+Mon Jul 22 17:20:41 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+
+          Fixes for certain kinds of declarations within structs,
+          exceptions and unions - enum in exception and anonymous array of
+          enum/struct/union inside exception/struct/union. These fixes
+          close out [BUGID:569] and [BUGID:1079].
+
+        * tests/IDL_Test/enum_in_struct.idl:
+        * tests/IDL_Test/union.idl:
+
+          Added examples to the test to cover the above fixes.
+
 Mon Jul 22 20:16:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Makefile.PortableGroup: Add 

@@ -236,3 +236,36 @@ union TestUnion switch (short)
   case 2: TestTwoEnum twoEnum;
 };
 
+// Test for various kinds of declarations inside a union,
+// similar to the example in enum_in_struct.idl.
+
+union decl_heavy_union switch (short)
+{
+  case 1:
+    enum which
+    {
+      ZERO,
+      ONE,
+      TWO
+    } m_which;
+  case 2: 
+    enum en 
+    {
+      a, 
+      b, 
+      c
+    } m_en_arr[10];
+  case 3: 
+    struct st 
+    {
+      long a; 
+      char b;
+    } m_st_arr[10];
+  case 4: 
+    union un switch (long) 
+    {
+      case 1: long a; 
+      case 2: char b;
+    } m_un_arr[10];
+};
+
