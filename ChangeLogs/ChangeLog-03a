@@ -1,32 +1,41 @@
+Mon Jun 05 20:59:42 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU: protected definitions
+          of shared_libs and static_libs with ifeq null.  Users can still
+          override the settings in their platform_macros.GNU, because
+          that's included after these definitions, or in their environment.
+          But this makes the code look more consistent.  Thanks to Jody
+          Hagins <jody@atdesk.com> for this suggestion.
+
 Mon Jun  5 14:54:46 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T):
+        * ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T):
 
-	  There is no need to deallocate resources from the previous call
-	  to open() since the open() method deallocates any resources
-	  prior to exiting if an error was encountered.
+          There is no need to deallocate resources from the previous call
+          to open() since the open() method deallocates any resources
+          prior to exiting if an error was encountered.
 
 Mon Jun  5 14:18:18 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T):
+        * ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T):
 
-	  If the Reactor fails to open with the hard-coded default size
-	  then set the Reactor size to be the current run-time limit on
-	  the number of file descriptors available to the process.  This
-	  size is not necessarily the maximum limit.  On platforms that do
-	  not support run-time evaluation of the current file descriptor
-	  limit, a default value of FD_SETSIZE will be used.  This
-	  corrects a problem on Solaris in 32 bit mode, and on any other
-	  platform where the per-process file descriptor limit is less
-	  than FD_SETSIZE.
-	  Reported by Marvin Allen Wolfthal <maw@ziplink.net>.
+          If the Reactor fails to open with the hard-coded default size
+          then set the Reactor size to be the current run-time limit on
+          the number of file descriptors available to the process.  This
+          size is not necessarily the maximum limit.  On platforms that do
+          not support run-time evaluation of the current file descriptor
+          limit, a default value of FD_SETSIZE will be used.  This
+          corrects a problem on Solaris in 32 bit mode, and on any other
+          platform where the per-process file descriptor limit is less
+          than FD_SETSIZE.
+          Reported by Marvin Allen Wolfthal <maw@ziplink.net>.
 
-	* ace/config-linux-common.h (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+        * ace/config-linux-common.h (ACE_DEFAULT_SELECT_REACTOR_SIZE):
 
-	  It is no longer necessary to hard-code the default reactor size
-	  for older Linux kernels that had a file descriptor limit less
-	  than FD_SETSIZE since the Select Reactor now falls back on the
-	  run-time file descriptor limit for the given process.
+          It is no longer necessary to hard-code the default reactor size
+          for older Linux kernels that had a file descriptor limit less
+          than FD_SETSIZE since the Select Reactor now falls back on the
+          run-time file descriptor limit for the given process.
 
 Mon Jun  5 10:22:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -34,7 +43,7 @@ Mon Jun  5 10:22:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Just like in OS_String.h, added an include for stddef.h to
           get the definition of size_t.
-          
+
 Mon Jun  5 09:55:20 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.h:
@@ -52,7 +61,7 @@ Mon Jun  5 09:55:20 2000  Darrell Brunsch <brunsch@uci.edu>
           char, since we shouldn't depend on definitions of u_char (since
           on some platforms we don't have a definition of u_char at that
           time).  Thanks to David Levine for reporting this.
-        
+
 Sun Jun  4 14:58:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/Orbix-Examples/Event_Comm/include/Event_Comm.hh:
@@ -137,10 +146,10 @@ Sun Jun  4 14:38:43 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS_String.inl:
 
           Some platforms (like QNX Neutrino) need strings.h to get
-          the declaration of strcasecmp. 
+          the declaration of strcasecmp.
 
         * ace/config-qnx-neutrino.h:
-          
+
           Added a definition of ACE_HAS_STRINGS so strings.h will be
           included in OS_String.inl.
 
