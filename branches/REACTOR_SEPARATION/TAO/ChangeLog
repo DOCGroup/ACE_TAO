@@ -1,5 +1,9 @@
-Sat Jan 15 00:08:12 2005  Marek Brudka  <mbrudka@aster.pl>
+Sat Jan 15 00:19:04 2005  Marek Brudka  <mbrudka@aster.pl>
 
+        * tao/tk_resource_loader.h (Module):
+        * tao/tk_resource_loader.cpp (Module):
+        * tao/fl_resource_loader.h (Module):
+        * tao/fl_resource_loader.cpp (Module):
         * tao/tk_resource.h (Module):
         * tao/tk_resource.cpp (Module):
         * examples/AMI/FL_Callback/svc.conf.xml (Module):
