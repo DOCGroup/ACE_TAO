@@ -25,11 +25,12 @@
 #include "idl_defines.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (be,
            be_global,
            "$Id$")
-           
+
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
