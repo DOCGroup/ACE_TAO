@@ -1,8 +1,7 @@
 #----------------------------------------------------------------------------
+#
 #	$Id$
 #
-#	Top-level Makefile for the ACE-ified Sun Ref. implementation
-#	of IIOP ORB
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -21,8 +20,19 @@ PROG_SRCS = server.cpp \
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = cubitC.o cubitS.o server.o cubit_i.o tmplinst.o
-CUBIT_CLIENT_OBJS = cubitC.o cubitS.o Task_Client.o client.o Util_Thread.o tmplinst.o
+CUBIT_SVR_OBJS = \
+	cubitC.o \
+	cubitS.o \
+	server.o \
+	cubit_i.o \
+	tmplinst.o
+CUBIT_CLIENT_OBJS = \
+	cubitC.o \
+	cubitS.o \
+	Task_Client.o \
+	client.o \
+	Util_Thread.o \
+	tmplinst.o
 
 BIN = server client
 BUILD = $(BIN)
@@ -50,9 +60,7 @@ OCFLAGS =
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
 
-.PRECIOUS: $(IDL_SRC)
-#$(IDL_SRC): cubit.idl
-#	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
+.PRECIOUS: cubitC.h cubitC.i cubitC.cpp cubitS.h cubitS.i cubitS.cpp 
 
 server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
@@ -65,6 +73,7 @@ clean:
 
 realclean: clean
 	-/bin/rm -rf cubitC.* cubitS.*
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
