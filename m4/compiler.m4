@@ -40,10 +40,16 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
  dnl                running the configure script.  As such, it is important
  dnl                not to replace the existing value of CXXFLAGS; rather
  dnl                one should only add to it.
- dnl    ACE_CXXFLAGS - General C++ flags the configure script should set before
- dnl                   CXXFLAGS to allow the user override them.
+ dnl    ACE_CXXFLAGS
+ dnl              - General C++ flags the configure script should set before
+ dnl                CXXFLAGS to allow the user override them.
  dnl    DCXXFLAGS - C++ debugging flags
  dnl    OCXXFLAGS - C++ optimization flags
+ dnl    CPPFLAGS  - C++ preprocessor flags
+ dnl    ACE_CPPFLAGS
+ dnl              - General C++ preprocessor flags the configure
+ dnl                script should set before CPPFLAGS to allow the
+ dnl                user override them.
  dnl    WERROR    - Compiler flag that converts warnings to errors
 
  if test -n "$GXX"; then
@@ -51,13 +57,52 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
  fi
 
  case "$target" in
+   *aix*)
+     dnl In case anything here or in the config depends on OS
+     dnl version number, grab it here and pass it all to the
+     dnl compiler as well.
+     AIX_MAJOR_VERS=`uname -v`
+     AIX_MINOR_VERS=`uname -r`
+
+     ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_AIX_MAJOR_VERS=$AIX_MAJOR_VERS"
+     ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_AIX_MINOR_VERS=$AIX_MINOR_VERS"
+
+     case "$CXX" in
+       xlC*)
+         dnl IBM C/C++ compiler 3.6.x produces a bazillion warnings about
+         dnl 0-valued preprocessor defs. Since both 3.1 and 3.4 could
+         dnl be installed, don't ask lslpp for one or the
+         dnl other. Instead, compile a file and see which compiler the
+         dnl user has set up for use. This trick was submitted by
+         dnl Craig Rodrigues <rodrigc@mediaone.net>, originally from
+         dnl the vacpp compiler newsgroup.  It relies on the
+         dnl preprocessor defining __xlC__ to the proper version
+         dnl number of the compiler.
+
+         AC_EGREP_CPP(0x0306,
+           [
+            __xlC__
+           ],
+           [
+            CXXFLAGS="$CXXFLAGS -qflag=e:e"
+           ],
+           [
+            CXXFLAGS="$CXXFLAGS -qflag=w:w"
+           ])
+         ;;
+     esac
+     ;;
+ esac
+
+ case "$target" in
    *aix4.2* | *aix4.3*)
      case "$CXX" in
        xlC*)
          CXXFLAGS="$CXXFLAGS"
-         ACE_CXXFLAGS="$ACE_CXXFLAGS -qtempinc -qlanglvl=ansi -qflag=w:w -qinfo"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS "
          DCXXFLAGS="-g -qcheck=nobounds:div:null"
          OCXXFLAGS="-qarch=com"
+         CPPFLAGS="$CPPFLAGS -qlanglvl=ansi"
          ;;
        *)
          if test -n "$GXX"; then

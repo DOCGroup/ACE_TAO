@@ -660,7 +660,6 @@ dnl Here, if X isn't found or the user sets "--without-x" on the command
 dnl line, then "no_x" is set to "yes."
                   if test "$no_x" != yes; then
                     ACE_XLIBS="-lX11 -lXt"
-                    AC_DEFINE(ACE_HAS_XT)
                     ace_user_enable_xt_reactor=yes
                   else
                     ACE_XLIBS=""
@@ -799,78 +798,15 @@ dnl
 dnl SECTION 3: check for programs <--- moved before section 2 (Ossama)
 dnl
 
-dnl Platform specific defines and libraries needed for ACE's autoconf tests
+dnl Platform specific libraries needed for ACE's autoconf tests
 dnl that currently do not have tests themselves.
 dnl Platform specific flags
 case "$target" in
-  *aix3*)
-    ;;
-  *aix4.1*)
-    AC_DEFINE(_BSD, 44)
-    ;;
-  *aix4.2*)
-    AC_DEFINE(_BSD, 44)
-    AC_DEFINE(_BSD_INCLUDES)
-    ;;
-  t3e-cray-unicosmk*)
-    AC_DEFINE(_CRAYMPP)
-    AC_DEFINE(_CRAYT3E)
-    AC_DEFINE(_UNICOS,)
-    ;;
-  t3e-cray*)
-    AC_DEFINE(_CRAYT3E)
-    AC_DEFINE(_UNICOS,)
-    ;;
-  *cray-unicos*)
-    AC_DEFINE(_UNICOS,)
-    ;;
-  *dgux4.11*)
-    LIBS="$LIBS -lc"
-    AC_DEFINE(_POSIX_SOURCE)
-    AC_DEFINE(_DGUX_SOURCE)
-    ;;
-  *dgux4*)
-    LIBS="$LIBS -lc"
-    AC_DEFINE(_POSIX4A_DRAFT10_SOURCE)
-    AC_DEFINE(_POSIX4_DRAFT_SOURCE)
-    ;;
   *freebsd*)
     LIBS="$LIBS -lcompat"
     ;;
-  *hpux9*)
+  *hpux9* | *hpux1[01]*)
     LIBS="$LIBS -lcma -lrt"
-    AC_DEFINE(HPUX)
-    ;;
-  *hpux10*)
-    LIBS="$LIBS -lcma -lrt"
-    AC_DEFINE(_HPUX_SOURCE)
-    ;;
-  *hpux11*)
-    LIBS="$LIBS -lcma -lrt"
-    ;;
-  *irix5.2*)
-    ;;
-  *irix5.3*)
-    if test -z "$GXX"; then
-      AC_DEFINE(_BSD_TYPES)
-    fi
-    ;;
-  *irix6*)
-    AC_DEFINE(_SGI_MP_SOURCE)
-    AC_DEFINE(_MODERN_C_)
-    ;;
-  *linux*)
-    ;;
-  *lynxos*)
-    AC_DEFINE(_POSIX_THREADS_CALLS)
-    AC_DEFINE(__NO_INCLUDE_WARN__)
-    ;;
-  *m88k*)
-    ;;
-  *mvs*)
-    AC_DEFINE(_ALL_SOURCE)
-    ;;
-  *netbsd*)
     ;;
   *osf3.2*)
     LIBS="$LIBS -lmach -lsys5 -lcxx -lc -lrt"
@@ -880,35 +816,6 @@ case "$target" in
     ;;
   *psos*)
     LIBS="$LIBS -lm"
-    ;;
-  *sco4.2*)
-    ;;
-  *sco5*)
-    AC_DEFINE(_SVID3)
-    ;;
-  *sunos4*)
-    ;;
-  *solaris2.4*)
-    ;;
-  *solaris2.5*)
-    ;;
-  *solaris2.6*)
-    ;;
-  *86*solaris*)
-    ;;
-  *tandem*)
-    ;;
-  *unixware2.0*)
-    ;;
-  *unixware2.1*)
-    ;;
-  *vxworks*)
-    ;;
-  *cygwin32*)
-    ;;
-  *win32*)
-    ;;
-  *)
     ;;
 esac
 
@@ -934,6 +841,7 @@ dnl Athena widget set.
   xt_reactor_go=no
   AC_CHECK_LIB(Xm, XmCreateRowColumn, dnl
     [
+     AC_DEFINE(ACE_HAS_XT)
      XTREACTOR_TEST_XLIBS="-lXm"
      xt_reactor_go=yes
     ],
@@ -941,13 +849,14 @@ dnl Athena widget set.
      AC_DEFINE(ACE_LACKS_MOTIF)
      AC_CHECK_LIB(Xaw, XawInitializeWidgetSet,
        [
+        AC_DEFINE(ACE_HAS_XT)
         XTREACTOR_TEST_XLIBS="-lXaw -lXmu"
         xt_reactor_go=yes
        ],
        [
         xt_reactor_go=no
         AC_MSG_WARN(No usable X widget libraries were found.)
-        AC_MSG_WARN(XtReactor test compilation will be disabled.)
+        AC_MSG_WARN(XtReactor support will be disabled.)
        ], -lXmu)
     ],-lXt)
 
