@@ -1,3 +1,9 @@
+Mon Dec 20 11:10:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp: Changed some
+	  template instantiations. 
+	  
+
 Mon Dec 20 10:17:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader.cpp: Removed some template
