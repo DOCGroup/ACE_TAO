@@ -23,7 +23,7 @@ ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (void)
 
 // Constructor.
 ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast)
-: dgram_mcast_ (dgram_mcast)
+  : dgram_mcast_ (dgram_mcast)
 {
 }
 
@@ -65,15 +65,15 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
   size_t bytes_sent;
 
   if (this->dgram_mcast_.send (&iov,
- 							   1,
-		                       bytes_sent,
+                               1,
+                               bytes_sent,
                                0,
-			                   send_to_addr,
-					           &ace_overlapped,
-					           NULL) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-					   "Error in dgram_mcast.send ()\n"),
-					   -1);
+                               send_to_addr,
+                               &ace_overlapped,
+                               NULL) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in dgram_mcast.send ()\n"),
+                      -1);
 
   else
     ACE_DEBUG ((LM_DEBUG,
