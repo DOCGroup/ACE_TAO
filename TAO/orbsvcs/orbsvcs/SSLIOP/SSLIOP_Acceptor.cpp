@@ -635,7 +635,7 @@ TAO_SSLIOP_Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
   // In order to support a secure connection, the SSLIOP::SSL tagged
   // component must be embedded in the IOR.  This isn't possible if
   // the user elects to disable standard profile components.
-  // Similarly, IIOP 1.0 does not support tagged components, which it
+  // Similarly, IIOP 1.0 does not support tagged components, which
   // makes it impossible to embed the SSLIOP::SSL tagged component
   // within the IOR.  If the given object explicitly disallows
   // insecure invocations and standard profile components are
