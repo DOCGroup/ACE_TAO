@@ -33,6 +33,11 @@ Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing
 	  this out.
 
+	* examples/Threads/context_switch_time.cpp (main): added
+	  ACE_SCOPE_PROCESS param to ACE_Sched_Params instances so
+	  that the test works on WIN32.  Thanks to Luca Priorelli
+	  <lucapri@mbox.vol.it> for identifying this problem.
+
 Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway: Updated the Peer and Gateway applications so that
