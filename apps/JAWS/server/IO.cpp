@@ -6,6 +6,7 @@
 #include "IO.h"
 #include "HTTP_Helpers.h"
 #include "ace/OS_NS_sys_uio.h"
+#include "ace/OS_NS_sys_socket.h"
 
 ACE_RCSID(server, IO, "$Id$")
 
