@@ -1,0 +1,19 @@
+//$Id$
+
+project (Config_Handlers) : taoexe {
+
+  macros   += XML_USE_PTHREADS
+  includes += $(XERCESCROOT)/include $(CIAO_ROOT)/DnC/
+  libpaths += $(XERCESCROOT)/lib $(ACE_ROOT)/ace
+  idlflags += -Ge 2 -Sc
+  exename  += Config_Handler
+  libs     += xerces-c
+
+  Source_Files {
+     ACD_Handler.cpp
+     APM_Handler.cpp
+     MID_Handler.cpp
+     SPE_Handler.cpp
+     XercesString.cpp
+  }
+}
