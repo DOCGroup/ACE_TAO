@@ -22,7 +22,7 @@ ACE_RCSID (ace, Process, "$Id$")
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
 // See wait() for more info.
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined(ACE_LACKS_UNIX_SIGNALS)
 static void
 sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
@@ -236,7 +236,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
       // something went wrong
       this->child_id_ = ACE_INVALID_PID;
   }
-  
+
   // restore STD file descriptors (if necessary)
   if (options.get_stdin () != ACE_INVALID_HANDLE) {
     if (saved_stdin == -1)
@@ -473,7 +473,45 @@ ACE_Process::wait (const ACE_Time_Value &tv,
       ACE_OS::set_errno_to_last_error ();
       return -1;
     }
-#else /* ACE_WIN32 */
+#elif defined(ACE_LACKS_UNIX_SIGNALS)
+  if (tv == ACE_Time_Value::zero)
+    {
+      pid_t retv =
+        ACE_OS::waitpid (this->child_id_,
+                         &this->exit_code_,
+                         WNOHANG);
+      if (status != 0)
+        *status = this->exit_code_;
+
+      return retv;
+    }
+
+  if (tv == ACE_Time_Value::max_time)
+    return this->wait (status);
+
+  pid_t pid = 0;
+  ACE_Time_Value sleeptm (1);    // 1 msec
+  if (sleeptm > tv)              // if sleeptime > waittime
+      sleeptm = tv;
+  ACE_Time_Value tmo (tv);       // Need one we can change
+  for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
+    {
+      pid = ACE_OS::waitpid (this->getpid (),
+                             &this->exit_code_,
+                             WNOHANG);
+      if (status != 0)
+        *status = this->exit_code_;
+
+      if (pid > 0 || pid == ACE_INVALID_PID)
+        break;          // Got a child or an error - all done
+
+      // pid 0, nothing is ready yet, so wait.
+      // Do a (very) short sleep (only this thread sleeps).
+      ACE_OS::sleep (sleeptm);
+    }
+
+  return pid;
+#else /* !ACE_WIN32 && !ACE_LACKS_UNIX_SIGNALS */
   if (tv == ACE_Time_Value::zero)
     {
       pid_t retv =
