@@ -10,7 +10,7 @@ require ACEutils;
 
 $iorfile = "server.ior";
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
-		       " -f $iorfile");
+                       " -f $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -19,7 +19,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT",
-		       " -f $iorfile");
+                       " -f $iorfile");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -35,7 +35,7 @@ if ($server == -1) {
 
 unlink $iorfile;
 
-if ($server != 0 || $client != 0) {
+if ($server == -1 || $client != 0) {
   exit 1;
 }
 

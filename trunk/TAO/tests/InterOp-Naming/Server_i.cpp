@@ -6,7 +6,6 @@
 
 Server_i::Server_i (void)
   : ior_output_file_ (0),
-    naming_ (0),
     ins_ (0)
 {
   // no-op.
@@ -40,12 +39,10 @@ Server_i::parse_args (void)
                              get_opts.optarg), -1);
         break;
 
-      case 'n': //Use naming service
-        this->naming_ = 1;
-        break;
       case 'i': // For Testing the InterOperable Naming Service.
-	this->ins_ = CORBA::string_dup (get_opts.optarg);
-	break;
+        this->ins_ = CORBA::string_dup (get_opts.optarg);
+        break;
+
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,30 +60,30 @@ Server_i::parse_args (void)
 }
 
 // Add the ObjectID:IOR mapping to the IOR table of
-// the ORB. 
+// the ORB.
 
 int
 Server_i::add_IOR_to_table (CORBA::String_var ior)
 {
-  
+
   CORBA::Object_ptr object =
     this->orb_manager_.orb ()->string_to_object (ior.in ());
-  
+
   // Add a KEY:IOR mapping to the ORB table.
   ACE_CString ins (this->ins_);
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"Adding (KEY:IOR) %s:%s\n",
-		ins.c_str (),
-		ior.in ()));
-  
+                "Adding (KEY:IOR) %s:%s\n",
+                ins.c_str (),
+                ior.in ()));
+
   if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (ins,
-							object) != 0)
+                                                        object) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Simple_Util : Unable to add IOR to table\n"),
-		      -1);
-  
+                       "Simple_Util : Unable to add IOR to table\n"),
+                      -1);
+
   return 0;
 }
 
@@ -106,22 +103,22 @@ Server_i::init (int argc,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  
+
   ACE_CHECK_RETURN (-1);
-  
+
   this->argc_ = argc;
   this->argv_ = argv;
-  
+
   int retval = this->parse_args ();
-  
+
   if (retval != 0)
     return retval;
-  
+
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Stash our ORB pointer for later reference.
   this->servant_.orb (orb.in ());
-  
+
   ACE_TRY
     {
       CORBA::String_var str  =
@@ -135,18 +132,18 @@ Server_i::init (int argc,
                   str.in ()));
 
       if (this->ins_)
-	if (this->add_IOR_to_table (str) != 0)
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "test_for_ins (): failed\n"),
-			    -1);
-      
+        if (this->add_IOR_to_table (str) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "test_for_ins (): failed\n"),
+                            -1);
+
       if (this->ior_output_file_)
-	{
-	  ACE_OS::fprintf (this->ior_output_file_,
-			   "%s",
-			   str.in ());
-	  ACE_OS::fclose (this->ior_output_file_);
-	}
+        {
+          ACE_OS::fprintf (this->ior_output_file_,
+                           "%s",
+                           str.in ());
+          ACE_OS::fclose (this->ior_output_file_);
+        }
 
     }
   ACE_CATCHANY
@@ -167,12 +164,6 @@ Server_i::run (CORBA::Environment &env)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);
-  
+
   return 0;
 }
-
-
-
-
-
-
