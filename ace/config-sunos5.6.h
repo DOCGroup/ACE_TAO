@@ -53,6 +53,10 @@
 #ifndef ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_HAS_TEMPLATE_TYPEDEFS               1
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+// Forte 7 seems to botch this one...
+#if __SUNPRO_CC == 0x540
+#undef ACE_HAS_TEMPLATE_TYPEDEFS
+#endif
 #ifndef ACE_HAS_TYPENAME_KEYWORD
 #define ACE_HAS_TYPENAME_KEYWORD                1
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
