@@ -254,8 +254,14 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   size_t if_cnt = 0;
 
   if (ACE::get_ip_interfaces (if_cnt,
-                              if_addrs) != 0)
-    return -1;
+                              if_addrs) != 0
+      && errno != ENOTSUP)
+    {
+      // In the case of errno == ENOTSUP, if_cnt and if_addrs will not
+      // be modified, and will each remain equal to zero.  This causes
+      // the default interface to be used.
+      return -1;
+    }
 
   if (if_cnt == 0 || if_addrs == 0)
     {
