@@ -1,3 +1,9 @@
+Wed Sep  1 06:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp (dump_iov):
+          Reverted my change of yesterday, this is an ACE_OS::sprintf and
+          no ACE_DEBUG, so %P and %t don't work.
+
 Tue Aug 31 17:53:30 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
