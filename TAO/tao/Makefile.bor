@@ -84,6 +84,7 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_Locate_Header.obj \
         $(OBJDIR)\GIOP_Message_Reactive_Handler.obj \
         $(OBJDIR)\GIOP_Message_State.obj \
+        $(OBJDIR)\GIOP_Message_Version.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\GIOPC.obj \
 	$(OBJDIR)\IFR_TypeCodes.obj \
