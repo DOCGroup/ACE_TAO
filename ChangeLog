@@ -1,3 +1,8 @@
+Sat Nov  8 04:52:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * apps/soreduce/Library.h:
+          Added #include streams.h 
+
 Sat Nov  8 04:11:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_main.h
