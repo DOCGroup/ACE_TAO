@@ -72,7 +72,7 @@ Process_Strategy_Test: !chorus !LynxOS
 RB_Tree_Test
 Reactors_Test
 Reactor_Exceptions_Test
-Reactor_Notify_Test
+Reactor_Notify_Test: !ST
 Reactor_Performance_Test: !chorus
 Reactor_Timer_Test
 Reader_Writer_Test
