@@ -1,13 +1,13 @@
 // $Id$
 
 // server.cpp : Defines the class behaviors for the application.
-//
 
-// demospecific includes
+// Demospecific includes
 #include "tao\corba.h"
 #include "w32_test_impl.h"
 #include "ace\Thread_Manager.h"
-// democpecific includes end!
+
+// Demospecific includes end!
 
 #include "stdafx.h"
 #include "server.h"
@@ -44,71 +44,75 @@ END_MESSAGE_MAP()
 static void *
 spawn_my_orb_thread (void *)
 {
-	// Initialization arguments for the ORB
-	const char* orb_name = "";
+  // Initialization arguments for the ORB
+  const char *orb_name = "";
 
-	CORBA::ORB_var _the_orb;
-
-	_the_orb = CORBA::ORB_init (__argc,__argv,orb_name);
+  CORBA::ORB_var the_orb =
+    CORBA::ORB_init (__argc,
+                     __argv,
+                     orb_name);
 	
-	
-	PortableServer::POA_var _the_root_poa;
-	PortableServer::POAManager_var _the_poa_manager;
+  CORBA::Object_var orb_obj =
+    the_orb->resolve_initial_references ("RootPOA");
 
-	CORBA::Object_var orb_obj;
+  PortableServer::POA_var the_root_poa =
+    PortableServer::POA::_narrow (orb_obj.in ());
 
-    orb_obj = _the_orb->resolve_initial_references("RootPOA");
+  PortableServer::POAManager_var the_poa_manager =
+    the_root_poa->the_POAManager ();
 
-	_the_root_poa = PortableServer::POA::_narrow (orb_obj.in ());
-	_the_poa_manager = _the_root_poa->the_POAManager ();
+  the_poa_manager->activate ();
 
-	_the_poa_manager->activate ();
+  // Initializing the NamingService
+  W32_Test_Impl myservant;
+  W32_Test_Interface_var orb_servant =
+    myservant._this();
 
-	// Initializing the NamingService
-	W32_Test_Impl myservant;
-	W32_Test_Interface_var orb_servant = myservant._this();
+  CORBA::String_var ior =
+    the_orb->object_to_string (orb_servant.in ());
 
-    CORBA::String_var ior = _the_orb->object_to_string (orb_servant.in());
+  FILE *output_file = ACE_OS::fopen ("ior.txt",
+                                    "w");
+  ACE_OS::fprintf (output_file,
+                   "%s",
+                   ior.in ());
+  ACE_OS::fclose (output_file);
 
-    FILE *output_file= ACE_OS::fopen ("ior.txt", "w");
-    ACE_OS::fprintf (output_file, "%s", ior.in ());
-    ACE_OS::fclose (output_file);
+  the_orb->run ();
 
-	_the_orb->run();
-
-	return 0;
+  return 0;
 }
-
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CServerApp construction
 
 CServerApp::CServerApp()
 {
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
+  // TODO: add construction code here,
+  // Place all significant initialization in InitInstance
 }
 
 
 CServerApp::~CServerApp()
 {
-	CORBA::ORB_var _the_shutdown_orb;
+  CORBA::ORB_var the_shutdown_orb;
 
-	int argc = 0;
-	char** argv = 0;
-	const char* orb_name = "";
+  int argc = 0;
+  char **argv = 0;
+  const char *orb_name = "";
 
-	// Retrieving a reference to the ORB used inside the thread
-	_the_shutdown_orb = CORBA::ORB_init (argc,argv,orb_name);	
+  // Retrieving a reference to the ORB used inside the thread
+  the_shutdown_orb =
+    CORBA::ORB_init (argc,
+                     argv,
+                     orb_name);	
 
-	_the_shutdown_orb->shutdown();
+  the_shutdown_orb->shutdown ();
 	
-	ACE_Thread_Manager::instance()->wait();
+  ACE_Thread_Manager::instance ()->wait ();
 
-	ACE::fini();
+  ACE::fini ();
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // The one and only CServerApp object
@@ -120,54 +124,54 @@ CServerApp theApp;
 
 BOOL CServerApp::InitInstance()
 {
-	ACE::init();
+  ACE::init();
 	
-	AfxEnableControlContainer();
+  AfxEnableControlContainer();
 
-	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	//  of your final executable, you should remove from the following
-	//  the specific initialization routines you do not need.
+  // Standard initialization
+  // If you are not using these features and wish to reduce the size
+  //  of your final executable, you should remove from the following
+  //  the specific initialization routines you do not need.
 
 #ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
+  Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
+  Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-	// Change the registry key under which our settings are stored.
-	// TODO: You should modify this string to be something appropriate
-	// such as the name of your company or organization.
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+  // Change the registry key under which our settings are stored.
+  // TODO: You should modify this string to be something appropriate
+  // such as the name of your company or organization.
+  SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-	LoadStdProfileSettings();  // Load standard INI file options (including MRU)
+  LoadStdProfileSettings();  // Load standard INI file options (including MRU)
 
-	// Register the application's document templates.  Document templates
-	//  serve as the connection between documents, frame windows and views.
+  // Register the application's document templates.  Document templates
+  //  serve as the connection between documents, frame windows and views.
 
-	CSingleDocTemplate* pDocTemplate;
-	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CServerDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CServerView));
-	AddDocTemplate(pDocTemplate);
+  CSingleDocTemplate* pDocTemplate;
+  pDocTemplate = new CSingleDocTemplate(
+                                        IDR_MAINFRAME,
+                                        RUNTIME_CLASS(CServerDoc),
+                                        RUNTIME_CLASS(CMainFrame),       // main SDI frame window
+                                        RUNTIME_CLASS(CServerView));
+  AddDocTemplate(pDocTemplate);
 
-	// Parse command line for standard shell commands, DDE, file open
-	CCommandLineInfo cmdInfo;
-	ParseCommandLine(cmdInfo);
+  // Parse command line for standard shell commands, DDE, file open
+  CCommandLineInfo cmdInfo;
+  ParseCommandLine(cmdInfo);
 
-	// Dispatch commands specified on the command line
-	if (!ProcessShellCommand(cmdInfo))
-		return FALSE;
+  // Dispatch commands specified on the command line
+  if (!ProcessShellCommand(cmdInfo))
+    return FALSE;
 
-	// The one and only window has been initialized, so show and update it.
-	m_pMainWnd->ShowWindow(SW_SHOW);
-	m_pMainWnd->UpdateWindow();
+  // The one and only window has been initialized, so show and update it.
+  m_pMainWnd->ShowWindow(SW_SHOW);
+  m_pMainWnd->UpdateWindow();
 
-	ACE_Thread_Manager::instance()->spawn (spawn_my_orb_thread);
+  ACE_Thread_Manager::instance()->spawn (spawn_my_orb_thread);
 
-	return TRUE;
+  return TRUE;
 }
 
 

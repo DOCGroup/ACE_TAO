@@ -1,3 +1,20 @@
+Tue Oct  5 16:17:57 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/MM_Shared_Memory_Test.cpp (spawn): Make sure to 
+	  delete the synchronizer in both the parent and the child
+ 	  processes since otherwise we get a memory leak!  Thanks to David
+ 	  Levine for pointing this out.
+
+	* tests/Task_Test.cpp (main): Make sure to delete the thread hook
+	  before exiting the process to avoid a memory leak.  Thanks to
+	  David Levine for pointing this out.
+
+Tue Oct  5 15:04:03 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* ace/[Active_|Hash_]Map_Manager: Modified these classes so that the
+	  find() methods are all "const".  Thanks to Jody Hagins
+ 	  <jody@atdesk.com> for reporting this.
+
 Tue Oct 05 21:58:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-WinCE.h: Reenabled ACE_HAS_MFC.  This should be the
