@@ -244,6 +244,10 @@ SOURCE=.\tao_internals.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\tao_util.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\tc_const.cpp
 # End Source File
 # Begin Source File
