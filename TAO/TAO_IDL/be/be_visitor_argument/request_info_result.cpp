@@ -51,6 +51,16 @@ int be_visitor_args_request_info_result::visit_argument (be_argument *node)
   // dealt with.
 
   // retrieve the type
+  bt = be_type::narrow_from_decl (node->field_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_::"
+                         "visit_argument - "
+                         "Bad return type\n"),
+                        -1);
+    }
+
   switch (bt->node_type ())
     {
     case AST_Decl::NT_pre_defined:
