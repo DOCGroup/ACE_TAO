@@ -116,7 +116,8 @@ CORBA::Object_var::ptr (void) const
 
 ACE_INLINE
 CORBA::Object_var::Object_var (const CORBA::Object_var &p)
-  : ptr_ (CORBA::Object::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA::Object::_duplicate (p.ptr ()))
 {
 }
 
