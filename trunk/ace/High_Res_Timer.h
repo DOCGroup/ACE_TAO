@@ -35,11 +35,12 @@ class ACE_Export ACE_High_Res_Timer
   //
   //     The scale factor is required for platforms that have
   //     high-resolution timers that return units other than
-  //     nanoseconds, such as clock ticks.  The member functions that
+  //     microseconds, such as clock ticks.  The member functions that
   //     return or print times use this scale factor.  They divide the
   //     "time" that they get from ACE_OS::gethrtime () by it to
-  //     obtain the time in nanoseconds.  Its units are 1/second,
-  //     possibly ticks/second.
+  //     obtain the time in microseconds.  Its units are therefore
+  //     1/microsecond.  On Solaris, a scale factor of 1000 should be used
+  //     because its high-resolution timer returns nanoseconds.
   //
   //     NOTE:  the elapsed time calculations in the print methods use
   //     ACE_hrtime_t values.  If ACE_hrtime_t is not a 64-bit type
@@ -57,7 +58,7 @@ public:
   // environment variable.  Returns 0 on success, -1 on failure.  Note
   // if <env> points to string "0" (value zero), this call will fail.
 
-  static void global_scale_factor (double gsf);
+  static void global_scale_factor (u_long gsf);
   // <gsf> is used as a global scale factor.  Any High_Res_Timers
   // constructed with scale_factor == 0 will check and use <gsf> if
   // set.  This allows applications to set the scale factor just once
@@ -73,10 +74,11 @@ public:
   // will be used instead of ACE_OS::gethrtime.  This allows the
   // scale_factor of 1 to still result in correct values.
 
-  ACE_High_Res_Timer (double scale_factor = 1);
+  ACE_High_Res_Timer (u_long scale_factor = 1000);
   // Initialize the timer.  The <scale_factor> takes precedence to
-  // global_scale_factor_.  A scale_factor of 1 is a noop.  A scale
-  // factor of 0 will cause division by zero exceptions.
+  // global_scale_factor_.  A scale_factor of 1000 converts the native
+  // time in nanoseconds to microseconds.  A factor of 0 will cause
+  // division by zero exceptions.
 
   void reset (void);
   // Reinitialize the timer.
@@ -128,7 +130,7 @@ public:
 private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
 			    ACE_hrtime_t hrt, 
-			    double scale_factor);
+			    u_long scale_factor);
   // Converts an <hrt> to <tv> using the <scale_factor>.
 
   ACE_hrtime_t start_;
@@ -143,9 +145,9 @@ private:
   ACE_hrtime_t start_incr_;
   // Start time of incremental timing.
 
-  double scale_factor_;
+  u_long scale_factor_;
 
-  static double global_scale_factor_;
+  static u_long global_scale_factor_;
 };
 
 #if defined (__ACE_INLINE__)

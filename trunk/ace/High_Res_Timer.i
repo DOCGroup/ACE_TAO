@@ -10,7 +10,7 @@ ACE_High_Res_Timer::supported ()
 }
 
 ACE_INLINE
-ACE_High_Res_Timer::ACE_High_Res_Timer (double scale_factor)
+ACE_High_Res_Timer::ACE_High_Res_Timer (u_long scale_factor)
   : scale_factor_ (scale_factor)
 {
   ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");
@@ -56,11 +56,11 @@ ACE_High_Res_Timer::stop_incr (void)
 ACE_INLINE void
 ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
-  usecs = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_) / 1000;
+  usecs = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_);
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::global_scale_factor (double gsf)
+ACE_High_Res_Timer::global_scale_factor (u_long gsf)
 {
   global_scale_factor_ = gsf;
 }
@@ -68,10 +68,10 @@ ACE_High_Res_Timer::global_scale_factor (double gsf)
 ACE_INLINE void
 ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
 				  ACE_hrtime_t hrt, 
-				  double scale_factor)
+				  u_long scale_factor)
 {
-  tv.sec ((long) (hrt / scale_factor / 1000) / 1000000);
-  tv.usec ((long) (hrt / scale_factor / 1000) % 1000000);
+  tv.sec ((long) (hrt / scale_factor) / 1000000);
+  tv.usec ((long) (hrt / scale_factor) % 1000000);
 }
 
 ACE_INLINE ACE_Time_Value
