@@ -1,13 +1,25 @@
+Sun Nov 01 08:24:19 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+          (calc_delta): removed fabs wrap of real_time with
+          ACE_LACKS_FLOATING_POINT, because real_time is unsigned
+          on those platforms.  GHS complained about useless
+          check for < 0.
+
+          (do_test): changed sleep_time - delta < 0 check to
+          sleep_time < delta, because GHS 1.8.8 complained (improperly)
+          that sleep_time - delta could never be less than 0.
+
 Sat Oct 31 17:49:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.38 released.
 
 Sat Oct 31 17:14:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* performance-tests/Demux/CodeGen/gen_names.cpp: Cleaned up the
- 	  code a little bit and fixed a problem with ACE_CString -- it was
- 	  being passed the address of a character, which really confused
- 	  it!  Thanks to Vishal for chasing this down.
+        * performance-tests/Demux/CodeGen/gen_names.cpp: Cleaned up the
+          code a little bit and fixed a problem with ACE_CString -- it was
+          being passed the address of a character, which really confused
+          it!  Thanks to Vishal for chasing this down.
 
 Sat Oct 31 13:03:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
