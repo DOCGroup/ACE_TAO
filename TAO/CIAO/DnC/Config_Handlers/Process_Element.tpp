@@ -68,13 +68,11 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
             {
               parser.reset (CIAO::Config_Handler::Utils::create_parser ());
               href_doc = parser->parseURI (final_url.c_str ());
-//              href_doc = CIAO::Config_Handler::Utils::create_document(final_url.c_str ());
             }
           else
             {
               parser.reset (CIAO::Config_Handler::Utils::create_parser ());
               href_doc = parser->parseURI (url_string.c_str ());
-//              href_doc = CIAO::Config_Handler::Utils::create_document (url_string.c_str ());
             }
 
           DOMDocumentTraversal* traverse (href_doc);
