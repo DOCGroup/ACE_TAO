@@ -1,3 +1,12 @@
+Mon Jul  6 19:33:54 1998  Jeff Parsons  <jp4@cs.wustl,edu>
+
+	* TAO/tests/Cubit/TAO/DII_Cubit/client.cpp:
+	  Made the shutdown request DII instead of SII. Everything 
+	  works on NT except for the shutdown option. Unix is OK.
+	  Also, changed the parse_args call to come after initializing
+	  the orb, so other orb-specific args can be used and not
+	  confuse parse_args.
+
 Mon Jul  6 19:17:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 
 	* docs/Options.html: Added documentation about the
@@ -5,7 +14,7 @@ Mon Jul  6 19:17:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 
 Mon Jul  6 17:00:00 1998  Jeff Parsons   <jp4@cs.wustl.edu>
 
-	* TAO/tests/Cubit/TAO/DII_Cubit/client.{h.cpp}:
+	* TAO/tests/Cubit/TAO/DII_Cubit/client.{h,cpp}:
 	  Added a DII request on the naming service to get the
 	  Cubit factory IOR, plus code to implement all the 
 	  command line options. Built with SunCC, it works on Unix,
