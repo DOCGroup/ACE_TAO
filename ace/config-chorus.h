@@ -120,10 +120,12 @@
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_SEMBUF_T
 #define ACE_HAS_STRDUP_EMULATION
+#define ACE_HAS_DIRENT
+#define ACE_LACKS_READDIR_R
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
-#define ACE_USE_RCSID 0
+# define ACE_USE_RCSID 0
 #endif /* #if !defined (ACE_USE_RCSID) */
 
 #endif /* ACE_CONFIG_H */
