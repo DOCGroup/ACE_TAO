@@ -374,13 +374,13 @@ ace_get_module (ACE_Static_Node *str_rec,
   // Module_Type object from the svc.conf file.
   ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
 
-  if (ACE_OS::strcmp (mp->name (), wname) != 0)
+  if (ACE_OS::strcmp (mp->name (), ASYS_WIDE_STRING (module_type_name)) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
                   ASYS_WIDE_STRING (module_type_name),
                   mp->name ()));
-      mp->name (wname);
+      mp->name (ASYS_WIDE_STRING (module_type_name));
     }
 
   return mt;
@@ -404,7 +404,7 @@ ace_create_service_type (const ASYS_TCHAR *name,
     case ACE_SVC_OBJ_T:
       ACE_NEW_RETURN (stp,
                       ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
-                                               ASYS_WIDE_STRING (name), flags,
+                                               name, flags,
                                                gobbler),
                       0);
       break;
