@@ -199,37 +199,6 @@ private:
   // Current value of the item in this node.
 };
 
-#if 0
-// Forward declaration.
-template <class T> class ACE_Double_Linked_List;
-template <class T> class ACE_Double_Linked_List_Iterator;
-
-template <class T>
-class ACE_DNode
-{
-// = TITLE
-//     Implementation element in a Double-linked List.
-public:
-  friend class ACE_Double_Linked_List<T>;
-  friend class ACE_Double_Linked_List_Iterator<T>;
-
-  T *item (void);
-protected:
-  ACE_DNode (const T &i, ACE_DNode<T> *n = 0, ACE_DNode<T> *p = 0);
-  ACE_DNode (const ACE_DNode<T> &i);
-
-  ~ACE_DNode (void);
-
-  T item_;
-
-  ACE_DNode *prev_;
-  // Pointer to previous element in the list.
-
-  ACE_DNode *next_;
-  // Pointer to next element in the list.
-};
-#endif /* 0 */
-
 template <class T>
 class ACE_Unbounded_Stack
 {
@@ -612,18 +581,6 @@ public:
 
   void dump (void) const;
   // Dump the state of an object.
-
-#if 0
-  T *find (const T &item);
-  // Locate the DNode address that contains the item. Return
-  // an address if succeed, 0 otherwise.
-
-  T *remove (const T &item);
-  // This function will iterate thru the double-linked list and remove
-  // it from the list.  Return Node address if succeed, 0 otherwise.
-  // Notice that this method will *not* free the internal node.  The
-  // node is simple unlinked from the list.
-#endif /* 0 */
 
   int remove (T *n);
   // Use DNode address directly.
