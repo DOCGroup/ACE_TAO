@@ -41,7 +41,7 @@ module TAO_IOP
 
       boolean set_primary (in Object ior1,
                            in Object ior2)
-        raises (Duplicate);
+        raises (Duplicate, NotFound);
       // Sets the profile ior1, in the profile ior2 to be a
       // primary.
 
