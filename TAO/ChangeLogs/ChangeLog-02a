@@ -1,3 +1,37 @@
+Thu Apr  5 11:04:52 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * tao/RT_Endpoint_Selector_Factory.{cpp,h}:
+        * tao/Endpoint_Selector_Factory.{cpp,h}:
+          Refactored endpoint selector factory code into
+          these new files as part of the RTCORBA subsetting
+          project.
+
+        * tao/Invocation_Endpoint_Selectors.{cpp,h,i}:
+        * tao/RT_Invocation_Endpoint_Selectors.{cpp,h}:
+          Moved almost all RT specific code from
+          Invocation_Endpoint_Selectors.*
+
+        * tao/ORB_Core.{cpp,h,i}:
+          Moved endpoint selectors from ORB_Core to the
+          factory objects.  Removed most RT endpoint selector
+          code except for the initialization of the endpoint
+          selector factory object.
+
+        * tao/Invocation.{cpp,h,i}:
+          Miscellaneous changes to work with the above
+          refactorings.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/Makefile.am:
+          Added RT_Endpoint_Selector_Factory and
+          Endpoint_Selector_Factory
+
+        * tao/RTCORBA/README:
+          Updated with selector changes
+
 Thu Apr  5 10:16:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/ORB.h:

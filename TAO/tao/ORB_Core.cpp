@@ -30,9 +30,11 @@
 #include "Services_Activate.h"
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
+#include "Endpoint_Selector_Factory.h"
 
-#include "Invocation_Endpoint_Selectors.h"
-#include "RT_Invocation_Endpoint_Selectors.h"
+#if (TAO_HAS_RT_CORBA == 1)
+#include "RT_Endpoint_Selector_Factory.h"
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #include "IORInfo.h"
 
@@ -139,14 +141,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_lock_ (),
     open_called_ (0),
     endpoint_selector_factory_ (0),
-    default_endpoint_selector_ (0),
 #if (TAO_HAS_RT_CORBA == 1)
-    priority_endpoint_selector_ (0),
-    bands_endpoint_selector_ (0),
-    protocol_endpoint_selector_ (0),
-    priority_protocol_selector_ (0),
-    bands_protocol_selector_ (0),
-    client_priority_policy_selector_ (0),
     rt_orb_ (),
     rt_current_ (),
     priority_mapping_manager_ (),
@@ -194,34 +189,15 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
 
-  ACE_NEW (this->endpoint_selector_factory_,
-           TAO_Endpoint_Selector_Factory);
-
-#if (TAO_HAS_RT_CORBA==1)
-
-  ACE_NEW (this->priority_endpoint_selector_,
-           TAO_Priority_Endpoint_Selector);
-
-  ACE_NEW (this->bands_endpoint_selector_,
-           TAO_Bands_Endpoint_Selector);
-
-  ACE_NEW (this->protocol_endpoint_selector_,
-           TAO_Protocol_Endpoint_Selector);
-
-  ACE_NEW (this->priority_protocol_selector_,
-           TAO_Priority_Protocol_Selector);
-
-  ACE_NEW (this->bands_protocol_selector_,
-           TAO_Bands_Protocol_Selector);
-
-  ACE_NEW (this->client_priority_policy_selector_,
-           TAO_Client_Priority_Policy_Selector);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  ACE_NEW (this->default_endpoint_selector_,
-           TAO_Default_Endpoint_Selector);
+#if (TAO_HAS_RT_CORBA == 1)
+  ACE_NEW (this->endpoint_selector_factory_,
+           RT_Endpoint_Selector_Factory);
+#else /* TAO_HAS_RT_CORBA == 1 */
+  ACE_NEW (this->endpoint_selector_factory_,
+           TAO_Endpoint_Selector_Factory);
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
@@ -251,18 +227,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   delete this->endpoint_selector_factory_;
-  delete this->default_endpoint_selector_;
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  delete this->priority_endpoint_selector_;
-  delete this->bands_endpoint_selector_;
-  delete this->protocol_endpoint_selector_;
-  delete this->priority_protocol_selector_;
-  delete this->bands_protocol_selector_;
-  delete this->client_priority_policy_selector_;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   delete this->transport_sync_strategy_;
 }
