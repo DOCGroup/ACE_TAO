@@ -89,6 +89,16 @@ LD          = $(SHR_FILTER) $(CXX)
 RANLIB	    = ranlib
 
 CPPFLAGS    += -DACE_AIX_VERS=$(AIX_VERS)
+
+# AIX 5.2 offers POSIX aio, but the Visual Age C++ compiler can't grok the
+# aio.h header file. This is a known problem and will be addressed in
+# May 2004 (per IBM). This is a workaround for it, supplied by IBM.
+# When the compiler fix is released, this workaround (and the change
+# to -qflag, below) can be removed. (Steve Huston)
+ifeq (502,$(AIX_VERS))
+CPPFLAGS += -U__C99_RESTRICT
+endif
+
 # -qinitauto seems like an interesting option, but some tests (specifically
 # Process_Strategy_Test) hang with it turned on. This should be investigated
 # at some point.
@@ -113,7 +123,14 @@ else    # Visual Age 5 and 6
   else
     ifeq ($(XLCVERSION),0x0600)
       TEMPINCDIR = tempinc
-      CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR)
+# This is just for the workaround for aio, above. Without it, the compiler
+# warns that __C99_RESTRICT is reserved. When that workaround is gone, this
+# ifeq can be removed also. -qflag=w:w is what we want in the end.
+      ifeq (502,$(AIX_VERS))
+        CCFLAGS    += -qflag=e:e -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR)
+      else
+        CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR)
+      endif
     else
       CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
     endif
