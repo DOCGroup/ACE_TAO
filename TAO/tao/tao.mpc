@@ -104,7 +104,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Sequence.cpp
       MProfile.cpp
       Stub.cpp
-      Typecode.cpp
+      TypeCode.cpp
       CDR.cpp
       Client_Strategy_Factory.cpp
       debug.cpp
