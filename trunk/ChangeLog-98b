@@ -1,3 +1,11 @@
+Mon Aug 17 00:05:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/ReactorEx/test_removals.cpp (main): Fixed
+ 	  signed/unsigned mismatch.
+
+	* examples/Reactor/ReactorEx/test_talker.cpp (handle_read_stream):
+ 	  Fixed incorrect unary minus operator application.
+
 Sun Aug 16 20:57:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (dlerror): Fixed a typo.  Thanks to Ossama Othman

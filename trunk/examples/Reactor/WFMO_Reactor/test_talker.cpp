@@ -363,7 +363,7 @@ Peer_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   // Reset pointers 
-  this->mb_.wr_ptr (-result.bytes_transferred ());
+  this->mb_.wr_ptr (this->mb_.wr_ptr () - result.bytes_transferred ());
 
   // Start off another read
   if (this->rd_stream_.read (this->mb_,
