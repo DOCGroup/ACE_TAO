@@ -68,6 +68,9 @@ public:
    * necessary relocations when @a dll_name>is first loaded and
    * <RTLD_GLOBAL>, which makes symbols available for relocation
    * processing of any other DLLs.
+   * @param dll_name The name of the dll.
+   * @param open_mode How the dll is opened.
+   * @param close_on_destruction Close the handle in the destructor.
    * @retval -1 On failure
    * @retval 0 On success.
    */
