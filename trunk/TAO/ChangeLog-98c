@@ -1,3 +1,24 @@
+Sun Feb 22 20:12:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs/orbsvcs.dsp: Adapted chages to the directory
+	  rearrangement. 
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h:
+	* orbsvcs/orbsvcs/Scheduler_Utilities.h:
+	* orbsvcs/orbsvcs/Event/BCU.h:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
+	* orbsvcs/orbsvcs/Event/RT_Task.h:
+	* orbsvcs/orbsvcs/Event/ReactorTask.h:
+	* orbsvcs/orbsvcs/Event/Task_Manager.h:
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.h:
+	* orbsvcs/orbsvcs/Naming/Entries.h:
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+	* orbsvcs/orbsvcs/Sched/Scheduler.h:
+	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.h: Added
+	  TAO_ORBSVCS_Export flags.
+
 Sat Feb 21 08:08:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU: added -Wno-used to CCFLAGS, with g++ only.
