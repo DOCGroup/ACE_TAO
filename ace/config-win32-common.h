@@ -555,6 +555,7 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_LACKS_CLOSEDIR
 #define ACE_LACKS_READDIR
 #define ACE_LACKS_MKSTEMP
+#define ACE_LACKS_LSTAT
 // Looks like Win32 has a non-const swab function
 #define ACE_HAS_NONCONST_SWAB
 
