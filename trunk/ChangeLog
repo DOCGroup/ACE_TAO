@@ -1,3 +1,11 @@
+Mon Jul 12 20:32:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Service_Repository.cpp:
+
+	  Fixed a bug with this change "Tue Jul  6 11:59:53 2004
+	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" which
+	  prevented any of the entries in svc.conf files from being read. 
+
 Sun Jul 11 20:26:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html
@@ -8,14 +16,16 @@ Mon Jul 12 01:31:53 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 	* tests/QtReactor_Test.cpp:
 	* tests/QtReactor_Test.h:
 	* tests/tests.mpc:
-	  New automatic test for testing QtReactor. This test may also serve
-          as an example of Qt and ACE integration.
+	  New automatic test for testing QtReactor. This test may also
+	  serve  as an example of Qt and ACE integration.
+	
 	* ace/QtReactor.cpp:
 	* ace/QtReactor.h:
-	Many bugfixes in QtReactor. QtReactor is operational now, though it should
-	be rewritten to make it more efficient and improve the clarity of sources.
-	Moreover, valgrind reports small memory leak in QtReactor_Test, though it's
-	not clear now if the leak results from QtReactor ot test code.
+	  Many bugfixes in QtReactor. QtReactor is operational now, though
+	  it should be rewritten to make it more efficient and improve the
+	  clarity of sources. Moreover, valgrind reports small memory leak
+	  in QtReactor_Test, though it's not clear now if the leak results
+	  from QtReactor ot test code. 
 
 Sun Jul 11 16:48:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

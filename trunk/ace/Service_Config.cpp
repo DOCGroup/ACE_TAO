@@ -350,6 +350,11 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
       return -1;
     }
 
+  if (ACE_Service_Repository::instance ()->insert (sr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("insertion failed, %p\n"),
+                       sr->name ()),
+                      -1);
   return 0;
 }
 
