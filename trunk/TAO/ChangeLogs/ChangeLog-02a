@@ -12,6 +12,10 @@ Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	* tests/OBV/Factory/client.dsp:
 	* tests/OBV/Factory/Factory.dsw:
 	* tests/OBV/Factory/Factory.idl:
+        * tests/OBV/Factory/FactoryC_impl.cpp:
+        * tests/OBV/Factory/FactoryC_impl.h:
+        * tests/OBV/Factory/FactoryS_impl.cpp:
+        * tests/OBV/Factory/FactoryS_impl.h:
 	* tests/OBV/Factory/Makefile:
 	* tests/OBV/Factory/Makefile.bor:
 	* tests/OBV/Factory/README:
