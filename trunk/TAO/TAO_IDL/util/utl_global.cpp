@@ -604,46 +604,128 @@ IDL_GlobalData::n_included_idl_files (size_t n)
 void
 IDL_GlobalData::validate_included_idl_files (void)
 {
-  // Flag to make sure we dont repeat things.
+  // Flag to make sure we don't repeat things.
   static int already_done = 0;
 
   if (already_done == 1)
-    return;
+    {
+      return;
+    }
 
   already_done = 1;
 
   // New number of included_idl_files.
   size_t newj = 0;
 
-  for (size_t j = 0;
-       j < idl_global->n_included_idl_files ();
-       j++)
-    {
-      // Get the base part.
-      char *base_part = ACE_OS::strrchr (idl_global->included_idl_files ()[j],
-                                         '/');
+  size_t n_lexer_includes = idl_global->n_included_idl_files ();
+  char **lexer_includes = idl_global->included_idl_files ();
+  char *lexer_include = 0;
+  char *lexer_base = 0;
+  size_t n_preproc_includes = idl_global->n_include_file_names ();
+  UTL_String **preproc_includes = idl_global->include_file_names ();
+  char *preproc_include = 0;
+  char *preproc_base = 0;
 
-      // If no / then take the whole name. We dont need the /
-      // anyway.
-      if (base_part == 0)
-        base_part = idl_global->included_idl_files ()[j];
-      else
-        base_part++;
+  for (size_t j = 0; j < n_lexer_includes; ++j)
+    {
+      // Get a name from the lexer's list of included IDL files.
+      lexer_include = lexer_includes[j];
 
       // Check this name with the names list that we got from the
       // preprocessor.
       size_t valid_file = 0;
-      for (size_t ni = 0;
-           ni < idl_global->n_include_file_names ();
-           ni++)
-        {
-          char *file_name = idl_global->include_file_names ()[ni]->get_string ();
 
-          if (ACE_OS::strstr (file_name, base_part) != 0)
+      for (size_t ni = 0; ni < n_preproc_includes; ++ni)
+        {
+          preproc_include = preproc_includes[ni]->get_string ();
+
+          if (ACE_OS::strstr (preproc_include, lexer_include) != 0)
             {
-              // This file name is valid.
-              valid_file = 1;
-              break;
+              // Find the last occurrence of '/', if any,.
+              lexer_base = ACE_OS::strrchr (lexer_include,
+                                            '/');
+
+              int lexer_no_prefix = 0;
+
+              // Does this include come from the working directory?
+              if (lexer_base == 0)
+                {
+                  // Just use the whole string.
+                  lexer_base = lexer_include;
+
+                  // Set the flag for later comparison.
+                  lexer_no_prefix = 1;
+                }
+              // strrchr leaves the token at the beginning of the
+              // returned string, so we strip it off here.
+              else if (lexer_base[0] == '/')
+                {
+                  ++lexer_base;
+                }
+
+              preproc_base = ACE_OS::strrchr (preproc_include,                                              
+                                              '/');
+              int preproc_no_prefix = 0;
+
+              // Does this include come from the working directory?
+              if (preproc_base == 0)
+                {
+                  // Just use the whole string.
+                  preproc_base = preproc_include;
+
+                  // Set the flag for later comparison.
+                  preproc_no_prefix = 1;
+                }
+              // strrchr leaves the token at the beginning of the
+              // returned string, so we strip it off here.
+              else if (preproc_base[0] == '/')
+                {
+                  ++preproc_base;
+                }
+              // VC++ preprocessor prepends '.\' to included filenames
+              // from the working directory. SunCC preprocessor prepends
+              // './'. Gnu preprocessor prepends nothing, so the code
+              // below makes them all equivalent.
+              else if (preproc_base[0] == '.')
+                {
+                  if (preproc_base[1] == '\\' || preproc_base[1] == '/')
+                    {
+                      preproc_base += 2;
+                    }
+                }
+
+              // This tells us that the substring match above is bogus,
+              // since one file is from the working directory and one
+              // is from a subdirectory. If both files are from
+              // subdirectories, the substring match will have already
+              // failed, unless we have a true match.
+              if (lexer_no_prefix != preproc_no_prefix)
+                {
+                  continue;
+                }
+              
+              // Belt-and-suspenders check for '\' in the path name,
+              // in case the lexer conversion function for VC++ lets
+              // some get through. If some did, we may still not have
+              // the base file name to use with strcmp.
+              char *tmp = ACE_OS::strrchr (preproc_base,
+                                           '\\');
+
+              if (tmp == 0)
+                {
+                  tmp = preproc_base;
+                }
+              else if (tmp[0] == '\\')
+                {
+                  preproc_base = tmp + 1;
+                }
+
+              if (ACE_OS::strcmp (lexer_base, preproc_base) == 0)
+                {
+                  // This file name is valid.
+                  valid_file = 1;
+                  break;
+                }
             }
         }
 

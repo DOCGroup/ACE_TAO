@@ -507,11 +507,13 @@ idl_parse_line_and_file (char *buf)
 
   idl_global->set_in_main_file (in_main_file);
 
-  // If it's an import file store the stripped name for the BE to use
+  // @@@ (JP) We no longer store the stripped name as before, since that
+  // made it impossible to validate included IDL files
+  // unambiguously.
   if (!(idl_global->in_main_file ()) && idl_global->import ()) 
     {
       ACE_NEW (nm,
-               UTL_String (stripped_name (fname)));
+               UTL_String (fname));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
