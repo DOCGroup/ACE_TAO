@@ -1,5 +1,7 @@
 Tue Apr 29 00:33:46 1997    <irfan@TWOSTEP>
 
+	* IOStream_Test.cpp (main): Added return 0 at the end of main().
+
 	* examples/Reactor/Proactor/test_proactor.mak: Added wsock32.lib
 	  to the link line. I am not sure why we have to do this again
 	  since ace.lib already includes it. Without this library in the
