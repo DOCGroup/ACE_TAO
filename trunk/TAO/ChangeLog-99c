@@ -1,3 +1,30 @@
+Mon Jun 14 22:02:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Event/EC_MT_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_MT_Dispatching.i:
+	* orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+	  Added new dispatching strategy that uses several dispatching
+	  threads.  Thanks to 
+
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	  Added support for the new dispatching strategy
+
+	* orbsvcs/orbsvcs/Event/EC_Command.h:
+	* orbsvcs/orbsvcs/Event/EC_Command.i:
+	* orbsvcs/orbsvcs/Event/EC_Command.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+	  Fixed name conflict between two classes.
+
+	* orbsvcs/tests/EC_Throughput/ec.mt.conf:
+	  New config file for the MT dispatching strategy
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  We don't use the naming service anymore.
+
 Mon Jun 14 22:10:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/GIOP.cpp (process_server_request): Make sure to initialize

@@ -23,8 +23,8 @@ TAO_EC_Disconnected_Command<Target,Object>::
 // ****************************************************************
 
 template<class Target>
-TAO_EC_Shutdown_Command<Target>::
-      TAO_EC_Shutdown_Command (Target *target)
+TAO_EC_Shutdown_Command_T<Target>::
+      TAO_EC_Shutdown_Command_T (Target *target)
   : target_ (target)
 {
 }

@@ -45,7 +45,7 @@
 class TAO_EC_ProxyPushSupplier;
 template<class Target,class Object> class TAO_EC_Connected_Command;
 template<class Target,class Object> class TAO_EC_Disconnected_Command;
-template<class Target> class TAO_EC_Shutdown_Command;
+template<class Target> class TAO_EC_Shutdown_Command_T;
 
 class TAO_ORBSVCS_Export TAO_EC_ProxyPushSupplier_Set
 {
@@ -241,11 +241,11 @@ protected:
 
   typedef TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier> Connected_Command;
   typedef TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier> Disconnected_Command;
-  typedef TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set> Shutdown_Command;
+  typedef TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set> Shutdown_Command;
 
   friend class TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
   friend class TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
-  friend class TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set>;
+  friend class TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set>;
   // This classes call the connected_i(), disconnected_i() and
   // shutdown_i() methods, that's ok because they do while this class
   // is holding its lock.
