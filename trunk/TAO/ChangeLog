@@ -1,3 +1,13 @@
+Fri Sep  5 20:31:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+          Added specializations of TAO_IFR_Generic_Utils<T>::set_initializers
+          guarded so they are seen only by platforms requiring explicit
+          template instantiation. Thanks to Trevor Fields <fields_t@ociweb.com>
+          and Ossama Othman <ossama@dre.vanderbilt.edu> for reporting the
+          problem.
+
 Fri Sep  5 08:19:20 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:

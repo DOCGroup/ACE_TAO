@@ -10,6 +10,101 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+             || (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_Attribute_i>::set_initializers (
+    const TAO_Attribute_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_Operation_i>::set_initializers (
+    const TAO_Operation_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_ProvidesDef_i>::set_initializers (
+    const TAO_ProvidesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_UsesDef_i>::set_initializers (
+    const TAO_UsesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_EmitsDef_i>::set_initializers (
+    const TAO_EmitsDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_PublishesDef_i>::set_initializers (
+    const TAO_PublishesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_ComsumesDef_i>::set_initializers (
+    const TAO_ComsumesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_FinderDef_i>::set_initializers (
+    const TAO_FinderDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_FactoryDef_i>::set_initializers (
+    const TAO_FactoryDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+#endif
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<CORBA::DefinitionKind>;
 template class ACE_Unbounded_Queue<CORBA::DefinitionKind>;
