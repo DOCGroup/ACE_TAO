@@ -1,3 +1,10 @@
+Tue Mar 24 07:38:44 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5-g++.h: replaced ACE_PAGE_SIZE with
+          ACE_HAS_GETPAGESIZE, and added ACE_HAS_STL_MAP_CONFLICT.
+          Thanks to Loren Rittle <rittle@comm.mot.com> for reporting
+          these.
+
 Mon Mar 23 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance_tests/UDP/udp_test.cpp: made use of the Reactor
