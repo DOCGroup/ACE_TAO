@@ -1,3 +1,8 @@
+Wed Dec 26 09:00:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Protocol.h:
+	  Removed incorrect #include for inline files.
+
 Tue Dec 25 22:57:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/RTEvent.bor:
