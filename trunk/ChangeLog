@@ -1,3 +1,8 @@
+Fri Oct  1 11:54:17 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * bin/MakeProjectCreator/config/messaging.mpb:
+          Added requires += corba_messaging
+
 Fri Oct  1 11:35:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
