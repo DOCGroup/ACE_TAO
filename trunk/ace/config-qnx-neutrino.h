@@ -15,25 +15,13 @@
 
 #include "ace/config-g++-common.h"
 
-#undef ACE_HAS_TYPENAME_KEYWORD
-
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
-
 #ifdef __GNUC__
-#  define ACE_CC_NAME "gcc"
+# define ACE_CC_NAME "gcc"
 #else
-#  define ACE_CC_NAME "NTO compiler ??"
+# define ACE_CC_NAME "NTO compiler ??"
 #endif
-
-#include <sys/param.h> // for NBBY
-typedef long fd_mask;
-#ifndef NFDBITS
-# define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
-#endif
-
-// sets O_NDELAY
-#include <unix.h>
 
 // /usr/nto/include/float.h defines
 //  FLT_MAX_EXP 127
