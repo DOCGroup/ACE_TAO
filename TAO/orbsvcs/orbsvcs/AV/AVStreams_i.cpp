@@ -525,7 +525,8 @@ TAO_Server_StreamEndPoint::~TAO_Server_StreamEndPoint (void)
 // TAO_VDev
 // ----------------------------------------------------------------------
 
-TAO_VDev::TAO_VDev (void)
+TAO_VDev::TAO_VDev (CORBA::ORB_ptr orb)
+  : orb_ (orb)
 {
   ACE_DEBUG ((LM_DEBUG, 
               "\n(%P|%t) TAO_VDev::TAO_VDev: created"));
@@ -542,9 +543,29 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) TAO_VDev::set_peer: called"));
+  
+  CORBA::String_var ior = this->orb_->object_to_string (the_peer_dev,
+                                                        env);
+
+  TAO_CHECK_ENV_RETURN (env, 
+                        CORBA::B_FALSE);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) TAO_VDev::set_peer: my peer is %s\n",
+              ior.in ()));
+
+  CORBA::Any anyval;
+  anyval <<= ior.in ();
+  this->define_property ("Related_VDev",
+                         anyval,
+                         env);
+  
+  TAO_CHECK_ENV_RETURN (env, 
+                        CORBA::B_FALSE);
+  
   this->streamctrl_ = the_ctrl;
   this->peer_ = the_peer_dev;
-  return 0;
+  return CORBA::B_TRUE;
 }
 
 CORBA::Boolean 
