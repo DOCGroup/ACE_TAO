@@ -1,3 +1,9 @@
+Tue Apr 20 17:31:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs: Performed copy editing on a bunch of documentation and
+ 	  added the new Interoperable Naming Service documentation to the
+ 	  main documentation page.
+
 Tue Apr 20 15:24:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/MT_Client/orb_creation.dsp: 
