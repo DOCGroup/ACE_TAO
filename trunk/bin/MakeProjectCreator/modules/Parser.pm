@@ -123,7 +123,7 @@ sub read_file {
   $self->{'line_number'} = 0;
   if (open($ih, $input)) {
     my($line) = '';
-    while($_ = $ih->getline()) {
+    while(<$ih>) {
       ($status, $errorString) = $self->collect_line($ih, \$line, $_);
 
       if (!$status) {

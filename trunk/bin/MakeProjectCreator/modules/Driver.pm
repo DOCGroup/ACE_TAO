@@ -15,6 +15,7 @@ use File::Basename;
 
 use Options;
 use Parser;
+use Version;
 
 use vars qw(@ISA);
 @ISA = qw(Parser Options);
@@ -40,7 +41,6 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = "2.3";
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -94,7 +94,7 @@ sub optionError {
     print STDERR "ERROR: $line\n";
   }
   my($spaces) = (' ' x (length($base) + 8));
-  print STDERR "$base v$self->{'version'}\n" .
+  print STDERR "$base v" . Version::get() . "\n" .
                "Usage: $base [-global <file>] [-include <directory>] [-recurse]]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .

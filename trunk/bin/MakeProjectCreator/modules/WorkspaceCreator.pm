@@ -270,7 +270,7 @@ sub parse_exclude {
   my(@types)   = split(/\s*,\s*/, $typestr);
   my(@exclude) = ();
 
-  while($_ = $fh->getline()) {
+  while(<$fh>) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
