@@ -1,8 +1,19 @@
 Fri May 02 08:14:30 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: removed
-	  specializations of ACE Guards because they're in libGateway.
-	  Thanks to Joey Zhu <joey.zhu@wcom.com> for reporting this problem.
+	* examples/ASX/Event_Server/Transceiver/{Makefile,transceiver.cpp}:
+	  added template specializations to transceiver.cpp so that it no
+	  longer needs to be linked with libGateway.
+
+	* examples/ASX/Event_Server/Event_Server/{Makefile,Peer_Router.cpp}:
+	  added template specialization to Peer_Router.cpp so that event_server
+	  no longer needs to be linked with libGateway.
+
+	Thanks to Joey Zhu <joey.zhu@wcom.com> for reporting the above
+	link problems.
+
+	* apps/Gateway/Peer/{Makefile,Peer.cpp}: added template
+	  specialization to Peer.cpp so that peerd no longer needs to
+	  be linked with libGateway.
 
 Thu May  1 10:16:34 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
