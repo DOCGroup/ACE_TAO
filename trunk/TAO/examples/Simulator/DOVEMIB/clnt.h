@@ -18,7 +18,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "any_testC.h"
-//#include "reverseC.h"
 #include "NavWeapC.h"
 
 class Any_Test_Client

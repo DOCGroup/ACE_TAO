@@ -16,6 +16,7 @@
 // ============================================================================
 
 #include "AnyAnalyser.h"
+#include "tao/Align.h"
 
 AnyAnalyser::AnyAnalyser (const char *file_name) 
   : printVisitor_ptr_(new PrintVisitor (file_name)) {
@@ -32,9 +33,11 @@ AnyAnalyser::printAny (CORBA::Any any) {
                               0,                  // member count
                               0};                 // recursion level
 
+  unsigned char *value_ptr_ = (unsigned char *)any.value ();
+
   // analyse the any
   Node *node_ptr_ = analyse (any.type (), 
-                             (unsigned char *)value_ptr, 
+                             value_ptr_, 
                              recurseInfo_);
 
   // print the results
@@ -46,7 +49,10 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 		      unsigned char *&value_ptr,
           RecurseInfo ri)
 {
-  
+  CORBA::Long size, alignment, align_offset;
+  CORBA::TypeCode_ptr param;  
+  unsigned char *start_addr = value_ptr;
+
   TAO_TRY {
     Node *node_ptr_ = 0;
     
@@ -55,9 +61,11 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
       switch (tc_ptr->kind(TAO_TRY_ENV)) {
 	
       	case CORBA::tk_struct:
-      	  cout << "Struct detected" << endl;
-	        {	  
-	          // create a new Node
+	        {	
+            // to hold a pointer to the start of the struct
+            unsigned char *start_addr = value_ptr;
+
+            // create a new Node
 	          StructNode *structNode_ptr_ = new StructNode (tc_ptr->name (TAO_TRY_ENV), 
                       								   ri.recursion_level);
 	    
@@ -69,8 +77,37 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
                                           tc_ptr,             // parent typecode
                                           i,                  // member count
                                           ri.recursion_level+1};
-	      
-	            structNode_ptr_->addChild (analyse (tc_ptr->member_type (i, TAO_TRY_ENV), 
+
+
+              // get the type code of the child i
+              param = tc_ptr->member_type (i, TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+
+              // get the size
+              size = param->size (TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+
+              // get the alignment
+              alignment = param->alignment (TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+
+              // calculate
+              align_offset =
+                      (ptr_arith_t) ptr_align_binary (value_ptr, alignment)
+                      - (ptr_arith_t) value_ptr
+                      + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
+                      - (ptr_arith_t) start_addr;
+              TAO_CHECK_ENV;
+
+              // if both the start_addr and data are not aligned as per
+              // the alignment, we do not add the offset
+              value_ptr = (unsigned char *) ((ptr_arith_t) value_ptr +
+                                           ((align_offset == alignment) ?
+                                            0 : align_offset));              
+
+              printf ("%d\n", (unsigned long)value_ptr);
+           
+	            structNode_ptr_->addChild (analyse (param, 
                                                   value_ptr,
 						                                      recurseInfo_));
             }   
@@ -80,7 +117,7 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 	  
         case CORBA::tk_double:
           if (ri.kind == PARENT_IS_STRUCT) {
-	          node_ptr_ = (Node *) new DoubleNode ((CORBA::Double *)*value_ptr,
+	          node_ptr_ = (Node *) new DoubleNode ((CORBA::Double *)value_ptr,
  					                                       ri.parent_tc_ptr->member_name(ri.member_number,
                                                                                TAO_TRY_ENV),
 					                                       ri.recursion_level);
@@ -91,7 +128,6 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 					                                       ri.recursion_level);
           }
 	        value_ptr += 8;
-	        cout << "Double detected" << endl;
 	        break;	      
 	  
 	      case CORBA::tk_long:
@@ -107,10 +143,13 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 			  		                                   ri.recursion_level);
           }
 	        value_ptr += 4;
-	        cout << "Long detected" << endl;
 	        break;
 	  
 	      case CORBA::tk_ulong:
+          cout << "Name:" << ri.parent_tc_ptr->member_name(ri.member_number,TAO_TRY_ENV)
+               << " Value: " << (CORBA::ULong)*value_ptr << endl;
+          printf ("%X\n", (unsigned long)value_ptr);
+
           if (ri.kind == PARENT_IS_STRUCT) {
   	        node_ptr_ = (Node *) new ULongNode ((CORBA::ULong *)value_ptr,
  					                                       ri.parent_tc_ptr->member_name(ri.member_number,
@@ -123,7 +162,6 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 					                                      ri.recursion_level);
           }
 	        value_ptr += 4;
-	        cout << "ULong detected" << endl;
 	        break;
 	  
 	      case CORBA::tk_string:
@@ -139,7 +177,6 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 					                                       ri.recursion_level);
           }
 	     	  value_ptr += 4;
-	        cout << "String detected" << endl;
 	        break;
 	  
 	      default: ACE_ERROR ((LM_ERROR, "AnyAnalyser::analyse: No known kind of type detected!\n"));

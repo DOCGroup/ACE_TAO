@@ -84,6 +84,34 @@ LINK32=link.exe
 # Name "TestClient - Win32 Debug"
 # Begin Source File
 
+SOURCE=.\any_test.idl
+
+!IF  "$(CFG)" == "TestClient - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TestClient - Win32 Debug"
+
+# Begin Custom Build - Invoking TAO_IDL compiler
+InputPath=.\any_test.idl
+InputName=any_test
+
+BuildCmds= \
+	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\any_testC.cpp
 # End Source File
 # Begin Source File

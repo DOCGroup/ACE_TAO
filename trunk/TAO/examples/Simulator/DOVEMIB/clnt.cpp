@@ -96,26 +96,26 @@ Any_Test_Client::run ()
       data.replace (_tc_Navigation, &navigation_, CORBA::B_FALSE, TAO_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,"Starting test with Any: Navigation\n")); 
-     // any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
+      any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,"Ending test with Any: Navigation\n"));   
 
       
       weapons_.number_of_weapons = 5;
       weapons_.weapon1_identifier = CORBA::string_alloc (20);
       strcpy (weapons_.weapon1_identifier, "A");
-      weapons_.weapon1_status = 0;
+      weapons_.weapon1_status = 1;
       weapons_.weapon2_identifier = CORBA::string_alloc (20);
       strcpy (weapons_.weapon2_identifier, "B");
-      weapons_.weapon2_status = 0;
+      weapons_.weapon2_status = 2;
       weapons_.weapon3_identifier = CORBA::string_alloc (20);
       strcpy (weapons_.weapon3_identifier, "C");
-      weapons_.weapon3_status = 0;
+      weapons_.weapon3_status = 4;
       weapons_.weapon4_identifier = CORBA::string_alloc (20);
       strcpy (weapons_.weapon4_identifier, "D");
-      weapons_.weapon4_status = 0;
+      weapons_.weapon4_status = 8;
       weapons_.weapon5_identifier = CORBA::string_alloc (20);
       strcpy (weapons_.weapon5_identifier, "E");
-      weapons_.weapon5_status = 0;
+      weapons_.weapon5_status = 16;
       
       weapons_.utilization = 1;
       weapons_.overhead = 2;

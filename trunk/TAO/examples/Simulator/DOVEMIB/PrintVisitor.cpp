@@ -75,7 +75,7 @@ PrintVisitor::visitULongNode (ULongNode *uLongNode) {
 void
 PrintVisitor::visitStringNode (StringNode *stringNode) { 
   printPadding (stringNode->getRecursionLevel());  
-  fprintf (output_, "CORBA::String %s = %s;", stringNode->getName(), (char *)stringNode->getValue());
+  fprintf (output_, "CORBA::String %s = \"%s\";", stringNode->getName(), (char *)stringNode->getValue());
 }
 
 void
