@@ -1,3 +1,10 @@
+Mon Jul 12 09:55:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/AST_Interface.h:
+	* TAO_IDL/ast/AST_Interface.cpp:
+	  Modified fwd_redefinition_helper method to allow for
+	  reopened modules.
+
 Mon Jul 12 09:00:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Exception.cpp (_tao_errno): conditionally compile
