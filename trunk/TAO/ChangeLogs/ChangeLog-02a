@@ -21,11 +21,17 @@ Tue Apr 11 09:02:33 2000  Ossama Othman  <ossama@uci.edu>
 	  TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE location code to
 	  improve exception messages.
 
+	  (open_default):
+
+	  Return error if no default endpoints were opened.  This can
+	  occur if all loaded pluggable protocols require an explicit
+	  endpoint to be provided.  [Bug 491]
+
 	* tao/ORB_Core.cpp (init):
 
 	  Updated all exceptions to utilize new
 	  TAO_ORB_CORE_INIT_LOCATION_CODE location code to improve
-	  exception messages.
+	  exception messages.  [Bug 487]
 
 	* tao/IIOP_Profile.cpp (decode):
 	* tao/SHMIOP_Profile.cpp (decode):
