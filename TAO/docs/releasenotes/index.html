@@ -569,22 +569,16 @@ Integrating the mpeg-1 streaming application with the trading service.</LI>
 <P><A NAME="ts"></A><B>CORBA Time Service</B>
 <P>Point of contact: <A HREF="mailto:vishal@cs.wustl.edu">Vishal Kachroo</A>
 <P>TAO's Time Service allows clients to connect to Time Service
-Clerks running on their machines and obtain globally synchronized
-time.  This time is calculated from the time obtained from one or more
-Time Servers running on multiple machines in the network.
-<P>Current status (as of 1st Jan 1999):
+Clerks and obtain globally synchronized time. This time is calculated from the
+time obtained from one or more Time Servers running on multiple machines in
+the network. The service uses the TAO Implementation Repository to activate the
+time servers on demand.
+
+<P>Current status (as of 10th Jan 1999):
 <UL>
 <LI>
-Implementation of a Distributed CORBA Time Service without using the Implementation
-Repository is complete.</LI>
-</UL>
-Work in progress
-<UL>
-<LI>
-Integrating the Implementation Repository with the Time Service. This
-allows the Time Servers and Clerks to be activated on-demand.</LI>
-<LI>
-Adding tests for the various options in the service.</LI>
+Implementation of a Distributed CORBA Time Service is complete.
+</LI>
 </UL>
 Future work:
 <UL>
@@ -629,7 +623,7 @@ Current Work:</H3>
 <LI>
 <TT>Event Service</TT>: The Event Service will create an event channel
 and register it with the naming service, Push style consumers and
-producers</LI> 
+producers</LI>
 
 <BR>can then connect to the service and send /receive events.
 <LI>
@@ -649,21 +643,21 @@ and <A HREF="mailto:levine@cs.wustl.edu">David Levine</A>
 <P>Currently Implemented Features:
 <UL>
 <LI>
-The scheduling service can be built to use either a null 
+The scheduling service can be built to use either a null
 implementation or a strategized implementation of the configuration scheduler.
 </LI>
 <LI>
-The null scheduler implementation, which is built by default, allows the 
+The null scheduler implementation, which is built by default, allows the
 configuration scheduler to be used with applications that require a scheduling
-service interface, but do not (at least in the current stage of their 
-development, in certain configurations, etc.) make use of the real-time 
+service interface, but do not (at least in the current stage of their
+development, in certain configurations, etc.) make use of the real-time
 scheduling features it provides.
 </LI>
 <LI>
 The strategized scheduler implementation can be built by #defining
 TAO_USES_STRATEGY_SCHEDULER, and the appropriate scheduling strategy macro
 (TAO_USES_RMS_SCHEDULING, TAO_USES_EDF_SCHEDULING, TAO_USES_MUF_SCHEDULING,
-or TAO_USES_MUF_SCHEDULING) in $ACE_ROOT/ace/config.h. This allows the 
+or TAO_USES_MUF_SCHEDULING) in $ACE_ROOT/ace/config.h. This allows the
 configuration scheduler to be used with applications that require a specific
 scheduling strategy.  Each scheduling strategy will produce a set of static
 scheduling priorities, which it will assign to operations based on their
@@ -677,7 +671,7 @@ Future work:
 &nbsp;Implement heap-based dispatching queues.</LI>
 <LI>
 &nbsp;Add support for additional configurability, especially in the type
-of dispatching strategy (list vs. heap) that will be used to dispatch 
+of dispatching strategy (list vs. heap) that will be used to dispatch
 operations at a given static priority level.</LI>
 <LI>
 &nbsp;Benchmark the various alternative strategies to obtain performance
