@@ -1,5 +1,9 @@
 Mon Apr 27 07:18:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/Service_Object.h (ACE_Service_Object_Ptr): 
+	* netsvcs/servers/main.cpp (main): Added more comments on how to
+	  use ACE_Service_Object_Ptr with ACE_SVC_INVOKE correctly. 
+
 	* ace/OS.h (ACE_Service_Object_Exterminator): Define the type as
  	  extern "C" function pointer to make MVS happy.  Thanks to
 
