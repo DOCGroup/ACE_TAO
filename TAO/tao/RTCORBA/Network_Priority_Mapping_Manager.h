@@ -38,6 +38,9 @@ class TAO_Network_Priority_Mapping_Manager_var;
 typedef TAO_Network_Priority_Mapping_Manager *TAO_Network_Priority_Mapping_Manager_ptr;
 
 
+namespace RTCORBA
+{
+}
 /**
  * @class TAO_Network_Priority_Mapping_Manager
  *
@@ -165,4 +168,3 @@ private:
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H */
-

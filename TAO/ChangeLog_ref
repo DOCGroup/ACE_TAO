@@ -1,3 +1,24 @@
+Tue Sep  2 16:32:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/RTCORBA/RTCORBAC.h:
+	* tao/RTCORBA/RTCORBAC.i:
+	* tao/RTPortableServer/RTPortableServerC.cpp:
+	* tao/RTPortableServer/RTPortableServerC.h:
+	* tao/RTPortableServer/RTPortableServerC.i:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/RTScheduler.pidl:
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTScheduling/RTSchedulerC.i:
+	* tao/RTScheduling/RTScheduler_Manager.h:
+	* tao/TypeCodeFactory/TypeCodeFactory.pidl:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.inl: Generated and
+	  handcrafted code.
+
 Tue Sep  2 11:46:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO.dsp:
