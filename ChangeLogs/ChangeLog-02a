@@ -1,3 +1,27 @@
+Tue Oct 24 23:14:55 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+        * ace/config-win32-borland.h:
+
+          Added ACE_LACKS_WCSDUP to do something similar to 
+          ACE_HAS_STRDUP_EMULATION.  Added this to Borland's config,
+
+          Also fixed several warnings in OS_String's emulation
+          functions that show up with g++.
+
+        * ace/Object_Manager.cpp:
+
+          Added code in the Object Manager to disable some of the
+          error windows that pops up in Win32 apps.  If 
+          ACE_DISABLE_WIN32_ERROR_WINDOWS is defined, then 
+          ACE_ASSERT's and Access Violations will not pop up 
+          error box's anymore.  This was mainly added for auto
+          build purposes.
+
+        * ace/Select_Reactor_Base.cpp:
+
+          Changed ACE_TEXT's to ACE_LIB_TEXT.
+
 Tue Oct 24 23:40:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/SString_Test.cpp (main): Added tests for string
