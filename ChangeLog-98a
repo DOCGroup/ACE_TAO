@@ -28,7 +28,7 @@ Mon Feb 23 11:27:10 1998  David L. Levine  <levine@cs.wustl.edu>
 Mon Feb 23 11:11:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.h: Define ACE_Process_Options::NO_EXEC as 0 on
- 	  Win32.  It is not used anyway.
+ 	  Win32.  It has no effect on NT anyway.
 
 Sun Feb 22 21:37:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
