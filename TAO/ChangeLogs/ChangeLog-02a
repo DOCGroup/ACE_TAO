@@ -1,3 +1,18 @@
+Sat Apr  1 22:10:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+
+          Added patches submitted by Larry Peacock <larry@appsmiths.com> to
+          finish the Environment Variable support in the Implementation
+          Repository.  
+
+          [Bug 196]
+
 Sat Apr  1 12:50:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Lite.cpp:
