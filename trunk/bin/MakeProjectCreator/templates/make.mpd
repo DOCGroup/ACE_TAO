@@ -48,20 +48,20 @@ OUTPUT_OPTION = -o $@
 <%marker(local)%>
 
 <%if(exename)%>
-all: $(BIN)
+all: $(BIN) <%if(install)%>install<%endif%>
 
 $(BIN): $(OBJS)
 	$(LINK.cc) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
 
 <%endif%>
 <%if(sharedname)%>
-all: $(SHLIB)
+all: $(SHLIB) <%if(install)%>install<%endif%>
 
 $(SHLIB): $(OBJS)
 	$(LINK.cc) $(SHFLAGS) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
 
 <%endif%>
-<%if(sharedname)%>
+<%if(staticname)%>
 $(LIB): $(OBJS)
 	$(AR) $(ARFLAGS) $(LIB) $(OBJS)
 
@@ -69,6 +69,25 @@ $(LIB): $(OBJS)
 %.o: %.cpp
 	$(COMPILE.cc) $< $(OUTPUT_OPTION)
 
+<%if(install)%>
+<%if(exename)%>
+INSTARGET = $(BIN)
+<%else%>
+<%if(sharedname)%>
+INSTARGET = $(SHLIB)
+<%else%>
+<%if(staticname)%>
+INSTARGET = $(LIB)
+<%endif%>
+<%endif%>
+<%endif%>
+install:
+	@echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"
+	@mkdir -p "<%install%>"
+	@$(RM) "<%install%>/$(INSTARGET)"
+	@ln -s "$(PWD)/$(INSTARGET)" "<%install%>"
+
+<%endif%>
 clean:
 	-$(RM) $(OBJS)
 

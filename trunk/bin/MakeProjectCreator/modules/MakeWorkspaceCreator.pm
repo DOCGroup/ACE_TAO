@@ -74,12 +74,22 @@ sub write_comps {
   ## If there is more than one project, use a for loop
   if ($#list > 0) {
     print $fh "\t\@for file in \$(MFILES); do \\$crlf" .
-              "\t\$(MAKE) -f \$\$file \$(\@); \\$crlf" .
+              "\told=`pwd`; \\$crlf" .
+              "\tcd `dirname \$\$file`; \\$crlf" .
+              "\t\$(MAKE) -f `basename \$\$file` \$(\@); \\$crlf" .
+              "\tcd \$\$old; \\$crlf" .
               "\tdone$crlf";
   }
   else {
     ## Otherwise, just list the call to make without a for loop
-    print $fh "\t\@\$(MAKE) -f " . $list[0] . " \$(\@);$crlf";
+    print $fh "\t\@";
+    my($dname) = dirname($list[0]);
+    if ($dname ne '.') {
+      print $fh "cd $dname && ";
+    }
+    print $fh "\$(MAKE) -f " .
+              ($dname eq '.' ? $list[0] : basename($list[0])) .
+              " \$(\@);$crlf";
   }
 }
 
