@@ -234,9 +234,10 @@ TAO_PropertySet::get_property_value (const char *property_name,
   ACE_DEBUG ((LM_DEBUG,
               "get_prop_value: hash_key.pname_.in () : %s \n",
               hash_key.pname_.in ()));
-  if (this->hash_table_.find (hash_key, hash_value) != 0) 
-    ACE_ERROR ((LM_ERROR,
-                "Find failed: \n"));
+  if (this->hash_table_.find (hash_key, hash_value) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Find failed\n"),
+                      0);
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Find succeeded \n"));
@@ -255,16 +256,16 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
                                  CORBA::Environment &env)
 {
   size_t n = property_names.length ();
-
+  
   if (n == 0)
     return CORBA::B_FALSE;
 
   CORBA::Any_ptr any_ptr = 0;
-
+  
   ACE_NEW_RETURN (nproperties,
                   CosPropertyService::Properties,
                   CORBA::B_FALSE);
-
+  
   nproperties->length (n);
 
   CORBA::Boolean ret_val = CORBA::B_TRUE;
@@ -286,16 +287,16 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
           ret_val = CORBA::B_FALSE;
           nproperties [i].property_name =
             CORBA::string_dup (property_names [i]);
-
+          
           // @@ Make any value with tk_void type. Using replace
           // method, <<= operator doesnot exist yet for this.
           nproperties [i].property_value.replace (CORBA::_tc_void,
                                                   0,
-                                                  CORBA::B_FALSE,
+                                                  CORBA::B_FALSE,                                   
                                                   env);
         }
     }
-  TAO_CHECK_ENV_RETURN (env, 1);
+  TAO_CHECK_ENV_RETURN (env, CORBA::B_FALSE);
   return ret_val;
 }
 
@@ -305,9 +306,10 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
                                      CosPropertyService::PropertiesIterator_out rest,
                                      CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG, "\nDB:TAO_PropertySet::get_all_properties\n"));
   size_t num_of_properties =
     hash_table_.current_size ();
-
+  
   if (num_of_properties == 0)
     return;
 
@@ -324,12 +326,15 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
         sequence_length = how_many;
       nproperties->length (sequence_length);
     }
+  ACE_DEBUG ((LM_DEBUG,
+              "PropertySet::get_all_properties -seq-length :%d\n",
+              sequence_length));
 
   // Prepare an iterator and iterate thru the PropertySet. Retrive the
   // values.
   CosProperty_Hash_Iterator iterator (this->hash_table_);
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
-
+  
   for (CORBA::ULong i = 0;
        i < sequence_length;
        i++, iterator.advance ()) 
@@ -348,26 +353,35 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 
   if (num_of_properties > how_many) 
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "DB:TAO_PropertySet-Creating PropertySet iterator\n"));
       TAO_PropertySet *prop_set;
       
       ACE_NEW (prop_set, TAO_PropertySet);
-
-      for (size_t i = how_many;
+      
+      for (size_t i = sequence_length;
            i < num_of_properties;
-           i++)
+           i++, iterator.advance ())
         {
           if (iterator.next (entry_ptr) != 0) 
             if (prop_set->hash_table_.bind (entry_ptr->ext_id_,
                                             entry_ptr->int_id_) < 0)
               ACE_DEBUG ((LM_DEBUG, "Err: get_all_properties\n"));
-          iterator.advance ();
         }
-
+      ACE_DEBUG ((LM_DEBUG,
+                  "DB:New PropertySet created--size %d\n",
+                  prop_set->get_number_of_properties (env)));
+      
       // Make the iterator out of the new TAO_Propset.
-      ACE_NEW (TAO_PropertiesIterator *prop_iterator,
-               TAO_PropertiesIterator (*prop_set));
+      TAO_PropertiesIterator *iterator = 0;
+      ACE_NEW_RETURN (iterator,
+                      TAO_PropertiesIterator (*prop_set),
+                      );
+      
+      rest = CosPropertyService::PropertiesIterator::_duplicate ( iterator->_this (env));
+      TAO_CHECK_ENV_RETURN (env, );
 
-      rest = CosPropertyService::PropertiesIterator::_duplicate (prop_iterator->_this (env));
+      ACE_DEBUG ((LM_DEBUG, "DB:TAO_PropSet::get_all_properties-Done\n"));
     }
 }
   
@@ -612,7 +626,7 @@ TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
       return CORBA::B_TRUE;
     }
   else
-    CORBA::B_FALSE;
+    return CORBA::B_FALSE;
 }  
 
 CORBA::Boolean
