@@ -1,3 +1,9 @@
+Tue Dec 16 08:11:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/default_resource.cpp:
+
+	  Instead of using errno, use reactor->initiliazed () instead.
+
 Tue Dec 16 12:08:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Portable_Interceptors/Collocated/Dynamic/Portable_Interceptors_Dynamic.mpc:
@@ -8,7 +14,8 @@ Mon Dec 15 19:46:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
 
 	  #include Consumer.h to get arounda compile error in aCC. Thanks
-	  to Pierre Pacchioni for suggesting the fix.
+	  to Pierre Pacchioni <pierre.pacchioni@avisto.com> for suggesting
+	  the fix.
 
 Mon Dec 15 13:34:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
