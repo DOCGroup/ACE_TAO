@@ -24,11 +24,6 @@ TAO_Remote_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
                                      const CORBA::Char *logical_type_id,
                                      CORBA_Environment &ACE_TRY_ENV)
 {
-  if (target->_stubobj ()->type_id.in () != 0
-      && ACE_OS::strcmp (logical_type_id,
-                         target->_stubobj ()->type_id.in ()) == 0)
-    return 1;
-
   // Here we go remote to answer the question.
   CORBA::Boolean _tao_retval = 0;
 

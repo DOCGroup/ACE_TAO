@@ -1,3 +1,13 @@
+Thu Dec 07 22:20:12 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object.cpp (_is_a): Checking the hint of the object can be
+	  done in the CORBA::Object class before invoking the appropriate
+	  proxy implementation.  The hint check is common for all
+	  implementations and not just the remote case.  Therefore, the
+	  code was removed from TAO_Remote_Object_Proxy_Impl::_is_a() and
+	  moved to CORBA::Object::_is_a().  Thanks to Russell L. Carter
+	  <rcarter@consys.com> for reporting this problem.
+
 Thu Dec 07 20:00:59 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp
