@@ -127,40 +127,40 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test test1 test2...\n";
+      print "run_test test\n";
       print "\n";
-      print "test1               -- Runs a specific test\n";
-      print "                       airplane, simple, or implrepo\n";
+      print "test               -- Runs a specific test\n";
+      print "                      airplane, simple, or implrepo\n";
       exit;
     }
     if ($ARGV[$i] eq "airplane")
     {
       airplane_test ();    
-      last SWITCH;
+      exit;
     }
     if ($ARGV[$i] eq "airplane_ir")
     {
       airplane_ir_test ();    
-      last SWITCH;
+      exit;
     }
     if ($ARGV[$i] eq "simple")
     {
       simple_test ();    
-      last SWITCH;
+      exit;
     }
     if ($ARGV[$i] eq "implrepo")
     {
       implrepo_test ();    
-      last SWITCH;
+      exit;
     }
     if ($ARGV[$i] eq "implrepo2")
     {
       implrepo2_test ();    
-      last SWITCH;
+      exit;
     }
-
 
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }
 }
 
+print "Specify airplane, airplane_ir\n"
