@@ -14,6 +14,7 @@
 
 #ifndef EXECUTIONMANAGER_IMPL_H
 #define EXECUTIONMANAGER_IMPL_H
+#include /**/ "ace/pre.h"
 
 #include "ExecutionManagerS.h"
 

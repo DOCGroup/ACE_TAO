@@ -59,7 +59,9 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, iorintercep
 
 }
 
-project(Deployment_stub) : taolib_with_idl {
+// Valuetype library must be linked for this project.
+// Please don't remove.
+project(Deployment_stub) : taolib_with_idl, valuetype {
   sharedname   =  Deployment_stub
   after        += CIAO_DnC_Client
 
@@ -87,11 +89,13 @@ project(Deployment_stub) : taolib_with_idl {
   }
 }
 
+// CIAO_DnC_Client library must be linked for this project.
+// Please don't remove.
 project(Deployment_svnt) : taolib_with_idl, portableserver{
   after        += Deployment_stub
   sharedname   =  Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
-  libs         += Deployment_stub
+  libs         += Deployment_stub CIAO_DnC_Client
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
   idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
