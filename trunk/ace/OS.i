@@ -11802,8 +11802,6 @@ ACE_OS::stat (const wchar_t *file, struct stat *stp)
       stp->st_size = fdata.nFileSizeLow;
       stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
       stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
-	  if (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-	    stp->st_mode &= !S_IFREG;
     }
   return 0;
 #   elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540)
