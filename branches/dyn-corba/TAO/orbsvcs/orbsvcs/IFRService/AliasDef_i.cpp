@@ -91,14 +91,12 @@ TAO_AliasDef_i::original_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "original_type",
                                             original_type);
 
-  CORBA::DefinitionKind def_kind = this->path_to_def_kind (original_type);
-
   CORBA::Object_var obj = this->path_to_ir_object (original_type
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 void

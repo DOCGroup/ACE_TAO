@@ -1,3 +1,16 @@
+Fri Dec 13 11:48:24 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+
+          Fixed various minor errors - preprocessor directive syntax,
+          throw spec agreement, and unused variables.
+
 Thu Dec 12 23:45:14 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
