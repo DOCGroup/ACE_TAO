@@ -412,16 +412,14 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   if (status == TAO_GIOP_OBJECT_FORWARD)
     {
       CORBA::Object_ptr object_ptr = forward_location_var.in ();
-      output.encode (CORBA::_tc_Object,
-                     &object_ptr,
-                     0,
-                     env);
-
-      // If encoding went fine
-      if (env.exception () != 0)
+      if ((output << object_ptr) == 0)
         {
-          env.print_exception ("TAO_Server_Connection_Handler::handle_locate:"
-                               " forwarding parameter encode failed");
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Server_Connection_Handler::handle_locate - "
+                          "error marshaling forwarded reference\n"));
+            }
           response_required = 0;
           return -1;
         }
@@ -465,11 +463,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
           // create and write a dummy context
           TAO_GIOP_ServiceContextList resp_ctx;
           resp_ctx.length (0);
-          output.encode (TC_ServiceContextList,
-                         &resp_ctx,
-                         0,
-                         ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          output << resp_ctx;
 
           // Write the request ID
           output.write_ulong (request_id);
@@ -496,11 +490,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
               CORBA::Object_ptr object_ptr =
                 forward_request_ptr->forward_reference.in();
 
-              output.encode (CORBA::_tc_Object,
-                             &object_ptr,
-                             0,
-                             ACE_TRY_ENV);
-              ACE_TRY_CHECK;
+              output << object_ptr;
             }
           // end of the forwarding code ****************************
           else

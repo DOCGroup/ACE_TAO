@@ -237,26 +237,12 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
 
   CORBA::Principal_ptr p = *(CORBA::Principal_ptr *) data;
 
-  if (p != 0)
+  if ((*stream << p) == 0)
     {
-      continue_encoding = stream->write_long (p->id.length ());
-
-      continue_encoding = continue_encoding &&
-        stream->write_octet_array (p->id.get_buffer (),
-                                   p->id.length ());
-    }
-  else
-    continue_encoding = stream->write_long (0);
-  if (continue_encoding == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Principal::encode detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // encode obj ref
@@ -278,49 +264,12 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
   // @@ Seems to break here!
   CORBA::Object_ptr obj = *(CORBA::Object_ptr *) data;
 
-  // NIL objrefs ... marshal as empty type hint, no elements.
-
-  if (CORBA::is_nil (obj))
+  if ((*stream << obj) == 0)
     {
-      // encode an empty type_id i.e., an empty string
-      stream->write_ulong (1);
-      stream->write_char (0);
-
-      // Number of profiles = 0
-      stream->write_ulong (0);
-
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      return CORBA::TypeCode::TRAVERSE_STOP;
     }
-  else
-    {
-
-      // All other objrefs ... narrow to a "real type" that we
-      // recognize, then marshal.
-      //
-      // XXX this will be changed so it narrows to STUB_Object and
-      // then asks that surrogate/proxy to marshal itself.
-      //
-      // For now, the original code is minimally changed.
-      // @@ Need to pass this stuff of to IIOP_Profile and let it
-      //    marshal it's own self.  This will be make_body
-
-      // @@ FRED: we will only encode he profile_in_use!!
-      // @@ need to add support for multiple profiles.  Move this part
-      // @@ to MProfile!!
-
-      STUB_Object *stubobj = obj->_stubobj ();
-
-      // STRING, a type ID hint
-      stream->encode (CORBA::_tc_string, &stubobj->type_id, 0, env);
-
-      // UNSIGNED LONG, value one, count of the sequence of
-      // encapsulated protocol profiles;
-      stream->write_ulong (1);
-
-      stubobj->profile_in_use ()->encode (stream, env);
-
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
-    }
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // encode structs
@@ -676,7 +625,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                   else // error getting member count
                     {
                       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-                      if (TAO_debug_level > 0) 
+                      if (TAO_debug_level > 0)
                         ACE_DEBUG ((LM_DEBUG,
                                     "Union::encode - error getting "
                                     "member count\n"));

@@ -24,18 +24,18 @@
 
 class TAO_Profile;
 typedef TAO_Profile *TAO_Profile_ptr;
-typedef CORBA::ULong TAO_PHandle; 
+typedef CORBA::ULong TAO_PHandle;
 
-class TAO_Export TAO_MProfile 
+class TAO_Export TAO_MProfile
 {
   // = TITLE
   //   This class implements the basic interface for supporting
   //   multiple profiles.
-  // 
+  //
   // = DESCRIPTION
   //   Multiple profiles can be treated either as a circular queue or
   //   a linear array of profiles.
-  // 
+  //
   //   It is assumed that locking will only be required when a profile
   //   list is associated with a STUB_Object.  Thus when the
   //   STUB_Object accepts ownership of an MProfile it also assumes
@@ -45,7 +45,7 @@ public:
   TAO_MProfile (CORBA::ULong sz);
 
   TAO_MProfile (TAO_MProfile *mprofiles);
-  // **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to 
+  // **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to
   //          mprofiles->last_.  Otherwise this->size_ - mprofiles->size_.
   //          Furthermore, current_ is set back to 0!  i.e. rewound.
   // The reference count on any profiles in mprofiles is increment
@@ -83,8 +83,12 @@ public:
   TAO_PHandle get_current_handle (void);
   // Returns the index for the current profile.
 
-  CORBA::ULong profile_count (void);
+  CORBA::ULong profile_count (void) const;
   // Returns the number of profiles stored in the list (last_).
+
+  const TAO_Profile* get_profile (CORBA::ULong index) const;
+  // Return the profile at position <index>.
+  // If <index> is out of range it returns 0.
 
   void rewind (void);
   // Sets the current index back to 0.
@@ -102,7 +106,7 @@ public:
   // forwarded This object is the set of forwarding profiles.
 
   TAO_MProfile *forward_from (void);
-  // Returns a pointer to the profile which was forwarded.  
+  // Returns a pointer to the profile which was forwarded.
 
   CORBA::Boolean is_equivalent (TAO_MProfile *first,
                                 TAO_MProfile *second,

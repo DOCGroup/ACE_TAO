@@ -26,12 +26,14 @@ sub run_test
   ACE::waitforfile ($iorfile);
 
   system ($EXEPREFIX."client $debug -f $iorfile  -i $invocation -t ".
-          "$type -n $num");
+          "$type -n $num -x");
 
   # @@
   # Someday, a better way of doing this should be found.  Or at least
   # something that can tell if a server is still alive.  There is kill -0 on
   # Unix, but on NT ???
+
+  sleep 3;
 
   $SV->Kill (); $SV->Wait ();
   unlink ($iorfile);
