@@ -1,15 +1,29 @@
+Sat Mar  5 23:57:53 2005  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* ace/Time_Value.h
+	* ace/Time_Value.cpp
+	* ace/Time_Value.inl
+	* ace/Countdown_Time.h
+	* ace/Countdown_Time.cpp
+	  moved the ACE_Countdown_Time to seperate files to avoid
+	  the wrong Windows release build behavior for client
+	  application when the right header is not included.
+
+	  There are ways of avoiding many changes but to make things
+	  look nice .... so will work on the whole ACE/TAO repo next.
+
 Sat Mar  5 08:48:02 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tests/QtReactor_Test.cpp: Reformatted this file so it conforms to
 	  the ACE programming style guide.
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): Fixed a typo
-	  where ACE_TESXT should be ACE_TEXT.  Thanks to 
+	  where ACE_TESXT should be ACE_TEXT.  Thanks to
 	  Sean Parker <supinlick@yahoo.com> for reporting this.
 
 Fri Mar  4 10:32:17 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Naming_Context.cpp: Changed ACE_OS::strcat() to 
+	* ace/Naming_Context.cpp: Changed ACE_OS::strcat() to
 	  ACE_OS::strcpy() to fix a bug.  Thanks to David Hauck
  	  <davidh@netacquire.com> for reporting this bug and providing a
  	  fix.

@@ -2,8 +2,6 @@
 //
 // $Id$
 
-#include "ace/OS_NS_sys_time.h"
-
 #if defined (ACE_WIN32) && defined (_WIN32_WCE)
 // Something is a bit brain-damaged here and I'm not sure what... this code
 // compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
