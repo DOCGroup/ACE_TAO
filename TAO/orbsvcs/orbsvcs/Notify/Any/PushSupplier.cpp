@@ -18,7 +18,7 @@ TAO_NS_PushSupplier::~TAO_NS_PushSupplier ()
 }
 
 void
-TAO_NS_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
+TAO_NS_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
 {
   this->push_supplier_ = CosEventComm::PushSupplier::_duplicate (push_supplier);
 
