@@ -1,7 +1,12 @@
+Tue Mar 27 21:57:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Simple/time-date/Time_Date.cpp:
+          Add missing #include
+
 Tue Mar 27 23:23:31 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/Trading/Makefile
-          Prevent unnecessary symlink from being installed in $ACE_ROOT/ace 
+          Prevent unnecessary symlink from being installed in $ACE_ROOT/ace
 
 Tue Mar 27 20:11:31 2001  Carlos O'Ryan  <coryan@uci.edu>
 
