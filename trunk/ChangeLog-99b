@@ -1,3 +1,77 @@
+Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.h
+	* ace/Cached_Connect_Strategy_T.i	
+	* ace/Cached_Connect_Strategy_T.cpp
+		
+	  Caching connection strategy used by the Strategy Connector.
+	
+	* ace/Cache_Map_Manager_T.h
+	* ace/Cache_Map_Manager_T.i
+	* ace/Cache_Map_Manager_T.cpp
+
+	  Map Manager which performs caching depending on the caching
+	  strategy used.
+
+	* ace/Hash_Cache_Map_Manager_T.h
+	* ace/Hash_Cache_Map_Manager_T.i
+	* ace/Hash_Cache_Map_Manager_T.cpp
+
+	  Hash_Map used as a specialised form of the Cache Map.
+
+	* ace/Caching_Strategies_T.h
+	* ace/Caching_Strategies_T.i
+	* ace/Caching_Strategies_T.cpp
+		
+	  Strategies used for caching purposes, example: Least Recently
+	  Used.
+
+	* ace/Caching_Strategy_Utility_T.h
+	* ace/Caching_Strategy_Utility_T.i
+	* ace/Caching_Strategy_Utility_T.cpp
+		
+	  Helper class for the caching strategy classes which does the
+	  purging of entries.
+
+	* ace/Cleanup_Strategies_T.h
+	* ace/Cleanup_Strategies_T.i	
+	* ace/Cleanup_Strategies_T.cpp
+		
+	  Strategy which deals with destruction and cleanup in general.
+	
+	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.h
+        * examples/Web_Crawler/Optimal_Cache_Map_Manager_T.i
+	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.cpp
+	* examples/Web_Crawler/Cached_Connect_Strategy_T.h
+	* examples/Web_Crawler/Cached_Connect_Strategy_T.i
+	* examples/Web_Crawler/Cached_Connect_Strategy_T.cpp
+	* examples/Web_Crawler/Caching_Strategies_T.h
+	* examples/Web_Crawler/Caching_Strategies_T.i
+	* examples/Web_Crawler/Caching_Strategies_T.cpp
+		
+          Removed these files and added them to the ace library itself.
+	       
+        * examples/Web_Crawler/Command_Processor.cpp
+        * examples/Web_Crawler/Command_Processor.h
+        * examples/Web_Crawler/HTTP_URL.cpp
+        * examples/Web_Crawler/HTTP_URL.h
+        * examples/Web_Crawler/Iterators.h
+        * examples/Web_Crawler/Makefile
+        * examples/Web_Crawler/Mem_Map_Stream.cpp
+        * examples/Web_Crawler/Mem_Map_Stream.h
+        * examples/Web_Crawler/Options.h
+        * examples/Web_Crawler/URL.h	  
+        * examples/Web_Crawler/URL_Addr.h
+        * examples/Web_Crawler/URL_Status.h
+        * examples/Web_Crawler/URL_Visitor.cpp
+        * examples/Web_Crawler/URL_Visitor.h
+        * examples/Web_Crawler/URL_Visitor_Factory.h
+        * examples/Web_Crawler/Web_Crawler.h
+        * examples/Web_Crawler/main.cpp
+
+	  Changed to include files pertaining to Caching and Connection
+	  management from ace library.	
+	
 Thu Jun 03 12:32:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Functor: Changed ACE_Hash<unsigned long long> specialization
