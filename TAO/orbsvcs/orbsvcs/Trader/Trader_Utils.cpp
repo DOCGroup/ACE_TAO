@@ -1096,7 +1096,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes,
 
 void
 TAO_Offer_Modifier::
-merge_properties (CosTrading::PropertySeq& modifies,
+merge_properties (const CosTrading::PropertySeq& modifies,
                   CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
                    CosTrading::DuplicatePropertyName,
@@ -1112,7 +1112,7 @@ merge_properties (CosTrading::PropertySeq& modifies,
   TAO_Property_Evaluator prop_eval (modifies);
   for (i = 0, length = modifies.length (); i < length; i++)
     {
-      const char* mname = ACE_static_cast (const char*,  modifies[i].name);
+      const char* mname = modifies[i].name;
       if (TAO_Trader_Base::is_valid_identifier_name (mname))
         {
           TAO_String_Hash_Key prop_name (mname);
@@ -1144,68 +1144,64 @@ merge_properties (CosTrading::PropertySeq& modifies,
       else
         TAO_THROW (CosTrading::IllegalPropertyName (mname));
     }
-
-  // The properties pass inspection. Claim this memory until it's time
-  // to affect changes.
-  CosTrading::Property* props_buf = modifies.get_buffer (0);
-  this->merge_props_.replace (length, length, props_buf, 0);
-  this->merge_props_._allocate_buffer (length);
-
-  // Merge these properties with the original set.
-  for (i = 0; i < length; i++)
-    {
-      Property_Table::ENTRY* entry = 0;
-      TAO_String_Hash_Key prop_name =
-        ACE_static_cast (const char *, props_buf[i].name);
-
-      if (this->props_.bind (prop_name, &props_buf[i], entry) == 1)
-        {
-          // We need to rebind here.
-          entry->int_id_ = &props_buf[i];
-        }
-    }
 }
 
 void
-TAO_Offer_Modifier::affect_change (void)
+TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 {
   // Create a new property list reflecting the deletes, modifies, and
   // add operations performed, and place this property list in the
   // offer.
 
-  int num_modified = 0;
+  // Merge these properties with the original set.
   CORBA::ULong i = 0,
+    merge_length = modifies.length ();
+  for (i = 0; i < merge_length; i++)
+    {
+      Property_Table::ENTRY* entry = 0;
+      TAO_String_Hash_Key prop_name = modifies[i].name;
+
+      CosTrading::Property* prop =
+        ACE_const_cast (CosTrading::Property*, &modifies[i]);
+      if (this->props_.bind (prop_name, prop, entry) == 1)
+        {
+          // We need to rebind here.
+          entry->int_id_ = prop;
+        }
+    }
+
+  CORBA::ULong num_modified = 0,
+    original_length = this->offer_->properties.length (),
     total_length = this->props_.current_size ();
 
-  CORBA::ULong prop_length = this->offer_->properties.length ();
-  CORBA::ULong merge_length = this->merge_props_.length ();
   // Scrap the existing property sequence and begin a new one
-  CosTrading::PropertySeq prop_seq (prop_length, prop_length, this->offer_->properties.get_buffer (), 0);
-  prop_seq._allocate_buffer (prop_length);
-  this->offer_->properties.length (total_length);
-
+  CosTrading::PropertySeq prop_seq (total_length);
+  //  this->offer_->properties.length (total_length);
+  
   // Copy in the unaffected and modified props into the offer,
   // excluding those that were deleted. Let's try and retain their
   // relative ordering.
-  for (i = 0; i < prop_length; i++)
+  for (i = 0; i < original_length; i++)
     {
       CosTrading::Property* prop_value = 0;
-      //    const char* name = prop_buf[i].name;
-      const char* name = prop_seq[i].name;
+      const char* name = this->offer_->properties[i].name;
       TAO_String_Hash_Key prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
-        this->offer_->properties[num_modified++] = *prop_value;
+        prop_seq[num_modified++] = *prop_value;
     }
-
+  
   for (i = 0; i < merge_length; i++)
     {
       CosTrading::Property* prop_value = 0;
-      const char* name = this->merge_props_[i].name;
+      const char* name = modifies[i].name;
       TAO_String_Hash_Key prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
-        this->offer_->properties[num_modified++] = *prop_value;
+        prop_seq[num_modified++] = *prop_value;
     }
 
+  this->offer_->properties.length (total_length);
+  for (i = 0; i < total_length; i++)
+    this->offer_->properties[i] = prop_seq[i];
   // Free the old, orphaned sequence.
   //  CosTrading::PropertySeq::freebuf (prop_buf);
 }
