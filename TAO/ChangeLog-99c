@@ -1,3 +1,7 @@
+Sat Oct 16 14:30:16 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* docs/releasenotes/index.html: Updated release notes on AMI.
+
 Sat Oct 16 11:17:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Latency/Makefile:
