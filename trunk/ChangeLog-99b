@@ -1,10 +1,16 @@
+Thu Aug 26 11:20:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Time_Value_Test.cpp (main): added a test showing
+          that ACE_Time_Value (2.5) == ACE_Time_Value (2).
+          The 2.5 gets coerced to a long with value 2.  Beware . . .
+
 Thu Aug 26 10:43:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-sunos5.6.h:
-	  egcs-2.95 under Solaris 5.6 does not need
-	  ACE_HAS_STL_QUEUE_CONFLICT, thanks to Krishnakumar
-	  B. <kitty@neo.shinko.co.jp> for reporting this problem.
-	  This fixes [BUGID:264]
+        * ace/config-sunos5.6.h:
+          egcs-2.95 under Solaris 5.6 does not need
+          ACE_HAS_STL_QUEUE_CONFLICT, thanks to Krishnakumar
+          B. <kitty@neo.shinko.co.jp> for reporting this problem.
+          This fixes [BUGID:264]
 
 Thu Aug 26 07:29:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
