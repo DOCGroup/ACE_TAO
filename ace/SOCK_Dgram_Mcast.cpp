@@ -33,7 +33,8 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   // make a local copy of address to use in sends
   this->mcast_addr_.set (mcast_addr);
 
-  if (this->ACE_SOCK::open (SOCK_DGRAM, protocol_family, protocol) == -1)
+  if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, 
+		      protocol, reuse_addr) == -1)
     return -1;
 
   // Create multicast request.
