@@ -31,7 +31,7 @@ Echo_Client_Request_Interceptor::preinvoke (CORBA::ULong rid,
                                             CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::preinvoke from \"%s\" request_id: %l\n",
+              "Echo_Client_Request_Interceptor::preinvoke from \"%s\" request_id: %d\n",
               op,
               rid));
 
@@ -63,7 +63,7 @@ Echo_Client_Request_Interceptor::postinvoke (CORBA::ULong rid,
                                              CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::postinvoke from \"%s\" request_id: %l\n",
+              "Echo_Client_Request_Interceptor::postinvoke from \"%s\" request_id: %d\n",
               op,
               rid));
 
@@ -90,7 +90,7 @@ Echo_Client_Request_Interceptor::exception_occurred (CORBA::ULong rid,
                                                      CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::exception_occurred from \"%s\" request_id: %l\n",
+              "Echo_Client_Request_Interceptor::exception_occurred from \"%s\" request_id: %d\n",
               op,
               rid));
 }
@@ -117,7 +117,7 @@ Echo_Server_Request_Interceptor::preinvoke (CORBA::ULong rid,
                                             CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::preinvoke from \"%s\" request_id: %l\n",
+              "Echo_Server_Request_Interceptor::preinvoke from \"%s\" request_id: %d\n",
               op,
               rid));
 
@@ -146,7 +146,7 @@ Echo_Server_Request_Interceptor::postinvoke (CORBA::ULong rid,
                                              CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::postinvoke from \"%s\" request_id: %l\n",
+              "Echo_Server_Request_Interceptor::postinvoke from \"%s\" request_id: %d\n",
               op,
               rid));
 
@@ -176,7 +176,7 @@ Echo_Server_Request_Interceptor::exception_occurred (CORBA::ULong rid,
                                                      CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::exception_occurred from \"%s\" request_id: %l\n",
+              "Echo_Server_Request_Interceptor::exception_occurred from \"%s\" request_id: %d\n",
               op,
               rid));
 }
