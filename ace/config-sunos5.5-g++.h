@@ -34,9 +34,6 @@
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-// G++ doesn't support template typedefs fully (yet).
-// #define ACE_HAS_TEMPLATE_TYPEDEFS
-
 #define ACE_HAS_TERM_IOCTLS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
@@ -199,7 +196,8 @@
 
 #define ACE_MALLOC_ALIGN 8
 
-// Defines the page size of the system.
-#define ACE_PAGE_SIZE 4096
+#define ACE_HAS_GETPAGESIZE 1
+
+#define ACE_HAS_STL_MAP_CONFLICT
 
 #endif /* ACE_CONFIG_H */
