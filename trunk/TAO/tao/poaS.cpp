@@ -1412,85 +1412,14 @@ POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &_env)
 }
 
 static const TAO_operation_db_entry PortableServer_POAManager_operations [] = {
-  {"activate", &POA_PortableServer::POAManager::activate_skel},
-  {"hold_requests", &POA_PortableServer::POAManager::hold_requests_skel},
-  {"discard_requests", &POA_PortableServer::POAManager::discard_requests_skel},
-  {"deactivate", &POA_PortableServer::POAManager::deactivate_skel},
   {"_is_a", &POA_PortableServer::POAManager::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_PortableServer_POAManager_optable (PortableServer_POAManager_operations, 5, 10);
+TAO_Dynamic_Hash_OpTable tao_PortableServer_POAManager_optable (PortableServer_POAManager_operations, 1, 2);
 // skeleton constructor
 POA_PortableServer::POAManager::POAManager (void)
 {
   this->optable_ = &tao_PortableServer_POAManager_optable;
-}
-
-void POA_PortableServer::POAManager::activate_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POAManager_ptr 	 impl = (POA_PortableServer::POAManager_ptr) _tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->activate(_tao_environment);
-  
-}
-
-void POA_PortableServer::POAManager::hold_requests_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POAManager_ptr 	 impl = (POA_PortableServer::POAManager_ptr) _tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  CORBA::Boolean wait_for_completion;
-  (void) nvlist->add_item ("wait_for_completion", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_boolean, &wait_for_completion, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->hold_requests(wait_for_completion, _tao_environment);
-  
-}
-
-void POA_PortableServer::POAManager::discard_requests_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POAManager_ptr 	 impl = (POA_PortableServer::POAManager_ptr) _tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  CORBA::Boolean wait_for_completion;
-  (void) nvlist->add_item ("wait_for_completion", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_boolean, &wait_for_completion, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->discard_requests(wait_for_completion, _tao_environment);
-  
-}
-
-void POA_PortableServer::POAManager::deactivate_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POAManager_ptr 	 impl = (POA_PortableServer::POAManager_ptr) _tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (2, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  CORBA::Boolean etherealize_objects;
-  (void) nvlist->add_item ("etherealize_objects", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_boolean, &etherealize_objects, 0, _tao_environment); // ORB does not own
-  CORBA::Boolean wait_for_completion;
-  (void) nvlist->add_item ("wait_for_completion", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_boolean, &wait_for_completion, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->deactivate(etherealize_objects, wait_for_completion, _tao_environment);
-  
 }
 
 void POA_PortableServer::POAManager::_is_a_skel (
@@ -1643,44 +1572,14 @@ POA_PortableServer::POAManager::_this (CORBA_Environment &_env)
 }
 
 static const TAO_operation_db_entry PortableServer_AdapterActivator_operations [] = {
-  {"unknown_adapter", &POA_PortableServer::AdapterActivator::unknown_adapter_skel},
   {"_is_a", &POA_PortableServer::AdapterActivator::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_PortableServer_AdapterActivator_optable (PortableServer_AdapterActivator_operations, 2, 4);
+TAO_Dynamic_Hash_OpTable tao_PortableServer_AdapterActivator_optable (PortableServer_AdapterActivator_operations, 1, 2);
 // skeleton constructor
 POA_PortableServer::AdapterActivator::AdapterActivator (void)
 {
   this->optable_ = &tao_PortableServer_AdapterActivator_optable;
-}
-
-void POA_PortableServer::AdapterActivator::unknown_adapter_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::AdapterActivator_ptr 	 impl = (POA_PortableServer::AdapterActivator_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Boolean *retval = new CORBA::Boolean;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (2, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::POA_ptr parent;
-  CORBA::Object_ptr _tao_base_parent;
-  (void) nvlist->add_item ("parent", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_POA, &_tao_base_parent, 0, _tao_environment); // ORB does not own
-  char *name;
-  (void) nvlist->add_item ("name", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_string, &name, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  parent = PortableServer::POA::_narrow (_tao_base_parent, _tao_environment);
-  if (_tao_environment.exception ()) return;
-   *retval = impl->unknown_adapter(parent, name, _tao_environment);
-  CORBA::release (parent);
-  CORBA::release (_tao_base_parent);
-  CORBA::string_free (name);
-  result = new CORBA::Any (CORBA::_tc_boolean, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
 }
 
 void POA_PortableServer::AdapterActivator::_is_a_skel (
@@ -1918,28 +1817,14 @@ POA_PortableServer::ServantManager::_this (CORBA_Environment &_env)
 }
 
 static const TAO_operation_db_entry PortableServer_ServantActivator_operations [] = {
-  {"incarnate", &POA_PortableServer::ServantActivator::incarnate_skel},
-  {"etherealize", &POA_PortableServer::ServantActivator::etherealize_skel},
   {"_is_a", &POA_PortableServer::ServantActivator::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantActivator_optable (PortableServer_ServantActivator_operations, 3, 6);
+TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantActivator_optable (PortableServer_ServantActivator_operations, 1, 2);
 // skeleton constructor
 POA_PortableServer::ServantActivator::ServantActivator (void)
 {
   this->optable_ = &tao_PortableServer_ServantActivator_optable;
-}
-
-void POA_PortableServer::ServantActivator::incarnate_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::ServantActivator::etherealize_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
 }
 
 void POA_PortableServer::ServantActivator::_is_a_skel (
@@ -2084,28 +1969,14 @@ POA_PortableServer::ServantActivator::_this (CORBA_Environment &_env)
 }
 
 static const TAO_operation_db_entry PortableServer_ServantLocator_operations [] = {
-  {"preinvoke", &POA_PortableServer::ServantLocator::preinvoke_skel},
-  {"postinvoke", &POA_PortableServer::ServantLocator::postinvoke_skel},
   {"_is_a", &POA_PortableServer::ServantLocator::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantLocator_optable (PortableServer_ServantLocator_operations, 3, 6);
+TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantLocator_optable (PortableServer_ServantLocator_operations, 1, 2);
 // skeleton constructor
 POA_PortableServer::ServantLocator::ServantLocator (void)
 {
   this->optable_ = &tao_PortableServer_ServantLocator_optable;
-}
-
-void POA_PortableServer::ServantLocator::preinvoke_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::ServantLocator::postinvoke_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
 }
 
 void POA_PortableServer::ServantLocator::_is_a_skel (
@@ -2254,536 +2125,14 @@ POA_PortableServer::ServantLocator::_this (CORBA_Environment &_env)
 }
 
 static const TAO_operation_db_entry PortableServer_POA_operations [] = {
-  {"create_POA", &POA_PortableServer::POA::create_POA_skel},
-  {"find_POA", &POA_PortableServer::POA::find_POA_skel},
-  {"destroy", &POA_PortableServer::POA::destroy_skel},
-  {"create_thread_policy", &POA_PortableServer::POA::create_thread_policy_skel},
-  {"create_lifespan_policy", &POA_PortableServer::POA::create_lifespan_policy_skel},
-  {"create_id_uniqueness_policy", &POA_PortableServer::POA::create_id_uniqueness_policy_skel},
-  {"create_id_assignment_policy", &POA_PortableServer::POA::create_id_assignment_policy_skel},
-  {"create_implicit_activation_policy", &POA_PortableServer::POA::create_implicit_activation_policy_skel},
-  {"create_servant_retention_policy", &POA_PortableServer::POA::create_servant_retention_policy_skel},
-  {"create_request_processing_policy", &POA_PortableServer::POA::create_request_processing_policy_skel},
-  {"_get_the_name", &POA_PortableServer::POA::_get_the_name_skel},
-  {"_get_the_parent", &POA_PortableServer::POA::_get_the_parent_skel},
-  {"_get_the_POAManager", &POA_PortableServer::POA::_get_the_POAManager_skel},
-  {"_get_the_activator", &POA_PortableServer::POA::_get_the_activator_skel},
-  {"_set_the_activator", &POA_PortableServer::POA::_set_the_activator_skel},
-  {"get_servant_manager", &POA_PortableServer::POA::get_servant_manager_skel},
-  {"set_servant_manager", &POA_PortableServer::POA::set_servant_manager_skel},
-  {"get_servant", &POA_PortableServer::POA::get_servant_skel},
-  {"set_servant", &POA_PortableServer::POA::set_servant_skel},
-  {"activate_object", &POA_PortableServer::POA::activate_object_skel},
-  {"activate_object_with_id", &POA_PortableServer::POA::activate_object_with_id_skel},
-  {"deactivate_object", &POA_PortableServer::POA::deactivate_object_skel},
-  {"create_reference", &POA_PortableServer::POA::create_reference_skel},
-  {"create_reference_with_id", &POA_PortableServer::POA::create_reference_with_id_skel},
-  {"servant_to_id", &POA_PortableServer::POA::servant_to_id_skel},
-  {"servant_to_reference", &POA_PortableServer::POA::servant_to_reference_skel},
-  {"reference_to_servant", &POA_PortableServer::POA::reference_to_servant_skel},
-  {"reference_to_id", &POA_PortableServer::POA::reference_to_id_skel},
-  {"id_to_servant", &POA_PortableServer::POA::id_to_servant_skel},
-  {"id_to_reference", &POA_PortableServer::POA::id_to_reference_skel},
   {"_is_a", &POA_PortableServer::POA::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_PortableServer_POA_optable (PortableServer_POA_operations, 31, 62);
+TAO_Dynamic_Hash_OpTable tao_PortableServer_POA_optable (PortableServer_POA_operations, 1, 2);
 // skeleton constructor
 POA_PortableServer::POA::POA (void)
 {
   this->optable_ = &tao_PortableServer_POA_optable;
-}
-
-void POA_PortableServer::POA::create_POA_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (3, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  char *adapter_name;
-  (void) nvlist->add_item ("adapter_name", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_string, &adapter_name, 0, _tao_environment); // ORB does not own
-  PortableServer::POAManager_ptr a_POAManager;
-  CORBA::Object_ptr _tao_base_a_POAManager;
-  (void) nvlist->add_item ("a_POAManager", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_POAManager, &_tao_base_a_POAManager, 0, _tao_environment); // ORB does not own
-  PortableServer::PolicyList policies;
-  (void) nvlist->add_item ("policies", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_PolicyList, &policies, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  a_POAManager = PortableServer::POAManager::_narrow (_tao_base_a_POAManager, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_POA(adapter_name, a_POAManager, policies, _tao_environment);
-  CORBA::string_free (adapter_name);
-  CORBA::release (a_POAManager);
-  CORBA::release (_tao_base_a_POAManager);
-  result = new CORBA::Any (PortableServer::_tc_POA, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::find_POA_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (2, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  char *adapter_name;
-  (void) nvlist->add_item ("adapter_name", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_string, &adapter_name, 0, _tao_environment); // ORB does not own
-  CORBA::Boolean activate_it;
-  (void) nvlist->add_item ("activate_it", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_boolean, &activate_it, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->find_POA(adapter_name, activate_it, _tao_environment);
-  CORBA::string_free (adapter_name);
-  result = new CORBA::Any (PortableServer::_tc_POA, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::destroy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (2, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  CORBA::Boolean etherealize_objects;
-  (void) nvlist->add_item ("etherealize_objects", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_boolean, &etherealize_objects, 0, _tao_environment); // ORB does not own
-  CORBA::Boolean wait_for_completion;
-  (void) nvlist->add_item ("wait_for_completion", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_boolean, &wait_for_completion, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->destroy(etherealize_objects, wait_for_completion, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_thread_policy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::ThreadPolicyValue value;
-  (void) nvlist->add_item ("value", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_ThreadPolicyValue, &value, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_thread_policy(value, _tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_ThreadPolicy, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_lifespan_policy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::LifespanPolicyValue value;
-  (void) nvlist->add_item ("value", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_LifespanPolicyValue, &value, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_lifespan_policy(value, _tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_LifespanPolicy, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_id_uniqueness_policy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::IdUniquenessPolicyValue value;
-  (void) nvlist->add_item ("value", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_IdUniquenessPolicyValue, &value, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_id_uniqueness_policy(value, _tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_IdUniquenessPolicy, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_id_assignment_policy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::IdAssignmentPolicyValue value;
-  (void) nvlist->add_item ("value", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_IdAssignmentPolicyValue, &value, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_id_assignment_policy(value, _tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_IdAssignmentPolicy, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_implicit_activation_policy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::ImplicitActivationPolicyValue value;
-  (void) nvlist->add_item ("value", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_ImplicitActivationPolicyValue, &value, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_implicit_activation_policy(value, _tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_ImplicitActivationPolicy, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_servant_retention_policy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::ServantRetentionPolicyValue value;
-  (void) nvlist->add_item ("value", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_ServantRetentionPolicyValue, &value, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_servant_retention_policy(value, _tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_ServantRetentionPolicy, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_request_processing_policy_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::RequestProcessingPolicyValue value;
-  (void) nvlist->add_item ("value", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_RequestProcessingPolicyValue, &value, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_request_processing_policy(value, _tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_RequestProcessingPolicy, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::_get_the_name_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void * /*context*/, CORBA::Environment &_tao_environment)
-{
-  POA_PortableServer::POA_ptr impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  char **retval = new char*;
-    // this method has no incoming parameters. Nothing to parse
-  *retval = impl->the_name(_tao_environment);
-  result = new CORBA::Any (CORBA::_tc_string, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-}
-
-void POA_PortableServer::POA::_get_the_parent_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void * /*context*/, CORBA::Environment &_tao_environment)
-{
-  POA_PortableServer::POA_ptr impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // this method has no incoming parameters. Nothing to parse
-  *retval = impl->the_parent(_tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_POA, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-}
-
-void POA_PortableServer::POA::_get_the_POAManager_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void * /*context*/, CORBA::Environment &_tao_environment)
-{
-  POA_PortableServer::POA_ptr impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // this method has no incoming parameters. Nothing to parse
-  *retval = impl->the_POAManager(_tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_POAManager, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-}
-
-void POA_PortableServer::POA::_get_the_activator_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void * /*context*/, CORBA::Environment &_tao_environment)
-{
-  POA_PortableServer::POA_ptr impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // this method has no incoming parameters. Nothing to parse
-  *retval = impl->the_activator(_tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_AdapterActivator, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-}
-
-void POA_PortableServer::POA::_set_the_activator_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void * /*context*/, CORBA::Environment &_tao_environment)
-{
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr)_tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  PortableServer::AdapterActivator_ptr the_activator;
-  CORBA::Object_ptr _tao_base_the_activator;
-  (void) nvlist->add_item ("the_activator", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_AdapterActivator, &_tao_base_the_activator, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  the_activator = PortableServer::AdapterActivator::_narrow (_tao_base_the_activator, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->the_activator(the_activator, _tao_environment);
-  CORBA::release (the_activator);
-  CORBA::release (_tao_base_the_activator);
-  
-}
-
-void POA_PortableServer::POA::get_servant_manager_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-  *retval = CORBA::Object::_nil ();
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->get_servant_manager(_tao_environment);
-  result = new CORBA::Any (PortableServer::_tc_ServantManager, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::set_servant_manager_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::ServantManager_ptr imgr;
-  CORBA::Object_ptr _tao_base_imgr;
-  (void) nvlist->add_item ("imgr", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_ServantManager, &_tao_base_imgr, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  imgr = PortableServer::ServantManager::_narrow (_tao_base_imgr, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->set_servant_manager(imgr, _tao_environment);
-  CORBA::release (imgr);
-  CORBA::release (_tao_base_imgr);
-  
-}
-
-void POA_PortableServer::POA::get_servant_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::set_servant_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::activate_object_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::activate_object_with_id_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::deactivate_object_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::ObjectId oid;
-  (void) nvlist->add_item ("oid", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_ObjectId, &oid, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  impl->deactivate_object(oid, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_reference_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  char *intf;
-  (void) nvlist->add_item ("intf", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_RepositoryId, &intf, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_reference(intf, _tao_environment);
-  CORBA::string_free (intf);
-  result = new CORBA::Any (CORBA::_tc_Object, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::create_reference_with_id_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (2, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::ObjectId oid;
-  (void) nvlist->add_item ("oid", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_ObjectId, &oid, 0, _tao_environment); // ORB does not own
-  char *intf;
-  (void) nvlist->add_item ("intf", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_RepositoryId, &intf, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->create_reference_with_id(oid, intf, _tao_environment);
-  CORBA::string_free (intf);
-  result = new CORBA::Any (CORBA::_tc_Object, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::servant_to_id_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::servant_to_reference_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::reference_to_servant_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::reference_to_id_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  PortableServer::ObjectId *retval;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  CORBA::Object_ptr reference;
-  (void) nvlist->add_item ("reference", CORBA::ARG_IN, _tao_environment)->value ()->replace (CORBA::_tc_Object, &reference, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  retval = impl->reference_to_id(reference, _tao_environment);
-  CORBA::release (reference);
-  result = new CORBA::Any (PortableServer::_tc_ObjectId, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
-}
-
-void POA_PortableServer::POA::id_to_servant_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  _tao_environment.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-}
-
-void POA_PortableServer::POA::id_to_reference_skel (CORBA::ServerRequest &_tao_server_request, void *_tao_object_reference, void *context, CORBA::Environment &_tao_environment)
-{
-  ACE_UNUSED_ARG (context);
-  CORBA::NVList_ptr 	 nvlist;
-  POA_PortableServer::POA_ptr 	 impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
-  CORBA::Any *result;
-  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
-    // create an NV list and populate it with typecodes
-  _tao_server_request.orb ()->create_list (1, nvlist); // initialize a list
-  // add each argument according to the in, out, inout semantics
-  PortableServer::ObjectId oid;
-  (void) nvlist->add_item ("oid", CORBA::ARG_IN, _tao_environment)->value ()->replace (PortableServer::_tc_ObjectId, &oid, 0, _tao_environment); // ORB does not own
-  // parse the arguments
-  _tao_server_request.params (nvlist, _tao_environment);
-  if (_tao_environment.exception ()) return;
-  *retval = impl->id_to_reference(oid, _tao_environment);
-  result = new CORBA::Any (CORBA::_tc_Object, retval, 1); // ORB owns
-  _tao_server_request.result (result, _tao_environment);
-  
 }
 
 void POA_PortableServer::POA::_is_a_skel (

@@ -15,7 +15,7 @@ class POA_PortableServer
 public:
   class CurrentBase;
   typedef CurrentBase *CurrentBase_ptr;
-  class CurrentBase :  public virtual PortableServer::LocalServantBase
+  class CurrentBase :  public virtual PortableServer::ServantBase
   {
   protected:
     CurrentBase (void);
@@ -62,7 +62,7 @@ public:
 
   class Policy;
   typedef Policy *Policy_ptr;
-  class Policy :  public virtual PortableServer::LocalServantBase
+  class Policy :  public virtual PortableServer::ServantBase
   {
   protected:
     Policy (void);
@@ -582,16 +582,12 @@ public:
         const char* logical_type_id
       );
     virtual void activate ( CORBA::Environment &env) = 0; // pure virtual
-    static void activate_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void hold_requests (CORBA::Boolean wait_for_completion,  CORBA::Environment &env) = 0; // pure virtual
-    static void hold_requests_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void discard_requests (CORBA::Boolean wait_for_completion,  CORBA::Environment &env) = 0; // pure virtual
-    static void discard_requests_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion,  CORBA::Environment &env) = 0; // pure virtual
-    static void deactivate_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
@@ -657,7 +653,6 @@ public:
         const char* logical_type_id
       );
     virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent, const char *name,  CORBA::Environment &env) = 0; // pure virtual
-    static void unknown_adapter_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
@@ -759,10 +754,8 @@ public:
         const char* logical_type_id
       );
     virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter,  CORBA::Environment &env) = 0; // pure virtual
-    static void incarnate_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void etherealize (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, PortableServer::Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations,  CORBA::Environment &env) = 0; // pure virtual
-    static void etherealize_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
@@ -830,10 +823,8 @@ public:
                                                const char *operation, 
                                                PortableServer::ServantLocator::Cookie & the_cookie,  
                                                CORBA::Environment &env) = 0; // pure virtual
-    static void preinvoke_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void postinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, PortableServer::Servant the_servant,  CORBA::Environment &env) = 0; // pure virtual
-    static void postinvoke_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 
@@ -899,94 +890,64 @@ public:
         const char* logical_type_id
       );
     virtual PortableServer::POA_ptr  create_POA (const char *adapter_name, PortableServer::POAManager_ptr a_POAManager, const PortableServer::PolicyList &policies,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_POA_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it,  CORBA::Environment &env) = 0; // pure virtual
-    static void find_POA_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion,  CORBA::Environment &env) = 0; // pure virtual
-    static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ThreadPolicy_ptr  create_thread_policy (PortableServer::ThreadPolicyValue value,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_thread_policy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::LifespanPolicy_ptr  create_lifespan_policy (PortableServer::LifespanPolicyValue value,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_lifespan_policy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::IdUniquenessPolicy_ptr  create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_id_uniqueness_policy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::IdAssignmentPolicy_ptr  create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_id_assignment_policy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ImplicitActivationPolicy_ptr  create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_implicit_activation_policy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ServantRetentionPolicy_ptr  create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_servant_retention_policy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::RequestProcessingPolicy_ptr  create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_request_processing_policy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual char * the_name (CORBA::Environment &env) = 0;
-    static void _get_the_name_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::POA_ptr  the_parent (CORBA::Environment &env) = 0;
-    static void _get_the_parent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::POAManager_ptr  the_POAManager (CORBA::Environment &env) = 0;
-    static void _get_the_POAManager_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::AdapterActivator_ptr  the_activator (CORBA::Environment &env) = 0;
-    static void _get_the_activator_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void the_activator(PortableServer::AdapterActivator_ptr the_activator, CORBA::Environment &env) = 0;
-    static void _set_the_activator_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ServantManager_ptr  get_servant_manager ( CORBA::Environment &env) = 0; // pure virtual
-    static void get_servant_manager_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void set_servant_manager (PortableServer::ServantManager_ptr imgr,  CORBA::Environment &env) = 0; // pure virtual
-    static void set_servant_manager_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::Servant get_servant ( CORBA::Environment &env) = 0; // pure virtual
-    static void get_servant_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void set_servant (PortableServer::Servant p_servant,  CORBA::Environment &env) = 0; // pure virtual
-    static void set_servant_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ObjectId * activate_object (PortableServer::Servant p_servant,  CORBA::Environment &env) = 0; // pure virtual
-    static void activate_object_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void activate_object_with_id (const PortableServer::ObjectId &id, PortableServer::Servant p_servant,  CORBA::Environment &env) = 0; // pure virtual
-    static void activate_object_with_id_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual void deactivate_object (const PortableServer::ObjectId &oid,  CORBA::Environment &env) = 0; // pure virtual
-    static void deactivate_object_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual CORBA::Object_ptr create_reference (const char *intf,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_reference_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid, const char *intf,  CORBA::Environment &env) = 0; // pure virtual
-    static void create_reference_with_id_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ObjectId * servant_to_id (PortableServer::Servant p_servant,  CORBA::Environment &env) = 0; // pure virtual
-    static void servant_to_id_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant,  CORBA::Environment &env) = 0; // pure virtual
-    static void servant_to_reference_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::Servant reference_to_servant (CORBA::Object_ptr reference,  CORBA::Environment &env) = 0; // pure virtual
-    static void reference_to_servant_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::ObjectId * reference_to_id (CORBA::Object_ptr reference,  CORBA::Environment &env) = 0; // pure virtual
-    static void reference_to_id_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid,  CORBA::Environment &env) = 0; // pure virtual
-    static void id_to_servant_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,  CORBA::Environment &env) = 0; // pure virtual
-    static void id_to_reference_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &_tao_enviroment);
 

@@ -1,3 +1,10 @@
+Fri Mar 06 00:18:38 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poaS and poaC: Removed about a 1000 lines of stubs and
+ 	  skeletons code from poaC.cpp and poaS.cpp.  This code was not
+ 	  necessary because of the locality constraints on certain POA
+ 	  objects. This should help reduce the footprint of TAO.
+
 Thu Mar  5 19:54:27 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: bind_context, rebind,
