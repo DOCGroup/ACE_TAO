@@ -6,14 +6,15 @@ factory object reference.
 server:
 -------
 
-% svr [-d] [-ORBhost <serverhost>] [-orbport <portnum>]
+% svr [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
            [-n <number-of-cubit-objects>]
 
 The server cubit factory maintained num_of_cubit objects (default =
 1). They are assigned keys that look like "key0", "key1", ...
 
-When the server is started, you should see as the first line of output
-something that looks like iiop:1.0//serverhost:10013/factory.
+When the server is started and you have used the -d flag, you should
+see as the first line of output something that looks like
+iiop:1.0//serverhost:10013/factory.
 
 Using -d turns on debugging messages.  It is additive, i.e., the more
 -d options provided, the more debugging you can get.  At the moment,
