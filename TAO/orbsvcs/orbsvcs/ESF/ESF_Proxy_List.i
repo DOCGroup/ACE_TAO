@@ -1,12 +1,12 @@
 // $Id$
 
-template<class PROXY> ACE_INLINE ACE_Unbounded_Set_Ex_Iterator<PROXY*>
+template<class PROXY> ACE_INLINE ACE_Unbounded_Set_Iterator<PROXY*>
 TAO_ESF_Proxy_List<PROXY>::begin (void)
 {
   return this->impl_.begin ();
 }
 
-template<class PROXY> ACE_INLINE ACE_Unbounded_Set_Ex_Iterator<PROXY*>
+template<class PROXY> ACE_INLINE ACE_Unbounded_Set_Iterator<PROXY*>
 TAO_ESF_Proxy_List<PROXY>::end (void)
 {
   return this->impl_.end ();
