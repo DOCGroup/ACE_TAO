@@ -9,34 +9,33 @@
 #endif
 
 // Threads
-#define	ACE_HAS_THREADS
+#define ACE_HAS_THREADS
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+        #define ACE_MT_SAFE 1
 #endif
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define	ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
-#define	ACE_HAS_PTHREAD_T
-#define	ACE_LACKS_PTHREAD_CANCEL
+#define ACE_HAS_PTHREAD_T
+#define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_HAS_PTHREAD_SIGMASK
-#define	ACE_HAS_SIGWAIT
-//#define	ACE_HAS_ONEARG_SIGWAIT
-//#define	ACE_HAS_PTHREAD_YIELD_VOID_PTR
-//#define	ACE_HAS_YIELD_VOID_PTR
-//#define	ACE_HAS_PTHREAD_ATTR_INIT
-//#define	ACE_HAS_PTHREAD_ATTR_DESTROY
-//#define	ACE_HAS_PTHREAD_DSTATE_PTR
-//#define	ACE_HAS_PTHREAD_EQUAL
-//#define	ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
+#define ACE_HAS_SIGWAIT
+//#define       ACE_HAS_PTHREAD_YIELD_VOID_PTR
+//#define       ACE_HAS_YIELD_VOID_PTR
+//#define       ACE_HAS_PTHREAD_ATTR_INIT
+//#define       ACE_HAS_PTHREAD_ATTR_DESTROY
+//#define       ACE_HAS_PTHREAD_DSTATE_PTR
+//#define       ACE_HAS_PTHREAD_EQUAL
+//#define       ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 //#define ACE_LACKS_THREAD_STACK_ADDR
 //#define ACE_LACKS_KEYDELETE
 // If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
+// send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_RWLOCK_T
-#define	ACE_LACKS_SETSCHED
+#define ACE_LACKS_SETSCHED
 
 #include <pthread.h>
 #if defined(_M_UNIX)

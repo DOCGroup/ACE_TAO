@@ -7,7 +7,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#define ACE_LACKS_SETSCHED 
+#define ACE_LACKS_SETSCHED
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_GETPGID
 // DF: this platform uses Digital's CXX compiler
@@ -39,10 +39,10 @@
 
 // Platform supports tid_t
 #define ACE_HAS_TID_T
-#define ACE_HAS_UALARM 
+#define ACE_HAS_UALARM
 
 // If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
+// send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 
@@ -62,18 +62,18 @@
 
 // Platform defines MAP_FAILED as a long constant.
 #define ACE_HAS_LONG_MAP_FAILED
- 
+
 // Platform's implementation of sendmsg() has a non-const msgheader parameter.
 #define ACE_HAS_BROKEN_SENDMSG
- 
+
 // Platform's implementation of writev() has a non-const iovec parameter.
 #define ACE_HAS_BROKEN_WRITEV
- 
+
 // Platform's implementation of setlrmit() has a non-const rlimit parameter.
 #define ACE_HAS_BROKEN_SETRLIMIT
- 
+
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
@@ -112,7 +112,7 @@
 #define ACE_HAS_POSIX_TIME
 
 // Platform defines struct timespec in <sys/timers.h>
-#define ACE_HAS_BROKEN_POSIX_TIME 
+#define ACE_HAS_BROKEN_POSIX_TIME
 // #define ACE_HAS_SVR4_TIME
 
 // Platform supports POSIX O_NONBLOCK semantics.
@@ -155,7 +155,7 @@
 // Compiler/platform supports SVR4 dynamic linking semantics.
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 
-// Platform support OSF1 gettimeofday 
+// Platform support OSF1 gettimeofday
 #define ACE_HAS_OSF1_GETTIMEOFDAY
 
 // Compiler/platform supports SVR4 signal typedef.
@@ -181,7 +181,7 @@
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+        #define ACE_MT_SAFE 1
 #endif
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
@@ -194,8 +194,5 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 8192
 #define ACE_HAS_GETPAGESIZE
-
-// DF: That the way it is
-#define ACE_HAS_ONEARG_SIGWAIT
 
 #endif /* ACE_CONFIG_H */

@@ -146,7 +146,6 @@
 #define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_HAS_SIGWAIT
-//#define       ACE_HAS_ONEARG_SIGWAIT
 //#define       ACE_HAS_PTHREAD_YIELD_VOID_PTR
 //#define       ACE_HAS_YIELD_VOID_PTR
 //#define       ACE_HAS_PTHREAD_ATTR_INIT
@@ -158,7 +157,7 @@
 //#define ACE_LACKS_THREAD_STACK_ADDR
 //#define ACE_LACKS_KEYDELETE
 // If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
+// send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_RWLOCK_T

@@ -22,7 +22,7 @@ ACE_CAST_CONST                          Used to work around broken SunCC ANSI ca
 ACE_HAS_ANSI_CASTS                      Platform supports new C++ style casts (dynamic_cast, static_cast, reinterpret_cast and const_cast)
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with ACE_HAS_TSS_EMULATION _only_.  Defaults to 64.
 ACE_THREADS_DONT_INHERIT_LOG_MSG                Specify this if you don't want threads to inherit parent thread's ACE_Log_Msg properties.
-ACE_HAS_ONE_DEFINITION_RULE		Compiler enforces C++ One Definition Rule
+ACE_HAS_ONE_DEFINITION_RULE             Compiler enforces C++ One Definition Rule
 ACE_HAS_PRIOCNTL                        OS has priocntl (2).
 ACE_HAS_RECV_TIMEDWAIT                  Platform has the MIT pthreads APIs for
 ACE_HAS_RECVFROM_TIMEDWAIT              timed send/recv operations
@@ -109,7 +109,6 @@ ACE_HAS_NONCONST_MSGSND                 Platform has a non-const parameter to ms
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses non-const timeval* (only found on Linux right now)
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old malloc()/free() prototypes (ugh)
 ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R       Uses ctime_r & asctime_r with only two parameters vs. three.
-ACE_HAS_ONEARG_SIGWAIT                  sigwait() takes only one argument.
 ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5, only supports SCHED_OTHER POSIX scheduling policy.
 ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R   Uses ctime_r & asctime_r with only two parameters vs. three.
 ACE_HAS_OPTIMIZED_MESSAGE_QUEUE         Use the semaphore implementation of ACE_Message_Queue rather than the emulated condition variable (NT and VxWorks).
