@@ -1,3 +1,16 @@
+Thu Jul 15 07:01:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+	  Removed ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION and added
+	  ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION checks.  
+
+	  These feature-test macros are used to set ACE_TEMPLATE_METHOD_-
+	  SPECIALIZATION and ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION as
+	  appropriate to accommodate the template specialization syntax
+	  required by different compilers.  The former is obsolete and 
+	  has (mostly) been removed, the latter is used by TAO.
+
 Wed Jul 14 10:10:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dev_Poll_Reactor.h:

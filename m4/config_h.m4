@@ -858,9 +858,8 @@ AH_TEMPLATE([ACE_HAS_STD_TEMPLATE_SPECIALIZATION],
 [Compiler supports standard C++ template specializations
    (e.g. "template <>" syntax.)])
 
-AH_TEMPLATE([ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION],
-[Compiler supports standard C++ template method specializations
-   (e.g. "template <>" syntax.)])
+AH_TEMPLATE([ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION],
+[Compiler supports standard C++ template class member specializations])
 
 AH_TEMPLATE([ACE_HAS_TEMPLATE_TYPEDEFS],
 [Compiler implements templates that support typedefs inside of
