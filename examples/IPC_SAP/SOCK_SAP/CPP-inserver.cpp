@@ -46,8 +46,8 @@ server (void *arg)
       // Keep reading until the client shuts down.
       for (;;)
         {
-          // Sleep for some amount of time in order to
-          // test client flow control.
+          // Sleep for some amount of time in order to test client
+          // flow control.
           ACE_OS::sleep (sleep_time);
 
           char buf[BUFSIZ];                                     
@@ -57,21 +57,19 @@ server (void *arg)
           if (r_bytes <= 0)
             {
               if (errno == ETIME)
-                ACE_ERROR ((LM_ERROR, "%p\n", "ACE::recv"));
+                ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
               break;
             }
           else if (verbose && ACE::write_n (ACE_STDOUT, buf, r_bytes) != r_bytes)
-            ACE_ERROR ((LM_ERROR, "%p\n", "ACE::send_n"));
+            ACE_ERROR ((LM_ERROR, "%p\n", "ACE::write_n"));
+          else if (new_stream.send_n (buf, r_bytes) != r_bytes)
+            ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
         }
 
       if (r_bytes == 0)
         {
           ACE_DEBUG ((LM_DEBUG, 
                       "(%P|%t) reached end of input, connection closed by client\n"));
-
-          // Send handshake back to client to unblock it.
-          if (new_stream.send_n ("", 1) != 1)
-            ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
           break;
         }
       else if (r_bytes == -1)
