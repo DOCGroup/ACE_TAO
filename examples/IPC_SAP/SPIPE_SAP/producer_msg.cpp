@@ -2,6 +2,7 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(SPIPE_SAP, producer_msg, "$Id$")
 
@@ -12,7 +13,7 @@ ACE_RCSID(SPIPE_SAP, producer_msg, "$Id$")
 const int DEFAULT_SIZE = 4 * 1024;
 const int DEFAULT_COUNT = 100;
 
-int 
+int
 main (int argc, char *argv[])
 {
   int size = argc > 1 ? atoi (argv[1]) : DEFAULT_SIZE;
@@ -37,7 +38,7 @@ main (int argc, char *argv[])
   ACE_Str_Buf buffer (buf, size);
 
   for (i = 0; i < iterations; i++)
-    if (cli_stream.send ((ACE_Str_Buf *) 0, 
+    if (cli_stream.send ((ACE_Str_Buf *) 0,
 			 &buffer,
 			 1,
 			 MSG_BAND) == -1)

@@ -18,7 +18,7 @@ FILES  	= Timer_Service
 PSRC   	= $(addsuffix .cpp,$(BIN))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-LDLIBS 	= -lTimer
+LDLIBS 	= 
 
 LIBS   += $(ACELIB)
 

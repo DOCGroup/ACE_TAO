@@ -24,7 +24,7 @@ FILES	= Concrete_Connection_Handlers \
 	  Connection_Handler_Connector
 
 LSRC	= $(addsuffix .cpp,$(FILES))
-LDLIBS	= -lGateway
+LDLIBS	= 
 
 LIBS   += $(ACELIB)
 

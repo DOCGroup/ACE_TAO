@@ -13,6 +13,7 @@ require File::Path;
 
 $is_release = 0;
 @ACE_DOCS = ('ace',
+	     'ace_man',
              'ace_rmcast',
              'ace_ssl');
 @TAO_DOCS = ('tao',
@@ -61,7 +62,7 @@ sub generate_doxy_files {
   my @DOCS = @_;
 
   my $VERSION = 'Snapshot ('.
-    POSIX::strftime("%Y/%m/%d @ %H:%M", localtime)
+    POSIX::strftime("%Y/%m/%d-%H:%M", localtime)
       .')';
 
   foreach my $i (@DOCS) {
@@ -78,25 +79,39 @@ sub generate_doxy_files {
     open(DOXYOUTPUT, ">$output")
       || die "Cannot open doxygen output file $output\n";
 
-    my $output_dir = 'html';
+    my $generate_man  = 0;
+    my $generate_html = 0;
+    my @output_dirs = ();
     while (<DOXYINPUT>) {
       chomp;
       if (/^PROJECT_NUMBER/) {
         print DOXYOUTPUT "PROJECT_NUMBER        = ", $VERSION, "\n";
-      } elsif (/^HTML_OUTPUT/) {
+	next;
+      } elsif (/^GENERATE_MAN/ && /= YES/) {
+	$generate_man = 1;
+      } elsif (/^GENERATE_HTML/ && /= YES/) {
+	$generate_html = 1;
+      } elsif ($generate_html && /^HTML_OUTPUT/) {
         my @field = split(' = ');
-        $output_dir = $field[1];
-        print DOXYOUTPUT $_, "\n";
-      } else {
-        print DOXYOUTPUT $_, "\n";
+	if ($#field >= 1) {
+	  push @output_dirs, $field[1];
+	}
+      } elsif ($generate_html && /^MAN_OUTPUT/) {
+        my @field = split(' = ');
+	if ($#field >= 1) {
+	  push @output_dirs, $field[1];
+	}
       }
+      print DOXYOUTPUT $_, "\n";
     }
     close (DOXYOUTPUT);
     close (DOXYINPUT);
 
-    File::Path::mkpath($output_dir, 0, 0755);
+    foreach my $i (@output_dirs) {
+      File::Path::mkpath($i, 0, 0755);
+    }
 
-    &run_doxy ($output, $output_dir);
+    &run_doxy ($output);
 
     unlink $output;
   }
@@ -104,7 +119,6 @@ sub generate_doxy_files {
 
 sub run_doxy {
   my $config = shift;
-  my $output = shift;
   open(DOX,"doxygen $config 2>&1 |")
     || die "cannot start ACE doxygen process\n";
   while (<DOX>) {
@@ -112,10 +126,6 @@ sub run_doxy {
   }
   close (DOX)
     || die "error while running doxygen on $config\n";
-
-  if (!-d $output) {
-    die "cannot find output directory <$output> \n";
-  }
 }
 
 ########

@@ -121,7 +121,7 @@ worker (void *c)
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
         ACE_OS::printf ("(%lu) errno = %d, lineno = %d, flags = %d\n",
-                        ACE_static_cast(unsigned long,handle),
+                        ACE_reinterpret_cast(unsigned long,handle),
                         tss_error->error (),
                         tss_error->line (),
                         tss_error->flags ());
