@@ -1,3 +1,10 @@
+Wed Jun 23 10:00:16 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
+	* orbsvcs/tests/CosEC_Multiple.cpp:
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	* examples/Event_Comm/Supplier_Input_Handler.cpp:
+	  Fixed unused arg warnings.
+
 Wed Jun 23 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/complex_any.cpp:
@@ -10,10 +17,10 @@ Wed Jun 23 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Wed Jun 23 09:26:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	  Changed a couple of instances of ACE_dynamic_cast 
+	  Changed a couple of instances of ACE_dynamic_cast
 	  to ACE_reinterpret_cast in generated code. I had earlier
 	  changed these from ACE_static_cast mistakenly to
-	  ACE_dynamic_cast. Thanks to David for setting me 
+	  ACE_dynamic_cast. Thanks to David for setting me
 	  straight.
 
 Wed Jun 23 00:42:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -29,7 +36,7 @@ Wed Jun 23 00:07:51 1999  John Heitmann  <jwh1@cs.wustl.edu>
 Tue Jun 22 22:11:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/default_resource.cpp:
-	  Removed the warning about -ORBresources, the current behavior is 
+	  Removed the warning about -ORBresources, the current behavior is
 	  acceptable and we decided not to remove the option in the
 	  future.
 
@@ -40,7 +47,7 @@ Tue Jun 22 22:11:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/benchmark/svc.conf:
 	* orbsvcs/tests/AVStreams/sfp/Makefile:
 	* orbsvcs/tests/Property/run_test.pl:
-	  Updated the Makefiles and scripts on the AV tests, there is some 
+	  Updated the Makefiles and scripts on the AV tests, there is some
 	  hope of adding them to the nightly builds.
 
 	* orbsvcs/tests/Event/Basic/BCast.cpp:
@@ -52,18 +59,18 @@ Tue Jun 22 22:11:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Tue Jun 22 21:49:38 1999  Fred Kuhns  <fredk@cs.wustl.edu>
 
         * IORManipulation.cpp:
-	  Fixed usage of type_id, was if (type_id) now if (type_id.in ()) 
+	  Fixed usage of type_id, was if (type_id) now if (type_id.in ())
           This will ensure a const char * is returned for the if.
 
 Tue Jun 22 21:11:56 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/Repository.cpp:Added missing template
 	  instantiations
-	
+
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.h: Added few missing
 	  exceptions in the signature.
-	
+
 Tue Jun 22 20:11:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (locate_servant_i): If incarnate() returns 0, then
