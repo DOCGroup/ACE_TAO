@@ -79,8 +79,7 @@ TAO_Reconfig_Scheduler_Entry::orig_rt_info_data ()
 void
 TAO_Reconfig_Scheduler_Entry::orig_rt_info_data (RtecScheduler::RT_Info &data)
 {
-  this->orig_rt_info_data_.entry_point = data.entry_point;
-  this->orig_rt_info_data_.handle = data.handle;
+  // Only store the information that can be updated by the public interface at run-time.
   this->orig_rt_info_data_.worst_case_execution_time = data.worst_case_execution_time;
   this->orig_rt_info_data_.typical_execution_time = data.typical_execution_time;
   this->orig_rt_info_data_.cached_execution_time = data.cached_execution_time;
@@ -89,9 +88,6 @@ TAO_Reconfig_Scheduler_Entry::orig_rt_info_data (RtecScheduler::RT_Info &data)
   this->orig_rt_info_data_.importance = data.importance;
   this->orig_rt_info_data_.quantum = data.quantum;
   this->orig_rt_info_data_.threads = data.threads;
-  this->orig_rt_info_data_.priority = data.priority;
-  this->orig_rt_info_data_.preemption_subpriority = data.preemption_subpriority;
-  this->orig_rt_info_data_.preemption_priority = data.preemption_priority;
   this->orig_rt_info_data_.info_type = data.info_type;
 }
 

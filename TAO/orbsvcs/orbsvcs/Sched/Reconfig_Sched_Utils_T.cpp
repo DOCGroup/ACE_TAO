@@ -97,61 +97,65 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
       // Get the dependency set for the current entry.
       RtecScheduler::Dependency_Set *dependency_set = 0;
       if (dependency_map_.find (rse.actual_rt_info ()->handle,
-                                dependency_set) != 0)
+                                dependency_set) == 0)
 	{
-          ACE_ERROR_RETURN ((LM_ERROR, "Dependency set not found"), -1);
+          // Iterate over the set of dependencies for the current entry.
+          TAO_Reconfig_Scheduler_Entry * next_rse = 0;
+          RtecScheduler::RT_Info *next_rt_info;
+          for (u_int i = 0; i < dependency_set->length (); ++i)
+            {
+              // Take the handle from the dependency and use it
+              // to obtain an RT_Info pointer from the map.
+              if (rt_info_map_.find ((*dependency_set) [i].rt_info,
+                                     next_rt_info) != 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR, "RT_Info not found.\n"), -1);
+                }
+
+              // Extract a pointer to the scheduling entry from the RT_Info.
+
+              if (next_rt_info == 0)
+	        {
+                  ACE_ERROR_RETURN ((LM_ERROR, "RT_Info in map was null.\n"),
+                                    -1);
+                }
+
+              // Reference the associated scheduling entry: the double cast is
+              // needed to ensure that the size of the pointer and the size of the
+              // stored magic cookie are the same (see the definition of
+              // ptr_arith_t in ACE to grok how this works portably).
+              next_rse = ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry *,
+                                               ACE_static_cast (ptr_arith_t,
+                                                                next_rt_info->
+                                                                  volatile_token));
+              if (next_rse == 0)
+	        {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Entry pointer in RT_Info was null.\n"),
+                                    -1);
+                }
+
+              // Call pre-recursion action method, which performs any necessary
+              // modifications to a successor (or the entry) prior to recursing
+              // on the successor.
+              result = this->pre_recurse_action (rse, *next_rse,
+                                                 (*dependency_set) [i]);
+              if (result < 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "TAO_RSE_Dependency_Visitor::visit: "
+                                     "error from pre-recursion action.\n"),
+                                    -1);
+                }
+
+              // If the pre-recursion action returned 0, visit the successor.
+              if (result == 0)
+                {
+                  this->visit (*next_rse);
+                }
+            }
+
 	}
-
-      // Iterate over the set of dependencies for the current entry.
-      TAO_Reconfig_Scheduler_Entry * next_rse = 0;
-      RtecScheduler::RT_Info *next_rt_info;
-      for (u_int i = 0; i < dependency_set->length (); ++i)
-        {
-          // Take the handle from the dependency and use it
-          // to obtain an RT_Info pointer from the map.
-          if (rt_info_map_.find ((*dependency_set) [i].rt_info,
-                                 next_rt_info) != 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR, "RT_Info not found"), -1);
-            }
-
-          // Extract a pointer to the scheduling entry from the RT_Info.
-
-          if (next_rt_info == 0)
-	    {
-              ACE_ERROR_RETURN ((LM_ERROR, "RT_Info in map was null"), -1);
-            }
-
-          // Reference the associated scheduling entry: the double cast is
-          // needed to ensure that the size of the pointer and the size of the
-          // stored magic cookie are the same (see the definition of
-          // ptr_arith_t in ACE to grok how this works portably).
-          next_rse = ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry *,
-                                           ACE_static_cast (ptr_arith_t,
-                                                            next_rt_info->
-                                                              volatile_token));
-          if (next_rse == 0)
-	    {
-              ACE_ERROR_RETURN ((LM_ERROR, "entry pointer in RT_Info was null"), -1);
-            }
-
-          // Call pre-recursion action method, which performs any necessary
-          // modifications to a successor (or the entry) prior to recursing
-          // on the successor.
-          result = this->pre_recurse_action (rse, *next_rse,
-                                             (*dependency_set) [i]);
-          if (result < 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR, "TAO_RSE_Dependency_Visitor::"
-                                 "visit: error from pre-recursion action.\n"), -1);
-            }
-
-           // If the pre-recursion action returned 0, visit the successor.
-          if (result == 0)
-            {
-              this->visit (*next_rse);
-            }
-        }
 
       // Call postfix action method, which performs any necessary
       // modifications on the node after visiting all its successors.
@@ -710,13 +714,17 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 // Constructor.
 
 template <class RECONFIG_SCHED_STRATEGY>
-TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::TAO_RSE_Priority_Visitor ()
+TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::
+TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
+                          TAO_Reconfig_Scheduler_Entry ** entry_ptr_array)
   : previous_entry_ (0),
     first_subpriority_entry_ (0),
     priority_ (0),
     subpriority_ (0),
     os_priority_ (ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                                  ACE_SCOPE_PROCESS))
+                                                  ACE_SCOPE_PROCESS)),
+    handles_ (handles),
+    entry_ptr_array_ (entry_ptr_array)
 {
 }
 
@@ -737,9 +745,9 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler
       // Indicate a new priority level was assigned.
       result = 1;
 
-      // If we're on the first node, store it as the start of
-      // the priority level.
-      first_subpriority_entry_ = &rse;
+      // If we're on the first node, store the start of the array
+      // as the start of the priority level.
+      first_subpriority_entry_ = this->entry_ptr_array_;
       rse.actual_rt_info ()->preemption_subpriority = subpriority_;
     }
   else
@@ -763,7 +771,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler
           // Iterate back through and adjust the subpriority levels.
           for (int i = 0; i <= subpriority_; ++i, ++first_subpriority_entry_)
 	    {
-              first_subpriority_entry_->
+              (*first_subpriority_entry_)->
                 actual_rt_info ()->
                   preemption_subpriority += subpriority_;
 	    }
@@ -771,7 +779,6 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler
           subpriority_ = 0;
           rse.actual_rt_info ()->preemption_subpriority = subpriority_;
 
-          first_subpriority_entry_ = &rse;
           ++priority_;
           os_priority_ = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     os_priority_,
@@ -789,6 +796,24 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler
   return result;
 }
 
+
+// Finishes scheduler entry priority assignment by iterating over the
+// remaining entries in the last subpriority level, and adjusting
+// their subpriorities.
+template <class RECONFIG_SCHED_STRATEGY> int
+TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::finish ()
+{
+  // Iterate back through and adjust the subpriority levels.
+  for (int i = 0; i <= subpriority_; ++i, ++first_subpriority_entry_)
+    {
+      (*first_subpriority_entry_)->
+        actual_rt_info ()->
+          preemption_subpriority += subpriority_;
+    }
+
+  // Indicate no new proirity level was identified.
+  return 0;
+}
 
 ///////////////////////////////////////
 // class TAO_RSE_Utilization_Visitor //
