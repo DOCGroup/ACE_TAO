@@ -106,7 +106,7 @@ Text_Input_Device_Wrapper::create_input_message (void)
 
 // Constructor.
 
-Text_Output_Driver_Wrapper::Text_Output_Driver_Wrapper (int logging)
+Text_Output_Device_Wrapper::Text_Output_Device_Wrapper (int logging)
   : logging_ (logging)
 {
 }
@@ -114,7 +114,7 @@ Text_Output_Driver_Wrapper::Text_Output_Driver_Wrapper (int logging)
 // Consume and possibly print out the passed message.
 
 int 
-Text_Output_Driver_Wrapper::write_output_message (void *message)
+Text_Output_Device_Wrapper::write_output_message (void *message)
 {
   if (message)
     {
@@ -128,7 +128,7 @@ Text_Output_Driver_Wrapper::write_output_message (void *message)
     }
 
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "Text_Output_Driver_Wrapper::"
+                     "Text_Output_Device_Wrapper::"
                      "write_output_message: null argument"), -1);
   return 0;
 }
@@ -138,7 +138,7 @@ Text_Output_Driver_Wrapper::write_output_message (void *message)
 // nothing if the pointer is null.
 
 int 
-Text_Output_Driver_Wrapper::modify_device_settings (void *logging)
+Text_Output_Device_Wrapper::modify_device_settings (void *logging)
 {
   if (logging)
     logging_ = *ACE_static_cast (int *, logging);
@@ -150,9 +150,11 @@ Text_Output_Driver_Wrapper::modify_device_settings (void *logging)
 
 // Constructor.
 
-User_Input_Task::User_Input_Task (Thread_Timer_Queue *queue,
+User_Input_Task::User_Input_Task (Bounded_Packet_Relay<ACE_MT_SYNCH> *relay,
+                                  Thread_Timer_Queue *queue,
                                   Thread_Bounded_Packet_Relay_Driver &tbprd)
   : ACE_Task_Base (ACE_Thread_Manager::instance ()),
+    relay_ (relay),
     queue_ (queue),
     usecs_ (ACE_ONE_SECOND_IN_USECS),
     driver_ (tbprd)
@@ -260,11 +262,8 @@ User_Input_Task::set_logging_level (void *argument)
 // Runs the next transmission (if one is not in progress).
 
 int 
-User_Input_Task::run_transmission (void *argument)
+User_Input_Task::run_transmission (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
   if (relay_)
     {
       switch (relay_->start_transmission (packet_count_,
@@ -339,38 +338,25 @@ User_Input_Task::end_transmission (void *)
 {
   if (relay_)
     {
-      Bounded_Packet_Relay_Base::Transmission_Status *status;
-
-      status = 
-        ACE_static_cast (Bounded_Packet_Relay_Base::Transmission_Status *,
-                         argument);
-
-      if (status)
+      switch (relay_->end_transmission (Bounded_Packet_Relay_Base::CANCELLED))
         {
-          switch (relay_->end_transmission (*status))
-            {
-              case 1:
-                ACE_DEBUG ((LM_DEBUG, 
-                            "\nEnd transmission: "
-                            "no transmission in progress\n"));
-                return 0;
-                /* NOTREACHED */
+          case 1:
+            ACE_DEBUG ((LM_DEBUG, 
+                        "\nEnd transmission: "
+                        "no transmission in progress\n"));
+            return 0;
+            /* NOTREACHED */
 
-              case 0: 
-                // Cancel any remaining timers.
-                this->clear_all_timers ();
-                return 0;
-                /* NOTREACHED */
+          case 0: 
+            // Cancel any remaining timers.
+            this->clear_all_timers ();
+            return 0;
+            /* NOTREACHED */
   
-              default:
-                return -1;
-                /* NOTREACHED */
-            }
-      }
-      ACE_ERROR_RETURN ((LM_ERROR, 
-                       "User_Input_Task::end_transmission: "
-                       "null argument"), 
-                      -1);
+          default:
+            return -1;
+            /* NOTREACHED */
+        }
     }
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::end_transmission: "
@@ -382,11 +368,8 @@ User_Input_Task::end_transmission (void *)
 // (if one is not in progress).
 
 int 
-User_Input_Task::report_stats (void *argument)
+User_Input_Task::report_stats (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
   if (relay_)
     {
       switch (relay_->report_statistics ())
@@ -415,11 +398,8 @@ User_Input_Task::report_stats (void *argument)
 // Shut down the task.
 
 int 
-User_Input_Task::shutdown (void *argument)
+User_Input_Task::shutdown (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
   // Cancel the thread timer queue task "preemptively."
   ACE_Thread::cancel (this->queue_->thr_id ());
@@ -584,8 +564,8 @@ Termination_Handler::cancelled (void)
 
 // Constructor.
 
-Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (void)
-  : input_task_ (&timer_queue_, *this)
+Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay<ACE_MT_SYNCH> *relay)
+  : input_task_ (relay, &timer_queue_, *this)
 {
 }
 

@@ -125,7 +125,7 @@ private:
   // Index into the string.
 };
 
-class Text_Output_Driver_Wrapper : public Output_Device_Wrapper_Base
+class Text_Output_Device_Wrapper : public Output_Device_Wrapper_Base
 {
   // = TITLE
   //    Implements a simple wrapper for a output pseudo-device.  
@@ -135,7 +135,7 @@ class Text_Output_Driver_Wrapper : public Output_Device_Wrapper_Base
   //    output stream, if logging is turned on.
 public:
 
-  Text_Output_Driver_Wrapper (int logging = 0);
+  Text_Output_Device_Wrapper (int logging = 0);
   // Default constructor.
 
   // = Command Accessible Entry Points
@@ -166,7 +166,8 @@ public:
   typedef int (User_Input_Task::*ACTION) (void *);
   // Trait for command accessible entry points.
 
-  User_Input_Task (Thread_Timer_Queue *queue,
+  User_Input_Task (Bounded_Packet_Relay<ACE_MT_SYNCH> *relay,
+                   Thread_Timer_Queue *queue,
 	           Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
   // Constructor.
 
@@ -349,7 +350,7 @@ public:
   typedef Command<User_Input_Task, User_Input_Task::ACTION> COMMAND;
 
   // = Initialization and termination methods.
-  Thread_Bounded_Packet_Relay_Driver (void);
+  Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay<ACE_MT_SYNCH> *relay);
   // Constructor.
 
   ~Thread_Bounded_Packet_Relay_Driver (void);
