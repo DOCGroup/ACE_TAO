@@ -1,211 +1,216 @@
+Tue Jun 08 09:42:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Simple_Naming/client.cpp (execute): added .ptr ()
+          derference of orb_ before comparing it to 0.
+
 Tue Jun 08 00:15:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
-	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
+        * examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
 
-	  Fixed void* to function pointer cast.
+          Fixed void* to function pointer cast.
 
 Tue Jun  8 00:19:02 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Files modified: Acceptor_Registry.cpp, Acceptor_Registry.h,
- 	  Connector_Registry.cpp, Connector_Registry.h, IIOP_Acceptor.cpp,
- 	  IIOP_Connector.cpp, IIOP_Connector.h, IIOP_Profile.cpp,
- 	  IIOP_Profile.h, IIOP_Profile.i, Invocation.cpp, ORB.cpp,
- 	  ORB_Core.cpp, Object.cpp, Pluggable.cpp, Pluggable.h,
- 	  UIOP_Acceptor.cpp, UIOP_Connector.cpp, UIOP_Profile.cpp,
- 	  UIOP_Profile.h, UIOP_Profile.i, UIOP_Transport.h
+          Connector_Registry.cpp, Connector_Registry.h, IIOP_Acceptor.cpp,
+          IIOP_Connector.cpp, IIOP_Connector.h, IIOP_Profile.cpp,
+          IIOP_Profile.h, IIOP_Profile.i, Invocation.cpp, ORB.cpp,
+          ORB_Core.cpp, Object.cpp, Pluggable.cpp, Pluggable.h,
+          UIOP_Acceptor.cpp, UIOP_Connector.cpp, UIOP_Profile.cpp,
+          UIOP_Profile.h, UIOP_Profile.i, UIOP_Transport.h
 
-	* Changed the interface to Connector_Registry.  Altered connect()
- 	  method to accept profiles rather than a Stub Object pointer.
+        * Changed the interface to Connector_Registry.  Altered connect()
+          method to accept profiles rather than a Stub Object pointer.
 
         * tao/Acceptor_Registry: comments updates
 
-	* tao/IIOP_Acceptor: Comments and fixed is_collocated to use the
- 	  cached copy of the local address.
+        * tao/IIOP_Acceptor: Comments and fixed is_collocated to use the
+          cached copy of the local address.
 
         * tao/IIOP_Connector: comments and fixed use of
- 	  profile->addr_to_string
+          profile->addr_to_string
 
         * tao/IIOP_Profile: Comments, changes add_to_string to accept a
- 	  buffer.  changed _key () to be _key (void), removed use of body_
- 	  (CDR stream).
+          buffer.  changed _key () to be _key (void), removed use of body_
+          (CDR stream).
 
         * tao/Invocation: comments and fixed use of
- 	  connector_registry->connect ()
+          connector_registry->connect ()
 
         * tao/ORB.cpp: comments and fixed use of profile->_key () to not
- 	  include ENV.
+          include ENV.
 
         * tao/ORB_Core: comments
 
-	* tao/Pluggable: comments and fixed TAO_XX_Profile::addr_to_string ()
- 	  to include a buffer, alsoc TAO_XX_Profile::_key () to not
- 	  include ENV.
+        * tao/Pluggable: comments and fixed TAO_XX_Profile::addr_to_string ()
+          to include a buffer, alsoc TAO_XX_Profile::_key () to not
+          include ENV.
 
         * tao/UIOP_{Acceptor,Connector,Profile,Transport}: comments and
- 	  also UIOP_Profile::_key() and UIOP_Profile::addr_to_string.
+          also UIOP_Profile::_key() and UIOP_Profile::addr_to_string.
 
 Tue Jun  8 00:09:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/MT_Client/run_test.pl:
-	  The test driver works more reliably now.
+        * tests/MT_Client/run_test.pl:
+          The test driver works more reliably now.
 
-	* tests/NestedUpcall/Reactor/client.h:
-	* tests/NestedUpcall/Reactor/mt_client.h:
-	  Fixed ORB vs. servants order
+        * tests/NestedUpcall/Reactor/client.h:
+        * tests/NestedUpcall/Reactor/mt_client.h:
+          Fixed ORB vs. servants order
 
 Mon Jun 07 23:39:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (Servant_Upcall): The code in the
-	  destructor of POA Current must be run before the Object Adapter
-	  lock is released. With the reorganization Nanbor and I did, this
-	  was no longer true.  Therefore, the solution was to move the
-	  code from the destructor to a teardown() method which is run
-	  before the Object Adapter lock is released.
+        * tao/Object_Adapter.cpp (Servant_Upcall): The code in the
+          destructor of POA Current must be run before the Object Adapter
+          lock is released. With the reorganization Nanbor and I did, this
+          was no longer true.  Therefore, the solution was to move the
+          code from the destructor to a teardown() method which is run
+          before the Object Adapter lock is released.
 
-	* tao/IIOP_Connect: Removed the following extra and unused
-	  functions:
+        * tao/IIOP_Connect: Removed the following extra and unused
+          functions:
 
-	  - TAO_IIOP_Server_Connection_Handler::handle_message
-	  - TAO_IIOP_Server_Connection_Handler::handle_locate
-	  - TAO_UIOP_Server_Connection_Handler::handle_message
-	  - TAO_UIOP_Server_Connection_Handler::handle_locate
+          - TAO_IIOP_Server_Connection_Handler::handle_message
+          - TAO_IIOP_Server_Connection_Handler::handle_locate
+          - TAO_UIOP_Server_Connection_Handler::handle_message
+          - TAO_UIOP_Server_Connection_Handler::handle_locate
 
-	* tao/GIOP: Moved the exception handling code from
-	  process_server_message() to process_server_request() and
-	  process_server_locate().  This was necessary since the two
-	  handle exceptions in different ways: process_server_request()
-	  propogates to the client in a GIOP::Reply while
-	  process_server_locate() propogates to the client in a
-	  GIOP::LocateReply.  BTW, the credit/blame for this goes to
-	  Carlos.
+        * tao/GIOP: Moved the exception handling code from
+          process_server_message() to process_server_request() and
+          process_server_locate().  This was necessary since the two
+          handle exceptions in different ways: process_server_request()
+          propogates to the client in a GIOP::Reply while
+          process_server_locate() propogates to the client in a
+          GIOP::LocateReply.  BTW, the credit/blame for this goes to
+          Carlos.
 
-	* examples/POA/Forwarding/client.cpp (main): Fixed exception
-	  handling.
+        * examples/POA/Forwarding/client.cpp (main): Fixed exception
+          handling.
 
-	* examples/POA/Forwarding/Servant_Locator.cpp (preinvoke): The
-	  forwarding location must be specified when constructing the
-	  ForwardRequest.
+        * examples/POA/Forwarding/Servant_Locator.cpp (preinvoke): The
+          forwarding location must be specified when constructing the
+          ForwardRequest.
 
-	* examples/POA/FindPOA/FindPOA.cpp (main): POA Manager must be
-	  activated before use.
+        * examples/POA/FindPOA/FindPOA.cpp (main): POA Manager must be
+          activated before use.
 
-	* tao/TAO.h (TAO_ORB_Manager): Added POA Manager accessor.
+        * tao/TAO.h (TAO_ORB_Manager): Added POA Manager accessor.
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.h (AdapterActivator):
-	* tao/POA.cpp (TAO_Adapter_Activator::unknown_adapter):
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h (AdapterActivator):
+        * tao/POA.cpp (TAO_Adapter_Activator::unknown_adapter):
 
-	  Held on to the POA Manager.  If we don't, we'll have to create a
-	  new one and then we'll have to worry about its state (remember
-	  that POA Managers are created in holding state).
+          Held on to the POA Manager.  If we don't, we'll have to create a
+          new one and then we'll have to worry about its state (remember
+          that POA Managers are created in holding state).
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i:
-	* orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
 
-	  Fixed improper use of return values from the ORB Manager.  Since
-	  the ORB Manager duplicates the data members before returning
-	  them, we must store them in vars.
+          Fixed improper use of return values from the ORB Manager.  Since
+          the ORB Manager duplicates the data members before returning
+          them, we must store them in vars.
 
-	* orbsvcs/tests/ImplRepo/IR_Helper.cpp (IR_Helper): Since the POA
-	  and ORB are kept as vars, we must duplicate them since keep them
-	  around in the constructor.
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp (IR_Helper): Since the POA
+          and ORB are kept as vars, we must duplicate them since keep them
+          around in the constructor.
 
 Mon Jun  7 23:49:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
-	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
-	  Fixed problems with conversion from T_var to T_ptr for g++ 2.7.X
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+          Fixed problems with conversion from T_var to T_ptr for g++ 2.7.X
 
-	* orbsvcs/tests/Event/Basic/Observer.cpp:
-	* orbsvcs/tests/Event/Performance/Connect.cpp:
-	* orbsvcs/tests/Event/Performance/Throughput.cpp:
-	  More T_var to T_ptr problems and a few unused variables.
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/Performance/Connect.cpp:
+        * orbsvcs/tests/Event/Performance/Throughput.cpp:
+          More T_var to T_ptr problems and a few unused variables.
 
 Mon Jun  7 21:57:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/append.cpp:
-	* tao/skip.cpp:
-	  The marshaling and demarshaling code for object references
-	  inside anys was broken, it only handled IIOP profiles and used
-	  chars where octets where needed.
+        * tao/append.cpp:
+        * tao/skip.cpp:
+          The marshaling and demarshaling code for object references
+          inside anys was broken, it only handled IIOP profiles and used
+          chars where octets where needed.
 
-	* tao/UIOP_Profile.cpp:
-	  Improve debugging messages and handle errors more gracefully.
+        * tao/UIOP_Profile.cpp:
+          Improve debugging messages and handle errors more gracefully.
 
-	* tests/Param_Test/Makefile:
-	* tests/Param_Test/server.cpp:
-	  Minor cosmetic fixes
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/server.cpp:
+          Minor cosmetic fixes
 
 Mon Jun  7 20:37:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.h:
-	* orbsvcs/tests/Simple_Naming/client.cpp: The ORB was being
- 	  leaked: the TAO_ORB_Manager::orb() method returns a duplicate
- 	  and that was not getting released in both the MT_Test
- 	  constructor invocation and in the naming_client.init() call.
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Simple_Naming/client.cpp: The ORB was being
+          leaked: the TAO_ORB_Manager::orb() method returns a duplicate
+          and that was not getting released in both the MT_Test
+          constructor invocation and in the naming_client.init() call.
 
-	* tao/ORB.cpp: The naming service and other object references
- 	  should be release *before* releasing the ORB core.
+        * tao/ORB.cpp: The naming service and other object references
+          should be release *before* releasing the ORB core.
 
-	* tao/ORB_Core.cpp: Made the use of ACE_CString in the ORB_Table
- 	  explicit, so we understand what is going on.
+        * tao/ORB_Core.cpp: Made the use of ACE_CString in the ORB_Table
+          explicit, so we understand what is going on.
 
 Mon Jun  7 16:13:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.cpp:
-	* tao/Invocation.cpp: The system exceptions were not being
- 	  demarshaled on the server side.  Fixed the signature of
- 	  TAO_Exceptions::create_system_exception, it was returning a
- 	  CORBA::Exception* but a CORBA::SystemException* was better.
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+        * tao/Invocation.cpp: The system exceptions were not being
+          demarshaled on the server side.  Fixed the signature of
+          TAO_Exceptions::create_system_exception, it was returning a
+          CORBA::Exception* but a CORBA::SystemException* was better.
 
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Connector.cpp: Added a few debugging messages if there
- 	  is an error.
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp: Added a few debugging messages if there
+          is an error.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/cubit_i.h:
-	* performance-tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: The
- 	  Cubit_i objects were activated with the _default_POA(), but that
- 	  was not overriden, hence they were using the
- 	  default/_default_POA which is the RootPOA of the default ORB.
-  	  There was also an activation under a child POA but that was not
- 	  exported through the IORs printed to the file.
+        * performance-tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: The
+          Cubit_i objects were activated with the _default_POA(), but that
+          was not overriden, hence they were using the
+          default/_default_POA which is the RootPOA of the default ORB.
+          There was also an activation under a child POA but that was not
+          exported through the IORs printed to the file.
 
 Mon Jun 07 15:14:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * utils/catior/catior.cpp (cat_iiop_profile): added missing read
- 	  of port_number from the str.
+          of port_number from the str.
 
         * utils/catior/README: updated to mention that there's now a test
- 	  subdirectory containing samples, instead of just a single sample
- 	  file.
+          subdirectory containing samples, instead of just a single sample
+          file.
 
 Mon Jun  7 12:39:14 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
         * examples/Simple: Fixed const-correctness problems with all the
- 	  simple examples.
+          simple examples.
 
 Mon Jun 07 11:51:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
           (svc,cube_octet,do_test): added timestamps and an errno
- 	  printout, for debugging purposes.  The errno printout should be
- 	  removed later.
+          printout, for debugging purposes.  The errno printout should be
+          removed later.
 
 Mon Jun 07 10:43:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/default_resource.cpp (TAO_Allocated_Resources): Moved the
- 	  destruction of the Reactor before the destruction of the
- 	  allocators.  The handlers deleted when the Reactors die access
- 	  these allocators.  Thanks to Carlos for helping with this.
+          destruction of the Reactor before the destruction of the
+          allocators.  The handlers deleted when the Reactors die access
+          these allocators.  Thanks to Carlos for helping with this.
 
 Mon Jun  7 01:11:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * examples/POA/DSI/client.cpp (main): Corrected an overly
- 	  aggresive removal of "const char *".  Thanks to David for
- 	  reporting this.
+          aggresive removal of "const char *".  Thanks to David for
+          reporting this.
 
         * orbsvcs/orbsvcs/Naming/Naming_Context.h: Added default
           CORBA::Environment & = TAO_default_environment() calls.  Thanks
@@ -220,34 +225,34 @@ Mon Jun  7 01:11:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Sun Jun 06 23:17:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/POAC: Changed <InvalidPolicy::slot> back to
- 	  <InvalidPolicy::index>.  We can't rename this since it is
- 	  specified in the CORBA spec.  Please let us know if this breaks
- 	  anything on compilers like MVS C++ and we'll figure out another
- 	  workaround.
+          <InvalidPolicy::index>.  We can't rename this since it is
+          specified in the CORBA spec.  Please let us know if this breaks
+          anything on compilers like MVS C++ and we'll figure out another
+          workaround.
 
         * tao/GIOP.cpp (process_server_locate): Initialized <status> to
- 	  TAO_GIOP_UNKNOWN_OBJECT. This is a safe initial value and will
- 	  prevent the "might be used uninitialized in this function"
- 	  warning.
+          TAO_GIOP_UNKNOWN_OBJECT. This is a safe initial value and will
+          prevent the "might be used uninitialized in this function"
+          warning.
 
         * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed the method
- 	  such that when we are not looking for an existing Naming Service
- 	  and we are simply become one, we don't print extra erroneous
- 	  debug messages.  Thanks to Gul Onural <Gul_Onural@Mitel.COM> for
- 	  pointing this out.
+          such that when we are not looking for an existing Naming Service
+          and we are simply become one, we don't print extra erroneous
+          debug messages.  Thanks to Gul Onural <Gul_Onural@Mitel.COM> for
+          pointing this out.
 
 Sun Jun  6 22:09:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV/sfp.cpp:
         * orbsvcs/orbsvcs/Trader/Trader.cpp: Fixed duplicate template
- 	  instantiations, IRIX does not like that.
+          instantiations, IRIX does not like that.
 
 Sun Jun 06 21:42:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp:
         * orbsvcs/orbsvcs/orbsvcs_static.dsp: A couple of .idl file where
- 	  not re-compiled when the DIL compiler changed, fixed the
- 	  dependencies.
+          not re-compiled when the DIL compiler changed, fixed the
+          dependencies.
 
 Sun Jun  6 20:25:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -277,16 +282,16 @@ Sun Jun  6 20:25:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/util/utl_string.cpp:
         * TAO_IDL/util/utl_strlist.cpp: Obliterated any references to
- 	  'String' this was just a macro that expanded to the UTL_String
- 	  class, but was an endless sort of confusion with just a typedef
- 	  for 'char*' Also cleaned up the use of UTL_Strings in the
- 	  idl_global interface.  This seems to have put the IDL compiler
- 	  into usable state again.
+          'String' this was just a macro that expanded to the UTL_String
+          class, but was an endless sort of confusion with just a typedef
+          for 'char*' Also cleaned up the use of UTL_Strings in the
+          idl_global interface.  This seems to have put the IDL compiler
+          into usable state again.
 
 Sun Jun  6 18:55:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/util/utl_global.cpp: Fixed several memory managment
- 	  problems
+          problems
 
 Sun Jun  6 18:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -296,17 +301,17 @@ Sun Jun  6 18:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Sun Jun  6 17:42:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/tao_idl.cpp: Fixed DRV_drive() it is taking a const
- 	  char* now
+          char* now
 
 Sun Jun  6 15:14:13 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
         * TAO_IDL/fe/keywords.dat: The type of keyword_ in
- 	  TAO_IDL_CPP_Keyword_Entry should be const char *.
+          TAO_IDL_CPP_Keyword_Entry should be const char *.
 
         * TAO_IDL: Fixed zillions of improper uses of non-const char *'s
- 	  that were reported by the new SunC++ 5.0 compiler.  Everything
- 	  should be "const-correct" now.  BTW, whoever wrote the Sun IDL
- 	  compiler clearly didn't understand the C++ const rules...
+          that were reported by the new SunC++ 5.0 compiler.  Everything
+          should be "const-correct" now.  BTW, whoever wrote the Sun IDL
+          compiler clearly didn't understand the C++ const rules...
 
 Sun Jun  6 17:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -316,15 +321,15 @@ Sun Jun  6 16:14:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/performance-tests/Pluggable/PP_Test_Client.h:
         * TAO/performance-tests/Pluggable/PP_Test_Client.cpp: Moved member
- 	  CORBA::ORB_var orb_ ahead of the other _vars in the
- 	  declaration/initialization order.
+          CORBA::ORB_var orb_ ahead of the other _vars in the
+          declaration/initialization order.
 
 Sun Jun  6 15:41:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Any.h: Added comment for Any_var operator= (CORBA::Any_var).
 
         * tao/Any.cpp: Added checks for failure of memory allocation at
- 	  several places in the insertion and extraction operators.
+          several places in the insertion and extraction operators.
 
         * tao/Context.h: Added comment to some member functions.
 
@@ -693,8 +698,8 @@ Fri Jun 04 16:11:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tao/Server_Request.{i,cpp}:
         * tao/Typecode.{i,cpp}:
         * tao/corbafwd.{i,cpp}: Unlined a bunch of methods in CORBA
-	  namespace to avoid duplicate definitions on platforms with
-	  namespace support.
+          namespace to avoid duplicate definitions on platforms with
+          namespace support.
 
 Fri Jun 04 15:25:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
