@@ -6,37 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    utime.h
+ *    pace/utime.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_UTIME_H
 #define PACE_UTIME_H
 
-
-#include "pace/defines.h"
-#include "pace/sys/types.h"
-#include <utime.h>
-
-
-# if defined (PACE_HAS_CPLUSPLUS)
-extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
-
-  PACE_INLINE int pace_utime (const char * path,
-                              const struct utimbuf * times);
-
-# if defined (PACE_HAS_CPLUSPLUS)
-}
-# endif /* PACE_HAS_CPLUSPLUS */
-
-# if defined (PACE_HAS_INLINE)
-# include "utime.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_POSIX)
+# include "posix/utime.h"
+#elif defined (PACE_VXWORKS)
+# include "vxworks/utime.h"
+#elif defined (PACE_WIN32)
+# include "win32/utime.h"
+#endif
 
 #endif /* PACE_UTIME_H */
