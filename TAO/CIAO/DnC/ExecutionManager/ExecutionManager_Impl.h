@@ -23,7 +23,7 @@
 
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
-#include "DomainApplicationManager_Impl.h"
+#include "DomainApplicationManager/DomainApplicationManager_Impl.h"
 
 /**
  *

@@ -1,13 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplication): ciao_server, ciao_deployment_svnt {
+project(NodeApplication): ciao_server_dnc, ciao_deployment_svnt {
   requires += dnc
   exename   = NodeApplication
 
     IDL_Files {
   }
-  
+
   Source_Files {
     NodeApplication.cpp
   }

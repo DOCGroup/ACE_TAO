@@ -5,9 +5,7 @@ project(Execution_Manager): ciao_deployment_svnt, ciao_deployment_stub, iortable
   requires += dnc
   exename = Execution_Manager
   after += DomainApplicationManager
-  includes += $(CIAO_ROOT)/DnC/DomainApplicationManager
   libs += DomainApplicationManager CIAO_Server
-  idlflags += -I ../Core
 
   IDL_Files {
     ExecutionManager.idl
