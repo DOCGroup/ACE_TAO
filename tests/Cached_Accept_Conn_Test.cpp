@@ -202,11 +202,11 @@ static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 //====================================================================
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-class ACE_Cached_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
 
-  ACE_Cached_Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
+  Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
   // Constructor.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
@@ -232,13 +232,13 @@ protected:
 };
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Cached_Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
   : caching_connect_strategy_ (caching_connect_strategy)
 {
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                                                                     int restart)
 {
   int result = ACCEPT_STRATEGY_BASE::open (local_addr,
@@ -259,7 +259,7 @@ ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PE
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
 {
   // Note: The base class method isnt called since it closes the
   // svc_handler on error which we want to avoid as we are trying to
@@ -301,7 +301,7 @@ ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
 {
   // ENOBUFS had to be checked on NT while ENOENT check had to be
   // added for Solaris + Linux.
@@ -317,8 +317,8 @@ ACE_Cached_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_han
   return -1;
 }
 
-typedef ACE_Cached_Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
-        CACHED_ACCEPT_STRATEGY;
+typedef Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+        ACCEPT_STRATEGY;
 
 static int
 cached_connect (STRATEGY_CONNECTOR &con,
@@ -378,7 +378,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                   i));
 
       // Connect strategy is required by the <out_of_sockets_handler>.
-      CACHED_ACCEPT_STRATEGY cached_accept_strategy (caching_connect_strategy);
+      ACCEPT_STRATEGY accept_strategy (caching_connect_strategy);
 
       // Acceptor
       ACCEPTOR acceptor;
@@ -389,7 +389,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
       if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
                          ACE_Reactor::instance (),
                          0,
-                         &cached_accept_strategy) == -1)
+                         &accept_strategy) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("%p\n"),
@@ -596,7 +596,12 @@ template class ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<Client_Svc_Handler>;
 
 template class ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<Server_Svc_Handler>;
+template class ACE_Concurrency_Strategy<Server_Svc_Handler>;
+template class ACE_Scheduling_Strategy<Server_Svc_Handler>;
 
 template class ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>;
 template class ACE_Reference_Pair<ADDR, Client_Svc_Handler *>;
@@ -681,7 +686,12 @@ template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH
 #pragma instantiate ACE_Svc_Tuple<Client_Svc_Handler>
 
 #pragma instantiate ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<Server_Svc_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<Server_Svc_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<Server_Svc_Handler>
 
 #pragma instantiate ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>
 #pragma instantiate ACE_Reference_Pair<ADDR, Client_Svc_Handler *>

@@ -140,7 +140,9 @@ run Map_Manager_Test                    # uses Map Manager and Hash Map Manager 
 
 run Cache_Map_Manager_Test              # uses Cache Map Manager and Hash Cache Map Manager + Forward and Reverse Map Iterators.
 
-run Cached_Conn_Test                    # uses Cached connection management
+run Cached_Conn_Test                    # uses Cached connection management (with OneShot Acceptor).
+
+run Cached_Accept_Conn_Test             # uses Cached connection management (with regular Acceptor).
 
 run Map_Test                            # uses Map + Forward and Reverse Map Iterators.
 
