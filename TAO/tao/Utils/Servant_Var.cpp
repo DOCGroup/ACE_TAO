@@ -1,5 +1,5 @@
 /**
- * @file Servant_Var.h
+ * @file Servant_Var.cpp
  *
  * $Id$
  *

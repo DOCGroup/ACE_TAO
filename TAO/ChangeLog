@@ -1,3 +1,9 @@
+Wed Jul 10 17:54:14 2002   Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Utils/Servant_Var.cpp:
+	* tao/Utils/RIR_Narrow.h:
+	* tao/Utils/PolicyList_Destroyer.h: Fixed fuzz errors.
+
 Wed Jul 10 15:38:48 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* examples/AMH/Sink_Server/AMH_Servant.h:

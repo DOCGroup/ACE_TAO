@@ -1,5 +1,5 @@
 /**
- * @file RIR_Narrow.hpp
+ * @file RIR_Narrow.h
  *
  * $Id$
  *
