@@ -1,5 +1,6 @@
 Thu Jun 06 13:56:54 2002  Ossama Othman  <ossama@uci.edu>
 
+	* tao/PortableServer/Object_Adapter.cpp:
 	* tao/RTCORBA/RT_Current.cpp:
 	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
 
