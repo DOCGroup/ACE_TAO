@@ -610,7 +610,8 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
         && header [3] == 'P'))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "bad header, magic word\n"));
+                  "TAO: (%P|%t) bad header, magic word [%c%c%c%c]\n",
+                  header[0], header[1], header[2], header[3]));
       return -1;
     }
 
@@ -621,7 +622,8 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
         && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "bad header, version\n"));
+                  "TAO: (%P|%t) bad header, version [%c%c]\n",
+                  header[4], header[5]));
       return -1;
     }
 
