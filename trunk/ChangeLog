@@ -1,3 +1,16 @@
+Thu Dec 11 18:25:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Future.cpp: Added #include "ace/Guard_T.h" and
+	  "ace/Recursive_Thread_Mutex.h" if ACE_HAS_THREADS is defined.
+	  There are ACE_Guards that use it and AIX Visual Age C++ needs
+	  to see these headers to work right.
+
+	* ace/Future_Set.h: Added #include "ace/Null_Mutex.h" since this
+	  file references it in an ACE_Hash_Map_Manager declaration. Even if
+	  it may have been available during compile, Visual Age C++ needs to
+	  see the header during link time as well, and it only remembers to
+	  look at headers that were explicitly included.
+
 Thu Dec 11 18:13:29 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_netdb.inl: Changed use of naked ::memset() calls to
