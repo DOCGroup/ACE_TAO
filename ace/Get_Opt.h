@@ -45,17 +45,29 @@ public:
   /// Mutually exclusive ordering values.
   enum
   {
-    /// The options must come first, return @c EOF as soon as a
-    /// non-option argument is encountered.
+   /**
+    * @arg REQUIRE_ORDER means that processing stops and @c EOF is
+    * returned as soon as a non-option argument is found. @c opt_ind()
+    * will return the index of the next @a argv element so the program
+    * can continue processing the rest of the @a argv elements.
+    */
     REQUIRE_ORDER = 1,
 
-    /// Reorder the arguments so that all the options come first (the
-    /// order of the options and the following arguments are
-    /// maintained).
+   /**
+    * @arg PERMUTE_ARGS means the @a argv elements are reordered dynamically
+    * (permuted) so that all options appear first. When the elements are
+    * permuted, the order of the options and the following arguments are
+    * maintained. When the last option has been processed, @c EOF is
+    * returned and @c opt_ind() returns the index into the next non-option
+    * element.
+    */
     PERMUTE_ARGS = 2,
 
-    /// Continue processing the command line for each argument.  The
-    /// return value '1' signifies a non-option argument.
+   /**
+    * @arg RETURN_IN_ORDER means each @a argv element is processed in the
+    * order is it seen.  If the element is not recognized as an option, '1'
+    * is returned and @c opt_arg() refers to the @a argv element found.
+    */
     RETURN_IN_ORDER = 3
   };
 
@@ -82,10 +94,10 @@ public:
    * @param argv          Command line tokens, such as would be passed
    *                      to @c main().
    * @param optstring     Nul-terminated string containing the legitimate
-   *                      short option characters.  A single colon ":" in
-   *                      @a optstring means that the previous character is
-   *                      an option that requires an argument.  A double
-   *                      colon "::" signifies the argument is optional.
+   *                      short option characters.  A single colon ":"
+   *                      following an option character means the option
+   *                      requires an argument.  A double colon "::" following
+   *                      an option character means the argument is optional.
    *                      The argument is taken from the rest of the current
    *                      @a argv element, or from the following @a argv
    *                      element (only valid for required arguments;
@@ -105,6 +117,14 @@ public:
    *                      contains "program -W foo", "foo" is treated as a
    *                      long option, that is, as if "program --foo" had
    *                      been passed.
+   *                      The following characters can appear in @a optstring
+   *                      before any option characters, with the described
+   *                      effect:
+   *                      - '+' changes the @a ordering to @a REQUIRE_ORDER.
+   *                      - '-' changes the @a ordering to @a RETURN_IN_ORDER.
+   *                      - ':' changes the return value from @c operator()
+   *                            and get_opt() from '?' to ':' when an option
+   *                            requires an argument but none is specified.
    *
    * @param skip_args     Optional (default 1). The specified number of
    *                      initial elements in @a argv are skipped before
@@ -116,24 +136,19 @@ public:
    *                      an error message to be displayed from the
    *                      @c operator() method before it returns. The
    *                      error message is suppressed if this argument is 0.
-   * @param ordering      Optional (default is @c PERMUTE_ARGS); refers to
-   *                      how the @a argv elements are processed.
-   *                      @arg REQUIRE_ORDER means that processing stops and
-   *                      @c EOF is returned as soon as a non-option argument
-   *                      is found. @c opt_ind() will return the index of the
-   *                      next @a argv element so the program can continue
-   *                      processing the rest of the @a argv elements.
-   *                      @arg PERMUTE_ARGS (default) means the @a argv
-   *                      elements are reordered dynamically (permuted) so
-   *                      that all options appear first.  When the last
-   *                      option has been processed, @c EOF is returned and
-   *                      @c opt_ind() returns the index into the next
-   *                      non-option element.
-   *                      @arg RETURN_IN_ORDER means each @a argv element
-   *                      is processed in the order is it seen.  If the
-   *                      element is not recognized as an option, '1' is
-   *                      returned and @c opt_arg() refers to the @a argv
-   *                      element found.
+   *                      This setting also controls whether or not an error
+   *                      message is displayed in @c long_option() encounters
+   *                      an error.
+   * @param ordering      Optional (default is @c PERMUTE_ARGS); determines
+   *                      how the @a argv elements are processed. This argument
+   *                      is overridden by two factors:
+   *                      -# The @c POSIXLY_CORRECT environment variable. If
+   *                         this environment variable is set, the ordering
+   *                         is changed to @c REQUIRE_ORDER.
+   *                      -# Leading characters in @a optstring (see above).
+   *                         Any leading ordering characters override both
+   *                         the @a ordering argument and any effect of the
+   *                         @c POSIXLY_CORRECT environment variable.
    * @param long_only     Optional. If non-zero, then all options are treated
    *                      as long options.  If a long option is not
    *                      recognized, the class tries to find a matching
@@ -177,10 +192,14 @@ public:
    * @return The parsed option character. The following characters have
    * special significance.
    * @retval 0      A long option was found
-   * @retval '\?'   An unknown option character was found and the first
-   *                character of @a optstring was not a colon.
-   * @retval ':'    An unknown option character was found and the first
-   *                character of @a optstring was a colon.
+   * @retval '\?'   Either an unknown option character was found, or the
+   *                option is known but requires an argument, none was
+   *                specified, and @a optstring did not contain a leading
+   *                colon.
+   * @retval ':'    A known option character was found but it requires an
+   *                argument and none was supplied, and the first character
+   *                of @a optstring was a colon. @c opt_opt() indicates
+   *                which option was specified.
    * @retval '1'    @c RETURN_IN_ORDER was specified and a non-option argument
    *                was found.
    * @retval EOF No more option characters were found.  @c opt_ind() will
@@ -202,6 +221,14 @@ public:
    * value is returned from this method, otherwise it returns 0.
    */
   ACE_TCHAR *opt_arg (void) const;
+
+  /**
+   * Returns the most recently matched option character. Especially
+   * useful when operator() returns ':' for an unspecified argument
+   * that's required, since this allows the caller to learn what option
+   * was specified without its required argument.
+   */
+  int opt_opt (void);
 
   /**
    * Index in @a argv of the next element to be scanned.  This is used
@@ -385,6 +412,9 @@ private:
    * by advancing to the next <argv>-element.
    */
   ACE_TCHAR *nextchar_;
+
+  /// Most recently matched short option character.
+  int optopt_;
 
   /// Keeps track of ordering mode (default <PERMUTE_ARGS>).
   int ordering_;
