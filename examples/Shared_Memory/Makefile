@@ -44,14 +44,15 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/test_MM.o .shobj/test_MM.: test_MM.cpp \
+.obj/test_MM.o .obj/test_MM. .shobj/test_MM.o .shobj/test_MM.: test_MM.cpp \
  $(ACE_ROOT)/ace/Shared_Memory_MM.h \
  $(ACE_ROOT)/ace/Shared_Memory.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -59,17 +60,16 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Shared_Memory_MM.i
-.obj/test_SV.o .shobj/test_SV.: test_SV.cpp \
+ $(ACE_ROOT)/ace/Mem_Map.h
+.obj/test_SV.o .obj/test_SV. .shobj/test_SV.o .shobj/test_SV.: test_SV.cpp \
  $(ACE_ROOT)/ace/Shared_Memory_SV.h \
  $(ACE_ROOT)/ace/Shared_Memory.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -77,8 +77,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/SV_Shared_Memory.h \
- $(ACE_ROOT)/ace/SV_Shared_Memory.i \
- $(ACE_ROOT)/ace/Shared_Memory_SV.i
+ $(ACE_ROOT)/ace/SV_Shared_Memory.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
