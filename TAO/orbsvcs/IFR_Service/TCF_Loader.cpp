@@ -25,8 +25,6 @@ TCF_Loader::create_object (CORBA::ORB_ptr orb,
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      cout << "will it compile now" << endl;
-
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in (),
                                       ACE_TRY_ENV);
