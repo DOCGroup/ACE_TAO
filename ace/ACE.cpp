@@ -1888,7 +1888,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len = va_arg (argp, size_t);
@@ -2362,6 +2362,7 @@ ACE::handle_ready (ACE_HANDLE handle,
   handle_set.set_bit (handle);
 
   // Wait for data or for the timeout to elapse.
+  int select_width;
 #  if defined (ACE_WIN64)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
@@ -2848,6 +2849,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
       int n = ACE_OS::poll (&fds, 1, timeout);
 
 #else
+      int select_width;
 #  if defined (ACE_WIN64)
       // This arg is ignored on Windows and causes pointer truncation
       // warnings on 64-bit compiles.
