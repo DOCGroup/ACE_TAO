@@ -26,7 +26,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 FT_EventService::FT_EventService()
 : global_scheduler_(0)
 , sched_impl_(0)
-, membership_(TAO_FTEC_Event_Channel::NONE)
+, membership_(TAO_FTEC_Event_Channel::UNSPECIFIED)
 , num_threads_(1)
 , task_(orb_)
 {
@@ -126,7 +126,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   /// get the membership from the environment variable
   char* member = ACE_OS::getenv("FTEC_MEMBERSHIP");
 
-  membership_ = TAO_FTEC_Event_Channel::NONE;
+  membership_ = TAO_FTEC_Event_Channel::UNSPECIFIED;
 
   if (member) {
     if (ACE_OS::strcasecmp(member, "PRIMARY")==0) {
