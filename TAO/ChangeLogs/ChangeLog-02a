@@ -1,3 +1,12 @@
+Thu Jul 26 21:48:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * orbsvcs/tests/AVStreams/mpeg/*: REMOVED
+
+          Example uses archaic version of AVStreams and does not
+          work well.
+
+        * orbsvcs/tests/AVStreams/mpeg/README.uav: (added)
+
 Thu Jul 26 17:12:00 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/default_resource.cpp (get_parser_names):
