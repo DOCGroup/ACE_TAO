@@ -1,5 +1,0 @@
-project(InterfaceRepo Persistence Test): taoexe {
-  depends += IFR_Client
-  libs    += TAO_IFR_Client
-  exename  = Persistence_Test
-}

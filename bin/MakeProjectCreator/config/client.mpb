@@ -1,3 +1,0 @@
-project(client) : taoexe {
-  exename = client
-}

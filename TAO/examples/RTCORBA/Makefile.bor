@@ -1,9 +1,0 @@
-
-#
-# Makefile for building the TAO RTCorba examples
-#
-
-DIRS =  \
-        Activity
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

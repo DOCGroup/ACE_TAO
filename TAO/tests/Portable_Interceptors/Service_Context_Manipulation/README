@@ -1,8 +1,0 @@
-# $Id$
-
-This test allows you to visually check proper manipulation of a
-request's ServiceContextList through Portable Interceptors.
-
-  server -o test.ior
-
-  client

@@ -1,8 +1,0 @@
-#
-# Makefile for building the ACE XML examples
-#
-
-DIRS = \
-	SAXPrint
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

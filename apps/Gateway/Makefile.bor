@@ -1,3 +1,0 @@
-DIRS = Gateway Peer
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
