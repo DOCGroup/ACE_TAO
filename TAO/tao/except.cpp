@@ -451,7 +451,9 @@ print_exception (const CORBA::Exception *x,
       // directly in the exception value so it can be queried.
 
       ACE_DEBUG ((LM_ERROR, "(%P|%t) system exception, ID '%s'\n", id));
-      ACE_DEBUG ((LM_ERROR, "(%P|%t) minor code = %#lx, completed = %s", x2->minor (),
+      ACE_DEBUG ((LM_ERROR,
+		  "(%P|%t) minor code = %#lx, completed = %s",
+		  x2->minor (),
                   (x2->completion () == CORBA::COMPLETED_YES) ? "YES" :
                   (x2->completion () == CORBA::COMPLETED_NO) ? "NO" :
                   (x2->completion () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
