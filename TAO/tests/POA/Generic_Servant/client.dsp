@@ -99,7 +99,7 @@ InputName=Foo
 
 BuildCmds= \
 	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
- -Wb,export_include=generic_servant_export.h $(InputName).idl
+  -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -122,13 +122,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "client - Win32 Debug"
 
+USERDEP__FOO_I="..\..\..\tao_idl\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
 	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
- -Wb,export_include=generic_servant_export.h $(InputName).idl
+  -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

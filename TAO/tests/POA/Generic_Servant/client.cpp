@@ -150,7 +150,9 @@ main (int argc, char **argv)
     }
   
   // Print the result of doit () method of the foo reference.
-  cout << result << endl;
-
+  ACE_DEBUG ((LM_DEBUG,
+              "%d\n",
+              result));
+  
   return 0;
 }
