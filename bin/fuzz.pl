@@ -1290,7 +1290,7 @@ print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
 check_for_noncvs_files () if ($opt_l >= 1);
-check_for_streams_include () if ($opt_l >= 1);
+check_for_streams_include () if ($opt_l >= 6);
 check_for_dependency_file () if ($opt_l >= 1);
 check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
