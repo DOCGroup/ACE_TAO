@@ -1,5 +1,9 @@
 Thu Mar 14 09:17:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Strategies_T.cpp (activate_svc_handler): Added a call to
+	  destroy() the svc_handler if ACE::fork() fails.  Thanks to
+ 	  Rainer Lucas <rainer.lucas@fun.de> for reporting this.
+
 	* ace/Configuration.cpp (remove_section): Made the code consistent
 	  for all versions of Windows.  Thanks to Jon Lambert
  	  <jlsysinc@ix.netcom.com> for the fix.
