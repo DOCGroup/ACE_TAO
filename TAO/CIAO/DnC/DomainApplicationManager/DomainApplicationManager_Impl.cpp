@@ -2,14 +2,9 @@
 
 #include "DomainApplicationManager_Impl.h"
 
-
-//===============================================================
-//============   DomainApplicationManager_Impl  =================
-//===============================================================
-
 CIAO::DomainApplicationManager_Impl::
 DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
-  	                       PortableServer::POA_ptr poa,
+                               PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
                                const Deployment::DeploymentPlan & plan,
                                char * deployment_file)
@@ -25,8 +20,8 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
-}
 
+}
 
 void
 CIAO::DomainApplicationManager_Impl::
@@ -106,8 +101,24 @@ bool
 CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
-  // @@ Not implemented.
-  return true;
+  size_t length = this->plan_.instance.length ();
+
+  // Error: If there are no nodes in the plan => No nodes to deploy the
+  // components
+  if (length == 0)
+    return 0;
+
+  // Copy the name of the node in the plan on to the node manager
+  // array
+  for (CORBA::ULong index = 0; index < length; index ++)
+    this->node_manager_names_.
+      push_back (CORBA::string_dup ((this->plan_.instance [index]).node));
+
+  // Set the length of the Node Managers
+  this->num_child_plans_ = length;
+
+  // Indicate success
+  return 1;
 }
 
 bool
@@ -244,7 +255,6 @@ split_plan (void)
   return 1;
 }
 
-
 void
 CIAO::DomainApplicationManager_Impl::
 startLaunch (const ::Deployment::Properties & configProperty,
@@ -261,14 +271,14 @@ startLaunch (const ::Deployment::Properties & configProperty,
       CORBA::ULong len = this->node_application_manager_set_.size ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
-          ::Deployment::NodeApplicationManager_var my_nam = 
+          ::Deployment::NodeApplicationManager_var my_nam =
             this->node_application_manager_set_.at (i);
 
           ::Deployment::Connections_var out_connections;
 
           // Obtained the returned NodeApplication object reference
           ::Deployment::Application_var temp =
-            my_nam->startLaunch (configProperty, 
+            my_nam->startLaunch (configProperty,
                                  out_connections.out (),
                                  start);
 
@@ -345,8 +355,14 @@ CIAO::DomainApplicationManager_Impl::
 getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //@@ Not implemented yet.
-  return 0;
+  Deployment::DeploymentPlan_var plan = 0;
+  // Make a deep copy of the Plan
+  ACE_NEW_THROW_EX (plan,
+                    Deployment::DeploymentPlan (this->plan_),
+                    CORBA::NO_MEMORY ());
+
+  // Transfer ownership
+  return plan._retn ();
 }
 
 Deployment::Applications *
