@@ -41,6 +41,7 @@ OBJFILES = \
 	$(OBJDIR)\Capabilities.obj \
 	$(OBJDIR)\CDR_Base.obj \
 	$(OBJDIR)\CDR_Stream.obj \
+        $(OBJDIR)\Codecs.obj \
 	$(OBJDIR)\Configuration.obj \
 	$(OBJDIR)\Configuration_Import_Export.obj \
         $(OBJDIR)\Connection_Recycling_Strategy.obj \
