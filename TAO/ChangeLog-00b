@@ -3552,7 +3552,7 @@ Wed Sep 13 15:19:07 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tests/Forwarding/run_test.pl:
         * tests/MT_Server/run_test.pl:
         * tests/MT_Client/run_test.pl:
-          Remote the ior file before running the server to avoid problems
+          Remove the ior file before running the server to avoid problems
           with stale files.
 
         * tests/MT_Client/orb_creation.cpp:
