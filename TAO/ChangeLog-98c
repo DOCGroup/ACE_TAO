@@ -1,3 +1,7 @@
+Wed Sep 17 12:26:56 1997  Nanbor Wang  <nw1@CHA-CHA>
+
+	* tao/TAO.dsp: Updated source file list.
+
 Mon Sep 15 16:52:28 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 	* tests/Cubit/TAO/{cubitS,cubit_i}.cpp: Updated references to oa()
