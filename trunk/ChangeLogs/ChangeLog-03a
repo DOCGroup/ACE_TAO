@@ -1,3 +1,9 @@
+Fri Sep 14 17:02:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/High_Res_Timer_Test.cpp: Replaced some (u_int) casts with
+          ACE_U64_TO_U32, which is correct. Thanks to Alain Decamps, yet
+          again!, for this fix.
+
 Fri Sep 14 11:39:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Mahes Varadarajan and Kevin Clien to the hall of
