@@ -1,3 +1,10 @@
+Mon Oct 18 15:21:49 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+          Build issues.
+
 Mon Oct 18 10:29:48 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Any/AnyEvent.inl:
