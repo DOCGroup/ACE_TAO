@@ -1,4 +1,4 @@
- // $Id$
+// $Id$
 
 // ============================================================================
 //
@@ -147,14 +147,7 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
   this->propsetdef_->define_property ("char_property",
                                       anyval,
                                       ACE_TRY_ENV);
-
-  // Check if that is an user exception, if so, print it out.
-  if ((ACE_TRY_ENV.exception () != 0) &&
-      (CORBA::UserException::_narrow (ACE_TRY_ENV.exception ()) != 0))
-    {
-      ACE_TRY_ENV.print_exception ("Error:Exception Received:char_property");
-      ACE_TRY_ENV.clear ();
-    }
+  ACE_CHECK_RETURN (-1);
 
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
@@ -165,14 +158,7 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
   propsetdef_->define_property ("short_property",
                                 anyval,
                                 ACE_TRY_ENV);
-
-  // Check if that is an user exception, if so, print it out.
-  if ((ACE_TRY_ENV.exception () != 0) &&
-      (CORBA::UserException::_narrow (ACE_TRY_ENV.exception ()) != 0))
-    {
-      ACE_TRY_ENV.print_exception ("Error:Exception Received:char_property:char_property");
-      ACE_TRY_ENV.clear ();
-    }
+  ACE_CHECK_RETURN (-1);
 
   // Prepare a Long and "define" that in the PropertySet.
   CORBA::Long l = 931232;
@@ -183,15 +169,8 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
   propsetdef_->define_property ("long_property",
                                 anyval,
                                 ACE_TRY_ENV);
-
-  // Check if that is an user exception, if so, print it out.
-  if ((ACE_TRY_ENV.exception () != 0) &&
-      (CORBA::UserException::_narrow (ACE_TRY_ENV.exception ()) != 0))
-    {
-      ACE_TRY_ENV.print_exception ("Error:Exception Received:char_property:char_property");
-      ACE_TRY_ENV.clear ();
-    }
-
+  ACE_CHECK_RETURN (-1);
+  
   // Prepare a Float and "define" that in the PropertySet.
   CORBA::Float f = 3.14F;
   anyval <<= f;
@@ -202,13 +181,7 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
                                 anyval,
                                 ACE_TRY_ENV);
 
-  // Check if that is an user exception, if so, print it out.
-  if ((ACE_TRY_ENV.exception () != 0) &&
-      (CORBA::UserException::_narrow (ACE_TRY_ENV.exception ()) != 0))
-    {
-      ACE_TRY_ENV.print_exception ("char_property");
-      ACE_TRY_ENV.clear ();
-    }
+  ACE_CHECK_RETURN (-1);
 
   // Prepare a String and "define" that in the PropertySet.
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
@@ -219,13 +192,7 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
                                 anyval,
                                 ACE_TRY_ENV);
 
-  // Check if that is an user exception, if so, print it out.
-  if ((ACE_TRY_ENV.exception () != 0) &&
-      (CORBA::UserException::_narrow (ACE_TRY_ENV.exception ()) != 0))
-    {
-      ACE_TRY_ENV.print_exception ("string_property");
-      ACE_TRY_ENV.clear ();
-    }
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -645,13 +612,7 @@ Client::test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV)
                                                 anyval,
                                                 CosPropertyService::normal,
                                                 ACE_TRY_ENV);
-  // Check if that is an user exception, if so, print it out.
-  if ((ACE_TRY_ENV.exception () != 0) &&
-      (CORBA::UserException::_narrow (ACE_TRY_ENV.exception ()) != 0))
-    {
-      ACE_TRY_ENV.print_exception ("char_property");
-      ACE_TRY_ENV.clear ();
-    }
+  ACE_CHECK_RETURN (-1);
 
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
@@ -663,16 +624,7 @@ Client::test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV)
                                           anyval,
                                           CosPropertyService::read_only,
                                           ACE_TRY_ENV);
-  // Check if that is an user exception, if so, print it out.
-  if (ACE_TRY_ENV.exception () != 0)
-    {
-      ACE_TRY_ENV.print_exception ("char_property");
-      if (CORBA::UserException::_narrow (ACE_TRY_ENV.exception ()) != 0)
-        ACE_TRY_ENV.clear ();
-      else
-        return -1;
-    }
-
+  ACE_CHECK_RETURN (-1);
 
   // Prepare a Long and "define" that in the PropertySet.
   CORBA::Long l = 931232;
