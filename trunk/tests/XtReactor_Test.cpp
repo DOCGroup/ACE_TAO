@@ -48,7 +48,7 @@ USELIB("..\ace\aced.lib");
 #include <X11/Xatom.h>
 #include <X11/Shell.h>
 
-#if defined (ACE_HAS_MOTIF)
+#if !defined (ACE_LACKS_MOTIF)
 
 #include <Xm/Xm.h>
 #include <Xm/Label.h>
