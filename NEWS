@@ -21,6 +21,10 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.4
 
 . Improved VxWorks support
 
+. Removed the usage of the ACE_x_cast macros, we are using the C++ casts
+  from now on. The ACE_x_cast macros are deprecated and will be removed
+  after the x.5.1 release
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.2 and ACE-5.4.3
 ====================================================
 
