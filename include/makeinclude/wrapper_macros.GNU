@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #  $Id$
 #----------------------------------------------------------------------------
@@ -303,7 +305,7 @@ endif # split
 ifneq ($(split),)
   override split_target = SPLIT
   override debug = 0
-  CFLAGS += -DACE_IS_SPLITTING
+  CPPFLAGS += -DACE_IS_SPLITTING
 else
   override split_target =
 endif # split
@@ -313,10 +315,10 @@ ifeq ($(debug),0)
 endif # debug
 
 ifeq ($(debug),)
-  ifeq (,$(findstring $(CFLAGS),$(CCFLAGS)))
-    CCFLAGS += -DACE_NDEBUG
-  else
-    CFLAGS  += -DACE_NDEBUG
+  CPPFLAGS += -DACE_NDEBUG
+# Disable the RCSID for release/non-debug builds.
+  ifeq (,$(findstring ACE_USE_RCSID,$(CPPFLAGS)))
+    CPPFLAGS += -DACE_USE_RCSID=0
   endif
 else
   CFLAGS  += $(DCFLAGS)
@@ -454,9 +456,9 @@ endif # pace
 
 ifneq ($(pace),)
   ifneq ($(inline),0)
-    CFLAGS += -DPACE_HAS_INLINE=1
+    CPPFLAGS += -DPACE_HAS_INLINE=1
   endif
-  CFLAGS += -DACE_HAS_PACE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
+  CPPFLAGS += -DACE_HAS_PACE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
   ACELIB = -lACE
   ifeq ($(inline),0)
     ACELIB += -lPACE
@@ -475,10 +477,10 @@ ifneq ($(profile),)
 endif # profile
 
 ifeq ($(inline),0)
-  CCFLAGS += -DACE_NO_INLINE
+  CPPFLAGS += -DACE_NO_INLINE
 else
 ifeq ($(inline),1)
-  CCFLAGS += -D__ACE_INLINE__
+  CPPFLAGS += -D__ACE_INLINE__
 endif # inline eq 1
 endif # inline eq 0
 
@@ -560,7 +562,7 @@ ifeq ($(probe),0)
 endif # probe
 
 ifeq ($(probe),1)
-    CCFLAGS += -DACE_COMPILE_TIMEPROBES
+    CPPFLAGS += -DACE_COMPILE_TIMEPROBES
 endif # probe
 
 ifeq ($(purify),0)
@@ -581,8 +583,7 @@ ifdef purify
   PURELINK += purify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
               -chain-length=20 -fds-inuse-at-exit=no \
               -inuse-at-exit -max_threads=100
-  CCFLAGS += -DACE_HAS_PURIFY
-  CPPFLAGS += -I$(ACE_PURIFY_DIR)
+  CPPFLAGS += -DACE_HAS_PURIFY -I$(ACE_PURIFY_DIR)
 endif # purify
 
 ifeq ($(quantify),0)
@@ -599,8 +600,7 @@ ifdef quantify
   #### to help avoid occasional link failure.
   PRELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
              -max_threads=100
-  CCFLAGS += -DACE_HAS_QUANTIFY
-  CPPFLAGS += -I$(ACE_QUANTIFY_DIR)
+  CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
 
   ifeq ($(shell uname -p),sparc)
     PRELINK += -record-register-window-traps
@@ -614,7 +614,8 @@ endif # repo
 ifdef repo
   #### Remove -fno-implicit-templates from, and add -frepo to, CCFLAGS.
   CCFLAGS := $(strip $(subst -fno-implicit-templates,,$(CCFLAGS)))
-  CCFLAGS += -frepo -DACE_HAS_GNU_REPO
+  CCFLAGS += -frepo
+  CPPFLAGS += -DACE_HAS_GNU_REPO
 #  ace_lib_prelink := 1
 endif # repo
 
