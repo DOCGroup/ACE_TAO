@@ -79,8 +79,8 @@ main (int argc, char *argv[])
 
       // Create a ContainerImplementationInfo sequence
       Deployment::ContainerImplementationInfo container_info;
-      container_info.length (1);
-      container_info[0] = info;
+      container_info.impl_infos.length (1);
+      container_info.impl_infos[0] = info;
 
       // Create a NodeImplementationInfo sequence
       Deployment::NodeImplementationInfo node_info;
