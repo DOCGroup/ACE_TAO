@@ -103,6 +103,7 @@
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_MKSTEMP
 #define ACE_MALLOC_ALIGN 8
 #define ACE_HAS_TYPENAME_KEYWORD
 // Don't use MAP_FIXED, at least for now.
