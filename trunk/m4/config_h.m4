@@ -492,6 +492,8 @@ Note: This gets defined by OS.h if __ACE_INLINE__ is defined])
 AH_TEMPLATE([ACE_HAS_IP_MULTICAST],[Platform supports IP multicast])
 
 AH_TEMPLATE([ACE_HAS_IPV6],[Platform supports IPv6])
+AH_TEMPLATE([ACE_USES_IPV4_IPV6_MIGRATION],
+[Enable IPv6 support on platforms that don't have IPv6 turned on by default])
 
 AH_TEMPLATE([ACE_HAS_NONSTATIC_OBJECT_MANAGER],
 [Causes the ACE_Object_Manager instance to be created in

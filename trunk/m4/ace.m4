@@ -45,6 +45,37 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    ace_user_enable_alloca=no
   ])
 
+ AC_ARG_ENABLE([ipv4-ipv6],
+  AS_HELP_STRING(--enable-ipv4-ipv6,compile with IPv4/IPv6 migration support [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      AC_DEFINE(ACE_HAS_IPV6)
+      AC_DEFINE(ACE_USES_IPV4_IPV6_MIGRATION)
+      ;;
+    no)
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ipv4-ipv6])
+      ;;
+   esac
+  ],)
+
+ AC_ARG_ENABLE([ipv6],
+  AS_HELP_STRING(--enable-ipv6,compile with IPv6 support [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      AC_DEFINE(ACE_HAS_IPV6)
+      ;;
+    no)
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-ipv6])
+      ;;
+   esac
+  ],)
+
  AC_ARG_ENABLE([log-msg-prop],
   AS_HELP_STRING(--enable-log-msg-prop,enable threads inheriting ACE_Log_Msg properties from parent thread [[[yes]]]),
   [
