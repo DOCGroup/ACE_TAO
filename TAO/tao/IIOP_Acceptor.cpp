@@ -350,7 +350,10 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              ACE_INET_Addr &addr,
                              ACE_CString &host)
 {
-  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
+  char tmp_host[MAXHOSTNAMELEN + 1];
+
+  if (orb_core->orb_params ()->use_dotted_decimal_addresses ()
+      || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
       const char *tmp = addr.get_host_addr ();
       if (tmp == 0)
@@ -367,41 +370,7 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       host = tmp;
     }
   else
-    {
-      char tmp_host[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (tmp_host,
-                              sizeof (tmp_host)) != 0)
-        {
-          // If hostname lookup fails, fall back on the IP address.
-          const char *tmp = addr.get_host_addr ();
-
-          if (tmp == 0)
-            {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                            ASYS_TEXT ("IIOP_Acceptor::hostname ")
-                            ASYS_TEXT ("- %p\n\n"),
-                            ASYS_TEXT ("cannot determine hostname")));
-
-              return -1;
-            }
-          else
-            {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                            ASYS_TEXT ("IIOP_Acceptor::hostname ")
-                            ASYS_TEXT ("- %p\n\n"),
-                            ASYS_TEXT ("hostname lookup failed.\n")
-                            ASYS_TEXT ("Falling back on IP address")));
-
-              host = tmp;
-            }
-        }
-      else
-        host = tmp_host;
-    }
+    host = tmp_host;
 
   return 0;
 }
