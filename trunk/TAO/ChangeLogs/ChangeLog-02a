@@ -1,3 +1,36 @@
+Thu Feb 10 15:14:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	  Added scope argument to call to create_module().
+
+	* TAO_IDL/include/utl_string.h:
+	  Uninlined destructor (see below).
+
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/include/utl_scope.h:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	  Change in approach to handling reopened modules
+	  in IDL files. The front end used to create a new node 
+	  each time a module was reopened, resulting in several
+	  brittle additions to the lookup functions. Now, when a
+	  module is reopened, the original node is returned for
+	  additions to its scope, and the lookup functions have
+	  been simplified. Thanks to Andreas Terstegge 
+	  <Andreas.Terstegge@nokia.com> for sending in an example
+	  IDl file that pointed out this bug.
+
+	* TAO_IDL/util/utl_string.cpp:
+	  Added calls to 'delete' in destructor for two char*
+	  members which are always initialized by calls to
+	  'new'.
+
 Thu Feb 10 14:10:32 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/TAO.dsp:
