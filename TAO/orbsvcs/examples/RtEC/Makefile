@@ -10,7 +10,8 @@
 
 DIRS  =	Simple \
 	Schedule \
-	MCast
+	MCast \
+	Kokyu
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
