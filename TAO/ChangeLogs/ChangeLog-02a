@@ -1,3 +1,16 @@
+Sat Jun 15 11:57:02 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Acceptor.h:
+	  Integrated Nick Cross <nick.cross@prismtechnologies.com>'s
+	  contribution to add the hostname_in_ior syntax to the
+	  IIOPEndpoint command line parameter specification.  This allows
+	  one to override the hostname that is put into an IOR to be an
+	  alias for the local machine.  This fixes bug 506.
+
+	* tao/docs/ORBEndpoint.html:
+	  Added documentation for the hostname_in_ior option.
+
 Fri Jun 14 13:58:56 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* The following ChangeLog entry describe my fixes for bug 1222:

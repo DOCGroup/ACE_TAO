@@ -285,6 +285,32 @@
             <CODE>[initialPort:initialPort+span-1]</CODE> at which point it                 fails with a <CODE>CORBA::BAD_PARAM</CODE> system exception.
           </TD>
         </TR>
+        <TR>
+          <TD>
+            <CODE>hostname_in_ior</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 1.2.4</CODE>
+          </TD>
+          <TD>
+            The <CODE>hostname_in_ior</CODE> option allows one to
+            specify the hostname that is inserted into the generated
+            IOR.  This option overrides the default (local) hostnames
+            that TAO normally inserts.  This can bue useful in
+            environments where the hostname in use is one whose IP
+            address changes dynamically.
+            <P>
+            The format for <CODE>ORBEndpoint</CODE> with the
+            <CODE>hostname_in_ior</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBEndpoint iiop://[</CODE><I>local_hostname</I><CODE>]:</CODE><I
+>port</I><CODE>/hostname_in_ior=</CODE><I>overridden_hostname</I>
+            </BLOCKQUOTE>
+            where <I>local_hostname</I> and <I>port</I> are specified
+            as normal, and <I>overridden_hostname</I> is the hostname
+            that should be put into generated IORs.
+            </TD>
+        </TR>
       </TABLE>
 
     <P>
@@ -508,7 +534,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Wed Jun 12 10:25:43 CDT 2002
+Last modified: Sat Jun 15 11:30:52 CDT 2002
 <!-- hhmts end -->
   </body>
 </html>
