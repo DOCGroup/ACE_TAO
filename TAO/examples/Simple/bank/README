@@ -9,7 +9,7 @@ The AccountManager interface has methods to create and close Accounts.
 It also has a method to shutdown the server.
 
 run_test.pl : This is a perl script to run the server and client as :
-
+------------
 	      server
 	      client  -x -b 100 -y Vishal -z Kachroo
 
@@ -18,7 +18,7 @@ run_test.pl : This is a perl script to run the server and client as :
 server:
 -------
 
-server [-d]
+server [-d] [-o IOR_file_name]
 
 Options:
 -------
@@ -37,6 +37,14 @@ the more -d options provided, the more debugging you can get.  At the
 moment, only 2 levels of debugging are implemented, and more than 2 -d
 options are ignored.
 
+-o    This option creates an ior file for the server with the name ior_filename.
+
+The file can be used by clients who wish to access the server directly using this ior file. This
+obviates the need for the client to use the naming service for getting the server ior. The client can
+use the -f option to specify the file which contains the ior of the server (the same file that was
+written by the server using the -o option).
+
+
 client:
 -------
 
@@ -46,12 +54,22 @@ client [-d] [-x] [-n iterations] [-b initial_balance] [-o Name_of_account_holder
 Options:
 -------
 -d    Debug flag
+
 -x    Tells the server to shutdown at the end of the test.
+
 -n    no. of iterations
+
 -b    initial balance
+
 -o    Name of the Account Holder
--k    Read IOR from the command line
--f    Read IOR from the specified file
+
+-k    Read IOR from the command line. If this option is specified the client does not use
+      the Naming Service for locating the server. It just uses the ior file supplied with
+      this option.
+
+-f    Read IOR from the specified file. If this option is specified the client does not use
+      the Naming Service for locating the server. It just uses the ior file supplied with
+      this option.
 
 The client executes the following tests :
 
