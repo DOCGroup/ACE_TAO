@@ -296,8 +296,7 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
             ACE_dynamic_cast (ACE_INET_Addr &,
                               pfile->object_addr());
     
-          TAO_POA *poa = TAO_ORB_Core_instance ()->
-            get_collocated_poa (addr);
+          poa = TAO_ORB_Core_instance ()->get_collocated_poa (addr);
         }
       else
         ACE_ERROR ((LM_ERROR,
