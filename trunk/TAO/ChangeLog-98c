@@ -1,3 +1,17 @@
+Tue Dec 08 15:10:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Internal.{h,cpp} (open_services): Added a new
+	  <open_services> method that simply takes the arguments for
+	  TAO_Resource_Factory, TAO_Default_Client_Strategy_Factory and
+	  TAO_Default_Server_Strategy_Factory directly and initializes
+	  them.  This eliminates the need of loading in a DLL when it is
+	  not desirable.  Removed <fake_service_entries_i> for this is now
+	  covered by the new <open_services> method.
+
+	  Like the original <open_services>, the new method is also
+	  one-shot.  Once you call either <open_services>, all subsequence
+	  calls to either functions become no-ops.
+
 Tue Dec  8 10:17:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.cpp: 
