@@ -58,13 +58,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             break;
           case 'z':
             zip = 1;
-#ifndef ACEXML_HAS_ZZIPLIB
+#ifndef USE_ZZIP
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ZZIPLIB support has not been")
                         ACE_TEXT (" compiled in. Refer to ")
                         ACE_TEXT ("$ACE_ROOT/ACEXML/README for more ")
                         ACE_TEXT ("information. \n")));
             return -1;
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
             break;
           default:
             usage(argv[0]);
@@ -82,12 +82,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_FileCharStream *fstm = 0;
   ACEXML_HttpCharStream *ustm = 0;
   ACEXML_StrCharStream* sstm = 0;
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
   ACEXML_ZipCharStream* zstm = 0;
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
   if (filename != 0)
     {
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
       if (zip)
         {
           ACE_NEW_RETURN (zstm, ACEXML_ZipCharStream(), -1);
@@ -100,7 +100,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
           ACE_NEW_RETURN (fstm, ACEXML_FileCharStream (), -1);
           if (fstm->open (filename) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -108,9 +108,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                filename),
                               -1);
           stm = fstm;
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
         }
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
     }
   else if (url != 0)
     {
