@@ -1,3 +1,9 @@
+Wed Aug 29 06:21:25 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/ORB.h (CORBA_ORB): Improved the documentation for
+	  ORB::destroy().  Thanks to Wilfried Reinoehl
+ 	  <Wilfried.Reinoehl@WiredMinds.de> for reporting this.
+
 Tue Aug 28 16:56:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp:

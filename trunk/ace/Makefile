@@ -245,6 +245,7 @@ TEMPLATE_FILES = \
            Auto_IncDec_T \
            Auto_Ptr \
            Based_Pointer_T \
+	   Bound_Ptr \
            Connector \
            Containers_T \
            Cache_Map_Manager_T \

@@ -431,16 +431,16 @@ public:
                  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   /**
-   * Destroy the ORB, releasing any resources.  Notice that TAO *cannot*
-   * release the resources even if you have destroyed all the
-   * references to a particular ORB.  CORBA::ORB_init() is required to
-   * return the same pointer if called with the same ORBid, only after
-   * ORB::destroy() is called it may return a new one.
+   * Explicitly destroy the ORB, releasing any resources.  Note that
+   * TAO *cannot* implicitly release the resources even if you have
+   * destroyed all the references to a particular ORB since
+   * CORBA::ORB_init() is required to return the same pointer if
+   * called with the same ORBid, only after ORB::destroy() is called
+   * it may return a new one.
    *
    * The results of multi-threaded applications, trying to destroy ()
-   * the ORB  in one thread and trying to service a request in another
-   * thread are not well defined. TAO does not support such cases.
-   */
+   * the ORB in one thread and trying to service a request in another
+   * thread are not well defined. TAO does not support such cases.  */
   void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
