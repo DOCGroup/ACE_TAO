@@ -1,3 +1,7 @@
+Fri Mar 17 09:39:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * Makefile.am: Added ChangeLog-99b to the EXTRA_DIST list.
+
 Fri Mar 17 00:18:40 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/QOS/Sender_QOS_Event_Handler.cpp (handle_qos): 
