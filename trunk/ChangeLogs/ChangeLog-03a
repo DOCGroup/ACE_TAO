@@ -1,3 +1,9 @@
+Fri Apr 21 10:23:19 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl: 
+
+          Removed all chdir's and fixed a bug with specifying multiple -dir's.
+
 Fri Apr 21 09:13:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * websvcs/lib/URL_Addr.cpp:

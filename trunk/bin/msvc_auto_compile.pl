@@ -26,10 +26,10 @@ $use_custom_dir = 0;
 
 # Find_dsp will search a directory for *.dsp files and return a list
 # of strings that include the project name and the configuration
-sub Find_dsp ($)
+sub Find_dsp (@)
 {
-  my ($dir) = @_;
-  my @array = ();
+  my (@dir) = @_;
+  @array = ();
   my @config_array = ();
 
   # wanted is only used for the File::Find
@@ -38,6 +38,7 @@ sub Find_dsp ($)
     $array[++$#array] = $File::Find::name if ($File::Find::name =~ /\.dsp/i);
   }
 
+  # get_config grabs the configurations out of a dsp file.
   sub get_config ($)
   {
     my ($file) = @_;
@@ -56,18 +57,12 @@ sub Find_dsp ($)
     return @configs;
   }
 
-  my $old_cwd = getcwd ()."\\";
+  unshift @dir, (\&wanted);
 
-  if (!chdir ($dir))
-  {
-    print "Error changing dir to $dir: $!\n";
-    return @config_array;
-  }
-
-  find(\&wanted, ".");
+  find @dir;
 
   for ($i = 0; $i <= $#array; ++$i) {
-    my $filename = "$dir/$array[$i]";
+    my $filename = "$array[$i]";
     $filename =~ s@/./@/@g;
     $filename =~ s@/@\\@g;
     my @dsp_configs = get_config ($array[$i]);
@@ -77,10 +72,6 @@ sub Find_dsp ($)
     }
   }
 
-  if (!chdir ($old_cwd."\\"))
-  {
-    print "Error changing dir to $old_cwd\\: $!\n";
-  }
   return @config_array;
 }
 
@@ -107,8 +98,6 @@ sub Build_Core ()
   print "DLL " if ($Verbose) && ($Build_DLL);
   print "LIB " if ($Verbose) && ($Build_LIB);
   print "\n" if ($Verbose);
-
-  die "Cannot chdir to ACE_ROOT\n" if (!chdir ($ACE_ROOT));
 
   if ($Build_DLL)
   {
@@ -141,12 +130,7 @@ sub Build_Core ()
 
 sub Build_All ()
 {
-  my @configurations = ();
-  
-  foreach $d (@directories) 
-  {
-    push @configurations, Find_dsp ($d);
-  }
+  my @configurations = Find_dsp (@directories);
 
   print "\nmsvc_auto_compile: First Pass (libraries)\n";
 
