@@ -26,7 +26,7 @@ Periodic_Task::~Periodic_Task ()
 }
 
 int
-Periodic_Task::init (ACE_Arg_Shifter& arg_shifter)
+Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
 
