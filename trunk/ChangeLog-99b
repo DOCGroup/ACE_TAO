@@ -1,3 +1,7 @@
+Tue May 25 19:20:15 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_tests.(sh bat): Added SOCK_Send_Recv_Test.
+
 Tue May 25 16:54:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tests/SOCK_Send_Recv_Test.cpp:
