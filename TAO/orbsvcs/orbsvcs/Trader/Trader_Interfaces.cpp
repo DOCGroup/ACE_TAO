@@ -58,173 +58,165 @@ query (const char *type,
                    CosTrading::DuplicatePropertyName,
                    CosTrading::DuplicatePolicyName))
 {
-  ACE_TRY
+  // Instantiate a class to help interpret query policies.
+  TAO_Policies policies (this->trader_, in_policies, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // If a federated query returns to us, ignore it to prevent
+  // redundant results and infinite loops.
+  CosTrading::Admin::OctetSeq* request_id = 0;
+  if (this->seen_request_id (policies, request_id, ACE_TRY_ENV))
     {
-      // Instantiate a class to help interpret query policies.
-      TAO_Policies policies (this->trader_, in_policies, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      returned_offers = new CosTrading::OfferSeq;
+      returned_limits_applied = new CosTrading::PolicyNameSeq;
+      return;
+    }
+  ACE_CHECK;
 
-      // If a federated query returns to us, ignore it to prevent
-      // redundant results and infinite loops.
-      CosTrading::Admin::OctetSeq* request_id = 0;
-      if (this->seen_request_id (policies, request_id, ACE_TRY_ENV))
+  // The presence of a link interface determines whether we should
+  // attempt to forward or propagate queries.
+  CosTrading::Link_ptr link_if =
+    this->trader_.trading_components ().link_if ();
+
+  // If the importer has specified a starting trader, foward the
+  // query.
+  CosTrading::TraderName* trader_name =
+    policies.starting_trader (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (! CORBA::is_nil (link_if) && trader_name != 0)
+    {
+      CosTrading::PolicySeq policies_to_forward;
+      policies.copy_to_forward (policies_to_forward, *trader_name);
+      const char* next_hop = (*trader_name)[0];
+      this->forward_query (next_hop,
+                           type,
+                           constraint,
+                           preferences,
+                           policies_to_forward,
+                           desired_props,
+                           how_many,
+                           returned_offers,
+                           returned_offer_iterator,
+                           returned_limits_applied,
+                           ACE_TRY_ENV);
+      ACE_CHECK;
+      return;
+    }
+
+  // Retrieve the type description struct from the Service Type Repos.
+  const TAO_Support_Attributes_i& support_attrs =
+    this->trader_.support_attributes ();
+  CosTradingRepos::ServiceTypeRepository_ptr rep =
+    support_attrs.service_type_repos ();
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
+    rep->fully_describe_type (type, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // @@ Should throw a NO_MEMORY exception here...
+  ACE_NEW (returned_offers,
+           CosTrading::OfferSeq);
+
+  // Obtain a reference to the offer database.
+  TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database =
+    this->trader_.offer_database ();
+
+  // TAO_Offer_Filter -- ensures that we don't consider offers with
+  // modifiable or dynamic properties if the Trader doesn't support
+  // them, or the importer has turned them off using policies.
+  // TAO_Constraint_Validator -- validates the constraint with the
+  // property types in the supplied type.  TAO_Constraint_Interpreter
+  // -- parses the constraint string, and determines whether an offer
+  // meets those constraints.  TAO_Preference_Interpreter -- parses
+  // the preference string and orders offers according to those
+  // constraints.
+  TAO_Offer_Filter offer_filter (policies,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+  TAO_Constraint_Validator validator (type_struct.in ());
+  TAO_Constraint_Interpreter constr_inter (validator,
+                                           constraint,
+                                           ACE_TRY_ENV);
+  ACE_CHECK;
+  TAO_Preference_Interpreter pref_inter (validator,
+                                         preferences,
+                                         ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Try to find the map of offers of desired service type.
+  offer_filter.configure_type (type_struct.ptr ());
+  this->lookup_one_type (type,
+                         offer_database,
+                         constr_inter,
+                         pref_inter,
+                         offer_filter);
+
+  if (! policies.exact_type_match (ACE_TRY_ENV))
+    {
+      // If the importer hasn't demanded an exact match search, we search
+      // all the subtypes of the supplied type. NOTE: Only the properties
+      // belonging to the provided type are considered on
+      // subtypes. Additional properties on the subtype are generally
+      // ignored. This is as it should be, consistent with the notions of
+      // type inheritence.
+      ACE_CHECK;
+      this->lookup_all_subtypes (type,
+                                 type_struct->incarnation,
+                                 offer_database,
+                                 rep,
+                                 constr_inter,
+                                 pref_inter,
+                                 offer_filter);
+    }
+  ACE_CHECK;
+
+  // Take note of the limits applied in this query.
+  returned_limits_applied = offer_filter.limits_applied ();
+
+  // Fill the return sequence and iterator with the bountiful results.
+  CORBA::ULong offers_returned =
+    this->fill_receptacles (type,
+                            how_many,
+                            desired_props,
+                            policies,
+                            pref_inter,
+                            *returned_offers.ptr (),
+                            returned_offer_iterator,
+                            ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // The following steps are only appropriate for a linked trader.
+  if (! CORBA::is_nil (link_if))
+    {
+      // Determine if we should perform a federated query, and if so
+      // construct a sequence of links to follow.
+      CosTrading::LinkNameSeq_var links;
+      CORBA::Boolean should_follow =
+        this->retrieve_links (policies,
+                              offers_returned,
+                              CosTrading::LinkNameSeq_out (links.out ()),
+                              ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (should_follow && links->length () != 0)
         {
-          returned_offers = new CosTrading::OfferSeq;
-          returned_limits_applied = new CosTrading::PolicyNameSeq;
-          return;
-        }
-      ACE_TRY_CHECK;
-
-      // The presence of a link interface determines whether we should
-      // attempt to forward or propagate queries.
-      CosTrading::Link_ptr link_if =
-        this->trader_.trading_components ().link_if ();
-
-      // If the importer has specified a starting trader, foward the
-      // query.
-      CosTrading::TraderName* trader_name =
-        policies.starting_trader (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (! CORBA::is_nil (link_if) && trader_name != 0)
-        {
-          CosTrading::PolicySeq policies_to_forward;
-          policies.copy_to_forward (policies_to_forward, *trader_name);
-          const char* next_hop = (*trader_name)[0];
-          this->forward_query (next_hop,
-                               type,
-                               constraint,
-                               preferences,
-                               policies_to_forward,
-                               desired_props,
-                               how_many,
-                               returned_offers,
-                               returned_offer_iterator,
-                               returned_limits_applied,
-                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          return;
-        }
-
-      // Retrieve the type description struct from the Service Type
-      // Repos.
-      const TAO_Support_Attributes_i& support_attrs =
-        this->trader_.support_attributes ();
-      CosTradingRepos::ServiceTypeRepository_ptr rep =
-        support_attrs.service_type_repos ();
-      CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
-        rep->fully_describe_type (type, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // @@ Should throw a NO_MEMORY exception here...
-      ACE_NEW (returned_offers,
-               CosTrading::OfferSeq);
-
-      // Obtain a reference to the offer database.
-      TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database =
-        this->trader_.offer_database ();
-
-      // TAO_Offer_Filter -- ensures that we don't consider offers
-      // with modifiable or dynamic properties if the Trader doesn't
-      // support them, or the importer has turned them off using
-      // policies.  TAO_Constraint_Validator -- validates the
-      // constraint with the property types in the supplied type.
-      // TAO_Constraint_Interpreter -- parses the constraint string,
-      // and determines whether an offer meets those constraints.
-      // TAO_Preference_Interpreter -- parses the preference string
-      // and orders offers according to those constraints.
-      TAO_Offer_Filter offer_filter (policies,
-                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      TAO_Constraint_Validator validator (type_struct.in ());
-      TAO_Constraint_Interpreter constr_inter (validator,
-                                               constraint,
-                                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      TAO_Preference_Interpreter pref_inter (validator,
-                                             preferences,
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Try to find the map of offers of desired service type.
-      offer_filter.configure_type (type_struct.ptr ());
-      this->lookup_one_type (type,
-                             offer_database,
-                             constr_inter,
-                             pref_inter,
-                             offer_filter);
-
-      if (! policies.exact_type_match (ACE_TRY_ENV))
-        {
-          // If the importer hasn't demanded an exact match search, we search
-          // all the subtypes of the supplied type. NOTE: Only the properties
-          // belonging to the provided type are considered on
-          // subtypes. Additional properties on the subtype are generally
-          // ignored. This is as it should be, consistent with the notions of
-          // type inheritence.
-          ACE_TRY_CHECK;
-          this->lookup_all_subtypes (type,
-                                     type_struct->incarnation,
-                                     offer_database,
-                                     rep,
-                                     constr_inter,
-                                     pref_inter,
-                                     offer_filter);
-        }
-      ACE_TRY_CHECK;
-
-      // Take note of the limits applied in this query.
-      returned_limits_applied = offer_filter.limits_applied ();
-
-      // Fill the return sequence and iterator with the bountiful results.
-      CORBA::ULong offers_returned =
-        this->fill_receptacles (type,
-                                how_many,
-                                desired_props,
-                                policies,
-                                pref_inter,
-                                *returned_offers.ptr (),
-                                returned_offer_iterator,
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // The following steps are only appropriate for a linked trader.
-      if (! CORBA::is_nil (link_if))
-        {
-          // Determine if we should perform a federated query, and if so
-          // construct a sequence of links to follow.
-          CosTrading::LinkNameSeq_var links;
-          CORBA::Boolean should_follow =
-            this->retrieve_links (policies,
-                                  offers_returned,
-                                  CosTrading::LinkNameSeq_out (links.out ()),
-                                  ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          if (should_follow && links->length () != 0)
-            {
-              // Query those links we've accumulated!
-              this->federated_query (links.in (),
-                                     policies,
-                                     *request_id,
-                                     pref_inter,
-                                     type,
-                                     constraint,
-                                     preferences,
-                                     desired_props,
-                                     how_many,
-                                     *returned_offers.ptr (),
-                                     returned_offer_iterator.ptr (),
-                                     *returned_limits_applied.ptr (),
-                                     ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
+          // Query those links we've accumulated!
+          this->federated_query (links.in (),
+                                 policies,
+                                 *request_id,
+                                 pref_inter,
+                                 type,
+                                 constraint,
+                                 preferences,
+                                 desired_props,
+                                 how_many,
+                                 *returned_offers.ptr (),
+                                 returned_offer_iterator.ptr (),
+                                 *returned_limits_applied.ptr (),
+                                 ACE_TRY_ENV);
+          ACE_CHECK;
         }
     }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -323,8 +315,11 @@ lookup_all_subtypes (const char* type,
     {
       ACE_TRY
         {
+          // @@ Irfan, can you please check the exception design here?
+
           // Obtain a description of the prospective type.
-          type_struct = rep->fully_describe_type (all_types[i], ACE_TRY_ENV);
+          type_struct = rep->fully_describe_type (all_types[i],
+                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq&
@@ -354,7 +349,6 @@ lookup_all_subtypes (const char* type,
     }
 }
 
-
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 int
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
@@ -380,89 +374,86 @@ fill_receptacles (const char* /* type */,
   // "offer_itr" will be nil.
   // END SPEC
 
-  ACE_TRY
+  TAO_Property_Filter prop_filter (desired_props, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // RETURNING: Calculate how many offers go into the sequence
+  //  Calculate how many go into the iterator
+
+  CORBA::ULong return_card = policies.return_card (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong i = 0;
+  CORBA::ULong size = pref_inter.num_offers ();
+  CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
+  CORBA::ULong offers_in_iterator = size - offers_in_sequence;
+
+  // Ensure the total number of offers returned doesn't exceed return_card.
+  offers_in_sequence = offers_in_sequence > return_card 
+    ? return_card 
+    : offers_in_sequence;
+
+  return_card -= offers_in_sequence;
+
+  offers_in_iterator = offers_in_iterator > return_card
+    ? return_card 
+    : offers_in_iterator;
+
+  CORBA::ULong total_offers = offers_in_sequence + offers_in_iterator;
+  offers.length (offers_in_sequence);
+
+  // Add to the sequence, filtering out the undesired properties.
+  for (i = 0; i < offers_in_sequence; i++)
     {
-      TAO_Property_Filter prop_filter (desired_props, ACE_TRY_ENV);
-      ACE_TRY_CHECK_RETURN (0);
+      CosTrading::Offer* offer = 0;
+      CosTrading::OfferId offer_id = 0;
 
-      // RETURNING: Calculate how many offers go into the sequence
-      //  Calculate how many go into the iterator
+      // Pull the next ordered offer out of the preference
+      // interpreter.
+      pref_inter.remove_offer (offer, offer_id);
 
-      CORBA::ULong return_card = policies.return_card (ACE_TRY_ENV);
-      ACE_TRY_CHECK_RETURN (0);
+      // Filter out the undesired properties.
+      prop_filter.filter_offer (offer, offers[i]);
+      CORBA::string_free (offer_id);
+    }
 
-      CORBA::ULong i = 0;
-      CORBA::ULong size = pref_inter.num_offers ();
-      CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
-      CORBA::ULong offers_in_iterator = size - offers_in_sequence;
+  // Any remaining offers under the return_card go into iterator
+  if (offers_in_iterator > 0)
+    {
+      // Create an iterator implementation
+      TAO_Offer_Iterator *oi =
+        this->create_offer_iterator (prop_filter);
 
-      // Ensure the total number of offers returned doesn't exceed return_card.
-      offers_in_sequence =
-        (offers_in_sequence > return_card) ? return_card : offers_in_sequence;
+      // Register it with the POA.
+      offer_itr = oi->_this (ACE_TRY_ENV);
+      oi->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (total_offers - offers_in_iterator);
 
-      return_card -= offers_in_sequence;
-
-      offers_in_iterator =
-        (offers_in_iterator > return_card) ? return_card : offers_in_iterator;
-
-      CORBA::ULong total_offers = offers_in_sequence + offers_in_iterator;
-      offers.length (offers_in_sequence);
-
-      // Add to the sequence, filtering out the undesired properties.
-      for (i = 0; i < offers_in_sequence; i++)
+      // Add to the iterator
+      for (i = 0; i < offers_in_iterator; i++)
         {
           CosTrading::Offer* offer = 0;
           CosTrading::OfferId offer_id = 0;
 
-          // Pull the next ordered offer out of the preference interpreter.
+          // Pull the next ordered offer out of the preference
+          // intrerpreter and add it to the offer iterator.
           pref_inter.remove_offer (offer, offer_id);
-
-          // Filter out the undesired properties.
-          prop_filter.filter_offer (offer, offers[i]);
-          CORBA::string_free (offer_id);
+          oi->add_offer (offer_id, offer);
         }
-
-      // Any remaining offers under the return_card go into iterator
-      if (offers_in_iterator > 0)
-        {
-          // Create an iterator implementation
-          TAO_Offer_Iterator *oi = this->create_offer_iterator (prop_filter);
-
-          // Register it with the POA.
-          offer_itr = oi->_this (ACE_TRY_ENV);
-          oi->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK_RETURN (total_offers - offers_in_iterator);
-
-          // Add to the iterator
-          for (i = 0; i < offers_in_iterator; i++)
-            {
-              CosTrading::Offer* offer = 0;
-              CosTrading::OfferId offer_id = 0;
-
-              // Pull the next ordered offer out of the preference
-              // intrerpreter and add it to the offer iterator.
-              pref_inter.remove_offer (offer, offer_id);
-              oi->add_offer (offer_id, offer);
-            }
-        }
-
-      // Clear the preference intrerpreter of superfluous items.
-      CORBA::ULong num_offers = pref_inter.num_offers ();
-      for (i = 0; i < num_offers; i++)
-        {
-          CosTrading::Offer* offer = 0;
-          CosTrading::OfferId offer_id = 0;
-
-          pref_inter.remove_offer (offer, offer_id);
-          CORBA::string_free (offer_id);
-        }
-
-      return total_offers;
     }
-  ACE_CATCHANY 
+
+  // Clear the preference intrerpreter of superfluous items.
+  CORBA::ULong num_offers = pref_inter.num_offers ();
+  for (i = 0; i < num_offers; i++)
     {
+      CosTrading::Offer* offer = 0;
+      CosTrading::OfferId offer_id = 0;
+
+      pref_inter.remove_offer (offer, offer_id);
+      CORBA::string_free (offer_id);
     }
-  ACE_ENDTRY;
+
+  return total_offers;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -486,14 +477,14 @@ create_offer_iterator (const TAO_Property_Filter& pfilter)
   TAO_Offer_Iterator* iterator = 0;
 
   if (CORBA::is_nil (this->trader_.trading_components ().register_if ()))
-    iterator = new TAO_Query_Only_Offer_Iterator (pfilter);
+    ACE_NEW_RETURN (iterator,
+                    TAO_Query_Only_Offer_Iterator (pfilter),
+                    0);
   else
-    {
-      iterator =
-        new TAO_Register_Offer_Iterator<MAP_LOCK_TYPE> (this->trader_.offer_database (),
-                                                        pfilter);
-    }
-
+    ACE_NEW_RETURN (iterator,
+                    TAO_Register_Offer_Iterator<MAP_LOCK_TYPE> (this->trader_.offer_database (),
+                                                                pfilter),
+                    0);
   return iterator;
 }
 
@@ -507,70 +498,62 @@ retrieve_links (TAO_Policies& policies,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Lookup::PolicyTypeMismatch))
 {
-  ACE_TRY
+  CORBA::Boolean should_follow = 0;
+  CosTrading::FollowOption follow_rule = policies.link_follow_rule (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (should_follow);
+
+  // Determine whether or not a federated query is warranted. A query
+  // is waranted if the follow_rule governing this query is 'always'
+  // or if_no_local and the local query returned nothing.
+  if ((follow_rule == CosTrading::always ||
+       (follow_rule == CosTrading::if_no_local && offers_returned == 0))
+      && policies.hop_count (ACE_TRY_ENV) > 0)
+    should_follow = 1;
+
+  if (should_follow)
     {
-      CORBA::Boolean should_follow = 0;
-      CosTrading::FollowOption follow_rule = policies.link_follow_rule (ACE_TRY_ENV);
-      ACE_TRY_CHECK_RETURN (should_follow);
+      // Grab the names of all the links in the trader, and push
+      // the suitable ones onto <valid_links>.
+      CosTrading::Link_ptr link_if =
+        this->trader_.trading_components ().link_if ();
 
-      // Determine whether or not a federated query is warranted. A query
-      // is waranted if the follow_rule governing this query is 'always'
-      // or if_no_local and the local query returned nothing.
-      if ((follow_rule == CosTrading::always ||
-           (follow_rule == CosTrading::if_no_local && offers_returned == 0))
-          && policies.hop_count (ACE_TRY_ENV) > 0)
-        should_follow = 1;
+      links = link_if->list_links (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
-      if (should_follow)
+      // Determine which of the links registered with the Link
+      // interface are suitable to follow.
+      CORBA::ULong i = 0, j = 0,
+        length = links->length ();
+
+      for (i = 0; i < length; i++)
         {
-          // Grab the names of all the links in the trader, and push
-          // the suitable ones onto <valid_links>.
-          CosTrading::Link_ptr link_if =
-            this->trader_.trading_components ().link_if ();
+          // Grab the link information.
+          CosTrading::Link::LinkInfo_var
+            link_info (link_if->describe_link (links[i], ACE_TRY_ENV));
+          ACE_CHECK_RETURN (should_follow);
 
-          links = link_if->list_links (ACE_TRY_ENV);
-          ACE_TRY_CHECK_RETURN (0);
+          // Compute the link follow rule.
+          CosTrading::FollowOption link_rule =
+            policies.link_follow_rule (link_info.in (), ACE_TRY_ENV);
+          ACE_CHECK_RETURN (should_follow);
 
-          // Determine which of the links registered with the Link
-          // interface are suitable to follow.
-          CORBA::ULong i = 0, j = 0,
-            length = links->length ();
-
-          for (i = 0; i < length; i++)
+          // Determine if the link follow rule applies.
+          if (link_rule == CosTrading::always 
+              || (link_rule == CosTrading::if_no_local 
+                  && offers_returned == 0))
             {
-              // Grab the link information.
-              CosTrading::Link::LinkInfo_var
-                link_info (link_if->describe_link (links[i], ACE_TRY_ENV));
-              ACE_TRY_CHECK_RETURN (should_follow);
+              // Add the link to the list of links to follow.
+              if (i > j)
+                links[j] = links[i];
 
-              // Compute the link follow rule.
-              CosTrading::FollowOption link_rule =
-                policies.link_follow_rule (link_info.in (), ACE_TRY_ENV);
-              ACE_TRY_CHECK_RETURN (should_follow);
-
-              // Determine if the link follow rule applies.
-              if (link_rule == CosTrading::always ||
-                  (link_rule == CosTrading::if_no_local &&
-                   offers_returned == 0))
-                {
-                  // Add the link to the list of links to follow.
-                  if (i > j)
-                    links[j] = links[i];
-
-                  j++;
-                }
+              j++;
             }
-
-          links->length (j);
         }
 
-      return should_follow;
+      links->length (j);
     }
-  ACE_CATCHANY 
-    {
-    }
-  ACE_ENDTRY;
-  return 0;
+
+  return should_follow;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -635,6 +618,8 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
       ACE_TRY
         {
+          // @@ Irfan, can you please check the exception design.
+
           // Obtain information about the link we're traversing.
           CosTrading::Link::LinkInfo_var link_info =
             link_interface->describe_link (links[i], ACE_TRY_ENV);
@@ -857,9 +842,11 @@ seen_request_id (TAO_Policies& policies,
     }
 
   if (seq == 0)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (), 1);
+    ACE_THROW_RETURN (CORBA::NO_MEMORY (),
+                      1);
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 1);
+
   for (Request_Ids::ITERATOR riter (this->request_ids_);
        ! riter.done ();
        riter.advance ())
@@ -888,10 +875,6 @@ seen_request_id (TAO_Policies& policies,
 
   return return_value;
 }
-
-  // *************************************************************
-  // TAO_Register
-  // *************************************************************
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
@@ -1245,6 +1228,7 @@ validate_properties (const char* type,
 
   // Perform property validation
   length = prop_types.length ();
+
   for (CORBA::ULong i = 0; i < length; i++)
     {
       const CosTradingRepos::ServiceTypeRepository::PropStruct&
@@ -1261,25 +1245,18 @@ validate_properties (const char* type,
               CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY)
             ACE_THROW (CosTrading::MissingMandatoryProperty (type, prop_name));
         }
-      else
+      else if (! prop_type->equal (prop_struct.value_type.in (), ACE_TRY_ENV))
         {
-          if (! prop_type->equal (prop_struct.value_type.in (), ACE_TRY_ENV))
-            {
-              // Offer cannot redefine the type of an property.
-              const CosTrading::Property* prop = prop_eval.get_property (prop_name);
-              ACE_THROW (CosTrading::PropertyTypeMismatch (type, *prop));
-            }
-          else if (prop_struct.mode ==
-                   CosTradingRepos::ServiceTypeRepository::PROP_READONLY &&
-                   prop_eval.is_dynamic_property (prop_name))
-            ACE_THROW (CosTrading::ReadonlyDynamicProperty (type, prop_name));
+          // Offer cannot redefine the type of an property.
+          const CosTrading::Property* prop = prop_eval.get_property (prop_name);
+          ACE_THROW (CosTrading::PropertyTypeMismatch (type, *prop));
         }
+      else if (prop_struct.mode ==
+               CosTradingRepos::ServiceTypeRepository::PROP_READONLY &&
+               prop_eval.is_dynamic_property (prop_name))
+        ACE_THROW (CosTrading::ReadonlyDynamicProperty (type, prop_name));
     }
 }
-
-  // *************************************************************
-  // TAO_Admin
-  // *************************************************************
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
@@ -1293,14 +1270,15 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 {
   // A random 4-bytes will prefix the sequence number space for each
   // trader, making it extremely unlikely that the sequence spaces for
-  // two traders will over lap.
-  // @@ TODO: This is a bad way to generate pseudo random numbers.
+  // two traders will over lap.  @@ TODO: This is a bad way to
+  // generate pseudo random numbers.
 
   // Ok, then, Carlos, we'll do it a different way: ip addr + pid.
   ACE_UINT32 ip_addr = 0;
   ASYS_TCHAR host_name[BUFSIZ];
 
-  if (ACE_OS::hostname (host_name, BUFSIZ) != -1)
+  if (ACE_OS::hostname (host_name,
+                        BUFSIZ) != -1)
     {
       ACE_INET_Addr addr ((u_short) 0, host_name);
       ip_addr = addr.get_ip_address ();

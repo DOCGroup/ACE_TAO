@@ -50,7 +50,7 @@ template <class MAP_LOCK_TYPE> CORBA::Boolean
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 next_n (CORBA::ULong n,
         CosTrading::OfferSeq_out offers,
-        CORBA::Environment& /* TAO_IN_ENV */)
+        CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong ret_offers = 0;
@@ -76,6 +76,7 @@ next_n (CORBA::ULong n,
 
       ACE_TRY
         {
+          // @@ Irfan, can you please check this out for exception design?
           CosTrading::OfferId_var offerid_var (id);
           CosTrading::Offer* offer = this->db_.lookup_offer (id, ACE_TRY_ENV);
           ACE_TRY_CHECK;

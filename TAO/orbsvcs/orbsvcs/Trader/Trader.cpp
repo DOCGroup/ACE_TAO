@@ -8,10 +8,6 @@
 
 ACE_RCSID(Trader, Trader, "$Id$")
 
-  // *************************************************************
-  // TAO_Trader_Base
-  // *************************************************************
-
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),
     import_attributes_ (*this),
@@ -96,10 +92,6 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
 
   return return_value;
 }
-
-  // *************************************************************
-  // Attribute Classes
-  // *************************************************************
 
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
@@ -611,10 +603,6 @@ operator== (const CosTrading::Admin::OctetSeq& left,
   return return_value;
 }
 
-  // *************************************************************
-  // TAO_Trader_Factory
-  // *************************************************************
-
 #include "ace/Arg_Shifter.h"
 #include "Trader_T.h"
 
@@ -814,8 +802,8 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
                 }
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSmax_follow_policy") == 0)
+      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0 
+               || ACE_OS::strcmp (current_arg, "-TSmax_follow_policy") == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -856,7 +844,8 @@ sequence_type (CORBA::TypeCode* type_code,
   CORBA::TCKind return_value = CORBA::tk_void,
     type_kind = type_code->kind (ACE_TRY_ENV);
 
-  if (type_kind == CORBA::tk_alias || type_kind == CORBA::tk_sequence)
+  if (type_kind == CORBA::tk_alias 
+      || type_kind == CORBA::tk_sequence)
     {
       CORBA::TypeCode_ptr base = type_code;
 
