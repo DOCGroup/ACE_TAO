@@ -25,21 +25,21 @@ run_client (void)
   ACE_MEM_Addr server_addr (ACE_DEFAULT_SERVER_PORT);
 
   if (connector.connect (stream, server_addr.get_remote_addr ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("connect")), -1);
 
   char buf [MAXPATHLEN];
   while (fgets (buf, MAXPATHLEN, stdin) >0)
     {
       stream.send (buf, ACE_OS::strlen (buf)+1);
       stream.recv (buf, MAXPATHLEN);
-      ACE_DEBUG ((LM_DEBUG, "Echo: %s\n", buf));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Echo: %C\n"), buf));
     }
 
   return 0;
 }
 
-int
-main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG(argc);
   // Initialize the logger.

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 // Handle connections from local UNIX domain sockets.
@@ -25,8 +24,8 @@ class ACE_Svc_Export Handle_L_Stream : public ACE_Service_Object, public ACE_LSO
 public:
   Handle_L_Stream (void);
   ~Handle_L_Stream (void);
-  virtual int init (int argc, char *argv[]);
-  virtual int info (char **, size_t) const;
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini (void);
 
 private:
@@ -35,8 +34,8 @@ private:
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 
-  char rendezvous[MAXPATHLEN + 1];
-  static const char *DEFAULT_RENDEZVOUS;
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
+  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
   static char *login_name;
   static char login[ACE_MAX_USERID];
 };

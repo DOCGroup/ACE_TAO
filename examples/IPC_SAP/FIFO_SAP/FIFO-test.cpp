@@ -20,7 +20,7 @@ ACE_RCSID(FIFO_SAP, FIFO_test, "$Id$")
 #define EXEC_NAME               "more"
 #define EXEC_COMMAND_ARG        "more"
 
-static const char *FIFO_NAME = "/tmp/fifo";
+static const ACE_TCHAR *FIFO_NAME = ACE_TEXT ("/tmp/fifo");
 
 static int
 do_child (ACE_FIFO_Recv &fifo_reader)
@@ -31,7 +31,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
     return -1;
 
   char *argv[2];
-  argv[0] = (char *) EXEC_COMMAND_ARG;
+  argv[0] = ACE_const_cast (char *, EXEC_COMMAND_ARG);
   argv[1] = 0;
 
   if (ACE_OS::execvp (EXEC_NAME, argv) == -1)
@@ -40,8 +40,8 @@ do_child (ACE_FIFO_Recv &fifo_reader)
 }
 
 static int
-do_parent (const char fifo_name[],
-	   char input_filename[])
+do_parent (const ACE_TCHAR fifo_name[],
+	   ACE_TCHAR input_filename[])
 {
   ACE_FIFO_Send fifo_sender (fifo_name, O_WRONLY | O_CREAT);
   ssize_t len;
@@ -71,14 +71,14 @@ do_parent (const char fifo_name[],
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
   if (argc != 2)
     {
       ACE_ERROR ((LM_ERROR,
-                  "usage: %n input-file\n",
+                  ACE_TEXT ("usage: %n input-file\n"),
                   1));
       ACE_OS::exit (1);
     }
@@ -94,27 +94,27 @@ main (int argc, char *argv[])
     {
     case -1:
       ACE_ERROR ((LM_ERROR,
-                  "%n: %p\n%a",
-                  "fork",
+                  ACE_TEXT ("%n: %p\n%a"),
+                  ACE_TEXT ("fork"),
                   1));
     case 0:
       if (do_child (fifo_reader) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%n: %p\n%a",
-                    "do_child",
+                    ACE_TEXT ("%n: %p\n%a"),
+                    ACE_TEXT ("do_child"),
                     1));
     default:
       if (do_parent (FIFO_NAME, argv[1]) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%n: %p\n%a",
-                    "do_parent",
+                    ACE_TEXT ("%n: %p\n%a"),
+                    ACE_TEXT ("do_parent"),
                     1));
 
       // wait for child to ACE_OS::exit.
       if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) 0, 0) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%n: %p\n%a",
-                    "waitpid",
+                    ACE_TEXT ("%n: %p\n%a"),
+                    ACE_TEXT ("waitpid"),
                     1));
     }
 

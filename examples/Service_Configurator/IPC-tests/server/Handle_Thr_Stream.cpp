@@ -41,7 +41,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor (void)
 
 template <class SVH, PR_AC_1> int
 Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
-					size_t length) const
+                                         size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr sa;
@@ -49,8 +49,8 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
   if (this->acceptor ().get_local_addr (sa) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, ACE_TEXT("%d/%s %s"), sa.get_port_number (), ACE_TEXT("tcp"),
-       ACE_TEXT("# tests threaded remote stream\n"));
+  ACE_OS::sprintf (buf, ACE_TEXT("%d/"), sa.get_port_number ());
+  ACE_OS::strcat (buf, ACE_TEXT("tcp # tests threaded remote stream\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -84,7 +84,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
   if (this->thr_strategy_.open (&this->thr_mgr_,
 				this->thr_flags_,
 				n_threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
 
   // Initialize the Acceptor base class, passing in the desired
   // concurrency strategy.
@@ -93,7 +93,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
 		       0,
 		       0,
 		       &this->thr_strategy_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else
     return 0;
 }
@@ -114,7 +114,8 @@ CLI_Stream<PR_ST_2>::CLI_Stream (ACE_Thread_Manager *thr_mgr)
 template <PR_ST_1> int
 CLI_Stream<PR_ST_2>::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) client stream object closing down\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) client stream object closing down\n")));
   this->peer ().close ();
 
   // Must be allocated dynamically!
@@ -127,13 +128,13 @@ CLI_Stream<PR_ST_2>::open (void *)
 {
   ACE_INET_Addr sa;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) client handle = %d\n",
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) client handle = %d\n"),
 	      this->peer ().get_handle ()));
 
   if (this->peer ().get_remote_addr (sa) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) accepted at port %d\n",
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) accepted at port %d\n"),
 	     sa.get_port_number ()));
   return 0;
 }
@@ -157,7 +158,7 @@ CLI_Stream<PR_ST_2>::svc (void)
   ACE_OS::cuserid (login_name);
   ACE_OS::sprintf (buf, "user %s %s",
 		   login_name,
-		   ACE_OS::ctime ((const time_t *) &t));
+		   ACE_TEXT_ALWAYS_CHAR (ACE_OS::ctime ((const time_t *) &t)));
 
   if (this->peer ().send_n (buf, ACE_OS::strlen (buf) + 1) == -1)
     return -1;

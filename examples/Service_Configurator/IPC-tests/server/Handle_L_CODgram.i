@@ -23,16 +23,16 @@ Handle_L_CODgram::open (const ACE_UNIX_Addr &suad, int async)
 }
 
 ACE_INLINE int 
-Handle_L_CODgram::info (char **strp, size_t length) const
+Handle_L_CODgram::info (ACE_TCHAR **strp, size_t length) const
 {
-  char      buf[BUFSIZ];
+  ACE_TCHAR      buf[BUFSIZ];
   ACE_UNIX_Addr sa;
 
   if (ACE_LSOCK_CODgram::get_local_addr (sa) == -1)
     return -1;
   
-  ACE_OS::sprintf (buf, "%s %s", sa.get_path_name (), 
-		   "# tests local connected datagram\n");
+  ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
+  ACE_OS::strcat (buf, ACE_TEXT (" # tests local connected datagram\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -42,11 +42,11 @@ Handle_L_CODgram::info (char **strp, size_t length) const
 }
 
 ACE_INLINE int
-Handle_L_CODgram::init (int argc, char *argv[])
+Handle_L_CODgram::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr  sucd;
-  ACE_Get_Opt    get_opt (argc, argv, "r:", 0);
-  const char *r = Handle_L_CODgram::DEFAULT_RENDEZVOUS;
+  ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
+  const ACE_TCHAR *r = Handle_L_CODgram::DEFAULT_RENDEZVOUS;
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
@@ -62,11 +62,12 @@ Handle_L_CODgram::init (int argc, char *argv[])
   ACE_OS::unlink (this->rendezvous);
   sucd.set (this->rendezvous);
   if (this->open (sucd) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler 
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "registering service with ACE_Reactor\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+		       ACE_TEXT ("registering service with ACE_Reactor")),
+                      -1);
   return 0;
 }
 
@@ -92,7 +93,7 @@ Handle_L_CODgram::handle_input (ACE_HANDLE)
   if (this->recv_handle (handle) == -1)
     return -1;
   else
-    ACE_DEBUG ((LM_INFO, "received handle (%d)\n", handle));
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("received handle (%d)\n"), handle));
 
   ACE_OS::puts ("----------------------------------------");
 

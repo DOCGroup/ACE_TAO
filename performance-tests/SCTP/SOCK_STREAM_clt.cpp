@@ -42,14 +42,14 @@ ACE_UINT32 const microsec_clock_scale_factor = ACE_High_Res_Timer::global_scale_
 // file readability.
 HIST runTest(ACE_SOCK_Stream &);
 
-int main(int argc, char **argv){
+int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // Initialize the options manager
-  Options_Manager optsMgr(argc, argv, "client-opts");
+  Options_Manager optsMgr(argc, argv, ACE_TEXT ("client-opts"));
 
   // show usage if requested
   if (optsMgr._usage) {
-    optsMgr._show_usage(cerr, "client-opts");
+    optsMgr._show_usage(cerr, ACE_TEXT ("client-opts"));
     return 1;
   }
 
@@ -58,13 +58,13 @@ int main(int argc, char **argv){
 #ifndef ACE_HAS_SCTP
   if (optsMgr.test_transport_protocol == IPPROTO_SCTP)
     ACE_ERROR_RETURN((LM_ERROR,
-                      "SCTP was NOT installed when this binary was compiled.\nSOCK_STREAM_clt may still be run using TCP via the '-t tcp' option.\n"),
+                      ACE_TEXT ("SCTP was NOT installed when this binary was compiled.\nSOCK_STREAM_clt may still be run using TCP via the '-t tcp' option.\n")),
                      1);
 #endif
 
   // check that valid options were specified
   if (optsMgr._error) {
-    cerr << "ERROR: " << optsMgr._error_message << endl;
+    cerr << "ERROR: " << ACE_TEXT_ALWAYS_CHAR (optsMgr._error_message) << endl;
     return 1;
   }
 
@@ -89,8 +89,8 @@ int main(int argc, char **argv){
                          0,clientAddr, 0, 0, 0, // ALL DEFAULT ARGUMENTS
                          Options_Manager::test_transport_protocol) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "connection failed"),
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("connection failed")),
                       1);
 
   // run the test

@@ -19,6 +19,12 @@ project(*notification) : aceexe {
     notification.cpp
   }
 }
+project(*pingpong) : aceexe {
+  exename = pingpong
+  Source_Files {
+    pingpong.cpp
+  }
+}
 project(*reactors) : aceexe {
   exename = reactors
   Source_Files {

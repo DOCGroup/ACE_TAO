@@ -21,7 +21,7 @@ public:
   ~Options (void);
   // Destructor.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
 
   const ACE_Time_Value &sleep_time (void) const;
@@ -31,7 +31,7 @@ public:
   u_short port (void) const;
   // Port of the server.
 
-  const char *host (void) const;
+  const ACE_TCHAR *host (void) const;
   // Host of the server.
 
   const char *quit_string (void) const;
@@ -65,7 +65,7 @@ private:
   void oneway_client_test (void);
   // Performs the oneway test.
 
-  const char *host_;
+  const ACE_TCHAR *host_;
   // Host of the server.
 
   u_short port_;
@@ -74,7 +74,8 @@ private:
   ACE_Time_Value sleep_time_;
   // Sleep_Time value.
 
-  const char *quit_string_;
+  enum {QUIT_STRING_SIZE = 128};
+  char quit_string_[QUIT_STRING_SIZE];
   // String that shuts down the client/server.
 
   size_t message_len_;
