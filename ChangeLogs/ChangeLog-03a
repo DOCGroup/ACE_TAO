@@ -1,3 +1,9 @@
+Fri Mar 23 18:01:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/auto_run_tests.lst: Some of the tests cannot be run in
+	  Single threaded configurations. Prevented such tests from
+	  running in the nightly builds.
+
 Fri Mar 23 16:25:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/New_Fail_Test.cpp: Reverted the change from "Fri Mar 23
