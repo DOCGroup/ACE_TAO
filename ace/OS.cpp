@@ -250,9 +250,9 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   _100ns.QuadPart -= ACE_Time_Value::FILETIME_to_timval_skew;
 
   // Convert 100ns units to seconds;
-  this->tv_.tv_sec = long (_100ns.QuadPart / (10000 * 1000));
+  this->tv_.tv_sec = (long) (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = (long) ((_100ns.LowPart % (DWORD) (10000 * 1000)) / 10);
+  this->tv_.tv_usec = (long) ((_100ns.QuadPart % (10000 * 1000)) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
