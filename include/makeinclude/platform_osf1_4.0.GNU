@@ -13,11 +13,16 @@ endif
 # exceptions=1 is the default on this platform. exceptions=0 has not
 # been tested. See the bottom of this file for more. Turning off exceptions
 # on this platform can cause bad things to happen.
-exceptions = 1
 
-# wrapper_macros.GNU disables rtti by default. We want to test with
-# rtti=1. So the right way to fix it is to fix wrapper_macros.GNU.
-rtti = 1
+ifeq (,$(exceptions))
+  exceptions = 1
+endif
+
+# We want to test with rtti=1
+
+ifeq (,$(rtti))
+   rtti = 1
+endif
 
 ifeq (,$(threads))
   threads = 1
@@ -57,9 +62,6 @@ ifneq ($(CXX_VER),CXX_5)
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
-ifeq ($(rtti),0)
-  CCFLAGS += -nortti
-endif # rtti
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
@@ -80,6 +82,9 @@ LIBS            := $(LIBS) \
                 -hidden $(wildcard /usr/lib/cmplrs/cxx/libcxxstd.a) -non_hidden
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
+ifeq (0,$(rtti))
+  CCFLAGS += -nortti
+endif # rtti
 
 ifeq (0,$(exceptions))
   #### Disable the default exception handling of cxx >= 6.0.
