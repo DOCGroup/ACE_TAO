@@ -17,6 +17,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "orbsvcs/RtecSchedulerC.h"
+#include "ace/SString.h"
 #include "TP_Task.h"
 
 namespace POA_RtecScheduler
@@ -50,6 +51,7 @@ private:
   TAO_FTEC_Event_Channel::MEMBERSHIP membership_;
   CORBA::ORB_var orb_;
   TP_Task task_;
+  ACE_CString ior_file_;
 };
 
 #endif

@@ -15,11 +15,11 @@
 #include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "Crash_Injector.h"
+#include <fstream>
 
 ACE_RCSID (Event_Service,
            FT_EventService,
            "$Id$")
-
 
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
@@ -115,6 +115,13 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     if (report_factory(orb_.in(), ec_ior.in() )==-1)
       return -1;
 
+    if (ior_file_.length()) {
+      std::ofstream file(ior_file_.c_str());
+      CORBA::String_var my_ior_string = orb_->object_to_string(ec_ior.in()
+        ACE_ENV_ARG_PARAMETER);
+      file << my_ior_string.in();
+    }
+
     Crash_Injector* injector = Crash_Injector::instance();
 
     while (injector ==0 || !injector->work_done() ) {
@@ -156,7 +163,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jprs:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jo:prs:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -196,6 +203,9 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
           get_opt.opt_arg ()));
         this->global_scheduler_ = 0;
       }
+      break;
+    case 'o':
+      ior_file_ = get_opt.opt_arg ();
       break;
     case '?':
     default:
