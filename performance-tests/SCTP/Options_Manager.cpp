@@ -1,12 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
-extern "C" {
-#include "ace/os_include/sys/os_types.h"
-}
-
 #include "ace/Get_Opt.h"
 #include "ace/os_include/netinet/os_in.h"
+#include "ace/os_include/sys/os_types.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
