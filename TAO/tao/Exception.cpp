@@ -523,8 +523,7 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (
 
 CORBA_UnknownUserException::~CORBA_UnknownUserException (void)
 {
-  if (this->exception_ != 0)
-    delete this->exception_;
+  delete this->exception_;
 }
 
 CORBA_Any &
