@@ -1,3 +1,12 @@
+Thu Apr 24 10:33:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+
+          Added '.in ()' to generated code for field accessor when the
+          type of the field is a pseudo object. Thanks to Andrey
+          Nechypurenko <andrey.nechypurenko@siemens.com> and Nanbor Wang
+          <nanbor@cse.wustl.edu> for reporting the problem.
+
 Thu Apr 24 10:03:48 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
