@@ -1,6 +1,12 @@
+Wed Jan 20 13:54:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp: removed explicit ACE_Convert instantiation.
+          LynxOS' g++ was raising an internal compiler error on it, and
+          it appears to no longer be used.
+
 Tue Jan 19 18:38:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time/Time_Client_i.h
+        * examples/Simple/time/Time_Client_i.h
         * examples/Simple/Simple_util.h
         * examples/Simple/Simple_util.cpp
         * examples/Simple/time/Time_i.cpp
@@ -12,12 +18,12 @@ Tue Jan 19 16:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/orbsvcs/Sched/Config_Scheduler.h
           TAO/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp, h}: added new
-	  TAO_Criticality_Scheduler_Strategy.  Thanks to Amir Bahmanyari
+          TAO_Criticality_Scheduler_Strategy.  Thanks to Amir Bahmanyari
           (abahmany@teknowledge.com) for suggesting this.
-	
-        * TAO/orbsvcs/tests/Simulator/DOVEBrowser/NavWeapDataHandler.java: 
-	  added some additional debugging information if an unrecognized any 
-	  type is received.
+
+        * TAO/orbsvcs/tests/Simulator/DOVEBrowser/NavWeapDataHandler.java:
+          added some additional debugging information if an unrecognized any
+          type is received.
 
 Tue Jan 19 15:44:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
