@@ -1,3 +1,12 @@
+Thu Apr  1 23:41:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp:
+	  Fixed write_array() to memcpy if doing a byte-swap
+	  and align = 1. Previously, it was falling through
+	  without wrting anything. Thanks to Jerry De Master 
+	  <jdemaste@ipdinc.com> for pointing this out and 
+	  suggesting a fix.
+
 Thu Apr 01 22:38:25 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.33 released.
