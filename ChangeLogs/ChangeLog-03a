@@ -1,3 +1,12 @@
+Sat May 13 01:06:22 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Remote_Name_Space.cpp:
+
+          SunCC 5 didn't like the template instantiations in the
+          Local_Name_Space_T file, so I moved them to 
+          Remote_Name_Space.cpp.
+
 Fri May 12 17:48:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/generate_export_file.pl:
