@@ -204,20 +204,22 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                                              events[i].ec_send_time_);
 
               const ACE_hrtime_t now = ACE_OS::gethrtime ();
-              const ACE_hrtime_t elapsed = now - creation;
+              // Sun C++ 4.2 on SunOS 5.6 doesn't like the cast of a
+              // const long long to (non-const) unsigned in ACE_U64_TO_U32.
+              /* const */ ACE_hrtime_t elapsed = now - creation;
               ACE_Time_Value latency ((long) (elapsed / ACE_ONE_SECOND_IN_NSECS),
                                       (long) (ACE_U64_TO_U32 (elapsed) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              const long to_ec_nsecs =
+              /* const */ long to_ec_nsecs =
                 ACE_static_cast (long, ec_recv - creation);
               ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
                                     (ACE_U64_TO_U32 (to_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
+              /* const */ ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
               ACE_Time_Value in_ec ((long) (in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
                                     (long) (ACE_U64_TO_U32 (in_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              const ACE_hrtime_t from_ec_nsecs = now - ec_send;
+              /* const */ ACE_hrtime_t from_ec_nsecs = now - ec_send;
               ACE_Time_Value from_ec ((long) (from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
                                       (long) (ACE_U64_TO_U32 (from_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
@@ -447,7 +449,7 @@ Latency_Supplier::disconnect_push_supplier (CORBA::Environment &)
 int
 Latency_Supplier::start_generating_events (void)
 {
-  const ACE_hrtime_t now = ACE_OS::gethrtime ();
+  /* const */ ACE_hrtime_t now = ACE_OS::gethrtime ();
   test_start_time_.set (ACE_static_cast (long, now / 1000000000),
                         ACE_static_cast (long, (ACE_U64_TO_U32 (now) % 1000000000) / 1000));
 
@@ -619,7 +621,7 @@ Latency_Supplier::shutdown (void)
       }
   #endif /* quantify */
 
-  const ACE_hrtime_t now = ACE_OS::gethrtime ();
+  /* const */ ACE_hrtime_t now = ACE_OS::gethrtime ();
   test_stop_time_.set (ACE_static_cast (long, now / ACE_ONE_SECOND_IN_NSECS),
                        ACE_static_cast (long, (ACE_U64_TO_U32 (now) % ACE_ONE_SECOND_IN_NSECS) / 1000));
 
