@@ -168,6 +168,7 @@ main (int, char *[])
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   if (ACE_Service_Config::thr_mgr ()->spawn_n (ACE_MAX_THREADS, 
 					       ACE_THR_FUNC (&worker), 
