@@ -1,0 +1,6 @@
+project: taoexe {
+  Source_Files {
+    testC.cpp
+    anyop.cpp
+  }
+}

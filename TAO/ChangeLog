@@ -1,3 +1,24 @@
+Wed Feb 11 11:38:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Log/RTEvent/Log_RTEvent.mpc:
+
+          Removed the minimum_corba requirement.  It didn't seem necessary.
+
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+
+          Removed many extraneous base projects.
+
+        * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+        * performance-tests/Anyop/Anyop.mpc:
+        * performance-tests/Latency/Collocation/Collocation.mpc:
+
+          Added new mpc files for these projects.
+
 Wed Feb 11 13:17:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc:
@@ -65,8 +86,8 @@ Wed Feb 11 09:23:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAOACE_WinCE.vcw:
         * tests/CodeSets/libs/IBM1047_ISO8859/IBM1047_ISO8859.vcp:
         * tests/CodeSets/libs/IBM1047_ISO8859/IBM1047_ISO8859_Static.vcp:
-          Removed these procect files from the repo. If you want embedded
-          Visual C++ project files generate them with MCP. These files where
+          Removed these project files from the repo. If you want embedded
+          Visual C++ project files generate them with MPC. These files where
           just not maintained after the first checkin.
 
 Tue Feb 10 11:18:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -82,8 +103,8 @@ Tue Feb 10 11:18:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Feb 10 17:20:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Anyop/Makefile.bor:
-	  Fixed this BCB makefile
+        * performance-tests/Anyop/Makefile.bor:
+          Fixed this BCB makefile
 
 Tue Feb 10 11:11:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
