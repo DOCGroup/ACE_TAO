@@ -1,4 +1,4 @@
-// $:Id$
+// $Id$
 //
 // FILE
 //   CosProperty_Hash.cpp
@@ -22,7 +22,7 @@ int
 EXT_ID::operator == (const EXT_ID &ext_id) const   
 {
   ACE_DEBUG ( (LM_DEBUG, "EXT_ID::operator == : %s == %s \n", this->pname_.in (), ext_id.pname_.in ()) );
-  return (strcmp(this->pname_.in (), ext_id.pname_.in ()) );
+  return ( (ACE_OS::strcmp(this->pname_.in (), ext_id.pname_.in ()) == 0) );
 }
 
 long  unsigned int 
