@@ -20,9 +20,7 @@ Supplier::~Supplier()
 void
 Supplier::update(ACE_ENV_SINGLE_ARG_DECL)
 {
-  /*
   ACE_DEBUG((LM_DEBUG,"Supplier %d (%P|%t) received update\n",this->_supplier_id));
-  */
 
   //only react to update if ready=1
   if (*this->_ready == 1 && this->_num_sent < this->_to_send)
@@ -34,16 +32,12 @@ Supplier::update(ACE_ENV_SINGLE_ARG_DECL)
       this->_consumer_proxy->push(this->_events ACE_ENV_ARG_PARAMETER);
 
       ++this->_num_sent;
-      /*
       ACE_DEBUG((LM_DEBUG,"Sent events; %d sent\t%d total\n",this->_num_sent,this->_to_send));
-      */
       if (this->_num_sent >= this->_to_send)
         {
           //just finished; only want to do this once!
-            /*
           ACE_DEBUG((LM_DEBUG,"RELEASE read lock from Supplier %d\n",
                      this->_supplier_id));
-                     */
           this->_done->release();
           this->_hold_mtx = 0;
         }
@@ -151,8 +145,8 @@ Supplier::connect (int *ready,
                                                 ACE_ENV_ARG_PARAMETER);
   ACE_DEBUG((LM_DEBUG, "Supplier (%t) "));
   printf("object pointer (%p) ---> push_consumer (%p)\n",
-	this,
-	this->_consumer_proxy.in());
+        this,
+        this->_consumer_proxy.in());
 
   ACE_CHECK;
 

@@ -56,7 +56,8 @@ const char *supplier_schedule =
 const char *consumer_schedule =
   "consumer_schedule.out";
 const char *remote_inet_addr =
-  "bhangra.doc.wustl.edu";
+"humpty.doc.wustl.edu";
+//  "bhangra.doc.wustl.edu";
 int remote_inet_port = 42424;
 
 template <class SCHED_STRAT>
@@ -266,6 +267,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
           ACE_OS::fclose (output_file);
 
           //now we block until the client writes its IOR
+          //this->barrier(true);
           this->barrier(true);
 
           //block forever so I can debug effectively!
@@ -273,7 +275,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
         }
 
       //CONSUMER writes IORs and blocks
-      if (cons_size > 0 && this->use_federated)
+      if (cons_size > 0 && supp_size==0 && this->use_federated)
         {
           //since there are consumers, we assume we are a consumer only
           //save IOR for federation
@@ -307,7 +309,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
           this->barrier(false);
         }
 
-      if (this->use_federated && cons_size>0) //only federate on consumer side
+      if (this->use_federated && cons_size>0 && supp_size==0) //only federate on consumer side
         {
           //gateway EC_Control does not appear to setup gateway on
           //activation, so we need to set it up BEFORE any consumers
@@ -361,7 +363,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
                                                 anomalies.in (),
                                                 supplier_schedule);
         }
-      if (this->consumers.size() > 0)
+      if (this->consumers.size() > 0 && this->suppliers.size()==0)
         {
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 deps.in(),
@@ -420,18 +422,19 @@ ECConfig<SCHED_STRAT>::run (void)
       //printf("data->orb = %p\n",(void*)(data->orb));
       data->ready = &(this->ready);
       data->use_federated = this->use_federated;
-      data->is_server = this->suppliers.size()>0; //assume client if no suppliers
-      //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,data);
+      data->is_server = (this->suppliers.size()>0); //assume client if no suppliers
+      ACE_DEBUG((LM_DEBUG,"data->is_server? %u\tsuppliers size: %u\n",data->is_server,this->suppliers.size()));
+      int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,data);
       //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,reactor);
       //no need for getting tid?
-      /*
+
         if (ret == -1)
         {
           ACE_DEBUG ((LM_DEBUG, "ERROR: Couldn't spawn ORB->run() thread: %s\n",
                       ACE_OS::strerror(errno)));
           return 1;
         }
-      */
+
       orb->run();
       //this method returns when orb->shutdown() is called; then thread exits
 
@@ -649,7 +652,7 @@ ECConfig<SCHED_STRAT>::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 template <class SCHED_STRAT> void
 ECConfig<SCHED_STRAT>::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
-  //ACE_DEBUG((LM_DEBUG,"Consumers to connect: %d\n",this->consumers.size()));
+  ACE_DEBUG((LM_DEBUG,"Consumers to connect: %d\n",this->consumers.size()));
   //this->consumers already has correct size
   size_t cons_idx = 0;
   for (size_t i=0; i<this->testcfgs.size(); ++i)
@@ -736,7 +739,7 @@ ECConfig<SCHED_STRAT>::print_RT_Infos (ACE_Array<RtecScheduler::handle_t> cfg_se
             //ACE_DEBUG ((LM_DEBUG, "\n"));
           }
 /*
-		ACE_DEBUG ((LM_DEBUG, rt_info_format,
+                ACE_DEBUG ((LM_DEBUG, rt_info_format,
                     (const char *) info.entry_point,
                     info.handle,
                     ACE_CU64_TO_CU32 (info.worst_case_execution_time),
@@ -779,12 +782,12 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
   addr_str += port_str;
   remote_inet_port++; //increment port for next barrier
 
-  if (is_supplier)
+  if (is_supplier == 1)
     {
       //now we block on a socket connect until a consumer opens it
       //this way, we don't start running until the consumer is ready
       ACE_SOCK_Stream accstrm;
-      //ACE_DEBUG((LM_DEBUG,"Opening supplier socket %s\n",addr_str.c_str()));
+      ACE_DEBUG((LM_DEBUG,"Opening supplier socket %s\n",addr_str.c_str()));
       ACE_INET_Addr addr(addr_str.c_str());
       ACE_SOCK_Acceptor acc(addr);
       if (acc.accept(accstrm,&addr) != 0) //blocks until consumer opens
@@ -793,17 +796,17 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
                      "Cannot accept socket: %s\n",
                      ACE_OS::strerror(errno)));
         }
-      //ACE_DEBUG((LM_DEBUG,"Supplier: unblocked on socket\n"));
+      ACE_DEBUG((LM_DEBUG,"Supplier: unblocked on socket\n"));
 
       //once opened, no need for socket any more
       acc.close();
       accstrm.close();
-      //ACE_DEBUG((LM_DEBUG, "Supplier: closed socket\n"));
+      ACE_DEBUG((LM_DEBUG, "Supplier: closed socket\n"));
     }
   else
     {
       //now we open a socket to start up the supplier
-      //ACE_DEBUG((LM_DEBUG,"Connecting consumer socket %s\n",addr_str.c_str()));
+      ACE_DEBUG((LM_DEBUG,"Connecting consumer socket %s\n",addr_str.c_str()));
       ACE_SOCK_Stream connstrm;
       ACE_INET_Addr addr(addr_str.c_str());
       ACE_SOCK_Connector conn;
@@ -813,11 +816,11 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
                      "Consumer cannot connect socket: %s\n",
                      ACE_OS::strerror(errno)));
         }
-      //ACE_DEBUG((LM_DEBUG,"Consumer: connected socket\n"));
+      ACE_DEBUG((LM_DEBUG,"Consumer: connected socket\n"));
 
       //once opened, no need for socket any more
       connstrm.close();
-      //ACE_DEBUG((LM_DEBUG, "Consumer: closed socket\n"));
+      ACE_DEBUG((LM_DEBUG, "Consumer: closed socket\n"));
     }
 }
 
@@ -840,7 +843,8 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
   if (data_ptr->use_federated)
     {
       //assume if have no suppliers that we are client
-      ACE_DEBUG((LM_DEBUG,"Barrier to wait until both apps configured and orbs running\n"));
+      ACE_DEBUG((LM_DEBUG,"Barrier to wait until both apps configured and orbs running (server? %u %d)\n",
+                 data_ptr->is_server,data_ptr->is_server));
       //not really sure orbs running, but certainly nothing else between the spawn and the run at this point!
       ECConfig<SCHED_STRAT>::barrier(data_ptr->is_server); //wait until both apps are ready to run
       *(data_ptr->ready) = 1; //checked by suppliers to start reacting to timeouts
@@ -879,7 +883,7 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
   //ACE_DEBUG((LM_DEBUG,"DONE; stopping reactor event loop\n"));
   ACE_Reactor::instance()->end_reactor_event_loop();
   */
-  //ACE_DEBUG((LM_DEBUG,"ORB Thread exiting\n"));
+  ACE_DEBUG((LM_DEBUG,"ORB Thread exiting\n"));
   return 0;
 }
 
