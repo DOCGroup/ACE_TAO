@@ -615,22 +615,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 
   // Create a new thread running <func>.  *Must* be called with the
   // <lock_> held...
-#if 1
   auto_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
   new_thr_desc->thr_state_ = ACE_THR_IDLE;
   // Get a "new" Thread Descriptor from the freelist.
-
-  new_thr_desc->sync_->acquire ();
-  // Acquire the <sync_> lock to block the spawned thread from
-  // removing this Thread Descriptor before it gets put into our
-  // thread table.
-#else
-  ACE_Thread_Descriptor *new_thr_desc = 0;
-
-  ACE_NEW_RETURN (new_thr_desc,
-                  ACE_Thread_Descriptor,
-                  -1);
-#endif /* 1 */
 
   ACE_Thread_Adapter *thread_args = 0;
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
@@ -652,13 +639,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       new_thr_desc.get ()),
                   -1);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-
-  // @@ Memory leak if the previous new failed, need an auto pointer here.
-  if (thread_args == 0)
-    {
-      this->thr_list_.insert_head (new_thr_desc.release ());
-      return -1;
-    }
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
@@ -688,6 +668,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
     t_id = &thr_id;
 #endif /* ! VXWORKS */
 
+  new_thr_desc->sync_->acquire ();
+  // Acquire the <sync_> lock to block the spawned thread from
+  // removing this Thread Descriptor before it gets put into our
+  // thread table.
+
   int result = ACE_Thread::spawn (func,
                                   args,
                                   flags,
@@ -699,10 +684,14 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                   thread_args);
 
   if (result != 0)
-    // _Don't_ clobber errno here!  result is either 0 or -1, and
-    // ACE_OS::thr_create () already set errno!  D. Levine 28 Mar 1997
-    // errno = result;
-    return -1;
+    {
+      // _Don't_ clobber errno here!  result is either 0 or -1, and
+      // ACE_OS::thr_create () already set errno!  D. Levine 28 Mar 1997
+      // errno = result;
+      ACE_Errno_Guard guard (errno);     // Lock release may smash errno
+      new_thr_desc->sync_->release ();
+      return -1;
+    }
   else
     {
 #if defined (ACE_HAS_WTHREADS)
