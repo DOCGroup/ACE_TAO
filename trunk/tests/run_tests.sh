@@ -181,7 +181,7 @@ if [ -f ../netsvcs/servers/main ]; then
   test $TOKEN && (test $chorus || test $Unicos || run Time_Service_Test) # tests libnetsvcs
 fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
-test $TOKEN && (test $chorus || test $LynxOS || test $Unicos || run Tokens_Test) # tests ACE_Token
+test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Map_Test                            # tests ACE_Map + Forward and Reverse Map Iterators.
