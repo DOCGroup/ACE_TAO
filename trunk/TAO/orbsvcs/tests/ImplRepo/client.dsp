@@ -112,18 +112,6 @@ SOURCE=.\Simple_ObjectS.cpp
 
 SOURCE=.\client_impl.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectS_T.h
-# End Source File
 # End Group
 # Begin Group "IDL Files"
 

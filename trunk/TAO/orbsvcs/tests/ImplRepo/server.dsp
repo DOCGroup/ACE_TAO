@@ -90,6 +90,14 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
+SOURCE=.\Impl_RepoC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Impl_RepoS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
@@ -123,10 +131,6 @@ SOURCE=.\server_impl.h
 # Begin Source File
 
 SOURCE=.\simple_object_impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

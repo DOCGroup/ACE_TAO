@@ -48,12 +48,16 @@ public:
 private:
   Simple_Impl server_impl;
 
+  int read_ir_ior (void);
+
   int parse_args (void);
   // Parses the commandline arguments.
 
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
+  char *ir_server_key_;
+  
   FILE *ior_output_file_;
   // File where the IOR of the server object is stored.
 

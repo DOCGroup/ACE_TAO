@@ -1,13 +1,13 @@
 // $Id$
 
-#include "ir_server_impl.h"
+#include "ir_implrepo_impl.h"
 
 ACE_RCSID(ImplRepo, ir_server, "$Id$")
 
 int
 main (int argc, char *argv[])
 {
-  IR_Server_Impl server;
+  IR_ImplRepo_Impl server;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tImplementation Repository\n\n"));
   TAO_TRY
