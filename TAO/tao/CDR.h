@@ -282,6 +282,8 @@ extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                              CORBA::Double x);
 extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                              const CORBA::Char* x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                             const CORBA::WChar* x);
 
 // CDR input operators for CORBA types
 
@@ -305,6 +307,8 @@ extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                              CORBA::Double &x);
 extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                              CORBA::Char* &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                             CORBA::WChar* &x);
 
 #endif /* __ACE_INLINE */
 

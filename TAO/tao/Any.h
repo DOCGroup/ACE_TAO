@@ -132,7 +132,10 @@ public:
   // insert an Any, non-copying
 
   void operator<<= (const char*);
-  // insert unbounded strings
+  // insert unbounded string
+
+  void operator<<= (const CORBA::WChar*);
+  // insert unbounded wide string
 
   void operator<<= (CORBA::TypeCode_ptr);
   // insert a TypeCode
@@ -141,7 +144,7 @@ public:
   // insert an object reference, copying.
 
   void operator<<= (CORBA::Object_ptr *);
-  // insert an object reference, non-copying.  Any assumes the ownership
+  // insert an object reference, non-copying. Any assumes the ownership
   // of the object.
 
   // =type safe extraction
@@ -179,6 +182,9 @@ public:
   CORBA::Boolean operator>>= (char*&) const;
   // extract an unbounded string
 
+  CORBA::Boolean operator>>= (CORBA::WChar*&) const;
+  // extract an unbounded wide string
+
   // = Special types.
 
   // These are needed for insertion and extraction of booleans,
@@ -191,6 +197,7 @@ public:
   typedef ACE_OutputCDR::from_char from_char;
   typedef ACE_OutputCDR::from_wchar from_wchar;
   typedef ACE_OutputCDR::from_string from_string;
+  typedef ACE_OutputCDR::from_wstring from_wstring;
 
   void operator<<= (from_boolean);
   // insert a boolean
@@ -207,6 +214,9 @@ public:
   void operator<<= (from_string);
   // insert a bounded string
 
+  void operator<<= (from_wstring);
+  // insert a bounded wide string
+
   void operator<<= (const CORBA_Exception &exception);
   // insert an exception into the Any
 
@@ -220,6 +230,7 @@ public:
   typedef ACE_InputCDR::to_wchar to_wchar;
   typedef ACE_InputCDR::to_octet to_octet;
   typedef ACE_InputCDR::to_string to_string;
+  typedef ACE_InputCDR::to_wstring to_wstring;
 
   // This one's not in ACE.
   struct TAO_Export to_object
@@ -246,6 +257,9 @@ public:
 
   CORBA::Boolean operator>>= (to_string) const;
   // extract a bounded string
+
+  CORBA::Boolean operator>>= (to_wstring) const;
+  // extract a bounded wide string
 
   CORBA::Boolean operator>>= (to_object) const;
   // extract an object reference
