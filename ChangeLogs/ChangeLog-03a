@@ -1,3 +1,31 @@
+Tue Feb  4 13:13:08 2003  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.bin.GNU:
+
+          Generalized the creation of objects from source files by
+          removing the dependency that the source files be named *.cpp.
+          Also removed a lot of junk.
+
+        * include/makeinclude/wrapper_macros.GNU: Removed some more
+          accumulated cruft.
+
+        * include/makeinclude/rules.nested.GNU: Fix recursive make so
+          that users can name the makefiles in sub-directories as
+          something other than Makefile by introducing a new variable
+          SUBDIR_MAKEFILE.
+
+        * ace/Makefile: Fix the Makefile to use the above extension when
+          recursing into directories.
+
+        * include/makeinclude/rules.local.GNU: Add a new local target
+          clean_idl_stubs.local which cleans all the IDL generated files.
+          This target is linked to realclean so the IDL generated files
+          will only be cleaned with realclean.
+
+          Thanks to James Mansion <james.mansion@uk.nomura.com> for
+          reporting the bugs and suggesting some fixes.
+
 Tue Feb  4 11:21:13 MST 2003 Rob Andzik <andzik@rtlogic.com>
 
          * ACE_wrappers/include/makeinclude/platform_vxworks5.x_g++.GNU
@@ -19,7 +47,7 @@ Tue Feb  4 11:21:13 MST 2003 Rob Andzik <andzik@rtlogic.com>
 Mon Feb  3 16:33:02 2003  Heather Drury  <drury_h@ociweb.com>
 
 	* ace/config-freebsd.h: msgsnd() with const parameter was recently
-	  added to FreeBSD-CURRENT. Thanks to Craig Rodrigues' for this change. 
+	  added to FreeBSD-CURRENT. Thanks to Craig Rodrigues' for this change.
 
 Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
 

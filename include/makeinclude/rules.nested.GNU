@@ -12,6 +12,10 @@ ifeq ($(MAKEFILE),)
   MAKEFILE = Makefile
 endif # ! MAKEFILE
 
+ifeq ($(SUBDIR_MAKEFILE),)
+  SUBDIR_MAKEFILE=$(MAKEFILE)
+endif
+
 # Make sure that we build directories with DIRS= in sequence instead of in
 # parallel, unless DIRS_PARALLEL is set, in which case they may be built
 # in parallel if enabled by the proper flags and not disabled elsewhere.
@@ -27,7 +31,7 @@ endif
 # Triggered by the $(TARGETS_NESTED) target, below.
 
 %.subdir: %
-	@$(MAKE) -f Makefile -C $< $(SUBDIR_TARGET)
+	$(MAKE) -f $(SUBDIR_MAKEFILE) -C $< $(SUBDIR_TARGET)
 
 # Build FOO.nested by calling MAKE again, this time with DIRS (with
 # ".subdir" appended to each) as the targets, and passing FOO as the
@@ -35,7 +39,5 @@ endif
 
 $(TARGETS_NESTED):
 ifneq ($(DIRS),)
-	@$(MAKE) -f $(MAKEFILE) SUBDIR_TARGET=$(@:.nested=) $(addsuffix .subdir, $(DIRS))
-
+	$(MAKE) -f $(MAKEFILE) SUBDIR_TARGET=$(@:.nested=) $(addsuffix .subdir, $(DIRS))
 endif # DIRS
-
