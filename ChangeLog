@@ -1,3 +1,21 @@
+Fri Nov  5 07:27:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* Makefile.am:
+
+	  Changed to configure/build new protocols subdirectory
+	  heirarchy.
+
+	* ace/Makefile.am:
+
+	  Changed to not decend into HTBP subdirectory.
+
+	* protocols/Makefile.am:
+	* protocols/ace/Makefile.am:
+	* protocols/ace/HTBP/Makefile.am:
+
+	  Added new files.  Automake support for new HTBP location.
+
 Fri Nov  5 07:33:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/htbp.mpb:
