@@ -213,7 +213,7 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::hash (const char *str, unsigned
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
-const struct TAO_operation_db_entry *
+const TAO_operation_db_entry *
 TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
@@ -228,7 +228,7 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::lookup (const char *str, unsign
       WORDLIST_SIZE = 9
     };
 
-  static const struct TAO_operation_db_entry  wordlist[] =
+  static const TAO_operation_db_entry  wordlist[] =
     {
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"_is_a", &POA_Messaging::ReplyHandler::_is_a_skel, 0},
