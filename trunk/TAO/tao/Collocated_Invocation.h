@@ -54,7 +54,7 @@ namespace TAO
      * @param et The effective target in which this invocation is now
      * flowing
      *
-     * @param stub Stub for effective target @et
+     * @param stub Stub for effective target @a et
      *
      * @param detail operation details of the invocation including
      * the service context list
