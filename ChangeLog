@@ -1,3 +1,16 @@
+Fri May  7 09:38:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Mutex.h:
+
+	  Fixed doxygen documentation.
+
+	  Removed "ace/Log_Msg.h" include.  It isn't needed in this
+	  header.
+
+	* ace/Mutex.cpp:
+
+	  Include "ace/Log_Msg.h" to pull in ACE_ERROR macros.
+
 Fri May  7 08:08:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

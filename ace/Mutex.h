@@ -6,14 +6,13 @@
  *
  *  $Id$
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //==========================================================================
 
 #ifndef ACE_MUTEX_H
 #define ACE_MUTEX_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
@@ -22,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Log_Msg.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_fcntl.h"
@@ -42,8 +40,8 @@ class ACE_Time_Value;
 /**
  * @class ACE_Mutex
  *
- * @brief <ACE_Mutex> wrapper (valid in same process or across
- * processes (depending on TYPE flag)).
+ * @brief @c ACE_Mutex wrapper (valid in same process or across
+ *        processes (depending on @a TYPE flag)).
  */
 class ACE_Export ACE_Mutex
 {
@@ -57,73 +55,79 @@ public:
   /// Implicitly destroy the mutex.
   ~ACE_Mutex (void);
 
+  /// Explicitly destroy the mutex.
   /**
-   * Explicitly destroy the mutex.  Note that only one thread should
-   * call this method since it doesn't protect against race
-   * conditions.
+   * @note Only one thread should call this method since it doesn't
+   *        protect against race conditions.
    */
   int remove (void);
 
   /// Acquire lock ownership (wait on queue if necessary).
   int acquire (void);
 
+  /// Block the thread until the mutex is acquired or @a tv times out,
+  /// in which case -1 is returned and @c errno == @c ETIME.
   /**
-   * Block the thread until the mutex is acquired or <tv> times out,
-   * in which case -1 is returned and <errno> == <ETIME>.  Note that
-   * <tv> is assumed  to be in "absolute" rather than "relative" time.
-   * The value of <tv> is updated upon return to show the actual
-   * (absolute) acquisition time.
+   * @note @a tv is assumed  to be in "absolute" rather than
+   * "     relative" time.  The value of @a tv is updated upon return
+   *       to show the actual(absolute) acquisition time.
    */
   int acquire (ACE_Time_Value &tv);
 
+  /// Block the thread until the mutex is acquired or @a *tv times
+  /// out, in which case -1 is returned and @c errno == @c ETIME.
   /**
-   * If <tv> == 0 then call <acquire()> directly.  Otherwise, block
-   * the thread until the mutex is acquired or <tv> times out, in
-   * which case -1 is returned and <errno> == <ETIME>.  Note that
-   * <*tv> is assumed to be in "absolute" rather than "relative" time.
-   * The value of <*tv> is updated upon return to show the actual
-   * (absolute) acquisition time.  */
+   * If @a tv == 0 then call @c acquire() directly.  Otherwise, block
+   * the thread until the mutex is acquired or @a tv times out, in
+   * which case -1 is returned and @c errno == @c ETIME.
+   *
+   * @note @a *tv is assumed to be in "absolute" rather than
+   *       "relative" time.  The value of @a *tv is updated upon
+   *       return to show the actual (absolute) acquisition time.
+   */
   int acquire (ACE_Time_Value *tv);
 
+  /// Conditionally acquire lock (i.e., don't wait on queue).
   /**
-   * Conditionally acquire lock (i.e., don't wait on queue).  Returns
-   * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * @return -1 on failure.  If we "failed" because someone
+   *         else already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire (void);
 
   /// Release lock and unblock a thread at head of queue.
   int release (void);
 
+  /// Acquire mutex ownership.
   /**
-   * Acquire mutex ownership.  This calls <acquire> and is only
-   * here to make the <ACE_Mutex> interface consistent with the
-   * other synchronization APIs.
+   * This calls @c acquire and is only here to make the @c ACE_Mutex
+   * interface consistent with the other synchronization APIs.
    */
   int acquire_read (void);
 
+  /// Acquire mutex ownership.
   /**
-   * Acquire mutex ownership.  This calls <acquire> and is only
-   * here to make the <ACE_Mutex> interface consistent with the
-   * other synchronization APIs.
+   * This calls @c acquire and is only here to make the @c ACE_Mutex
+   * interface consistent with the other synchronization APIs.
    */
   int acquire_write (void);
 
+  /// Conditionally acquire mutex (i.e., won't block).
   /**
-   * Conditionally acquire mutex (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the <ACE_Mutex> interface
-   * consistent with the other synchronization APIs.  Returns -1 on
-   * failure.  If we "failed" because someone else already had the
-   * lock, <errno> is set to <EBUSY>.
+   * This calls @c tryacquire and is only here to make the @c ACE_Mutex
+   * interface consistent with the other synchronization APIs.
+   *
+   * @return -1 on failure.  If we "failed" because someone else
+   *         already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (void);
 
+  /// Conditionally acquire mutex (i.e., won't block).
   /**
-   * Conditionally acquire mutex (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the <ACE_Mutex> interface
-   * consistent with the other synchronization APIs.  Returns -1 on
-   * failure.  If we "failed" because someone else already had the
-   * lock, <errno> is set to <EBUSY>.
+   * This calls @c tryacquire and is only here to make the @c ACE_Mutex
+   * interface consistent with the other synchronization APIs.
+   *
+   * @return -1 on failure.  If we "failed" because someone else
+   *         already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (void);
 
@@ -145,7 +149,7 @@ public:
 
   // = This should be protected but some C++ compilers complain...
 public:
-#if defined (CHORUS) || defined(ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
   /// This lock resides in shared memory.
   ACE_mutex_t *process_lock_;
 
@@ -160,15 +164,15 @@ public:
   /// Mutex type supported by the OS.
   ACE_mutex_t lock_;
 
-  /// Keeps track of whether <remove> has been called yet to avoid
-  /// multiple <remove> calls, e.g., explicitly and implicitly in the
+  /// Keeps track of whether @c remove has been called yet to avoid
+  /// multiple @c remove calls, e.g., explicitly and implicitly in the
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
+  /// @c remove on the same object, which is a bad idea anyway.
   int removed_;
 
 private:
-  // = Prevent assignment and initialization.
+  // Prevent assignment and initialization.
   void operator= (const ACE_Mutex &);
   ACE_Mutex (const ACE_Mutex &);
 };
@@ -178,4 +182,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_MUTEX_H */
