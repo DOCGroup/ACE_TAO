@@ -121,7 +121,7 @@ Identifier::~Identifier (void)
 {
   if (this->pv_string != 0)
     {
-      delete this->pv_string;
+      ACE::strdelete (this->pv_string);
       this->pv_string = 0;
     }
 }
