@@ -1,3 +1,12 @@
+Thu Mar 10 17:28:38 2005  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+	* examples/C++NPv2/TPC_Logging_Server.cpp: Only dynamic_cast a
+	  ACE_HANDLE to int when not on ACE_WIN32. Else there's a risk of
+	  compile errors, such as from HP aC++ that a dynamic_cast from
+	  int to int is illegal.
+
 Wed Mar  9 21:59:24 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Time_Value.inl (ACE_Time_Value): Moved the definition of 
