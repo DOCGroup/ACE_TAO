@@ -252,6 +252,7 @@ module Deployment {
 
   struct DeploymentPlan {
     string label;
+    string UUID;
     ComponentInterfaceDescription realizes;
     MonolithicDeploymentDescriptions implementation;
     InstanceDeploymentDescriptions instance;
