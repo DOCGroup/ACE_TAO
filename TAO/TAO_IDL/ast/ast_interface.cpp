@@ -104,6 +104,8 @@ AST_Interface::AST_Interface (void)
     pd_inherits_flat (0),
     pd_n_inherits_flat (0)
 {
+  this->size_type (AST_Type::VARIABLE); // Always the case.
+  this->has_constructor (I_TRUE);      // Always the case.
 }
 
 AST_Interface::AST_Interface (UTL_ScopedName *n,
@@ -125,6 +127,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_inherits_flat (ih_flat),
     pd_n_inherits_flat (nih_flat)
 {
+  this->size_type (AST_Type::VARIABLE); // always the case
+  this->has_constructor (I_TRUE);      // always the case
 }
 
 AST_Interface::~AST_Interface (void)
