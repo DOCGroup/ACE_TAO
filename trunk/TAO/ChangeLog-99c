@@ -1,100 +1,106 @@
+Thu Apr 29 06:41:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Context.cpp: removed ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
+          explicit instantiation because it was already in
+          Exception.cpp.
+
 Thu Apr 29 02:54:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* lots of .cpp files: Removed "TAO_DEFAULT_MINOR_CODE,
-	  CORBA::COMPLETED_NO" from many system exception instantiations
-	  because they are what the default constructors use.  Thanks to
-	  Irfan for suggesting this.
+        * lots of .cpp files: Removed "TAO_DEFAULT_MINOR_CODE,
+          CORBA::COMPLETED_NO" from many system exception instantiations
+          because they are what the default constructors use.  Thanks to
+          Irfan for suggesting this.
 
 Thu Apr 29 01:23:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA (policies): Fixed destroy() methods of the policies by
-	  (a) removing "delete this" from the destroy() function, and (b)
-	  using servant/POA reference counting.
+        * tao/POA (policies): Fixed destroy() methods of the policies by
+          (a) removing "delete this" from the destroy() function, and (b)
+          using servant/POA reference counting.
 
-	  The new destroy() function simply removes self from POA.
-	  Because of reference counting, the POA will automatically delete
-	  the servant when all pending requests on this servant are
-	  complete.
+          The new destroy() function simply removes self from POA.
+          Because of reference counting, the POA will automatically delete
+          the servant when all pending requests on this servant are
+          complete.
 
-	* tao/Object_Adapter.cpp (TAO_Object_Adapter): Fixed memory leak
-	  by deleting dynamically allocated lock.
+        * tao/Object_Adapter.cpp (TAO_Object_Adapter): Fixed memory leak
+          by deleting dynamically allocated lock.
 
 Wed Apr 28 21:16:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/MessagingS.h: Removed inclusion of MessagingS_T.h.  Old g++
-	  cannot handle nested template classes properly.  This is the
-	  same reason we cannot compile examples/POA/TIE with old g++.
+        * tao/MessagingS.h: Removed inclusion of MessagingS_T.h.  Old g++
+          cannot handle nested template classes properly.  This is the
+          same reason we cannot compile examples/POA/TIE with old g++.
 
-	* docs/Options.html: Removed -ORBpoa <global/tss> option since it
-	  does not make sense in the new ORB/POA architecture.
+        * docs/Options.html: Removed -ORBpoa <global/tss> option since it
+          does not make sense in the new ORB/POA architecture.
 
-	* examples/Simple/echo/server.dsp:
-	* examples/Simple/echo/client.dsp:
+        * examples/Simple/echo/server.dsp:
+        * examples/Simple/echo/client.dsp:
 
-	  Added release dependencies to the IDL compiler.
+          Added release dependencies to the IDL compiler.
 
-	* examples/POA/Reference_Counted_Servant/server.dsp: Updated this
-	  since some source files were removed.
+        * examples/POA/Reference_Counted_Servant/server.dsp: Updated this
+          since some source files were removed.
 
-	* examples/POA/Explicit_Activation/server.cpp (main): Added the
-	  use of SINGLE_THREAD_MODEL POA policy.  This helps in MT
-	  debugging of the POA.
+        * examples/POA/Explicit_Activation/server.cpp (main): Added the
+          use of SINGLE_THREAD_MODEL POA policy.  This helps in MT
+          debugging of the POA.
 
 Wed Apr 28 19:03:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/Context.{h,i,cpp}:
-	  Added an implementation of ContextList, based on TAO's
-	  implementation of ExceptionList, since the IDL definitions
-	  and the C++ mappings are very similar. Also added
-	  ContextList_var and ContextList_out classes.
+        * tao/corbafwd.h:
+        * tao/Context.{h,i,cpp}:
+          Added an implementation of ContextList, based on TAO's
+          implementation of ExceptionList, since the IDL definitions
+          and the C++ mappings are very similar. Also added
+          ContextList_var and ContextList_out classes.
 
-	  Added the methods from the OMG C++ mapping for Context.
-	  Since our support for Context is intentionally minimal,
-	  these methods just throw CORBA::NO_IMPLEMENT. Wherever
-	  a Context_ptr is used as an argument in TAO, the only
-	  value it may have is 0 (or the above exception is raised).
+          Added the methods from the OMG C++ mapping for Context.
+          Since our support for Context is intentionally minimal,
+          these methods just throw CORBA::NO_IMPLEMENT. Wherever
+          a Context_ptr is used as an argument in TAO, the only
+          value it may have is 0 (or the above exception is raised).
 
-	* Exception.h:
-	  Added the _var_type typedef to class Exception. It wouldn't
-	  compile before, because of a (just-discovered) typo in
-	  corbafwd.h.
+        * Exception.h:
+          Added the _var_type typedef to class Exception. It wouldn't
+          compile before, because of a (just-discovered) typo in
+          corbafwd.h.
 
 Wed Apr 28 18:52:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/Object_Adapter:
 
           - Single_Threaded_POA_Lock: This class helps us by locking
-	    servants in a single threaded POA for the duration of the
-	    upcall.  Single_Threaded_POA_Lock has a magic constructor and
-	    destructor.  We acquire the servant lock in the constructor.
-	    We release the servant lock in the destructor.
+            servants in a single threaded POA for the duration of the
+            upcall.  Single_Threaded_POA_Lock has a magic constructor and
+            destructor.  We acquire the servant lock in the constructor.
+            We release the servant lock in the destructor.
 
         * tao/POA:
 
-	  - Added appropriate code for establishing and tearing down locks
-	    for servants in POAs with the SINGLE_THREAD_MODEL policy.
+          - Added appropriate code for establishing and tearing down locks
+            for servants in POAs with the SINGLE_THREAD_MODEL policy.
 
-	* tao/Servant_Base:
+        * tao/Servant_Base:
 
-	  - Added a lock pointer to the servant base class.  This lock
-	    will be created when the servant is registered with a single
-	    threaded poa and removed/deleted when the servant is
-	    deactivated from the POA.
+          - Added a lock pointer to the servant base class.  This lock
+            will be created when the servant is registered with a single
+            threaded poa and removed/deleted when the servant is
+            deactivated from the POA.
 
-	    Note that because a servant maybe registered with multiple
-	    single threaded POAs simultaneously, we do reference counting
-	    on this lock.
+            Note that because a servant maybe registered with multiple
+            single threaded POAs simultaneously, we do reference counting
+            on this lock.
 
 Wed Apr 28 18:05:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Fixed dependencies of some
-	  idl files.
+        * orbsvcs/orbsvcs/orbsvcs[_static].dsp: Fixed dependencies of some
+          idl files.
 
 Wed Apr 28 15:21:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): Changed
-	  object_id to object_id.in ().
+        * tao/TAO.cpp (deactivate_under_child_poa and deactivate): Changed
+          object_id to object_id.in ().
 
 Wed Apr 28 16:21:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
