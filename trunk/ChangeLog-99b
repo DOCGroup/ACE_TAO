@@ -1,3 +1,7 @@
+Tue May 11 14:45:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Conn_Test.cpp: fixed use of status on platforms that lack fork.
+
 Tue May 11 14:10:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf-4.0.h: added #define of ACE_NEW_THROWS_EXCEPTIONS,
