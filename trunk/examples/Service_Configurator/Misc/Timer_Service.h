@@ -64,7 +64,7 @@ public:
 };
 
 // Declare both static and dynamic services.
-ACE_STATIC_SVC_DECLARE (Timer_Service_1)
+ACE_STATIC_SVC_DECLARE_EXPORT (ACE_Svc, Timer_Service_1)
 ACE_SVC_FACTORY_DECLARE (Timer_Service_1)
 ACE_SVC_FACTORY_DECLARE (Timer_Service_2)
 ACE_SVC_FACTORY_DECLARE (Timer_Service_3)

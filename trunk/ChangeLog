@@ -1,12 +1,20 @@
+Thu Apr 24 08:50:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Service_Configurator/Misc/Timer_Service.h:
+          Use ACE_STATIC_SVC_DECLARE_EXPORT instead of ACE_STATIC_SVC_DECLARE
+          to export Timer_Service_1 from the DLL. This solves Kylix link
+          problems.
+
 Thu Apr 24 07:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/TQTD.dsp:
         * examples/Timer_Queue/TQTDDLL.dsp:
           Removed TQTD.dsp and added TQTDDLL.dsp. Show in the name we build a
-          dll.
+          dll. Also add Library to the name of the configuration so that the
+          autobuild scripts builds this project first.
 
         * examples/Timer_Queue/Timer_Queue.dsw:
-          Updated because of name change
+          Updated because of name change.
 
 Wed Apr 23 18:19:07 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
