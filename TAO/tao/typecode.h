@@ -294,7 +294,7 @@ public:
   // reference to that parent to ensure its memory is not freed
   // inappropriately.
 
-  static CORBA_Boolean CORBA_TypeCode::skip_typecode (CDR &stream);
+  static CORBA_Boolean skip_typecode (CDR &stream);
   // skip a typecode encoding in a given CDR stream
   // This is just a helper function
 

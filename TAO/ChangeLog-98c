@@ -1,3 +1,14 @@
+Wed Aug  6 17:27:44 1997  Brian R. Mendel  <brian.r.mendel@boeing.com>
+
+        * tao/typecode.h: Removed qualified name in typecode.h to eliminate 
+          compiler warnings by the GHS compiler.  Line 297.
+ 
+        * tao/decode.cpp: Changed wchar_t* to CORBA_WChar* to eliminate
+          compiler errors on GHS compiler.  Lines 142, 216, 729, 1371, and 1475.
+        
+        * tao/typecode.cpp: Deleted unreachable break statements at lines
+          429, and 477, 904, and 947.
+
 Wed Aug  6 16:31:29 1997  Chris Cleeland  <cleeland@swarm.cs.wustl.edu>
 
 	* tao/*: Changed 'const' to 'TAO_CONST' in contexts where the

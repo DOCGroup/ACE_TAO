@@ -399,7 +399,7 @@ CORBA_TypeCode::private_equal (CORBA_TypeCode_ptr,
 //
 // Valid only for objref, struct, union, enum, alias, and except. Raises
 // BadKind exception for the rest of the cases.
-TAO_CONST CORBA_String
+const CORBA_String
 CORBA_TypeCode::private_id (CORBA_Environment &env) const
 {
   env.clear ();
@@ -426,7 +426,6 @@ CORBA_TypeCode::private_id (CORBA_Environment &env) const
 	return _private_state->tc_id_; // this is OK because the strings in the
 				       // CDR stream are NULL terminated
       }
-    break;
     // No other typecodes ever have type IDs
     default:
       env.exception (new CORBA_BadKind ());
@@ -435,7 +434,7 @@ CORBA_TypeCode::private_id (CORBA_Environment &env) const
 }
 
 // return the name. The string is owned by the typecode
-TAO_CONST CORBA_String
+const CORBA_String
 CORBA_TypeCode::private_name (CORBA_Environment &env) const
 {
   env.clear ();
@@ -474,7 +473,6 @@ CORBA_TypeCode::private_name (CORBA_Environment &env) const
 	    return (CORBA_String)0;
 	  }
       }
-    break;
     // No other typecodes ever have type IDs
     default:
       env.exception (new CORBA_BadKind ());
@@ -555,7 +553,7 @@ CORBA_TypeCode::private_member_count (CORBA_Environment &env) const
 
 // Return the name for the nth member
 // Applicable only to tk_struct, tk_union, and tk_except
-TAO_CONST CORBA_String 
+const CORBA_String 
 CORBA_TypeCode::member_name (CORBA_ULong,
 			     CORBA_Environment &) const
 {
@@ -901,7 +899,6 @@ CORBA_TypeCode::private_length (CORBA_Environment &env) const
 	    _private_state->tc_length_known_ = CORBA_B_TRUE;
 	    return _private_state->tc_length_;
 	  }
-	break;
       case tk_string:
       case tk_wstring:
 	{
@@ -921,7 +918,6 @@ CORBA_TypeCode::private_length (CORBA_Environment &env) const
 	return 0;
       }
     }
-  return 0;  // Should never be reached, but silences compilers
 }
 
 CORBA_TypeCode_ptr
@@ -948,7 +944,6 @@ CORBA_TypeCode::private_content_type (CORBA_Environment &env) const
 	    _private_state->tc_content_type_known_ = CORBA_B_TRUE;
 	    return _private_state->tc_content_type_;
 	  }
-	break;
       case tk_alias:
 	{
 	  if (!stream.skip_string ()  // typeID
@@ -971,7 +966,6 @@ CORBA_TypeCode::private_content_type (CORBA_Environment &env) const
 	return 0;
       }
     }
-  return 0; // Should never be reached, but silences compilers
 }
 
 CORBA_ULong
