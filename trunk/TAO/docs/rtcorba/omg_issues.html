@@ -1,0 +1,40 @@
+<html>
+
+<!-- $Id$ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Issues with OMG Real-Time CORBA 1.0 Specification</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+</head>
+
+<body>
+
+<h2>Issues with Real-Time CORBA 1.0 Specification</h2>
+
+This material will be available shortly.
+<!--
+<p>the spec (to be Submitted to the OMG)<br>
+- Evaluation of policies<br>
+- Model (structure) In Pool with Lanes, threads never change their<br>
+priorities for the duration of request (what's the point then of<br>
+carefully presetting the resources?). In Pools without lanes,<br>
+priorities of threads can be adjusted for the duration of the call.<br>
+- All policy configuraitons (valid/invalid/use cases) </p>
+
+<p>- POA - accessing effective policies for the object on the server side.<br>
+- Policies like client protocol that can be set on both client and<br>
+- server (orb defaults)<br>
+- which policy exception to throw if attempting to set a policy that's<br>
+only valid on POA level at object level. </p>
+
+<p>- Why do we need setting of the ClientProtocolPolicy on the Server<br>
+side. The server already gets a chance to express which protocols<br>
+should be used/preference by ServerProtocolPolicy. Furthermore,<br>
+CORBA spec says that there are some pure client policies, and there<br>
+are pure server policies. There can be some that are set on both<br>
+client and server, but they should be avoided unless there is a<br>
+really good reason for them, since they make things complicated.<br>
+Plus the whole resetting to null things on the client is murky... </p>
+-->
+</body>
+</html>
