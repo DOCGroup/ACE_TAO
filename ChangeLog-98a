@@ -1,5 +1,8 @@
 Mon Dec 29 13:57:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
+	* ace/XtReactor.cpp: 
+	  Fixed syntax error, apparently some kind of typo.
+
 	* ace/OS.h: 
 	  The ACE_*_cast() macros had (IMHO) surprizing priority, added
 	  some parenthesis to make them behave as the new cast operators
