@@ -39,14 +39,7 @@ is_a_skel (CORBA_ServerRequest &req,
     dexc (env, "_is_a, result");
 }
 
-
-struct method_db
-{
-   CORBA_String opname;
-   TAO_Skeleton skel_ptr;
-};
-
-static const method_db cubit_operations[] = {
+static const TAO_operation_db_entry cubit_operations[] = {
    { "_is_a", &is_a_skel },
    { "cube_octet", &_skel_Cubit::_cube_octet_skel },
    { "cube_short", &_skel_Cubit::_cube_short_skel },
@@ -58,10 +51,3 @@ static const method_db cubit_operations[] = {
 };
    
 
-void initialize_method_db (TAO_Operation_Table *the_optable)
-{
-   for (int ndx = 0; ndx < 7; ndx++)
-      the_optable->bind(cubit_operations[ndx].opname, 
-                        cubit_operations[ndx].skel_ptr);
-   
-}

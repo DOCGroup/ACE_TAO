@@ -323,7 +323,7 @@ static const CORBA_Long _oc_Cubit_oneof [] =
    4,          // the 5th member label value
    1, 0,       // omitted member name, "cm"
    ~0,         // indirected typecode (~0)
-   -84         // offset to struct "Many" typecode
+   -88         // offset to struct "Many" typecode
 };
 
 static CORBA_TypeCode _tc_Cubit_oneof (tk_union,
