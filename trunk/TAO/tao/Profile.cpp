@@ -261,6 +261,12 @@ TAO_Unknown_Profile::encode (TAO_OutputCDR &stream) const
   return (stream << this->body_);
 }
 
+int
+TAO_Unknown_Profile::encode_endpoints (void)
+{
+  return 0;
+}
+
 const TAO_ObjectKey &
 TAO_Unknown_Profile::object_key (void) const
 {

@@ -97,6 +97,23 @@ public:
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
 
+  virtual int encode_endpoints (void);
+  // Encodes this profile's endpoints into a tagged component.
+  // This is done only if RTCORBA is enabled, since currently this is
+  // the only case when we have more than one endpoint per profile.
+  //
+  // Endpoints are transmitted using TAO-proprietory tagged component.
+  // Component tag is TAO_TAG_ENDPOINTS and component data is an
+  // encapsulation of a sequence of structs, each representing a
+  // single endpoint.  Data format is specified in iiop_endpoins.pidl.
+  //
+  // Multiple a la TAG_ALTERNATE_IIOP_ADDRESS components can be used
+  // instead of a single proprietory component to transmit multiple
+  // endpoints.  This is somewhat slower and less convenient.  Also,
+  // TAG_ALTERNATE_IIOP_ADDRESS does not provide for transmission of
+  // endpoint priorities.
+  //
+
   virtual const TAO_ObjectKey &object_key (void) const;
   // @@ deprecated. return a reference to the Object Key.
 
@@ -105,7 +122,7 @@ public:
   // allocated for the returned key.
 
   virtual TAO_Endpoint *endpoint (void);
-  // Return pointer to the head of this profile's endpoints list. 
+  // Return pointer to the head of this profile's endpoints list.
 
   void add_endpoint (TAO_SHMIOP_Endpoint *endp);
   // Add <endp> to this profile's list of endpoints (it is inserted
@@ -129,24 +146,6 @@ private:
 
   void create_profile_body (TAO_OutputCDR &cdr) const;
   // Create an encapsulation of the struct ProfileBody in <cdr>
-  
-  int encode_endpoints (void);
-  // Helper for <create_profile_body>.
-  // Encodes this profile's endpoints into a tagged component.
-  // This is done only if RTCORBA is enabled, since currently this is
-  // the only case when we have more than one endpoint per profile.
-  //
-  // Endpoints are transmitted using TAO-proprietory tagged component.
-  // Component tag is TAO_TAG_ENDPOINTS and component data is an
-  // encapsulation of a sequence of structs, each representing a
-  // single endpoint.  Data format is specified in iiop_endpoins.pidl.
-  //
-  // Multiple a la TAG_ALTERNATE_IIOP_ADDRESS components can be used
-  // instead of a single proprietory component to transmit multiple
-  // endpoints.  This is somewhat slower and less convenient.  Also,
-  // TAG_ALTERNATE_IIOP_ADDRESS does not provide for transmission of
-  // endpoint priorities.
-  // 
 
   int decode_endpoints (void);
   // Helper for <decode>.  Decodes endpoints from a tagged component.
@@ -164,18 +163,14 @@ private:
   // list contains more than just the head, only when RTCORBA is enabled.
   // However, in the near future, this will be used in nonRT
   // mode as well, e.g., to support TAG_ALTERNATE_IIOP_ADDRESS-style
-  // feature.  
+  // feature.
   // Addressing info of the default endpoint, i.e., head of the list,
   // is transmitted using standard SHMIOP ProfileBody components.  See
   // <encode_endpoints> method documentation above for how the rest of
-  // the endpoint list is transmitted. 
+  // the endpoint list is transmitted.
 
   size_t count_;
   // Number of endpoints in the list headed by <endpoint_>.
-
-  int endpoints_encoded_;
-  // Flag indicating whether endpoints have already been encoded
-  // into a tagged component.
 
   TAO_ObjectKey object_key_;
   // object_key associated with this profile.
