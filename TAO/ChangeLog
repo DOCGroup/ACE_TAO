@@ -1,3 +1,10 @@
+Wed Mar 30 15:10:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Strategies/UIOP_Profile.cpp:
+
+	  Updated include directive to renamed UIOP endpoint sequence
+	  header "uiop_endpointsC.h"
+
 Wed Mar 30 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Visibility.pidl:
