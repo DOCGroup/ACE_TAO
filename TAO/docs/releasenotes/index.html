@@ -1409,8 +1409,8 @@ you have to say CTRL-C to get back to the prompt.
 <hr WIDTH="100%">
 <h3><a NAME="log"></a>CORBA Telecom Log Service </h3>
 
-<h4> Last updated: Sat Feb 19 16:58:42 CDT 2000 </h4>
-Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Pathayapura</a>
+<h4> Last updated: Mon Oct 14 13:03:21 CDT 2002 </h4>
+Point of contact: <a href="mailto:d.hanvey@qub.ac.uk">D A Hanvey</a>
 <p>The CORBA <a href="http://www.omg.org/cgi-bin/doc?telecom/99-05-01"> Telecom Log Service </a> prototype was released in TAO version 1.0.6.
 
 <br>
@@ -1422,22 +1422,50 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
       implements the <tt>DsLogAdmin </tt>module.
       <br>
   </li>
+  <li>
+      Support for the <tt>DsEventLogAdmin </tt> module, which uses
+      the <a href= "#ec">COS Event Service</a> has been added.
+      <br>
+  </li>
+  <li>
+      Support for the <tt>DsNotifyLogAdmin </tt> module, which uses
+      the <a href= "#notify">Notification Service</a> has been added.
+      <br>
+  </li>
+  <li>
+      Support for the <tt>RTEventLog </tt> module, which uses
+      the <a href= "ec.html">RTEvent Service</a> has been added.
+      <br>
+  </li>
+  <li>
+      Support for the <tt>DsLogNotification </tt> module for log-
+      generated events has been added.
+      <br>
+  </li>
 
   <li>
-      The Logging_Service (<tt>$TAO_ROOT/orbsvcs/Logging_Service</tt>) starts the Log
-      Service and registers the Log Service Factory with the Naming Service
-      as "BasicLogFactory".
+      The Logging_Service (<tt>$TAO_ROOT/orbsvcs/Logging_Service</tt>) contains 4 
+      separate services
+      <ul>
+        <li>Basic_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Basic_Logging_Service</tt></li>
+        <li>Event_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Event_Logging_Service</tt></li>
+        <li>Notify_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Notify_Logging_Service</tt></li>
+        <li>RTEvent_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/RTEvent_Logging_Service</tt></li>
+      </ul>
+      Each service registers with the Naming Service as "BasicLogFactory", 
+      "EventLogFactory", "NotifyLogFactory" and "RTEventLogFactory" respectively.
       <br>
   </li>
   <li>
-      The test <tt>$TAO_ROOT/orbsvcs/examples/Log/Client</tt> demonstrates
-      a simple use of the Log Service.
+      There are now examples that demonstrate simple usage of the Log Services.
+      These are found in  <tt>$TAO_ROOT/orbsvcs/examples/Log</tt> and the 
+      relevant sub-directories.
       <br>
-      A thorough test <tt>$TAO_ROOT/orbsvcs/examples/Log/test/client</tt> tests
-      most of the features of the logging service.
+      A thorough test <tt>$TAO_ROOT/orbsvcs/tests/Log/Basic_Log_Test</tt> tests
+      most of the features of the basic logging service.
   </li>
   <li>
-      The Query Language supported at present is "TCL".
+      The Query Language supported at present is "ETCL".
           The Log record id and Log record time are treated as properties
           of the log and can be referenced in a query as "id" and "time"
           respectively.
@@ -1445,38 +1473,13 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
   </li>
 </ul>
 
-<h3> Things to be done: </h3>
-<ul>
-  <li>
-      Implement a few remaining methods - <br>
-      For the <tt>Log</tt> interface: copy.<br>
-      For the <tt>LogMgr</tt> interface: list_logs_by_id
-      <br>
-  </li>
-</ul>
-
 <h3> Future work and enhancements: </h3>
 <ul>
-  <li>
-      Support the <tt>DsEventLogAdmin </tt> module, which uses
-      the <a href= "#ec">COS Event Service </a>
-      <br>
-  </li>
-  <li>
-      Support the <tt>DsLogNotification </tt> module after the
-      <tt>CORBA Notification Service</tt> is complete.
-      <br>
-  </li>
+
   <li>
       Currently all Log records are stored in memory, later we could add
       support for persistant storage.
       <br>
-  </li>
-  <li>
-      Support "Extended TCL" as the Query Language.
-      <br>
-          Support the record attributes as name-value pair properties.
-          <br>
   </li>
   <li>
         Use Red-Black trees to optimize lookup on frequently used query keys -
