@@ -1,3 +1,15 @@
+Thu Sep 20 13:23:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional_NestedUpcall/client.cpp:
+	* tests/BiDirectional_NestedUpcall/server.cpp: Created the servant
+          object on the heap instead of on the stack. 
+	
+	* tests/BiDirectional_NestedUpcall/test_i.h: Inherited the
+	  implementation from the Refcounted servant base. 
+	  
+	  The above changes should prevent the client from crashing if the
+	  server crashes during the upcall. 
+	
 Thu Sep 20 13:23:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/tests/IOR_MCast/server.bor: Added missing iortable
