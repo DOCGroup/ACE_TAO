@@ -101,7 +101,7 @@ public:
   // = Initialization method.
 
   /**
-   * global_scale_factor_ is set to <gsf>.  All High_Res_Timers use
+   * global_scale_factor_ is set to @a gsf.  All High_Res_Timers use
    * global_scale_factor_.  This allows applications to set the scale
    * factor just once for all High_Res_Timers.  Check
    *  High_Res_Timer.cpp for the default global_scale_factors for
@@ -132,7 +132,7 @@ public:
   /**
    * Sets the global_scale_factor to the value in the <env>
    * environment variable.  Returns 0 on success, -1 on failure.  Note
-   * if <env> points to string "0" (value zero), this call will fail.
+   * if @a env points to string "0" (value zero), this call will fail.
    * This is basically a no-op on CE because there is no concept of
    * environment variable on CE.
    */
@@ -141,8 +141,8 @@ public:
 
   /**
    * Set (and return, for info) the global scale factor by sleeping
-   * for <usec> and counting the number of intervening clock cycles.
-   * Average over <iterations> of <usec> each.  On some platforms,
+   * for @a usec and counting the number of intervening clock cycles.
+   * Average over @a iterations of @a usec each.  On some platforms,
    * such as Pentiums, this is called automatically during the first
    * ACE_High_Res_Timer construction with the default parameter
    * values.  An application can override that by calling calibrate
@@ -156,7 +156,7 @@ public:
   /// Initialize the timer.
   ACE_High_Res_Timer (void);
 
-  /// dtor.
+  /// Destructor.
   ~ACE_High_Res_Timer (void);
 
   /// Reinitialize the timer.
@@ -168,7 +168,7 @@ public:
   /// Stop timing.
   void stop (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
 
-  /// Set <tv> to the number of microseconds elapsed.
+  /// Set @a tv to the number of microseconds elapsed.
   /**
    *  Could overflow within hours on windows with emulated 64 bit int's
    *  and a fast counter. VC++ and Borland normaly use __int64 and
@@ -176,7 +176,7 @@ public:
    */
   void elapsed_time (ACE_Time_Value &tv) const;
 
-  /// Set <nanoseconds> to the number of nanoseconds elapsed.
+  /// Set @a nanoseconds to the number of nanoseconds elapsed.
   /**
    *  Will overflow when measuring more than 194 day's.
    */
@@ -188,7 +188,7 @@ public:
   void elapsed_time (struct timespec &) const;
 #endif /* ACE_HAS_POSIX_TIME */
 
-  /// Sets <usecs> to the elapsed (stop - start) time in microseconds.
+  /// Sets @a usecs to the elapsed (stop - start) time in microseconds.
   /**
    *  Will overflow on windows when measuring more than appox. 2^^54 ticks.
    *  Is still more than 48 days with a 4 Ghz counter.
@@ -201,7 +201,7 @@ public:
   /// Stop incremental timing.
   void stop_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
 
-  /// Set <tv> to the number of microseconds elapsed between all calls
+  /// Set @a tv to the number of microseconds elapsed between all calls
   /// to start_incr and stop_incr.
   void elapsed_time_incr (ACE_Time_Value &tv) const;
 
