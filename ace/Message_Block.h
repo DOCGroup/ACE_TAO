@@ -409,6 +409,7 @@ protected:
   // Pointer to the reference counted data structure that contains the
   // actual memory buffer.
 
+private:
   // = Disallow these operations for now (use <clone> instead).
   ACE_Message_Block &operator= (const ACE_Message_Block &);
   ACE_Message_Block (const ACE_Message_Block &);
@@ -562,6 +563,7 @@ protected:
   ACE_Allocator *data_block_allocator_;
   // The allocator use to destroy ourselves.
 
+private:
   // = Disallow these operations.
   ACE_Data_Block &operator= (const ACE_Data_Block &);
   ACE_Data_Block (const ACE_Data_Block &);
