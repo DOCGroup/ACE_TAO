@@ -99,20 +99,44 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   // Called by the <Strategy_Acceptor> when the handler is
   // completely connected.
-  ACE_INET_Addr addr;
 
-  char client[MAXHOSTNAMELEN + 16];
-
-  // Get the peername.
-  if (this->peer ().get_remote_addr (addr) == -1)
+  ACE_INET_Addr remote_addr;
+  if (this->peer ().get_remote_addr (remote_addr) == -1)
     return -1;
 
-  // Verify that we can resolve the peer hostname.
-  else if (addr.addr_to_string (client, sizeof (client)) == -1)
+  ACE_INET_Addr local_addr;
+  if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
+
+  if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
+      && local_addr.get_port_number () == remote_addr.get_port_number ())
+    {
+      if (TAO_debug_level > 0)
+        {
+          char remote_as_string[MAXHOSTNAMELEN + 16];
+          char local_as_string[MAXHOSTNAMELEN + 16];
+
+          (void) remote_addr.addr_to_string (remote_as_string,
+                                             sizeof(remote_as_string));
+          (void) local_addr.addr_to_string (local_as_string,
+                                            sizeof(local_as_string));
+          ACE_ERROR ((LM_ERROR,
+                      "TAO(%P|%t) - TAO_IIOP_Connection_Handler::open, "
+                      "Holy Cow! The remote addr and "
+                      "local addr are identical (%s == %s)\n",
+                      remote_as_string, local_as_string));
+        }
+      return -1;
+    }
 
   if (TAO_debug_level > 0)
     {
+      char client[MAXHOSTNAMELEN + 16];
+
+      // Verify that we can resolve the peer hostname.
+      if (remote_addr.addr_to_string (client, sizeof (client)) == -1)
+        return -1;
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) IIOP connection from client")
                   ACE_TEXT ("<%s> on %d\n"),

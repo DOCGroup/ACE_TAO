@@ -1,10 +1,34 @@
+Tue Apr 10 11:08:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Connection_Handler.cpp (open):
+          Workaround what appears to be a bug in the Linux TCP/IP stack.
+          Here is the scenario: a server starts on a kernel selected port,
+          a client makes oneway requests to this server, eventually the
+          server shutdown or crashes, but the client continues to make
+          requests.
+          Now, suppose the port selected for the server was 12345, the
+          local address for the client sockets are also randomly selected,
+          but if you keep trying to make requests eventually the client
+          will select 12345 as its *local* port.
+          Here is were things get weird: the kernel will connect() that
+          port successfully!  There is no server *listening* on that port,
+          it just happens that the local address and the destination
+          address are the same.
+          That's clearly wrong, to reproduce the problem run the
+          Reliable_Oneways test with a *lot* of iterations and
+          -ORBDebugLevel 1, for example:
+              $ server &
+              $ client -n -i 50000 -ORBDebugLevel 1
+          the change I'm commiting now will detect the weird problem and
+          print out a message.
+
 Tue Apr 10 11:05:22 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Sequence.i:
+        * tao/Sequence.i:
 
-	  Backed out the optimized growth change.  It is apparently more
-	  controversial than I thought since it takes control of sequence
-	  growth away from the user.
+          Backed out the optimized growth change.  It is apparently more
+          controversial than I thought since it takes control of sequence
+          growth away from the user.
 
 Tue Apr 10 11:03:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
