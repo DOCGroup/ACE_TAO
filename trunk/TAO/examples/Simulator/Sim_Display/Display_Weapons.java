@@ -43,12 +43,17 @@ public class Display_Weapons
 
   public Dimension getPreferredSize ()
     {
-      return new Dimension (200, 200);
+      return new Dimension (250, 200);
+    }
+
+  public Dimension getMinimumSize ()
+    {
+      return new Dimension (250, 100);
     }
   
-  public int update_display (Display_Consumer display_consumer)
+  public int update_display (Display_Push_Consumer display_push_consumer)
     {      
-      Weapons weapons = display_consumer.get_weapons ();
+      Weapons weapons = display_push_consumer.get_weapons ();
 
       for (int i = 0; i < weapons.number_of_weapons && i < 5; i++)
 	{
@@ -76,10 +81,6 @@ public class Display_Weapons
 
 
 	  Label status_label = (Label)weapons_.get (weapon);
-
-	  System.out.println (weapon + " - Status: " + status);
-	  if (status_label == null)
-	    System.out.println ("Status label is null");
 
 	  if (status_label != null)
 	    status_label.setText ((status == 1) ? ONLINE : OFFLINE);

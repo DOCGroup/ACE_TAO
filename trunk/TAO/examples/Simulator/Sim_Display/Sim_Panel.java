@@ -43,14 +43,14 @@ class Sim_Panel extends Panel
 	}
     }
 
-  public void update_simulator (String name, Display_Consumer display_consumer)
+  public void update_simulator (String name, Display_Push_Consumer display_push_consumer)
    
     {
       Container panel = (Container) sims_.get (name);
       Display_Object sim = (panel != null) ? (Display_Object) panel.getComponent(0) : null;
 
       if(sim != null)
-	sim.update_display (display_consumer);
+	sim.update_display (display_push_consumer);
     }
 
   public Display_Object get_simulator(String name)
@@ -58,6 +58,7 @@ class Sim_Panel extends Panel
       return (Display_Object)((Container) sims_.get (name)).getComponent (0);
     }
 }
+
 
 
 

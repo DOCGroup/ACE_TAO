@@ -30,7 +30,7 @@ eventserviceport=10026
 cd $TAO_ROOT/orbsvcs/Naming_Service
 ./Naming_Service -ORBport $nameserviceport >> /tmp/logfile 2>&1  &
 
-sleep 2
+sleep 1
 
 IOR=`cat /tmp/logfile | grep IOR | cut -c22-300 | cut -f1 -d">" `
 
@@ -41,7 +41,7 @@ echo // Started Naming Service on port $nameserviceport
 cd $TAO_ROOT/orbsvcs/Scheduling_Service
 Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile  2>&1 &
 
-sleep 2
+sleep 1
 
 echo // Started Scheduling Service on port $schedulerserviceport
 

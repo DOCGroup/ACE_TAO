@@ -1,3 +1,12 @@
+Mon Feb 23 20:45:03 1998  Michael Kircher  <mk1@cec.wustl.edu>
+
+	* orbsvcs/tests/Simulator/Sim_Display: Fixed some small
+     	bugs concerning the representation
+
+	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+	Changed the rate on which events are supplied
+
+
 Mon Feb 23 18:51:03 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (main): Set the handle

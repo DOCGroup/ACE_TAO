@@ -18,9 +18,9 @@ public class Display_Art_Horizon
       add ("South", pos_);
     }
 
-  public int update_display (Display_Consumer display_consumer) 
+  public int update_display (Display_Push_Consumer display_push_consumer) 
     {
-      Navigation navigation = display_consumer.get_navigation ();
+      Navigation navigation = display_push_consumer.get_navigation ();
       /*
       System.out.println ("Art_Horizon: lat " + latitude + " long " + longitude + " alt " +
 			  altitude + " heading " + heading + " roll " +

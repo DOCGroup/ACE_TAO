@@ -10,18 +10,12 @@
 //    Michael Kircher (mk1@cs.wustl.edu)
 //
 // = DESCRIPTION
-//   This Client connects to the Event Channel (TAO Event Channel).
+//   This Consumer connects to the Event Channel (TAO Event Channel).
 //   It accepts Notification events containing Navigation and 
 //   Weapons data.
 // 
 //
 // ============================================================================
-
-
-
-
-
-import org.omg.CORBA.*;
 
 
 
@@ -49,15 +43,21 @@ public class Display_Consumer {
   private Navigation navigation_;
   private Weapons weapons_;
 
-  
-  public Display_Consumer (Display display)
+  public synchronized void init () 
+    {
+    }
+
+
+public Display_Consumer (Display display) //, String name_service_ior, java.applet.Applet applet)
     {
       display_ = display;
       try {      
-	orb_ = ORB.init ();
+	orb_ = org.omg.CORBA.ORB.init (); // applet, null);
 	boa_ = orb_.BOA_init ();
 	
 	// Get the Naming Service initial reference
+	 
+        //naming_service_object_ = orb_.string_to_object (name_service_ior);
 
 	NS_Resolve ns_resolve_ = new NS_Resolve ();
      
@@ -123,12 +123,12 @@ public class Display_Consumer {
 	 
  
 	  // Start the consumer
-	  Demo_Consumer demo_consumer_ = new Demo_Consumer ();
-	  demo_consumer_.open_consumer (event_channel_, scheduler_, "demo_consumer");
+	  Display_Push_Consumer display_push_consumer_ = new Display_Push_Consumer (orb_, display_);
+	  display_push_consumer_.open_consumer (event_channel_, scheduler_, "demo_consumer");
 	 
 	  // Tell the CORBA environment that we are ready
 
-	  boa_.obj_is_ready (demo_consumer_);
+	  boa_.obj_is_ready (display_push_consumer_);
 	  
 	  System.out.println ("boa.obj_is_ready succeeded"); 
 
@@ -161,199 +161,6 @@ public class Display_Consumer {
 	}	
     }
 
-  // The Consumer has to implement the Skeleton Consumer
-
-  public class Demo_Consumer extends RtecEventComm._sk_PushConsumer
-  {
-    // Store the number of received events
-    private int total_received_ = 0;
-    
-    public void push (RtecEventComm.Event[] events)
-      {
-	System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
-	  
-	if (events.length == 0)
-	  {
-	    System.err.println ("No events");
-	  }
-	else
-	  {
-	    for (int i = 0; i < events.length; ++i)
-	      {
-		if (events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
-		  {
-		    System.out.println ("Demo Consumer: received shutdown event.");
-		    System.exit (0);
-		  }
-		else if(events[i].type_ == ACE_ES_EVENT_NOTIFICATION) 
-		  {
-		    try
-		      {
-			if (events[i].data_.any_value.type().equal (NavigationHelper.type()))
-			  {
-			    navigation_ = NavigationHelper.extract (events[i].data_.any_value);
-			    display_.update_metrics (navigation_.utilitzation,
-						     navigation_.overhead,
-						     navigation_.arrival_time,
-						     navigation_.deadline_time,
-						     navigation_.dispatch_time);
-			    display_.update_simulation (Display_Object_Factory.ART_HORIZON_ENUM, 
-							Display_Consumer.this);
-			  }
-			else if (events[i].data_.any_value.type().equal (WeaponsHelper.type()))
-			  {
-			    weapons_ = WeaponsHelper.extract (events[i].data_.any_value);
-			    display_.update_metrics (weapons_.utilitzation,
-						     weapons_.overhead,
-						     weapons_.arrival_time,
-						     weapons_.deadline_time,
-						     weapons_.dispatch_time);
-			    display_.update_simulation (Display_Object_Factory.WEAPONS_ENUM, 
-							Display_Consumer.this);
-						     
-			  }
-			else 
-			  {
-			    System.out.println ("TypeCode in the any does not match!");
-			  }		
-		      }
-		    catch(org.omg.CORBA.SystemException e) 
-		      {
-			System.err.println(e);
-		      }
-		  }
-		else if(events[i].type_ == ACE_ES_EVENT_INTERVAL_TIMEOUT) 
-		  {
-		    System.out.println ("Demo Consumer: received ACE_ES_EVENT_INTERVAL_TIMEOUT event.");
-		  }
-		
-	      }
-	    total_received_++;
-	    /*
-	    if (total_received_ >= TOTAL_MESSAGES)
-	      {
-		orb.disconnect (this);
-		System.exit (0);
-	      } 
-	      */
-	  }
-      }
-	
-    public void disconnect_push_consumer() 
-      {
-	System.out.println ("Demo Consumer: Have to disconnect!");
-      }
-
-    public void open_consumer (RtecEventChannelAdmin.EventChannel event_channel_,
-			       RtecScheduler.Scheduler scheduler_,
-			       String name)
-      {
-	try {
-
-	  // Define Real-time information
-	  
-	  rt_info_ = new RtecScheduler.handle_tHolder (scheduler_.create (name));
-
-	  scheduler_.set (rt_info_.value,
-			  new TimeBase.ulonglong (0,0), 
-			  new TimeBase.ulonglong (0,0),
-			  new TimeBase.ulonglong (0,0),
-			  2500000,  // period
-			  RtecScheduler.Importance.VERY_LOW,
-			  new TimeBase.ulonglong (0,0),
-			  1);	  	        
-
-
-	  // Register for Notification and Shutdown events
-
-	  
-	  RtecEventComm.Event disjunction_designator_ = 
-	    new RtecEventComm.Event (ACE_ES_DISJUNCTION_DESIGNATOR,  0, 
-				     1,        // ttl
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new RtecEventComm.EventData (0, 0, orb_.create_any())
-				     );
-	  RtecEventComm.Event notification_event_ = 
-	    new RtecEventComm.Event (ACE_ES_EVENT_NOTIFICATION,  0, 
-				     1,        // ttl
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new RtecEventComm.EventData (0, 0, orb_.create_any())
-				     );
-	  RtecEventComm.Event shutdown_event_ = 
-	    new RtecEventComm.Event (ACE_ES_EVENT_SHUTDOWN,  0, 
-				     1,        // ttl
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new RtecEventComm.EventData (0, 0, orb_.create_any())
-				     );
-
-
-	  RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[3];  
-	  dependencies_[0] = new RtecEventChannelAdmin.Dependency (disjunction_designator_, rt_info_.value);
-	  dependencies_[1] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
-	  dependencies_[2] = new RtecEventChannelAdmin.Dependency (shutdown_event_, rt_info_.value); 
-	  
-									      
-
-	  RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies_); 
-
-
-	  // The channel administrator is the event channel we got from the invocation
-	  // of this routine
-	  
-	  channel_admin_ = event_channel_;
-
-	  // Connect as a consumer
-	  
-	  consumer_admin_ = channel_admin_.for_consumers ();
-	  
-	  // Obtain a reference to the proxy push supplier
-	  
-	  suppliers_ = consumer_admin_.obtain_push_supplier ();
-
-	  suppliers_.connect_push_consumer (this, qos);
-
-	  System.out.println ("Registered the consumer successfully.");
-
-	 
-	}
-	catch (RtecScheduler.UNKNOWN_TASK e)
-	  {
-	    System.err.println ("Demo_Consumer.open_consumer: Unknown task");
-	    System.err.println (e);
-	  }
-	catch (RtecScheduler.DUPLICATE_NAME e)
-	  {
-	    System.err.println ("Demo_Consumer.open_consumer: Duplicate names");
-	    System.err.println (e);
-	  }
-	catch(org.omg.CORBA.SystemException e) 
-	  {
-	    System.err.println(e);
-	  }		
-      }
-
-    private RtecScheduler.handle_tHolder rt_info_;
-    private RtecEventChannelAdmin.EventChannel channel_admin_;
-    private RtecEventChannelAdmin.ConsumerAdmin consumer_admin_;
-    private RtecEventChannelAdmin.ProxyPushSupplier suppliers_;
-  }
-  
-
-    public Navigation get_navigation ()
-      {
-	return navigation_;    
-      }
-
-    public Weapons get_weapons ()
-      {
-	return weapons_;
-      }   
     
 } // public class Display_Consumer
 
