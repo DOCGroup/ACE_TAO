@@ -1,3 +1,11 @@
+Mo Jun 1  21:36:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tests/Quoter: Several files had to be modified in order
+	  to use the LifeCycle Service now as a separate object as
+	  part of the orbsvcs.
+
+	* orbsvcs/LifeCycle_Service: Did some more customizations.
+
 Mon Jun  1 15:48:28 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/orbconf.h: Modified the TAO_NAMESPACE related macros. Added

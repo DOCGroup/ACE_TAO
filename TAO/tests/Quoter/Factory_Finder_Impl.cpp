@@ -62,49 +62,13 @@ Quoter_Factory_Finder_Impl::find_factories (const CosLifeCycle::Key &factory_key
       return 0;
     }
 
-  // Get the IDL_Quoter naming context.
-  CosNaming::Name quoterContextName (1);  // max = 1 
-  quoterContextName.length (1);
-  quoterContextName[0].id = CORBA::string_dup ("IDL_Quoter");
 
-  CORBA::Object_var quoterNamingObj_var = 
-    namingContext_var->resolve (quoterContextName, env_here);
-
-  // see if there is an exception, if yes then throw the NoFactory
-  // exception.
-  if (env_here.exception () != 0) // throw a NoFactory exception  
-    { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
-      return 0;
-    }
-
-  CosNaming::NamingContext_var quoterNamingContext_var = 
-    CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
-                                       env_here);
-
-  // see if there is an exception, if yes then throw the NoFactory exception
-  if (env_here.exception () != 0) // throw a NoFactory exception  
-    { 
-      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
-      return 0;
-    }
-  
-
-  // **  now a proper reference to the quoter naming context is available
-
-  // fill in the name of the Quoter Factory
-  //CosNaming::Name factoryName (1);  // max = 1 
-  //factoryName.length (1);
-  //factoryName[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
-  // for direct contact with the Quoter Factory
-  // factoryName[0].id = CORBA::string_dup ("Quoter_Factory");
-    // or
   // Take the key supplied to search for a Quoter Factory
   CosNaming::Name factoryName = (CosNaming::Name) factory_key;
 
   // Try to get a reference to a Quoter Factory
   CORBA::Object_var quoterFactoryObject_var =  
-    quoterNamingContext_var->resolve (factoryName, env_here);
+    namingContext_var->resolve (factoryName, env_here);
   
   // see if there is an exception, if yes then throw the NoFactory exception
   if (env_here.exception () != 0) // throw a NoFactory exception  

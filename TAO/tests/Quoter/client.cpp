@@ -61,7 +61,7 @@ Quoter_Client::read_ior (char *filename)
 int
 Quoter_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:gk:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:lxs");
   int c;
   int result;
   
@@ -98,7 +98,7 @@ Quoter_Client::parse_args (void)
                           "usage:  %s"
                           " [-d]"
                           " [-f quoter_factory-obj-ref-key-file]"
-                          " [-g] # use a generic factory instead of the lifecycle service"
+                          " [-l] # use the lifecycle service instead of the generic factory"
                           " [-k quoter-obj-ref-key]"
                           " [-x]"
                           " [-s]"
@@ -249,18 +249,20 @@ Quoter_Client::init_naming_service (void)
     ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory Finder.\n"));
 
     // The name of the Quoter Generic Factory
-    CosLifeCycle::Key factoryName (1);  // max = 1 
-    factoryName.length(1);
+    CosLifeCycle::Key factoryName (2);  // max = 2
 
     if (this->useLifeCycleService_ == 1)
     {
       // use the LifeCycle Service
-      factoryName[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
+      factoryName.length(1);
+      factoryName[0].id = CORBA::string_dup ("Life_Cycle_Service");
     }
     else
     {
       // use a Generic Factory
-      factoryName[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
+      factoryName.length(2);
+      factoryName[0].id = CORBA::string_dup ("IDL_Quoter");
+      factoryName[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
     }
     
     ACE_DEBUG ((LM_DEBUG, "Trying to get a reference of a factory.\n"));
