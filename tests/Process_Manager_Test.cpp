@@ -126,7 +126,7 @@ one_child_sig_handler (void *)
               // child without blocking.  Note that it also decrements
               // the count of waiting children by one.
 	      pid_t pid =
-                ACE_Process_Manager::instance ()->wait 
+                ACE_Process_Manager::instance ()->reap
                 (-1,
                  &child_exit_status,
                  WNOHANG);
@@ -432,8 +432,7 @@ one_child_worker_parent (void *)
   // the counting of remaining processes.  Therefore, this <wait>
   // method is less portable than the version that's shown below in
   // the <multiple_children_worker_parent> function.
-  int result = ACE_Process_Manager::instance ()->wait 
-    ((ACE_Time_Value *) 0);
+  int result = ACE_Process_Manager::instance ()->wait ();
   ACE_ASSERT (result != -1);
 
   ACE_DEBUG ((LM_DEBUG,
