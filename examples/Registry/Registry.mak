@@ -66,7 +66,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_OBJS=.\debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -125,7 +125,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_OBJS=.\debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -154,8 +154,8 @@ LINK32_OBJS= \
 !ENDIF 
 
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG"\
- /D "_CONSOLE" /D "_AFXDLL" /Fp"$(INTDIR)/iterator.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
+ /D "_CONSOLE" /Fp"$(INTDIR)/iterator.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/"\
+ /c 
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -184,6 +184,14 @@ CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG"\
 
 SOURCE=.\test_registry_iterator.cpp
 DEP_CPP_TEST_=\
+	"..\..\STL\algobase.h"\
+	"..\..\STL\bool.h"\
+	"..\..\STL\bstring.h"\
+	"..\..\STL\defalloc.h"\
+	"..\..\STL\function.h"\
+	"..\..\STL\iterator.h"\
+	"..\..\STL\pair.h"\
+	"..\..\STL\vector.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -204,14 +212,6 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\algobase.h"\
-	{$(INCLUDE)}"\bool.h"\
-	{$(INCLUDE)}"\bstring.h"\
-	{$(INCLUDE)}"\defalloc.h"\
-	{$(INCLUDE)}"\function.h"\
-	{$(INCLUDE)}"\iterator.h"\
-	{$(INCLUDE)}"\pair.h"\
-	{$(INCLUDE)}"\vector.h"\
 	
 
 "$(INTDIR)\test_registry_iterator.obj" : $(SOURCE) $(DEP_CPP_TEST_) "$(INTDIR)"
@@ -228,6 +228,14 @@ DEP_CPP_TEST_=\
 
 SOURCE=.\test_registry_update.cpp
 DEP_CPP_TEST_R=\
+	"..\..\STL\algobase.h"\
+	"..\..\STL\bool.h"\
+	"..\..\STL\bstring.h"\
+	"..\..\STL\defalloc.h"\
+	"..\..\STL\function.h"\
+	"..\..\STL\iterator.h"\
+	"..\..\STL\pair.h"\
+	"..\..\STL\vector.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
@@ -248,14 +256,6 @@ DEP_CPP_TEST_R=\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	{$(INCLUDE)}"\algobase.h"\
-	{$(INCLUDE)}"\bool.h"\
-	{$(INCLUDE)}"\bstring.h"\
-	{$(INCLUDE)}"\defalloc.h"\
-	{$(INCLUDE)}"\function.h"\
-	{$(INCLUDE)}"\iterator.h"\
-	{$(INCLUDE)}"\pair.h"\
-	{$(INCLUDE)}"\vector.h"\
 	
 
 "$(INTDIR)\test_registry_update.obj" : $(SOURCE) $(DEP_CPP_TEST_R) "$(INTDIR)"
