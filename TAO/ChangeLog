@@ -1,3 +1,22 @@
+Wed Aug  4 21:16:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp
+	  (ClientCredentials):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.cpp
+	  (OwnCredentials):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp
+	  (TargetCredentials):
+
+	  Explicitly qualify the namespace to which the Credentials base
+	  class belongs to work around MSVC++ 6 namespace brain damage.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open, close):
+	  (iiop_connect):
+
+	  Wrap calls to TAO::IIOP_SSL_Connector base class methods with
+	  the ACE_NESTED_CLASS macro to work around MSVC++ 6 namespace
+	  brain damage.
+
 Wed Aug  4 15:48:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_global.cpp (destroy):
