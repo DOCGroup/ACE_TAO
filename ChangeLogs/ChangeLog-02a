@@ -1,3 +1,9 @@
+Sun Jan  6 20:01:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/run_test.lst: Commented out Conn_Test from the daily
+	  builds. This test seems to hang blocking build progress. Have
+	  sent a mail to John Aughey on this.
+
 Sun Jan  6 09:37:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Acceptor.cpp (accept, ssl_accept):
