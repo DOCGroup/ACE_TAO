@@ -514,6 +514,12 @@ public:
   /// because of a thread trying to unblock the <Reactor_Impl>
   virtual int dispatch_notify (ACE_HANDLE handle);
 
+  /// Read one of the notify call on the <handle> into the
+  /// <buffer>. This could be because of a thread trying to unblock
+  /// the <Reactor_Impl>
+  virtual int read_notify_pipe (ACE_HANDLE handle,
+                                ACE_Notification_Buffer &buffer);
+
   /**
    * Set the maximum number of times that the
    * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
