@@ -192,6 +192,14 @@ public:
 		      TAO_POA *the_poa,
                       CORBA::Environment &env);
   // Constructor
+  IIOP_ServerRequest (CORBA::ULong &request_id,
+                      CORBA::Boolean &response_expected,
+                      TAO_opaque &object_key,
+                      char* operation,
+                      TAO_OutputCDR &output,
+                      CORBA::ORB_ptr the_orb,
+                      TAO_POA *the_poa,
+                      CORBA::Environment &env);
 
   virtual ~IIOP_ServerRequest (void);
   // Destructor.

@@ -1,3 +1,14 @@
+Sat Jul 18 20:22:19 1998  Michael Kircher <mk1@cs.wustl.edu>
+
+	* tao/Server_Request.{h,cpp}: Added a new constructor,
+	  which does not need an input CDR stream. It is going
+	  to be used for locate requests. When we invoke
+	  the non_existend method on the object to see if it
+	  is there, forwarded or not existent.
+
+	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java.JDK1.2:
+	  Adopted to the new interfaces for the Event Service.
+
 Sat Jul 18 19:37:19 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp: The ORB now looks
