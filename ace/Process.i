@@ -334,6 +334,12 @@ ACE_Process_Options::process_name (void)
   return this->process_name_;
 }
 
+ACE_INLINE void
+ACE_Managed_Process::unmanage (void)
+{
+  delete this;
+}
+
 #if defined (ACE_HAS_WINCE)
 // Here is a collection of inline functions which are defined only
 // under CE.  They are not empty on most other platforms.
@@ -368,22 +374,6 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   ACE_UNUSED_ARG (std_out);
   ACE_UNUSED_ARG (std_err);
   return -1;
-}
-
-ACE_INLINE
-ACE_Managed_Process::ACE_Managed_Process (void)
-{
-}
-
-ACE_INLINE
-ACE_Managed_Process::~ACE_Managed_Process (void)
-{
-}
-
-ACE_INLINE void
-ACE_Managed_Process::unmanage (void)
-{
-  delete this;
 }
 
 #endif /* ACE_HAS_WINCE */

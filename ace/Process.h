@@ -534,6 +534,8 @@ protected:
 class ACE_Export ACE_Managed_Process : public ACE_Process
 {
 public:
+  ACE_Managed_Process ();
+
   virtual void unmanage (void);
   // Cleanup by deleting <this>.
 
