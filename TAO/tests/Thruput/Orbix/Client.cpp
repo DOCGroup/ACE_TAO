@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ttcp_decl.h"
 
 char Usage[] = "\

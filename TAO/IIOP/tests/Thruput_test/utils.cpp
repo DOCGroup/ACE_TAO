@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ttcp_decl.h"
 
 int SetSocketBufferSize(int size, unsigned short isTrans)

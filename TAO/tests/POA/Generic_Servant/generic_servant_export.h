@@ -1,3 +1,5 @@
+// $Id$
+
 // Definition for Win32 Export directives.
 // This file is generated automatically by
 // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT

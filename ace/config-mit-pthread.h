@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined (ACE_CONFIG_MIT_PTHREAD_H)
 #define ACE_CONFIG_MIT_PTHREAD_H
 

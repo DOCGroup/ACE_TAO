@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined (POA_T_CPP)
 #define POA_T_CPP
 

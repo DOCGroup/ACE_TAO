@@ -1,3 +1,5 @@
+// $Id$
+
 // constructor
 ACE_INLINE
 Marshal_SSI_Impl::Marshal_SSI_Impl (const char *obj_name)

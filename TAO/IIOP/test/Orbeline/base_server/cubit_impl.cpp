@@ -1,3 +1,5 @@
+// $Id$
+
 #include "cubit_impl.h"
 
 CORBA::Octet Cubit_Impl:: cube_octet (CORBA::Octet o) {

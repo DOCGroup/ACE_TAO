@@ -1,3 +1,5 @@
+// $Id$
+
 struct Bar {
     long	b1;
     char	b2;

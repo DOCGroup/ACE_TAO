@@ -1,3 +1,5 @@
+// $Id$
+
 #include "pbroker/corba/xpsorb.h"
 #include "pbroker/corba/xpsboa.h"
 #include "pbroker/corba/boad/boafull.h"   // will force usage of "Full" BOA API

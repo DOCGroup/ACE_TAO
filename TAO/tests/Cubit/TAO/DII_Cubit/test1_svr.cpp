@@ -1,3 +1,5 @@
+// $Id$
+
 // @(#)test1_svr.cpp	1.7 95/09/25
 // Copyright 1995 by Sun Microsystems Inc.
 // All Rights Reserved

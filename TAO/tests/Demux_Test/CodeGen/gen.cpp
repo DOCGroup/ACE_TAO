@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao.h"
 
 static long GenDistinctString(ACE_Unbounded_Queue<ACE_CString> &, int);

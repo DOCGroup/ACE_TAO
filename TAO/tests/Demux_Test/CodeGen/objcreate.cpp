@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao.h"
 
 long GenObjectCreateCode(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)

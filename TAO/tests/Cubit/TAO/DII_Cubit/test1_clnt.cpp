@@ -1,3 +1,5 @@
+// $Id$
+
 // @(#)test1_clnt.cpp	1.5 95/09/24
 // Copyright 1995 by Sun Microsystems, Inc.
 // All Rights Reserved

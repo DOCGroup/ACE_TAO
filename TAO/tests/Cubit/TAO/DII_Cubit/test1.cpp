@@ -1,3 +1,5 @@
+// $Id$
+
 // @(#)test1.cpp	1.4 95/09/28
 // Copyright 1995 by Sun Microsystems, Inc.
 // All Rights Reserved

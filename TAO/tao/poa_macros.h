@@ -1,3 +1,5 @@
+// $Id$
+
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
 #define TAO_POA_WRITE_GUARD(MUTEX,OBJ,LOCK,ENV) \

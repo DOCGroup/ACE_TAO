@@ -1,3 +1,5 @@
+// $Id$
+
 // This example uses the ACE_Registry class to iterator through the
 // entries in the predefined registries. The host of iteration can be
 // varied through argv[1]. If no host is specified the local host is

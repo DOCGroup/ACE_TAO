@@ -1,3 +1,5 @@
+// $Id$
+
 // @(#)test1.hh	1.2 95/09/12
 // Copyright 1995 by Sun Microsystems, Inc.
 // All Rights Reserved

@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined (BE_EXCEPTION_H)
 #define BE_EXCEPTION_H
 
