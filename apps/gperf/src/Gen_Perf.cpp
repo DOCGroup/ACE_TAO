@@ -20,8 +20,11 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#include "Vectors.h"
 #include "Gen_Perf.h"
+
+#if defined (ACE_HAS_GPERF)
+
+#include "Vectors.h"
 
 // Current release version.
 extern char *version_string;
@@ -372,3 +375,4 @@ Gen_Perf::~Gen_Perf (void)
     }
 }
 
+#endif /* ACE_HAS_GPERF */

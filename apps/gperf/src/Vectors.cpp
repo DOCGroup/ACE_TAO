@@ -23,8 +23,12 @@ USA.  */
 
 #include "Vectors.h"
 
+#if defined (ACE_HAS_GPERF)
+
 // Counts occurrences of each key set character.
 int Vectors::occurrences[ALPHA_SIZE]; 
 
 // Value associated with each character.
 int Vectors::asso_values[ALPHA_SIZE]; 
+
+#endif /* ACE_HAS_GPERF */

@@ -25,9 +25,11 @@ USA.  */
 // Simple driver program for the Gen_Perf.hash function generator.
 // All the hard work is done in class Gen_Perf and its class methods.
 
-#include "Options.h"
 #include "Gen_Perf.h"
 
+#if defined (ACE_HAS_GPERF)
+
+#include "Options.h"
 int
 main (int argc, char *argv[])
 {
@@ -73,3 +75,5 @@ main (int argc, char *argv[])
 
   return status;
 }
+
+#endif /* ACE_HAS_GPERF */
