@@ -121,7 +121,7 @@ public:
   /// Schedules a timer.
   virtual long schedule (const TYPE &type,
                          const void *act,
-                         const ACE_Time_Value &delay,
+                         const ACE_Time_Value &future_time,
                          const ACE_Time_Value &interval
                            = ACE_Time_Value::zero);
 
