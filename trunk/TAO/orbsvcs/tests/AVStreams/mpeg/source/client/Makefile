@@ -17,7 +17,9 @@ DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
 
-##LIBS 	+= -lTAO -lACE
+LIBS 	+= -lTAO -lACE
+MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
+CPPFLAGS += -I$(MPEG_ROOT)/include -I$(MPEG_ROOT)/mpeg_shared -I$(MPEG_ROOT)/mpeg_server -I$(MPEG_ROOT)/mpeg_client
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -48,8 +50,11 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/vcr.o .obj/vcr.so .shobj/vcr.o .shobj/vcr.so: vcr.cpp ../mpeg_client//video.h ../mpeg_client//proto.h \
- ../include/common.h $(ACE_ROOT)/ace/OS.h \
+.obj/vcr.o .obj/vcr.so .shobj/vcr.o .shobj/vcr.so: vcr.cpp \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/video.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/proto.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -64,9 +69,10 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- ../mpeg_client//newproto.h ../mpeg_client//../mpeg_shared/routine.h \
- ../mpeg_client//../mpeg_shared/../include/common.h \
- ../mpeg_client//global.h ../mpeg_client//util.h \
- ../mpeg_client//dither.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/newproto.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/global.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/dither.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

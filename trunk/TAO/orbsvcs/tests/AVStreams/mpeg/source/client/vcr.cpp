@@ -66,7 +66,8 @@
 
 #include "video.h"
 #include "proto.h"
-#include "../include/common.h"
+#include "common.h"
+#include "routine.h"
 #include "newproto.h"
 #include "global.h"
 
