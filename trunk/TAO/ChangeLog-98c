@@ -1,3 +1,5 @@
+1998-09-15  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
 	* TAO/tests/Simple/bank : Added the client and server files for this test.
 	/Account_i.cpp
 	/Account_i.h
