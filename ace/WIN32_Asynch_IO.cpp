@@ -12,10 +12,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/Task_T.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/WIN32_Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
-
 u_long
 ACE_WIN32_Asynch_Result::bytes_transferred (void) const
 {
