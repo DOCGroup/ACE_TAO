@@ -4,6 +4,7 @@
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
 #include "CIAO_common.h"
+#include "ace/Env_Value_T.h"
 
 #include "RoundTripClient_exec.h"
 
@@ -100,6 +101,12 @@ MyImpl::RoundTripClient_exec_i::start ()
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
+
+  ACE_Env_Value<int> envar ("CIAO_DUMP_SAMPLE_HISTORY", 0);
+  if (envar != 0)
+    {
+      history.dump_samples ("HISTORY", gsf);
+    }
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);

@@ -1,3 +1,12 @@
+Sat Nov 29 11:08:08 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* docs/EnvVars.html: Documented the environment variables
+	  recognized by CIAO.
+
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+	  Allowed dumping if sample history if the environment variable
+	  CIAO_DUMP_SAMPLE_HISTORY = 1.
+
 Fri Nov 28 22:45:13 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* ciao/ServerActivator_Impl.cpp:
