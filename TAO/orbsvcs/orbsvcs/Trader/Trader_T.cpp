@@ -38,25 +38,25 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::TAO_Trader (Trader_Components compo
       this->trading_components ().lookup_if (lookup->_this (env));
       this->ifs_[LOOKUP_IF] = lookup;
     }
-  else if (ACE_BIT_ENABLED (components, REGISTER))
+  if (ACE_BIT_ENABLED (components, REGISTER))
     {
       TAO_Register<TRADER_SELF>* reg = new TAO_Register<TRADER_SELF> (*this);
       this->trading_components ().register_if (reg->_this (env));
       this->ifs_[REGISTER_IF] = reg;
     }
-  else if (ACE_BIT_ENABLED (components, ADMIN))
+  if (ACE_BIT_ENABLED (components, ADMIN))
     {
       TAO_Admin<TRADER_SELF>* admin = new TAO_Admin<TRADER_SELF> (*this);
       this->trading_components ().admin_if (admin->_this (env));
       this->ifs_[ADMIN_IF] = admin;
     }
-  else if (ACE_BIT_ENABLED (components, PROXY))
+  if (ACE_BIT_ENABLED (components, PROXY))
     {
       TAO_Proxy<TRADER_SELF>* proxy = new TAO_Proxy<TRADER_SELF> (*this);
       this->trading_components ().proxy_if (proxy->_this (env));
       this->ifs_[PROXY_IF] = proxy;
     }
-  else if (ACE_BIT_ENABLED (components, LINK))
+  if (ACE_BIT_ENABLED (components, LINK))
     {
       TAO_Link<TRADER_SELF, MAP_LOCK_TYPE>* link =
 	new TAO_Link<TRADER_SELF, MAP_LOCK_TYPE> (*this);

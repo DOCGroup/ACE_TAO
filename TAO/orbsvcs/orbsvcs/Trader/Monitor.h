@@ -41,22 +41,45 @@ class TAO_Monitor : public TYPE
 public:
   
   typedef TAO_LOCK LOCK_TYPE;
+
+  TAO_Monitor (void)
+    : delete_ (1)
+    {
+      ACE_NEW (this->lock_, TAO_LOCK);
+    }
+  
+  TAO_Monitor (const TAO_Monitor& monitor)
+    {
+      // Assume control of their lock.
+      TAO_Monitor* mon = (TAO_Monitor*)&monitor;
+      mon->delete_ = 0;
+      this->delete_ = 1;
+      this->lock_ = mon->lock_;
+    }
+
+  ~TAO_Monitor (void)
+    {
+      if (this->delete_)
+	delete this->lock_;
+    }
   
   // Return a reference to the lock that I use.
   TAO_LOCK &lock (void)
   {
-    return this->lock_;
+    return *this->lock_;
   }
 
   // Return a reference to the lock that I use.
   const TAO_LOCK &lock (void) const
   {
-    return this->lock_;
+    return *this->lock_;
   }
 
 protected:
 
-  TAO_LOCK lock_;
+  int delete_;
+  
+  TAO_LOCK* lock_;
   // Lock used to monitor the object.
 };
 

@@ -24,7 +24,6 @@
 
 typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
 
-template <class MAP_LOCK_TYPE>
 class TAO_Service_Type_Repository :
   public POA_CosTradingRepos::ServiceTypeRepository
   //
@@ -34,8 +33,12 @@ class TAO_Service_Type_Repository :
 {
 public:
   
-  TAO_Service_Type_Repository (void);
-
+  TAO_Service_Type_Repository (ACE_Lock* lock = 0);
+  // Parameterize the Service_Type_Repository with a lock to serialize
+  // access to the type repository map. A reader/writer lock is
+  // probably best. The Service_Type_Repository assumes control of the 
+  // lock.
+  
   ~TAO_Service_Type_Repository (void);
   
   virtual SERVICE_TYPE_REPOS::IncarnationNumber 
@@ -202,8 +205,6 @@ public:
   // exception is raised. 
   // END SPEC
 
-  static const char * NAME;
-
 private:
   
   struct Type_Info {
@@ -221,14 +222,8 @@ private:
     // names of subtypes.
   };
   
-  typedef map< string, Type_Info, less <string> > TYPE_MAP;
-  typedef TYPE_MAP::iterator TYPE_MAP_ITER;
-  
-  typedef TAO_Monitor
-    <
-    TYPE_MAP,
-    MAP_LOCK_TYPE
-    > SERVICE_TYPE_MAP;
+  typedef map< string, Type_Info, less <string> > SERVICE_TYPE_MAP;
+  typedef SERVICE_TYPE_MAP::iterator SERVICE_TYPE_ITERATOR;
   
   typedef map
     <
@@ -240,10 +235,10 @@ private:
   typedef map
     <
     string,
-    TYPE_MAP_ITER,
+    SERVICE_TYPE_MAP::iterator,
     less < string >
     > SUPER_TYPE_MAP;
-
+  
   void validate_properties (const SERVICE_TYPE_REPOS::PropStructSeq& props,
 			    PROP_MAP& prop_map,
 			    CORBA::Environment& _env)
@@ -279,6 +274,9 @@ private:
 			SUPER_TYPE_MAP& super_map);
   // Update the type map with the information contained in the
   // TypeStruct, prop_map, and super_map.
+
+  ACE_Lock* lock_;
+  // Lock with which to serialize access to the service type map.
   
   SERVICE_TYPE_MAP type_map_;
   // Stores information for each service type in the repository.

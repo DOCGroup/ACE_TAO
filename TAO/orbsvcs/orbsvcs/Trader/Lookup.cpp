@@ -324,16 +324,17 @@ lookup_all_subtypes (const char* type,
   // proceeds until all of the subtypes for the original class have
   // been located and their offers considered, or we've exhausted the
   // cardinality constraints.
-  
-  list<char*> sub_types, unconsidered_types;
+
+  string type_string (type);
+  TYPE_LIST sub_types, unconsidered_types;
   CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
   TYPE_NAME_SEQ all_types (service_type_map.list_all_types ());
   
   // All types save the supertype are initially unconsidered.
-  sub_types.push_back ((char *) type);
+  sub_types.push_back (type_string);
   for (int i = all_types->length () - 1; i >= 0; i--)
-    unconsidered_types.push_back ((char*)((const char*) all_types[i]));
-  unconsidered_types.remove ((char *) type);
+    unconsidered_types.push_back (string (all_types[i]));
+  unconsidered_types.remove (type_string);
 
   // Iterate over the remaining subtypes to locate their subtypes.
   // We could meet our cardinality constraints prior searching all
@@ -341,7 +342,7 @@ lookup_all_subtypes (const char* type,
   while (! sub_types.empty () && offer_filter.ok_to_consider_more ())  
   {
     // For each potential supertype, iterate over the remaining types.
-    const char* super_type = sub_types.front ();
+    const char* super_type = sub_types.front ().data ();
     sub_types.pop_front ();
     for (int j = unconsidered_types.size () - 1;
 	 j >= 0 && offer_filter.ok_to_consider_more ();
@@ -349,12 +350,12 @@ lookup_all_subtypes (const char* type,
       {
 	TYPE_STRUCT type_struct;
 	CORBA::Boolean is_sub_type = 0;
-	char* type_name = unconsidered_types.front ();
+	string type_name = unconsidered_types.front ();
 	unconsidered_types.pop_front ();
 	
 	TAO_TRY
 	  {
-	    type_struct = rep->describe_type (type_name, TAO_TRY_ENV);
+	    type_struct = rep->describe_type (type_name.data (), TAO_TRY_ENV);
 	  }
 	TAO_CATCHANY
 	  {
@@ -377,7 +378,7 @@ lookup_all_subtypes (const char* type,
 	  {
 	    // Otherwise, perform a constraint match on the type, and
 	    // add it to the queue of potential supertypes.
-	    this->lookup_one_type (type_name,
+	    this->lookup_one_type (type_name.data (),
 				   service_type_map,
 				   constr_inter,
 				   pref_inter,
