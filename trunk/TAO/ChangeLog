@@ -1,3 +1,8 @@
+Fri Feb 27 08:51:03 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+          Removed not needed qualifiers.
+
 Thu Feb 26 17:39:51 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
