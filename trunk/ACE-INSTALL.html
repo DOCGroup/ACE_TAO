@@ -512,7 +512,29 @@ make: *** [libACE.so] Error 8
 If you use the GNU GCC g++ compiler please note the following:
 
 <UL>
-  <LI>With g++ 2.8.0, an internal compiler error is raised when
+  <li>If you have problems building shared libraries with egcs 1.1 or 1.1.1
+      on SunOS 2.5 or 2.5.1 that look like this:
+      <pre>
+	/usr/ccs/lib/libgen.a(reg_compile.o): In function `_get_vars_storage':
+	reg_compile.o(.text+0x30): relocation truncated to fit: R_SPARC_GOT13 free
+      </pre>
+      the suggested workaround is to comment out the <code>ACE_HAS_REGEX</code>
+      <code>#define</code> in <code>ace/config-sunos5.5.h</code>.
+      Or better, create an <code>ace/config.h</code> that looks like:
+      <pre>
+      #ifndef ACE_CONFIG_H
+      // ACE_CONFIG_H is defined by the following #included header.
+
+      #include "ace/config-sunos5.5.h"
+
+      #undef ACE_HAS_REGEX
+
+      #endif /* ACE_CONFIG_H */
+      </pre>
+      We don't know what causes the link problem, though the
+      workaround solves it.<p>
+
+  <li>With g++ 2.8.0, an internal compiler error is raised when
       trying to compile ACE_Map_Manager instantiations.  One workaround
       is to disable optimization.  The easiest way to do that is:
 
