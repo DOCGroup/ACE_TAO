@@ -1,7 +1,14 @@
+Wed May  8 10:58:15 2002  Alex Libman <AlexL@rumblegroup.com>
+
+	* tests/Proactor_Test.cpp: Fixed the test to work right on
+	  Linux. Turned off full traces, only the error messages and
+	  statistics will go to the log.
+	  
 Wed May  8 06:14:08 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Filecache.cpp (R_MASK): Allow file sharing by default.  Thanks to
-	  Peter Kullmann" <P.Kullmann@rog.de> for reporting this.
+	* ace/Filecache.cpp (R_MASK): Allow file sharing by default.
+	  Thanks to  Peter Kullmann" <P.Kullmann@rog.de> for reporting
+	  this. 
 
 Tue May 07 21:03:01 2002  Ossama Othman  <ossama@uci.edu>
 
