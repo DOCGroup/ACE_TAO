@@ -418,7 +418,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_short;
       return ev;
     case AST_Expression::EV_char:
-      if (ev->u.cval < 0)
+      if ((signed char) ev->u.cval < 0)
 	return NULL;
       ev->u.usval = (unsigned short) ev->u.cval;
       ev->et = AST_Expression::EV_ushort;
@@ -528,7 +528,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_ulong;
       return ev;
     case AST_Expression::EV_char:
-      if (ev->u.cval < 0)
+      if ((signed char) ev->u.cval < 0)
 	return NULL;
       ev->u.ulval = (unsigned long) ev->u.cval;
       ev->et = AST_Expression::EV_ulong;
@@ -795,7 +795,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_octet;
       return ev;
     case AST_Expression::EV_char:
-      if (ev->u.cval < 0)
+      if ((signed char) ev->u.cval < 0)
 	return NULL;
       ev->u.oval = (unsigned char) ev->u.cval;
       ev->et = AST_Expression::EV_octet;
