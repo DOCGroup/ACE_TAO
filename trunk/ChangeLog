@@ -1,3 +1,10 @@
+Tue Nov 25 11:14:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-lynxos.h:
+        * include/makeinclude/platform_lynxos.GNU:
+
+          Made modifications to support LynxOS 4.0.0 and shared libraries.
+
 Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/all_in_one.GNU:
@@ -9,40 +16,40 @@ Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 25 10:08:12 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/jaws3/io.h: 
-	* apps/JAWS3/jaws3/io.cpp: 
-	* apps/JAWS3/jaws3/file.h: 
-	* apps/JAWS3/jaws3/file.cpp: 
-	  Removed.
-	
+        * apps/JAWS3/jaws3/io.h:
+        * apps/JAWS3/jaws3/io.cpp:
+        * apps/JAWS3/jaws3/file.h:
+        * apps/JAWS3/jaws3/file.cpp:
+          Removed.
+
 
 Tue Nov 25 09:23:35 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/small/SS_Templates.cpp: 
-	* apps/JAWS3/jaws3/io.h: 
-	* apps/JAWS3/jaws3/io.cpp: 
-	* apps/JAWS3/jaws3/file.h: 
-	* apps/JAWS3/jaws3/file.cpp: 
-	* apps/JAWS3/jaws3/Timer_Helpers.h: 
-	* apps/JAWS3/jaws3/Timer_Helpers.cpp: 
-	* apps/JAWS3/jaws3/Templates.cpp: 
-	* apps/JAWS3/jaws3/Reactive_IO_Helpers.h: 
-	* apps/JAWS3/jaws3/Options.h: 
-	* apps/JAWS3/jaws3/Options.cpp: 
-	* apps/JAWS3/jaws3/Asynch_IO_Helpers.h: 
-	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h: 
-	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp: 
-	* apps/JAWS3/http/HTTP_States.h: 
-	* apps/JAWS3/contrib/john_at_lyris_dot_com/readme: 
-	* apps/JAWS3/contrib/jmills_at_tga_dot_com/readme: 
-	* apps/JAWS3/bench/rqfiles.cpp: 
-	* apps/JAWS3/bench/mkfiles.cpp: 
-	* apps/JAWS3/docs/web/images/jaws3_components.gif: 
-	* apps/JAWS3/docs/web/images/jaws3_components.fig: 
-	* apps/JAWS3/docs/web/images/jaws3_banner.png: 
-	* apps/JAWS3/docs/web/images/jaws3_banner.gif:
-	
-	  Added to the repository
+        * apps/JAWS3/small/SS_Templates.cpp:
+        * apps/JAWS3/jaws3/io.h:
+        * apps/JAWS3/jaws3/io.cpp:
+        * apps/JAWS3/jaws3/file.h:
+        * apps/JAWS3/jaws3/file.cpp:
+        * apps/JAWS3/jaws3/Timer_Helpers.h:
+        * apps/JAWS3/jaws3/Timer_Helpers.cpp:
+        * apps/JAWS3/jaws3/Templates.cpp:
+        * apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
+        * apps/JAWS3/jaws3/Options.h:
+        * apps/JAWS3/jaws3/Options.cpp:
+        * apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h:
+        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp:
+        * apps/JAWS3/http/HTTP_States.h:
+        * apps/JAWS3/contrib/john_at_lyris_dot_com/readme:
+        * apps/JAWS3/contrib/jmills_at_tga_dot_com/readme:
+        * apps/JAWS3/bench/rqfiles.cpp:
+        * apps/JAWS3/bench/mkfiles.cpp:
+        * apps/JAWS3/docs/web/images/jaws3_components.gif:
+        * apps/JAWS3/docs/web/images/jaws3_components.fig:
+        * apps/JAWS3/docs/web/images/jaws3_banner.png:
+        * apps/JAWS3/docs/web/images/jaws3_banner.gif:
+
+          Added to the repository
 
 Tue Nov 25 05:25:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

@@ -19,8 +19,15 @@
 ifeq ($(debug),)
   debug = 1
 endif
-shared_libs =
-static_libs = 1
+ifeq ($(shared_libs_only),1)
+  shared_libs = 1
+  static_libs =
+endif
+ifeq ($(static_libs_only),1)
+  shared_libs =
+  static_libs = 1
+endif
+
 #### optimize is defined below because it is version-dependent.
 
 ifneq ($(shell uname -s),LynxOS)
@@ -102,6 +109,7 @@ ifeq (2.5.0,$(VERSION))
 endif # VERSION
 
 DCFLAGS         += -g
+PIC             = -fPIC
 DLD             = $(CXX)
 LD              = $(CXX)
 LIBS            += -lnetinet -lnsl
@@ -109,6 +117,9 @@ OCFLAGS         += -O2
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
+SOFLAGS        += $(CPPFLAGS) -shared
+SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
+                  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB          = @true
 
 # Test for template instantiation, add to SOFLAGS if SONAME set, 
@@ -121,4 +132,6 @@ CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 # To save much disk space, strip all executables.  Comment the
 # following line out if you want to debug.  Or, add "POSTLINK="
 # to your make invocation.
-POSTLINK        = ; strip $@
+ifeq ($(static_libs),1)
+  POSTLINK       = ; strip $@
+endif
