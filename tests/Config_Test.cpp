@@ -332,7 +332,7 @@ run_tests (void)
   return 0;
 }
 
-static int 
+static int
 build_config_object (ACE_Configuration& cfg)
 {
   ACE_Configuration_Section_Key root = cfg.root_section ();
@@ -422,7 +422,7 @@ build_config_object (ACE_Configuration& cfg)
 /*
  * Test ACE_Configuration::operator==
  */
-int 
+int
 Config_Test::testEquality ()
 {
   // create and open 2 ACE_Configuration objects.
@@ -445,7 +445,7 @@ Config_Test::testEquality ()
   // populate them equally
   build_config_object (heap1);
   build_config_object (heap2);
- 
+
   // test equality
   ACE_DEBUG ((LM_DEBUG, "The objects should equal...\n"));
   if (heap1 == heap2)
@@ -539,7 +539,7 @@ Config_Test::testEquality ()
 
   // add new value in heap 1
   if (heap1.set_integer_value (NewSection,
-                               ACE_TEXT ("TestIntValue2"), 
+                               ACE_TEXT ("TestIntValue2"),
                                100))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -633,15 +633,15 @@ Config_Test::testEquality ()
 /*
  * Compare INI import data in fromFile to origional data exported (in origional)
  *
- * This compare is destructive to the origional object.  
+ * This compare is destructive to the origional object.
  * I realize that normally you would not do such an obscene thing but
  * this funciton has a special purpose and I know my origional is not needed
- * after calling this routine.  
+ * after calling this routine.
  * This is done because configuration objects that are imported using the INI
- * import store all data as strings. My origional has type information and I need to 
+ * import store all data as strings. My origional has type information and I need to
  * know if the import worked.
 */
-static int 
+static int
 iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 {
   int rc = 1; // start by guessing they are equal
@@ -656,8 +656,8 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
   // loop through each section in the fromFile object
   while ((rc) &&
-         (!fromFile.enumerate_sections (fromFileRoot, 
-                                        sectionIndex, 
+         (!fromFile.enumerate_sections (fromFileRoot,
+                                        sectionIndex,
                                         sectionName)) )
     {
       // find that section in the original object
@@ -669,9 +669,9 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
           // If the original object does not contain the section then we are not equal.
           rc = 0;
         }
-      else if (fromFile.open_section (fromFileRoot, 
-                                      sectionName.c_str (), 
-                                      0, 
+      else if (fromFile.open_section (fromFileRoot,
+                                      sectionName.c_str (),
+                                      0,
                                       fromFileSection) != 0)
         {
           // if there is some error opening the section in the fromFile
@@ -687,7 +687,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
           // Enumerate each value in the fromFile section
           while ((rc) &&
-                 (!fromFile.enumerate_values (fromFileSection, 
+                 (!fromFile.enumerate_values (fromFileSection,
                                               valueIndex,
                                               valueName,
                                               valueType)))
@@ -697,7 +697,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                         valueName.c_str (),
                                         originalType) != 0)
                 {
-                  // We're not equal if the same value cannot 
+                  // We're not equal if the same value cannot
                   // be found in the original object.
                   rc = 0;
                 }
@@ -765,7 +765,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                               delete (char *)binary_data;
                             }// end successful binary read
                         }// end if originalType was binary
-                      else 
+                      else
                         {
                           // if the type is invalid, then go ahead and fail it.
                           rc = 0;
@@ -773,7 +773,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
                     }// end if the original type was not a string.
                   else
-                    {                        
+                    {
                       if (original.get_string_value (originalSection,
                                                       valueName.c_str (),
                                                       originalString) != 0)
@@ -828,11 +828,11 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
     }// end section while loop
 
-  // Finally, if the original has any sections, then we're not equal 
+  // Finally, if the original has any sections, then we're not equal
   sectionIndex = 0;
   while ((rc) &&
-         (!original.enumerate_sections (originalRoot, 
-                                         sectionIndex, 
+         (!original.enumerate_sections (originalRoot,
+                                         sectionIndex,
                                          sectionName)) )
     {
       sectionIndex++;
@@ -845,7 +845,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
 // Used to test INI Import Export class
 
-int 
+int
 Config_Test::testIniFormat ()
 {
   int rc = 0;
@@ -896,7 +896,7 @@ Config_Test::testIniFormat ()
 
 
   // At this point we've successfully created, populated and written
-  // the configuration object    
+  // the configuration object
   //  5. Creates a new ACE_Configuration_Heap object
   if ((rc = fromFile.open ()) == 0)
     {
@@ -912,11 +912,11 @@ Config_Test::testIniFormat ()
         }
 
       //  7. Compares to original.
-      // This is a special compare since files imported using the 
+      // This is a special compare since files imported using the
       // INI file import do not contain type information
       //
       // NOTE: After this call the original object will be invalid!!!
-      // 
+      //
       if (!iniCompare (fromFile, original))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -952,8 +952,8 @@ Config_Test::testIniFormat ()
 
   // Process [network] section
   ACE_Configuration_Section_Key NetworkSection;
-  if (fromFile.open_section (root, 
-                             ACE_TEXT ("network"), 
+  if (fromFile.open_section (root,
+                             ACE_TEXT ("network"),
                              1,
                              NetworkSection) == 0)
     {
@@ -993,7 +993,7 @@ Config_Test::testIniFormat ()
   // Process [logger] section
   ACE_Configuration_Section_Key LoggerSection;
   if (fromFile.open_section (root,
-                             ACE_TEXT ("logger"), 
+                             ACE_TEXT ("logger"),
                              1,
                              LoggerSection) == 0)
     {
@@ -1032,7 +1032,7 @@ Config_Test::testIniFormat ()
 
 // Used to test registry Import Export class
 
-int 
+int
 Config_Test::testRegFormat ()
 {
   int rc = 0;
@@ -1084,7 +1084,7 @@ Config_Test::testRegFormat ()
 
 
   // At this point we've successfully created, populated and written
-  // the configuration object    
+  // the configuration object
   //  5. Creates a new ACE_Configuration_Heap object
   if ((rc = fromFile.open ()) == 0)
     {
@@ -1237,8 +1237,12 @@ main (int, ACE_TCHAR *[])
 
   if (manager.testIniFormat () != 0)
     ACE_DEBUG ((LM_DEBUG, "Failed the INI Format Test\n"));
-    
+
   run_tests ();
+
+  // @@ We should remove the function test_io from the file. Just to
+  // avoid the risk of removing something that is useful...
+  ACE_UNUSED_ARG (test_io);
 
   ACE_END_TEST;
   return 0;

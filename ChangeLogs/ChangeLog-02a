@@ -1,3 +1,8 @@
+Mon Apr 16 09:58:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Config_Test.cpp: Fixed a warning with g++ builds. The
+	  warning was  because of an unused function. 
+
 Sun Apr 15 21:27:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
