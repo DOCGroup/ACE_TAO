@@ -181,6 +181,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ORB_Table.cpp
     ORBInitializer_Registry.cpp
     ORBInitInfo.cpp
+    ParameterModeA.cpp
     ParameterModeC.cpp
     params.cpp
     Parser_Registry.cpp

@@ -197,6 +197,7 @@ libTAO_la_SOURCES = \
   PICurrent_Copy_Callback.cpp \
   PICurrent_ORBInitializer.cpp \
   PI_ForwardC.cpp \
+  ParameterModeA.cpp \
   ParameterModeC.cpp \
   Parser_Registry.cpp \
   Pluggable_Messaging.cpp \

@@ -126,5 +126,13 @@ TAO::TypeCode::Sequence<RefCountPolicy>::length_i (
   return this->length_;
 }
 
+template <class RefCountPolicy>
+CORBA::TypeCode_ptr
+TAO::TypeCode::Sequence<RefCountPolicy>::content_type_i (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  return CORBA::TypeCode::_duplicate (*this->content_type_);
+}
+
 
 #endif  /* TAO_SEQUENCE_TYPECODE_CPP */

@@ -174,6 +174,110 @@ CORBA::TypeCode::concrete_base_type_i (ACE_ENV_SINGLE_ARG_DECL) const
 
 // ---------------------------------------------------------------
 
+CORBA::TypeCode::Bounds::Bounds (void)
+  : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0",
+                          "Bounds")
+{
+}
+
+CORBA::TypeCode::Bounds*
+CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
+{
+   return dynamic_cast <CORBA::TypeCode::Bounds*> (ex);
+}
+
+CORBA::Exception *
+CORBA::TypeCode::Bounds::_alloc (void)
+{
+  CORBA::Exception *retval = 0;
+  ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, 0);
+  return retval;
+}
+
+CORBA::Exception *
+CORBA::TypeCode::Bounds::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (result,
+                  CORBA::TypeCode::Bounds (*this),
+                  0);
+  return result;
+}
+
+void
+CORBA::TypeCode::Bounds::_raise (void) const
+{
+  TAO_RAISE(*this);
+}
+
+void
+CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr
+                                      ACE_ENV_ARG_DECL) const
+{
+  if (cdr << this->_rep_id ())
+    {
+      return;
+    }
+
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void
+CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &
+                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+// ****************************************************************
+
+CORBA::TypeCode::BadKind::BadKind (void)
+  : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0",
+                          "BadKind")
+{
+}
+
+CORBA::TypeCode::BadKind*
+CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
+{
+  return dynamic_cast <CORBA::TypeCode::BadKind*> (ex);
+}
+
+CORBA::Exception *
+CORBA::TypeCode::BadKind::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (result,
+                  CORBA::TypeCode::BadKind (*this),
+                  0);
+  return result;
+}
+
+void
+CORBA::TypeCode::BadKind::_raise (void) const
+{
+  TAO_RAISE(*this);
+}
+
+void
+CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr
+                                       ACE_ENV_ARG_DECL) const
+{
+  if (cdr << this->_rep_id ())
+    {
+      return;
+    }
+
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void
+CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &
+                                       ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+// ---------------------------------------------------------------
+
 bool
 operator<< (TAO_OutputCDR & cdr,
             CORBA::TypeCode_ptr tc)
@@ -215,7 +319,7 @@ operator>> (TAO_InputCDR & cdr,
 
 }
 
-
+// ---------------------------------------------------------------
 
 CORBA::TypeCode_ptr
 TAO::unaliased_typecode (CORBA::TypeCode_ptr tc

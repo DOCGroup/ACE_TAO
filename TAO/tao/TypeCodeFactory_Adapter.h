@@ -215,7 +215,7 @@ public:
   // i.e. it is TAO-specific.
 
   virtual bool _tao_make_typecode (TAO_InputCDR & cdr,
-                                   CORBA::TypeCode *& tc);
+                                   CORBA::TypeCode *& tc) = 0;
 
   virtual CORBA::TypeCode_ptr _tao_create_enum_tc (
     CORBA::TCKind,
