@@ -93,9 +93,17 @@ public:
   virtual int handle_exception (ACE_HANDLE);
   // Keep track of the number of notifies.
 
+  int verify_results (void);
+  // Verify that the expected events did happen.
+
 private:
   ACE_Pipe pipe_;
   // Provide something to trigger I/O.
+
+  int input_seen_;
+  int notify_seen_;
+  int timers_fired_;
+
 };
 
 #endif /* __MT_REACTOR_TIMER_TEST_H */
