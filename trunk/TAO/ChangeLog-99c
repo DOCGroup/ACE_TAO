@@ -1,3 +1,9 @@
+Tue Oct  5 15:43:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/params.idl:
+	  Changed the name of a struct to avoid a clash with
+	  a struct in another IDL file.
+
 Mon Oct  4 20:42:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/NVList.h:
