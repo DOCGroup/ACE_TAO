@@ -1,3 +1,20 @@
+Thu Jul  2 19:22:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Makefile: 
+	* orbsvcs/tests/EC_Throughput/Makefile: 
+	* orbsvcs/tests/EC_Throughput/svc.conf: 
+	* orbsvcs/tests/EC_Throughput/data.idl: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	  This test shows how to use the EC for custom marshalling, later
+	  it will be adapted to measure throughput in the EC.
+
+	* orbsvcs/orbsvcs/RtecEventComm.idl: 
+	  Added some padding so the payload (an encapsulated CDR) is
+	  always properly aligned.
+
 Thu Jul  2 14:28:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_array.cpp: We were generating incorrect code for
