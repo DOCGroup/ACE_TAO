@@ -1,3 +1,9 @@
+Sun Aug 22 20:08:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Fixed unused variable warnings in the generated code. 
+
 Sun Aug 22 17:06:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/IDL3_to_IDL2/be_global.cpp:
