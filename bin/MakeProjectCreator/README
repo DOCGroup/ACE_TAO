@@ -211,6 +211,8 @@ command             The name of the command that should be used to process
 commandflags        Any options that should be passed to the command go here.
 inputext            This is a comma separated list of input file extensions
                     that belong to the command.
+libpath             If the command requires an additional library path, add
+                    it here.
 output_option       If the command takes an option to specify a single file
                     output name, then set it here.  Otherwise, this should be
                     omitted.
