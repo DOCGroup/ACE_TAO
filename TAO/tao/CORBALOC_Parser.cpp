@@ -54,7 +54,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
 
       if (*i == ':')
         {
-          if (*(i+1) == '/')
+          if (*(i+1) == '/' && *(i+2) == '/')
             {
               ACE_ERROR((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
@@ -99,6 +99,7 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
   const char protocol_suffix_append[] = "://";
   const char iiop_prefix[] = "iiop";
   const char uiop_prefix[] = "uiop";
+  const char def_port [] = ":2809";
 
   // Copy the cloc_name_ptr to cloc_name_cstring.
   ACE_CString cloc_name_cstring (cloc_name_ptr,
@@ -123,6 +124,7 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
                                        sizeof (iiop_prefix) +
                                        1 + // For the seperator
                                        2 +
+                                       sizeof (def_port) +
                                        key_string.length ());
 
       // Copy the default <iiop:> prefix.
@@ -133,13 +135,6 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       ACE_OS::strcat (end_point,
                       protocol_suffix_append);
 
-      ACE_CString host_name_port =
-        cloc_name_cstring.substring (pos_colon + 1,
-                                     -1);
-
-      ACE_OS::strcat (end_point,
-                      host_name_port.c_str ());
-
     }
   else
     {
@@ -149,7 +144,9 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       // Allocate memory for the end_point.
       end_point = CORBA::string_alloc (addr_list_length +
                                        1 + // For the seperator
-                                       2 + // For the protocol_prefix_append
+                                       2 + // For the
+                                       // protocol_prefix_append
+                                       sizeof (def_port) +
                                        key_string.length ());
 
       ACE_CString prot_name = cloc_name_cstring.substring (0,
@@ -165,23 +162,31 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
 
       // Example:
       // The End_point will now be 'iiop'
-
       ACE_OS::strcat (end_point,
                       protocol_suffix_append);
 
-      // The End_point will now be 'iiop://'
-
-      ACE_CString host_name_port =
-        cloc_name_cstring.substring (pos_colon + 1, -1);
-
-      ACE_OS::strcat (end_point,
-                      host_name_port.c_str ());
-
-      // Example:
-      // The End_point will now be of the form
-      // 'iiop://1.0@doc.ece.uci.edu:12345'
-
     }
+
+  // The End_point will now be 'iiop://'
+  ACE_CString host_name_port =
+    cloc_name_cstring.substring (pos_colon + 1, -1);
+
+  /// Search for a port number.
+  ACE_CString host_port =
+    ACE_OS::strchr (host_name_port.c_str (),
+                    ':');
+
+  ACE_OS::strcat (end_point,
+                  host_name_port.c_str ());
+
+  /// If port number is not specified, add the defaultport no.
+  if (ACE_OS::strcmp (host_port.c_str (), "") == 0)
+    ACE_OS::strcat (end_point,
+                    def_port);
+
+  // Example:
+  // The End_point will now be of the form
+  // 'iiop://1.0@doc.ece.uci.edu:12345'
 
   if (ACE_OS::strncmp (cloc_name_ptr,
                        uiop_prefix,
