@@ -19,7 +19,10 @@ get_priority_bands (const char *test_type,
     ACE_OS::fopen (bands_file, "r");
 
   if (file == 0)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open file %s\n",
+                       bands_file),
+                      -1);
 
   ACE_Read_Buffer reader (file, 1);
 
@@ -77,7 +80,10 @@ get_priority_bands (const char *test_type,
   reader.alloc ()->free (string);
 
   if (result == 0 || result == EOF)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Parsing error in file %s\n",
+                       bands_file),
+                      -1);
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\n"));
@@ -107,7 +113,10 @@ get_values (const char *test_type,
     ACE_OS::fopen (file_name, "r");
 
   if (file == 0)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open file %s\n",
+                       file_name),
+                      -1);
 
   ACE_Read_Buffer reader (file, 1);
 
@@ -156,7 +165,10 @@ get_values (const char *test_type,
   reader.alloc ()->free (string);
 
   if (result == 0 || result == EOF)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Parsing error in file %s\n",
+                       file_name),
+                      -1);
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\n"));
