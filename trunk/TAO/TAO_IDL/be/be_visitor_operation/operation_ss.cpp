@@ -122,7 +122,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &_tao_server_request," << be_nl
+      << "CORBA::ServerRequest &_tao_server_request," << be_nl
       << "void *_tao_object_reference, " << be_nl
       << "void * /* context */, " << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
