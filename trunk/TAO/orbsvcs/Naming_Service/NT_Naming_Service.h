@@ -23,6 +23,9 @@
 #define TAO_NT_NAMING_SERVICE_H
 
 #include /**/ "ace/OS.h"
+
+#if defined(ACE_WIN32)
+
 #include /**/ "ace/NT_Service.h"
 #include /**/ "ace/Singleton.h"
 #include /**/ "ace/Synch.h"
@@ -49,7 +52,7 @@ public:
 
   virtual int svc (void);
   // This is a virtual method inherited from ACE_NT_Service.
-        
+
   virtual int init (int argc,
                     ACE_TCHAR *argv[]);
   // Initialize the objects argc_ and argv_ attributes values.
@@ -61,7 +64,7 @@ private:
   // Argument count.
 
   char **argv_;
-  char **argv_save_; 
+  char **argv_save_;
   // Argument list.
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
@@ -69,6 +72,6 @@ private:
 
 typedef ACE_Singleton<TAO_NT_Naming_Service, ACE_Mutex> SERVICE;
 
+#endif /* ACE_WIN32 */
+
 #endif /* TAO_NT_NAMING_SERVER_H */
-
-
