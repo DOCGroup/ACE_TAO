@@ -2670,7 +2670,7 @@ idl_escape_reader(
 	    }
 	    char save = str[i];
 	    str[i] = '\0';
-	    char out = (char)idl_atoi(&str[2], 16);
+	    char out = (char)idl_atoui(&str[2], 16);
 	    str[i] = save;
 	    return out;
 	}
@@ -2684,7 +2684,7 @@ idl_escape_reader(
 	    }
 	    char save = str[i];
 	    str[i] = '\0';
-	    char out = (char)idl_atoi(&str[1], 8);
+	    char out = (char)idl_atoui(&str[1], 8);
 	    str[i] = save;
 	    return out;
 	} else {
