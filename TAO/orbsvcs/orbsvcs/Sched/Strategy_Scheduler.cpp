@@ -1221,6 +1221,15 @@ template class ACE_Strategy_Scheduler_Factory<ACE_RMS_Scheduler_Strategy>;
 template class ACE_Strategy_Scheduler_Factory<ACE_MLF_Scheduler_Strategy>;
 template class ACE_Strategy_Scheduler_Factory<ACE_EDF_Scheduler_Strategy>;
 template class ACE_Strategy_Scheduler_Factory<ACE_RMS_Dyn_Scheduler_Strategy>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<Dispatch_Entry *>
+#pragma instantiate ACE_Unbounded_Set<Dispatch_Entry *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<Dispatch_Entry *>
+#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_MUF_Scheduler_Strategy>
+#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_RMS_Scheduler_Strategy>
+#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_MLF_Scheduler_Strategy>
+#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_EDF_Scheduler_Strategy>
+#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_RMS_Dyn_Scheduler_Strategy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 

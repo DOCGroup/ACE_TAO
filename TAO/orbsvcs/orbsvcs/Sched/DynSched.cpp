@@ -1700,6 +1700,29 @@ template class ACE_Unbounded_Set<RtecScheduler::RT_Info *>;
 template class ACE_Unbounded_Set<Task_Entry_Link *>;
 template class ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info *>;
 template class ACE_Unbounded_Set_Iterator<Task_Entry_Link *>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Entry<ACE_CString, RtecScheduler::RT_Info *>
+#pragma instantiate ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, ACE_Thread_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, RtecScheduler::RT_Info *, ACE_Thread_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_CString, RtecScheduler::RT_Info *, ACE_Thread_Mutex>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, RtecScheduler::RT_Info *, ACE_Thread_Mutex>
+#pragma instantiate ACE_DNode<Dispatch_Entry_Link>
+#pragma instantiate ACE_DNode<Dispatch_Proxy_Iterator *>
+#pragma instantiate ACE_DNode<TimeLine_Entry_Link>
+#pragma instantiate ACE_Node<RtecScheduler::RT_Info *>
+#pragma instantiate ACE_Node<Task_Entry_Link *>
+#pragma instantiate ACE_Ordered_MultiSet<Dispatch_Entry_Link>
+#pragma instantiate ACE_Ordered_MultiSet<Dispatch_Proxy_Iterator *>
+#pragma instantiate ACE_Ordered_MultiSet<TimeLine_Entry_Link>
+#pragma instantiate ACE_Ordered_MultiSet_Iterator<Dispatch_Entry_Link>
+#pragma instantiate ACE_Ordered_MultiSet_Iterator<Dispatch_Proxy_Iterator *>
+#pragma instantiate ACE_Ordered_MultiSet_Iterator<TimeLine_Entry_Link>
+#pragma instantiate ACE_Unbounded_Queue<Dispatch_Entry *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<Dispatch_Entry *>
+#pragma instantiate ACE_Unbounded_Set<RtecScheduler::RT_Info *>
+#pragma instantiate ACE_Unbounded_Set<Task_Entry_Link *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<Task_Entry_Link *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // EOF
