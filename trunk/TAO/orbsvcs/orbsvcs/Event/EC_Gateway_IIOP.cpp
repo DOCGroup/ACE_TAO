@@ -21,7 +21,8 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
      supplier_ (this),
      supplier_is_active_ (0),
      ec_control_ (0),
-     factory_ (0)
+     factory_ (0),
+     use_ttl_ (1)
 {
   if (this->factory_ == 0)
     {
@@ -35,6 +36,8 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
                    TAO_EC_Gateway_IIOP_Factory);
           this->factory_ = f;
         }
+
+      this->use_ttl_ = this->factory_->use_ttl();
     }
 }
 
@@ -447,8 +450,11 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
   out.length (1);
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
-      if (events[i].header.ttl == 0)
-        continue;
+      if (this->use_ttl_ == 1)
+        {
+          if (events[i].header.ttl == 0)
+            continue;
+        }
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 0;
       RtecEventComm::EventSourceID sid = events[i].header.source;
@@ -464,7 +470,9 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
         continue;
 
       out[0] = events[i];
-      out[0].header.ttl--;
+
+      if (this->use_ttl_ == 1)
+        out[0].header.ttl--;
 
       // ACE_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
       this->push_to_consumer(proxy, out ACE_ENV_ARG_PARAMETER);

@@ -11,6 +11,10 @@
 #include "ECG_Reactive_ConsumerEC_Control.h"
 #include "EC_Gateway_IIOP.h"
 
+#if !defined (__ACE_INLINE__)
+#include "EC_Gateway_IIOP_Factory.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(Event, EC_Gateway_IIOP_Factory, "$Id$")
 
 int
@@ -24,7 +28,8 @@ TAO_EC_Gateway_IIOP_Factory::TAO_EC_Gateway_IIOP_Factory (void)
   :  orbid_ (TAO_ECG_DEFAULT_IIOP_ORB_ID),
      consumer_ec_control_ (TAO_ECG_DEFAULT_IIOP_CONSUMEREC_CONTROL),
      consumer_ec_control_period_ (TAO_ECG_DEFAULT_IIOP_CONSUMEREC_CONTROL_PERIOD),
-     consumer_ec_control_timeout_ (TAO_ECG_DEFAULT_IIOP_CONSUMEREC_CONTROL_TIMEOUT)
+     consumer_ec_control_timeout_ (TAO_ECG_DEFAULT_IIOP_CONSUMEREC_CONTROL_TIMEOUT),
+     use_ttl_ (TAO_ECG_DEFAULT_IIOP_USE_TTL)
 {
 }
 
@@ -99,6 +104,18 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
             {
               // Save argument for later use
               this->orbid_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECGIIOPUseTTL")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              this->use_ttl_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
         }

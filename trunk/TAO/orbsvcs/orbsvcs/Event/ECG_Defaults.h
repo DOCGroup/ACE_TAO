@@ -66,5 +66,9 @@
 # define TAO_ECG_DEFAULT_IIOP_ORB_ID "" /* */
 #endif /* TAO_ECG_DEFAULT_IIOP_ORB_ID */
 
+#ifndef TAO_ECG_DEFAULT_IIOP_USE_TTL
+# define TAO_ECG_DEFAULT_IIOP_USE_TTL 1 /* use TTL */
+#endif /* TAO_ECG_DEFAULT_IIOP_USE_TTL */
+
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_DEFAULTS_H */
