@@ -1,0 +1,69 @@
+Tue Jan 04 07:30:04 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 1.0.11 released.
+
+Tue Jan  4 00:34:57 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	* orbsvcs/LifeCycle_Service/Factory_Trader.cpp: Fixes for KAI that
+	  missed the last round and fixes that were needed after the last
+	  round.
+
+Mon Jan  3 20:33:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp: Fixes for KAI that
+	  missed the last round and fixes that were needed after the last
+	  round.
+
+Mon Jan  3 15:08:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	* orbsvcs//LifeCycle_Service/Factory_Trader.cpp:
+	* orbsvcs/tests/Property/client.cpp: KAI needed fixes in these
+	  files to compile clean. There was a need to explicitly use an
+	  unsigned integer to avoid overloading amibiguity. Essentially
+	  the same fix as 'Mon Jan 03 10:55:36 2000  David L. Levine'.
+
+Mon Jan  3 14:45:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/corbafwd.h: Removed compiler-specific alignment adjusting
+	  preprocessor directives for MSVC and BCB completely.  Thanks to
+	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
+
+Mon Jan 03 10:55:36 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Clerk_i.cpp (get_first_IOR):
+          explicitly use unsigned 0 index for bindings_list
+          array element to avoid overloading ambiguity on Irix
+          and HP/UX.
+
+Mon Jan 03 10:46:31 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n):
+          modified look index so that its comparison is > 0, not
+          >= 0.  Now that it's unsigned, it was causing a compiler
+          warning.
+
+Sun Jan 02 10:48:59 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+          Fixed a MSVC warning, complaining about an array
+          operator.
+
+Sat Jan 01 09:18:59 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: updated dependencies, including
+          Notification Service files.
+
+Sat Jan 01 09:17:40 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ChangeLog: moved to ChangeLog-99c.
