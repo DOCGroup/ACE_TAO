@@ -68,6 +68,11 @@ namespace TAO
   Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
                                      Proxy_Broker_Factory pbf)
   {
+    if (CORBA::is_nil (obj))
+      {
+        return T::_nil ();
+      }
+
     T_ptr proxy = Narrow_Utils<T>::lazy_evaluation (obj);
 
     if (!CORBA::is_nil (proxy))
@@ -102,6 +107,11 @@ namespace TAO
   Narrow_Utils<T>::unchecked_narrow (CORBA::AbstractBase_ptr obj,
                                      Proxy_Broker_Factory pbf)
   {
+    if (obj == 0)
+      {
+        return T::_nil ();
+      }
+
     T_ptr proxy = T::_nil ();
 
     if (obj->_is_objref ())

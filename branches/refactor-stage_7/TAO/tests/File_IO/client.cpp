@@ -138,7 +138,10 @@ MTTEST (void *args)
       for( int i = 0; i < iterations; ++i)
         {
           //seek to the beginning of the file
+#if 0
           ACE_DEBUG((LM_DEBUG,"Making request number %d\n",i));
+#endif /*if 0*/
+
           fd->lseek (0, SEEK_SET ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

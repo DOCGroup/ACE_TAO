@@ -52,10 +52,6 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
-    // Do not unbind duringdestruction. We need the entry to be
-    // there in the map
-    (void) dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
-
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
@@ -76,7 +72,7 @@ namespace TAO
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
-    // try block is to do just this.
+    // try block is to take care of the cases when things go wrong.
     ACE_TRY
       {
         this->write_header (tspec,
@@ -96,47 +92,32 @@ namespace TAO
         ACE_TRY_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
-        // If the above call returns a restart due to connection
-        // failure then call the receive_other interception point
-        // before we leave.
-        if (s == TAO_INVOKE_RESTART)
-          {
-            s =
-              this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
+        // Nothing great on here. If we get a restart during send or a
+        // proper send, we are supposed to call receiver_other ()
+        // interception point. So we do that here
+        Invocation_Status tmp =
+          this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        // We got an error during the interception.
+        if (s == TAO_INVOKE_SUCCESS && tmp != TAO_INVOKE_SUCCESS)
+          s = tmp;
 #endif /*TAO_HAS_INTERCEPTORS */
 
+        // If an error occurred just return. At this point all the
+        // endpoint interception would have been invoked. The callee
+        // wold take care of the rest.
         if (s != TAO_INVOKE_SUCCESS)
           return s;
 
-        // For some strategies one may want to release the transport
-        // back to  cache. If the idling is successfull let the
-        // resolver about that.
-        if (this->resolver_.transport ()->idle_after_send ())
-          this->resolver_.transport_released ();
+        // Do not unbind during destruction. We need the entry to be
+        // there in the map since the reply dispctaher depends on
+        // that.
+        dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
 
-        // @@ In all MT environments, there's a cancellation point lurking
-        // here; need to investigate.  Client threads would frequently be
-        // canceled sometime during recv_request ... the correct action to
-        // take on being canceled is to issue a CancelRequest message to the
-        // server and then imediately let other client-side cancellation
-        // handlers do their jobs.
-        //
-        // In C++, that basically means to unwind the stack using almost
-        // normal procedures: all destructors should fire, and some "catch"
-        // blocks should probably be able to handle things like releasing
-        // pointers. (Without unwinding the C++ stack, resources that must
-        // be freed by thread cancellation won't be freed, and the process
-        // won't continue to function correctly.)  The tricky part is that
-        // according to POSIX, all C stack frames must also have their
-        // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
-        // environment.
-#if TAO_HAS_INTERCEPTORS == 1
-        s =
-          this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-#endif /*TAO_HAS_INTERCEPTORS */
+        // Irrespective of whatever the muxed strategy is, just
+        // release the transport for other threads. This is AMI dude.
+        (void)  this->resolver_.transport_released ();
       }
     ACE_CATCHANY
       {
