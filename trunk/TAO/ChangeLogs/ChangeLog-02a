@@ -1,3 +1,8 @@
+Thu Feb 28 11:40:19 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+	* tests/AMI_Buffering/Makefile: 
+	  updated the Makefile dependencies.
+
 Thu Feb 28 11:38:51 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.SSLIOP: 
