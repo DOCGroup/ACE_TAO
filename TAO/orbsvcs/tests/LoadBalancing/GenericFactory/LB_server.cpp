@@ -52,11 +52,11 @@ LB_Basic_Test::write_ior_to_file (const char *ior)
     ACE_OS::fopen ("obj.ior", "w");
 
   if (output_file == 0)
-  {
-    ACE_ERROR ((LM_ERROR,
-               "Cannot open output file for writing IOR:"));
-    return -1;
-  }
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Cannot open output file for writing IOR:"));
+      return -1;
+    }
 
   ACE_OS::fprintf (output_file, "%s", ior);
   ACE_OS::fclose (output_file);
