@@ -1,3 +1,20 @@
+Thu Sep  3 13:22:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	  Split the huge functions into smaller functions.
+	
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+		Added MACROS for quantify calls.
+
+	* tests/Cubit/TAO/MT_Cubit/Timer.{h,cpp}:
+		A class that abstracts the timer over pcctimer for Chorus
+	  platforms and uses ACE_Timer for other platforms.
+
+	* tests/Cubit/TAO/MT_Cubit/Cubit_i.{h,cpp}:
+		Added an ORB member so that shutdown is done using that 
+	  instead of TAO_ORB_Core_instance.
+	
 Thu Sep 03 10:36:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Mcast/Makefile: added VBIN definition so that

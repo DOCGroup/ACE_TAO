@@ -231,7 +231,7 @@ Cubit_Task::create_servants (void)
                            this->task_id_);
 
           ACE_NEW_RETURN (this->servants_[i],
-                          Cubit_i (this->orb_),
+                          Cubit_i (this->orb_.in ()),
                           -1);
 
           if (this->servants_[i] == 0)
