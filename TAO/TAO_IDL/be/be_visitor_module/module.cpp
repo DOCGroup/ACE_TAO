@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_module.h"
 
@@ -419,6 +419,149 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
   delete visitor;
   return 0;
 }
+
+#ifdef IDL_HAS_VALUETYPE
+
+// visit an valuetype
+int
+be_visitor_module::visit_valuetype (be_valuetype *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_CI:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CI);
+      break;
+    case TAO_CodeGen::TAO_MODULE_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CS);
+      break;
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS);
+      break;
+    case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_SI:
+    case TAO_CodeGen::TAO_MODULE_SS:
+    case TAO_CodeGen::TAO_MODULE_IS:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      return 0;    // nothing to do, resp. not yet impl.
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_module::"
+                           "visit_valuetype - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_valuetype - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_valuetype - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+// visit an valuetype_fwd
+int
+be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+                   // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_CI:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CI);
+      break;
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CI);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+    // case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_MODULE_CS:
+    case TAO_CodeGen::TAO_MODULE_SH:
+    case TAO_CodeGen::TAO_MODULE_SI:
+    case TAO_CodeGen::TAO_MODULE_SS:
+        case TAO_CodeGen::TAO_MODULE_IS:
+        case TAO_CodeGen::TAO_MODULE_IH:
+                return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_module::"
+                           "visit_valuetype_fwd - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_valuetype_fwd - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_module::"
+                         "visit_valuetype_fwd - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
 
 // visit an structure
 int

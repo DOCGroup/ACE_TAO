@@ -35,39 +35,49 @@
 #define IDL_RAISES 290
 #define IDL_CONTEXT 291
 #define IDL_NATIVE 292
-#define IDL_INTEGER_LITERAL 293
-#define IDL_STRING_LITERAL 294
-#define IDL_CHARACTER_LITERAL 295
-#define IDL_FLOATING_PT_LITERAL 296
-#define IDL_TRUETOK 297
-#define IDL_FALSETOK 298
-#define IDL_SCOPE_DELIMITOR 299
-#define IDL_LEFT_SHIFT 300
-#define IDL_RIGHT_SHIFT 301
+#define IDL_ABSTRACT 293
+#define IDL_CUSTOM 294
+#define IDL_INIT 295
+#define IDL_PRIVATE 296
+#define IDL_PUBLIC 297
+#define IDL_SUPPORTS 298
+#define IDL_TRUNCATABLE 299
+#define IDL_VALUETYPE 300
+#define IDL_INTEGER_LITERAL 301
+#define IDL_STRING_LITERAL 302
+#define IDL_CHARACTER_LITERAL 303
+#define IDL_FLOATING_PT_LITERAL 304
+#define IDL_TRUETOK 305
+#define IDL_FALSETOK 306
+#define IDL_SCOPE_DELIMITOR 307
+#define IDL_LEFT_SHIFT 308
+#define IDL_RIGHT_SHIFT 309
 typedef union {
-  AST_Decl		*dcval;		/* Decl value		*/
-  UTL_StrList		*slval;		/* String list		*/
-  UTL_NameList		*nlval;		/* Name list		*/
-  UTL_ExprList		*elval;		/* Expression list	*/
-  UTL_LabelList		*llval;		/* Label list		*/
-  UTL_DeclList		*dlval;		/* Declaration list	*/
-  FE_InterfaceHeader	*ihval;		/* Interface header	*/
-  AST_Expression	*exval;		/* Expression value	*/
-  AST_UnionLabel	*ulval;		/* Union label		*/
-  AST_Field		*ffval;		/* Field value		*/
-  AST_Expression::ExprType etval;	/* Expression type	*/
-  AST_Argument::Direction dival;	/* Argument direction	*/
-  AST_Operation::Flags	ofval;		/* Operation flags	*/
-  FE_Declarator		*deval;		/* Declarator value	*/
-  idl_bool		bval;		/* Boolean value	*/
-  long			ival;		/* Long value		*/
-  double		dval;		/* Double value		*/
-  float			fval;		/* Float value		*/
-  char			cval;		/* Char value		*/
+  AST_Decl              *dcval;         /* Decl value           */
+  UTL_StrList           *slval;         /* String list          */
+  UTL_NameList          *nlval;         /* Name list            */
+  UTL_ExprList          *elval;         /* Expression list      */
+  UTL_LabelList         *llval;         /* Label list           */
+  UTL_DeclList          *dlval;         /* Declaration list     */
+  FE_InterfaceHeader    *ihval;         /* Interface header     */
+  FE_obv_header         *vhval;         /* Valuetype header     */
+  AST_Expression        *exval;         /* Expression value     */
+  AST_UnionLabel        *ulval;         /* Union label          */
+  AST_Field             *ffval;         /* Field value          */
+  AST_Field::Visibility  vival;         /* N/A, pub or priv     */
+  AST_Expression::ExprType etval;       /* Expression type      */
+  AST_Argument::Direction dival;        /* Argument direction   */
+  AST_Operation::Flags  ofval;          /* Operation flags      */
+  FE_Declarator         *deval;         /* Declarator value     */
+  idl_bool              bval;           /* Boolean value        */
+  long                  ival;           /* Long value           */
+  double                dval;           /* Double value         */
+  float                 fval;           /* Float value          */
+  char                  cval;           /* Char value           */
 
-  String		*sval;		/* String value		*/
-  char			*strval;	/* char * value		*/
-  Identifier		*idval;		/* Identifier		*/
-  UTL_IdList		*idlist;	/* Identifier list	*/
+  String                *sval;          /* String value         */
+  char                  *strval;        /* char * value         */
+  Identifier            *idval;         /* Identifier           */
+  UTL_IdList            *idlist;        /* Identifier list      */
 } TAO_YYSTYPE;
 extern TAO_YYSTYPE tao_yylval;

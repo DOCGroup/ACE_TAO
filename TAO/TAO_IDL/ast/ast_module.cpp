@@ -72,8 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * of UTL_Scope.
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(ast, ast_module, "$Id$")
 
@@ -85,8 +85,9 @@ AST_Module::AST_Module()
 }
 
 AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
-	 : AST_Decl(AST_Decl::NT_module, n, p),
-	   UTL_Scope(AST_Decl::NT_module)
+         : AST_Decl(AST_Decl::NT_module, n, p),
+           UTL_Scope(AST_Decl::NT_module),
+           pd_has_nested_valuetype (0)
 {
 }
 
@@ -187,8 +188,8 @@ AST_Module *AST_Module::fe_add_module(AST_Module *t)
  */
 AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
 {
-  AST_Decl		*predef;
-  AST_Interface		*fwd;
+  AST_Decl              *predef;
+  AST_Interface         *fwd;
 
   /*
    * Already defined?
@@ -203,11 +204,11 @@ AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
       if (fwd == NULL)
           return NULL;
 
-      if (!fwd->is_defined()) {	/* Forward declared and not defined yet */
-	if (fwd->defined_in() != this) {
-	  idl_global->err()
-	     ->error3(UTL_Error::EIDL_SCOPE_CONFLICT, fwd, t, this);
-	  return NULL;
+      if (!fwd->is_defined()) { /* Forward declared and not defined yet */
+        if (fwd->defined_in() != this) {
+          idl_global->err()
+             ->error3(UTL_Error::EIDL_SCOPE_CONFLICT, fwd, t, this);
+          return NULL;
         }
       }
       /*
@@ -216,7 +217,7 @@ AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
        */
       else if (referenced(predef)) {
         idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, predef);
-	return NULL;
+        return NULL;
       }
     } else if (!can_be_redefined(predef)) {
       idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, predef);
@@ -247,20 +248,21 @@ AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
  */
 AST_InterfaceFwd *AST_Module::fe_add_interface_fwd(AST_InterfaceFwd *i)
 {
-  AST_Decl	*d;
-  AST_Interface	*itf;
+  AST_Decl      *d;
+  AST_Interface *itf;
 
   /*
    * Already defined and cannot be redefined? Or already used?
    */
   if ((d = lookup_for_add(i, I_FALSE)) != NULL) {
     if (d->node_type() == AST_Decl::NT_interface &&
-	d->defined_in() == this) {
+        d->defined_in() == this) {
       itf = AST_Interface::narrow_from_decl(d);
       if (itf == NULL)
           return NULL;
 
-      i->set_full_definition(itf);
+      // %! redefinition of forward; type check not implemented
+      i->set_full_definition(itf);   //%! memory leak
       return i;
     }
     if (!can_be_redefined(d)) {
@@ -591,6 +593,29 @@ AST_Module::dump(ostream &o)
   UTL_Scope::dump(o);
   idl_global->indent()->skip_to(o);
   o << "}";
+}
+
+
+// involved in OBV_ namespace generation
+void
+AST_Module::set_has_nested_valuetype ()
+{
+#ifdef IDL_HAS_VALUETYPE
+  UTL_Scope *parent;
+  if (!pd_has_nested_valuetype && (parent = this->defined_in()))
+    {
+      AST_Module *pm = AST_Module::narrow_from_scope (parent);
+      if (pm)
+        pm->set_has_nested_valuetype ();
+    }
+  pd_has_nested_valuetype = 1;
+#endif /* IDL_HAS_VALUETYPE */
+}
+
+idl_bool
+AST_Module::has_nested_valuetype ()
+{
+  return pd_has_nested_valuetype;
 }
 
 /*

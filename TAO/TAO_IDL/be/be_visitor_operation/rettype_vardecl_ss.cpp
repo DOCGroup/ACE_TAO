@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -117,6 +117,31 @@ visit_interface_fwd (be_interface_fwd *)
   *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();" << be_nl;
   return 0;
 }
+
+#ifdef IDL_HAS_VALUETYPE
+// like be_compiled_visitor_operation_rettype_vardecl_ss
+int
+be_visitor_operation_rettype_vardecl_ss::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  os->indent ();
+  *os << node->name () << "_var _tao_retval;\n";
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_vardecl_ss::
+visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  os->indent ();
+  *os << node->name () << "_var _tao_retval;\n";
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_vardecl_ss::
@@ -303,4 +328,3 @@ visit_interface_fwd (be_interface_fwd *node)
   *os << node->name () << "_var _tao_retval;\n";
   return 0;
 }
-

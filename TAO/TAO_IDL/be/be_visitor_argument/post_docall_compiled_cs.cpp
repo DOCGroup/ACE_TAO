@@ -120,6 +120,56 @@ be_visitor_args_post_docall_compiled_cs::visit_interface_fwd (be_interface_fwd *
   return 0;
 }
 
+#ifdef IDL_HAS_VALUETYPE
+
+int
+be_visitor_args_post_docall_compiled_cs::visit_valuetype (be_valuetype *)
+{
+  // we must narrow the out object reference to the appropriate type
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_INOUT:
+      {
+        os->indent ();
+        *os << "CORBA::remove_ref (" << arg->local_name ()
+            << ");\n";
+      }
+      break;
+    default:
+      break;
+    }
+  return 0;
+}
+
+int
+be_visitor_args_post_docall_compiled_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+{
+  // we must narrow the out object reference to the appropriate type
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_INOUT:
+      {
+        os->indent ();
+        *os << "CORBA::remove_ref (" << arg->local_name ()
+            << ");\n";
+      }
+      break;
+    default:
+      break;
+    }
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
+
 int
 be_visitor_args_post_docall_compiled_cs::visit_string (be_string *)
 {

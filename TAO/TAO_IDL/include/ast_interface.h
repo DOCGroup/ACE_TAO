@@ -100,6 +100,10 @@ public:
   virtual ~AST_Interface() {}
 
   // Data Accessors
+  static void fwd_redefinition_helper (AST_Interface *&i,
+                                       UTL_Scope *s, UTL_StrList *p);
+
+  virtual void redefine (AST_Interface *from, UTL_StrList *p);
   AST_Interface **inherits();
   void set_inherits(AST_Interface **i);
   long n_inherits();
@@ -112,6 +116,11 @@ public:
   {
     return (pd_n_inherits < 0) ? I_FALSE : I_TRUE;
   }
+
+  virtual idl_bool is_abstract_interface ();
+  virtual idl_bool is_valuetype ();
+  virtual idl_bool is_abstract_valuetype ();
+  virtual void set_abstract_valuetype ();
 
   // Narrowing
   DEF_NARROW_METHODS2(AST_Interface, AST_Type, UTL_Scope);
@@ -134,6 +143,7 @@ private:
   virtual AST_Constant          *fe_add_constant(AST_Constant   *c);
   virtual AST_Exception         *fe_add_exception(AST_Exception *e);
   virtual AST_Attribute         *fe_add_attribute(AST_Attribute *a);
+  virtual AST_Field             *fe_add_field(AST_Field *o);
   virtual AST_Operation         *fe_add_operation(AST_Operation *o);
   virtual AST_Union             *fe_add_union(AST_Union         *u);
   virtual AST_Structure         *fe_add_structure(AST_Structure *s);

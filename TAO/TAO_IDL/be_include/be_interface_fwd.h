@@ -39,8 +39,10 @@ public:
   be_interface_fwd (void);
   // default constructor
 
-  be_interface_fwd (UTL_ScopedName *n, UTL_StrList *p);
+  be_interface_fwd (AST_Interface *dummy, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
+
+  virtual ~be_interface_fwd (void);
 
   virtual int gen_var_defn (void);
   // generate the _var class definition

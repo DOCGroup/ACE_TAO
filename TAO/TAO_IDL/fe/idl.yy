@@ -1,4 +1,4 @@
-
+/* $Id$ */
 
 /*
 
@@ -102,9 +102,11 @@ extern int yyleng;
   UTL_LabelList		*llval;		/* Label list		*/
   UTL_DeclList		*dlval;		/* Declaration list	*/
   FE_InterfaceHeader	*ihval;		/* Interface header	*/
+  FE_obv_header         *vhval;         /* Valuetype header     */
   AST_Expression	*exval;		/* Expression value	*/
   AST_UnionLabel	*ulval;		/* Union label		*/
   AST_Field		*ffval;		/* Field value		*/
+  AST_Field::Visibility  vival;         /* N/A, pub or priv     */
   AST_Expression::ExprType etval;	/* Expression type	*/
   AST_Argument::Direction dival;	/* Argument direction	*/
   AST_Operation::Flags	ofval;		/* Operation flags	*/
@@ -162,6 +164,15 @@ extern int yyleng;
 %token		IDL_RAISES
 %token		IDL_CONTEXT
 %token          IDL_NATIVE
+                 /* OBV tokens  see OMG ptc/98-10-04 3.2.4 */
+%token          IDL_ABSTRACT
+%token          IDL_CUSTOM
+%token          IDL_INIT
+%token          IDL_PRIVATE
+%token          IDL_PUBLIC
+%token          IDL_SUPPORTS
+%token          IDL_TRUNCATABLE
+%token          IDL_VALUETYPE
 
 %token <ival>	IDL_INTEGER_LITERAL
 %token <sval>	IDL_STRING_LITERAL
@@ -189,7 +200,7 @@ extern int yyleng;
 %type <slval>	string_literals
 
 %type <nlval>	at_least_one_scoped_name scoped_names inheritance_spec
-%type <nlval>	opt_raises
+%type <nlval>	opt_raises supports_spec 
 
 %type <elval>	at_least_one_array_dim array_dims
 
@@ -199,6 +210,8 @@ extern int yyleng;
 %type <dlval>   at_least_one_simple_declarator simple_declarators
 
 %type <ihval>	interface_header
+
+%type <vhval>   value_header
 
 %type <exval>	expression const_expr or_expr xor_expr and_expr shift_expr
 %type <exval>	add_expr mult_expr unary_expr primary_expr literal
@@ -218,9 +231,9 @@ extern int yyleng;
 
 %type <deval>	declarator simple_declarator complex_declarator
 
-%type <bval>	opt_readonly
+%type <bval>	opt_readonly, opt_truncatable
 
-%type <idval>	interface_decl id
+%type <idval>	interface_decl value_decl id
 
 %type <ival> type_dcl
 %%
@@ -271,6 +284,14 @@ definition
 	| module
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ModuleDeclSeen);
+        }
+	  ';'
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+        }
+	| value_def
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_ValuetypeDeclSeen);
         }
 	  ';'
 	{
@@ -348,9 +369,6 @@ interface :
 	  AST_Interface *i = NULL;
 	  AST_Decl	*v = NULL;
 	  UTL_StrList   *p = idl_global->pragmas();
-	  AST_Decl	*d = NULL;
-	  AST_Interface *fd = NULL;
-
 	  ACE_UNUSED_ARG (v);
 
 	  /*
@@ -361,61 +379,7 @@ interface :
 						    $1->inherits(),
 						    $1->n_inherits(),
 						    p);
-	    if (i != NULL &&
-		(d = s->lookup_by_name(i->name(), I_FALSE)) != NULL) {
-	      /*
-	       * See if we're defining a forward declared interface.
-	       */
-	      if (d->node_type() == AST_Decl::NT_interface) {
-		/*
-		 * Narrow to an interface
-		 */
-		fd = AST_Interface::narrow_from_decl(d);
-		/*
-		 * Successful?
-		 */
-		if (fd == NULL) {
-		  /*
-		   * Should we give an error here?
-		   */
-		}
-		/*
-		 * If it is a forward declared interface..
-		 */
-		else if (!fd->is_defined()) {
-		  /*
-		   * Check if redefining in same scope
-		   */
-		  if (fd->defined_in() != s) {
-		    idl_global->err()
-		       ->error3(UTL_Error::EIDL_SCOPE_CONFLICT,
-				i,
-				fd,
-				ScopeAsDecl(s));
-		  }
-		  /*
-		   * All OK, do the redefinition
-		   */
-		  else {
-		    fd->set_inherits($1->inherits());
-		    fd->set_n_inherits($1->n_inherits());
-		    /*
-		     * Update place of definition
-		     */
-		    fd->set_imported(idl_global->imported());
-		    fd->set_in_main_file(idl_global->in_main_file());
-		    fd->set_line(idl_global->lineno());
-		    fd->set_file_name(idl_global->filename());
-		    fd->add_pragmas(p);
-		    /*
-		     * Use full definition node
-		     */
-		    delete i;
-		    i = fd;
-		  }
-	        }
-	      }
-	    }
+            AST_Interface::fwd_redefinition_helper (i,s,p);
 	    /*
 	     * Add the interface to its definition scope
 	     */
@@ -490,6 +454,250 @@ inheritance_spec
 	  $$ = NULL;
 	}
 	;
+
+value_def
+        : valuetype
+        | value_abs_decl
+        | value_forward_decl
+        | value_box_decl
+	;
+
+valuetype
+        : IDL_CUSTOM value_concrete_decl
+        {
+           cerr << "error in " << idl_global->filename()->get_string()
+		<< " line " << idl_global->lineno() << ":\n" ;
+           cerr << "Sorry, I (TAO_IDL) can't handle custom yet\n";
+            /* set custom (if not truncatable) */
+        }
+        | value_concrete_decl
+        ;
+
+value_concrete_decl :
+        value_header
+	{
+	  UTL_Scope     *s = idl_global->scopes()->top_non_null();
+	  AST_Interface *i = NULL;
+	  UTL_StrList   *p = idl_global->pragmas();
+
+	  if (s != NULL && $1 != NULL) {
+	    i = idl_global->gen()->create_valuetype($1->interface_name(),
+						    $1->inherits(),
+						    $1->n_inherits(),
+						    p);
+            AST_Interface::fwd_redefinition_helper (i,s,p);
+	    /*
+	     * Add the valuetype to its definition scope
+	     */
+	    (void) s->fe_add_interface(i);
+	  }
+	  /*
+	   * Push it on the scope stack
+	   */
+	  idl_global->scopes()->push(i);
+        }
+	'{'
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSqSeen);
+	}
+	value_elements
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceBodySeen);
+	}
+	'}'
+        {
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceQsSeen);
+	  /*
+	   * Done with this interface - pop it off the scopes stack
+	   */
+	  UTL_Scope* s = idl_global->scopes()->top();
+	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
+	  UTL_StrList *p = m->pragmas ();
+	  if (p != 0) p = (UTL_StrList*)p->copy ();
+	  idl_global->set_pragmas (p);
+	  idl_global->scopes()->pop();
+        }
+        ;
+
+value_abs_decl :
+        IDL_ABSTRACT
+        value_header
+	{
+	  UTL_Scope     *s = idl_global->scopes()->top_non_null();
+	  AST_Interface *i = NULL;
+	  UTL_StrList   *p = idl_global->pragmas();
+
+	  if (s != NULL && $2 != NULL) {
+
+            if ($2->n_concrete() > 0) {
+              idl_global->err()->abstract_inheritance_error ($2->interface_name ());
+            }
+
+	    i = idl_global->gen()->create_valuetype($2->interface_name(),
+						    $2->inherits(),
+						    $2->n_inherits(),
+						    p);
+            i->set_abstract_valuetype ();
+            AST_Interface::fwd_redefinition_helper (i,s,p);
+	    /*
+	     * Add the valuetype to its definition scope
+	     */
+	    (void) s->fe_add_interface(i);
+	  }
+	  /*
+	   * Push it on the scope stack
+	   */
+	  idl_global->scopes()->push(i);
+        }
+	'{'
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSqSeen);
+	}
+	exports
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceBodySeen);
+	}
+	'}'
+        {
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceQsSeen);
+	  /*
+	   * Done with this interface - pop it off the scopes stack
+	   */
+	  UTL_Scope* s = idl_global->scopes()->top();
+	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
+	  UTL_StrList *p = m->pragmas ();
+	  if (p != 0) p = (UTL_StrList*)p->copy ();
+	  idl_global->set_pragmas (p);
+	  idl_global->scopes()->pop();
+        }
+
+        ;
+
+value_header : 
+        value_decl 
+        opt_truncatable
+        inheritance_spec
+        supports_spec
+        {
+          $$ = new FE_obv_header (new UTL_ScopedName ($1, NULL), $3, $4);
+        }
+        ;
+
+value_decl
+        : IDL_VALUETYPE
+        {
+	   idl_global->set_parse_state(IDL_GlobalData::PS_ValuetypeSeen);
+        }
+        id
+        {
+           idl_global->set_parse_state(IDL_GlobalData::PS_ValuetypeIDSeen);
+	   $$ = $3;
+        }
+        ;
+
+opt_truncatable :
+          IDL_TRUNCATABLE 
+ 	  {
+            cerr << "warning in " << idl_global->filename()->get_string()
+	         << " line " << idl_global->lineno() << ":\n" ;
+            cerr << "truncatable modifier not supported and is ignored\n";
+	    $$ = I_FALSE;
+	    /* $$ = I_TRUE; */
+	  }
+	| /* EMPTY */
+	  {
+	    $$ = I_FALSE;
+	  }
+	;
+
+supports_spec :
+            IDL_SUPPORTS 
+            scoped_name 
+            { 
+              $$ = new UTL_NameList($2, NULL); 
+            }
+        |   /* empty */     
+            { 
+              $$ = NULL; 
+            }
+        ;
+
+value_forward_decl :
+        IDL_ABSTRACT
+        value_decl
+        {
+	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
+	  UTL_ScopedName	*n = new UTL_ScopedName($2, NULL);
+	  AST_InterfaceFwd	*f = NULL;
+	  UTL_StrList		*p = idl_global->pragmas();
+
+	  idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+	  /*
+	   * Create a node representing a forward declaration of an
+	   * valuetype. Store it in the enclosing scope
+	   */
+	  if (s != NULL) {
+	    f = idl_global->gen()->create_valuetype_fwd(n, p);
+         //   if ($1)
+            f->set_abstract_valuetype ();
+	    (void) s->fe_add_interface_fwd(f);
+	  }
+	}
+      |
+        value_decl
+        {
+	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
+	  UTL_ScopedName	*n = new UTL_ScopedName($1, NULL);
+	  AST_InterfaceFwd	*f = NULL;
+	  UTL_StrList		*p = idl_global->pragmas();
+
+	  idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+	  /*
+	   * Create a node representing a forward declaration of an
+	   * valuetype. Store it in the enclosing scope
+	   */
+	  if (s != NULL) {
+	    f = idl_global->gen()->create_valuetype_fwd(n, p);
+	    (void) s->fe_add_interface_fwd(f);
+	  }
+	}
+	;
+
+      
+value_box_decl
+        : value_decl type_spec /* in this order %!?*/
+        {
+           cerr << "error in " << idl_global->filename()->get_string()
+		<< " line " << idl_global->lineno() << ":\n" ;
+           cerr << "Sorry, I (TAO_IDL) can't handle boxes yet\n";
+        }
+        ;
+
+value_elements
+        : value_elements value_element
+        | /* EMPTY */
+        ;
+
+value_element
+        : state_member
+        | export
+        | init_decl
+        ;
+
+state_member
+        : IDL_PUBLIC
+          {
+            /* is $0 to member_i */
+            $<vival>$ = AST_Field::vis_PUBLIC;
+          }
+          member_i
+        | IDL_PRIVATE
+          {
+            /* is $0 to member_i */
+            $<vival>$ = AST_Field::vis_PRIVATE;
+          }
+          member_i
+        ; 
 
 exports
 	: exports export
@@ -1219,7 +1427,15 @@ members
 	| /* EMPTY */
 	;
 
-member	:
+member  : 
+        { 
+          /* is $0 to member_i */
+          $<vival>$ = AST_Field::vis_NA;
+        }
+        member_i
+        ;
+
+member_i:
 	type_spec
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_MemberTypeSeen);
@@ -1255,7 +1471,8 @@ member	:
  	      AST_Type *tp = d->compose($1);
 	      if (tp == NULL)
 		continue;
-	      f = idl_global->gen()->create_field(tp, d->name(), p);
+              /* $0 denotes Visibility, must be on yacc reduction stack */
+	      f = idl_global->gen()->create_field(tp, d->name(), p, $<vival>0);
 	      (void) s->fe_add_field(f);
 	    }
 	    delete l;
@@ -2123,6 +2340,16 @@ op_type_spec
 	       ->lookup_primitive_type(AST_Expression::EV_void);
 	}
 	;
+
+init_decl
+        : IDL_INIT
+        {
+           cerr << "error in " << idl_global->filename()->get_string()
+		<< " line " << idl_global->lineno() << ":\n" ;
+           cerr << "Sorry, I (TAO_IDL) can't handle init yet\n";
+        }
+        ;
+
 
 parameter_list
 	: '('

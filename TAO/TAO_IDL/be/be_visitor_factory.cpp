@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 // individual visitors included only here
 #include "be_visitor_factory.h"
@@ -35,6 +35,8 @@
 #include "be_visitor_field.h"
 #include "be_visitor_interface.h"
 #include "be_visitor_interface_fwd.h"
+#include "be_visitor_valuetype.h"
+#include "be_visitor_valuetype_fwd.h"
 #include "be_visitor_module.h"
 #include "be_visitor_operation.h"
 #include "be_visitor_root.h"
@@ -82,7 +84,6 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
   // created context is a copy of what was sent by the caller. The newly
   // created visitor will own this new copy.
   be_visitor_context *new_ctx = new be_visitor_context (*ctx);
-
   switch (st)
     {
     case TAO_CodeGen::TAO_ROOT_CH:
@@ -181,6 +182,48 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_fwd_ci (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI:
       return new be_visitor_interface_fwd_cdr_op_ci (new_ctx);
+
+#   ifdef IDL_HAS_VALUETYPE
+
+    case TAO_CodeGen::TAO_VALUETYPE_CH:
+      return new be_visitor_valuetype_ch (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_CS:
+      return new be_visitor_valuetype_cs (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_CI:
+      return new be_visitor_valuetype_ci (new_ctx);
+
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+      return new be_visitor_valuetype_obv_ch (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+      return new be_visitor_decl (new_ctx);  //  currently NO-OP
+      //return new be_visitor_valuetype_obv_ci (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
+      return new be_visitor_valuetype_obv_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_FIELD_OBV_CH:
+      return new be_visitor_valuetype_field_ch (new_ctx);
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
+    //case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
+    //case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
+    //case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
+      return new be_visitor_obv_operation_arglist (new_ctx);
+
+    case TAO_CodeGen::TAO_MODULE_OBV_CH:
+    case TAO_CodeGen::TAO_MODULE_OBV_CI:
+    case TAO_CodeGen::TAO_MODULE_OBV_CS:
+      return new be_visitor_obv_module (new_ctx);
+
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
+      return new be_visitor_valuetype_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
+      return new be_visitor_valuetype_cdr_op_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
+      return new be_visitor_decl (new_ctx);  // is TODO
+
+#   endif /* IDL_HAS_VALUETYPE */
 
     case TAO_CodeGen::TAO_STRUCT_CH:
       return new be_visitor_structure_ch (new_ctx);
@@ -533,9 +576,9 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_sh (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_SS:
       return new be_compiled_visitor_operation_ss (new_ctx);
-	case TAO_CodeGen::TAO_OPERATION_IS:
+        case TAO_CodeGen::TAO_OPERATION_IS:
       return new be_visitor_operation_is (new_ctx);
-	 case TAO_CodeGen::TAO_OPERATION_IH:
+         case TAO_CodeGen::TAO_OPERATION_IH:
       return new be_visitor_operation_ih (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH:
       return new be_visitor_operation_collocated_sh (new_ctx);
@@ -571,8 +614,8 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_decl (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-	case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-	case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:
       return new be_visitor_operation_arglist (new_ctx);

@@ -101,6 +101,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_module.h"           // class BE_Module
 #include        "be_interface.h"        // class BE_Interface
 #include        "be_interface_fwd.h"    // class BE_InterfaceFwd
+#include        "be_valuetype.h"        // class be_valuetype
+#include        "be_valuetype_fwd.h"    // class be_valuetype_fwd
 #include        "be_structure.h"        // class BE_Structure
 #include        "be_exception.h"        // class BE_Exception
 #include        "be_expression.h"       // class BE_Expr_val

@@ -65,10 +65,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 // utl_error.cc - Implementation of error reporting object for IDL
-//		  compiler program
+//                compiler program
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(util, utl_error, "$Id$")
 
@@ -114,7 +114,7 @@ error_string(UTL_Error::ErrorCode c)
   case UTL_Error::EIDL_ILLEGAL_CONTEXT:
     return GTDEVEL("error in context(..) clause, ");
   case UTL_Error::EIDL_CANT_INHERIT:
-    return GTDEVEL("cannot inherit from ");
+    return GTDEVEL("");
   case UTL_Error::EIDL_LOOKUP_ERROR:
     return GTDEVEL("error in lookup of symbol: ");
   case UTL_Error::EIDL_INHERIT_FWD_ERROR:
@@ -468,8 +468,8 @@ void
 UTL_Error::syntax_error(IDL_GlobalData::ParseState ps)
 {
   idl_error_header(EIDL_SYNTAX_ERROR,
-		   idl_global->lineno(),
-		   idl_global->filename());
+                   idl_global->lineno(),
+                   idl_global->filename());
   cerr << parse_state_to_error_message(ps) << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
@@ -501,9 +501,9 @@ UTL_Error::error2(UTL_Error::ErrorCode c, AST_Decl *d1, AST_Decl *d2)
 
 void
 UTL_Error::error3(UTL_Error::ErrorCode c,
-		  AST_Decl *d1,
-		  AST_Decl *d2,
-		  AST_Decl *d3)
+                  AST_Decl *d1,
+                  AST_Decl *d2,
+                  AST_Decl *d3)
 {
   idl_error_header(c, d1->line(), d1->file_name());
   d1->name()->dump(cerr); cerr << ", ";
@@ -527,8 +527,8 @@ void
 UTL_Error::lookup_error(UTL_ScopedName *n)
 {
   idl_error_header(EIDL_LOOKUP_ERROR,
-		   idl_global->lineno(),
-		   idl_global->filename());
+                   idl_global->lineno(),
+                   idl_global->filename());
   n->dump(cerr);
   cerr << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
@@ -552,14 +552,26 @@ UTL_Error::inheritance_fwd_error(UTL_ScopedName *n, AST_Interface *f)
 void
 UTL_Error::inheritance_error(UTL_ScopedName *n, AST_Decl *d)
 {
-  idl_error_header(EIDL_CANT_INHERIT, d->line(), d->file_name());
-  cerr << " interface ";
+  idl_error_header(EIDL_CANT_INHERIT, idl_global->lineno(), idl_global->filename());
+  /* cerr << " interface "; */
   n->dump(cerr);
   cerr << GTDEVEL(" attempts to inherit from ");
-  d->dump(cerr);
+  d->name()->dump(cerr);
   cerr << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
+
+// Report inheritance from non-abstract valuetype
+void
+UTL_Error::abstract_inheritance_error (UTL_ScopedName *n)
+{
+  idl_error_header(EIDL_CANT_INHERIT, idl_global->lineno(), idl_global->filename());
+  cerr << " abstract valuetype ";
+  n->dump(cerr);
+  cerr << GTDEVEL(" attempts to inherit from nonabstract type\n");
+  idl_global->set_err_count(idl_global->err_count() + 1);
+}
+
 
 // Report an error while evaluating an expression
 void
@@ -606,8 +618,8 @@ UTL_Error::enum_val_expected(AST_Union *u, AST_UnionLabel *l)
 // the enum discriminator type
 void
 UTL_Error::enum_val_lookup_failure(AST_Union *u,
-				AST_Enum *e,
-				UTL_ScopedName *n)
+                                AST_Enum *e,
+                                UTL_ScopedName *n)
 {
   idl_error_header(EIDL_ENUM_VAL_NOT_FOUND, u->line(), u->file_name());
   cerr << " union " << u->local_name()->get_string() << ", ";
@@ -623,8 +635,8 @@ void
 UTL_Error::name_case_error(char *b, char *n)
 {
   idl_error_header(EIDL_NAME_CASE_ERROR,
-		   idl_global->lineno(),
-		   idl_global->filename());
+                   idl_global->lineno(),
+                   idl_global->filename());
   cerr << "\"" << b << GTDEVEL("\" and ") << "\"" << n << "\"\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
@@ -661,8 +673,8 @@ void
 UTL_Error::fwd_decl_lookup(AST_Interface *d, UTL_ScopedName *n)
 {
   idl_error_header(EIDL_FWD_DECL_LOOKUP,
-		   idl_global->lineno(),
-		   idl_global->filename());
+                   idl_global->lineno(),
+                   idl_global->filename());
   cerr << GTDEVEL("trying to look up ");
   n->dump(cerr);
   cerr << GTDEVEL(" in undefined forward declared interface ");
@@ -688,8 +700,8 @@ void
 UTL_Error::not_a_type(AST_Decl *d)
 {
   idl_error_header(EIDL_NOT_A_TYPE,
-		   idl_global->lineno(),
-		   idl_global->filename());
+                   idl_global->lineno(),
+                   idl_global->filename());
   if (d == NULL || d->name() == NULL)
     cerr << GTDEVEL("unknown symbol");
   else
