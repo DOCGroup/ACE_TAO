@@ -1,3 +1,14 @@
+Thu Feb  7 13:13:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Added new substate and used it in generation of AMH response
+          handler operations, where the environment arg is not used
+          in the body if there are no other args.
+
 Thu Feb  7 09:12:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/fe_init.cpp:
