@@ -1,3 +1,9 @@
+Sat Apr  7 21:16:49 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Add the new Crash_On_Write and MT_Timeout tests to the nightly
+          builds.
+
 Fri Apr  6 21:02:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Synch/proc_sema.cpp:

@@ -39,6 +39,7 @@ TAO/tests/Client_Leaks/run_test.pl: !ST !TRU_64
 TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Faults/run_test.pl: !MINIMUM
 TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM
+TAO/tests/Crash_On_Write/run_test.pl: !ST
 TAO/tests/NestedUpcall/Simple/run_test.pl: !ST
 TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl: !ST
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
@@ -53,6 +54,7 @@ TAO/tests/POA/wait_for_completion/run_test.pl
 TAO/tests/IORManipulation/run_test.pl
 TAO/tests/Policies/run_test.pl: !MINIMUM !ST
 TAO/tests/Timeout/run_test.pl: !MINIMUM
+TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !ST
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Single_Read/run_test.pl:
 TAO/tests/Codec/run_test.pl
