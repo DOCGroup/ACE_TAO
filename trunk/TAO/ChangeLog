@@ -1,3 +1,9 @@
+Thu Sep  5 23:28:29 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/Makefile: Instead of iterating through
+	  the list of directories specified by DIRS in a for loop,
+	  use a scheme similar to the one in rules.nested.GNU.
+
 Thu Sep  5 09:46:38 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h: 
