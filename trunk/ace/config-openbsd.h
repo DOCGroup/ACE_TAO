@@ -226,6 +226,9 @@
 
 #define ACE_HAS_SNPRINTF
 
+// OpenBSD 3.2 lacks sched_setscheduler (see /usr/src/lib/libc_r/TODO)
+#define ACE_LACKS_SETSCHED
+
 // OpenBSD supports IPv6 by default, but ACE IPv6 code
 // has compile errors.
 //#define ACE_HAS_IPV6

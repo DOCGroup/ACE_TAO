@@ -14,7 +14,7 @@ TAO/tests/Param_Test/run_test.pl: !MINIMUM
 TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: !MINIMUM !ST !STATIC
-TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST
+TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST !OpenBSD
 
 TAO/performance-tests/Latency/Single_Threaded/run_test.pl
 TAO/performance-tests/Latency/Thread_Pool/run_test.pl: !ST
@@ -151,7 +151,7 @@ TAO/tests/ORT/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !STATIC
 
 TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM !SUNCC5_1
-TAO/examples/POA/POA_BiDir/run_test.pl: !MINIMUM 
+TAO/examples/POA/POA_BiDir/run_test.pl: !MINIMUM
 TAO/examples/POA/DSI/run_test.pl: !MINIMUM
 TAO/examples/POA/Default_Servant/run_test.pl: !MINIMUM
 TAO/examples/POA/Explicit_Activation/run_test.pl: !MINIMUM

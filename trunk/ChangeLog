@@ -1,3 +1,11 @@
+Thu Jan 30 21:50:27 2003  Frank Hunleth  <frank@hunleth.com>
+
+	* ace/config-openbsd.h: Added ACE_LACKS_SETSCHED, since it turns
+	  out that sched_setscheduler hasn't been implemented on OpenBSD.
+
+	* bin/auto_run_tests.lst: Disabled the MT_Cubit test for OpenBSD,
+          since it fails completely when sched_params returns an error.
+
 Thu Jan 30 10:34:02 2003  Ossama Othman  <ossama@uci.edu>
 
 	From Olivier Brunet <o.brunet@free.fr>
