@@ -1328,10 +1328,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format,
-                             ACE_OS::strerror (errno));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, ACE_OS::strerror (errno));
+                            (bp, format, 
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                       }
                     else
                       {
@@ -1434,12 +1435,19 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #if defined (ACE_HAS_TRACE)
                   if (0 == wp)
                     wp = ACE_Trace::get_nesting_indent ();
+#else
+                  if (0 == wp)
+                    wp = 4;
 #endif /* ACE_HAS_TRACE */
                   wp *= this->trace_depth_;
                   if (ACE_static_cast (size_t, wp) > bspace)
                     wp = ACE_static_cast (int, bspace);
-                  ACE_OS::memset (bp, ' ', wp);
-                  bp += wp;
+
+                  for (int tmp_indent = wp;
+                       tmp_indent;
+                       tmp_indent--)
+                    *bp++ = ' ';
+
                   *bp = '\0';
                   bspace -= ACE_static_cast (size_t, wp);
                   skip_nul_locate = 1;

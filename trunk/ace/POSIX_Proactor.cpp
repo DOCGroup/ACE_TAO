@@ -1760,7 +1760,8 @@ ACE_POSIX_SIG_Proactor::create_asynch_timer (ACE_Handler &handler,
   return implementation;
 }
 
-extern "C" void sig_handler (int sig_num, siginfo_t *, ucontext_t *)
+static void 
+sig_handler (int sig_num, siginfo_t *, ucontext_t *)
 {
   // Should never be called
   ACE_DEBUG ((LM_DEBUG,

@@ -64,7 +64,9 @@ struct ACE_Export siginfo_t
 # endif /* ACE_HAS_SIGINFO_T */
 
 #if !defined (ACE_WIN32)
-  typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo_t*,void*);
+extern "C" {
+  typedef void (*ACE_SIGNAL_C_FUNC)(int, siginfo_t *, void *);
+}
 #endif /* ACE_WIN32 */
 
 namespace ACE_OS {
