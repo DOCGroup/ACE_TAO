@@ -27,6 +27,10 @@
 // @todo should we include anything from signal.h?
 #include "ace/os_include/sys/os_types.h"
 
+// To get the proper select() signature, this is required for HP-UX, and
+// maybe other platforms that offer both int and fdset forms of select().
+#include "ace/os_include/sys/os_time.h"
+
 #if !defined (ACE_LACKS_TIME_H)
 #  include /**/ <time.h>
 #endif /* !ACE_LACKS_TIME_H */

@@ -1,3 +1,9 @@
+Thu Apr 15 17:56:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/os_include/os_time.h: Include ace/os_include/sys/os_time.h
+	  before <time.h>. This insures that the X/Open form of select(),
+	  using fdset* as opposed to int*, gets selected, at least on HP-UX.
+
 Thu Apr 15 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
