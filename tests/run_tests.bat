@@ -73,6 +73,7 @@ call %0 %dopure% Semaphore_Test
 call %0 %dopure% Service_Config_Test
 call %0 %dopure% Sigset_Ops_Test
 call %0 %dopure% Simple_Message_Block_Test
+call %0 %dopure% Svc_Handler_Test
 call %0 %dopure% SOCK_Test
 call %0 %dopure% SOCK_Connector_Test
 call %0 %dopure% SOCK_Send_Recv_Test

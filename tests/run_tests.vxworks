@@ -224,6 +224,10 @@ ld < Upgradable_RW_Test
 write 2, "Upgradable_RW_Test ", 19
 ace_main; unld "Upgradable_RW_Test"
 
+ld < Svc_Handler_Test
+write 2, "Svc_Handler_Test ", 17
+ace_main; unld "Svc_Handler_Test"
+
 write 2, "\n", 1
 
 memShow
