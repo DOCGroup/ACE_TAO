@@ -136,23 +136,26 @@ TAO_GIOP::dump_msg (const char *label,
                     const u_char *ptr,
                     size_t len)
 {
+  const int TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
+  const int TAO_GIOP_VERSION_MINOR_OFFSET = 5;
+  const int TAO_GIOP_MESSAGE_TYPE_OFFSET = 7;
+
   if (TAO_debug_level >= 5)
     {
       const char *message_name = "UNKNOWN MESSAGE";
-      // @@ Carlos, where does the magic number '7' come from?!
-      u_long slot = ptr[7];
+      u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
       if (slot < sizeof (names)/sizeof(names[0]))
         message_name = names [slot];
       ACE_DEBUG ((LM_DEBUG,
                   "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s",
                   label,
-                  digits[ptr[4]],
-                  digits[ptr[5]],
+                  digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
+                  digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                   len - TAO_GIOP_HEADER_LEN,
                   (ptr[6] == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
                   message_name));
 
-      if (ptr[7] == TAO_GIOP::Request)
+      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Request)
         {
           // @@ Only works if ServiceContextList is empty....
           const CORBA::ULong *request_id =
@@ -162,7 +165,7 @@ TAO_GIOP::dump_msg (const char *label,
                       " = %d\n",
                       *request_id));
         }
-      else if (ptr[7] == TAO_GIOP::Reply)
+      else if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Reply)
         {
           const CORBA::ULong *request_id =
             ACE_reinterpret_cast (const CORBA::ULong *,
@@ -304,11 +307,11 @@ TAO_GIOP::send_message (TAO_Transport *transport,
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
 
   // Ptr to first buffer.
-  char *buf = (char *) stream.buffer (); 
+  char *buf = (char *) stream.buffer ();
 
   // Length of all buffers.
   size_t total_len =
-    stream.total_length ();  
+    stream.total_length ();
 
   // assert (buflen == (stream.length - stream.remaining));
 
@@ -414,7 +417,7 @@ static const char close_message [TAO_GIOP_HEADER_LEN] =
   // uses EBCDIC).
   0x47, // 'G'
   0x49, // 'I'
-  0x4f, // 'O' 
+  0x4f, // 'O'
   0x50, // 'P'
   TAO_GIOP_MessageHeader::MY_MAJOR,
   TAO_GIOP_MessageHeader::MY_MINOR,
@@ -437,8 +440,16 @@ TAO_GIOP::close_connection (TAO_Transport *transport,
                       (const u_char *) close_message,
                       TAO_GIOP_HEADER_LEN);
 
-  // @@ Carlos, can you please check the return value on this?
   ACE_HANDLE which = transport->handle ();
+  if (which == ACE_INVALID_HANDLE)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) TAO_GIOP::close_connection -"
+                    " connection already closed\n"));
+      return;
+    }
+
   if (transport->send ((const u_char *) close_message,
                        TAO_GIOP_HEADER_LEN) == -1)
     if (TAO_orbdebug)
@@ -465,7 +476,7 @@ error_message [TAO_GIOP_HEADER_LEN] =
   // uses EBCDIC).
   0x47, // 'G'
   0x49, // 'I'
-  0x4f, // 'O' 
+  0x4f, // 'O'
   0x50, // 'P'
   TAO_GIOP_MessageHeader::MY_MAJOR,
   TAO_GIOP_MessageHeader::MY_MINOR,
@@ -487,10 +498,11 @@ TAO_GIOP::send_error (TAO_Transport *transport)
 
   // @@ Carlos, can you please check to see if <send_n> should have
   // it's reply checked?
+  // @@ Doug: I'm not sure what do you want me to do here...
   if (transport->send ((const u_char *)error_message,
                        TAO_GIOP_HEADER_LEN) == -1)
     {
-      if (TAO_orbdebug != 0)
+      if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) error sending error to %d\n",
                     which));
@@ -586,7 +598,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
 
   char *buf = input.rd_ptr ();
   size_t n;
-  
+
   for (int t = header_size;
        t != 0;
        t -= n)
@@ -599,7 +611,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
       buf += n;
     }
 
-  if (TAO_GIOP::parse_header (orb_core, 
+  if (TAO_GIOP::parse_header (orb_core,
                               input,
                               header) == -1)
     return -1;
@@ -781,7 +793,7 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
                          '\0',
                          sizeof repbuf);
 #endif /* ACE_HAS_PURIFY */
-  TAO_OutputCDR output (repbuf, 
+  TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
                         orb_core->output_cdr_buffer_allocator (),
@@ -892,8 +904,8 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
       // exceptions it couldn't have been raised in the first place!
       if (response_required)
         {
-          CORBA::UNKNOWN exception 
-            (CORBA::SystemException::minor_code_tao_ 
+          CORBA::UNKNOWN exception
+            (CORBA::SystemException::minor_code_tao_
              (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
              CORBA::COMPLETED_MAYBE);
 
@@ -906,8 +918,7 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
                 ACE_ERROR ((LM_ERROR,
                             "TAO: (%P|%t) %p: cannot send exception\n",
                             "TAO_GIOP::process_server_message"));
-              ACE_PRINT_EXCEPTION (exception,
-                                   "TAO: ");
+              ACE_PRINT_EXCEPTION (exception, "TAO: ");
             }
         }
       else if (TAO_debug_level > 0)
@@ -1069,7 +1080,7 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
 
-          if (CORBA::is_nil (object_reference) 
+          if (CORBA::is_nil (object_reference)
               || find_status == -1)
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
 
@@ -1192,7 +1203,7 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
                          '\0',
                          sizeof repbuf);
 #endif /* ACE_HAS_PURIFY */
-  TAO_OutputCDR output (repbuf, 
+  TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
                         orb_core->output_cdr_buffer_allocator (),
@@ -1303,7 +1314,7 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
     // uses EBCDIC).
     0x47, // 'G'
     0x49, // 'I'
-    0x4f, // 'O' 
+    0x4f, // 'O'
     0x50, // 'P'
     TAO_GIOP_MessageHeader::MY_MAJOR,
     TAO_GIOP_MessageHeader::MY_MINOR,
