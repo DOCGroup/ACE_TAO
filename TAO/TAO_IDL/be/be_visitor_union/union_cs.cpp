@@ -157,8 +157,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "this->disc_ = u.disc_;" << be_nl;
       // now switch based on the disc value
       *os << "switch (this->disc_)" << be_nl;
-      *os << "{\n";
-      os->incr_indent (0);
+      *os << "{" << be_idt_nl;
+
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -175,17 +175,13 @@ int be_visitor_union_cs::visit_union (be_union *node)
       // an enum, this does no harm.
       if (node->default_index () == -1)
         {
-          os->indent ();
           *os << "default:" << be_nl
-              << "break;" << be_uidt_nl;
+              << "break;";
         }
 
-      os->decr_indent ();
-      *os << "}\n";
-      os->decr_indent ();
-      *os << "}\n\n";
+      *os << be_uidt_nl << "}" << be_uidt_nl
+          << "}" << be_nl << be_nl;
 
-      os->indent ();
       *os << "// destructor" << be_nl
           << node->name () << "::~" << node->local_name ()
           << " (void)" << be_nl
