@@ -837,6 +837,7 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
     {
       //assume if have no suppliers that we are client
       ACE_DEBUG((LM_DEBUG,"Barrier to wait until both apps configured and orbs running\n"));
+      //not really sure orbs running, but certainly nothing else between the spawn and the run at this point!
       ECConfig<SCHED_STRAT>::barrier(data_ptr->is_server); //wait until both apps are ready to run
       *(data_ptr->ready) = 1; //checked by suppliers to start reacting to timeouts
     }
@@ -854,6 +855,8 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
                  ACE_OS::strerror(errno)));
       return 0;
     }
+  //release the lock, since it has served its purpose
+  data_ptr->lock->release();
   //@BT INSTRUMENT with event ID: EVENT_TEST_END Measure time when
   //all events have been pushed.
 
