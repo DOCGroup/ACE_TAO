@@ -9,7 +9,7 @@
  *  performed.  "Speculative reads" are necessary when using event
  *  demultiplexing mechanisms that use a "state change" interface.
  *  Similarly, "speculative writes" may be necessary, i.e. keep
- *  writing until the connection is flow controlled.  An example of
+ *  writing until the connection is flow controlled.  An example of a
  *  demuxing mechanism with such an interface is Linux's `/dev/epoll'
  *  character device.  Mechansims with state change interfaces are
  *  also said to be "edge triggered," versus "level triggered"
