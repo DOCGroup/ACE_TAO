@@ -1,3 +1,15 @@
+Thu Oct 19 11:54:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+
+	  In code recently added to these files, replaced calls
+	  to be_predefined_type::base_type with
+	  be_predefined_type::primitive_base_type, to allow for
+	  a chain of typedefs in the IDL file. Thanks to
+	  J. Russell Noseworthy <rnosewor@objectsciences.com> for
+	  pointing out this bug.
+
 Thu Oct 19 11:31:39 2000  Paul Calabrese  <calabrese_p@ociweb.com>
 
         * orbsvcs/LifeCycle_Service/Makefile:
