@@ -26,9 +26,6 @@ void NIA_Handler::process_NamedImplementationArtifact
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
-      ACE_DEBUG ((LM_DEBUG, "node name in NIA is %s\n", XMLString::transcode
-(node_name)));
-
       if (node_name == XStr 
         (ACE_TEXT ("Deployment:NamedImplementationArtifact")))
         {
