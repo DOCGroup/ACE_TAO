@@ -1,7 +1,13 @@
+Thu Feb  6 15:19:28 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.i: Made the other get() method const. See
+          previous ChangeLog entry. 
+
 Thu Feb  6 07:13:06 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Refcounted_Auto_Ptr.{h,i} (get): Made the get() method const.
-	  Thanks to Jenny Kowald <jkowald@agile.tv> for suggesting this.
+        * ace/Refcounted_Auto_Ptr.{h,i} (get): Made the get() method const.
+          Thanks to Jenny Kowald <jkowald@agile.tv> for suggesting this.
 
 Wed Feb  5 20:48:47 2003  Krishnakumar B  <kitty@cse.wustl.edu>
 
@@ -17,13 +23,13 @@ Wed Feb  5 20:15:18 2003  Krishnakumar B  <kitty@cse.wustl.edu>
 
 Sat Feb  1 08:43:53 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Stream_Modules.cpp (put): Return 0 rather than -1 to be consistent
-	  wrt the put() semantics elsewhere in ACE.  Thanks to Jody Hagins
- 	  <jody@atdesk.com> for help with this.
+        * ace/Stream_Modules.cpp (put): Return 0 rather than -1 to be consistent
+          wrt the put() semantics elsewhere in ACE.  Thanks to Jody Hagins
+          <jody@atdesk.com> for help with this.
 
-	* tests/FIFO_Test.cpp (server): Only compile this on platforms
-	  that aren't Win32 since FIFO's don't work there.  Thanks to Carl
- 	  Halvorson <cyberdesk@yahoo.com> for reporting this.
+        * tests/FIFO_Test.cpp (server): Only compile this on platforms
+          that aren't Win32 since FIFO's don't work there.  Thanks to Carl
+          Halvorson <cyberdesk@yahoo.com> for reporting this.
 
 Wed Feb  5 09:45:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -62,9 +68,9 @@ Tue Feb  4 11:21:13 MST 2003 Rob Andzik <andzik@rtlogic.com>
 
          * ACE_wrappers/include/makeinclude/platform_vxworks5.x_g++.GNU
             - Added three new variables
-		         GCC_VERSION (defaults to gcc-2.96)
-		         VXWORKS_VERSION_FLAG (defaults to -DACE_VXWORKS=0x542)
-		         VXWORKS_STDINC_FLAG (defaults to <null>)
+                         GCC_VERSION (defaults to gcc-2.96)
+                         VXWORKS_VERSION_FLAG (defaults to -DACE_VXWORKS=0x542)
+                         VXWORKS_STDINC_FLAG (defaults to <null>)
 
             - Modified all sets of GCCLIB_DIR to use GCC_VERSION
             - Modified all references to ACE_VXWORKS to use VXWORKS_VERSION_FLAG
@@ -78,8 +84,8 @@ Tue Feb  4 11:21:13 MST 2003 Rob Andzik <andzik@rtlogic.com>
 
 Mon Feb  3 16:33:02 2003  Heather Drury  <drury_h@ociweb.com>
 
-	* ace/config-freebsd.h: msgsnd() with const parameter was recently
-	  added to FreeBSD-CURRENT. Thanks to Craig Rodrigues' for this change.
+        * ace/config-freebsd.h: msgsnd() with const parameter was recently
+          added to FreeBSD-CURRENT. Thanks to Craig Rodrigues' for this change.
 
 Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
 
@@ -92,16 +98,16 @@ Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
 
 Sat Feb  1 07:50 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-  	* Our deepest sympathies to the families and friends of the crew of
-	  the US Space Shuttle Columbia, which was lost over Texas this
- 	  morning.
+        * Our deepest sympathies to the families and friends of the crew of
+          the US Space Shuttle Columbia, which was lost over Texas this
+          morning.
 
           "We shall never forget them nor the last time we saw them, as
-	  they prepared for their mission and waved good-bye and slipped
-	  the surly bonds of Earth to touch the face of God."
+          they prepared for their mission and waved good-bye and slipped
+          the surly bonds of Earth to touch the face of God."
 
              - President Reagan (addressing NASA employees following the
-	       tragic loss of the Challenger 7 crew on STS-51L.)
+               tragic loss of the Challenger 7 crew on STS-51L.)
 
           Ad astra per aspera.
 
