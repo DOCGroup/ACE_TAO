@@ -1,3 +1,16 @@
+Mon Nov  3 21:33:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/BiDir_GIOP/diffs/BiDirPolicy.diff:
+	  
+	  Added a new diff file for BiDirPolicy generated code. 
+	
+	* tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
+	* tao/BiDir_GIOP/diffs/BiDirPolicyC.h.diff:
+	* tao/BiDir_GIOP/diffs/BiDirPolicyC.i.diff:
+
+	  Three different files are maddening. Just removed them and added
+	  a new file (above) to serve the same purpose.
+
 Mon Nov  3 21:28:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CurrentC.cpp: Cosmetic fix.
