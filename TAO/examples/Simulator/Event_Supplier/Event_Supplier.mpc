@@ -1,3 +1,4 @@
+// $Id$
 project(*Event_Sup): rtoldevent, namingexe {
   exename = Event_Sup
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
