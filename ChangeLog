@@ -1,3 +1,12 @@
+Fri Jan 16 16:09:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/event.mpb:
+	  Removed ec_typed_events as base. This resulted in problems in
+          building other orbsvcs which then use the ec_typed_events.mpb
+	  which is located in $(TAO_ROOT)/orbsvcs/orbsvcs. This restores
+	  the situation to the previous situation and in meantime we can
+	  figure out a better solution.
+
 Fri Jan 16 15:01:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Logging_Strategy_Test.cpp:
