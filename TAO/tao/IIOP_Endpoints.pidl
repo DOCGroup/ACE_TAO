@@ -37,7 +37,7 @@
 
 module TAO
 {
-  // Stores information for a single IIOP endpoint.
+  /// Stores information for a single IIOP endpoint.
   struct IIOP_Endpoint_Info
   {
     string host;
@@ -45,7 +45,7 @@ module TAO
     short priority;
   };
 
-  // Stores information for a collection of IIOP endpoints.
+  /// Stores information for a collection of IIOP endpoints.
   typedef sequence <IIOP_Endpoint_Info> IIOPEndpointSequence;
 };
 
