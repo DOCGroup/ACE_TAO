@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
@@ -10301,11 +10301,6 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
 }
 
 #if defined (ACE_HAS_LLSEEK)
-
-# if defined (linux)
-    extern "C" loff_t llseek (int fd, loff_t offset, int whence);
-# endif /* linux */
-
 ACE_INLINE ACE_LOFF_T
 ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 {
@@ -10314,9 +10309,9 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 #if ACE_SIZEOF_LONG == 8
   /* The native lseek is 64 bit, use it. */
   return ACE_OS::lseek (handle, offset, whence);
-#elif defined (linux)
-  ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
-#elif defined (__sgi)
+// #elif defined (linux)
+//   ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
+#elif defined (__sgi) || defined (linux)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #else
   ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
