@@ -1,3 +1,8 @@
+Tue Feb  8 16:17:21 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Thread_Manager.h: Added comment text to ACE_Thread_Manager::wait
+          noting that it doesn't wait during ACE_Object_Manager rundown.
+
 Tue Feb  8 14:16:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-sunos5.5.h (ACE_HAS_USING_KEYWORD):
