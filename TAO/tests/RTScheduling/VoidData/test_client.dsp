@@ -68,6 +68,7 @@ LINK32=link.exe
 # ADD CPP /nologo /MD /W3 /Gm /GX /Zi /Od /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
+# SUBTRACT RSC /x
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
