@@ -82,10 +82,6 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
 	    handlers_[index]->handle_close (handle,
 					    ACE_Event_Handler::NULL_MASK);
 
-	  // Reinitial the ReactorEx pointer since we no longer point
-	  // to this one.
-	  handlers_[index]->reactorEx (0);
-
 	  // If there was only one handle, reset the pointer to 0.
 	  if (this->active_handles_ == 1)
 	    {
