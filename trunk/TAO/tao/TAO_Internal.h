@@ -43,6 +43,13 @@ public:
   // things down on the last call.  It is fully thread-safe.  Return 0
   // if successful, -1 with errno set if failure.
 
+  static void _svc_conf (const char *resource_factory_args,
+                         const char *server_strategy_args,
+                         const char *client_strategy_args);
+  // Set fake svc.conf content.  This call has no effect if
+  // TAO_PLATFORM_SVC_CONF_FILE_NOTSUP is not defined.  This function
+  // must be called before first ORB initialization.
+
 private:
   TAO_Internal (void);
   // Private CTOR prevents this class from being instantiated.
@@ -51,6 +58,12 @@ private:
   // Number of times <open_services> has been called.  Incremented by
   // <open_services>, and decremented by <close_services>.  Access to
   // this is protected via the <ACE_Static_Object_Lock>.
+
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+  static char *resource_factory_args_;
+  static char *server_strategy_args_;
+  static char *client_strategy_args_;
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 };
 
 #endif /* TAO_INTERNAL_H */

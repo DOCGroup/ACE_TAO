@@ -17,6 +17,11 @@ ACE_STATIC_SVC_REQUIRE (TAO_Default_Client_Strategy_Factory)
 #endif /* TAO_USES_STATIC_SERVICE */
 
 int TAO_Internal::service_open_count_ = 0;
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+char *TAO_Internal::resource_factory_args_ = TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
+char *TAO_Internal::server_strategy_args_ = TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
+char *TAO_Internal::client_strategy_args_ = TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
 int
 TAO_Internal::open_services (int& argc, char** argv)
