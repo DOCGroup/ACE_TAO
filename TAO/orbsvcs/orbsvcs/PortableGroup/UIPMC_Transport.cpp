@@ -27,6 +27,40 @@
 
 ACE_RCSID (tao, UIPMC_Transport, "$Id$")
 
+// Local MIOP Definitions:
+
+// Note: We currently support packet fragmentation on transmit, but
+//       do not support reassembly.
+
+// Limit the number of fragments that we can divide a message
+// into.
+#define MIOP_MAX_FRAGMENTS    (4)
+#define MIOP_MAX_HEADER_SIZE  (272) // See MIOP Spec.  Must be a multiple of 8.
+#define MIOP_MAX_DGRAM_SIZE   (ACE_MAX_DGRAM_SIZE)
+
+#define MIOP_MAGIC_OFFSET             (0)
+#define MIOP_VERSION_OFFSET           (4)
+#define MIOP_FLAGS_OFFSET             (5)
+#define MIOP_PACKET_LENGTH_OFFSET     (6)
+#define MIOP_PACKET_NUMBER_OFFSET     (8)
+#define MIOP_NUMBER_OF_PACKETS_OFFSET (12)
+#define MIOP_ID_LENGTH_OFFSET         (16)
+#define MIOP_MIN_LENGTH_ID            (0)
+#define MIOP_MAX_LENGTH_ID            (252)
+#define MIOP_ID_DEFAULT_LENGTH        (12)
+#define MIOP_ID_CONTENT_OFFSET        (20)
+#define MIOP_HEADER_PADDING           (0)   // The ID field needs to be padded to
+                                            // a multiple of 8 bytes.
+#define MIOP_HEADER_SIZE              (MIOP_ID_CONTENT_OFFSET   \
+                                       + MIOP_ID_DEFAULT_LENGTH \
+                                       + MIOP_HEADER_PADDING)
+#define MIOP_MIN_HEADER_SIZE          (MIOP_ID_CONTENT_OFFSET   \
+                                       + MIOP_MIN_LENGTH_ID     \
+                                       + (8 - MIOP_MIN_LENGTH_ID) /* padding */)
+
+static const CORBA::Octet miop_magic[4] = { 0x4d, 0x49, 0x4f, 0x50 }; // 'M', 'I', 'O', 'P'
+
+
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core,
                                           CORBA::Boolean /*flag*/)
@@ -202,14 +236,38 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
     }
 }
 
-// Limit the number of fragments that we can divide a message
-// into.
-#define MIOP_MAX_FRAGMENTS    (4)
-#define MIOP_MAX_HEADER_SIZE  (272)  // See MIOP Spec.  Must be a multiple of 8.
-#define MIOP_HEADER_SIZE      (24)   // We only use 24 byte headers.
-#define MIOP_MAX_DGRAM_SIZE   (ACE_MAX_DGRAM_SIZE)
+void
+TAO_UIPMC_Transport::write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long unique)
+{
+  // We currently construct a unique ID for each MIOP message by
+  // concatenating the address of the buffer to a counter.  We may
+  // also need to use a MAC address or something more unique to
+  // fully comply with the MIOP specification.
 
-static const CORBA::Octet miop_magic[4] = { 0x4d, 0x49, 0x4f, 0x50 }; // 'M', 'I', 'O', 'P'
+  static unsigned long counter = 1;  // Don't worry about race conditions on counter,
+                                     // since buffer addresses can't be the same if
+                                     // this is being called simultaneously.
+
+  CORBA::Octet unique_id[MIOP_ID_DEFAULT_LENGTH];
+
+  unique_id[0] = ACE_static_cast (CORBA::Octet, unique & 0xff);
+  unique_id[1] = ACE_static_cast (CORBA::Octet, (unique & 0xff00) >> 8);
+  unique_id[2] = ACE_static_cast (CORBA::Octet, (unique & 0xff0000) >> 16);
+  unique_id[3] = ACE_static_cast (CORBA::Octet, (unique & 0xff000000) >> 24);
+
+  unique_id[4] = ACE_static_cast (CORBA::Octet, counter & 0xff);
+  unique_id[5] = ACE_static_cast (CORBA::Octet, (counter & 0xff00) >> 8);
+  unique_id[6] = ACE_static_cast (CORBA::Octet, (counter & 0xff0000) >> 16);
+  unique_id[7] = ACE_static_cast (CORBA::Octet, (counter & 0xff000000) >> 24);
+
+  unique_id[8] = 0;
+  unique_id[9] = 0;
+  unique_id[10] = 0;
+  unique_id[11] = 0;
+
+  miop_hdr.write_ulong (MIOP_ID_DEFAULT_LENGTH);
+  miop_hdr.write_octet_array (unique_id, MIOP_ID_DEFAULT_LENGTH);
+}
 
 ssize_t
 TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
@@ -286,10 +344,19 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
   miop_hdr.write_octet (0x10);                  // Version
   CORBA::Octet *flags_field = ACE_reinterpret_cast (CORBA::Octet *,
                                                     miop_hdr.current ()->wr_ptr ());
+
+  // Write flags octet:
+  //  Bit        Description
+  //   0         Endian
+  //   1         Stop message flag (Assigned later)
+  //   2 - 7     Set to 0
   miop_hdr.write_octet (TAO_ENCAP_BYTE_ORDER);  // Flags
 
-  // Packet Length (optional).  Set to 0, since we don't
-  // need it, and it seems like it could only create confusion.
+  // Packet Length
+  // NOTE: We can save pointers and write them later without byte swapping since
+  //       in CORBA, the sender chooses the endian.
+  CORBA::UShort *packet_length = ACE_reinterpret_cast (CORBA::UShort *,
+                                                       miop_hdr.current ()->wr_ptr ());
   miop_hdr.write_short (0);
 
   // Packet number
@@ -300,30 +367,32 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
   // Number of packets field
   miop_hdr.write_ulong (num_fragments);
 
-  // UniqueId - fix this
-  CORBA::Octet unique_id[4] = { 1, 2, 3, 4};
-  miop_hdr.write_ulong (4);
-  miop_hdr.write_octet_array (unique_id, 4);
+  // UniqueId
+  this->write_unique_id (miop_hdr, ACE_reinterpret_cast (unsigned long,
+                                                         iov));
 
   // Send the buffers.
   current_fragment = &fragments[0];
   while (num_fragments > 0 &&
          current_fragment->iovcnt > 1)
     {
-      ssize_t rc;
+      // Fill in the packet length header field.
+      *packet_length = current_fragment->length;
 
       // If this is the last fragment, set the stop message flag.
       if (num_fragments == 1)
-        *flags_field |= 0x02;
+        {
+          *flags_field |= 0x02;
+        }
 
       // Setup the MIOP header in the iov list.
       current_fragment->iov[0].iov_base = miop_hdr.current ()->rd_ptr ();
       current_fragment->iov[0].iov_len = MIOP_HEADER_SIZE;
 
       // Send the fragment. - Need to check for errors!!
-      rc = this->connection_handler_->dgram ().send (current_fragment->iov,
-                                                     current_fragment->iovcnt,
-                                                     addr);
+      ssize_t rc = this->connection_handler_->dgram ().send (current_fragment->iov,
+                                                             current_fragment->iovcnt,
+                                                             addr);
 
       if (rc <= 0)
         {
@@ -372,7 +441,7 @@ TAO_UIPMC_Transport::recv_i (char *buf,
   ssize_t n = this->connection_handler_->mcast_dgram ().recv (buf,
                                                               len,
                                                               from_addr);
-  if (TAO_debug_level > 0)
+  if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO_UIPMC_Transport::recv_i: received %d bytes from %s:%d\n",
@@ -382,19 +451,85 @@ TAO_UIPMC_Transport::recv_i (char *buf,
     }
 
   // Make sure that we at least have a MIOP header.
-  if (n < MIOP_HEADER_SIZE)
-    return 0;
+  if (n < MIOP_MIN_HEADER_SIZE)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO_UIPMC_Transport::recv_i: packet of size %d is too small from %s:%d\n",
+                      n,
+                      from_addr.get_host_addr (),
+                      from_addr.get_port_number ()));
+        }
+      return 0;
+    }
 
   // Check for MIOP magic bytes.
-  if (buf[0] != miop_magic [0] ||
-      buf[1] != miop_magic [1] ||
-      buf[2] != miop_magic [2] ||
-      buf[3] != miop_magic [3])
-    return 0;
+  if (buf[MIOP_MAGIC_OFFSET] != miop_magic [0] ||
+      buf[MIOP_MAGIC_OFFSET + 1] != miop_magic [1] ||
+      buf[MIOP_MAGIC_OFFSET + 2] != miop_magic [2] ||
+      buf[MIOP_MAGIC_OFFSET + 3] != miop_magic [3])
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO_UIPMC_Transport::recv_i: UIPMC packet didn't contain magic bytes.\n"));
+        }
+
+      return 0;
+    }
+
+  // Retrieve the byte order.
+  // 0 = Big endian
+  // 1 = Small endian
+  CORBA::Octet byte_order = buf[MIOP_FLAGS_OFFSET] & 0x01;
+
+  // Ignore the header version, other flags, packet length and number of packets.
+
+  // Get the length of the ID.
+  CORBA::ULong id_length;
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
+  if (byte_order == ACE_CDR_BYTE_ORDER)
+    {
+      id_length = *ACE_reinterpret_cast (ACE_CDR::ULong*, &buf[MIOP_ID_LENGTH_OFFSET]);
+    }
+  else
+    {
+      ACE_CDR::swap_4 (&buf[MIOP_ID_LENGTH_OFFSET],
+                       ACE_reinterpret_cast (char*, &id_length));
+    }
+#else
+  id_length = *ACE_reinterpret_cast (ACE_CDR::ULong*, &buf[MIOP_ID_LENGTH_OFFSET]);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
+
+  // Make sure that the length field is legal.
+  if (id_length > MIOP_MAX_LENGTH_ID ||
+      ACE_static_cast (ssize_t, MIOP_ID_CONTENT_OFFSET + id_length) > n)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO_UIPMC_Transport::recv_i: Invalid ID length.\n"));
+        }
+
+      return 0;
+    }
 
   // Trim off the header for now.
-  n -= MIOP_HEADER_SIZE;
-  ACE_OS::memmove (buf, buf + MIOP_HEADER_SIZE, n);
+  ssize_t miop_header_size = (MIOP_ID_CONTENT_OFFSET + id_length + 7) & ~0x7;
+  if (miop_header_size > n)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO_UIPMC_Transport::recv_i: MIOP packet not large enough for padding.\n"));
+        }
+
+      return 0;
+    }
+
+  n -= miop_header_size;
+  ACE_OS::memmove (buf, buf + miop_header_size, n);
 
   return n;
 }
@@ -445,19 +580,37 @@ TAO_UIPMC_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // If there is an error return to the reactor..
   if (n <= 0)
     {
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) recv returned error on transport %d after fault %p\n"),
+                      this->id (),
+                      ACE_TEXT ("handle_input_i ()\n")));
+        }
+
       if (n == -1)
         this->tms_->connection_closed ();
 
       return n;
     }
 
-  // Set the write pointer in the stack buffer
+  // Set the write pointer in the stack buffer.
   message_block.wr_ptr (n);
 
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
   if (this->parse_incoming_messages (message_block) == -1)
-    return -1;
+    {
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) parse_incoming_messages failed on transport %d after fault %p\n"),
+                      this->id (),
+                      ACE_TEXT ("handle_input_i ()\n")));
+        }
+
+      return -1;
+    }
 
   // NOTE: We are not performing any queueing nor any checking for
   // missing data. We are assuming that ALL the data would be got in a
