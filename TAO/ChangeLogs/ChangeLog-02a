@@ -1,3 +1,10 @@
+Wed Jun  7 12:10:20 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Encodable.h:
+        * tao/Policy_Factory.h:
+
+          Added missing "ace/post.h" includes.
+
 Wed Jun  7 11:35:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/tests/CosEvent/lib/CECTest.dsp:
