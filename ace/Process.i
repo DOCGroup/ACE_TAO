@@ -110,7 +110,7 @@ ACE_Process_Options::handle_inheritence (void)
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   return handle_inheritence_;
 #else
-  ACE_NOTSUP_RETURN (0);  // This is a benign error. 
+  ACE_NOTSUP_RETURN (0);  // This is a benign error.
 #endif /* ACE_WIN32 && ! ACE_HAS_WINCE */
 }
 
@@ -223,12 +223,12 @@ ACE_Process_Options::inherit_environment (int nv)
 }
 
 ACE_INLINE int
-ACE_Process_Options::setreugid (const char* user)
+ACE_Process_Options::setreugid (const ACE_TCHAR* user)
 {
-#if !defined (ACE_LACKS_PWD_FUNCTIONS)  
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)
   struct passwd *ent = ACE_OS::getpwnam (user);
 
-  if (ent != 0) 
+  if (ent != 0)
     {
       this->euid_ = ent->pw_uid;
       this->ruid_ = ent->pw_uid;
@@ -347,7 +347,7 @@ ACE_Process_Options::process_name (void)
 {
   if (process_name_[0] == '\0')
     this->process_name (this->command_line_argv ()[0]);
-  
+
   return this->process_name_;
 }
 
