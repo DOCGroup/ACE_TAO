@@ -1,3 +1,18 @@
+Mon May 15 15:40:46 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Connect.cpp (open):
+	* tao/SHMIOP_Connect.cpp (open):
+
+	  Moved the call to addr_to_string() inside the debug level
+	  conditional block.  The call is only used to stringify the
+	  address of the connected client or the server the client is
+	  connected to for debugging purposes.
+
+	* tao/UIOP_Connect.cpp (open, handle_close, handle_close_i):
+
+	  UNICODE related updates.  Wrap debugging messages within
+	  ACE_TEXT macro.
+
 Mon May 15 14:43:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp
@@ -829,7 +844,6 @@ Tue May  9 20:01:41 2000  Ossama Othman  <ossama@uci.edu>
         * tao/Pluggable.h (TAO_Transport):
         * tao/Profile.h (TAO_Profile):
         * tao/Resource_Factory.h (TAO_Protocol_Item):
-
 
           Declared the copy constructor and the assignment operator to be
           private and unimplemented.
