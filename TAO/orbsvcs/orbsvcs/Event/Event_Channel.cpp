@@ -3178,6 +3178,10 @@ template class ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>;
 
 template class ACE_CORBA_var<ACE_ES_Event_Container>;
 
+template class ACE_Node<TAO_EC_Gateway*>;
+template class ACE_Unbounded_Set<TAO_EC_Gateway*>;
+template class ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Atomic_Op<ACE_ES_MUTEX, int>
@@ -3211,5 +3215,9 @@ template class ACE_CORBA_var<ACE_ES_Event_Container>;
 #pragma instantiate ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>
 #pragma instantiate ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>
 #pragma instantiate ACE_CORBA_var<ACE_ES_Event_Container>
+
+#pragma instantiate ACE_Node<TAO_EC_Gateway*>
+#pragma instantiate ACE_Unbounded_Set<TAO_EC_Gateway*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
