@@ -23,6 +23,21 @@ module CORBA
     SYSTEM_EXCEPTION
   };
 
+  typedef unsigned short ServiceType; 
+  typedef unsigned long ServiceOption; 
+  typedef unsigned long ServiceDetailType;
+
+  struct ServiceDetail 
+  { 
+    ServiceDetailType service_detail_type;
+    sequence <octet> service_detail; 
+  }; 
+   
+   struct ServiceInformation 
+   { 
+     sequence <ServiceOption> service_options; 
+     sequence <ServiceDetail> service_details; 
+   };
 };
 
 #pragma prefix ""
