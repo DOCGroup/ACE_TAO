@@ -1,3 +1,8 @@
+Wed Mar 13 09:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Registry_Name_Space.cpp:
+          Fixed warnings about unused variables in BCB Unicode build
+
 Tue Mar 12 18:37:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Configuration_Import_Export.{h cpp} (ACE_Ini_ImpExp):
@@ -17,12 +22,12 @@ Tue Mar 12 17:43:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  does not have a chain of message blocks, there is no need to do
 	  a deep copy, a refcount increment on the incoming datablock
 	  would do.  Thanks to Lothar Werzinger
-	  <Werzinger.Lothar@krones.de> for the patches. 
+	  <Werzinger.Lothar@krones.de> for the patches.
 
 Tue Mar 12 15:32:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM (Subject): Added a request for the version
-	  of winsock on Windows based OS's. 
+	  of winsock on Windows based OS's.
 
 Tue Mar 12 15:22:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -32,7 +37,7 @@ Tue Mar 12 15:22:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  out of the loop that sends data. Thanks to Stephan Gudmundson
 	  <stephang@netacquire.com> for providing this patch.
 
-	* THANKS: Added Stephan Gudmundson to the Hall of fame. 
+	* THANKS: Added Stephan Gudmundson to the Hall of fame.
 
 Mon Feb 25 14:06:45 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -65,10 +70,10 @@ Tue Mar 12 11:53:53 2002  Chad Elliott  <elliott_c@ociweb.com>
           Use ACE_ENV_* instead of TAO_ENV_*.
 
 Tue Mar 12 10:45:00 2002  Justin Michel <michel_j@ociweb.com>
- 
+
        * ace/OS.i:
 
-         Added call to ACE_OS::set_errno_to_last_error() in two places 
+         Added call to ACE_OS::set_errno_to_last_error() in two places
          where Winsock WSARecvFrom or WSASendTo were called.
 
 Tue Mar 12 09:06:00 2002  Si Mong Park  <spark@ociweb.com>
