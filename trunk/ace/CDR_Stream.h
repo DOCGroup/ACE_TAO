@@ -42,6 +42,8 @@
 //     <gokhale@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
 //     for TAO.  ACE version by Jeff Parsons <parsons@cs.wustl.edu>
 //     and Istvan Buki <istvan.buki@euronet.be>.
+//     Codeset translation by Jim Rogers (jrogers@viasoft.com) and
+//     Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -54,6 +56,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class ACE_Char_Codeset_Translator;
+class ACE_WChar_Codeset_Translator;
 
 class ACE_Export ACE_CDR
 {
@@ -246,6 +251,10 @@ class ACE_Export ACE_OutputCDR
   //   support all OMG-IDL datatypes, even those not supported
   //   directly by put/get primitives.
 public:
+  friend class ACE_Char_Codeset_Translator;
+  friend class ACE_WChar_Codeset_Translator;
+  // The Codeset translators need access to some private members to
+  // efficiently marshal arrays
   friend class ACE_InputCDR;
   // For reading from an output CDR stream.
 
@@ -501,7 +510,14 @@ private:
 
   size_t memcpy_tradeoff_;
   // Break-even point for copying.
+
+protected:
+  ACE_Char_Codeset_Translator *char_translator_;
+  ACE_WChar_Codeset_Translator *wchar_translator_;
+  // If not nil, invoke for translation of character and string data.
 };
+
+// ****************************************************************
 
 class ACE_Export ACE_InputCDR
 {
@@ -525,6 +541,11 @@ class ACE_Export ACE_InputCDR
   //   support all OMG-IDL datatypes, even those not supported
   //   directly by put/get primitives.
 public:
+  friend class ACE_Char_Codeset_Translator;
+  friend class ACE_WChar_Codeset_Translator;
+  // The translator need privileged access to efficiently demarshal
+  // arrays and the such
+
   ACE_InputCDR (const char *buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER);
@@ -717,6 +738,10 @@ protected:
   int good_bit_;
   // set to 0 when an error occurs.
 
+  ACE_Char_Codeset_Translator *char_translator_;
+  ACE_WChar_Codeset_Translator *wchar_translator_;
+  // If not nil, invoke for translation of character and string data.
+
 private:
   ACE_CDR::Boolean read_1 (ACE_CDR::Octet *x);
   ACE_CDR::Boolean read_2 (ACE_CDR::UShort *x);
@@ -764,6 +789,171 @@ private:
               char *&buf);
   // As above, but now the size and alignment requirements may be
   // different.
+};
+
+// ****************************************************************
+
+class ACE_Export ACE_Char_Codeset_Translator
+{
+  // = TITLE
+  //   Codeset translation routines common to both Output and Input
+  //   CDR streams.
+  //
+  // = DESCRIPTION
+  //   This class is a base class for defining codeset translation    
+  //   routines to handle the character set translations required by 
+  //   both CDR Input streams and CDR Output streams.
+  //
+public:
+  virtual ACE_CDR::Boolean read_char (ACE_InputCDR&,
+                                      ACE_CDR::Char&) = 0;
+  // Read a single character from the stream, converting from the
+  // stream codeset to the native codeset
+
+  virtual ACE_CDR::Boolean read_string (ACE_InputCDR&,
+                                        ACE_CDR::Char *&) = 0;
+  // Read a string from the stream, including the length, converting
+  // the characters from the stream codeset to the native codeset
+
+  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR&,
+                                            ACE_CDR::Char*,
+                                            ACE_CDR::ULong) = 0;
+  // Read an array of characters from the stream, converting the
+  // characters from the stream codeset to the native codeset. 
+
+  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR&,
+                                       ACE_CDR::Char) = 0;
+  // Write a single character to the stream, converting from the
+  // native codeset to the stream codeset
+
+  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR&,
+                                         ACE_CDR::ULong,
+                                         const ACE_CDR::Char*) = 0;
+  // Write a string to the stream, including the length, converting
+  // from the native codeset to the stream codeset
+
+  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR&,
+                                             const ACE_CDR::Char*,
+                                             ACE_CDR::ULong) = 0;
+  // Write an array of characters to the stream, converting from the
+  // native codeset to the stream codeset
+
+protected:
+  ACE_CDR::Boolean read_1 (ACE_InputCDR& input,
+                           ACE_CDR::Octet *x);
+  ACE_CDR::Boolean write_1 (ACE_OutputCDR& output,
+                            const ACE_CDR::Octet *x);
+  // Children have access to low-level routines because they cannot
+  // use read_char or something similar (it would recurse).
+
+  ACE_CDR::Boolean read_array (ACE_InputCDR& input,
+                               void* x,
+                               size_t size,
+                               size_t align,
+                               ACE_CDR::ULong length);
+  // Efficiently read <length> elements of size <size> each from
+  // <input> into <x>; the data must be aligned to <align>.
+
+  ACE_CDR::Boolean write_array (ACE_OutputCDR& output,
+                                const void *x,
+                                size_t size,
+                                size_t align,
+                                ACE_CDR::ULong length);
+  // Efficiently write <length> elements of size <size> from <x> into
+  // <output>. Before inserting the elements enough padding is added
+  // to ensure that the elements will be aligned to <align> in the
+  // stream.
+
+  int adjust (ACE_OutputCDR& out,
+              size_t size,
+              size_t align,
+              char *&buf);
+  // Exposes the stream implementation of <adjust>, this is useful in
+  // many cases to minimize memory allocations during marshaling.
+  // On success <buf> will contain a contiguous area in the CDR stream
+  // that can hold <size> bytes aligned to <align>.
+  // Results 
+
+  void good_bit (ACE_OutputCDR& out, int bit);
+  // Used by derived classes to set errors in the CDR stream.
+};
+
+// ****************************************************************
+
+class ACE_Export ACE_WChar_Codeset_Translator
+{
+  // = TITLE
+  //   Codeset translation routines common to both Output and Input
+  //   CDR streams.
+  //
+  // = DESCRIPTION
+  //   This class is a base class for defining codeset translation    
+  //   routines to handle the character set translations required by 
+  //   both CDR Input streams and CDR Output streams.
+  //
+public:
+  virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR&,
+                                       ACE_CDR::WChar&) = 0;
+  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
+                                         ACE_CDR::WChar *&) = 0;
+  virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR&,
+                                             ACE_CDR::WChar*,
+                                             ACE_CDR::ULong) = 0;
+  virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR&,
+                                        ACE_CDR::WChar) = 0;
+  virtual ACE_CDR::Boolean write_wstring (ACE_OutputCDR&,
+                                          ACE_CDR::ULong,
+                                          const ACE_CDR::WChar*) = 0;
+  virtual ACE_CDR::Boolean write_wchar_array (ACE_OutputCDR&,
+                                              const ACE_CDR::WChar*,
+                                              ACE_CDR::ULong) = 0;
+
+protected:
+  ACE_CDR::Boolean read_1 (ACE_InputCDR& input,
+                           ACE_CDR::Octet *x);
+  ACE_CDR::Boolean read_2 (ACE_InputCDR& input,
+                           ACE_CDR::UShort *x);
+  ACE_CDR::Boolean read_4 (ACE_InputCDR& input,
+                           ACE_CDR::ULong *x);
+  ACE_CDR::Boolean write_1 (ACE_OutputCDR& output,
+                            const ACE_CDR::Octet *x);
+  ACE_CDR::Boolean write_2 (ACE_OutputCDR& output,
+                            const ACE_CDR::UShort *x);
+  ACE_CDR::Boolean write_4 (ACE_OutputCDR& output,
+                            const ACE_CDR::ULong *x);
+  // Children have access to low-level routines because they cannot
+  // use read_char or something similar (it would recurse).
+
+  ACE_CDR::Boolean read_array (ACE_InputCDR& input,
+                               void* x,
+                               size_t size,
+                               size_t align,
+                               ACE_CDR::ULong length);
+  // Efficiently read <length> elements of size <size> each from
+  // <input> into <x>; the data must be aligned to <align>.
+
+  ACE_CDR::Boolean write_array (ACE_OutputCDR& output,
+                                const void *x,
+                                size_t size,
+                                size_t align,
+                                ACE_CDR::ULong length);
+  // Efficiently write <length> elements of size <size> from <x> into
+  // <output>. Before inserting the elements enough padding is added
+  // to ensure that the elements will be aligned to <align> in the
+  // stream.
+
+  int adjust (ACE_OutputCDR& out,
+              size_t size,
+              size_t align,
+              char *&buf);
+  // Exposes the stream implementation of <adjust>, this is useful in
+  // many cases to minimize memory allocations during marshaling.
+  // On success <buf> will contain a contiguous area in the CDR stream
+  // that can hold <size> bytes aligned to <align>.
+  // Results 
+
+  void good_bit (ACE_OutputCDR& out, int bit);
+  // Used by derived classes to set errors in the CDR stream.
 };
 
 #if defined(__ACE_INLINE__)
