@@ -51,6 +51,7 @@ BIN =   Aio_Platform_Test \
         New_Fail_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
+        OS_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
         Priority_Buffer_Test \
