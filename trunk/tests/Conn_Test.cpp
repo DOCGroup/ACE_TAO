@@ -180,7 +180,7 @@ Svc_Handler::idle (u_long flags)
 // Template specializations.  Older versions of g++, such as 2.7.2.3,
 // can't deal with them, though.
 
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  !defined (ACE_HAS_OLD_GNUG)
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  !defined (ACE_HAS_GNUG_PRE_2_8)
 size_t
 ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 {

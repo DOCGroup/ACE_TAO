@@ -53,7 +53,7 @@
 #else  /* ! EGCS */
   // Plain old g++.
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-# define ACE_HAS_OLD_GNUG
+# define ACE_HAS_GNUG_PRE_2_8
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 #endif /* ! EGCS */
 
