@@ -433,6 +433,11 @@ sub add_file_written {
             "$self->{'grammar_type'} with a duplicate name.\n";
       last;
     }
+    elsif (lc($written) eq lc($file)) {
+      print "WARNING: $file has been overwritten by a " .
+            "$self->{'grammar_type'} with different casing: $written.\n";
+      last;
+    }
   }
   push(@{$self->{'files_written'}}, $file);
 
