@@ -10,7 +10,7 @@
 //     IORTest.cpp
 //
 // = DESCRIPTION
-//   This program tests the basic functionality of the 
+//   This program tests the basic functionality of the
 //   IOR Manipultion interface.
 //
 // = AUTHOR
@@ -57,25 +57,25 @@ main (int argc, char **argv)
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO_IOP::TAO_IOR_Manipulation_ptr iorm = 
+      TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
                TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // ***********************************************************************
-    
+
       // Create a few fictitious IORs
-      CORBA_Object_ptr name1 = 
+      CORBA_Object_ptr name1 =
         orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz", ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Object_ptr name2 =
         orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz", ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // ***********************************************************************
-    
+
       // Get the string reps for these IORs and show them to the user
       ACE_CString iorm_ior = orb_->object_to_string (IORM, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       printf("\tIORManipultion IOR string = %s\n", iorm_ior.c_str());
-    
+
       ACE_CString name1_ior = orb_->object_to_string (name1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       printf("\tFirst made up IOR = %s\n", name1_ior.c_str());
@@ -83,17 +83,17 @@ main (int argc, char **argv)
       ACE_CString name2_ior = orb_->object_to_string (name2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       printf("\tSecond made up IOR = %s\n", name2_ior.c_str());
-    
+
       // ***********************************************************************
       // Create IOR list for use with merge_iors.
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length(2);
       iors [0] = name1;
       iors [1] = name2;
-    
+
       CORBA_Object_ptr merged = iorm->merge_iors (iors, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    
+
       ACE_CString merged_ior = orb_->object_to_string (merged, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -120,14 +120,14 @@ main (int argc, char **argv)
         printf ("**ERROR (merge_iors): name1 is_in_ior returned profile count bad (%d)!\n",
                 in_count);
 
-      in_count = iorm->is_in_ior (merged, name2, ACE_TRY_ENV); 
+      in_count = iorm->is_in_ior (merged, name2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
         printf ("**ERROR (merge_iors): name2 is_in_ior returned profile count bad (%d)!\n",
                 in_count);
       // ***********************************************************************
-    
+
       // Verify ability to remove profiles from an IOR
       // First remove the second IOR from the merged IOR
       CORBA_Object_ptr just1 = iorm->remove_profiles (merged, name2, ACE_TRY_ENV);
@@ -151,11 +151,11 @@ main (int argc, char **argv)
         printf ("**ERROR (merge_profiles): incorrect count returned for is_in_ior\
                 \nafter removal (%d)\n", in_count);
       // ***********************************************************************
-    
+
       // Now try the add_profiles interface.
       CORBA_Object_ptr merged2 = iorm->add_profiles (just1, name2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       count = iorm->get_profile_count (merged2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -166,7 +166,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       printf("\tAdding 2 back in IOR(%d) = %s\n", count, merged2_ior.c_str ());
-      
+
       // is_in_ior throws an exception if the intersection of the two
       // IORs is NULL.
       in_count = iorm->is_in_ior (merged2, name1, ACE_TRY_ENV);
@@ -182,7 +182,7 @@ main (int argc, char **argv)
       if (count2 != in_count)
         printf ("**ERROR (add_profiles): is_in_ior returned profile count bad!\n");
       // ***********************************************************************
-    
+
       CORBA_Object_ptr just2 = iorm->remove_profiles (merged2, name1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -201,9 +201,11 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
-        printf ("**ERROR (add_profiles): incorrect count returned for is_in_ior after\
-                \nremoval\n", in_count);
-      // ***********************************************************************
+        ACE_DEBUG ((LM_DEBUG,
+                    "**ERROR (add_profiles): incorrect count (%d) "
+                    "returned for is_in_ior after removal\n",
+                    in_count));
+
       // all the primary tests worked, set status to 1
       Status = 1;
       // Finally generate an exception and quit.
@@ -268,6 +270,6 @@ main (int argc, char **argv)
   else
     printf ("Tests Successfully Completed!\n");
   printf ("--------------------------------------\n");
-      
+
   return 0;
 }
