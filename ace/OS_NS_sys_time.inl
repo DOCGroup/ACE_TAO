@@ -4,7 +4,7 @@
 #include "ace/os_include/sys/os_time.h"
 #include "ace/os_include/os_errno.h"
 
-if defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
 #  include "ace/OS_NS_time.h"
 #endif /* VXWORKS || CHORUS || ACE_PSOS */
 

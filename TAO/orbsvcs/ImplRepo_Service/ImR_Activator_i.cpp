@@ -883,7 +883,8 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
       if (reactor != 0)
         {
-          if (this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor) == -1)
+          if (this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE,
+                                       reactor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "The ACE_Process_Manager didnt get initialized\n"),
@@ -902,10 +903,11 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
       
       // We need to send the list of our persisted server names to the Locator
       // so that it knows we are managing them.
-      auto_ptr<Server_Repository::HASH_IMR_MAP::ITERATOR> server_iter(this->repository_.new_iterator());
+      auto_ptr<Server_Repository::HASH_IMR_MAP::ITERATOR>
+        server_iter(this->repository_.new_iterator());
       if (server_iter.get () == 0) 
       {
-        ACE_THROW (CORBA::NO_MEMORY ());
+        ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
       }
       ImplementationRepository::Locator::ServerNameList server_names;
       server_names.length(this->repository_.get_repository_size());
