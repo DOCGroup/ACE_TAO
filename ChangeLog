@@ -1,3 +1,13 @@
+Sat Nov 13 14:34:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Split Kokyu directories out of monolithic AC_CONFIG_FILES list,
+	  into a separate, smaller, AC_CONFIG_FILES that is used only if
+	  the Kokyu subdirectory exists.  This pattern can be used for
+	  other subdirectories (ACEXML, ASNMP, etc.) to provide flexibilty
+	  for packaging and compile-time configuration.
+
 Sat Nov 13 10:40:13 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
