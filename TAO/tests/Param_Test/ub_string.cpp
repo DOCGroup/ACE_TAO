@@ -55,9 +55,10 @@ Test_Unbounded_String::opname (void) const
 }
 
 void
-Test_Unbounded_String::dii_req_invoke (CORBA::Request *req)
+Test_Unbounded_String::dii_req_invoke (CORBA::Request *req,
+                                       CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int

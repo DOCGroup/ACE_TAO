@@ -62,7 +62,7 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *);
+  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
   // invoke DII request with appropriate exception handling.
 
 protected:
@@ -130,7 +130,7 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *);
+  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
   // invoke DII request with appropriate exception handling.
 
 protected:

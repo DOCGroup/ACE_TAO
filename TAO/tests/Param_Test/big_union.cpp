@@ -45,9 +45,10 @@ Test_Big_Union::opname (void) const
 }
 
 void
-Test_Big_Union::dii_req_invoke (CORBA::Request *req)
+Test_Big_Union::dii_req_invoke (CORBA::Request *req,
+                                CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int

@@ -47,9 +47,9 @@ Test_Any::opname (void) const
 }
 
 void
-Test_Any::dii_req_invoke (CORBA::Request *req)
+Test_Any::dii_req_invoke (CORBA::Request *req, CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 #if 0 /* any_table isn't currently used */

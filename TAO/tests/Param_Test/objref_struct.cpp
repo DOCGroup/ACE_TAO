@@ -48,9 +48,10 @@ Test_Objref_Struct::opname (void) const
 }
 
 void
-Test_Objref_Struct::dii_req_invoke (CORBA::Request *req)
+Test_Objref_Struct::dii_req_invoke (CORBA::Request *req,
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  req->invoke ();
+  req->invoke (ACE_TRY_ENV);
 }
 
 int
