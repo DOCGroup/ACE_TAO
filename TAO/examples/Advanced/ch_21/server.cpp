@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -17,9 +18,6 @@
 //
 // ============================================================================
 
-
-
-
 #include "server.h"
 #include <algorithm>
 #include "icp.h"
@@ -35,7 +33,7 @@ const char* Controller_oid = "Controller";
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-// #if 0   // This inserter may or may not be needed for your ORB.
+#if 0   // This inserter is not needed for TAO.
 
 static ostream &
 operator<<(ostream & os, const CORBA::Exception & e)
@@ -52,7 +50,7 @@ operator<<(ostream & os, const CORBA::Exception & e)
     return os;
 }
 
-// #endif
+#endif
 
 //----------------------------------------------------------------
 
@@ -616,8 +614,7 @@ preinvoke(
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr          /* poa */ ,
     const char *                     operation,
-    void * &                         /* cookie */ ,
-    CORBA_Environment &
+    void * &                         /* cookie */ 
 ) throw(CORBA::SystemException, PortableServer::ForwardRequest)
 {
     // Convert object id into asset number.

@@ -64,7 +64,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 .PRECIOUS: CCSS.cpp CCSS.i CCSS.h
 .PRECIOUS: CCSS_T.cpp CCSS_T.i CCSS_T.h
 
-override TAO_IDLFLAGS += -hc .hh -hs S.hh -hT S_T.hh \
+override TAO_IDLFLAGS += -hc .hh -hs S.hh -hT S_T.hh 
 			 -cs C.cc -ci C.i \
                          -ss S.cc -sT S_T.cc  
 CCFLAGS += -fimplicit-templates -frtti -O0
