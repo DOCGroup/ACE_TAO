@@ -1,3 +1,21 @@
+Fri Oct 15 17:46:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Added checks for the swab() variants that have:
+	  (const char*, char*, ssize_t) [SVID3 - ACE_HAS_CONST_CHAR_SWAB]
+	  and (char*, char*, ssize_t) [Windows, et al - ACE_HAS_NONCONST_SWAB].
+	  Also altered the ACE_HAS_TYPENAME test to work on Forte C++ 7.
+
+	* m4/config_h.m4: Added ACE_HAS_CONST_CHAR_SWAB and
+	  ACE_HAS_NONCONST_SWAB.
+
+	* ace/OS_NS_unistd.inl (swab): Added code for ACE_HAS_CONST_CHAR_SWAB
+	  variant for swab() found on Solaris.
+
+	* ace/config-sunos5.5.h: Replace ACE_LACKS_SWAB with
+	  ACE_HAS_CONST_CHAR_SWAB. This was determined by running the autoconf
+	  tests. If it doesn't work uniformly, will need some feature-test
+	  tweaks.
+
 Fri Oct 15 17:33:18 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE.h:
