@@ -22,6 +22,9 @@
 #if !defined (ACE_LOG_RECORD_H)
 #define ACE_LOG_RECORD_H
 
+// In case iostream.h is not #included before this header . . .
+class ostream;
+
 class ACE_Export ACE_Log_Record
 {
   // = TITLE
