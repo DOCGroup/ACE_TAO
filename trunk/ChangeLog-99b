@@ -1,3 +1,11 @@
+Tue Oct 19 12:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Web_Crawler.dsp: Changed the settings to make the
+	  executable name as main.exe.
+	* examples/Web_Crawler/URL_Visitor.cpp (~URL_Validation_Visitor):
+	  Removed double deletion of the <strat_connector_> which is the 
+	  Strategy Connector.
+	
 Tue Oct 19 11:24:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Commented out an
