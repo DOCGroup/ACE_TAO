@@ -30,7 +30,9 @@ module RtecEventComm {
   struct Event {
     EventSourceID source_;
     EventType type_;
-    Time time_;
+    Time creation_time_;
+    Time ec_recv_time_;
+    Time ec_send_time_;
     EventData data_;
   };
   typedef sequence<Event> EventSet;

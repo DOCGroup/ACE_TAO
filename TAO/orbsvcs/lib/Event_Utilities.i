@@ -8,7 +8,9 @@ ACE_ConsumerQOS_Factory::insert (RtecEventComm::EventSourceID source,
   RtecEventChannelAdmin::Dependency dependency;
   dependency.event_.source_ = source;
   dependency.event_.type_ = type;
-  dependency.event_.time_ = 0;
+  dependency.event_.creation_time_ = 0;
+  dependency.event_.ec_recv_time_ = 0;
+  dependency.event_.ec_send_time_ = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -20,7 +22,9 @@ ACE_ConsumerQOS_Factory::insert_type (RtecEventComm::EventType type,
   RtecEventChannelAdmin::Dependency dependency;
   dependency.event_.source_ = 0;
   dependency.event_.type_ = type;
-  dependency.event_.time_ = 0;
+  dependency.event_.creation_time_ = 0;
+  dependency.event_.ec_recv_time_ = 0;
+  dependency.event_.ec_send_time_ = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -32,6 +36,9 @@ ACE_ConsumerQOS_Factory::insert_source (RtecEventComm::EventSourceID source,
   RtecEventChannelAdmin::Dependency dependency;
   dependency.event_.source_ = source;
   dependency.event_.type_ = ACE_ES_EVENT_ANY;
+  dependency.event_.creation_time_ = 0;
+  dependency.event_.ec_recv_time_ = 0;
+  dependency.event_.ec_send_time_ = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -44,7 +51,9 @@ ACE_ConsumerQOS_Factory::insert_time (RtecEventComm::EventType type,
   RtecEventChannelAdmin::Dependency dependency;
   dependency.event_.source_ = 0;
   dependency.event_.type_ = type;
-  dependency.event_.time_ = interval;
+  dependency.event_.creation_time_ = interval;
+  dependency.event_.ec_recv_time_ = 0;
+  dependency.event_.ec_send_time_ = 0;
   dependency.rt_info = rt_info;
   return this->insert (dependency);
 }
@@ -55,7 +64,9 @@ ACE_ConsumerQOS_Factory::insert_act (RtecEventComm::EventData act)
   RtecEventChannelAdmin::Dependency dependency;
   dependency.event_.source_ = 0;
   dependency.event_.type_ = ACE_ES_EVENT_ACT;
-  dependency.event_.time_ = 0;
+  dependency.event_.creation_time_ = 0;
+  dependency.event_.ec_recv_time_ = 0;
+  dependency.event_.ec_send_time_ = 0;
   dependency.event_.data_ = act;
   return this->insert (dependency);
 }
