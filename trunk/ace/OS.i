@@ -8661,30 +8661,13 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   asm volatile ("rpcc %0" : "=r" (now) : : "memory");
 
   return now;
-#elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_WINCE)
-  // Issue the RDTSC assembler instruction to get the number of clock
-  // ticks since system boot.  RDTSC is only available on Pentiums and
-  // higher.  Thanks to Wayne Vucenic <wvucenic@netgate.net> for
-  // pointing us to intel's RDTSC instruction.  See
-  // http://www.sandpile.org/80x86/rdtsc.shtml for a description of
-  // the RDTSC instruction.  Or see Frank van Gilluwe's "The
-  // Undocumented PC" published by Addison Wesley Developers Press.
+#elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM)
+  LARGE_INTEGER freq;
 
-  ACE_UNUSED_ARG (op);
-  unsigned long least;
-  unsigned long most;
+  ::QueryPerformanceCounter (&freq);
 
-  __asm {
-    //      __asm               rdtsc
-    // VC++ doesn't know the opcode for rdtsc (OFh, 31h), so we'll
-    // emit the opcode manually.
-      __asm             _emit           0xf
-      __asm             _emit           0x31
-      __asm             mov             least,eax
-      __asm             mov             most,edx
-      }
+  return freq.QuadPart;
 
-  return ACE_MAKE_QWORD (least, most);
 #elif defined (CHORUS)
   if (op == ACE_OS::ACE_HRTIMER_GETTIME)
     {
