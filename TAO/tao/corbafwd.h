@@ -911,9 +911,13 @@ private:
 //          T           A        0      location      errno
 
 // Location encoding:  next-to-last 8 bits.
+
+// For TRANSIENT...
 #define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01u << 4)
 #define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02u << 4)
 #define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03u << 4)
+#define TAO_POA_DISCARDING                         (0x04u << 4)
+#define TAO_POA_HOLDING                            (0x05u << 4)
 
 // errno encoding:  bottom 4 bits.
 #define TAO_UNKNOWN_MINOR_CODE   0x00u

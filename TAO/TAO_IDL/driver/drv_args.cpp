@@ -733,12 +733,31 @@ DRV_parse_args (long ac, char **av)
           "tmp"
           ACE_DIRECTORY_SEPARATOR_STR_A;
 
+#if defined(ACE_MVS)
+      if (ACE_OS::access (tmpdir, F_OK) == -1
+          || ACE_OS::access (tmpdir, R_OK) == -1
+          || ACE_OS::access (tmpdir, W_OK) == -1)
+#else
       if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
+#endif /* ACE_MVS */
         {
           cerr << GTDEVEL ("Warning: Can't access temporary directory (")
                << tmpdir
                << GTDEVEL ("), using current directory for temp files.\n");
           tmpdir = ".";
+#if defined(ACE_MVS)
+          if (ACE_OS::access (tmpdir, F_OK) == -1
+              || ACE_OS::access (tmpdir, R_OK) == -1
+              || ACE_OS::access (tmpdir, W_OK) == -1)
+#else
+          if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
+#endif /* ACE_MVS */
+            {
+              cerr << GTDEVEL ("Warning: Can't access temporary directory (")
+                   << tmpdir
+                   << "\n";
+              ACE_OS::exit (99);
+            }
         }
 
       idl_global->temp_dir (tmpdir);
