@@ -1,3 +1,9 @@
+Wed Jul 29 17:46:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Task_T.h: Updated documentation to explain that
+ 	  ACE_Time_Values are ABSOLUTE rather than relative.  Thanks to
+ 	  James Johnson for reporting this.
+
 Wed Jul 29 16:05:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/Process_Unix.pm: 
