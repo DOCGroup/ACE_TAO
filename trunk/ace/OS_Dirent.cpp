@@ -6,6 +6,20 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS.h"
 
+/*
+   These definitions are missing on the original VC6 distribution.  The new
+   headers that define these are available in the Platform SDK and are defined
+   for those that don't have it.
+ */
+#if defined (ACE_WIN32)
+#  if !defined (INVALID_FILE_ATTRIBUTES)
+#    define INVALID_FILE_ATTRIBUTES (-1)
+#  endif /* INVALID_FILE_ATTRIBUTES */
+#  if !defined (INVALID_SET_FILE_POINTER)
+#    define INVALID_SET_FILE_POINTER (-1)
+#  endif /* INVALID_SET_FILE_POINTER */
+#endif /* ACE_WIN32 */
+
 ACE_RCSID(ace, OS_Dirent, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
