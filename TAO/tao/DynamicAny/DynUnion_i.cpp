@@ -153,6 +153,15 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
   // Get the CDR stream of the argument.
   ACE_Message_Block* mb = any._tao_get_cdr ();
 
+  if (mb == 0)
+    {
+      ACE_NEW (mb,
+               ACE_Message_Block);
+      TAO_OutputCDR out;
+      any.impl ()->marshal_value (out);
+      ACE_CDR::consolidate (mb, out.begin ());
+    }
+
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
 
@@ -165,9 +174,10 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
   CORBA::Any disc_any;
   TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW (unk,
-           TAO::Unknown_IDL_Type (disc_tc.in (),
+           TAO::Unknown_IDL_Type (CORBA::TypeCode::_duplicate (disc_tc.in ()),
                                   cdr.start (),
-                                  cdr.byte_order ()));
+                                  cdr.byte_order (),
+                                  1));
   disc_any.replace (unk);
 
   // Need this here because we might have been called from init().
@@ -178,8 +188,9 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
     }
 
   // Set the discriminator.
-  this->discriminator_ = TAO_DynAnyFactory::make_dyn_any (disc_any
-                                                          ACE_ENV_ARG_PARAMETER);
+  this->discriminator_ = 
+    TAO_DynAnyFactory::make_dyn_any (disc_any
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Move to the next field in the CDR stream.
@@ -188,7 +199,13 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ULong count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var unaliased = 
+    TAO_DynAnyFactory::strip_alias (tc.in ()
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::ULong count = 
+    unaliased->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Boolean match = 0;
@@ -768,6 +785,16 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *member_mb = member_any->_tao_get_cdr ();
+
+  if (member_mb == 0)
+    {
+      ACE_NEW_RETURN (member_mb,
+                      ACE_Message_Block,
+                      0);
+      TAO_OutputCDR out;
+      member_any->impl ()->marshal_value (out);
+      ACE_CDR::consolidate (member_mb, out.begin ());
+    }
 
   TAO_InputCDR member_cdr (member_mb,
                            member_any->_tao_byte_order ());

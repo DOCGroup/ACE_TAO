@@ -108,12 +108,8 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
                                  0);
       break;
     case CORBA::tk_TypeCode:
-      {
-        CORBA::TypeCode tc (CORBA::tk_null);
-        CORBA::TypeCode_ptr tc_ptr = &tc;
-        this->any_ <<= tc_ptr;
-        break;
-      }
+      this->any_ <<= CORBA::_tc_null;
+      break;
     case CORBA::tk_objref:
       {
         TAO_OutputCDR stream;
@@ -482,7 +478,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         // already been checked for equivalence above (done with this
         // DynAny's type_ member, which does have the bound set correctly).
         const char* lhs_v;
-        this->any_ >>= lhs_v;
+        this->any_ >>= CORBA::Any::to_string (lhs_v,
+                                              bound);
 
         return ACE_OS::strcmp (rhs_v, lhs_v) == 0;
       }

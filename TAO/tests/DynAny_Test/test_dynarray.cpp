@@ -74,7 +74,7 @@ Test_DynArray::run_test (void)
         }
 
       CORBA::Any in_any1;
-      in_any1 <<= ta;
+      in_any1 <<= DynAnyTests::test_array_forany (ta);
       DynamicAny::DynAny_var dp1 =
         dynany_factory->create_dyn_any (in_any1
                                         ACE_ENV_ARG_PARAMETER);
@@ -127,18 +127,21 @@ Test_DynArray::run_test (void)
                             -1);
         }
 
-      ta[1] = data.m_long1;
+      ta[1U] = data.m_long1;
       CORBA::Any in_any2;
-      in_any2 <<= ta;
+      in_any2 <<= DynAnyTests::test_array_forany (ta);
+      
       ftc1->from_any (in_any2
                       ACE_ENV_ARG_PARAMETER);
+
       ACE_TRY_CHECK;
       CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
       DynAnyTests::test_array_forany ta_out;
       out_any1.in () >>= ta_out;
 
-      if (ta_out[(CORBA::ULong) 1] == data.m_long1)
+      if (ta_out[1U] == data.m_long1)
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));

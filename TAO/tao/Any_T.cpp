@@ -69,20 +69,20 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
-      TAO::Any_Impl_T<T> *narrow_impl =
-        dynamic_cast <TAO::Any_Impl_T<T> *> (impl);
-
-      if (narrow_impl != 0)
-        {
-          _tao_elem = (T *) narrow_impl->value_;
-          return 1;
-        }
-
       ACE_Message_Block *mb = impl->_tao_get_cdr ();
 
       if (mb == 0)
         {
-          return 0;
+          TAO::Any_Impl_T<T> *narrow_impl =
+            dynamic_cast <TAO::Any_Impl_T<T> *> (impl);
+
+          if (narrow_impl == 0)
+            {
+              return 0;
+            }
+
+          _tao_elem = (T *) narrow_impl->value_;
+          return 1;
         }
 
       TAO::Any_Impl_T<T> *replacement = 0;
@@ -207,21 +207,21 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
-      TAO::Any_Array_Impl_T<T_slice, T_forany> *narrow_impl =
-        dynamic_cast <TAO::Any_Array_Impl_T<T_slice, T_forany> *> (impl);
-
-      if (narrow_impl != 0)
-        {
-          _tao_elem = ACE_const_cast (const T_slice *&, 
-                                      narrow_impl->value_);
-          return 1;
-        }
-
       ACE_Message_Block *mb = impl->_tao_get_cdr ();
 
       if (mb == 0)
         {
-          return 0;
+          TAO::Any_Array_Impl_T<T_slice, T_forany> *narrow_impl =
+            dynamic_cast <TAO::Any_Array_Impl_T<T_slice, T_forany> *> (impl);
+
+          if (narrow_impl == 0)
+            {
+              return 0;
+            }
+
+          _tao_elem = ACE_const_cast (const T_slice *&, 
+                                      narrow_impl->value_);
+          return 1;
         }
 
       TAO::Any_Array_Impl_T<T_slice, T_forany> *replacement = 0;
@@ -535,20 +535,20 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
-      TAO::Any_Basic_Impl_T<T> *narrow_impl =
-        dynamic_cast <TAO::Any_Basic_Impl_T<T> *> (impl);
-
-      if (narrow_impl != 0)
-        {
-          _tao_elem = narrow_impl->value_;
-          return 1;
-        }
-
       ACE_Message_Block *mb = impl->_tao_get_cdr ();
 
       if (mb == 0)
         {
-          return 0;
+          TAO::Any_Basic_Impl_T<T> *narrow_impl =
+            dynamic_cast <TAO::Any_Basic_Impl_T<T> *> (impl);
+
+          if (narrow_impl == 0)
+            {
+              return 0;
+            }
+
+          _tao_elem = narrow_impl->value_;
+          return 1;
         }
 
       TAO::Any_Basic_Impl_T<T> *replacement = 
@@ -660,25 +660,25 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::extract (
           return 0;
         }
 
-      TAO::Any_Impl *impl = any.impl ();
-
       typedef TAO::Any_Special_Basic_Impl_T<T, from_T, to_T> 
         UNSIGNED_CHAR_ANY_IMPL;
 
-      TAO::Any_Special_Basic_Impl_T<T, from_T, to_T> *narrow_impl =
-        dynamic_cast <UNSIGNED_CHAR_ANY_IMPL *> (impl);
-
-      if (narrow_impl != 0)
-        {
-          _tao_elem = narrow_impl->value_;
-          return 1;
-        }
+      TAO::Any_Impl *impl = any.impl ();
 
       ACE_Message_Block *mb = impl->_tao_get_cdr ();
 
       if (mb == 0)
         {
-          return 0;
+          TAO::Any_Special_Basic_Impl_T<T, from_T, to_T> *narrow_impl =
+            dynamic_cast <UNSIGNED_CHAR_ANY_IMPL *> (impl);
+
+          if (narrow_impl == 0)
+            {
+              return 0;
+            }
+
+          _tao_elem = narrow_impl->value_;
+          return 1;
         }
 
       TAO::Any_Special_Basic_Impl_T<T, from_T, to_T> *replacement = 0;
@@ -819,20 +819,20 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
-      TAO::Any_Dual_Impl_T<T> *narrow_impl =
-        dynamic_cast <TAO::Any_Dual_Impl_T<T> *> (impl);
-
-      if (narrow_impl != 0)
-        {
-          _tao_elem = narrow_impl->value_;
-          return 1;
-        }
-
       ACE_Message_Block *mb = impl->_tao_get_cdr ();
 
       if (mb == 0)
         {
-          return 0;
+          TAO::Any_Dual_Impl_T<T> *narrow_impl =
+            dynamic_cast <TAO::Any_Dual_Impl_T<T> *> (impl);
+
+          if (narrow_impl == 0)
+            {
+              return 0;
+            }
+
+          _tao_elem = narrow_impl->value_;
+          return 1;
         }
 
       T *empty_value = 0;

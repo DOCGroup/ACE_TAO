@@ -94,10 +94,6 @@ SOURCE=.\da_testsC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\da_testsS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\data.cpp
 # End Source File
 # Begin Source File
@@ -139,10 +135,6 @@ SOURCE=.\test_wrapper.cpp
 # Begin Source File
 
 SOURCE=.\da_testsC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\da_testsS.h
 # End Source File
 # Begin Source File
 
