@@ -1,7 +1,5 @@
 // $Id$
 
-// Consumer driver for the Orbix Notification example.
-
 #include "Notification_Receiver_Handler.h"
 #include "Input_Handler.h"
 
@@ -11,6 +9,8 @@ ACE_RCSID(Consumer, consumer, "$Id$")
 
 class Consumer : public ACE_Event_Handler
 {
+  // = TITLE
+  // Consumer driver for the Orbix Notification example.
 public:
   Consumer (int argc, char *argv[]);
   ~Consumer (void);
@@ -36,14 +36,17 @@ private:
 int
 Consumer::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "closing down Consumer\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "closing down Consumer\n"));
   return 0;
 }
 
 int 
 Consumer::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "%S\n", signum));
+  ACE_DEBUG ((LM_DEBUG,
+              "%S\n",
+              signum));
 
   // Indicate that the consumer initiated the shutdown.
   this->ih_->consumer_initiated_shutdown (1);
@@ -60,7 +63,9 @@ void
 Consumer::run (void)
 {
   if (ACE_Reactor::run_event_loop () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "run_reactor_event_loop"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "run_reactor_event_loop"));
 }
 
 Consumer::Consumer (int argc, char *argv[])
@@ -72,19 +77,25 @@ Consumer::Consumer (int argc, char *argv[])
     {
       if (errno == ENOENT) // There's no svc.conf file, so use static linking...
 	{
-	  ACE_DEBUG ((LM_DEBUG, "no config file, using static binding\n"));
+	  ACE_DEBUG ((LM_DEBUG,
+                      "no config file, using static binding\n"));
 	  // The constructor registers the handlers...
-	  this->nrh_ = new Notification_Receiver_Handler (argc, argv);
-	  ACE_ASSERT (this->nrh_ != 0);
-	  this->ih_ = new Input_Handler (this->nrh_);
-	  ACE_ASSERT (this->ih_ != 0);
+	  ACE_NEW (this->nrh_,
+                   Notification_Receiver_Handler (argc, argv));
+	  ACE_NEW (this->ih_,
+                   Input_Handler (this->nrh_));
 	}
       else
-	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
+	ACE_ERROR ((LM_ERROR,
+                    "%p\n%a",
+                    "open",
+                    1));
     }
 
   if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "register_handler"));
 }
 
 Consumer::~Consumer (void)
@@ -109,6 +120,9 @@ main (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "you must have Orbix to run application %s\n", argv[0]), 1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "you must have Orbix to run application %s\n",
+                     argv[0]),
+                    1);
 }
 #endif /* ACE_HAS_ORBIX */

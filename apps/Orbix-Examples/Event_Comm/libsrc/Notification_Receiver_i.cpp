@@ -24,7 +24,9 @@ Notification_Receiver_i::receive_notification
 {
   const char *tmpstr = notification.tag_;
 
-  ACE_DEBUG ((LM_DEBUG, "**** got notification = %s\n", tmpstr));
+  ACE_DEBUG ((LM_DEBUG,
+              "**** got notification = %s\n",
+              tmpstr));
 }
 
 // Disconnect the <Event_Comm::Notification_Receiver> from the <Event_Comm::Notifier>.
@@ -33,8 +35,10 @@ void
 Notification_Receiver_i::disconnect (const char *reason,
 				     CORBA::Environment &IT_env)
 {
-  ACE_DEBUG ((LM_DEBUG, "**** got disconnected due to %s\n", reason));
-  ACE_Reactor::end_event_loop();
+  ACE_DEBUG ((LM_DEBUG,
+              "**** got disconnected due to %s\n",
+              reason));
+  ACE_Reactor::end_event_loop ();
 }
 
 #endif /* ACE_HAS_ORBIX */

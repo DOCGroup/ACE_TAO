@@ -1,9 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// @(#)Notification.idl	1.1	10/18/96
-
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,21 +17,21 @@
 // 
 // ============================================================================
 
-#ifndef _NOTIFICATION_IDL
+#if !defined (_NOTIFICATION_IDL)
 #define _NOTIFICATION_IDL
 
 struct Notification
+{
   // = TITLE
   //   Defines the interface for an event <Notification>.
   //
   // = This is the type passed by the Notifier to the Notification_Receiver.
   //   Since it contains an <any>, it can hold any values.  Naturally,
   //   the consumer must understand how to interpret this!
-{
   string tag_;
   // Tag for the notification.
 
-//  any value_;
+  any value_;
   // A notification can contain anything.
 
   Object object_ref_;

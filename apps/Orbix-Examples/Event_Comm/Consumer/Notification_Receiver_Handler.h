@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -28,15 +27,15 @@
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 class Notification_Receiver_Handler 
+{
   // = TITLE
-  //    Subclass of Corba_Handler that sets up the Notification Receiver handler
-  //    for use with the ACE ACE_Reactor.
+  //    Subclass of Corba_Handler that sets up the Notification
+  //    Receiver handler for use with the ACE ACE_Reactor.
   //
   // = DESCRIPTION
-  //    Note that this class doesn't inherit from ACE_ST_CORBA_Handler (unlike
-  //    the Supplier's Notifier_Handler class).  Instead, it uses an
-  //    alternative interface that can be called directly.
-{
+  //    Note that this class doesn't inherit from ACE_ST_CORBA_Handler
+  //    (unlike the Supplier's Notifier_Handler class).  Instead, it
+  //    uses an alternative interface that can be called directly.
 public:
   Notification_Receiver_Handler (int argc, char *argv[]);
 

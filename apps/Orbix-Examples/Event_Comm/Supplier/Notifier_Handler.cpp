@@ -17,14 +17,16 @@ Notifier_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   if (this->notifier_ != 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "closing down Notifier_Handler\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "closing down Notifier_Handler\n"));
       CORBA_HANDLER::instance ()->deactivate_service (Event_Comm_Notifier_IMPL, 
 						      this->notifier_->_marker ());
       CORBA::release (this->notifier_);
       this->notifier_ = 0;
       // *Must* be allocated dyanmically!
-      delete this;
+      ::operator delete ((void *) this);
     }
+
   return 0;
 }
 
@@ -51,11 +53,14 @@ Notifier_Handler::Notifier_Handler (const char *service_location,
 				    int putit)
 {
   CORBA_HANDLER::instance ()->activate_service (Event_Comm_Notifier_IMPL, 
-						putit ? marker : 0, service_location);
+						putit ? marker : 0,
+                                                service_location);
 
-  // Create a notifier object using the implementation class Notifier_i.
-  this->notifier_ = 
-    new TIE_Event_Comm_Notifier (Notifier_i) (new Notifier_i, marker);
+  // Create a notifier object using the implementation class
+  // Notifier_i.
+  ACE_NEW (this->notifier_,
+           TIE_Event_Comm_Notifier (Notifier_i) (new Notifier_i,
+                                                 marker));
 }
 
 // Destroy a Notifier target object.

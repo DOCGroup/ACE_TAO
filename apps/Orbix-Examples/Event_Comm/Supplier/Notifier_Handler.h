@@ -9,9 +9,6 @@
 // = FILENAME
 //    Notifier_Handler.h
 //
-// = DESCRIPTION 
-//     Integrate CORBA with the ACE ACE_Reactor.
-//
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu)
 // 
@@ -28,9 +25,6 @@
 class Notifier_Handler
   // = TITLE
   //     Integrate CORBA with the ACE ACE_Reactor.
-  //
-  // = DESCRIPTION
-  //   
 {
 public:
   Notifier_Handler (const char *service_location,
@@ -49,7 +43,7 @@ private:
   // Ensure dynamic allocation.
 
   Event_Comm::Notifier *notifier_;
-  // Pointer to an a <Event_Comm::Notifier> object.
+  // Pointer to an <Event_Comm::Notifier> object.
 };
 
 #endif /* ACE_HAS_ORBIX */
