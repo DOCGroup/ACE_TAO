@@ -1,3 +1,8 @@
+Thu Jan 23 17:44:38 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_freebsd.GNU: Remove gratuitous link
+	  of -lstdc++.  g++ already does that for us.
+
 Wed Jan 22 21:08:48 2003  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp (Quit_Handler):
