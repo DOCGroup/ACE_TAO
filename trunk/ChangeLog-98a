@@ -11,6 +11,22 @@ Tue May 05 08:35:18 1998  David L. Levine  <levine@cs.wustl.edu>
           The problem seems to be due to an old version left in
           /tmp/Svc_Conf_l.cpp, which confuses flex.
 
+        * ace/config-linux-common.h,config-g++-common.h: moved
+          ACE_HAS_PENTIUM (with i386) from config-linux-common.h
+          to config-g++-common.h.
+
+        * ace/config-linux-common.h: added ACE_HAS_POLL, so we
+          don't use ::select () in ACE_OS::sleep ().  Linux's
+          ::select () modifies its timeout argument!
+
+        * ace/OS.i (gethrtime): added RDTSC support for all g++
+          _and_ ACE_HAS_PENTIUM platforms.
+
+        * ace/Makefile: for GHS on Intel 8086, build gethrtime.cpp.
+          It's used to provide a high-resolution time using the
+          Pentium RDTSC instruction.  I don't know how to get
+          GHS' asm to do it, so it uses g++.
+
 Tue May 05 02:15:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Svc_Conf_l.cpp: I know, I know.  I shouldn't mess with this
