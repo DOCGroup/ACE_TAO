@@ -1,3 +1,0 @@
-project : taoexe, core {
-  exename = TAO_Service
-}

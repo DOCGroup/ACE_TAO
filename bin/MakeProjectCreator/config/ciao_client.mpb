@@ -1,7 +1,0 @@
-project : orbsvcslib, ifr_client, valuetype, security {
-  after    += CIAO_Client
-  includes   += $(TAO_ROOT)/orbsvcs/orbsvcs
-  idlflags += -I$(CIAO_ROOT) -I$(TAO_ROOT)/CIAO/ciao -I$(TAO_ROOT)/orbsvcs/orbsvcs
-  libs     += CIAO_Client
-  includes += $(CIAO_ROOT) $(CIAO_ROOT)/ciao
-}
