@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt & Carlos O'Ryan
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_MESSAGE_BLOCK_T_H
 #define ACE_MESSAGE_BLOCK_T_H

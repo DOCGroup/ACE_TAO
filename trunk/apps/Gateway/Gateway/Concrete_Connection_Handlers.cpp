@@ -673,7 +673,7 @@ Thr_Consumer_Handler::svc (void)
 
       this->peer ().close ();
 
-      // Re-establish the connection, using expoential backoff.
+      // Re-establish the connection, using exponential backoff.
       for (this->timeout (1);
            // Default is to reconnect synchronously.
            this->event_channel_->initiate_connection_connection (this, 1) == -1;
