@@ -293,7 +293,6 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast("; pt->accept (visitor); *os << "*,this->buffer_);" << be_nl
       << "freebuf (tmp);" << be_uidt_nl
       << "}" << be_nl
-      << "freebuf (("; pt->accept (visitor); *os << " *) this->buffer_);" << be_nl
       << "this->buffer_ = data;" << be_nl
       << "this->release_ = release;" << be_uidt_nl
       << "}" << be_nl
