@@ -99,6 +99,7 @@ mv -f "$compilation_log" "$compilation_log.bak" > /dev/null 2>&1
 run Basic_Types_Test
 test $chorus || run Env_Value_Test      # tests Env_Value_T and Process
 run Atomic_Op_Test                      # tests Atomic_Op
+run CDR_Test                            # tests ACE_OutputCDR and ACE_InputCDR
 run Semaphore_Test                      # tests ACE_Thread_Semaphore
 run TSS_Test                            # tests ACE_Task, ACE_Mutex, ACE_Guard
 run Timeprobe_Test                      # tests ACE_Timeprobes

@@ -26,6 +26,7 @@ call %0 %dopure% Atomic_Op_Test
 call %0 %dopure% Barrier_Test
 call %0 %dopure% Basic_Types_Test
 call %0 %dopure% Buffer_Stream_Test
+call %0 %dopure% CDR_Test
 call %0 %dopure% Collection_Test
 call %0 %dopure% Conn_Test
 call %0 %dopure% DLL_Test
