@@ -1037,11 +1037,11 @@ ACE_OS_String::strsncpy (char *dst, const char *src, size_t maxlen)
           if (rsrc != 0)
             strncat (rdst, rsrc, --rmaxlen);
         }
-    }
-  else
-    {
-      rdst += (rmaxlen - 1);
-      *rdst = '\0';
+      else
+        {
+          rdst += (rmaxlen - 1);
+          *rdst = '\0';
+        }
     }
   return dst;
 }
@@ -1061,11 +1061,11 @@ ACE_OS_String::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen
           if (rsrc != 0)
             strncat (rdst, rsrc, --rmaxlen);
         }
-    }
-  else
-    {
-      rdst += (rmaxlen - 1);
-      *rdst = ACE_TEXT_WIDE ('\0');
+      else
+        {
+          rdst += (rmaxlen - 1);
+          *rdst = ACE_TEXT_WIDE ('\0');
+        }
     }
   return dst;
 }
