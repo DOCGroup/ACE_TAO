@@ -179,7 +179,7 @@ ACE_Event_Handler::read_adapter (void *args)
 {
   ACE_Event_Handler *this_ptr = (ACE_Event_Handler *) args;
 
-  ACE_HANLDE handle = this_ptr->get_handle ();
+  ACE_HANDLE handle = this_ptr->get_handle ();
   if (handle == ACE_INVALID_HANDLE)
     handle = ACE_STDIN;
 

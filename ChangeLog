@@ -1,10 +1,14 @@
+Sun Dec 08 01:17:26 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Event_Handler.cpp: Fixed a typo.
+
 Thu Dec  5 20:30:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Event_Handler.cpp: Updated the implementation of ACE_Event_Handler::read_adapter()
 	  so that the code is consistent with the stated semantics.  Thanks to
 	  Ron Muck <rlm@sdiusa.com> for the fix.
 
-	* ace/OS_Dirent.inl (readdir_r): Enhanced the ACE_OS_Directn::readdir_r() 
+	* ace/OS_Dirent.inl (readdir_r): Enhanced the ACE_OS_Directn::readdir_r()
 	  wrapper facade so that it returns 1 (i.e., "done") when an error
  	  occurs.  Thanks to Abhay Kulkarni <Abhay.Kulkarni@veritas.com>
  	  for reporting this.
