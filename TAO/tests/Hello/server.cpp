@@ -76,7 +76,7 @@ main (int argc, char *argv[])
 	orb->object_to_string (hello.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // If the ior_output_file exists, output the ior to it
+      // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
