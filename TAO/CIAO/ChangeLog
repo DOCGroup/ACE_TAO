@@ -1,3 +1,9 @@
+Sun Aug 15 09:12:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/tests/Config_Handlers/handler_test.mpb:
+
+	  Fixed the handlers to link in CIAO_DnC_Container too. 
+
 Sat Aug 14 14:44:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/Config_Handlers.mpc:
