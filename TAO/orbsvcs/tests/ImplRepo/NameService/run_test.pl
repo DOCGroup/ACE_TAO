@@ -16,13 +16,7 @@ $name_ior = PerlACE::LocalFile ("name.ior");
 
 $IMR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service");
-
-if ($^O eq "MSWin32") {
-    $TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
-}
-else {
-    $TAO_IMR = new PerlACE::Process ("../../../ImplRepo_Service/tao_imr");
-}
+$TAO_IMR = new PerlACE::Process ("../../../ImplRepo_Service/tao_imr");
 
 $TEST = new PerlACE::Process ("test");
 
@@ -34,7 +28,7 @@ unlink $imr_ior;
 unlink $name_ior;
 
 ################################################################################
-## Start the implementation Repository 
+## Start the implementation Repository
 
 $IMR->Arguments ("-o $imr_ior -d 0");
 $IMR->Spawn ();
@@ -50,7 +44,7 @@ if (PerlACE::waitforfile_timed ($imr_ior, 5) == -1) {
 
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
                     . " add NameService "
-                    ." -c \"" . $NS->Executable () 
+                    ." -c \"" . $NS->Executable ()
                        ." -ORBInitRef ImplRepoService=file://$imr_ior"
                        ." -ORBUseIMR 1 .\"");
 
@@ -104,7 +98,7 @@ if ($taoimr != 0) {
 ################################################################################
 ## Kill the IMR
 
-$iserver = $IMR->TerminateWaitKill (5); 
+$iserver = $IMR->TerminateWaitKill (5);
 
 if ($iserver != 0) {
     print STDERR "ERROR: IMR returned $iserver\n";
