@@ -10,6 +10,13 @@
 #include "ace/Task.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if (defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+  // For template specializations at end of this file.
+  #include "ace/Dynamic.h"
+#endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #if defined (ACE_MT_SAFE)
 // Lock the creation of the Singleton.
 ACE_Thread_Mutex ACE_Task_Exit::ace_task_lock_;
@@ -262,3 +269,10 @@ ACE_Task_Base::module_closed (void)
   return this->close (1);
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if (defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+  template class ACE_TSS<ACE_Task_Exit>;
+  // This doesn't necessarily belong here, but it's a convenient place for it.
+  template class ACE_TSS<ACE_Dynamic>;
+#endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
