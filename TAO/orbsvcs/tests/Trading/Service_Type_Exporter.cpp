@@ -394,13 +394,13 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::PLOTTER].props[4].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
   this->type_structs_[TT_Info::PLOTTER].props[4].value_type =
-    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_StringSeq);
+    CORBA::TypeCode::_duplicate (TAO_Trader_Test::_tc_StringSeq);
   this->type_structs_[TT_Info::PLOTTER].props[4].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PLOTTER].props[5].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
   this->type_structs_[TT_Info::PLOTTER].props[5].value_type =
-    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_ULongSeq);
+    CORBA::TypeCode::_duplicate (TAO_Trader_Test::_tc_ULongSeq);
   this->type_structs_[TT_Info::PLOTTER].props[5].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PLOTTER].if_name =
@@ -443,13 +443,13 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::PRINTER].props[5].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
   this->type_structs_[TT_Info::PRINTER].props[5].value_type =
-    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_StringSeq);
+    CORBA::TypeCode::_duplicate (TAO_Trader_Test::_tc_StringSeq);
   this->type_structs_[TT_Info::PRINTER].props[5].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PRINTER].props[6].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
   this->type_structs_[TT_Info::PRINTER].props[6].value_type =
-    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_ULongSeq);
+    CORBA::TypeCode::_duplicate (TAO_Trader_Test::_tc_ULongSeq);
   this->type_structs_[TT_Info::PRINTER].props[6].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PRINTER].if_name =

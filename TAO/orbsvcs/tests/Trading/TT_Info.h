@@ -4,7 +4,6 @@
 #define TAO_TRADER_TEST_UTILS_H
 
 #include "TTestS.h"
-#include "orbsvcs/SequencesC.h"
 #include "orbsvcs/CosTradingC.h"
 
 class TT_Info

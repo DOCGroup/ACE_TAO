@@ -366,8 +366,8 @@ TAO_Offer_Exporter::create_offers (void)
   char name[BUFSIZ];
   char description[BUFSIZ];
   CORBA::Any extra_info;
-  TAO_Sequences::StringSeq string_seq (QUEUE_SIZE);
-  TAO_Sequences::ULongSeq ulong_seq (QUEUE_SIZE);
+  TAO_Trader_Test::StringSeq string_seq (QUEUE_SIZE);
+  TAO_Trader_Test::ULongSeq ulong_seq (QUEUE_SIZE);
 
   CosTradingDynamic::DynamicProp* dp_user_queue;
   CosTradingDynamic::DynamicProp* dp_file_queue;
@@ -394,22 +394,22 @@ TAO_Offer_Exporter::create_offers (void)
 
       dp_user_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
-	 TAO_Sequences::_tc_StringSeq,
+	 TAO_Trader_Test::_tc_StringSeq,
 	 extra_info);
 
       dp_file_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
-	 TAO_Sequences::_tc_ULongSeq,
+	 TAO_Trader_Test::_tc_ULongSeq,
 	 extra_info);
       
       this->dp_plotters_[i].register_handler
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
-	 new Simple_DP_Evaluation_Handler<TAO_Sequences::StringSeq> (string_seq),
+	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::StringSeq> (string_seq),
 	 CORBA::B_TRUE);
 
       this->dp_plotters_[i].register_handler
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
-	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq),
+	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::ULongSeq> (ulong_seq),
 	 CORBA::B_TRUE);
       
       this->props_plotters_[i].length (11);
@@ -454,22 +454,22 @@ TAO_Offer_Exporter::create_offers (void)
 
       dp_user_queue = this->dp_printers_[i].construct_dynamic_prop
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE],
-	 TAO_Sequences::_tc_StringSeq,
+	 TAO_Trader_Test::_tc_StringSeq,
 	 extra_info);
 
       dp_file_queue = this->dp_printers_[i].construct_dynamic_prop
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING],
-	 TAO_Sequences::_tc_ULongSeq,
+	 TAO_Trader_Test::_tc_ULongSeq,
 	 extra_info);
       
       this->dp_printers_[i].register_handler
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE],
-	 new Simple_DP_Evaluation_Handler<TAO_Sequences::StringSeq> (string_seq),
+	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::StringSeq> (string_seq),
 	 CORBA::B_TRUE);
 
       this->dp_printers_[i].register_handler
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING],
-	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq),
+	 new Simple_DP_Evaluation_Handler<TAO_Trader_Test::ULongSeq> (ulong_seq),
 	 CORBA::B_TRUE);
 
       this->props_printers_[i].length (12);

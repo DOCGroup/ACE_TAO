@@ -23,7 +23,7 @@ main (int argc, char** argv)
       // Create a Service Type Repository and a Trader Object.
       TAO_Service_Type_Repository type_repos;
       auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
-	TAO_Trader_Factory::create_linked_trader ();
+	TAO_Trader_Factory::create_trader (argc, argv);
       TAO_Support_Attributes_Impl& sup_attr = trader->support_attributes ();
       TAO_Trading_Components_Impl& trd_comp = trader->trading_components ();
 
@@ -31,21 +31,12 @@ main (int argc, char** argv)
       sup_attr.type_repos (type_repos._this (TAO_TRY_ENV));
       TAO_CHECK_ENV;
 
-      // Obtain the Service Type Repository.
-      ACE_DEBUG ((LM_DEBUG, "Obtaining the Service Type Repository.\n"));
-      //CosTrading::TypeRepository_ptr obj = lookup_if->type_repos (TAO_TRY_ENV);
-      CosTrading::TypeRepository_ptr obj = sup_attr.type_repos ();
-      TAO_CHECK_ENV;
-      
-      // Narrow the Service Type Repository.
-      ACE_DEBUG ((LM_DEBUG, "Narrowing the Service Type Repository.\n"));
-      CosTradingRepos::ServiceTypeRepository_var tr =
-	CosTradingRepos::ServiceTypeRepository::_narrow (obj, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "Running the Service Type Exporter tests.\n"));
-      TAO_Service_Type_Exporter type_exporter (tr.ptr ());
+      TAO_Service_Type_Exporter type_exporter
+        (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
+         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       type_exporter.remove_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -65,7 +56,7 @@ main (int argc, char** argv)
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter
-	(CosTrading::Register::_duplicate (trd_comp.register_if ()),
+	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
 	 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
