@@ -37,7 +37,7 @@
 // functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
-#if !(__GLIBC_PREREQ (2, 1))
+#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1)
    // Older versions of glibc lacked reentrant netdb functions
 #  define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
@@ -51,7 +51,7 @@
 
 #include /**/ <pthread.h>
 
-#if __GLIBC_PREREQ (2, 2)
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)
    // glibc 2.2.x or better has pthread_mutex_timedlock()
 #  define ACE_HAS_MUTEX_TIMEOUTS
 #  if !defined (_XOPEN_SOURCE) \
