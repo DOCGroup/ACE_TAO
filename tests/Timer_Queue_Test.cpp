@@ -34,9 +34,12 @@ static int *timer_ids = 0;
 class Example_Handler : public ACE_Event_Handler
 {
 public:
+  Example_Handler (void): close_count_ (0) {}
+
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
   {
     ACE_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
+    this->close_count_++;
     return 0;
   }
 
@@ -49,6 +52,9 @@ public:
     else
       return 0;
   }
+
+  int close_count_;
+  // Keeps track of the number of times that <handle_close> is called.
 };
 
 static void
@@ -60,25 +66,44 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
   int timer_id; 
   
-  timer_id = tq->schedule (&eh, (const void *) 1, ACE_OS::gettimeofday ());
+  timer_id = tq->schedule (&eh, (const void *) 1, 
+			   ACE_OS::gettimeofday ());
   ACE_ASSERT (timer_id != -1);
 
   ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
 			   ACE_OS::gettimeofday ()) != -1);
   ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
 			   ACE_OS::gettimeofday ()) != -1);
-  ACE_ASSERT (tq->cancel (timer_id) == 1);
+  // The following method will trigger a call to <handle_close>.
+  ACE_ASSERT (tq->cancel (timer_id, 0, 0) == 1);
   ACE_ASSERT (tq->is_empty () == 0);
 
   ACE_ASSERT (tq->expire () == 2);
 
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 4, ACE_OS::gettimeofday ()) != -1);
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 5, ACE_OS::gettimeofday ()) != -1);
-  ACE_ASSERT (tq->cancel (&eh) == 2);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 4, 
+			    ACE_OS::gettimeofday ()) != -1);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 5, 
+			    ACE_OS::gettimeofday ()) != -1);
+
+  // The following method will trigger a call to <handle_close>.
+  ACE_ASSERT (tq->cancel (&eh, 0) == 2);
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (tq->expire () == 0);
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 007, ACE_OS::gettimeofday ()) != -1);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 007, 
+			    ACE_OS::gettimeofday ()) != -1);
   ACE_ASSERT (tq->expire () == 1);
+
+  timer_id = tq->schedule (&eh, (const void *) 6,
+			   ACE_OS::gettimeofday ());
+  ACE_ASSERT (timer_id != -1);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 7, 
+			    ACE_OS::gettimeofday ()) != -1);
+
+  // The following method will *not* trigger a call to <handle_close>.
+  ACE_ASSERT (tq->cancel (timer_id) == 1);
+  ACE_ASSERT (tq->cancel (&eh) == 1);
+  ACE_ASSERT (tq->expire () == 0);
+  ACE_ASSERT (eh.close_count_ == 2);
 }
 
 static void
@@ -98,7 +123,9 @@ test_performance (ACE_Timer_Queue *tq,
 
   for (i = 0; i < max_iterations; i++)
     {
-      timer_ids[i] = tq->schedule (&eh, (const void *) 42, ACE_OS::gettimeofday ());
+      timer_ids[i] = tq->schedule (&eh, 
+				   (const void *) 42, 
+				   ACE_OS::gettimeofday ());
       ACE_ASSERT (timer_ids[i] != -1);
     }
 
@@ -110,11 +137,14 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, "time to schedule %d timers for %s\n", 
+  ACE_DEBUG ((LM_DEBUG, 
+	      "time to schedule %d timers for %s\n", 
 	      max_iterations, test_name));
-  ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
+  ACE_DEBUG ((LM_DEBUG, 
+	      "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, 
+	      "time per call = %f usecs\n", 
 	      (et.user_time / double (max_iterations)) * 1000000));
 
   // Test the amount of time required to cancel all the timers.  We
@@ -132,11 +162,14 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, "time to cancel %d timers for %s\n",
+  ACE_DEBUG ((LM_DEBUG, 
+	      "time to cancel %d timers for %s\n",
 	      max_iterations, test_name));
-  ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
+  ACE_DEBUG ((LM_DEBUG, 
+	      "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, 
+	      "time per call = %f usecs\n", 
 	      (et.user_time / double (max_iterations)) * 1000000));
 
   // Test the amount of time required to schedule and expire all the
@@ -145,7 +178,9 @@ test_performance (ACE_Timer_Queue *tq,
   timer.start ();
 
   for (i = 0; i < max_iterations; i++)
-    ACE_ASSERT (tq->schedule (&eh, (const void *) 42, ACE_OS::gettimeofday ()) != -1);
+    ACE_ASSERT (tq->schedule (&eh, 
+			      (const void *) 42, 
+			      ACE_OS::gettimeofday ()) != -1);
 
   ACE_ASSERT (tq->is_empty () == 0);
 
@@ -156,11 +191,14 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, "time to schedule and expire %d timers for %s\n", 
+  ACE_DEBUG ((LM_DEBUG, 
+	      "time to schedule and expire %d timers for %s\n", 
 	      max_iterations, test_name));
-  ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
+  ACE_DEBUG ((LM_DEBUG, 
+	      "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, 
+	      "time per call = %f usecs\n", 
 	      (et.user_time / double (max_iterations)) * 1000000));
 }
 
@@ -209,8 +247,9 @@ main (int argc, char *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, "**** starting test of %s\n", 
 		  timer_queues[i].name_));
-      test_performance (timer_queues[i].queue_, timer_queues[i].name_);
       test_functionality (timer_queues[i].queue_);
+      test_performance (timer_queues[i].queue_, 
+			timer_queues[i].name_);
       delete timer_queues[i].queue_;
     }
 

@@ -490,7 +490,7 @@ ACE_Timer_Heap::cancel (int timer_id,
     {
       ACE_Timer_Node *temp = this->remove (timer_node_slot);
 
-      if (dont_call_handle_close)
+      if (dont_call_handle_close == 0)
 	// Call the close hook.
 	temp->handler_->handle_close (ACE_INVALID_HANDLE, 
 				      ACE_Event_Handler::TIMER_MASK);
