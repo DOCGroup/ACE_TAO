@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:609
 
 #ifndef _TAO_IDL_ORIG_IFR_COMPONENTSS_CPP_
@@ -35,7 +35,7 @@
 
 #include "IFR_ComponentsS.h"
 #include "tao/PortableServer/ForwardRequestC.h"
-#include "tao/PortableServer/Operation_Table.h"
+#include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Basic_SArguments.h"
@@ -80,13 +80,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:702
 
 #if !defined (_CORBA_DEFINITIONKIND__SARG_TRAITS_SS_)
 #define _CORBA_DEFINITIONKIND__SARG_TRAITS_SS_
-  
+
   template<>
   class TAO_IFR_Client_Export SArg_Traits<CORBA::DefinitionKind>
     : public
@@ -100,7 +100,7 @@ namespace TAO
 
 #if !defined (_CORBA_REPOSITORY__SARG_TRAITS_SS_)
 #define _CORBA_REPOSITORY__SARG_TRAITS_SS_
-  
+
   template<>
   class  SArg_Traits<CORBA::Repository>
     : public
@@ -116,7 +116,7 @@ namespace TAO
 
 #if !defined (_CORBA_CONTAINER__SARG_TRAITS_SS_)
 #define _CORBA_CONTAINER__SARG_TRAITS_SS_
-  
+
   template<>
   class  SArg_Traits<CORBA::Container>
     : public
@@ -132,7 +132,7 @@ namespace TAO
 
 #if !defined (_CORBA_IDLTYPE__SARG_TRAITS_SS_)
 #define _CORBA_IDLTYPE__SARG_TRAITS_SS_
-  
+
   template<>
   class  SArg_Traits<CORBA::IDLType>
     : public
@@ -148,7 +148,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__SARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEF__SARG_TRAITS_SS_
-  
+
   template<>
   class  SArg_Traits<CORBA::InterfaceDef>
     : public
@@ -161,13 +161,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__SARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEFSEQ__SARG_TRAITS_SS_
-  
+
   template<>
   class TAO_IFR_Client_Export SArg_Traits<CORBA::InterfaceDefSeq>
     : public
@@ -183,7 +183,7 @@ namespace TAO
 
 #if !defined (_CORBA_VALUEDEF__SARG_TRAITS_SS_)
 #define _CORBA_VALUEDEF__SARG_TRAITS_SS_
-  
+
   template<>
   class  SArg_Traits<CORBA::ValueDef>
     : public
@@ -196,7 +196,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:492
 

@@ -34,8 +34,8 @@
 
 
 #include "ImplRepoS.h"
+#include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/ForwardRequestC.h"
-#include "tao/PortableServer/Operation_Table.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Basic_SArguments.h"
