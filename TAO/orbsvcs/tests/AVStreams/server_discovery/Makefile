@@ -8,14 +8,13 @@ MAKEFILE = Makefile
 LIBNAME  = libavdemo
 SHLIB2   = $(LIBNAME).$(SOEXT)
 
-IDL_SRCS= Video_Repository
+IDL_FILES= Video_Repository
 
-IDL_FILES = \
-	$(addsuffix S, $(IDL_SRCS)) \
-	$(addsuffix C, $(IDL_SRCS))
+IDL_SRC = \
+	$(addsuffix S.cpp, $(IDL_FILES)) \
+	$(addsuffix C.cpp, $(IDL_FILES))
 
-SRCS =  $(IDL_FILES) \
-	Trader_Client \
+SRCS =  Trader_Client \
 	Server_Discovery
 
 FILES	 = $(SRCS)
@@ -25,7 +24,7 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
-LSRC	= $(addsuffix .cpp,$(FILES))
+LSRC	= $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 
 LDFLAGS += -L$(JAVA_ROOT)/jre/lib/sparc -L$(JAVA_ROOT)/jre/lib/sparc/native_threads -L$(MPEG_ROOT)/mpeg_shared
 
@@ -66,8 +65,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-idl_stubs: $(addsuffix .h, $(IDL_FILES))
-
 Video_Repository.idl: $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl
 	cp $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl .
 
@@ -75,13 +72,10 @@ TAO_VR.module: Video_Repository.idl
 	$(JAVA_ROOT)/bin/idltojava Video_Repository.idl
 	touch TAO_VR.module
 
+.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
+
 realclean: clean
-	-$(RM) Video_Repository.idl $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
-	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES))
-
-IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
-
-.PRECIOUS: $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 #----------------------------------------------------------------------------
 #	Dependencies

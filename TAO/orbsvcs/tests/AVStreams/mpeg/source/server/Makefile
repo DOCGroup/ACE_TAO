@@ -22,12 +22,16 @@ AV_AS_OBJS = as.o
 override TAO_IDLFLAGS += \
 	-I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-IDL_FILES = Video_RepositoryC  Video_RepositoryS
+IDL_FILES = Video_Repository
+IDL_SRC = \
+        $(addsuffix S.cpp, $(IDL_FILES)) \
+        $(addsuffix C.cpp, $(IDL_FILES))
 
-FILES = augmented_server server vs as Property_Exporter Machine_Properties $(IDL_FILES)
+FILES = augmented_server server vs as \
+	Property_Exporter Machine_Properties
 
 DEFS    = $(addsuffix .h,$(FILES))
-LSRC	= $(addsuffix .cpp,$(FILES))
+LSRC	= $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 
 
 LDLIBS 	+= -lmpeg_server -lmpeg_shared -lTAO_AV -lTAO_CosNaming -lTAO -lrpcsvc
@@ -64,11 +68,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 CPPFLAGS += -DSH_MEM -DNDEBUG
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
-.PRECIOUS: Video_RepositoryC.cpp
-
-idl_stubs: $(addsuffix .h, $(IDL_FILES))
-
-
 ifdef stat
 CPPFLAGS += -DSTAT
 endif
@@ -85,9 +84,10 @@ vs:$(addprefix $(VDIR),$(AV_VS_OBJS))
 as:$(addprefix $(VDIR),$(AV_AS_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
+.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
+
 realclean: clean
-	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
-	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES))
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

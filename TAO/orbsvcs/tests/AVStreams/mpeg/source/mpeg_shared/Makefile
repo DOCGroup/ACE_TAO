@@ -13,19 +13,19 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-IDL_FILES = Video_ControlS Video_ControlC Audio_ControlS Audio_ControlC ReceiverS ReceiverC MMDevice_ExporterC MMDevice_ExporterS
+IDL_FILES = Video_Control Audio_Control Receiver MMDevice_Exporter
+IDL_SRC = $(addsuffix C.cpp, $(IDL_FILES)) \
+	$(addsuffix C.cpp, $(IDL_FILES))
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 override TAO_IDLFLAGS += \
 	-I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-FILES = $(IDL_FILES)
+FILES = com fileio filters routine sendpt
 
 DEFS    = $(addsuffix .h,$(FILES))
-LSRC	= $(addsuffix .cpp,$(FILES))
-
-FILES += com fileio filters routine sendpt
+LSRC	= $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
@@ -65,12 +65,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -DSH_MEM -DNDEBUG
 
-.PRECIOUS: Video_ControlS.cpp Video_ControlC.cpp Audio_ControlS.cpp Audio_ControlC.cpp
-
-idl_stubs: $(addsuffix .h, $(IDL_FILES))
+.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
 realclean: clean
-	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

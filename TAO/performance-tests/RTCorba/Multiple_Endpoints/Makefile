@@ -15,18 +15,15 @@ ifdef AMI
 TAO_IDLFLAGS += -GC
 endif # AMI
 
-IDL_SRCS = test
-IDL_FILES = \
-        $(addsuffix S, $(IDL_SRCS)) \
-        $(addsuffix C, $(IDL_SRCS))
-
-BIN   = idl_stubs
+IDL_FILES = test
+IDL_SRC = \
+        $(addsuffix S.cpp, $(IDL_FILES)) \
+        $(addsuffix C.cpp, $(IDL_FILES))
 
 DIRS  = Single_Endpoint \
         Orb_Per_Priority \
         Endpoint_Per_Priority
 
-all: all.local all.nested
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -44,10 +41,11 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-idl_stubs: $(addsuffix .h, $(IDL_FILES))
+all.local: idl_stubs
 
 realclean:
-	-$(RM) $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
