@@ -1,3 +1,13 @@
+Thu Jul 31 01:29:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Export/Export.mpc:
+          Added sharedname to library project and libs to executable so
+          they would link correctly.
+
+        * examples/IPC_SAP/FIFO_SAP/fifo_sap.mpc:
+        * examples/Smart_Pointers/Smart_Pointers.mpc:
+          Fixed minor typo's in exename and sourcefile name.
+
 Thu Jul 31 00:49:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         These are changes needed in order to use MPC.
