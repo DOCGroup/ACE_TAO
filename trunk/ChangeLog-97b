@@ -1,8 +1,12 @@
 Sat Sep 13 12:11:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+        * tests/Reactors_Test.cpp: As a result of the new changes to
+ 	  ACE_Thread_Manager, the Reactors_Test now seems to be working
+ 	  fine.
+
 	* ace/Thread_Manager.cpp (append_thr): When we append a new
  	  Thr_Descriptor make sure to zero-out the cleanup_info_ fields
- 	  since otherwise horrible things will happen...
+ 	  since otherwise horrible things will happen...  
 
 	* ace/Reactor: Added a new ACE_Reactor_Handle_Set called
  	  suspend_set_ and updated the suspend_i() and resume_i() method
