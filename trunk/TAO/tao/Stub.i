@@ -34,6 +34,12 @@ TAO_Stub::reset_base (void)
 }
 
 
+ACE_INLINE ACE_Lock*
+TAO_Stub::profile_lock (void) const
+{
+  return this->profile_lock_ptr_;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_Stub::service_profile_selection (void)
 {

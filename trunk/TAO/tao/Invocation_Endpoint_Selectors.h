@@ -122,6 +122,12 @@ public:
                         TAO_default_environment ());
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
+
+protected:
+  /// This method selects an endpoint from the profile in the
+  /// invocation object.
+  int endpoint_from_profile (TAO_GIOP_Invocation *invocation,
+                             CORBA::Environment &ACE_TRY_ENV);
 };
 
 #if defined (__ACE_INLINE__)

@@ -182,6 +182,10 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
+  /// Return the Profile lock. This lock can be used at places where
+  /// profiles need to be edited.
+  ACE_Lock *profile_lock (void) const;
+
   // Manage the base (non-forwarded) profiles.
   /// returns a pointer to the profile_in_use object.  This object
   /// retains ownership of this profile.

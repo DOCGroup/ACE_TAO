@@ -1,3 +1,17 @@
+Sat Oct 27 13:49:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Invocation_Endpoint_Selectors.h (endpoint_from_profile):
+	* tao/Invocation_Endpoint_Selectors.cpp: Added a new method in
+	  TAO_Default_Endpoint_Selector. This method extracts an endpoint
+	  from a profile and tests its validity. This method is just an
+	  abstraction to reuse code from the inherited classes.
+
+	* tao/Stub.h:
+	* tao/Stub.i: Added a method to return the profile_lock_ptr. This
+	  is useful for modules that are outside the ORB and requires
+	  parsing the list of profiles to pick one for invocation, like
+	  the FT service.
+	  	
 Wed Oct 24 14:51:03 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
 	* examples/Quoter/Client.bor: 
