@@ -487,6 +487,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 			   ACE_HANDLE accept_handle,
 			   const void *act)
 {
+#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
   // Sanity check: make sure that enough space has been allocated by the caller. 
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
   size_t space_in_use = message_block.wr_ptr () - message_block.base ();
@@ -557,6 +558,9 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ReadFile"), -1);
     }
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400) */
 }
   
 // ************************************************************
@@ -634,6 +638,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 					 u_long flags,
 					 const void *act)
 {
+#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
   Result *result = 0;
   ACE_NEW_RETURN (result, 
 		  Result (*this->handler_,
@@ -682,6 +687,9 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "TransmitFile"), -1);
     }  
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400) */
 }
   
 // ************************************************************

@@ -240,6 +240,11 @@
 	#endif /* WIN32_LEAN_AND_MEAN */
 #endif /* !defined (_INC_INWDOWS) */
 
+// Always use WS2 when available
+#if (_WIN32_WINNT >= 0x0400)
+	#define ACE_HAS_WINSOCK2
+#endif
+
 #if defined (ACE_HAS_WINSOCK2)
 	#if !defined (_WINSOCK2API_)
 
