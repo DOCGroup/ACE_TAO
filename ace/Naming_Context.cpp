@@ -59,8 +59,10 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
   ACE_OS::hostname (this->hostname_,
                     (sizeof this->hostname_ / sizeof (char)));
 
-  this->netnameserver_host_ = this->name_options_->nameserver_host ();
-  this->netnameserver_port_ = this->name_options_->nameserver_port ();
+  this->netnameserver_host_ =
+    this->name_options_->nameserver_host ();
+  this->netnameserver_port_ =
+    this->name_options_->nameserver_port ();
 
   // Perform factory operation to select appropriate type of
   // Name_Space subclass.
@@ -70,7 +72,9 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 
   if (this->name_options_->use_registry ())
     // Use ACE_Registry
-    ACE_NEW_RETURN (this->name_space_, ACE_Registry_Name_Space (this->name_options_), -1);
+    ACE_NEW_RETURN (this->name_space_,
+                    ACE_Registry_Name_Space (this->name_options_),
+                    -1);
 #endif /* ACE_WIN32 && UNICODE */
   if (!this->name_options_->use_registry ())
     if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
@@ -81,16 +85,24 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
                                                (u_short) this->netnameserver_port_),
                         -1);
       }
-    else // Use NODE_LOCAL or PROC_LOCAL name space.
+    else   // Use NODE_LOCAL or PROC_LOCAL name space.
       {
         if (lite)
-          ACE_NEW_RETURN (this->name_space_, LITE_LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
+          ACE_NEW_RETURN (this->name_space_,
+                          LITE_LOCAL_NAME_SPACE (scope_in,
+                                                 this->name_options_),
+                          -1);
         else
-          ACE_NEW_RETURN (this->name_space_, LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
+          ACE_NEW_RETURN (this->name_space_,
+                          LOCAL_NAME_SPACE (scope_in,
+                                            this->name_options_),
+                          -1);
       }
 
   if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "NAME_SPACE::NAME_SPACE\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "NAME_SPACE::NAME_SPACE\n"),
+                      -1);
   return 0;
 }
 
@@ -122,7 +134,8 @@ ACE_Naming_Context::ACE_Naming_Context (void)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
-  ACE_NEW (this->name_options_, ACE_Name_Options);
+  ACE_NEW (this->name_options_,
+           ACE_Name_Options);
 }
 
 ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
@@ -132,11 +145,14 @@ ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
-  ACE_NEW (this->name_options_, ACE_Name_Options);
+  ACE_NEW (this->name_options_,
+           ACE_Name_Options);
 
   // Initialize.
   if (this->open (scope_in, lite) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
 }
 
 ACE_Name_Options *
@@ -160,7 +176,9 @@ ACE_Naming_Context::bind (const char *name_in,
                           const char *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::bind");
-  return this->bind (ACE_WString (name_in), ACE_WString (value_in), type_in);
+  return this->bind (ACE_WString (name_in),
+                     ACE_WString (value_in),
+                     type_in);
 }
 
 int
@@ -169,7 +187,9 @@ ACE_Naming_Context::rebind (const ACE_WString &name_in,
                             const char *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::rebind");
-  return this->name_space_->rebind (name_in, value_in, type_in);
+  return this->name_space_->rebind (name_in,
+                                    value_in,
+                                    type_in);
 }
 
 int
@@ -178,7 +198,9 @@ ACE_Naming_Context::rebind (const char *name_in,
                             const char *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::rebind");
-  return rebind (ACE_WString (name_in), ACE_WString (value_in), type_in);
+  return rebind (ACE_WString (name_in),
+                 ACE_WString (value_in),
+                 type_in);
 }
 
 int
@@ -187,7 +209,9 @@ ACE_Naming_Context::resolve (const ACE_WString &name_in,
                              char *&type_out)
 {
   ACE_TRACE ("ACE_Naming_Context::resolve");
-  return this->name_space_->resolve (name_in, value_out, type_out);
+  return this->name_space_->resolve (name_in,
+                                     value_out,
+                                     type_out);
 }
 
 int
@@ -196,7 +220,9 @@ ACE_Naming_Context::resolve (const char *name_in,
                              char *&type_out)
 {
   ACE_TRACE ("ACE_Naming_Context::resolve");
-  return this->resolve (ACE_WString (name_in), value_out, type_out);
+  return this->resolve (ACE_WString (name_in),
+                        value_out,
+                        type_out);
 }
 
 int
@@ -207,10 +233,12 @@ ACE_Naming_Context::resolve (const char *name_in,
   ACE_TRACE ("ACE_Naming_Context::resolve");
   ACE_WString val_str;
 
-  if (this->resolve (ACE_WString (name_in), val_str, type_out) == -1)
+  if (this->resolve (ACE_WString (name_in),
+                     val_str,
+                     type_out) == -1)
     return -1;
 
-  // Note that char_rep() *allocates* the memory!  Thus, caller is
+  // Note that <char_rep> *allocates* the memory!  Thus, caller is
   // responsible for deleting it!
   value_out = val_str.char_rep ();
 
@@ -236,7 +264,8 @@ ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
                                 const ACE_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_names");
-  return this->name_space_->list_names (set_out, pattern_in);
+  return this->name_space_->list_names (set_out,
+                                        pattern_in);
 }
 
 int
@@ -244,7 +273,8 @@ ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
                                 const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_names");
-  return this->list_names (set_out, ACE_WString (pattern_in));
+  return this->list_names (set_out,
+                           ACE_WString (pattern_in));
 }
 
 int
@@ -252,7 +282,8 @@ ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
                                  const ACE_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_values");
-  return this->name_space_->list_values (set_out, pattern_in);
+  return this->name_space_->list_values (set_out,
+                                         pattern_in);
 }
 
 int
@@ -260,7 +291,8 @@ ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
                                  const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_values");
-  return this->list_values (set_out, ACE_WString (pattern_in));
+  return this->list_values (set_out,
+                            ACE_WString (pattern_in));
 }
 
 int
@@ -268,7 +300,8 @@ ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
                                  const ACE_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_types");
-  return this->name_space_->list_types (set_out, pattern_in);
+  return this->name_space_->list_types (set_out,
+                                        pattern_in);
 }
 
 int
@@ -276,7 +309,8 @@ ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
                                  const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_types");
-  return this->list_types (set_out, ACE_WString (pattern_in));
+  return this->list_types (set_out,
+                           ACE_WString (pattern_in));
 }
 
 int
@@ -284,7 +318,8 @@ ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
                                        const ACE_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_name_entries");
-  return this->name_space_->list_name_entries (set_out, pattern_in);
+  return this->name_space_->list_name_entries (set_out,
+                                               pattern_in);
 }
 
 int
@@ -292,7 +327,8 @@ ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
                                        const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_name_entries");
-  return this->list_name_entries (set_out, ACE_WString (pattern_in));
+  return this->list_name_entries (set_out,
+                                  ACE_WString (pattern_in));
 }
 
 int
@@ -300,7 +336,8 @@ ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
                                         const ACE_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_value_entries");
-  return this->name_space_->list_value_entries (set_out, pattern_in);
+  return this->name_space_->list_value_entries (set_out,
+                                                pattern_in);
 }
 
 int
@@ -308,7 +345,8 @@ ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
                                         const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_value_entries");
-  return this->list_value_entries (set_out, ACE_WString (pattern_in));
+  return this->list_value_entries (set_out, 
+                                   ACE_WString (pattern_in));
 }
 
 int
@@ -316,7 +354,8 @@ ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
                                        const ACE_WString &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_type_entries");
-  return this->name_space_->list_type_entries (set_out, pattern_in);
+  return this->name_space_->list_type_entries (set_out,
+                                               pattern_in);
 }
 
 int
@@ -324,9 +363,9 @@ ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
                                        const char *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_type_entries");
-  return this->list_type_entries (set_out, ACE_WString (pattern_in));
+  return this->list_type_entries (set_out, 
+                                  ACE_WString (pattern_in));
 }
-
 
 ACE_Naming_Context::~ACE_Naming_Context (void)
 {
@@ -358,9 +397,7 @@ ACE_Naming_Context::fini (void)
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("ACE_Naming_Context::fini\n")));
-
   this->close_down ();
-
   return 0;
 }
 
@@ -460,13 +497,13 @@ void
 ACE_Name_Options::base_address (char *base_address)
 {
   ACE_TRACE ("ACE_Name_Options::base_address");
-// HP-UX 11, aC++ has a bug with 64-bit pointer initialization from a literal.
-// To work around it, assign the literal to a long, then to the pointer.
-// This is allegedly fixed in aC++ A.03.10.
+  // HP-UX 11, aC++ has a bug with 64-bit pointer initialization from
+  // a literal.  To work around it, assign the literal to a long, then
+  // to the pointer.  This is allegedly fixed in aC++ A.03.10.
 #if defined (__hpux) && defined(__LP64__)
-long temp = ACE_DEFAULT_BASE_ADDRL;
-  base_address = (char *)temp;
-#endif
+  long temp = ACE_DEFAULT_BASE_ADDRL;
+  base_address = (char *) temp;
+#endif /* defined (__hpux) && defined(__LP64__) */
   this->base_address_ = base_address;
 }
 
