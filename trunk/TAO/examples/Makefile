@@ -20,8 +20,6 @@ DIRS  = Callback_Quoter \
 	Persistent_Grid \
 	AMI \
 	Quoter \
-	Buffered_Oneways \
-	Buffered_AMI \
 	Load_Balancing_persistent \
 	Simulator \
 	Content_Server \
@@ -39,6 +37,15 @@ endif
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+
+DIRS += \
+	Buffered_AMI \
+	Buffered_Oneways
+
+endif # corba_messaging
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
