@@ -7,7 +7,7 @@
 MAKEFILE = Makefile
 LIBNAME	 = libbe
 LIB	 = $(LIBNAME).a
-SHLIB	 = $(LIBNAME).so
+SHLIB	 = $(LIBNAME).$(SOEXT)
 IDL_CFE_VERSION	= \"1.3.0\"
 
 # These are components that are sources of
@@ -75,6 +75,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
+
+ifeq ($(CXX),g++)
+CCFLAGS += -Wno-switch
+endif
 
 CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 

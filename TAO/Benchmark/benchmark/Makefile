@@ -10,7 +10,7 @@
 
 LIBNAME  = libbenchmark
 LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).so
+SHLIB    = $(LIBNAME).$(SOEXT)
 
 FILES 	= driver \
 	  marshal_options \
