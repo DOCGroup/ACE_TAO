@@ -1,3 +1,15 @@
+Fri Jan  9 20:13:21 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/rules.bin.GNU:
+          Set the default (blank) value of STATIC_LINK_FLAG in
+          rules.bin.GNU and only set it in platform_g++_common.GNU if it
+          hasn't been set.
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+          Set STATIC_LINK_FLAG blank to prevent platform_g++_common.GNU
+          from setting it to "-static", since this flag doesn't work on Sun.
+
 Fri Jan  9 11:15:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
