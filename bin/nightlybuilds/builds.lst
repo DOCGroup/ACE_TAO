@@ -183,3 +183,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Full
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Minimum
+
+[QNX]
+TYPE = TIMEONLY
+LIST = http://amras.ece.uci.edu/~bugzilla/auto_compile_logs/amras_QNX/
+WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?amras_QNX
