@@ -44,7 +44,10 @@ else  # ! minimum_corba
   override minimum_corba =
 endif # ! minimum_corba
 
-ifneq ($(interface_repo),1)
+### Enable the interface repository by default
+interface_repo=1
+
+ifeq ($(interface_repo),1)
   CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY
 endif # interface_repo
 
