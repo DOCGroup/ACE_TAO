@@ -39,6 +39,7 @@ class TAO_Notify_EventListener;
 class TAO_Notify_Worker_Task;
 class TAO_Notify_EMO_Factory;
 class TAO_Notify_Event_Processor;
+class TAO_Notify_AdminProperties;
 
 class TAO_Notify_Export TAO_Notify_Event_Manager
 {
@@ -98,7 +99,10 @@ class TAO_Notify_Export TAO_Notify_Event_Manager
   // Get the event map.
 
   TAO_Notify_Event_Processor* event_processor (void);
-  // Ge the Event Processor.
+  // Get the Event Processor.
+
+  TAO_Notify_AdminProperties* const admin_properties (void);
+  // Get the Admin Properties.
 
   // = Event forwarding methods.
   void process_event (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV);
@@ -128,6 +132,9 @@ class TAO_Notify_Export TAO_Notify_Event_Manager
 
   ACE_Lock* lock_;
   // The locking strategy.
+
+  TAO_Notify_AdminProperties* admin_properties_;
+  // Admin properties.
 };
 
 /**************************************************************************/

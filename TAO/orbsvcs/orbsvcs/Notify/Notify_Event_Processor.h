@@ -10,16 +10,10 @@
 //   Notify_Event_Processor.h
 //
 // = DESCRIPTION
-//   The Event Processor holds the strategies for processing the event as it goes from
-//   source to destination(s).
-//   It is composed of 4 ACE_Task's that can be either passive or active:
-//   a) Source filter evaluation task - checks if the event passes the source's filter.
-//   b) Lookup Task - Looksup which listeners are subscribed to recieve this events.
-//   c) Listener filter evaluation task - checks if the event passes the listeners filter.
-//   d) Dispatching Task - dispatches the event to listeners.
-//
-//   Breaking up the event processing into these stages allows us to configure the Notify's EC
-//   according to the requirements that suit a client's use case.
+//        The QoS properties of "Order Policy" and "Discard Policy" can be set
+//        per proxy.To accomodate this we now have an ACE_Task per proxy.
+//        The TAO_Notify_Event_Processor asks each event listener and source
+//        for the task object to send commands to.
 //
 // = AUTHOR
 //   Pradeep Gore <pradeep@cs.wustl.edu>

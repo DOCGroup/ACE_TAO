@@ -60,8 +60,8 @@ TAO_Notify_ProxyPushConsumer_i::connect_any_push_supplier (CosEventComm::PushSup
                             CORBA::INTERNAL ());
         ACE_TRY_CHECK;
 
-        this->event_manager_->register_for_subscription_updates (this,
-                                                                 ACE_TRY_ENV);
+        this->on_connected (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
       }
     }
   ACE_CATCHALL
@@ -130,7 +130,8 @@ TAO_Notify_ProxyPushConsumer_i::push (const CORBA::Any & data, CORBA::Environmen
   notify_event->_decr_refcnt ();
 }
 
-void TAO_Notify_ProxyPushConsumer_i::disconnect_push_consumer (
+void
+TAO_Notify_ProxyPushConsumer_i::disconnect_push_consumer (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -140,6 +141,9 @@ void TAO_Notify_ProxyPushConsumer_i::disconnect_push_consumer (
   // ask our parent to deactivate us.
   this->supplier_admin_->
     deactivate_proxy_pushconsumer (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->on_disconnected (ACE_TRY_ENV);
 }
 
 // = TAO_Notify_CosEC_ProxyPushConsumer_i

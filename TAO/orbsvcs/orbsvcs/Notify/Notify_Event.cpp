@@ -125,13 +125,14 @@ TAO_Notify_Event::TAO_Notify_Event (void)
    // stop_time_ (0),
    timeout_ (0)
 {
-  lock_ = new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+  ACE_NEW (lock_, ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ());
 }
 
 TAO_Notify_Event::~TAO_Notify_Event ()
 {
   delete this->lock_;
-  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Event\n"));
+  this->lock_ = 0;
+  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Event %X\n", this));
 }
 
 
@@ -140,7 +141,7 @@ TAO_Notify_Event::_incr_refcnt (void)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   this->refcount_++;
-  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event incr %d\n", refcount_));
+  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X incr %d\n", this, refcount_));
 }
 
 void
@@ -151,7 +152,7 @@ TAO_Notify_Event::_decr_refcnt (void)
     this->refcount_--;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event decr %d\n", refcount_));
+  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X decr %d\n", this, refcount_));
   if (this->refcount_ == 0)
     delete this;
 }

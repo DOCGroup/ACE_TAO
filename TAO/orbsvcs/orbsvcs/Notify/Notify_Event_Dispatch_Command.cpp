@@ -11,13 +11,14 @@ TAO_Notify_Event_Dispatch_Command::TAO_Notify_Event_Dispatch_Command (TAO_Notify
   :TAO_Notify_Command (event_processor, event),
    event_listener_ (event_listener)
 {
+  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event_Dispatch_Command %X\n", this));
   event_listener_->_incr_refcnt ();
   this->event_->_incr_refcnt ();
 }
 
 TAO_Notify_Event_Dispatch_Command::~TAO_Notify_Event_Dispatch_Command ()
 {
-  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Event_Dispatch_Command\n"));
+  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Event_Dispatch_Command %X\n", this));
   event_listener_->_decr_refcnt ();
   this->event_->_decr_refcnt ();
 }

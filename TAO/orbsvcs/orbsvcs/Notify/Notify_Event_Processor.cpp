@@ -34,7 +34,11 @@ TAO_Notify_Event_Processor::init (CORBA::Environment& ACE_TRY_ENV)
   this->lookup_task_ = this->emo_factory_->create_lookup_task (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->lookup_task_->open (0);
+  // Get hold of the admin properties.
+  TAO_Notify_AdminProperties* const admin_properties =
+    this->event_manager_->admin_properties ();
+
+  this->lookup_task_->init_task (admin_properties);
 }
 
 void
