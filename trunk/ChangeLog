@@ -1,3 +1,14 @@
+Mon Jun 10 14:23:28 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Reactor.h (ACE_Reactor): Added a comment explaining that
+	  the mask passed to notify() can only be READ_MASK, WRITE_MASK,
+ 	  or EXCEPT_MASK.  Thanks to Cary Steinmetz
+ 	  <cary.s.steinmetz@boeing.com> for motivating this comment.
+
+	* ace/OS_String.cpp: Make sure to check whether src == dst and
+	  avoid doing any copies in this case.  Thanks to Michael Searles
+ 	  <msearles@base16.com> for reporting this.
+
 Sun Jun  9 20:01:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
   
 	* ace/Makefile: Something is wrong with my ACE_ROOT environment variable,

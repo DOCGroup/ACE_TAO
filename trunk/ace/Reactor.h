@@ -534,7 +534,9 @@ public:
    * Notify <event_handler> of <mask> event.  The <ACE_Time_Value>
    * indicates how long to blocking trying to notify.  If <timeout> ==
    * 0, the caller will block until action is possible, else will wait
-   * until the relative time specified in <timeout> elapses).
+   * until the relative time specified in <timeout> elapses).  Note that
+   * <mask> can only be one of the pre-defined <ACE_Event_Handler>
+   * masks, e.g., <READ_MASK>, <WRITE_MASK>, or <EXCEPT_MASK>.
    */
   virtual int notify (ACE_Event_Handler *event_handler = 0,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
