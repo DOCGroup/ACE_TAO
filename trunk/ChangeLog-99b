@@ -1,3 +1,9 @@
+Thu Jul 22 14:22:41 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Shared_Malloc/Malloc.cpp: fixed explicit
+          template instantiations so that there are no duplications
+          with ACE_LACKS_SBRK and ACE_LACKS_SYSV_SHMEM.
+
 Thu Jul 22 12:17:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: removed ACE_LACKS_FORK on PowerPC.
