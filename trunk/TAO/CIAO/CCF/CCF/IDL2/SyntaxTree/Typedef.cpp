@@ -15,12 +15,11 @@ namespace CCF
       TypeDeclPtr TypedefDecl::
       clone_typedef_temporary (SimpleName const& name,
                                Order const& order,
-                               ScopePtr const& scope)
+                               ScopePtr const& scope,
+                               ContextHolderPtr const& ch)
       {
         return underlying_type ()->clone_typedef_temporary (
-          name,
-          order,
-          scope);
+          name, order, scope, ch);
       }
 
 
@@ -110,7 +109,8 @@ namespace CCF
         return underlying_type ()->clone_typedef_temporary (
           name ().simple (),
           order (),
-          scope ());
+          scope (),
+          context_holder ());
       }
 
       namespace

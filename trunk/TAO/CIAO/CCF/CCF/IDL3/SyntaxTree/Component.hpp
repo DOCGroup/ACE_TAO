@@ -41,7 +41,7 @@ namespace CCF
           //
           return true;
         }
-        
+
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -76,8 +76,10 @@ namespace CCF
       protected:
         ComponentForwardDecl (SimpleName const& name,
                               Order const& order,
-                              ScopePtr const& scope)
-            : Declaration (name, order, scope)
+                              ScopePtr const& scope,
+                              ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -86,10 +88,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new ComponentForwardDecl (name, order, scope));
+            new ComponentForwardDecl (name, order, scope, ch));
         }
 
 
@@ -154,9 +157,11 @@ namespace CCF
         ComponentDef (SimpleName const& name,
                       Order const& order,
                       ScopePtr const& scope,
+                      ContextHolderPtr const& ch,
                       ComponentDefRef const& inherits,
                       InterfaceDefRefSetName const& supports)
-            : Declaration (name, order, scope),
+            : Node (ch),
+              Declaration (name, order, scope),
               inherits_ (inherits),
               supports_ (supports)
         {
@@ -167,10 +172,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new ComponentDef (name, order, scope, inherits_, supports_));
+            new ComponentDef (name, order, scope, ch, inherits_, supports_));
         }
 
       private:

@@ -63,8 +63,12 @@ namespace CCF
         }
 
       protected:
-        ObjectDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        ObjectDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -73,9 +77,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new ObjectDecl (name, order, scope));
+          return TypeDeclPtr (new ObjectDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -113,8 +118,12 @@ namespace CCF
         }
 
       protected:
-        ValueBaseDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        ValueBaseDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -123,9 +132,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new ValueBaseDecl (name, order, scope));
+          return TypeDeclPtr (new ValueBaseDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -163,8 +173,12 @@ namespace CCF
         }
 
       protected:
-        AnyDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        AnyDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -173,9 +187,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new AnyDecl (name, order, scope));
+          return TypeDeclPtr (new AnyDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -213,8 +228,12 @@ namespace CCF
         }
 
       protected:
-        BooleanDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        BooleanDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -223,9 +242,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new BooleanDecl (name, order, scope));
+          return TypeDeclPtr (new BooleanDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -263,8 +283,12 @@ namespace CCF
         }
 
       protected:
-        CharDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        CharDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -273,9 +297,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new CharDecl (name, order, scope));
+          return TypeDeclPtr (new CharDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -313,8 +338,12 @@ namespace CCF
         }
 
       protected:
-        DoubleDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        DoubleDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -323,9 +352,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new DoubleDecl (name, order, scope));
+          return TypeDeclPtr (new DoubleDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -363,8 +393,12 @@ namespace CCF
         }
 
       protected:
-        FloatDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        FloatDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -373,9 +407,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new FloatDecl (name, order, scope));
+          return TypeDeclPtr (new FloatDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -413,8 +448,12 @@ namespace CCF
         }
 
       protected:
-        LongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        LongDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -423,9 +462,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new LongDecl (name, order, scope));
+          return TypeDeclPtr (new LongDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -463,8 +503,12 @@ namespace CCF
         }
 
       protected:
-        LongDoubleDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        LongDoubleDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -473,9 +517,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new LongDoubleDecl (name, order, scope));
+          return TypeDeclPtr (new LongDoubleDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -513,8 +558,12 @@ namespace CCF
         }
 
       protected:
-        LongLongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        LongLongDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -523,9 +572,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new LongLongDecl (name, order, scope));
+          return TypeDeclPtr (new LongLongDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -563,8 +613,12 @@ namespace CCF
         }
 
       protected:
-        OctetDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        OctetDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -573,9 +627,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new OctetDecl (name, order, scope));
+          return TypeDeclPtr (new OctetDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -613,8 +668,12 @@ namespace CCF
         }
 
       protected:
-        ShortDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        ShortDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -623,9 +682,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new ShortDecl (name, order, scope));
+          return TypeDeclPtr (new ShortDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -663,8 +723,12 @@ namespace CCF
         }
 
       protected:
-        StringDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        StringDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -673,9 +737,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new StringDecl (name, order, scope));
+          return TypeDeclPtr (new StringDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -713,8 +778,12 @@ namespace CCF
         }
 
       protected:
-        UnsignedLongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        UnsignedLongDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -723,9 +792,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new UnsignedLongDecl (name, order, scope));
+          return TypeDeclPtr (new UnsignedLongDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -763,8 +833,12 @@ namespace CCF
         }
 
       protected:
-        UnsignedLongLongDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        UnsignedLongLongDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -773,9 +847,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new UnsignedLongLongDecl (name, order, scope));
+          return TypeDeclPtr (new UnsignedLongLongDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -813,8 +888,12 @@ namespace CCF
         }
 
       protected:
-        UnsignedShortDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        UnsignedShortDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -823,9 +902,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new UnsignedShortDecl (name, order, scope));
+          return TypeDeclPtr (new UnsignedShortDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -863,8 +943,12 @@ namespace CCF
         }
 
       protected:
-        VoidDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        VoidDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -873,9 +957,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new VoidDecl (name, order, scope));
+          return TypeDeclPtr (new VoidDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -913,8 +998,12 @@ namespace CCF
         }
 
       protected:
-        WcharDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        WcharDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -923,9 +1012,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new WcharDecl (name, order, scope));
+          return TypeDeclPtr (new WcharDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.
@@ -963,8 +1053,12 @@ namespace CCF
         }
 
       protected:
-        WstringDecl (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        WstringDecl (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -973,9 +1067,10 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new WstringDecl (name, order, scope));
+          return TypeDeclPtr (new WstringDecl (name, order, scope, ch));
         }
 
         // Runtime declaration type information.

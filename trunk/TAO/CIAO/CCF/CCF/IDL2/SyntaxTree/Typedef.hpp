@@ -32,7 +32,8 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope);
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch);
       public:
         virtual bool
         is_a (Introspection::TypeInfo const& ti) const;
@@ -51,7 +52,7 @@ namespace CCF
         }
 
       public:
-        ScopedName 
+        ScopedName
         type_name () const
         {
           return type_;
