@@ -1,3 +1,14 @@
+Wed Sep  8 14:03:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Latency/TestImpl.java:
+	  The shutdown() method is not implemented in some Java ORBs, we
+	  are not using that until we can figure out a more portable way
+	  to stop the ORB.
+
+	* performance-tests/Latency/scalability.pl:
+	  Fine tuned the number of clients and the execution time of
+	  them.
+
 Wed Sep  8 14:00:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: (ORB_init) changed to allow correct parsing.
