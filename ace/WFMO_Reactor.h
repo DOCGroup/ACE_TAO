@@ -5,13 +5,12 @@
  *  @file    WFMO_Reactor.h
  *
  *  $Id$
- *
- *  @author Irfan Pyarali
- *  @author Tim Harrison
- *  @author and Doug Schmidt
+ * 
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author Tim Harrison <harrison@cs.wustl.edu>
+ *  @author and Doug Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_WFMO_REACTOR_H
 #define ACE_WFMO_REACTOR_H
@@ -673,9 +672,9 @@ public:
   // = Event loop drivers.
 
   /**
-   * Returns non-zero if there are I/O events "ready" for dispatching,
-   * but does not actually dispatch the event handlers.  By default,
-   * don't block while checking this, i.e., "poll".
+   * This method is not currently implemented.  We recommend that you 
+   * use handle_events (ACE_Time_Value::zero) to get basically the
+   * same effect, i.e., it won't block the caller if there are no events.
    */
   virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
 
