@@ -1,3 +1,10 @@
+Mon Dec  8 15:43:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* bin/Event_Service/svc.conf: 
+	* tests/svc.conf: 
+	  These files are needed for proper operation, I forgot to add
+	  them at first.
+
 Mon Dec  8 13:20:39 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* bin/Event_Service/Makefile: 
