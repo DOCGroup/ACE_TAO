@@ -571,7 +571,8 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 #endif
 }
 
-// Open the sender-side of the Message ACE_Queue.
+// Open the sender-side of the message queue.
+
 int
 ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
                    u_long flags,
@@ -602,7 +603,18 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
 
   // Always close the current handle before doing anything else.
   if (ACE_Log_Msg_Manager::message_queue_->get_handle () != ACE_INVALID_HANDLE)
-    ACE_Log_Msg_Manager::message_queue_->close ();
+    {
+      // If we don't do this, handles aren't reused on Win32 and the
+      // server eventually crashes!
+#if defined (ACE_WIN32)
+      ACE_INT32 dummy = ~0;
+      ACE_Log_Msg_Manager::message_queue_->send_n ((const void *) &dummy,
+                                                   sizeof (ACE_INT32),
+                                                   0,
+                                                   0);
+#endif /* ACE_WIN32 */
+      ACE_Log_Msg_Manager::message_queue_->close ();
+    }
 
   // Note that if we fail to open the message queue the default action
   // is to use stderr (set via static initialization in the
