@@ -36,9 +36,9 @@ public class Display extends Panel
 	sims_.add_simulator (name, obj);
     }
 
-  public void update_simulator (String name, Display_Consumer display_consumer)
+  public void update_simulator (String name, Display_Push_Consumer display_push_consumer)
     {
-      sims_.update_simulator (name, display_consumer);
+      sims_.update_simulator (name, display_push_consumer);
     }
 
   
@@ -48,7 +48,7 @@ public class Display extends Panel
 			       int deadline_time,
 			       int dispatch_time)
     {
-      float latency = (float)(dispatch_time - arrival_time);
+      float latency = (float)(dispatch_time - arrival_time > 0 ? dispatch_time - arrival_time : 0);
       float jitter = (float)Math.abs(latency - last_latency);
       float missed_deadline =
 	(float)((deadline_time < dispatch_time) ? 1.0 : 0.0);
@@ -68,12 +68,21 @@ public class Display extends Panel
     }
 
   public void update_simulation (long simulation_id,
-				  Display_Consumer display_consumer)
+				  Display_Push_Consumer display_push_consumer)
     {
        String sim_name =
       	Display_Object_Factory.resolve_name (simulation_id);
 
       if (sim_name != null)
-	update_simulator (sim_name, display_consumer);
+	update_simulator (sim_name, display_push_consumer);
     }
 }
+
+
+
+
+
+
+
+
+

@@ -197,7 +197,8 @@ Demo_Supplier::disconnect_push_supplier (CORBA::Environment &)
 void
 Demo_Supplier::start_generating_events (void)
 {
-  ACE_Time_Value pause (0, 500000);
+  ACE_Time_Value pause (0, 400000);
+
   unsigned int total_sent_ = 0;
 
   TAO_TRY
@@ -224,19 +225,20 @@ Demo_Supplier::start_generating_events (void)
 	      this->insert_event_data (event1.data_.any_value, event2.data_.any_value);
 	      
 	      RtecEventComm::EventSet events;
-	      events.length (1);
-	      
-	      if ((total_sent_%2) == 0)
-		events[0] = event1;
-	      else
-		events[0] = event2;
+	      events.length (2);	      
+	      events[0] = event1;
+	      events[1] = event2;
 	      
 	      //events[1] = event2; // two events are not supported right now
 
 	      proxy_consumer_->push (events, TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
 	      
-	      ACE_DEBUG ((LM_DEBUG, "Pushing event data.\n"));
+	      if (total_sent_ < 5)		
+		ACE_DEBUG ((LM_DEBUG, "Pushing event data.\n"));
+	      else if (total_sent_ == 5)
+		ACE_DEBUG ((LM_DEBUG, "Everything is running. Going to be mute.\n"));
+		
 
 	      ACE_OS::sleep (pause);
 
@@ -287,8 +289,8 @@ Demo_Supplier::insert_event_data (CORBA::Any &data1, CORBA::Any &data2)
       navigation_.heading = ACE_OS::rand() % 180;
       navigation_.roll = (navigation_.roll == 180) ? -180 : navigation_.roll + 1;
       navigation_.pitch =  (navigation_.pitch == 90) ? -90 : navigation_.pitch + 1;
-      navigation_.utilitzation = ((double)(ACE_OS::rand() %50))/50.0;
-      navigation_.overhead = ((double)(ACE_OS::rand() %50))/50.0;
+      navigation_.utilitzation = ((double)(ACE_OS::rand() %50))/100.0;
+      navigation_.overhead = ((double)(ACE_OS::rand() %20))/100.0;
       navigation_.arrival_time = ACE_OS::rand();
       navigation_.deadline_time = navigation_.arrival_time + (ACE_OS::rand() % 1000);
       navigation_.dispatch_time = navigation_.arrival_time + (ACE_OS::rand() % 1000);
@@ -303,14 +305,14 @@ Demo_Supplier::insert_event_data (CORBA::Any &data1, CORBA::Any &data2)
       strcpy (weapons_.weapon2.identifier,"Quantum Torpedoes");
       weapons_.weapon2.status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
       weapons_.weapon3.identifier = 0;
-      weapons_.weapon2.status = 0;
+      weapons_.weapon3.status = 0;
       weapons_.weapon4.identifier = 0;
-      weapons_.weapon3.status = 0; 
+      weapons_.weapon4.status = 0; 
       weapons_.weapon5.identifier = 0;	    
-      weapons_.weapon4.status = 0;
+      weapons_.weapon5.status = 0;
 
-      weapons_.utilitzation = ((double)(ACE_OS::rand() %50))/50.0;
-      weapons_.overhead = ((double)(ACE_OS::rand() %50))/50.0;
+      weapons_.utilitzation = ((double)(ACE_OS::rand() %50))/100.0;
+      weapons_.overhead = ((double)(ACE_OS::rand() %20))/100.0;
       weapons_.arrival_time = ACE_OS::rand();
       weapons_.deadline_time = weapons_.arrival_time + (ACE_OS::rand() % 1000);
       weapons_.dispatch_time = weapons_.arrival_time + (ACE_OS::rand() % 1000);
@@ -382,6 +384,7 @@ get_options (int argc, char *argv [])
       if ((temp = ACE_OS::atoi (get_opt.optarg)) > 0)
         {
           total_messages = (u_int) temp;
+	  cout << "Messages to send:" << total_messages << endl;
         }
       else
         {
