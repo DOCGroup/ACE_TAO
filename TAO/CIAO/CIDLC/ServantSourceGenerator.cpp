@@ -2056,6 +2056,60 @@ namespace
       TypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
     };
+    
+    struct PortTablePopulator : Traversal::ProviderData,
+                                Traversal::UserData,
+                                Traversal::PublisherData,
+                                Traversal::EmitterData,
+                                Traversal::ConsumerData,
+                                EmitterBase
+    {
+      PortTablePopulator (Context& c)
+        : EmitterBase (c)
+      {
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Provider& p)
+      {
+        os << "::CORBA::Object_var tmp =" << endl
+           << "  this->provide_" << p.name () << " (" << endl
+           << "  " << STRS[ENV_SNGL_ARG] << ");"
+           << "ACE_CHECK;" << endl;
+           
+        os << "this->add_facet (" << endl
+           << "\"" << p.name () << "\"," << endl
+           << "tmp.in ());" << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::User& u)
+      {
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Publisher& p)
+      {
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Emitter& p)
+      {
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Consumer& p)
+      {
+        os << "::Components::EventConsumerBase_var tmp =" << endl
+           << "  this->get_consumer_" << p.name () << " (" << endl
+           << "  " << STRS[ENV_SNGL_ARG] << ");"
+           << "ACE_CHECK;" << endl;
+           
+        os << "this->add_consumer (" << endl
+           << "\"" << p.name () << "\"," << endl
+           << "tmp.in ());" << endl;
+      }
+    };
 
   public:
     virtual void
@@ -2065,6 +2119,9 @@ namespace
          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
          << "{";
 
+      ScopedName scoped (t.scoped_name ());
+      Name stripped (scoped.begin () + 1, scoped.end ());
+
       // Servant Constructor
       os << t.name () << "_Servant::"
          << t.name () << "_Servant (" << endl
@@ -2072,9 +2129,16 @@ namespace
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << ": executor_ (" << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "::_duplicate (exe))," << endl
-         << "container_ (c)" << endl
+         << "  : CIAO::Servant_Impl<" << endl
+         << "      POA_" << stripped << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var," << endl
+         << "      " << t.name () << "_Context" << endl
+         << "    " << "> (" << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "::_duplicate (exe)," << endl
+         << "       c)" << endl
          << "{"
          << "this->context_ = "
          << "new " << t.name () << "_Context (h, c, this);"
@@ -2176,14 +2240,6 @@ namespace
       os << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
-         << "}" << endl;
-
-      os << "::Components::FacetDescriptions *" << endl
-         << t.name () << "_Servant::get_all_facets (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl;
 
       os << "::Components::FacetDescriptions *" << endl
@@ -2490,15 +2546,6 @@ namespace
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_NC] << "))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
-         << "}" << endl;
-
-      os << "::Components::ConsumerDescriptions *" << endl
-         << t.name () << "_Servant::get_all_consumers ("
-         << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
          << "{"
          << "ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);" << endl
          << "}" << endl;
@@ -2817,8 +2864,11 @@ namespace
          << "ACE_CHECK;" << endl
          << "if (! ::CORBA::is_nil (temp.in ()))" << endl
          << "{"
-         << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}" << endl
+         << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");"
+         << "ACE_CHECK;" << endl
+         << "}" << endl << endl
+         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG] 
+         << ");" << endl
          << "}" << endl;
 
       os << "void" << endl
@@ -2923,6 +2973,33 @@ namespace
 
         component_emitter.traverse (t);
       }
+      
+      os << "// Private method to populate the port tables." 
+         << endl << endl;
+      
+      os << "void" << endl
+         << t.name () << "_Servant::populate_port_tables (" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[EXCP_SNGL] << endl
+         << "{";
+         
+      {
+        Traversal::Component component_emitter;
+
+        Traversal::Inherits inherits;
+        component_emitter.edge_traverser (inherits);
+        inherits.node_traverser (component_emitter);
+
+        Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        
+        PortTablePopulator port_table_populator (ctx);
+        defines.node_traverser (port_table_populator);
+        
+        component_emitter.traverse (t);
+      }
+         
+      os << "}" << endl;
     }
 
     virtual void

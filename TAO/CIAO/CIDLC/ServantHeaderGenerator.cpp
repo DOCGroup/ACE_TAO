@@ -1192,8 +1192,15 @@ namespace
 
       os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Servant" << endl
-         << ": public virtual POA_" << stripped << "," << endl
-         << STRS[INH_RCSB] << endl
+         << "  : public virtual CIAO::Servant_Impl<" << endl
+         << "      POA_" << stripped << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_" 
+         << t.name () << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var," << endl
+         << "      " << t.name () << "_Context" << endl
+         << "    >," << endl
+         << "    " << STRS[INH_RCSB] << endl
          << "{"
          << "public:" << endl;
 
@@ -1313,247 +1320,237 @@ namespace
       os << "// Operations for Navigation interface." << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
-          << "provide_facet (" << endl
-          << "const char *name" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "provide_facet (" << endl
+         << "const char *name" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::FacetDescriptions *" << endl
-          << "get_all_facets (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "virtual ::Components::FacetDescriptions *" << endl
-          << "get_named_facets (" << endl
-          << "const " << STRS[COMP_NAMES] << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "get_named_facets (" << endl
+         << "const " << STRS[COMP_NAMES] << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual CORBA::Boolean" << endl
-          << "same_component (" << endl
-          << "CORBA::Object_ptr object_ref" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "same_component (" << endl
+         << "CORBA::Object_ptr object_ref" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "// Operations for Receptacles interface." << endl << endl;
 
       os << "virtual " << STRS[COMP_CK] << " *" << endl
-          << "connect (" << endl
-          << "const char *name," << endl
-          << "CORBA::Object_ptr connection" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "," << endl
-          << STRS[EXCP_IC] << "," << endl
-          << STRS[EXCP_AC] << "," << endl
-          << STRS[EXCP_ECL] << "));" << endl << endl;
+         << "connect (" << endl
+         << "const char *name," << endl
+         << "CORBA::Object_ptr connection" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "," << endl
+         << STRS[EXCP_IC] << "," << endl
+         << STRS[EXCP_AC] << "," << endl
+         << STRS[EXCP_ECL] << "));" << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
-          << "disconnect (" << endl
-          << "const char *name," << endl
-          << STRS[COMP_CK] << " *ck" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "," << endl
-          << STRS[EXCP_IC] << "," << endl
-          << STRS[EXCP_CR] << "," << endl
-          << STRS[EXCP_NC] << "));" << endl << endl;
+         << "disconnect (" << endl
+         << "const char *name," << endl
+         << STRS[COMP_CK] << " *ck" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "," << endl
+         << STRS[EXCP_IC] << "," << endl
+         << STRS[EXCP_CR] << "," << endl
+         << STRS[EXCP_NC] << "));" << endl << endl;
 
       os << "virtual ::Components::ConnectionDescriptions *" << endl
-          << "get_connections (" << endl
-          << "const char *name" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "get_connections (" << endl
+         << "const char *name" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::ReceptacleDescriptions *" << endl
-          << "get_all_receptacles (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "get_all_receptacles (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::ReceptacleDescriptions *" << endl
-          << "get_named_receptacles (" << endl
-          << "const " << STRS[COMP_NAMES] << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "get_named_receptacles (" << endl
+         << "const " << STRS[COMP_NAMES] << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "// Operations for Events interface." << endl << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-          << "get_consumer (" << endl
-          << "const char *sink_name" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "get_consumer (" << endl
+         << "const char *sink_name" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual " << STRS[COMP_CK] << " *" << endl
-          << "subscribe (" << endl
-          << "const char *publisher_name," << endl
-          << STRS[COMP_ECB] << "_ptr subscriber" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "," << endl
-          << STRS[EXCP_IC] << "," << endl
-          << STRS[EXCP_ECL] << "));" << endl << endl;
+         << "subscribe (" << endl
+         << "const char *publisher_name," << endl
+         << STRS[COMP_ECB] << "_ptr subscriber" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "," << endl
+         << STRS[EXCP_IC] << "," << endl
+         << STRS[EXCP_ECL] << "));" << endl << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-          << "unsubscribe (" << endl
-          << "const char *publisher_name," << endl
-          << STRS[COMP_CK] << " *ck" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "," << endl
-          << STRS[EXCP_IC] << "));" << endl << endl;
+         << "unsubscribe (" << endl
+         << "const char *publisher_name," << endl
+         << STRS[COMP_CK] << " *ck" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "," << endl
+         << STRS[EXCP_IC] << "));" << endl << endl;
 
       os << "virtual void" << endl
-          << "connect_consumer (" << endl
-          << "const char *emitter_name," << endl
-          << STRS[COMP_ECB] << "_ptr consumer" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "," << endl
-          << STRS[EXCP_AC] << "," << endl
-          << STRS[EXCP_IC] << "));" << endl << endl;
+         << "connect_consumer (" << endl
+         << "const char *emitter_name," << endl
+         << STRS[COMP_ECB] << "_ptr consumer" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "," << endl
+         << STRS[EXCP_AC] << "," << endl
+         << STRS[EXCP_IC] << "));" << endl << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-          << "disconnect_consumer (" << endl
-          << "const char *source_name" << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "," << endl
-          << STRS[EXCP_NC] << "));" << endl << endl;
+         << "disconnect_consumer (" << endl
+         << "const char *source_name" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "," << endl
+         << STRS[EXCP_NC] << "));" << endl << endl;
 
       os << "virtual ::Components::ConsumerDescriptions *" << endl
-          << "get_all_consumers (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "virtual ::Components::ConsumerDescriptions *" << endl
-          << "get_named_consumers (" << endl
-          << "const " << STRS[COMP_NAMES] << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "get_named_consumers (" << endl
+         << "const " << STRS[COMP_NAMES] << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::EmitterDescriptions *" << endl
-          << "get_all_emitters (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "get_all_emitters (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::EmitterDescriptions *" << endl
-          << "get_named_emitters(" << endl
-          << "const " << STRS[COMP_NAMES] << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "get_named_emitters(" << endl
+         << "const " << STRS[COMP_NAMES] << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::PublisherDescriptions *" << endl
-          << "get_all_publishers (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "get_all_publishers (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::PublisherDescriptions *" << endl
-          << "get_named_publishers(" << endl
-          << "const " << STRS[COMP_NAMES] << endl
-          << STRS[ENV_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_IN] << "));" << endl << endl;
+         << "get_named_publishers(" << endl
+         << "const " << STRS[COMP_NAMES] << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "// Operations for CCMObject interface." << endl << endl;
 
       os << "virtual CORBA::IRObject_ptr" << endl
-          << "get_component_def (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "get_component_def (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::CCMHome_ptr" << endl
-          << "get_ccm_home (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "get_ccm_home (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::PrimaryKeyBase *" << endl
-          << "get_primary_key (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_NKA] << "));" << endl << endl;
+         << "get_primary_key (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_NKA] << "));" << endl << endl;
 
       os << "virtual void" << endl
-          << "configuration_complete (" << endl
-          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_ICF] << "));" << endl << endl;
+         << "configuration_complete (" << endl
+         << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_ICF] << "));" << endl << endl;
 
       os << "virtual void" << endl
-          << "remove (" << endl
-          << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
-          << STRS[EXCP_START] << endl
-          << STRS[EXCP_SYS] << "," << endl
-          << STRS[EXCP_RF] << "));" << endl << endl;
+         << "remove (" << endl
+         << STRS[ENV_SNGL_HDR_NOTUSED] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_RF] << "));" << endl << endl;
 
       os << "virtual ::Components::ComponentPortDescription *" << endl
-          << "get_all_ports(" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "get_all_ports(" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "// Get component implementation." << endl
-          << "virtual CORBA::Object_ptr" << endl
-          << "_get_component (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-        << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "virtual CORBA::Object_ptr" << endl
+         << "_get_component (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "// CIAO-specific operations." << endl << endl;
 
       os << "void" << endl
-          << "ciao_preactivate (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "ciao_preactivate (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "void" << endl
-          << "ciao_activate (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "ciao_activate (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "void" << endl
          << "ciao_postactivate (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
-      os << "/// @@NOTE: The busted operation " << endl;
+      os << "/// @@NOTE: The busted operation." << endl;
 
       os << "void" << endl
-          << "_ciao_passivate (" << endl
-          << STRS[ENV_SNGL_HDR] << ")" << endl
-          << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << "_ciao_passivate (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
-      os << "protected:" << endl
-          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
-          << "_var" << endl
-          << "executor_;" << endl << endl;
+      os << "protected:" << endl << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+         << "_var" << endl
+         << "executor_;" << endl << endl;
 
       os << t.name () << "_Context *" << endl
-          << "context_;" << endl << endl;
+         << "context_;" << endl << endl;
 
       os << "::CIAO::Session_Container *" << endl
-          << "container_;" << endl;
+         << "container_;" << endl << endl;
 
       // Generate protected operations for facets and event sinks.
       {
@@ -1571,6 +1568,12 @@ namespace
 
         component_emitter.traverse (t);
       }
+          
+      os << endl
+         << "private:" << endl << endl
+         << "void populate_port_tables (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl;
     }
 
     virtual void
@@ -2232,6 +2235,7 @@ ServantHeaderEmitter::pre (TranslationUnit& u)
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */" << endl << endl;
 
   os << "#include \"ciao/Container_Base.h\"" << endl
+     << "#include \"ciao/Servant_Impl_T.h\"" << endl
      << "#include \"tao/LocalObject.h\"" << endl
      << "#include \"tao/PortableServer/Key_Adapters.h\"" << endl
      << "#include \"ace/Active_Map_Manager_T.h\"" << endl << endl;
