@@ -336,12 +336,28 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       // You do *NOT* need modify this code to add your own protocol,
       // instead simply add the following to your svc.conf file:
       //
-      // dynamic PN_Factory Service_Object * LIB:_make_PN_Protocol_Factory() ""
-      // static Resource_Factory "-ORBProtocolFactory PN_Factory"
+      // dynamic PP_Factory Service_Object * LIB:_make_PP_Protocol_Factory() ""
+      // static Resource_Factory "-ORBProtocolFactory PP_Factory"
       //
-      // where PN is the name of your protocol and LIB is the base
-      // name of the shared library that implements the protocol.
+      // where "PP_Factory" is the name of your protocol, i.e. the
+      // second argument passed to the ACE_STATIC_SVC_DEFINE macro:
       //
+      // ACE_STATIC_SVC_DEFINE (PP_Protocol_Factory,
+      //                        ASYS_TEXT ("PP_Factory"), ...)
+      //
+      // "PP_Protocol_Factory" is the name of your protocol factory
+      // class.  A "_make_" is prepended to your protocol factory
+      // class name by the ACE_FACTORY_DECLARE macro.  The resulting
+      // factory function "_make_PP_Protocol_Factory()" is what should
+      // be used in the "dynamic" line in your svc.conf file.
+      // 
+      // LIB is the base name of the shared library that implements
+      // the protocol.  The directory containing your library must be
+      // in your library search path, typically defined by the
+      // LD_LIBRARY_PATH environment variable on UNIX systems, and/or
+      // the `/etc/ld.so.conf' file on some UNIX systems.  Remember to
+      // run "ldconfig" if you modify `/etc/ld.so.conf'.
+
       TAO_Protocol_Factory *protocol_factory = 0;
       TAO_Protocol_Item *item = 0;
 
