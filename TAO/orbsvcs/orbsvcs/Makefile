@@ -244,17 +244,27 @@ ifneq (,$(findstring  RT_Notify, $(TAO_ORBSVCS)))
   MKLIST += Makefile.ETCL Makefile.CosNotification Makefile.RT_Notification
 endif
 
+# Since Makefiles can appear multiple times in MKLIST, we sort them to 
+# remove duplicates and assign the list to "thelist".
 thelist = $(sort $(MKLIST))
 #----------------------------------------------------------------------------
 #       Local rules
 #----------------------------------------------------------------------------
 
+# A list of all possible targets
 standard_targets = all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean
 
 all: ORBSVCS_COMPONENTS
 
+# This is the rule for all the standard targets listed above.  The dependencies
+# are formed by adding "-<target name>" to each Makefile listed in MKLIST, e.g.,
+# Makefile.CosNaming-all.
 $(standard_targets): %: $(addsuffix -%, $(thelist))
 
+# This is the rule that matches targets like Makefile.CosNaming-all.  We use
+# the subst function to split it into two pieces on the '-'.  The first part
+# is the name of the Makefile we want to run, and the second is the name
+# of the target we pass. e.g., make -f Makefile.CosNaming all
 Makefile.%: 
 	@echo $(MAKE) -f $(word 1,$(subst -, ,$@)) $(word 2,$(subst -, ,$@))
 	@$(MAKE) -f $(word 1,$(subst -, ,$@)) $(word 2,$(subst -, ,$@))
@@ -269,13 +279,17 @@ ORBSVCS_COMPONENTS:
 ORBSVCS_COMPONENTS_realclean:
 	-$(RM) ORBSVCS_COMPONENTS.list
 
-# This list of targets maintains the inter-library dependencies.  Follow this
-# pattern when adding new services.
+# This list of targets maintains the inter-library dependencies.  The rule is
+# a list of all possible Makefile-target combinations.  The part of the
+# target matches the standard target and uses it to construct a list of
+# dependencies that must be built first.  Follow this pattern when adding
+# new services.
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.av-)): Makefile.av-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosEvent-)): Makefile.CosEvent-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosLifeCycle-)): Makefile.CosLifeCycle-%: Makefile.CosNaming-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosLoadBalancing-)): Makefile.CosLoadBalancing-%: Makefile.CosNaming-% Makefile.PortableGroup-%
-$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosNotification-)): Makefile.CosNotification-%: Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosNaming-)): Makefile.CosNaming-%: Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosNotification-)): Makefile.CosNotification-%: Makefile.Svc_Utils-% Makefile.ETCL-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosTime-)): Makefile.CosTime-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosTrading-)): Makefile.CosTrading-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsEventLogAdmin-)): Makefile.DsEventLogAdmin-%: Makefile.DsLogAdmin-% Makefile.CosEvent-%
@@ -283,7 +297,7 @@ $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsLogAdmin-)): M
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsNotifyLogAdmin-)): Makefile.DsNotifyLogAdmin-%: Makefile.DsEventLogAdmin-% Makefile.DsLogAdmin-% Makefile.CosNotification-% Makefile.CosNaming-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.FaultTolerance-)): Makefile.FaultTolerance-%: Makefile.FTORB-% Makefile.CosNaming-% Makefile.CosNotification-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.IFRService-)): Makefile.IFRService-%: Makefile.Svc_Utils-%
-$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.Metrics-)): Makefile.Metrics-%: Makefile.RTSched Makefile.CosTime-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.Metrics-)): Makefile.Metrics-%: Makefile.RTSched-% Makefile.CosTime-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.PortableGroup-)): Makefile.PortableGroup-%: Makefile.CosNaming-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTCORBAEvent-)): Makefile.RTCORBAEvent-%: Makefile.RTEvent-% Makefile.CosNaming-% Makefile.Svc_Utils-%
 $(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTEvent-)): Makefile.RTEvent-%: Makefile.Svc_Utils-%

@@ -1,3 +1,10 @@
+Tue Nov 25 05:25:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/all_in_one.GNU:
+          Include rules.nonested.GNU instead of rules.nested.GNU to enable
+          parallel builds.  Thanks to Bala for noticing that the builds
+          didn't always build in parallel as expected.
+
 Mon Nov 24 18:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
