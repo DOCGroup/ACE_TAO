@@ -5,6 +5,10 @@ Tue Mar 09 21:54:39 1999  David L. Levine  <levine@cs.wustl.edu>
           in the default case, when ACE_COMPONENTS isn't set.
           Thanks to Carlos for noticing this.
 
+        * netsvcs/Makefile,netsvcs/servers/Makefile: moved
+          netsvcs/server build suppression, when ACE_COMPONENTS
+          lacks Other, from netsvcs/Makefile to netsvcs/servers/Makefile.
+
         * examples/Naming/Makefile: suppress build if ACE_COMPONENTS
           is defined and doesn't contain Other.
 
