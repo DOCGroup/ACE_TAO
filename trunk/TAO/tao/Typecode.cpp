@@ -1826,12 +1826,12 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       CORBA::TypeCode::traverse_status status =
         CORBA::TypeCode::TRAVERSE_STOP;
 
-      TAO_TRY_SYS
+      TAO_TRY_VAR (env)
         {
           status = stream.decode (tc, buf, this, env);
-          TAO_CHECK_ENV_SYS;
+          TAO_CHECK_ENV;
         }
-      TAO_CATCHANY_SYS
+      TAO_CATCHANY
         {
           delete [] buf;
           TAO_RETHROW_RETURN_SYS (0);
