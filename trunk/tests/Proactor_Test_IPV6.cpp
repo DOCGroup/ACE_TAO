@@ -1982,7 +1982,7 @@ template class ACE_Asynch_Connector<Client>;
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("Proactor_Test_IPV6"));
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Threads or Asynchronous IO is unsupported.\n")
