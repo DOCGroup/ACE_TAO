@@ -19,9 +19,9 @@ SHLIB   = libSupplier.$(SOEXT)
 FILES   = Supplier
 LSRC    = $(addsuffix .cpp,$(FILES))
 
-LIBS   += -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable  -lTAO_PortableServer -lTAO $(ACELIB)
+LIBS   += -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging  -lTAO_PortableServer -lTAO $(ACELIB)
 
-# TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))

@@ -53,27 +53,9 @@ Service::run (int argc, char* argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Prepend a "dummy" program name argument to the Service
-      // Configurator argument vector.
-      int new_argc = argc + 1;
-
-      CORBA::StringSeq new_argv (new_argc);
-      new_argv.length (new_argc);
-
-      // Prevent the ORB from opening the Service Configurator file
-      // again since the Service Configurator file is already in the
-      // process of being opened.
-      new_argv[0] = CORBA::string_dup ("dummy");
-
-      // Copy the remaining arguments into the new argument vector.
-      for (int i = new_argc - argc, j = 0;
-           j < argc;
-           ++i, ++j)
-        new_argv[i] = CORBA::string_dup (argv[j]);
-
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (new_argc,
-                                            new_argv.get_buffer (),
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
                                             "Service"
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -120,37 +102,11 @@ Service::run (int argc, char* argv[])
       naming_client->bind (ec_name, event_channel.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int done = 0;
-
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
 
-      while (!done)
-        {
-          CORBA::Boolean pending =
-            orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (pending)
-            {
-              orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-          ACE_TRY
-            {
-              CORBA::Object_var ec_obj =
-                naming_client->resolve (ec_name
-                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-          ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
-            {
-              ACE_DEBUG ((LM_DEBUG, "EventChannel has been destroyed\n"));
-              done = 1;
-              break;
-            }
-          ACE_ENDTRY;
-        }
+      ACE_Time_Value tv (90, 0);
+      orb->run (tv);
     }
   ACE_CATCHANY
     {

@@ -203,6 +203,12 @@ ACE_TMAIN (int argc, char* argv[])
                       dsoname.c_str()));
           return -1;
         }
+      else if (ACE_OS::unlink (dsoname.c_str()) < 0)
+        {
+          ACE_ERROR ((LM_ERROR, "Unable to unlink local copy %s : %m\n",
+                      dsoname.c_str()));
+          return -1;
+        }
       ACEXML_Char buf[65535];
       int bytes = 0;
       while ((bytes = dll->read (buf, sizeof(buf))) > 0)
@@ -270,5 +276,10 @@ ACE_TMAIN (int argc, char* argv[])
       ACE_OS::sleep (3);
     }
   thr_mgr->wait();
+  if (rmdir (temp) < 0)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to cleanup safe temp directory : %m\n"));
+      return -1;
+    }
   return 0;
 }
