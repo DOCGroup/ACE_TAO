@@ -393,6 +393,10 @@ namespace CCF
       struct ScopeTemplate : Node<T>
       {
       public:
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+	*/
+
         virtual void
         traverse (T& s)
         {
@@ -403,7 +407,7 @@ namespace CCF
         names (T& s)
         {
           names_pre (s);
-          names (s, edge_traverser ());
+          names (s, this->edge_traverser ());
           names_post (s);
         }
 

@@ -57,6 +57,10 @@ namespace CCF
       template<typename T>
       struct ParameterTemplate : Node<T>
       {
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+        */
+
         virtual void
         traverse (T&);
 
@@ -98,6 +102,10 @@ namespace CCF
       template <typename T>
       struct OperationTemplate : Node<T>
       {
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+        */
+
         virtual void
         traverse (T&);
 

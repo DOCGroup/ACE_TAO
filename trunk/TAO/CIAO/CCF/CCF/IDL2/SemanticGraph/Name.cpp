@@ -196,7 +196,7 @@ namespace CCF
       ScopedName ScopedName::
       scope_name () const throw (FileScope)
       {
-        Iterator end (end () - 1);
+        Iterator end (this->end () - 1);
 
         if (begin () == end) throw FileScope ();
 

@@ -5,6 +5,9 @@
 #ifndef SERVANT_GENERATOR_HPP
 #define SERVANT_GENERATOR_HPP
 
+#include <string>
+#include <iosfwd>
+
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
@@ -27,7 +30,7 @@ private:
   void
   compute_export_macro (const fs::path& file_path);
 
-  ostream&
+  std::ostream&
   configure_stream (std::string const& suffix_option,
                     std::string const& default_suffix,
                     std::string const& regex_option,

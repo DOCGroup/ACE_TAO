@@ -11,6 +11,7 @@
 
 namespace Indentation
 {
+  template <typename C>
   class Buffer
   {
   public:
@@ -30,15 +31,15 @@ namespace Indentation
 
   public:
     typedef
-    std::char_traits<char>
+    std::char_traits<C>
     traits_type;
 
     typedef
-    traits_type::char_type
+    typename traits_type::char_type
     char_type;
 
     typedef
-    traits_type::char_type
+    typename traits_type::int_type
     int_type;
 
   public:

@@ -17,6 +17,8 @@ using namespace StringLiterals;
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 
+using std::string;
+
 namespace
 {
   // On some platforms toupper can be something other than a

@@ -9,8 +9,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 //@@ this stuff needs proper reimplementation
 
 class CommandLine
