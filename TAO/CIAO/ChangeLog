@@ -1,8 +1,17 @@
+Thu Oct  2 15:02:10 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/Traversal/TypeId.hpp:
+	* CCF/CCF/IDL2/Traversal/TypeId.cpp:
+	* CCF/CCF/IDL2/Traversal.hpp:
+	* CCF/CCF/IDL2/SyntaxTree.hpp:
+	* CCF/CCF/IDL2/SemanticAction.hpp: added missing pieces for
+	  typeid/typeprefix support.
+
 Wed Oct  1 14:26:09 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CompilerElements/Context.hpp: added count () member
 	  function.
-	
+
 	* CIDLC/RepositoryIdGenerator.hpp:
 	* CIDLC/RepositoryIdGenerator.cpp: implemented first phase of
 	  repository id generation.
