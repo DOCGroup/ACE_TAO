@@ -1,7 +1,8 @@
 Fri Jun 23 14:32:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Connectors.cpp: Initialised the reserved field
-	  to zero. Thanks to James Megquier for pointing this out.
+	  to zero. Thanks to James Megquier <jmegq@bbn.com> for pointing
+	  this out. 
 
 Fri Jun 23 12:08:51 2000  Ossama Othman  <ossama@uci.edu>
 
