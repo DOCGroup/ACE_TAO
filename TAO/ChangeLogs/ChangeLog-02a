@@ -1,3 +1,8 @@
+Tue May 01 12:00:11 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* $ACE_ROOT/auto_run_tests.lst: Don't run
+	  tests/POA/Etherealization if we are compiling for minimum CORBA.
+
 Tue May 01 11:56:58 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Etherealization/Makefile: This test should only be
