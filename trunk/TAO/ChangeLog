@@ -1,3 +1,10 @@
+Thu Aug 26 22:54:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Current.pidl:
+
+	  Added #ifndef guard, as was done with GIOP.idl in:
+	  Thu Aug 26 22:54:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Thu Aug 26 22:48:26 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
