@@ -53,7 +53,7 @@ LDFLAGS = --no_auto_instantiation \
           $(MVME_DIR)/lib/CC/libC.a \
           $(GHS_DIR)/ch68/libedg.a \
           $(MVME_DIR)/lib/classix/libcx.s.a
-OFLAGS  += -O -OM -OL
+OCFLAGS += -O -OM -OL
 AR      = $(GHS_DIR)/gnuch68/bin/ar
 ARFLAGS = rv
 RANLIB  = @true
