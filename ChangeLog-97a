@@ -14,6 +14,12 @@ Tue Jun 17 15:11:09 1997  David L. Levine  <levine@cs.wustl.edu>
 	  SVR4 machines because it has other read permission by default
 	  (on Solaris 2.x).
 
+	* ace/Timer_Hash_T.cpp (cancel): added "[]" to delete of timer_ids
+	  array.  Purify rules.
+
+	* Timer_Queue_Test.cppc (test_performance): added "[]" to delete of
+	  times array.  Purify rules.
+
 Tue Jun 17 15:31:01 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE.cpp: Fixed get_ip_interfaces (and count_interfaces) to
