@@ -69,7 +69,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
     orb_core_ (pfile.orb_core_)
 {
   // @@ Do we need this copy constructor?  Won't the default copy
-  // constructor work just as well?
+  //    constructor work just as well?  -Ossama
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
@@ -242,10 +242,11 @@ TAO_IIOP_Profile::parse_string (const char *string,
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');
+  char *cp = ACE_OS::strchr (start, ':');  // Look for a port
 
   if (cp == 0)
     {
+      // No host/port delimiter!
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
           TAO_NULL_POINTER_MINOR_CODE,
@@ -254,17 +255,11 @@ TAO_IIOP_Profile::parse_string (const char *string,
         -1);
     }
 
-  CORBA::String_var tmp = CORBA::string_alloc (cp - start);
+  char *okd = ACE_OS::strchr (start, this->object_key_delimiter);
 
-  for (cp = tmp.inout (); *start != ':'; *cp++ = *start++)
-    continue;
-
-  *cp = 0; start++; // increment past :
-
-  cp = ACE_OS::strchr (start, this->object_key_delimiter);
-
-  if (cp == 0)
+  if (okd == 0)
     {
+      // No object key delimiter!
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
           TAO_NULL_POINTER_MINOR_CODE,
@@ -272,19 +267,32 @@ TAO_IIOP_Profile::parse_string (const char *string,
         CORBA::COMPLETED_NO),
         -1);
     }
+
+  // Don't increment the pointer 'cp' directly since we still need
+  // to use it immediately after this block.
+
+  CORBA::ULong length = okd - (cp + 1);
+  // Don't allocate space for the colon ':'.
+
+  CORBA::String_var tmp = CORBA::string_alloc (length);
+
+  ACE_OS::strncpy (tmp.inout (), cp + 1, length);
+  tmp[length] = '\0';
+
+  this->port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
+
+  length = cp - start;
+
+  tmp = CORBA::string_alloc (length);
+
+  ACE_OS::strncpy (tmp.inout (), start, length);
+  tmp[length] = '\0';
 
   this->host_ = tmp._retn ();
-  this->port_ = (CORBA::UShort) ACE_OS::atoi (start);
-
-  // @@ This call to atoi appears to pass in a string that
-  //    still has the object key appended to it.
-  //    Shouldn't we actually parse the port from the string
-  //    rather than pass a `port/object_key' combined string?
-  //                      -Ossama
 
   this->object_addr_.set (this->port_, this->host_.in ());
 
-  start = ++cp;  // increment past the /
+  start = ++okd;  // increment past the object key separator
 
   TAO_POA::decode_string_to_sequence (this->object_key_, start);
 
