@@ -136,12 +136,16 @@ AST_Field::dump(ostream &o)
 {
   switch (visibility())
     {
-      case vis_PRIVATE:
-        o << "private ";
-        break;
-      case vis_PUBLIC:
-        o << "public ";
-        break;
+    case vis_PRIVATE:
+      o << "private ";
+      break;
+    case vis_PUBLIC:
+      o << "public ";
+      break;
+    case vis_NA:
+      ACE_ASSERT (!"this shouldn't happen!");
+      /* NOTREACHED */
+      break;
     }
   pd_field_type->local_name()->dump(o);
   o << " ";
