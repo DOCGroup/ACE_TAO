@@ -1,14 +1,4 @@
 // $Id$
-// ============================================================================
-//
-// = FILENAME
-//   Load_Balancer_i.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
-
 #include "Load_Balancer_i.h"
 #include "ace/Auto_Ptr.h"
 
