@@ -29,7 +29,7 @@ private:
   void check_counter(ACE_ENV_SINGLE_ARG_DECL);
 
 private:
-  ACE_Atomic_Op<ACE_Thread_Mutex::ACE_Thread_Mutex,long> counter_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> counter_;
   Test::Hello_var hello_;
   CORBA::ORB_var orb_;
 };

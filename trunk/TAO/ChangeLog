@@ -1,3 +1,22 @@
+Fri Jul 18 17:26:32 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/default_resource.cpp: As an experiment, change the typedef
+	  for LOCKED_ALLOCATOR from an ACE_Malloc<>-based allocator to use
+	  the ACE_New_Allocator, thus delegating all issues with regard to
+	  dynamic allocations to the underlying heap allocator.  In simple
+	  tests on Redhat 8.0/gcc 3.2-based systems, this resulted in
+	  smaller dynamic memory footprints.  If the change doesn't
+	  exhibit the same behavior on other platforms, I'll back this
+	  out.
+
+Fri Jul 18 17:22:49 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/Bug_1551_Regression/Reply_Handler.h (Reply_Handler): 
+
+	  Use TAO_SYNCH_MUTEX preprocessor macro rather than
+	  ACE_Thread_Mutex directly so that things build properly on
+	  single-threaded builds like Debian_SingleThreaded.
+
 Fri Jul 18 15:58:20 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/tao.mpc:
