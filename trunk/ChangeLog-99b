@@ -3,6 +3,11 @@ Tue Jul 13 15:22:51 1999  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
           set ACE_HAS_GNUG_PRE_2_8 to 0 with egcs (Tornado II).
 
+Tue Jul 13 15:15:43 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc, ace-lib.icc: Corrected source file set; now builds
+          (still with some warnings) on AIX, Visual Age C++ 4.
+
 Tue Jul 13 15:11:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * bin/run_all_win32.pl: Fixed program output redirection problem.
