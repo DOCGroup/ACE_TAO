@@ -35,16 +35,15 @@ ECT_Driver::Latency_Stats::dump_results (const char *test_name,
 
   ACE_hrtime_t avg = this->sum_ / this->n_;
   ACE_hrtime_t dev =
-    this->sum2_ / this->n_ - avg*avg;
+    this->sum2_ / (this->n_ - 1)
+    - (this->sum_ / this->n_) * (this->sum_ / (this->n_ - 1));
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-
-  double min_usec = ACE_CU64_TO_CU32 (this->min_) / gsf;
-  double max_usec = ACE_CU64_TO_CU32 (this->max_) / gsf;
-  double avg_usec = ACE_CU64_TO_CU32 (avg) / gsf;
-  double dev_usec = ACE_CU64_TO_CU32 (dev) / (gsf * gsf);
+  double min_usec = ACE_CU64_TO_CU32 (this->min_) / 1000.0;
+  double max_usec = ACE_CU64_TO_CU32 (this->max_) / 1000.0;
+  double avg_usec = ACE_CU64_TO_CU32 (avg) / 1000.0;
+  double dev_usec = ACE_CU64_TO_CU32 (dev) / 1000.0;
   ACE_DEBUG ((LM_DEBUG,
-              "%s/%s: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2) [usecs]\n",
+              "%s/%s: %.2f/%.2f/%.2f/%.2f (min/avg/max/dev2) [usecs]\n",
               test_name, sub_test,
               min_usec, avg_usec, max_usec, dev_usec));
 }
@@ -129,7 +128,7 @@ ECT_Driver::Throughput_Stats::dump_results (const char *test_name,
 
   ACE_DEBUG ((LM_DEBUG,
               "%s/%s: "
-              "%d / %d.%06.6d = %.3f events/second\n",
+              "%d / %d.%08.8d = %.3f events/second\n",
               test_name, subtest,
               this->n_,
               tv.sec (), tv.usec (),

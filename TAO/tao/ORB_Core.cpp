@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 
 #include "ace/Env_Value_T.h"
 #include "ace/Arg_Shifter.h"
@@ -18,6 +17,9 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
+
+typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
+        TAO_ORB_CORE_TSS_RESOURCES;
 
 // ****************************************************************
 
@@ -47,11 +49,8 @@ TAO_ORB_Core::TAO_ORB_Core (void)
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
     arl_same_port_connect_ (0),
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-    preconnections_ (0),
-    poa_current_ (0)
+    preconnections_ (0)
 {
-  ACE_NEW (this->poa_current_,
-           TAO_POA_Current);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -63,8 +62,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   // Allocated in init()
   delete this->orb_params_;
-
-  delete this->poa_current_;
 }
 
 int
@@ -450,6 +447,24 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         arg_shifter.ignore_arg ();
     }
 
+#if defined (DEBUG)
+  // Make it a little easier to debug programs using this code.
+  {
+    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
+
+    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
+
+    if (value != 0)
+      {
+        TAO_debug_level = ACE_OS::atoi (value);
+        if (TAO_debug_level <= 0)
+          TAO_debug_level = 1;
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_debug_level == %d", TAO_debug_level));
+      }
+  }
+#endif  /* DEBUG */
+
   // Set the endpoint
   ACE_INET_Addr rendezvous;
   if (this->set_endpoint (dotted_decimal_addresses,
@@ -571,6 +586,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
   this->orb_params ()->use_lite_protocol (giop_lite);
+
+  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
 
   // tell the registry to open all registered interfaces! fredk
   if (this->connector_registry ()->open (trf, this->reactor ()) != 0)
@@ -824,17 +841,43 @@ TAO_ORB_Core::arl_same_port_connect (void)
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
 int
-TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources)
+TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
 {
   // Inherit properties/objects used in ORB_Core from the
   // parent thread.  Stuff inherited here must already exist
   // in the "parent" orbcore.
 
-  this->reactor (tss_resources->reactor_);
+  this->reactor (p->reactor ());
   // We'll use the spawning thread's reactor.
 
-  // this->connection_cache (tss_resources->connection_cache_);
-  // Inherit connection cache?
+  this->thr_mgr (p->thr_mgr ());
+  // We should use the same thread_manager.
+
+  this->connector_registry (p->connector_registry ());
+  // We'll use the spawning thread's connector.
+
+  this->orb (p->orb ());
+  // We'll use the spawning thread's ORB.
+
+  this->root_poa (p->root_poa ());
+  // And its root_poa.
+
+  this->orb_params_ = p->orb_params ();
+  // We also need its ORB_Params.
+
+  this->acceptor (p->acceptor ());
+  // Also grab the acceptor passively listening for connection
+  // requests.
+
+  this->using_collocation (p->using_collocation ());
+  // Use the same collocation settings
+
+  this->resource_factory_ = p->resource_factory ();
+  this->client_factory_ = p->client_factory ();
+  this->server_factory_ = p->server_factory ();
+  // Inherit the factories.  Notice that they will not be destroyed by
+  // this orb_core because *_factory_from_service_config_'s all
+  // default to FALSE.
 
   return 0;
 }
@@ -1097,10 +1140,21 @@ TAO_ORB_Core::reactor (void)
   return tss->reactor_;
 }
 
-TAO_POA_Current &
-TAO_ORB_Core::poa_current (void) const
+TAO_POA_Current *
+TAO_ORB_Core::poa_current (void)
 {
-  return *this->poa_current_;
+  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_;
+}
+
+TAO_POA_Current *
+TAO_ORB_Core::poa_current (TAO_POA_Current *new_current)
+{
+  TAO_ORB_Core_TSS_Resources *tss =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+
+  TAO_POA_Current *old = tss->poa_current_;
+  tss->poa_current_ = new_current;
+  return old;
 }
 
 CORBA_Environment*
@@ -1140,7 +1194,7 @@ TAO_ORB_Core::policy_current (TAO_Policy_Current* current)
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   :  reactor_ (0),
-     poa_current_impl_ (0),
+     poa_current_ (0),
      default_environment_ (&this->tss_environment_),
 #if defined (TAO_HAS_CORBA_MESSAGING)
      policy_current_ (&this->initial_policy_current_),
@@ -1167,6 +1221,8 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
 // ****************************************************************
 
+// ****************************************************************
+
 // This function exists because of Win32's proclivity for expanding
 // templates at link time.  Since DLLs are just executables, templates
 // get expanded and instantiated at link time.  Thus, if there are
@@ -1183,8 +1239,6 @@ TAO_ORB_Core_instance (void)
 {
   return CORBA::instance ()->orb_core_;
 }
-
-// ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

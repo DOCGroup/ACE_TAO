@@ -53,7 +53,6 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
 
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
-                               0,
                                cdr.start ());
 
           // This recursive step will call the correct constructor
@@ -101,7 +100,7 @@ TAO_DynStruct_i::~TAO_DynStruct_i (void)
 //////////////////////////////////////////////////////////////////////////
 // Functions specific to DynStruct
 
-CORBA::FieldName
+FieldName
 TAO_DynStruct_i::current_member_name (CORBA::Environment &)
 {
   return CORBA::string_dup (this->type_.in ()->member_name (this->index_));
@@ -116,14 +115,14 @@ TAO_DynStruct_i::current_member_kind (CORBA::Environment& env)
                                 env);
 }
 
-CORBA::NameValuePairSeq*
+NameValuePairSeq*
 TAO_DynStruct_i::get_members (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
 
-  CORBA::NameValuePairSeq* members;
+  NameValuePairSeq* members;
   ACE_NEW_THROW_EX (members,
-                    CORBA::NameValuePairSeq (length),
+                    NameValuePairSeq (length),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -144,7 +143,7 @@ TAO_DynStruct_i::get_members (CORBA::Environment& ACE_TRY_ENV)
 }
 
 void
-TAO_DynStruct_i::set_members (const CORBA::NameValuePairSeq& value,
+TAO_DynStruct_i::set_members (const NameValuePairSeq& value,
                               CORBA::Environment& env)
 {
   CORBA::ULong length = value.length ();
@@ -233,7 +232,6 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
 
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
-                               0,
                                cdr.start ());
 
           if (!CORBA::is_nil (this->da_members_[i].in ()))
@@ -284,7 +282,6 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   CORBA_Any* retval;
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type (ACE_TRY_ENV),
-                               0,
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);

@@ -5,7 +5,6 @@
 
 #include "tao/POA.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"
@@ -1145,7 +1144,6 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
                                     is_system_id,
                                     poa_creation_time);
       if (result != 0 ||
-          !this->root () &&
           poa_system_name != this->system_name () ||
           is_root != this->root () ||
           is_persistent != this->persistent () ||
@@ -1273,7 +1271,6 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
                                 is_system_id,
                                 poa_creation_time);
   if (result != 0 ||
-      !this->root () &&
       poa_system_name != this->system_name () ||
       is_root != this->root () ||
       is_persistent != this->persistent () ||
@@ -1503,11 +1500,11 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
 PortableServer::Servant
 TAO_POA::locate_servant_i (const char *operation,
                            const PortableServer::ObjectId &system_id,
-                           TAO_POA_Current_Impl *poa_current_impl,
+                           TAO_POA_Current *poa_current,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                               poa_current_impl->object_id_) == -1)
+                                                               poa_current->object_id_) == -1)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
@@ -1521,14 +1518,14 @@ TAO_POA::locate_servant_i (const char *operation,
     {
       PortableServer::Servant servant = 0;
       int result = this->active_object_map ().find_servant_using_system_id_and_user_id (system_id,
-                                                                                        poa_current_impl->object_id (),
+                                                                                        poa_current->object_id_,
                                                                                         servant,
-                                                                                        poa_current_impl->active_object_map_entry_);
+                                                                                        poa_current->active_object_map_entry_);
 
       if (result == 0)
         {
           // Increment the reference count.
-          ++poa_current_impl->active_object_map_entry ()->reference_count_;
+          ++poa_current->active_object_map_entry_->reference_count_;
 
           // Success
           return servant;
@@ -1619,7 +1616,7 @@ TAO_POA::locate_servant_i (const char *operation,
             // Invocations of incarnate on the servant manager are serialized.
             // Invocations of etherealize on the servant manager are serialized.
             // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-            servant = this->servant_activator_->incarnate (poa_current_impl->object_id (),
+            servant = this->servant_activator_->incarnate (poa_current->object_id_,
                                                            poa.in (),
                                                            ACE_TRY_ENV);
             ACE_CHECK_RETURN (0);
@@ -1646,9 +1643,9 @@ TAO_POA::locate_servant_i (const char *operation,
           // ObjectId value will be delivered directly to that servant
           // without invoking the servant manager.
           int result = this->active_object_map ().rebind_using_user_id_and_system_id (servant,
-                                                                                      poa_current_impl->object_id (),
+                                                                                      poa_current->object_id_,
                                                                                       system_id,
-                                                                                      poa_current_impl->active_object_map_entry_);
+                                                                                      poa_current->active_object_map_entry_);
           if (result != 0)
             {
               ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1657,7 +1654,7 @@ TAO_POA::locate_servant_i (const char *operation,
           else
             {
               // Increment the reference count.
-              ++poa_current_impl->active_object_map_entry ()->reference_count_;
+              ++poa_current->active_object_map_entry_->reference_count_;
 
               // Success
               return servant;
@@ -1688,7 +1685,7 @@ TAO_POA::locate_servant_i (const char *operation,
           // process the request, and postinvoke the object.
           //
           PortableServer::ServantLocator::Cookie cookie;
-          PortableServer::Servant servant = this->servant_locator_->preinvoke (poa_current_impl->object_id (),
+          PortableServer::Servant servant = this->servant_locator_->preinvoke (poa_current->object_id_,
                                                                                poa.in (),
                                                                                operation,
                                                                                cookie,
@@ -1699,7 +1696,7 @@ TAO_POA::locate_servant_i (const char *operation,
             return 0;
 
           // Remember the cookie
-          poa_current_impl->locator_cookie (cookie);
+          poa_current->locator_cookie (cookie);
 
           // Success
           return servant;
@@ -1914,8 +1911,8 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 #if !defined (TAO_NO_IOR_TABLE)
   // Add the object key prefix.
   ACE_OS::memcpy (&buffer[starting_at],
-                  &objectkey_prefix[0],
-                  TAO_OBJECTKEY_PREFIX_SIZE);
+		  &objectkey_prefix[0],
+		  TAO_OBJECTKEY_PREFIX_SIZE);
 
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 #endif /* TAO_NO_IOR_TABLE */
@@ -2136,7 +2133,7 @@ CORBA::WChar *
 TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
   // Create space
-  CORBA::WChar* string = CORBA::wstring_alloc (id.length ());
+  CORBA::WString string = CORBA::wstring_alloc (id.length ());
 
   // Copy the data
   ACE_OS::memcpy (string, id.get_buffer (), id.length () * sizeof (CORBA::WChar));
@@ -3214,11 +3211,29 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-TAO_POA_Current_Impl::TAO_POA_Current_Impl (TAO_POA *impl,
-                                            const TAO_ObjectKey &key,
-                                            PortableServer::Servant servant,
-                                            const char *operation,
-                                            TAO_ORB_Core &orb_core)
+TAO_POA_Current::TAO_POA_Current (void)
+  : poa_impl_ (0),
+    object_id_ (),
+    object_key_ (0),
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+    cookie_ (0),
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+    servant_ (0),
+    operation_ (0),
+    orb_core_ (0),
+    previous_current_ (0)
+{
+}
+
+TAO_POA_Current::TAO_POA_Current (TAO_POA *impl,
+                                  const TAO_ObjectKey &key,
+                                  PortableServer::Servant servant,
+                                  const char *operation,
+                                  TAO_ORB_Core &orb_core)
   : poa_impl_ (impl),
     object_id_ (),
     object_key_ (&key),
@@ -3232,14 +3247,14 @@ TAO_POA_Current_Impl::TAO_POA_Current_Impl (TAO_POA *impl,
     servant_ (servant),
     operation_ (operation),
     orb_core_ (&orb_core),
-    previous_current_impl_ (0),
+    previous_current_ (0),
     active_object_map_entry_ (0)
 {
   // Set the current context and remember the old one.
-  this->previous_current_impl_ = this->orb_core_->poa_current ().implementation (this);
+  this->previous_current_ = this->orb_core_->poa_current (this);
 }
 
-TAO_POA_Current_Impl::~TAO_POA_Current_Impl (void)
+TAO_POA_Current::~TAO_POA_Current (void)
 {
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -3304,12 +3319,18 @@ TAO_POA_Current_Impl::~TAO_POA_Current_Impl (void)
     }
 
   // Reset the old context.
-  this->orb_core_->poa_current ().implementation (this->previous_current_impl_);
+  this->orb_core_->poa_current (this->previous_current_);
 }
 
 PortableServer::POA_ptr
-TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
 {
+  if (!this->context_is_valid ())
+    {
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        PortableServer::POA::_nil ());
+    }
+
   PortableServer::POA_var result = this->poa_impl_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
@@ -3317,56 +3338,18 @@ TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::ObjectId *
-TAO_POA_Current_Impl::get_object_id (CORBA::Environment &)
+TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
 {
+  if (!this->context_is_valid ())
+    {
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        0);
+    }
+
   // Create a new one and pass it back
   return new PortableServer::ObjectId (this->object_id_);
 }
 
-PortableServer::POA_ptr
-TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_POA_Current_Impl *impl = this->implementation ();
-
-  if (impl == 0)
-    {
-      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
-                        0);
-    }
-
-  return impl->get_POA (ACE_TRY_ENV);
-}
-
-PortableServer::ObjectId *
-TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_POA_Current_Impl *impl = this->implementation ();
-
-  if (impl == 0)
-    {
-      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
-                        0);
-    }
-
-  return impl->get_object_id (ACE_TRY_ENV);
-}
-
-TAO_POA_Current_Impl *
-TAO_POA_Current::implementation (void)
-{
-  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
-}
-
-TAO_POA_Current_Impl *
-TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
-{
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
-
-  TAO_POA_Current_Impl *old = tss->poa_current_impl_;
-  tss->poa_current_impl_ = new_current;
-  return old;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array<PortableServer::ObjectId>;

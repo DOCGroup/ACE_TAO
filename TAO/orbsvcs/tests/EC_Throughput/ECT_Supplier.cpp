@@ -128,12 +128,20 @@ Test_Supplier::disconnect (CORBA::Environment &TAO_IN_ENV)
 int
 Test_Supplier::svc ()
 {
+  int min_priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+
+  if (ACE_OS::thr_setprio (min_priority) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Test_Supplier::svc (%P|%t) "
+                  "thr_setprio failed\n"));
+    }
+
   TAO_TRY
     {
-      // Initialize a time value to pace the test
       ACE_Time_Value tv (0, this->burst_pause_);
 
-      // Pre-allocate a message to send
       ACE_Message_Block mb (this->event_size_);
       mb.wr_ptr (this->event_size_);
 
@@ -172,23 +180,11 @@ Test_Supplier::svc ()
               TAO_CHECK_ENV;
             }
           this->throughput_.sample ();
-
-          if (TAO_debug_level > 0
-              && i % 100 == 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "ECT_Supplier (%P|%t): %d bursts sent\n",
-                          i));
-            }
-
           ACE_OS::sleep (tv);
         }
 
       // Send one event shutdown from each supplier
       event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
-                                     now);
       this->consumer_proxy ()->push(event, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       this->throughput_.sample ();

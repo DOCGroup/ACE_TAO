@@ -451,7 +451,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // New for Multiple profile.  Get the MProfile list from the
   // forwarded object refererence
 
-  this->stub_->add_forward_profiles (*stubobj->get_profiles ());
+  this->stub_->add_forward_profiles (stubobj->get_profiles ());
   // store the new profile list and set the first forwarding profile
   // note: this has to be and is thread safe.  Also get_profiles returns
   // a pointer to a new MProfile object which we give to our
@@ -526,7 +526,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
           const ACE_Message_Block* cdr =
             this->inp_stream_.start ();
-          CORBA_Any any (tcp, 0, cdr);
+          CORBA_Any any (tcp, cdr);
           CORBA_Exception *exception;
           ACE_NEW_THROW_EX (exception,
                             CORBA_UnknownUserException (any),

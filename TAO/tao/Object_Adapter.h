@@ -131,8 +131,6 @@ protected:
   static ACE_Lock *create_lock (int enable_locking,
                                 ACE_SYNCH_MUTEX &thread_lock);
 
-public:
-
   class Hint_Strategy
   {
     // = TITLE
@@ -224,8 +222,6 @@ public:
                                        const poa_name &system_name);
 
   };
-
-protected:
 
   Hint_Strategy *hint_strategy_;
 
@@ -378,7 +374,7 @@ public:
     TAO_Object_Adapter &object_adapter_;
   };
 
-  friend class Non_Servant_Upcall;
+  friend Non_Servant_Upcall;
 
   class Outstanding_Requests
   {
@@ -408,7 +404,7 @@ public:
     TAO_Object_Adapter &object_adapter_;
   };
 
-  friend class Outstanding_Requests;
+  friend Outstanding_Requests;
 
   class Single_Threaded_POA_Lock
   {
@@ -434,7 +430,7 @@ public:
     PortableServer::Servant servant_;
   };
 
-  friend class Single_Threaded_POA_Lock;
+  friend Single_Threaded_POA_Lock;
 
 };
 

@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
-#include "ace/High_Res_Timer.h"
 
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -63,10 +62,6 @@ ECT_Throughput::run (int argc, char* argv[])
 {
   TAO_TRY
     {
-      // Calibrate the high resolution timer *before* starting the
-      // test.
-      ACE_High_Res_Timer::calibrate ();
-
       this->orb_ =
         CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -137,15 +132,12 @@ ECT_Throughput::run (int argc, char* argv[])
             }
         }
 
-      int priority =
-        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int min_priority =
+        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                                  priority,
+                                                  min_priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
         {
           if (ACE_OS::last_error () == EPERM)
@@ -160,7 +152,7 @@ ECT_Throughput::run (int argc, char* argv[])
                         "%s: ACE_OS::sched_params failed\n", argv[0]));
         }
 
-      if (ACE_OS::thr_setprio (priority) == -1)
+      if (ACE_OS::thr_setprio (min_priority) == -1)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed,"
                       "no real-time features\n"));
@@ -240,13 +232,10 @@ ECT_Throughput::run (int argc, char* argv[])
         }
       else
         {
-          TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                                root_poa.in ());
-          attr.busy_hwm = this->ec_concurrency_hwm_;
-          attr.max_write_delay = this->ec_concurrency_hwm_;
-
           TAO_EC_Event_Channel *ec =
-            new TAO_EC_Event_Channel (attr);
+            new TAO_EC_Event_Channel (root_poa.in (),
+                                      root_poa.in ());
+          ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -302,8 +291,6 @@ ECT_Throughput::run (int argc, char* argv[])
         TAO_CHECK_ENV;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
-
       {
         // Deactivate the Scheduler
         PortableServer::POA_var poa =
@@ -316,22 +303,14 @@ ECT_Throughput::run (int argc, char* argv[])
         TAO_CHECK_ENV;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
-
       this->disconnect_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "consumers disconnected\n"));
 
       this->disconnect_suppliers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
-
       channel->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "channel destroyed\n"));
     }
   TAO_CATCHANY
     {
@@ -428,14 +407,13 @@ ECT_Throughput::connect_suppliers
 void
 ECT_Throughput::activate_suppliers (CORBA::Environment &)
 {
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+  int min_priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       if (this->suppliers_[i]->activate (this->thr_create_flags_,
-                                         1, 0, priority) == -1)
+                                         1, 0, min_priority) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Cannot activate thread for supplier %d\n",
@@ -499,7 +477,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, "rdc:s:u:n:t:b:h:l:p:m:w:");
   int opt;
-
+  
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
@@ -651,7 +629,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_consumers_ >= ECT_Throughput::MAX_CONSUMERS)
     {
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of consumers or "
                          "suppliers out of range, "
                          "reset to default (%d)\n",
@@ -662,7 +640,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_suppliers_ >= ECT_Throughput::MAX_SUPPLIERS)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
@@ -672,7 +650,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
     {
       this->n_suppliers_ = 1;
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: no suppliers or consumers, "
                          "reset to default (%d of each)\n",
                          argv[0], 1), -1);
@@ -681,7 +659,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
   if (this->ec_concurrency_hwm_ <= 0)
     {
       this->ec_concurrency_hwm_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: invalid concurrency HWM, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);

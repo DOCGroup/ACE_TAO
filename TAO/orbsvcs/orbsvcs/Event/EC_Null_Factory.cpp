@@ -3,14 +3,12 @@
 #include "EC_Null_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_Filter_Builder.h"
-#include "EC_Trivial_Supplier_Filter.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
 #include "EC_SupplierFiltering.h"
 #include "EC_ObserverStrategy.h"
-#include "EC_Null_Scheduling.h"
 #include "EC_ProxyPushSupplier_Set_T.h"
 #include "EC_Reactive_Timeout_Generator.h"
 
@@ -44,18 +42,6 @@ TAO_EC_Null_Factory::create_filter_builder (TAO_EC_Event_Channel *)
 
 void
 TAO_EC_Null_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
-{
-  delete x;
-}
-
-TAO_EC_Supplier_Filter_Builder*
-TAO_EC_Null_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel *ec)
-{
-  return new TAO_EC_Trivial_Supplier_Filter_Builder (ec);
-}
-
-void
-TAO_EC_Null_Factory::destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder *x)
 {
   delete x;
 }
@@ -134,18 +120,6 @@ TAO_EC_Null_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
   delete x;
 }
 
-TAO_EC_Scheduling_Strategy*
-TAO_EC_Null_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
-{
-  return new TAO_EC_Null_Scheduling;
-}
-
-void
-TAO_EC_Null_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
-{
-  delete x;
-}
-
 TAO_EC_ProxyPushSupplier_Set*
 TAO_EC_Null_Factory::create_proxy_push_supplier_set (TAO_EC_Event_Channel *)
 {
@@ -208,6 +182,10 @@ TAO_EC_Null_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

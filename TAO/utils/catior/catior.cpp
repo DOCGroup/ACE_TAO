@@ -545,7 +545,7 @@ main (int argc, char *argv[])
             while (!ifstr.eof ())
               {
                 ifstr.get (ch);
-                if (ch == '\n' || ifstr.eof ())
+                if (ch == '\n' || ch == EOF)
                   break;
                 aString += ch;
               }
@@ -595,7 +595,7 @@ main (int argc, char *argv[])
                 b = catpoop (str, env);
               }
             else
-              ACE_ERROR_RETURN ((LM_ERROR,
+              ACE_ERROR_RETURN ((LM_DEBUG,
                                  "Don't know how to decode this IOR\n"),
                                 -1);
             if (b == 1)

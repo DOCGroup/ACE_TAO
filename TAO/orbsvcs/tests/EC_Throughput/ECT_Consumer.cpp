@@ -125,8 +125,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 {
   if (events.length () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ECT_Consumer (%P|%t) no events\n"));
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
 
@@ -141,11 +140,11 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
   this->recv_count_ += events.length ();
 
   if (TAO_debug_level > 0
-      && this->recv_count_ % 100 == 0)
+      && this->recv_count_ % 1000 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ECT_Consumer (%P|%t): %d events received\n",
-                  this->recv_count_));
+		  this->recv_count_));
     }
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
@@ -174,6 +173,20 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
           const ACE_hrtime_t now = ACE_OS::gethrtime ();
           const ACE_hrtime_t elapsed = now - creation;
           this->latency_.sample (elapsed);
+
+#if 0
+          ACE_hrtime_t ec_recv;
+          ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
+                                         e.header.ec_recv_time);
+
+          ACE_hrtime_t ec_send;
+          ORBSVCS_Time::TimeT_to_hrtime (ec_send,
+                                         e.header.ec_send_time);
+
+          this->driver_->supplier_to_ec (ec_recv - creation);
+          this->driver_->inside_ec (ec_send - ec_recv);
+          this->driver_->ec_to_consumer (now - ec_send);
+#endif /* 0 */
         }
     }
 }
