@@ -354,6 +354,7 @@ TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
             return n;
         }
 
+      nbytes += n;
       if (message_block->cont ())
         message_block = message_block->cont ();
       else
