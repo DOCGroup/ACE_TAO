@@ -22,7 +22,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
   delete[] this->filename_;
   this->filename_ = 0;
 
-  this->infile_ = ACE_OS::fopen (name, ACE_LIB_TEXT ("r"));
+  this->infile_ = ACE_OS::fopen (name, ACE_TEXT ("r"));
   if (this->infile_ == NULL)
     return -1;
 
@@ -58,10 +58,8 @@ ACEXML_FileCharStream::close (void)
 int
 ACEXML_FileCharStream::get (ACEXML_Char& ch)
 {
-  // @@ Error checking?
-  ch = (unsigned char) fgetc (this->infile_);
-
-  return (((char) ch) == EOF ? -1 :0);
+  ch = (ACEXML_Char) ACE_OS::fgetc (this->infile_);
+  return (ACE_OS::feof(this->infile_) ? -1 : 0);
 }
 
 int
@@ -74,7 +72,7 @@ ACEXML_FileCharStream::read (ACEXML_Char *str,
 int
 ACEXML_FileCharStream::peek (void)
 {
-  ACEXML_Char ch = ::fgetc (this->infile_);
-  ::ungetc (ch, this->infile_);
+  ACEXML_Char ch = ACE_OS::fgetc (this->infile_);
+  ACE_OS::ungetc (ch, this->infile_);
   return ch;
 }

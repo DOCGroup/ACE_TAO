@@ -31,7 +31,7 @@ ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
   ACE_UNUSED_ARG (end);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("%s"),
+              ACE_TEXT ("%s"),
               cdata));
 }
 
@@ -41,7 +41,7 @@ ACEXML_SAXPrint_Handler::endDocument (ACEXML_Env &xmlenv)
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
 void
@@ -56,7 +56,7 @@ ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
   this->dec_indent ();
   this->print_indent ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("</%s>"),
+              ACE_TEXT ("</%s>"),
               qName));
 }
 
@@ -68,7 +68,7 @@ ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *prefix,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
+              ACE_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
               prefix));
 }
 
@@ -82,7 +82,7 @@ ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char *,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event ignorableWhitespace () ***************\n")));
+              ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
 void
@@ -95,7 +95,7 @@ ACEXML_SAXPrint_Handler::processingInstruction (const ACEXML_Char *target,
 
   this->print_indent ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("<?%s %s>\n"),
+              ACE_TEXT ("<?%s %s>\n"),
               target, data));
 }
 
@@ -106,7 +106,7 @@ ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator *,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event setDocumentLocator () ***************\n")));
+              ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
 
 void
@@ -117,7 +117,7 @@ ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event skippedEntity (%s) ***************\n"),
+              ACE_TEXT ("* Event skippedEntity (%s) ***************\n"),
               name));
 }
 
@@ -128,7 +128,7 @@ ACEXML_SAXPrint_Handler::startDocument (ACEXML_Env &xmlenv)
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event startDocument () ***************\n")));
+              ACE_TEXT ("* Event startDocument () ***************\n")));
 }
 
 void
@@ -143,16 +143,16 @@ ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
 
   this->print_indent ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("<%s"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<%s"),
               qName));
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT (" %s = \"%s\""),
+                    ACE_TEXT (" %s = \"%s\""),
                     alist->getQName (i), alist->getValue (i)));
       }
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (">")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (">")));
   this->inc_indent ();
 }
 
@@ -163,9 +163,9 @@ ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * prefix,
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event startPrefixMapping () ***************\n")));
+              ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
+              ACE_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
 
 }
 
@@ -236,7 +236,7 @@ ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException &,
 void
 ACEXML_SAXPrint_Handler::print_indent (void)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   for (size_t i = 0; i < this->indent_; ++i)
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("  ")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  ")));
 }

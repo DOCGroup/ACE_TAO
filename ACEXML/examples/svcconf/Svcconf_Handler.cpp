@@ -258,10 +258,10 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT (" %s = \"%s\""),
+                    ACE_TEXT (" %s = \"%s\""),
                     alist->getQName (i), alist->getValue (i)));
       }
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (">")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (">")));
 }
 
 void

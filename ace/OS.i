@@ -9747,6 +9747,53 @@ ACE_OS::fsetpos (FILE* fp, fpos_t* pos)
   ACE_OSCALL_RETURN (::fsetpos (fp, pos), int, -1);
 }
 
+ACE_INLINE int
+ACE_OS::feof (FILE* fp)
+{
+  ACE_OSCALL_RETURN (::feof (fp), int, -1);
+}
+
+ACE_INLINE int
+ACE_OS::ferror (FILE* fp)
+{
+  ACE_OSCALL_RETURN (::ferror (fp), int, -1);
+}
+
+ACE_INLINE int
+ACE_OS::fgetc (FILE* fp)
+{
+  ACE_OSCALL_RETURN (::fgetc (fp), int, -1);
+}
+
+ACE_INLINE void
+ACE_OS::clearerr (FILE* fp)
+{
+  ::clearerr(fp);
+}
+
+ACE_INLINE int
+ACE_OS::ungetc (int c, FILE* fp)
+{
+  ACE_OSCALL_RETURN (::ungetc (c, fp), int, -1);
+}
+
+
+#if defined (ACE_HAS_WCHAR)
+
+ACE_INLINE wint_t
+ACE_OS::fgetwc (FILE* fp)
+{
+  ACE_OSCALL_RETURN (::fgetwc (fp), wint_t, -1);
+}
+
+ACE_INLINE wint_t
+ACE_OS::ungetwc (wint_t c, FILE* fp)
+{
+  ACE_OSCALL_RETURN (::ungetwc (c, fp), wint_t, -1);
+}
+
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE pid_t
 ACE_OS::waitpid (pid_t pid,
                  ACE_exitcode *status,
