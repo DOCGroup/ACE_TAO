@@ -1,3 +1,9 @@
+Wed May 06 16:32:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Filecache.h (ACE_Filecache_Handle): Removed
+ 	  ACE_EXPORT_DECLARE and specified ACE_Export directly for
+ 	  ACE_Filecache_Handle and ACE_Filecache in calss declarations.
+
 Wed May  6 02:57:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,i,cpp}: A bug was found by Arturo Montes
