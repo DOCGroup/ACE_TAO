@@ -452,37 +452,40 @@ be_visitor_interface::visit_operation (be_operation *node)
     }
   delete visitor;
 
-  // #if defined (TAO_IDL_HAS_AMI)
-  // Generate AMI stub for this operation, if you are doing client 
-  // side header.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_INTERFACE_CH)
-    {
-      // AMI.
-      ctx.state (TAO_CodeGen::TAO_OPERATION_AMI);
-
-      // grab the appropriate visitor
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
+  // Is AMI enabled?
+  if (idl_global->ami_call_back () == I_TRUE)
+    {  
+      // Generate AMI stub for this operation, if you are doing client 
+      // side header.
+      
+      if (this->ctx_->state () == TAO_CodeGen::TAO_INTERFACE_CH)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface::"
-                             "visit_operation - "
-                             "NUL visitor\n"),
-                            -1);
+          // AMI.
+          ctx.state (TAO_CodeGen::TAO_OPERATION_AMI);
+          
+          // grab the appropriate visitor
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface::"
+                                 "visit_operation - "
+                                 "NUL visitor\n"),
+                                -1);
+            }
+          
+          // visit the node using this visitor
+          if (node->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface::"
+                                 "visit_operation - "
+                                 "failed to accept visitor\n"),
+                                -1);
+            }
+          delete visitor;
         }
-
-      // visit the node using this visitor
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface::"
-                             "visit_operation - "
-                             "failed to accept visitor\n"),
-                            -1);
-        }
-      delete visitor;
     }
-
   return 0;
 }
 

@@ -38,10 +38,7 @@
 #include "be_visitor_argument/compiled_marshal_cs.cpp"
 #include "be_visitor_argument/compiled_marshal_ss.cpp"
 #include "be_visitor_argument/pre_invoke_cs.cpp"
-
-// #if defined (TAO_IDL_HAS_AMI)
 #include "be_visitor_argument/arglist_ami.cpp"
-// #endif /* TAO_IDL_HAS_AMI */
 
 ACE_RCSID(be, be_visitor_argument, "$Id$")
 

@@ -232,7 +232,6 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
 #   endif /* IDL_HAS_VALUETYPE */
 
-// #if defined TAO_IDL_HAS_AMI
     case TAO_CodeGen::TAO_OPERATION_AMI:
       return new be_visitor_operation_ami (new_ctx);
 
@@ -251,8 +250,10 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_AMI_HANDLER_FWD_CH:
       return new be_visitor_ami_handler_fwd_ch (new_ctx);
-// #endif /* TAO_IDL_HAS_AMI */
       
+    case TAO_CodeGen::TAO_AMI_HANDLER_FWD_CI:
+      return new be_visitor_ami_handler_fwd_ci (new_ctx);
+
     case TAO_CodeGen::TAO_STRUCT_CH:
       return new be_visitor_structure_ch (new_ctx);
     case TAO_CodeGen::TAO_STRUCT_CS:

@@ -257,8 +257,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -320,8 +318,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -342,8 +340,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -405,8 +401,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -427,8 +423,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -490,8 +484,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -512,8 +506,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -575,8 +567,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -597,14 +589,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -618,8 +610,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -681,8 +671,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -707,8 +697,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -770,8 +758,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -792,8 +780,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -855,8 +841,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -884,8 +870,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -947,8 +931,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -970,8 +954,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1033,8 +1015,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1056,8 +1038,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1119,8 +1099,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1142,8 +1122,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1205,8 +1183,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1228,8 +1206,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1291,8 +1267,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1314,8 +1290,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1377,8 +1351,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1400,8 +1374,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1463,8 +1435,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1484,8 +1456,6 @@ tags:
  include/fe_declarator.h
 .obj/lex.yy.o .obj/lex.yy.so .shobj/lex.yy.o .shobj/lex.yy.so: fe/lex.yy.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1548,8 +1518,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1571,8 +1541,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1634,8 +1602,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1655,8 +1623,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1718,8 +1684,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1739,8 +1705,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1802,8 +1766,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1823,8 +1787,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1886,8 +1848,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1907,8 +1869,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1970,8 +1930,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -1991,8 +1951,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2054,8 +2012,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2075,8 +2033,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2138,8 +2094,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2159,8 +2115,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2222,8 +2176,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2243,8 +2197,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2306,8 +2258,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2327,8 +2279,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2390,8 +2340,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2411,8 +2361,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2474,8 +2422,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2495,8 +2443,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2558,8 +2504,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2579,8 +2525,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2642,8 +2586,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2663,8 +2607,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2726,8 +2668,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2747,8 +2689,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2810,8 +2750,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2831,8 +2771,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2894,8 +2832,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2915,8 +2853,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -2978,8 +2914,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -2999,8 +2935,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3062,8 +2996,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3083,8 +3017,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3146,8 +3078,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3167,8 +3099,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3230,8 +3160,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3251,8 +3181,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3314,8 +3242,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3335,8 +3263,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3398,8 +3324,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3419,8 +3345,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3482,8 +3406,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3503,8 +3427,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3566,8 +3488,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3587,8 +3509,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3650,8 +3570,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3671,8 +3591,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3734,8 +3652,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3755,8 +3673,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3818,8 +3734,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3839,8 +3755,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3902,8 +3816,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -3923,8 +3837,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3986,8 +3898,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4007,8 +3919,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4070,8 +3980,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4091,8 +4001,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4154,8 +4062,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4175,8 +4083,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4238,8 +4144,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4259,8 +4165,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4322,8 +4226,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4343,8 +4247,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4406,8 +4308,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4427,8 +4329,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4490,8 +4390,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4511,8 +4411,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4574,8 +4472,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4595,8 +4493,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4658,8 +4554,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4679,8 +4575,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4742,8 +4636,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4763,8 +4657,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4826,8 +4718,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4847,8 +4739,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4910,8 +4800,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -4931,8 +4821,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -4994,8 +4882,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5015,8 +4903,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5078,8 +4964,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5099,8 +4985,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5162,8 +5046,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5183,8 +5067,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5246,8 +5128,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5267,8 +5149,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5330,8 +5210,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5351,8 +5231,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5414,8 +5292,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5435,8 +5313,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5498,8 +5374,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5519,14 +5395,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -5540,8 +5416,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5603,8 +5477,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5624,14 +5498,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -5645,8 +5519,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5708,8 +5580,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5729,14 +5601,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -5750,8 +5622,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5813,8 +5683,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5834,14 +5704,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -5855,8 +5725,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5918,8 +5786,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -5939,14 +5807,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -5960,8 +5828,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6023,8 +5889,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6044,14 +5910,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6065,8 +5931,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6128,8 +5992,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6149,14 +6013,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6170,8 +6034,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6233,8 +6095,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6254,14 +6116,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6275,8 +6137,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6338,8 +6198,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6359,14 +6219,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6380,8 +6240,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6443,8 +6301,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6479,19 +6337,21 @@ tags:
  be_include/be_visitor_interface/cdr_op_ci.h \
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
- be_include/be_visitor_interface/tie_si.h be_include/be.h \
+ be_include/be_visitor_interface/tie_si.h \
+ be_include/be_visitor_interface/ami_handler_fwd_ch.h \
+ be_include/be_visitor_interface/ami_handler_fwd_ci.h be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6505,8 +6365,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6568,8 +6426,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6589,14 +6447,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6610,8 +6468,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6673,8 +6529,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6694,14 +6550,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6715,8 +6571,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6778,8 +6632,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6799,14 +6653,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6820,8 +6674,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6883,8 +6735,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -6904,14 +6756,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -6925,8 +6777,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -6988,8 +6838,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7009,14 +6859,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7030,8 +6880,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7093,8 +6941,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7114,14 +6962,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7135,8 +6983,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7198,8 +7044,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7219,14 +7065,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7240,8 +7086,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7303,8 +7147,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7324,14 +7168,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7345,8 +7189,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7408,8 +7250,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7429,14 +7271,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7462,8 +7304,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7525,8 +7365,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7546,14 +7386,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7567,8 +7407,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7630,8 +7468,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7651,14 +7489,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7672,8 +7510,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7735,8 +7571,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7756,14 +7592,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7777,8 +7613,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7840,8 +7674,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7861,14 +7695,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7882,8 +7716,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -7945,8 +7777,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -7966,14 +7798,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -7987,8 +7819,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8050,8 +7880,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8071,14 +7901,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8092,8 +7922,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8155,8 +7983,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8176,14 +8004,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8197,8 +8025,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8260,8 +8086,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8281,14 +8107,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8302,8 +8128,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8365,8 +8189,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8386,14 +8210,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8408,8 +8232,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8471,8 +8293,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8492,14 +8314,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8513,8 +8335,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8576,8 +8396,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8597,14 +8417,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8618,8 +8438,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8681,8 +8499,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8702,14 +8520,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8723,8 +8541,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8786,8 +8602,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8807,14 +8623,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8828,8 +8644,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8891,8 +8705,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -8912,14 +8726,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -8934,8 +8748,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -8997,8 +8809,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -9018,14 +8830,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -9039,8 +8851,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -9102,8 +8912,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -9123,14 +8933,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -9144,8 +8954,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -9207,8 +9015,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -9228,14 +9036,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -9250,8 +9058,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -9313,8 +9119,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -9334,14 +9140,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -9425,6 +9231,8 @@ tags:
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
+ be_include/be_visitor_interface/ami_handler_fwd_ch.h \
+ be_include/be_visitor_interface/ami_handler_fwd_ci.h \
  be_include/be_visitor_interface_fwd.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
@@ -9559,8 +9367,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -9622,8 +9428,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -9641,14 +9447,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -9662,8 +9468,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -9725,8 +9529,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -9744,14 +9548,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -9799,8 +9603,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -9862,8 +9664,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -9883,14 +9685,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -9917,8 +9719,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -9980,8 +9780,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10001,14 +9801,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10026,8 +9826,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10089,8 +9887,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10110,14 +9908,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10137,8 +9935,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10200,8 +9996,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10221,14 +10017,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10242,8 +10038,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10305,8 +10099,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10326,14 +10120,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10348,8 +10142,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10411,8 +10203,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10432,14 +10224,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10463,8 +10255,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10526,8 +10316,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10547,14 +10337,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10598,8 +10388,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10661,8 +10449,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10682,14 +10470,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10713,8 +10501,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10776,8 +10562,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10797,14 +10583,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10834,6 +10620,8 @@ tags:
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
+ be_include/be_visitor_interface/ami_handler_fwd_ch.h \
+ be_include/be_visitor_interface/ami_handler_fwd_ci.h \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
  be/be_visitor_interface/interface_ci.cpp \
@@ -10850,13 +10638,17 @@ tags:
  be/be_visitor_interface/any_op_cs.cpp \
  be/be_visitor_interface/cdr_op_ch.cpp \
  be/be_visitor_interface/cdr_op_ci.cpp \
- be/be_visitor_interface/cdr_op_cs.cpp
+ be/be_visitor_interface/cdr_op_cs.cpp \
+ be/be_visitor_interface/ami_handler_fwd_ch.cpp \
+ be_include/be_visitor_interface_fwd.h \
+ be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
+ be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
+ be_include/be_visitor_interface_fwd/cdr_op_ci.h \
+ be/be_visitor_interface/ami_handler_fwd_ci.cpp
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -10918,8 +10710,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -10939,14 +10731,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -10968,8 +10760,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11031,8 +10821,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -11052,14 +10842,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -11142,8 +10932,6 @@ tags:
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11205,8 +10993,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -11226,14 +11014,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -11252,8 +11040,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11315,8 +11101,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -11336,14 +11122,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -11367,8 +11153,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11430,8 +11214,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -11451,14 +11235,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -11552,8 +11336,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11615,8 +11397,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -11636,14 +11418,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -11674,8 +11456,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11737,8 +11517,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -11758,14 +11538,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -11780,8 +11560,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11843,8 +11621,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -11864,14 +11642,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -11925,8 +11703,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -11988,8 +11764,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -12009,14 +11785,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -12056,8 +11832,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -12119,8 +11893,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -12140,14 +11914,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -12167,8 +11941,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -12230,8 +12002,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -12251,14 +12023,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -12291,8 +12063,6 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -12354,8 +12124,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -12375,14 +12145,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \
@@ -12416,8 +12186,6 @@ tags:
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -12479,8 +12247,8 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
  include/ast_interface.h include/ast_interface_fwd.h \
  include/ast_structure.h include/ast_exception.h include/ast_enum.h \
@@ -12500,14 +12268,14 @@ tags:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
  be_include/be_union.h be_include/be_union_branch.h \
  be_include/be_union_label.h be_include/be_constant.h \

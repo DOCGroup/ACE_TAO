@@ -279,6 +279,9 @@ public:
     TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
     TAO_ARGUMENT_ARGLIST_AMI,              // Arg list in AMI stub.
     TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.           
+    TAO_AMI_HANDLER_FWD_CI,                // FWD decl for AMI handler.
+    // @ Alex: FWD does nt make sense.
+    //         Should rename it.
 
     // Emitting code for root.
     TAO_ROOT_CH,
