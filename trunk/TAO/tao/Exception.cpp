@@ -731,6 +731,15 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
+void \
+CORBA_##name ::_raise (void) \
+{ \
+  TAO_RAISE (*this); \
+}
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
 CORBA_##name :: CORBA_##name (void) \
   :  CORBA_SystemException (CORBA::_tc_ ## name, \
                             TAO_DEFAULT_MINOR_CODE, \

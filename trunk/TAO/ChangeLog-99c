@@ -1,3 +1,9 @@
+Tue Jun 15 16:42:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	  Added the _raise() method to the system exceptions
+
 Tue Jun 15 16:16:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_operation/collocated_ss.h:

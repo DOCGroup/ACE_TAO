@@ -212,6 +212,7 @@ public: \
     { } \
   static CORBA_##name * _narrow (CORBA_Exception* exception); \
   virtual int _is_a (const char* type_id) const; \
+  virtual void _raise (void); \
 }
 
 TAO_SYSTEM_EXCEPTION(UNKNOWN);
