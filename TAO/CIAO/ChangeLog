@@ -1,3 +1,11 @@
+Sun Sep 12 22:10:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantHeaderGenerator.cpp:
+	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Changes to the CIDL which uses the servant and port activators
+	  checked in now. 
+
 Mon Sep 13 03:00:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	To overcome the long standing problem in DAnCE, we are now making
