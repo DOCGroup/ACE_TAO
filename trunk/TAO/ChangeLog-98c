@@ -1,3 +1,9 @@
+Wed Aug 19 16:38:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosPropertyService.idl: 
+		Changed <exception PropertyException> to <struct
+		PropertyException>.
+
 Wed Aug 19 15:25:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* $ACE_wrappers/TAO/orbsvcs/tests/CosPropertyService/client.cpp: 
