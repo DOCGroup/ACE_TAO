@@ -934,15 +934,15 @@ be_interface::gen_operation_table (void)
         // Generate the skeleton for the is_a method.
         ss->indent ();
         *ss << "_is_a" << ", &"
-	    << this->full_skel_name ()
-	    << "::_is_a_skel\n";
+            << this->full_skel_name ()
+            << "::_is_a_skel\n";
         this->skel_count_++;
 
-	ss->indent ();
-	*ss << "_non_existent, &"
-	    << this->full_skel_name ()
-	    << "::_non_existent_skel\n";
-	this->skel_count_++;
+        ss->indent ();
+        *ss << "_non_existent, &"
+            << this->full_skel_name ()
+            << "::_non_existent_skel\n";
+        this->skel_count_++;
 
         // Input to the gperf is ready. Run gperf and get things done.
         gen_perfect_hash_optable ();
@@ -1432,9 +1432,11 @@ be_interface::cleanup_gperf_temp_file (void)
   // Codegen singleton.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
+#if !defined (linux)
   // Delete the stream ptr.
   TAO_OutStream *ss = cg->gperf_input_stream ();
   delete ss;
+#endif /* ! linux */
 
   // Delete the temp file.
   ACE_OS::unlink (cg->gperf_input_filename ());
