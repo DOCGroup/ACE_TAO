@@ -199,7 +199,9 @@ virtual void set_admin (
   supplier_admin_map_;
   //
 
-  auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
+  // ???? Pradeep: auto_ptr can't be used this way.
+  // auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
+  TAO_Notify_Dispatcher *dispatcher_;
   //
 
   CosNotifyFilter::FilterFactory_var filter_factory_;

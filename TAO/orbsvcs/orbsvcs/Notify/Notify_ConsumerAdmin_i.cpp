@@ -20,9 +20,11 @@ TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
 void
 TAO_Notify_ConsumerAdmin_i::init (CORBA::Environment &ACE_TRY_ENV)
 {
-  dispatcher_ =
-    auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::
-                                    create (ACE_TRY_ENV));
+  // ???? Pradeep: auto_ptr can't be used this way.
+  // dispatcher_ =
+  //  auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::
+  //                                  create (ACE_TRY_ENV));
+  dispatcher_ = TAO_Notify_Dispatcher::create (ACE_TRY_ENV);
   ACE_CHECK;
   dispatcher_->set_FilterAdmin (this);
 }
