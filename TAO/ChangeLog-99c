@@ -1,3 +1,7 @@
+Sat Jun 19 15:43:38 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/compiler.html: Updated documentation.
+
 Sat Jun 19 14:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynUnion_i_T.h:
@@ -81,7 +85,48 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* Native_Exceptions/server.dsp: Here the command line parameters
 	  where changed from '-Ge' to '-Ge 0'.
 
-	
+	* examples/Callback_Quoter/Consumer.dsp:
+	* examples/Callback_Quoter/Notifier.dsp:
+	* examples/Callback_Quoter/Supplier.dsp:
+	* examples/Event_Comm/Consumer.dsp:
+	* examples/Event_Comm/Notifier.dsp:
+	* examples/Event_Comm/Supplier.dsp:
+	* examples/OBV/Typed_Events/client.dsp:
+	* examples/OBV/Typed_Events/server.dsp:
+	* examples/POA/DSI/client.dsp:
+	* examples/POA/DSI/server.dsp:
+	* examples/POA/Default_Servant/client.dsp:
+	* examples/POA/Default_Servant/server.dsp:
+	* examples/POA/Forwarding/server.dsp:
+	* examples/POA/Forwarding/client.dsp:
+	* examples/POA/Generic_Servant/client.dsp:
+	* examples/POA/Generic_Servant/server.dsp:
+	* examples/POA/Identity/Identity.dsp:
+	* examples/POA/TIE/client.dsp:
+	* examples/POA/TIE/server.dsp:
+	* examples/Quoter/Factory_Finder.dsp:
+	* examples/Quoter/Generic_Factory.dsp:
+	* examples/Quoter/client.dsp:
+	* examples/Quoter/server.dsp:
+	* examples/Simple/bank/client.dsp:
+	* examples/Simple/bank/server.dsp:
+	* examples/Simple/chat/client.dsp:
+	* examples/Simple/chat/server.dsp:
+	* examples/Simple/echo/server.dsp:
+	* examples/Simple/echo/client.dsp:
+	* examples/Simple/grid/client.dsp:
+	* examples/Simple/grid/server.dsp:
+	* examples/Simple/time/client.dsp:
+	* examples/Simple/time/server.dsp:
+	* examples/Simple/time-date/Time_Date.dsp:
+	* examples//Simulator/DOVEMIB/DOVEMIBx.dsp 
+	* examples//Simulator/DOVEMIB/TestClient.dsp:
+	* examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
+	* examples/Simulator/Event_Supplier/Event_Sup.dsp:
+	* examples/Simulator/Event_Supplier/Logging_Sup.dsp:Changed the tao_idl
+	  invocation parameter in all these NT related project files.  The
+	  command line parameter is set to '-Ge 1'.
+
 Fri Jun 18 21:00:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
