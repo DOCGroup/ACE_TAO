@@ -17,7 +17,6 @@ Mon Aug 23 21:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Added XSCRT 0.0.4 into the repository to compile the handlers. 
 
-
 Mon Aug 23 21:32:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/TypeNameEmitter.cpp:
