@@ -178,7 +178,6 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
             {
               any->any_owns_data_ = 1;
               any->value_ = 0;
-              elem_tc->_incr_refcnt ();
               any->type_ = elem_tc;
               // now skip the value
               //      retval = stream->skip (elem_tc, env);
@@ -694,7 +693,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       // the corba proxy would have already incremented the reference count on
       // the objdata. So we decrement it here by 1 so that the objdata is now
       // fully owned by the corba_proxy that was created.
-      objdata->_decr_refcnt ();
+      // objdata->_decr_refcnt ();
     }
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_decoding == CORBA::B_TRUE)

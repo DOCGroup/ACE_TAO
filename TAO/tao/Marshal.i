@@ -163,7 +163,8 @@ TAO_Marshal_Any::deep_copy (CORBA::TypeCode_ptr,
 			    const void *dest,
 			    CORBA::Environment &)
 {
-  (void) new (dest) CORBA::Any (*(CORBA::Any *) source);
+  void* target = ACE_const_cast(void*,dest);
+  (void) new (target) CORBA::Any (*(CORBA::Any *) source);
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
@@ -174,12 +175,12 @@ TAO_Marshal_TypeCode::deep_copy (CORBA::TypeCode_ptr,
 				 const void *dest,
 				 CORBA::Environment &)
 {
-  if ((*(CORBA::TypeCode_ptr *) source) != 0)
-    dest = source;
+  CORBA::TypeCode_ptr src = *(CORBA::TypeCode_ptr *) source;
+  if (!CORBA::is_nil (src))
+    dest = CORBA::TypeCode::_duplicate (src);
   else
-    dest = CORBA::_tc_null;
+    dest = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
 
-  ((CORBA::TypeCode_ptr) dest)->_incr_refcnt ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
@@ -237,8 +238,7 @@ TAO_Marshal_TypeCode::deep_free (CORBA::TypeCode_ptr,
                                  const void *,
                                  CORBA::Environment &)
 {
-  if ((*(CORBA::TypeCode_ptr *) source) != 0)
-    (*(CORBA::TypeCode_ptr *) source)->_decr_refcnt ();
+  CORBA::release (*(CORBA::TypeCode_ptr *) source);
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 

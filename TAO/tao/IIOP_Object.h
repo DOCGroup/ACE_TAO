@@ -250,10 +250,10 @@ private:
   ACE_Lock* fwd_profile_lock_ptr_;
   // Mutex to protect access to the forwarding profile
   
-  ACE_SYNCH_MUTEX IUnknown_lock_;
-  // Mutex to protect <IUnknown>-related stuff.
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Mutex to protect reference count
 
-  u_int refcount_;
+  CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
   CORBA::Boolean use_locate_request_;

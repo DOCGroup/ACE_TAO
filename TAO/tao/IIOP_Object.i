@@ -46,7 +46,7 @@ ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id)
   : STUB_Object (repository_id),
     fwd_profile_ (0),
-    refcount_ (0),
+    refcount_ (1),
     use_locate_request_ (CORBA::B_FALSE),
     first_locate_request_ (CORBA::B_FALSE)
 {
@@ -61,7 +61,7 @@ IIOP_Object::IIOP_Object (char *repository_id,
   : STUB_Object (repository_id),
     profile (a_profile),
     fwd_profile_ (0),
-    refcount_ (0),
+    refcount_ (1),
     use_locate_request_ (CORBA::B_FALSE),
     first_locate_request_ (CORBA::B_FALSE)
 {

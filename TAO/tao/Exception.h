@@ -76,6 +76,12 @@ protected:
 private:
   CORBA::ULong refcount_;
   // Reference count to avoid copying overhead.
+
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Mutex to protect the reference count; though in most cases this
+  // class is used only in one thread adding a mutex here is *not*
+  // expensive, because uses of this class are never on the critical
+  // path.
 };
 
 class TAO_Export CORBA_UserException : public CORBA_Exception

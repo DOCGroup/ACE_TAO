@@ -428,83 +428,83 @@ TAO_TypeCodes::fini (void)
   // Initialize all the standard typecodes owned by the ORB
 
   // Null and void
-  delete CORBA::_tc_null;
+  CORBA::release (CORBA::_tc_null);
 
-  delete CORBA::_tc_void;
+  CORBA::release (CORBA::_tc_void);
 
   // Basic numeric types:  short, long, longlong, and unsigned variants
-  delete CORBA::_tc_short;
+  CORBA::release (CORBA::_tc_short);
 
-  delete CORBA::_tc_long;
+  CORBA::release (CORBA::_tc_long);
 
-  delete CORBA::_tc_longlong;
+  CORBA::release (CORBA::_tc_longlong);
 
-  delete CORBA::_tc_ushort;
+  CORBA::release (CORBA::_tc_ushort);
 
-  delete CORBA::_tc_ulong;
+  CORBA::release (CORBA::_tc_ulong);
 
-  delete CORBA::_tc_ulonglong;
+  CORBA::release (CORBA::_tc_ulonglong);
 
   // Floating point types: single, double, quad precision
-  delete CORBA::_tc_float;
+  CORBA::release (CORBA::_tc_float);
 
-  delete CORBA::_tc_double;
+  CORBA::release (CORBA::_tc_double);
 
-  delete CORBA::_tc_longdouble;
+  CORBA::release (CORBA::_tc_longdouble);
 
   // Various simple quantities.
-  delete CORBA::_tc_boolean;
+  CORBA::release (CORBA::_tc_boolean);
 
-  delete CORBA::_tc_octet;
+  CORBA::release (CORBA::_tc_octet);
 
   // Internationalization-related data types: ISO Latin/1 and "wide"
   // characters, and strings of each.  "wchar" is probably Unicode 1.1,
   // "wstring" being null-terminated sets thereof.
-  delete CORBA::_tc_char;
+  CORBA::release (CORBA::_tc_char);
 
-  delete CORBA::_tc_wchar;
+  CORBA::release (CORBA::_tc_wchar);
 
   // a string/wstring have a simple parameter list that indicates the length
-  delete CORBA::_tc_string;
+  CORBA::release (CORBA::_tc_string);
 
-  delete CORBA::_tc_wstring;
+  CORBA::release (CORBA::_tc_wstring);
 
   //
   // Various things that can be passed as "general" parameters:
   // Any, TypeCode_ptr, Principal_ptr, Object_ptr
   //
-  delete CORBA::_tc_any;
+  CORBA::release (CORBA::_tc_any);
 
-  delete CORBA::_tc_TypeCode;
+  CORBA::release (CORBA::_tc_TypeCode);
 
-  delete CORBA::_tc_Principal;
+  CORBA::release (CORBA::_tc_Principal);
 
   // typecode for objref is complex, has two string parameters
   //
-  delete CORBA::_tc_Object;
+  CORBA::release (CORBA::_tc_Object);
 
   // other ORB owned typecodes
-  delete CORBA::_tc_Bounds;
+  CORBA::release (CORBA::_tc_Bounds);
 
-  delete CORBA::_tc_BadKind;
+  CORBA::release (CORBA::_tc_BadKind);
 
   // additional typecodes in the CORBA namespace
-  delete CORBA::_tc_Policy;
+  CORBA::release (CORBA::_tc_Policy);
 
-  delete CORBA::_tc_PolicyList;
+  CORBA::release (CORBA::_tc_PolicyList);
 
-  delete CORBA::_tc_Current;
+  CORBA::release (CORBA::_tc_Current);
 
-  delete CORBA::_tc_Identifier;
+  CORBA::release (CORBA::_tc_Identifier);
 
-  delete CORBA::_tc_RepositoryId;
+  CORBA::release (CORBA::_tc_RepositoryId);
 
-  delete CORBA::_tc_PolicyType;
+  CORBA::release (CORBA::_tc_PolicyType);
 
   // TAO specific
-  delete TC_opaque;
+  CORBA::release (TC_opaque);
 
-  delete TC_ServiceContextList;
+  CORBA::release (TC_ServiceContextList);
 
-  delete TC_completion_status;
+  CORBA::release (TC_completion_status);
 }

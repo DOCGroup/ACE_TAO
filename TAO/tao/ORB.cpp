@@ -176,22 +176,6 @@ CORBA_ORB::shutdown (CORBA::Boolean /* wait_for_completion */)
   return;
 }
 
-CORBA::ULong
-CORBA_ORB::_decr_refcnt (void)
-{
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
-
-    ACE_ASSERT (this != 0);
-
-    if (--refcount_ != 0)
-      return this->refcount_;
-  }
-
-  delete this;
-  return 0;
-}
-
 void
 CORBA_ORB::create_list (CORBA::Long count,
                         CORBA::NVList_ptr &retval)

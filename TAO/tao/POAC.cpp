@@ -183,7 +183,9 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
     return PortableServer::ThreadPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::ThreadPolicy_ptr new_obj = new PortableServer::ThreadPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
+      PortableServer::ThreadPolicy_ptr new_obj = new PortableServer::ThreadPolicy(stub);
       return new_obj;
     } // end of if
 
@@ -267,7 +269,9 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
     return PortableServer::LifespanPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::LifespanPolicy_ptr new_obj = new PortableServer::LifespanPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
+      PortableServer::LifespanPolicy_ptr new_obj = new PortableServer::LifespanPolicy (stub);
       return new_obj;
     } // end of if
 
@@ -350,7 +354,9 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
     return PortableServer::IdUniquenessPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::IdUniquenessPolicy_ptr new_obj = new PortableServer::IdUniquenessPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
+      PortableServer::IdUniquenessPolicy_ptr new_obj = new PortableServer::IdUniquenessPolicy (stub);
       return new_obj;
     } // end of if
 
@@ -433,7 +439,9 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
     return PortableServer::IdAssignmentPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::IdAssignmentPolicy_ptr new_obj = new PortableServer::IdAssignmentPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
+      PortableServer::IdAssignmentPolicy_ptr new_obj = new PortableServer::IdAssignmentPolicy (stub);
       return new_obj;
     } // end of if
 
@@ -516,7 +524,9 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
     return PortableServer::ImplicitActivationPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::ImplicitActivationPolicy_ptr new_obj = new PortableServer::ImplicitActivationPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
+      PortableServer::ImplicitActivationPolicy_ptr new_obj = new PortableServer::ImplicitActivationPolicy (stub);
       return new_obj;
     } // end of if
 
@@ -599,7 +609,9 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
     return PortableServer::ServantRetentionPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::ServantRetentionPolicy_ptr new_obj = new PortableServer::ServantRetentionPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
+      PortableServer::ServantRetentionPolicy_ptr new_obj = new PortableServer::ServantRetentionPolicy (stub);
       return new_obj;
     } // end of if
 
@@ -683,8 +695,10 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
     return PortableServer::RequestProcessingPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
       PortableServer::RequestProcessingPolicy_ptr
-        new_obj = new PortableServer::RequestProcessingPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+        new_obj = new PortableServer::RequestProcessingPolicy (stub);
       return new_obj;
     } // end of if
 
@@ -773,8 +787,10 @@ PortableServer::SynchronizationPolicy_ptr PortableServer::SynchronizationPolicy:
     return PortableServer::SynchronizationPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
       PortableServer::SynchronizationPolicy_ptr
-        new_obj = new PortableServer::SynchronizationPolicy (obj->_stubobj ()); // construct obj ref using the stub object
+        new_obj = new PortableServer::SynchronizationPolicy (stub);
       return new_obj;
     } // end of if
 
@@ -2229,8 +2245,9 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
     return PortableServer::Current::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::Current_ptr
-        new_obj = new PortableServer::Current (obj->_stubobj ()); // construct obj ref using the stub object
+      STUB_Object *stub = obj->_stubobj ();
+      stub->_incr_refcnt ();
+      PortableServer::Current_ptr new_obj = new PortableServer::Current(stub);
       return new_obj;
     } // end of if
 

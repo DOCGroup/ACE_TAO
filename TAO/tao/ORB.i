@@ -155,13 +155,6 @@ CORBA::wstring_dup (const WChar *const str)
 
 // CORBA dup/release build on top of COM's (why not).
 
-ACE_INLINE void
-CORBA::release (CORBA::ORB_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
-}
-
 // ---------------------------------------------------------------------------
 //  ORB specific
 // ---------------------------------------------------------------------------
@@ -169,9 +162,22 @@ CORBA::release (CORBA::ORB_ptr obj)
 ACE_INLINE CORBA::ULong
 CORBA_ORB::_incr_refcnt (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0);
+  return ++this->refcount_;
+}
 
-  return refcount_++;
+ACE_INLINE CORBA::ULong
+CORBA_ORB::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  delete this;
+  return 0;
 }
 
 ACE_INLINE CORBA::ORB_ptr
@@ -180,6 +186,13 @@ CORBA_ORB::_duplicate (CORBA::ORB_ptr obj)
   if (obj)
     obj->_incr_refcnt ();
   return obj;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::ORB_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
 }
 
 // Null pointers represent nil objects.
@@ -193,7 +206,7 @@ CORBA_ORB::_nil (void)
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::ORB_ptr obj)
 {
-  return (CORBA::Boolean) (obj == 0);
+  return obj == 0;
 }
 
 ACE_INLINE CORBA::Boolean

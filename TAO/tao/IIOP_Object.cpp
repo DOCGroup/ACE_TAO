@@ -308,20 +308,18 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
 CORBA::ULong
 IIOP_Object::_incr_refcnt (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->IUnknown_lock_, 0));
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
 
-  return ++this->refcount_;
+  return this->refcount_++;
 }
 
 CORBA::ULong
 IIOP_Object::_decr_refcnt (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->IUnknown_lock_, 0));
-
-    ACE_ASSERT (this != 0);
-
-    if (--this->refcount_ > 0)
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
       return this->refcount_;
   }
 
@@ -720,18 +718,15 @@ IIOP_Object::do_dynamic_call (const char *opname,
 
                   if (!(flags & CORBA::OUT_LIST_MEMORY))
                     {
-                      CORBA::TypeCode_ptr tcp;
-                      size_t size;
-
-                      tcp = result->value ()->type ();
-                      size = tcp->size (env);
+                      CORBA::TypeCode_ptr tcp =
+			CORBA::TypeCode::_duplicate (result->value ()->type ());
+                      size_t size = tcp->size (env);
                       dexc (env, "do_dynamic_call, get result size");
 
                       if (size != 0)
                         {
                           void *ptr = new CORBA::Octet [size];
 
-                          tcp->_incr_refcnt ();
                           result->value ()->replace (tcp, ptr,
                                                      CORBA::B_TRUE, env);
                           dexc (env, "do_dynamic_call, set result mem");
@@ -792,18 +787,15 @@ IIOP_Object::do_dynamic_call (const char *opname,
                       // memory for this parameter ...
                       if (!(flags & CORBA::OUT_LIST_MEMORY))
                         {
-                          CORBA::TypeCode_ptr tcp;
-                          size_t size;
-
-                          tcp = value->value ()->type ();
-                          size = tcp->size (env);
+                          CORBA::TypeCode_ptr tcp =
+			    CORBA::TypeCode::_duplicate (value->value ()->type ());
+                          size_t size = tcp->size (env);
                           dexc (env, "do_dynamic_call, get param size");
 
                           if (size != 0)
                             {
                               CORBA::Octet *ptr = new CORBA::Octet [size];
 
-                              tcp->_incr_refcnt ();
                               value->value ()->replace (tcp, ptr,
                                                         CORBA::B_TRUE, env);
                               dexc (env, "do_dynamic_call, set result mem");
