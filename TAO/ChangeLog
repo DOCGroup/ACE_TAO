@@ -1,3 +1,9 @@
+Tue Aug 24 20:33:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/RTCORBA/RTMutex/server.cpp:
+
+	  Changed test_mutex_try_lock to unlock mutex before releasing it.
+
 Tue Aug 24 16:09:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * docs/releasenotes/OBV.html:
