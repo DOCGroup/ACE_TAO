@@ -223,14 +223,6 @@ EXIT_LABEL:
 
 // ************************************************************
 
-ACE_ALLOC_HOOK_DEFINE(ACE_CString)
-
-char ACE_CString::NULL_CString_ = '\0';
-ACE_WSTRING_TYPE ACE_WString::NULL_WString_ = '\0';
-const int ACE_CString::npos = -1;
-const int ACE_SString::npos = -1;
-const int ACE_WString::npos = -1;
-
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ostream &
 operator<< (ostream &os, const ACE_CString &cs)
@@ -260,182 +252,9 @@ operator<< (ostream &os, const ACE_SString &ss)
 }
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 
-// Constructor that copies <s> into dynamically allocated memory.
-// Probable loss of data. Please use with care.
-
-ACE_CString::ACE_CString (const ACE_WSTRING_TYPE *s,
-                          ACE_Allocator *alloc)
-  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
-    len_ (0),
-    buf_len_ (0),
-    rep_ (0),
-    release_ (0)
-{
-  ACE_TRACE ("ACE_CString::ACE_CString");
-
-  if (s == 0 || s[0] == (ACE_WSTRING_TYPE) '\0')
-    {
-      this->release_ = 0;
-      this->len_ = 0;
-      this->rep_ = &ACE_CString::NULL_CString_;
-    }
-  else
-    {
-      this->release_ = 1;
-
-      size_t len = ACE_WString::strlen (s);
-      ACE_ALLOCATOR (this->rep_,
-                     (char *) this->allocator_->malloc (len + 1));
-      this->len_ = len;
-      this->buf_len_ = len + 1;
-
-      // Copy the ACE_WSTRING_TYPE * string byte-by-byte into the char *
-      // string.
-      for (size_t i = 0; i < this->len_; i++)
-        this->rep_[i] = char (s[i]);
-
-      this->rep_[this->len_] = '\0';
-    }
-}
-
-// this method might benefit from a little restructuring.
-void
-ACE_CString::set (const char *s,
-                  size_t len,
-                  int release)
-{
-  // Case 1. Going from memory to more memory
-  size_t new_buf_len = len + 1;
-  if (s != 0 && len != 0 && release && this->buf_len_ < new_buf_len)
-    {
-      char *temp;
-      ACE_ALLOCATOR (temp,
-                     (char *) this->allocator_->malloc (new_buf_len));
-
-      if (this->release_)
-        this->allocator_->free (this->rep_);
-
-      this->rep_ = temp;
-      this->buf_len_ = new_buf_len;
-      this->release_ = 1;
-      this->len_ = len;
-      ACE_OS::memcpy (this->rep_, s, len);
-      // NUL terminate.
-      this->rep_[len] = '\0';
-    }
-
-  // Case 2. No memory allocation is necessary.
-  else
-    {
-      // Free memory if necessary and figure out future ownership
-      if (!release || s == 0 || len == 0)
-        if (this->release_)
-          {
-            this->allocator_->free (this->rep_);
-            this->release_ = 0;
-          }
-      // else - stay with whatever value for release_ we have.
-
-      // Populate data.
-      if (s == 0 || len == 0)
-        {
-          this->buf_len_ = 0;
-          this->len_ = 0;
-          this->rep_ = &ACE_CString::NULL_CString_;
-        }
-      else if (!release)
-        {
-          this->buf_len_ = len;
-          this->len_ = len;
-          this->rep_ = (char *) s;
-        }
-      else
-        {
-          ACE_OS::memcpy (this->rep_, s, len);
-          // NUL terminate.
-          this->rep_[len] = 0;
-          this->len_ = len;
-        }
-    }
-}
-
-// Return substring.
-ACE_CString
-ACE_CString::substring (size_t offset,
-                        ssize_t length) const
-{
-  ACE_CString nil;
-  size_t count = length;
-
-  // case 1. empty string
-  if (this->len_ == 0)
-    return nil;
-
-  // case 2. start pos past our end
-  if (offset >= this->len_)
-    return nil;
-  // No length == empty string.
-  else if (length == 0)
-    return nil;
-  // Get all remaining bytes.
-  else if (length == -1 || count > (this->len_ - offset))
-    count = this->len_ - offset;
-
-  return ACE_CString (&this->rep_[offset],
-                      count,
-                      this->allocator_);
-}
-
-// Concat operator (does copy memory).
-
-ACE_CString &
-ACE_CString::operator+= (const ACE_CString &s)
-{
-  ACE_TRACE ("ACE_CString::operator+=");
-
-  if (s.len_ > 0)
-    {
-      size_t new_buf_len = this->len_ + s.len_ + 1;
-
-      // case 1. No memory allocation needed.
-      if (this->buf_len_ >= new_buf_len)
-        // Copy in data from new string.
-        ACE_OS::memcpy (this->rep_ + this->len_,
-                        s.rep_,
-                        s.len_);
-
-      // case 2. Memory reallocation is needed
-      else
-        {
-          char *t = 0;
-
-          ACE_ALLOCATOR_RETURN (t,
-                                (char *) this->allocator_->malloc (new_buf_len),
-                                *this);
-
-          // Copy memory from old string into new string.
-          ACE_OS::memcpy (t,
-                          this->rep_,
-                          this->len_);
-
-          ACE_OS::memcpy (t + this->len_,
-                          s.rep_,
-                          s.len_);
-
-          if (this->release_)
-            this->allocator_->free (this->rep_);
-
-          this->release_ = 1;
-          this->rep_ = t;
-          this->buf_len_ = new_buf_len;
-        }
-
-      this->len_ += s.len_;
-      this->rep_[this->len_] = '\0';
-    }
-
-  return *this;
-}
+ACE_WSTRING_TYPE ACE_WString::NULL_WString_ = '\0';
+const int ACE_SString::npos = -1;
+const int ACE_WString::npos = -1;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SString)
 
@@ -1052,11 +871,11 @@ ACE_WString::check_allocate (size_t len)
         {
           ACE_WSTRING_TYPE *t = (ACE_WSTRING_TYPE *)
             this->allocator_->malloc ((tempbuflen) * sizeof (ACE_WSTRING_TYPE));
- 
+
           ACE_OS::memcpy ((void *) t,
                           (const void *) this->rep_,
                           this->len_ * sizeof (ACE_WSTRING_TYPE));
- 
+
           this->allocator_->free (this->rep_);
           this->rep_ = t;
         }

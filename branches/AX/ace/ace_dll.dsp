@@ -1910,6 +1910,10 @@ SOURCE=.\streams.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\String_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SV_Message.h
 # End Source File
 # Begin Source File
@@ -2823,6 +2827,10 @@ SOURCE=.\Stream.i
 # Begin Source File
 
 SOURCE=.\Stream_Modules.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\String_Base.i
 # End Source File
 # Begin Source File
 

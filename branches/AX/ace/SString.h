@@ -14,7 +14,7 @@
 #define ACE_SSTRING_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/String_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,188 +30,10 @@ typedef ACE_USHORT16 ACE_WSTRING_TYPE;
 #define ACE_DEFAULT_GROWSIZE 32
 #endif /* ACE_DEFAULT_GROWSIZE */
 
-// Forward decl.
-class ACE_Allocator;
+typedef ACE_String_Base<char> ACE_CString;
 
-/**
- * @class ACE_CString
- *
- * @brief This class provides a wrapper facade for C strings.
- *
- * This class uses an <ACE_Allocator> to allocate memory.  The
- * user can make this a persistant class by providing an
- * ACE_Allocator with a persistable memory pool.  This class is
- * optimized for efficiency, so it doesn't provide any internal
- * locking.
- * NOTE: if an instance of this class is constructed from or
- * assigned an empty string (with first element of '\0'), then it
- * is _not_ allocated new space.  Instead, its internal
- * representation is set equal to a global empty string.
- * CAUTION: in cases when ACE_CString is constructed from a
- * provided buffer with the release parameter set to 0,
- * ACE_CString is not guaranteed to be '\0' terminated.
- */
-class ACE_Export ACE_CString
-{
-public:
-  /// No position constant
-  static const int npos;
-
-  /// Default constructor.
-  ACE_CString (ACE_Allocator *alloc = 0);
-
-  /**
-   * Constructor that copies <s> into dynamically allocated memory.
-   * If <release> is non-0 then the <ACE_allocator> is responsible for
-   * freeing this memory. Memory is _not_ allocated/freed if <release>
-   * is 0.
-   */
-  ACE_CString (const char *s,
-               ACE_Allocator *alloc = 0,
-               int release = 1);
-
-  /**
-   * Constructor that copies <len> chars of <s> into dynamically
-   * allocated memory (will NUL terminate the result).  If <release>
-   * is non-0 then the <ACE_allocator> is responsible for freeing this
-   * memory.  Memory is _not_ allocated/freed if <release> is 0.
-   */
-  ACE_CString (const char *s,
-               size_t len,
-               ACE_Allocator *alloc = 0,
-               int release = 1);
-
-  /// Copy constructor.
-  ACE_CString (const ACE_CString &);
-
-  /// Constructor that copies <s> into dynamically allocated memory.
-  /// Probable loss of data. Please use with care.
-  ACE_CString (const ACE_WSTRING_TYPE *s,
-               ACE_Allocator *alloc = 0);
-
-  /// Constructor that copies <c> into dynamically allocated memory.
-  ACE_CString (char c, ACE_Allocator *alloc = 0);
-
-  /// Deletes the memory...
-  ~ACE_CString (void);
-
-  /// Return the <slot'th> character in the string (doesn't perform
-  /// bounds checking).
-  const char &operator [] (size_t slot) const;
-
-  /// Return the <slot'th> character by reference in the string
-  /// (doesn't perform bounds checking).
-  char &operator [] (size_t slot);
-
-  /// Assignment operator (does copy memory).
-  ACE_CString &operator = (const ACE_CString &);
-
-  /// Copy <s> into this <ACE_CString>.  Memory is _not_
-  /// allocated/freed if <release> is 0.
-  void set (const char *s, int release = 1);
-
-  /// Copy <len> bytes of <s> (will NUL terminate the result).
-  /// Memory is _not_ allocated/freed if <release> is 0.
-  void set (const char *s,
-            size_t len,
-            int release);
-
-  /**
-   * Return a substring given an offset and length, if length == -1
-   * use rest of str.  Return empty substring if offset or
-   * offset/length are invalid.
-   */
-  ACE_CString substring (size_t offset, ssize_t length = -1) const;
-
-  /// Same as <substring>.
-  ACE_CString substr (size_t offset, ssize_t length = -1) const;
-
-  /// Concat operator (copies memory).
-  ACE_CString &operator += (const ACE_CString &);
-
-  /// Returns a hash value for this string.
-  u_long hash (void) const;
-
-  /// Return the length of the string.
-  size_t length (void) const;
-
-  /// Get a copy of the underlying pointer.
-  char *rep (void) const;
-
-  /**
-   * Get at the underlying representation directly!
-   * _Don't_ even think about casting the result to (char *) and modifying it,
-   * if it has length 0!
-   */
-  const char *fast_rep (void) const;
-
-  /// Same as STL String's <c_str> and <fast_rep>.
-  const char *c_str (void) const;
-
-  /// Comparison operator that will match substrings.  Returns the
-  /// slot of the first location that matches, else -1.
-  int strstr (const ACE_CString &s) const;
-
-  /// Find <str> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
-  int find (const ACE_CString &str, int pos = 0) const;
-
-  /// Find <s> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
-  int find (const char *s, int pos = 0) const;
-
-  /// Find <c> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
-  int find (char c, int pos = 0) const;
-
-  /// Find <c> starting at pos (counting from the end).  Returns the
-  /// slot of the first location that matches, else npos.
-  int rfind (char c, int pos = npos) const;
-
-  /// Equality comparison operator (must match entire string).
-  int operator == (const ACE_CString &s) const;
-
-  /// Less than comparison operator.
-  int operator < (const ACE_CString &s) const;
-
-  /// Greater than comparison operator.
-  int operator > (const ACE_CString &s) const;
-
-  /// Inequality comparison operator.
-  int operator != (const ACE_CString &s) const;
-
-  /// Performs a <strcmp>-style comparison.
-  int compare (const ACE_CString &s) const;
-
-  /// Dump the state of an object.
-  void dump (void) const;
-
-  /// Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-
-private:
-  /// Pointer to a memory allocator.
-  ACE_Allocator *allocator_;
-
-  /// Length of the ACE_CString data (not counting the trailing '\0').
-  size_t len_;
-
-  /// Length of the ACE_CString data buffer.  Keeping track of the
-  /// length allows to avoid unnecessary dynamic allocations.
-  size_t buf_len_;
-
-  /// Pointer to data.
-  char *rep_;
-
-  /// Flag that indicates if we own the memory
-  int release_;
-
-  /// Represents the "NULL" string to simplify the internal logic.
-  static char NULL_CString_;
-};
-
-ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &,
-                                              const ACE_CString &);
+template ACE_CString operator + (const ACE_CString &,
+                                 const ACE_CString &);
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_CString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
@@ -560,9 +382,9 @@ ACE_Export ostream &operator << (ostream &, const ACE_SString &);
 // This allows one to use W or C String based on the Unicode
 // setting
 #if defined (ACE_USES_WCHAR)
-# define ACE_TString ACE_WString
+typedef ACE_WString ACE_TString;
 #else /* ACE_USES_WCHAR */
-# define ACE_TString ACE_CString
+typedef ACE_CString ACE_TString;
 #endif /* ACE_USES_WCHAR */
 
 
