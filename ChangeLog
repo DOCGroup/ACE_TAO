@@ -16,8 +16,8 @@ Thu Feb 10 10:18:00 2000  Ossama Othman  <ossama@uci.edu>
 	  (ace_cv_feature_cxx_std_template_specialization):
 
 	  It appears that this variable had to be quoted when testing if
-	  it was set to "yes."  Thanks again to Markus and Robert for
-	  providing a patch.
+	  it was set to "yes" on AIX.  Thanks again to Markus and Robert
+	  for providing a patch.
 
 Wed Feb 09 00:41:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
