@@ -1,3 +1,16 @@
+Mon Oct 14 20:19:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ChangeLog: Removed a large chunk of duplicated dates from Oct 11
+          back to July.
+
+        * ace/OS.{h i}: Removed the owning_thread_ member from
+          ACE_recursive_mutex_state on Windows. This isn't needed since the
+          OS mutex restores the owner properly - it was in to do a sanity
+          check ACE_ASSERT, but can't do that from ACE_OS.
+
+        * ace/WFMO_Reactor.h: Expanded and clarified the class comments
+          to resolve Bugzilla #772.
+
 Mon Oct 14 17:23:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/CDR_Base.cpp (consolidate): Reverted the optimization
