@@ -513,8 +513,8 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
         ACE_ERROR((LM_INFO,
           "%s: Unregister_factory_by_location: Removing: [%d] %s@%s\n",
           this->identity_.c_str(),
-          ACE_static_cast (int, nInfo), 
-          role.c_str(), 
+          ACE_static_cast (int, nInfo),
+          role.c_str(),
           ACE_static_cast (const char *, location[0].id)
           ));
         found = 1;
@@ -691,30 +691,30 @@ int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class ACE_Hash_Map_Manager <
-    ACE_CString, 
-    TAO::PG_FactoryRegistry::RoleInfo *, 
+    ACE_CString,
+    TAO::PG_FactoryRegistry::RoleInfo *,
     TAO::PG_FactoryRegistry::MapMutex>;
   template class ACE_Hash_Map_Entry <
-    ACE_CString, 
+    ACE_CString,
     TAO::PG_FactoryRegistry::RoleInfo *>;
   template class ACE_Hash_Map_Iterator <
-    ACE_CString, 
-    TAO::PG_FactoryRegistry::RoleInfo *, 
+    ACE_CString,
+    TAO::PG_FactoryRegistry::RoleInfo *,
     TAO::PG_FactoryRegistry::MapMutex>;
   template class ACE_Vector<ACE_CString>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate ACE_Hash_Map_Manager <
-    ACE_CString, 
-    TAO::PG_FactoryRegistry::RoleInfo *, 
+    ACE_CString,
+    TAO::PG_FactoryRegistry::RoleInfo *,
     TAO::PG_FactoryRegistry::MapMutex>
 # pragma instantiate ACE_Hash_Map_Entry <
-    ACE_CString, 
+    ACE_CString,
     TAO::PG_FactoryRegistry::RoleInfo *>
 # pragma instantiate ACE_Hash_Map_Iterator <
-    ACE_CString, 
-    TAO::PG_FactoryRegistry::RoleInfo *, 
+    ACE_CString,
+    TAO::PG_FactoryRegistry::RoleInfo *,
     TAO::PG_FactoryRegistry::MapMutex>
 # pragma instantiate ACE_Vector<ACE_CString>
 

@@ -24,8 +24,8 @@ namespace TAO_PG
   class TAO_PortableGroup_Export Properties_Decoder
   {
     typedef ACE_Hash_Map_Manager<
-      ACE_CString, 
-      const PortableGroup::Value *, 
+      ACE_CString,
+      const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX> ValueMap;
   public:
     Properties_Decoder (const PortableGroup::Properties & property_set);
