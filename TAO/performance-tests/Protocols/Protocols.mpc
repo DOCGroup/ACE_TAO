@@ -7,7 +7,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): rt_client {
   Source_Files {
     client.cpp
     testC.cpp
