@@ -1,3 +1,20 @@
+Wed Dec 02 03:31:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Added TAO_CHECK_CONDITION_ENV_RETURN and
+	  TAO_CHECK_CONDITION_ENV_RETURN_VOID macros.  These two macros
+	  work with TAO's simulated exception by checking the specified
+	  CORBA_Exception for exception and also a user specified
+	  condition.
+
+	* CDR.i:
+	* Exception.cpp:
+	* Marshal.i:
+	* Typecode.cpp:
+	* decode.cpp:
+	* deep_free.cpp: Integrated exception handling macros into TAO in
+	  order to document the code better and to unify TAO's behavior
+	  with or without native exception support.
+
 Wed Dec  2 01:48:54 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
 	* performance-tests/Thruput/TAO/utils.cpp: fixed the problem with
