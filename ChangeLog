@@ -1,3 +1,9 @@
+Thu May 09 10:39:17 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Fixed link error on win32.  I forgot to merge
+	  these project files differently (they can not be merged.)
+
 Thu May  9 01:07:56 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/StrCharStream.h:
