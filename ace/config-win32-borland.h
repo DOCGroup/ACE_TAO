@@ -112,11 +112,11 @@
 /*
  * Definitions only for Borland C++ Builder 4.x
  */
-#   if (__BORLANDC__ == 0x0540) 
+#   if (__BORLANDC__ == 0x0540)
 
 // Compiler enforces need for 'template<>" when specializing template
 // class methods.
-#     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION 
+#     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 
 // Compiler enforces need for 'template<>" when specializing template
 // class methods.
@@ -143,7 +143,7 @@
 #     endif /* defined (ACE_LACKS_ACE_IOSTREAM) */
 #     define ACE_LACKS_ACE_IOSTREAM 1
 
-      /* previously defined for MSVC */ 
+      /* previously defined for MSVC */
 #     if defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
 #       undef ACE_HAS_WCHAR_TYPEDEFS_USHORT
 #     endif /* defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT) */
@@ -170,7 +170,8 @@
 
 #   endif /* (__BORLANDC__ == 0x0540) */
 
+# define ACE_HAS_EXPLICIT_KEYWORD
+
 # endif /* defined(__BORLANDC__) */
 
 #endif /* ACE_WIN32_BORLAND_H */
-
