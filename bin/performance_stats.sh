@@ -88,7 +88,7 @@ for i in $SEQUENCE_TESTS; do
      cd $ACE_ROOT/TAO/performance-tests/Sequence_Latency/${i};
      for j in $SEQ_TEST_TYPE; do
          (
-             ./run_test.pl > $DEST/source/Sequence_${i}_${j}.log 2>&1
+             ./run_test.pl -t $j > $DEST/source/Sequence_${i}_${j}.log 2>&1
              
              if grep -q 'Total throughput: ' $DEST/source/Sequence_${i}_${j}.log; then
                  (
