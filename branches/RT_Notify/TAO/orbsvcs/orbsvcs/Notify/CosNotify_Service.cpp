@@ -325,3 +325,13 @@ ACE_STATIC_SVC_DEFINE (TAO_NS_CosNotify_Service,
 ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_CosNotify_Service)
 
 /*********************************************************************************************************************/
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Dynamic_Service<TAO_NS_Factory>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Dynamic_Service<TAO_NS_Factory>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

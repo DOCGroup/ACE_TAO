@@ -152,7 +152,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// Id generator for ConstraintInfo's.
-  ACE_Atomic_Op <ACE_SYNCH_NULL_MUTEX, CORBA::Long> constraint_expr_ids_;
+  CORBA::Long constraint_expr_ids_;
 
   /// A list of the constraints stored in this filter.
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,

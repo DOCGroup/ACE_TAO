@@ -21,7 +21,9 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "../orbsvcs/Notify/Service.h"
+#include "../orbsvcs/Notify/CosNotify_Initializer.h"
+
+class TAO_NS_Service;
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"

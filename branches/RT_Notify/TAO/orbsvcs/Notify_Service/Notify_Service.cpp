@@ -44,14 +44,6 @@ TAO_Notify_Service::init_ORB (int& argc, ACE_TCHAR *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
-
-  if (this->notify_service_ == 0)
-  {
-          ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
-      return -1;
-  }
-
   CORBA::Object_var object =
     this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
@@ -85,6 +77,19 @@ TAO_Notify_Service::init (int argc, ACE_TCHAR *argv[]
   if (this->init_ORB (argc, argv
                       ACE_ENV_ARG_PARAMETER) != 0)
   return -1;
+
+  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
+
+  if (this->notify_service_ == 0)
+    {
+      this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
+    }
+
+  if (this->notify_service_ == 0)
+  {
+          ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
+      return -1;
+  }
 
   this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
