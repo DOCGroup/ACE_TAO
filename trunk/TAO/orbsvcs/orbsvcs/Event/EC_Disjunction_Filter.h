@@ -35,7 +35,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_Disjunction_Filter : public TAO_EC_Filter
+class TAO_ORBSVCS_Export TAO_EC_Disjunction_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   The disjunction filter.

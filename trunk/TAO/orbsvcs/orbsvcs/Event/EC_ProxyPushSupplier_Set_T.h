@@ -109,7 +109,7 @@ private:
   // A condition variable to wait while the object is too busy.
 
   int busy_count_;
-  // Keep track of the number of threads using the set 
+  // Keep track of the number of threads using the set
 
   int write_delay_;
   // Keep track of the number of threads that have used the set since

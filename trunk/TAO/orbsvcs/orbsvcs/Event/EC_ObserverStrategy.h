@@ -43,7 +43,7 @@ class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_EC_ObserverStrategy
+class TAO_ORBSVCS_Export TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   The strategy to handle observers for the Event Channel
@@ -145,6 +145,10 @@ class TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
   //   changes in queries the EC, computes the global subscription
   //   and/or publication list and sends the update message to all the
   //   observers.
+  //
+  // = MEMORY MANAGMENT
+  //   It assumes ownership of the <lock>, but not of the
+  //   Event_Channel.
   //
 public:
   TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel* ec,

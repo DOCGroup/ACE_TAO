@@ -1,3 +1,53 @@
+Thu Mar  4 12:43:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Filter.i:
+	  Fixed nasty bug, thanks to J. Russell Noseworthy
+	  <rnosewor@objectsciences.com> for catching this one.
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Removed a couple of memory leaks, thanks to J. Russell
+	  Noseworthy <rnosewor@objectsciences.com> for catching them up.
+
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/Event_Service/Event_Service.h:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	  The ACE_EventChannel implementation does not shutdown the ORB
+	  anymore, instead we use composition in the Event_Service program 
+	  to shutdown the ORB there (where it actually makes sense).
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Updated dependencies.
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i:
+	  Minor cosmetic fixes.
+
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Command.h:
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	  Added the TAO_ORBSVCS_Export in many classes.
+
 Thu Mar 04 10:22:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp (parse_args):

@@ -36,7 +36,7 @@ ifndef TAO_ORBSVCS
                 Event \
                 CosEvent \
                 AV \
-		#Event2
+		Event2
 endif # TAO_ORBSVCS
 
 

@@ -28,12 +28,13 @@
 #ifndef TAO_EC_PROXYPUSHSUPPLIER_SET_H
 #define TAO_EC_PROXYPUSHSUPPLIER_SET_H
 
-#include "ace/Containers.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Containers.h"
 #include "tao/corba.h"
 #include "EC_Busy_Lock.h"
 
@@ -41,7 +42,7 @@ class TAO_EC_ProxyPushSupplier;
 template<class Target,class Object> class TAO_EC_Connected_Command;
 template<class Target,class Object> class TAO_EC_Disconnected_Command;
 
-class TAO_EC_ProxyPushSupplier_Set
+class TAO_ORBSVCS_Export TAO_EC_ProxyPushSupplier_Set
 {
   // = TITLE
   //   ProxyPushSupplier_Set

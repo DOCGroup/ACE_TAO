@@ -23,6 +23,8 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* ec)
 
 TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
 {
+  delete this->child_;
+  this->child_ = 0;
   this->event_channel_->destroy_supplier_lock (this->lock_);
 }
 

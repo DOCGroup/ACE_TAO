@@ -288,7 +288,7 @@ public:
   ACE_INLINE int operator== (const TAO_ECG_UDP_Request_Index& rhs) const;
   ACE_INLINE int operator!= (const TAO_ECG_UDP_Request_Index& rhs) const;
   // Compare
-  
+
   ACE_INET_Addr from;
   CORBA::ULong request_id;
 };
@@ -313,7 +313,7 @@ public:
   // TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry& rhs);
   // TAO_ECG_UDP_Request_Entry& operator=(const TAO_ECG_UDP_Request_Entry& rhs);
   ~TAO_ECG_UDP_Request_Entry (void);
-  
+
   TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
                              CORBA::ULong request_id,
                              CORBA::ULong request_size,
@@ -326,7 +326,7 @@ public:
                          CORBA::ULong fragment_offset,
                          CORBA::ULong fragment_id,
                          CORBA::ULong fragment_count) const;
-  // Validate a fragment, it should be rejected if it is invalid.. 
+  // Validate a fragment, it should be rejected if it is invalid..
 
   int test_received (CORBA::ULong fragment_id) const;
   // Has <fragment_id> been received?
@@ -349,7 +349,7 @@ public:
 
   int get_timeout (void) const;
   // Get the timeout counter....
-  
+
 private:
   CORBA::Boolean byte_order_;
   CORBA::ULong request_id_;

@@ -28,11 +28,13 @@
 #ifndef TAO_EC_FACTORY_H
 #define TAO_EC_FACTORY_H
 
-#include "tao/corba.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/corba.h"
 
 class ACE_Lock;
 
@@ -48,7 +50,7 @@ class TAO_EC_Timer_Module;
 class TAO_EC_ObserverStrategy;
 class TAO_EC_ProxyPushSupplier_Set;
 
-class TAO_EC_Factory
+class TAO_ORBSVCS_Export TAO_EC_Factory
 {
   // = TITLE
   //   Abstract base class for the Event Channel components.

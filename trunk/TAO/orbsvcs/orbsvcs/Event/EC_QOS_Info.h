@@ -28,13 +28,13 @@
 #ifndef TAO_EC_QOS_INFO_H
 #define TAO_EC_QOS_INFO_H
 
-#include "ace/OS.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_QOS_Info
+class TAO_ORBSVCS_Export TAO_EC_QOS_Info
 {
   // = TITLE
   //   A representation of QoS information for the event channel

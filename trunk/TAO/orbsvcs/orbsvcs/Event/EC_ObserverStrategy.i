@@ -45,4 +45,3 @@ TAO_EC_Basic_ObserverStrategy::Header_Compare::
     return lhs.type < rhs.type;
   return lhs.source < rhs.source;
 }
-
