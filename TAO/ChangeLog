@@ -1,3 +1,9 @@
+Sun Aug  3 20:57:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/OctetSeq/client.cpp:
+	* tests/OctetSeq/test_i.cpp: #included ACE.h to get rid of compile
+	  errors on full reactor build.
+
 Sun Aug  3 18:43:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Notify/lib/Peer.h: #included ace/SStream.h
