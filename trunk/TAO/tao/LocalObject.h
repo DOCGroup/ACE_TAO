@@ -80,8 +80,8 @@ public:
 
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &ACE_TRY_ENV =
-                                                    TAO_default_environment ());
+  virtual IR_InterfaceDef *_get_interface (CORBA_Environment &ACE_TRY_ENV =
+                                             TAO_default_environment ());
   // throws NO_IMPLEMENT.
 #endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
