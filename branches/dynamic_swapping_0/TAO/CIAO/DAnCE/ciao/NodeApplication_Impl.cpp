@@ -22,7 +22,6 @@ CIAO::NodeApplication_Impl::finishLaunch (
 {
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG, "calling finish launch\n"));
       const CORBA::ULong length = providedReference.length ();
 
       // For every connection struct we finish the connection.
@@ -209,8 +208,6 @@ CIAO::NodeApplication_Impl::install (
          comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
          ACE_TRY_CHECK;
 
-         ACE_DEBUG ((LM_DEBUG, "created the component\n"));
-
          if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
                                         Components::CCMObject::_duplicate (comp.in ())))
            ACE_TRY_THROW (Deployment::InstallationFailure ());
@@ -220,8 +217,6 @@ CIAO::NodeApplication_Impl::install (
            = impl_infos[i].component_instance_name.in ();
 
          (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
-
-         ACE_DEBUG ((LM_DEBUG, "got the comp ref\n"));
 
          // Deal with Component instance related Properties.
          // Now I am only concerning about the COMPOENTIOR and here is only
@@ -256,7 +251,6 @@ CIAO::NodeApplication_Impl::install (
                }
            }
 
-           ACE_DEBUG ((LM_DEBUG, "done with install\n"));
        }
    }
   ACE_CATCHANY

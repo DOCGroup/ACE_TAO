@@ -65,6 +65,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
+    ACE_DEBUG ((LM_DEBUG, "i am being called to remove\n"));
     Components::SessionComponent_var temp = this->get_executor ();
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
@@ -79,6 +80,7 @@ namespace CIAO
     this->container_->uninstall_component ( ccmobjref.in (),
                                             oid.out ()
                                             ACE_ENV_ARG_PARAMETER);
+    ACE_DEBUG ((LM_DEBUG, "uninstalled the component\n"));
     this->home_servant_->update_component_map (oid);
   }
 
@@ -229,7 +231,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
 
-    ACE_DEBUG ((LM_DEBUG, "BEING CALLED\n"));
     ::Components::ConsumerDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
                       ::Components::ConsumerDescriptions (this->consumer_table_.current_size ()),
