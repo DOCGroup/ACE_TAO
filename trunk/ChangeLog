@@ -1,3 +1,11 @@
+Thu Sep 18 13:49:56 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
+
+        * performance-tests/SCTP/README: 
+
+          Added a table providing additional clarifications about
+          different implementations of SCTP under Linux and its
+          implications with respect to ACE Wrapper facades supported.
+         
 Thu Sep 18 10:55:58 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
