@@ -1,12 +1,21 @@
-Sun Jun 27 21:33:00 1999  Chris Gill  <cdgill@tango.cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/RtecScheduler.idl,
-          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp, h},
-          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: Added use of
-          dependency graph visitors for topological ordering, cycle checking,
-          and graph reset during schedule computation.
-	
 Sun Jun 27 20:29:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/POA_CORBA.h (POA_CORBA): Added a no-op constructor for
+	  the _tao_collocated_Current class to work around a bug with
+ 	  IBM's VisualAge C++ compiler.  Thanks to Rene Matteau
+ 	  <matteau@ca.ibm.com> for reporting this.
+
+	* tao/encode.cpp (encode): Borland's C++ Builder 4.0 doesn't seem
+	  to align caught exceptions along the correct boundaries!
+ 	  Therefore we will assume that the data pointer passed in is
+ 	  already correctly aligned and we will calculate member
+ 	  alignments relative to this pointer.  Thanks to Christopher
+ 	  Kohlhoff <chris@kohlhoff.com> for this fix.
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp: Removed the
+	  hacked up coding for MAX_SIGNED_INTEGER, MAX_UNSIGNED_INTEGER,
+ 	  and MIN_SIGNED_INTEGER and replaced them with the corresponding
+ 	  #defines from $ACE_ROOT/Basic_Types.h.
 
 	* tao/orbconf.h: By default generate a no-op macro for
 	  TAO_EXPORT_NESTED_MACRO.  This can be overridden if
@@ -29,6 +38,14 @@ Sun Jun 27 20:29:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  an error by returning 0 if we get an exception.  Thanks to David
  	  Levine for reporting this.
 
+Sun Jun 27 21:33:00 1999  Chris Gill  <cdgill@tango.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/RtecScheduler.idl,
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp, h},
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: Added use of
+          dependency graph visitors for topological ordering, cycle checking,
+          and graph reset during schedule computation.
+	
 Sun Jun 27 20:02:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DynArray_i.cpp:
