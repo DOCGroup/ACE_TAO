@@ -34,7 +34,7 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
     {
-      int current_count = int (arg);
+      long current_count = long (arg);
       ACE_ASSERT (current_count == count);
 
       ACE_DEBUG ((LM_DEBUG, "%d: Timer #%d timed out at %d!\n",
@@ -58,7 +58,7 @@ main (int, char *[])
 
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
-  int i;
+  long i;
   
   for (i = 0; i < ACE_MAX_TIMERS; i++)
     t_id[i] = reactor.schedule_timer (&rt[i], 

@@ -79,8 +79,8 @@ public:
   // Block until there are no more processs running or <timeout>
   // expires.  Returns 0 on success and -1 on failure.
 
-  int kill (pid_t, int signum);
-  // Kill a single process.
+  int terminate (pid_t pid);
+  // Terminate a single process with id <pid>.
 
   int remove (pid_t pid);
   // Remove process <pid> from the table.  This is typically called by

@@ -6448,25 +6448,8 @@ ACE_INLINE int
 ACE_OS::kill (pid_t pid, int signum)
 {
   // ACE_TRACE ("ACE_OS::kill");
-#if defined (ACE_WIN32)
-  ACE_UNUSED_ARG (signum);
-
-  // Create a handle for the given process id.
-  ACE_HANDLE process_handle = 
-    ::OpenProcess (PROCESS_TERMINATE,
-		   FALSE, // New handle is not inheritable.
-		   pid);
-
-  if (process_handle == ACE_INVALID_HANDLE || process_handle == NULL)
-    return -1;
-  else
-    {
-      // Kill the process associated with process_handle.
-      BOOL terminate_result = ::TerminateProcess (process_handle, 0);
-      // Free up the kernel resources.
-      ACE_OS::close (process_handle);
-      return terminate_result;
-    }
+#if defined (ACE_WIN32) || defined (CHORUS)
+  ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::kill (pid, signum), int, -1);
 #endif /* ACE_WIN32 */

@@ -2,8 +2,15 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Thread.h"
+#include "ace/Synch_T.h"
 
 #if defined (ACE_HAS_THREADS)
+#if defined (CHORUS)
+// Chorus does not have signal, so we'll stop after a number of rounds.
+#define MAX_ITERATIONS 3
+#else
+#define MAX_ITERATIONS 10000
+#endif
 
 class Thread_Handler : public ACE_Event_Handler
   // = TITLE
@@ -49,6 +56,8 @@ private:
   size_t id_;
   // ID passed in by Thread_Handler constructor.
 
+  int iterations_;
+
   static sig_atomic_t shutdown_;
   // Shutting down.
 
@@ -69,17 +78,21 @@ ACE_Time_Value Thread_Handler::delay_;
 // Interval factor for Event_Handler timer.
 ACE_Time_Value Thread_Handler::interval_;
 
+
 Thread_Handler::Thread_Handler (int delay, 
 				int interval,
 				size_t n_threads)
+    : iterations_(MAX_ITERATIONS)
 {
   delay_.set (delay);
   interval_.set (interval);
 
+#if !defined(CHORUS)
   ACE_Sig_Set sig_set;
   
   sig_set.sig_add (SIGQUIT);
   sig_set.sig_add (SIGINT);
+#endif
 
   this->id_ = 0;
 
@@ -88,8 +101,10 @@ Thread_Handler::Thread_Handler (int delay,
 				   ACE_Service_Config::thr_mgr ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 
+#if !defined(CHORUS)
   else if (ACE_Service_Config::reactor ()->register_handler (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "register_handler"));
+#endif
 
   else if (ACE_Service_Config::reactor ()->schedule_timer 
       (this, 0, Thread_Handler::delay_, Thread_Handler::interval_) == -1)
@@ -98,7 +113,9 @@ Thread_Handler::Thread_Handler (int delay,
   // Set up this thread's signal mask, which is inherited by the
   // threads it spawns.
 
+#if !defined(CHORUS)
   ACE_Thread::sigsetmask (SIG_BLOCK, sig_set);
+#endif
 
   // Create N new threads of control Thread_Handlers.
 
@@ -109,7 +126,9 @@ Thread_Handler::Thread_Handler (int delay,
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread::spawn"));
 
   // Unblock signal set so that only this thread receives them!
+#if !defined(CHORUS)
   ACE_Thread::sigsetmask (SIG_UNBLOCK, sig_set);
+#endif
 }
 
 int
@@ -120,17 +139,18 @@ Thread_Handler::notify (ACE_Time_Value *timeout)
 
   if (ACE_Service_Config::reactor ()->notify 
       (this, ACE_Event_Handler::EXCEPT_MASK, timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
+		       "notification::notify:exception"), -1);
   else if (ACE_Service_Config::reactor ()->notify 
 	   (this, ACE_Event_Handler::WRITE_MASK, timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
+		       "notification::notify:write"), -1);
 
   return 0;
 }
 
 // Test stdin handling (can use select to demultiplex HANDLEs)
-
+// Input is only handled by the main thread
 int
 Thread_Handler::handle_input (ACE_HANDLE handle)
 {
@@ -138,18 +158,31 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
   ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
 
   if (n > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%t) %*s", n, buf));
+  {
+      ACE_DEBUG ((LM_DEBUG, "input to (%t) %*s", 
+		  n, buf));
 
-      // Only wait up to 10 milliseconds to notify the Reactor.
-      ACE_Time_Value timeout (0, 10 * 1000);
-
-      if (this->notify (&timeout) == -1)
-	ACE_ERROR ((LM_DEBUG, "(%t), %p\n", "notify"));
+      if (--iterations_ <= 0)
+      {
+	  // would like to put this in handle_timeout(), but chorus
+	  // clock_gettime() does not seem to work in my version!
+	  ACE_Service_Config::end_reactor_event_loop();
+      }
+      else
+      {
+	  ACE_DEBUG ((LM_DEBUG, "%d more input to kill\n", 
+		      iterations_));
+	  // Only wait up to 10 milliseconds to notify the Reactor.
+	  ACE_Time_Value timeout (0, 10 * 1000);
+	  
+	  if (this->notify (&timeout) == -1)
+	      ACE_ERROR ((LM_DEBUG, "(%t), %p\n", 
+			  "notification::handle_input:notify"));
+      }
       return 0;
-    }
+  }
   else
-    return -1;
+      return -1;
 }
 
 // Perform a task that will test the ACE_Reactor's multi-threading
@@ -158,7 +191,9 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
 int
 Thread_Handler::svc (void)
 {
-  while (this->shutdown_ == 0)
+  iterations_ = MAX_ITERATIONS;
+
+  while (this->shutdown_ == 0 && --iterations_ > 0 )
     {
       if (Thread_Handler::delay_.sec () > 0)
 	// Block for delay_.secs () / 2, then notify the Reactor.
@@ -171,6 +206,7 @@ Thread_Handler::svc (void)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "notify"));
     }
 
+  ACE_Service_Config::reactor()->remove_handler(this, ALL_EVENTS_MASK);
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting svc\n"));
   return 0;
 }
@@ -210,7 +246,7 @@ int
 Thread_Handler::handle_exception (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) handle_exception received notification from id %d\n", 
+	      "(%t) exception to id %d\n", 
 	      this->id_));
   return 0;
 }
@@ -221,7 +257,7 @@ int
 Thread_Handler::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) handle_output received notification from id %d\n", 
+	      "(%t) output to id %d\n", 
 	      this->id_));
   return 0;
 }

@@ -1,5 +1,59 @@
 Sat Jun 21 10:48:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Reactor/FIFO: Added a new example that illustrates
+	  how the Reactor and the FIFO wrappers work together.  Thanks
+	  to Johannes Gutleber <Johannes.Gutleber@cern.ch> for sending
+	  this.
+
+	* tests/Time_Service_Test.cpp (main): Replaced the kill() call
+ 	  with the terminate() call since kill() isn't portable across
+ 	  platforms.
+
+	* ace/Process: The kill() method on this class was being used
+ 	  incorrectly.  I've created a new method called terminate() that
+ 	  terminates the process.
+
+	* ace/Process_Manager: Renamed the kill() method to terminate()
+ 	  and updated the implementation to use the new
+ 	  ACE::terminate_process() call.
+
+	* ace/ACE: Moved the incorrect Win32 and Chorus implementations of
+ 	  ACE_OS::kill() and put them in a new static method called
+ 	  ACE::terminate_process().
+
+	* ace/ACE: Changed the name of the is_process_active() to the
+ 	  more concise process_active().
+
+	* ace/OS.i: Added an implementation of ACE_OS::kill() for Chorus.
+  	  Note that this doesn't behave as UNIX does -- it kills the
+ 	  process id rather than sending a signal!  Thanks to Wei Chiang
+ 	  <chiang@tele.nokia.fi> for these fixes.
+
+	* examples/Reactor/Misc/notification.cpp: Added patches to run
+ 	  this example under Chorus.  Thanks to Wei Chiang
+ 	  <chiang@tele.nokia.fi> for these fixes.
+
+	* ace/Connector.cpp (create_AST): Changed the order of some
+ 	  instructions in Connector::create_AST method to make it more
+ 	  safer to use in multi-thread environment.  Thank to Paul Han
+ 	  <phan@CCGATE.HAC.COM> for reporting the problem and the fix.
+
+	* ace/Connector.cpp (create_AST): Make sure to pass in the "mask"
+ 	  when calling remove_handler() so that we get the right set of
+ 	  bits removed from the Reactor.
+
+	* tests/Reactor_Timer_Test.cpp (class Time_Handler): Changed int
+ 	  to long to avoid type conversion problems on 64 bit SGI.  Thanks
+ 	  to Fred LaBar <flabar@fallschurch.esys.com> for reporting this.
+
+	* examples/Reactor/FIFO: Added a test program to illustrate the
+ 	  interaction of the ACE Reactor with the FIFO IPC mechanism.
+  	  Thanks to Johannes Gutleber <Johannes.Gutleber@cern.ch> for this
+ 	  test.
+
+	* examples/Reactor/Misc/pingpong.cpp: Added support for Chorus.
+  	  Thanks to Wei Chiang <chiang@tele.nokia.fi> for this.
+
 	* ace: Added a number of minor changes to signal assignment
 	  code so that ACE will compile with Tandem NonStop.  Thanks
 	  to Jan Perman <uabjjpp@osd.ericsson.se> for these fixes.

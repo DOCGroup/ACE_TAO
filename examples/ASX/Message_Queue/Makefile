@@ -11,7 +11,7 @@
 BIN     = buffer_stream \
 	  bounded_buffer \
 	  priority_buffer
-	  
+
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD   = $(VBIN)

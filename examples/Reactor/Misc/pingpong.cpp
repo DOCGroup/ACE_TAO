@@ -1,6 +1,6 @@
-/* Simple program that illustrates all the features of the ACE_Reactor:
 // $Id$
 
+/* Simple program that illustrates many features of the ACE_Reactor:
 
    1. I/O event demultiplexing
    2. Signal-based demultiplexing
@@ -99,7 +99,7 @@ Ping_Pong::handle_input (ACE_HANDLE)
 	      *(int *) (this->buf_ + sizeof (int)), 
 	      this->buf_ + (2 * sizeof (int))));
 #else
-  ssize_t n = ACE::recv (this->handle_, this->buf_, sizeof this->buf_);
+  ssize_t n = ACE::recv (this->handle_, this->buf_, this->buflen_);
 
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "[%d] %p\n", handle_, "read"), -1);
@@ -156,21 +156,6 @@ static char *string_name;
 // Wait for 10 seconds and then shut down.
 static const int SHUTDOWN_TIME = 10;
 
-#if defined (ACE_WIN32)
-static ACE_Barrier barrier (3);
-
-static void *
-worker (void *arg)
-{
-  ACE_HANDLE handle = (ACE_HANDLE) arg;
-
-  run_svc (handle);
-  barrier.wait ();
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %n: shutting down tester\n"));
-  return 0;
-}
-#endif /* ACE_WIN32 */
-
 static void
 run_svc (ACE_HANDLE handle)
 {
@@ -184,7 +169,9 @@ run_svc (ACE_HANDLE handle)
   if (reactor.register_handler (&callback,
 				ACE_Event_Handler::READ_MASK 
 				| ACE_Event_Handler::WRITE_MASK) == -1
+#if !defined (CHORUS)
       || reactor.register_handler (SIGINT, &callback) == -1
+#endif /* CHORUS */
       || reactor.schedule_timer (&callback, 0, SHUTDOWN_TIME) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "reactor", 1));
 
@@ -194,6 +181,21 @@ run_svc (ACE_HANDLE handle)
     if (reactor.handle_events () == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "handle_events"));
 }
+
+#if defined (ACE_WIN32) || defined (CHORUS)
+static ACE_Barrier barrier (3);
+
+static void *
+worker (void *arg)
+{
+  ACE_HANDLE handle = (ACE_HANDLE) arg;
+
+  run_svc (handle);
+  barrier.wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %n: shutting down tester\n"));
+  return 0;
+}
+#endif /* ACE_WIN32 */
 
 int 
 main (int argc, char *argv[])
@@ -210,7 +212,7 @@ main (int argc, char *argv[])
   // Create a pipe and initialize the handles.
   ACE_Pipe pipe (handles);
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (CHORUS)
   if (ACE_Thread::spawn (ACE_THR_FUNC (worker), 
 			 (void *) handles[0], 
 			 THR_DETACHED) == -1
@@ -220,7 +222,6 @@ main (int argc, char *argv[])
       ACE_ERROR ((LM_ERROR, "%p\n%a", "spawn", 1));
 
   barrier.wait ();
-
 #else
   pid_t pid = ACE_OS::fork (argv[0]);
 
