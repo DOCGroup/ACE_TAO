@@ -1010,6 +1010,7 @@ Viatcheslav A. Batenine <slavikb@iname.com>
 Shashi Bhushan <Shashi.Bhushan@lmco.com>
 Javier Corrales <jcorrales@tcpsi.es>
 J. Randy Pitz <james.r.pitz@boeing.com>
+Richard Reitmeyer <richard@verecomm.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
