@@ -121,7 +121,7 @@ public:
                   "Callback method <foo_excep> called: \n"));
       ACE_TRY
         {
-          excep_holder->raise_foo ();
+          excep_holder->raise_foo (ACE_TRY_ENV);
         }
       ACE_CATCHANY
         {
