@@ -49,13 +49,13 @@ ACE_Sched_Params::priority_min (const Policy policy,
       ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
       ACE_OS::strcpy (pcinfo.pc_clname, "TS");
 
-      if (::priocntl (P_ALL /* ignored */,
-                      P_MYID /* ignored */,
-                      PC_GETCID,
-                      (char *) &pcinfo) == -1)
+      if (ACE_OS::priority_control (P_ALL /* ignored */,
+                                    P_MYID /* ignored */,
+                                    PC_GETCID,
+                                    (char *) &pcinfo) == -1)
 	// Just hope that priority range wasn't configured from -1
 	// .. 1
-	return -1; 
+	return -1;
 
       // OK, now we've got the class ID in pcinfo.pc_cid.  In
       // addition, the maximum configured time-share priority is in
@@ -133,10 +133,10 @@ ACE_Sched_Params::priority_max (const Policy policy,
   ACE_OS::strcpy (pcinfo.pc_clname,
                   policy == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
 
-  if (::priocntl (P_ALL /* ignored */,
-                  P_MYID /* ignored */,
-                  PC_GETCID,
-                  (char *) &pcinfo) == -1)
+  if (ACE_OS::priority_control (P_ALL /* ignored */,
+                                P_MYID /* ignored */,
+                                PC_GETCID,
+                                (char *) &pcinfo) == -1)
     return -1;
 
   // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,

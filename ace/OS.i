@@ -5709,6 +5709,22 @@ ACE_OS::thr_yield (void)
 #endif /* ACE_HAS_THREADS */
 }
 
+ACE_INLINE int
+ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t id, int cmd, void *arg)
+{
+  // ACE_TRACE ("ACE_OS::priority_control");
+#if defined (ACE_HAS_PRIOCNTL)
+  ACE_OSCALL_RETURN (priocntl (idtype, id, cmd, ACE_static_cast (caddr_t, arg)),
+                     int, -1);
+#else  /* ! ACE_HAS_PRIOCNTL*/
+  ACE_UNUSED_ARG (idtype);
+  ACE_UNUSED_ARG (id);
+  ACE_UNUSED_ARG (cmd);
+  ACE_UNUSED_ARG (arg);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_PRIOCNTL*/
+}
+
 ACE_INLINE void
 ACE_OS::rewind (FILE *fp)
 {
@@ -9221,14 +9237,12 @@ putchar (int c)
 }
 #endif /* ACE_HAS_WINCE */
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Cleanup::ACE_Cleanup (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Cleanup::~ACE_Cleanup (void)
 {
 }
-
-

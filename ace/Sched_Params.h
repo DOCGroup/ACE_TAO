@@ -56,6 +56,11 @@ class ACE_Export ACE_Sched_Params
   //    ACE_OS::sched_params () will fail by returning -1 with EINVAL
   //    (available through ACE_OS::last_error ()).
 
+  //    NOTE:  Solaris 2.5.x threads in the RT class must set the
+  //    priority of their LWP.  The only way to do that through ACE is
+  //    for the RT thread itself to call ACE_OS::thr_setprio () with
+  //    it's own priority.
+
   //    OS Scheduling parameters are complicated and often confusing.  Many
   //    thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for his
   //    careful review of this class design, thoughtful comments, and
@@ -93,7 +98,7 @@ public:
   void quantum (const ACE_Time_Value &);
 
   // = Accessors for OS-specific priorities.
-  // These return priority values for ACE_SCHED_OTHER if the Policy value 
+  // These return priority values for ACE_SCHED_OTHER if the Policy value
   // is invalid.
   static int priority_min (const Policy,
                            const int scope = ACE_SCOPE_THREAD);

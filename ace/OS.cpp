@@ -750,67 +750,63 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PRIOCNTL)
 #include /**/ <sys/rtpriocntl.h>
 #include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PRIOCNTL */
 
 int
-ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
+ACE_OS::scheduling_class (const char *class_name, ACE_id_t &id)
 {
-  // Set the thread priority on the current thread.
-  ACE_hthread_t my_thread_id;
-  ACE_OS::thr_self (my_thread_id);
-  return ACE_OS::thr_setprio (my_thread_id, prio);
-}
-
-int
-ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
-{
-  // ACE_TRACE ("ACE_OS::sched_params");
-#if defined (CHORUS)
-  int result;
-  struct sched_param param;
-  ACE_thread_t thr_id = ACE_OS::thr_self ();
-
-  param.sched_priority = sched_params.priority ();
-
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
-                                                                sched_params.policy (),
-                                                                &param),
-                                       result),
-                     int, -1);
-#elif defined (ACE_HAS_STHREADS)
-  // Set priority class, priority, and quantum of this LWP or process as
-  // specified in sched_params.
-
-  // Get the priority class ID and attributes.
+#if defined (ACE_HAS_PRIOCNTL)
+  // Get the priority class ID.
   pcinfo_t pcinfo;
   // The following is just to avoid Purify warnings about unitialized
   // memory reads.
   ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
 
-  ACE_OS::strcpy (pcinfo.pc_clname,
-                  sched_params.policy() == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
-
-  if (::priocntl (P_ALL /* ignored */,
-                  P_MYID /* ignored */,
-                  PC_GETCID,
-                  (char *) &pcinfo) == -1)
+  ACE_OS::strcpy (pcinfo.pc_clname, class_name);
+  if (ACE_OS::priority_control (P_ALL /* ignored */,
+                                P_MYID /* ignored */,
+                                PC_GETCID,
+                                (char *) &pcinfo) == -1)
     {
       return -1;
     }
+  else
+    {
+      id = pcinfo.pc_cid;
+      return 0;
+    }
+#else  /* ! ACE_HAS_PRIOCNTL */
+  ACE_UNUSED_ARG (class_name);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_PRIOCNTL */
+}
 
-  // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,
-  // the maximum configured real-time priority is in ((rtinfo_t *)
-  // pcinfo.pc_clinfo)->rt_maxpri.
+int
+ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
+                               ACE_id_t id)
+{
+#if defined (ACE_HAS_PRIOCNTL)
+  // Set priority class, priority, and quantum of this LWP or process as
+  // specified in sched_params.
+
+  // Get the priority class ID.
+  ACE_id_t class_id;
+  if (ACE_OS::scheduling_class (sched_params.policy() == ACE_SCHED_OTHER  ?
+                                  "TS"  :
+                                  "RT", class_id) == -1)
+    {
+      return -1;
+    }
 
   pcparms_t pcparms;
   // The following is just to avoid Purify warnings about unitialized
   // memory reads.
   ACE_OS::memset (&pcparms, 0, sizeof pcparms);
 
-  pcparms.pc_cid = pcinfo.pc_cid;
+  pcparms.pc_cid = class_id;
 
   if (sched_params.policy () == ACE_SCHED_OTHER  &&
       sched_params.quantum () == ACE_Time_Value::zero)
@@ -826,8 +822,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
       tsparms.ts_uprilim = TS_NOCHANGE;
       tsparms.ts_upri = sched_params.priority ();
 
-      // Package up the TS class ID and parameters for the ::priocntl ()
-      // call.
+      // Package up the TS class ID and parameters for the
+      // priority_control () call.
       ACE_OS::memcpy (pcparms.pc_clparms, &tsparms, sizeof tsparms);
     }
   else if (sched_params.policy () == ACE_SCHED_FIFO  ||
@@ -855,8 +851,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
           rtparms.rt_tqnsecs = sched_params.quantum ().usec () * 1000;
         }
 
-      // Package up the RT class ID and parameters for the ::priocntl ()
-      // call.
+      // Package up the RT class ID and parameters for the
+      // priority_control () call.
       ACE_OS::memcpy (pcparms.pc_clparms, &rtparms, sizeof rtparms);
     }
   else
@@ -865,17 +861,83 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
       return -1;
     }
 
-  if (::priocntl ((idtype_t) (sched_params.scope () == ACE_SCOPE_THREAD
-                                ? ACE_SCOPE_PROCESS
-                                : sched_params.scope ()), P_MYID, PC_SETPARMS,
-                  (char *) &pcparms) < 0)
+  if (ACE_OS::priority_control ((idtype_t) (sched_params.scope () ==
+                                              ACE_SCOPE_THREAD  ?
+                                            ACE_SCOPE_PROCESS  :
+                                            sched_params.scope ()),
+                                id,
+                                PC_SETPARMS,
+                                (char *) &pcparms) < 0)
     {
       return ACE_OS::last_error ();
     }
 
   return 0;
+#else  /* ! ACE_HAS_PRIOCNTL */
+  ACE_UNUSED_ARG (class_name);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_PRIOCNTL */
+}
 
+int
+ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
+{
+  // Set the thread priority on the current thread.
+  ACE_hthread_t my_thread_id;
+  ACE_OS::thr_self (my_thread_id);
+
+  int status = ACE_OS::thr_setprio (my_thread_id, prio);
+
+#if defined (ACE_NEEDS_LWP_PRIO_SET)
+  // If the thread is in the RT class, then set the priority on its
+  // LWP.  (Instead of doing this if the thread is in the RT class, it
+  // should be done for all bound threads.  But, there doesn't appear
+  // to be an easy way to determine if the thread is bound.)
+  if (status == 0)
+    {
+      // Find what scheduling class the thread's LWP is in.
+      ACE_Sched_Params sched_params (ACE_SCHED_OTHER, 0);
+      if (ACE_OS::lwp_getparams (sched_params) == -1)
+        {
+          return -1;
+        }
+      else if (sched_params.policy () == ACE_SCHED_FIFO)
+        {
+          // This thread's LWP is in the RT class, so we need to set
+          // its priority.
+          sched_params.priority (prio);
+          return ACE_OS::lwp_setparams (sched_params);
+        }
+      // else this is not an RT thread.  Nothing more needs to be
+      // done.
+    }
+#endif /* ACE_NEEDS_LWP_PRIO_SET */
+
+  return status;
+}
+
+int
+ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
+                      ACE_id_t id)
+{
+  // ACE_TRACE ("ACE_OS::sched_params");
+#if defined (CHORUS)
+  ACE_UNUSED_ARG (id);
+  int result;
+  struct sched_param param;
+  ACE_thread_t thr_id = ACE_OS::thr_self ();
+
+  param.sched_priority = sched_params.priority ();
+
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
+                                                                sched_params.policy (),
+                                                                &param),
+                                       result),
+                     int, -1);
+#elif defined (ACE_HAS_STHREADS)
+  return ACE_OS::set_scheduling_params (sched_params, id);
 #elif defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+  ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
       // quantums not supported
@@ -889,14 +951,22 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   // with other PThreads flavors!
 
   struct sched_param param;
-
   param.sched_priority = sched_params.priority ();
 
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-      return (::sched_setscheduler(0, // this process
-                                   sched_params.policy (),
-                                   &param) == -1 ? -1 : 0);
+      int result = ::sched_setscheduler(0, // this process
+                                        sched_params.policy (),
+                                        &param) == -1 ? -1 : 0;
+#     if defined DIGITAL_UNIX
+        return result == 0
+          ? // Use priocntl (2) to set the process in the RT class,
+            // if using an RT policy.
+            ACE_OS::set_scheduling_params (sched_params)
+          : result;
+#     else  /* ! DIGITAL_UNIX */
+        return result;
+#     endif /* ! DIGITAL_UNIX */
     }
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
@@ -924,6 +994,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
     }
 
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (id);
 
   if (sched_params.scope () != ACE_SCOPE_PROCESS  ||
       sched_params.quantum () != ACE_Time_Value::zero)
@@ -949,6 +1020,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   return ACE_OS::thr_setprio (sched_params.priority ());
 
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (id);
+
   // There is only one class of priorities on VxWorks, and no
   // time quanta.  So, just set the current thread's priority.
 
@@ -964,6 +1037,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   return ACE_OS::thr_setprio (sched_params.priority ());
 #else
   ACE_UNUSED_ARG (sched_params);
+  ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 }
@@ -2050,6 +2124,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             // Solaris, thru version 2.5.1, only supports SCHED_OTHER.
             spolicy = SCHED_OTHER;
 #      else
+          // Make sure to enable explicit scheduling, in case we didn't
+          // enable it above (for non-default priority).
+          ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
+
           if (ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
             spolicy = SCHED_OTHER;
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
@@ -2348,6 +2426,27 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                              int, -1);
         }
     }
+
+#if defined (ACE_NEEDS_LWP_PRIO_SET)
+#if 0
+  // It would be useful if we could make this work.  But, it requires
+  // a mechanism for determining the ID of an LWP to which another
+  // thread is bound.  Is there a way to do that?
+
+  // If the thread is bound, then set the priority on its LWP.
+  if (ACE_BIT_ENABLED (flags, THR_BOUND))
+    {
+      ACE_Sched_Params sched_params (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO) ||
+                                     ACE_BIT_ENABLED (flags, THR_SCHED_RR)  ?
+                                       ACE_SCHED_FIFO  : ACE_SCHED_OTHER,
+                                     priority);
+      result = ACE_OS::lwp_setparams (sched_params,
+                                      /* ? How do we find the ID of the LWP
+                                           to which *thr_id is bound? */);
+    }
+#endif /* 0 */
+#endif /* ACE_NEEDS_LWP_PRIO_SET */
+
 #    endif /* ACE_HAS_STHREADS */
   return result;
 #  elif defined (ACE_HAS_STHREADS)
@@ -2630,6 +2729,85 @@ ACE_OS::thr_exit (void *status)
 #else
   ACE_UNUSED_ARG (status);
 #endif /* ACE_HAS_THREADS */
+}
+
+int
+ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
+{
+#if defined (ACE_HAS_STHREADS)
+  // Get the class TS and RT class IDs.
+  ACE_id_t rt_id;
+  ACE_id_t ts_id;
+  if (ACE_OS::scheduling_class ("RT", rt_id) == -1  ||
+     (ACE_OS::scheduling_class ("TS", ts_id) == -1))
+    {
+      return -1;
+    }
+
+  // Get this LWP's scheduling parameters.
+  pcparms_t pcparms;
+  /* The following is just to avoid Purify warnings about unitialized
+     memory reads. */
+  ACE_OS::memset (&pcparms, 0, sizeof pcparms);
+  pcparms.pc_cid = PC_CLNULL;
+
+  if (ACE_OS::priority_control (P_LWPID,
+                                P_MYID,
+                                PC_GETPARMS,
+                                (char *) &pcparms) == -1)
+    {
+      return -1;
+    }
+  else
+    {
+      if (pcparms.pc_cid == rt_id)
+        {
+          /* RT class */
+          rtparms_t rtparms;
+          ACE_OS::memcpy (&rtparms, pcparms.pc_clparms, sizeof rtparms);
+
+          sched_params.policy (ACE_SCHED_FIFO);
+          sched_params.priority (rtparms.rt_pri);
+          sched_params.scope (ACE_SCOPE_THREAD);
+          ACE_Time_Value quantum (rtparms.rt_tqsecs,
+                                  rtparms.rt_tqnsecs == RT_TQINF  ?  0
+                                    :  rtparms.rt_tqnsecs * 1000);
+          sched_params.quantum (quantum);
+        }
+      else if (pcparms.pc_cid == ts_id)
+        {
+          /* TS class */
+          tsparms_t tsparms;
+          ACE_OS::memcpy (&tsparms, pcparms.pc_clparms, sizeof tsparms);
+
+          sched_params.policy (ACE_SCHED_RR);
+          sched_params.priority (tsparms.ts_upri);
+          sched_params.scope (ACE_SCOPE_THREAD);
+        }
+      else
+        {
+          return -1;
+        }
+    }
+
+  return 0;
+#else  /* ! ACE_HAS_STHREADS */
+  ACE_UNUSED_ARG (sched_params);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_STHREADS */
+}
+
+int
+ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
+{
+#if defined (ACE_HAS_STHREADS)
+  ACE_Sched_Params lwp_params (sched_params);
+  lwp_params.scope (ACE_SCOPE_LWP);
+  return ACE_OS::sched_params (lwp_params);
+#else  /* ! ACE_HAS_STHREADS */
+  ACE_UNUSED_ARG (sched_params);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ! ACE_HAS_STHREADS */
 }
 
 int
