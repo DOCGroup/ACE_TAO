@@ -1,10 +1,10 @@
-Tue Apr 14 10:12:54 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+Tue Apr 14 10:23:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * TAO version 0.1.14 released.
-
-Tue Apr 14 09:58:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * TAO version 0.1.14 released.
+	* tao/ORB_Core.h (TAO_ORB_Core): Moved a bunch of "set" methods
+ 	  into the public part of the class so that we can set them if
+ 	  necessary.  Also changed the "set" methods so they return the
+ 	  original pointer, which enables "chaining".  Thanks to Brian
+ 	  Mendel for point this out.
 
 Tue Apr 14 07:16:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
