@@ -23,7 +23,7 @@ Legend:
 
 [1111  ]   libTAO and TAO_IDL compile.
 [1111  ]   IDL_Cubit compiles
-        [11 1  ] Runs
+        [1111  ] Runs
 [1111  ]   Param_Test compiles and runs for
         [x111  ] DII short
         [x111  ] DII ubstring
@@ -43,10 +43,10 @@ Legend:
         [0000  ] SII struct_seq
         [0000  ] SII objref
 [1110  ] MT_Cubit compiles
-        [100x  ] runs for Octet
-        [100x  ] runs for Short
-        [100x  ] runs for Long
-        [100x  ] runs for Struct
+        [101x  ] runs for Octet
+        [101x  ] runs for Short
+        [101x  ] runs for Long
+        [101x  ] runs for Struct
 [1101  ] orbsvcs compiles
         [10 x  ] Event_Latency runs
         [0x x  ] Simple_Naming runs

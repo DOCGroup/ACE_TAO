@@ -1,3 +1,8 @@
+Wed Jan 21 16:27:58 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/README: Changed docs to reflect the new
+ 	names and command line requirements.
+
 Wed Jan 21 15:38:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Makefile: 
