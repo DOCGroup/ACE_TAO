@@ -231,7 +231,7 @@ TAO_IDLFLAGS += <%idlflags%>
 <%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%>  =<%foreach(libs)%> -l<%lib%><%endfor%><%if(sharedname)%> $(ACELIB)<%endif%>
 <%endif%>
 <%if(lit_libs)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%if(sharedname)%> $(ACELIB)<%endif%>
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%> 
 <%endif%>
 <%if(ssl)%>
 <%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>

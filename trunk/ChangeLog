@@ -1,3 +1,22 @@
+Thu Jun 19 07:13:16 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Documented the existing 'specific' keyword.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added the ability to specify multiple project types with the
+          'specific' scope.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Removed ACESHLIB from the lit_libs assignment.
+
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+
+          Added the ssl_libs definition.
+
 Thu Jun 19 12:04:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Default_Constants.h:
@@ -7,15 +26,15 @@ Thu Jun 19 12:04:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Jun 19 07:01:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-lynxos.h: Since LynxOS lacks sys/select.h and
-	  dlfcn.h header files, config file needs ACE_LACKS_DLFCN_H
-	  and ACE_LACKS_SYS_SELECT_H to be defined. Thanks to  Olli Savia
-	  <ops@iki.fi> for the patch.
+        * ace/config-lynxos.h: Since LynxOS lacks sys/select.h and
+          dlfcn.h header files, config file needs ACE_LACKS_DLFCN_H
+          and ACE_LACKS_SYS_SELECT_H to be defined. Thanks to  Olli Savia
+          <ops@iki.fi> for the patch.
 
 Thu Jun 19 06:35:26 2003  John Michael Zorko <j.zorko@att.net>
 
-	* ace/config-macosx.h: Patches to get ACE building on OSX10.2
-	  again. 
+        * ace/config-macosx.h: Patches to get ACE building on OSX10.2
+          again.
 
 Wed Junr 19 00:27:38 2003  Stephen Torri <storri@cs.wustl.edu>
 
@@ -71,8 +90,8 @@ Wed Junr 19 00:27:38 2003  Stephen Torri <storri@cs.wustl.edu>
         * ace/Timeprobe.cpp:
         * ace/Timeprobe_T.cpp:
         * ace/Timeprobe_T.h:
-        
-          Advanced new timeprobe. New features are a 
+
+          Advanced new timeprobe. New features are a
           ring buffer for elements kept in data structure.
           This eliminates the ACE_ASSERT when an element
           is attempted to be inserted into a full data
@@ -96,7 +115,7 @@ Wed Junr 19 00:27:38 2003  Stephen Torri <storri@cs.wustl.edu>
         * ace/Metrics_Cache_T.cpp:
         * ace/Metrics_Cache_T.h:
         * ace/Metrics_Cache_T.i:
-        
+
           Added new Metrics Cache.
 
         * ACE/ace/OS.h:
@@ -104,7 +123,7 @@ Wed Junr 19 00:27:38 2003  Stephen Torri <storri@cs.wustl.edu>
           Added two new macros called ACE_NEW_MALLOC_ARRAY_RETURN
           and ACE_NEW_MALLOC_ARRAY. ACE_NEW_MALLOC_ARRAY_RETURN
           returns an array of class pointers with their space
-          preallocated and each entry initialized. If there is 
+          preallocated and each entry initialized. If there is
           an error the value contained in RET_VAL is returned.
           ACE_NEW_MALLOC_ARRAY is the same but there is no
           return of a value if there is an error.
@@ -112,30 +131,30 @@ Wed Junr 19 00:27:38 2003  Stephen Torri <storri@cs.wustl.edu>
 
 Wed Jun 18 21:27:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/exceptions.html: Added documentation for the
-	  ACE_ENV_BKWD_COMPAT macro.
+        * docs/exceptions.html: Added documentation for the
+          ACE_ENV_BKWD_COMPAT macro.
 
 Wed Jun 18 17:28:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_linux.GNU (CXX): Added some default
-	  options specified in the /usr/sys/features.h.
+        * include/makeinclude/platform_linux.GNU (CXX): Added some default
+          options specified in the /usr/sys/features.h.
 
-	  Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
+          Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
           Noseworthy <j.russell.noseworthy@objectsciences.com> for
-	  providing these patches.
+          providing these patches.
 
 Wed Jun 18 17:20:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Log_Record.cpp:
-	* ace/Log_Record.h (print): Changed the 3rd argument to be of type
-	  ACE_OSTREAM_TYPE instead of ostream.
+        * ace/Log_Record.cpp:
+        * ace/Log_Record.h (print): Changed the 3rd argument to be of type
+          ACE_OSTREAM_TYPE instead of ostream.
 
-	* ace/ace/config-sunos5.5.h: Added ACE_HAS_TEMPLATE_TYPEDEFS and
-	  removed ACE_TEMPLATES_REQUIRES_SOURCE.
+        * ace/ace/config-sunos5.5.h: Added ACE_HAS_TEMPLATE_TYPEDEFS and
+          removed ACE_TEMPLATES_REQUIRES_SOURCE.
 
-	  Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
+          Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
           Noseworthy <j.russell.noseworthy@objectsciences.com> for
-	  providing these patches.
+          providing these patches.
 
 Wed Jun 18 15:59:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

@@ -1,5 +1,6 @@
 configurations = gcc
 soext          = so
+ssl_libs       = ssl crypto
 zzip_libs      = z zziplib
 
 gcc {
