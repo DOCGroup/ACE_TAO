@@ -119,7 +119,7 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
                                        + key_string.length ());
 
       // Copy the default <iiop> prefix.
-      ACE_OS::strcpy (end_point.out (),
+      ACE_OS::strcpy (end_point.inout (),
                       iiop_prefix);
 
       // Append '://'
@@ -146,7 +146,7 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
 
       // Example:
       // prot_name.c_str () = iiop
-      ACE_OS::strcpy (end_point.out (),
+      ACE_OS::strcpy (end_point.inout (),
                       prot_name.c_str ());;
 
 
