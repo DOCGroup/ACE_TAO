@@ -23,6 +23,11 @@ project(CosNaming) : orbsvcslib, core {
   Inline_Files {
     CosNamingC.inl
   }
+ 
+  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
+  Resource_Files{
+    CosNaming.rc
+  }
 }
 
 
@@ -45,7 +50,7 @@ project(CosNaming_Skel) : orbsvcslib, core, naming {
     CosNamingS.inl
   }
 }
-  
+ 
 
 project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging, svc_utils, iortable {
   sharedname   = TAO_CosNaming_Serv
@@ -72,7 +77,7 @@ project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging, svc_utils, i
       Naming/Transient_Naming_Context.cpp
     }
   }
-  
+ 
   Header_Files {
     Naming/naming_export.h
     Naming/Naming_Server.h

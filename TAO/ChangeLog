@@ -1,8 +1,17 @@
+Wed Sep  8 10:28:29 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          Add explicit Resource_Files sections to associate
+          rc files with the correct project.
+
+
 Wed Sep  8 10:22:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_visitor_root/root.cpp:
-        
+ 
           Modified stream output to make sure a bare newline (with no
           whitespace) is added at the end of the generated source
           file containing Any operators and type codes (if the file
@@ -14,146 +23,146 @@ Wed Sep  8 10:22:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Sep  8 04:54:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
 
-	  Define TAO_*_BUILD_DLL macro for stub and skeleton libraries
-	  so that symbols will be exported for Windows builds.  I hope
-	  this will be enough so that separate #defines aren't needed
-	  for each library.  Thanks to Johnny Willemsen for help with
-	  this problem.
+          Define TAO_*_BUILD_DLL macro for stub and skeleton libraries
+          so that symbols will be exported for Windows builds.  I hope
+          this will be enough so that separate #defines aren't needed
+          for each library.  Thanks to Johnny Willemsen for help with
+          this problem.
 
 Tue Sep  7 21:48:40 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Utils/Server_Main.cpp:
+        * tao/Utils/Server_Main.cpp:
 
-	  Removed redundant include guards around ace/Time_Value.h include
-	  directive.
+          Removed redundant include guards around ace/Time_Value.h include
+          directive.
 
 Tue Sep  7 16:31:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.h:
 
-	  Removed #include of "orbsvcs/Notify/CosNotify_Initializer.h", as
-	  that requires the Notification Service implementation library to
-	  be pulled in.
+          Removed #include of "orbsvcs/Notify/CosNotify_Initializer.h", as
+          that requires the Notification Service implementation library to
+          be pulled in.
 
-	* orbsvcs/TAO_Service/svc.conf:
-	* orbsvcs/examples/Notify/ThreadPool/notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/cos_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/rt_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/cos_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/rt_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/cos_notify.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/rt_notify.conf:
+        * orbsvcs/TAO_Service/svc.conf:
+        * orbsvcs/examples/Notify/ThreadPool/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/rt_notify.conf:
 
-	  Changed CosEvent, CosNaming, CosNotification, and CosTrading
-	  Service file/path names.
+          Changed CosEvent, CosNaming, CosNotification, and CosTrading
+          Service file/path names.
 
-	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
-	* examples/Callback_Quoter/Callback_Quoter.mpc:
-	* examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
-	* examples/Event_Comm/Event_Comm.mpc:
-	* examples/Logging/Logging.mpc:
-	* examples/Simple/bank/bank.mpc:
-	* examples/Simple/echo/echo.mpc:
-	* examples/Simple/grid/grid.mpc:
-	* examples/Simple/time-date/Simple_time_date.mpc:
-	* examples/Simple/time/time.mpc:
-	* examples/ior_corbaloc/ior_corbaloc.mpc:
-	* examples/mfc/client.mpc:
-	* examples/mfc/server.mpc:
-	* orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
-	* orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
-	* orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.mpc:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
-	* orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
-	* orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	* orbsvcs/Naming_Service/Naming_Service.mpc:
-	* orbsvcs/Notify_Service/Notify_Service.mpc:
-	* orbsvcs/Time_Service/Time_Service.mpc:
-	* orbsvcs/Trading_Service/Trading_Service.mpc:
-	* orbsvcs/examples/CosEC/Factory/CosEC_Factory.mpc:
-	* orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
-	* orbsvcs/examples/CosEC/Simple/CosEC_Simple.mpc:
-	* orbsvcs/examples/Notify/Filter/Notify_Filter.mpc:
-	* orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
-	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
-	* orbsvcs/orbsvcs/CosTime.mpc:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
-	* orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
-	* orbsvcs/tests/FT_App/FT_App.mpc:
-	* orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
-	* orbsvcs/tests/Interoperable_Naming/Interoperable_Naming.mpc:
-	* orbsvcs/tests/Redundant_Naming/Redundant_Naming.mpc:
-	* orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
-	* orbsvcs/tests/Trading/Trading.mpc:
-	* orbsvcs/tests/ior_corbaname/ior_corbaname.mpc:
-	* performance-tests/POA/Demux/Demux.mpc:
+        * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Logging/Logging.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/echo/echo.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/Simple/time-date/Simple_time_date.mpc:
+        * examples/Simple/time/time.mpc:
+        * examples/ior_corbaloc/ior_corbaloc.mpc:
+        * examples/mfc/client.mpc:
+        * examples/mfc/server.mpc:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.mpc:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+        * orbsvcs/examples/CosEC/Factory/CosEC_Factory.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+        * orbsvcs/examples/CosEC/Simple/CosEC_Simple.mpc:
+        * orbsvcs/examples/Notify/Filter/Notify_Filter.mpc:
+        * orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
+        * orbsvcs/tests/Interoperable_Naming/Interoperable_Naming.mpc:
+        * orbsvcs/tests/Redundant_Naming/Redundant_Naming.mpc:
+        * orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname.mpc:
+        * performance-tests/POA/Demux/Demux.mpc:
 
-	  Update *.mpc and *.mpb files to reflect new libraries.  In many
-	  cases this required adding new base projects, as libraries were
-	  being linked in because of naming -- which was once the service
-	  implementation (and thus pulled in lots of other libraries) and
-	  is now just the Naming client stubs.
+          Update *.mpc and *.mpb files to reflect new libraries.  In many
+          cases this required adding new base projects, as libraries were
+          being linked in because of naming -- which was once the service
+          implementation (and thus pulled in lots of other libraries) and
+          is now just the Naming client stubs.
 
-	* orbsvcs/orbsvcs/Event/Local_ESTypes.h:
+        * orbsvcs/orbsvcs/Event/Local_ESTypes.h:
 
-	  Removed #include of "orbsvcs/CosNaming.h".  The Event Service
-	  does not use/depend on the Naming Service.
+          Removed #include of "orbsvcs/CosNaming.h".  The Event Service
+          does not use/depend on the Naming Service.
 
-	* orbsvcs/orbsvcs/CosEvent_Serv.rc:
-	* orbsvcs/orbsvcs/CosEvent_Skel.rc:
-	* orbsvcs/orbsvcs/CosNaming_Serv.rc:
-	* orbsvcs/orbsvcs/CosNaming_Skel.rc:
-	* orbsvcs/orbsvcs/CosNotification_Serv.rc:
-	* orbsvcs/orbsvcs/CosNotification_Skel.rc:
-	* orbsvcs/orbsvcs/CosTrading_Serv.rc:
-	* orbsvcs/orbsvcs/CosTrading_Skel.rc:
+        * orbsvcs/orbsvcs/CosEvent_Serv.rc:
+        * orbsvcs/orbsvcs/CosEvent_Skel.rc:
+        * orbsvcs/orbsvcs/CosNaming_Serv.rc:
+        * orbsvcs/orbsvcs/CosNaming_Skel.rc:
+        * orbsvcs/orbsvcs/CosNotification_Serv.rc:
+        * orbsvcs/orbsvcs/CosNotification_Skel.rc:
+        * orbsvcs/orbsvcs/CosTrading_Serv.rc:
+        * orbsvcs/orbsvcs/CosTrading_Skel.rc:
 
-	  New files, resource files for new libraries.
+          New files, resource files for new libraries.
 
-	* orbsvcs/orbsvcs/ec_typed_events.mpb:
+        * orbsvcs/orbsvcs/ec_typed_events.mpb:
 
-	  Update to contain the additional source files, etc. for Event
-	  Service client stubs only.
+          Update to contain the additional source files, etc. for Event
+          Service client stubs only.
 
-	* orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
-	* orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+        * orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
+        * orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
 
-	  New files, containing the additional source files, etc. for the
-	  Event Service implementation and servant skeletons.
+          New files, containing the additional source files, etc. for the
+          Event Service implementation and servant skeletons.
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	  Split Event Service into three libraries:
-	  CosEvent, CosEvent_Skel, and CosEvent_Serv for client stubs,
-	  servant skeletons, and service implementation respectively.
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+          Split Event Service into three libraries:
+          CosEvent, CosEvent_Skel, and CosEvent_Serv for client stubs,
+          servant skeletons, and service implementation respectively.
 
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	  Split Naming Service into three libraries:
-	  CosNaming, CosNaming_Skel, and CosNaming_Serv for client stubs,
-	  servant skeletons, and service implementation respectively.
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+          Split Naming Service into three libraries:
+          CosNaming, CosNaming_Skel, and CosNaming_Serv for client stubs,
+          servant skeletons, and service implementation respectively.
 
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	  Split Notification Service into three libraries:
-	  CosNotification, CosNotification_Skel, and CosNotification_Serv
-	  for client stubs, servant skeletons, and service implementation
-	  respectively.
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          Split Notification Service into three libraries:
+          CosNotification, CosNotification_Skel, and CosNotification_Serv
+          for client stubs, servant skeletons, and service implementation
+          respectively.
 
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	  Split Trading Service into three libraries:
-	  CosTrading, CosTrading_Skel, and CosTrading_Serv for client stubs,
-	  servant skeletons, and service implementation respectively.
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+          Split Trading Service into three libraries:
+          CosTrading, CosTrading_Skel, and CosTrading_Serv for client stubs,
+          servant skeletons, and service implementation respectively.
 
 Tue Sep  7 14:10:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
@@ -164,15 +173,15 @@ Tue Sep  7 14:10:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
 Mon Sep  6 22:59:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
+        * TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
 
           The UserException::_tao_{en,de}code() methods can throw a
-	  CORBA::MARSHAL exception so make sure that system exception is
-	  fully declared/defined by including
-	  "tao/SystemException.h".  However, only include
-	  "tao/SystemException.h" if a user exception was encountered and
-	  if we're not already including it in the stub header.  Thanks to
-	  Johnny Willemsen for reporting the problem.
+          CORBA::MARSHAL exception so make sure that system exception is
+          fully declared/defined by including
+          "tao/SystemException.h".  However, only include
+          "tao/SystemException.h" if a user exception was encountered and
+          if we're not already including it in the stub header.  Thanks to
+          Johnny Willemsen for reporting the problem.
 
 Mon Sep  6 19:45:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -184,228 +193,228 @@ Mon Sep  6 19:45:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Sep  6 00:54:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
 
-	  For some reason this MPC file was configured to generate
-	  "CosLoadManager" and "CosLoadMonitor" libraries rather
-	  "LoadManager" and "LoadMonitor" executables, respectively; a
-	  complete departure from the pre-MPC "hand-written" Makefiles and
-	  project files.  Fixed this problem.  This should also fix the
-	  Load Balancer test failures in our daily automated regression
-	  tests.
+          For some reason this MPC file was configured to generate
+          "CosLoadManager" and "CosLoadMonitor" libraries rather
+          "LoadManager" and "LoadMonitor" executables, respectively; a
+          complete departure from the pre-MPC "hand-written" Makefiles and
+          project files.  Fixed this problem.  This should also fix the
+          Load Balancer test failures in our daily automated regression
+          tests.
 
 Mon Sep  6 00:42:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Utils/Server_Main.cpp:
+        * tao/Utils/Server_Main.cpp:
 
-	  Include "ace/Time_Value.h" to pull ACE_Time_Value class
-	  declaration.
+          Include "ace/Time_Value.h" to pull ACE_Time_Value class
+          declaration.
 
-	  (Server_Main):
+          (Server_Main):
 
-	  Fixed emulated exception macro usage for CORBA::ORB_init()
-	  call within an ACE_TRY block, i.e. "ACE_TRY_CHECK", not
-	  "ACE_CHECK_RETURN(...)".
+          Fixed emulated exception macro usage for CORBA::ORB_init()
+          call within an ACE_TRY block, i.e. "ACE_TRY_CHECK", not
+          "ACE_CHECK_RETURN(...)".
 
 Sun Sep  5 22:46:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_attribute.cpp (be_attribute):
+        * TAO_IDL/be/be_attribute.cpp (be_attribute):
 
-	  TAO_IDL generated attribute methods currently have an exception
-	  specification containing CORBA::SystemException.  Make sure we
-	  generate a "tao/SystemException.h" include directive.
+          TAO_IDL generated attribute methods currently have an exception
+          specification containing CORBA::SystemException.  Make sure we
+          generate a "tao/SystemException.h" include directive.
 
-	* examples/RTScheduling/MIF_SchedulingC.h:
+        * examples/RTScheduling/MIF_SchedulingC.h:
 
-	  Removed some lingering "_tao" prefixes in TAO::Objref_Traits<>
-	  traits templates.  Fixes compile-time errors.
+          Removed some lingering "_tao" prefixes in TAO::Objref_Traits<>
+          traits templates.  Fixes compile-time errors.
 
-	* orbsvcs/tests/IOR_MCast/server.cpp:
-	* orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+        * orbsvcs/tests/IOR_MCast/server.cpp:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
 
-	  Fixed compile-time errors due to missing #include directives now
-	  made necessary by header reductions performed over the last few
-	  days.
+          Fixed compile-time errors due to missing #include directives now
+          made necessary by header reductions performed over the last few
+          days.
 
 Sun Sep  5 09:42:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Time_Utilities.i:
+        * orbsvcs/orbsvcs/Time_Utilities.i:
 
-	  Include "ace/Time_Value.h" to pull in ACE_Time_Value class
-	  declaration.
+          Include "ace/Time_Value.h" to pull in ACE_Time_Value class
+          declaration.
 
 Sun Sep  5 09:32:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/CDR/basic_types.cpp:
-	* tests/Connection_Failure/client.cpp:
-	* tests/DynAny_Test/data.h:
-	* tests/ORB_init/ORB_init.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/Connection_Failure/client.cpp:
+        * tests/DynAny_Test/data.h:
+        * tests/ORB_init/ORB_init.cpp:
 
-	  Added missing #include directives now needed due to included
-	  header reductions in tao/ORB.h.
+          Added missing #include directives now needed due to included
+          header reductions in tao/ORB.h.
 
-	* tests/ORT/ObjectReferenceFactory.h (make_object):
-	* tests/ORT/ObjectReferenceFactory.cpp (make_object):
+        * tests/ORT/ObjectReferenceFactory.h (make_object):
+        * tests/ORT/ObjectReferenceFactory.cpp (make_object):
 
-	  Removed exception specification.  Valuetypes in TAO_IDL
-	  generated stubs do not have one, nor does this test
-	  ObjectReferenceFactory method need one.  Fixes a compile-time
-	  error.
+          Removed exception specification.  Valuetypes in TAO_IDL
+          generated stubs do not have one, nor does this test
+          ObjectReferenceFactory method need one.  Fixes a compile-time
+          error.
 
 Sun Sep  5 09:21:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
-	* orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h:
-	* orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h:
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
 
-	  Added missing "tao/PolicyC.h" #include.
+          Added missing "tao/PolicyC.h" #include.
 
 Sun Sep  5 03:58:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
 
-	  Added missing "tao/SystemException.h" #include.
+          Added missing "tao/SystemException.h" #include.
 
 Sun Sep  5 01:42:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Stub.h (create_ior_info, get_profile_ior_info):
+        * tao/Stub.h (create_ior_info, get_profile_ior_info):
 
-	  Removed exception specifications from these methods.  They
-	  aren't needed and force an unecessary include of the heavy
-	  weight tao/SystemException.h header.
+          Removed exception specifications from these methods.  They
+          aren't needed and force an unecessary include of the heavy
+          weight tao/SystemException.h header.
 
-	* tao/Stub.cpp:
+        * tao/Stub.cpp:
 
-	  Likewise.
+          Likewise.
 
-	* tao/IOP_CodecC.h:
-	* tao/PollableC.h:
-	* tao/PortableInterceptorC.h:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/PortableServer/ImplRepoC.h:
-	* tao/PortableServer/ORT_Adapter.h:
+        * tao/IOP_CodecC.h:
+        * tao/PollableC.h:
+        * tao/PortableInterceptorC.h:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ORT_Adapter.h:
 
-	  Added missing header #includes now made necessary by header
-	  dependency reductions in tao/ORB.h.
+          Added missing header #includes now made necessary by header
+          dependency reductions in tao/ORB.h.
 
 Sun Sep  5 01:21:45 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/RTScheduling/MIF_SchedulingC.h:
-	* examples/RTScheduling/MIF_SchedulingC.cpp:
+        * examples/RTScheduling/MIF_SchedulingC.h:
+        * examples/RTScheduling/MIF_SchedulingC.cpp:
 
           Removed "tao_" prefix from methods in the TAO traits templates
           used in these sources, as was done to the other traits templates
-	  used throughout TAO.
+          used throughout TAO.
 
 Sun Sep  5 01:13:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB.h:
+        * tao/ORB.h:
 
-	  Removed exception specifications from CORBA::ORB methods.  The
-	  C++ mapping no longer requires them.  This also allows for the
-	  removal of the "tao/SystemException.h" include which will
-	  improve TAO library compile times, in addition to compile times
-	  for TAO_IDL generated stubs for IDL that contain no operations
-	  (e.g. anything except for non-empty interfaces).
+          Removed exception specifications from CORBA::ORB methods.  The
+          C++ mapping no longer requires them.  This also allows for the
+          removal of the "tao/SystemException.h" include which will
+          improve TAO library compile times, in addition to compile times
+          for TAO_IDL generated stubs for IDL that contain no operations
+          (e.g. anything except for non-empty interfaces).
 
-	  Include "Policy_ForwardC.h" instead of "PolicyC.h".  The former
-	  is much lighter weight, and is all that is needed.
+          Include "Policy_ForwardC.h" instead of "PolicyC.h".  The former
+          is much lighter weight, and is all that is needed.
 
-	  Forward declare some types in the CORBA namespace since they are
-	  no longer pulled in by removed "PolicyC.h" #include.
+          Forward declare some types in the CORBA namespace since they are
+          no longer pulled in by removed "PolicyC.h" #include.
 
-	  Include "VarOut_T.h" to pull in some necessary TAO templates.
+          Include "VarOut_T.h" to pull in some necessary TAO templates.
 
-	  Corrected some Doxygen documentation.
+          Corrected some Doxygen documentation.
 
-	* tao/ORB.cpp:
+        * tao/ORB.cpp:
 
-	  Removed exception specifications from CORBA::ORB methods in
-	  accordance with changes made to ORB.h.
+          Removed exception specifications from CORBA::ORB methods in
+          accordance with changes made to ORB.h.
 
-	  Removed code that initiated TAO unexpected exception handler
-	  registration.  See TAO_Singleton_Manager.* change description
-	  below for details.
+          Removed code that initiated TAO unexpected exception handler
+          registration.  See TAO_Singleton_Manager.* change description
+          below for details.
 
-	* tao/TAO_Singleton_Manager.h:
-	* tao/TAO_Singleton_Manager.cpp:
+        * tao/TAO_Singleton_Manager.h:
+        * tao/TAO_Singleton_Manager.cpp:
 
-	  Removed code that set the TAO unexpected exception handler.  It
-	  is no longer needed since the C++ mapping no longer requires
-	  unknown C++ exceptions to be converted to the CORBA::UNKNOWN
-	  system exception.  It is anyway considered "bad form" to
-	  potentially override an application defined unexpected exception
-	  handler.
+          Removed code that set the TAO unexpected exception handler.  It
+          is no longer needed since the C++ mapping no longer requires
+          unknown C++ exceptions to be converted to the CORBA::UNKNOWN
+          system exception.  It is anyway considered "bad form" to
+          potentially override an application defined unexpected exception
+          handler.
 
-	* tao/ClientRequestInfo.cpp:
-	* tao/FILE_Parser.cpp:
-	* tao/Object.cpp:
-	* tao/Object_Ref_Table.cpp:
-	* tao/PolicyFactory_Registry.cpp:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.h:
-	* tao/Stub.h:
-	* tao/DynamicInterface/Server_Request.cpp:
-	* tao/RTCORBA/RTCORBAC.h:
-	* tao/RTCORBA/RT_ORB_Loader.cpp:
-	* tao/RTCORBA/RT_Stub_Factory.cpp:
-	* tao/Utils/RIR_Narrow.cpp:
+        * tao/ClientRequestInfo.cpp:
+        * tao/FILE_Parser.cpp:
+        * tao/Object.cpp:
+        * tao/Object_Ref_Table.cpp:
+        * tao/PolicyFactory_Registry.cpp:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Stub.h:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_Stub_Factory.cpp:
+        * tao/Utils/RIR_Narrow.cpp:
 
-	  Added missing header #includes now made necessary by header
-	  dependency reductions in tao/ORB.h.
+          Added missing header #includes now made necessary by header
+          dependency reductions in tao/ORB.h.
 
-	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+        * TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
 
-	  Enabled/uncommented code that conditionally generates a
-	  "tao/SystemException.h" include for IDL that defines
-	  operations.  Since tao/ORB.h no longer includes
-	  "tao/SystemException.h", it must be included in TAO_IDL
-	  generated stub headers; at least until exception specifications
-	  are removed from IDL-based stub and skeleton operations (see Bug
-	  1852).
+          Enabled/uncommented code that conditionally generates a
+          "tao/SystemException.h" include for IDL that defines
+          operations.  Since tao/ORB.h no longer includes
+          "tao/SystemException.h", it must be included in TAO_IDL
+          generated stub headers; at least until exception specifications
+          are removed from IDL-based stub and skeleton operations (see Bug
+          1852).
 
 Sat Sep  4 23:30:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IORTable/IORTableC.h:
-	* tao/PortableServer/ORT_Adapter_Factory.h:
+        * tao/IORTable/IORTableC.h:
+        * tao/PortableServer/ORT_Adapter_Factory.h:
 
-	  Added missing "tao/SystemException.h" include.
+          Added missing "tao/SystemException.h" include.
 
 Fri Sep  3 13:55:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
 
-	  Include "tao/SystemException.h" instead of "tao/Exception.h" to
-	  pull CORBA::SystemException class declaration.
+          Include "tao/SystemException.h" instead of "tao/Exception.h" to
+          pull CORBA::SystemException class declaration.
 
-	* tao/IORManipulation/IORC.h:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/RTPortableServer/RTPortableServerC.h:
-	* tao/RTPortableServer/RTPortableServerC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
 
           Removed "tao_" prefix from methods in the TAO traits templates
           used in these sources, as was done to the other traits templates
-	  used throughout TAO.
+          used throughout TAO.
 
 Fri Sep  3 13:42:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Acceptor_Registry.h (open):
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.h (open):
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Removed the exception specification from this method.  It really
-	  isn't needed.  Removing it also allows us to avoid including
-	  "tao/SystemException.h" to pull in the CORBA::SystemException
-	  class declaration.  Fixes a compile-time error regarding
-	  undefined CORBA::SystemException type in header.
+          Removed the exception specification from this method.  It really
+          isn't needed.  Removing it also allows us to avoid including
+          "tao/SystemException.h" to pull in the CORBA::SystemException
+          class declaration.  Fixes a compile-time error regarding
+          undefined CORBA::SystemException type in header.
 
 Fri Sep  3 14:18:35 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * interop-tests/wchar/interop_wchar_i.cpp:
-          gcc on True64 is still complaining about using a
+          gcc on Tru64 is still complaining about using a
           wchar_t * where a CORBA::WChar * is expected.
           ( I wonder if this is a 32 vs 64 bit problem?)
           Try again to make it happy.
@@ -730,7 +739,7 @@ Thu Sep  2 14:41:42 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 Thu Sep  2 09:41:28 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * interop-tests/wchar/interop_wchar_i.cpp:
-          Add a cast to keep the TRUE64 compiler from complaining
+          Add a cast to keep the Tru64 compiler from complaining
           that a wchar_t * cannot be used for a
           const CORBA::WChar_T * argument.
 
