@@ -221,7 +221,7 @@ ACE_ProcessEx::start (ACE_Process_Options &options)
 		     options.get_process_attributes (),
 		     options.get_thread_attributes (),
 		     options.handle_inheritence (),
-		     options.new_console (),
+		     options.creation_flags (),
 		     options.env_buf (), // environment variables
 		     options.working_directory (),
 		     options.startup_info (),
@@ -541,7 +541,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
   : inherit_environment_ (ie),
 #if defined (ACE_WIN32)
     handle_inheritence_ (TRUE),
-    new_console_ (FALSE),
+    creation_flags_ (0),
     set_handles_called_ (0),
     process_attributes_ (NULL),
     thread_attributes_ (NULL),

@@ -106,9 +106,9 @@ public:
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
 
-  int new_console (void) const;
+  u_long creation_flags (void) const;
   // Get.
-  void new_console (int);
+  void creation_flags (u_long);
   // Set.
 
   STARTUPINFO *startup_info (void);
@@ -171,8 +171,8 @@ protected:
   BOOL handle_inheritence_;
   // Default TRUE.
 
-  BOOL new_console_;
-  // Default FALSE.
+  u_long creation_flags_;
+  // Default 0.
 
   LPSECURITY_ATTRIBUTES process_attributes_;
   // Pointer to security_buf1_.
