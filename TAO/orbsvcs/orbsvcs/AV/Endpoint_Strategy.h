@@ -133,6 +133,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
   
   
   virtual int get_stream_endpoint (CORBA::Environment &env);
+  // Gets the object reference of the "B" type streamendpoint.
   
 };  
 // ----------------------------------------------------------------------
@@ -140,19 +141,23 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
   : public TAO_AV_Endpoint_Strategy
 // = DESCRIPTION
-//    Reactive strategy
+//    Reactive strategy base clas
 {
  protected:
   TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager);
   // Constructor
 
   virtual int activate (void);
+  // creates and activates the streamendpoint, vdev, and mediacontrol
   
   virtual int activate_stream_endpoint (CORBA::Environment &env) = 0;
+  // activates the stream_endpoint with the POA
   
   virtual int activate_vdev (CORBA::Environment &env);
+  // activates the vdev with the POA
 
   virtual int activate_mediactrl (CORBA::Environment &env);
+  // activates the media controller with the POA
 
   virtual int make_vdev (T_VDev *&vdev);
   // Bridge method to create a vdev, a la Acceptor. Applications
@@ -167,6 +172,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
   // can override this
 
   TAO_ORB_Manager *orb_manager_;
+  // ORB manager, used to activate the objects
 
 };
 // ----------------------------------------------------------------------
@@ -179,8 +185,11 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
 {
  public:
   TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager);
+  // Constructor
 
   virtual int activate_stream_endpoint (CORBA::Environment &env);
+  // Overrides the base class stream_endpoint activator, to activate
+  // an "A" type endpoint
 
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
@@ -201,10 +210,13 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
   TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *);
 
   virtual int activate_stream_endpoint (CORBA::Environment &env);
+  // Overrides the base class stream_endpoint activator, to activate
+  // a "B" type endpoint
 
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
                         CORBA::Environment &env);
+  // Called by the MMDevice, when it needs to create a B type endpoint
 };
 
 // ----------------------------------------------------------------------
@@ -216,23 +228,42 @@ class TAO_ORBSVCS_Export TAO_AV_Child_Process
 {
 public:
   TAO_AV_Child_Process ();
+  // Constructor
+
   ~TAO_AV_Child_Process ();
+  // Destructor
 
   int init (int argc, char **argv);
+  // Initializes the ORB, creates and activates the
+  // T_StreamEndpoint, T_VDev, T_MediaCtrl in the POA
+  
   int run (ACE_Time_Value *tv = 0);
+  // runs the ORB event loop
 
  protected:
   const char *stream_endpoint_name_;
+  // The name of the stream endpoint. Subclasses
+  // can override this to define their own name
 
   int activate_objects (int argc, 
                         char **argv,
                         CORBA::Environment &env);
+  // Creates the objects and inserts them into the Naming
+  // Service, so the parent can pick the IOR's and
+  // return them to the client
+  
 
   int bind_to_naming_service (CORBA::Environment &env);
+  // Binds to the naming service
+  
   int register_vdev (CORBA::Environment &env);
+  // Registers vdev with the naming service
+
   int register_stream_endpoint (CORBA::Environment &env);
-  int register_with_naming_service (CORBA::Environment &env);
+  // Registers stream_endpoint with the naming service
+
   int release_semaphore ();
+  // Releases the semaphore on which the parent is waiting on
 
   virtual int make_vdev (T_VDev *&vdev);
   // Bridge method to create a vdev, a la Acceptor. Applications
