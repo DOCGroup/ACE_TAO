@@ -1108,6 +1108,8 @@ Arnaud Compan <compan@ipanematech.com>
 Frank A. Hunleth <fhunleth@cs.wustl.edu>
 Michael Searles <msearles@base16.com> 
 Bogdan Jeram <bjeram@eso.org>
+Sebastian Schubert <sschuber@et.htwk-leipzig.de>
+Li Zhou <lizhou@doc.ece.uci.edu>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
