@@ -1107,7 +1107,9 @@ template class ACE_Hash_Map_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_V
 template class ACE_Hash_Map_Iterator_Base_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
-template class TAO_Unbounded_Sequence<TAO_PropertySet*>;
+template class TAO_PropertySet <POA_CosPropertyService::PropertySet>;
+template class TAO_PropertySet<POA_CosPropertyService::PropertySetDef>
+template class TAO_Unbounded_Sequence<TAO_PropertySet<POA_CosPropertyService::PropertySet>*>;
 template class TAO_Unbounded_Sequence<TAO_PropertySetDef*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
@@ -1120,6 +1122,8 @@ template class TAO_Unbounded_Sequence<TAO_PropertySetDef*>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySet*>
+#pragma instantiate TAO_PropertySet <POA_CosPropertyService::PropertySet>;
+#pragma instantiate TAO_PropertySet<POA_CosPropertyService::PropertySetDef>
+#pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySet<POA_CosPropertyService::PropertySet>*>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySetDef*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
