@@ -55,7 +55,6 @@ TAO_Table_Adapter::priority (void) const
 int
 TAO_Table_Adapter::dispatch (TAO_ObjectKey &key,
                              TAO_ServerRequest &,
-                             void *,
                              CORBA::Object_out forward_to,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))

@@ -21,53 +21,88 @@
 
 #include "DynamicC.h"
 
+#include "tao/StringSeqC.h"
+
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#endif /* __BORLANDC__ */
+
 #if !defined (__ACE_INLINE__)
 #include "DynamicC.i"
 #endif /* !defined INLINE */
 
-#include "tao/StringSeqC.h"
-
-static const CORBA::Long _oc_Dynamic_ParameterMode[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724d6f64), ACE_NTOHL (0x653a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/ParameterMode:1.0
-  14, ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724d6f64), ACE_NTOHL (0x65000000),  // name = ParameterMode
-  3, // member count
-  9, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f494e), ACE_NTOHL (0x0),  // name = PARAM_IN
-  10, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f4f55), ACE_NTOHL (0x54000000),  // name = PARAM_OUT
-  12, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f494e), ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
-};
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_ParameterMode (CORBA::tk_enum, sizeof (_oc_Dynamic_ParameterMode), (char *) &_oc_Dynamic_ParameterMode, 0, sizeof (Dynamic::ParameterMode));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Dynamic)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ParameterMode, &_tc_TAO_tc_Dynamic_ParameterMode)
-TAO_NAMESPACE_END
 static const CORBA::Long _oc_Dynamic_Parameter[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  26, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x723a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/Parameter:1.0
-  10, ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x72000000),  // name = Parameter
+  26,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d69632f),
+  ACE_NTOHL (0x50617261),
+  ACE_NTOHL (0x6d657465),
+  ACE_NTOHL (0x723a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/Parameter:1.0
+  10,
+  ACE_NTOHL (0x50617261),
+  ACE_NTOHL (0x6d657465),
+  ACE_NTOHL (0x72000000),  // name = Parameter
   2, // member count
-  9, ACE_NTOHL (0x61726775), ACE_NTOHL (0x6d656e74), ACE_NTOHL (0x0),  // name = argument
+  9,
+  ACE_NTOHL (0x61726775),
+  ACE_NTOHL (0x6d656e74),
+  ACE_NTOHL (0x0),  // name = argument
   CORBA::tk_any,
 
-  5, ACE_NTOHL (0x6d6f6465), ACE_NTOHL (0x0),  // name = mode
+  5,
+  ACE_NTOHL (0x6d6f6465),
+  ACE_NTOHL (0x0),  // name = mode
   CORBA::tk_enum, // typecode kind
-  112, // encapsulation length
+  116, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724d6f64), ACE_NTOHL (0x653a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/ParameterMode:1.0
-    14, ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724d6f64), ACE_NTOHL (0x65000000),  // name = ParameterMode
+    36,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5061),
+    ACE_NTOHL (0x72616d65),
+    ACE_NTOHL (0x7465724d),
+    ACE_NTOHL (0x6f64653a),
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParameterMode:1.0
+    14,
+    ACE_NTOHL (0x50617261),
+    ACE_NTOHL (0x6d657465),
+    ACE_NTOHL (0x724d6f64),
+    ACE_NTOHL (0x65000000),  // name = ParameterMode
     3, // member count
-    9, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f494e), ACE_NTOHL (0x0),  // name = PARAM_IN
-    10, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f4f55), ACE_NTOHL (0x54000000),  // name = PARAM_OUT
-    12, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f494e), ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
+    9,
+    ACE_NTOHL (0x50415241),
+    ACE_NTOHL (0x4d5f494e),
+    ACE_NTOHL (0x0),  // name = PARAM_IN
+    10,
+    ACE_NTOHL (0x50415241),
+    ACE_NTOHL (0x4d5f4f55),
+    ACE_NTOHL (0x54000000),  // name = PARAM_OUT
+    12,
+    ACE_NTOHL (0x50415241),
+    ACE_NTOHL (0x4d5f494e),
+    ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
 
 };
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_Parameter (CORBA::tk_struct, sizeof (_oc_Dynamic_Parameter), (char *) &_oc_Dynamic_Parameter, 0, sizeof (Dynamic::Parameter));
+
+static CORBA::TypeCode _tc_TAO_tc_Dynamic_Parameter (
+    CORBA::tk_struct,
+    sizeof (_oc_Dynamic_Parameter),
+    (char *) &_oc_Dynamic_Parameter,
+    0,
+    sizeof (Dynamic::Parameter)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Dynamic)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Parameter, &_tc_TAO_tc_Dynamic_Parameter)
 TAO_NAMESPACE_END
+
 void Dynamic::Parameter::_tao_any_destructor (void *x)
 {
   Parameter *tmp = ACE_static_cast (Parameter*,x);
@@ -76,7 +111,7 @@ void Dynamic::Parameter::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CS_
 
@@ -85,43 +120,43 @@ void Dynamic::Parameter::_tao_any_destructor (void *x)
   {
     Dynamic::Parameter* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_Dynamic_ParameterList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       Dynamic::Parameter *old = ACE_reinterpret_cast (Dynamic::Parameter *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_Dynamic_ParameterList::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     Dynamic::Parameter *tmp = ACE_reinterpret_cast (Dynamic::Parameter *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_Dynamic_ParameterList::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::~_TAO_Unbounded_Sequence_Dynamic_ParameterList (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMIC_PARAMETERLIST_CS_)
 #define _DYNAMIC_PARAMETERLIST_CS_
@@ -133,30 +168,30 @@ void Dynamic::Parameter::_tao_any_destructor (void *x)
 Dynamic::ParameterList::ParameterList (void)
 {}
 Dynamic::ParameterList::ParameterList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<Dynamic::Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 Dynamic::ParameterList::ParameterList (CORBA::ULong max, CORBA::ULong length, Dynamic::Parameter *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<Dynamic::Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 Dynamic::ParameterList::ParameterList (const ParameterList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<Dynamic::Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 Dynamic::ParameterList::~ParameterList (void) // dtor
@@ -173,80 +208,187 @@ void Dynamic::ParameterList::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_Dynamic_ParameterList[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724c6973), ACE_NTOHL (0x743a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/ParameterList:1.0
-  14, ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724c6973), ACE_NTOHL (0x74000000),  // name = ParameterList
+  30,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d69632f),
+  ACE_NTOHL (0x50617261),
+  ACE_NTOHL (0x6d657465),
+  ACE_NTOHL (0x724c6973),
+  ACE_NTOHL (0x743a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/ParameterList:1.0
+  14,
+  ACE_NTOHL (0x50617261),
+  ACE_NTOHL (0x6d657465),
+  ACE_NTOHL (0x724c6973),
+  ACE_NTOHL (0x74000000),  // name = ParameterList
   CORBA::tk_sequence, // typecode kind
-  224, // encapsulation length
+  228, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    208, // encapsulation length
+    212, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      26, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x723a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/Parameter:1.0
-      10, ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x72000000),  // name = Parameter
+      26,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x44796e61),
+      ACE_NTOHL (0x6d69632f),
+      ACE_NTOHL (0x50617261),
+      ACE_NTOHL (0x6d657465),
+      ACE_NTOHL (0x723a312e),
+      ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/Parameter:1.0
+      10,
+      ACE_NTOHL (0x50617261),
+      ACE_NTOHL (0x6d657465),
+      ACE_NTOHL (0x72000000),  // name = Parameter
       2, // member count
-      9, ACE_NTOHL (0x61726775), ACE_NTOHL (0x6d656e74), ACE_NTOHL (0x0),  // name = argument
+      9,
+      ACE_NTOHL (0x61726775),
+      ACE_NTOHL (0x6d656e74),
+      ACE_NTOHL (0x0),  // name = argument
       CORBA::tk_any,
 
-      5, ACE_NTOHL (0x6d6f6465), ACE_NTOHL (0x0),  // name = mode
+      5,
+      ACE_NTOHL (0x6d6f6465),
+      ACE_NTOHL (0x0),  // name = mode
       CORBA::tk_enum, // typecode kind
-      112, // encapsulation length
+      116, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724d6f64), ACE_NTOHL (0x653a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/ParameterMode:1.0
-        14, ACE_NTOHL (0x50617261), ACE_NTOHL (0x6d657465), ACE_NTOHL (0x724d6f64), ACE_NTOHL (0x65000000),  // name = ParameterMode
+        36,
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+        ACE_NTOHL (0x412f5061),
+        ACE_NTOHL (0x72616d65),
+        ACE_NTOHL (0x7465724d),
+        ACE_NTOHL (0x6f64653a),
+        ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParameterMode:1.0
+        14,
+        ACE_NTOHL (0x50617261),
+        ACE_NTOHL (0x6d657465),
+        ACE_NTOHL (0x724d6f64),
+        ACE_NTOHL (0x65000000),  // name = ParameterMode
         3, // member count
-        9, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f494e), ACE_NTOHL (0x0),  // name = PARAM_IN
-        10, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f4f55), ACE_NTOHL (0x54000000),  // name = PARAM_OUT
-        12, ACE_NTOHL (0x50415241), ACE_NTOHL (0x4d5f494e), ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
+        9,
+        ACE_NTOHL (0x50415241),
+        ACE_NTOHL (0x4d5f494e),
+        ACE_NTOHL (0x0),  // name = PARAM_IN
+        10,
+        ACE_NTOHL (0x50415241),
+        ACE_NTOHL (0x4d5f4f55),
+        ACE_NTOHL (0x54000000),  // name = PARAM_OUT
+        12,
+        ACE_NTOHL (0x50415241),
+        ACE_NTOHL (0x4d5f494e),
+        ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
 
 
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_ParameterList (CORBA::tk_alias, sizeof (_oc_Dynamic_ParameterList), (char *) &_oc_Dynamic_ParameterList, 0, sizeof (Dynamic::ParameterList));
+
+static CORBA::TypeCode _tc_TAO_tc_Dynamic_ParameterList (
+    CORBA::tk_alias,
+    sizeof (_oc_Dynamic_ParameterList),
+    (char *) &_oc_Dynamic_ParameterList,
+    0,
+    sizeof (Dynamic::ParameterList)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Dynamic)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ParameterList, &_tc_TAO_tc_Dynamic_ParameterList)
 TAO_NAMESPACE_END
+
 static const CORBA::Long _oc_Dynamic_ContextList[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  28, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x436f6e74), ACE_NTOHL (0x6578744c), ACE_NTOHL (0x6973743a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:Dynamic/ContextList:1.0
-  12, ACE_NTOHL (0x436f6e74), ACE_NTOHL (0x6578744c), ACE_NTOHL (0x69737400),  // name = ContextList
+  28,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d69632f),
+  ACE_NTOHL (0x436f6e74),
+  ACE_NTOHL (0x6578744c),
+  ACE_NTOHL (0x6973743a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:Dynamic/ContextList:1.0
+  12,
+  ACE_NTOHL (0x436f6e74),
+  ACE_NTOHL (0x6578744c),
+  ACE_NTOHL (0x69737400),  // name = ContextList
   CORBA::tk_alias, // typecode kind for typedefs
   80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5374), ACE_NTOHL (0x72696e67), ACE_NTOHL (0x5365713a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringSeq:1.0
-    10, ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e675365), ACE_NTOHL (0x71000000),  // name = StringSeq
+    32,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5374),
+    ACE_NTOHL (0x72696e67),
+    ACE_NTOHL (0x5365713a),
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringSeq:1.0
+    10,
+    ACE_NTOHL (0x53747269),
+    ACE_NTOHL (0x6e675365),
+    ACE_NTOHL (0x71000000),  // name = StringSeq
     CORBA::tk_sequence, // typecode kind
     16, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       0U,
 
 
 };
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_ContextList (CORBA::tk_alias, sizeof (_oc_Dynamic_ContextList), (char *) &_oc_Dynamic_ContextList, 0, sizeof (Dynamic::ContextList));
+
+static CORBA::TypeCode _tc_TAO_tc_Dynamic_ContextList (
+    CORBA::tk_alias,
+    sizeof (_oc_Dynamic_ContextList),
+    (char *) &_oc_Dynamic_ContextList,
+    0,
+    sizeof (Dynamic::ContextList)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Dynamic)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ContextList, &_tc_TAO_tc_Dynamic_ContextList)
 TAO_NAMESPACE_END
+
 static const CORBA::Long _oc_Dynamic_TypeCode[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  25, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x54797065), ACE_NTOHL (0x436f6465), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:Dynamic/TypeCode:1.0
-  9, ACE_NTOHL (0x54797065), ACE_NTOHL (0x436f6465), ACE_NTOHL (0x0),  // name = TypeCode
+  25,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d69632f),
+  ACE_NTOHL (0x54797065),
+  ACE_NTOHL (0x436f6465),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:Dynamic/TypeCode:1.0
+  9,
+  ACE_NTOHL (0x54797065),
+  ACE_NTOHL (0x436f6465),
+  ACE_NTOHL (0x0),  // name = TypeCode
   CORBA::tk_TypeCode,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_TypeCode (CORBA::tk_alias, sizeof (_oc_Dynamic_TypeCode), (char *) &_oc_Dynamic_TypeCode, 0, sizeof (Dynamic::TypeCode));
+
+static CORBA::TypeCode _tc_TAO_tc_Dynamic_TypeCode (
+    CORBA::tk_alias,
+    sizeof (_oc_Dynamic_TypeCode),
+    (char *) &_oc_Dynamic_TypeCode,
+    0,
+    sizeof (Dynamic::TypeCode)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Dynamic)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TypeCode, &_tc_TAO_tc_Dynamic_TypeCode)
 TAO_NAMESPACE_END
 
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CS_
 
@@ -256,59 +398,69 @@ TAO_NAMESPACE_END
   {
     CORBA::TypeCode **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       CORBA::TypeCode **old = ACE_reinterpret_cast (CORBA::TypeCode**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = CORBA::TypeCode::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
+        {
+          if (!this->release_)
+            {
+              tmp[i] = CORBA::TypeCode::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
+
       if (this->release_)
-        delete[] old;
-      
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     CORBA::TypeCode **tmp = ACE_reinterpret_cast (CORBA::TypeCode**, this->buffer_);
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = CORBA::TypeCode::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = CORBA::TypeCode::_nil ();
+      }
+
     _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::freebuf (tmp);
     this->buffer_ = 0;
   }
-  
+
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::~_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (void)
   {
     this->_deallocate_buffer ();
   }
-  
+
   void
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     CORBA::TypeCode **tmp = ACE_reinterpret_cast (CORBA::TypeCode**, this->buffer_);
-    
+
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = CORBA::TypeCode::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = CORBA::TypeCode::_nil ();
+      }
   }
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CS_)
 #define _DYNAMIC_EXCEPTIONLIST_CS_
@@ -320,30 +472,30 @@ TAO_NAMESPACE_END
 Dynamic::ExceptionList::ExceptionList (void)
 {}
 Dynamic::ExceptionList::ExceptionList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 Dynamic::ExceptionList::ExceptionList (CORBA::ULong max, CORBA::ULong length, CORBA::TypeCode_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 Dynamic::ExceptionList::ExceptionList (const ExceptionList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 Dynamic::ExceptionList::~ExceptionList (void) // dtor
@@ -360,92 +512,113 @@ void Dynamic::ExceptionList::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_Dynamic_ExceptionList[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x45786365), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e4c6973), ACE_NTOHL (0x743a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/ExceptionList:1.0
-  14, ACE_NTOHL (0x45786365), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e4c6973), ACE_NTOHL (0x74000000),  // name = ExceptionList
+  30,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d69632f),
+  ACE_NTOHL (0x45786365),
+  ACE_NTOHL (0x7074696f),
+  ACE_NTOHL (0x6e4c6973),
+  ACE_NTOHL (0x743a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/ExceptionList:1.0
+  14,
+  ACE_NTOHL (0x45786365),
+  ACE_NTOHL (0x7074696f),
+  ACE_NTOHL (0x6e4c6973),
+  ACE_NTOHL (0x74000000),  // name = ExceptionList
   CORBA::tk_sequence, // typecode kind
   72, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_alias, // typecode kind for typedefs
     56, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      25, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x54797065), ACE_NTOHL (0x436f6465), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:Dynamic/TypeCode:1.0
-      9, ACE_NTOHL (0x54797065), ACE_NTOHL (0x436f6465), ACE_NTOHL (0x0),  // name = TypeCode
+      25,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x44796e61),
+      ACE_NTOHL (0x6d69632f),
+      ACE_NTOHL (0x54797065),
+      ACE_NTOHL (0x436f6465),
+      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x0),  // repository ID = IDL:Dynamic/TypeCode:1.0
+      9,
+      ACE_NTOHL (0x54797065),
+      ACE_NTOHL (0x436f6465),
+      ACE_NTOHL (0x0),  // name = TypeCode
       CORBA::tk_TypeCode,
 
 
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_ExceptionList (CORBA::tk_alias, sizeof (_oc_Dynamic_ExceptionList), (char *) &_oc_Dynamic_ExceptionList, 0, sizeof (Dynamic::ExceptionList));
+
+static CORBA::TypeCode _tc_TAO_tc_Dynamic_ExceptionList (
+    CORBA::tk_alias,
+    sizeof (_oc_Dynamic_ExceptionList),
+    (char *) &_oc_Dynamic_ExceptionList,
+    0,
+    sizeof (Dynamic::ExceptionList)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Dynamic)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ExceptionList, &_tc_TAO_tc_Dynamic_ExceptionList)
 TAO_NAMESPACE_END
+
 static const CORBA::Long _oc_Dynamic_RequestContext[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x44796e61), ACE_NTOHL (0x6d69632f), ACE_NTOHL (0x52657175), ACE_NTOHL (0x65737443), ACE_NTOHL (0x6f6e7465), ACE_NTOHL (0x78743a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:Dynamic/RequestContext:1.0
-  15, ACE_NTOHL (0x52657175), ACE_NTOHL (0x65737443), ACE_NTOHL (0x6f6e7465), ACE_NTOHL (0x78740000),  // name = RequestContext
+  31,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d69632f),
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737443),
+  ACE_NTOHL (0x6f6e7465),
+  ACE_NTOHL (0x78743a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:Dynamic/RequestContext:1.0
+  15,
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737443),
+  ACE_NTOHL (0x6f6e7465),
+  ACE_NTOHL (0x78740000),  // name = RequestContext
   CORBA::tk_alias, // typecode kind for typedefs
   80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5374), ACE_NTOHL (0x72696e67), ACE_NTOHL (0x5365713a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringSeq:1.0
-    10, ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e675365), ACE_NTOHL (0x71000000),  // name = StringSeq
+    32,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5374),
+    ACE_NTOHL (0x72696e67),
+    ACE_NTOHL (0x5365713a),
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringSeq:1.0
+    10,
+    ACE_NTOHL (0x53747269),
+    ACE_NTOHL (0x6e675365),
+    ACE_NTOHL (0x71000000),  // name = StringSeq
     CORBA::tk_sequence, // typecode kind
     16, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       0U,
 
 
 };
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_RequestContext (CORBA::tk_alias, sizeof (_oc_Dynamic_RequestContext), (char *) &_oc_Dynamic_RequestContext, 0, sizeof (Dynamic::RequestContext));
+
+static CORBA::TypeCode _tc_TAO_tc_Dynamic_RequestContext (
+    CORBA::tk_alias,
+    sizeof (_oc_Dynamic_RequestContext),
+    (char *) &_oc_Dynamic_RequestContext,
+    0,
+    sizeof (Dynamic::RequestContext)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Dynamic)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestContext, &_tc_TAO_tc_Dynamic_RequestContext)
 TAO_NAMESPACE_END
-void operator<<= (CORBA::Any &_tao_any, Dynamic::ParameterMode _tao_elem)
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Dynamic::_tc_ParameterMode,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Dynamic::ParameterMode &_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_ParameterMode, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
-      {
-        return 0;
-      }
-
-    TAO_InputCDR stream (
-        _tao_any._tao_get_cdr (),
-        _tao_any._tao_byte_order ()
-      );
-    if (stream >> _tao_elem)
-    {
-      return 1;
-    }
-  }
-  ACE_CATCHANY
-  {
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 
 void operator<<= (CORBA::Any &_tao_any, const Dynamic::Parameter &_tao_elem) // copying
 {
@@ -483,14 +656,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Parameter
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_Parameter, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (Dynamic::_tc_Parameter, ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
     if (!result)
-      {
-        return 0;
-      }
+      return 0; // not equivalent
 
     if (_tao_any.any_owns_data ())
     {
@@ -576,14 +747,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Parameter
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_ParameterList, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (Dynamic::_tc_ParameterList, ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
     if (!result)
-      {
-        return 0;
-      }
+      return 0; // not equivalent
 
     if (_tao_any.any_owns_data ())
     {
@@ -669,14 +838,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Dynamic::Exception
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (Dynamic::_tc_ExceptionList, ACE_TRY_ENV);
+
+    CORBA::Boolean result = type->equivalent (Dynamic::_tc_ExceptionList, ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
     if (!result)
-      {
-        return 0;
-      }
+      return 0; // not equivalent
 
     if (_tao_any.any_owns_data ())
     {
@@ -747,8 +914,13 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 58.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -789,8 +961,13 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 58.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -801,4 +978,3 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
-

@@ -39,7 +39,7 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  POA_CORBA_FixedDef_tie : public POA_CORBA_FixedDef
+class TAO_IFR_Client_Export POA_CORBA_FixedDef_tie : public POA_CORBA_FixedDef
 {
 public:
   POA_CORBA_FixedDef_tie (T &t);
@@ -77,8 +77,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void digits (
+  
+    void digits (
       CORBA::UShort digits,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -86,16 +86,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::Short scale (
+  
+    CORBA::Short scale (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void scale (
+  
+    void scale (
       CORBA::Short scale,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -103,32 +103,32 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::TypeCode_ptr type (
+  
+    CORBA::TypeCode_ptr type (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::DefinitionKind def_kind (
+  
+    CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void destroy (
+  
+    void destroy (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-private:
+  
+  private:
   T *ptr_;
   PortableServer::POA_var poa_;
   CORBA::Boolean rel_;
@@ -140,7 +140,7 @@ private:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  POA_CORBA_ValueMemberDef_tie : public POA_CORBA_ValueMemberDef
+class TAO_IFR_Client_Export POA_CORBA_ValueMemberDef_tie : public POA_CORBA_ValueMemberDef
 {
 public:
   POA_CORBA_ValueMemberDef_tie (T &t);
@@ -178,16 +178,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_IDLType_ptr type_def (
+  
+    CORBA_IDLType_ptr type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void type_def (
+  
+    void type_def (
       CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -195,16 +195,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::Visibility access (
+  
+    CORBA::Visibility access (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void access (
+  
+    void access (
       CORBA::Visibility access,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -212,16 +212,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * id (
+  
+    char * id (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void id (
+  
+    void id (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -229,16 +229,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * name (
+  
+    char * name (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void name (
+  
+    void name (
       const char * name,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -246,16 +246,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * version (
+  
+    char * version (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void version (
+  
+    void version (
       const char * version,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -263,40 +263,40 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Container_ptr defined_in (
+  
+    CORBA_Container_ptr defined_in (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * absolute_name (
+  
+    char * absolute_name (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Repository_ptr containing_repository (
+  
+    CORBA_Repository_ptr containing_repository (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Contained::Description * describe (
+  
+    CORBA_Contained::Description * describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void move (
+  
+    void move (
       CORBA_Container_ptr new_container,
       const char * new_name,
       const char * new_version,
@@ -306,24 +306,24 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::DefinitionKind def_kind (
+  
+    CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void destroy (
+  
+    void destroy (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-private:
+  
+  private:
   T *ptr_;
   PortableServer::POA_var poa_;
   CORBA::Boolean rel_;
@@ -335,7 +335,7 @@ private:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  POA_CORBA_ValueDef_tie : public POA_CORBA_ValueDef
+class TAO_IFR_Client_Export POA_CORBA_ValueDef_tie : public POA_CORBA_ValueDef
 {
 public:
   POA_CORBA_ValueDef_tie (T &t);
@@ -373,8 +373,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void supported_interfaces (
+  
+    void supported_interfaces (
       const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -382,16 +382,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_InitializerSeq * initializers (
+  
+    CORBA_InitializerSeq * initializers (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void initializers (
+  
+    void initializers (
       const CORBA_InitializerSeq & initializers,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -399,16 +399,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ValueDef_ptr base_value (
+  
+    CORBA_ValueDef_ptr base_value (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void base_value (
+  
+    void base_value (
       CORBA_ValueDef_ptr base_value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -416,16 +416,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ValueDefSeq * abstract_base_values (
+  
+    CORBA_ValueDefSeq * abstract_base_values (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void abstract_base_values (
+  
+    void abstract_base_values (
       const CORBA_ValueDefSeq & abstract_base_values,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -433,16 +433,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::Boolean is_abstract (
+  
+    CORBA::Boolean is_abstract (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void is_abstract (
+  
+    void is_abstract (
       CORBA::Boolean is_abstract,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -450,16 +450,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::Boolean is_custom (
+  
+    CORBA::Boolean is_custom (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void is_custom (
+  
+    void is_custom (
       CORBA::Boolean is_custom,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -467,16 +467,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::Boolean is_truncatable (
+  
+    CORBA::Boolean is_truncatable (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void is_truncatable (
+  
+    void is_truncatable (
       CORBA::Boolean is_truncatable,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -484,8 +484,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::Boolean is_a (
+  
+    CORBA::Boolean is_a (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -493,16 +493,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ValueDef::FullValueDescription * describe_value (
+  
+    CORBA_ValueDef::FullValueDescription * describe_value (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ValueMemberDef_ptr create_value_member (
+  
+    CORBA_ValueMemberDef_ptr create_value_member (
       const char * id,
       const char * name,
       const char * version,
@@ -514,8 +514,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_AttributeDef_ptr create_attribute (
+  
+    CORBA_AttributeDef_ptr create_attribute (
       const char * id,
       const char * name,
       const char * version,
@@ -527,8 +527,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_OperationDef_ptr create_operation (
+  
+    CORBA_OperationDef_ptr create_operation (
       const char * id,
       const char * name,
       const char * version,
@@ -543,8 +543,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Contained_ptr lookup (
+  
+    CORBA_Contained_ptr lookup (
       const char * search_name,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -552,8 +552,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ContainedSeq * contents (
+  
+    CORBA_ContainedSeq * contents (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Environment &ACE_TRY_ENV = 
@@ -562,8 +562,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ContainedSeq * lookup_name (
+  
+    CORBA_ContainedSeq * lookup_name (
       const char * search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
@@ -574,8 +574,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Container::DescriptionSeq * describe_contents (
+  
+    CORBA_Container::DescriptionSeq * describe_contents (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs,
@@ -585,8 +585,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ModuleDef_ptr create_module (
+  
+    CORBA_ModuleDef_ptr create_module (
       const char * id,
       const char * name,
       const char * version,
@@ -596,8 +596,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ConstantDef_ptr create_constant (
+  
+    CORBA_ConstantDef_ptr create_constant (
       const char * id,
       const char * name,
       const char * version,
@@ -609,8 +609,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_StructDef_ptr create_struct (
+  
+    CORBA_StructDef_ptr create_struct (
       const char * id,
       const char * name,
       const char * version,
@@ -621,8 +621,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_UnionDef_ptr create_union (
+  
+    CORBA_UnionDef_ptr create_union (
       const char * id,
       const char * name,
       const char * version,
@@ -634,8 +634,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_EnumDef_ptr create_enum (
+  
+    CORBA_EnumDef_ptr create_enum (
       const char * id,
       const char * name,
       const char * version,
@@ -646,8 +646,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_AliasDef_ptr create_alias (
+  
+    CORBA_AliasDef_ptr create_alias (
       const char * id,
       const char * name,
       const char * version,
@@ -658,8 +658,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_InterfaceDef_ptr create_interface (
+  
+    CORBA_InterfaceDef_ptr create_interface (
       const char * id,
       const char * name,
       const char * version,
@@ -670,8 +670,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ValueDef_ptr create_value (
+  
+    CORBA_ValueDef_ptr create_value (
       const char * id,
       const char * name,
       const char * version,
@@ -688,8 +688,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ValueBoxDef_ptr create_value_box (
+  
+    CORBA_ValueBoxDef_ptr create_value_box (
       const char * id,
       const char * name,
       const char * version,
@@ -700,8 +700,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_ExceptionDef_ptr create_exception (
+  
+    CORBA_ExceptionDef_ptr create_exception (
       const char * id,
       const char * name,
       const char * version,
@@ -712,8 +712,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_NativeDef_ptr create_native (
+  
+    CORBA_NativeDef_ptr create_native (
       const char * id,
       const char * name,
       const char * version,
@@ -723,8 +723,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_AbstractInterfaceDef_ptr create_abstract_interface (
+  
+    CORBA_AbstractInterfaceDef_ptr create_abstract_interface (
       const char * id,
       const char * name,
       const char * version,
@@ -735,8 +735,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_LocalInterfaceDef_ptr create_local_interface (
+  
+    CORBA_LocalInterfaceDef_ptr create_local_interface (
       const char * id,
       const char * name,
       const char * version,
@@ -747,16 +747,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * id (
+  
+    char * id (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void id (
+  
+    void id (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -764,16 +764,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * name (
+  
+    char * name (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void name (
+  
+    void name (
       const char * name,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -781,16 +781,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * version (
+  
+    char * version (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void version (
+  
+    void version (
       const char * version,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -798,40 +798,40 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Container_ptr defined_in (
+  
+    CORBA_Container_ptr defined_in (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * absolute_name (
+  
+    char * absolute_name (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Repository_ptr containing_repository (
+  
+    CORBA_Repository_ptr containing_repository (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Contained::Description * describe (
+  
+    CORBA_Contained::Description * describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void move (
+  
+    void move (
       CORBA_Container_ptr new_container,
       const char * new_name,
       const char * new_version,
@@ -841,32 +841,32 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::TypeCode_ptr type (
+  
+    CORBA::TypeCode_ptr type (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::DefinitionKind def_kind (
+  
+    CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void destroy (
+  
+    void destroy (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-private:
+  
+  private:
   T *ptr_;
   PortableServer::POA_var poa_;
   CORBA::Boolean rel_;
@@ -878,7 +878,7 @@ private:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class  POA_CORBA_ValueBoxDef_tie : public POA_CORBA_ValueBoxDef
+class TAO_IFR_Client_Export POA_CORBA_ValueBoxDef_tie : public POA_CORBA_ValueBoxDef
 {
 public:
   POA_CORBA_ValueBoxDef_tie (T &t);
@@ -916,8 +916,8 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void original_type_def (
+  
+    void original_type_def (
       CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -925,16 +925,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * id (
+  
+    char * id (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void id (
+  
+    void id (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -942,16 +942,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * name (
+  
+    char * name (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void name (
+  
+    void name (
       const char * name,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -959,16 +959,16 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * version (
+  
+    char * version (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void version (
+  
+    void version (
       const char * version,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -976,40 +976,40 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Container_ptr defined_in (
+  
+    CORBA_Container_ptr defined_in (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  char * absolute_name (
+  
+    char * absolute_name (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Repository_ptr containing_repository (
+  
+    CORBA_Repository_ptr containing_repository (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA_Contained::Description * describe (
+  
+    CORBA_Contained::Description * describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void move (
+  
+    void move (
       CORBA_Container_ptr new_container,
       const char * new_name,
       const char * new_version,
@@ -1019,32 +1019,32 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::TypeCode_ptr type (
+  
+    CORBA::TypeCode_ptr type (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  CORBA::DefinitionKind def_kind (
+  
+    CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  void destroy (
+  
+    void destroy (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-private:
+  
+  private:
   T *ptr_;
   PortableServer::POA_var poa_;
   CORBA::Boolean rel_;

@@ -52,7 +52,7 @@ typedef POA_CORBA_IRObject *POA_CORBA_IRObject_ptr;
 class _TAO_CORBA_IRObject_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_IRObject_Strategized_Proxy_Broker;
 
-class  POA_CORBA_IRObject :  public virtual PortableServer::ServantBase
+class TAO_IFR_Client_Export POA_CORBA_IRObject :  public virtual PortableServer::ServantBase
 {
 protected:
   POA_CORBA_IRObject (void);
@@ -75,32 +75,28 @@ public:
   static void _is_a_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      TAO_ServerRequest &req,
+      void *_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   ::CORBA_IRObject *_this (
@@ -117,13 +113,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_def_kind_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void destroy (
@@ -133,13 +128,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void destroy_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void destroy_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
 
@@ -150,7 +144,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_CORBA_IRObject_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IRObject_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_IRObject_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IRObject_Proxy_Broker
 {
 public: 
   _TAO_CORBA_IRObject_Strategized_Proxy_Broker (void);
@@ -159,30 +153,30 @@ public:
   
   virtual ::_TAO_CORBA_IRObject_Proxy_Impl &select_proxy (
     ::CORBA_IRObject *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:
 
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
+  // Helper methods that takes care to create the proxy
+  // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
-
+  
 private:
   
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
   ::_TAO_CORBA_IRObject_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
+  // This funxtion is used to get an handle to the unique instance
+  // of the Strategized Proxy Broker that is available for a given
+  // interface.
 
 public:
   static _TAO_CORBA_IRObject_Strategized_Proxy_Broker *the_TAO_CORBA_IRObject_Strategized_Proxy_Broker (void);
@@ -198,7 +192,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_CORBA_IRObject_ThruPOA_Proxy_Impl : 
+class TAO_IFR_Client_Export _TAO_CORBA_IRObject_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_IRObject_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
@@ -207,14 +201,14 @@ public:
   
   virtual ~_TAO_CORBA_IRObject_ThruPOA_Proxy_Impl (void) { }
   
-    virtual CORBA::DefinitionKind def_kind (
+  virtual CORBA::DefinitionKind def_kind (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual void destroy (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
@@ -222,13 +216,14 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
+  
 };
-
 
 //
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
+
 
 class POA_CORBA_Contained;
 typedef POA_CORBA_Contained *POA_CORBA_Contained_ptr;
@@ -236,7 +231,7 @@ typedef POA_CORBA_Contained *POA_CORBA_Contained_ptr;
 class _TAO_CORBA_Contained_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_Contained_Strategized_Proxy_Broker;
 
-class  POA_CORBA_Contained : public virtual POA_CORBA_IRObject
+class TAO_IFR_Client_Export POA_CORBA_Contained : public virtual POA_CORBA_IRObject
 {
 protected:
   POA_CORBA_Contained (void);
@@ -259,32 +254,28 @@ public:
   static void _is_a_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      TAO_ServerRequest &req,
+      void *_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   ::CORBA_Contained *_this (
@@ -301,13 +292,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_id_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_id_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void id (
@@ -318,13 +308,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _set_id_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _set_id_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual char * name (
@@ -334,13 +323,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_name_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_name_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void name (
@@ -351,13 +339,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _set_name_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _set_name_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual char * version (
@@ -367,13 +354,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_version_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_version_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void version (
@@ -384,13 +370,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _set_version_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _set_version_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_Container_ptr defined_in (
@@ -400,13 +385,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_defined_in_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual char * absolute_name (
@@ -416,13 +400,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_absolute_name_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_Repository_ptr containing_repository (
@@ -432,13 +415,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_containing_repository_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_Contained::Description * describe (
@@ -448,13 +430,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void describe_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void describe_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void move (
@@ -467,13 +448,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void move_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void move_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _get_def_kind_skel (
@@ -500,7 +480,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_CORBA_Contained_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Contained_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_Contained_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Contained_Proxy_Broker
 {
 public: 
   _TAO_CORBA_Contained_Strategized_Proxy_Broker (void);
@@ -509,30 +489,30 @@ public:
   
   virtual ::_TAO_CORBA_Contained_Proxy_Impl &select_proxy (
     ::CORBA_Contained *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:
 
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
+  // Helper methods that takes care to create the proxy
+  // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
-
+  
 private:
   
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
   ::_TAO_CORBA_Contained_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
+  // This funxtion is used to get an handle to the unique instance
+  // of the Strategized Proxy Broker that is available for a given
+  // interface.
 
 public:
   static _TAO_CORBA_Contained_Strategized_Proxy_Broker *the_TAO_CORBA_Contained_Strategized_Proxy_Broker (void);
@@ -548,7 +528,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_CORBA_Contained_ThruPOA_Proxy_Impl : 
+class TAO_IFR_Client_Export _TAO_CORBA_Contained_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_Contained_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_IRObject_ThruPOA_Proxy_Impl
@@ -559,14 +539,14 @@ public:
   
   virtual ~_TAO_CORBA_Contained_ThruPOA_Proxy_Impl (void) { }
   
-    virtual char * id (
+  virtual char * id (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual void id (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -575,7 +555,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual char * name (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
@@ -583,7 +563,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual void name (
       CORBA_Object *_collocated_tao_target_,
       const char * name,
@@ -592,7 +572,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual char * version (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
@@ -600,7 +580,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual void version (
       CORBA_Object *_collocated_tao_target_,
       const char * version,
@@ -609,7 +589,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_Container_ptr defined_in (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
@@ -617,7 +597,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual char * absolute_name (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
@@ -625,7 +605,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_Repository_ptr containing_repository (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
@@ -633,7 +613,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_Contained::Description * describe (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
@@ -641,7 +621,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual void move (
       CORBA_Object *_collocated_tao_target_,
       CORBA_Container_ptr new_container,
@@ -652,13 +632,14 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
+  
 };
-
 
 //
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
+
 
 class POA_CORBA_Container;
 typedef POA_CORBA_Container *POA_CORBA_Container_ptr;
@@ -666,7 +647,7 @@ typedef POA_CORBA_Container *POA_CORBA_Container_ptr;
 class _TAO_CORBA_Container_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_Container_Strategized_Proxy_Broker;
 
-class  POA_CORBA_Container : public virtual POA_CORBA_IRObject
+class TAO_IFR_Client_Export POA_CORBA_Container : public virtual POA_CORBA_IRObject
 {
 protected:
   POA_CORBA_Container (void);
@@ -689,32 +670,28 @@ public:
   static void _is_a_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      TAO_ServerRequest &req,
+      void *_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   ::CORBA_Container *_this (
@@ -732,13 +709,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void lookup_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void lookup_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_ContainedSeq * contents (
@@ -750,13 +726,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void contents_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void contents_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_ContainedSeq * lookup_name (
@@ -770,13 +745,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void lookup_name_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void lookup_name_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_Container::DescriptionSeq * describe_contents (
@@ -789,13 +763,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void describe_contents_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void describe_contents_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_ModuleDef_ptr create_module (
@@ -808,13 +781,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_module_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_module_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_ConstantDef_ptr create_constant (
@@ -829,13 +801,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_constant_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_constant_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_StructDef_ptr create_struct (
@@ -849,13 +820,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_struct_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_struct_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_UnionDef_ptr create_union (
@@ -870,13 +840,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_union_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_union_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_EnumDef_ptr create_enum (
@@ -890,13 +859,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_enum_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_enum_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_AliasDef_ptr create_alias (
@@ -910,13 +878,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_alias_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_alias_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_InterfaceDef_ptr create_interface (
@@ -930,13 +897,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_interface_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_interface_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_ValueDef_ptr create_value (
@@ -956,13 +922,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_value_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_value_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_ValueBoxDef_ptr create_value_box (
@@ -976,13 +941,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_value_box_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_value_box_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_ExceptionDef_ptr create_exception (
@@ -996,13 +960,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_exception_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_exception_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_NativeDef_ptr create_native (
@@ -1015,13 +978,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_native_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_native_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_AbstractInterfaceDef_ptr create_abstract_interface (
@@ -1035,13 +997,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_abstract_interface_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_abstract_interface_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual CORBA_LocalInterfaceDef_ptr create_local_interface (
@@ -1055,13 +1016,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void create_local_interface_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void create_local_interface_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _get_def_kind_skel (
@@ -1088,7 +1048,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_CORBA_Container_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Container_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_Container_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Container_Proxy_Broker
 {
 public: 
   _TAO_CORBA_Container_Strategized_Proxy_Broker (void);
@@ -1097,30 +1057,30 @@ public:
   
   virtual ::_TAO_CORBA_Container_Proxy_Impl &select_proxy (
     ::CORBA_Container *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:
 
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
+  // Helper methods that takes care to create the proxy
+  // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
-
+  
 private:
   
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
   ::_TAO_CORBA_Container_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
+  // This funxtion is used to get an handle to the unique instance
+  // of the Strategized Proxy Broker that is available for a given
+  // interface.
 
 public:
   static _TAO_CORBA_Container_Strategized_Proxy_Broker *the_TAO_CORBA_Container_Strategized_Proxy_Broker (void);
@@ -1136,7 +1096,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_CORBA_Container_ThruPOA_Proxy_Impl : 
+class TAO_IFR_Client_Export _TAO_CORBA_Container_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_Container_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_IRObject_ThruPOA_Proxy_Impl
@@ -1147,7 +1107,7 @@ public:
   
   virtual ~_TAO_CORBA_Container_ThruPOA_Proxy_Impl (void) { }
   
-    virtual CORBA_Contained_ptr lookup (
+  virtual CORBA_Contained_ptr lookup (
       CORBA_Object *_collocated_tao_target_,
       const char * search_name,
       CORBA::Environment &ACE_TRY_ENV
@@ -1155,7 +1115,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_ContainedSeq * contents (
       CORBA_Object *_collocated_tao_target_,
       CORBA::DefinitionKind limit_type,
@@ -1165,7 +1125,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_ContainedSeq * lookup_name (
       CORBA_Object *_collocated_tao_target_,
       const char * search_name,
@@ -1177,7 +1137,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_Container::DescriptionSeq * describe_contents (
       CORBA_Object *_collocated_tao_target_,
       CORBA::DefinitionKind limit_type,
@@ -1188,7 +1148,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_ModuleDef_ptr create_module (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1199,7 +1159,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_ConstantDef_ptr create_constant (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1212,7 +1172,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_StructDef_ptr create_struct (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1224,7 +1184,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_UnionDef_ptr create_union (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1237,7 +1197,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_EnumDef_ptr create_enum (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1249,7 +1209,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_AliasDef_ptr create_alias (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1261,7 +1221,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_InterfaceDef_ptr create_interface (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1273,7 +1233,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_ValueDef_ptr create_value (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1291,7 +1251,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_ValueBoxDef_ptr create_value_box (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1303,7 +1263,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_ExceptionDef_ptr create_exception (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1315,7 +1275,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_NativeDef_ptr create_native (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1326,7 +1286,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_AbstractInterfaceDef_ptr create_abstract_interface (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1338,7 +1298,7 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
   virtual CORBA_LocalInterfaceDef_ptr create_local_interface (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
@@ -1350,13 +1310,14 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
+  
 };
-
 
 //
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
+
 
 class POA_CORBA_IDLType;
 typedef POA_CORBA_IDLType *POA_CORBA_IDLType_ptr;
@@ -1364,7 +1325,7 @@ typedef POA_CORBA_IDLType *POA_CORBA_IDLType_ptr;
 class _TAO_CORBA_IDLType_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_IDLType_Strategized_Proxy_Broker;
 
-class  POA_CORBA_IDLType : public virtual POA_CORBA_IRObject
+class TAO_IFR_Client_Export POA_CORBA_IDLType : public virtual POA_CORBA_IRObject
 {
 protected:
   POA_CORBA_IDLType (void);
@@ -1387,32 +1348,28 @@ public:
   static void _is_a_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      TAO_ServerRequest &req,
+      void *_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   ::CORBA_IDLType *_this (
@@ -1429,13 +1386,12 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
-
-  static void _get_type_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  
+    static void _get_type_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _get_def_kind_skel (
@@ -1462,7 +1418,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_CORBA_IDLType_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IDLType_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_IDLType_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IDLType_Proxy_Broker
 {
 public: 
   _TAO_CORBA_IDLType_Strategized_Proxy_Broker (void);
@@ -1471,30 +1427,30 @@ public:
   
   virtual ::_TAO_CORBA_IDLType_Proxy_Impl &select_proxy (
     ::CORBA_IDLType *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:
 
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
+  // Helper methods that takes care to create the proxy
+  // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
-
+  
 private:
   
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
   ::_TAO_CORBA_IDLType_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
+  // This funxtion is used to get an handle to the unique instance
+  // of the Strategized Proxy Broker that is available for a given
+  // interface.
 
 public:
   static _TAO_CORBA_IDLType_Strategized_Proxy_Broker *the_TAO_CORBA_IDLType_Strategized_Proxy_Broker (void);
@@ -1510,7 +1466,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_CORBA_IDLType_ThruPOA_Proxy_Impl : 
+class TAO_IFR_Client_Export _TAO_CORBA_IDLType_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_IDLType_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_IRObject_ThruPOA_Proxy_Impl
@@ -1521,20 +1477,21 @@ public:
   
   virtual ~_TAO_CORBA_IDLType_ThruPOA_Proxy_Impl (void) { }
   
-    virtual CORBA::TypeCode_ptr type (
+  virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
+  
+  
 };
-
 
 //
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
+
 
 class POA_CORBA_TypedefDef;
 typedef POA_CORBA_TypedefDef *POA_CORBA_TypedefDef_ptr;
@@ -1542,7 +1499,7 @@ typedef POA_CORBA_TypedefDef *POA_CORBA_TypedefDef_ptr;
 class _TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker;
 
-class  POA_CORBA_TypedefDef : public virtual POA_CORBA_Contained, public virtual POA_CORBA_IDLType
+class TAO_IFR_Client_Export POA_CORBA_TypedefDef : public virtual POA_CORBA_Contained, public virtual POA_CORBA_IDLType
 {
 protected:
   POA_CORBA_TypedefDef (void);
@@ -1565,32 +1522,28 @@ public:
   static void _is_a_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      void *servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      TAO_ServerRequest &req,
+      void *_servant_upcall,
+      CORBA::Environment &ACE_TRY_ENV
     );
 
   ::CORBA_TypedefDef *_this (
@@ -1720,7 +1673,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class  _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_TypedefDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_TypedefDef_Proxy_Broker
 {
 public: 
   _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker (void);
@@ -1729,30 +1682,30 @@ public:
   
   virtual ::_TAO_CORBA_TypedefDef_Proxy_Impl &select_proxy (
     ::CORBA_TypedefDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:
 
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
+  // Helper methods that takes care to create the proxy
+  // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy,
     CORBA::Environment &ACE_TRY_ENV
   );
-
+  
 private:
   
   // Caches the proxy implementations. The proxy implementation
   // are totally stateless, and those can be shared by all the
   // instances of a given IDL interface type.
   ::_TAO_CORBA_TypedefDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
   TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
+  // This funxtion is used to get an handle to the unique instance
+  // of the Strategized Proxy Broker that is available for a given
+  // interface.
 
 public:
   static _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker *the_TAO_CORBA_TypedefDef_Strategized_Proxy_Broker (void);
@@ -1768,7 +1721,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class  _TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl : 
+class TAO_IFR_Client_Export _TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_TypedefDef_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl, 
@@ -1780,7 +1733,7 @@ public:
   
   virtual ~_TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl (void) { }
   
-  };
+};
 
 
 //

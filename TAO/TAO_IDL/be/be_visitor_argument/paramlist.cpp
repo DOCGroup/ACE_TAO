@@ -15,6 +15,7 @@
 //
 // = AUTHOR
 //    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//    Ossama Othman <ossama@uci.edu>
 //
 // ============================================================================
 
@@ -22,7 +23,9 @@
 #include "be.h"
 #include "be_visitor_argument.h"
 
-ACE_RCSID(be_visitor_argument, paramlist, "$Id$")
+ACE_RCSID (be_visitor_argument,
+           paramlist,
+           "$Id$")
 
 
 // ************************************************************
@@ -74,7 +77,7 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
                         -1);
     }
 
-  // Generate valuetype check: this hack is needed as there is no 
+  // Generate valuetype check: this hack is needed as there is no
   // available way to check for valuetype type.
   // Any operators for valuetypes arent there so we dont add it to the
   // paramlist.
@@ -88,13 +91,6 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
           return 0;
         }
     }
- 
-  // Just to make the length var unique.     
-  *os << be_nl
-      << "CORBA::ULong length_" << node->local_name ()
-      << " = parameter_list->length ();" << be_nl
-      << "parameter_list->length (length_"
-      << node->local_name () << " + 1);" << be_nl;
 
   // Amazed by the zillion os operators below? Its just to combat
   // side effects functions like type_name() have on the os stream.
@@ -113,19 +109,15 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
         *os << "(const ::" << bt->name () << "_slice *) ";
       *os << "this->";
       *os << node->local_name () << "_));" << be_nl;
-      *os << "(*parameter_list)[length_"
-          << node->local_name () << "].argument <<= _tao_forany_" ;
+      *os << "(*parameter_list)[len].argument <<= _tao_forany_" ;
       *os << node->local_name () << ";" << be_nl;
     }
   else
-    {  
-      *os << "(*parameter_list)[length_"
-          << node->local_name () << "].argument ";
-      // Insertion into an Any has some special cases which need to be 
+    {
+      *os << "(*parameter_list)[len].argument <<= ";
+      // Insertion into an Any has some special cases which need to be
       // dealt with.
-            
-      *os << "<<= ";
-      
+
       switch (bt->node_type ())
         {
         case AST_Decl::NT_pre_defined:
@@ -142,8 +134,8 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
           break;
 
         default:
-          *os << " this->" << node->local_name () << "_;" << be_nl;
-          
+          *os << " this->" << node->local_name () << "_;";
+
         }
     }
 
@@ -153,21 +145,15 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "(*parameter_list)[length_"
-          << node->local_name () 
-          << "].mode = Dynamic::PARAM_IN;" << be_nl;
-      break;
-    case AST_Argument::dir_OUT:
-      *os << "(*parameter_list)[length_"
-          << node->local_name () 
-          << "].mode = Dynamic::PARAM_OUT;" << be_nl;
+      *os << "(*parameter_list)[len].mode = CORBA::PARAM_IN;" << be_nl;
       break;
     case AST_Argument::dir_INOUT:
-      *os << "(*parameter_list)[length_"
-          << node->local_name () 
-          << "].mode = Dynamic::PARAM_INOUT;" << be_nl;
+      *os << "(*parameter_list)[len].mode = CORBA::PARAM_INOUT;" << be_nl;
       break;
-    default: 
+    case AST_Argument::dir_OUT:
+      *os << "(*parameter_list)[len].mode = CORBA::PARAM_OUT;" << be_nl;
+      break;
+    default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_args_paramlist::"
                          "visit_argument - "
@@ -175,10 +161,13 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
                         -1);
     }
 
+  *os << "len++;" << be_nl;
+
+
   return 0;
 }
 
-int 
+int
 be_visitor_args_paramlist::visit_string (be_string *node)
 {
   // Get output stream.
@@ -186,7 +175,7 @@ be_visitor_args_paramlist::visit_string (be_string *node)
 
   // Get the argument.
   be_argument *arg = this->ctx_->be_node_as_argument ();
-  
+
   // We need to make a distinction between bounded and unbounded strings.
   if (node->max_size ()->ev ()->u.ulval != 0)
     {
@@ -212,7 +201,7 @@ be_visitor_args_paramlist::visit_string (be_string *node)
   return 0;
 }
 
-int 
+int
 be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
 {
   // Get output stream.
@@ -246,4 +235,3 @@ be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
 
   return 0;
 }
- 

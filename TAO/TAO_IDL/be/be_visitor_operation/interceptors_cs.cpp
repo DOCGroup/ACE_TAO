@@ -23,7 +23,9 @@
 #include "be.h"
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, operation_interceptors_cs, "$Id$")
+ACE_RCSID (be_visitor_operation,
+           operation_interceptors_cs,
+           "$Id$")
 
 
 // ******************************************************
@@ -184,7 +186,7 @@ be_visitor_operation_interceptors_cs::
   // Here I still need to generate the other methods + private args.
   *os << "virtual Dynamic::ParameterList * arguments "
       << "(" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
@@ -192,7 +194,7 @@ be_visitor_operation_interceptors_cs::
 
   *os << "virtual Dynamic::ExceptionList * exceptions "
       << "(" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
@@ -200,7 +202,7 @@ be_visitor_operation_interceptors_cs::
 
   *os << "virtual CORBA::Any * result "
       << "(" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));\n"
@@ -596,7 +598,7 @@ be_visitor_operation_interceptors_cs::
       // parameters. Otherwise, there is nothing to be put into
       // the Dyanmic::Paramlist.
       (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
-       !(this->has_param_type (node, AST_Argument::dir_INOUT))))
+      !(this->has_param_type (node, AST_Argument::dir_INOUT))))
     {
       *os << "return parameter_list;" << be_uidt_nl;
     }
@@ -605,24 +607,40 @@ be_visitor_operation_interceptors_cs::
       *os << "Dynamic::ParameterList_var safe_parameter_list = "
           << "parameter_list;" << be_nl;
 
-      // The insertion operator is different for different nodes.
-      // We change our scope to go to the argument scope to
-      // be able to decide this.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
-      visitor = tao_cg->make_visitor (&ctx);
+      // Precompute the length of the Dynamic::ParameterList.  This is
+      // a nice optimization since it reduces the number of additional
+      // allocations to one, instead of one for each argument, in
+      // addition to remove all copying that occured when growing the
+      // sequence for each parameter.
+      size_t parameter_count = this->count_non_out_parameters (node);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (parameter_count > 0)
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for argument pre invoke failed\n"),
-                            -1);
-        }
+          *os << be_nl
+              << "parameter_list->length (" << parameter_count << ");"
+              << be_nl;
 
-      delete visitor;
+          *os << "CORBA::ULong len = 0;" << be_nl << be_nl;
+
+          // The insertion operator is different for different nodes.
+          // We change our scope to go to the argument scope to
+          // be able to decide this.
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
+          visitor = tao_cg->make_visitor (&ctx);
+
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "visit_operation - "
+                                 "codegen for argument pre invoke failed\n"),
+                                -1);
+            }
+
+          delete visitor;
+        }
 
       *os << be_nl
           << "return safe_parameter_list._retn ();" << be_uidt_nl;

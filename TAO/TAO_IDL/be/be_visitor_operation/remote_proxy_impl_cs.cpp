@@ -362,13 +362,19 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       << flag
       << "," <<be_nl
       << "istub->orb_core ()" << be_uidt_nl
-      << ");\n";
+      << ");" << be_uidt_nl;
 
-  // Fish out the interceptor from the ORB.
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_uidt_nl;
+  *os << be_nl
+      << "int _invoke_status;" << be_nl;
+
+  // Generate code to obtain the client request interceptors from the
+  // ORB.
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
   *os << "TAO_ClientRequestInterceptor_Adapter _tao_vfr ("
       << be_idt << be_idt_nl
-      << "istub->orb_core ()->client_request_interceptors ()"
+      << "istub->orb_core ()->client_request_interceptors ()," << be_nl
+      << "&_tao_call," << be_nl
+      << "_invoke_status"
       << be_uidt_nl
       << ");" << be_uidt_nl;
 
@@ -378,7 +384,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   *os << be_nl
       << "for (;;)" << be_idt_nl
       << "{" << be_idt_nl
-      << "int _invoke_status = TAO_INVOKE_EXCEPTION;" << be_nl;
+      << "_invoke_status = TAO_INVOKE_EXCEPTION;" << be_nl;
+
 
   *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
 
@@ -443,24 +450,11 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
                         -1);
     }
 
-  *os << be_nl << "ACE_TRY" << be_idt_nl
-      << "{\n"
-      << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
+  *os << be_nl;
 
-  *os << be_idt_nl
-      << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
-  // check if there is an exception
-  if (this->gen_check_interceptor_exception (bt) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for checking exception failed\n"),
-                        -1);
-    }
-
-  // Prepare the request header.
+ // Prepare the request header.
   *os << be_nl << "CORBA::Short _tao_response_flag = ";
 
   switch (node->flags ())
@@ -474,14 +468,45 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
           << "TAO_INTERCEPTOR (ri.response_expected (1));" << be_nl;
     }
 
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
+
+  *os << be_nl << "ACE_TRY" << be_idt_nl
+      << "{" << be_idt_nl;
+
   // Invoke send_request() interception point.
-  *os << be_nl << "TAO_INTERCEPTOR (" << be_idt_nl
-      << "_tao_vfr.send_request (" << be_idt_nl
+  // This is done before the Invocation::start() call so that a
+  // connection can be avoided if send_request() throws an exception,
+  // i.e. this is an optimization.
+  *os << "_tao_vfr.send_request (" << be_idt_nl
       << "&ri," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << ");" << be_nl;
+      << ");" << be_nl
+      << "ACE_TRY_CHECK;" << be_nl;
 
+  // _invoke_status is potentially set (via a reference) in
+  // TAO_ClientRequestInterceptor_Adapter::send_request() so check its
+  // value.  If a location forward or transport retry occured, then we
+  // need to restart the loop so that the ClientRequestInfo object is
+  // setup for the re-issued request.
+  //
+  // Note that since we're invoking the send_request() interception
+  // point before the Invocation::start() call, i.e. before a
+  // connection is ever made, we're actually able to forward requests
+  // for oneways via the PortableInterceptor::ForwardRequest exception
+  // too!
+  *os  << be_nl
+       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
+       << "{" << be_idt_nl
+       << "_tao_call.restart_flag (1);" << be_nl
+       << "continue;" << be_uidt_nl
+       << "}" << be_uidt_nl;
+
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
+
+
+  *os << be_nl
+      << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
+  // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -491,13 +516,13 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
                         -1);
     }
 
-  *os << be_nl
+ *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
       << "ACE_static_cast (CORBA::Octet, _tao_response_flag)," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl;
+  // check if there is an exception
 
-  // Check if there is an exception.
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -549,6 +574,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 
       *os << be_uidt_nl;
     }
+  else
+    *os << be_nl;
 
   *os << "_invoke_status =" << be_idt_nl;
   if (node->flags () == AST_Operation::OP_oneway)
@@ -586,10 +613,11 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       << "if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
       << "{" << be_idt_nl;
 
+  // Unlisted user exception received by client.
   if (this->gen_raise_interceptor_exception (
         bt,
         "CORBA::UNKNOWN",
-        "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES") == -1)
+        "TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES") == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_compiled_visitor_operation_cs::"
@@ -796,8 +824,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
           << "_tao_vfr.receive_reply (" << be_idt_nl
           << "&ri," << be_nl
           << "ACE_TRY_ENV" << be_uidt_nl
-          << ");" << be_nl
-          << "ACE_TRY_CHECK;" << be_nl;
+          << ");" << be_nl;
     }
   else if (node->flags () == AST_Operation::OP_oneway)
     {
@@ -807,28 +834,19 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
           << "_tao_vfr.receive_other (" << be_idt_nl
           << "&ri," << be_nl
           << "ACE_TRY_ENV" << be_uidt_nl
-          << ");" << be_nl
-          << "ACE_TRY_CHECK;" << be_nl;
+          << ");" << be_nl;
     }
+
+  *os << "ACE_TRY_CHECK;" << be_uidt_nl;
 
   *os << be_uidt_nl
       << "}" << be_uidt_nl;
 
-  // Generate exception occurred interceptor code
-  *os << "ACE_CATCH (PortableInterceptor::ForwardRequest, exc)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_invoke_status =" << be_idt_nl
-      << "_tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);"
-      << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl
-      << be_nl
-      << "ri.forward_reference (exc); " << be_nl
-      << "_tao_vfr.receive_other (" << be_idt_nl
-      << "&ri," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}" << be_uidt_nl;
+  // Note that we do NOT catch the PortableInterceptor::ForwardRequest
+  // exception here.  It is caught in the
+  // TAO_ClientRequestInterceptor_Adapter class.  This is necessary to
+  // prevent applications from being able to throw the exception in an
+  // effort to get an easy (but illegal) way to forward a request.
 
   *os << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl;
@@ -850,7 +868,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
       << "ri.reply_status (ACE_TRY_ENV);" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
-  
+
   *os << be_nl
       << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
       << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"

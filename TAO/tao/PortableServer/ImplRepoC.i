@@ -275,176 +275,176 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CI_
 
-  // = Static operations.
-  ACE_INLINE ImplementationRepository::EnvironmentVariable *
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE ImplementationRepository::EnvironmentVariable *
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  ImplementationRepository::EnvironmentVariable *retval = 0;
+  ACE_NEW_RETURN (retval, ImplementationRepository::EnvironmentVariable[size], 0);
+  return retval;
+}
+
+ACE_INLINE void ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (ImplementationRepository::EnvironmentVariable *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum,
+  CORBA::ULong length,
+  ImplementationRepository::EnvironmentVariable *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    ImplementationRepository::EnvironmentVariable *retval = 0;
-    ACE_NEW_RETURN (retval, ImplementationRepository::EnvironmentVariable[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (ImplementationRepository::EnvironmentVariable *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum,
-    CORBA::ULong length,
-    ImplementationRepository::EnvironmentVariable *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      ImplementationRepository::EnvironmentVariable *tmp1 = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->maximum_);
-      ImplementationRepository::EnvironmentVariable * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator= (const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        ImplementationRepository::EnvironmentVariable *tmp = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *, this->buffer_);
-        _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    ImplementationRepository::EnvironmentVariable *tmp1 = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *, this->buffer_);
+    ImplementationRepository::EnvironmentVariable *tmp1 = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->maximum_);
     ImplementationRepository::EnvironmentVariable * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator= (const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE ImplementationRepository::EnvironmentVariable &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    ImplementationRepository::EnvironmentVariable* tmp = ACE_reinterpret_cast(ImplementationRepository::EnvironmentVariable*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const ImplementationRepository::EnvironmentVariable &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    ImplementationRepository::EnvironmentVariable * const tmp = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE ImplementationRepository::EnvironmentVariable *
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::get_buffer (CORBA::Boolean orphan)
-  {
-    ImplementationRepository::EnvironmentVariable *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(ImplementationRepository::EnvironmentVariable*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const ImplementationRepository::EnvironmentVariable *
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  ImplementationRepository::EnvironmentVariable *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      ImplementationRepository::EnvironmentVariable *tmp = ACE_reinterpret_cast(ImplementationRepository::EnvironmentVariable*,this->buffer_);
+      // free the old buffer
+      ImplementationRepository::EnvironmentVariable *tmp = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *, this->buffer_);
       _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  ImplementationRepository::EnvironmentVariable *tmp1 = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *, this->buffer_);
+  ImplementationRepository::EnvironmentVariable * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE ImplementationRepository::EnvironmentVariable &
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  ImplementationRepository::EnvironmentVariable* tmp = ACE_reinterpret_cast(ImplementationRepository::EnvironmentVariable*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const ImplementationRepository::EnvironmentVariable &
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  ImplementationRepository::EnvironmentVariable * const tmp = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE ImplementationRepository::EnvironmentVariable *
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::get_buffer (CORBA::Boolean orphan)
+{
+  ImplementationRepository::EnvironmentVariable *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(ImplementationRepository::EnvironmentVariable*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const ImplementationRepository::EnvironmentVariable *
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::replace (CORBA::ULong max,
+CORBA::ULong length,
+ImplementationRepository::EnvironmentVariable *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    ImplementationRepository::EnvironmentVariable *tmp = ACE_reinterpret_cast(ImplementationRepository::EnvironmentVariable*,this->buffer_);
+    _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -1055,176 +1055,176 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CI_
 
-  // = Static operations.
-  ACE_INLINE ImplementationRepository::ServerInformation *
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE ImplementationRepository::ServerInformation *
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  ImplementationRepository::ServerInformation *retval = 0;
+  ACE_NEW_RETURN (retval, ImplementationRepository::ServerInformation[size], 0);
+  return retval;
+}
+
+ACE_INLINE void ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (ImplementationRepository::ServerInformation *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum,
+  CORBA::ULong length,
+  ImplementationRepository::ServerInformation *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    ImplementationRepository::ServerInformation *retval = 0;
-    ACE_NEW_RETURN (retval, ImplementationRepository::ServerInformation[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (ImplementationRepository::ServerInformation *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum,
-    CORBA::ULong length,
-    ImplementationRepository::ServerInformation *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      ImplementationRepository::ServerInformation *tmp1 = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->maximum_);
-      ImplementationRepository::ServerInformation * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::ServerInformation * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator= (const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        ImplementationRepository::ServerInformation *tmp = ACE_reinterpret_cast (ImplementationRepository::ServerInformation *, this->buffer_);
-        _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    ImplementationRepository::ServerInformation *tmp1 = ACE_reinterpret_cast (ImplementationRepository::ServerInformation *, this->buffer_);
+    ImplementationRepository::ServerInformation *tmp1 = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->maximum_);
     ImplementationRepository::ServerInformation * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::ServerInformation * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator= (const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE ImplementationRepository::ServerInformation &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    ImplementationRepository::ServerInformation* tmp = ACE_reinterpret_cast(ImplementationRepository::ServerInformation*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const ImplementationRepository::ServerInformation &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    ImplementationRepository::ServerInformation * const tmp = ACE_reinterpret_cast (ImplementationRepository::ServerInformation* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE ImplementationRepository::ServerInformation *
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::get_buffer (CORBA::Boolean orphan)
-  {
-    ImplementationRepository::ServerInformation *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (ImplementationRepository::ServerInformation*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(ImplementationRepository::ServerInformation*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const ImplementationRepository::ServerInformation *
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const ImplementationRepository::ServerInformation * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  ImplementationRepository::ServerInformation *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      ImplementationRepository::ServerInformation *tmp = ACE_reinterpret_cast(ImplementationRepository::ServerInformation*,this->buffer_);
+      // free the old buffer
+      ImplementationRepository::ServerInformation *tmp = ACE_reinterpret_cast (ImplementationRepository::ServerInformation *, this->buffer_);
       _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  ImplementationRepository::ServerInformation *tmp1 = ACE_reinterpret_cast (ImplementationRepository::ServerInformation *, this->buffer_);
+  ImplementationRepository::ServerInformation * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::ServerInformation * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE ImplementationRepository::ServerInformation &
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  ImplementationRepository::ServerInformation* tmp = ACE_reinterpret_cast(ImplementationRepository::ServerInformation*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const ImplementationRepository::ServerInformation &
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  ImplementationRepository::ServerInformation * const tmp = ACE_reinterpret_cast (ImplementationRepository::ServerInformation* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE ImplementationRepository::ServerInformation *
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::get_buffer (CORBA::Boolean orphan)
+{
+  ImplementationRepository::ServerInformation *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (ImplementationRepository::ServerInformation*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(ImplementationRepository::ServerInformation*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const ImplementationRepository::ServerInformation *
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const ImplementationRepository::ServerInformation * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::replace (CORBA::ULong max,
+CORBA::ULong length,
+ImplementationRepository::ServerInformation *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    ImplementationRepository::ServerInformation *tmp = ACE_reinterpret_cast(ImplementationRepository::ServerInformation*,this->buffer_);
+    _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 

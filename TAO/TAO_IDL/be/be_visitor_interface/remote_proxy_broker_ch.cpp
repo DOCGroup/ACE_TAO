@@ -4,7 +4,9 @@
 
 #include "be_visitor_interface.h"
 
-ACE_RCSID (be_visitor_interface, be_visitor_interface_remote_proxy_broker_ch, "$Id$")
+ACE_RCSID (be_visitor_interface,
+           be_visitor_interface_remote_proxy_broker_ch,
+           "$Id$")
 
 be_visitor_interface_remote_proxy_broker_ch::be_visitor_interface_remote_proxy_broker_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -34,7 +36,7 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
   *os << "class " << be_global->stub_export_macro () << " "
       << node->remote_proxy_broker_name () << be_idt_nl
       << ": public virtual "
-      << node->base_proxy_broker_name () << be_uidt_nl 
+      << node->base_proxy_broker_name () << be_uidt_nl
       <<  "{" << be_nl
       << "public: " << be_idt_nl;
 
@@ -42,22 +44,22 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
   *os << node->remote_proxy_broker_name () << " (void);" << be_nl << be_nl;
 
   // Destructor
-  *os << "virtual ~" << node->remote_proxy_broker_name () << " (void);" 
+  *os << "virtual ~" << node->remote_proxy_broker_name () << " (void);"
       << be_nl << be_nl;
 
   // Accessor Method
-  *os << "virtual " << node->base_proxy_impl_name () << " &" << "select_proxy (" 
+  *os << "virtual " << node->base_proxy_impl_name () << " &" << "select_proxy ("
       << be_idt << be_idt_nl;
 
   *os << node->local_name () << " *object," << be_nl
-      << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
-      << ");" << be_uidt_nl << be_uidt_nl;
+      << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   *os << "private:" << be_idt_nl
       << node->remote_proxy_impl_name () << " remote_proxy_impl_;"
       << be_uidt_nl << be_nl;
 
-  *os << "public:" << be_idt_nl;  
+  *os << "public:" << be_idt_nl;
 
   // Factory Member Function declaration.
   *os << "// This member function is used to get an handle to the unique instance" << be_nl

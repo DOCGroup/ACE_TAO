@@ -287,7 +287,10 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
-
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
+                                      const CORBA::ParameterMode &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
+                                      CORBA::ParameterMode &);
 #endif /* __ACE_INLINE */
 
 #include "ace/post.h"

@@ -83,6 +83,38 @@ be_visitor_operation::has_param_type (be_operation *node,
   return 0;
 }
 
+size_t
+be_visitor_operation::count_non_out_parameters (be_operation *node)
+{
+  size_t count = 0;
+
+  // proceed if the number of members in our scope is greater than 0
+  if (node->nmembers () > 0)
+    {
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (node,
+                                               UTL_Scope::IK_decls),
+                      0);
+
+      // Continue until each element is visited
+      while (!si->is_done ())
+        {
+          be_argument *bd = be_argument::narrow_from_decl (si->item ());
+          if (bd && (bd->direction () != AST_Argument::dir_OUT))
+            count++;
+
+          si->next ();
+        }
+
+      delete si;
+    }
+  
+  return count;
+}
+
+
 //Method to generate the throw specs for exceptions that are thrown by the
 //operation
 int

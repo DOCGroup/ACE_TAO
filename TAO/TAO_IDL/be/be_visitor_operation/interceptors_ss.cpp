@@ -15,6 +15,7 @@
 //
 // = AUTHOR
 //    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//    Ossama Othman <ossama@uci.edu>
 //
 // ============================================================================
 
@@ -158,8 +159,11 @@ be_visitor_operation_interceptors_ss::
                         -1);
     }
 
+  // Pass in the pointer to the Servant_Upcall.
+  *os << "TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,";
+
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " *tao_impl";
+  *os << intf->full_skel_name () << " *tao_impl" << be_nl;
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -531,7 +535,8 @@ be_visitor_operation_interceptors_ss::
     }
 
   *os << " (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &_tao_server_request," << be_nl;
+      << "TAO_ServerRequest &_tao_server_request," << be_nl
+      << "TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall," << be_nl;
 
   be_interface *intf;
   intf = this->ctx_->attribute ()
@@ -573,7 +578,8 @@ be_visitor_operation_interceptors_ss::
 
   // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.
-  *os << ": TAO_ServerRequestInfo (_tao_server_request)," << be_nl
+  *os << ": TAO_ServerRequestInfo (_tao_server_request, "
+      << "_tao_servant_upcall)," << be_nl
       << "  _tao_impl (tao_impl)";
 
   ctx = *this->ctx_;
@@ -645,7 +651,7 @@ be_visitor_operation_interceptors_ss::
   if (node->argument_count () == 0 ||
       // Now make sure that we have some in and inout
       // parameters. Otherwise, there is nothing to be put into
-      // the Dyanmic::Paramlist.
+      // the Dynamic::Parameterlist.
       (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
        !(this->has_param_type (node, AST_Argument::dir_INOUT))))
     {
@@ -656,24 +662,40 @@ be_visitor_operation_interceptors_ss::
       *os << "Dynamic::ParameterList_var safe_parameter_list = "
           << "parameter_list;" << be_nl;
 
-      // The insertion operator is different for different nodes.
-      // We change our scope to go to the argument scope to
-      // be able to decide this.
-        ctx = *this->ctx_;
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
-        visitor = tao_cg->make_visitor (&ctx);
+      // Precompute the length of the Dynamic::ParameterList.  This is
+      // a nice optimization since it reduces the number of additional
+      // allocations to one, instead of one for each argument, in
+      // addition to remove all copying that occured when growing the
+      // sequence for each parameter.
+      size_t parameter_count = this->count_non_out_parameters (node);
 
-        if (!visitor || (node->accept (visitor) == -1))
-          {
-            delete visitor;
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                               "codegen for argument pre invoke failed\n"),
-                              -1);
-          }
+      if (parameter_count > 0)
+        {
+          *os << be_nl
+              << "parameter_list->length (" << parameter_count << ");"
+              << be_nl;
 
-        delete visitor;
+          *os << "CORBA::ULong len = 0;" << be_nl << be_nl;
+
+          // The insertion operator is different for different nodes.
+          // We change our scope to go to the argument scope to be
+          // able to decide this.
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
+          visitor = tao_cg->make_visitor (&ctx);
+
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "visit_operation - "
+                                 "codegen for argument pre invoke failed\n"),
+                                -1);
+            }
+
+          delete visitor;
+        }
 
         *os << be_nl
             << "return safe_parameter_list._retn ();" << be_uidt_nl;

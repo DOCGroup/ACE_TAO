@@ -42,18 +42,9 @@
 
 module Dynamic {
 
-// For now, jsut commented this out unutil it is implemented.
-
- enum ParameterMode
-  {
-    PARAM_IN,
-    PARAM_OUT,
-    PARAM_INOUT
-  };
   struct Parameter {
     any argument;
-    //    CORBA::ParameterMode mode;
-    ParameterMode mode;
+    CORBA::ParameterMode mode;
   };
 
   typedef sequence<Parameter> ParameterList;

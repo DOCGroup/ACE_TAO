@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_IMPLREPOS_T_H_
-#define _TAO_IDL_ORIG_IMPLREPOS_T_H_
+#ifndef _TAO_IDL_IMPLREPOS_T_H_
+#define _TAO_IDL_IMPLREPOS_T_H_
 
 #include "ace/pre.h"
 #if defined(_MSC_VER)
@@ -74,16 +74,16 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-    void shutdown (
+    
+        void shutdown (
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-  private:
+    
+      private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
@@ -136,8 +136,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
         ImplementationRepository::Administration::NotFound,
         ImplementationRepository::Administration::CannotActivate
       ));
-
-    void register_server (
+    
+        void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
         CORBA::Environment &ACE_TRY_ENV = 
@@ -147,8 +147,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException,
         ImplementationRepository::Administration::AlreadyRegistered
       ));
-
-    void reregister_server (
+    
+        void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
         CORBA::Environment &ACE_TRY_ENV = 
@@ -157,8 +157,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-    void remove_server (
+    
+        void remove_server (
         const char * server,
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
@@ -167,8 +167,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException,
         ImplementationRepository::Administration::NotFound
       ));
-
-    void shutdown_server (
+    
+        void shutdown_server (
         const char * server,
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
@@ -177,8 +177,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException,
         ImplementationRepository::Administration::NotFound
       ));
-
-    char * server_is_running (
+    
+        char * server_is_running (
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object,
@@ -189,8 +189,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException,
         ImplementationRepository::Administration::NotFound
       ));
-
-    void server_is_shutting_down (
+    
+        void server_is_shutting_down (
         const char * server,
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
@@ -199,8 +199,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException,
         ImplementationRepository::Administration::NotFound
       ));
-
-    void find (
+    
+        void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info,
         CORBA::Environment &ACE_TRY_ENV = 
@@ -210,8 +210,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException,
         ImplementationRepository::Administration::NotFound
       ));
-
-    void list (
+    
+        void list (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator,
@@ -221,8 +221,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-  private:
+    
+      private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
@@ -274,16 +274,16 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-    void destroy (
+    
+        void destroy (
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-  private:
+    
+      private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;

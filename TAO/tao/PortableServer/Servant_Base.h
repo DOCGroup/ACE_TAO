@@ -68,20 +68,20 @@ public:
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
 
-  virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ());
+  virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV);
   // This is an auxiliar method for _this() and _narrow().
 
   virtual void _dispatch (TAO_ServerRequest &request,
-                          void *context,
-                          CORBA_Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()) = 0;
+                          void *servant_upcall,
+                          CORBA_Environment &ACE_TRY_ENV) = 0;
   // Dispatches a request to the object: find the operation, cast the
   // type to the most derived type, demarshall all the parameters from
   // the request and finally invokes the operation, storing the
   // results and out parameters (if any) or the exceptions thrown into
   // <request>.
+
 protected:
+
   TAO_ServantBase (void);
   // Default constructor, only derived classes can be created.
 
@@ -91,8 +91,9 @@ protected:
   TAO_ServantBase &operator= (const TAO_ServantBase &);
   // assignment operator.
 
+
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                            void *context,
+                                            void *servant_upcall,
                                             void *derived_this,
                                             CORBA::Environment &ACE_TRY_ENV);
 
@@ -244,9 +245,8 @@ protected:
   // register with the default POA.
 
   void _dispatch (TAO_ServerRequest &request,
-                  void *context,
-                  CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
+                  void *servant_upcall,
+                  CORBA_Environment &ACE_TRY_ENV);
   // Throws CORBA::BAD_OPERATION exception.
 };
 

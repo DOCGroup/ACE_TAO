@@ -37,11 +37,11 @@ public:
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id,
-                                CORBA_Environment &ACE_TRY_ENV = 
+                                CORBA_Environment &ACE_TRY_ENV =
                                   TAO_default_environment ()) = 0;
 
   /// Default <_non_existent>: always returns false.
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV = 
+  virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ()) = 0;
 
   /// Query the Interface Repository.
@@ -60,9 +60,8 @@ public:
   /// Get the correct vtable.
   virtual void *_downcast (const char *repository_id) = 0;
 
-  /// This is an auxiliar method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()) = 0;
+  /// This is an auxiliary method for _this() and _narrow().
+  virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV) = 0;
 
 protected:
   /// Default constructor, only derived classes can be created.
@@ -79,14 +78,14 @@ protected:
    * Find the operation, cast the type to the most derived type,
    * demarshall all the parameters from the request and finally
    * invokes the operation, storing the results and out parameters (if
-   * any) or the exceptions thrown into <request>.
+   * any) or the exceptions thrown into @param request.
    */
   virtual void _dispatch (TAO_ServerRequest &request,
-                          void *context,
-                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
+                          void *servant_upcall,
+                          CORBA_Environment &ACE_TRY_ENV) = 0;
 
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                            void *context,
+                                            void *servant_upcall,
                                             void *derived_this,
                                             CORBA::Environment &ACE_TRY_ENV) = 0;
 

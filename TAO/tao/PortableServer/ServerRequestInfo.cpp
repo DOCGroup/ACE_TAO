@@ -3,6 +3,7 @@
 // $Id$
 
 #include "ServerRequestInfo.h"
+#include "POA.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/PolicyC.h"
@@ -18,11 +19,10 @@ ACE_RCSID (TAO_PortableServer,
 # endif /* !__ACE_INLINE__ */
 
 TAO_ServerRequestInfo::TAO_ServerRequestInfo (
-  TAO_ServerRequest &server_request)
+  TAO_ServerRequest &server_request,
+  TAO_Object_Adapter::Servant_Upcall *servant_upcall)
   : server_request_ (server_request),
-    forward_reference_ (),
-    //    poa_current_ (),
-    //    adapter_id_ (),
+    servant_upcall_ (servant_upcall),
     caught_exception_ (0),
     reply_status_ (-1)
 {
@@ -82,7 +82,7 @@ Dynamic::ParameterList *
 TAO_ServerRequestInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -91,7 +91,7 @@ Dynamic::ExceptionList *
 TAO_ServerRequestInfo::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -100,7 +100,7 @@ Dynamic::ContextList *
 TAO_ServerRequestInfo::contexts (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -109,7 +109,7 @@ Dynamic::RequestContext *
 TAO_ServerRequestInfo::operation_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -118,7 +118,7 @@ CORBA::Any *
 TAO_ServerRequestInfo::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -138,7 +138,7 @@ TAO_ServerRequestInfo::sync_scope (CORBA::Environment &ACE_TRY_ENV)
   if (this->server_request_.sync_with_server ())
     return Messaging::SYNC_WITH_SERVER;
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     -1);
 }
@@ -150,7 +150,7 @@ TAO_ServerRequestInfo::reply_status (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->reply_status_ == -1)
     // A reply hasn't been received yet.
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                             CORBA::COMPLETED_NO),
                       -1);
 
@@ -162,17 +162,13 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                             CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
-  // We don't get the forward reference from the TAO_ServerRequest
-  // object since it may not have been set there.  For example, this
-  // is the case when a Servant Manager throws a
-  // PortableServer::ForwardRequest exception.  As such, we only
-  // return the one stored in this object since it is explicitly set
-  // by the responsible request forwarding code.
-  return CORBA::Object::_duplicate (this->forward_reference_.in ());
+  // TAO_ServerRequest::forward_location() already duplicates the
+  // object reference.  There is no need to duplicate it here.
+  return this->server_request_.forward_location ();
 }
 
 CORBA::Any *
@@ -247,7 +243,7 @@ TAO_ServerRequestInfo::get_service_context_i (
   else
     {
       // Not found.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 26,
                                           CORBA::COMPLETED_NO),
                         0);
     }
@@ -263,7 +259,7 @@ TAO_ServerRequestInfo::sending_exception (CORBA::Environment &ACE_TRY_ENV)
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
       && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                               CORBA::COMPLETED_NO),
                         0);
     }
@@ -304,45 +300,40 @@ CORBA::OctetSeq *
 TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-#if 0
-  if (CORBA::is_nil (this->poa_current_.in ()))
+  if (this->servant_upcall_ != 0)
     {
-      CORBA::Object_var p =
-        this->server_request_.orb_core ()->poa_current ();
+      const PortableServer::ObjectId &id =
+        this->servant_upcall_->id ();
 
-      this->poa_current_ =
-        PortableServer::Current::_narrow (p.in (),
-                                          ACE_TRY_ENV);
+      CORBA::OctetSeq *obj_id = 0;
+
+      ACE_NEW_THROW_EX (obj_id,
+                        CORBA::OctetSeq,
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
-      if (CORBA::is_nil (this->poa_current_.in ()))
-        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      // @@ It would be nice to avoid this copy.  However, we can't be
+      //    sure if the octet sequence will out live the POA from
+      //    which the object ID is ultimately obtained.  In the event
+      //    the octet sequence does out live the POA, a copy is indeed
+      //    necessary.  Do a copy to be on the safe side.  In any
+      //    case, this is still faster than the
+      //    PortableServer::Current::object_id() method since no TSS
+      //    access is involved.
+      CORBA::ULong len = id.length ();
+      obj_id->length (len);
+      CORBA::Octet *buffer = obj_id->get_buffer ();
+      ACE_OS_String::memcpy (buffer, id.get_buffer (), len);
+
+      return obj_id;
     }
 
-  ACE_TRY
-    {
-      CORBA::OctetSeq_var obj_id =
-        this->poa_current_->get_object_id (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return obj_id._retn ();
-    }
-  ACE_CATCH (PortableServer::Current::NoContext, exc)
-    {
-      // Convert the NoContext exception to a NO_RESOURCES exception.
-
-      ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
-                                             CORBA::COMPLETED_NO),
-                        0);
-    }
-  ACE_ENDTRY;
-#endif  /* 0 */
-
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                          CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -350,18 +341,11 @@ CORBA::OctetSeq *
 TAO_ServerRequestInfo::adapter_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-//   if (this->adapter_id_.in () == 0)
-//     {
-//       ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
-//                                              CORBA::COMPLETED_NO),
-//                         0);
-//     }
+  if (this->servant_upcall_ != 0)
+    return this->servant_upcall_->poa ().id (ACE_TRY_ENV);
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                          CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -422,7 +406,7 @@ TAO_ServerRequestInfo::add_reply_service_context (
 
   if (service_context_list.set_context (service_context, replace) == 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 11,
+      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 15,
                                        CORBA::COMPLETED_NO));
     }
 }
