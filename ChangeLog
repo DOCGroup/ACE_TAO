@@ -1,3 +1,9 @@
+Wed Jan  3 12:06:20 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Refcounted_Auto_Ptr_Test.dsw:
+
+          Projects are listed in tests.dsw, so this is unneeded.
+
 Tue Jan  3 10:30:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/msvc_notes.txt:
