@@ -33,7 +33,6 @@
 #include "strategies_export.h"
 #include "ace/UNIX_Addr.h"
 
-class TAO_UIOP_Client_Connection_Handler;
 
 class TAO_Strategies_Export TAO_UIOP_Endpoint : public TAO_Endpoint
 {
@@ -84,18 +83,11 @@ public:
   // Return a pointer to the rendezvous point string.
   // This object maintains ownership of the returned string.
 
-  // TAO_UIOP_Client_Connection_Handler *&hint (void);
-  // Access to our <hint_>.
-
 private:
 
   ACE_UNIX_Addr object_addr_;
   // Cached instance of <ACE_UNIX_Addr> for use in making
   // invocations, etc.
-
-  // TAO_UIOP_Client_Connection_Handler *hint_;
-  // Hint indicating the last successfully used connection handler for
-  // a connection established through this endpoint's acceptor.
 
   TAO_UIOP_Endpoint *next_;
   // UIOP Endpoints can be stringed into a list.  Return the next

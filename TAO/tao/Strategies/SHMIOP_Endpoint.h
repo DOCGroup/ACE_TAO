@@ -114,9 +114,6 @@ public:
   CORBA::UShort port (CORBA::UShort p);
   // Set the port number.
 
-  // TAO_SHMIOP_Client_Connection_Handler *&hint (void);
-  // Access to our <hint_>.
-
 private:
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
@@ -131,10 +128,6 @@ private:
   ACE_INET_Addr object_addr_;
   // Cached instance of <ACE_INET_Addr> for use in making
   // invocations, etc.
-
-  // TAO_SHMIOP_Client_Connection_Handler *hint_;
-  // Hint indicating the last successfully used connection handler for
-  // a connection established through this endpoint's acceptor.
 
   TAO_SHMIOP_Endpoint *next_;
   // SHMIOP Endpoints can be stringed into a list.  Return the next

@@ -126,12 +126,6 @@ private:
   /// invocations, etc.
   ACE_INET_Addr object_addr_;
 
-  // TAO_IIOP_Client_Connection_Handler *hint_;
-  // Hint indicating the last successfully used connection handler for
-  // a connection established through this endpoint's acceptor.
-  // @@ This needs to be used for optimization. Will look in to this
-  // after MS defense - Bala
-
   /// IIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
