@@ -2925,13 +2925,6 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::SetOverrideType &
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<CORBA::Current,CORBA::Current_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<CORBA::Current,CORBA::Current_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>
