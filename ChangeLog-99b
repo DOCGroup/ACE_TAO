@@ -1,3 +1,12 @@
+Mon Nov 01 15:05:44 1999  Steve Huston  <shuston@riverace.com>
+
+        * THANKS: Added Greg Siebers <gsiebers@vignette.com>
+
+Mon Nov 01 15:02:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Added definition of ACE_LD_SEARCH_PATH.
+          Thanks to Greg Siebers <gsiebers@vignette.com> for this fix.
+
 Mon Nov 01 10:11:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Capabilities.{i,cpp}: unlined definition of
