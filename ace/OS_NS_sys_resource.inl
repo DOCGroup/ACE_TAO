@@ -59,7 +59,7 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 }
 
 ACE_INLINE int
-ACE_OS::setrlimit (int resource, ACE_SETRLIMIT_TYPE *rl)
+ACE_OS::setrlimit (int resource, const struct rlimit *rl)
 {
   ACE_OS_TRACE ("ACE_OS::setrlimit");
 
@@ -69,11 +69,18 @@ ACE_OS::setrlimit (int resource, ACE_SETRLIMIT_TYPE *rl)
 
   ACE_NOTSUP_RETURN (-1);
 #else
+  ACE_OSCALL_RETURN (::setrlimit (
 # if defined (ACE_HAS_RLIMIT_RESOURCE_ENUM)
-  ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource, rl), int, -1);
+                                  (ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
 # else
-  ACE_OSCALL_RETURN (::setrlimit (resource, rl), int, -1);
+                                  resource,
 # endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
+# if defined (ACE_HAS_NONCONST_SETRLIMIT)
+                                  const_cast<struct rlimit *>(rl)
+# else
+                                  rl
+# endif /* ACE_HAS_NONCONST_SETRLIMIT */
+                                  ), int, -1);
 #endif /* ACE_LACKS_RLIMIT */
 }
 

@@ -243,14 +243,6 @@ ACE_HAS_BROKEN_POSIX_TIME               Platform defines struct
 ACE_HAS_BROKEN_RANDR                    OS/compiler's header files are
                                         inconsistent with libC
                                         definition of rand_r().
-ACE_HAS_BROKEN_READV()                  OS/Compiler's header files are
-                                        not consistent with readv()
-                                        definition.
-ACE_HAS_BROKEN_SENDMSG                  OS/compiler omits the const
-                                        from the sendmsg() prototype.
-ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const
-                                        from the rlimit parameter in
-                                        the setrlimit() prototype.
 ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
                                         t_error(char *) rather than
@@ -261,9 +253,6 @@ ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct
                                         tv_nsec.  This is highly
                                         non-portable.  Currently only
                                         FreeBSD 2.1.x uses it.
-ACE_HAS_BROKEN_WRITEV                   OS/compiler omits the const
-                                        from the iovec parameter in
-                                        the writev() prototype.
 ACE_HAS_BSTRING                         Platform has <bstring.h>
                                         (which contains bzero()
                                         prototype)
@@ -404,11 +393,21 @@ ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
 ACE_HAS_NONCONST_MSGSND                 Platform has a non-const
                                         parameter to msgsend() (e.g.,
                                         SCO).
+ACE_HAS_NONCONST_READV			Platform omits const qualifier from
+					iovec parameter in readv() prototype.
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
                                         non-const timeval* (only found
                                         on Linux right now)
+ACE_HAS_NONCONST_SENDMSG		Platform omits const qualifier 
+					from msghdr parameter in sendmsg()
+					prototype.
+ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier 
+					from rlimit parameter in setrlimit() 
+					prototype.
 ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
+ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
+					iovec parameter in writev() prototype.
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
                                         malloc()/free() prototypes
                                         (ugh)
@@ -1641,20 +1640,20 @@ ACE_QTREACTOR_CLEAR_PENDING_EVENTS:
 ----------------------------
   Used in:
     ace/QtReactor.cpp:
-    QtReactor by default does not clear qt events pending for 
-    activated socket. Clearing costs much, at least 2 hash accesses 
-    in ACE, and 2 another in Qt. It is also better to not clear 
-    pending events as some side effects are unknown. However, 
-    when events are not clear, then some user applications may be 
-    confused by handle_input/output/exception called without any 
-    data eg. in ACE_Acceptor::make_svc_handler. This swithc is 
-    intended to quickly fix user application which does not 
+    QtReactor by default does not clear qt events pending for
+    activated socket. Clearing costs much, at least 2 hash accesses
+    in ACE, and 2 another in Qt. It is also better to not clear
+    pending events as some side effects are unknown. However,
+    when events are not clear, then some user applications may be
+    confused by handle_input/output/exception called without any
+    data eg. in ACE_Acceptor::make_svc_handler. This swithc is
+    intended to quickly fix user application which does not
     follow some reactor rules.
  Linux:
-   It seems linux::qt does not queue pending events. Do not define 
+   It seems linux::qt does not queue pending events. Do not define
    this switch.
  Windows:
-   Windows::qt queues pending events. If user application has handle_* 
-   methods which cannot be called without data, then turn on this switch 
-   to quickly fix the bug. However, one should seriously fix the 
+   Windows::qt queues pending events. If user application has handle_*
+   methods which cannot be called without data, then turn on this switch
+   to quickly fix the bug. However, one should seriously fix the
    application then.

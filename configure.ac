@@ -4649,25 +4649,6 @@ dnl converts all warnings to errors, whenever we are compiling with
 dnl G++.
 dnl        -Ossama
 
-ACE_CONVERT_WARNINGS_TO_ERRORS(
-[
-dnl Check if setrlimit() takes a const pointer as 2nd argument
-ACE_CACHE_CHECK([if setrlimit() takes a const pointer as 2nd argument],
-  [ace_cv_lib_posix_setrlimit_const_2],[
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <sys/time.h>
-#include <sys/resource.h>
-      ]], [[
-       const struct rlimit* rlp = 0;
-       setrlimit(RLIMIT_CPU, rlp);
-      ]])],[
-       ace_cv_lib_posix_setrlimit_const_2=yes
-      ],[
-       ace_cv_lib_posix_setrlimit_const_2=no
-      ])
-  ],, [AC_DEFINE([ACE_HAS_BROKEN_SETRLIMIT])])
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
-
 dnl Check if getrusage() takes an enum as 1st argument
 ACE_CHECK_GETRUSAGE_ENUM
 
@@ -4707,14 +4688,15 @@ ACE_CACHE_CHECK([if select takes a const fifth argument],
   ], , [AC_DEFINE([ACE_HAS_NONCONST_SELECT_TIMEVAL])])
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
+
 dnl Only run the following tests if the msghdr structure exists.
 if test "$ace_cv_struct_msghdr" = yes &&
    test "$ac_cv_func_sendmsg" = yes; then
  ACE_CONVERT_WARNINGS_TO_ERRORS(
  [
 dnl Check if sendmsg takes a const 2nd argument
- ACE_CACHE_CHECK([if sendmsg omits the const from the second argument],
-  [ace_cv_lib_broken_sendmsg],[
+ ACE_CACHE_CHECK([if sendmsg omits const qualifier from the msghdr argument],
+  [ace_cv_lib_nonconst_sendmsg],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
@@ -4729,13 +4711,69 @@ dnl Check if sendmsg takes a const 2nd argument
 
        result = (int) sendmsg(s, msg, flags);
       ]])],[
-       ace_cv_lib_broken_sendmsg=no
+       ace_cv_lib_nonconst_sendmsg=no
       ],[
-       ace_cv_lib_broken_sendmsg=yes
+       ace_cv_lib_nonconst_sendmsg=yes
       ])
-   ], [AC_DEFINE([ACE_HAS_BROKEN_SENDMSG])],)
+   ], [AC_DEFINE([ACE_HAS_NONCONST_SENDMSG])],)
  ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
-fi dnl test "$ace_cv_struct_msghdr" = yes
+fi dnl "$ace_cv_struct_msghdr" = yes && $ac_cv_func_sendmsg = yes
+
+
+dnl Only run the following tests if the setrlimit function exists
+if test "$ac_cv_func_setrlimit" = yes; then
+ ACE_CONVERT_WARNINGS_TO_ERRORS(
+ [
+dnl Check if setrlimit() takes a const pointer as 2nd argument
+ ACE_CACHE_CHECK([if setrlimit omits const qualifier from the rlimit argument],
+  [ace_cv_lib_nonconst_setrlimit],[
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <sys/time.h>
+#include <sys/resource.h>
+      ]], [[
+       const struct rlimit* rlp = 0;
+       setrlimit(RLIMIT_CPU, rlp);
+      ]])],[
+       ace_cv_lib_nonconst_setrlimit=no
+      ],[
+       ace_cv_lib_nonconst_setrlimit=yes
+      ])
+   ], [AC_DEFINE([ACE_HAS_NONCONST_SETRLIMIT])])
+ ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+fi dnl "$ac_cv_func_setrlimit" = yes; then
+
+
+dnl Only run the following tests if the readv function exists
+if test "$ac_cv_header_sys_uio_h" = yes &&
+   test "$ac_cv_func_readv" = yes; then
+ ACE_CONVERT_WARNINGS_TO_ERRORS(
+ [
+dnl Check if readv omits the const from the iovec argument
+ ACE_CACHE_CHECK([if readv omits const qualifier from the iovec argument],
+  [ace_cv_lib_nonconst_readv],[
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>
+#endif
+
+#include <sys/uio.h>
+      ]], [[
+       int filedes = 0;
+       const struct iovec *vector = 0;
+       size_t count = 0;
+
+       int result = 0;
+
+       result = (int) readv(filedes, vector, count);
+      ]])],[
+       ace_cv_lib_nonconst_readv=no
+      ],[
+       ace_cv_lib_nonconst_readv=yes
+      ])
+   ], [AC_DEFINE([ACE_HAS_NONCONST_READV])],)
+ ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+fi dnl $ac_cv_header_sys_uio_h = yes && $ac_cv_func_writev = yes
+
 
 dnl Only run the following tests if the writev function exists
 if test "$ac_cv_header_sys_uio_h" = yes &&
@@ -4743,8 +4781,8 @@ if test "$ac_cv_header_sys_uio_h" = yes &&
  ACE_CONVERT_WARNINGS_TO_ERRORS(
  [
 dnl Check if writev omits the const from the iovec argument
- ACE_CACHE_CHECK([if writev omits the const from the iovec argument],
-  [ace_cv_lib_broken_writev],[
+ ACE_CACHE_CHECK([if writev omits const qualifier from the iovec argument],
+  [ace_cv_lib_nonconst_writev],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifndef ACE_LACKS_UNISTD_H
 # include <unistd.h>
@@ -4760,11 +4798,11 @@ dnl Check if writev omits the const from the iovec argument
 
        result = (int) writev(filedes, vector, count);
       ]])],[
-       ace_cv_lib_broken_writev=no
+       ace_cv_lib_nonconst_writev=no
       ],[
-       ace_cv_lib_broken_writev=yes
+       ace_cv_lib_nonconst_writev=yes
       ])
-   ], [AC_DEFINE([ACE_HAS_BROKEN_WRITEV])],)
+   ], [AC_DEFINE([ACE_HAS_NONCONST_WRITEV])],)
  ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 fi dnl $ac_cv_header_sys_uio_h = yes && $ac_cv_func_writev = yes
 

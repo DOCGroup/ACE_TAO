@@ -306,7 +306,7 @@ extern int cma_sigwait  (sigset_t *);
 
 // OS/compiler omits the const from the iovec parameter in the
 // writev() prototype.
-#define ACE_HAS_BROKEN_WRITEV
+#define ACE_HAS_NONCONST_WRITEV
 
 // Platform lacks <stdint.h>
 #define ACE_LACKS_STDINT_H

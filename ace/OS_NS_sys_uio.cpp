@@ -20,7 +20,7 @@ ACE_RCSID(ace, OS_NS_sys_uio, "$Id$")
 
 ssize_t
 ACE_OS::readv_emulation (ACE_HANDLE handle,
-                         ACE_READV_TYPE *iov,
+                         const iovec *iov,
                          int n)
 {
   ACE_OS_TRACE ("ACE_OS::readv_emulation");
@@ -81,7 +81,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
 // thread-safe.
 
 ssize_t
-ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
+ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
 {
   ACE_OS_TRACE ("ACE_OS::writev_emulation");
 
