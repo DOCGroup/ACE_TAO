@@ -8,7 +8,6 @@ interface Cubit
   // = DESCRIPTION
   //    This interface encapsulates operations that cube
   //    octets, shorts, longs, structs and unions.
-
 {
   octet	cube_octet (in octet o);
   // cube an octet

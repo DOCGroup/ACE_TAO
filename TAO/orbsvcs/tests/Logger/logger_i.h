@@ -1,42 +1,36 @@
 /* -*- C++ -*- */
-
 #if !defined (LOGGER_I_H)
 #define LOGGER_I_H
 
-
 #include "orbsvcs/LoggerS.h"
 #include "ace/streams.h"
-#include <string.h>
-
 
 class Logger_Factory_i : public virtual POA_Logger_Factory
 {
 public:
   Logger_Factory_i (void);
-  // constructor
+  // constructor.
 
-  virtual Logger_ptr make_logger (const char * name, 
+  virtual Logger_ptr make_logger (const char *name,
 				  CORBA::Environment &_env);
-  // this function creates and returns a logger with the given name 
+  // This function creates and returns a logger with the given name.
 };
-
 
 class Logger_i : public virtual POA_Logger
 {
 public:
-
-  // constructor
   Logger_i (const char* name);
+  // constructor
 
-  // destructor
   virtual ~Logger_i (void);
+  // destructor
 
   virtual void log (const char *message, 
 		    CORBA::Environment &_env);
 
 private:
-  // logger identification
   char *name_;
+  // logger identification
 };
 
 #endif /* LOGGER_I_H */
