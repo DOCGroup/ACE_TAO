@@ -207,7 +207,7 @@ Factory_Trader::query (const char* constraint)
           if (offerSeq_var->length() >= 1)
             {
               // now we are all set to read from the sequence the result
-              object_ptr = CORBA::Object::_duplicate (offerSeq_var[0].reference.in());
+              object_ptr = CORBA::Object::_duplicate (offerSeq_var[0u].reference.in());
 
               if (CORBA::is_nil (object_ptr))
                 ACE_ERROR_RETURN ((LM_ERROR,"Factory_Trader::query: Object reference is nil.\n"), 0);

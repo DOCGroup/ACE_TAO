@@ -993,7 +993,7 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
                           -1);
       ACE_DEBUG ((LM_DEBUG,
                   "First binding: %s\n",
-                  bindings_list[0].binding_name[0u].id.in ()));
+                  bindings_list[0u].binding_name[0u].id.in ()));
 
       // Invoke operations on the iterator.
       CosNaming::Binding_var binding;
@@ -1074,7 +1074,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
 
       // Do the testing.
       not_empty_test (my_context,
-				      ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       my_context->unbind (object_name, ACE_TRY_ENV);
