@@ -1,3 +1,16 @@
+Sun Jul 18 00:26:19 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* ace/QtReactor.h
+	* ace/QtReactor.cpp
+	Changed QtReactor constructors to follow the way plain ACE_Select_Reactor
+	is constructed.
+	* tests/QtReactor.cpp
+	* tests/QtReactor.h
+	Reduced number of socket handlers for QNX NTO as Qt@NTO is compiled with
+	small FD_SETSIZE
+	* ace/config-qnx-rtp-62x.h
+	Decreased FD_SETSIZE to 1000 to better follow QNX NTO limits.
+
 Sat Jul 17 14:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.{h,cpp,i}:
