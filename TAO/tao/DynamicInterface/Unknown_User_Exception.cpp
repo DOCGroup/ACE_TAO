@@ -65,13 +65,13 @@ CORBA::UnknownUserException::_is_a (const char *interface_id) const
 CORBA::UnknownUserException *
 CORBA::UnknownUserException::_downcast (CORBA::Exception *ex)
 {
-  if (ex->_is_a ("IDL:omg.org/CORBA/UnknownUserException:1.0"))
-    {
-      return ACE_dynamic_cast (CORBA::UnknownUserException *,
-                               ex);
-    }
+  return dynamic_cast<CORBA::UnknownUserException *> (ex);
+}
 
-  return 0;
+CORBA::UnknownUserException const *
+CORBA::UnknownUserException::_downcast (CORBA::Exception const * ex)
+{
+  return dynamic_cast<CORBA::UnknownUserException const *> (ex);
 }
 
 void
