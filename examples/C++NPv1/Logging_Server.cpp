@@ -50,7 +50,7 @@ int Logging_Server::make_log_file (ACE_FILE_IO &logging_file,
 {
   char filename[MAXHOSTNAMELEN + sizeof (".log")];
 
-  if (logging_peer != 0) { // Use client's hostname as logfile name.
+  if (logging_peer != 0) { // Use client's hostname as log file name.
     ACE_INET_Addr logging_peer_addr;
     logging_peer->get_remote_addr (logging_peer_addr);
     logging_peer_addr.get_host_name (filename, MAXHOSTNAMELEN);
