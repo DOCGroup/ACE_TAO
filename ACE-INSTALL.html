@@ -320,10 +320,13 @@ If you use the GNU GCC C++ compiler please note the following: <P>
 	  parts of ACE correctly due to compiler bugs.  Please
 	  upgrade to G++ 2.7.2 or greater. <P>
 
-	<LI> Make sure to update your gcc "config.status" file -
-	  this specifies whether your gcc install uses, for
-	  example, Solaris's "/usr/ccs/bin" binary utils or
-	  GNU binary utils. <P>
+	<LI> Make sure to update your gcc <code>config.status</code>
+          file - this specifies whether your gcc install uses, for
+	  example, Solaris's <code>/usr/ccs/bin</code> binary utils or
+	  GNU binary utils. <code>config.status</code> is an output
+          of <code>configure</code>; it is preferable to use the
+          <code>--prefix</code> option to <code>configure</code> instead
+          of hacking its output.<P>
 
         <LI> Make sure that the linker invoked by GCC produces code
 	  that initializes static objects.  Please see GCC's
