@@ -3,7 +3,7 @@
 // $Id$
 
 #include "LB_ReplicaLocator.h"
-#include "LoadBalancer_i.h"
+#include "LoadBalancingI.h"
 
 ACE_RCSID (LoadBalancing,
            LB_ReplicaLocator,

@@ -74,7 +74,7 @@ public:
 private:
 
   /// The load balancer implementation.
-  TAO_LB_LoadBalancer *load_balancer_;
+  TAO_LoadBalancing_ReplicationManager_i *load_balancer_;
 
 };
 

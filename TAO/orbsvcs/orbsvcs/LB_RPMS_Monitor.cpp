@@ -48,7 +48,8 @@ TAO_LB_RPMS_Monitor::current_load (CORBA::Environment &ACE_TRY_ENV)
   // server replicas.
 
   LoadBalancing::LoadList *tmp_loads = 0;
-  ACE_NEW_THROW_EX (LoadBalancing::LoadList,
+  ACE_NEW_THROW_EX (tmp_loads,
+                    LoadBalancing::LoadList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,

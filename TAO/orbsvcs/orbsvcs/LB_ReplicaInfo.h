@@ -25,8 +25,6 @@
 
 #include "orbsvcs/LoadBalancingC.h"
 
-#include "LB_Replica_Set.h"
-
 class TAO_LB_ReplicaInfo;
 typedef ACE_Unbounded_Set<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfoSet;
 typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfoSetIterator;
@@ -51,6 +49,10 @@ public:
   /// FactoryCreationId_var will contain a zero pointer if the replica
   /// was not created using a GenericFactory.
   LoadBalancing::GenericFactory::FactoryCreationId_var factory_creation_id;
+
+  /// Reference to the load monitor residing at the same location the
+  /// replica resides.
+  LoadBalancing::LoadMonitor_var load_monitor;
 
 };
 
