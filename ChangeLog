@@ -1,3 +1,18 @@
+Thu Dec 18 22:43:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Malloc_T.{h,cpp}:
+          Added a new functor template class, ACE_Malloc_Adapter_T, used
+          by ACE_Malloc_T as a factory of the ACE_LOCK template parameter,
+          and allows the use locking strategy classes that don't have a
+          satisfactory ctor taking a single required ACE_TCHAR* parameter,
+          which is the default.
+
+        * ace/Process_Semaphore.{h,cpp}:
+        * ace/Thread_Semaphore.{h,cpp}:
+          Added template specializations of ACE_Malloc_Adapter_T for
+          ACE_Process_Semaphore and ACE_Thread_Semaphore since they don't
+          have a satisfactory ctor taking an ACT_TCHAR*.
+
 Thu Dec 18 11:55:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Null_Barrier.h:

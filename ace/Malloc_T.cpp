@@ -289,11 +289,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
     bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
-  if (pool_name == 0)
-    ACE_NEW (this->lock_, ACE_LOCK (pool_name));  // Want the ctor with char*
-  else
-    ACE_NEW (this->lock_, ACE_LOCK (ACE::basename (pool_name,
-                                                   ACE_DIRECTORY_SEPARATOR_CHAR)));
+  if ((this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(pool_name)) == 0)
+    return;
+
   this->delete_lock_ = 1;
 
   if ((this->bad_flag_ = this->open ()) == -1)
@@ -310,11 +308,11 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
     bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
-  if (lock_name != 0)
-    ACE_NEW (this->lock_, ACE_LOCK (lock_name));
-  else
-    ACE_NEW (this->lock_, ACE_LOCK (ACE::basename (pool_name,
-                                                   ACE_DIRECTORY_SEPARATOR_CHAR)));
+  // Use pool_name for lock_name if lock_name not passed.
+  const ACE_TCHAR *name = lock_name ? lock_name : pool_name;
+  if ((this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(name)) == 0)
+    return;
+
   this->delete_lock_ = 1;
 
   if ((this->bad_flag_ = this->open ()) == -1)
@@ -359,7 +357,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
 
-  ACE_NEW (this->lock_, ACE_LOCK (lock_name));
+  if ((this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(lock_name)) == 0)
+    return;
+
   this->delete_lock_ = 1;
   if ((this->bad_flag_ = this->open ()) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -830,6 +830,23 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name)
   void *temp = 0;
   return this->unbind (name, temp);
 }
+
+/*****************************************************************************/
+
+template <class ACE_LOCK> ACE_LOCK *
+ACE_Malloc_Lock_Adapter_T<ACE_LOCK>::operator () (const ACE_TCHAR *name)
+{
+  ACE_LOCK *p = 0;
+  if (name == 0)
+    ACE_NEW_RETURN (p, ACE_LOCK (name), 0);
+  else
+    ACE_NEW_RETURN (p, ACE_LOCK (ACE::basename (name,
+                                                ACE_DIRECTORY_SEPARATOR_CHAR)),
+                    0);
+  return p;
+}
+
+/*****************************************************************************/
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const

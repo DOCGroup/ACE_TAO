@@ -134,6 +134,26 @@ protected:
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 };
 
+/*****************************************************************************/
+
+template <class T> class ACE_Malloc_Lock_Adapter_T;
+
+/**
+ * @class ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
+ *
+ * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for
+ * ACE_Process_Semaphore.
+ *
+ * This is needed since the ctor for ACE_Process_Semaphore doesn't match
+ * the standard form used by other lock strategy classes.
+ */
+ACE_TEMPLATE_SPECIALIZATION
+class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
+{
+public:
+  ACE_Process_Semaphore * operator () (const ACE_TCHAR *name);
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Process_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
