@@ -163,6 +163,8 @@ namespace CIAO
                      ::Components::NoKeyAvailable))
   {
     ACE_THROW_RETURN (::Components::NoKeyAvailable (), 0);
+
+    return 0;
   }
 
   template <typename BASE_SKEL,
