@@ -122,10 +122,11 @@ be_sequence::gen_name (void)
   // Append the size (if any).
   if (this->unbounded () == I_FALSE)
     {
-      ACE_OS::sprintf (namebuf,
-                       "%s_%lu",
-                       namebuf,
+      char ulval_str [NAMEBUFSIZE];
+      ACE_OS::sprintf (ulval_str,
+                       "_%lu",
                        this->max_size ()->ev ()->u.ulval);
+      ACE_OS::strcat (namebuf, ulval_str);
     }
 
   return ACE_OS::strdup (namebuf);
@@ -135,7 +136,7 @@ be_sequence::gen_name (void)
 int
 be_sequence::create_name (be_typedef *node)
 {
-  static char namebuf [NAMEBUFSIZE];
+  static char *namebuf = 0;
   UTL_ScopedName *n = 0;
 
   // Scope in which we are defined.
@@ -144,19 +145,12 @@ be_sequence::create_name (be_typedef *node)
   // If there is a typedef node, we use its name as our name.
   if (node)
     {
-      n = (UTL_ScopedName *)node->name ()->copy ();
-      this->set_name (n);
+      this->set_name (node->name ());
     }
   else
     {
-      // Reset the buffer.
-      ACE_OS::memset (namebuf, 
-                      '\0', 
-                      NAMEBUFSIZE);
-
       // Generate a local name.
-      ACE_OS::strcpy (namebuf, 
-                      this->gen_name ());
+      namebuf = this->gen_name ();
 
       // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();
@@ -170,7 +164,7 @@ be_sequence::create_name (be_typedef *node)
 
           Identifier *id = 0;
           ACE_NEW_RETURN (id,
-                          Identifier (ACE_OS::strdup (namebuf)),
+                          Identifier (namebuf),
                           -1);
 
           UTL_ScopedName *conc_name = 0;
@@ -191,6 +185,8 @@ be_sequence::create_name (be_typedef *node)
           // at least the ROOT scope.
           return -1;
         }
+
+      ACE_OS::free (namebuf);
     }
 
   return 0;
