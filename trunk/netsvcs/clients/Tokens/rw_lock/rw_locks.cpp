@@ -242,7 +242,7 @@ main (int argc, char* argv[])
 
   mgr.wait ();
 
-  return 42;
+  return 0;
 }
 
 #else

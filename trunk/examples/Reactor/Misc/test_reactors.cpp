@@ -179,7 +179,7 @@ main (void)
   ACE_Service_Config::thr_mgr ()->wait ();
   ACE_DEBUG ((LM_DEBUG, "(%t) done\n"));
 
-  return 42;
+  return 0;
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
