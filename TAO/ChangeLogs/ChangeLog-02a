@@ -1,3 +1,14 @@
+Wed Sep 20 10:39:20 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Abstract_Servant_Base.cpp:
+
+	  Fixed link errors.
+
+	* tao/Remote_Object_Proxy_Broker.cpp:
+
+	  Fixed warning caused by unused args.
+	
+
 Wed Sep 20 09:38:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
