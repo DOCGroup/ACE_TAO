@@ -1,3 +1,15 @@
+Fri Jun 25 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CurrentC.cpp:
+	  Simplified exit path to avoid this problems.
+
+	* tao/append.cpp:
+	  Added .in() calls for some T_var objects.
+
+	* tao/skip.cpp:
+	  Added .in() calls for some T_var objects.
+	  My last change broken the default case for unions.
+
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Exception.cpp :
@@ -364,6 +376,7 @@ Thu Jun 24 17:22:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
         * performance-tests/Thruput/TAO/client.cpp:
+        * performance-tests/Thruput/TAO/server.cpp:
         * performance-tests/Thruput/TAO/ttcp_decl.h:
         * performance-tests/Thruput/TAO/utils.cpp:
         * examples/OBV/Typed_Events/Client_i.h:

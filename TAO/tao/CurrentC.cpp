@@ -111,12 +111,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_
                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      return 1;
     }
   ACE_CATCHANY
     {
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 1;
 }
