@@ -174,33 +174,24 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         curarg++;
         CONV_FRAME::CodeSetId ncs;
         if (ACE_Codeset_Registry::locale_to_registry (argv[curarg],
-                                                      ncs))
+                                                      ncs) == 0)
           {
             char **endPtr =0;
             ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                         endPtr, 0);
-          }
-        // Validate the CodesetId
-        if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
-          {
-            if (TAO_debug_level > 0)
-              ACE_ERROR((LM_ERROR,
-                         ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
-                         ncs));
-
-            // @@Phil: This is *completely* busted!
-            ACE_DECLARE_NEW_CORBA_ENV;
-            ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA::SystemException::_tao_minor_code (
-                                  TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                  EINVAL),
-                                CORBA::COMPLETED_NO),
-                              -1);
-          }
-        TAO_Codeset_Manager *csm =
-          this->get_codeset_manager ();
-        if (csm)
-          csm->set_ncs_c(ncs);
+					 endPtr, 0);
+	  }
+	// Validate the CodesetId
+	if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
+	  {
+	    if (TAO_debug_level > 0)
+	      ACE_ERROR((LM_ERROR,
+			 ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
+			 ncs));
+	    return -1;
+	  }
+	TAO_Codeset_Manager *csm = this->get_codeset_manager();
+	if (csm)
+	  csm->set_ncs_c(ncs);
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -208,35 +199,26 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     {
         curarg++;
         CONV_FRAME::CodeSetId ncs;
-        if (!ACE_Codeset_Registry::locale_to_registry( argv[curarg],
-                                                       ncs))
+        if (ACE_Codeset_Registry::locale_to_registry( argv[curarg],
+                                                       ncs) == 0)
           {
             char **endPtr = 0;
             ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                         endPtr, 0);
-          }
-        // Validate the CodesetId
-        int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
-        if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
-          {
-            if (TAO_debug_level > 0)
-              ACE_ERROR((LM_ERROR,
-                         ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
-                         ncs));
-
-            // @@Phile: This is completely busted!
-            ACE_DECLARE_NEW_CORBA_ENV;
-            ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                CORBA::SystemException::_tao_minor_code (
-                                  TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                  EINVAL),
-                                CORBA::COMPLETED_NO),
-                              -1);
-          }
-
-        TAO_Codeset_Manager *csm = this->get_codeset_manager();
-        if (csm)
-          csm->set_ncs_w(ncs,mb);
+					 endPtr, 0);
+	  }
+	// Validate the CodesetId
+	int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
+	if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
+	  {
+	    if (TAO_debug_level > 0)
+	      ACE_ERROR((LM_ERROR,
+			 ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
+			 ncs));
+	    return -1;
+	  }
+	TAO_Codeset_Manager *csm = this->get_codeset_manager();
+	if (csm)
+	  csm->set_ncs_w(ncs,mb);
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],

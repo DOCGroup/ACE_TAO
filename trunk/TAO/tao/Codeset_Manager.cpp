@@ -4,6 +4,8 @@
 #include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/operation_details.h"
+#include "tao/Transport.h"
+#include "tao/Profile.h"
 #include "tao/Exception.h"
 #include "tao/corbafwd.h"
 #include "tao/Codeset_Translator_Factory.h"
@@ -16,10 +18,12 @@
 ACE_RCSID(tao, Codeset_Manager, "$Id$")
 
 /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet No. 1
-CONV_FRAME::CodeSetId TAO_Codeset_Manager::default_char_codeset = 0x00010001;
+CONV_FRAME::CodeSetId
+TAO_Codeset_Manager::default_char_codeset = 0x00010001;
 /// NCS for wchar is not defaulted by the CORBA specification, but a default
 /// may be set here if desired
-CONV_FRAME::CodeSetId TAO_Codeset_Manager::default_wchar_codeset = 0;
+CONV_FRAME::CodeSetId
+TAO_Codeset_Manager::default_wchar_codeset = 0;
 
 
 TAO_Codeset_Manager::TAO_Codeset_Manager()
@@ -27,6 +31,10 @@ TAO_Codeset_Manager::TAO_Codeset_Manager()
    char_factories_ (),
    wchar_factories_ ()
 {
+  this->codeset_info_.ForCharData.native_code_set =
+    TAO_Codeset_Manager::default_char_codeset;
+  this->codeset_info_.ForWcharData.native_code_set =
+    TAO_Codeset_Manager::default_wchar_codeset;
 }
 
 TAO_Codeset_Manager::~TAO_Codeset_Manager()
@@ -85,36 +93,31 @@ TAO_Codeset_Manager::set_tcs(TAO_Profile &theProfile,
        TAO_Codeset_Manager::default_wchar_codeset;
    }
 
-  CONV_FRAME::CodeSetId ncs =
-     this->codeset_info_.ForCharData.native_code_set;
    CONV_FRAME::CodeSetId tcs = computeTCS (remote.ForCharData,
                                            this->codeset_info_.ForCharData);
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
-                 ACE_LIB_TEXT("setting char translator(%08x, %08x)\n"),
-                ncs,tcs));
-   trans.char_translator(this->get_char_trans (ncs,tcs));
+                 ACE_LIB_TEXT("setting char translator(%08x)\n"),
+		 tcs));
+   trans.char_translator(this->get_char_trans (tcs));
 
-   ncs = this->codeset_info_.ForWcharData.native_code_set;
    tcs = computeTCS (remote.ForWcharData,
                      this->codeset_info_.ForWcharData);
 
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_LIB_TEXT("(%P|%t) Codeset_Manager::set_tcs ")
-                 ACE_LIB_TEXT("setting wchar translator (%08x, %08x)\n"),
-                 ncs,tcs));
-   trans.wchar_translator(this->get_wchar_trans (ncs,tcs));
+                 ACE_LIB_TEXT("setting wchar translator (%08x)\n"),
+                 tcs));
+   trans.wchar_translator(this->get_wchar_trans (tcs));
 }
 
 void
 TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
 {
-  if( request.transport()->is_tcs_set())
-    {
-      return;
-    }
+  if (request.transport()->is_tcs_set())
+    return;
 
   // Get the service Context from an object of TAO_ServerRequest
   // and set the TCS values on the Transport
@@ -124,7 +127,6 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
   CONV_FRAME::CodeSetId tcs_c = TAO_Codeset_Manager::default_char_codeset;
   CONV_FRAME::CodeSetId tcs_w = TAO_Codeset_Manager::default_wchar_codeset;
 
-  // Codeset Context is not available, no need to process service context
   if (service_cntx.get_context(context))
     {
       // Convert the Service Context to Codeset Context
@@ -147,22 +149,15 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
                 ACE_LIB_TEXT("using tcsc = %08x, tcsw = %08x\n"),
                 tcs_c,tcs_w));
 
-  CONV_FRAME::CodeSetId ncs =
-    this->codeset_info_.ForCharData.native_code_set;
-
-  request.transport()->char_translator(this->get_char_trans (ncs,tcs_c));
-
-  ncs = this->codeset_info_.ForWcharData.native_code_set;
-  request.transport()->wchar_translator(this->get_wchar_trans (ncs,tcs_w));
+  request.transport()->char_translator(this->get_char_trans (tcs_c));
+  request.transport()->wchar_translator(this->get_wchar_trans (tcs_w));
 }
 
 void
 TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
                                                TAO_Transport &trans)
 {
-  // Take a reference to service context
-  IOP::ServiceContextList &serv_cntxs = opd.request_service_info();
-
+  TAO_Service_Context &service_cntx = opd.request_service_context ();
   CONV_FRAME::CodeSetContext codeset_cntx;
 
   // Generating codeset context
@@ -180,60 +175,26 @@ TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
                 codeset_cntx.char_data,
                 codeset_cntx.wchar_data));
 
-  // @@Phil: Could we please use the abstraction TAO_Service_Context
-  // for doing all this? Looks like this is "repeated" code which
-  // could be either reused directly  from TAO_Service_Context or with
-  // some changes.  It would be nice if we could avoid code
-  // duplication.
   TAO_OutputCDR codeset_cdr;
   codeset_cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
   codeset_cdr << codeset_cntx;
 
-  // Convert the codeset_cntx to servicecontext and insert into the List
-  IOP::ServiceContext cntx;
-  cntx.context_id = IOP::CodeSets;
-
-  CORBA::ULong length = codeset_cdr.total_length ();
-  cntx.context_data.length (length);
-  CORBA::Octet *buf = cntx.context_data.get_buffer ();
-
-  for (const ACE_Message_Block *i = codeset_cdr.begin ();
-       i != 0;
-       i = i->cont ())
-    {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-      buf += i->length ();
-    }
-
-  /// Append it to IIOP::ServiceContextList
-  length = serv_cntxs.length ();
-  serv_cntxs.length (length + 1);
-
-  CORBA::ULong max = cntx.context_data.maximum ();
-  CORBA::ULong len = cntx.context_data.length ();
-  buf = cntx.context_data.get_buffer (1);
-
-  serv_cntxs[length].context_id = cntx.context_id;
-  serv_cntxs[length].context_data.replace (max, len, buf, 1);
+  service_cntx.set_context (IOP::CodeSets,codeset_cdr);
 }
 
 /// Checks whether the NCS is a part of CCS
-CORBA::Boolean
+int
 TAO_Codeset_Manager::isElementOf (CONV_FRAME::CodeSetId id,
                                   CONV_FRAME::CodeSetComponent &cs_comp)
 {
-  // @@Phil: Please use the values 0/1 as retuns. Here is the problem
-  // 1. CORBA::Boolean is a "char" and not a bool
-  // 2. Even if all our compilers support bool, you may want to return
-  // bool from this method instead of CORBA::Boolean.
   for (CORBA::ULong i=0L;
        i < cs_comp.conversion_code_sets.length();
        ++i )
     {
       if (id == cs_comp.conversion_code_sets[i])
-        return true;
+        return 1;
     }
-  return false;
+  return 0;
 }
 
 /// Find the Intersection of Client and Server CCS's
@@ -249,7 +210,7 @@ TAO_Codeset_Manager::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
   return 0;
 }
 
-CORBA::Boolean
+int
 TAO_Codeset_Manager::isCompatible(CONV_FRAME::CodeSetId cs1,
                                   CONV_FRAME::CodeSetId cs2 )
 {
@@ -351,7 +312,6 @@ TAO_Codeset_Manager::init_codeset_factories_i (TAO_CodesetFactorySet& factset,
   cs_comp.conversion_code_sets.length(factset.size());
   CORBA::ULong index;
 
-  //@@Phil: What is the magic that you do for static builds?
   for (index=0; iter != end; iter++)
     {
       const char *name = (*iter)->codeset_name ();
@@ -382,22 +342,23 @@ TAO_Codeset_Manager::init_codeset_factories_i (TAO_CodesetFactorySet& factset,
 }
 
 TAO_Codeset_Translator_Factory *
-TAO_Codeset_Manager::get_char_trans (CONV_FRAME::CodeSetId ncs,
-                                     CONV_FRAME::CodeSetId tcs)
+TAO_Codeset_Manager::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
-  return this->get_translator_i (this->char_factories_,ncs,tcs);
+  if (this->codeset_info_.ForCharData.native_code_set == tcs)
+    return 0;
+  return this->get_translator_i (this->char_factories_,tcs);
 }
 
 TAO_Codeset_Translator_Factory *
-TAO_Codeset_Manager::get_wchar_trans (CONV_FRAME::CodeSetId ncs,
-                                      CONV_FRAME::CodeSetId tcs)
+TAO_Codeset_Manager::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
 {
-  return this->get_translator_i (this->wchar_factories_,ncs,tcs);
+  if (this->codeset_info_.ForWcharData.native_code_set == tcs)
+    return 0;
+  return this->get_translator_i (this->wchar_factories_,tcs);
 }
 
 TAO_Codeset_Translator_Factory *
 TAO_Codeset_Manager::get_translator_i (TAO_CodesetFactorySet& factset,
-                                       CONV_FRAME::CodeSetId ncs,
                                        CONV_FRAME::CodeSetId tcs)
 {
   TAO_CodesetFactorySetItor end = factset.end ();
@@ -406,7 +367,7 @@ TAO_Codeset_Manager::get_translator_i (TAO_CodesetFactorySet& factset,
   for (; iter != end; iter++)
     {
       TAO_Codeset_Translator_Factory *fact = (*iter)->factory ();
-      if( fact && ncs == fact->ncs() && tcs == fact->tcs())
+      if (fact && tcs == fact->tcs())
           return fact;
     }
 

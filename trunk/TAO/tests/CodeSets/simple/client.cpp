@@ -18,6 +18,26 @@
 // ============================================================================
 // IDL generated headers
 #include "simpleC.h"
+#include <ace/ace_wchar.h>
+
+wchar_t *
+make_wstring (const char *str)
+{
+  // Short circuit null pointer case
+  if (str == 0)
+    return 0;
+
+  int len = strlen (str) + 1;
+  wchar_t *wstr = new wchar_t[len];
+  cout << "make_wstring: str = " << str << endl;
+  for (int i = 0; i < len; i++)
+    {
+      char *t = ACE_const_cast (char *, str);
+      wstr[i] = ACE_static_cast (wchar_t, *(t + i));
+      cout << "wstr[" << i << "] = " << (short)wstr[i] << endl;
+    }
+  return wstr;
+}
 
 // ------------------------------------------------------------
 // Client
@@ -30,7 +50,7 @@ int main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Init the orb
-      CORBA::ORB_var orb= CORBA::ORB_init (argc, 
+      CORBA::ORB_var orb= CORBA::ORB_init (argc,
                                            argv,
                                            ""
                                            ACE_ENV_ARG_PARAMETER);
@@ -58,13 +78,13 @@ int main (int argc, char *argv[])
         }
 
       // The first arg should be the IOR
-      CORBA::Object_var object = 
+      CORBA::Object_var object =
         orb->string_to_object (buf
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the server
-      simple_var server = simple::_narrow (object.in () 
+      simple_var server = simple::_narrow (object.in ()
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -86,7 +106,7 @@ int main (int argc, char *argv[])
       const char *any_reply;
       outarg >>= any_reply;
 
-      cout << "Client sent " << bare_string 
+      cout << "Client sent " << bare_string
            << ", got " << reply.in () << endl;
 
       if (ACE_OS::strcmp (bare_string, reply.in ()) != 0)
@@ -94,13 +114,19 @@ int main (int argc, char *argv[])
           ++error_count;
         }
 
-      cout << "Client sent " << any_string 
+      cout << "Client sent " << any_string
            << ", got " << any_reply << endl;
 
       if (ACE_OS::strcmp (any_string, any_reply) != 0)
         {
           ++error_count;
         }
+
+      wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_ALWAYS_WCHAR ("Wide String"));
+      for (int i = 0; i < 11; i++)
+	cout << "ws[" << i << "] = " << (short) wide_string[i] << endl;
+      wchar_t *wide_reply = server->op2 (wide_string);
+      cout << "sent " << wide_string << " got " << wide_reply << endl;
     }
   ACE_CATCHANY
     {
@@ -112,4 +138,3 @@ int main (int argc, char *argv[])
 
   return error_count;
 }
-
