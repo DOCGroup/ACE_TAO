@@ -14,7 +14,7 @@
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
 ACE_Object_Manager::ACE_Object_Manager (void)
-  : registered_objects_ ()
+  : registered_objects_ (), shutting_down_(0)
 {
 }
 
@@ -23,7 +23,11 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   object_info_t info;
 
   // Call all registered cleanup hooks, in reverse order of
-  // registration.
+  // registration.  Before starting, mark this object as being
+  // destroyed - then if during the course of shutting things down,
+  // some object tries to register, it won't be.
+  shutting_down_ = 1;
+  ACE_Trace::stop_tracing();
   while (registered_objects_.dequeue_head (info) != -1)
     (*info.cleanup_hook_) (info.object_, info.param_);
 
@@ -56,6 +60,9 @@ ACE_Object_Manager::at_exit_i (void *object,
 {
   object_info_t *info = 0;
 
+  if (shutting_down_)
+    return -1;
+
   // Check for already in queue, and return 1 if so.
 
   for (ACE_Unbounded_Queue_Iterator<object_info_t> iter (registered_objects_);
@@ -84,4 +91,3 @@ template class ACE_Node<ACE_Object_Manager::object_info_t>;
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::object_info_t>
 #pragma instantiate ACE_Node<ACE_Object_Manager::object_info_t>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
