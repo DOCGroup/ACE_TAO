@@ -10,6 +10,12 @@ Fri Mar 27 23:04:08 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/UDP/udp_test.cpp (main): getopt.optarg instead
           of optarg, for -f option.
 
+        * ace/IPC_SAP.cpp (enable,disable): removed the ACE_NOTREACHED
+          wrappers around the return statements.  Seems that some versions
+          of Green Hills complain about an unreachable statement, but
+          we'll live with it.  This change is only visible with SGI,
+          DEC CXX, and Green Hills.
+
 Fri Mar 27 16:47:26 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.mdp: Made settings for Env_Value_Test consistent with
