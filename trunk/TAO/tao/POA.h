@@ -531,10 +531,6 @@ public:
   virtual PortableServer::Servant find_servant (const TAO_ObjectKey &key,
                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  virtual void etherealize_servants (CORBA::Boolean etherealize_objects,
-                                     CORBA::Boolean wait_for_completion,
-                                     CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
   static char name_separator (void);
 
   static char id_separator (void);
