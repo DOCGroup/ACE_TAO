@@ -1,8 +1,7 @@
-// $Id$
+# $Id$
 # platform_macosx.GNU
-# preliminry support for Mac OS X DP4, some stuff still doesn't work.
+# preliminary support for Mac OS X DP4, some stuff still doesn't work.
 
-thread = 1
 
 CC              = cc
 CXX             = c++
