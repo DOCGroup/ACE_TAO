@@ -98,6 +98,7 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF        1
 #endif /* ACE_LACKS_LINEBUFFERED_STREAMBUF */
 
+#endif /* defined (__SUNPRO_CC_COMPAT) && (__SUNPRO_CC_COMPAT >= 5)
 #endif /* defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510 */
 
 // SunOS 5.6 and above support mkstemp

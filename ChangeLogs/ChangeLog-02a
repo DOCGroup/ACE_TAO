@@ -1,3 +1,8 @@
+Sat Feb  2 00:01:36 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ace/config-sunos5.6.h: 
+	  Added missing #endif.
+
 Fri Feb  1 23:42:03 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ace/config-all.h: 
