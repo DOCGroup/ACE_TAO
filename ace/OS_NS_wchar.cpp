@@ -129,8 +129,8 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
   const wchar_t *scan2 = t;
 
   while (*scan1 != 0
-         && ACE_OS::to_lower (*scan1)
-            == ACE_OS::to_lower (*scan2))
+         && ACE_OS::ace_towlower (*scan1)
+            == ACE_OS::ace_towlower (*scan2))
     {
       ++scan1;
       ++scan2;
@@ -147,7 +147,7 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
   else if (*scan2 == '\0')
     return 1;
   else
-    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
+    return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_towlower (*scan2);
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSICMP */
 
@@ -253,8 +253,8 @@ ACE_OS::wcsnicmp_emulation (const wchar_t *s,
 
   while (count++ < len
          && *scan1 != 0
-         && ACE_OS::to_lower (*scan1)
-            == ACE_OS::to_lower (*scan2))
+         && ACE_OS::ace_towlower (*scan1)
+            == ACE_OS::ace_towlower (*scan2))
     {
       ++scan1;
       ++scan2;
@@ -274,7 +274,7 @@ ACE_OS::wcsnicmp_emulation (const wchar_t *s,
   else if (*scan2 == '\0')
     return 1;
   else
-    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
+    return ACE_OS::ace_towlower (*scan1) - ACE_OS::ace_towlower (*scan2);
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNICMP */
 

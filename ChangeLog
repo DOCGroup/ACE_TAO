@@ -1,3 +1,24 @@
+Mon Aug  9 23:13:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-freebsd.h:
+	  Remove #define of ACE_LACKS_TOWLOWER and ACE_LACKS_TOWUPPER.
+	  FreeBSD has these functions, but they were disabled because
+	  of the problem below.
+
+	* ace/OS_NS_ctype.h:
+	* ace/OS_NS_ctyle.inl:
+	* ace/OS_NS_strings.cpp:
+	* ace/OS_NS_wchar.cpp:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
+	* tests/Config_Test.cpp:
+	* tests/Proactor_Test.cpp:
+	* tests/Proactor_Test_IPV6.cpp:
+	  Renamed ACE_OS::to_upper(int) and ACE_OS::to_upper(wint_t) to
+	  ACE_OS::ace_toupper() and ACE_OS::ace_towupper() because they
+	  are ambiguous on systems where wint_t is in fact an int.  The
+	  same was done for ACE_OS::to_lower(), etc.
+
+
 Mon Aug  9 18:12:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * ace/OS_NS_stdlib.cpp (realpath):

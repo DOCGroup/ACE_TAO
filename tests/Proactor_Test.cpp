@@ -1704,7 +1704,7 @@ set_proactor_type (const ACE_TCHAR *ptype)
   if (!ptype)
     return 0;
 
-  switch (ACE_OS::to_upper (*ptype))
+  switch (ACE_OS::ace_toupper (*ptype))
     {
     case 'D':
       proactor_type = DEFAULT;
