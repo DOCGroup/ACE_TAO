@@ -135,11 +135,13 @@ protected:
 
   /// Processes the <GIOP_REQUEST> messages
   int process_request (TAO_Transport *transport,
-                       TAO_InputCDR &input);
+                       TAO_InputCDR &input,
+                       TAO_OutputCDR &output);
 
   /// Processes the <GIOP_LOCATE_REQUEST> messages
   int process_locate_request (TAO_Transport *transport,
-                              TAO_InputCDR &input);
+                              TAO_InputCDR &input,
+                              TAO_OutputCDR &output);
 
   /// Set the state
   void set_state (CORBA::Octet major,
@@ -173,7 +175,8 @@ private:
   /// unmanageable difference comes let them be implemented here.
   int make_send_locate_reply (TAO_Transport *transport,
                               TAO_GIOP_Locate_Request_Header &request,
-                              TAO_GIOP_Locate_Status_Msg &status);
+                              TAO_GIOP_Locate_Status_Msg &status,
+                              TAO_OutputCDR &output);
 
   /// Send error messages
   int  send_error (TAO_Transport *transport);
@@ -216,12 +219,6 @@ private:
   /// Thr message handler object that does reading and parsing of the
   /// incoming messages
   TAO_GIOP_Message_State message_state_;
-
-  /// Output CDR
-  TAO_OutputCDR *output_;
-
-  /// A buffer that we will use to initialise the CDR stream
-  char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
 
   /// All the implementations of GIOP message generator and parsers
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;

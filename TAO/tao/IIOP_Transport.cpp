@@ -89,12 +89,12 @@ TAO_IIOP_Transport::recv_i (char *buf,
 
   // Most of the errors handling is common for
   // Now the message has been read
-  if (n == -1 && TAO_debug_level > 0)
+  if (n == -1 && TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p \n"),
-                  ACE_TEXT ("TAO - read message failure \n")
-                  ACE_TEXT ("TAO - recv_i () \n")));
+                  ACE_TEXT ("TAO - read message failure ")
+                  ACE_TEXT ("recv_i () \n")));
     }
 
   // Error handling
