@@ -391,7 +391,10 @@ typedef unsigned __int64 ACE_UINT64;
                 #include /**/ <winsock.h>
         #endif /* _WINSOCKAPI */
 
-        #if defined (_MSC_VER) && !defined (UNDER_CE)
+        // PharLap ETS has its own winsock lib, so don't grab the one
+        // supplied with the OS.
+        #if defined (_MSC_VER) && !defined (UNDER_CE) && \
+                                  !defined (ACE_HAS_PHARLAP)
                 #pragma comment(lib, "wsock32.lib")
         #endif /* _MSC_VER */
 
