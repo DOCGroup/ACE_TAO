@@ -82,8 +82,16 @@ public:
 
   // = Please see Profile.h for the documentation of these methods.
   virtual int decode (TAO_InputCDR& cdr);
-  virtual int encode (TAO_OutputCDR &stream) const;
-  // Encode this profile in a stream, i.e. marshal it.
+  virtual int encode_endpoints (void);
+  // Encodes this profile's endpoints into a tagged component.
+  // This is done only if RTCORBA is enabled, since currently this is
+  // the only case when we have more than one endpoint per profile.
+  //
+  // SSL endpoints are transmitted using TAO-proprietory tagged component.
+  // Component tag is TAO_TAG_SSL_ENDPOINTS and component data is an
+  // encapsulation of a sequence of structs, each representing a
+  // single endpoint.  Data format is specified in ssl_endpoins.pidl.
+
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
 
   virtual TAO_Endpoint *endpoint (void);
@@ -98,20 +106,9 @@ public:
 
 private:
 
-  int encode_endpoints (void);
-  // Helper for <encode>.
-  // Encodes this profile's endpoints into a tagged component.
-  // This is done only if RTCORBA is enabled, since currently this is
-  // the only case when we have more than one endpoint per profile.
-  //
-  // SSL endpoints are transmitted using TAO-proprietory tagged component.
-  // Component tag is TAO_TAG_SSL_ENDPOINTS and component data is an
-  // encapsulation of a sequence of structs, each representing a
-  // single endpoint.  Data format is specified in ssl_endpoins.pidl.
-
   int decode_endpoints (void);
   // Helper for <decode>.  Decodes endpoints from a tagged component.
-  // Decode only if RTCORBA is enabled.  
+  // Decode only if RTCORBA is enabled.
 
   TAO_SSLIOP_Endpoint ssl_endpoint_;
   // Head of this profile's list of endpoints.  This endpoint is not
