@@ -22,6 +22,7 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
    transport_ (0),
    tss_resources_ (orb_core->get_tss_resources ()),
    pending_upcalls_ (1),
+   reference_count_ (1),
    pending_upcall_lock_ (0)
 
 {
@@ -45,6 +46,8 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   TAO_Transport::release (this->transport_);
 
   delete this->pending_upcall_lock_;
+
+  cout << " Amba I am going " << endl;
 }
 
 
