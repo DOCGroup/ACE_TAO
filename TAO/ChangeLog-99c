@@ -1,3 +1,13 @@
+Mon Feb  8 15:25:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/echo/Makefile
+	* examples/Simple/echo/client.cpp
+	* examples/Simple/echo/server.cpp
+	* examples/Simple/echo/Echo_i.cpp
+	Replaced old TAO_TRY macros with ACE_TRY macros
+	* examples/Simple/echo/Echo_Client_i.cpp
+	* examples/Simple/echo/Echo_Client_i.h
+	New files after removing Server_i.* and Client_i.*
 Mon Feb  8 14:26:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DynAnyC.cpp: 
