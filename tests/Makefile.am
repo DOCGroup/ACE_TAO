@@ -44,7 +44,7 @@ libdir = @ACE_TESTS_DIR@
 ##
 ## We override the "LIBS" variable provided by the configure script since
 ## we should only need to link against the ACE library for these tests.
-LDADD = Main.o $(libdir)/libTest_Output.la $(top_builddir)/ace/libACE.la
+LDADD = Main.o libTest_Output.la $(top_builddir)/ace/libACE.la
 ##LIBS = $(top_builddir)/ace/libACE.la
 
 noinst_SCRIPTS = \
@@ -286,7 +286,7 @@ Conn_Test_SOURCES = Conn_Test.cpp Conn_Test.h
 DLList_Test_SOURCES = DLList_Test.cpp
 
 DLL_Test_SOURCES = DLL_Test.cpp DLL_Test.h
-DLL_Test_DEPENDENCIES = libDLL_Test.la
+DLL_Test_DEPENDENCIES = libDLL_Test.la libTest_Output.la
 
 Date_Time_Test_SOURCES = Date_Time_Test.cpp
 
@@ -455,7 +455,7 @@ SV_Shared_Memory_Test_SOURCES = SV_Shared_Memory_Test.cpp
 Semaphore_Test_SOURCES = Semaphore_Test.cpp
 
 Service_Config_Test_SOURCES = Service_Config_Test.cpp
-Service_Config_Test_DEPENDENCIES = libService_Config_DLL.la
+Service_Config_Test_DEPENDENCIES = libService_Config_DLL.la libTest_Output.la
 
 Signal_Test_SOURCES = Signal_Test.cpp
 

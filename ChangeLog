@@ -1,3 +1,11 @@
+Mon Jan 12 14:24:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Makefile.am: Remove $(libdir) from libTest_Output.la listed
+	  in dependencies - having it there caused it to not match the
+	  plain libTest_Output.la target in the Makefile, and thus not
+	  get built before many of the tests. Added libTest_Output.la to
+	  the DLL_Test and Service_Config_Test dependencies.
+
 Mon Jan 12 15:54:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* apps/JAWS/server/jaws.dsp:
