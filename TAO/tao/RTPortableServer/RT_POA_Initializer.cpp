@@ -27,7 +27,7 @@ TAO_RT_POA_Initializer::register_hooks_impl (TAO_Object_Adapter &object_adapter,
   // Create and add the RT policy validator.
   TAO_POA_RT_Policy_Validator *rt_validator;
   ACE_NEW (rt_validator,
-           TAO_POA_RT_Policy_Validator (&object_adapter.orb_core ()));
+           TAO_POA_RT_Policy_Validator (object_adapter.orb_core ()));
 
   object_adapter.validator ().add_validator (rt_validator);
 

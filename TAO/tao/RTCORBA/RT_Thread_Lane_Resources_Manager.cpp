@@ -1,17 +1,17 @@
 // $Id$
 
-#include "tao/Default_Thread_Lane_Resources_Manager.h"
+#include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
-ACE_RCSID(tao, Default_Thread_Lane_Resources_Manager, "$Id$")
+ACE_RCSID(RTCORBA, RT_Thread_Lane_Resources_Manager, "$Id$")
 
 #include "tao/ORB_Core.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "tao/Thread_Pool.h"
+#include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Default_Thread_Lane_Resources_Manager.i"
+# include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.i"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (void)
@@ -91,6 +91,12 @@ TAO_RT_Thread_Lane_Resources_Manager::lane_resources (void)
     return lane->resources ();
   else
     return *this->default_lane_resources_;
+}
+
+TAO_Thread_Lane_Resources &
+TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources (void)
+{
+  return *this->default_lane_resources_;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Thread_Lane_Resources_Manager,

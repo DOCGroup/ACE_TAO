@@ -43,6 +43,8 @@ public:
 
   TAO_Thread_Lane_Resources &lane_resources (void);
 
+  TAO_Thread_Lane_Resources &default_lane_resources (void);
+
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;
 

@@ -21,6 +21,7 @@
 #include "tao/debug.h"
 #include "tao/PortableInterceptor.h"
 #include "tao/POA_Extension_Initializer.h"
+#include "tao/Thread_Lane_Resources_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
@@ -587,11 +588,17 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // takes a const reference and makes its own copy of the
   // policy.  (Otherwise, we'd have to allocate the policy
   // on the heap.)
-  TAO_Implicit_Activation_Policy implicit_activation_policy (
-                                      PortableServer::IMPLICIT_ACTIVATION);
+  TAO_Implicit_Activation_Policy
+    implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
+
   policies.merge_policy (&implicit_activation_policy,
                          ACE_TRY_ENV);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+  // This makes sure that the default resources are open when the Root
+  // POA is created.
+  this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);

@@ -68,15 +68,15 @@ TAO_RT_CORBA_Priority_Normalizer::normalize (CORBA::Short corba_priority,
   return 1;
 }
 
-TAO_RT_ORB::TAO_RT_ORB (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (orb)
+    tp_manager_ (*orb_core)
 {
   TAO_RT_CORBA_Priority_Normalizer *corba_priority_normalizer = 0;
   ACE_NEW (corba_priority_normalizer,
-           TAO_RT_CORBA_Priority_Normalizer (orb->orb_core ()));
-  orb->orb_core ()->corba_priority_normalizer (corba_priority_normalizer);
+           TAO_RT_CORBA_Priority_Normalizer (orb_core));
+  orb_core->corba_priority_normalizer (corba_priority_normalizer);
 }
 
 TAO_RT_ORB::~TAO_RT_ORB (void)
@@ -320,6 +320,7 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                               allow_request_buffering,
                                               max_buffered_requests,
                                               max_request_buffer_size,
+                                              1,
                                               ACE_TRY_ENV);
 }
 
@@ -339,6 +340,7 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                          allow_request_buffering,
                                                          max_buffered_requests,
                                                          max_request_buffer_size,
+                                                         1,
                                                          ACE_TRY_ENV);
 }
 
@@ -441,6 +443,12 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
   ACE_CHECK_RETURN (RTCORBA::ClientProtocolPolicy::_nil ());
 
   return tmp;
+}
+
+TAO_Thread_Pool_Manager &
+TAO_RT_ORB::tp_manager (void)
+{
+  return this->tp_manager_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -68,6 +68,7 @@
 #endif /* _MSC_VER */
 
 class TAO_Acceptor_Filter;
+class TAO_Acceptor_Registry;
 class TAO_Temporary_Creation_Time;
 
 class TAO_Creation_Time
@@ -491,6 +492,7 @@ protected:
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
+                                TAO_Acceptor_Registry &acceptor_registry,
                                 CORBA::Environment &ACE_TRY_ENV);
 
   int is_servant_in_map (PortableServer::Servant servant);
