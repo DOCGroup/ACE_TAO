@@ -256,11 +256,14 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (
 {
   TAO_MProfile jth_mprofile;
 
+  TAO_Connector_Registry *conn_reg =
+    orb->orb_core ()->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   int retv =
-    orb->orb_core ()->connector_registry ()->make_mprofile (
-      end_point,
-      jth_mprofile
-      ACE_ENV_ARG_PARAMETER);
+    conn_reg->make_mprofile (end_point,
+                             jth_mprofile
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (retv != 0)

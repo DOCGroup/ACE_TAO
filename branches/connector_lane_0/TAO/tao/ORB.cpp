@@ -1862,12 +1862,14 @@ CORBA_ORB::url_ior_string_to_object (const char* str
   // of profiles and tell the MProfile object to allocate enough memory
   // to hold them all.
 
-  int retv =
-    this->orb_core_->connector_registry ()->make_mprofile (
-      str,
-      mprofile
-      ACE_ENV_ARG_PARAMETER);
+  TAO_Connector_Registry *conn_reg =
+    this->orb_core_->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
+  int retv =
+    conn_reg->make_mprofile (str,
+                             mprofile
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
 
   if (retv != 0)
