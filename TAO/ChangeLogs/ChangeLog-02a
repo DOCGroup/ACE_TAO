@@ -1,3 +1,11 @@
+Mon Feb 14 13:01:53 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  In the check for redefinition of a scope immediately
+	  inside itself, add a check for a null pointer to
+	  Identifier. This was causing seg faults on many
+	  platforms.
+
 Mon Feb 14 10:16:15 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.h:
