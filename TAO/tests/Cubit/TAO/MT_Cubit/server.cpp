@@ -452,30 +452,14 @@ int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
                         Task_State *ts)
 {
-  ACE_ARGV tmp_args (this->argv_);
-  char *low_thread_args;
-  const char *arg_buf = tmp_args.buf ();
-  int arg_len = ACE_OS::strlen (arg_buf);
-
-  ACE_NEW_RETURN (low_thread_args,
-                  char[arg_len + 1],
-                  -1);
-
-  ACE_OS::strcpy (low_thread_args,
-                  arg_buf);
-  char *args1;
-
-  // @@ Naga, can you please explain why you need to do all of this?
-  // i.e, we need some comments here!  In particular, what is args1
-  // being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
-  // is an appropriate size?  It seems to me that we should either (1)
-  // add an accessor on ACE_ARGV to determine what this size ought to
-  // be or (2) we should try to use/add a method on ACE_ARGV that
-  // converts the argv back into a char * buffer or something!  At any
-  // rate, this code should be cleaned up and abstracted better.
-  ACE_NEW_RETURN (args1,
-                  char[ACE_DEFAULT_ARGV_BUFSIZ],
-                  -1);
+  //DONE// @@ Naga, can you please explain why you need to do all of this?
+  //DONE// i.e, we need some comments here!  In particular, what is args1
+  //DONE// being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
+  //DONE// is an appropriate size?  It seems to me that we should either (1)
+  //DONE// add an accessor on ACE_ARGV to determine what this size ought to
+  //DONE// be or (2) we should try to use/add a method on ACE_ARGV that
+  //DONE// converts the argv back into a char * buffer or something!  At any
+  //DONE// rate, this code should be cleaned up and abstracted better.
   int i;
 
   for (i = 0; i < this->argc_ ; i++)

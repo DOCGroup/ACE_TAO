@@ -589,6 +589,12 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 #if defined (VXWORKS)
   delete task_id;
 #endif /* VXWORKS */
+
+  // Delete the low priority task array
+  for (i = number_of_low_priority_client; i > 0; i--)
+    delete low_priority_client [i - 1];
+
+  delete[] low_priority_client;
   return 0;
 }
 

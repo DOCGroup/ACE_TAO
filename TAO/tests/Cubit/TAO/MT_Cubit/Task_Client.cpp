@@ -166,6 +166,7 @@ Task_State::parse_args (int argc,char **argv)
           iors_[i] = ACE_OS::strdup (buf);
           i++;
         }
+      this->iors_count_ = i;
       ACE_OS::fclose (ior_file);
     }
 
@@ -213,6 +214,26 @@ Task_State::parse_args (int argc,char **argv)
   return 0;
 }
 
+
+Task_State::~Task_State (void)
+{
+  int i;
+
+  if (this->ior_file_ != 0)
+    delete this->ior_file_;
+
+  // Delete the strduped memory
+  for (i=0;i<this->iors_count_; i++)
+    ACE_OS::free (this->iors_ [i]);
+  
+  // Delete the barrier
+
+  delete this->barrier_;
+  delete this->semaphore_;
+  delete [] this->latency_;
+  delete [] this->global_jitter_array_;
+  delete [] this->count_;
+}
 
 Client::Client (ACE_Thread_Manager *thread_manager, Task_State *ts, u_int id)
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thread_manager)),
@@ -675,6 +696,10 @@ Client::svc (void)
         }
     }
 
+  // Delete dynamic memory
+  
+  CORBA::release (cb);
+
   return 0;
 }
 
@@ -1127,6 +1152,8 @@ Client::run_tests (Cubit_ptr cb,
                   error_count));
     }
 
+  // Delete the dynamically allocated memory
+  delete [] my_jitter_array;
   return 0;
 }
 

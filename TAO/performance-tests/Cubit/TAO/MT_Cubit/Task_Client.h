@@ -109,6 +109,9 @@ public:
   // Constructor. Takes the command line arguments, which are later
   // passed into ORB_init.
 
+  ~Task_State (void);
+  // Destructor
+
   CORBA::String key_;
   // All cubit objects will have this as prefix to its key.
 
@@ -167,6 +170,9 @@ public:
   char **iors_;
   // Array of pointers used to hold the ior strings read from the ior file
   // that the server created.
+
+  int iors_count_;
+  // count on the number of iors
 
   char *ior_file_;
   // Name of the filename that the server used to store the iors.
