@@ -299,7 +299,8 @@ private:
 		     ACE_Allocator *allocator,
 		     ACE_Lock *locking_strategy,
 		     Message_Flags flags,
-		     u_long priority);
+		     u_long priority,
+		     ACE_Data_Block *db);
   // Perform the actual initialization.
 
   int init_i (size_t size, 
@@ -310,7 +311,7 @@ private:
 	      ACE_Lock *locking_strategy,
 	      Message_Flags flags,
 	      u_long priority, 
-	      ACE_Data_Block *db = 0);
+	      ACE_Data_Block *db);
   // Perform the actual initialization.
 
   char *rd_ptr_;	

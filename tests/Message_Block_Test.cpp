@@ -9,8 +9,9 @@
 //    Message_Block_Test.cpp
 //
 // = DESCRIPTION
-//      This test program illustrates how ACE_Message_Block reference
-//      counting works.
+//      This test program is a torture test that illustrates how
+//      ACE_Message_Block reference counting works in multi-threaded
+//      code.
 //
 // = AUTHOR
 //    Doug Schmidt
@@ -61,7 +62,7 @@ Worker_Task::close (u_long)
 int
 Worker_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 { 
-  return this->putq (mb, tv); 
+  return this->msg_queue ()->enqueue_prio (mb, tv); 
 }
 
 // Iterate <n_iterations> printing off a message and "waiting" for all
@@ -80,22 +81,71 @@ Worker_Task::svc (void)
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (int count = 1; ; count++)
+  for (int count = 0; ; count++)
     {       
       ACE_Message_Block *mb;
 
-      ACE_ASSERT (this->getq (mb) != -1);
-
-      // Duplicate the message and send it on down the pipeline.
-      if (this->put_next (mb->duplicate ()) != 0)
-	ACE_DEBUG ((LM_DEBUG, "(%t) put_next failed\n"));
+      ACE_ASSERT (this->msg_queue ()->dequeue_head (mb) != -1);
 
       int length = mb->length ();
 
-      if (length > 0)
-	ACE_DEBUG ((LM_DEBUG, 
-		    "(%t) in iteration %d, length = %d, text = \"%*s\"\n",
-		    count, length, length - 1, mb->rd_ptr ()));
+      // If there's a next() Task then duplicate the message and send
+      // it on down the pipeline.
+      if (this->next () != 0)
+	ACE_ASSERT (this->put_next (mb->duplicate ()) != -1);
+
+      // If there's no next() Task to send to, then we'll consume the
+      // message here.
+      else if (length > 0)
+	{
+	  int current_count = ACE_OS::atoi (mb->rd_ptr ());
+	  int i;
+
+	  ACE_ASSERT (count == current_count);
+
+	  ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing %d duplicates\n", 
+		      current_count));
+
+	  ACE_Message_Block *dup;
+
+	  // Enqueue <current_count> duplicates with msg_priority == 1.
+	  for (i = current_count; i > 0; i--)
+	    {
+	      ACE_ALLOCATOR_RETURN (dup, mb->duplicate (), -1);
+	      // Set the priority to be greater than "normal"
+	      // messages.  Therefore, all of these messages should go
+	      // to the "front" of the queue, i.e., ahead of all the
+	      // other messages that are being enqueued by other
+	      // threads.
+	      dup->msg_priority (1);
+
+	      ACE_ASSERT (this->msg_queue ()->enqueue_prio 
+			  (dup, 
+			   // Don't block indefinitely if we flow control...
+			   (ACE_Time_Value *) &ACE_Time_Value::zero) != -1);
+	    }
+
+	  ACE_DEBUG ((LM_DEBUG, "(%t) dequeueing %d duplicates\n",
+		      current_count));
+
+	  // Dequeue the same <current_count> duplicates.
+	  for (i = current_count; i > 0; i--)
+	    {
+	      ACE_ASSERT (this->msg_queue ()->dequeue_head (dup) != -1);
+	      ACE_ASSERT (count == ACE_OS::atoi (dup->rd_ptr ()));
+	      ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
+	      ACE_ASSERT (dup->msg_priority () == 1);
+	      dup->release ();
+	    }
+
+	  ACE_DEBUG ((LM_DEBUG, 
+		      "(%t) in iteration %d, length = %d, prio = %d, text = \"%*s\"\n",
+		      count, 
+		      length, 
+		      mb->msg_priority (), 
+		      length - 2, // remove the trailing "\n\0"
+		      mb->rd_ptr ()));
+	}
 
       // We're responsible for deallocating this.
       mb->release ();
@@ -116,7 +166,7 @@ Worker_Task::svc (void)
 
 Worker_Task::Worker_Task (void)
 {
-  // Create worker threads.
+  // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }  
@@ -126,29 +176,32 @@ produce (Worker_Task &worker_task)
 {
   ACE_Message_Block *mb;
 
-  for (size_t count = 0;;)
+  // Send <n_iteration> messages through the pipeline.
+  for (size_t count = 0; count < n_iterations; count++)
     {
+      char buf[BUFSIZ];
+      ACE_OS::sprintf (buf, "%d\n", count);
+
+      int n = ACE_OS::strlen (buf) + 1;
+
       // Allocate a new message.
       ACE_NEW_RETURN (mb, 
-		      ACE_Message_Block (BUFSIZ, ACE_Message_Block::MB_DATA, 
-					 0, 0, 0, &lock_adapter_),
+		      ACE_Message_Block (n, // size
+					 ACE_Message_Block::MB_DATA, // type
+					 0, // cont
+					 0, // data
+					 0, // allocator
+					 &lock_adapter_, // locking strategy
+					 0), // priority
 		      -1);
 
-      ACE_OS::sprintf (mb->rd_ptr (), "%d\n", count);
-      int n = ACE_OS::strlen (mb->rd_ptr ());
-
-      if (count == n_iterations)
-	break;
-      else
-	count++;
-
-      if (count == 0 || (count % 20 == 0))
-	ACE_OS::sleep (1);
-
-      mb->wr_ptr (n);
+      // Copy buf into the Message_Block and update the wr_ptr ().
+      mb->copy (buf, n);
 
       // Pass the message to the Worker_Task.
-      if (worker_task.put (mb) == -1)
+      if (worker_task.put (mb, 
+			   // Don't block indefinitely if we flow control...
+			   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
 	ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
     }
 
@@ -161,10 +214,8 @@ produce (Worker_Task &worker_task)
 				     0, 0, 0, &lock_adapter_),
 		  -1);
 
-  if (worker_task.put (mb->duplicate ()) == -1)
+  if (worker_task.put (mb) == -1)
     ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
-
-  mb->release ();
 
   ACE_DEBUG ((LM_DEBUG, "\n(%t) end producer\n"));
 }
@@ -188,6 +239,7 @@ main (int, char *[])
   for (int i = 1; i < ACE_MAX_THREADS; i++)
     worker_task[i - 1].next (&worker_task[i]);
 
+  // Generate messages and pass them through the pipeline.
   produce (worker_task[0]);
 
   // Wait for all the threads to reach their exit point.
