@@ -118,6 +118,9 @@ class ACE_Unmanaged_Singleton : public ACE_Singleton <TYPE, ACE_LOCK>
   //     instance after it is no longer needed (if it wants to avoid
   //     memory leaks, at least).  The <close> static member function
   //     must be used to explicitly destroy the Singleton.
+  //     Usage is the same as for ACE_Singleton, but note that if you
+  //     you declare a friend, the friend class must still be an
+  //     *ACE_Singleton*<T, [ACE_LOCK]>, not an ACE_Unmanaged_Singleton.
   //
 public:
   static TYPE *instance (void);

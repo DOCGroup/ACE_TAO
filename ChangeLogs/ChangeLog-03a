@@ -1,3 +1,9 @@
+Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc701.comm.mot.com>
+
+        * ace/Singleton.h: added comment to ACE_Unmanaged_Singleton
+          description to clarify that friend declaration must be
+          be for ACE_Unmanaged_Singleton.
+
 Tue Mar  7 14:21:12 CST 2000  Loren Rittle  <rittle@rsch.comm.mot.com>
 
         * ace/Log_Msg.cpp (log): Correct cast usage, a reinterpret
