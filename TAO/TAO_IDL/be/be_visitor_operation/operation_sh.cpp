@@ -139,7 +139,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
           << "void *_tao_obj, " << be_nl
           << "void *_tao_context, " << be_nl
           << "CORBA::Environment &_tao_env = " << be_idt_nl
-	  << "CORBA::Environment::default_environment ()"
+	  << "CORBA::default_environment ()"
 	  << be_uidt << be_uidt_nl
 	  << ");" << be_uidt << "\n\n";
     }

@@ -60,7 +60,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
- 
+
 
   switch (this->ctx_->state ())
     {
@@ -71,7 +71,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
       os->indent ();
       *os << "CORBA::Environment &ACE_TRY_ENV";
       *os << " = " << be_idt_nl
-	        << "CORBA::Environment::default_environment ()"
+	        << "CORBA::default_environment ()"
 	        << be_uidt;
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
@@ -156,7 +156,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:    
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:

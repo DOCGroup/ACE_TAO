@@ -1,6 +1,7 @@
 // $Id$
 
-#include "IOR_LookupTable.h"
+#include "tao/IOR_LookupTable.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, IOR_TableLookup, "$Id$")
 
@@ -32,20 +33,23 @@ TAO_IOR_LookupTable::add_ior (ACE_CString &object_name,
   switch (this->hash_map_.bind (object_name, ior))
     {
     case 1 : // object name already exists in the table.
-      ACE_DEBUG ((LM_DEBUG,
-                  "Object Name already exists in the table\n"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) Object Name already exists in the IOR table\n"));
       return 1;
     case -1 : // Failure.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to bind in IOR_LookupTable::add_ior ()"),
-                        -1);
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) Unable to bind in IOR tao\n"));
+      return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-	      "\n%s:%s Added to the IOR table\n",
-	      object_name.c_str (),
-	      ior.c_str ()));
-  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) IOR Table: <%s> -> <%s>\n",
+                object_name.c_str (),
+                ior.c_str ()));
+
   return 0;
 }
 
@@ -56,6 +60,11 @@ TAO_IOR_LookupTable::find_ior (ACE_CString &object_name,
   // Find the IOR corresponding to the object name.
   // returns 0 on success.
   //        -1 on failure.
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) IOR Table find <%s>\n",
+                object_name.c_str ()));
 
   return this->hash_map_.find (object_name, ior);
 

@@ -1,10 +1,10 @@
 // $Id$
 
+#include "tao/Context.h"
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
 #include "tao/ORB.h"
-#include "tao/Context.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Context.i"
