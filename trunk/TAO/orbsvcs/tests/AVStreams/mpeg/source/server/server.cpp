@@ -11,7 +11,7 @@ int
 Mpeg_Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::open called\n"));
-  this->activate ();
+  this->activate (THR_BOUND);
   return 0;
 }
 
@@ -313,89 +313,6 @@ Mpeg_Server::run ()
   // enter the reactor event loop
   ACE_Reactor::run_event_loop ();
 }
-
-#if 0
-{
-  for (;;)
-  {
-    int val;
-    unsigned char cmd;
-    int serverpid = -1;
-    int cfd, dfd;
-    int max_pkt_size;
-
-    if (ComGetConnPair(&cfd, &dfd, &max_pkt_size) == -1) continue;
-    
-    if ((serverpid = fork()) == -1)
-    {
-      perror("VCRS error on creating service process");
-      exit(1);
-    }
-    Mpeg_Global::session_num ++;
-    if (serverpid > 0)  /* parent process for forking servers */
-    {
-      ComCloseFd(cfd);
-      ComCloseFd(dfd);
-      continue;
-    }
-    else
-    {
-      if (Mpeg_Global::session_num > Mpeg_Global::session_limit)
-        {
-          time_t t;
-          char *buf;
-          t = time(NULL);
-          buf = ctime(&t);
-          buf[strlen(buf) - 1] = 0;
-          fprintf(stderr, "VCRS: %s, session_limit %d, session_number %d\n",
-                  buf, Mpeg_Global::session_limit, Mpeg_Global::session_num);
-        }
-      
-      if ((val = read(cfd, &cmd, 1)) < 0)
-        {
-          perror("VCRS fails to read command from service socket");
-          exit(1);
-        }
-      if (val == 0) {
-	fprintf(stderr, "Client has closed connection.\n");
-	ComCloseConn(cfd);
-	ComCloseConn(dfd);
-	/* continue; -- I don't know why I wrote this line? scen 5-12-96 */
-        exit (0);
-      }
-      ComCloseListen();
-      if (cmd == CmdINITvideo)
-      {
-	/*
-	fprintf(stderr, "Server forked a VideoServer process.\n");
-	*/
-	if (Mpeg_Global::live_audio) LeaveLiveAudio();
-	VideoServer(cfd, dfd, Mpeg_Global::rttag, max_pkt_size);
-	fprintf(stderr, "Weird: video server returned.\n");
-      }
-      else
-      {
-	/*
-	fprintf(stderr, "Server forked a AudioServer process.\n");
-	*/
-	if (Mpeg_Global::live_video) 
-          LeaveLiveVideo ();
-
-        AudioServer (cfd, 
-                     dfd, 
-                     Mpeg_Global::rttag, 
-                     max_pkt_size);
-
-	fprintf (stderr, 
-                 "Weird: audio server returned.\n");
-
-      }
-      exit(1);
-    }
-  }
-  return 0;
-}
-#endif
 
 Mpeg_Server::~Mpeg_Server (void)
 {
