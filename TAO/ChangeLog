@@ -1,3 +1,19 @@
+Mon Mar 07 14:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+          Changed "Unable to get" to "ERROR, Unable to get" so that the
+          autobuild script detects these errors
+
+        * tao/PortableServer/PortableServer.cpp:
+          Load the explicit activation strategy in the minimum corba
+          configuration, we need it for the root poa
+
 Mon Mar 07 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Adapter_Factory.cpp:
