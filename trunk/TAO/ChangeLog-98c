@@ -1,3 +1,9 @@
+Tue Aug  4 21:20:35 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
+	  Replaced 3*BUFSIZ with ACE_DEFAULT_ARGV_BUFSIZ and
+	  allocated memory after calculating the length.
+
 Tue Aug  4 20:00:59 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* Param_Test/ub_any_seq.{h,cpp}:
