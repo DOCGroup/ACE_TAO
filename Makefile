@@ -183,6 +183,13 @@ RELEASE_LIB_FILES = \
         ACE_wrappers/tests \
         ACE_wrappers/websvcs
 
+# Files that should get tagged at release time but shouldn't be in any
+# of the release file lists since they may already be in a directory
+# found in those lists.
+RELEASE_TAG_FILES = \
+	man/man3/Makefile.am \
+	man/html/Makefile.am
+
 .PHONY: release releasetao releaseall tag
 
 ACE_TAG_VALUE = $(shell head -1 VERSION | perl -ne \
@@ -223,6 +230,7 @@ releaseall: $(APPLY_NEW_TAG) ACE-INSTALL
 	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
 
 .PHONY: show_controlled_files show_release_files show_release_lib_files
+.PHONY: show_release_tag_files
 
 show_controlled_files:
 	@echo $(CONTROLLED_FILES)
@@ -232,6 +240,9 @@ show_release_files:
 
 show_release_lib_files:
 	@echo $(RELEASE_LIB_FILES)
+
+show_release_tag_files:
+	@echo $(RELEASE_TAG_FILES)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
