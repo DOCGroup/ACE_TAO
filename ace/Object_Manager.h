@@ -303,11 +303,13 @@ private:
   ACE_OS_Exit_Info exit_info_;
   // For at_exit support.
 
+#if !defined (ACE_LACKS_ACE_SVCCONF)
   ACE_Object_Manager_Preallocations *preallocations_;
   // Preallocated objects collection.
 
   ACE_Sig_Adapter *ace_service_config_sig_handler_;
   // ACE_Service_Config signal handler.
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
 
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
   // Register an object or array for deletion at program termination.

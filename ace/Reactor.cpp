@@ -5,10 +5,12 @@
 #include "ace/Reactor_Impl.h"
 #include "ace/Handle_Set.h"
 #if !defined (ACE_HAS_WINCE)
-#  include "ace/Service_Config.h"
+#  if !defined (ACE_LACKS_ACE_SVCCONF)
+#    include "ace/Service_Config.h"
+#  endif /* !ACE_LACKS_ACE_SVCCONF */
 #  include "ace/WFMO_Reactor.h"
 #  include "ace/Msg_WFMO_Reactor.h"
-#endif /* !ACE_HAS_WINCE */
+#endif /* ! ACE_HAS_WINCE */
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Object_Manager.h"
@@ -128,13 +130,13 @@ ACE_Reactor::close_singleton (void)
 int
 ACE_Reactor::check_reconfiguration (void *)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_SVCCONF)
   if (ACE_Service_Config::reconfig_occurred ())
     {
       ACE_Service_Config::reconfigure ();
       return 1;
     }
-#endif /* ACE_HAS_WINCE */
+#endif /* ! ACE_HAS_WINCE || ! ACE_LACKS_ACE_SVCCONF */
   return 0;
 }
 
