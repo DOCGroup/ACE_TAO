@@ -76,7 +76,7 @@ public:
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_profile (const TAO_ObjectKey &object_key,
+  virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
   virtual int is_collocated (const TAO_Endpoint* endpoint);
@@ -105,13 +105,13 @@ private:
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profile (const TAO_ObjectKey &object_key,
+  int create_new_profile (const TAO::ObjectKey &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
-  int create_shared_profile (const TAO_ObjectKey &object_key,
+  int create_shared_profile (const TAO::ObjectKey &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 

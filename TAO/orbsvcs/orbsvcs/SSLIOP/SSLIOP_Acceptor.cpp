@@ -92,7 +92,7 @@ TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
 }
 
 int
-TAO_SSLIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+TAO_SSLIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
                                      TAO_MProfile &mprofile,
                                      CORBA::Short priority)
 {
@@ -113,7 +113,7 @@ TAO_SSLIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_SSLIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
+TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                          TAO_MProfile &mprofile,
                                          CORBA::Short priority)
 {
@@ -198,7 +198,7 @@ TAO_SSLIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
 
 
 int
-TAO_SSLIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
+TAO_SSLIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             TAO_MProfile &mprofile,
                                             CORBA::Short priority)
 {

@@ -1,3 +1,13 @@
+Fri Mar 14 08:46:46 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (create_profile)
+	  (create_new_profile, create_shared_profile):
+
+	  Corrected ObjectKey parameter in these methods.  The
+	  "TAO_ObjectKey" type has been replaced by the "TAO::ObjectKey"
+	  type.
+
 Thu Mar 13 19:20:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
