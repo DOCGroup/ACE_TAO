@@ -504,8 +504,11 @@ TAO_GIOP_Message_Accept_State_12::parse_request_header (
 
   input >> service_info;
 
-  // Reset the read_ptr to an 8-byte boundary.
-  input.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
+  if (input.length () > 0)
+    {
+      // Reset the read_ptr to an 8-byte boundary.
+      input.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
+    }
 
   return hdr_status ? 0 : -1;
 }

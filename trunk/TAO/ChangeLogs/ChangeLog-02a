@@ -1,3 +1,21 @@
+Tue Nov 21 10:41:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Accept_State.cpp: We align the write pointers
+	  as per GIOP 1.2. But when we read from the stream on the server
+	  side, we just set the read pointer to an 8 byte boundary. Why?
+	  We dont have any information about the information following the
+	  header. So, we just set the read pointer to an 8 byte boundary
+	  assuming that the skeletons would know whether to marshal
+	  something or not. This started giving problems in DSI_Gateway
+	  test during the shutdown () operation. So, for a shutdown ()
+	  call that we receive on the gateway, the read pointer is set to
+	  an 8 byte boundary. The same stream is used for encoding (). As
+	  the read pointer is displaced, the difference between them gave
+	  a "BIG" number that wrapped around as -4 when we called a writev
+	  () on the handler which is not acceptable. So, the fix -- we
+	  check for the stream length before we align the read
+	  pointer. Hopefully this should be the right fix.
+
 Tue Nov 21 10:10:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_interface.h:
