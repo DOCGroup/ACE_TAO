@@ -19,6 +19,10 @@
 // This turns on ACE_HAS_PENTIUM
 #define _M_IX86 500
 
+#if defined ACE_LACKS_STRUCT_DIR
+# undef ACE_LACKS_STRUCT_DIR
+#endif
+
 // Changed ACE_TEXT to ACE_LIB_TEXT in the following line
 # define ACE_CC_NAME ACE_LIB_TEXT ("Digital Mars")
 # define ACE_CC_MAJOR_VERSION (1)
