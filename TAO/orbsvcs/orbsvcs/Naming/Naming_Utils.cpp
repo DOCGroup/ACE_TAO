@@ -21,7 +21,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tao/corba.h"
 #include "Naming_Utils.h"
-#include "tao/orbobj.h"
 
 // Default constructor
 
