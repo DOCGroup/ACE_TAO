@@ -1,3 +1,10 @@
+Tue Sep 18 13:05:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+        * */Makefile.*:
+          Updated dependencies, some of the paths were absolute leading to
+          ambiguities in parallel builds.
+
 Tue Sep 18 12:07:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
