@@ -28,7 +28,8 @@ mib_Widget *mib_create_List(mib_Widget *parent, char *name, char *label,
   mib_Widget	*temp;
   mib_List	*myres;
   Widget	 wtemp;
-  unsigned char *label_text;
+  //  unsigned char *label_text;
+  XmString label_text;
   char		 ttext[30];
   Arg		 args[20];
   String	 myname;
