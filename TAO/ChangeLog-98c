@@ -1,3 +1,13 @@
+Fri Oct 23 15:00:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/DOVEMIB/DOVEMIBx.dsp
+          orbsvcs/tests/Simulator/DOVEMIB/TestClient.dsp
+          orbsvcs/tests/Simulator/DOVEMIB/any_test_i.cpp:
+          Modified custom build step for .idl files to look for
+          the TAO IDL compiler in the $ACE_ROOT/bin directory,
+	  converted ostream output for which compiler was complaining
+	  about an ambiguous << operator into ACE_DEBUG output form.
+
 1998-10-23  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* examples/Simple/bank/README (Options): Explained the [-o IOR_file_name]
