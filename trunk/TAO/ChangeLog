@@ -1,3 +1,21 @@
+Fri Sep 19 07:30:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/ImplRepoC.h:
+
+          Explicitly #undef IOR in this file to work around an HPUX
+          namespace conflict.
+
+	* orbsvcs/tests/IOR_MCast/server_i.h (enable_multicast):
+	* orbsvcs/tests/IOR_MCast/server_i.cpp (enable_multicast):
+
+	  Removed CORBA::Environment parameter and accompanying
+	  ACE_TRY/CATCH blocks.  They were not used.  Fixes an unused
+	  "ACE_TRY_LABEL" warning in non-inline builds.
+
+	* orbsvcs/tests/IOR_MCast/Makefile:
+
+	  Updated dependencies.  They were missing altogether
+
 Thu Sep 18 14:11:53 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
         * TAO/performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
