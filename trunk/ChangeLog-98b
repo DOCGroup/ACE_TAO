@@ -2,6 +2,11 @@ Thu Jul 30 08:43:41 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.(mdp mak): Made include and library paths relative.
 
+Thu Jul 30 02:22:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch_T.cpp (ts_init): Casted away constness of key_.
+	  Changed to cast away constness of the pointer to once_.
+
 Thu Jul 30 01:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/TP_Reactor.i (notify_handle): Added an ASYS_TEXT where it
@@ -13,11 +18,6 @@ Thu Jul 30 01:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
   	  I also factored out some common code into a new method called
  	  ts_init().  Thanks to Bob McWhirter <bob@netwrench.com> for
  	  reporting this.
-
-Thu Jul 30 02:22:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/Synch_T.cpp (ts_init): Casted away constness of key_.
-	  Changed to cast away constness of the pointer to once_.
 
 Wed Jul 29 23:58:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
