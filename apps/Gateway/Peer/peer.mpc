@@ -1,14 +1,23 @@
 // -*- MPC -*-
 // $Id$
 
-project(Gateway_Peer) : aceexe {
-  exename = peerd
+project(Gateway_Peer) : acelib {
+  sharedname = Gateway_Peer
   Source_Files {
     Options.cpp
     Peer.cpp
-    peerd.cpp
   }
   Documentation_Files {
     svc.conf
+  }
+}
+
+project(gateway_peerd) : aceexe {
+  exename = peerd
+  after += Gateway_Peer
+  libs += Gateway_Peer
+
+  Source_Files {
+    peerd.cpp
   }
 }
