@@ -306,6 +306,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "IORInterceptor_Static"=.\tao\IORInterceptor\TAO_IORInterceptor_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "IORManip_Static"=.\tao\IORManipulation\TAO_IORManip_Static.dsp - Package Owner=<4>
 
 Package=<5>
@@ -374,6 +392,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -414,6 +438,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ObjRefTemplate_Static"=.\tao\ObjRefTemplate\TAO_ObjRefTemplate_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "PortableGroup_Static"=.\orbsvcs\orbsvcs\PortableGroup_Static.dsp - Package Owner=<4>
 
 Package=<5>
@@ -439,6 +481,15 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name TAO LIB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype_Static
     End Project Dependency
 }}}
 
@@ -529,6 +580,18 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RTCORBA_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype_Static
     End Project Dependency
 }}}
 
@@ -757,6 +820,21 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name IFR_Client_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Valuetype_Static"=.\tao\Valuetype\TAO_Valuetype_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
     End Project Dependency
 }}}
 
