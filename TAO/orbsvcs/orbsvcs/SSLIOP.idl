@@ -23,4 +23,7 @@ module SSLIOP {
         unsigned short        port;
     };
 };
+
+#pragma prefix ""
+
 #endif /* _SSLIOP_IDL */

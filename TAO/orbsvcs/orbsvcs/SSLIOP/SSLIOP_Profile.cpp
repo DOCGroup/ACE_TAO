@@ -95,7 +95,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
   // we are dealing with pure IIOP profile.
   int ssl_component_found = 0;
   IOP::TaggedComponent component;
-  component.tag = IOP::TAG_SSL_SEC_TRANS;
+  component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
 
   if (this->tagged_components ().get_component (component) == 0)
       this->ssl_endpoint_.ssl_component_.port = 0;

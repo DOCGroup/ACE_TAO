@@ -1,6 +1,22 @@
+// -*- IDL -*-
 //
 // $Id$
+
 //
+//   This file was used to generate the code in
+//   IOP*.* The command used to generate code
+//   is:
+//
+//     tao_idl \
+//          -Wb,export_macro=TAO_Export \
+//          -Wb,export_include="tao/TAO_Export.h" \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          IOP.pidl
+//
+
+#ifndef TAO_IOP_PIDL
+#define TAO_IOP_PIDL
 
 #pragma prefix "omg.org"
 
@@ -28,20 +44,14 @@ module IOP
   typedef sequence<TaggedComponent> MultipleComponentProfile;
   typedef sequence<TaggedComponent> TaggedComponentList;
 
+  // @@ All security related tags are located in the Security Service
+  // @@ related IDL files, in accordance with the Security Service 1.7
+  // @@ specification.
+
   const ComponentId TAG_ORB_TYPE = 0;
   const ComponentId TAG_CODE_SETS = 1;
   const ComponentId TAG_POLICIES = 2;
   const ComponentId TAG_ALTERNATE_IIOP_ADDRESS = 3;
-  const ComponentId TAG_ASSOCIATION_OPTIONS = 13;
-  const ComponentId TAG_SEC_NAME = 14;
-  const ComponentId TAG_SPKM_1_SEC_MECH = 15;
-  const ComponentId TAG_SPKM_2_SEC_MECH = 16;
-  const ComponentId TAG_KerberosV5_SEC_MECH = 17;
-  const ComponentId TAG_CSI_ECMA_Secret_SEC_MECH = 18;
-  const ComponentId TAG_CSI_ECMA_Hybrid_SEC_MECH = 19;
-  const ComponentId TAG_SSL_SEC_TRANS = 20;
-  const ComponentId TAG_CSI_ECMA_Public_SEC_MECH = 21;
-  const ComponentId TAG_GENERIC_SEC_MECH = 22;
 
   const ComponentId TAG_COMPLETE_OBJECT_KEY = 5;
   const ComponentId TAG_ENDPOINT_ID_POSITION = 6;
@@ -49,7 +59,6 @@ module IOP
   const ComponentId TAG_DCE_STRING_BINDING = 100;
   const ComponentId TAG_DCE_BINDING_NAME = 101;
   const ComponentId TAG_DCE_NO_PIPES = 102;
-  const ComponentId TAG_DCE_SEC_MECH = 103;
 
   typedef unsigned long ServiceId;
   struct ServiceContext {
@@ -86,3 +95,5 @@ module IOP
 };
 
 #pragma prefix ""
+
+#endif  /* TAO_IOP_PIDL */

@@ -119,19 +119,19 @@ TAO_ORB_Parameters::service_port (MCAST_SERVICEID service_id) const
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::mcast_discovery_endpoint (const ACE_CString &mde)
+TAO_ORB_Parameters::mcast_discovery_endpoint (const char *mde)
 {
-  this->mcast_discovery_endpoint_ = mde;
+  this->mcast_discovery_endpoint_ = CORBA::string_dup (mde);
 }
 
 ACE_INLINE const char *
 TAO_ORB_Parameters::mcast_discovery_endpoint (void) const
 {
-  return this->mcast_discovery_endpoint_.c_str ();
+  return this->mcast_discovery_endpoint_.in ();
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::default_init_ref (const ACE_CString &default_init_ref)
+TAO_ORB_Parameters::default_init_ref (const char *default_init_ref)
 {
   this->default_init_ref_ = default_init_ref;
 }
