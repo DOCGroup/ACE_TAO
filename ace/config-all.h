@@ -468,6 +468,10 @@ extern "C"
 // Miscellaneous macros
 // ============================================================================
 
+# if !defined (ENOSYS)
+#   define ENOSYS EFAULT /* Operation not supported or unknown error. */
+# endif /* !ENOSYS */
+
 #if !defined (ENOTSUP)
 # define ENOTSUP ENOSYS  /* Operation not supported. */
 #endif /* !ENOTSUP */
