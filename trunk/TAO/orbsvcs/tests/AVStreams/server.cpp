@@ -18,6 +18,7 @@
 
 #include "server.h"
 
+// Callbacks made by the AVStreams library into the application
 Video_Server_StreamEndPoint::Video_Server_StreamEndPoint ()
 {
 }
@@ -50,6 +51,7 @@ Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::StreamEndPo
   return 1;
 } 
 
+// Main program
 int
 main (int argc, char ** argv)
 {
