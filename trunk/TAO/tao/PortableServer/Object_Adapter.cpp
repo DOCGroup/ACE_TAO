@@ -22,6 +22,7 @@
 #include "tao/PortableInterceptor.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/Protocols_Hooks.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
