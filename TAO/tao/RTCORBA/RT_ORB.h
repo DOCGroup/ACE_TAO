@@ -316,10 +316,6 @@ protected:
   TAO_Thread_Pool_Manager *tp_manager_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "RT_ORB.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

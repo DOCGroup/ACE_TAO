@@ -6,11 +6,7 @@
 
 #include "ace/Sched_Params.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Continuous_Priority_Mapping.i"
-#endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID(RTCORBA, Continuous_Priority_Mapping, "$Id: ")
+ACE_RCSID(RTCORBA, Continuous_Priority_Mapping, "$Id$")
 
 TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
   :  policy_ (policy)

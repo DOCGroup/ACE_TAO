@@ -13,11 +13,9 @@
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 #include "ace/Sched_Params.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "RT_ORB.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID(TAO, RT_ORB, "$Id$")
+ACE_RCSID(RTCORBA,
+          RT_ORB,
+          "$Id$")
 
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),

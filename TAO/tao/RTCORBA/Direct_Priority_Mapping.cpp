@@ -7,11 +7,9 @@
 #include "Direct_Priority_Mapping.h"
 #include "ace/Sched_Params.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Direct_Priority_Mapping.i"
-#endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID(Strategies, Direct_Priority_Mapping, "$Id$")
+ACE_RCSID(RTCORBA,
+          Direct_Priority_Mapping,
+          "$Id$")
 
 TAO_Direct_Priority_Mapping::TAO_Direct_Priority_Mapping (long)
 {

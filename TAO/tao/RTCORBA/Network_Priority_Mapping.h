@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  Class that declares the Network Priority Mapping 
+ *  Class that declares the Network Priority Mapping
  *  that can be overriden to provide different mappings
  *
  *
@@ -50,10 +50,6 @@ public:
     to_CORBA (RTCORBA::NetworkPriority network_priority,
 	      RTCORBA::Priority &corba_priority) = 0;
 };
-
-#if defined (__ACE_INLINE__)
-# include "Network_Priority_Mapping.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

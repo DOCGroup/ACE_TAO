@@ -52,10 +52,6 @@ public:
                            RTCORBA::Priority &corba_priority);
 };
 
-#if defined (__ACE_INLINE__)
-# include "Linear_Network_Priority_Mapping.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"

@@ -18,11 +18,6 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Core.h"
 
-#if !defined (__ACE_INLINE__)
-#include "RT_Invocation_Endpoint_Selectors.i"
-#endif /* __ACE_INLINE__ */
-
-
 ACE_RCSID (RTCORBA,
            RT_Invocation_Endpoint_Selectors,
            "$Id$")

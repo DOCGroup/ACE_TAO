@@ -11,10 +11,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Linear_Network_Priority_Mapping.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (RTCORBA,
            Linear_Network_Priority_Mapping,
            "$Id$")
