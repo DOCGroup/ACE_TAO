@@ -145,6 +145,9 @@ public:
   virtual int visit_enum (be_enum *node);
   // visit enum type
 
+  virtual int visit_sequence (be_sequence *node);
+  // visit sequence type
+
   virtual int visit_structure (be_structure *node);
   // visit structure type
 
