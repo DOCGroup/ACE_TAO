@@ -57,7 +57,7 @@ main (int, char *[])
   ACE_OS::sleep (3);
 
   ACE_Process_Options clerk_options;
-  clerk_options.command_line (APPLICATION "client.conf");
+  clerk_options.command_line (APPLICATION "clerk.conf");
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)
