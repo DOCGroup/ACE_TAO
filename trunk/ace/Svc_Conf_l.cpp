@@ -598,7 +598,7 @@ ACE_YY_MALLOC_DECL
 ACE_YY_DECL
 	{
 	register ace_yy_state_type ace_yy_current_state;
-	register char *ace_yy_cp, *ace_yy_bp;
+	register char *ace_yy_cp = 0, *ace_yy_bp = 0;
 	register int ace_yy_act;
 
 # line 39 "Svc_Conf.l"
