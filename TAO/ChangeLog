@@ -1,3 +1,10 @@
+Wed Aug 13 08:25:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+          Explicitly set the scheduler type to local because this test
+          uses the new RTEvent but wants to use a scheduler. This fixes
+          the failing of this test in the daily builds.
+
 Tue Aug 12 22:18:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
@@ -29,8 +36,8 @@ Tue Aug 12 17:05:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Aug 12 17:49:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: 
-	* examples/RTScheduling/MIF_Scheduler/run_test.pl: 
+	* examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+	* examples/RTScheduling/MIF_Scheduler/run_test.pl:
 
 	  Added scripts to run the RTScheduler examples.
 
@@ -38,7 +45,7 @@ Tue Aug 12 06:27:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: Missed the
 	  checkin last night. This should fix build errors in our daily
-	  builds. 
+	  builds.
 
 Mon Aug 11 22:37:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -52,7 +59,7 @@ Mon Aug 11 22:37:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
 	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
-	  #included the required headers. 
+	  #included the required headers.
 
 	  This decoupling is just fine, since the IOGR would only be used
 	  probably by the RM whereas other participants like the FT-Client
@@ -102,7 +109,7 @@ Mon Aug 11 12:36:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
           Fixed warnings and errors on when exceptions=0 by changing or
-          removing several ACE_ENV_ARG_* macros. 
+          removing several ACE_ENV_ARG_* macros.
 
 Mon Aug 11 02:31:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -131,10 +138,10 @@ Sun Aug 10 08:27:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTKokyuEvent_Static.dsp: Added new .dsp file for
 	  static builds.
-	
+
 	* orbsvcs/orbsvcs/RTKokyuEvent.mpc:
 	  Updated these files so that they are similar to RTSchedEvent files.
-	
+
 	* TAOACE.dsw:
 	* TAOACE_Static.dsw:
 	* orbsvcs/orbsvcs/orbsvcs.dsw:
@@ -157,7 +164,7 @@ Sat Aug  9 13:38:27 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  EC. If the old EC (-t <old_reactive|old_mt>) is used, then it
 	  requires a scheduler and the -s <none> option translates to
 	  using a local scheduler. This will preserve the behavior for
-	  existing users.  	  
+	  existing users.
 
 Sat Aug  9 13:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
