@@ -1,3 +1,16 @@
+Sat Dec 12 11:29:38 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+
+	  The generated signatures of various methods contained default
+	  arguments which should only appear in the class definition. This
+	  has been fixed. Thanks to David Levine for reporting the problem.
+
 Sat Dec 12 09:15:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp

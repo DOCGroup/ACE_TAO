@@ -101,7 +101,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   *os << full_class_name << "::" << class_name << " (CORBA::ULong length," << be_idt_nl;
   pt->accept (visitor); 
   *os <<" *data," << be_nl
-      << "CORBA::Boolean release=0)" << be_uidt_nl
+      << "CORBA::Boolean release)" << be_uidt_nl
       << "// Constructor using the data and memory management flag." << be_nl
       << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", length, data, release)" << be_nl
       << "{" << be_nl
@@ -311,7 +311,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
       << "CORBA::ULong length," << be_nl;
   pt->accept(visitor); 
   *os <<" *data," << be_nl
-      << "CORBA::Boolean release = 0)" << be_uidt_nl
+      << "CORBA::Boolean release)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->maximum_ = max;" << be_nl
       << "this->length_ = length;" << be_nl
