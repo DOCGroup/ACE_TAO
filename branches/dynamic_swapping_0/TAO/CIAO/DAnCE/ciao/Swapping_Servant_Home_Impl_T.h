@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Swapping_Servant_Home_Impl_Base.h"
+#include "Home_Servant_Impl_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +29,7 @@
 
 namespace CIAO
 {
-  class Swapping_Container;
+  class Session_Container;
 
   /**
    * @class Swapping_Servant_Impl
@@ -49,12 +49,12 @@ namespace CIAO
             typename COMP_SVNT>
   class Swapping_Servant_Home_Impl
     : public virtual BASE_SKEL,
-      public virtual Swapping_Servant_Home_Impl_Base,
+      public virtual Home_Servant_Impl_Base,
       public virtual PortableServer::RefCountServantBase
   {
   public:
     Swapping_Servant_Home_Impl (EXEC * exe,
-                       Swapping_Container * c,
+                       Session_Container * c,
                        const char* obj_id, const char* repo_id);
 
     virtual ~Swapping_Servant_Home_Impl (void);
@@ -80,6 +80,9 @@ namespace CIAO
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
+
+    virtual void
+    update_component_map (PortableServer::ObjectId &oid);
 
   protected:
     // CIAO-specific operations.

@@ -39,6 +39,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
 
+    ACE_DEBUG ((LM_DEBUG, "i am being used to start\n"));
     char buffer[MAXPATHLEN];
 
     if (name == 0)
