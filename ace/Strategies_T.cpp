@@ -379,6 +379,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
   switch (ACE::fork (ACE_LIB_TEXT ("child"), this->flags_))
     {
     case -1:
+      svc_handler->destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%p\n"),
                          ACE_LIB_TEXT ("fork")),
