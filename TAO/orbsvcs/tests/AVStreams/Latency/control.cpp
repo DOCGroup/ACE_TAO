@@ -8,18 +8,18 @@
 
 ACE_RCSID(Latency, ping, "$Id$")
 
-const char *ping_ior = "file://ping.ior";
-const char *pong_ior = "file://pong.ior";
-const char *ping_address = "224.9.9.2:12345";
-const char *pong_address = "224.9.9.2:23456";
-const char *protocol = "UDP";
+const char *ping_ior = CORBA::string_dup ("file://ping.ior");
+const char *pong_ior = CORBA::string_dup ("file://pong.ior");
+const char *ping_address = CORBA::string_dup ("224.9.9.2:12345");
+const char *pong_address = CORBA::string_dup ("224.9.9.2:23456");
+const char *protocol = CORBA::string_dup ("UDP");
 
 int milliseconds = 30000;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:");
+  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -47,6 +47,10 @@ parse_args (int argc, char *argv[])
 
       case 'p':
         protocol = get_opts.optarg;
+        break;
+
+      case 'd':
+        TAO_debug_level++;
         break;
 
       case '?':
@@ -150,7 +154,7 @@ int main (int argc, char *argv[])
       stream_control->start (flow_spec, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (0, milliseconds * 1000);
+      ACE_Time_Value tv (100, 0);
       orb->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
