@@ -1,3 +1,34 @@
 // $Id$
 
 // Executor interface definitions of hello.cidl.
+//   tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Sc helloE.idl
+
+#include "ciao/CIAO_Container.pidl"
+#include "HelloC.idl"
+
+local interface CCM_Hello : Hello
+{
+  string sayhello (in string username);
+};
+
+// Component main executor
+local interface CCM_HelloWorld_Executor
+  : Components::EnterpriseComponent,
+    Hello
+{
+  //  attribute string message;
+};
+
+local interface CCM_HelloWorld
+  : CCM_HelloWorld_Executor
+/*
+: Components::EnterpriseComponent,
+  Hello
+*/
+{
+};
+
+local interface CCM_HelloWorld_Context
+  : Components::CCMContext
+{
+};
