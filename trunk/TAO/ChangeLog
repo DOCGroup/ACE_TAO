@@ -1,3 +1,8 @@
+Fri Nov 28 15:44:31 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Sequence_Latency/Deferred/client.bor:
+          Added portableserver library
+
 Fri Nov 28 15:30:42 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV.bor:
