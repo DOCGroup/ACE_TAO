@@ -1,8 +1,13 @@
 Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* include/makeinclude/rules.local.GNU,
+	  netsvcs/lib/Makefile,
+	  examples/Service_Configurator/IPC-tests/server/Makefile:
+	  fixed ESOBUILD mechanism to work on all platforms, not just Linux.
+	  Thanks to Marius Kjeldahl <marius@funcom.com> for this fix.
+
 	* ace/OS.i and OS.cpp: uninlined functions that use varargs, because
 	  they usually won't get inlined anyways.
-
 
 Fri Jan 17 01:16:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
