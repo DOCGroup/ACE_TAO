@@ -1,3 +1,8 @@
+Tue Feb  9 22:06:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.h: Added Title and description
+	  comments to the class declaration.  
+
 Tue Feb  9 21:40:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* $TAO_ROOT/examples/Event_Comm/*.cpp
