@@ -6,6 +6,10 @@ project(Segment_Timer): acelib {
   dynamicflags += SEGMENT_TIMER_BUILD_DLL
 
   Source_Files {
-     Segment_Timer.cpp
+    Segment_Timer.cpp
+  }
+  
+  Header_Files {
+    Segment_Timer_Export.h
   }
 }
