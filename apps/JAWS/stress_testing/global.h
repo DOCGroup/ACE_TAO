@@ -1,13 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <signal.h>
-#include <string.h>
-#include <iostream.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <signal.h>
-
 #include "ace/ACE.h"
 #include "ace/OS.h"
 #include "ace/SOCK_Acceptor.h"
