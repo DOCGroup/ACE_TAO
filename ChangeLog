@@ -1,3 +1,21 @@
+Mon Dec 20 11:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/README:
+        * ace/OS_NS_unistd.inl:
+          Added ACE_HAS_NONCONST_UNLINK
+
+Mon Dec 20 11:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/README:
+        * ace/OS_NS_unistd.inl:
+          Added ACE_HAS_NONCONST_RMDIR
+
+        * ace/OS_NS_unistd.inl:
+          Merged the two ACE_OS::getopt methods to one, no need to have a special
+          win32 not supported version
+
 Mon Dec 20 11:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:

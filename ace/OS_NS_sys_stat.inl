@@ -304,7 +304,7 @@ ACE_OS::stat (const char *file, ACE_stat *stp)
 #endif /* __IBMCPP__ */
 #else /* ACE_HAS_NONCONST_STAT */
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
-#endif /* VXWORKS */
+#endif /* ACE_HAS_NONCONST_STAT */
 }
 
 #if defined (ACE_HAS_WCHAR)
