@@ -27,7 +27,7 @@ WCE ARM {
 
 Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /GX /O2 /MD /GR
+  compile_flags         = /W3 /O2 /Zi /Ob2
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
@@ -36,7 +36,7 @@ Release {
 
 Debug {
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  compile_flags         = /W3 /Zi /Od
   defines               = _DEBUG
   compile_flags_removed = /YX
   intermediate_dir      = Debug

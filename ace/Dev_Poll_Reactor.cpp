@@ -17,19 +17,19 @@ ACE_RCSID (ace,
 // #undef POLLHUP
 // #undef POLLNVAL
 
-#    include <asm/page.h>
+#    include /**/ <asm/page.h>
   //#  include <asm/poll.h>
   // @@ UGLY HACK ... REMOVE ME
   //    <asm/poll.h> and <sys/poll.h> conflict.
 #    define POLLREMOVE      0x1000
-#    include <linux/eventpoll.h>
+#    include /**/ <linux/eventpoll.h>
 
 #  elif defined (ACE_HAS_DEV_POLL)
 
 #    if defined (sun)
-#      include <sys/devpoll.h>
+#      include /**/ <sys/devpoll.h>
 #    elif defined (linux)
-#      include <linux/devpoll.h>
+#      include /**/ <linux/devpoll.h>
 #    endif  /* sun */
 
 #  endif  /* ACE_HAS_DEV_POLL */

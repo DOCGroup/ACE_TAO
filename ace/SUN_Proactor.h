@@ -22,7 +22,7 @@
 #if defined (ACE_HAS_AIO_CALLS) && defined (sun)
 
 #include "ace/POSIX_Proactor.h"
-#include "sys/asynch.h"    // Sun native aio calls
+#include /**/ <sys/asynch.h>    // Sun native aio calls
 
 /**
  * @class ACE_SUN_Proactor

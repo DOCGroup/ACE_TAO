@@ -5452,7 +5452,6 @@ ACE_OS::ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
 }
 # endif /* ACE_HAS_WINCE */
 
-# if !defined (ACE_HAS_WINCE)
 time_t
 ACE_OS::mktime (struct tm *t)
 {
@@ -5460,6 +5459,20 @@ ACE_OS::mktime (struct tm *t)
 #   if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (-1);
+#   elif defined (ACE_HAS_WINCE)
+  SYSTEMTIME t_sys;
+  FILETIME t_file;
+  t_sys.wSecond = t->tm_sec;
+  t_sys.wMinute = t->tm_min;
+  t_sys.wHour = t->tm_hour;
+  t_sys.wDay = t->tm_mday;
+  t_sys.wMonth = t->tm_mon + 1;  // SYSTEMTIME is 1-indexed, tm is 0-indexed
+  t_sys.wYear = t->tm_year + 1900; // SYSTEMTIME is real; tm is since 1900
+  t_sys.wDayOfWeek = t->tm_wday;  // Ignored in below function call.
+  if (SystemTimeToFileTime (&t_sys, &t_file) == 0)
+    return -1;
+  ACE_Time_Value tv (t_file);
+  return tv.sec ();
 #   else
 #     if defined (ACE_HAS_THREADS)  &&  !defined (ACE_HAS_MT_SAFE_MKTIME)
   ACE_OS_GUARD
@@ -5468,7 +5481,6 @@ ACE_OS::mktime (struct tm *t)
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
 #   endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
 }
-# endif /* !ACE_HAS_WINCE */
 
 # if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_RWLOCK_T)
 int

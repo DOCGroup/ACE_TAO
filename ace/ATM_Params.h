@@ -37,7 +37,7 @@ typedef struct netbuf Param_Udata;
 typedef int Param_Info;
 typedef int Param_Udata;
 #elif defined (ACE_HAS_LINUX_ATM)
-#include "atm.h"
+#include /**/ "atm.h"
 #define AF_ATM PF_ATMSVC
 #define ACE_XTI_ATM_DEVICE ""
 #define ATM_PROTOCOL_DEFAULT ATM_AAL5

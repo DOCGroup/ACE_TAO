@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
-#include "forews2.h"
+#include /**/ "forews2.h"
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 
 #if !defined (__ACE_INLINE__)

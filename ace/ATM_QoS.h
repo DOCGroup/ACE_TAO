@@ -29,7 +29,7 @@ typedef ACE_QoS ATM_QoS;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
 typedef struct netbuf ATM_QoS;
 #elif defined (ACE_HAS_LINUX_ATM)
-#include "atm.h"
+#include /**/ "atm.h"
 #include "ATM_Params.h"
 typedef struct atm_qos ATM_QoS;
 #else

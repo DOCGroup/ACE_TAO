@@ -7,7 +7,7 @@ ACE_RCSID(ace, ATM_Acceptor, "$Id$")
 #if defined (ACE_HAS_ATM)
 
 #if defined (ACE_HAS_LINUX_ATM)
-#include "linux/atmdev.h"
+#include /**/ "linux/atmdev.h"
 #endif /* ACE_HAS_LINUX_ATM */
 
 #if !defined (__ACE_INLINE__)

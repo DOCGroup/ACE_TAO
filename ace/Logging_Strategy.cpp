@@ -298,9 +298,9 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
           FILE *output_file = 0;
           if (wipeout_logfile_)
-            output_file = ACE_OS::fopen (this->filename_, "wt");
+            output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("wt"));
           else
-            output_file = ACE_OS::fopen (this->filename_, "at");
+            output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("at"));
           if (output_file == 0)
             return -1;
 #else
@@ -390,7 +390,8 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 
               // Open a new log file with the same name.
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-              output_file = ACE_OS::fopen (this->filename_, "wt");
+              output_file = ACE_OS::fopen (this->filename_,
+                                           ACE_LIB_TEXT ("wt"));
 
               if (output_file == 0)
                 return -1;
@@ -483,7 +484,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 
       // Open a new log file by the same name
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-      output_file = ACE_OS::fopen (this->filename_, "wt");
+      output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("wt"));
 
       if (output_file == 0)
         return -1;
