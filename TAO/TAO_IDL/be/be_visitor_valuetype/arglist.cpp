@@ -26,7 +26,7 @@
 
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, arglist, "$Id$")
+ACE_RCSID(be_visitor_valuetype, arglist, "$Id$")
 
 
 // ************************************************************
@@ -113,7 +113,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-      *os << ";\n";    
+      *os << ";\n";
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
        *os << "\n";
