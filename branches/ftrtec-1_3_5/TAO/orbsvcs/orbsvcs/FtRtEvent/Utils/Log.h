@@ -45,6 +45,7 @@ namespace TAO_FTRTEC {
   public:
     Log (unsigned int log_level, const ACE_TCHAR* format, ...);
     static void level(unsigned int log_level);
+    static unsigned int level();
     static void hexdump(unsigned int log_level, const char* buf, size_t len, const char* msg);
   private:
     friend class Trace;

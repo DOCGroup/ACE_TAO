@@ -44,18 +44,10 @@ namespace {
     ACE_ENV_ARG_DECL)
   {
     FTRTEC_TRACE("obtain_push_consumer_and_connect");
-    FTRTEC_LOGTIME("obtain_push_consumer_and_connect");
 
-    {
-      TAO_FTRTEC::TimeLogger logger("Request_Context_Repository().set_object_id()");
     Request_Context_Repository().set_object_id(oid ACE_ENV_ARG_PARAMETER);
-    }
-    RtecEventChannelAdmin::ProxyPushConsumer_var consumer;
-    {
-      TAO_FTRTEC::TimeLogger logger("ec->supplier_admin()->obtain()");
-    consumer =
+    RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
       ec->supplier_admin()->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
-    }
 
     ACE_CHECK;
 
@@ -63,12 +55,9 @@ namespace {
       &TAO_FTEC_SupplierAdmin::disconnect,
       consumer.in());
 
-    {
-      TAO_FTRTEC::TimeLogger logger("consumer->connect_push_supplier()");
     consumer->connect_push_supplier(push_supplier, qos
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    }
 
     guard.Dismiss();
   }
@@ -380,8 +369,6 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
 {
   FTRTEC_TRACE("TAO_FTEC_Event_Channel_Impl::connect_push_supplier"); 
   FtRtecEventChannelAdmin::ObjectId_var object_id;
-  {
-  FTRTEC_LOGTIME("TAO_FTEC_Event_Channel_Impl::connect_push_supplier");
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
@@ -396,7 +383,6 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
     return result;
   }
 
-
   ACE_NEW_THROW_EX(oid, FtRtecEventChannelAdmin::ObjectId, CORBA::NO_MEMORY());
   object_id = oid;
 
@@ -409,8 +395,6 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
                                    ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN(0);
-  }
-  TAO_FTRTEC::TimeLogger::output();
 
   return object_id._retn();
 
