@@ -4,7 +4,7 @@
 
 ACE_RCSID (Application_Controlled,
            Simple,
-           "$Id$");
+           "$Id$")
 
 
 Simple::Simple (CORBA::Object_ptr object_group,
