@@ -2009,12 +2009,12 @@ three built-in load balancing strategies.  They are:
  <li><CODE>LeastLoaded</CODE> <FONT COLOR=BLUE>(adaptive)</FONT></li>
 </ol>
 
-TAO currently implements the <CODE>Random</CODE> load balancing strategy.
+TAO currently implements the <CODE>RoundRobin</CODE> and
+<CODE>Random</CODE> load balancing strategies.
 
 <h4>Known Issues:</h4>
 <ul>
-<li><CODE>RoundRobin</CODE> and <CODE>LeastLoaded</CODE> load
-    balancing strategies are currently unimplemented.</li>
+<li><CODE>LeastLoaded</CODE> load balancing strategy is currently non-operational.</li>
 <li>New group members are not automatically created if possible and
     when necessary.  This is only a problem for the <I>infrastructure
     controlled</I> object group membership style.</li>
@@ -2025,13 +2025,12 @@ TAO currently implements the <CODE>Random</CODE> load balancing strategy.
 
 <h4>Recent Work:</h4>
 <ul>
-<li>It's all recent.  :-)</li>
+<li>Implemented <CODE>RoundRobin</CODE> load balancing strategy</li>
 </ul>
 
 <h4>Future Work:</h4>
 <ul>
-<li>Implement <CODE>RoundRobin</CODE> and <CODE>LeastLoaded</CODE>
-    load balancing strategies</li>
+<li>Complete the <CODE>LeastLoaded</CODE> load balancing strategy implementation</li>
 <li>Implement cooperative (distributed) load balancing support</li>
 <li>Integrate multicast support</li>
 </ul>
