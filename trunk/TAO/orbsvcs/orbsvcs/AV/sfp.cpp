@@ -761,7 +761,7 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
 int
 TAO_SFP::end_stream (void)
 {
-  int result;
+  int result = -1;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -781,13 +781,13 @@ TAO_SFP::end_stream (void)
       if ((n==-1) || (n==0))
         ACE_ERROR_RETURN ((LM_ERROR,"Error sending endofstream message:%p",""),-1);
       result = this->reactor_->remove_handler (this,
-                                                   ACE_Event_Handler::READ_MASK);
+                                               ACE_Event_Handler::READ_MASK);
 
     }
   ACE_CATCHANY
     {
       ACE_TRY_ENV.print_exception ("TAO_SFP::end_stream ()\n");
-      return -1;
+      return result;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
