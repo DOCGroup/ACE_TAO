@@ -7220,46 +7220,7 @@ private:
   ACE_OS_CString (void);
   ACE_OS_CString (ACE_OS_CString &);
   ACE_OS_CString operator= (ACE_OS_CString &);
-  // Disallow these operations.
-};
-
-class ACE_OS_Recursive_Thread_Mutex_Guard
-{
-  // = TITLE
-  //     This data structure is meant to be used within an ACE_OS
-  //     function.  It performs automatic aquisition and release of
-  //     an ACE_recursive_thread_mutex_t.
-  //
-  // = DESCRIPTION
-  //     For internal use only by ACE.
-public:
-  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
-  // Implicitly and automatically acquire the lock.
-
-  ~ACE_OS_Recursive_Thread_Mutex_Guard (void);
-  // Implicitly release the lock.
-
-  int acquire (void);
-  // Explicitly acquire the lock.
-
-  int release (void);
-  // Explicitly release the lock.
-
-  int locked (void);
-  // Returns 1 if locked, 0 if not.
-
-protected:
-  ACE_recursive_thread_mutex_t &lock_;
-  // Reference to the mutex.
-
-  int owner_;
-  // Keeps track of whether we acquired the lock or failed.
-
-  // = Prevent assignment and initialization.
-  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
+  // Disallow these operation.
 };
 
 // Support non-scalar thread keys, such as with some POSIX
