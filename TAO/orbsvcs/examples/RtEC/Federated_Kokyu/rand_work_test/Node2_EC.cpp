@@ -167,7 +167,7 @@ main (int argc, char* argv[])
   ACE_TRY
     {
 #ifdef ACE_HAS_DSUI
-      ds_control ds_cntl("Node2_Test_Supplier","node2_enabled.dsui");
+      ds_control ds_cntl("Node2_Test","node2_enabled.dsui");
 #endif //ACE_HAS_DSUI
 
       // ORB initialization boiler plate...
