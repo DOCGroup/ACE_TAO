@@ -10,6 +10,10 @@ Mon Nov 10 14:09:24 1997  Steve Huston  <shuston@riverace.com>
 
 Mon Nov 10 13:33:02 1997    <irfan@TWOSTEP>
 
+	* ace/OS.h (ACE_WRITE_GUARD): Added macros for ACE_WRITE_GUARD and
+ 	  ACE_READ_GUARD. Thanks to Brian Raven <Brian.Raven@liffe.com>
+ 	  for suggesting this.
+
 	* tests/Thread_Mutex_Test.cpp: Modified version of Mutex_Test that
  	  exclusively works on a Thread_Mutex.
 
