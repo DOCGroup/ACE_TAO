@@ -104,6 +104,7 @@ server (void *arg)
   ACE_FIFO_Recv_Msg *fifo = ACE_reinterpret_cast (ACE_FIFO_Recv_Msg *, arg);
 
   // Wait for the client to get going and open the FIFO.
+  errno = 0;
   ACE_Handle_Set h;
   ACE_Time_Value delay (10);
   h.set_bit (fifo->get_handle ());
@@ -111,6 +112,12 @@ server (void *arg)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) server %p\n"),
                        ACE_TEXT ("select")),
                       0);
+
+  // On AIX, select() always seems to select a fifo handle as a normal file,
+  // always readable. Just wait a second...
+# if defined (AIX)
+  ACE_OS::sleep (1);
+# endif /* AIX */
 
   // Read the things the client is sending; alphabet, huge overflow, then
   // alphabet.
