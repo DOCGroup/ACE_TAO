@@ -1,3 +1,9 @@
+Thu Mar 27 09:28:09 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (create_object): Removed
+	  the stray ':' after the 'r' option.  Thanks to Sean Ogle
+ 	  <sean.ogle@syslog.at> for reporting this.
+
 Thu Mar 27 12:13:21 2003  Edward Scott  <eas@prismtechnologies.com>
 
 	* orbsvcs/tests/ior_corbaname/Makefile:
