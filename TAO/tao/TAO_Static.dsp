@@ -238,10 +238,6 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Assorted_Headers.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Accept_State.cpp
 # End Source File
 # Begin Source File
@@ -258,7 +254,15 @@ SOURCE=.\GIOP_Message_Connectors.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Headers.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Lite.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.cpp
 # End Source File
 # Begin Source File
 
@@ -618,7 +622,7 @@ SOURCE=.\TAOS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\target_identifier.cpp
+SOURCE=.\target_specification.cpp
 # End Source File
 # Begin Source File
 
@@ -835,6 +839,14 @@ SOURCE=.\Forwarding_Servant.h
 # Begin Source File
 
 SOURCE=.\giop.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Headers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.h
 # End Source File
 # Begin Source File
 
@@ -1186,6 +1198,10 @@ SOURCE=.\TAOS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\target_specification.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
@@ -1331,6 +1347,14 @@ SOURCE=.\Exception.i
 # Begin Source File
 
 SOURCE=.\giop.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Headers.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
@@ -1555,6 +1579,10 @@ SOURCE=.\TAOC.i
 # Begin Source File
 
 SOURCE=.\TAOS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\target_specification.i
 # End Source File
 # Begin Source File
 
