@@ -1,3 +1,11 @@
+Wed Mar  6 14:37:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/Simple/time-date/server.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr.cpp:
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp: Changed the
+	  argv type in main to char*.
+
 Wed Mar  6 11:03:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
@@ -66,7 +74,7 @@ Tue Mar  5 23:47:17 2002  Ossama Othman  <ossama@uci.edu>
 	  slightly, in addition to improving object reference creation
 	  times for both unconstrained objects and locality-constrained
 	  objects (e.g. one lock initialization -- not acquisition --
-	  instead of two). 
+	  instead of two).
 
 	  These changes are part of an optimization for creation of
 	  locality-constrained objects.  This is particularly useful for
@@ -97,7 +105,7 @@ Tue Mar  5 23:47:17 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Mar 05 19:16:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
-	* docs/tutorials/Quoter/AMI/server.dsp: 
+	* docs/tutorials/Quoter/AMI/server.dsp:
 	* docs/tutorials/Quoter/AMI/client.dsp:
 	* docs/tutorials/Quoter/AMI/server.dsp:
 	* docs/tutorials/Quoter/On_Demand_Activation/server.dsp:
@@ -152,7 +160,7 @@ Tue Mar 05 19:16:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	* orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
 	* orbsvcs/tests/Event/Basic/Negation.dsp:
 	* orbsvcs/tests/Event/Basic/Observer.dsp:
-	* orbsvcs/tests/Event/Basic/Random.dsp:	
+	* orbsvcs/tests/Event/Basic/Random.dsp:
 	* orbsvcs/tests/Event/Basic/Reconnect.dsp:
 	* orbsvcs/tests/Event/Basic/Schedule.dsp:
 	* orbsvcs/tests/Event/Basic/Shutdown.dsp:
@@ -207,7 +215,7 @@ Tue Mar 05 19:16:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	* tests/Timed_Buffered_Oneways/client.dsp:
 	* tests/Timed_Buffered_Oneways/server.dsp:
 	* tests/Timeout/client.dsp:
-	* tests/Timeout/server.dsp	
+	* tests/Timeout/server.dsp
 	  Added link to the new Messaging library.
 
 Tue Mar  5 17:32:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -219,7 +227,7 @@ Tue Mar  5 17:32:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
           Craig Rodrigues <crodrigu@bbn.com>, who is using Red Hat
           7.1 and an experimental configuration of gcc
           (version 3.1 20020302 prerelease). The preprocessor output
-          of this configuration is radically different than any 
+          of this configuration is radically different than any
           others we support, and an additional check was required to
           prevent the current prefix from being popped off the stack
           prematurely.
