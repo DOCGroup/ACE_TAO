@@ -19,7 +19,8 @@
 ACE_RCSID(Event, EC_Kokyu_Dispatching, "$Id$")
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec)
-  :dispatcher_ (0)
+  :dispatcher_ (0),
+   lanes_setup_ (0)
 {
   CORBA::Object_var tmp = ec->scheduler ();
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
@@ -27,6 +28,17 @@ TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *e
 
 void
 TAO_EC_Kokyu_Dispatching::activate (void)
+{
+  if (!lanes_setup_)
+    setup_lanes ();
+  
+  this->dispatcher_->activate ();
+
+  //ACE_DEBUG ((LM_DEBUG, "Kokyu dispatcher activated\n"));
+}
+
+void
+TAO_EC_Kokyu_Dispatching::setup_lanes (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   // Query the scheduler togetConfig_Infos
@@ -63,10 +75,16 @@ TAO_EC_Kokyu_Dispatching::activate (void)
         }
   }
 
+  Kokyu::Dispatcher_Attributes attrs;
+  attrs.config_info_set_ = kconfigs;
+
   // Create Kokyu::Dispatcher using factory
   Kokyu::Dispatcher_Auto_Ptr 
-    tmp(Kokyu::Dispatcher_Factory::create_dispatcher(kconfigs));
+    tmp(Kokyu::Dispatcher_Factory::create_dispatcher(attrs));
   this->dispatcher_ = tmp;
+  this->lanes_setup_ = 1;
+
+  //ACE_DEBUG ((LM_DEBUG, "Kokyu dispatcher setup\n"));
 }
 
 void
@@ -93,9 +111,9 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        TAO_EC_QOS_Info& qos_info
                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (this->dispatcher_.get () == 0)
-        this->activate();
-
+    if (this->dispatcher_.get () == 0)
+        this->setup_lanes ();
+  
   // Create Dispatch_Command
   TAO_EC_Kokyu_Push_Command *cmd =
     new TAO_EC_Kokyu_Push_Command(proxy,consumer,event);
@@ -107,6 +125,9 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   qosd.deadline_ = rt_info->period;
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
+
+  //ACE_DEBUG ((LM_DEBUG, 
+  //             "(%t) About to drop event into queue.\n"));
 
   this->dispatcher_->dispatch(cmd,qosd);
 }
@@ -137,6 +158,9 @@ TAO_EC_Kokyu_Push_Command::execute ()
 
   ACE_TRY
     {
+      //ACE_DEBUG ((LM_DEBUG, 
+      //            "(%t) Command object executed.\n"));
+
       this->proxy_->push_to_consumer (this->consumer_.in (),
                                       this->event_
                                       ACE_ENV_ARG_PARAMETER);

@@ -71,11 +71,15 @@ public:
                             ACE_ENV_ARG_DECL);
 
 private:
+  void TAO_EC_Kokyu_Dispatching::setup_lanes (void);
+
   /// The dispatcher
   Kokyu::Dispatcher_Auto_Ptr dispatcher_;
 
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
+
+  int lanes_setup_;
 };
 
 // ****************************************************************
