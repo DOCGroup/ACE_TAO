@@ -53,6 +53,8 @@ Tue Jan 28 21:57:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Jan 28 12:42:39 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* ace/ace.mdp: Added the "Using MFC in a Shared DLL" flags.
+
 	* tests/test_config.h (ACE_INIT_LOG): Made this UNICODE safe.
 
 	* tests/Pipe_Test.cpp (main): Added an iteration count to control
