@@ -1,52 +1,56 @@
+Wed Aug 19 15:58:23 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO-INSTALL.html: added instructions for cross-compiled targets.
+
 Wed Aug 19 15:18:36 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: 
-	  Fixed template errors that derailed compilation
-	
-	* orbsvcs/tests/Property/client.{h,cpp}: 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}: 
-	* tests/Cubit/TAO/MT_client/server.{h,cpp}
-	* tests/Cubit/TAO/IDL_Cubit/client_i.{h,cpp}
- 	  Replaced old code with Naming_Utils code. Added a
-	  TAO_Naming_Client to the *.h, and used it in the *.cpp to
-	  contact the Naming Service for binds and resolves.
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}:
+          Fixed template errors that derailed compilation
+
+        * orbsvcs/tests/Property/client.{h,cpp}:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}:
+        * tests/Cubit/TAO/MT_client/server.{h,cpp}
+        * tests/Cubit/TAO/IDL_Cubit/client_i.{h,cpp}
+          Replaced old code with Naming_Utils code. Added a
+          TAO_Naming_Client to the *.h, and used it in the *.cpp to
+          contact the Naming Service for binds and resolves.
 
 Wed Aug 19 15:06:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h: 
-	* tao/Exception.h: 
-	* tao/Exception.cpp: 
-	* tao/Invocation.cpp: 
-	  Added the new CORBA::UnknownUserException, that is used with DII
-	  when a user exception is raised.
-	  User and system exceptions are created using the right dynamic
-	  type.
-	  Minimized code size by using a factory method for the system
-	  exceptions in the TAO_Exceptions class.
+        * tao/ORB.h:
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+        * tao/Invocation.cpp:
+          Added the new CORBA::UnknownUserException, that is used with DII
+          when a user exception is raised.
+          User and system exceptions are created using the right dynamic
+          type.
+          Minimized code size by using a factory method for the system
+          exceptions in the TAO_Exceptions class.
 
-	* tao/Typecode.h: 
-	* tao/Typecode.cpp: 
-	  Completed the implementation for the Bounds and BadKind
-	  exceptions.
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+          Completed the implementation for the Bounds and BadKind
+          exceptions.
 
-	* tests/Param_Test/Makefile: 
-	* tests/Param_Test/README: 
-	* tests/Param_Test/driver.cpp: 
-	* tests/Param_Test/options.cpp: 
-	* tests/Param_Test/options.h: 
-	* tests/Param_Test/param_test.idl: 
-	* tests/Param_Test/param_test_i.cpp: 
-	* tests/Param_Test/param_test_i.h: 
-	* tests/Param_Test/run_test.pl: 
-	* tests/Param_Test/tests.h: 
-	  Added a new test for exceptions, it verifies that user
-	  exceptions are properly transmitted and demarshaled and that
-	  unexpected exceptions are converted into CORBA::UNKNOWN.
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/README:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/tests.h:
+          Added a new test for exceptions, it verifies that user
+          exceptions are properly transmitted and demarshaled and that
+          unexpected exceptions are converted into CORBA::UNKNOWN.
 
-	* tests/Param_Test/any.cpp: 
-	* tests/Param_Test/ub_any_seq.cpp: 
-	  The tests (specially the server side) are silent unless the
-	  TAO_debug_level is greater than 0.
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/ub_any_seq.cpp:
+          The tests (specially the server side) are silent unless the
+          TAO_debug_level is greater than 0.
 
 Wed Aug 19 14:24:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -59,11 +63,11 @@ Wed Aug 19 10:48:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Fixed syntax errors, wrong paths and increased sleep time, seems
           to work now.
 
-	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
-	  The script was giving the wrong options to the server.
+        * tests/Cubit/TAO/DII_Cubit/run_test.pl:
+          The script was giving the wrong options to the server.
 
-	* tests/NestedUpcall/Reactor/run_test.pl: 
-	  Increased sleep time, simplify command line args.
+        * tests/NestedUpcall/Reactor/run_test.pl:
+          Increased sleep time, simplify command line args.
 
 Wed Aug 19 09:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
