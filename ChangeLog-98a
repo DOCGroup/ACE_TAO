@@ -1,5 +1,8 @@
 Mon Apr 13 19:19:13 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS: Made the destructor of ACE_Thread_Adapter private to
+ 	  keep people like Russ from abusing this class... ;-)
+
 	* ace/OS.cpp (invoke): We were incorrectly deleting this and then
  	  using one of its fields!  Thanks to the ever-vigilant Russ
  	  Noseworthy <rnosewor@objectsciences.com> for reporting this.
