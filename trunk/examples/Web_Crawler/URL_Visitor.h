@@ -1,9 +1,10 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
-//    examples/Web_Crawlerx
+//    examples/Web_Crawler
 //
 // = FILENAME
 //    URL_Visitor.h
