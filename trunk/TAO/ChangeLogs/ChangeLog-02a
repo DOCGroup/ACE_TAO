@@ -1,3 +1,21 @@
+Tue Jun 27 12:50:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_interface.cpp:
+
+	  If an interface is forward declared in a module and
+	  then fully defined in a reopened instance of that
+	  module, the IDL compiler may, in some cases,
+	  consider the two module instances to be different
+	  scopes (for example, if one of them is included from
+	  another IDL file). In a case like this, the 
+	  AST_Interface::redefine() method, called by
+	  AST_Interface::forward_redefinition_helper(), was not
+	  updating the 'defined_in" member, leading to lookup
+	  errors for references inside the interface definition.
+	  The scope update has now been added. Thanks to
+	  Richard Reitmeyer <richard@verecomm.com> for reporting
+	  this bug and sending in an example pair of IDL files.
+
 Tue Jun 27 10:09:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
