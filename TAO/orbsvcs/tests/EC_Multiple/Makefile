@@ -1,6 +1,4 @@
-#
 # $Id$
-#
 
 BIN = EC_Multiple
 
@@ -240,7 +238,7 @@ EC_Multiple: $(addprefix $(VDIR),$(EC_MULTIPLE_OBJS) $(EC_MULTIPLE_CONFIG_OBJS))
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
