@@ -1,3 +1,12 @@
+Tue Sep 28 15:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACEXML/apps/svcconf/svcconf.mpc:
+	* ACEXML/common/common.mpc:
+	* ACEXML/parser/parser/parser.mpc:
+
+	  Changed to inherit from core.mpb, so that libraries will 
+	  be installed.
+
 Tue Sep 28 15:22:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/acedefaults.mpb:
