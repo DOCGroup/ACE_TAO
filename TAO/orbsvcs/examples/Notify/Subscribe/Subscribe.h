@@ -207,7 +207,7 @@ class Subscribe_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPus
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
                 ACE_ENV_ARG_DECL);
   // Connect the Supplier to the EventChannel.
-  // Creates a new proxy supplier and connects to it.
+  // Creates a new proxy consumer and connects to it.
 
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.

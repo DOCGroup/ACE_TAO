@@ -1,3 +1,9 @@
+Wed Jan 30 13:50:17 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/index.html: Fixed the ACE-inheritance.pdf document so
+	  it isn't gzipped.  Thanks to Michael Searles
+ 	  <msearles@base16.com> for reporting this.
+
 Wed Jan 30 09:28:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * XML/parser/debug_validator/Debug_Attributes_Builder.cpp:
