@@ -19,11 +19,58 @@
 <ol>
   <li><h3>Latest News</h3>
       <ul>
-        <li>Mon Jun  2 2003 - The first Alpha release of CIAO will be
-            available with TAO.  We now have a CIDL compiler.  Check
-            out its <a href="..\CIDLC\README">README</a> file for more
+        <li>Sun Aug 24 2003 - The first phase of RT support extension
+            is complete.  The RT extension enables developers to
+            specify RT policy on a per component installation basis
+            (per home, and the component created form the home).  The
+            extension includes the following major features:
+            <ul>
+              <li>A real-time ComponentServer:  A real-time
+                  ComponentServer is capable of hosting real-time
+                  Container for components in real-time applications.
+                  To use the real-time ComponentServer, simply tell
+                  CIAO_Daemon to use the RTComponentServer via the
+                  '-n' flag.
+
+              <li>RT extension for assembly descriptors (defined in
+                  .cad files) to specify component installations to RT
+                  policy sets defined in CIAO's real-time descriptors
+                  (defined in CIAO's .rtd files.)  DTD definitions for
+                  .rtd files can be found in <a
+                  href="XML/ciao_rt_cad_ext.dtd">this file</a>.  An
+                  example .cad file that uses the RT extension and an
+                  example .rtd file that provides RT policy
+                  definitions can be found at:
+                  <pre><code>
+     $(CIAO_ROOT)/examples/OEP/Display/descriptors/HUDisplay-rtcad.cad
+     $(CIAO_ROOT)/examples/OEP/Display/descriptors/test.rtd
+                  </code></pre>
+            </ul>
+
+            More documentation and comprehensive
+            examples/tests/benchmark results for CIAO's RT extension
+            will be added shortly.
+            <p>
+
+        <li>Thu Jul 31 2003 - Arvind and Diego are starting to work on
+            benchmarking and comparing the performance of CIAO and
+            TAO.  These performance test programs are available in
+            <a href="../performance-tests/Benchmark/">the repository
+            </a><p>
+
+        <li>Thu Jul 24 2003 - Bala and George are starting to work on a container
+            mediated event delivering support.  This will allow developers
+            to specify the event deliverying strategy and the degree
+            of QoS.  The fist task is to integrate TAO's event channel
+            into the container framework.<p>
+
+        <li>Tue Jun  3 2003 - The first Alpha release of CIAO is now
+            available with ACE/TAO beta kit.<p>
+
+        <li>Mon Jun  2 2003 - We now have a CIDL compiler.  Check
+            out its <a href="../CIDLC/README">README</a> file for more
             information.  Examples are also moved to <a
-            href="..\examples\OEP\">here</a> to use the new CIDL
+            href="../examples/OEP/">here</a> to use the new CIDL
             compiler to generate servant glue code.<p>
 
         <li>Thu Apr 16 2003 - The HUDisplay example now also works on
