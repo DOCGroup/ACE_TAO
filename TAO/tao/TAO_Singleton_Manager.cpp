@@ -9,7 +9,6 @@
 
 #include "tao/Exception.h"
 #include "tao/Typecode.h"
-#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Singleton_Manager.inl"
@@ -163,16 +162,6 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       // been initialized.
       this->object_manager_state_ = OBJ_MAN_INITIALIZED;
 
-#if defined (ACE_HAS_EXCEPTIONS)
-      // Store a pointer to the old unexpected exception handler so
-      // that it can be restored when TAO is unloaded, for example.
-      // Otherwise, any unexpected exceptions will result in a call to
-      // TAO's unexpected exception handler which may no longer exist
-      // if TAO was unloaded.
-      this->old_unexpected_ =
-        set_unexpected (CORBA_ORB::_tao_unexpected_exception);
-#endif /* ACE_HAS_EXCEPTIONS */
-
       return 0;
     }
 
@@ -306,6 +295,20 @@ TAO_Singleton_Manager::shutting_down (void)
     ? instance_->shutting_down_i ()
     : 1;
 }
+
+#if defined (ACE_HAS_EXCEPTIONS)
+void
+TAO_Singleton_Manager::_set_unexpected (TAO_unexpected_handler u)
+{
+  // This must be done after the system TypeCodes and Exceptions have
+  // been initialized.  An unexpected exception will cause TAO's
+  // unexpected exception handler to be called.  That handler
+  // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
+  // course requires the TypeCode constants and system exceptions to
+  // have been initialized.
+  this->old_unexpected_ = set_unexpected (u);
+}
+#endif /* ACE_HAS_EXCEPTIONS */
 
 int
 TAO_Singleton_Manager::at_exit_i (void *object,

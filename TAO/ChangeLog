@@ -1,3 +1,22 @@
+Wed Jul 31 13:27:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Singleton_Manager.h (_set_unexpected):
+	* tao/TAO_Singleton_Manager.cpp (_set_unexpected):
+
+	  New public method that sets the unexpected exception handler to
+	  the supplied value.
+
+	  (init):
+
+	  Do not set the unexpected exception handler.
+	  ORB::init_orb_globals() once again does that by invoking the
+	  above new method.
+
+	* tao/ORB.cpp (init_orb_globals):
+
+	  Set the unexpected exception handler by invoking the
+	  TAO_Singleton_Manger::_set_unexpected() method.
+	
 Wed Jul 31 11:28:16 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.h (init_orb_globals):
