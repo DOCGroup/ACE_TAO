@@ -1,3 +1,19 @@
+Tue Aug 27 18:31:53 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tao/Transport.cpp: Made the methods purge_entry () and make_idle 
+	  () more readable. Instead of checking whether the hash_map entry
+	  is available within the transport classes, just defer that
+	  decision to the Transport_Cache_Manager classes. 
+	
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/Transport_Cache_Manager.inl: The make_idle () and
+	  purge_entry () methods now use the classical double-checked
+	  locking optimization pattern before calling the actual 
+	  implementations. 
+
+	  This fixes [BUG 1276]. Thanks to Carlos O'Ryan
+	  <coryan@atdesk.com> for supplying the patches.
+		
 Tue Aug 27 15:56:05 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Callback/server_i.cpp (test_request):

@@ -51,10 +51,11 @@ TAO_Transport_Cache_Manager::purge (void)
 ACE_INLINE int
 TAO_Transport_Cache_Manager::purge_entry (HASH_MAP_ENTRY *&entry)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
+  // Double checked locking
+  if(entry == 0)
+    return 0;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
 
   return this->purge_entry_i (entry);
 }
@@ -62,9 +63,11 @@ TAO_Transport_Cache_Manager::purge_entry (HASH_MAP_ENTRY *&entry)
 ACE_INLINE void
 TAO_Transport_Cache_Manager::mark_invalid (HASH_MAP_ENTRY *&entry)
 {
-  ACE_MT (ACE_GUARD (ACE_Lock,
-                     guard,
-                     *this->cache_lock_));
+  if(entry == 0)
+    return;
+
+  // Double checked locking
+  ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
 
   this->mark_invalid_i (entry);
 }
@@ -74,10 +77,10 @@ TAO_Transport_Cache_Manager::mark_invalid (HASH_MAP_ENTRY *&entry)
 ACE_INLINE int
 TAO_Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
+  if(entry == 0)
+    return -1;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
   return this->make_idle_i (entry);
 }
 
