@@ -94,7 +94,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 	  "ub_strseq", "bd_strseq",
 	  "var_struct", "nested_struct",
 	  "ub_struct_seq", "bd_struct_seq",
-	  "any", "objref", "objref_sequence", 
+	  "any", "objref", "objref_sequence", "objref_struct",
 	  "any_sequence",
 	  "ub_short_sequence", "ub_long_sequence", 
 	  "bd_short_sequence", "bd_long_sequence",
