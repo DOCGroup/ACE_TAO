@@ -1,3 +1,11 @@
+Mon Jun 28 00:18:04 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* CIAO\performance-tests\Protocols: 
+
+	  Added new test.  Closely mirrors
+	  $TAO_ROOT\performance-tests\Protocols but uses CCM components
+	  rather that TAO applications.
+
 Sun Jun 27 12:59:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/tests/scripts/BasicSP/basicNodeDaemon.pl:
