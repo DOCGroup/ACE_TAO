@@ -1462,7 +1462,7 @@ sub update_project_info {
 sub get_verbatim {
   my($self)   = shift;
   my($marker) = shift;
-  my($type)   = Driver::extractType($self, "$self");
+  my($type)   = $self->extractType("$self");
   my($str)    = undef;
   my($thash)  = $self->{'verbatim'}->{$type};
 

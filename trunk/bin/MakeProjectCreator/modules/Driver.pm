@@ -13,7 +13,10 @@ package Driver;
 use strict;
 use File::Basename;
 
-use Parser;
+use StringProcessor;
+
+use vars qw(@ISA);
+@ISA = qw(StringProcessor);
 
 # ************************************************************
 # Data Section
@@ -32,28 +35,16 @@ sub new {
   my($path)     = shift;
   my($name)     = shift;
   my(@creators) = @_;
-  my($self)     = bless {'path'     => $path,
-                         'name'     => $name,
-                         'version'  => 1.3,
-                         'types'    => {},
-                         'creators' => \@creators,
-                         'default'  => $creators[0],
-                        }, $class;
+  my($self)     = $class->SUPER::new();
+
+  $self->{'path'}     = $path;
+  $self->{'name'}     = $name;
+  $self->{'version'}  = 1.3;
+  $self->{'types'}    = {};
+  $self->{'creators'} = \@creators;
+  $self->{'default'}  = $creators[0];
 
   return $self;
-}
-
-
-sub extractType {
-  my($self) = shift;
-  my($name) = shift;
-  my($type) = $name;
-
-  if ($name =~ /(.*)(Project|Workspace)Creator/) {
-    $type = $1;
-  }
-
-  return lc($type);
 }
 
 
@@ -178,7 +169,7 @@ sub run {
   ## Before we process the arguments, we will prepend the $cmdenv
   ## environment variable.
   if (defined $ENV{$cmdenv}) {
-    my($envargs) = Parser::create_array(undef, $ENV{$cmdenv});
+    my($envargs) = $self->create_array($ENV{$cmdenv});
     unshift(@args, @$envargs);
   }
 
