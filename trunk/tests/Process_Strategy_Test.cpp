@@ -44,8 +44,9 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Strategies_T.h"
 #include "ace/Singleton.h"
-#include "Process_Strategy_Test.h"	// Counting_Service and Options in here
 
+// Counting_Service and Options in here
+#include "Process_Strategy_Test.h"	
 
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
@@ -57,16 +58,15 @@ typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR>
 typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 
 // counter for connections
-int connections = 0;
+static int connections = 0;
 
-// Use this to show down the process gracefully.
-int 
+// Use this to show down the process gracefully.  Note that this
+// doesn't work for the PROCESS case.
+
+static int 
 done (void)
 {
-  if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
-    return connections == 1;
-  else 
-    return connections == ACE_MAX_ITERATIONS + 1;
+  return connections == ACE_MAX_ITERATIONS + 1;
 }
 
 ACE_File_Lock &
@@ -266,6 +266,7 @@ Counting_Service::read (void)
 
   if (this->peer ().send_n (buf, n) != n)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "send_n"), -1);
+
   return 0;
 }
 
@@ -356,7 +357,7 @@ Counting_Service::svc (void)
 Counting_Service::handle_close (ACE_HANDLE,
                                 ACE_Reactor_Mask)
 {
-  // Done with another connection
+  // Done with another connection.
   connections++;
  
   // Call down to base class
@@ -385,6 +386,10 @@ Counting_Service::open (void *)
       // Exit the child.
       ACE_OS::exit (0);
     }
+  else if (OPTIONS::instance ()->concurrency_type () == Options::THREAD)
+    // We need to set this to 0 so that our <shutdown> method doesn't
+    // try to deregister <this> from the Reactor.
+    this->reactor (0);
   return 0;
 }
 
@@ -478,13 +483,11 @@ static void *
 server (void *)
 {
   int result = 0;
+  ACE_Reactor::instance ()->owner (ACE_Thread::self ());
+
   while (!done () && result != -1)
-    {
-      // Run the main event loop, but only wait for up to 3 seconds (this
-      // is used to shutdown the server.
-      ACE_Reactor::instance ()->owner (ACE_Thread::self ());
-      result = ACE_Reactor::instance ()->handle_events ();
-    }
+    // Run the main event loop.
+    result = ACE_Reactor::instance ()->handle_events ();
   
   return 0;
 }
@@ -502,6 +505,7 @@ main (int argc, char *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
+  // Note that this implicitly creates the Reactor singleton.
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any,
 		     ACE_Reactor::instance(),
 		     0,
@@ -514,7 +518,8 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
 		  server_addr.get_port_number ()));
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
+#if !defined (ACE_LACKS_FORK)
+      // We're running the client and serve as separate processes.
       pid_t pid = ACE_OS::fork ("child");
 
       switch (pid)
@@ -526,13 +531,16 @@ main (int argc, char *argv[])
 	case 0:
 	  signal (SIGCHLD, SIG_IGN);
 	  server (0);
+
 	  break;
 	  /* NOTREACHED */
 	default:
 	  client (&server_addr);
+
 	  // Shutdown the server process.
 	  if (ACE_OS::kill (pid, SIGINT) == 0)
-	    ACE_OS::wait ();
+            ACE_OS::wait ();
+
 	  break;
 	  /* NOTREACHED */
 	}
@@ -553,7 +561,8 @@ main (int argc, char *argv[])
 	  ACE_Thread_Manager::instance ()->wait ();
 #else
       ACE_ERROR ((LM_ERROR,
-      "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
+                  "(%P|%t) only one thread may be run in a process on this platform\n%a",
+                  1));
 #endif /* ACE_HAS_THREADS */
     }
 
