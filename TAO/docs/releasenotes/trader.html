@@ -1023,24 +1023,8 @@ describe and query methods are concealed, use the <tt>-q</tt> flag.</p>
 
 <h1><a name="KnownBugsandWorkarounds">Known Bugs and Workarounds</a></h1>
 
-<p>The following is a list of known problems with TAO that adversly affect the Trading
-Service, and the workarounds applied to those problems.</p>
-
-<p><strong>Problem: </strong>TAO has difficulty marshalling and demarshalling object
-references that extend <tt>CORBA::Object</tt> when they occur as a field in a <tt>struct</tt>.
-In the CosTrading IDL file there are two <tt>structs</tt> passed that contain such object
-references: <tt>CosTradingDynamic::DynamicProp</tt> and <tt>CosTrading::Link:LinkInfo</tt>.
-<br>
-<strong>Workaround</strong>: Instead of passing object references in the structs, we pass
-the IORs of those object references, strings. The IDL file and the Trading Service code is
-compiled with the preprocessor flag <tt>TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG</tt>. For
-dynamic properties, as long as the trader clients use the <tt>TAO_Property_Evaluator</tt>
-and <tt>TAO_Dynamic_Property</tt> classes, this workaround will be invisible --- these
-classes hide the use of the <tt>DynamicProp struct</tt>. However, for those applications
-that invoke the <tt>CosTrading::Link::describe_link</tt> method, checking for that flag
-definition will be necessary. Two additional lines of code will suffice--- a call to <tt>CORBA::ORB::string_to_object</tt>,
-and either <tt>CosTrading::Lookup::_narrow</tt> or <tt>CosTrading::Register::_narrow</tt>
-depending on the field of LinkInfo.</p>
+    <p>At this point there are no known problems with TAO that affect the
+      Trading service.</p>
 
 <hr>
 
