@@ -1,3 +1,14 @@
+Fri Apr 03 17:10:32 1998  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/rules.bin.GNU: Set OBJEXT and VOBJS from the
+	  SRC files in the Makefile (LSRC sets VLOBJS in rules.lib.GNU;
+	  SRC sets VOBJS in rules.bin.GNU).
+
+	* include/makeinclude/rules.local.GNU: depend rule will also operate
+	  on $(PSRC) in addition to $(SRC).  PSRC is new - if you have more
+	  than one program to build in a makefile, set PSRC to the source
+	  files for make depend.
+
 Fri Apr 03 11:57:14 1998  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/rules.lib.GNU: Use VLOBJS for archive lib object
