@@ -66,7 +66,7 @@ TAO_Objref_Var_T<T, T_life>::operator-> (void) const
 }
 
 template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life>::operator T const *& () const
+TAO_Objref_Var_T<T, T_life>::operator T * const & () const
 {
   return this->ptr_;
 }
