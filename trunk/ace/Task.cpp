@@ -131,6 +131,9 @@ ACE_Task_Base::svc_run (void *args)
 
   ACE_Task_Base *t = (ACE_Task_Base *) args;
 
+  // Register ourself with our <Thread_Manager>'s thread exit hook
+  // mechanism so that our close() hook will be sure to get invoked
+  // when this thread exits.
   t->thr_mgr ()->at_exit (t, ACE_Task_Base::cleanup, 0);
 
   // Call the Task's svc() hook method.

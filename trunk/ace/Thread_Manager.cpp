@@ -48,6 +48,8 @@ ACE_Thread_Descriptor::at_exit (void *object,
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
 
+  // @@ This should really store these values into a stack, but we're
+  // just solving one problem at a time now...
   this->cleanup_info_.object_ = object;
   this->cleanup_info_.cleanup_hook_ = cleanup_hook;
   this->cleanup_info_.param_ = param;
@@ -425,6 +427,8 @@ ace_thread_manager_adapter (void *args)
   ACE_Thread_Exit exit_hook;
 #endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ! ACE_HAS_PTHREAD_SIGMASK && !ACE_HAS_FSU_PTHREADS */
 
+  // Keep track of the <Thread_Manager> that's associated with this
+  // <exit_hook>.
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
   // Invoke the user-supplied function with the args.
@@ -696,12 +700,17 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
 {
   ACE_TRACE ("ACE_Thread_Manager::run_thread_exit_hooks");
 
+  // @@ Currently, we have just one hook.  This should clearly be
+  // generalized to support an arbitrary number of hooks.
+
   if (this->thr_table_[i].cleanup_info_.cleanup_hook_ != 0)
     {
       (*this->thr_table_[i].cleanup_info_.cleanup_hook_) 
         (this->thr_table_[i].cleanup_info_.object_,
          this->thr_table_[i].cleanup_info_.param_);
     }
+
+  this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
 }
 
 // Remove a thread from the pool.  Must be called with locks held.
@@ -1070,6 +1079,8 @@ ACE_Thread_Manager::at_exit (void *object,
 			     ACE_CLEANUP_FUNC cleanup_hook,
 			     void *param)
 {
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+
   // Locate thread id.
   int i = this->find_thread (ACE_Thread::self ());
 
@@ -1101,10 +1112,11 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 
   if (do_thr_exit)
     {
-      // Note, destructor is never called, so we must manually release
-      // the lock...  Note that once we release the lock, it marks it
-      // as being "free" so that the Guard's destructor won't try to
-      // release it again.
+      // Note, since we are exiting this scope, there's no guarantee
+      // that the destructor will be called.  Therefore, we must
+      // manually release the lock...  Note that once we release the
+      // lock, it marks the Guard as being "unowned" so that the
+      // Guard's destructor won't try to release it again.
 
       ACE_MT (ace_mon.release ()); 
 
@@ -1200,6 +1212,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   
   // Now to do the actual work
   int result = 0;
+
   for (int i = 0; i < copy_count && result != -1; i++)
     if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
       result = -1;

@@ -1813,7 +1813,7 @@ ACE_Reactor::check_handles (void)
 	}
       rd_mask.clr_bit (handle);
 #else /* !ACE_WIN32 */
-      struct stat &temp;
+      struct stat temp;
 
       if (ACE_OS::fstat (handle, &temp) == -1)
         {
