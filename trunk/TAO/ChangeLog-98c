@@ -21,6 +21,12 @@ Sat Aug 15 08:19:26 1998  David L. Levine  <levine@cs.wustl.edu>
           TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG.  This avoids a warning
           about TAO_TRY_LABEL being declared but not referenced.
 
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp (export_offers_to_all):
+          dereference link_info->target_reg with .in ().
+
+        * orbsvcs/tests/Trading/Offer_Importer.cpp (perform_directed_queries):
+          dereference link_info->target with .in ().
+
         * orbsvcs/tests/Trading/Makefile: added LIBS, for use when
           building libTTest.
 
