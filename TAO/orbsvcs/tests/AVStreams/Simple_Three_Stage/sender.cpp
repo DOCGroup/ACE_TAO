@@ -58,7 +58,7 @@ Sender::Sender (void)
     frame_count_ (0),
     filename_ ("input"),
     input_file_ (0),
-    frame_rate_ (10),
+    frame_rate_ (10.0),
     mb_ (BUFSIZ),
     protocol_object_ (0)
 {
@@ -96,7 +96,7 @@ Sender::parse_args (int argc,
           this->filename_ = opts.opt_arg ();
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
+          this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
           TAO_debug_level++;
@@ -183,11 +183,11 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
   ACE_Time_Value inter_frame_time;
 
   // The time between two consecutive frames.
-  inter_frame_time.set (1 / (double) this->frame_rate_);
+  inter_frame_time.set (1.0 / this->frame_rate_);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Frame Rate = %d / second\n"
+                "Frame Rate = %f / second\n"
                 "Inter Frame Time = %d (msec)\n",
                 this->frame_rate_,
                 inter_frame_time.msec ()));
