@@ -1,3 +1,9 @@
+Sun Dec 19 01:32:05 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+        * ace/config-win32-msvc.h:
+
+          Added a if not defined guard to the QT_DLL definition.
+
 Sat Dec 18 10:03:41 2004  Olli Savia  <ops@iki.fi>
 
         * ace/README:
