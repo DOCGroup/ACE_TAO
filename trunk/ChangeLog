@@ -1,3 +1,10 @@
+Wed Nov 10 07:10:12 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ASNMP/asnmp/enttraps.h:
+        * ASNMP/asnmp/smival.h:
+
+          Get rid of warnings from both aCC and Borland.
+
 Wed Nov 10 13:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
