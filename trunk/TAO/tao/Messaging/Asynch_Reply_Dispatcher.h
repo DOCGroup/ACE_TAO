@@ -69,10 +69,5 @@ private:
   TAO_Asynch_Timeout_Handler *timeout_handler_;
 };
 
-
-#if defined (__ACE_INLINE__)
-#include "Asynch_Reply_Dispatcher.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_REPLY_DISPATCHER_H */
