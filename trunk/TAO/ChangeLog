@@ -1,3 +1,10 @@
+Wed Apr 16 00:47:50 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.h:
+
+	  Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
+	  declarations of ACE_CString are enough.
+
 Wed Apr 16 00:18:08 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/AbstractBase.inl (_is_a):
