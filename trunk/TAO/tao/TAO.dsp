@@ -575,6 +575,25 @@ SOURCE=.\CONV_FRAMES.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBA_String.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\corbafwd.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3391,6 +3410,10 @@ SOURCE=.\corba.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBA_String.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\corbafwd.h
 # End Source File
 # Begin Source File
@@ -4012,6 +4035,10 @@ SOURCE=.\CONV_FRAMEC.i
 # Begin Source File
 
 SOURCE=.\CONV_FRAMES.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBA_String.inl
 # End Source File
 # Begin Source File
 
