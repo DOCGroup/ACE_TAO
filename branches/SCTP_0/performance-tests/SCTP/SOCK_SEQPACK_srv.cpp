@@ -294,8 +294,8 @@ int main(int argc, char **argv){
     }
 
     // Put all but the last secondary address into the buffer
-    size_t top = optsMgr.num_secondary_accept_addrs - 1;
-    for (size_t i = 0; i < top; ++i) {
+    int top = optsMgr.num_secondary_accept_addrs - 1;
+    for (int i = 0; i < top; ++i) {
 
       ACE_OS::strncpy(printbuf_ptr, ", ", printbuf_remaining_size);
       printbuf_ptr             = &printbuf_ptr[2];
