@@ -12,32 +12,18 @@ namespace ACE_RMCast
   struct Out_Element
   {
     virtual
-    ~Out_Element ()
-    {
-    }
+    ~Out_Element ();
 
-    Out_Element ()
-        : out_ (0)
-    {
-    }
+    Out_Element ();
 
     virtual void
-    out_start (Out_Element* out)
-    {
-      out_ = out;
-    }
+    out_stop ();
 
     virtual void
-    send (Message_ptr m)
-    {
-      if (out_) out_->send (m);
-    }
+    out_start (Out_Element* out);
 
     virtual void
-    out_stop ()
-    {
-      out_ = 0;
-    }
+    send (Message_ptr m);
 
   protected:
     Out_Element* out_;
@@ -47,41 +33,27 @@ namespace ACE_RMCast
   struct In_Element
   {
     virtual
-    ~In_Element ()
-    {
-    }
+    ~In_Element ();
 
-    In_Element ()
-        : in_ (0)
-    {
-    }
+    In_Element ();
 
     virtual void
-    in_start (In_Element* in)
-    {
-      in_ = in;
-    }
+    in_stop ();
 
     virtual void
-    recv (Message_ptr m)
-    {
-      if (in_) in_->recv (m);
-    }
+    in_start (In_Element* in);
 
     virtual void
-    in_stop ()
-    {
-      in_ = 0;
-    }
+    recv (Message_ptr m);
 
   protected:
     In_Element* in_;
   };
 
+
   struct Element : In_Element, Out_Element
   {
   };
-
 }
 
 #endif  // ACE_RMCAST_STACK_H
