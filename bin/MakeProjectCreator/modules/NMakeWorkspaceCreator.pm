@@ -94,7 +94,8 @@ sub write_comps {
   my($fh)       = shift;
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
-  my(@list)     = $self->sort_dependencies($projects, $pjs);
+  my(%targnum)  = ();
+  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
   my($crlf)     = $self->crlf();
   my($default)  = 'Win32 Debug';
 
@@ -108,7 +109,7 @@ sub write_comps {
       last;
     }
   }
-  
+
   ## Print out the content
   print $fh '!IF "$(CFG)" == ""' . $crlf .
             'CFG=' . $default . $crlf .
@@ -116,10 +117,38 @@ sub write_comps {
             'Defaulting to ' . $default . '.' . $crlf .
             '!ENDIF' . $crlf;
 
-  foreach my $target ('ALL', 'DEPEND', 'CLEAN', 'REALCLEAN') {
+  ## Print out the "all" target
+  print $fh $crlf . 'ALL:';
+  foreach my $project (@list) {
+    print $fh " $$pjs{$project}->[0]";
+  }
+  print $fh $crlf;
+
+  ## Print out all other targets here
+  foreach my $target ('DEPEND', 'CLEAN', 'REALCLEAN') {
     print $fh $crlf .
               $target . ':' . $crlf;
     $self->write_project_targets($fh, 'CFG="$(CFG)" ' . $target, \@list);
+  }
+
+  ## Print out each target separately
+  foreach my $project (@list) {
+    my($dname) = dirname($project);
+    print $fh $crlf . $$pjs{$project}->[0] . ':';
+    if (defined $targnum{$project}) {
+      foreach my $number (@{$targnum{$project}}) {
+        print $fh " $$pjs{$list[$number]}->[0]";
+      }
+    }
+
+    print $fh $crlf;
+    $self->write_project_targets($fh, 'CFG="$(CFG)" ' . 'ALL', [ $project ]);
+  }
+
+  ## Print out the project_name_list target
+  print $fh $crlf . "project_name_list:$crlf";
+  foreach my $project (@list) {
+    print $fh "\t\@echo $$pjs{$project}->[0]$crlf";
   }
 }
 

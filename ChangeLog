@@ -1,24 +1,41 @@
+Thu Jan 29 14:10:51 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+
+          Clean up some double quoted strings.
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+
+          Changed the workspace output to allow a user to make a specific
+          target within the workspace.  If the user specified target
+          requires other projects, then those projects are built also.  For
+          example, a user could execute "nmake CosNaming" using the Makefile
+          generated from the TAOACE.mwc file and the CosNaming library
+          would be built including everything else that was required to
+          build that library.
+
 Thu Jan 29 14:04:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Asynch_Connector.cpp:
-	* ace/Local_Name_Space_T.cpp:
-	* ace/Local_Tokens.cpp:
-	* ace/MEM_Acceptor.cpp:
-	* ace/MEM_Connector.cpp:
-	* ace/Multihomed_INET_Addr.cpp:
-	* ace/Process_Manager.cpp:
-	* ace/Remote_Tokens.cpp:
-	* ace/Service_Config.cpp:
-	* ace/Service_Manager.cpp:
-	* ace/Sock_Connect.cpp:
-	* ace/Timeprobe_T.cpp:
-	* ace/Token.cpp:
-	* ace/Token_Invariants.cpp:
-	* ace/CLASSIX/CLASSIX_Select_Reactor.cpp:
+        * ace/Asynch_Connector.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/Remote_Tokens.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/Timeprobe_T.cpp:
+        * ace/Token.cpp:
+        * ace/Token_Invariants.cpp:
+        * ace/CLASSIX/CLASSIX_Select_Reactor.cpp:
 
-	  Thanks to Duane Binder<duane.binder@veritas.com> for providing
-	  patches to fix some of the messages printed out using
-	  ACE_Log_Msg. 
+          Thanks to Duane Binder<duane.binder@veritas.com> for providing
+          patches to fix some of the messages printed out using
+          ACE_Log_Msg.
 
 Thu Jan 29 14:03:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
