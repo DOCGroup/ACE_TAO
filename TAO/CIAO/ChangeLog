@@ -1,3 +1,19 @@
+Mon Sep 13 03:50:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/CCM_Core.mpc:
+	* DAnCE/ciao/Container_Base.cpp:
+	* DAnCE/ciao/Container_Base.h:
+	* DAnCE/ciao/Container_Base.inl:
+	* DAnCE/ciao/Port_Activator.cpp:
+	* DAnCE/ciao/Port_Activator.h:
+	* DAnCE/ciao/Port_Activator_T.cpp:
+	* DAnCE/ciao/Port_Activator_T.h:
+	* DAnCE/ciao/Servant_Activator.cpp:
+	* DAnCE/ciao/Servant_Activator.h:
+
+	  Replicated changes to DAnCE. DAnCE testing hasn't been completed
+	  yet. 
+
 Sun Sep 12 22:10:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantHeaderGenerator.cpp:
