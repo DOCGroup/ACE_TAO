@@ -131,7 +131,7 @@ main (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in client");
       return -1;
     }
   ACE_ENDTRY;
