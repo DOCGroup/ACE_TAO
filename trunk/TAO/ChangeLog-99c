@@ -1,3 +1,8 @@
+Thu Jan 14 22:10:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Added comments to indication the macros in the
+	  file has been depricated.
+
 Thu Jan 14 15:39:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Connect.cpp (check_unexpected_data): Only print the closing

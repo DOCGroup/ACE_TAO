@@ -1,3 +1,18 @@
+Thu Jan 14 21:50:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CORBA_macros.h: Added a new set of try macros which help
+	  application developers write portable code that handles
+	  CORBA::Exception portably.  The macros will work with any ORB.
+
+	  The total number of macros has reduces significantly and they
+	  should be much easier to use because the rules all follow the
+	  same style.
+
+	  The new try macros should be prefered over the original try
+	  macro in $TAO_ROOT/TAO/try_macros.h because those macros will
+	  soon be *DEPRICATED* once we finished convert TAO to use the new
+	  macros.
+
 Thu Jan 14 20:41:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS: Moved some code around to consolidate the getuid() and
@@ -11,7 +26,7 @@ Thu Jan 14 16:18:37 EST 1999  James CE Johnson  <jcej@lads.com>
 
   * docs/tutorials/001/page02.html:
     docs/tutorials/001/page03.html:
-    
+
     Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu>
     abstract and analogy.  Thanks Kirthika!
 
