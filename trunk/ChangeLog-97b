@@ -1,3 +1,13 @@
+Fri Oct 10 15:16:47 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/WFMO_Reactor.{h,cpp}:
+	* ace/Select_Reactor.{h,cpp}:
+	* ace/Reactor_Impl.h:
+	* ace/Reactor.h:  Added 2 new functions in ACE_Reactor class so we
+	  can replace the signal handler and timer queue the reactor is
+	  using.  Notice that you should do this before you start the
+	  reactor, otherwise, you may loose your scheduled timed events.
+
 Fri Oct 10 14:49:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* bin/man2html: Added a new set rul -e 's/^$/<P>/g', which
