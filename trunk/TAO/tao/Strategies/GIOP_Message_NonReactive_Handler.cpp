@@ -99,16 +99,18 @@ TAO_GIOP_Message_NonReactive_Handler::read_parse_message(TAO_Transport *transpor
   buf = this->input_cdr_.rd_ptr ();
 
   // Read the rest of the message
-  if (this->read_message (transport,
-                          buf,
-                          msg_size - TAO_GIOP_MESSAGE_HEADER_LEN,
-                          max_wait_time) == -1)
+  int retval = this->read_message (transport,
+                                   buf,
+                                   msg_size - TAO_GIOP_MESSAGE_HEADER_LEN,
+                                   max_wait_time);
+  if (retval <= 0)
     {
       if (TAO_debug_level > 1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) : (%N | %l) \n")
-                    ACE_TEXT ("Error during message read \n")));
-        return -1;
+                    ACE_TEXT ("(%P|%t) Error during message read \n")));
+
+      return retval;
     }
 
   // Parse the GIOP fragment header.
@@ -129,7 +131,7 @@ TAO_GIOP_Message_NonReactive_Handler::read_parse_message(TAO_Transport *transpor
   // Now we have parsed almost every thing that is part of the GIOP
   // header. Return a succes value
 
-  return 0;
+  return 1;
 }
 
 
@@ -160,9 +162,13 @@ TAO_GIOP_Message_NonReactive_Handler::read_message (TAO_Transport *transport,
 
       // @@ Do we need to check for errno != EWOULDBLOCK?? and errno ==
       // @@ ECONNRESET. Does such things make sense here??
+      if (bytes == -1 && errno == EAGAIN)
+        return 0;
+
       if (bytes == 0 ||
           bytes == -1)
-        return bytes;
+        return -1;
+
       buf += bytes;
     }
 
