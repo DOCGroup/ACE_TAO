@@ -1,3 +1,21 @@
+Mon Feb 23 15:43:01 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+          Changed the processing of service contexts from receive_request_service_contexts()
+          to receive_request(), this allows to filter out the requests which do not need the
+          burden of service contexts processing.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+          Changed to use FTRTEC specific message log facility instead of ACE_DEBUG.
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.h:
+          Removed used macros.
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+          Changed to use another ORB for gateway objects in order to bypass the
+          interceptor processing in the collocated case.
+
 Mon Feb 23 10:59:03 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
