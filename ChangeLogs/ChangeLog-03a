@@ -1,3 +1,9 @@
+Tue Dec 11 16:12:54 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* etc/acexml.doxygen:
+	* bin/generate_doxygen.pl: Added ACEXML into the list of ACE
+	  document.
+
 Mon Dec 03 21:36:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/String_Base.h:
