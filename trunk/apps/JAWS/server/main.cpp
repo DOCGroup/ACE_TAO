@@ -6,11 +6,13 @@
 ACE_STATIC_SVC_REQUIRE(HTTP_Server)
 
 extern "C"
-void
-handler (int)
 {
-  exit (0);
-} 
+
+/* call exit() so that static destructors get called */
+static void
+handler (int) { exit (0); } 
+
+}
 
 int
 main (int argc, char *argv[])

@@ -162,7 +162,7 @@ HTTP_Server::thread_per_request (void)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Thread_Per_Request_Task::open"),
                           -1);
-    }      
+    }
 
   // This stinks, because I am afraid that if I remove this line,
   // some compiler will issue a warning that this routine could exit
