@@ -33,9 +33,7 @@ Cubit_Server::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-                           " [-n] <num of cubit objects>"
                            " [-o] <ior_output_file>"
-                           " [-s]"
                            "\n",
                            argv_ [0]),
                           1);

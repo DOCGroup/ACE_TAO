@@ -1,3 +1,14 @@
+Mon Oct 26 18:40:03 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+          Fixed a bug reported in the DII Cubit test. Removed -s
+          option from server (harmful), also from client (not
+          harmful but useless) and removed these args from the
+          perl file. Also fixed a typo in the perl file (thanks,
+          Carlos).
+
 Mon Oct 26 18:28:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Updated dependencies for all the Makefiles.
