@@ -13,6 +13,7 @@
 #include "CCF/IDL3/SemanticAction/Consumes.hpp"
 #include "CCF/IDL3/SemanticAction/Emits.hpp"
 #include "CCF/IDL3/SemanticAction/EventType.hpp"
+#include "CCF/IDL3/SemanticAction/EventTypeFactory.hpp"
 #include "CCF/IDL3/SemanticAction/Home.hpp"
 #include "CCF/IDL3/SemanticAction/HomeFactory.hpp"
 #include "CCF/IDL3/SemanticAction/HomeFinder.hpp"

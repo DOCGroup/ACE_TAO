@@ -20,6 +20,7 @@ namespace CCF
       struct Emits;
       struct Consumes;
       struct EventType;
+      struct EventTypeFactory;
       struct Home;
       struct HomeFactory;
       struct HomeFinder;
@@ -47,6 +48,9 @@ namespace CCF
 
         virtual EventType&
         event_type () = 0;
+
+        virtual EventTypeFactory&
+        event_type_factory () = 0;
 
         virtual Home&
         home () = 0;
