@@ -1,3 +1,9 @@
+Mon Dec 18 20:47:40 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/POSIX_Asynch_IO.h:
+
+ 	  Reverted previous change.  It introduced compile-time errors.
+
 Mon Dec 18 19:07:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_IO.h, ace/POSIX_Asynch_IO.h: Clarified/corrected some
