@@ -584,6 +584,8 @@ TAO_CodeGen::start_server_header (const char *fname)
         << "#include \"tao/PortableServer/PortableServer.h\"\n"
         << "#include \"tao/PortableServer/Servant_Base.h\"\n"
         << "#include \"tao/PortableServer/Collocated_Object.h\"\n"
+	<< "#include \"tao/PortableServer/ThruPOA_Object_Proxy_Impl.h\"\n"
+	<< "#include \"tao/PortableServer/Direct_Object_Proxy_Impl.h\"\n"
         << "#include \"tao/PortableServer/ServerRequestInfo.h\"\n"
         << "\n";
 

@@ -63,86 +63,106 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  // Collocation factory function pointer initializer.
-  *os << node->full_name () << "_ptr _TAO_collocation_POA_"
-      << node->flat_name () << "_Stub_Factory (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ")" << be_uidt_nl;
+  // Strategized Proxy Broker Implementation
+  be_visitor *visitor = 0;
+  be_visitor_context ctx; 
 
-  *os << "{" << be_idt_nl
-      << "TAO_Stub *stub = obj->_stubobj ();" << be_nl << be_nl
-      << "switch (stub->servant_orb_var ()->orb_core"
-      << " ()->get_collocation_strategy ())" << be_idt_nl
-      << "{" << be_nl << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
+  if (be_global->gen_thru_poa_collocation () ||
+      be_global->gen_direct_collocation ())
+    {
+      ctx =  (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS);
+      visitor = tao_cg->make_visitor (&ctx);
+  
+      if (!visitor || (node->accept (visitor) == -1))
+	{
+	  delete visitor;
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "be_visitor_interface_cs::"
+			     "visit_interface - "
+			     "codegen for Base Proxy Broker class failed\n"),
+			    -1);
+	}
+      delete visitor;
+      
+      // Proxy Broker  Factory Function.
+      *os << be_nl
+	  << node->full_base_proxy_broker_name () << " *" << be_nl
+	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
+	  << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
+	  << "{" << be_idt_nl // idt = 1
+	  << "ACE_UNUSED_ARG (obj);" << be_nl
+	  << "return " 
+	  << node->server_enclosing_scope () << "the" 
+	  << node->strategized_proxy_broker_name ()
+	  << "();" << be_uidt_nl // idt = 0
+	  << "}" << be_nl << be_nl;
+  
+      // Proxy Broker Function Pointer Initializer.
+      *os << "int" << be_nl 
+	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
+	  << "_Factory_Initializer (long _dummy_)" << be_nl
+	  << "{" << be_idt_nl // idt = 1
+	  << "ACE_UNUSED_ARG (_dummy_);" << be_nl << be_nl
+	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
+	  << "_Factory_function_pointer = " 
+	  << be_idt_nl  // idt = 2
+	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
+	  << "_Factory_function;" 
+	  << be_uidt_nl // idt = 1
+	  << be_nl
+	  << "return 0;" << be_uidt_nl // idt = 0
+	  << "}" << be_nl << be_nl;
 
+      
+      *os << "static int " <<  node->flat_client_enclosing_scope () 
+	  << node->base_proxy_broker_name ()
+	  << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
+	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
+	  << "_Factory_Initializer (ACE_reinterpret_cast (long, "
+	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
+	  << "_Factory_Initializer));"
+	  << be_uidt_nl << be_nl;
+    }
+
+  
+  // Proxy Impl Implementations.
   if (be_global->gen_thru_poa_collocation ())
-    *os << "{" << be_nl
-        << node->full_name () << "_ptr retval = 0;" << be_nl
-        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-        << "retval," << be_nl
-        << node->full_coll_name (be_interface::THRU_POA)
-        << " (stub)," << be_nl
-        << "0" << be_uidt_nl
-        << ");" << be_uidt_nl
-        << "return retval;" << be_nl
-        << "}" << be_uidt_nl;
-  else
-    *os << "break;" << be_uidt_nl;
-
-  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
-
+    {
+      visitor = 0;
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS);
+      visitor = tao_cg->make_visitor (&ctx);
+      
+      if (!visitor || (node->accept (visitor) == -1))
+	{
+	  delete visitor;
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "be_visitor_interface_cs::"
+			     "visit_interface - "
+			     "codegen for Base Proxy Broker class failed\n"),
+			    -1);
+	}
+      delete visitor;
+    }
   if (be_global->gen_direct_collocation ())
-    *os << "if (obj->_is_local () != 0)" << be_idt_nl
-        << "{" << be_idt_nl
-        << "TAO_Collocated_Object *local_object =" << be_nl
-        << "  TAO_Collocated_Object::_narrow (obj);" << be_nl
-        << "if (local_object == 0)" << be_nl
-        << "  return 0;" << be_nl
-        << node->full_skel_name () << " *servant =" << be_idt_nl
-        << "ACE_reinterpret_cast (" << be_idt_nl
-        << node->full_skel_name () << "*," << be_nl
-        << "local_object->_servant ()->_downcast (\""
-        << node->repoID () << "\")" << be_uidt_nl
-        << ");" << be_uidt_nl
-        << "local_object->_remove_ref ();" << be_nl
-        << "if (servant != 0)" << be_idt_nl
-        << "{" << be_idt_nl
-        << node->full_name () << " *retval = 0;" << be_nl
-        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-        << "retval," << be_nl
-        << node->full_coll_name (be_interface::DIRECT)
-        << " (servant, stub)," << be_nl
-        << "0" << be_uidt_nl
-        << ");" << be_uidt_nl
-        << "return retval;" << be_uidt_nl
-        << "}" << be_uidt << be_uidt_nl
-        << "}" << be_uidt_nl;
-
-  *os << "break;" << be_uidt_nl
-      << "default:" << be_idt_nl
-      << "break;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "return 0;" << be_uidt_nl
-      << "}\n\n";
-
-  *os << "int _TAO_collocation_POA_" << node->flat_name ()
-      << "_Stub_Factory_Initializer"
-      << " (long dummy)" << be_nl
-      << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG (dummy);" << be_nl << be_nl
-      << "_TAO_collocation_" << node->flat_name ()
-      << "_Stub_Factory_function_pointer = " << be_idt_nl
-      << "_TAO_collocation_POA_" << node->flat_name ()
-      << "_Stub_Factory;" << be_uidt_nl << be_nl
-      << "return 0;" << be_uidt_nl << "}" << be_nl << be_nl;
-
-  *os << "static int _TAO_collocation_POA_" << node->flat_name ()
-      << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
-      << "_TAO_collocation_POA_" << node->flat_name ()
-      << "_Stub_Factory_Initializer ("
-      << "ACE_reinterpret_cast (long, _TAO_collocation_POA_"
-      << node->flat_name () << "_Stub_Factory_Initializer));"
-      << be_uidt_nl << be_nl;
+    {
+      visitor = 0;
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
+      visitor = tao_cg->make_visitor (&ctx);
+      
+      if (!visitor || (node->accept (visitor) == -1))
+	{
+	  delete visitor;
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "be_visitor_interface_cs::"
+			     "visit_interface - "
+			     "codegen for Base Proxy Broker class failed\n"),
+			    -1);
+	}
+      delete visitor;
+    }
 
   // constructor
   *os << "// skeleton constructor" << be_nl;
@@ -360,62 +380,31 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << node->full_name () << "*" << be_nl
       << node->full_skel_name ()
       << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
-      << "{" << be_idt_nl
+      << "{" << be_idt_nl // idt = 1
       << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl;
-
-  *os << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())" << be_idt_nl
-      << "switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())" << be_idt_nl
-      << "{" << be_nl
-      << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
-
-      // Thru POA stub
-  if (be_global->gen_thru_poa_collocation ())
-    *os << "{" << be_idt_nl
-        << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
-        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-        << "retval," << be_nl
-        << node->full_coll_name (be_interface::THRU_POA) << " (stub)," << be_nl
-        << "0" << be_uidt_nl
-        << ");" << be_uidt_nl
-        << "return retval;" << be_uidt_nl
-        << "}" << be_uidt_nl;
-  else
-    *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
-
-      // Direct stub
-  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
-  if (be_global->gen_direct_collocation ())
-    *os << "{" << be_idt_nl
-        << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
-        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-        << "retval," << be_nl
-        << node->full_coll_name (be_interface::DIRECT) << " (this, stub)," << be_nl
-        << "0" << be_uidt_nl
-        << ");" << be_uidt_nl
-        << "return retval;" << be_uidt_nl
-        << "}" << be_uidt_nl;
-  else
-    *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
-
-  *os << "default:" << be_idt_nl
-      << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "// stub->_incr_refcnt ();" << be_nl
-      << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);" << be_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
+  
+  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl 
+      << be_nl
+      << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())"
+      << be_idt_nl // idt = 2
+      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);"
+      << be_uidt_nl // idt = 1
+      << "else"
+      << be_idt_nl // idt = 2
+      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
+      << be_uidt_nl << be_nl // idt = 1
       << "CORBA::Object_var obj = tmp;" << be_nl
-      << "return " << "::" << node->full_name ()
-      << "::_unchecked_narrow (obj.in ());" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}\n\n";
-
+      << "return " << "::" << node->full_name () << "::_unchecked_narrow (obj.in ());"
+      << be_uidt_nl // idt = 0
+      << "}" << be_nl;
+    
   // the _create_collocated_objref method.  If the idl compiler does
   // not generate the type of collocated stub but the orb is asking
   // for it, simply return null so a remote stub will be used.
   // generate the collocated class impl
+ 
+  /*
   if (be_global->gen_thru_poa_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
@@ -440,7 +429,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         }
       delete visitor;
     }
-
+  
   if (be_global->gen_direct_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
@@ -465,13 +454,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         }
       delete visitor;
     }
-
+  */
   *os << "\n\n";
 
   // Interceptor classes
 
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor *visitor = 0;
+  ctx = *this->ctx_;
+  visitor = 0;
 
   ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
   visitor = tao_cg->make_visitor (&ctx);

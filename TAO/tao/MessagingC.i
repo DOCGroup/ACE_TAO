@@ -3853,18 +3853,16 @@ Messaging::ExceptionHolder::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 ACE_INLINE
-Messaging::ReplyHandler::ReplyHandler (void) // default constructor
-{}
-
-ACE_INLINE
-Messaging::ReplyHandler::ReplyHandler (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_collocated)
-{}
-
-ACE_INLINE
-Messaging::ReplyHandler::~ReplyHandler (void) // destructor
-{}
-
+Messaging::ReplyHandler::ReplyHandler (
+  TAO_Stub *objref,
+  CORBA::Boolean _tao_collocated,
+  TAO_Abstract_ServantBase *servant
+  )
+    : CORBA_Object (objref, _tao_collocated, servant)
+  {
+    
+      this->setup_collocation (_tao_collocated);
+    }
 
 #if !defined (_MESSAGING_REPLYHANDLER___VAR_CI_)
 #define _MESSAGING_REPLYHANDLER___VAR_CI_

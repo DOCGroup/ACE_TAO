@@ -44,15 +44,15 @@ class be_interface : public virtual AST_Interface,
   // = DESCRIPTION
   //
 public:
-  enum 
+  enum
   {
     THRU_POA = 0,
-    DIRECT = 1
+    DIRECT = 1,
   };
 
   // Used to pass functions to the template method.
-  typedef int (*tao_code_emitter) (be_interface *, 
-                                   be_interface *, 
+  typedef int (*tao_code_emitter) (be_interface *,
+                                   be_interface *,
                                    TAO_OutStream *);
 
   be_interface (void);
@@ -98,6 +98,64 @@ public:
   const char *local_coll_name (int) const;
   // Retrieve the fully qualified collocated class name.
 
+    virtual const char *base_proxy_impl_name (void);
+  // retrieve the name of the base proxy implementation.
+
+  virtual const char *full_base_proxy_impl_name (void);
+  // retrieve the fully qualified name of the base proxy
+  // implementation.
+
+  virtual const char *remote_proxy_impl_name (void);
+  // retrieve the name of the remote  proxy implementation.
+
+  virtual const char *full_remote_proxy_impl_name (void);
+  // retrieve the fully qualified name of the remote
+  // proxy implementation.
+
+  virtual const char *thru_poa_proxy_impl_name (void);
+  // retrieve the name of the ThruPOA  proxy implementation.
+
+  virtual const char *full_thru_poa_proxy_impl_name (void);
+  // retrieve the fully qualified name of the ThruPOA  proxy
+  // implementation.
+
+  virtual const char *direct_proxy_impl_name (void);
+  // retrieve the name of the Directx  proxy implementation.
+
+  virtual const char *full_direct_proxy_impl_name (void);
+  // retrieve the fully qualified name of the Directx  proxy
+  // implementation.
+
+  virtual const char *base_proxy_broker_name (void);
+  // retrieve the name of the base proxy broker.
+
+  virtual const char *full_base_proxy_broker_name (void);
+  // retrieve the fully qualified name of the base proxy broker.
+
+  virtual const char *remote_proxy_broker_name (void);
+  // retrieve the name of the remote  proxy broker implementation.
+
+  virtual const char *full_remote_proxy_broker_name (void);
+  // retrieve the fully qualified name of the remote  proxy broker
+  // implementation.
+
+  virtual const char *strategized_proxy_broker_name (void);
+  // retrieve the name of the strategized proxy broker implementation.
+
+  virtual const char *full_strategized_proxy_broker_name (void);
+  // retrieve the fully qualified name of the strategized proxy broker
+  // implementation.
+
+  virtual const char *client_enclosing_scope (void);
+  // Return the client scope that encloses the interface.
+
+  virtual const char *flat_client_enclosing_scope (void);
+  // Return the "flattened" scope that encloses 
+  // the interface.
+
+  virtual const char *server_enclosing_scope (void);
+  // Return the server scope that encloses the interface.
+
   const char *relative_skel_name (const char *skel_name);
   // Retrieve skeleton name.
 
@@ -105,7 +163,7 @@ public:
                                char *&skel_name);
   // Build up the skeleton name.
 
-  static const char *relative_name (const char *localname, 
+  static const char *relative_name (const char *localname,
                                     const char *othername);
 
   virtual void gen_def_ctors (TAO_OutStream* os);
@@ -171,8 +229,8 @@ public:
   DEF_NARROW_FROM_DECL (be_interface);
   DEF_NARROW_FROM_SCOPE (be_interface);
 
-  static int is_a_helper (be_interface *, 
-                          be_interface *, 
+  static int is_a_helper (be_interface *,
+                          be_interface *,
                           TAO_OutStream *os);
   // Helper method passed to the template method that generates code for the
   // is_a method.
@@ -223,14 +281,14 @@ public:
                                    be_interface* base,
                                    TAO_OutStream *os);
 
-  // Helper method to generate a call to the default 
+  // Helper method to generate a call to the default
   // constructors of all the base classes.
 
   static int gen_copy_ctors_helper (be_interface* node,
                                     be_interface* base,
                                     TAO_OutStream *os);
 
-  // Helper method to generate a call to the copy 
+  // Helper method to generate a call to the copy
   // constructors of all the base classes.
 
 

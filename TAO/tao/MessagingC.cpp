@@ -1571,6 +1571,83 @@ Messaging::ExceptionHolder_init::tao_repository_id ()
 
 #endif /* end #if !defined */
 
+
+///////////////////////////////////////////////////////////////////////
+//                Base & Remote Proxy  Implementation. 
+//
+
+Messaging::_TAO_ReplyHandler_Proxy_Impl::~_TAO_ReplyHandler_Proxy_Impl (void)
+{}
+
+Messaging::_TAO_ReplyHandler_Remote_Proxy_Impl::~_TAO_ReplyHandler_Remote_Proxy_Impl (void)
+{}
+
+//
+//            End  Base & Remote  Proxy Implemeentation. 
+///////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////
+//           Remote & Base  Proxy Broker Implementation
+//
+
+Messaging::_TAO_ReplyHandler_Proxy_Broker::~_TAO_ReplyHandler_Proxy_Broker (void)
+{
+}
+
+// Factory function Implementation.
+Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker *Messaging::the_TAO_ReplyHandler_Remote_Proxy_Broker (void)
+{
+  static ::Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker remote_proxy_broker;
+  return &remote_proxy_broker;
+}
+
+Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::~_TAO_ReplyHandler_Remote_Proxy_Broker (void)
+{
+}
+
+Messaging::_TAO_ReplyHandler_Proxy_Impl&
+Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::select_proxy (
+  
+    ::Messaging::ReplyHandler *object,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  ACE_UNUSED_ARG (object);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return remote_proxy_impl_;
+}
+
+
+//
+//           End Remote & Base Proxy Broker Implementation
+///////////////////////////////////////////////////////////////////////
+
+
+// default constructor
+Messaging::ReplyHandler::ReplyHandler (int collocated)
+{
+  this->setup_collocation (collocated);
+}
+
+// destructor
+Messaging::ReplyHandler::~ReplyHandler (void)
+{}
+
+void
+Messaging::ReplyHandler::setup_collocation (int collocated)
+{
+  if (collocated)
+    this->the_TAO_ReplyHandler_Proxy_Broker_ =
+      Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer (this);
+  else
+    this->the_TAO_ReplyHandler_Proxy_Broker_ =
+      ::Messaging::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
+  
+  
+}
+
+
 void Messaging::ReplyHandler::_tao_any_destructor (void *x)
 {
   ReplyHandler *tmp = ACE_static_cast (ReplyHandler*,x);
@@ -1608,33 +1685,41 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
         stub->_incr_refcnt ();
       ReplyHandler_ptr default_proxy = ReplyHandler::_nil ();
 
-      if (obj->_is_collocated () && _TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer != 0)
-        {
-          default_proxy = _TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer (obj);
+      if (
+          !CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&
+          stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&
+          obj->_is_collocated () &&Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer != 0
+        )
+      {
+        ACE_NEW_RETURN (
+          default_proxy,
+          ::Messaging::ReplyHandler (
+            stub,
+            1,
+            obj->_servant ()),
+            
+          ReplyHandler::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
-        ACE_NEW_RETURN (default_proxy, ReplyHandler (stub), ReplyHandler::_nil ());
-      #if (TAO_HAS_SMART_PROXIES == 1)
+        ACE_NEW_RETURN (default_proxy, ::Messaging::ReplyHandler (stub, 0, obj->_servant ()), ReplyHandler::_nil ());
         return TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else
-        return default_proxy;
-      #endif /*TAO_HAS_SMART_PROXIES == 1*/
-    }
-  else
-    return
-      ACE_reinterpret_cast
-        (
-          ReplyHandler_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &ReplyHandler::_narrow
-                  )
-              )
-        );
+      }
+    else 
+      return
+        ACE_reinterpret_cast
+          (
+            ReplyHandler_ptr,
+              obj->_tao_QueryInterface
+                (
+                  ACE_reinterpret_cast
+                    (
+                      ptr_arith_t,
+                      &ReplyHandler::_narrow
+                    )
+                )
+          );
 }
+
 
 Messaging::ReplyHandler_ptr
 Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
@@ -2255,9 +2340,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
+  Messaging::_TAO_ReplyHandler_Proxy_Broker * (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
       CORBA::Object_ptr obj
     ) = 0;
+
     void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
   {
     TAO_OutputCDR stream;

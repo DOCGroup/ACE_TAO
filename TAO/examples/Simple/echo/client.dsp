@@ -103,10 +103,6 @@ SOURCE=.\EchoC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\EchoS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\Simple_util.cpp
 # End Source File
 # End Group
@@ -120,10 +116,6 @@ SOURCE=.\Echo_Client_i.h
 # Begin Source File
 
 SOURCE=.\EchoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\EchoS.h
 # End Source File
 # Begin Source File
 
@@ -187,7 +179,7 @@ InputPath=.\Echo.idl
 InputName=Echo
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 -Gd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

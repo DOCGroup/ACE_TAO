@@ -50,19 +50,19 @@ be_interface::be_interface (UTL_ScopedName *n,
                             UTL_StrList *p,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Interface (n, 
-                   ih, 
-                   nih, 
-                   ih_flat, 
-                   nih_flat, 
-                   p, 
-                   local, 
+  : AST_Interface (n,
+                   ih,
+                   nih,
+                   ih_flat,
+                   nih_flat,
+                   p,
+                   local,
                    abstract),
-    AST_Decl (AST_Decl::NT_interface, 
-              n, 
+    AST_Decl (AST_Decl::NT_interface,
+              n,
               p),
     UTL_Scope (AST_Decl::NT_interface),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
@@ -207,7 +207,7 @@ be_interface::compute_full_skel_name (const char *prefix,
 
       delete i;
 
-      ACE_NEW (skelname, 
+      ACE_NEW (skelname,
                char [namelen+1]);
       skelname[0] = '\0';
       first = I_TRUE;
@@ -280,14 +280,14 @@ be_interface::relative_name (const char *localname,
   char *use_curr = use_name;
   char *use_next;
 
-  ACE_OS::memset (macro, 
-                  '\0', 
+  ACE_OS::memset (macro,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (def_name, 
-                  '\0', 
+  ACE_OS::memset (def_name,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (use_name, 
-                  '\0', 
+  ACE_OS::memset (use_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   // Traverse every component of the def_scope and use_scope beginning at the
@@ -297,14 +297,14 @@ be_interface::relative_name (const char *localname,
   // macro. Whenever there is no match, the remaining components of the
   // def_scope form the second argument.
 
-  ACE_OS::strcpy (def_name, 
+  ACE_OS::strcpy (def_name,
                   localname);
-  ACE_OS::strcpy (use_name, 
+  ACE_OS::strcpy (use_name,
                   othername);
 
   while (def_curr && use_curr)
     {
-      // Find the first occurrence of a :: 
+      // Find the first occurrence of a ::
       // and advance the next pointers accordingly.
       def_next = ACE_OS::strstr (def_curr, "::");
       use_next = ACE_OS::strstr (use_curr, "::");
@@ -351,7 +351,7 @@ be_interface::relative_name (const char *localname,
   // Copy the remaining def_name (if any left)
   if (def_curr)
     {
-      ACE_OS::strcat (macro, 
+      ACE_OS::strcat (macro,
                       def_curr);
     }
 
@@ -367,7 +367,7 @@ int be_interface::in_mult_inheritance (void)
       // Compute once for all.
       // Determine if we are in some form of a multiple inheritance.
       if (this->traverse_inheritance_graph (
-              be_interface::in_mult_inheritance_helper, 
+              be_interface::in_mult_inheritance_helper,
               0
             ) == -1)
         {
@@ -402,8 +402,8 @@ be_interface::gen_copy_ctors (TAO_OutStream *os)
 }
 
 int
-be_interface::gen_copy_ctors_helper (be_interface *node, 
-                                     be_interface *base, 
+be_interface::gen_copy_ctors_helper (be_interface *node,
+                                     be_interface *base,
                                      TAO_OutStream *os)
 {
   static int first = 0;
@@ -448,8 +448,8 @@ be_interface::gen_def_ctors (TAO_OutStream *os)
 
 
 int
-be_interface::gen_def_ctors_helper (be_interface* node, 
-                                    be_interface* base, 
+be_interface::gen_def_ctors_helper (be_interface* node,
+                                    be_interface* base,
                                     TAO_OutStream *os)
 {
 
@@ -520,11 +520,11 @@ be_interface::gen_var_defn (char *interface_name)
 
   // Default constructor.
   *ch << namebuf << " (void); // default constructor" << nl;
-  *ch << namebuf << " (" << interface_name << "_ptr p)" 
+  *ch << namebuf << " (" << interface_name << "_ptr p)"
       << " : ptr_ (p) {} " << nl;
 
   // Copy constructor.
-  *ch << namebuf << " (const " << namebuf 
+  *ch << namebuf << " (const " << namebuf
       << " &); // copy constructor" << nl;
 
   // Destructor.
@@ -554,7 +554,7 @@ be_interface::gen_var_defn (char *interface_name)
   *ch << interface_name << "_ptr &out (void);" << nl;
   *ch << interface_name << "_ptr _retn (void);" << nl;
 
-  // Generate an additional member function that returns 
+  // Generate an additional member function that returns
   // the underlying pointer.
   *ch << interface_name << "_ptr ptr (void) const;\n";
   *ch << "\n";
@@ -799,7 +799,7 @@ be_interface::gen_out_defn (char *interface_name)
 
   // Generate the out definition (always in the client header)
   // start with whatever was our current indent level.
-  ch->indent (); 
+  ch->indent ();
 
   *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << nl;
@@ -882,7 +882,7 @@ be_interface::gen_out_impl (char *interface_local_name,
   // for over here.
 
   // Start with whatever was our current indent level.
-  ci->indent (); 
+  ci->indent ();
 
   *ci << "// *************************************************************"
       << nl;
@@ -1113,7 +1113,7 @@ be_interface::gen_operation_table (void)
 
         // Open the temp file.
         if (os->open (temp_file,
-                      TAO_OutStream::TAO_GPERF_INPUT) 
+                      TAO_OutStream::TAO_GPERF_INPUT)
               == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1129,7 +1129,7 @@ be_interface::gen_operation_table (void)
 
         // Traverse the graph.
         if (this->traverse_inheritance_graph (
-                be_interface::gen_optable_helper, 
+                be_interface::gen_optable_helper,
                 os
               ) == -1)
           {
@@ -1215,7 +1215,7 @@ be_interface::gen_optable_entries (be_interface *derived)
           // or one of its ancestors.
 
           ACE_NEW_RETURN (si,
-                          UTL_ScopeActiveIterator (this, 
+                          UTL_ScopeActiveIterator (this,
                                                    UTL_Scope::IK_decls),
                           -1);
           // Instantiate a scope iterator.
@@ -1293,7 +1293,7 @@ be_interface::gen_optable_entries (be_interface *derived)
           // or one of its ancestors.
 
           ACE_NEW_RETURN (si,
-                          UTL_ScopeActiveIterator (this, 
+                          UTL_ScopeActiveIterator (this,
                                                    UTL_Scope::IK_decls),
                           -1);
           // Instantiate a scope iterator.
@@ -1381,14 +1381,14 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                                           TAO_OutStream *os)
 {
   // Loop index.
-  long i;            
+  long i;
 
   // Queue data structure needed for breadth-first traversal of
   // inheritance tree.
-  ACE_Unbounded_Queue <be_interface*> queue; 
+  ACE_Unbounded_Queue <be_interface*> queue;
 
   // For a special case of a deeply nested inheritance graph and one specific
-  // way of inheritance in which a node that was already visited, 
+  // way of inheritance in which a node that was already visited,
   // but is not present in
   // the queue, gets inserted at the tail. This situation arises when a node
   // multiply inherits from two or more interfaces in which the first parent is
@@ -1396,14 +1396,14 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
   // parent turns out to be a child of the first .
 
   // Queue of dequeued nodes to be searched for the above case.
-  ACE_Unbounded_Queue <be_interface*> del_queue; 
+  ACE_Unbounded_Queue <be_interface*> del_queue;
 
   // Insert ourselves in the queue.
   if (queue.enqueue_tail (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_interface::traverse_inheritance_graph - "
-                         "error generating entries\n"), 
+                         "error generating entries\n"),
                         -1);
     }
 
@@ -1423,7 +1423,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
-                             "dequeue_head failed\n"), 
+                             "dequeue_head failed\n"),
                             -1);
         }
 
@@ -1432,7 +1432,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
-                             "enqueue_head failed\n"), 
+                             "enqueue_head failed\n"),
                             -1);
         }
 
@@ -1443,7 +1443,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
-                             "helper code gen failed\n"), 
+                             "helper code gen failed\n"),
                             -1);
         }
 
@@ -1452,7 +1452,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
       for (i=0; i < bi->n_inherits (); i++)
         {
           // Parent of the dequeued element.
-          be_interface *parent;  
+          be_interface *parent;
 
           // Initialize an iterator to search the queue for duplicates.
           ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
@@ -1464,7 +1464,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_interface::gen_server_skeletons -"
-                                 " bad inherited interface\n"), 
+                                 " bad inherited interface\n"),
                                 -1);
             }
 
@@ -1475,10 +1475,10 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
           while (!q_iter.done ())
             {
               // Queue element.
-              be_interface **temp;  
+              be_interface **temp;
 
               (void) q_iter.next (temp);
-              if (!ACE_OS::strcmp (parent->full_name (), 
+              if (!ACE_OS::strcmp (parent->full_name (),
                                    (*temp)->full_name ()))
                 {
                   // We exist in this queue and cannot be inserted.
@@ -1490,7 +1490,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                 }
 
               (void) q_iter.advance ();
-            } 
+            }
 
           // Initialize an iterator to search the del_queue for duplicates.
           ACE_Unbounded_Queue_Iterator<be_interface*> del_q_iter (del_queue);
@@ -1498,11 +1498,11 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
           while (!found && !del_q_iter.done ())
             {
               // Queue element.
-              be_interface **temp;  
+              be_interface **temp;
 
               (void) del_q_iter.next (temp);
 
-              if (!ACE_OS::strcmp (parent->full_name (), 
+              if (!ACE_OS::strcmp (parent->full_name (),
                                    (*temp)->full_name ()))
                 {
                   // We exist in this del_queue and cannot be inserted.
@@ -1524,7 +1524,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_interface::gen_server_skeletons - "
-                                 "enqueue op failed\n"), 
+                                 "enqueue op failed\n"),
                                 -1);
                 }
             }
@@ -1549,7 +1549,7 @@ be_interface::gen_optable_helper (be_interface *derived,
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_interface::gen_operation_table - "
                          "error generating entries for inherited"
-                         "interfaces\n"), 
+                         "interfaces\n"),
                         -1);
     }
 
@@ -1955,7 +1955,7 @@ be_interface::queryinterface_helper (be_interface *derived,
   // If the ancestor is in the root scope, we can use the local name.
   if (scope->node_type () == AST_Decl::NT_root)
     {
-      *os << "&" << ancestor->local_name () << "::_narrow" << be_uidt 
+      *os << "&" << ancestor->local_name () << "::_narrow" << be_uidt
           << "))" << be_nl;
     }
   // Or, if it's defined in a scope different than the child's, the
@@ -1968,8 +1968,8 @@ be_interface::queryinterface_helper (be_interface *derived,
   // The ACE_NESTED_CLASS macro is necessary in this case.
   else
     {
-      *os << "&ACE_NESTED_CLASS (::" << scope->name () << ", " 
-          << ancestor->local_name () << ")" << "::_narrow" << be_uidt 
+      *os << "&ACE_NESTED_CLASS (::" << scope->name () << ", "
+          << ancestor->local_name () << ")" << "::_narrow" << be_uidt
           << "))" << be_nl;
     }
 
@@ -2036,7 +2036,7 @@ be_interface::gen_skel_helper (be_interface *derived,
       // proper casting.
 
       ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (ancestor, 
+                      UTL_ScopeActiveIterator (ancestor,
                                                UTL_Scope::IK_decls),
                       -1);
       // Instantiate a scope iterator.
@@ -2283,7 +2283,7 @@ TAO_CodeGen::CG_STATE
 be_interface::next_state (TAO_CodeGen::CG_STATE current_state,
                           int is_extra_state)
 {
-  return this->strategy_->next_state (current_state, 
+  return this->strategy_->next_state (current_state,
                                       is_extra_state);
 }
 
@@ -2308,9 +2308,116 @@ be_interface::original_interface ()
 be_interface *
 be_interface::replacement (void)
 {
-  // Return a node, which can be used as a replacement.
-  return this->strategy_->replacement ();
+   return this->strategy_->replacement ();
 }
+
+const char *
+be_interface::base_proxy_impl_name (void)
+{
+  return this->strategy_->base_proxy_impl_name ();
+}
+
+const char *
+be_interface::full_base_proxy_impl_name (void)
+{
+  return this->strategy_->full_base_proxy_impl_name ();
+}
+
+const char *
+be_interface::remote_proxy_impl_name (void)
+{
+  return this->strategy_->remote_proxy_impl_name ();
+}
+
+const char *
+be_interface::full_remote_proxy_impl_name (void)
+{
+  return this->strategy_->full_remote_proxy_impl_name ();
+}
+
+const char *
+be_interface::thru_poa_proxy_impl_name (void)
+{
+  return this->strategy_->thru_poa_proxy_impl_name ();
+}
+
+
+const char *
+be_interface::full_thru_poa_proxy_impl_name (void)
+{
+  return this->strategy_->full_thru_poa_proxy_impl_name ();
+}
+
+
+const char *
+be_interface::direct_proxy_impl_name (void)
+{
+  return this->strategy_->direct_proxy_impl_name ();
+}
+
+const char *
+be_interface::full_direct_proxy_impl_name (void)
+{
+  return this->strategy_->full_direct_proxy_impl_name ();
+}
+
+
+const char *
+be_interface::base_proxy_broker_name (void)
+{
+  return this->strategy_->base_proxy_broker_name ();
+}
+
+const char *
+be_interface::full_base_proxy_broker_name (void)
+{
+  return this->strategy_->full_base_proxy_broker_name ();
+}
+
+
+const char *
+be_interface::remote_proxy_broker_name (void)
+{
+  return this->strategy_->remote_proxy_broker_name ();
+}
+
+const char *
+be_interface::full_remote_proxy_broker_name (void)
+{
+  return this->strategy_->full_remote_proxy_broker_name ();
+}
+
+
+const char *
+be_interface::strategized_proxy_broker_name (void)
+{
+  return this->strategy_->strategized_proxy_broker_name ();
+}
+
+const char *
+be_interface::full_strategized_proxy_broker_name (void)
+{
+  return this->strategy_->full_strategized_proxy_broker_name ();
+}
+
+const char *
+be_interface::client_enclosing_scope (void)
+{
+  return this->strategy_->client_scope ();
+}
+
+const char *
+be_interface::flat_client_enclosing_scope (void)
+{
+  return this->strategy_->flat_client_scope ();
+}
+
+const char *
+be_interface::server_enclosing_scope (void)
+{
+  return this->strategy_->server_scope ();
+}
+
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
