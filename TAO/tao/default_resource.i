@@ -23,9 +23,3 @@ TAO_Default_Resource_Factory::poa_source (void)
 {
   return poa_source_;
 }
-
-ACE_INLINE int
-TAO_Default_Resource_Factory::reactor_lock (void)
-{
-  return reactor_lock_;
-}
