@@ -112,8 +112,14 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc,
         break;
       }
     case CORBA::tk_objref:
-      this->any_ = CORBA_Any (tc);
-      break;
+      {
+        TAO_OutputCDR stream;
+        stream << CORBA::Object::_nil ();
+        this->any_._tao_replace (tc,
+                                 TAO_ENCAP_BYTE_ORDER,
+                                 stream.begin ());
+        break;
+      }
     case CORBA::tk_string:
       this->any_ <<= "";
       break;
