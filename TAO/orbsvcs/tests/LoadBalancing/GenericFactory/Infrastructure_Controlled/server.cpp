@@ -4,7 +4,7 @@
 
 ACE_RCSID (Infrastructure_Controlled,
            server,
-           "$Id$");
+           "$Id$")
 
 int
 main (int argc, char *argv[])
