@@ -1733,11 +1733,11 @@ AC_REQUIRE([AC_PROG_NM])dnl
 AC_REQUIRE([AC_PROG_LN_S])dnl
 AC_REQUIRE([AC_DEPLIBS_CHECK_METHOD])dnl
 # Autoconf's AC_OBJEXT and AC_EXEEXT macros only works for C compilers!
-AC_REQUIRE([AC_LANG_SAVE])dnl
-AC_REQUIRE([AC_LANG_C])dnl
+AC_LANG_SAVE
+AC_LANG_C
 AC_REQUIRE([AC_OBJEXT])dnl
 AC_REQUIRE([AC_EXEEXT])dnl
-AC_REQUIRE([AC_LANG_RESTORE])dnl
+AC_LANG_RESTORE
 dnl
 
 # Only perform the check for file, if the check method requires it
@@ -2348,7 +2348,7 @@ lt_save_CFLAGS="$CFLAGS"
 dnl Make sure LTCC is set to the C compiler, i.e. set LTCC before CC
 dnl is set to the C++ compiler.
 AR="$AR" LTCC="$CC" CC="$CXX" CFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" \
-FILE="$FILE" LIBS="$LIBS" \
+FILE="$FILE" LDFLAGS="$LDFLAGS" LIBS="$LIBS" \
 LN_S="$LN_S" NM="$NM" RANLIB="$RANLIB" STRIP="$STRIP" \
 AS="$AS" DLLTOOL="$DLLTOOL" OBJDUMP="$OBJDUMP" \
 objext="$OBJEXT" exeext="$EXEEXT" \
