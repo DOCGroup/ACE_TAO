@@ -1,3 +1,10 @@
+Wed Apr 10 17:23:09 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Auto_IncDec_T.h:
+
+	  Include "ace/Global_Macros.h" to pull ACE_UNIMPLEMENTED_FUNC
+	  macro definition.
+
 Wed Apr 10 19:28:27 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/display_logfile.cpp: First cut at the C++NPv2
