@@ -15,6 +15,10 @@
 
 #include	<initguid.h>
 
+TAO_Operation_Table::~TAO_Operation_Table()
+{
+}
+
 //
 // Constructor and destructor are accessible to subclasses
 //

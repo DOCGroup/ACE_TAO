@@ -81,8 +81,8 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
     ;
 
   client_acceptor_.acceptor().get_local_addr(addr);
-  this->objtable_ = 0;
-  if (env.exception () != 0)
+  this->objtable_ = f->objlookup_strategy();
+  if (this->objtable_ != 0)
     p->oa(this);
 }
 

@@ -1,3 +1,26 @@
+Wed Apr 30 22:00:51 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IIOP/lib/objtable.{hh,cpp}: Added two new files that define
+	different object demultiplexing strategies. 
+
+	* IIOP/lib/Makefile: Added objtable as additional source file to compile.
+
+	* IIOP/lib/boa.cpp: Provided the default destructor for the
+	TAO_Object_Table. 
+
+	* IIOP/lib/boa.cpp: Provided the default destructor for the
+	TAO_Operation_Table.
+
+	* IIOP/lib/orbobj.cpp: Added support for the -OAtablesize option
+	in the call to CORBA_ORB::BOA_init method.
+
+	* IIOP/lib/params.{hh,i,cpp}: Added support to ROA_Factory to return
+	a specific object lookup strategy.
+
+	*IIOP/lib/roa.cpp: The ROA constructor initializes its "objtable_"
+	private data member with the object lookup strategy returned by
+	ROA factory.
+
 Tue Apr 29 11:52:48 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/any.hh: Moved CORBA_Any_ptr declaration to orb.hh.

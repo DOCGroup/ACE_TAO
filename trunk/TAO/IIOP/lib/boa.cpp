@@ -33,6 +33,10 @@
 DEFINE_GUID (IID_BOA,
 0xa201e4c8, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
+// destructor
+TAO_Object_Table::~TAO_Object_Table()
+{
+}
 
 //
 // A "Named BOA" is used in bootstrapping some part of the ORB since
@@ -165,7 +169,6 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
     {
       opname = req.op_name();
       skel = obj->lookup(opname);
-
     }
   // we need to pass this skel and associated information to the scheduler. How
   // do we do it??
