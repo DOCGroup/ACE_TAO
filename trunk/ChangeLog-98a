@@ -1,3 +1,19 @@
+Fri Apr 10 00:04:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Proactor.cpp (post_completion): Added a new method to the
+ 	  Proactor. It can be used to post a result to the completion port
+ 	  of the Proactor.  If errors occur, the result will be deleted by
+ 	  this method.  If successful, the result will be deleted by the
+ 	  Proactor when the result is removed from the completion port.
+  	  Therefore, the result should have been dynamically allocated and
+ 	  should be orphaned by the user once this method is called.
+
+	  Changed the timer mechanism to use this new method rather than
+ 	  posting to the completion port directly.
+	
+  	  Thanks to Jason Katz <Jason@rtswireless.com> for the
+ 	  improvements.
+
 Thu Apr  9 17:31:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Updated all the Makefile dependencies and also added the

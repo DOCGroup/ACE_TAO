@@ -149,30 +149,14 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
 		       "(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall, no completion port to post timeout to?!@\n"),
 		      -1);
 
-  // Grab the event associated with the Proactor
-  HANDLE handle = this->proactor_->get_handle ();
-
   // Create the Asynch_Timer
   ACE_Proactor::Asynch_Timer *asynch_timer
     = new ACE_Proactor::Asynch_Timer (*handler,
 				      act,
-				      time,
-				      handle);
-  // If Proactor event is valid, signal it
-  if (handle != ACE_INVALID_HANDLE &&
-      handle != 0)
-    ACE_OS::event_signal (&handle);
-
+				      time);
   // Post a completion
-  if (::PostQueuedCompletionStatus (this->proactor_->completion_port_, // completion port
-				    0, // number of bytes tranferred
-				    0,	// completion key
-				    asynch_timer // overlapped
-				    ) == FALSE)
-    {
-      delete asynch_timer;
-      ACE_ERROR_RETURN ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
-    }
+  if (this->proactor_->post_completion (asynch_timer) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
 
   return 0;
 }
@@ -594,6 +578,31 @@ ACE_Proactor::application_specific_code (ACE_Asynch_Result *asynch_result,
       // This is crucial to prevent memory leaks
       delete asynch_result;
     }
+}
+
+int
+ACE_Proactor::post_completion (ACE_Asynch_Result *result)
+{
+  // Grab the event associated with the Proactor
+  HANDLE handle = this->get_handle ();
+
+  // If Proactor event is valid, signal it
+  if (handle != ACE_INVALID_HANDLE &&
+      handle != 0)
+    ACE_OS::event_signal (&handle);
+
+  // Post a completion
+  if (::PostQueuedCompletionStatus (this->completion_port_, // completion port
+				    0, // number of bytes tranferred
+				    0,	// completion key
+				    result // overlapped
+				    ) == FALSE)
+    {
+      delete result;
+      ACE_ERROR_RETURN ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
+    }
+
+  return 0;
 }
 
 int
