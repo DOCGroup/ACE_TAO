@@ -480,7 +480,7 @@ ImplRepo_i::server_is_running (const char *server,
   else
     return new_location;
 
-  ACE_CHECK_RETURN ("");
+  ACE_CHECK_RETURN (0);
 
   char *pos = ACE_OS::strstr (new_location, "://");
 
@@ -763,7 +763,9 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
       ACE_TRY
         {
           if (activation == Server_Info::AUTO_START)
-            this->activate_server (server_entry->ext_id_.c_str ());
+            this->activate_server (server_entry->ext_id_.c_str (),
+                                   ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
