@@ -1,3 +1,7 @@
+Mon Jul 15 21:23:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Message_Block.i (base): Fixed a warning in TRU 64 builds.
+
 Mon Jul 15 18:56:47 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/String_Base.cpp (substring): Changed "nil" to "nill" to
@@ -57,7 +61,7 @@ Mon Jul 15 10:14:44 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 Sun Jul 14 20:14:16 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* FAQ: Fixed the use of "*.ps.gz" files.  Thanks to 
+	* FAQ: Fixed the use of "*.ps.gz" files.  Thanks to
 	  Carol Hunsicker <carol.hunsicker@lmco.com> for pointing this
  	  out.
 
@@ -70,12 +74,12 @@ Sun Jul 14 01:43:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Message_Block.h:
 	* ace/Message_Block.i: Added two methods viz. reset_allocators ()
-	  and access_allocators () to ACE_Message_Block. 
+	  and access_allocators () to ACE_Message_Block.
 
 Sat Jul 13 17:29:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/fuzz.pl: Removed the word "warning" from a print statement,
-	  since our scoreboard scripts seems to catch that as a warning. 
+	  since our scoreboard scripts seems to catch that as a warning.
 
 Sat Jul 13 13:31:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
