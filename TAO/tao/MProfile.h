@@ -21,8 +21,11 @@
 #define TAO_MPROFILE_H
 
 #include "tao/corbafwd.h"
+#include "tao/Pluggable.h"
 
-class TAO_Profile;
+// @@ Fred, this definitions are of very little use, can you make them 
+//    local to the Profile class so we don't pollute the global
+//    namespace
 typedef TAO_Profile *TAO_Profile_ptr;
 typedef CORBA::ULong TAO_PHandle;
 
@@ -44,17 +47,24 @@ public:
   // = Initalization and termination methods.
   TAO_MProfile (CORBA::ULong sz);
 
-  TAO_MProfile (TAO_MProfile *mprofiles);
+  TAO_MProfile (const TAO_MProfile &mprofiles);
   // **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to
   //          mprofiles->last_.  Otherwise this->size_ - mprofiles->size_.
   //          Furthermore, current_ is set back to 0!  i.e. rewound.
   // The reference count on any profiles in mprofiles is increment
   // when their references (i.e. pointers) are copied.
 
+  TAO_MProfile& operator= (const TAO_MProfile& mprofiles);
+  // Assigment operator.
+
+  ~TAO_MProfile (void);
+  // Destructor: decrements reference count on all references
+  // profiles!
+
   int set (CORBA::ULong sz);
   // @@ Fred, what does this method do?
 
-  int set (TAO_MProfile *mprofile);
+  int set (const TAO_MProfile &mprofile);
   // Inits this to the values of mprofile.  NOTE: We use
   // mprofile->last_ instead of mprofile->size_ to set this->size_.
   // This is so we can use set () to trim a profile list!!
@@ -119,14 +129,15 @@ public:
                      CORBA::Environment &env);
   // @@ FRED: The list should be locked for this!
 
-  ~TAO_MProfile (void);
-  // Deletes this object and decrements reference count on all
-  // references profiles!
-
 protected:
   TAO_Profile_ptr *pfiles (void) const;
   // return the complete list of profiles, this object retains
   // ownership!
+
+
+private:
+  void cleanup (void);
+  // Helper method to implement the destructor
 
 private:
 
@@ -155,5 +166,4 @@ private:
 # include "tao/MProfile.i"
 #endif /* __ACE_INLINE__ */
 
-// @@ Fred, please don't use #endif // ..., instead, always use #endif /* ... */
-#endif // TAO_MPROFILE_H
+#endif /* TAO_MPROFILE_H */

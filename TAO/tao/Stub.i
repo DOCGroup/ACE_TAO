@@ -72,10 +72,8 @@ ACE_INLINE
 void
 TAO_Stub::reset_forward (void)
 {
-  while (forward_profiles_)
+  while (this->forward_profiles_ != 0)
     forward_back_one ();
-
-  forward_profiles_ = 0;
 }
 
 ACE_INLINE
@@ -145,7 +143,7 @@ ACE_INLINE
 TAO_MProfile *
 TAO_Stub::get_profiles (void)
 {
-  return new TAO_MProfile (&base_profiles_);
+  return new TAO_MProfile (base_profiles_);
 }
 
 ACE_INLINE
@@ -154,7 +152,8 @@ TAO_Stub::next_forward_profile (void)
 {
   TAO_Profile *pfile_next = 0;
 
-  while (forward_profiles_ && (pfile_next = forward_profiles_->get_next ()) == 0)
+  while (this->forward_profiles_
+         && (pfile_next = forward_profiles_->get_next ()) == 0)
     // that was the last profile.  Now we clean up our forward profiles.
     // since we own the forward MProfiles, we must delete them when done.
     forward_back_one ();
@@ -220,7 +219,7 @@ TAO_Stub::valid_profile (void)
 
 ACE_INLINE
 TAO_Profile *
-TAO_Stub::set_base_profiles (TAO_MProfile *mprofiles)
+TAO_Stub::set_base_profiles (const TAO_MProfile &mprofiles)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
@@ -232,31 +231,6 @@ TAO_Stub::set_base_profiles (TAO_MProfile *mprofiles)
   base_profiles_.set (mprofiles);
   reset_base ();
   return profile_in_use_;
-
-}
-
-ACE_INLINE
-void
-TAO_Stub::add_forward_profiles (TAO_MProfile *mprofiles)
-{
-  // we assume that the profile_in_use_ is being
-  // forwarded!  Grab the lock so things don't change.
-  ACE_MT (ACE_GUARD (ACE_Lock,
-                     guard,
-                     *this->profile_lock_ptr_));
-
-  // forwarded profile points to the new IOR (profiles)
-  profile_in_use_->forward_to (mprofiles);
-
-  TAO_MProfile *now_pfiles = forward_profiles_ ? forward_profiles_ : &base_profiles_;
-
-  // new profile list points back to the list which was forwarded.
-  mprofiles->forward_from (now_pfiles);
-
-  forward_profiles_ = mprofiles;
-
-  // make sure we start at the beginning of mprofiles
-  forward_profiles_->rewind ();
 
 }
 

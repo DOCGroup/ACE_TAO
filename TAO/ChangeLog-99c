@@ -1,3 +1,29 @@
+Wed May 12 10:38:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/MProfile.h:
+	* tao/MProfile.i:
+	* tao/MProfile.cpp:
+	* tao/Stub.h:
+	* tao/Stub.i:
+	* tao/Stub.cpp:
+	* tao/Pluggable.h:
+	* tao/Pluggable.i:
+	* tao/Pluggable.cpp:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/IIOP_Profile.cpp:
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.i:
+	* tao/UIOP_Profile.cpp:
+	* tao/Invocation.cpp:
+	* tao/ORB.cpp:
+	* tao/Object.cpp:
+	  Fixed memory leaks in the managment of MProfiles.
+	  Use references to document and clarify the memory managment
+	  rules.
+	  Implemented the forward_to() methods on TAO_Profile instead of
+	  TAO_IIOP_Profile, they are required for all protocols.
+
 Wed May 12 10:18:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html:

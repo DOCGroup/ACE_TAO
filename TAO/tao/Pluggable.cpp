@@ -6,6 +6,12 @@
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Pluggable.i"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(tao, Pluggable, "$Id$")
+
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : iiop_connector_ (0)
 {
