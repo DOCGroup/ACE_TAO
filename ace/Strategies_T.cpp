@@ -158,7 +158,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char dll_name[],
 		  factory_function,
 		  svc_name,
 		  svc_rep, thr_mgr) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "open"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("open")));
 }
 
 template <class SVC_HANDLER>
@@ -447,7 +447,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
 
   if (this->open (local_addr, restart) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "open"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("open")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -518,7 +518,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (voi
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy");
 
   if (this->acceptor_.close () == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("(%P|%t) %p\n"),  ASYS_TEXT ("close")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> void
@@ -616,7 +616,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
   switch (ACE_OS::fork ("child"))
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "fork"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("fork")), -1);
       /* NOTREACHED */
     case 0: // In child process.
 
@@ -677,8 +677,8 @@ ACE_Scheduling_Strategy<SVC_HANDLER>::dump (void) const
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "scheduler_ = %x", this->scheduler_));
-  ACE_DEBUG ((LM_DEBUG, "\ndelete_scheduler_ = %d", this->delete_scheduler_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("scheduler_ = %x"), this->scheduler_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ndelete_scheduler_ = %d"), this->delete_scheduler_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -852,7 +852,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
       delete_recycling_strategy_ (0)
 {
   if (this->open (cre_s, con_s, rec_s) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>

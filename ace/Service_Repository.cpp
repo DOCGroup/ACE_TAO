@@ -108,7 +108,7 @@ ACE_Service_Repository::ACE_Service_Repository (int size)
   ACE_TRACE ("ACE_Service_Repository::ACE_Service_Repository");
 
   if (this->open (size) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Service_Repository"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Service_Repository")));
 }
 
 // Close down all the services.
@@ -126,7 +126,7 @@ ACE_Service_Repository::close (void)
       while (this->current_size_ > 0)
         {
           int i = --this->current_size_;
-          ACE_DEBUG ((LM_DEBUG, "shutting down %s\n",
+          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("shutting down %s\n"),
                       this->service_vector_[i]->name ()));
           delete (ACE_Service_Type *)this->service_vector_[i];
         }

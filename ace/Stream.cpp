@@ -21,18 +21,18 @@ template <ACE_SYNCH_DECL> void
 ACE_Stream<ACE_SYNCH_USE>::dump (void) const
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::dump");
-  ACE_DEBUG ((LM_DEBUG, "-------- module links --------\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------- module links --------\n")));
 
   for (ACE_Module<ACE_SYNCH_USE> *mp = this->stream_head_; 
        ; 
        mp = mp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG, "module name = %s\n", mp->name ()));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("module name = %s\n"), mp->name ()));
       if (mp == this->stream_tail_)
 	break;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "-------- writer links --------\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------- writer links --------\n")));
 
   ACE_Task<ACE_SYNCH_USE> *tp;
 
@@ -40,21 +40,21 @@ ACE_Stream<ACE_SYNCH_USE>::dump (void) const
        ; 
        tp = tp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG, "writer queue name = %s\n", tp->name ()));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("writer queue name = %s\n"), tp->name ()));
       tp->dump ();
-      ACE_DEBUG ((LM_DEBUG, "-------\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------\n")));
       if (tp == this->stream_tail_->writer ()
 	  || (this->linked_us_ 
 	      && tp == this->linked_us_->stream_head_->reader ()))
 	break;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "-------- reader links --------\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------- reader links --------\n")));
   for (tp = this->stream_tail_->reader (); ; tp = tp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG, "reader queue name = %s\n", tp->name ()));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("reader queue name = %s\n"), tp->name ()));
       tp->dump ();
-      ACE_DEBUG ((LM_DEBUG, "-------\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------\n")));
       if (tp == this->stream_head_->reader ()
 	  || (this->linked_us_ 
 	      && tp == this->linked_us_->stream_head_->writer ()))

@@ -148,8 +148,8 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
       // The caller is an owner, so we have a deadlock situation.
       if (debug_)
         {
-          ACE_DEBUG ((LM_DEBUG, "(%t) Deadlock detected.\n"));
-          ACE_DEBUG ((LM_DEBUG, "%s owns %s and is waiting for %s.\n",
+          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%t) Deadlock detected.\n")));
+          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("%s owns %s and is waiting for %s.\n"),
                       proxy->client_id (),
                       token->name (),
                       proxy->token_->name ()));
@@ -252,10 +252,10 @@ ACE_Token_Manager::dump (void) const
 {
   ACE_TRACE ("ACE_Token_Manager::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "ACE_Token_Manager::dump:\n"));
-  ACE_DEBUG ((LM_DEBUG, "lock_\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Token_Manager::dump:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("lock_\n")));
   lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "collection_\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection_\n")));
   collection_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

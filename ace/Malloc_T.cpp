@@ -135,7 +135,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
 				     rounded_bytes,
 				     first_time);
   if (this->cb_ptr_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "init_acquire failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("(%P|%t) %p\n"),  ASYS_TEXT ("init_acquire failed")), -1);
   else if (first_time)
     {
       // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("(%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
@@ -307,7 +307,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
 	      currp = this->cb_ptr_->freep_;
 	    }
 	  else
-	    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "malloc"), 0);
+	    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("(%P|%t) %p\n"),  ASYS_TEXT ("malloc")), 0);
 	}
     }
 }

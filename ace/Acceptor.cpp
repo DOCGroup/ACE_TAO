@@ -93,7 +93,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor");
   if (this->open (addr, reactor, flags) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Acceptor::ACE_Acceptor"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Acceptor::ACE_Acceptor")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -313,12 +313,12 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       SVC_HANDLER *svc_handler = 0;
 
       if (this->make_svc_handler (svc_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_svc_handler"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("make_svc_handler")), 0);
 
       // Accept connection into the Svc_Handler.
 
       else if (this->accept_svc_handler (svc_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept_svc_handler"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("accept_svc_handler")), 0);
 
       // Activate the <svc_handler> using the designated concurrency
       // strategy (note that this method becomes responsible for
@@ -326,7 +326,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       // awry...).
 
       else if (this->activate_svc_handler (svc_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_svc_handler"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("activate_svc_handler")), 0);
 
       conn_handle.set_bit (listener);
     }
@@ -370,16 +370,16 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump ();
   this->creation_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, "delete_creation_strategy_ = %d", delete_creation_strategy_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_creation_strategy_ = %d"), delete_creation_strategy_));
   this->accept_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, "delete_accept_strategy_ = %d", delete_accept_strategy_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_accept_strategy_ = %d"), delete_accept_strategy_));
   this->concurrency_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, "delete_concurrency_strategy_ = %d", delete_concurrency_strategy_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_concurrency_strategy_ = %d"), delete_concurrency_strategy_));
   this->scheduling_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, "delete_scheduling_strategy_ = %d", delete_scheduling_strategy_));
-  ACE_DEBUG ((LM_DEBUG, "\nservice_name_ = %s", this->service_name_));
-  ACE_DEBUG ((LM_DEBUG, "\nservice_description_ = %s", this->service_description_));
-  ACE_DEBUG ((LM_DEBUG, "\nservice_port_ = %d", this->service_port_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nservice_name_ = %s"), this->service_name_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nservice_description_ = %s"), this->service_description_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nservice_port_ = %d"), this->service_port_));
   this->service_addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -527,7 +527,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
 
   if (this->open (addr, reactor, cre_s, acc_s, con_s, sch_s,
                   service_name, service_description) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Strategy_Acceptor::ACE_Strategy_Acceptor"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Strategy_Acceptor::ACE_Strategy_Acceptor")));
 }
 
 // Perform termination activities when <this> is removed from the
@@ -682,10 +682,10 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\nsvc_handler_ = %x", this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG, "\nrestart_ = %d", this->restart_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nsvc_handler_ = %x"), this->svc_handler_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nrestart_ = %d"), this->restart_));
   this->peer_acceptor_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "delete_concurrency_strategy_ = %d",
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("delete_concurrency_strategy_ = %d"),
               delete_concurrency_strategy_));
   this->concurrency_strategy_->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

@@ -87,7 +87,7 @@ ACE_Token_Collection::acquire (int notify,
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG, "collection acquiring %s\n",
+	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection acquiring %s\n"),
 		    temp->int_id_->name ()));
       if (temp->int_id_->acquire (notify, sleep_hook, options) == -1)
 	{
@@ -149,7 +149,7 @@ ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG, "collection acquiring %s\n",
+	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection acquiring %s\n"),
 		    temp->int_id_->name ()));
       // We will fail if _any_ token is not free.
       if (temp->int_id_->tryacquire (sleep_hook) == -1)
@@ -172,7 +172,7 @@ ACE_Token_Collection::renew (int requeue_position,
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG, "collection renewing %s\n",
+	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection renewing %s\n"),
 		    temp->int_id_->name ()));
       if (temp->int_id_->renew (requeue_position, options) == -1)
 	return -1;
@@ -214,7 +214,7 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG, "collection releasing %s\n",
+	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection releasing %s\n"),
 		    temp->int_id_->name ()));
       temp->int_id_->release ();
     }
@@ -275,11 +275,11 @@ ACE_Token_Collection::dump (void) const
 {
   ACE_TRACE ("ACE_Token_Collection::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "ACE_Token_Collection::dump:\n"
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Token_Collection::dump:\n")
 			" debug_ = %d\n", debug_));
-  ACE_DEBUG ((LM_DEBUG, "collection_\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection_\n")));
   collection_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "base:\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("base:\n")));
   ACE_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

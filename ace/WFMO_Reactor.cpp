@@ -607,7 +607,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     open_for_business_ (0)
 {
   if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "WFMO_Reactor"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WFMO_Reactor")));
 }
 
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
@@ -636,7 +636,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
   ACE_UNUSED_ARG (unused);
 
   if (this->open (size, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "WFMO_Reactor"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WFMO_Reactor")));
 }
 
 int
@@ -1366,7 +1366,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 
   // This will get called when <WFMO_Reactor->wakeup_one_thread_> event
   // is signaled.
-  //  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to handle internal notifications\n"));
+  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%t) waking up to handle internal notifications\n")));
 
   for (int i = 1; ; i++)
     {
