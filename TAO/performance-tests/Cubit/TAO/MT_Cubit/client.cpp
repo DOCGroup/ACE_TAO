@@ -249,15 +249,16 @@ Client_i::output_latency (void)
 void
 Client_i::init_low_priority (void)
 {
+  ACE_Sched_Priority prev_priority = this->high_priority_;
   if (this->ts_->use_multiple_priority_ == 1)
     this->low_priority_ =
-      this->priority_.get_low_priority (this->high_priority_,
-                                        this->num_low_priority_,
+      this->priority_.get_low_priority (this->num_low_priority_,
+					prev_priority,
                                         1);
   else
     this->low_priority_ =
-      this->priority_.get_low_priority (this->high_priority_,
-                                        this->num_low_priority_,
+      this->priority_.get_low_priority (this->num_low_priority_,
+					prev_priority,
                                         0);
   this->num_priorities_ =
     this->priority_.number_of_priorities ();
@@ -865,6 +866,7 @@ main (int argc, char *argv[])
   client.run ();
 
 #if defined (CHORUS)
+  int pTime;
   if (pccTimer (PCC2_TIMER1_STOP,
                 &pTime) != K_OK)
     ACE_DEBUG ((LM_DEBUG,
