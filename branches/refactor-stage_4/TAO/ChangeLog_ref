@@ -1,3 +1,8 @@
+Sat Jul 05 18:38:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (TAO): 
+	* tao/Synch_Invocation.h: Added support for oneways.
+
 Sat Jul 05 16:46:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	

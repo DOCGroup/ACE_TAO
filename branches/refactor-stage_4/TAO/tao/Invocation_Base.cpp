@@ -3,11 +3,14 @@
 #include "Object.h"
 #include "Profile_Transport_Resolver.h"
 #include "operation_details.h"
+#include "Stub.h"
+#include "ORB_Core.h"
 //@@ Need to remove when we take care o fthe note below.
 #include "corbafwd.h"
 #include "Synch_Invocation.h"
 #include "Transport.h"
 #include "Transport_Mux_Strategy.h"
+#include "Messaging_SyncScopeC.h"
 
 ACE_RCSID (tao,
            Invocation_Base,
@@ -38,6 +41,7 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
   Invocation_Base::invoke (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    // Should stub object be refcounted here?
     TAO_Stub *stub =
       this->target_->_stubobj ();
 
@@ -67,7 +71,21 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
 
     if (this->type_ == TAO_ONEWAY_INVOCATION)
       {
-        // @@ Do Nothing at this point
+        int has_synchronization = 0;
+        Messaging::SyncScope sync_scope;
+        stub->orb_core ()->call_sync_scope_hook (stub,
+                                                 has_synchronization,
+                                                 sync_scope);
+
+        op_details.response_flags (sync_scope);
+
+        TAO::Synch_Oneway_Invocation synch (resolver,
+                                            op_details);
+
+        synch.communicate (this->args_,
+                           this->number_args_
+                           ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
       }
     else if (this->type_ == TAO_TWOWAY_INVOCATION
              && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
