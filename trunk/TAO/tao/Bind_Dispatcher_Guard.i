@@ -40,8 +40,8 @@ TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard (void)
 }
 
 
-ACE_INLINE int
-TAO_Bind_Dispatcher_Guard::status (void) const
+ACE_INLINE int &
+TAO_Bind_Dispatcher_Guard::status (void)
 {
   return status_;
 }

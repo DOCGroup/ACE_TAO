@@ -1,3 +1,15 @@
+Sun Nov 26 16:52:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Bind_Dispatcher_Guard.i:
+	* tao/Bind_Dispatcher_Guard.h: Return the reference to the status_
+	  in the status () method. 
+	
+	* tao/Invocation.cpp (invoke_i): If there is an error and if the
+	  connection is closed, we set the status in the
+	  Bind_Dispatcher_Guard to -1. This should fix a problem that
+	  caused the client ORB to dump a core if the server shutsdown
+	  suddenly. 
+
 Sun Nov 26 13:34:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:
