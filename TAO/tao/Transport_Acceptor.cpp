@@ -3,6 +3,8 @@
 // $Id$
 
 #include "Transport_Acceptor.h"
+#include "IOP_IORC.h"
+#include "Object_KeyC.h"
 
 
 #if !defined (__ACE_INLINE__)

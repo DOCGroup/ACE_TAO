@@ -18,14 +18,12 @@
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H
 #include "ace/pre.h"
-
-#include "tao/IOPC.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Condition.h"
 
 // Forward Declarations.
 class TAO_GIOP_Message_State;
