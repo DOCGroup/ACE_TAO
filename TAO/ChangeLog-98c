@@ -1,3 +1,16 @@
+Mon Nov 03 13:22:12 1997    <nw1@CHA-CHA>
+
+	* TAO_IDL/be/be.h: Added #ifdef'ed pragma to diable warning 4250
+	  on NT.  This is only temporary and should be fixed later.
+	
+	* TAO_IDL/be/be_union.cpp (gen_var_defn): 
+	* TAO_IDL/be/be_structure.cpp (gen_var_defn): 
+	* TAO_IDL/be/be_array.cpp (gen_var_defn): Removed unused local
+	  variables declaration (s).
+
+	* TAO_IDL/ast/ast_expression.cpp (coerce_value): Added an explicit
+	  cast (float) to avoid NT warnging messages.
+
 Mon Nov  3 13:45:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* {tao,TAO_IDL/util,TAO_IDL/narrow,TAO_IDL/fe,TAO_IDL/driver,
