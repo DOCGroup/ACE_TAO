@@ -1,3 +1,8 @@
+Sat May  1 15:06:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tao/Typecode.cpp (parameter): Changed the variable env to
+	  ACE_TRY_ENV in CORBA_TypeCode::parameter method. 
+
 Sat May  1 13:32:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp : Fixed the
