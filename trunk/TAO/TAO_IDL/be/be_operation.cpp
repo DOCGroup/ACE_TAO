@@ -562,7 +562,6 @@ be_operation::gen_server_skeletons (void)
           "be_operation::gen_server_skeletons - argument gen code failed\n"),
                          -1);
     }
-  *ss << "\n";
   cg->pop ();
 
   // make the upcall
@@ -603,40 +602,17 @@ be_operation::gen_server_skeletons (void)
           "be_operation::gen_server_skeletons - argument gen code failed\n"),
                          -1);
     }
-  *ss << "\n";
   cg->pop ();
 
   // if there is any return type, send it via the ServerRequest
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
-      // not a void type
-      switch (rt->node_type ())
-        {
-#if 0
-	  // @ Andy: this is the fix for the objref OUT params
-        case AST_Decl::NT_interface:
-        case AST_Decl::NT_interface_fwd:
-          {
-            *ss << "result = new CORBA::Any (" << rt->tc_name () <<
-              ", retval, 0); // ORB does not own" << nl;
-            *ss << "_tao_server_request.result (result, _tao_environment);" << nl;
-          }
-          break;
-#endif
-        default:
-          {
-            *ss << "result = new CORBA::Any (" << rt->tc_name () <<
-              ", retval, 1); // ORB owns" << nl;
-            *ss << "_tao_server_request.result (result, _tao_environment);" << nl;
-          }
-        }
-#if 0
       cg->push (TAO_CodeGen::TAO_OPERATION_RESULT_SS);
       s = cg->make_state ();
       if (!s || (s->gen_code (rt, this) == -1))
         return -1;
       cg->pop ();
-#endif
+      *ss << "_tao_server_request.result (result, _tao_environment);" << nl;
     }
   *ss << "\n";
   ss->decr_indent ();

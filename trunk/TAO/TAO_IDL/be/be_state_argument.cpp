@@ -571,7 +571,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               } // end switch direction
           } // end of if
-        else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+        else if (bpd->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
           {
             switch (arg->direction ())
               {
@@ -594,12 +594,12 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      // just like objrefs
+                      // no casting necessary as we already are object_ptr
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
                     {
-                      // nothing
+                      *os << ", &" << arg->local_name ();
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
@@ -614,7 +614,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
                     {
-                      // nothing
+                      // nothing to be done as we are Object_ptr
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
@@ -648,8 +648,8 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                     {
                     // declare a variable
-                      *os << bt->name () << "_ptr ";
-                      *os << arg->local_name () << ";" << nl;
+                      *os << bt->name () << "_ptr *" << arg->local_name () <<
+                        " = new " << bt->name () << "_ptr;" << nl;
                     // now define a NamedValue_ptr
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
@@ -666,7 +666,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
                     {
-                      // nothing
+                      *os << ", &" << arg->local_name ();
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
@@ -731,17 +731,21 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      // nothing
+                      // declare a variable
+                      *os << bt->name () << "_ptr _tao_base_" <<
+                        arg->local_name () << ";" << nl;
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
                     {
-                      // nothing
+                      *os << ", &_tao_base_" << arg->local_name ();
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
                     {
-                      // nothing
+                      // assign to the _out parameter
+                      *os << arg->local_name () << " = _tao_base_" <<
+                        arg->local_name () << ";" << nl;
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:

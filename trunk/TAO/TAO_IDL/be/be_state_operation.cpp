@@ -101,19 +101,20 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
-              //              *os << bt->name () << "_ptr retval;"; // callee
-              //              allocates
-              // some stupid problems arising out of casting to the
-	      // bt->name type
-
-	      // @@ Andy: this is the fix for the objref value...
               *os << "CORBA::Object_ptr *retval ="
                 " new CORBA::Object_ptr;" << nl;
+              *os << "*retval = CORBA::Object::_nil ();" << nl;
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
               *os << "*retval"; // assign to retval
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
+            {
+              *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                ", retval, 1); // ORB owns" << nl;
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_CH:
@@ -227,7 +228,8 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
               else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
                 {
                   // pseudo object, return a pointer
-                  *os << bt->name () << "_ptr retval;" << nl;
+                  *os << bt->name () << "_ptr *retval = new " << bt->name () <<
+                      "_ptr;" << nl;
                 }
               else
                 {
@@ -247,11 +249,32 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
               else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
                 {
                   // pseudo object, return a pointer
-                  *os << "retval";
+                  *os << "*retval";
                 }
               else
                 {
                   *os << " *retval";
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
+            {
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                    ", retval, 1); // ORB owns" << nl;
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                    ", retval, 1); // ORB owns" << nl;
+                }
+              else
+                {
+                  *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                    ", retval, 1); // ORB owns" << nl;
                 }
             }
             break;
@@ -328,6 +351,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "retval";
             }
             break;
+          case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
+            {
+              *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                ", retval, 1); // ORB owns" << nl;
+            }
+            break;
           case TAO_CodeGen::TAO_OPERATION_CH:
             {
               if (bt->node_type () == AST_Decl::NT_typedef)
@@ -383,6 +412,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "retval";
             }
             break;
+          case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
+            {
+              *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                ", retval, 1); // ORB owns" << nl;
+            }
+            break;
           case TAO_CodeGen::TAO_OPERATION_CH:
             {
               // to keep MSVC++ happy
@@ -432,6 +467,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "retval";
             }
             break;
+          case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
+            {
+              *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                ", retval, 1); // ORB owns" << nl;
+            }
+            break;
           case TAO_CodeGen::TAO_OPERATION_CH:
             {
               // to keep MSVC++ happy
@@ -478,6 +519,12 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
               *os << "*retval";
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
+            {
+              *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                ", retval, 1); // ORB owns" << nl;
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_CH:
@@ -551,17 +598,20 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
-#if 0
-	      // @@ Andy: this is the fix for the objref value...
               if (type->size_type () == be_decl::VARIABLE)
                 {
                   *os << "retval";
                 }
               else
-#endif
                 {
                   *os << "*retval";
                 }
+            }
+            break;
+          case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
+            {
+              *os << "result = new CORBA::Any (" << bt->tc_name () <<
+                ", retval, 1); // ORB owns" << nl;
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_CH:
