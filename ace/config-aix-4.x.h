@@ -292,5 +292,9 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+#if (_XOPEN_SOURCE == 500) && !defined(_UNIX95)
+# define ACE_HAS_3_PARAM_WCSTOK
+#endif /* _XOPEN_SOURCE == 500 && !_UNIX95 */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

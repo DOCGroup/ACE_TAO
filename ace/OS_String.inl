@@ -522,12 +522,12 @@ ACE_OS_String::strtok (char *s, const char *tokens)
 ACE_INLINE wchar_t *
 ACE_OS_String::strtok (wchar_t *s, const wchar_t *tokens)
 {
-#if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#if defined (ACE_HAS_3_PARAM_WCSTOK)
   static wchar_t *lasts;
   return ::wcstok (s, tokens, &lasts);
 #else
   return ::wcstok (s, tokens);
-#endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
+#endif /* ACE_HAS_3_PARAM_WCSTOK */
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
 
@@ -699,20 +699,16 @@ ACE_OS_String::strtok_r (char *s, const char *tokens, char **lasts)
 ACE_INLINE wchar_t*
 ACE_OS_String::strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
 {
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
-#  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-    // The XPG4 spec says 2-arg wcstok() is thread-safe. wcstok_r is obsolete.
+#if defined (ACE_LACKS_WCSTOK)
+    return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
+#else
+#  if defined (ACE_HAS_3_PARAM_WCSTOK)
+    return ::wcstok (s, tokens, lasts);
+#  else /* ACE_HAS_3_PARAM_WCSTOK */
     *lasts = ::wcstok (s, tokens);
     return *lasts;
-#  else
-    // Apparantly, UNIX98 and ISO/ANSI C define this with 3 args.
-    // Still no mention of wcstok_r...
-    // return ::wcstok_r (s, tokens, lasts);
-    return ::wcstok (s, tokens, lasts);
-#  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
-#else
-    return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
-#endif  // ACE_HAS_REENTRANT_FUNCTIONS
+#  endif /* ACE_HAS_3_PARAM_WCSTOK */
+#endif  /* ACE_LACKS_WCSTOK */
 }
 #endif  // ACE_HAS_WCHAR
 

@@ -76,4 +76,10 @@ typedef unsigned long long uint64_t;
 #define ACE_SIZEOF_LONG 8 /* Needed to circumvent compiler bug #4294969 */
 #endif /* __sparcv9 */
 
+#if (defined(_XOPEN_SOURCE) && (_XOPEN_VERSION - 0 == 4)) /* XPG4 or XPG4v2 */
+// 2 parameter wcstok()
+#else   /* XPG4 or XPG4v2 */
+# define ACE_HAS_3_PARAM_WCSTOK
+#endif
+
 #endif /* ACE_CONFIG_H */
