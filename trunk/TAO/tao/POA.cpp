@@ -15,7 +15,7 @@
 // Timeprobes class
 #include "tao/Timeprobe.h"
 
-const char *TAO_POA_Timeprobe_Description[] = 
+static const char *TAO_POA_Timeprobe_Description[] = 
 { 
   "POA::locate_poa_i - start",
   "POA::locate_poa_i - end",
@@ -54,8 +54,12 @@ enum
   TAO_POA_PARSE_KEY_END,
 
   TAO_SERVANT_DISPATCH_START,
-  TAO_SERVANT_DISPATCH_END,
+  TAO_SERVANT_DISPATCH_END
 };
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description, 
+                                  TAO_POA_LOCATE_POA_I_START);
 
 // This is the maximum space require to convert the ulong into a
 // string.

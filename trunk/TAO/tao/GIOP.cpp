@@ -49,7 +49,7 @@
 # include "tao/GIOP.i"
 #endif /* ! __ACE_INLINE__ */
 
-const char *TAO_GIOP_Timeprobe_Description[] = 
+static const char *TAO_GIOP_Timeprobe_Description[] = 
 { 
   "GIOP::send_request - start",
   "GIOP::send_request - end",
@@ -76,8 +76,12 @@ enum
   TAO_GIOP_READ_BUFFER_END,
 
   TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
-  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END,
+  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END
 };
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description, 
+                                  TAO_GIOP_SEND_REQUEST_START);
 
 static const char digits [] = "0123456789ABCD";
 static const char *names [] =

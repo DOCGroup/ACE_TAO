@@ -17,7 +17,7 @@
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
-const char *TAO_ORB_Timeprobe_Description[] = 
+static const char *TAO_ORB_Timeprobe_Description[] = 
 { 
   "CORBA_ORB::run - start",
   "CORBA_ORB::run - end",
@@ -28,6 +28,10 @@ enum
   TAO_CORBA_ORB_RUN_START = 0,
   TAO_CORBA_ORB_RUN_END
 };
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description, 
+                                  TAO_CORBA_ORB_RUN_START);
 
 // Static initialization.
 int CORBA_ORB::orb_init_count_ = 0;
@@ -187,12 +191,6 @@ CORBA_ORB::perform_work (ACE_Time_Value *tv)
   return r->handle_events (tv);
 }
 
-const char *TAO_ORB_Timeprobe_Description[];
-const char *TAO_GIOP_Timeprobe_Description[];
-const char *TAO_POA_Timeprobe_Description[];
-const char *TAO_Connect_Timeprobe_Description[];
-const char *TAO_Server_Request_Timeprobe_Description[];
-
 int
 CORBA_ORB::run (ACE_Time_Value *tv)
 {
@@ -209,26 +207,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   if (this->open () == -1)
     return -1;
 
-  // Setup Timeprobes
-  int i = 0;
-
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description, i * 100);
-  i++;
-
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description, i * 100);
-  i++;
-
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description, i * 100);
-  i++;
-
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description, i * 100);
-  i++;
-
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description, i * 100);
-  i++;
-
   // Loop "forever" handling client requests.
-  
   const int max_iterations = 100;
   int counter = 0;
   while (this->should_shutdown_ == 0)
