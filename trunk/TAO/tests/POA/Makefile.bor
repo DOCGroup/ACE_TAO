@@ -1,0 +1,12 @@
+#
+# Makefile for building the TAO POA tests
+#
+
+DIRS = \
+        Deactivation \
+        Destruction \
+        Identity \
+        Non_Servant_Upcalls \
+        wait_for_completion
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
