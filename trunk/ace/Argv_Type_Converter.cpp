@@ -57,7 +57,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter(void)
         if (char_passed_) {
             align_wchar_with_char();
         }
-        for (int i = 0; i < saved_argc_; ++i) {
+        for (int i = 0; i < before_pass_argc_; ++i) {
             delete [] char_argv_[i];
         }
         delete [] char_argv_;
@@ -67,7 +67,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter(void)
         if (wchar_passed_) {
             align_char_with_wchar();
         }
-        for (int i = 0; i < saved_argc_; ++i) {
+        for (int i = 0; i < before_pass_argc_; ++i) {
             delete [] wchar_argv_[i];
         }
         delete [] wchar_argv_;
