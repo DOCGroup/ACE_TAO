@@ -264,6 +264,33 @@ to Graham for providing the OSE tools!<p>
         declaration is seen.  Of course, we should avoid using
         static variables at all.<p>
 
+    <li>It is usually clearer to write conditionals that have
+        both branches without a negated condition.  For example,<p>
+
+        <pre>
+        if (test)
+          {
+            // true branch
+          }
+        else
+          {
+            // false branch
+          }
+        </pre><p>
+
+        is preferred over:<p>
+
+        <pre>
+        if (! test)
+          {
+            // false test branch
+          }
+        else
+          {
+            // true test branch
+          }
+        </pre><p>
+
     <li>If a cast is necessary, avoid use of ANSI-style casts,
         <em>e.g.</em>, <code>int (foo)</code>.  Instead, use
         the ACE_static_cast macro:
@@ -383,7 +410,7 @@ to Graham for providing the OSE tools!<p>
 
 <hr>
 <!-- hhmts start -->
-Last modified: Mon Nov 10 18:27:08 CST 1997
+Last modified: Tue Dec  2 09:54:01 CST 1997
 <!-- hhmts end -->
 
 </body>
