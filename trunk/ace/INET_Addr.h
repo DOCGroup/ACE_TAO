@@ -121,10 +121,10 @@ public:
 
   virtual int string_to_addr (const ASYS_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
-  // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
-  // "128.252.166.57:1234").  If there is no ':' in the <address> it
-  // is assumed to be a port number, with the IP address being
-  // INADDR_ANY.
+  // "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234") or
+  // "ip-number:port-number" (e.g., "128.252.166.57:1234").  If there
+  // is no ':' in the <address> it is assumed to be a port number,
+  // with the IP address being INADDR_ANY.
 
   void set_port_number (u_short, int encode = 1);
   // Sets the port number without affecting the host name.  If

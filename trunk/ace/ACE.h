@@ -486,8 +486,16 @@ public:
   // "<pathname>.exe".  Always returns <pathname> on UNIX.
 
   static const char *basename (const char *pathname,
-                               char delim);
-  // Returns the "basename" of a <pathname>.
+                               char delim = ACE_DIRECTORY_SEPARATOR_CHAR_A);
+  // Returns the "basename" of a <pathname> separated by <delim>.  For
+  // instance, the basename of "/tmp/foo.cpp" is "foo.cpp" when
+  // <delim> is '/'.
+
+  static const char *dirname (const char *pathname,
+                              char delim);
+  // Returns the "dirname" of a <pathname>.  For instance, the
+  // basename of "/tmp/foo.cpp" is "/tmp" when <delim> is '/'.  This
+  // method does not modify <pathname> and is not reentrant.
 
 #if defined (ACE_HAS_UNICODE)
   // A collection of wide string functions.  See above for details.
@@ -503,7 +511,7 @@ public:
   static const wchar_t *execname (const wchar_t *pathname);
 
   static const wchar_t *basename (const wchar_t *pathname,
-                                  wchar_t delim);
+                                  wchar_t delim = ACE_DIRECTORY_SEPARATOR_CHAR_W);
   // Returns the "basename" of a <pathname>.
 #endif /* ACE_HAS_UNICODE */
 

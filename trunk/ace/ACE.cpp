@@ -935,6 +935,34 @@ ACE::basename (const char *pathname, char delim)
     return temp + 1;
 }
 
+const char *
+ACE::dirname (const char *pathname, char delim)
+{
+  ACE_TRACE ("ACE::basename");
+  static char return_dirname[MAXPATHLEN + 1];
+
+  const char *temp = ACE_OS::strrchr (pathname, delim);
+
+  if (temp == 0)
+    {
+      if (ACE_OS::strcmp (pathname, ".") == 0
+          || ACE_OS::strcmp (pathname, "..") == 0)
+        return_dirname[0] = '.';
+      else
+        return_dirname[0] = delim;
+
+      return return_dirname;
+    }
+  else
+    {
+      ACE_OS::strncpy (return_dirname,
+                       pathname,
+                       MAXPATHLEN);
+      return_dirname[temp - pathname] = '\0';
+      return return_dirname;
+    }
+}
+
 #if defined (ACE_HAS_UNICODE)
 const wchar_t *
 ACE::basename (const wchar_t *pathname, wchar_t delim)
