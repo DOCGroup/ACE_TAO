@@ -22,6 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantActivatorC.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
