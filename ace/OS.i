@@ -5542,61 +5542,24 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #endif /* ACE_HAS_THREADS */
 }
 
-
-ACE_INLINE int
-ACE_OS::thr_join (ACE_thread_t waiter_id,
-                  ACE_thread_t *thr_id,
-                  void **status)
-{
-  // ACE_TRACE ("ACE_OS::thr_join");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (waiter_id, thr_id, status), ace_result_),
-                     int, -1);
-# elif defined (ACE_HAS_PTHREADS)
-  ACE_UNUSED_ARG (thr_id);
-#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-  ACE_OSCALL_RETURN (::pthread_join (waiter_id, status), int, -1);
-#   else
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (waiter_id, status), ace_result_),
-                     int, -1);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
-# elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG (waiter_id);
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (status);
-
-  // This could be implemented if the DLL-Main function or the
-  // task exit base class some log the threads which have exited
-  ACE_NOTSUP_RETURN (-1);
-# elif defined (VXWORKS) || defined (ACE_PSOS)
-  ACE_UNUSED_ARG (waiter_id);
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (status);
-  ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (waiter_id);
-  ACE_UNUSED_ARG (thr_id);
-  ACE_UNUSED_ARG (status);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
-
 ACE_INLINE int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
                   void **status)
 {
   // ACE_TRACE ("ACE_OS::thr_join");
-  thr_handle = thr_handle;
-  status = status;
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (thr_handle, 0, status), ace_result_),
                      int, -1);
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+#     if defined (ACE_LACKS_NULL_PTHREAD_STATUS)
+  void *temp;
+  ACE_OSCALL_RETURN (::pthread_join (thr_handle,
+    status == 0  ?  &temp  :  status), int, -1);
+#     else
   ACE_OSCALL_RETURN (::pthread_join (thr_handle, status), int, -1);
+#     endif
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (thr_handle, status), ace_result_),
                      int, -1);
@@ -5630,6 +5593,52 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (thr_handle);
+  ACE_UNUSED_ARG (status);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::thr_join (ACE_thread_t waiter_id,
+                  ACE_thread_t *thr_id,
+                  void **status)
+{
+  // ACE_TRACE ("ACE_OS::thr_join");
+#if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (waiter_id, thr_id, status), ace_result_),
+                     int, -1);
+# elif defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (thr_id);
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+#     if defined (ACE_LACKS_NULL_PTHREAD_STATUS)
+  void *temp;
+  ACE_OSCALL_RETURN (::pthread_join (waiter_id,
+    status == 0  ?  &temp  :  status), int, -1);
+#     else
+  ACE_OSCALL_RETURN (::pthread_join (waiter_id, status), int, -1);
+#     endif
+#   else
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (waiter_id, status), ace_result_),
+                     int, -1);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
+# elif defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (waiter_id);
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (status);
+
+  // This could be implemented if the DLL-Main function or the
+  // task exit base class some log the threads which have exited
+  ACE_NOTSUP_RETURN (-1);
+# elif defined (VXWORKS) || defined (ACE_PSOS)
+  ACE_UNUSED_ARG (waiter_id);
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (status);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (waiter_id);
+  ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (status);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
