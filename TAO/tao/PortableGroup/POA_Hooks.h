@@ -49,22 +49,50 @@ public:
 
   virtual ~TAO_POA_Hooks (void);
 
-  virtual PortableServer::ObjectId *create_id_for_reference (
-    TAO_POA &the_poa,
-    CORBA::Object_ptr the_ref,
-    CORBA::Environment &ACE_TRY_ENV)
+  virtual PortableServer::ObjectId * create_id_for_reference (
+      TAO_POA &the_poa,
+      CORBA::Object_ptr the_ref,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
     ));
 
-  virtual PortableServer::IDs *reference_to_ids (
-    TAO_POA &the_poa,
-    CORBA::Object_ptr the_ref,
-    CORBA::Environment &ACE_TRY_ENV)
+  virtual PortableServer::IDs * reference_to_ids (
+      TAO_POA &the_poa,
+      CORBA::Object_ptr the_ref,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
+    ));
+
+  virtual void associate_reference_with_id (
+      TAO_POA &the_poa,
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ));
+
+  virtual void disassociate_reference_with_id (
+      TAO_POA &the_poa,
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
     ));
 
 protected:
@@ -79,6 +107,16 @@ protected:
                               TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
                               TAO_ORB_Core &orb_core,
                               CORBA::Environment &ACE_TRY_ENV);
+
+  /// Helper function to associate group references with
+  /// object references.
+  void associate_group_with_ref (
+        TAO_POA &the_poa,
+        CORBA::Object_ptr group_ref,
+        CORBA::Object_ptr obj_ref,
+        CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::NotAGroupObject));
 
 
 protected:

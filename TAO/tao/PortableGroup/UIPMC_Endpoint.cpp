@@ -39,7 +39,7 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
     next_ (0)
 {
   for (int i = 0; i<4; i++)
-    class_d_address_[i] = class_d_address[i];
+    this->class_d_address_[i] = class_d_address[i];
 
   this->update_object_addr ();
 }
@@ -55,7 +55,16 @@ TAO_UIPMC_Endpoint::object_addr (const ACE_INET_Addr &addr)
 {
   this->port_ = addr.get_port_number();
   this->uint_ip_addr (addr.get_ip_address ());
+
+  this->object_addr_.set (addr);
 }
+
+const char *
+TAO_UIPMC_Endpoint::get_host_addr (void) const
+{
+  return this->object_addr_.get_host_addr ();
+}
+
 
 int
 TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)

@@ -98,6 +98,7 @@ module IOP
   // InterORB Protocol (OMB TC Document orbos/2001-01-11)
   const ProfileId TAG_UIPMC = 0x54414f0c;  // @@ Get real number
   const ComponentId TAG_GROUP = 0x54414f03;  // @@ Get real number
+  const ComponentId TAG_GROUP_IIOP = 0x54414f04; // @@ Get real number
 
   local interface Codec {
     exception InvalidTypeForEncoding {};

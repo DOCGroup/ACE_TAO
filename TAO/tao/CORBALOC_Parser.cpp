@@ -22,6 +22,7 @@ static const char corbaloc_prefix[] = "corbaloc:";
 static const char iiop_prefix[] = "iiop:";
 static const char uiop_prefix[] = "uiop:";
 static const char shmiop_prefix[] = "shmiop:";
+static const char miop_prefix[] = "miop:";
 static const char rir_prefix[] = "rir:";
 
 int
@@ -370,21 +371,25 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point,
     return -1; // Failure
 
   // Lets first check if it is a valid protocol:
-  if (!(ACE_OS::strncmp (end_point,
+  if (!((ACE_OS::strncmp (end_point,
                        iiop_prefix,
                        sizeof iiop_prefix - 1) == 0) ||
 
-      (ACE_OS::strncmp (end_point,
+        (ACE_OS::strncmp (end_point,
                         shmiop_prefix,
                         sizeof shmiop_prefix - 1) == 0) ||
 
-      (ACE_OS::strncmp (end_point,
+        (ACE_OS::strncmp (end_point,
                         uiop_prefix,
                         sizeof uiop_prefix - 1) == 0) ||
 
-      (ACE_OS::strncmp (end_point,
+        (ACE_OS::strncmp (end_point,
+                        miop_prefix,
+                        sizeof miop_prefix - 1) == 0) ||
+
+        (ACE_OS::strncmp (end_point,
                         rir_prefix,
-                        sizeof rir_prefix - 1) == 0))
+                        sizeof rir_prefix - 1) == 0)))
     {
 
       ACE_ERROR ((LM_ERROR,

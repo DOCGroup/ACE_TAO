@@ -36,7 +36,7 @@ TAO_POA_Hooks::create_id_for_reference (
     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
     ))
 {
 
@@ -54,44 +54,11 @@ TAO_POA_Hooks::create_id_for_reference (
                                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  // Create the acceptors necessary to receive requests for the
-  // specified group reference.
-  this->create_group_acceptors (the_ref,
-                                this->portable_group_adapter_->acceptor_registry_,
-                                the_poa.orb_core (),
-                                ACE_TRY_ENV);
-
-  ACE_CHECK_RETURN (0);
-
-  // Find the Group Component.
-  PortableGroup::TagGroupTaggedComponent *tmp_group_id;
-  ACE_NEW_THROW_EX (tmp_group_id,
-                    PortableGroup::TagGroupTaggedComponent,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
-
-  PortableGroup::TagGroupTaggedComponent_var group_id = tmp_group_id;
-
-  if (this->find_group_component (the_ref, group_id.inout ()) != 0)
-    {
-      // Group component wasn't found.  The group reference
-      // that was passed in must be bogus.
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (),
-                        0);
-    }
-
-  const TAO_ObjectKey &key = obj_ref->_object_key ();
-
-  // Add a mapping from GroupId to Object key in the PortableGroup
-
-  this->portable_group_adapter_->group_map_.add_groupid_objectkey_pair (
-                                   group_id._retn (),
-                                   key,
-                                   ACE_TRY_ENV);
+  // Associate the object reference with the group reference.
+  this->associate_group_with_ref (the_poa,
+                                  the_ref,
+                                  obj_ref.in (),
+                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   return obj_id._retn ();
@@ -192,11 +159,101 @@ TAO_POA_Hooks::reference_to_ids (
     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
     ))
 {
 
   return 0;
+}
+
+void 
+TAO_POA_Hooks::associate_group_with_ref (
+      TAO_POA &the_poa,
+      CORBA::Object_ptr group_ref,
+      CORBA::Object_ptr obj_ref,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::NotAGroupObject))
+{
+  // Find the Group Component so that we can extract the Group ID.
+  PortableGroup::TagGroupTaggedComponent *tmp_group_id;
+  ACE_NEW_THROW_EX (tmp_group_id,
+                    PortableGroup::TagGroupTaggedComponent,
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  PortableGroup::TagGroupTaggedComponent_var group_id = tmp_group_id;
+
+  if (this->find_group_component (group_ref, group_id.inout ()) != 0)
+    {
+      // Group component wasn't found.  The group reference
+      // that was passed in must be bogus.
+      ACE_THROW (PortableServer::NotAGroupObject ());
+    }
+
+  // Create the acceptors necessary to receive requests for the
+  // specified group reference.
+  this->create_group_acceptors (group_ref,
+                                this->portable_group_adapter_->acceptor_registry_,
+                                the_poa.orb_core (),
+                                ACE_TRY_ENV);
+
+  ACE_CHECK;
+
+
+  // Add a mapping from GroupId to Object key in the PortableGroup
+  const TAO_ObjectKey &key = obj_ref->_object_key ();
+  this->portable_group_adapter_->group_map_.add_groupid_objectkey_pair (
+                                   group_id._retn (),
+                                   key,
+                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
+}
+
+void 
+TAO_POA_Hooks::associate_reference_with_id (
+      TAO_POA &the_poa,
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+
+  // Create a reference for the specified ObjectId, since
+  // it is much easier to extract the object key from the
+  // reference.
+  CORBA::Object_var obj_ref = the_poa.id_to_reference (oid,
+                                                       ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Associate the object reference with the group reference.
+  this->associate_group_with_ref (the_poa,
+                                  ref,
+                                  obj_ref.in (),
+                                  ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void 
+TAO_POA_Hooks::disassociate_reference_with_id (
+      TAO_POA &the_poa,
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ))
+{
+  return;
 }
 
 

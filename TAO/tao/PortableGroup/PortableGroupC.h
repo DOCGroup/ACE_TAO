@@ -31,7 +31,7 @@
 
 #include "portablegroup_export.h"
 #include "tao/PortableServer/PortableServerC.h"
-#include "CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 //#include "IOPC.h"
 #include "tao/GIOPC.h"
 
@@ -73,9 +73,17 @@ TAO_NAMESPACE  PortableGroup
   typedef CORBA::ULong_out ObjectGroupRefVersion_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroupRefVersion;
 
+  typedef GIOP::Version Version;
+//  @@ Frank: Version_var and Version_out are commented out as they
+//     do not exist in tao/GIOPC.h.  Hopefully, this doesn't become an
+//     issue.
+//  typedef GIOP::Version_var Version_var;
+//  typedef GIOP::Version_out Version_out;
+    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Version;
+
   struct TagGroupTaggedComponent;
   class TagGroupTaggedComponent_var;
-
+  
   struct TAO_PortableGroup_Export TagGroupTaggedComponent
   {
 
@@ -85,7 +93,7 @@ TAO_NAMESPACE  PortableGroup
 
     static void _tao_any_destructor (void*);
 
-    GIOP::Version version;
+    ACE_NESTED_CLASS (PortableGroup, Version) component_version;
     TAO_String_Manager group_domain_id;
     ACE_NESTED_CLASS (PortableGroup, ObjectGroupId) object_group_id;
     ACE_NESTED_CLASS (PortableGroup, ObjectGroupRefVersion) object_group_ref_version;
@@ -98,18 +106,18 @@ TAO_NAMESPACE  PortableGroup
     TagGroupTaggedComponent_var (TagGroupTaggedComponent *);
     TagGroupTaggedComponent_var (const TagGroupTaggedComponent_var &); // copy constructor
     ~TagGroupTaggedComponent_var (void); // destructor
-
+    
     TagGroupTaggedComponent_var &operator= (TagGroupTaggedComponent *);
     TagGroupTaggedComponent_var &operator= (const TagGroupTaggedComponent_var &);
     TagGroupTaggedComponent *operator-> (void);
     const TagGroupTaggedComponent *operator-> (void) const;
-
+    
     operator const TagGroupTaggedComponent &() const;
     operator TagGroupTaggedComponent &();
     operator TagGroupTaggedComponent &() const;
     operator TagGroupTaggedComponent *&(); // variable-size types only
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const TagGroupTaggedComponent &in (void) const;
     TagGroupTaggedComponent &inout (void);
     TagGroupTaggedComponent *&out (void);
@@ -131,7 +139,7 @@ TAO_NAMESPACE  PortableGroup
     operator TagGroupTaggedComponent *&();
     TagGroupTaggedComponent *&ptr (void);
     TagGroupTaggedComponent *operator-> (void);
-
+    
   private:
     TagGroupTaggedComponent *&ptr_;
     // assignment from T_var not allowed
@@ -140,8 +148,128 @@ TAO_NAMESPACE  PortableGroup
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TagGroupTaggedComponent;
 
-  class GenericFactory;
 
+#if !defined (_PORTABLEGROUP_GROUPIIOPPROFILE_CH_)
+#define _PORTABLEGROUP_GROUPIIOPPROFILE_CH_
+
+  class GroupIIOPProfile;
+  class GroupIIOPProfile_var;
+  
+  // *************************************************************
+  // GroupIIOPProfile
+  // *************************************************************
+  
+  class TAO_PortableGroup_Export GroupIIOPProfile : public 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+    TAO_Unbounded_Sequence<CORBA::Octet>
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+    TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  {
+  public:
+    GroupIIOPProfile (void); // default ctor
+    GroupIIOPProfile (CORBA::ULong max); // uses max size
+    GroupIIOPProfile (
+      CORBA::ULong max, 
+      CORBA::ULong length, 
+      CORBA::Octet *buffer, 
+      CORBA::Boolean release = 0
+    );
+    GroupIIOPProfile (const GroupIIOPProfile &); // copy ctor
+    ~GroupIIOPProfile (void);
+    static void _tao_any_destructor (void*);
+
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef GroupIIOPProfile_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+    GroupIIOPProfile (
+        CORBA::ULong length,
+        const ACE_Message_Block* mb
+      )
+      : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
+
+  };
+  
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEGROUP_GROUPIIOPPROFILE___VAR_CH_)
+#define _PORTABLEGROUP_GROUPIIOPPROFILE___VAR_CH_
+
+  // *************************************************************
+  // class PortableGroup::GroupIIOPProfile_var
+  // *************************************************************
+
+  class TAO_PortableGroup_Export GroupIIOPProfile_var
+  {
+  public:
+    GroupIIOPProfile_var (void); // default constructor
+    GroupIIOPProfile_var (GroupIIOPProfile *);
+    GroupIIOPProfile_var (const GroupIIOPProfile_var &); // copy constructor
+    GroupIIOPProfile_var (const GroupIIOPProfile &); // fixed-size base types only
+    ~GroupIIOPProfile_var (void); // destructor
+    
+    GroupIIOPProfile_var &operator= (GroupIIOPProfile *);
+    GroupIIOPProfile_var &operator= (const GroupIIOPProfile_var &);
+    GroupIIOPProfile_var &operator= (const GroupIIOPProfile &); // fixed-size base types only
+    GroupIIOPProfile *operator-> (void);
+    const GroupIIOPProfile *operator-> (void) const;
+    
+    operator const GroupIIOPProfile &() const;
+    operator GroupIIOPProfile &();
+    operator GroupIIOPProfile &() const;
+    
+    CORBA::Octet & operator[] (CORBA::ULong index);
+    const CORBA::Octet & operator[] (CORBA::ULong index) const;
+    
+    // in, inout, out, _retn 
+    const GroupIIOPProfile &in (void) const;
+    GroupIIOPProfile &inout (void);
+    GroupIIOPProfile *&out (void);
+    GroupIIOPProfile *_retn (void);
+    GroupIIOPProfile *ptr (void) const;
+
+  private:
+    GroupIIOPProfile *ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEGROUP_GROUPIIOPPROFILE___OUT_CH_)
+#define _PORTABLEGROUP_GROUPIIOPPROFILE___OUT_CH_
+
+  class TAO_PortableGroup_Export GroupIIOPProfile_out
+  {
+  public:
+    GroupIIOPProfile_out (GroupIIOPProfile *&);
+    GroupIIOPProfile_out (GroupIIOPProfile_var &);
+    GroupIIOPProfile_out (const GroupIIOPProfile_out &);
+    GroupIIOPProfile_out &operator= (const GroupIIOPProfile_out &);
+    GroupIIOPProfile_out &operator= (GroupIIOPProfile *);
+    operator GroupIIOPProfile *&();
+    GroupIIOPProfile *&ptr (void);
+    GroupIIOPProfile *operator-> (void);
+    CORBA::Octet & operator[] (CORBA::ULong index);
+    
+  private:
+    GroupIIOPProfile *&ptr_;
+    // assignment from T_var not allowed
+    void operator= (const GroupIIOPProfile_var &);
+  };
+
+
+#endif /* end #if !defined */
+
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_GroupIIOPProfile;
+
+  class GenericFactory;
+  
 #if !defined (_PORTABLEGROUP_GENERICFACTORY___PTR_CH_)
 #define _PORTABLEGROUP_GENERICFACTORY___PTR_CH_
 
@@ -157,23 +285,23 @@ TAO_NAMESPACE  PortableGroup
   {
   public:
     GenericFactory_var (void); // default constructor
-    GenericFactory_var (GenericFactory_ptr p) : ptr_ (p) {}
+    GenericFactory_var (GenericFactory_ptr p) : ptr_ (p) {} 
     GenericFactory_var (const GenericFactory_var &); // copy constructor
     ~GenericFactory_var (void); // destructor
-
+    
     GenericFactory_var &operator= (GenericFactory_ptr);
     GenericFactory_var &operator= (const GenericFactory_var &);
     GenericFactory_ptr operator-> (void) const;
-
+    
     operator const GenericFactory_ptr &() const;
     operator GenericFactory_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     GenericFactory_ptr in (void) const;
     GenericFactory_ptr &inout (void);
     GenericFactory_ptr &out (void);
     GenericFactory_ptr _retn (void);
     GenericFactory_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static GenericFactory_ptr duplicate (GenericFactory_ptr);
@@ -181,7 +309,7 @@ TAO_NAMESPACE  PortableGroup
     static GenericFactory_ptr nil (void);
     static GenericFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     GenericFactory_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -208,7 +336,7 @@ TAO_NAMESPACE  PortableGroup
     operator GenericFactory_ptr &();
     GenericFactory_ptr &ptr (void);
     GenericFactory_ptr operator-> (void);
-
+  
   private:
     GenericFactory_ptr &ptr_;
   };
@@ -240,7 +368,7 @@ TAO_NAMESPACE  PortableGroup
 
   struct Property;
   class Property_var;
-
+  
   struct TAO_PortableGroup_Export Property
   {
 
@@ -261,18 +389,18 @@ TAO_NAMESPACE  PortableGroup
     Property_var (Property *);
     Property_var (const Property_var &); // copy constructor
     ~Property_var (void); // destructor
-
+    
     Property_var &operator= (Property *);
     Property_var &operator= (const Property_var &);
     Property *operator-> (void);
     const Property *operator-> (void) const;
-
+    
     operator const Property &() const;
     operator Property &();
     operator Property &() const;
     operator Property *&(); // variable-size types only
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const Property &in (void) const;
     Property &inout (void);
     Property *&out (void);
@@ -294,7 +422,7 @@ TAO_NAMESPACE  PortableGroup
     operator Property *&();
     Property *&ptr (void);
     Property *operator-> (void);
-
+    
   private:
     Property *&ptr_;
     // assignment from T_var not allowed
@@ -305,7 +433,7 @@ TAO_NAMESPACE  PortableGroup
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+    
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_PROPERTIES_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_PROPERTIES_CH_
 
@@ -313,9 +441,9 @@ TAO_NAMESPACE  PortableGroup
     {
     public:
       // = Initialization and termination methods.
-
+      
       _TAO_Unbounded_Sequence_PortableGroup_Properties (void); // Default constructor.
-      _TAO_Unbounded_Sequence_PortableGroup_Properties (CORBA::ULong maximum);
+      _TAO_Unbounded_Sequence_PortableGroup_Properties (CORBA::ULong maximum); 
       _TAO_Unbounded_Sequence_PortableGroup_Properties (CORBA::ULong maximum,
         CORBA::ULong length,
         Property *data,
@@ -332,7 +460,7 @@ TAO_NAMESPACE  PortableGroup
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+      
       Property *get_buffer (CORBA::Boolean orphan = 0);
       const Property *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -344,32 +472,32 @@ TAO_NAMESPACE  PortableGroup
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_PORTABLEGROUP_PROPERTIES_CH_)
 #define _PORTABLEGROUP_PROPERTIES_CH_
 
   class Properties;
   class Properties_var;
-
+  
   // *************************************************************
   // Properties
   // *************************************************************
-
-  class TAO_PortableGroup_Export Properties : public
+  
+  class TAO_PortableGroup_Export Properties : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_PortableGroup_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     Properties (void); // default ctor
     Properties (CORBA::ULong max); // uses max size
     Properties (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      Property *buffer,
+      CORBA::ULong max, 
+      CORBA::ULong length, 
+      Property *buffer, 
       CORBA::Boolean release = 0
     );
     Properties (const Properties &); // copy ctor
@@ -381,7 +509,7 @@ TAO_NAMESPACE  PortableGroup
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-
+  
 #endif /* end #if !defined */
 
 
@@ -399,21 +527,21 @@ TAO_NAMESPACE  PortableGroup
     Properties_var (Properties *);
     Properties_var (const Properties_var &); // copy constructor
     ~Properties_var (void); // destructor
-
+    
     Properties_var &operator= (Properties *);
     Properties_var &operator= (const Properties_var &);
     Properties *operator-> (void);
     const Properties *operator-> (void) const;
-
+    
     operator const Properties &() const;
     operator Properties &();
     operator Properties &() const;
     operator Properties *&(); // variable-size base types only
-
+    
     Property & operator[] (CORBA::ULong index);
     const Property & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const Properties &in (void) const;
     Properties &inout (void);
     Properties *&out (void);
@@ -443,7 +571,7 @@ TAO_NAMESPACE  PortableGroup
     Properties *&ptr (void);
     Properties *operator-> (void);
     Property & operator[] (CORBA::ULong index);
-
+    
   private:
     Properties *&ptr_;
     // assignment from T_var not allowed
@@ -462,7 +590,7 @@ TAO_NAMESPACE  PortableGroup
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+    
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_LOCATIONS_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_LOCATIONS_CH_
 
@@ -470,9 +598,9 @@ TAO_NAMESPACE  PortableGroup
     {
     public:
       // = Initialization and termination methods.
-
+      
       _TAO_Unbounded_Sequence_PortableGroup_Locations (void); // Default constructor.
-      _TAO_Unbounded_Sequence_PortableGroup_Locations (CORBA::ULong maximum);
+      _TAO_Unbounded_Sequence_PortableGroup_Locations (CORBA::ULong maximum); 
       _TAO_Unbounded_Sequence_PortableGroup_Locations (CORBA::ULong maximum,
         CORBA::ULong length,
         Location *data,
@@ -489,7 +617,7 @@ TAO_NAMESPACE  PortableGroup
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+      
       Location *get_buffer (CORBA::Boolean orphan = 0);
       const Location *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -501,32 +629,32 @@ TAO_NAMESPACE  PortableGroup
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_PORTABLEGROUP_LOCATIONS_CH_)
 #define _PORTABLEGROUP_LOCATIONS_CH_
 
   class Locations;
   class Locations_var;
-
+  
   // *************************************************************
   // Locations
   // *************************************************************
-
-  class TAO_PortableGroup_Export Locations : public
+  
+  class TAO_PortableGroup_Export Locations : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_PortableGroup_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     Locations (void); // default ctor
     Locations (CORBA::ULong max); // uses max size
     Locations (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      Location *buffer,
+      CORBA::ULong max, 
+      CORBA::ULong length, 
+      Location *buffer, 
       CORBA::Boolean release = 0
     );
     Locations (const Locations &); // copy ctor
@@ -538,7 +666,7 @@ TAO_NAMESPACE  PortableGroup
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-
+  
 #endif /* end #if !defined */
 
 
@@ -556,21 +684,21 @@ TAO_NAMESPACE  PortableGroup
     Locations_var (Locations *);
     Locations_var (const Locations_var &); // copy constructor
     ~Locations_var (void); // destructor
-
+    
     Locations_var &operator= (Locations *);
     Locations_var &operator= (const Locations_var &);
     Locations *operator-> (void);
     const Locations *operator-> (void) const;
-
+    
     operator const Locations &() const;
     operator Locations &();
     operator Locations &() const;
     operator Locations *&(); // variable-size base types only
-
+    
     Location & operator[] (CORBA::ULong index);
     const Location & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const Locations &in (void) const;
     Locations &inout (void);
     Locations *&out (void);
@@ -600,7 +728,7 @@ TAO_NAMESPACE  PortableGroup
     Locations *&ptr (void);
     Locations *operator-> (void);
     Location & operator[] (CORBA::ULong index);
-
+    
   private:
     Locations *&ptr_;
     // assignment from T_var not allowed
@@ -619,7 +747,7 @@ TAO_NAMESPACE  PortableGroup
 
   struct FactoryInfo;
   class FactoryInfo_var;
-
+  
   struct TAO_PortableGroup_Export FactoryInfo
   {
 
@@ -639,18 +767,18 @@ TAO_NAMESPACE  PortableGroup
     FactoryInfo_var (FactoryInfo *);
     FactoryInfo_var (const FactoryInfo_var &); // copy constructor
     ~FactoryInfo_var (void); // destructor
-
+    
     FactoryInfo_var &operator= (FactoryInfo *);
     FactoryInfo_var &operator= (const FactoryInfo_var &);
     FactoryInfo *operator-> (void);
     const FactoryInfo *operator-> (void) const;
-
+    
     operator const FactoryInfo &() const;
     operator FactoryInfo &();
     operator FactoryInfo &() const;
     operator FactoryInfo *&(); // variable-size types only
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const FactoryInfo &in (void) const;
     FactoryInfo &inout (void);
     FactoryInfo *&out (void);
@@ -672,7 +800,7 @@ TAO_NAMESPACE  PortableGroup
     operator FactoryInfo *&();
     FactoryInfo *&ptr (void);
     FactoryInfo *operator-> (void);
-
+    
   private:
     FactoryInfo *&ptr_;
     // assignment from T_var not allowed
@@ -681,7 +809,7 @@ TAO_NAMESPACE  PortableGroup
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+    
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_FACTORYINFOS_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_FACTORYINFOS_CH_
 
@@ -689,9 +817,9 @@ TAO_NAMESPACE  PortableGroup
     {
     public:
       // = Initialization and termination methods.
-
+      
       _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (void); // Default constructor.
-      _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (CORBA::ULong maximum);
+      _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (CORBA::ULong maximum); 
       _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (CORBA::ULong maximum,
         CORBA::ULong length,
         FactoryInfo *data,
@@ -708,7 +836,7 @@ TAO_NAMESPACE  PortableGroup
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+      
       FactoryInfo *get_buffer (CORBA::Boolean orphan = 0);
       const FactoryInfo *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -720,32 +848,32 @@ TAO_NAMESPACE  PortableGroup
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_PORTABLEGROUP_FACTORYINFOS_CH_)
 #define _PORTABLEGROUP_FACTORYINFOS_CH_
 
   class FactoryInfos;
   class FactoryInfos_var;
-
+  
   // *************************************************************
   // FactoryInfos
   // *************************************************************
-
-  class TAO_PortableGroup_Export FactoryInfos : public
+  
+  class TAO_PortableGroup_Export FactoryInfos : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     FactoryInfos (void); // default ctor
     FactoryInfos (CORBA::ULong max); // uses max size
     FactoryInfos (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      FactoryInfo *buffer,
+      CORBA::ULong max, 
+      CORBA::ULong length, 
+      FactoryInfo *buffer, 
       CORBA::Boolean release = 0
     );
     FactoryInfos (const FactoryInfos &); // copy ctor
@@ -757,7 +885,7 @@ TAO_NAMESPACE  PortableGroup
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-
+  
 #endif /* end #if !defined */
 
 
@@ -775,21 +903,21 @@ TAO_NAMESPACE  PortableGroup
     FactoryInfos_var (FactoryInfos *);
     FactoryInfos_var (const FactoryInfos_var &); // copy constructor
     ~FactoryInfos_var (void); // destructor
-
+    
     FactoryInfos_var &operator= (FactoryInfos *);
     FactoryInfos_var &operator= (const FactoryInfos_var &);
     FactoryInfos *operator-> (void);
     const FactoryInfos *operator-> (void) const;
-
+    
     operator const FactoryInfos &() const;
     operator FactoryInfos &();
     operator FactoryInfos &() const;
     operator FactoryInfos *&(); // variable-size base types only
-
+    
     FactoryInfo & operator[] (CORBA::ULong index);
     const FactoryInfo & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const FactoryInfos &in (void) const;
     FactoryInfos &inout (void);
     FactoryInfos *&out (void);
@@ -819,7 +947,7 @@ TAO_NAMESPACE  PortableGroup
     FactoryInfos *&ptr (void);
     FactoryInfos *operator-> (void);
     FactoryInfo & operator[] (CORBA::ULong index);
-
+    
   private:
     FactoryInfos *&ptr_;
     // assignment from T_var not allowed
@@ -855,29 +983,29 @@ TAO_NAMESPACE  PortableGroup
 
     InterfaceNotFound (void);
     // Default constructor.
-
+    
     InterfaceNotFound (const InterfaceNotFound &);
     // Copy constructor.
-
+    
     ~InterfaceNotFound (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     InterfaceNotFound &operator= (const InterfaceNotFound &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static InterfaceNotFound *_downcast (CORBA::Exception *);
 
 
@@ -901,29 +1029,29 @@ TAO_NAMESPACE  PortableGroup
 
     ObjectGroupNotFound (void);
     // Default constructor.
-
+    
     ObjectGroupNotFound (const ObjectGroupNotFound &);
     // Copy constructor.
-
+    
     ~ObjectGroupNotFound (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     ObjectGroupNotFound &operator= (const ObjectGroupNotFound &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static ObjectGroupNotFound *_downcast (CORBA::Exception *);
 
 
@@ -947,29 +1075,29 @@ TAO_NAMESPACE  PortableGroup
 
     MemberNotFound (void);
     // Default constructor.
-
+    
     MemberNotFound (const MemberNotFound &);
     // Copy constructor.
-
+    
     ~MemberNotFound (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     MemberNotFound &operator= (const MemberNotFound &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static MemberNotFound *_downcast (CORBA::Exception *);
 
 
@@ -993,29 +1121,29 @@ TAO_NAMESPACE  PortableGroup
 
     ObjectNotFound (void);
     // Default constructor.
-
+    
     ObjectNotFound (const ObjectNotFound &);
     // Copy constructor.
-
+    
     ~ObjectNotFound (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     ObjectNotFound &operator= (const ObjectNotFound &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static ObjectNotFound *_downcast (CORBA::Exception *);
 
 
@@ -1039,29 +1167,29 @@ TAO_NAMESPACE  PortableGroup
 
     MemberAlreadyPresent (void);
     // Default constructor.
-
+    
     MemberAlreadyPresent (const MemberAlreadyPresent &);
     // Copy constructor.
-
+    
     ~MemberAlreadyPresent (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     MemberAlreadyPresent &operator= (const MemberAlreadyPresent &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static MemberAlreadyPresent *_downcast (CORBA::Exception *);
 
 
@@ -1085,29 +1213,29 @@ TAO_NAMESPACE  PortableGroup
 
     BadReplicationStyle (void);
     // Default constructor.
-
+    
     BadReplicationStyle (const BadReplicationStyle &);
     // Copy constructor.
-
+    
     ~BadReplicationStyle (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     BadReplicationStyle &operator= (const BadReplicationStyle &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static BadReplicationStyle *_downcast (CORBA::Exception *);
 
 
@@ -1131,29 +1259,29 @@ TAO_NAMESPACE  PortableGroup
 
     ObjectNotCreated (void);
     // Default constructor.
-
+    
     ObjectNotCreated (const ObjectNotCreated &);
     // Copy constructor.
-
+    
     ~ObjectNotCreated (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     ObjectNotCreated &operator= (const ObjectNotCreated &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static ObjectNotCreated *_downcast (CORBA::Exception *);
 
 
@@ -1177,29 +1305,29 @@ TAO_NAMESPACE  PortableGroup
 
     ObjectNotAdded (void);
     // Default constructor.
-
+    
     ObjectNotAdded (const ObjectNotAdded &);
     // Copy constructor.
-
+    
     ~ObjectNotAdded (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     ObjectNotAdded &operator= (const ObjectNotAdded &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static ObjectNotAdded *_downcast (CORBA::Exception *);
 
 
@@ -1224,35 +1352,35 @@ TAO_NAMESPACE  PortableGroup
 
     UnsupportedProperty (void);
     // Default constructor.
-
+    
     UnsupportedProperty (const UnsupportedProperty &);
     // Copy constructor.
-
+    
     ~UnsupportedProperty (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     UnsupportedProperty &operator= (const UnsupportedProperty &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static UnsupportedProperty *_downcast (CORBA::Exception *);
 
     UnsupportedProperty (
         const ACE_NESTED_CLASS (PortableGroup, Name) & _tao_nam
       );
-
+    
     // = TAO extension.
     static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -1275,36 +1403,36 @@ TAO_NAMESPACE  PortableGroup
 
     InvalidProperty (void);
     // Default constructor.
-
+    
     InvalidProperty (const InvalidProperty &);
     // Copy constructor.
-
+    
     ~InvalidProperty (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     InvalidProperty &operator= (const InvalidProperty &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static InvalidProperty *_downcast (CORBA::Exception *);
 
     InvalidProperty (
         const ACE_NESTED_CLASS (PortableGroup, Name) & _tao_nam,
         const ACE_NESTED_CLASS (PortableGroup, Value) & _tao_val
       );
-
+    
     // = TAO extension.
     static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -1327,36 +1455,36 @@ TAO_NAMESPACE  PortableGroup
 
     NoFactory (void);
     // Default constructor.
-
+    
     NoFactory (const NoFactory &);
     // Copy constructor.
-
+    
     ~NoFactory (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     NoFactory &operator= (const NoFactory &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static NoFactory *_downcast (CORBA::Exception *);
 
     NoFactory (
         const ACE_NESTED_CLASS (PortableGroup, Location) & _tao_the_location,
         const char * _tao_type_id
       );
-
+    
     // = TAO extension.
     static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -1378,35 +1506,35 @@ TAO_NAMESPACE  PortableGroup
 
     InvalidCriteria (void);
     // Default constructor.
-
+    
     InvalidCriteria (const InvalidCriteria &);
     // Copy constructor.
-
+    
     ~InvalidCriteria (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     InvalidCriteria &operator= (const InvalidCriteria &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static InvalidCriteria *_downcast (CORBA::Exception *);
 
     InvalidCriteria (
         const ACE_NESTED_CLASS (PortableGroup, Criteria) & _tao_invalid_criteria
       );
-
+    
     // = TAO extension.
     static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -1428,35 +1556,35 @@ TAO_NAMESPACE  PortableGroup
 
     CannotMeetCriteria (void);
     // Default constructor.
-
+    
     CannotMeetCriteria (const CannotMeetCriteria &);
     // Copy constructor.
-
+    
     ~CannotMeetCriteria (void);
     // Destructor.
-
+    
     static void _tao_any_destructor (void*);
-
+    
     CannotMeetCriteria &operator= (const CannotMeetCriteria &);
-
+    
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-
+    
     static CannotMeetCriteria *_downcast (CORBA::Exception *);
 
     CannotMeetCriteria (
         const ACE_NESTED_CLASS (PortableGroup, Criteria) & _tao_unmet_criteria
       );
-
+    
     // = TAO extension.
     static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -1473,7 +1601,7 @@ TAO_NAMESPACE  PortableGroup
 
   class PropertyManager;
   typedef PropertyManager *PropertyManager_ptr;
-
+  
 #endif /* end #if !defined */
 
 
@@ -1484,23 +1612,23 @@ TAO_NAMESPACE  PortableGroup
   {
   public:
     PropertyManager_var (void); // default constructor
-    PropertyManager_var (PropertyManager_ptr p) : ptr_ (p) {}
+    PropertyManager_var (PropertyManager_ptr p) : ptr_ (p) {} 
     PropertyManager_var (const PropertyManager_var &); // copy constructor
     ~PropertyManager_var (void); // destructor
-
+    
     PropertyManager_var &operator= (PropertyManager_ptr);
     PropertyManager_var &operator= (const PropertyManager_var &);
     PropertyManager_ptr operator-> (void) const;
-
+    
     operator const PropertyManager_ptr &() const;
     operator PropertyManager_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     PropertyManager_ptr in (void) const;
     PropertyManager_ptr &inout (void);
     PropertyManager_ptr &out (void);
     PropertyManager_ptr _retn (void);
     PropertyManager_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static PropertyManager_ptr duplicate (PropertyManager_ptr);
@@ -1508,7 +1636,7 @@ TAO_NAMESPACE  PortableGroup
     static PropertyManager_ptr nil (void);
     static PropertyManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     PropertyManager_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1535,7 +1663,7 @@ TAO_NAMESPACE  PortableGroup
     operator PropertyManager_ptr &();
     PropertyManager_ptr &ptr (void);
     PropertyManager_ptr operator-> (void);
-
+  
   private:
     PropertyManager_ptr &ptr_;
   };
@@ -1559,12 +1687,12 @@ TAO_NAMESPACE  PortableGroup
     static PropertyManager_ptr _duplicate (PropertyManager_ptr obj);
     static PropertyManager_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static PropertyManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static PropertyManager_ptr _nil (void)
@@ -1574,7 +1702,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual void set_default_properties (
         const PortableGroup::Properties & props,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1584,7 +1712,7 @@ TAO_NAMESPACE  PortableGroup
       )) = 0;
 
     virtual PortableGroup::Properties * get_default_properties (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1593,7 +1721,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual void remove_default_properties (
         const PortableGroup::Properties & props,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1605,7 +1733,7 @@ TAO_NAMESPACE  PortableGroup
     virtual void set_type_properties (
         const char * type_id,
         const PortableGroup::Properties & overrides,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1616,7 +1744,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual PortableGroup::Properties * get_type_properties (
         const char * type_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1626,7 +1754,7 @@ TAO_NAMESPACE  PortableGroup
     virtual void remove_type_properties (
         const char * type_id,
         const PortableGroup::Properties & props,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1638,7 +1766,7 @@ TAO_NAMESPACE  PortableGroup
     virtual void set_properties_dynamically (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Properties & overrides,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1650,7 +1778,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual PortableGroup::Properties * get_properties (
         PortableGroup::ObjectGroup_ptr object_group,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1659,12 +1787,12 @@ TAO_NAMESPACE  PortableGroup
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     PropertyManager ();
-
+    
     virtual ~PropertyManager (void);
   private:
     PropertyManager (const PropertyManager &);
@@ -1680,7 +1808,7 @@ TAO_NAMESPACE  PortableGroup
 
   class ObjectGroupManager;
   typedef ObjectGroupManager *ObjectGroupManager_ptr;
-
+  
 #endif /* end #if !defined */
 
 
@@ -1691,23 +1819,23 @@ TAO_NAMESPACE  PortableGroup
   {
   public:
     ObjectGroupManager_var (void); // default constructor
-    ObjectGroupManager_var (ObjectGroupManager_ptr p) : ptr_ (p) {}
+    ObjectGroupManager_var (ObjectGroupManager_ptr p) : ptr_ (p) {} 
     ObjectGroupManager_var (const ObjectGroupManager_var &); // copy constructor
     ~ObjectGroupManager_var (void); // destructor
-
+    
     ObjectGroupManager_var &operator= (ObjectGroupManager_ptr);
     ObjectGroupManager_var &operator= (const ObjectGroupManager_var &);
     ObjectGroupManager_ptr operator-> (void) const;
-
+    
     operator const ObjectGroupManager_ptr &() const;
     operator ObjectGroupManager_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     ObjectGroupManager_ptr in (void) const;
     ObjectGroupManager_ptr &inout (void);
     ObjectGroupManager_ptr &out (void);
     ObjectGroupManager_ptr _retn (void);
     ObjectGroupManager_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ObjectGroupManager_ptr duplicate (ObjectGroupManager_ptr);
@@ -1715,7 +1843,7 @@ TAO_NAMESPACE  PortableGroup
     static ObjectGroupManager_ptr nil (void);
     static ObjectGroupManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     ObjectGroupManager_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1742,7 +1870,7 @@ TAO_NAMESPACE  PortableGroup
     operator ObjectGroupManager_ptr &();
     ObjectGroupManager_ptr &ptr (void);
     ObjectGroupManager_ptr operator-> (void);
-
+  
   private:
     ObjectGroupManager_ptr &ptr_;
   };
@@ -1766,12 +1894,12 @@ TAO_NAMESPACE  PortableGroup
     static ObjectGroupManager_ptr _duplicate (ObjectGroupManager_ptr obj);
     static ObjectGroupManager_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static ObjectGroupManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static ObjectGroupManager_ptr _nil (void)
@@ -1784,7 +1912,7 @@ TAO_NAMESPACE  PortableGroup
         const PortableGroup::Location & the_location,
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1801,7 +1929,7 @@ TAO_NAMESPACE  PortableGroup
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location,
         CORBA::Object_ptr member,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1814,7 +1942,7 @@ TAO_NAMESPACE  PortableGroup
     virtual PortableGroup::ObjectGroup_ptr remove_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1825,7 +1953,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual PortableGroup::Locations * locations_of_members (
         PortableGroup::ObjectGroup_ptr object_group,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1835,7 +1963,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual PortableGroup::ObjectGroupId get_object_group_id (
         PortableGroup::ObjectGroup_ptr object_group,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1845,7 +1973,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
         PortableGroup::ObjectGroup_ptr object_group,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1856,7 +1984,7 @@ TAO_NAMESPACE  PortableGroup
     virtual CORBA::Object_ptr get_member_ref (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & loc,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1866,12 +1994,12 @@ TAO_NAMESPACE  PortableGroup
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ObjectGroupManager ();
-
+    
     virtual ~ObjectGroupManager (void);
   private:
     ObjectGroupManager (const ObjectGroupManager &);
@@ -1897,12 +2025,12 @@ TAO_NAMESPACE  PortableGroup
     static GenericFactory_ptr _duplicate (GenericFactory_ptr obj);
     static GenericFactory_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static GenericFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static GenericFactory_ptr _nil (void)
@@ -1918,7 +2046,7 @@ TAO_NAMESPACE  PortableGroup
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
         PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1932,7 +2060,7 @@ TAO_NAMESPACE  PortableGroup
 
     virtual void delete_object (
         const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -1941,12 +2069,12 @@ TAO_NAMESPACE  PortableGroup
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     GenericFactory ();
-
+    
     virtual ~GenericFactory (void);
   private:
     GenericFactory (const GenericFactory &);
@@ -1964,6 +2092,10 @@ TAO_PortableGroup_Export void operator<<= (CORBA::Any &, const PortableGroup::Ta
 TAO_PortableGroup_Export void operator<<= (CORBA::Any &, PortableGroup::TagGroupTaggedComponent*); // noncopying version
 TAO_PortableGroup_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableGroup::TagGroupTaggedComponent *&); // deprecated
 TAO_PortableGroup_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableGroup::TagGroupTaggedComponent *&);
+TAO_PortableGroup_Export void operator<<= (CORBA::Any &, const PortableGroup::GroupIIOPProfile &); // copying version
+TAO_PortableGroup_Export void operator<<= (CORBA::Any &, PortableGroup::GroupIIOPProfile*); // noncopying version
+TAO_PortableGroup_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableGroup::GroupIIOPProfile *&); // deprecated
+TAO_PortableGroup_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableGroup::GroupIIOPProfile *&);
 TAO_PortableGroup_Export void operator<<= (CORBA::Any &, const PortableGroup::Property &); // copying version
 TAO_PortableGroup_Export void operator<<= (CORBA::Any &, PortableGroup::Property*); // noncopying version
 TAO_PortableGroup_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableGroup::Property *&); // deprecated
@@ -2033,6 +2165,21 @@ TAO_PortableGroup_Export CORBA::Boolean operator>>= (const CORBA::Any &, const P
 
 TAO_PortableGroup_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableGroup::TagGroupTaggedComponent &);
 TAO_PortableGroup_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableGroup::TagGroupTaggedComponent &);
+
+#if !defined _TAO_CDR_OP_PortableGroup_GroupIIOPProfile_H_
+#define _TAO_CDR_OP_PortableGroup_GroupIIOPProfile_H_
+
+TAO_PortableGroup_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const PortableGroup::GroupIIOPProfile &
+  );
+TAO_PortableGroup_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    PortableGroup::GroupIIOPProfile &
+  );
+
+#endif /* _TAO_CDR_OP_PortableGroup_GroupIIOPProfile_H_ */
+
 TAO_PortableGroup_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableGroup::Property &);
 TAO_PortableGroup_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableGroup::Property &);
 

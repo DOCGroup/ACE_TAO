@@ -311,18 +311,62 @@ TAO_Profile::verify_profile_version (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-void
-TAO_Profile::request_target_specifier (TAO_Target_Specification &target_spec)
+void 
+TAO_Profile::request_target_specifier (
+                      TAO_Target_Specification &target_spec,
+                      TAO_Target_Specification::TAO_Target_Address required_type,
+                      CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Frank - Note: This will need to be moved to handle exception
-  //   cases where the remote doesn't like the target specifier that
-  //   we picked.
-  //
-  // Almost 100% of the time, the request target specifier is the object
-  // key, so this is the default.  For the odd case where a pluggable
-  // protocol needs to change this, it can override this method.
+  // Fill out the target specifier based on the required type.
+  switch (required_type)
+    {
+    case TAO_Target_Specification::Default_Addr:
+    case TAO_Target_Specification::Key_Addr:
+      // Almost 100% of the time, the request target specifier is the object
+      // key, so this is the default.  For the odd case where a pluggable
+      // protocol needs to change this, it can override this method.
 
-  target_spec.target_specifier (this->object_key ());
+      target_spec.target_specifier (this->object_key ());
+      break;
+
+    case TAO_Target_Specification::Profile_Addr:
+
+      target_spec.target_specifier (
+            this->create_tagged_profile ());
+      break;
+    
+    case TAO_Target_Specification::Reference_Addr:
+      {
+        // We need to call the method seperately. If there is no
+        // IOP::IOR info, the call would create the info and return the
+        // index that we need.
+        CORBA::ULong index = 0;
+        IOP::IOR *ior_info = 0;
+        int retval = this->stub_->create_ior_info (ior_info,
+                                                   index,
+                                                   ACE_TRY_ENV);
+        ACE_CHECK;
+
+        if (retval == -1)
+          {
+            if (TAO_debug_level > 0)
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) Error in finding index for \n")
+                            ACE_TEXT ("IOP::IOR \n")));
+              }
+            ACE_THROW (CORBA::MARSHAL ());
+          }
+
+        target_spec.target_specifier (*ior_info,
+                                      index);
+        break;
+      }
+
+    default:
+      // Unknown required type.  Throw an exception.
+      ACE_THROW (CORBA::MARSHAL ());
+    }
 }
 
 int

@@ -40,23 +40,23 @@ static const CORBA::Long _oc_PortableGroup_GroupDomainId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4772),
-  ACE_NTOHL (0x6f757044),
-  ACE_NTOHL (0x6f6d6169),
-  ACE_NTOHL (0x6e49643a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4772), 
+  ACE_NTOHL (0x6f757044), 
+  ACE_NTOHL (0x6f6d6169), 
+  ACE_NTOHL (0x6e49643a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/GroupDomainId:1.0
   14,
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x70446f6d),
-  ACE_NTOHL (0x61696e49),
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x70446f6d), 
+  ACE_NTOHL (0x61696e49), 
   ACE_NTOHL (0x64000000),  // name = GroupDomainId
-  CORBA::tk_string,
+  CORBA::tk_string, 
   0U, // string length
 };
 
@@ -77,21 +77,21 @@ static const CORBA::Long _oc_PortableGroup_ObjectGroupId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x7049643a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4f62), 
+  ACE_NTOHL (0x6a656374), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x7049643a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/ObjectGroupId:1.0
   14,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744772),
-  ACE_NTOHL (0x6f757049),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744772), 
+  ACE_NTOHL (0x6f757049), 
   ACE_NTOHL (0x64000000),  // name = ObjectGroupId
   CORBA::tk_ulonglong,
 
@@ -114,25 +114,25 @@ static const CORBA::Long _oc_PortableGroup_ObjectGroupRefVersion[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   52,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x70526566),
-  ACE_NTOHL (0x56657273),
-  ACE_NTOHL (0x696f6e3a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4f62), 
+  ACE_NTOHL (0x6a656374), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x70526566), 
+  ACE_NTOHL (0x56657273), 
+  ACE_NTOHL (0x696f6e3a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/ObjectGroupRefVersion:1.0
   22,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744772),
-  ACE_NTOHL (0x6f757052),
-  ACE_NTOHL (0x65665665),
-  ACE_NTOHL (0x7273696f),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744772), 
+  ACE_NTOHL (0x6f757052), 
+  ACE_NTOHL (0x65665665), 
+  ACE_NTOHL (0x7273696f), 
   ACE_NTOHL (0x6e000000),  // name = ObjectGroupRefVersion
   CORBA::tk_ulong,
 
@@ -151,149 +151,229 @@ TAO_NAMESPACE_BEGIN (PortableGroup)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectGroupRefVersion, &_tc_TAO_tc_PortableGroup_ObjectGroupRefVersion)
 TAO_NAMESPACE_END
 
-static const CORBA::Long _oc_PortableGroup_TagGroupTaggedComponent[] =
+static const CORBA::Long _oc_PortableGroup_Version[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  54,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f5461),
-  ACE_NTOHL (0x6747726f),
-  ACE_NTOHL (0x75705461),
-  ACE_NTOHL (0x67676564),
-  ACE_NTOHL (0x436f6d70),
-  ACE_NTOHL (0x6f6e656e),
-  ACE_NTOHL (0x743a312e),
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/TagGroupTaggedComponent:1.0
-  24,
-  ACE_NTOHL (0x54616747),
-  ACE_NTOHL (0x726f7570),
-  ACE_NTOHL (0x54616767),
-  ACE_NTOHL (0x6564436f),
-  ACE_NTOHL (0x6d706f6e),
-  ACE_NTOHL (0x656e7400),  // name = TagGroupTaggedComponent
-  4, // member count
+  38,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f5665), 
+  ACE_NTOHL (0x7273696f), 
+  ACE_NTOHL (0x6e3a312e), 
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/Version:1.0
   8,
-  ACE_NTOHL (0x76657273),
-  ACE_NTOHL (0x696f6e00),  // name = version
+  ACE_NTOHL (0x56657273), 
+  ACE_NTOHL (0x696f6e00),  // name = Version
   CORBA::tk_struct, // typecode kind
   88, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x47494f50),
-    ACE_NTOHL (0x2f566572),
-    ACE_NTOHL (0x73696f6e),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x47494f50), 
+    ACE_NTOHL (0x2f566572), 
+    ACE_NTOHL (0x73696f6e), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/GIOP/Version:1.0
     8,
-    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x56657273), 
     ACE_NTOHL (0x696f6e00),  // name = Version
     2, // member count
     6,
-    ACE_NTOHL (0x6d616a6f),
+    ACE_NTOHL (0x6d616a6f), 
     ACE_NTOHL (0x72000000),  // name = major
     CORBA::tk_octet,
 
     6,
-    ACE_NTOHL (0x6d696e6f),
+    ACE_NTOHL (0x6d696e6f), 
     ACE_NTOHL (0x72000000),  // name = minor
     CORBA::tk_octet,
 
 
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableGroup_Version (
+    CORBA::tk_alias,
+    sizeof (_oc_PortableGroup_Version),
+    (char *) &_oc_PortableGroup_Version,
+    0,
+    sizeof (PortableGroup::Version)
+  );
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (PortableGroup)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Version, &_tc_TAO_tc_PortableGroup_Version)
+TAO_NAMESPACE_END
+
+static const CORBA::Long _oc_PortableGroup_TagGroupTaggedComponent[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  54,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f5461), 
+  ACE_NTOHL (0x6747726f), 
+  ACE_NTOHL (0x75705461), 
+  ACE_NTOHL (0x67676564), 
+  ACE_NTOHL (0x436f6d70), 
+  ACE_NTOHL (0x6f6e656e), 
+  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/TagGroupTaggedComponent:1.0
+  24,
+  ACE_NTOHL (0x54616747), 
+  ACE_NTOHL (0x726f7570), 
+  ACE_NTOHL (0x54616767), 
+  ACE_NTOHL (0x6564436f), 
+  ACE_NTOHL (0x6d706f6e), 
+  ACE_NTOHL (0x656e7400),  // name = TagGroupTaggedComponent
+  4, // member count
+  18,
+  ACE_NTOHL (0x636f6d70), 
+  ACE_NTOHL (0x6f6e656e), 
+  ACE_NTOHL (0x745f7665), 
+  ACE_NTOHL (0x7273696f), 
+  ACE_NTOHL (0x6e000000),  // name = component_version
+  CORBA::tk_alias, // typecode kind for typedefs
+  156, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    38,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f5665), 
+    ACE_NTOHL (0x7273696f), 
+    ACE_NTOHL (0x6e3a312e), 
+    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/Version:1.0
+    8,
+    ACE_NTOHL (0x56657273), 
+    ACE_NTOHL (0x696f6e00),  // name = Version
+    CORBA::tk_struct, // typecode kind
+    88, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      29,
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x47494f50), 
+      ACE_NTOHL (0x2f566572), 
+      ACE_NTOHL (0x73696f6e), 
+      ACE_NTOHL (0x3a312e30), 
+      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/GIOP/Version:1.0
+      8,
+      ACE_NTOHL (0x56657273), 
+      ACE_NTOHL (0x696f6e00),  // name = Version
+      2, // member count
+      6,
+      ACE_NTOHL (0x6d616a6f), 
+      ACE_NTOHL (0x72000000),  // name = major
+      CORBA::tk_octet,
+
+      6,
+      ACE_NTOHL (0x6d696e6f), 
+      ACE_NTOHL (0x72000000),  // name = minor
+      CORBA::tk_octet,
+
+
+
   16,
-  ACE_NTOHL (0x67726f75),
-  ACE_NTOHL (0x705f646f),
-  ACE_NTOHL (0x6d61696e),
+  ACE_NTOHL (0x67726f75), 
+  ACE_NTOHL (0x705f646f), 
+  ACE_NTOHL (0x6d61696e), 
   ACE_NTOHL (0x5f696400),  // name = group_domain_id
   CORBA::tk_alias, // typecode kind for typedefs
   80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     44,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4772),
-    ACE_NTOHL (0x6f757044),
-    ACE_NTOHL (0x6f6d6169),
-    ACE_NTOHL (0x6e49643a),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4772), 
+    ACE_NTOHL (0x6f757044), 
+    ACE_NTOHL (0x6f6d6169), 
+    ACE_NTOHL (0x6e49643a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/GroupDomainId:1.0
     14,
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x70446f6d),
-    ACE_NTOHL (0x61696e49),
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x70446f6d), 
+    ACE_NTOHL (0x61696e49), 
     ACE_NTOHL (0x64000000),  // name = GroupDomainId
-    CORBA::tk_string,
+    CORBA::tk_string, 
     0U, // string length
 
   16,
-  ACE_NTOHL (0x6f626a65),
-  ACE_NTOHL (0x63745f67),
-  ACE_NTOHL (0x726f7570),
+  ACE_NTOHL (0x6f626a65), 
+  ACE_NTOHL (0x63745f67), 
+  ACE_NTOHL (0x726f7570), 
   ACE_NTOHL (0x5f696400),  // name = object_group_id
   CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     44,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4f62),
-    ACE_NTOHL (0x6a656374),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x7049643a),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4f62), 
+    ACE_NTOHL (0x6a656374), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x7049643a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/ObjectGroupId:1.0
     14,
-    ACE_NTOHL (0x4f626a65),
-    ACE_NTOHL (0x63744772),
-    ACE_NTOHL (0x6f757049),
+    ACE_NTOHL (0x4f626a65), 
+    ACE_NTOHL (0x63744772), 
+    ACE_NTOHL (0x6f757049), 
     ACE_NTOHL (0x64000000),  // name = ObjectGroupId
     CORBA::tk_ulonglong,
 
 
   25,
-  ACE_NTOHL (0x6f626a65),
-  ACE_NTOHL (0x63745f67),
-  ACE_NTOHL (0x726f7570),
-  ACE_NTOHL (0x5f726566),
-  ACE_NTOHL (0x5f766572),
-  ACE_NTOHL (0x73696f6e),
+  ACE_NTOHL (0x6f626a65), 
+  ACE_NTOHL (0x63745f67), 
+  ACE_NTOHL (0x726f7570), 
+  ACE_NTOHL (0x5f726566), 
+  ACE_NTOHL (0x5f766572), 
+  ACE_NTOHL (0x73696f6e), 
   ACE_NTOHL (0x0),  // name = object_group_ref_version
   CORBA::tk_alias, // typecode kind for typedefs
   92, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     52,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4f62),
-    ACE_NTOHL (0x6a656374),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x70526566),
-    ACE_NTOHL (0x56657273),
-    ACE_NTOHL (0x696f6e3a),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4f62), 
+    ACE_NTOHL (0x6a656374), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x70526566), 
+    ACE_NTOHL (0x56657273), 
+    ACE_NTOHL (0x696f6e3a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/ObjectGroupRefVersion:1.0
     22,
-    ACE_NTOHL (0x4f626a65),
-    ACE_NTOHL (0x63744772),
-    ACE_NTOHL (0x6f757052),
-    ACE_NTOHL (0x65665665),
-    ACE_NTOHL (0x7273696f),
+    ACE_NTOHL (0x4f626a65), 
+    ACE_NTOHL (0x63744772), 
+    ACE_NTOHL (0x6f757052), 
+    ACE_NTOHL (0x65665665), 
+    ACE_NTOHL (0x7273696f), 
     ACE_NTOHL (0x6e000000),  // name = ObjectGroupRefVersion
     CORBA::tk_ulong,
 
@@ -319,42 +399,134 @@ void PortableGroup::TagGroupTaggedComponent::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+
+#if !defined (_PORTABLEGROUP_GROUPIIOPPROFILE_CS_)
+#define _PORTABLEGROUP_GROUPIIOPPROFILE_CS_
+
+// *************************************************************
+// PortableGroup::GroupIIOPProfile
+// *************************************************************
+
+PortableGroup::GroupIIOPProfile::GroupIIOPProfile (void)
+{}
+PortableGroup::GroupIIOPProfile::GroupIIOPProfile (CORBA::ULong max) // uses max size
+  : 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+ (max)
+{}
+PortableGroup::GroupIIOPProfile::GroupIIOPProfile (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
+  : 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+ (max, length, buffer, release)
+{}
+PortableGroup::GroupIIOPProfile::GroupIIOPProfile (const GroupIIOPProfile &seq) // copy ctor
+  : 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+ (seq)
+{}
+PortableGroup::GroupIIOPProfile::~GroupIIOPProfile (void) // dtor
+{}
+void PortableGroup::GroupIIOPProfile::_tao_any_destructor (void *x)
+{
+  GroupIIOPProfile *tmp = ACE_static_cast (GroupIIOPProfile*,x);
+  delete tmp;
+}
+
+
+#endif /* end #if !defined */
+
+static const CORBA::Long _oc_PortableGroup_GroupIIOPProfile[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  47,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4772), 
+  ACE_NTOHL (0x6f757049), 
+  ACE_NTOHL (0x494f5050), 
+  ACE_NTOHL (0x726f6669), 
+  ACE_NTOHL (0x6c653a31), 
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/GroupIIOPProfile:1.0
+  17,
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x7049494f), 
+  ACE_NTOHL (0x5050726f), 
+  ACE_NTOHL (0x66696c65), 
+  ACE_NTOHL (0x0),  // name = GroupIIOPProfile
+  CORBA::tk_sequence, // typecode kind
+  12, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_octet,
+
+    0U,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableGroup_GroupIIOPProfile (
+    CORBA::tk_alias,
+    sizeof (_oc_PortableGroup_GroupIIOPProfile),
+    (char *) &_oc_PortableGroup_GroupIIOPProfile,
+    0,
+    sizeof (PortableGroup::GroupIIOPProfile)
+  );
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (PortableGroup)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_GroupIIOPProfile, &_tc_TAO_tc_PortableGroup_GroupIIOPProfile)
+TAO_NAMESPACE_END
+
 static const CORBA::Long _oc_PortableGroup_TypeId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f5479),
-  ACE_NTOHL (0x70654964),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f5479), 
+  ACE_NTOHL (0x70654964), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/TypeId:1.0
   7,
-  ACE_NTOHL (0x54797065),
+  ACE_NTOHL (0x54797065), 
   ACE_NTOHL (0x49640000),  // name = TypeId
   CORBA::tk_alias, // typecode kind for typedefs
   72, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f5265),
-    ACE_NTOHL (0x706f7369),
-    ACE_NTOHL (0x746f7279),
-    ACE_NTOHL (0x49643a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f5265), 
+    ACE_NTOHL (0x706f7369), 
+    ACE_NTOHL (0x746f7279), 
+    ACE_NTOHL (0x49643a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f),
-    ACE_NTOHL (0x7369746f),
-    ACE_NTOHL (0x72794964),
+    ACE_NTOHL (0x5265706f), 
+    ACE_NTOHL (0x7369746f), 
+    ACE_NTOHL (0x72794964), 
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string,
+    CORBA::tk_string, 
     0U, // string length
 
 };
@@ -376,35 +548,35 @@ static const CORBA::Long _oc_PortableGroup_ObjectGroup[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   42,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x703a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4f62), 
+  ACE_NTOHL (0x6a656374), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x703a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/ObjectGroup:1.0
   12,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744772),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744772), 
   ACE_NTOHL (0x6f757000),  // name = ObjectGroup
   CORBA::tk_objref,
   52, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f62),
-    ACE_NTOHL (0x6a656374),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f4f62), 
+    ACE_NTOHL (0x6a656374), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
     7,
-    ACE_NTOHL (0x4f626a65),
+    ACE_NTOHL (0x4f626a65), 
     ACE_NTOHL (0x63740000),  // name = Object
 
 };
@@ -426,32 +598,32 @@ static const CORBA::Long _oc_PortableGroup_Name[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4e61),
-  ACE_NTOHL (0x6d653a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4e61), 
+  ACE_NTOHL (0x6d653a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
   5,
-  ACE_NTOHL (0x4e616d65),
+  ACE_NTOHL (0x4e616d65), 
   ACE_NTOHL (0x0),  // name = Name
   CORBA::tk_alias, // typecode kind for typedefs
   312, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x436f734e),
-    ACE_NTOHL (0x616d696e),
-    ACE_NTOHL (0x672f4e61),
-    ACE_NTOHL (0x6d653a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x436f734e), 
+    ACE_NTOHL (0x616d696e), 
+    ACE_NTOHL (0x672f4e61), 
+    ACE_NTOHL (0x6d653a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
     5,
-    ACE_NTOHL (0x4e616d65),
+    ACE_NTOHL (0x4e616d65), 
     ACE_NTOHL (0x0),  // name = Name
     CORBA::tk_sequence, // typecode kind
     252, // encapsulation length
@@ -460,20 +632,20 @@ static const CORBA::Long _oc_PortableGroup_Name[] =
       236, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         40,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x436f734e),
-        ACE_NTOHL (0x616d696e),
-        ACE_NTOHL (0x672f4e61),
-        ACE_NTOHL (0x6d65436f),
-        ACE_NTOHL (0x6d706f6e),
-        ACE_NTOHL (0x656e743a),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x436f734e), 
+        ACE_NTOHL (0x616d696e), 
+        ACE_NTOHL (0x672f4e61), 
+        ACE_NTOHL (0x6d65436f), 
+        ACE_NTOHL (0x6d706f6e), 
+        ACE_NTOHL (0x656e743a), 
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
         14,
-        ACE_NTOHL (0x4e616d65),
-        ACE_NTOHL (0x436f6d70),
-        ACE_NTOHL (0x6f6e656e),
+        ACE_NTOHL (0x4e616d65), 
+        ACE_NTOHL (0x436f6d70), 
+        ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74000000),  // name = NameComponent
         2, // member count
         3,
@@ -482,41 +654,41 @@ static const CORBA::Long _oc_PortableGroup_Name[] =
         64, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           34,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4973),
-          ACE_NTOHL (0x7472696e),
-          ACE_NTOHL (0x673a312e),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4973), 
+          ACE_NTOHL (0x7472696e), 
+          ACE_NTOHL (0x673a312e), 
           ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
           8,
-          ACE_NTOHL (0x49737472),
+          ACE_NTOHL (0x49737472), 
           ACE_NTOHL (0x696e6700),  // name = Istring
-          CORBA::tk_string,
+          CORBA::tk_string, 
           0U, // string length
 
         5,
-        ACE_NTOHL (0x6b696e64),
+        ACE_NTOHL (0x6b696e64), 
         ACE_NTOHL (0x0),  // name = kind
         CORBA::tk_alias, // typecode kind for typedefs
         64, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           34,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4973),
-          ACE_NTOHL (0x7472696e),
-          ACE_NTOHL (0x673a312e),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4973), 
+          ACE_NTOHL (0x7472696e), 
+          ACE_NTOHL (0x673a312e), 
           ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
           8,
-          ACE_NTOHL (0x49737472),
+          ACE_NTOHL (0x49737472), 
           ACE_NTOHL (0x696e6700),  // name = Istring
-          CORBA::tk_string,
+          CORBA::tk_string, 
           0U, // string length
 
 
@@ -542,17 +714,17 @@ static const CORBA::Long _oc_PortableGroup_Value[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f5661),
-  ACE_NTOHL (0x6c75653a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f5661), 
+  ACE_NTOHL (0x6c75653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Value:1.0
   6,
-  ACE_NTOHL (0x56616c75),
+  ACE_NTOHL (0x56616c75), 
   ACE_NTOHL (0x65000000),  // name = Value
   CORBA::tk_any,
 
@@ -575,19 +747,19 @@ static const CORBA::Long _oc_PortableGroup_Property[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f5072),
-  ACE_NTOHL (0x6f706572),
-  ACE_NTOHL (0x74793a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f5072), 
+  ACE_NTOHL (0x6f706572), 
+  ACE_NTOHL (0x74793a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Property:1.0
   9,
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727479),
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727479), 
   ACE_NTOHL (0x0),  // name = Property
   2, // member count
   4,
@@ -596,32 +768,32 @@ static const CORBA::Long _oc_PortableGroup_Property[] =
   376, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4e61),
-    ACE_NTOHL (0x6d653a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4e61), 
+    ACE_NTOHL (0x6d653a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
     5,
-    ACE_NTOHL (0x4e616d65),
+    ACE_NTOHL (0x4e616d65), 
     ACE_NTOHL (0x0),  // name = Name
     CORBA::tk_alias, // typecode kind for typedefs
     312, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       31,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x436f734e),
-      ACE_NTOHL (0x616d696e),
-      ACE_NTOHL (0x672f4e61),
-      ACE_NTOHL (0x6d653a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x436f734e), 
+      ACE_NTOHL (0x616d696e), 
+      ACE_NTOHL (0x672f4e61), 
+      ACE_NTOHL (0x6d653a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
       5,
-      ACE_NTOHL (0x4e616d65),
+      ACE_NTOHL (0x4e616d65), 
       ACE_NTOHL (0x0),  // name = Name
       CORBA::tk_sequence, // typecode kind
       252, // encapsulation length
@@ -630,20 +802,20 @@ static const CORBA::Long _oc_PortableGroup_Property[] =
         236, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4e61),
-          ACE_NTOHL (0x6d65436f),
-          ACE_NTOHL (0x6d706f6e),
-          ACE_NTOHL (0x656e743a),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4e61), 
+          ACE_NTOHL (0x6d65436f), 
+          ACE_NTOHL (0x6d706f6e), 
+          ACE_NTOHL (0x656e743a), 
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
           14,
-          ACE_NTOHL (0x4e616d65),
-          ACE_NTOHL (0x436f6d70),
-          ACE_NTOHL (0x6f6e656e),
+          ACE_NTOHL (0x4e616d65), 
+          ACE_NTOHL (0x436f6d70), 
+          ACE_NTOHL (0x6f6e656e), 
           ACE_NTOHL (0x74000000),  // name = NameComponent
           2, // member count
           3,
@@ -652,41 +824,41 @@ static const CORBA::Long _oc_PortableGroup_Property[] =
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
           5,
-          ACE_NTOHL (0x6b696e64),
+          ACE_NTOHL (0x6b696e64), 
           ACE_NTOHL (0x0),  // name = kind
           CORBA::tk_alias, // typecode kind for typedefs
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
 
@@ -700,17 +872,17 @@ static const CORBA::Long _oc_PortableGroup_Property[] =
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     36,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f5661),
-    ACE_NTOHL (0x6c75653a),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f5661), 
+    ACE_NTOHL (0x6c75653a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Value:1.0
     6,
-    ACE_NTOHL (0x56616c75),
+    ACE_NTOHL (0x56616c75), 
     ACE_NTOHL (0x65000000),  // name = Value
     CORBA::tk_any,
 
@@ -738,7 +910,7 @@ void PortableGroup::Property::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_PROPERTIES_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_PROPERTIES_CS_
 
@@ -747,43 +919,43 @@ void PortableGroup::Property::_tao_any_destructor (void *x)
   {
     PortableGroup::Property* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_PortableGroup_Properties::allocbuf (length);
-
+    
     if (this->buffer_ != 0)
     {
       PortableGroup::Property *old = ACE_reinterpret_cast (PortableGroup::Property *,this->buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-
+      
       if (this->release_)
         _TAO_Unbounded_Sequence_PortableGroup_Properties::freebuf (old);
-
+      
     }
     this->buffer_ = tmp;
   }
-
+  
   void
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-
+    
     PortableGroup::Property *tmp = ACE_reinterpret_cast (PortableGroup::Property *,this->buffer_);
-
+    
     _TAO_Unbounded_Sequence_PortableGroup_Properties::freebuf (tmp);
     this->buffer_ = 0;
-  }
-
+  } 
+  
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::~_TAO_Unbounded_Sequence_PortableGroup_Properties (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-
-
+  
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEGROUP_PROPERTIES_CS_)
 #define _PORTABLEGROUP_PROPERTIES_CS_
@@ -795,30 +967,30 @@ void PortableGroup::Property::_tao_any_destructor (void *x)
 PortableGroup::Properties::Properties (void)
 {}
 PortableGroup::Properties::Properties (CORBA::ULong max) // uses max size
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
 PortableGroup::Properties::Properties (CORBA::ULong max, CORBA::ULong length, PortableGroup::Property *buffer, CORBA::Boolean release)
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
 PortableGroup::Properties::Properties (const Properties &seq) // copy ctor
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
 PortableGroup::Properties::~Properties (void) // dtor
@@ -836,20 +1008,20 @@ static const CORBA::Long _oc_PortableGroup_Properties[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   41,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f5072),
-  ACE_NTOHL (0x6f706572),
-  ACE_NTOHL (0x74696573),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f5072), 
+  ACE_NTOHL (0x6f706572), 
+  ACE_NTOHL (0x74696573), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/Properties:1.0
   11,
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727469),
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727469), 
   ACE_NTOHL (0x65730000),  // name = Properties
   CORBA::tk_sequence, // typecode kind
   552, // encapsulation length
@@ -858,19 +1030,19 @@ static const CORBA::Long _oc_PortableGroup_Properties[] =
     536, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       39,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x506f7274),
-      ACE_NTOHL (0x61626c65),
-      ACE_NTOHL (0x47726f75),
-      ACE_NTOHL (0x702f5072),
-      ACE_NTOHL (0x6f706572),
-      ACE_NTOHL (0x74793a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x506f7274), 
+      ACE_NTOHL (0x61626c65), 
+      ACE_NTOHL (0x47726f75), 
+      ACE_NTOHL (0x702f5072), 
+      ACE_NTOHL (0x6f706572), 
+      ACE_NTOHL (0x74793a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Property:1.0
       9,
-      ACE_NTOHL (0x50726f70),
-      ACE_NTOHL (0x65727479),
+      ACE_NTOHL (0x50726f70), 
+      ACE_NTOHL (0x65727479), 
       ACE_NTOHL (0x0),  // name = Property
       2, // member count
       4,
@@ -879,32 +1051,32 @@ static const CORBA::Long _oc_PortableGroup_Properties[] =
       376, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         35,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x506f7274),
-        ACE_NTOHL (0x61626c65),
-        ACE_NTOHL (0x47726f75),
-        ACE_NTOHL (0x702f4e61),
-        ACE_NTOHL (0x6d653a31),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x506f7274), 
+        ACE_NTOHL (0x61626c65), 
+        ACE_NTOHL (0x47726f75), 
+        ACE_NTOHL (0x702f4e61), 
+        ACE_NTOHL (0x6d653a31), 
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
         5,
-        ACE_NTOHL (0x4e616d65),
+        ACE_NTOHL (0x4e616d65), 
         ACE_NTOHL (0x0),  // name = Name
         CORBA::tk_alias, // typecode kind for typedefs
         312, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           31,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4e61),
-          ACE_NTOHL (0x6d653a31),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4e61), 
+          ACE_NTOHL (0x6d653a31), 
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
           5,
-          ACE_NTOHL (0x4e616d65),
+          ACE_NTOHL (0x4e616d65), 
           ACE_NTOHL (0x0),  // name = Name
           CORBA::tk_sequence, // typecode kind
           252, // encapsulation length
@@ -913,20 +1085,20 @@ static const CORBA::Long _oc_PortableGroup_Properties[] =
             236, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               40,
-              ACE_NTOHL (0x49444c3a),
-              ACE_NTOHL (0x6f6d672e),
-              ACE_NTOHL (0x6f72672f),
-              ACE_NTOHL (0x436f734e),
-              ACE_NTOHL (0x616d696e),
-              ACE_NTOHL (0x672f4e61),
-              ACE_NTOHL (0x6d65436f),
-              ACE_NTOHL (0x6d706f6e),
-              ACE_NTOHL (0x656e743a),
+              ACE_NTOHL (0x49444c3a), 
+              ACE_NTOHL (0x6f6d672e), 
+              ACE_NTOHL (0x6f72672f), 
+              ACE_NTOHL (0x436f734e), 
+              ACE_NTOHL (0x616d696e), 
+              ACE_NTOHL (0x672f4e61), 
+              ACE_NTOHL (0x6d65436f), 
+              ACE_NTOHL (0x6d706f6e), 
+              ACE_NTOHL (0x656e743a), 
               ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
               14,
-              ACE_NTOHL (0x4e616d65),
-              ACE_NTOHL (0x436f6d70),
-              ACE_NTOHL (0x6f6e656e),
+              ACE_NTOHL (0x4e616d65), 
+              ACE_NTOHL (0x436f6d70), 
+              ACE_NTOHL (0x6f6e656e), 
               ACE_NTOHL (0x74000000),  // name = NameComponent
               2, // member count
               3,
@@ -935,41 +1107,41 @@ static const CORBA::Long _oc_PortableGroup_Properties[] =
               64, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a),
-                ACE_NTOHL (0x6f6d672e),
-                ACE_NTOHL (0x6f72672f),
-                ACE_NTOHL (0x436f734e),
-                ACE_NTOHL (0x616d696e),
-                ACE_NTOHL (0x672f4973),
-                ACE_NTOHL (0x7472696e),
-                ACE_NTOHL (0x673a312e),
+                ACE_NTOHL (0x49444c3a), 
+                ACE_NTOHL (0x6f6d672e), 
+                ACE_NTOHL (0x6f72672f), 
+                ACE_NTOHL (0x436f734e), 
+                ACE_NTOHL (0x616d696e), 
+                ACE_NTOHL (0x672f4973), 
+                ACE_NTOHL (0x7472696e), 
+                ACE_NTOHL (0x673a312e), 
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8,
-                ACE_NTOHL (0x49737472),
+                ACE_NTOHL (0x49737472), 
                 ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string,
+                CORBA::tk_string, 
                 0U, // string length
 
               5,
-              ACE_NTOHL (0x6b696e64),
+              ACE_NTOHL (0x6b696e64), 
               ACE_NTOHL (0x0),  // name = kind
               CORBA::tk_alias, // typecode kind for typedefs
               64, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a),
-                ACE_NTOHL (0x6f6d672e),
-                ACE_NTOHL (0x6f72672f),
-                ACE_NTOHL (0x436f734e),
-                ACE_NTOHL (0x616d696e),
-                ACE_NTOHL (0x672f4973),
-                ACE_NTOHL (0x7472696e),
-                ACE_NTOHL (0x673a312e),
+                ACE_NTOHL (0x49444c3a), 
+                ACE_NTOHL (0x6f6d672e), 
+                ACE_NTOHL (0x6f72672f), 
+                ACE_NTOHL (0x436f734e), 
+                ACE_NTOHL (0x616d696e), 
+                ACE_NTOHL (0x672f4973), 
+                ACE_NTOHL (0x7472696e), 
+                ACE_NTOHL (0x673a312e), 
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8,
-                ACE_NTOHL (0x49737472),
+                ACE_NTOHL (0x49737472), 
                 ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string,
+                CORBA::tk_string, 
                 0U, // string length
 
 
@@ -983,17 +1155,17 @@ static const CORBA::Long _oc_PortableGroup_Properties[] =
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         36,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x506f7274),
-        ACE_NTOHL (0x61626c65),
-        ACE_NTOHL (0x47726f75),
-        ACE_NTOHL (0x702f5661),
-        ACE_NTOHL (0x6c75653a),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x506f7274), 
+        ACE_NTOHL (0x61626c65), 
+        ACE_NTOHL (0x47726f75), 
+        ACE_NTOHL (0x702f5661), 
+        ACE_NTOHL (0x6c75653a), 
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Value:1.0
         6,
-        ACE_NTOHL (0x56616c75),
+        ACE_NTOHL (0x56616c75), 
         ACE_NTOHL (0x65000000),  // name = Value
         CORBA::tk_any,
 
@@ -1020,50 +1192,50 @@ static const CORBA::Long _oc_PortableGroup_Location[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4c6f),
-  ACE_NTOHL (0x63617469),
-  ACE_NTOHL (0x6f6e3a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4c6f), 
+  ACE_NTOHL (0x63617469), 
+  ACE_NTOHL (0x6f6e3a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Location:1.0
   9,
-  ACE_NTOHL (0x4c6f6361),
-  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x4c6f6361), 
+  ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x0),  // name = Location
   CORBA::tk_alias, // typecode kind for typedefs
   376, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4e61),
-    ACE_NTOHL (0x6d653a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4e61), 
+    ACE_NTOHL (0x6d653a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
     5,
-    ACE_NTOHL (0x4e616d65),
+    ACE_NTOHL (0x4e616d65), 
     ACE_NTOHL (0x0),  // name = Name
     CORBA::tk_alias, // typecode kind for typedefs
     312, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       31,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x436f734e),
-      ACE_NTOHL (0x616d696e),
-      ACE_NTOHL (0x672f4e61),
-      ACE_NTOHL (0x6d653a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x436f734e), 
+      ACE_NTOHL (0x616d696e), 
+      ACE_NTOHL (0x672f4e61), 
+      ACE_NTOHL (0x6d653a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
       5,
-      ACE_NTOHL (0x4e616d65),
+      ACE_NTOHL (0x4e616d65), 
       ACE_NTOHL (0x0),  // name = Name
       CORBA::tk_sequence, // typecode kind
       252, // encapsulation length
@@ -1072,20 +1244,20 @@ static const CORBA::Long _oc_PortableGroup_Location[] =
         236, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4e61),
-          ACE_NTOHL (0x6d65436f),
-          ACE_NTOHL (0x6d706f6e),
-          ACE_NTOHL (0x656e743a),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4e61), 
+          ACE_NTOHL (0x6d65436f), 
+          ACE_NTOHL (0x6d706f6e), 
+          ACE_NTOHL (0x656e743a), 
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
           14,
-          ACE_NTOHL (0x4e616d65),
-          ACE_NTOHL (0x436f6d70),
-          ACE_NTOHL (0x6f6e656e),
+          ACE_NTOHL (0x4e616d65), 
+          ACE_NTOHL (0x436f6d70), 
+          ACE_NTOHL (0x6f6e656e), 
           ACE_NTOHL (0x74000000),  // name = NameComponent
           2, // member count
           3,
@@ -1094,41 +1266,41 @@ static const CORBA::Long _oc_PortableGroup_Location[] =
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
           5,
-          ACE_NTOHL (0x6b696e64),
+          ACE_NTOHL (0x6b696e64), 
           ACE_NTOHL (0x0),  // name = kind
           CORBA::tk_alias, // typecode kind for typedefs
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
 
@@ -1153,7 +1325,7 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_LOCATIONS_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_LOCATIONS_CS_
 
@@ -1162,43 +1334,43 @@ TAO_NAMESPACE_END
   {
     PortableGroup::Location* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_PortableGroup_Locations::allocbuf (length);
-
+    
     if (this->buffer_ != 0)
     {
       PortableGroup::Location *old = ACE_reinterpret_cast (PortableGroup::Location *,this->buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-
+      
       if (this->release_)
         _TAO_Unbounded_Sequence_PortableGroup_Locations::freebuf (old);
-
+      
     }
     this->buffer_ = tmp;
   }
-
+  
   void
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-
+    
     PortableGroup::Location *tmp = ACE_reinterpret_cast (PortableGroup::Location *,this->buffer_);
-
+    
     _TAO_Unbounded_Sequence_PortableGroup_Locations::freebuf (tmp);
     this->buffer_ = 0;
-  }
-
+  } 
+  
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::~_TAO_Unbounded_Sequence_PortableGroup_Locations (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-
-
+  
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEGROUP_LOCATIONS_CS_)
 #define _PORTABLEGROUP_LOCATIONS_CS_
@@ -1210,30 +1382,30 @@ TAO_NAMESPACE_END
 PortableGroup::Locations::Locations (void)
 {}
 PortableGroup::Locations::Locations (CORBA::ULong max) // uses max size
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
 PortableGroup::Locations::Locations (CORBA::ULong max, CORBA::ULong length, PortableGroup::Location *buffer, CORBA::Boolean release)
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
 PortableGroup::Locations::Locations (const Locations &seq) // copy ctor
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
 PortableGroup::Locations::~Locations (void) // dtor
@@ -1251,19 +1423,19 @@ static const CORBA::Long _oc_PortableGroup_Locations[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4c6f),
-  ACE_NTOHL (0x63617469),
-  ACE_NTOHL (0x6f6e733a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4c6f), 
+  ACE_NTOHL (0x63617469), 
+  ACE_NTOHL (0x6f6e733a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Locations:1.0
   10,
-  ACE_NTOHL (0x4c6f6361),
-  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x4c6f6361), 
+  ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x73000000),  // name = Locations
   CORBA::tk_sequence, // typecode kind
   464, // encapsulation length
@@ -1272,50 +1444,50 @@ static const CORBA::Long _oc_PortableGroup_Locations[] =
     448, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       39,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x506f7274),
-      ACE_NTOHL (0x61626c65),
-      ACE_NTOHL (0x47726f75),
-      ACE_NTOHL (0x702f4c6f),
-      ACE_NTOHL (0x63617469),
-      ACE_NTOHL (0x6f6e3a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x506f7274), 
+      ACE_NTOHL (0x61626c65), 
+      ACE_NTOHL (0x47726f75), 
+      ACE_NTOHL (0x702f4c6f), 
+      ACE_NTOHL (0x63617469), 
+      ACE_NTOHL (0x6f6e3a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Location:1.0
       9,
-      ACE_NTOHL (0x4c6f6361),
-      ACE_NTOHL (0x74696f6e),
+      ACE_NTOHL (0x4c6f6361), 
+      ACE_NTOHL (0x74696f6e), 
       ACE_NTOHL (0x0),  // name = Location
       CORBA::tk_alias, // typecode kind for typedefs
       376, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         35,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x506f7274),
-        ACE_NTOHL (0x61626c65),
-        ACE_NTOHL (0x47726f75),
-        ACE_NTOHL (0x702f4e61),
-        ACE_NTOHL (0x6d653a31),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x506f7274), 
+        ACE_NTOHL (0x61626c65), 
+        ACE_NTOHL (0x47726f75), 
+        ACE_NTOHL (0x702f4e61), 
+        ACE_NTOHL (0x6d653a31), 
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
         5,
-        ACE_NTOHL (0x4e616d65),
+        ACE_NTOHL (0x4e616d65), 
         ACE_NTOHL (0x0),  // name = Name
         CORBA::tk_alias, // typecode kind for typedefs
         312, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           31,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4e61),
-          ACE_NTOHL (0x6d653a31),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4e61), 
+          ACE_NTOHL (0x6d653a31), 
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
           5,
-          ACE_NTOHL (0x4e616d65),
+          ACE_NTOHL (0x4e616d65), 
           ACE_NTOHL (0x0),  // name = Name
           CORBA::tk_sequence, // typecode kind
           252, // encapsulation length
@@ -1324,20 +1496,20 @@ static const CORBA::Long _oc_PortableGroup_Locations[] =
             236, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               40,
-              ACE_NTOHL (0x49444c3a),
-              ACE_NTOHL (0x6f6d672e),
-              ACE_NTOHL (0x6f72672f),
-              ACE_NTOHL (0x436f734e),
-              ACE_NTOHL (0x616d696e),
-              ACE_NTOHL (0x672f4e61),
-              ACE_NTOHL (0x6d65436f),
-              ACE_NTOHL (0x6d706f6e),
-              ACE_NTOHL (0x656e743a),
+              ACE_NTOHL (0x49444c3a), 
+              ACE_NTOHL (0x6f6d672e), 
+              ACE_NTOHL (0x6f72672f), 
+              ACE_NTOHL (0x436f734e), 
+              ACE_NTOHL (0x616d696e), 
+              ACE_NTOHL (0x672f4e61), 
+              ACE_NTOHL (0x6d65436f), 
+              ACE_NTOHL (0x6d706f6e), 
+              ACE_NTOHL (0x656e743a), 
               ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
               14,
-              ACE_NTOHL (0x4e616d65),
-              ACE_NTOHL (0x436f6d70),
-              ACE_NTOHL (0x6f6e656e),
+              ACE_NTOHL (0x4e616d65), 
+              ACE_NTOHL (0x436f6d70), 
+              ACE_NTOHL (0x6f6e656e), 
               ACE_NTOHL (0x74000000),  // name = NameComponent
               2, // member count
               3,
@@ -1346,41 +1518,41 @@ static const CORBA::Long _oc_PortableGroup_Locations[] =
               64, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a),
-                ACE_NTOHL (0x6f6d672e),
-                ACE_NTOHL (0x6f72672f),
-                ACE_NTOHL (0x436f734e),
-                ACE_NTOHL (0x616d696e),
-                ACE_NTOHL (0x672f4973),
-                ACE_NTOHL (0x7472696e),
-                ACE_NTOHL (0x673a312e),
+                ACE_NTOHL (0x49444c3a), 
+                ACE_NTOHL (0x6f6d672e), 
+                ACE_NTOHL (0x6f72672f), 
+                ACE_NTOHL (0x436f734e), 
+                ACE_NTOHL (0x616d696e), 
+                ACE_NTOHL (0x672f4973), 
+                ACE_NTOHL (0x7472696e), 
+                ACE_NTOHL (0x673a312e), 
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8,
-                ACE_NTOHL (0x49737472),
+                ACE_NTOHL (0x49737472), 
                 ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string,
+                CORBA::tk_string, 
                 0U, // string length
 
               5,
-              ACE_NTOHL (0x6b696e64),
+              ACE_NTOHL (0x6b696e64), 
               ACE_NTOHL (0x0),  // name = kind
               CORBA::tk_alias, // typecode kind for typedefs
               64, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a),
-                ACE_NTOHL (0x6f6d672e),
-                ACE_NTOHL (0x6f72672f),
-                ACE_NTOHL (0x436f734e),
-                ACE_NTOHL (0x616d696e),
-                ACE_NTOHL (0x672f4973),
-                ACE_NTOHL (0x7472696e),
-                ACE_NTOHL (0x673a312e),
+                ACE_NTOHL (0x49444c3a), 
+                ACE_NTOHL (0x6f6d672e), 
+                ACE_NTOHL (0x6f72672f), 
+                ACE_NTOHL (0x436f734e), 
+                ACE_NTOHL (0x616d696e), 
+                ACE_NTOHL (0x672f4973), 
+                ACE_NTOHL (0x7472696e), 
+                ACE_NTOHL (0x673a312e), 
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8,
-                ACE_NTOHL (0x49737472),
+                ACE_NTOHL (0x49737472), 
                 ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string,
+                CORBA::tk_string, 
                 0U, // string length
 
 
@@ -1410,38 +1582,38 @@ static const CORBA::Long _oc_PortableGroup_Criteria[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4372),
-  ACE_NTOHL (0x69746572),
-  ACE_NTOHL (0x69613a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4372), 
+  ACE_NTOHL (0x69746572), 
+  ACE_NTOHL (0x69613a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Criteria:1.0
   9,
-  ACE_NTOHL (0x43726974),
-  ACE_NTOHL (0x65726961),
+  ACE_NTOHL (0x43726974), 
+  ACE_NTOHL (0x65726961), 
   ACE_NTOHL (0x0),  // name = Criteria
   CORBA::tk_alias, // typecode kind for typedefs
   628, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     41,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f5072),
-    ACE_NTOHL (0x6f706572),
-    ACE_NTOHL (0x74696573),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f5072), 
+    ACE_NTOHL (0x6f706572), 
+    ACE_NTOHL (0x74696573), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/Properties:1.0
     11,
-    ACE_NTOHL (0x50726f70),
-    ACE_NTOHL (0x65727469),
+    ACE_NTOHL (0x50726f70), 
+    ACE_NTOHL (0x65727469), 
     ACE_NTOHL (0x65730000),  // name = Properties
     CORBA::tk_sequence, // typecode kind
     552, // encapsulation length
@@ -1450,19 +1622,19 @@ static const CORBA::Long _oc_PortableGroup_Criteria[] =
       536, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         39,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x506f7274),
-        ACE_NTOHL (0x61626c65),
-        ACE_NTOHL (0x47726f75),
-        ACE_NTOHL (0x702f5072),
-        ACE_NTOHL (0x6f706572),
-        ACE_NTOHL (0x74793a31),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x506f7274), 
+        ACE_NTOHL (0x61626c65), 
+        ACE_NTOHL (0x47726f75), 
+        ACE_NTOHL (0x702f5072), 
+        ACE_NTOHL (0x6f706572), 
+        ACE_NTOHL (0x74793a31), 
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Property:1.0
         9,
-        ACE_NTOHL (0x50726f70),
-        ACE_NTOHL (0x65727479),
+        ACE_NTOHL (0x50726f70), 
+        ACE_NTOHL (0x65727479), 
         ACE_NTOHL (0x0),  // name = Property
         2, // member count
         4,
@@ -1471,32 +1643,32 @@ static const CORBA::Long _oc_PortableGroup_Criteria[] =
         376, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x506f7274),
-          ACE_NTOHL (0x61626c65),
-          ACE_NTOHL (0x47726f75),
-          ACE_NTOHL (0x702f4e61),
-          ACE_NTOHL (0x6d653a31),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x506f7274), 
+          ACE_NTOHL (0x61626c65), 
+          ACE_NTOHL (0x47726f75), 
+          ACE_NTOHL (0x702f4e61), 
+          ACE_NTOHL (0x6d653a31), 
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
           5,
-          ACE_NTOHL (0x4e616d65),
+          ACE_NTOHL (0x4e616d65), 
           ACE_NTOHL (0x0),  // name = Name
           CORBA::tk_alias, // typecode kind for typedefs
           312, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             31,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4e61),
-            ACE_NTOHL (0x6d653a31),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4e61), 
+            ACE_NTOHL (0x6d653a31), 
             ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
             5,
-            ACE_NTOHL (0x4e616d65),
+            ACE_NTOHL (0x4e616d65), 
             ACE_NTOHL (0x0),  // name = Name
             CORBA::tk_sequence, // typecode kind
             252, // encapsulation length
@@ -1505,20 +1677,20 @@ static const CORBA::Long _oc_PortableGroup_Criteria[] =
               236, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 40,
-                ACE_NTOHL (0x49444c3a),
-                ACE_NTOHL (0x6f6d672e),
-                ACE_NTOHL (0x6f72672f),
-                ACE_NTOHL (0x436f734e),
-                ACE_NTOHL (0x616d696e),
-                ACE_NTOHL (0x672f4e61),
-                ACE_NTOHL (0x6d65436f),
-                ACE_NTOHL (0x6d706f6e),
-                ACE_NTOHL (0x656e743a),
+                ACE_NTOHL (0x49444c3a), 
+                ACE_NTOHL (0x6f6d672e), 
+                ACE_NTOHL (0x6f72672f), 
+                ACE_NTOHL (0x436f734e), 
+                ACE_NTOHL (0x616d696e), 
+                ACE_NTOHL (0x672f4e61), 
+                ACE_NTOHL (0x6d65436f), 
+                ACE_NTOHL (0x6d706f6e), 
+                ACE_NTOHL (0x656e743a), 
                 ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
                 14,
-                ACE_NTOHL (0x4e616d65),
-                ACE_NTOHL (0x436f6d70),
-                ACE_NTOHL (0x6f6e656e),
+                ACE_NTOHL (0x4e616d65), 
+                ACE_NTOHL (0x436f6d70), 
+                ACE_NTOHL (0x6f6e656e), 
                 ACE_NTOHL (0x74000000),  // name = NameComponent
                 2, // member count
                 3,
@@ -1527,41 +1699,41 @@ static const CORBA::Long _oc_PortableGroup_Criteria[] =
                 64, // encapsulation length
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   34,
-                  ACE_NTOHL (0x49444c3a),
-                  ACE_NTOHL (0x6f6d672e),
-                  ACE_NTOHL (0x6f72672f),
-                  ACE_NTOHL (0x436f734e),
-                  ACE_NTOHL (0x616d696e),
-                  ACE_NTOHL (0x672f4973),
-                  ACE_NTOHL (0x7472696e),
-                  ACE_NTOHL (0x673a312e),
+                  ACE_NTOHL (0x49444c3a), 
+                  ACE_NTOHL (0x6f6d672e), 
+                  ACE_NTOHL (0x6f72672f), 
+                  ACE_NTOHL (0x436f734e), 
+                  ACE_NTOHL (0x616d696e), 
+                  ACE_NTOHL (0x672f4973), 
+                  ACE_NTOHL (0x7472696e), 
+                  ACE_NTOHL (0x673a312e), 
                   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                   8,
-                  ACE_NTOHL (0x49737472),
+                  ACE_NTOHL (0x49737472), 
                   ACE_NTOHL (0x696e6700),  // name = Istring
-                  CORBA::tk_string,
+                  CORBA::tk_string, 
                   0U, // string length
 
                 5,
-                ACE_NTOHL (0x6b696e64),
+                ACE_NTOHL (0x6b696e64), 
                 ACE_NTOHL (0x0),  // name = kind
                 CORBA::tk_alias, // typecode kind for typedefs
                 64, // encapsulation length
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   34,
-                  ACE_NTOHL (0x49444c3a),
-                  ACE_NTOHL (0x6f6d672e),
-                  ACE_NTOHL (0x6f72672f),
-                  ACE_NTOHL (0x436f734e),
-                  ACE_NTOHL (0x616d696e),
-                  ACE_NTOHL (0x672f4973),
-                  ACE_NTOHL (0x7472696e),
-                  ACE_NTOHL (0x673a312e),
+                  ACE_NTOHL (0x49444c3a), 
+                  ACE_NTOHL (0x6f6d672e), 
+                  ACE_NTOHL (0x6f72672f), 
+                  ACE_NTOHL (0x436f734e), 
+                  ACE_NTOHL (0x616d696e), 
+                  ACE_NTOHL (0x672f4973), 
+                  ACE_NTOHL (0x7472696e), 
+                  ACE_NTOHL (0x673a312e), 
                   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                   8,
-                  ACE_NTOHL (0x49737472),
+                  ACE_NTOHL (0x49737472), 
                   ACE_NTOHL (0x696e6700),  // name = Istring
-                  CORBA::tk_string,
+                  CORBA::tk_string, 
                   0U, // string length
 
 
@@ -1575,17 +1747,17 @@ static const CORBA::Long _oc_PortableGroup_Criteria[] =
         60, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           36,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x506f7274),
-          ACE_NTOHL (0x61626c65),
-          ACE_NTOHL (0x47726f75),
-          ACE_NTOHL (0x702f5661),
-          ACE_NTOHL (0x6c75653a),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x506f7274), 
+          ACE_NTOHL (0x61626c65), 
+          ACE_NTOHL (0x47726f75), 
+          ACE_NTOHL (0x702f5661), 
+          ACE_NTOHL (0x6c75653a), 
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Value:1.0
           6,
-          ACE_NTOHL (0x56616c75),
+          ACE_NTOHL (0x56616c75), 
           ACE_NTOHL (0x65000000),  // name = Value
           CORBA::tk_any,
 
@@ -1611,7 +1783,7 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_FACTORYINFOS_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_FACTORYINFOS_CS_
 
@@ -1620,43 +1792,43 @@ TAO_NAMESPACE_END
   {
     PortableGroup::FactoryInfo* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::allocbuf (length);
-
+    
     if (this->buffer_ != 0)
     {
       PortableGroup::FactoryInfo *old = ACE_reinterpret_cast (PortableGroup::FactoryInfo *,this->buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-
+      
       if (this->release_)
         _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::freebuf (old);
-
+      
     }
     this->buffer_ = tmp;
   }
-
+  
   void
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-
+    
     PortableGroup::FactoryInfo *tmp = ACE_reinterpret_cast (PortableGroup::FactoryInfo *,this->buffer_);
-
+    
     _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::freebuf (tmp);
     this->buffer_ = 0;
-  }
-
+  } 
+  
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::~_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-
-
+  
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEGROUP_FACTORYINFOS_CS_)
 #define _PORTABLEGROUP_FACTORYINFOS_CS_
@@ -1668,30 +1840,30 @@ TAO_NAMESPACE_END
 PortableGroup::FactoryInfos::FactoryInfos (void)
 {}
 PortableGroup::FactoryInfos::FactoryInfos (CORBA::ULong max) // uses max size
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
 PortableGroup::FactoryInfos::FactoryInfos (CORBA::ULong max, CORBA::ULong length, PortableGroup::FactoryInfo *buffer, CORBA::Boolean release)
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
 PortableGroup::FactoryInfos::FactoryInfos (const FactoryInfos &seq) // copy ctor
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<PortableGroup::FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
 PortableGroup::FactoryInfos::~FactoryInfos (void) // dtor
@@ -1709,25 +1881,25 @@ static const CORBA::Long _oc_PortableGroup_MembershipStyleValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   51,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4d65),
-  ACE_NTOHL (0x6d626572),
-  ACE_NTOHL (0x73686970),
-  ACE_NTOHL (0x5374796c),
-  ACE_NTOHL (0x6556616c),
-  ACE_NTOHL (0x75653a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4d65), 
+  ACE_NTOHL (0x6d626572), 
+  ACE_NTOHL (0x73686970), 
+  ACE_NTOHL (0x5374796c), 
+  ACE_NTOHL (0x6556616c), 
+  ACE_NTOHL (0x75653a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/MembershipStyleValue:1.0
   21,
-  ACE_NTOHL (0x4d656d62),
-  ACE_NTOHL (0x65727368),
-  ACE_NTOHL (0x69705374),
-  ACE_NTOHL (0x796c6556),
-  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x4d656d62), 
+  ACE_NTOHL (0x65727368), 
+  ACE_NTOHL (0x69705374), 
+  ACE_NTOHL (0x796c6556), 
+  ACE_NTOHL (0x616c7565), 
   ACE_NTOHL (0x0),  // name = MembershipStyleValue
   CORBA::tk_long,
 
@@ -1758,28 +1930,28 @@ static const CORBA::Long _oc_PortableGroup_InitialNumberReplicasValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   57,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f496e),
-  ACE_NTOHL (0x69746961),
-  ACE_NTOHL (0x6c4e756d),
-  ACE_NTOHL (0x62657252),
-  ACE_NTOHL (0x65706c69),
-  ACE_NTOHL (0x63617356),
-  ACE_NTOHL (0x616c7565),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f496e), 
+  ACE_NTOHL (0x69746961), 
+  ACE_NTOHL (0x6c4e756d), 
+  ACE_NTOHL (0x62657252), 
+  ACE_NTOHL (0x65706c69), 
+  ACE_NTOHL (0x63617356), 
+  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/InitialNumberReplicasValue:1.0
   27,
-  ACE_NTOHL (0x496e6974),
-  ACE_NTOHL (0x69616c4e),
-  ACE_NTOHL (0x756d6265),
-  ACE_NTOHL (0x72526570),
-  ACE_NTOHL (0x6c696361),
-  ACE_NTOHL (0x7356616c),
+  ACE_NTOHL (0x496e6974), 
+  ACE_NTOHL (0x69616c4e), 
+  ACE_NTOHL (0x756d6265), 
+  ACE_NTOHL (0x72526570), 
+  ACE_NTOHL (0x6c696361), 
+  ACE_NTOHL (0x7356616c), 
   ACE_NTOHL (0x75650000),  // name = InitialNumberReplicasValue
   CORBA::tk_ushort,
 
@@ -1802,28 +1974,28 @@ static const CORBA::Long _oc_PortableGroup_MinimumNumberReplicasValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   57,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4d69),
-  ACE_NTOHL (0x6e696d75),
-  ACE_NTOHL (0x6d4e756d),
-  ACE_NTOHL (0x62657252),
-  ACE_NTOHL (0x65706c69),
-  ACE_NTOHL (0x63617356),
-  ACE_NTOHL (0x616c7565),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4d69), 
+  ACE_NTOHL (0x6e696d75), 
+  ACE_NTOHL (0x6d4e756d), 
+  ACE_NTOHL (0x62657252), 
+  ACE_NTOHL (0x65706c69), 
+  ACE_NTOHL (0x63617356), 
+  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/MinimumNumberReplicasValue:1.0
   27,
-  ACE_NTOHL (0x4d696e69),
-  ACE_NTOHL (0x6d756d4e),
-  ACE_NTOHL (0x756d6265),
-  ACE_NTOHL (0x72526570),
-  ACE_NTOHL (0x6c696361),
-  ACE_NTOHL (0x7356616c),
+  ACE_NTOHL (0x4d696e69), 
+  ACE_NTOHL (0x6d756d4e), 
+  ACE_NTOHL (0x756d6265), 
+  ACE_NTOHL (0x72526570), 
+  ACE_NTOHL (0x6c696361), 
+  ACE_NTOHL (0x7356616c), 
   ACE_NTOHL (0x75650000),  // name = MinimumNumberReplicasValue
   CORBA::tk_ushort,
 
@@ -1901,7 +2073,7 @@ void PortableGroup::InterfaceNotFound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -1914,7 +2086,7 @@ void PortableGroup::InterfaceNotFound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -1930,23 +2102,23 @@ static const CORBA::Long _oc_PortableGroup_InterfaceNotFound[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f496e),
-  ACE_NTOHL (0x74657266),
-  ACE_NTOHL (0x6163654e),
-  ACE_NTOHL (0x6f74466f),
-  ACE_NTOHL (0x756e643a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f496e), 
+  ACE_NTOHL (0x74657266), 
+  ACE_NTOHL (0x6163654e), 
+  ACE_NTOHL (0x6f74466f), 
+  ACE_NTOHL (0x756e643a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/InterfaceNotFound:1.0
   18,
-  ACE_NTOHL (0x496e7465),
-  ACE_NTOHL (0x72666163),
-  ACE_NTOHL (0x654e6f74),
-  ACE_NTOHL (0x466f756e),
+  ACE_NTOHL (0x496e7465), 
+  ACE_NTOHL (0x72666163), 
+  ACE_NTOHL (0x654e6f74), 
+  ACE_NTOHL (0x466f756e), 
   ACE_NTOHL (0x64000000),  // name = InterfaceNotFound
   0, // member count
 };
@@ -2030,7 +2202,7 @@ void PortableGroup::ObjectGroupNotFound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2043,7 +2215,7 @@ void PortableGroup::ObjectGroupNotFound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2059,24 +2231,24 @@ static const CORBA::Long _oc_PortableGroup_ObjectGroupNotFound[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   50,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x704e6f74),
-  ACE_NTOHL (0x466f756e),
-  ACE_NTOHL (0x643a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4f62), 
+  ACE_NTOHL (0x6a656374), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x704e6f74), 
+  ACE_NTOHL (0x466f756e), 
+  ACE_NTOHL (0x643a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/ObjectGroupNotFound:1.0
   20,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744772),
-  ACE_NTOHL (0x6f75704e),
-  ACE_NTOHL (0x6f74466f),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744772), 
+  ACE_NTOHL (0x6f75704e), 
+  ACE_NTOHL (0x6f74466f), 
   ACE_NTOHL (0x756e6400),  // name = ObjectGroupNotFound
   0, // member count
 };
@@ -2160,7 +2332,7 @@ void PortableGroup::MemberNotFound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2173,7 +2345,7 @@ void PortableGroup::MemberNotFound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2189,22 +2361,22 @@ static const CORBA::Long _oc_PortableGroup_MemberNotFound[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4d65),
-  ACE_NTOHL (0x6d626572),
-  ACE_NTOHL (0x4e6f7446),
-  ACE_NTOHL (0x6f756e64),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4d65), 
+  ACE_NTOHL (0x6d626572), 
+  ACE_NTOHL (0x4e6f7446), 
+  ACE_NTOHL (0x6f756e64), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/MemberNotFound:1.0
   15,
-  ACE_NTOHL (0x4d656d62),
-  ACE_NTOHL (0x65724e6f),
-  ACE_NTOHL (0x74466f75),
+  ACE_NTOHL (0x4d656d62), 
+  ACE_NTOHL (0x65724e6f), 
+  ACE_NTOHL (0x74466f75), 
   ACE_NTOHL (0x6e640000),  // name = MemberNotFound
   0, // member count
 };
@@ -2288,7 +2460,7 @@ void PortableGroup::ObjectNotFound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2301,7 +2473,7 @@ void PortableGroup::ObjectNotFound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2317,22 +2489,22 @@ static const CORBA::Long _oc_PortableGroup_ObjectNotFound[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x4e6f7446),
-  ACE_NTOHL (0x6f756e64),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4f62), 
+  ACE_NTOHL (0x6a656374), 
+  ACE_NTOHL (0x4e6f7446), 
+  ACE_NTOHL (0x6f756e64), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/ObjectNotFound:1.0
   15,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744e6f),
-  ACE_NTOHL (0x74466f75),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744e6f), 
+  ACE_NTOHL (0x74466f75), 
   ACE_NTOHL (0x6e640000),  // name = ObjectNotFound
   0, // member count
 };
@@ -2416,7 +2588,7 @@ void PortableGroup::MemberAlreadyPresent::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2429,7 +2601,7 @@ void PortableGroup::MemberAlreadyPresent::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2445,25 +2617,25 @@ static const CORBA::Long _oc_PortableGroup_MemberAlreadyPresent[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   51,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4d65),
-  ACE_NTOHL (0x6d626572),
-  ACE_NTOHL (0x416c7265),
-  ACE_NTOHL (0x61647950),
-  ACE_NTOHL (0x72657365),
-  ACE_NTOHL (0x6e743a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4d65), 
+  ACE_NTOHL (0x6d626572), 
+  ACE_NTOHL (0x416c7265), 
+  ACE_NTOHL (0x61647950), 
+  ACE_NTOHL (0x72657365), 
+  ACE_NTOHL (0x6e743a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/MemberAlreadyPresent:1.0
   21,
-  ACE_NTOHL (0x4d656d62),
-  ACE_NTOHL (0x6572416c),
-  ACE_NTOHL (0x72656164),
-  ACE_NTOHL (0x79507265),
-  ACE_NTOHL (0x73656e74),
+  ACE_NTOHL (0x4d656d62), 
+  ACE_NTOHL (0x6572416c), 
+  ACE_NTOHL (0x72656164), 
+  ACE_NTOHL (0x79507265), 
+  ACE_NTOHL (0x73656e74), 
   ACE_NTOHL (0x0),  // name = MemberAlreadyPresent
   0, // member count
 };
@@ -2547,7 +2719,7 @@ void PortableGroup::BadReplicationStyle::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2560,7 +2732,7 @@ void PortableGroup::BadReplicationStyle::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2576,24 +2748,24 @@ static const CORBA::Long _oc_PortableGroup_BadReplicationStyle[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   50,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4261),
-  ACE_NTOHL (0x64526570),
-  ACE_NTOHL (0x6c696361),
-  ACE_NTOHL (0x74696f6e),
-  ACE_NTOHL (0x5374796c),
-  ACE_NTOHL (0x653a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4261), 
+  ACE_NTOHL (0x64526570), 
+  ACE_NTOHL (0x6c696361), 
+  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x5374796c), 
+  ACE_NTOHL (0x653a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/BadReplicationStyle:1.0
   20,
-  ACE_NTOHL (0x42616452),
-  ACE_NTOHL (0x65706c69),
-  ACE_NTOHL (0x63617469),
-  ACE_NTOHL (0x6f6e5374),
+  ACE_NTOHL (0x42616452), 
+  ACE_NTOHL (0x65706c69), 
+  ACE_NTOHL (0x63617469), 
+  ACE_NTOHL (0x6f6e5374), 
   ACE_NTOHL (0x796c6500),  // name = BadReplicationStyle
   0, // member count
 };
@@ -2677,7 +2849,7 @@ void PortableGroup::ObjectNotCreated::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2690,7 +2862,7 @@ void PortableGroup::ObjectNotCreated::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2706,23 +2878,23 @@ static const CORBA::Long _oc_PortableGroup_ObjectNotCreated[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x4e6f7443),
-  ACE_NTOHL (0x72656174),
-  ACE_NTOHL (0x65643a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4f62), 
+  ACE_NTOHL (0x6a656374), 
+  ACE_NTOHL (0x4e6f7443), 
+  ACE_NTOHL (0x72656174), 
+  ACE_NTOHL (0x65643a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/ObjectNotCreated:1.0
   17,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744e6f),
-  ACE_NTOHL (0x74437265),
-  ACE_NTOHL (0x61746564),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744e6f), 
+  ACE_NTOHL (0x74437265), 
+  ACE_NTOHL (0x61746564), 
   ACE_NTOHL (0x0),  // name = ObjectNotCreated
   0, // member count
 };
@@ -2806,7 +2978,7 @@ void PortableGroup::ObjectNotAdded::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2819,7 +2991,7 @@ void PortableGroup::ObjectNotAdded::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2835,22 +3007,22 @@ static const CORBA::Long _oc_PortableGroup_ObjectNotAdded[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x4e6f7441),
-  ACE_NTOHL (0x64646564),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4f62), 
+  ACE_NTOHL (0x6a656374), 
+  ACE_NTOHL (0x4e6f7441), 
+  ACE_NTOHL (0x64646564), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/ObjectNotAdded:1.0
   15,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744e6f),
-  ACE_NTOHL (0x74416464),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63744e6f), 
+  ACE_NTOHL (0x74416464), 
   ACE_NTOHL (0x65640000),  // name = ObjectNotAdded
   0, // member count
 };
@@ -2936,7 +3108,7 @@ void PortableGroup::UnsupportedProperty::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2949,7 +3121,7 @@ void PortableGroup::UnsupportedProperty::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -2973,24 +3145,24 @@ static const CORBA::Long _oc_PortableGroup_UnsupportedProperty[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   50,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f556e),
-  ACE_NTOHL (0x73757070),
-  ACE_NTOHL (0x6f727465),
-  ACE_NTOHL (0x6450726f),
-  ACE_NTOHL (0x70657274),
-  ACE_NTOHL (0x793a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f556e), 
+  ACE_NTOHL (0x73757070), 
+  ACE_NTOHL (0x6f727465), 
+  ACE_NTOHL (0x6450726f), 
+  ACE_NTOHL (0x70657274), 
+  ACE_NTOHL (0x793a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/UnsupportedProperty:1.0
   20,
-  ACE_NTOHL (0x556e7375),
-  ACE_NTOHL (0x70706f72),
-  ACE_NTOHL (0x74656450),
-  ACE_NTOHL (0x726f7065),
+  ACE_NTOHL (0x556e7375), 
+  ACE_NTOHL (0x70706f72), 
+  ACE_NTOHL (0x74656450), 
+  ACE_NTOHL (0x726f7065), 
   ACE_NTOHL (0x72747900),  // name = UnsupportedProperty
   1, // member count
   4,
@@ -2999,32 +3171,32 @@ static const CORBA::Long _oc_PortableGroup_UnsupportedProperty[] =
   376, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4e61),
-    ACE_NTOHL (0x6d653a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4e61), 
+    ACE_NTOHL (0x6d653a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
     5,
-    ACE_NTOHL (0x4e616d65),
+    ACE_NTOHL (0x4e616d65), 
     ACE_NTOHL (0x0),  // name = Name
     CORBA::tk_alias, // typecode kind for typedefs
     312, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       31,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x436f734e),
-      ACE_NTOHL (0x616d696e),
-      ACE_NTOHL (0x672f4e61),
-      ACE_NTOHL (0x6d653a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x436f734e), 
+      ACE_NTOHL (0x616d696e), 
+      ACE_NTOHL (0x672f4e61), 
+      ACE_NTOHL (0x6d653a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
       5,
-      ACE_NTOHL (0x4e616d65),
+      ACE_NTOHL (0x4e616d65), 
       ACE_NTOHL (0x0),  // name = Name
       CORBA::tk_sequence, // typecode kind
       252, // encapsulation length
@@ -3033,20 +3205,20 @@ static const CORBA::Long _oc_PortableGroup_UnsupportedProperty[] =
         236, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4e61),
-          ACE_NTOHL (0x6d65436f),
-          ACE_NTOHL (0x6d706f6e),
-          ACE_NTOHL (0x656e743a),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4e61), 
+          ACE_NTOHL (0x6d65436f), 
+          ACE_NTOHL (0x6d706f6e), 
+          ACE_NTOHL (0x656e743a), 
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
           14,
-          ACE_NTOHL (0x4e616d65),
-          ACE_NTOHL (0x436f6d70),
-          ACE_NTOHL (0x6f6e656e),
+          ACE_NTOHL (0x4e616d65), 
+          ACE_NTOHL (0x436f6d70), 
+          ACE_NTOHL (0x6f6e656e), 
           ACE_NTOHL (0x74000000),  // name = NameComponent
           2, // member count
           3,
@@ -3055,41 +3227,41 @@ static const CORBA::Long _oc_PortableGroup_UnsupportedProperty[] =
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
           5,
-          ACE_NTOHL (0x6b696e64),
+          ACE_NTOHL (0x6b696e64), 
           ACE_NTOHL (0x0),  // name = kind
           CORBA::tk_alias, // typecode kind for typedefs
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
 
@@ -3182,7 +3354,7 @@ void PortableGroup::InvalidProperty::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -3195,7 +3367,7 @@ void PortableGroup::InvalidProperty::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -3221,22 +3393,22 @@ static const CORBA::Long _oc_PortableGroup_InvalidProperty[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f496e),
-  ACE_NTOHL (0x76616c69),
-  ACE_NTOHL (0x6450726f),
-  ACE_NTOHL (0x70657274),
-  ACE_NTOHL (0x793a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f496e), 
+  ACE_NTOHL (0x76616c69), 
+  ACE_NTOHL (0x6450726f), 
+  ACE_NTOHL (0x70657274), 
+  ACE_NTOHL (0x793a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/InvalidProperty:1.0
   16,
-  ACE_NTOHL (0x496e7661),
-  ACE_NTOHL (0x6c696450),
-  ACE_NTOHL (0x726f7065),
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c696450), 
+  ACE_NTOHL (0x726f7065), 
   ACE_NTOHL (0x72747900),  // name = InvalidProperty
   2, // member count
   4,
@@ -3245,32 +3417,32 @@ static const CORBA::Long _oc_PortableGroup_InvalidProperty[] =
   376, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4e61),
-    ACE_NTOHL (0x6d653a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4e61), 
+    ACE_NTOHL (0x6d653a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
     5,
-    ACE_NTOHL (0x4e616d65),
+    ACE_NTOHL (0x4e616d65), 
     ACE_NTOHL (0x0),  // name = Name
     CORBA::tk_alias, // typecode kind for typedefs
     312, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       31,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x436f734e),
-      ACE_NTOHL (0x616d696e),
-      ACE_NTOHL (0x672f4e61),
-      ACE_NTOHL (0x6d653a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x436f734e), 
+      ACE_NTOHL (0x616d696e), 
+      ACE_NTOHL (0x672f4e61), 
+      ACE_NTOHL (0x6d653a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
       5,
-      ACE_NTOHL (0x4e616d65),
+      ACE_NTOHL (0x4e616d65), 
       ACE_NTOHL (0x0),  // name = Name
       CORBA::tk_sequence, // typecode kind
       252, // encapsulation length
@@ -3279,20 +3451,20 @@ static const CORBA::Long _oc_PortableGroup_InvalidProperty[] =
         236, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x436f734e),
-          ACE_NTOHL (0x616d696e),
-          ACE_NTOHL (0x672f4e61),
-          ACE_NTOHL (0x6d65436f),
-          ACE_NTOHL (0x6d706f6e),
-          ACE_NTOHL (0x656e743a),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x436f734e), 
+          ACE_NTOHL (0x616d696e), 
+          ACE_NTOHL (0x672f4e61), 
+          ACE_NTOHL (0x6d65436f), 
+          ACE_NTOHL (0x6d706f6e), 
+          ACE_NTOHL (0x656e743a), 
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
           14,
-          ACE_NTOHL (0x4e616d65),
-          ACE_NTOHL (0x436f6d70),
-          ACE_NTOHL (0x6f6e656e),
+          ACE_NTOHL (0x4e616d65), 
+          ACE_NTOHL (0x436f6d70), 
+          ACE_NTOHL (0x6f6e656e), 
           ACE_NTOHL (0x74000000),  // name = NameComponent
           2, // member count
           3,
@@ -3301,41 +3473,41 @@ static const CORBA::Long _oc_PortableGroup_InvalidProperty[] =
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
           5,
-          ACE_NTOHL (0x6b696e64),
+          ACE_NTOHL (0x6b696e64), 
           ACE_NTOHL (0x0),  // name = kind
           CORBA::tk_alias, // typecode kind for typedefs
           64, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             34,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4973),
-            ACE_NTOHL (0x7472696e),
-            ACE_NTOHL (0x673a312e),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4973), 
+            ACE_NTOHL (0x7472696e), 
+            ACE_NTOHL (0x673a312e), 
             ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8,
-            ACE_NTOHL (0x49737472),
+            ACE_NTOHL (0x49737472), 
             ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string,
+            CORBA::tk_string, 
             0U, // string length
 
 
@@ -3349,17 +3521,17 @@ static const CORBA::Long _oc_PortableGroup_InvalidProperty[] =
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     36,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f5661),
-    ACE_NTOHL (0x6c75653a),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f5661), 
+    ACE_NTOHL (0x6c75653a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Value:1.0
     6,
-    ACE_NTOHL (0x56616c75),
+    ACE_NTOHL (0x56616c75), 
     ACE_NTOHL (0x65000000),  // name = Value
     CORBA::tk_any,
 
@@ -3449,7 +3621,7 @@ void PortableGroup::NoFactory::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -3462,7 +3634,7 @@ void PortableGroup::NoFactory::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -3488,74 +3660,74 @@ static const CORBA::Long _oc_PortableGroup_NoFactory[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4e6f),
-  ACE_NTOHL (0x46616374),
-  ACE_NTOHL (0x6f72793a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4e6f), 
+  ACE_NTOHL (0x46616374), 
+  ACE_NTOHL (0x6f72793a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/NoFactory:1.0
   10,
-  ACE_NTOHL (0x4e6f4661),
-  ACE_NTOHL (0x63746f72),
+  ACE_NTOHL (0x4e6f4661), 
+  ACE_NTOHL (0x63746f72), 
   ACE_NTOHL (0x79000000),  // name = NoFactory
   2, // member count
   13,
-  ACE_NTOHL (0x7468655f),
-  ACE_NTOHL (0x6c6f6361),
-  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x7468655f), 
+  ACE_NTOHL (0x6c6f6361), 
+  ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x0),  // name = the_location
   CORBA::tk_alias, // typecode kind for typedefs
   448, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     39,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4c6f),
-    ACE_NTOHL (0x63617469),
-    ACE_NTOHL (0x6f6e3a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4c6f), 
+    ACE_NTOHL (0x63617469), 
+    ACE_NTOHL (0x6f6e3a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Location:1.0
     9,
-    ACE_NTOHL (0x4c6f6361),
-    ACE_NTOHL (0x74696f6e),
+    ACE_NTOHL (0x4c6f6361), 
+    ACE_NTOHL (0x74696f6e), 
     ACE_NTOHL (0x0),  // name = Location
     CORBA::tk_alias, // typecode kind for typedefs
     376, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       35,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x506f7274),
-      ACE_NTOHL (0x61626c65),
-      ACE_NTOHL (0x47726f75),
-      ACE_NTOHL (0x702f4e61),
-      ACE_NTOHL (0x6d653a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x506f7274), 
+      ACE_NTOHL (0x61626c65), 
+      ACE_NTOHL (0x47726f75), 
+      ACE_NTOHL (0x702f4e61), 
+      ACE_NTOHL (0x6d653a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
       5,
-      ACE_NTOHL (0x4e616d65),
+      ACE_NTOHL (0x4e616d65), 
       ACE_NTOHL (0x0),  // name = Name
       CORBA::tk_alias, // typecode kind for typedefs
       312, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         31,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x436f734e),
-        ACE_NTOHL (0x616d696e),
-        ACE_NTOHL (0x672f4e61),
-        ACE_NTOHL (0x6d653a31),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x436f734e), 
+        ACE_NTOHL (0x616d696e), 
+        ACE_NTOHL (0x672f4e61), 
+        ACE_NTOHL (0x6d653a31), 
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
         5,
-        ACE_NTOHL (0x4e616d65),
+        ACE_NTOHL (0x4e616d65), 
         ACE_NTOHL (0x0),  // name = Name
         CORBA::tk_sequence, // typecode kind
         252, // encapsulation length
@@ -3564,20 +3736,20 @@ static const CORBA::Long _oc_PortableGroup_NoFactory[] =
           236, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             40,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x436f734e),
-            ACE_NTOHL (0x616d696e),
-            ACE_NTOHL (0x672f4e61),
-            ACE_NTOHL (0x6d65436f),
-            ACE_NTOHL (0x6d706f6e),
-            ACE_NTOHL (0x656e743a),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x436f734e), 
+            ACE_NTOHL (0x616d696e), 
+            ACE_NTOHL (0x672f4e61), 
+            ACE_NTOHL (0x6d65436f), 
+            ACE_NTOHL (0x6d706f6e), 
+            ACE_NTOHL (0x656e743a), 
             ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
             14,
-            ACE_NTOHL (0x4e616d65),
-            ACE_NTOHL (0x436f6d70),
-            ACE_NTOHL (0x6f6e656e),
+            ACE_NTOHL (0x4e616d65), 
+            ACE_NTOHL (0x436f6d70), 
+            ACE_NTOHL (0x6f6e656e), 
             ACE_NTOHL (0x74000000),  // name = NameComponent
             2, // member count
             3,
@@ -3586,41 +3758,41 @@ static const CORBA::Long _oc_PortableGroup_NoFactory[] =
             64, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               34,
-              ACE_NTOHL (0x49444c3a),
-              ACE_NTOHL (0x6f6d672e),
-              ACE_NTOHL (0x6f72672f),
-              ACE_NTOHL (0x436f734e),
-              ACE_NTOHL (0x616d696e),
-              ACE_NTOHL (0x672f4973),
-              ACE_NTOHL (0x7472696e),
-              ACE_NTOHL (0x673a312e),
+              ACE_NTOHL (0x49444c3a), 
+              ACE_NTOHL (0x6f6d672e), 
+              ACE_NTOHL (0x6f72672f), 
+              ACE_NTOHL (0x436f734e), 
+              ACE_NTOHL (0x616d696e), 
+              ACE_NTOHL (0x672f4973), 
+              ACE_NTOHL (0x7472696e), 
+              ACE_NTOHL (0x673a312e), 
               ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
               8,
-              ACE_NTOHL (0x49737472),
+              ACE_NTOHL (0x49737472), 
               ACE_NTOHL (0x696e6700),  // name = Istring
-              CORBA::tk_string,
+              CORBA::tk_string, 
               0U, // string length
 
             5,
-            ACE_NTOHL (0x6b696e64),
+            ACE_NTOHL (0x6b696e64), 
             ACE_NTOHL (0x0),  // name = kind
             CORBA::tk_alias, // typecode kind for typedefs
             64, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               34,
-              ACE_NTOHL (0x49444c3a),
-              ACE_NTOHL (0x6f6d672e),
-              ACE_NTOHL (0x6f72672f),
-              ACE_NTOHL (0x436f734e),
-              ACE_NTOHL (0x616d696e),
-              ACE_NTOHL (0x672f4973),
-              ACE_NTOHL (0x7472696e),
-              ACE_NTOHL (0x673a312e),
+              ACE_NTOHL (0x49444c3a), 
+              ACE_NTOHL (0x6f6d672e), 
+              ACE_NTOHL (0x6f72672f), 
+              ACE_NTOHL (0x436f734e), 
+              ACE_NTOHL (0x616d696e), 
+              ACE_NTOHL (0x672f4973), 
+              ACE_NTOHL (0x7472696e), 
+              ACE_NTOHL (0x673a312e), 
               ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
               8,
-              ACE_NTOHL (0x49737472),
+              ACE_NTOHL (0x49737472), 
               ACE_NTOHL (0x696e6700),  // name = Istring
-              CORBA::tk_string,
+              CORBA::tk_string, 
               0U, // string length
 
 
@@ -3630,44 +3802,44 @@ static const CORBA::Long _oc_PortableGroup_NoFactory[] =
 
 
   8,
-  ACE_NTOHL (0x74797065),
+  ACE_NTOHL (0x74797065), 
   ACE_NTOHL (0x5f696400),  // name = type_id
   CORBA::tk_alias, // typecode kind for typedefs
   140, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     37,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f5479),
-    ACE_NTOHL (0x70654964),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f5479), 
+    ACE_NTOHL (0x70654964), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/TypeId:1.0
     7,
-    ACE_NTOHL (0x54797065),
+    ACE_NTOHL (0x54797065), 
     ACE_NTOHL (0x49640000),  // name = TypeId
     CORBA::tk_alias, // typecode kind for typedefs
     72, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       35,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x434f5242),
-      ACE_NTOHL (0x412f5265),
-      ACE_NTOHL (0x706f7369),
-      ACE_NTOHL (0x746f7279),
-      ACE_NTOHL (0x49643a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x434f5242), 
+      ACE_NTOHL (0x412f5265), 
+      ACE_NTOHL (0x706f7369), 
+      ACE_NTOHL (0x746f7279), 
+      ACE_NTOHL (0x49643a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
       13,
-      ACE_NTOHL (0x5265706f),
-      ACE_NTOHL (0x7369746f),
-      ACE_NTOHL (0x72794964),
+      ACE_NTOHL (0x5265706f), 
+      ACE_NTOHL (0x7369746f), 
+      ACE_NTOHL (0x72794964), 
       ACE_NTOHL (0x0),  // name = RepositoryId
-      CORBA::tk_string,
+      CORBA::tk_string, 
       0U, // string length
 
 
@@ -3754,7 +3926,7 @@ void PortableGroup::InvalidCriteria::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -3767,7 +3939,7 @@ void PortableGroup::InvalidCriteria::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -3791,66 +3963,66 @@ static const CORBA::Long _oc_PortableGroup_InvalidCriteria[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f496e),
-  ACE_NTOHL (0x76616c69),
-  ACE_NTOHL (0x64437269),
-  ACE_NTOHL (0x74657269),
-  ACE_NTOHL (0x613a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f496e), 
+  ACE_NTOHL (0x76616c69), 
+  ACE_NTOHL (0x64437269), 
+  ACE_NTOHL (0x74657269), 
+  ACE_NTOHL (0x613a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableGroup/InvalidCriteria:1.0
   16,
-  ACE_NTOHL (0x496e7661),
-  ACE_NTOHL (0x6c696443),
-  ACE_NTOHL (0x72697465),
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c696443), 
+  ACE_NTOHL (0x72697465), 
   ACE_NTOHL (0x72696100),  // name = InvalidCriteria
   1, // member count
   17,
-  ACE_NTOHL (0x696e7661),
-  ACE_NTOHL (0x6c69645f),
-  ACE_NTOHL (0x63726974),
-  ACE_NTOHL (0x65726961),
+  ACE_NTOHL (0x696e7661), 
+  ACE_NTOHL (0x6c69645f), 
+  ACE_NTOHL (0x63726974), 
+  ACE_NTOHL (0x65726961), 
   ACE_NTOHL (0x0),  // name = invalid_criteria
   CORBA::tk_alias, // typecode kind for typedefs
   700, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     39,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4372),
-    ACE_NTOHL (0x69746572),
-    ACE_NTOHL (0x69613a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4372), 
+    ACE_NTOHL (0x69746572), 
+    ACE_NTOHL (0x69613a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Criteria:1.0
     9,
-    ACE_NTOHL (0x43726974),
-    ACE_NTOHL (0x65726961),
+    ACE_NTOHL (0x43726974), 
+    ACE_NTOHL (0x65726961), 
     ACE_NTOHL (0x0),  // name = Criteria
     CORBA::tk_alias, // typecode kind for typedefs
     628, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       41,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x506f7274),
-      ACE_NTOHL (0x61626c65),
-      ACE_NTOHL (0x47726f75),
-      ACE_NTOHL (0x702f5072),
-      ACE_NTOHL (0x6f706572),
-      ACE_NTOHL (0x74696573),
-      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x506f7274), 
+      ACE_NTOHL (0x61626c65), 
+      ACE_NTOHL (0x47726f75), 
+      ACE_NTOHL (0x702f5072), 
+      ACE_NTOHL (0x6f706572), 
+      ACE_NTOHL (0x74696573), 
+      ACE_NTOHL (0x3a312e30), 
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/Properties:1.0
       11,
-      ACE_NTOHL (0x50726f70),
-      ACE_NTOHL (0x65727469),
+      ACE_NTOHL (0x50726f70), 
+      ACE_NTOHL (0x65727469), 
       ACE_NTOHL (0x65730000),  // name = Properties
       CORBA::tk_sequence, // typecode kind
       552, // encapsulation length
@@ -3859,19 +4031,19 @@ static const CORBA::Long _oc_PortableGroup_InvalidCriteria[] =
         536, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           39,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x506f7274),
-          ACE_NTOHL (0x61626c65),
-          ACE_NTOHL (0x47726f75),
-          ACE_NTOHL (0x702f5072),
-          ACE_NTOHL (0x6f706572),
-          ACE_NTOHL (0x74793a31),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x506f7274), 
+          ACE_NTOHL (0x61626c65), 
+          ACE_NTOHL (0x47726f75), 
+          ACE_NTOHL (0x702f5072), 
+          ACE_NTOHL (0x6f706572), 
+          ACE_NTOHL (0x74793a31), 
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Property:1.0
           9,
-          ACE_NTOHL (0x50726f70),
-          ACE_NTOHL (0x65727479),
+          ACE_NTOHL (0x50726f70), 
+          ACE_NTOHL (0x65727479), 
           ACE_NTOHL (0x0),  // name = Property
           2, // member count
           4,
@@ -3880,32 +4052,32 @@ static const CORBA::Long _oc_PortableGroup_InvalidCriteria[] =
           376, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             35,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x506f7274),
-            ACE_NTOHL (0x61626c65),
-            ACE_NTOHL (0x47726f75),
-            ACE_NTOHL (0x702f4e61),
-            ACE_NTOHL (0x6d653a31),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x506f7274), 
+            ACE_NTOHL (0x61626c65), 
+            ACE_NTOHL (0x47726f75), 
+            ACE_NTOHL (0x702f4e61), 
+            ACE_NTOHL (0x6d653a31), 
             ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
             5,
-            ACE_NTOHL (0x4e616d65),
+            ACE_NTOHL (0x4e616d65), 
             ACE_NTOHL (0x0),  // name = Name
             CORBA::tk_alias, // typecode kind for typedefs
             312, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               31,
-              ACE_NTOHL (0x49444c3a),
-              ACE_NTOHL (0x6f6d672e),
-              ACE_NTOHL (0x6f72672f),
-              ACE_NTOHL (0x436f734e),
-              ACE_NTOHL (0x616d696e),
-              ACE_NTOHL (0x672f4e61),
-              ACE_NTOHL (0x6d653a31),
+              ACE_NTOHL (0x49444c3a), 
+              ACE_NTOHL (0x6f6d672e), 
+              ACE_NTOHL (0x6f72672f), 
+              ACE_NTOHL (0x436f734e), 
+              ACE_NTOHL (0x616d696e), 
+              ACE_NTOHL (0x672f4e61), 
+              ACE_NTOHL (0x6d653a31), 
               ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
               5,
-              ACE_NTOHL (0x4e616d65),
+              ACE_NTOHL (0x4e616d65), 
               ACE_NTOHL (0x0),  // name = Name
               CORBA::tk_sequence, // typecode kind
               252, // encapsulation length
@@ -3914,20 +4086,20 @@ static const CORBA::Long _oc_PortableGroup_InvalidCriteria[] =
                 236, // encapsulation length
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   40,
-                  ACE_NTOHL (0x49444c3a),
-                  ACE_NTOHL (0x6f6d672e),
-                  ACE_NTOHL (0x6f72672f),
-                  ACE_NTOHL (0x436f734e),
-                  ACE_NTOHL (0x616d696e),
-                  ACE_NTOHL (0x672f4e61),
-                  ACE_NTOHL (0x6d65436f),
-                  ACE_NTOHL (0x6d706f6e),
-                  ACE_NTOHL (0x656e743a),
+                  ACE_NTOHL (0x49444c3a), 
+                  ACE_NTOHL (0x6f6d672e), 
+                  ACE_NTOHL (0x6f72672f), 
+                  ACE_NTOHL (0x436f734e), 
+                  ACE_NTOHL (0x616d696e), 
+                  ACE_NTOHL (0x672f4e61), 
+                  ACE_NTOHL (0x6d65436f), 
+                  ACE_NTOHL (0x6d706f6e), 
+                  ACE_NTOHL (0x656e743a), 
                   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
                   14,
-                  ACE_NTOHL (0x4e616d65),
-                  ACE_NTOHL (0x436f6d70),
-                  ACE_NTOHL (0x6f6e656e),
+                  ACE_NTOHL (0x4e616d65), 
+                  ACE_NTOHL (0x436f6d70), 
+                  ACE_NTOHL (0x6f6e656e), 
                   ACE_NTOHL (0x74000000),  // name = NameComponent
                   2, // member count
                   3,
@@ -3936,41 +4108,41 @@ static const CORBA::Long _oc_PortableGroup_InvalidCriteria[] =
                   64, // encapsulation length
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34,
-                    ACE_NTOHL (0x49444c3a),
-                    ACE_NTOHL (0x6f6d672e),
-                    ACE_NTOHL (0x6f72672f),
-                    ACE_NTOHL (0x436f734e),
-                    ACE_NTOHL (0x616d696e),
-                    ACE_NTOHL (0x672f4973),
-                    ACE_NTOHL (0x7472696e),
-                    ACE_NTOHL (0x673a312e),
+                    ACE_NTOHL (0x49444c3a), 
+                    ACE_NTOHL (0x6f6d672e), 
+                    ACE_NTOHL (0x6f72672f), 
+                    ACE_NTOHL (0x436f734e), 
+                    ACE_NTOHL (0x616d696e), 
+                    ACE_NTOHL (0x672f4973), 
+                    ACE_NTOHL (0x7472696e), 
+                    ACE_NTOHL (0x673a312e), 
                     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8,
-                    ACE_NTOHL (0x49737472),
+                    ACE_NTOHL (0x49737472), 
                     ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string,
+                    CORBA::tk_string, 
                     0U, // string length
 
                   5,
-                  ACE_NTOHL (0x6b696e64),
+                  ACE_NTOHL (0x6b696e64), 
                   ACE_NTOHL (0x0),  // name = kind
                   CORBA::tk_alias, // typecode kind for typedefs
                   64, // encapsulation length
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34,
-                    ACE_NTOHL (0x49444c3a),
-                    ACE_NTOHL (0x6f6d672e),
-                    ACE_NTOHL (0x6f72672f),
-                    ACE_NTOHL (0x436f734e),
-                    ACE_NTOHL (0x616d696e),
-                    ACE_NTOHL (0x672f4973),
-                    ACE_NTOHL (0x7472696e),
-                    ACE_NTOHL (0x673a312e),
+                    ACE_NTOHL (0x49444c3a), 
+                    ACE_NTOHL (0x6f6d672e), 
+                    ACE_NTOHL (0x6f72672f), 
+                    ACE_NTOHL (0x436f734e), 
+                    ACE_NTOHL (0x616d696e), 
+                    ACE_NTOHL (0x672f4973), 
+                    ACE_NTOHL (0x7472696e), 
+                    ACE_NTOHL (0x673a312e), 
                     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8,
-                    ACE_NTOHL (0x49737472),
+                    ACE_NTOHL (0x49737472), 
                     ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string,
+                    CORBA::tk_string, 
                     0U, // string length
 
 
@@ -3984,17 +4156,17 @@ static const CORBA::Long _oc_PortableGroup_InvalidCriteria[] =
           60, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             36,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x506f7274),
-            ACE_NTOHL (0x61626c65),
-            ACE_NTOHL (0x47726f75),
-            ACE_NTOHL (0x702f5661),
-            ACE_NTOHL (0x6c75653a),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x506f7274), 
+            ACE_NTOHL (0x61626c65), 
+            ACE_NTOHL (0x47726f75), 
+            ACE_NTOHL (0x702f5661), 
+            ACE_NTOHL (0x6c75653a), 
             ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Value:1.0
             6,
-            ACE_NTOHL (0x56616c75),
+            ACE_NTOHL (0x56616c75), 
             ACE_NTOHL (0x65000000),  // name = Value
             CORBA::tk_any,
 
@@ -4087,7 +4259,7 @@ void PortableGroup::CannotMeetCriteria::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -4100,7 +4272,7 @@ void PortableGroup::CannotMeetCriteria::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -4124,67 +4296,67 @@ static const CORBA::Long _oc_PortableGroup_CannotMeetCriteria[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x47726f75),
-  ACE_NTOHL (0x702f4361),
-  ACE_NTOHL (0x6e6e6f74),
-  ACE_NTOHL (0x4d656574),
-  ACE_NTOHL (0x43726974),
-  ACE_NTOHL (0x65726961),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x47726f75), 
+  ACE_NTOHL (0x702f4361), 
+  ACE_NTOHL (0x6e6e6f74), 
+  ACE_NTOHL (0x4d656574), 
+  ACE_NTOHL (0x43726974), 
+  ACE_NTOHL (0x65726961), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/CannotMeetCriteria:1.0
   19,
-  ACE_NTOHL (0x43616e6e),
-  ACE_NTOHL (0x6f744d65),
-  ACE_NTOHL (0x65744372),
-  ACE_NTOHL (0x69746572),
+  ACE_NTOHL (0x43616e6e), 
+  ACE_NTOHL (0x6f744d65), 
+  ACE_NTOHL (0x65744372), 
+  ACE_NTOHL (0x69746572), 
   ACE_NTOHL (0x69610000),  // name = CannotMeetCriteria
   1, // member count
   15,
-  ACE_NTOHL (0x756e6d65),
-  ACE_NTOHL (0x745f6372),
-  ACE_NTOHL (0x69746572),
+  ACE_NTOHL (0x756e6d65), 
+  ACE_NTOHL (0x745f6372), 
+  ACE_NTOHL (0x69746572), 
   ACE_NTOHL (0x69610000),  // name = unmet_criteria
   CORBA::tk_alias, // typecode kind for typedefs
   700, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     39,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x506f7274),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x47726f75),
-    ACE_NTOHL (0x702f4372),
-    ACE_NTOHL (0x69746572),
-    ACE_NTOHL (0x69613a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x506f7274), 
+    ACE_NTOHL (0x61626c65), 
+    ACE_NTOHL (0x47726f75), 
+    ACE_NTOHL (0x702f4372), 
+    ACE_NTOHL (0x69746572), 
+    ACE_NTOHL (0x69613a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Criteria:1.0
     9,
-    ACE_NTOHL (0x43726974),
-    ACE_NTOHL (0x65726961),
+    ACE_NTOHL (0x43726974), 
+    ACE_NTOHL (0x65726961), 
     ACE_NTOHL (0x0),  // name = Criteria
     CORBA::tk_alias, // typecode kind for typedefs
     628, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       41,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x506f7274),
-      ACE_NTOHL (0x61626c65),
-      ACE_NTOHL (0x47726f75),
-      ACE_NTOHL (0x702f5072),
-      ACE_NTOHL (0x6f706572),
-      ACE_NTOHL (0x74696573),
-      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x506f7274), 
+      ACE_NTOHL (0x61626c65), 
+      ACE_NTOHL (0x47726f75), 
+      ACE_NTOHL (0x702f5072), 
+      ACE_NTOHL (0x6f706572), 
+      ACE_NTOHL (0x74696573), 
+      ACE_NTOHL (0x3a312e30), 
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableGroup/Properties:1.0
       11,
-      ACE_NTOHL (0x50726f70),
-      ACE_NTOHL (0x65727469),
+      ACE_NTOHL (0x50726f70), 
+      ACE_NTOHL (0x65727469), 
       ACE_NTOHL (0x65730000),  // name = Properties
       CORBA::tk_sequence, // typecode kind
       552, // encapsulation length
@@ -4193,19 +4365,19 @@ static const CORBA::Long _oc_PortableGroup_CannotMeetCriteria[] =
         536, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           39,
-          ACE_NTOHL (0x49444c3a),
-          ACE_NTOHL (0x6f6d672e),
-          ACE_NTOHL (0x6f72672f),
-          ACE_NTOHL (0x506f7274),
-          ACE_NTOHL (0x61626c65),
-          ACE_NTOHL (0x47726f75),
-          ACE_NTOHL (0x702f5072),
-          ACE_NTOHL (0x6f706572),
-          ACE_NTOHL (0x74793a31),
+          ACE_NTOHL (0x49444c3a), 
+          ACE_NTOHL (0x6f6d672e), 
+          ACE_NTOHL (0x6f72672f), 
+          ACE_NTOHL (0x506f7274), 
+          ACE_NTOHL (0x61626c65), 
+          ACE_NTOHL (0x47726f75), 
+          ACE_NTOHL (0x702f5072), 
+          ACE_NTOHL (0x6f706572), 
+          ACE_NTOHL (0x74793a31), 
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Property:1.0
           9,
-          ACE_NTOHL (0x50726f70),
-          ACE_NTOHL (0x65727479),
+          ACE_NTOHL (0x50726f70), 
+          ACE_NTOHL (0x65727479), 
           ACE_NTOHL (0x0),  // name = Property
           2, // member count
           4,
@@ -4214,32 +4386,32 @@ static const CORBA::Long _oc_PortableGroup_CannotMeetCriteria[] =
           376, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             35,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x506f7274),
-            ACE_NTOHL (0x61626c65),
-            ACE_NTOHL (0x47726f75),
-            ACE_NTOHL (0x702f4e61),
-            ACE_NTOHL (0x6d653a31),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x506f7274), 
+            ACE_NTOHL (0x61626c65), 
+            ACE_NTOHL (0x47726f75), 
+            ACE_NTOHL (0x702f4e61), 
+            ACE_NTOHL (0x6d653a31), 
             ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableGroup/Name:1.0
             5,
-            ACE_NTOHL (0x4e616d65),
+            ACE_NTOHL (0x4e616d65), 
             ACE_NTOHL (0x0),  // name = Name
             CORBA::tk_alias, // typecode kind for typedefs
             312, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               31,
-              ACE_NTOHL (0x49444c3a),
-              ACE_NTOHL (0x6f6d672e),
-              ACE_NTOHL (0x6f72672f),
-              ACE_NTOHL (0x436f734e),
-              ACE_NTOHL (0x616d696e),
-              ACE_NTOHL (0x672f4e61),
-              ACE_NTOHL (0x6d653a31),
+              ACE_NTOHL (0x49444c3a), 
+              ACE_NTOHL (0x6f6d672e), 
+              ACE_NTOHL (0x6f72672f), 
+              ACE_NTOHL (0x436f734e), 
+              ACE_NTOHL (0x616d696e), 
+              ACE_NTOHL (0x672f4e61), 
+              ACE_NTOHL (0x6d653a31), 
               ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CosNaming/Name:1.0
               5,
-              ACE_NTOHL (0x4e616d65),
+              ACE_NTOHL (0x4e616d65), 
               ACE_NTOHL (0x0),  // name = Name
               CORBA::tk_sequence, // typecode kind
               252, // encapsulation length
@@ -4248,20 +4420,20 @@ static const CORBA::Long _oc_PortableGroup_CannotMeetCriteria[] =
                 236, // encapsulation length
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   40,
-                  ACE_NTOHL (0x49444c3a),
-                  ACE_NTOHL (0x6f6d672e),
-                  ACE_NTOHL (0x6f72672f),
-                  ACE_NTOHL (0x436f734e),
-                  ACE_NTOHL (0x616d696e),
-                  ACE_NTOHL (0x672f4e61),
-                  ACE_NTOHL (0x6d65436f),
-                  ACE_NTOHL (0x6d706f6e),
-                  ACE_NTOHL (0x656e743a),
+                  ACE_NTOHL (0x49444c3a), 
+                  ACE_NTOHL (0x6f6d672e), 
+                  ACE_NTOHL (0x6f72672f), 
+                  ACE_NTOHL (0x436f734e), 
+                  ACE_NTOHL (0x616d696e), 
+                  ACE_NTOHL (0x672f4e61), 
+                  ACE_NTOHL (0x6d65436f), 
+                  ACE_NTOHL (0x6d706f6e), 
+                  ACE_NTOHL (0x656e743a), 
                   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CosNaming/NameComponent:1.0
                   14,
-                  ACE_NTOHL (0x4e616d65),
-                  ACE_NTOHL (0x436f6d70),
-                  ACE_NTOHL (0x6f6e656e),
+                  ACE_NTOHL (0x4e616d65), 
+                  ACE_NTOHL (0x436f6d70), 
+                  ACE_NTOHL (0x6f6e656e), 
                   ACE_NTOHL (0x74000000),  // name = NameComponent
                   2, // member count
                   3,
@@ -4270,41 +4442,41 @@ static const CORBA::Long _oc_PortableGroup_CannotMeetCriteria[] =
                   64, // encapsulation length
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34,
-                    ACE_NTOHL (0x49444c3a),
-                    ACE_NTOHL (0x6f6d672e),
-                    ACE_NTOHL (0x6f72672f),
-                    ACE_NTOHL (0x436f734e),
-                    ACE_NTOHL (0x616d696e),
-                    ACE_NTOHL (0x672f4973),
-                    ACE_NTOHL (0x7472696e),
-                    ACE_NTOHL (0x673a312e),
+                    ACE_NTOHL (0x49444c3a), 
+                    ACE_NTOHL (0x6f6d672e), 
+                    ACE_NTOHL (0x6f72672f), 
+                    ACE_NTOHL (0x436f734e), 
+                    ACE_NTOHL (0x616d696e), 
+                    ACE_NTOHL (0x672f4973), 
+                    ACE_NTOHL (0x7472696e), 
+                    ACE_NTOHL (0x673a312e), 
                     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8,
-                    ACE_NTOHL (0x49737472),
+                    ACE_NTOHL (0x49737472), 
                     ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string,
+                    CORBA::tk_string, 
                     0U, // string length
 
                   5,
-                  ACE_NTOHL (0x6b696e64),
+                  ACE_NTOHL (0x6b696e64), 
                   ACE_NTOHL (0x0),  // name = kind
                   CORBA::tk_alias, // typecode kind for typedefs
                   64, // encapsulation length
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34,
-                    ACE_NTOHL (0x49444c3a),
-                    ACE_NTOHL (0x6f6d672e),
-                    ACE_NTOHL (0x6f72672f),
-                    ACE_NTOHL (0x436f734e),
-                    ACE_NTOHL (0x616d696e),
-                    ACE_NTOHL (0x672f4973),
-                    ACE_NTOHL (0x7472696e),
-                    ACE_NTOHL (0x673a312e),
+                    ACE_NTOHL (0x49444c3a), 
+                    ACE_NTOHL (0x6f6d672e), 
+                    ACE_NTOHL (0x6f72672f), 
+                    ACE_NTOHL (0x436f734e), 
+                    ACE_NTOHL (0x616d696e), 
+                    ACE_NTOHL (0x672f4973), 
+                    ACE_NTOHL (0x7472696e), 
+                    ACE_NTOHL (0x673a312e), 
                     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8,
-                    ACE_NTOHL (0x49737472),
+                    ACE_NTOHL (0x49737472), 
                     ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string,
+                    CORBA::tk_string, 
                     0U, // string length
 
 
@@ -4318,17 +4490,17 @@ static const CORBA::Long _oc_PortableGroup_CannotMeetCriteria[] =
           60, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             36,
-            ACE_NTOHL (0x49444c3a),
-            ACE_NTOHL (0x6f6d672e),
-            ACE_NTOHL (0x6f72672f),
-            ACE_NTOHL (0x506f7274),
-            ACE_NTOHL (0x61626c65),
-            ACE_NTOHL (0x47726f75),
-            ACE_NTOHL (0x702f5661),
-            ACE_NTOHL (0x6c75653a),
+            ACE_NTOHL (0x49444c3a), 
+            ACE_NTOHL (0x6f6d672e), 
+            ACE_NTOHL (0x6f72672f), 
+            ACE_NTOHL (0x506f7274), 
+            ACE_NTOHL (0x61626c65), 
+            ACE_NTOHL (0x47726f75), 
+            ACE_NTOHL (0x702f5661), 
+            ACE_NTOHL (0x6c75653a), 
             ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableGroup/Value:1.0
             6,
-            ACE_NTOHL (0x56616c75),
+            ACE_NTOHL (0x56616c75), 
             ACE_NTOHL (0x65000000),  // name = Value
             CORBA::tk_any,
 
@@ -4451,7 +4623,7 @@ PortableGroup::PropertyManager_var::operator const ::PortableGroup::PropertyMana
   return this->ptr_;
 }
 
-PortableGroup::PropertyManager_var::operator ::PortableGroup::PropertyManager_ptr &() // cast
+PortableGroup::PropertyManager_var::operator ::PortableGroup::PropertyManager_ptr &() // cast 
 {
   return this->ptr_;
 }
@@ -4643,7 +4815,7 @@ void *PortableGroup::PropertyManager::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-
+    
   if (retv)
     this->_add_ref ();
   return retv;
@@ -4745,7 +4917,7 @@ PortableGroup::ObjectGroupManager_var::operator const ::PortableGroup::ObjectGro
   return this->ptr_;
 }
 
-PortableGroup::ObjectGroupManager_var::operator ::PortableGroup::ObjectGroupManager_ptr &() // cast
+PortableGroup::ObjectGroupManager_var::operator ::PortableGroup::ObjectGroupManager_ptr &() // cast 
 {
   return this->ptr_;
 }
@@ -4937,7 +5109,7 @@ void *PortableGroup::ObjectGroupManager::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-
+    
   if (retv)
     this->_add_ref ();
   return retv;
@@ -5039,7 +5211,7 @@ PortableGroup::GenericFactory_var::operator const ::PortableGroup::GenericFactor
   return this->ptr_;
 }
 
-PortableGroup::GenericFactory_var::operator ::PortableGroup::GenericFactory_ptr &() // cast
+PortableGroup::GenericFactory_var::operator ::PortableGroup::GenericFactory_ptr &() // cast 
 {
   return this->ptr_;
 }
@@ -5231,7 +5403,7 @@ void *PortableGroup::GenericFactory::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-
+    
   if (retv)
     this->_add_ref ();
   return retv;
@@ -5278,13 +5450,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Tag
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_TagGroupTaggedComponent, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -5308,6 +5480,97 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Tag
             1,
             ACE_static_cast (void *, tmp),
             PortableGroup::TagGroupTaggedComponent::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const PortableGroup::GroupIIOPProfile &_tao_elem
+  ) // copying
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        PortableGroup::_tc_GroupIIOPProfile,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
+  }
+}
+
+void operator<<= (CORBA::Any &_tao_any, PortableGroup::GroupIIOPProfile *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      PortableGroup::_tc_GroupIIOPProfile,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      PortableGroup::GroupIIOPProfile::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableGroup::GroupIIOPProfile *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(
+      const PortableGroup::GroupIIOPProfile*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::GroupIIOPProfile *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean result = type->equivalent (PortableGroup::_tc_GroupIIOPProfile, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+    
+    if (!result)
+      return 0; // not equivalent
+    
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const PortableGroup::GroupIIOPProfile*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      PortableGroup::GroupIIOPProfile *tmp;
+      ACE_NEW_RETURN (tmp, PortableGroup::GroupIIOPProfile, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            PortableGroup::_tc_GroupIIOPProfile,
+            1,
+            ACE_static_cast (void *, tmp),
+            PortableGroup::GroupIIOPProfile::_tao_any_destructor
           );
         _tao_elem = tmp;
         return 1;
@@ -5361,13 +5624,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Pro
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_Property, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -5452,13 +5715,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Pro
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_Properties, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -5543,13 +5806,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Loc
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_Locations, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -5629,13 +5892,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Int
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_InterfaceNotFound, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::InterfaceNotFound *)_tao_any.value ();
@@ -5719,13 +5982,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Obj
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_ObjectGroupNotFound, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::ObjectGroupNotFound *)_tao_any.value ();
@@ -5809,13 +6072,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Mem
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_MemberNotFound, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::MemberNotFound *)_tao_any.value ();
@@ -5899,13 +6162,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Obj
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_ObjectNotFound, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::ObjectNotFound *)_tao_any.value ();
@@ -5989,13 +6252,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Mem
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_MemberAlreadyPresent, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::MemberAlreadyPresent *)_tao_any.value ();
@@ -6079,13 +6342,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Bad
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_BadReplicationStyle, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::BadReplicationStyle *)_tao_any.value ();
@@ -6169,13 +6432,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Obj
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_ObjectNotCreated, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::ObjectNotCreated *)_tao_any.value ();
@@ -6259,13 +6522,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Obj
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_ObjectNotAdded, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::ObjectNotAdded *)_tao_any.value ();
@@ -6349,13 +6612,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Uns
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_UnsupportedProperty, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::UnsupportedProperty *)_tao_any.value ();
@@ -6439,13 +6702,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Inv
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_InvalidProperty, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::InvalidProperty *)_tao_any.value ();
@@ -6529,13 +6792,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::NoF
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_NoFactory, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::NoFactory *)_tao_any.value ();
@@ -6619,13 +6882,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Inv
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_InvalidCriteria, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::InvalidCriteria *)_tao_any.value ();
@@ -6709,13 +6972,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Can
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (PortableGroup::_tc_CannotMeetCriteria, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableGroup::CannotMeetCriteria *)_tao_any.value ();
@@ -6783,6 +7046,79 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableGroup::Can
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
+    const PortableGroup::GroupIIOPProfile &_tao_sequence
+  )
+{
+  if (strm << _tao_sequence.length ())
+  {
+    // encode all elements
+    
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+    {
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+        ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (PortableGroup::GroupIIOPProfile *)&_tao_sequence);
+      if (oseq->mb ())
+        return strm.write_octet_array_mb (oseq->mb ());
+      else
+        return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+    }
+    
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+    return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+  
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+  }
+  return 0; // error
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    PortableGroup::GroupIIOPProfile &_tao_sequence
+  )
+{
+  CORBA::ULong _tao_seq_len;
+  if (strm >> _tao_seq_len)
+  {
+    // set the length of the sequence
+    _tao_sequence.length (_tao_seq_len);
+    // If length is 0 we return true.
+    if (0 >= _tao_seq_len) 
+      return 1;
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 58.)
+    if (_tao_seq_len > strm.length())
+      return 0;
+    // retrieve all the elements
+    
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+    if (ACE_BIT_DISABLED (strm.start ()->flags (),
+    ACE_Message_Block::DONT_DELETE))
+    {
+      TAO_ORB_Core* orb_core = strm.orb_core ();
+      if (orb_core != 0 &&
+      strm.orb_core ()->resource_factory ()->
+      input_cdr_allocator_type_locked () == 1)
+      {
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+          ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
+        oseq->replace (_tao_seq_len, strm.start ());
+        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+        strm.skip_bytes (_tao_seq_len);
+        return 1;
+      }
+    }
+    return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+    return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+  
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+  }
+  return 0; // error
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
     const PortableGroup::Properties &_tao_sequence
   )
 {
@@ -6810,7 +7146,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len)
+    if (0 >= _tao_seq_len) 
       return 1;
     // Add a check to the length of the sequence
     // to make sure it does not exceed the length
@@ -6857,7 +7193,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len)
+    if (0 >= _tao_seq_len) 
       return 1;
     // Add a check to the length of the sequence
     // to make sure it does not exceed the length

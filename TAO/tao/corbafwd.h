@@ -1692,6 +1692,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 //#define TAO_TAG_SOME_OTHER_TAG 0x54414f03U
 // Tag for specifying object groups - see MIOP specification
 #define TAO_TAG_GROUP 0x54414f03U
+#define TAO_TAG_GROUP_IIOP 0x54414f04U
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own service context list entries.

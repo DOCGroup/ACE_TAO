@@ -312,14 +312,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
   // Set the unique request ID associated with this request.
   this->op_details_.request_id (this->transport_->tms ()->request_id ());
-
-  // Set the target specifier to point to the right kind
-  // of specifier for our request.  Normally, this is just
-  // the object key.  However, some pluggable have special
-  // requires such that the object key does not make the
-  // most sense.  For example, MIOP requires the group id
-  // to be sent.
-  this->profile_->request_target_specifier (this->target_spec_);
 }
 
 void
@@ -341,52 +333,19 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   this->add_rt_service_context (ACE_TRY_ENV);
   ACE_CHECK;
 
-/* @@ Frank - I don't understand the purpose of this code.  We just
-              set the target specification in TAO_GIOP_Invocation::start ().
+  // Set the target specifier to point to the right kind
+  // of specifier for our request.  Normally, this is just
+  // the object key.  However, some pluggable have special
+  // requirements on what can actually be put in the target
+  // specification.  For example, MIOP doesn't have an 
+  // object key.
+  this->profile_->request_target_specifier (
+    this->target_spec_,
+    ACE_static_cast (TAO_Target_Specification::TAO_Target_Address,
+                     this->stub_->addressing_mode ()),
+    ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // The target specification mode
-  if (this->stub_->addressing_mode () ==
-      TAO_Target_Specification::Key_Addr)
-    {
-      this->target_spec_.target_specifier (
-            this->profile_->object_key ());
-    }
-  else if (this->stub_->addressing_mode ()
-             == TAO_Target_Specification::Profile_Addr)
-    {
-      this->target_spec_.target_specifier (
-                this->profile_->create_tagged_profile ()
-              );
-    }
-  else if (this->stub_->addressing_mode ()
-             == TAO_Target_Specification::Reference_Addr)
-    {
-      // We need to call the method seperately. If there is no
-      // IOP::IOR info, the call would create the info and return the
-      // index that we need.
-      CORBA::ULong index = 0;
-
-      IOP::IOR *ior_info = 0;
-      int retval = this->stub_->create_ior_info (ior_info,
-                                                 index,
-                                                 ACE_TRY_ENV);
-      ACE_CHECK;
-
-      if (retval == -1)
-        {
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Error in finding index for \n")
-                          ACE_TEXT ("IOP::IOR \n")));
-            }
-          return;
-        }
-
-      this->target_spec_.target_specifier (*ior_info,
-                                           index);
-    }
-*/
   // Update the response flags
   this->op_details_.response_flags (response_flags);
 
