@@ -59,6 +59,17 @@ using xercesc::DOMNamedNodeMap;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
+/**
+ * @class IAD_Handler
+ *
+ * @brief Handler class for <ImplementationArtifactDescription> tag
+ *
+ * This class defines handler methods to parse the
+ * ImplementationArtifactDescription type
+ * in the descriptor files. The corresponding CORBA IDL type for this
+ * element is returned.
+ */
+
 class Config_Handler_Export IAD_Handler: public Basic_Handler
 {
 public:
@@ -76,7 +87,8 @@ public:
     : Basic_Handler (doc, iter, release) { }
 
   /// Process the component package description
-  void process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
+  void process_ImplementationArtifactDescription
+    (::Deployment::ImplementationArtifactDescription &iad);
 
 };
 

@@ -47,6 +47,17 @@ using xercesc::DOMNodeFilter;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
+/**
+ * @class IR_Handler
+ *
+ * @brief Handler class for <ImplementationRequirement> type
+ *
+ * This class defines handler methods to parse Implementation
+ * Requirement types in the descriptor files. The corresponding
+ * CORBA IDL type for the schema element is returned.
+ *
+ */
+
 class Config_Handler_Export IR_Handler: public Basic_Handler
 {
 public:
