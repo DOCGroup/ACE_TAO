@@ -1,3 +1,11 @@
+Sat Mar 18 01:33:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp: Changed to
+	  use TAO_Notify_EventType::get_native to access the EventType.
+	  Thanks to Darrell for pointing this out.
+
+	* orbsvcs/orbsvcs/Notify/Notify_Types.h: Undid my previous hack.
+
 Fri Mar 17 23:39:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Types.h (class

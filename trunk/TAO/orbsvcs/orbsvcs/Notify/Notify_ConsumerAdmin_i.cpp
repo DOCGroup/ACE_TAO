@@ -121,7 +121,7 @@ TAO_Notify_ConsumerAdmin_i::register_listener (TAO_Notify_Event_Listener *listen
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
-    added[i] = event_type->event_type_;
+    added[i] = event_type->get_native ();
 
   this->event_manager_->subscribe_for_events (listener,
                                               0,
@@ -146,7 +146,7 @@ TAO_Notify_ConsumerAdmin_i::unregister_listener (TAO_Notify_Event_Listener *list
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
-    removed[i] = event_type->event_type_;
+    removed[i] = event_type->get_native ();
 
   this->event_manager_->subscribe_for_events (listener,
                                               0,
