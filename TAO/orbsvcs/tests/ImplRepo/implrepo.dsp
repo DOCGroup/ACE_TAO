@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\server"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /out:"Impl_Repo.exe" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /out:"Impl_Repo.exe" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "ImplRepoTest ImplRepo - Win32 Debug"
 
@@ -138,13 +138,13 @@ SOURCE=.\Impl_Repo.idl
 
 !IF  "$(CFG)" == "ImplRepoTest ImplRepo - Win32 Release"
 
-USERDEP__IMPL_="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__IMPL_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Impl_Repo.idl
 InputName=Impl_Repo
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -177,13 +177,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ImplRepoTest ImplRepo - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__IMPL_="..\..\..\bin\tao_idl.exe"	
+USERDEP__IMPL_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Impl_Repo.idl
 InputName=Impl_Repo
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
