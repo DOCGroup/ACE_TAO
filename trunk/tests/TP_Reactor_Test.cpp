@@ -128,7 +128,7 @@ public:
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void): sem_ (0),
+  MyTask (void): sem_ ((unsigned int) 0),
                  my_reactor_ (0) {}
 
   virtual ~MyTask () { stop (); }
