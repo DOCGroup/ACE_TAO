@@ -9,8 +9,8 @@ Sat Aug 16 14:13:02 2003  Pradeep Gore  <pradeep@oomworks.com>
  	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
  	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
 
-	  Renamed classnames to resolve Solaris 9 compiler symbol conflicts with
-	  simile in the obsvcs Notify lib. 
+	  Renamed classnames to resolve Solaris 9 compiler symbol
+	  conflicts with simile in the orbsvcs Notify lib.
 	  Thanks to Don Hinton  <dhinton @ dresystems.com> for reporting
 	  this.
 
