@@ -508,10 +508,11 @@ namespace ACE_RMCast
   ACE_Refcounted_Auto_Ptr<NAK, ACE_Null_Mutex>
   NAK_ptr;
 
-  class NAK : Profile
+  class NAK : public Profile
   {
-    static u16 const id;
+  public:
 
+    static u16 const id;
 
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
   // Borland C++ Builder 6 and earlier don't handle default template
@@ -523,7 +524,6 @@ namespace ACE_RMCast
 
     typedef SerialNumbers::Iterator iterator;
 
-  public:
     NAK (Header const& h, istream& is)
         : Profile (h, 8)
     {

@@ -1,3 +1,17 @@
+Wed Feb 16 17:04:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/rmcast.mpb:
+	* protocols/ace/RMCast/RMCast.mpc:
+
+	  The RMCast protocol implementation currently requires thread
+	  support.  Updated these MPC files accordingly.
+
+	* protocols/ace/RMCast/Protocol.h (NAK):
+
+	  Since "NAK" is now a class instead of struct, public inheritance
+	  must be explicitly specified.  Fixes compile-time errors related
+	  to inaccessible members in the "Profile" base class.
+
 Wed Feb 16 18:31:28 2005  Steve Huston  <shuston@riverace.com>
 
 	* protocols/ace/RMCast/Acknowledge.cpp:
