@@ -20,7 +20,8 @@ Server<Servant>::~Server (void)
 // Parse the command-line arguments and set options.
 
 template <class Servant>
-int Server<Servant>::parse_args (void)
+int 
+Server<Servant>::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
   int c = 0;
@@ -55,7 +56,8 @@ int Server<Servant>::parse_args (void)
 
 // Initialize the server.
 template <class Servant>
-int Server<Servant>::init (const char *servant_name, 
+int 
+Server<Servant>::init (const char *servant_name, 
                            int argc, 
                            char *argv[], 
                            CORBA::Environment &env)
@@ -135,7 +137,8 @@ int Server<Servant>::run (CORBA::Environment &env)
 }
 
 template <class Servant>
-void Server<Servant>::register_name (void)
+void 
+Server<Servant>::register_name (void)
 {
   namingClient.init (orb_manager_.orb());
   // create the name for the naming service
@@ -179,7 +182,8 @@ Client<InterfaceObj, Var>::Client (void)
 // Reads the Server ior from a file
 
 template <class InterfaceObj, class Var>
-int Client<InterfaceObj, Var>::read_ior (char *filename)
+int 
+Client<InterfaceObj, Var>::read_ior (char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -209,10 +213,8 @@ int Client<InterfaceObj, Var>::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 template <class InterfaceObj, class Var>
-// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
-// format the methods correctly (hint, see where the return type goes
-// in the other examples.
-int Client<InterfaceObj, Var>::parse_args (void)
+int 
+Client<InterfaceObj, Var>::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "df:k:x");
   int c = 0;
@@ -263,10 +265,8 @@ Client<InterfaceObj, Var>::~Client (void)
 }
 
 template <class InterfaceObj, class Var>
-// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
-// format the methods correctly (hint, see where the return type goes
-// in the other examples.
-int Client<InterfaceObj, Var>::init (int argc, char **argv)
+int 
+Client<InterfaceObj, Var>::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -316,20 +316,16 @@ int Client<InterfaceObj, Var>::init (int argc, char **argv)
 }
 
 template <class InterfaceObj, class Var>
-// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
-// format the methods correctly (hint, see where the return type goes
-// in the other examples.
-int Client<InterfaceObj, Var>::shutdown (void )
+int 
+Client<InterfaceObj, Var>::shutdown (void )
 {
   // Returns the shutdwon flag
   return shutdown_;
 }
 
 template <class InterfaceObj, class Var>
-// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
-// format the methods correctly (hint, see where the return type goes
-// in the other examples.
-void  Client<InterfaceObj, Var>::shutdown (int flag)
+void  
+Client<InterfaceObj, Var>::shutdown (int flag)
 {
   // Fills the flag
   shutdown_ = flag;
