@@ -16,7 +16,7 @@
 
 #define QOSEVENT_MAIN
 
-#include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_Dgram_Mcast_QoS.h"
 #include "ace/OS.h"
 #include "ace/QoS_Session_Factory.h"
 #include "ace/QoS_Session.h"
@@ -146,7 +146,7 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 int
 main (int argc, char * argv[])
 {  
-  ACE_Protocol_Info protocol_info, *pinfo=0;
+  ACE_Protocol_Info *pinfo=0;
 
   OPTIONS options;
 
@@ -198,7 +198,7 @@ main (int argc, char * argv[])
                       -1);
 
   // Opening a new Multicast Datagram.
-  ACE_SOCK_Dgram_Mcast dgram_mcast;
+  ACE_SOCK_Dgram_Mcast_QoS dgram_mcast;
 
   // The windows example code uses PF_INET for the address family.
   // Winsock.h defines PF_INET to be AF_INET. The following
@@ -254,6 +254,8 @@ main (int argc, char * argv[])
   // subscribe will be added that constrains the various features of
   // GQoS like different flags etc.
 
+  ACE_QoS_Manager *ace_qos_manager;
+
   if (dgram_mcast.subscribe (mult_addr,
                              qos_params,
                              1,
@@ -266,6 +268,7 @@ main (int argc, char * argv[])
                              ACE_OVERLAPPED_SOCKET_FLAG 
                              | ACE_FLAG_MULTIPOINT_C_LEAF 
                              | ACE_FLAG_MULTIPOINT_D_LEAF,
+							  ace_qos_manager,
                              qos_session) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in subscribe\n"),
@@ -334,6 +337,7 @@ main (int argc, char * argv[])
   // Set the QoS for the session. Replaces the ioctl () call that was
   // being made previously.
   if (qos_session->qos (&dgram_mcast,
+						ace_qos_manager,
                         ace_qos) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to set QoS\n"),

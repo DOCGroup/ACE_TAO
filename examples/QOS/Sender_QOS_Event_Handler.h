@@ -20,7 +20,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
-#include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_Dgram_Mcast_QoS.h"
 
 #define MY_DEFPORT 5001
 #define DEFAULT_MULTICASTGROUP "234.5.6.7"
@@ -34,7 +34,7 @@ public:
   ACE_QOS_Event_Handler (void);
   // Constructor.
 
-  ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast);
+  ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast);
   // Constructor.
 
   ~ACE_QOS_Event_Handler (void);
@@ -50,7 +50,7 @@ public:
 
 private:
 
-  ACE_SOCK_Dgram_Mcast dgram_mcast_;
+  ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_;
  
 };
 

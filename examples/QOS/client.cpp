@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_Dgram_Mcast_QoS.h"
 #include "ace/OS.h"
 
 #define QOSEVENT_MAIN
@@ -202,7 +202,7 @@ main (int argc, char * argv[])
   // the sender and the receiver subscribe to the same multicast
   // addresses to make sure the "multicast sessions" for the two are
   // the same. This is used to match the RESV<->PATH states.
-  ACE_SOCK_Dgram_Mcast dgram_mcast;
+  ACE_SOCK_Dgram_Mcast_QoS dgram_mcast;
 
   // The windows example code uses PF_INET for the address family.
   // Winsock.h defines PF_INET to be AF_INET. Is there really a
