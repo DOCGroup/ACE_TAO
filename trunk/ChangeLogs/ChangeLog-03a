@@ -1,3 +1,10 @@
+Wed Feb 13 20:13:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Strategies_T.cpp (make_svc_handler): Make sure that the
+	  reactor of the Svc Handler is set to the reactor from the
+ 	  Creation Strategy.  Thanks to David Smith
+ 	  <smithdav@tycoelectronics.com> for reporting this!
+
 Wed Feb 13 17:42:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Configuration.cpp (operator=): Fixed a warning in g+
