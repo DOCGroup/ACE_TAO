@@ -156,6 +156,12 @@ take advantage of if a compiler supports them:
     TAO will automatically take advantage of namespaces if the C++
     compiler supports them, <EM>i.e.</EM>, if
     <CODE>ACE_HAS_BROKEN_NAMESPACES</CODE> is <EM>not</EM> enabled. <P>
+
+<LI> <B>STL</B> -- Unfortunately many of the platforms that ACE
+	supports don't have an STL library, so ACE does not depends on
+	STL and does not use it.
+	If your target platform(s) support STL you should be able to
+	use both without problems. <P>
 </UL>
 
 <P><HR><P>
