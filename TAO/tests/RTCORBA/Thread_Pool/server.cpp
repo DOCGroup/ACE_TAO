@@ -3,13 +3,13 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTPortableServer/RTPortableServer.h"
 
 ACE_RCSID(Thread_Pools, server, "$Id$")
 
 const char *ior_output_file = "ior";
-CORBA::ULong static_threads = 2;
-CORBA::ULong dynamic_threads = 2;
+int ior_count = 1;
+CORBA::ULong static_threads = 3;
+CORBA::ULong dynamic_threads = 3;
 long nap_time = 1000;
 
 int
@@ -55,6 +55,100 @@ parse_args (int argc, char *argv[])
 }
 
 int
+write_ior_to_file (CORBA::ORB_ptr orb,
+                   test_ptr test,
+                   CORBA_Environment &ACE_TRY_ENV)
+{
+  CORBA::String_var ior =
+    orb->object_to_string (test,
+                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  char filename[BUFSIZ];
+  ACE_OS::sprintf (filename,
+                   "%s_%d",
+                   ior_output_file,
+                   ior_count++);
+
+  FILE *output_file =
+    ACE_OS::fopen (filename,
+                   "w");
+
+  if (output_file == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open output file for writing IOR: %s",
+                       filename),
+                      -1);
+
+  ACE_OS::fprintf (output_file,
+                   "%s",
+                   ior.in ());
+
+  ACE_OS::fclose (output_file);
+
+  return 0;
+}
+
+int
+create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
+                                 const char *poa_name,
+                                 PortableServer::POAManager_ptr poa_manager,
+                                 PortableServer::POA_ptr root_poa,
+                                 CORBA::ORB_ptr orb,
+                                 CORBA_Environment &ACE_TRY_ENV)
+{
+  // Policies for the firstPOA to be created.
+  CORBA::PolicyList policies (2); policies.length (2);
+
+  // Implicit_activation policy.
+  policies[0] =
+    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Thread pool policy.
+  policies[1] =
+    CORBA::Policy::_duplicate (threadpool_policy);
+
+  // Create the POA under the RootPOA.
+  PortableServer::POA_var poa =
+    root_poa->create_POA (poa_name,
+                          poa_manager,
+                          policies,
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Creation of POAs is over. Destroy the Policy objects.
+  for (CORBA::ULong i = 0;
+       i < policies.length ();
+       ++i)
+    {
+      policies[i]->destroy (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  test_i *servant =
+    new test_i (orb,
+                poa.in (),
+                nap_time);
+
+  PortableServer::ServantBase_var safe_servant (servant);
+  ACE_UNUSED_ARG (safe_servant);
+
+  test_var test =
+    servant->_this (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  int result =
+    write_ior_to_file (orb,
+                       test.in (),
+                       ACE_TRY_ENV);
+  ACE_CHECK;
+
+  return result;
+}
+
+int
 main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
@@ -86,31 +180,20 @@ main (int argc, char *argv[])
         return result;
 
       test_i servant (orb.in (),
+                      root_poa.in (),
                       nap_time);
       test_var test =
         servant._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::String_var ior =
-        orb->object_to_string (test.in (),
-                               ACE_TRY_ENV);
+      result =
+        write_ior_to_file (orb.in (),
+                           test.in (),
+                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      FILE *output_file =
-        ACE_OS::fopen (ior_output_file,
-                       "w");
-
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          -1);
-
-      ACE_OS::fprintf (output_file,
-                       "%s",
-                       ior.in ());
-
-      ACE_OS::fclose (output_file);
+      if (result != 0)
+        return result;
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -132,7 +215,7 @@ main (int argc, char *argv[])
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      RTCORBA::ThreadpoolId id1 =
+      RTCORBA::ThreadpoolId threadpool_id_1 =
         rt_orb->create_threadpool (stacksize,
                                    static_threads,
                                    dynamic_threads,
@@ -142,17 +225,25 @@ main (int argc, char *argv[])
                                    max_request_buffer_size,
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_UNUSED_ARG (id1);
+
+      CORBA::Policy_var threadpool_policy_1 =
+        rt_orb->create_threadpool_policy (threadpool_id_1,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Boolean allow_borrowing = 0;
-      RTCORBA::ThreadpoolLanes lanes;
-      lanes.length (1);
+      RTCORBA::ThreadpoolLanes lanes (2);
+      lanes.length (2);
 
       lanes[0].lane_priority = default_priority;
       lanes[0].static_threads = static_threads;
       lanes[0].dynamic_threads = dynamic_threads;
 
-      RTCORBA::ThreadpoolId id2 =
+      lanes[1].lane_priority = default_priority;
+      lanes[1].static_threads = static_threads * 2;
+      lanes[1].dynamic_threads = dynamic_threads * 2;
+
+      RTCORBA::ThreadpoolId threadpool_id_2 =
         rt_orb->create_threadpool_with_lanes (stacksize,
                                               lanes,
                                               allow_borrowing,
@@ -161,7 +252,33 @@ main (int argc, char *argv[])
                                               max_request_buffer_size,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_UNUSED_ARG (id2);
+
+      CORBA::Policy_var threadpool_policy_2 =
+        rt_orb->create_threadpool_policy (threadpool_id_2,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      result =
+        create_POA_and_register_servant (threadpool_policy_1,
+                                         "first_poa",
+                                         poa_manager.in (),
+                                         root_poa.in (),
+                                         orb.in (),
+                                         ACE_TRY_ENV)
+        ACE_TRY_CHECK;
+      if (result != 0)
+        return result;
+
+      result =
+        create_POA_and_register_servant (threadpool_policy_2,
+                                         "second_poa",
+                                         poa_manager.in (),
+                                         root_poa.in (),
+                                         orb.in (),
+                                         ACE_TRY_ENV)
+        ACE_TRY_CHECK;
+      if (result != 0)
+        return result;
 
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
