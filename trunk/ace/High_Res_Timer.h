@@ -52,14 +52,14 @@ class ACE_Export ACE_High_Res_Timer
   //     NOTE:  the elapsed time calculations in the print methods use
   //     ACE_hrtime_t values.  Those methods do _not_ check for overflow!
   //
-  //     NOTE:  Gabe <begeddov@proaxis.com> raises this issue regarding
-  //     ACE_OS::gethrtime ():  on multi-processors, the processor that you
-  //     query for your timer.stop () value might not be the one you queried
-  //     for timer.stop ().  Its not clear how much divergence there would be,
-  //     if any.
+  //     NOTE:  Gabe <begeddov@proaxis.com> raises this issue
+  //     regarding ACE_OS::gethrtime ():  on multi-processors, the
+  //     processor that you query for your timer.stop () value might
+  //     not be the one you queried for timer.start ().  Its not clear
+  //     how much divergence there would be, if any.
   //
-  //     This issue is not mentioned in the Solaris 2.5.1 gethrtime man
-  //     page.
+  //     This issue is not mentioned in the Solaris 2.5.1 gethrtime
+  //     man page.
 public:
   // = Initialization method.
 
