@@ -130,7 +130,7 @@ DRV_usage (void)
   cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
 
   cerr << GTDEVEL (" -GC \t\tGenerate the code for using AMI Call back model\n");
-  cerr << GTDEVEL (" -Gs \t\tGenerate the code for Smart Proxies\n");
+  cerr << GTDEVEL (" -Gsp \t\tGenerate the code for Smart Proxies\n");
   cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
   cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
   cerr << GTDEVEL ("  \t\t\tb - Prefix to the implementation class names. Default is 'no prefix' \n");
