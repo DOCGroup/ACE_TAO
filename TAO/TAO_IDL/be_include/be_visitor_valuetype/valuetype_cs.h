@@ -40,6 +40,11 @@ public:
   ~be_visitor_valuetype_cs (void);
   // destructor
 
+  virtual int is_amh_exception_holder (be_valuetype *node);
+  // Test if valuetype is an AMH ExceptionHolder.  Special generation
+  // of marshalling/unmarshalling tests if it is an AMH
+  // ExceptionHolder
+
   virtual int visit_valuetype (be_valuetype *node);
   // set the right context and make a visitor
 };

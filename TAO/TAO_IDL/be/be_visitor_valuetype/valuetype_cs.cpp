@@ -37,6 +37,34 @@ be_visitor_valuetype_cs::~be_visitor_valuetype_cs (void)
 }
 
 int
+be_visitor_valuetype_cs::is_amh_exception_holder (be_valuetype *node)
+{
+  // 1) Find out if the ValueType is an AMH_*ExceptionHolder, the
+  // conditions are:
+  //  a) The local_name starts with AMH_
+  //  b) The local_name ends with ExceptionHolder
+   int is_an_amh_exception_holder = 0;
+   const char *amh_underbar = "AMH_";
+   const char *node_name = node->local_name ();
+
+   if( amh_underbar[0] == node_name[0] &&
+       amh_underbar[1] == node_name[1] &&
+       amh_underbar[2] == node_name[2] &&
+       amh_underbar[3] == node_name[3]
+       ) // node name starts with "AMH_"
+     {
+       const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
+
+       if (last_E != 0
+           && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+         {
+           is_an_amh_exception_holder = 1;
+         }
+     }
+   return is_an_amh_exception_holder;
+}
+
+int
 be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 {
   if (node->cli_stub_gen () || node->imported ())
@@ -233,7 +261,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
 
   // Nothing to marshal if abstract valuetype.
-  if (!node->is_abstract ())
+  if (!node->is_abstract () && !is_amh_exception_holder (node))
     {
       // The virtual _tao_marshal_v method.
       *os << "CORBA::Boolean " << node->name ()

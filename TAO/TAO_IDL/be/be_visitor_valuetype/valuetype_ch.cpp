@@ -327,7 +327,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "virtual void *_tao_obv_narrow (ptr_arith_t);" << be_nl;
 
   // Support for marshalling.
-  if (!node->is_abstract ())
+  if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
       *os << "virtual CORBA::Boolean "
           << "_tao_marshal_v (TAO_OutputCDR &);" << be_nl;
@@ -387,10 +387,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           if (is_an_amh_exception_holder)
             {
               *os << "virtual CORBA::Boolean _tao_marshal__"
-                  <<    node->flat_name () << " (TAO_OutputCDR &);"
+                  <<    node->flat_name () << " (TAO_OutputCDR &) {return 1;}"
                   << be_nl;
               *os << "virtual CORBA::Boolean _tao_unmarshal__"
-                  <<    node->flat_name () << " (TAO_InputCDR &);"
+                  <<    node->flat_name () << " (TAO_InputCDR &) {return 1;}"
                   << be_nl;
             }          
           /*********************************************************/
