@@ -35,9 +35,17 @@ else
 THR_DEFS	= -DACE_HAS_THREADS -D_REENTRANT
 endif
 endif
+#
 # Suppress warning 829 (string literal to char * is deprecated)
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) +W829,302 -DACE_LACKS_PRAGMA_ONCE
+CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W829,302
+# Additionally, on HP-UX 10.20, suppress 495 to shut up the warnings from
+# the system header files.  667 is also suppressed, but the compiler still
+# tells you there was a future error, but at least you can pick out any real
+# errors by quickly scanning the output.
+ifeq ($(word 2,$(HPVERS_WORDS)), 10)
+CCFLAGS         += +W495,667
+endif
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)
 LD		= $(CXX)
