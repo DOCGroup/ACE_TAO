@@ -347,7 +347,7 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    
+
   CORBA::TypeCode_ptr create_local_interface_tc (
       const char *id,
       const char *ame,
@@ -423,6 +423,10 @@ public:
    * references to a particular ORB.  CORBA::ORB_init() is required to
    * return the same pointer if called with the same ORBid, only after
    * ORB::destroy() is called it may return a new one.
+   *
+   * The results of multi-threaded applications, trying to destroy ()
+   * the ORB  in one thread and trying to service a request in another
+   * thread are not well defined. TAO does not support such cases.
    */
   void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
