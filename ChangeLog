@@ -1,3 +1,19 @@
+Tue Jul 22 14:47:14 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * TAO/orbsvcs/Fault_Detector/Detector_i.h:
+        * TAO/orbsvcs/Fault_Detector/Detector_i.cpp:
+        * TAO/orbsvcs/Fault_Detector/FT_DetectorFactory_i.h:
+        * TAO/orbsvcs/Fault_Detector/FT_DetectorFactory_i.cpp:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.h:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.cpp:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          First pass at Fault Detector.  Compiles OK.  Does NOT work yet.
+
+        These changes were made in the oci_haft branch.
+
 Wed Jul 16 17:53:01 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * TAO/examples/Simple/Simple_util.h:
@@ -16,7 +32,7 @@ Wed Jul 16 17:53:01 2003  Dale Wilson  <wilson_d@ociweb.com>
         * TAO/tests/FT_App/testscript:
           Add client-simulated fault tolerance to allow FT_App
           to pass the unit test.  When FT CORBA is working we should
-          be able to disable client simulated FT (via command line), 
+          be able to disable client simulated FT (via command line),
           and it should still pass.
 
         These changes were made in the oci_haft branch.
