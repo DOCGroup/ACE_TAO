@@ -39,6 +39,17 @@ ACE_Tokens::make_owner (ACE_TPQ_Entry *caller)
 }
 
 // ************************************************************
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+ACE_Null_Token::ACE_Null_Token (void)
+{
+}
+
+ACE_Null_Token::~ACE_Null_Token (void)
+{
+}
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
 // ************************************************************
 // ************************************************************
 
@@ -1419,4 +1430,3 @@ template class ACE_Node <ACE_TPQ_Entry *>;
 #pragma instantiate ACE_Unbounded_Stack <ACE_TPQ_Entry *>
 #pragma instantiate ACE_Node <ACE_TPQ_Entry *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

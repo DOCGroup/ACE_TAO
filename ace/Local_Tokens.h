@@ -831,11 +831,14 @@ class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
   // = TITLE
   //   No op class for nonthreaded platform protocols.
 public:
-  ACE_Null_Token (void) {}
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+  // @@ Hopefully, we can remove this ridicules ifdef when CE's compiler becomes more normal.
+  ACE_Null_Token (void);
   // Construction.
 
-  ~ACE_Null_Token (void) {}
+  ~ACE_Null_Token (void);
   // Destructor
+#endif /* ACE_LACKS_INLINE_FUNCTION */
 
   virtual int acquire (int /* notify */ = 0,
                        void (* /* sleep_hook */ )(void *) = 0,
