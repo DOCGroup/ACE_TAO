@@ -1,6 +1,7 @@
 Tue Aug 14 10:56:01 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
         * TAO_IDL/be/be_visitor_operation/rettype.cpp:
         * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
 
