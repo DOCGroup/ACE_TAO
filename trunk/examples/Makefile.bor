@@ -15,6 +15,7 @@ DIRS = \
         RMCast \
         Service_Configurator \
         Synch \
-        Threads
+        Threads \
+        Timer_Queue
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
