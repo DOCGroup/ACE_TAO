@@ -282,8 +282,8 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::unbind");
 
-  size_t index;
-  ACE_Event_Handler *eh = this->find (handle, &index);
+  size_t slot;
+  ACE_Event_Handler *eh = this->find (handle, &slot);
 
   if (eh == 0)
     return -1;
@@ -317,10 +317,10 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
       && this->select_reactor_.wait_set_.ex_mask_.is_set (handle) == 0)
 #if defined (ACE_WIN32)
     {
-      ACE_SELECT_REACTOR_HANDLE (index) = ACE_INVALID_HANDLE;
-      ACE_SELECT_REACTOR_EVENT_HANDLER (this, index) = 0;
+      ACE_SELECT_REACTOR_HANDLE (slot) = ACE_INVALID_HANDLE;
+      ACE_SELECT_REACTOR_EVENT_HANDLER (this, slot) = 0;
 
-      if (this->max_handlep1_ == (int) index + 1)
+      if (this->max_handlep1_ == (int) slot + 1)
         {
           // We've deleted the last entry (i.e., i + 1 == the current
           // size of the array), so we need to figure out the last

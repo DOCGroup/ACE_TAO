@@ -1991,7 +1991,7 @@ ACE_Thread_Manager::cancel_task (ACE_Task_Base *task,
 // lock held.
 
 ACE_Thread_Descriptor *
-ACE_Thread_Manager::find_task (ACE_Task_Base *task, int index)
+ACE_Thread_Manager::find_task (ACE_Task_Base *task, int slot)
 {
   ACE_TRACE ("ACE_Thread_Manager::find_task");
 
@@ -2001,7 +2001,7 @@ ACE_Thread_Manager::find_task (ACE_Task_Base *task, int index)
        !iter.done ();
        iter.advance ())
     {
-      if (i >= index)
+      if (i >= slot)
         break;
 
       if (task == iter.next ()->task_)

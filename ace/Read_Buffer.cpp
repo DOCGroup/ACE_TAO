@@ -89,18 +89,18 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   char buf[BUFSIZ];
 
   int c = EOF;
-  size_t index = 0;
+  size_t slot = 0;
   int done = 0;
 
   // Read in the file char by char
-  while (index < BUFSIZ)
+  while (slot < BUFSIZ)
     {
       c = getc (this->stream_);
 
       // Don't insert EOF into the buffer...
       if (c == EOF)
         {
-          if (index == 0)
+          if (slot == 0)
             return 0;
           else
             {
@@ -120,7 +120,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
             c = replace;
         }
 
-      buf[index++] = (char) c;
+      buf[slot++] = (char) c;
 
       // Substitutions must be made before checking for termination.
       if (done)
@@ -128,7 +128,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
     }
 
   // Increment the number of bytes.
-  this->size_ += index;
+  this->size_ += slot;
 
   char *result;
 
@@ -156,7 +156,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // Copy buf into the appropriate location starting from end of
   // buffer.  Peter says this is confusing and that we should use
   // memcpy() ;-)
-  for (size_t j = index; j > 0; j--)
+  for (size_t j = slot; j > 0; j--)
     *--result = buf[j - 1];
 
   return result;

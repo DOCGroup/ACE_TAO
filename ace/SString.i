@@ -140,22 +140,22 @@ ACE_CString::substr (size_t offset,
   return this->substring (offset, length);
 }
 
-// Return the <index'th> character in the string.
+// Return the <slot'th> character in the string.
 
 ACE_INLINE const char &
-ACE_CString::operator[] (size_t index) const
+ACE_CString::operator[] (size_t slot) const
 {
   ACE_TRACE ("ACE_CString::operator[]");
-  return this->rep_[index];
+  return this->rep_[slot];
 }
 
-// Return the <index'th> character in the string by reference.
+// Return the <slot'th> character in the string by reference.
 
 ACE_INLINE char &
-ACE_CString::operator[] (size_t index)
+ACE_CString::operator[] (size_t slot)
 {
   ACE_TRACE ("ACE_CString::operator[]");
-  return this->rep_[index];
+  return this->rep_[slot];
 }
 
 // Get a copy of the underlying representation.
@@ -340,22 +340,22 @@ ACE_SString::substr (size_t offset,
   return this->substring (offset, length);
 }
 
-// Return the <index'th> character in the string.
+// Return the <slot'th> character in the string.
 
 ACE_INLINE char
-ACE_SString::operator[] (size_t index) const
+ACE_SString::operator[] (size_t slot) const
 {
   ACE_TRACE ("ACE_SString::operator[]");
-  return this->rep_[index];
+  return this->rep_[slot];
 }
 
-// Return the <index'th> character in the string by reference.
+// Return the <slot'th> character in the string by reference.
 
 ACE_INLINE char &
-ACE_SString::operator[] (size_t index)
+ACE_SString::operator[] (size_t slot)
 {
   ACE_TRACE ("ACE_SString::operator[]");
-  return this->rep_[index];
+  return this->rep_[slot];
 }
 
 // Get the underlying pointer (does not make a copy, so beware!).
@@ -603,22 +603,22 @@ ACE_WString::compare (const ACE_WString &s) const
                          this->len_ * sizeof (ACE_USHORT16));
 }
 
-// Return the <index'th> character in the string.
+// Return the <slot'th> character in the string.
 
 ACE_INLINE ACE_USHORT16
-ACE_WString::operator[] (size_t index) const
+ACE_WString::operator[] (size_t slot) const
 {
   ACE_TRACE ("ACE_WString::operator[]");
-  return this->rep_[index];
+  return this->rep_[slot];
 }
 
-// Return the <index'th> character in the string.
+// Return the <slot'th> character in the string.
 
 ACE_INLINE ACE_USHORT16 &
-ACE_WString::operator[] (size_t index)
+ACE_WString::operator[] (size_t slot)
 {
   ACE_TRACE ("ACE_WString::operator[]");
-  return this->rep_[index];
+  return this->rep_[slot];
 }
 
 ACE_INLINE int

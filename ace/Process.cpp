@@ -273,14 +273,14 @@ ACE_Process_Options::inherit_environment (void)
   // Get the existing environment.
   LPTSTR existing_environment = ::GetEnvironmentStrings ();
 
-  int index = 0;
+  int slot = 0;
 
-  while (existing_environment[index] != '\0')
+  while (existing_environment[slot] != '\0')
     {
-      int len = ACE_OS::strlen (existing_environment + index);
+      int len = ACE_OS::strlen (existing_environment + slot);
 
       // Add the string to our env buffer.
-      if (this->setenv_i (existing_environment+index, len) == -1)
+      if (this->setenv_i (existing_environment + slot, len) == -1)
         {
           ACE_ERROR ((LM_ERROR, "%p.\n",
                       "ACE_Process_Options::ACE_Process_Options"));
@@ -288,7 +288,7 @@ ACE_Process_Options::inherit_environment (void)
         }
 
       // Skip to the next word.
-      index += len + 1;
+      slot += len + 1;
     }
 
   ::FreeEnvironmentStrings (existing_environment);
@@ -413,18 +413,17 @@ ACE_Process_Options::setenv (LPCTSTR variable_name,
 }
 
 int
-ACE_Process_Options::setenv_i (LPTSTR assignment, int len)
+ACE_Process_Options::setenv_i (LPTSTR assignment,
+                               int len)
 {
   // Add one for the null char.
   len++;
 
   // If environment larger than allocated buffer return. Also check to
   // make sure we have enough room.
-  if ( environment_argv_index_ == max_environ_argv_index_  ||
-       (len + environment_buf_index_) >= environment_buf_len_ )
-  {
+  if (environment_argv_index_ == max_environ_argv_index_  
+      || (len + environment_buf_index_) >= environment_buf_len_)
     return -1;
-  }
 
   // Copy the new environment string.
   ACE_OS::memcpy (environment_buf_ + environment_buf_index_,

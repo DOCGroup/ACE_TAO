@@ -477,14 +477,14 @@ public:
   void reset (void);
   // Reset the <ACE_Unbounded_Queue> to be empty.
 
-  int get (T *&item, size_t index = 0) const;
-  // Get the <index>th element in the set.  Returns -1 if the element
+  int get (T *&item, size_t slot = 0) const;
+  // Get the <slot>th element in the set.  Returns -1 if the element
   // isn't in the range <0..size() - 1>, else 0.
 
-  int set (const T &item, size_t index);
-  // Set the <index>th element in the set.  Will pad out the set with
-  // empty nodes if <index> is beyond the range <0..size() - 1>.
-  // Returns -1 on failure, 0 if <index> isn't initially in range, and
+  int set (const T &item, size_t slot);
+  // Set the <slot>th element in the set.  Will pad out the set with
+  // empty nodes if <slot> is beyond the range <0..size() - 1>.
+  // Returns -1 on failure, 0 if <slot> isn't initially in range, and
   // 0 otherwise.
 
   size_t size (void) const;
@@ -650,8 +650,8 @@ public:
   // Notice that since no one is interested in the items within,
   // This operation will delete all items.
 
-  int get (T *&item, size_t index = 0);
-  // Get the <index>th element in the set.  Returns -1 if the element
+  int get (T *&item, size_t slot = 0);
+  // Get the <slot>th element in the set.  Returns -1 if the element
   // isn't in the range <0..size() - 1>, else 0.
 
   size_t size (void) const;
@@ -743,7 +743,7 @@ public:
 
   // = Additional utility methods.
 
-  int get (T *&item, size_t index = 0);
+  int get (T *&item, size_t slot = 0);
   // Delegates to ACE_Double_Linked_List.
 
   void dump (void) const;
@@ -1427,21 +1427,21 @@ public:
 
   // = Set/get methods.
 
-  T &operator [] (size_t index);
-  // Set item in the array at location <index>.  Doesn't
+  T &operator [] (size_t slot);
+  // Set item in the array at location <slot>.  Doesn't
   // perform range checking.
 
-  const T &operator [] (size_t index) const;
-  // Get item in the array at location <index>.  Doesn't
+  const T &operator [] (size_t slot) const;
+  // Get item in the array at location <slot>.  Doesn't
   // perform range checking.
 
-  int set (const T &new_item, size_t index);
-  // Set an item in the array at location <index>.  Returns
-  // -1 if <index> is not in range, else returns 0.
+  int set (const T &new_item, size_t slot);
+  // Set an item in the array at location <slot>.  Returns
+  // -1 if <slot> is not in range, else returns 0.
 
-  int get (T &item, size_t index) const;
-  // Get an item in the array at location <index>.  Returns -1 if
-  // <index> is not in range, else returns 0.  Note that this function
+  int get (T &item, size_t slot) const;
+  // Get an item in the array at location <slot>.  Returns -1 if
+  // <slot> is not in range, else returns 0.  Note that this function
   // copies the item.  If you want to avoid the copy, you can use
   // the const operator [], but then you'll be responsible for range checking.
 
@@ -1463,8 +1463,8 @@ public:
   // It does not affect new_size
 
 private:
-  int in_range (size_t index) const;
-  // Returns 1 if <index> is within range, i.e., 0 >= <index> <
+  int in_range (size_t slot) const;
+  // Returns 1 if <slot> is within range, i.e., 0 >= <slot> <
   // <cur_size_>, else returns 0.
 
   size_t max_size_;

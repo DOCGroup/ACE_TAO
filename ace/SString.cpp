@@ -37,7 +37,8 @@ ACE_Tokenizer::delimiter (TCHAR d)
 }
 
 int
-ACE_Tokenizer::delimiter_replace (TCHAR d, TCHAR replacement)
+ACE_Tokenizer::delimiter_replace (TCHAR d,
+                                  TCHAR replacement)
 {
   if (delimiter_index_ == MAX_DELIMITERS)
     return -1;
@@ -50,7 +51,9 @@ ACE_Tokenizer::delimiter_replace (TCHAR d, TCHAR replacement)
 }
 
 int
-ACE_Tokenizer::preserve_designators (TCHAR start, TCHAR stop, int strip)
+ACE_Tokenizer::preserve_designators (TCHAR start,
+                                     TCHAR stop,
+                                     int strip)
 {
   if (preserves_index_ == MAX_PRESERVES)
     return -1;
@@ -63,11 +66,13 @@ ACE_Tokenizer::preserve_designators (TCHAR start, TCHAR stop, int strip)
 }
 
 int
-ACE_Tokenizer::is_delimiter (TCHAR d, int &replace, TCHAR &r)
+ACE_Tokenizer::is_delimiter (TCHAR d,
+                             int &replace,
+                             TCHAR &r)
 {
   replace = 0;
 
-  for (int x=0; x < delimiter_index_; x++)
+  for (int x = 0; x < delimiter_index_; x++)
     if (delimiters_[x].delimiter_ == d)
       {
         if (delimiters_[x].replace_)
@@ -82,9 +87,11 @@ ACE_Tokenizer::is_delimiter (TCHAR d, int &replace, TCHAR &r)
 }
 
 int
-ACE_Tokenizer::is_preserve_designator (TCHAR start, TCHAR &stop, int &strip)
+ACE_Tokenizer::is_preserve_designator (TCHAR start,
+                                       TCHAR &stop,
+                                       int &strip)
 {
-  for (int x=0; x < preserves_index_; x++)
+  for (int x = 0; x < preserves_index_; x++)
     if (preserves_[x].start_ == start)
       {
         stop = preserves_[x].stop_;
