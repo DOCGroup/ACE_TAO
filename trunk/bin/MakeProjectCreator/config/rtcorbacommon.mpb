@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project {
   after    += RTCORBA_Common
   libs     += RTCORBA_Common

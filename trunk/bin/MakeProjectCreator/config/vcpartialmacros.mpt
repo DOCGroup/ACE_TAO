@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 // ACE specific macros for nmake, vc6, vc7 and em3
 
 pch_defines += ACE_USING_PCH

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : messaging {
   requires += ami
   idlflags += -GC

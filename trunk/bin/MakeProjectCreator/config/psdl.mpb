@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project {
   after += PSDL_Parser PSDL PSDL_Datastore
   libs  += TAO_PSDL TAO_PSDL_Datastore

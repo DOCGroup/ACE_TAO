@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : iortable, svc_utils, typecodefactory {
   after     += IFRService
   libs      += TAO_IFRService
