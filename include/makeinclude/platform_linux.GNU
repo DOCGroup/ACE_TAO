@@ -98,10 +98,6 @@ ifeq ($(threads),1)
                $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
-ifeq ($(IMPLICIT_TEMPLATES_FLAG),)
-  IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates 
-endif
-
 CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)

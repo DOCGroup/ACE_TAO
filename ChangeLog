@@ -1,3 +1,9 @@
+Wed Feb 27 09:24:30 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* include/makeinclude/platform_linux.GNU:
+	  Pull back Jai's change from last night.  It looks like an
+	  accident to me, and it is breaking all the builds.
+
 Wed Feb 27 12:09:12 2002   Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
