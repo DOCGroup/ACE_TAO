@@ -1,3 +1,9 @@
+Thu Aug  1 09:08:36 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Message_Block.h: Made the non-static duplicate() and release()
+	  methods virtual so they can be overridden by subclasses.  Thanks
+ 	  to Brian Raven <brianr@liffe.com> for this suggestion.
+
 Thu Aug 01 15:24:32 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_Thread_Adapter.h:
