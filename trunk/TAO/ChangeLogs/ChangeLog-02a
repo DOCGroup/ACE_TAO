@@ -1,3 +1,10 @@
+Wed Jun 28 15:50:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IORC.cpp (_unchecked_narrow): Removed smart proxies code
+	  from the generated code.  We don't need smart proxy stuff in
+	  this file.  It was causing compilation errors when compiling
+	  with smart proxies enable.
+
 Wed Jun 28 12:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* docs/tutorials/Quoter/Naming_Service/Naming_Service.dsw:
