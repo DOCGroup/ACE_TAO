@@ -1,3 +1,19 @@
+Wed Jan 16 14:12:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+
+          Added initialization of the gen_amh_classes_ member.
+
+        * TAOACE.dsw:
+
+          Restored ETCL project to workspace and updated project
+          dependencies for this project and for CosNotifcation. My
+          previous checkin of these changes got clobbered someehow.
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+
+          Somehow these settings got clobbered as well.
+
 Wed Jan 16 12:02:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.cpp (copy):
