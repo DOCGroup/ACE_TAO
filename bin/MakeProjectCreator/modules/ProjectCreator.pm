@@ -137,6 +137,7 @@ sub new {
   my($makeco)    = shift;
   my($nmod)      = shift;
   my($applypj)   = shift;
+  my($genins)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
@@ -167,6 +168,7 @@ sub new {
   $self->{'source_callback'}       = undef;
   $self->{'dollar_special'}        = $self->dollar_special();
   $self->{'exclude'}               = $exclude;
+  $self->{'generate_ins'}          = $genins;
   $self->reset_generating_types();
 
   return $self;
@@ -2285,11 +2287,43 @@ sub write_output_file {
 }
 
 
+sub write_install_file {
+  my($self)    = shift;
+  my($fh)      = new FileHandle();
+  my($insfile) = $self->transform_file_name(
+                           $self->get_assignment('project_name')) .
+                 '.ins';
+
+  unlink($insfile);
+  if (open($fh, ">$insfile")) {
+    foreach my $vc (keys %{$self->{'valid_components'}}) {
+      my($names) = $self->{$vc};
+      foreach my $name (keys %$names) {
+        foreach my $key (keys %{$$names{$name}}) {
+          my($array) = $$names{$name}->{$key};
+          if (defined $$array[0]) {
+            print $fh "$vc:\n";
+            foreach my $file (@$array) {
+              print $fh "$file\n";
+            }
+            print $fh "\n";
+          }
+        }
+      }
+    }
+
+    close($fh);
+    return 1, undef;
+  }
+
+  return 0, 'Unable write to ' . $insfile;
+}
+
+
 sub write_project {
   my($self)      = shift;
   my($status)    = 1;
   my($error)     = undef;
-  my($file_name) = $self->transform_file_name($self->project_file_name());
   my($progress)  = $self->get_progress_callback();
 
   if (defined $progress) {
@@ -2300,7 +2334,12 @@ sub write_project {
                             $self->get_assignment('avoids'),
                             1)) {
     if ($self->need_to_write_project()) {
-      ($status, $error) = $self->write_output_file($file_name);
+      ($status, $error) = $self->write_output_file(
+                                   $self->transform_file_name(
+                                            $self->project_file_name()));
+      if ($self->{'generate_ins'} && $status) {
+        ($status, $error) = $self->write_install_file();
+      }
     }
   }
   else {
