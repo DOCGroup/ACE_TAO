@@ -85,12 +85,12 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
       // set the attribute for the in object
       Coffee_ptr tmp = this->in_[i];
       tmp->description (desc, env);
-      
+
       if (env.exception ())
-	{
-	  env.print_exception ("set coffee attribute");
-	  return -1;
-	}
+        {
+          env.print_exception ("set coffee attribute");
+          return -1;
+        }
     }
   return 0;
 }
@@ -174,8 +174,8 @@ Test_ObjRef_Sequence::check_validity (void)
       // this->print_sequence (this->out_.in ());
 
       if (this->compare (this->in_,
-			 this->inout_.in (),
-			 TAO_TRY_ENV))
+                         this->inout_.in (),
+                         TAO_TRY_ENV))
         {
           TAO_CHECK_ENV;
           if (this->compare (this->in_,
@@ -199,7 +199,7 @@ Test_ObjRef_Sequence::check_validity (void)
       return 0;
     }
   TAO_ENDTRY;
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 CORBA::Boolean
@@ -246,25 +246,25 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
       Coffee_ptr vs2 = s2[i];
 
       if (CORBA::is_nil (vs1) && CORBA::is_nil (vs2))
-	continue;
+        continue;
 
       if (CORBA::is_nil (vs1) || CORBA::is_nil (vs2))
-	return 0;
+        return 0;
 
       CORBA::String_var n1 = vs1->description (env)->name;
       if (env.exception ())
-	{
-	  env.print_exception ("retrieving description for vs1");
-	  return 0;
-	}
+        {
+          env.print_exception ("retrieving description for vs1");
+          return 0;
+        }
       CORBA::String_var n2 = vs2->description (env)->name;
       if (env.exception ())
-	{
-	  env.print_exception ("retrieving description for vs2");
-	  return 0;
-	}
+        {
+          env.print_exception ("retrieving description for vs2");
+          return 0;
+        }
       if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
-	return 0;
+        return 0;
     }
 
   return 1; // success
@@ -283,15 +283,15 @@ Test_ObjRef_Sequence::print_sequence (const Param_Test::Coffee_Mix &s)
     {
       Coffee_ptr c = s[i];
       if (CORBA::is_nil (c))
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Element #%d is nil\n", i));
-	  continue;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Element #%d is nil\n", i));
+          continue;
+        }
       ACE_DEBUG ((LM_DEBUG,
-		  "Element #%d\n"
-		  "\ttype = <%s>\n",
-		  i,
-		  c->_interface_repository_id ()));
+                  "Element #%d\n"
+                  "\ttype = <%s>\n",
+                  i,
+                  c->_interface_repository_id ()));
     }
 }
