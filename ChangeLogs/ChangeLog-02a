@@ -1,3 +1,8 @@
+Thu Dec 27 15:47:22 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/OS/Process/imore.cpp: Fixed typo in optind -> opt_ind()
+          conversion.
+
 Thu Dec 27 09:52:56 2001  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 	* tests/Get_Opt_Test.cpp: Added ACE_TEXT macros to the various
