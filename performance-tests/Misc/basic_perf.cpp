@@ -53,7 +53,7 @@ inline
 double
 per_iteration (const ACE_hrtime_t elapsed /* nanoseconds */)
 {
-  double ms_per_iteration = (double) ACE_U64_TO_U32 (elapsed) / 1000.0 /
+  double ms_per_iteration = (double) ACE_CU64_TO_CU32 (elapsed) / 1000.0 /
                             (double) iterations;
 
   // Don't print out "-0.000" or "-0.001" . . .
