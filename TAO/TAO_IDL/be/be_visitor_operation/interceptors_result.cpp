@@ -39,74 +39,81 @@ be_visitor_operation_interceptors_result::~be_visitor_operation_interceptors_res
 {
 }
 
-int be_visitor_operation_interceptors_result::visit_array (be_array *node)
+int 
+be_visitor_operation_interceptors_result::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
   // if the current type is an alias, use that
   be_type *bt;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
-  os->indent ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
   *os << bt->name () <<  "_forany _tao_forany_result"
       << " (this->result_);" << be_nl
       << "this->result_val_ <<= _tao_forany_result;"<< be_nl;
+
   return 0;
 }
 
-int be_visitor_operation_interceptors_result::visit_enum (be_enum *)
+int 
+be_visitor_operation_interceptors_result::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  os->indent ();
+
   *os << "this->result_val_ <<= this->result_;";
 
   return 0;
 }
 
-int be_visitor_operation_interceptors_result::visit_interface (be_interface *)
+int 
+be_visitor_operation_interceptors_result::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
   return 0;
 }
-int be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd *)
+
+int 
+be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  os->indent ();
+
   *os << "this->result_val_ <<= this->result_;";
 
   return 0;
-
 }
 #ifdef IDL_HAS_VALUETYPE
 
-int be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
+int 
+be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  os->indent ();
 
   // Not supported since TAO doesnt support Any operators for valuetype yet.
   //  *os << "this->result_val_ <<= this->result_;";
 
   return 0;
-
 }
 
-int be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd *)
+int 
+be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  os->indent ();
+
   // Not supported since TAO doesnt support Any operators for valuetype yet.
   //  *os << "this->result_val_ <<= this->result_;";
 
   return 0;
-
 }
 
 #endif /* IDL_HAS_VALUETYPE */
@@ -115,8 +122,9 @@ int
 be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  os->indent ();
+
   *os << "this->result_val_ <<= ";
+
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
@@ -152,18 +160,18 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
                         -1);
 
     }
-  return 0;
 
+  return 0;
 }
 
-int be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
+int 
+be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  os->indent ();
+
   *os << "this->result_val_ <<= this->result_;";
 
   return 0;
-
 }
 
 int
@@ -171,8 +179,8 @@ be_visitor_operation_interceptors_result::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  os->indent ();
   *os << "this->result_val_ <<= ";
+
   // we need to make a distinction between bounded and unbounded strings
   if (node->max_size ()->ev ()->u.ulval != 0)
     {
@@ -185,44 +193,44 @@ be_visitor_operation_interceptors_result::visit_string (be_string *node)
         {
           *os << "CORBA::Any::from_wstring ((CORBA::WChar *)";
         }
+
       *os <<"this->result_, "
           << node->max_size ()->ev ()->u.ulval
           << ");";
     }
   else
+    {
       *os << "this->result_; ";
+    }
+
 return 0;
 }
 
-int be_visitor_operation_interceptors_result::visit_structure (be_structure *)
+int 
+be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
   return 0;
 
 }
 
-int be_visitor_operation_interceptors_result::visit_union (be_union *)
+int 
+be_visitor_operation_interceptors_result::visit_union (be_union *)
 {
- TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
   return 0;
-
 }
 
-int be_visitor_operation_interceptors_result::visit_typedef (be_typedef *)
+int 
+be_visitor_operation_interceptors_result::visit_typedef (be_typedef *node)
 {
- TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
-  os->indent ();
-  *os << "this->result_val_ <<= this->result_;";
+  node->primitive_base_type ()->accept (this);
 
   return 0;
-
 }

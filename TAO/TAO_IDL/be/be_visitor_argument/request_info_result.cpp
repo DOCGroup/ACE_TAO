@@ -46,9 +46,6 @@ int be_visitor_args_request_info_result::visit_argument (be_argument *node)
   be_type *bt;
 
   os->indent ();
-  //  *os << "this->result_val_ <<=";
-  // Insertion into an Any has some special cases which need to be
-  // dealt with.
 
   // retrieve the type
   bt = be_type::narrow_from_decl (node->field_type ());
@@ -60,58 +57,6 @@ int be_visitor_args_request_info_result::visit_argument (be_argument *node)
                          "Bad return type\n"),
                         -1);
     }
-  /*
-  switch (bt->node_type ())
-    {
-    case AST_Decl::NT_pre_defined:
-      {
-        if (bt->accept (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "be_visitor_args_request_info_result::"
-                               "visit_argument - "
-                               "cannot accept visitor\n"),
-                              -1);
-          }
-
-        *os <<"result_;" ;
-        break;
-      }
-    case AST_Decl::NT_string:
-       {
-         if (bt->accept (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "be_visitor_args_paramlist::"
-                               "visit_argument - "
-                               "cannot accept visitor\n"),
-                              -1);
-          }
-
-         //       *os <<node->local_name () << "_;" ;
-
-         break;
-       }
-    case AST_Decl::NT_wstring:
-      {
-         if (bt->accept (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "be_visitor_args_paramlist::"
-                               "visit_argument - "
-                               "cannot accept visitor\n"),
-                              -1);
-          }
-
-         // *os <<node->local_name () << "_;" ;
-      break;
-      }
-
-    default:
-      *os << " this->result_;" << be_nl;
-
-   }
-  */
 
     if (bt->accept (this) == -1)
     {
