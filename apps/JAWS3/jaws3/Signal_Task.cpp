@@ -3,6 +3,8 @@
 #include "ace/OS.h"
 #include "ace/Thread.h"
 
+#define JAWS_BUILD_DLL
+
 #include "jaws3/Signal_Task.h"
 #include "jaws3/Event_Dispatcher.h"
 #include "jaws3/THYBRID_Concurrency.h"
@@ -10,7 +12,7 @@
 #include "jaws3/TPR_Concurrency.h"
 
 
-static void *
+ACE_THR_FUNC_RETURN
 JAWS_Signal_Task_function (void *)
 {
   int done = 0;
@@ -30,7 +32,7 @@ JAWS_Signal_Task_function (void *)
            done = 1;
 
           break;
-
+# if !defined (ACE_WIN32)
         case SIGHUP:
           // In the future, re-read jaws.conf and svc.conf,
           // and then reset the JAWS singletons.
@@ -38,6 +40,7 @@ JAWS_Signal_Task_function (void *)
           break;
 
         case SIGPIPE:
+#endif // !defined (ACE_WIN32)
         default:
           break;
 
