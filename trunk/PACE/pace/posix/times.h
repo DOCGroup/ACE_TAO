@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_TIMES_H
-#define PACE_SYS_TIMES_H
+#ifndef PACE_SYS_TIMES_H_POSIX
+#define PACE_SYS_TIMES_H_POSIX
 
 #include <sys/times.h>
 
@@ -32,14 +32,8 @@ typedef clock_t pace_clock_t;
 typedef struct tms pace_tms;
 #endif /* PACE_TMS */
 
-  PACE_INLINE pace_clock_t pace_times (pace_tms * buffer);
-
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#if defined (PACE_HAS_INLINE)
-# include "pace/posix/times.inl"
-#endif /* PACE_HAS_INLINE */
-
-#endif /* PACE_SYS_TIMES_H */
+#endif /* PACE_SYS_TIMES_H_POSIX */

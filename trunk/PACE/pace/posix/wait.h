@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_WAIT_H
-#define PACE_WAIT_H
+#ifndef PACE_WAIT_H_POSIX
+#define PACE_WAIT_H_POSIX
 
 #include "pace/sys/types.h"
 
@@ -31,28 +31,8 @@ extern "C" {
 #define PACE_WTERMSIG WTERMSIG
 #define PACE_WUNTRACED WUNTRACED
 
-  /**
-     PACE's implementation of the POSIX function wait.
-     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
-     IEEE Std 1003.1, 1996 Edition), Section 3.2.1.
-   */
-  PACE_INLINE pid_t pace_wait (int * statloc);
-
-  /**
-     PACE's implementation of the POSIX function waitpid.
-     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
-     IEEE Std 1003.1, 1996 Edition), Section 3.2.1.
-   */
-  PACE_INLINE pid_t pace_waitpid (pid_t pid,
-                                  int * statloc,
-                                  int options);
-
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
-
-#if defined (PACE_HAS_INLINE)
-# include "pace/posix/wait.inl"
-#endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_WAIT_H */
