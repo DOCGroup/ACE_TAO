@@ -96,7 +96,6 @@ sub Build_Config ($)
     my ($arg) = @_;
     my ($project, $config) = split /--/, $arg;
 
-    print "Auto_compiling $project : $config\n";
     return Build ($project, $config);
 }
 
@@ -104,6 +103,8 @@ sub Build_Config ($)
 sub Build ($$)
 {
   my ($project, $config) = @_;
+
+  print "Auto_compiling $project : $config\n";
 
   print "Building $project $config\n" if $verbose;
 
