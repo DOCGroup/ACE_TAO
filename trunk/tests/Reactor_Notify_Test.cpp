@@ -12,7 +12,7 @@
 //      This is a test that illustrates how the <ACE_Reactor>'s <notify>
 //      method works under various <max_notify_iterations> settings.
 //      It also tests that the <disable_notify_pipe> option works
-//      correctly. 
+//      correctly.
 //
 // = AUTHOR
 //      Douglas C. Schmidt
@@ -205,8 +205,6 @@ Supplier_Task::handle_output (ACE_HANDLE handle)
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
-
 static void
 run_test (int disable_notify_pipe)
 {
@@ -270,6 +268,8 @@ run_test (int disable_notify_pipe)
   delete reactor_impl;
   delete reactor;
 }
+
+#endif /* ACE_HAS_THREADS */
 
 int
 main (int, char *[])
