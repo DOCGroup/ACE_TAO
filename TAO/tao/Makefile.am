@@ -171,19 +171,11 @@ ORB_CORE_FILES = \
   Messaging_Policy_i.cpp \
   TAOC.cpp \
   TAOS.cpp \
-  Client_Priority_Policy.cpp \
   Buffering_Constraint_Policy.cpp \
-  rtcorbafwd.cpp \
-  Priority_Mapping.cpp \
-  Linear_Priority_Mapping.cpp \
-  Direct_Priority_Mapping.cpp \
-  RT_Current.cpp \
-  Pool_Per_Endpoint.cpp \
   GIOPC.cpp \
   TAO_Singleton_Manager.cpp \
   DLL_ORB.cpp \
-  Endpoint_Selector_Factory.cpp \
-  RT_Endpoint_Selector_Factory.cpp
+  Endpoint_Selector_Factory.cpp
 
 # Build a libtool library, libTAO.la for installation in libdir.
 lib_LTLIBRARIES = libTAO.la
@@ -270,12 +262,10 @@ HEADER_FILES = \
   CONV_FRAMES.h \
   CONV_FRAMES_T.h \
   CORBA_String.h \
-  Client_Priority_Policy.h \
   Client_Strategy_Factory.h \
   Connector_Registry.h \
   CurrentC.h \
   DLL_ORB.h
-  Direct_Priority_Mapping.h \
   DomainC.h \
   DomainS_T.h \
   DynamicInterface_Adapter.h \
@@ -306,7 +296,6 @@ HEADER_FILES = \
   Invocation.h \
   Key_Adapters.h \
   Leader_Follower.h \
-  Linear_Priority_Mapping.h \
   MProfile.h \
   Managed_Types.h \
   Marshal.h \
@@ -341,12 +330,9 @@ HEADER_FILES = \
   PollableC.h \
   PollableS.h \
   PollableS_T.h \
-  Pool_Per_Endpoint.h \
   Principal.h \
-  Priority_Mapping.h \
   Profile.h \
   Protocol_Factory.h \
-  RT_Current.h \
   Reactor_Per_Priority.h \
   Reactor_Registry.h \
   Resource_Factory.h \
@@ -404,11 +390,9 @@ HEADER_FILES = \
   params.h \
   poa_macros.h \
   qt_resource.h \
-  rtcorbafwd.h \
   try_macros.h \
   xt_resource.h \
-  Endpoint_Selector_Factory.h \
-  RT_Endpoint_Selector_Factory.h
+  Endpoint_Selector_Factory.h
 
 INLINE_FILES = \
   Acceptor_Impl.i \
@@ -427,7 +411,6 @@ INLINE_FILES = \
   Connector_Registry.i \
   CurrentC.i \
   DLL_ORB.inl \
-  Direct_Priority_Mapping.i \
   DomainC.i \
   DomainS_T.i \
   Environment.i \
@@ -448,7 +431,6 @@ INLINE_FILES = \
   Invocation.i \
   Key_Adapters.i \
   Leader_Follower.i \
-  Linear_Priority_Mapping.i \
   MProfile.i \
   Managed_Types.i \
   Marshal.i \
@@ -518,7 +500,6 @@ INLINE_FILES = \
   default_server.i \
   params.i \
   qt_resource.i \
-  rtcorbafwd.i \
   xt_resource.i
 
 

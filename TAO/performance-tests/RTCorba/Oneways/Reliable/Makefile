@@ -658,7 +658,6 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
