@@ -82,7 +82,7 @@ add_type (const char *name,
   inc_num.high = 0;
 
   // With exceptions enabled, inc_num isn't used.
-  ACE_UNUSED_ARG (inc_num); 
+  ACE_UNUSED_ARG (inc_num);
 
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
   ACE_CHECK_RETURN (inc_num);
@@ -213,13 +213,13 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
       Type_Info* type_info = (*itr).int_id_;
       const char* type_name = (const char*) (*itr).ext_id_;
 
-      if (all 
+      if (all
           || num < type_info->type_struct_.incarnation)
         types[i++] = CORBA::string_dup (type_name);
     }
 
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *tmp = 0;
-  
+
   ACE_NEW_RETURN (tmp,
                   CosTradingRepos::ServiceTypeRepository::
                   ServiceTypeNameSeq (length,
@@ -542,15 +542,15 @@ validate_supertypes (Service_Type_Map &super_map,
         ACE_THROW (CosTrading::IllegalServiceType (type));
       else
         {
-          TAO_String_Hash_Key s_type (type);
+          TAO_String_Hash_Key hash_type (type);
           Service_Type_Map::ENTRY *type_entry = 0;
 
-          if (this->type_map_.find (s_type,
+          if (this->type_map_.find (hash_type,
                                     type_entry) == -1)
             ACE_THROW (CosTrading::UnknownServiceType (type));
           else
             {
-              if (super_map.bind (s_type,
+              if (super_map.bind (hash_type,
                                   type_entry->int_id_) == 1)
                 ACE_THROW (CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName (type));
             }

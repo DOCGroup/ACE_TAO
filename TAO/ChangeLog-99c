@@ -1,3 +1,12 @@
+Wed Jul 28 10:46:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	  Fixed compilation problems on AIX over PPC, thanks to Steve
+	  Huston for reporting the problem and helping us track it
+	  down. Note: this was another ugly macro in a system header file
+	  (s_type) it is now documented in the ACE-guidelines.html file,
+	  thanks to David for that.
+
 Wed Jul 28 00:06:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * Added a bunch of updated Makefile.bor files for BCB4.  Thanks to
