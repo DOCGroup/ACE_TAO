@@ -36,6 +36,7 @@ public:
           {
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT ("(%t) Shutting down\n")));
+            mb->release ();
             break;
           }
 
