@@ -1,7 +1,13 @@
 //  -*- MPC -*-
 // $Id$
 
-project(ACEXML): acelib {
+project(ACEXML): acelib, codecs {
   sharedname    = ACEXML
   dynamicflags += ACEXML_BUILD_DLL
+
+  Source_Files {
+    // This file will only be added if the ace_codecs feature is enabled.
+    // See codecs.mpb for more information.
+    !XML_Codecs.cpp
+  }
 }
