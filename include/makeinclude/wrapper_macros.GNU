@@ -244,10 +244,45 @@ ifeq ($(xt_reactor),0)
 endif # xt_reactor
 
 ifneq ($(xt_reactor),)
+  override ace_with_x11=1
   CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
   LIBS += $(PLATFORM_XT_LIBS)
   LDFLAGS += $(PLATFORM_XT_LDFLAGS)
 endif # xt_reactor
+
+ifeq ($(fl_reactor),0)
+  override fl_reactor =
+endif # fl_reactor
+
+ifneq ($(fl_reactor),)
+  override ace_with_x11=1
+  override ace_with_gl=1
+  CPPFLAGS += -DACE_HAS_FL $(PLATFORM_FL_CPPFLAGS)
+  LIBS += $(PLATFORM_FL_LIBS)
+  LDFLAGS += $(PLATFORM_FL_LDFLAGS)
+endif # fl_reactor
+
+ifeq ($(ace_with_gl),0)
+  override ace_with_gl =
+endif # ace_with_gl
+
+ifneq ($(ace_with_gl),)
+  override ace_with_x11 = 1
+  CPPFLAGS += $(PLATFORM_GL_CPPFLAGS)
+  LIBS += $(PLATFORM_GL_LIBS)
+  LDFLAGS += $(PLATFORM_GL_LDFLAGS)
+endif # ace_with_gl
+
+ifeq ($(ace_with_x11),0)
+  override ace_with_x11 =
+endif # ace_with_x11
+
+ifneq ($(ace_with_x11),)
+  CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
+  LIBS += $(PLATFORM_X11_LIBS)
+  LDFLAGS += $(PLATFORM_X11_LDFLAGS)
+endif # ace_with_x11
+
 
 ifdef exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
