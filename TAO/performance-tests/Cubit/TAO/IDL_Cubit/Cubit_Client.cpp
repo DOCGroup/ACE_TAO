@@ -1121,7 +1121,6 @@ Cubit_Client::run_oneway (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (ACE_TRY_ENV);
-      ACE_TRY_ENV.print_exception ("server, please ACE_OS::exit");
     }
 
   return this->error_count_ == 0 ? 0 : 1;
@@ -1150,7 +1149,6 @@ Cubit_Client::run_void (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (ACE_TRY_ENV);
-      ACE_TRY_ENV.print_exception ("server, please ACE_OS::exit");
     }
 
   return this->error_count_ == 0 ? 0 : 1;

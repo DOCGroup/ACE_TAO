@@ -7,10 +7,8 @@
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ECM_Consumer.h"
 #include "ECM_Data.h"
 
@@ -122,9 +120,6 @@ Driver::run (int argc, char* argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      if (ACE_Scheduler_Factory::use_config (naming_context.in ()) == -1)
-        return -1;
 
       CosNaming::Name name (1);
       name.length (1);
@@ -376,65 +371,43 @@ void
 Test_Consumer::connect (const char* name,
                         int event_a, int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment& TAO_IN_ENV)
+                        CORBA::Environment& ACE_TRY_ENV)
 {
-  RtecScheduler::Scheduler_ptr server =
-    ACE_Scheduler_Factory::server ();
-
-  RtecScheduler::handle_t rt_info =
-    server->create (name, TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
-
-  // The worst case execution time is far less than 2
-  // milliseconds, but that is a safe estimate....
-  ACE_Time_Value tv (0, 2000);
-  TimeBase::TimeT time;
-  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  server->set (rt_info,
-               RtecScheduler::VERY_HIGH_CRITICALITY,
-               time, time, time,
-               0,
-               RtecScheduler::VERY_LOW_IMPORTANCE,
-               time,
-               0,
-               RtecScheduler::OPERATION,
-               TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
-
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
-  qos.insert_type (ACE_ES_EVENT_SHUTDOWN, rt_info);
-  qos.insert_type (event_a, rt_info);
-  qos.insert_type (event_b, rt_info);
+  qos.insert_type (ACE_ES_EVENT_SHUTDOWN, 0);
+  qos.insert_type (event_a, 0);
+  qos.insert_type (event_b, 0);
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    ec->for_consumers (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  RtecEventComm::PushConsumer_var objref = this->_this (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+  RtecEventComm::PushConsumer_var objref = this->_this (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS (),
-                                                TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+                                                ACE_TRY_ENV);
+  ACE_CHECK;
+
 }
 
 void
-Test_Consumer::disconnect (CORBA::Environment &TAO_IN_ENV)
+Test_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+  RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
+    this->supplier_proxy_._retn ();
 
-  this->supplier_proxy_ = 0;
+  proxy->disconnect_push_supplier (ACE_TRY_ENV);
 }
 
 void

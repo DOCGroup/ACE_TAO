@@ -18,13 +18,20 @@ $NS = Process::Create ("..".$DIR_SEPARATOR.
                        "Naming_Service".$DIR_SEPARATOR.
                        "Naming_Service".$EXE_EXT,
                        " -o $NS_ior ");
-sleep $sleeptime;
+
+if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
+  print STDERR "ERROR: waiting for naming service IOR file\n";
+  $NS->Kill (); $NS->TimedWait (1);
+  exit 1;
+}
 
 $ES = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Event_Service".$DIR_SEPARATOR.
                        "Event_Service".$EXE_EXT,
-		       "-ORBNameServiceIOR file://$NS_ior");
+		       "-ORBNameServiceIOR file://$NS_ior -t new");
+
+sleep $sleeptime;
 
 $C = Process::Create ($EXEPREFIX."ECM_Consumer".$EXE_EXT,
 		      "-ORBNameServiceIOR file://$NS_ior");

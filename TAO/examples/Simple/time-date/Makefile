@@ -64,8 +64,8 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
@@ -75,9 +75,7 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-.PRECIOUS: Time_DateC.cpp Time_DateC.i Time_DateC.h
-.PRECIOUS: Time_DateS.cpp Time_DateS.i Time_DateS.h
-.PRECIOUS: Time_DateS_T.cpp Time_DateS_T.i Time_DateS_T.h
+.PRECIOUS: $(foreach ext, $(IDL_EXT), TimeDate$(ext))
 
 server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS)) $(SHLIB)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -88,7 +86,7 @@ client: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 $(BIN):
 
 realclean: clean
-	-$(RM) Time_DateC.* Time_DateS.* Time_DateS_T.*
+	-$(RM) $(foreach ext, $(IDL_EXT), TimeDate$(ext))
 
 #----------------------------------------------------------------------------
 #       Dependencies
