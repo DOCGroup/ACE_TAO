@@ -1,3 +1,17 @@
+Sat Jul 31 00:22:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Basic_Types_Test.dsp:
+	* tests/Collection_Test.dsp:
+	* tests/Dynamic_Priority_Test.dsp:
+	* tests/New_Fail_Test.dsp:
+	* tests/Reverse_Lock_Test.dsp:
+	* tests/SOCK_Connector_Test.dsp:
+	* tests/SOCK_Send_Recv_Test.dsp:
+	* tests/Thread_Mutex_Test.dsp:
+	* tests/Timeprobe_Test.dsp:
+	* tests/Upgradable_RW_Test.dsp: Rebuilt.  ACE_Init_Test.dsp is
+	  still broken.
+
 Fri Jul 30 10:27:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-10.x.h: Allow building w/o threads - set _REENTRANT
@@ -8,7 +22,7 @@ Fri Jul 30 08:36:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Commented out the ACE_TRACE calls in ACE_OS::mutex_lock()
 	  and ACE_OS::thread_mutex_lock() to avoid infinite recursion.  Thanks
-	  to Ulf Jaehrig <jaehrig@desys.com> for reporting this.	
+	  to Ulf Jaehrig <jaehrig@desys.com> for reporting this.
 
 Fri Jul 30 03:33:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -17,7 +31,7 @@ Fri Jul 30 03:33:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* bin/run_all_list.pm:
 	  Added options to run only the tests that do not require threads
 	  (-single_threaded) and that do not require the full corba
-	  profile (-minimum_corba).  Also added options to disable the cvs 
+	  profile (-minimum_corba).  Also added options to disable the cvs
 	  update, to execute realclean before compiling and to print some
 	  debugging info.
 
@@ -28,7 +42,7 @@ Thu Jul 29 20:44:56 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Override minimum_corba variable if it isn't set to 1 (i.e. if
 	  minimum_corba is not enabled).  This change was needed to make
 	  it easier to disable some TAO ORB services, examples and tests
-	  that rely on CORBA features that aren't supported in the minimum 
+	  that rely on CORBA features that aren't supported in the minimum
 	  CORBA specification.
 
 Thu Jul 29 19:04:12 1999  Ossama Othman  <othman@cs.wustl.edu>
