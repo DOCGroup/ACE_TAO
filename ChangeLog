@@ -1,3 +1,10 @@
+Mon Jun  5 10:22:22 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_Memory.h:
+
+          Just like in OS_String.h, added an include for stddef.h to
+          get the definition of size_t.
+          
 Mon Jun  5 09:55:20 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.h:

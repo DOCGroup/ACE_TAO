@@ -27,6 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_Export.h"
+#include /**/ <stddef.h>
 
 # if !defined (ACE_MALLOC_ALIGN)
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
