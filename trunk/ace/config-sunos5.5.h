@@ -2,33 +2,36 @@
 // $Id$
 
 // This configuration file is designed to work for SunOS 5.5 platforms
-// using the SunC++ 4.x or g++ (version 2.7.2 or later) compilers.  If
-// using SunC++, it's best to use version 4.2, patched as noted below.
+// using the following compilers:
+//   * SunC++ 4.2 and later, patched as noted below
+//   * g++ 2.7.2 and later, including egcs
+//   * GreenHills 1.8.8 and later
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // Compiler version-specific settings:
 #if defined (__SUNPRO_CC)
-#  if (__SUNPRO_CC < 0x410)
+# if (__SUNPRO_CC < 0x410)
     // The following might not be necessary, but I can't tell: my build
     // with Sun C++ 4.0.1 never completes.
-#    define ACE_NEEDS_DEV_IO_CONVERSION
-#  elif (__SUNPRO_CC >= 0x420)
-#  define ACE_HAS_ANSI_CASTS
-#  if 0 /* Explicit instantiation requires the -instances=explicit
-           CCFLAG.  It seems to work for the most part, except for:
-           1) Static data members get instantiated multiple times.
-           2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found. */
-     // Sun C++ 4.2 (and beyond) supports template specialization.
-#    define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#    define ACE_TEMPLATES_REQUIRE_SOURCE
-#  endif /* 0 */
-#  endif /* __SUNPRO_CC >= 0x420 */
-#  define ACE_CAST_CONST const
-#  define ACE_HAS_TEMPLATE_SPECIALIZATION
-#  define ACE_LACKS_LINEBUFFERED_STREAMBUF
-#  define ACE_LACKS_SIGNED_CHAR
+#   define ACE_NEEDS_DEV_IO_CONVERSION
+# elif (__SUNPRO_CC >= 0x420)
+# define ACE_HAS_ANSI_CASTS
+# if 0 /* Explicit instantiation requires the -instances=explicit
+          CCFLAG.  It seems to work for the most part, except for:
+          1) Static data members get instantiated multiple times.
+          2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found. */
+    // Sun C++ 4.2 (and beyond) supports template specialization.
+#   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#   define ACE_TEMPLATES_REQUIRE_SOURCE
+# endif /* 0 */
+# endif /* __SUNPRO_CC >= 0x420 */
+# define ACE_CAST_CONST const
+# define ACE_HAS_HI_RES_TIMER
+# define ACE_HAS_TEMPLATE_SPECIALIZATION
+# define ACE_LACKS_LINEBUFFERED_STREAMBUF
+# define ACE_LACKS_SIGNED_CHAR
 
   // ACE_HAS_EXCEPTIONS precludes -noex in
   // include/makeinclude/platform_macros.GNU.  But beware, we have
@@ -55,6 +58,7 @@
 
 #elif defined (__GNUG__)
 # include "ace/config-g++-common.h"
+# define ACE_HAS_HI_RES_TIMER
 # define ACE_HAS_STRING_CLASS
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
@@ -70,9 +74,26 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
-#else  /* ! __SUNPRO_CC && ! __GNUG__ */
+#elif defined (ghs)
+# define ACE_LACKS_LONGLONG_T /* It really doesn't.  Boo. */
+
+  // To avoid warning about inconsistent declaration between Sun's
+  // stdlib.h and GreenHills' ctype.h.
+  extern "C" unsigned char __ctype[];
+
+# if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
+    // ACE_MT_SAFE is #defined below, for all compilers.
+#   if !defined (_REENTRANT)
+    /* If you want to disable threading, comment out the following
+       line.  Or, add -DACE_MT_SAFE=0 to your CFLAGS, e.g., using
+       make threads=0. */
+#     define _REENTRANT
+#   endif /* _REENTRANT */
+# endif /* !ACE_MT_SAFE */
+
+#else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 # error unsupported compiler in ace/config-sunos5.5.h
-#endif /* ! __SUNPRO_CC && ! __GNUG__ */
+#endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 
 #if !defined (__ACE_INLINE__)
 // NOTE:  if you have link problems with undefined inline template
@@ -128,9 +149,6 @@
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
-
-// Compiler/platform supports SunOS high resolution timers.
-#define ACE_HAS_HI_RES_TIMER
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
