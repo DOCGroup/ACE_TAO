@@ -1,3 +1,18 @@
+Mon Jun 17 12:43:07 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/IIOP_Endpoint.cpp:
+	* tao/Strategies/DIOP_Endpoint.cpp:
+	  After my changes on Wed Jun 12 13:24:11 2002 the implementation
+	  of is_equivalent() was broken.  Basically it use to depend on an
+	  eager evaluation of object_addr_, but the field was supposed to
+	  be lazy-evaluated (and my fixes made sure of that.)
+	  There were also some problems in the implementation of hash().
+	  Once more I only fixed some of the protocols, I do not have the
+	  expertise or time to review/fix SHMIOP, UIOP, SSLIOP or UIPMC.
+	  I am considering this change another partial fix to:
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+
 Mon Jun 17 10:51:03 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* Makefile:

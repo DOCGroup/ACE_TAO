@@ -166,18 +166,16 @@ TAO_IIOP_Endpoint::duplicate (void)
 CORBA::Boolean
 TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
-                                        other_endpoint);
+  TAO_Endpoint *endpt =
+    ACE_const_cast (TAO_Endpoint *, other_endpoint);
 
-  TAO_IIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                                                  endpt);
+  TAO_IIOP_Endpoint *endpoint =
+    ACE_dynamic_cast (TAO_IIOP_Endpoint *, endpt);
   if (endpoint == 0)
     return 0;
 
-  return
-    (this->port_ == endpoint->port_)
-    && (this->object_addr_.get_ip_address () ==
-    endpoint->object_addr_.get_ip_address());
+  return (this->port_ == endpoint->port_
+          && (ACE_OS::strcmp(this->host(), endpoint->host()) == 0));
 }
 
 CORBA::ULong
@@ -187,5 +185,5 @@ TAO_IIOP_Endpoint::hash (void)
   // thing except that it converts the port from network byte order to
   // host byte order.  As such, this implementation is actually less
   // costly.
-  return this->object_addr_.get_ip_address () + this->port_;
+  return this->object_addr ().get_ip_address () + this->port ();
 }
