@@ -203,7 +203,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   
   ACE_DEBUG ((LM_DEBUG, 
               "\nstream_endpoint_b_ = %s",
-              TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_,
+              TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_.in (),
                                                                   env)));
   TAO_CHECK_ENV_RETURN (env, 1);
 
@@ -227,7 +227,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
   // Now connect the streams together. This will
   // establish the connection
-  this->stream_endpoint_a_->connect (this->stream_endpoint_b_,
+  this->stream_endpoint_a_->connect (this->stream_endpoint_b_.in (),
                                      the_qos,
                                      the_flows,
                                      env);
@@ -254,7 +254,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party,
   this->stream_endpoint_a_ = a_party;
   this->stream_endpoint_b_ = b_party;
   // Now connect the streams together
-  this->stream_endpoint_a_->connect (this->stream_endpoint_b_,
+  this->stream_endpoint_a_->connect (this->stream_endpoint_b_.in (),
                                      the_qos,
                                      the_flows,
                                      env);
@@ -346,7 +346,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
               "flowspec has length = %d"
               "and the strings are:",
               the_spec.length ()));
-  for (int i = 0; i < the_spec.length (); i++)
+  for (u_int i = 0; i < the_spec.length (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 the_spec [i]));
 
@@ -418,7 +418,7 @@ TAO_StreamEndPoint::set_negotiator (AVStreams::Negotiator_ptr new_negotiator,
 // @@ Need to throw not-supported exception here
 void 
 TAO_StreamEndPoint::set_key (const char *flow_name, 
-                             const encryption_key & the_key,
+                             const AVStreams::encryption_key & the_key,
                              CORBA::Environment &env)
 {
 }

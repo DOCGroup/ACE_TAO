@@ -93,7 +93,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
   
   // create a unique semaphore name
   ::sprintf (sem_str,
-             "%s:%s:%d",
+             "%s:%s:%ld",
              "TAO_AV_Process_Semaphore",
              host,
              pid);
