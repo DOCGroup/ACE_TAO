@@ -76,6 +76,8 @@ ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # ImplRepo
 
+TAO_IDLFLAGS += -Ge 1
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------

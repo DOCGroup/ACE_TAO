@@ -29,6 +29,8 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2 = client
 
+TAO_IDLFLAGS += -Ge 1
+
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
