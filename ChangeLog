@@ -17,13 +17,6 @@ Fri Sep 28 23:38:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Corrected some comments.
 
-	* ace/SSL/SSL_SOCK_Connector.cpp (connect):
-
-	  If errno == EWOULDBLOCK, make sure the SSL_SOCK_Stream's handle
-	  is set to a valid handle before returning to the caller.  This
-	  allows connection completion to be done using the
-	  SSL_SOCK_Stream.
-
 	* ace/SSL/SSL_SOCK_Stream.h (send_n, recv_n):
 
 	  Added a "bytes transferred" pointer parameter.  This allows the

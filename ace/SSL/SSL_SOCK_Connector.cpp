@@ -203,12 +203,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                 perms,
                                 protocol_family,
                                 protocol) == -1)
-    {
-      if (errno == EWOULDBLOCK)
-        new_stream.ACE_SSL_SOCK::set_handle (new_stream.peer ().get_handle ());
-
-      return -1;
-    }
+    return -1;
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
@@ -247,12 +242,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                 perms,
                                 protocol_family,
                                 protocol) == -1)
-    {
-      if (errno == EWOULDBLOCK)
-        new_stream.ACE_SSL_SOCK::set_handle (new_stream.peer ().get_handle ());
-
-      return -1;
-    }
+    return -1;
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
