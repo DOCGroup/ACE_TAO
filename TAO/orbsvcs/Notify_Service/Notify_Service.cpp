@@ -161,15 +161,31 @@ TAO_Notify_Service::init (int argc, char *argv[]
     // Register the Factory
     ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
+
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+    CosNaming::Name name (1);
+    name.length (1);
+    name[0].id =
+      CORBA::string_dup (this->notify_factory_name_.c_str ());
+#else
     CosNaming::Name_var name =
       this->naming_->to_name (this->notify_factory_name_.c_str ()
                               ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
+
     ACE_CHECK_RETURN (-1);
 
 
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+    this->naming_->rebind (name,
+                           this->notify_factory_.in ()
+                           ACE_ENV_ARG_PARAMETER);
+#else
     this->naming_->rebind (name.in (),
                            this->notify_factory_.in ()
                            ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
+
     ACE_CHECK_RETURN (-1);
 
     ACE_DEBUG ((LM_DEBUG,
@@ -189,15 +205,26 @@ TAO_Notify_Service::init (int argc, char *argv[]
                                                  initial_admin,
                                                  id
                                                  ACE_ENV_ARG_PARAMETER);
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+        name[0].id =
+          CORBA::string_dup (this->notify_channel_name_.c_str ());
+#else
         name = this->naming_->to_name (
           this->notify_channel_name_.c_str ()
           ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
         ACE_CHECK_RETURN (-1);
 
 
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+        this->naming_->rebind (name,
+                               ec.in ()
+                               ACE_ENV_ARG_PARAMETER);
+#else
         this->naming_->rebind (name.in (),
                                ec.in ()
                                ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
         ACE_CHECK_RETURN (-1);
 
         ACE_DEBUG ((LM_DEBUG,
@@ -225,8 +252,13 @@ TAO_Notify_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
                       -1);
 
   this->naming_ =
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+    CosNaming::NamingContext::_narrow (naming_obj.in ();
+                                       ACE_ENV_ARG_PARAMETER);
+#else
     CosNaming::NamingContextExt::_narrow (naming_obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -277,13 +309,26 @@ TAO_Notify_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   if (this->use_name_svc_)
   {
     // Unbind from the naming service.
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+    CosNaming::Name name (1);
+    name.length (1);
+    name[0].id =
+      CORBA::string_dup (this->notify_factory_name_.c_str ());
+#else
     CosNaming::Name_var name =
       this->naming_->to_name (this->notify_factory_name_.c_str ()
                               ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
+
     ACE_CHECK;
 
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+    this->naming_->unbind (name
+                           ACE_ENV_ARG_PARAMETER);
+#else
     this->naming_->unbind (name.in ()
                            ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
     ACE_CHECK;
   }
 

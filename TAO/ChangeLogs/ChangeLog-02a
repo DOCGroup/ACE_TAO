@@ -1,3 +1,16 @@
+Thu Mar  7 13:03:50 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          Added the ability to use a CosNaming::NamingContext instead
+          of the default which is a CosNaming::NamingContextExt.
+          This CosNaming::NamingContext is used by defining
+          TAO_NOTIFY_USE_NAMING_CONTEXT at compile time.
+
+          Thanks to Markus Wild <markus.wild@homag.de> for supplying these
+          changes.
+
 Wed Mar  6 21:55:11 2002  Ossama Othman  <ossama@uci.edu>
 	
 	* tao/Object.cpp (_remove_ref):
@@ -51,7 +64,6 @@ Wed Mar  6 14:32:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	* tao/Messaging/MessagingC.cpp:
 	  Made changes to fix the Debbian_KCC builds.
 
->>>>>>> 1.5174
 Wed Mar  6 11:03:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
