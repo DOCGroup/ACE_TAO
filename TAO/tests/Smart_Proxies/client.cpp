@@ -62,7 +62,6 @@ main (int argc, char *argv[])
                       smart_test_factory,
                       -1);
       
-      // This was done for using the default proxy.
       test_var server =
         test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
