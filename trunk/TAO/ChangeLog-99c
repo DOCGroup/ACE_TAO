@@ -1,3 +1,17 @@
+Thu Apr 29 17:28:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	Added support to allow Policy objects to be locality constraint.
+	This reduces the footprint of TAO when policy objects will never
+	be accessed remotely.  You can enable this feature by defining
+	TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.
+
+	* tao/POAC.{h,cpp}:
+	* tao/CurrentS.cpp:
+	* tao/POAS.{h,i,cpp}:
+	* tao/POA_CORBA.h
+	* tao/PolicyS.cpp: Other than supporting locality constraint
+	  policies, also removed unused op_tables, skeletons, stubs.
+
 Thu Apr 29 16:33:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: added
