@@ -1,3 +1,44 @@
+Wed May 12 12:04:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp (process_parsed_messages):
+          In case of TAO_PLUGGABLE_MESSAGE_MESSAGERROR an ACE_ERROR_RETURN
+          was used, but this was inside a TAO_debug_level check. The result
+          was that when we enabled TAO_debug we get an error -1, without
+          TAO_debug, we just return 0 and ignore the error. This is really
+          not wat we want.
+
+        * tao/Adapter.cpp:
+        * tao/Codeset_Manager.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Object.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Policy_Validator.cpp:
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/PortableServer/POA.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+          During searching for a ACE_DEBUG line with a side effect I updated
+          the formatting of debug lines, changed some checks from
+          TAO_debug_level >= 3 to TAO_debug_level > 2 and use {} around
+          ACE_DEBUG lines to make clear that when checking TAO_debug_level
+          we do after that only the ACE_DEBUG and nothing more.
+
 Wed May 12 09:24:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Muxed_TMS.cpp:
