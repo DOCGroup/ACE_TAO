@@ -1,3 +1,11 @@
+Sun Jun  8 10:52:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu> 
+
+	* bin/PerlACE/Process.pm:
+	* bin/PerlACE/Process_Win32.pm:
+	* bin/PerlACE/Process_Unix.pm: Moved the Normalize_Executable_Name
+	  method to platform specific implementation files.  The original
+	  implementation in Process.pm was Win32 specific.
+ 
 Sat Jun  7 11:12:16 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h: Added a 
