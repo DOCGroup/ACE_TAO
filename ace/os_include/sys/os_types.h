@@ -78,7 +78,7 @@ typedef double ACE_timer_t;
 
 /* This should work for linux, solaris 5.6 and above, IRIX, OSF */
 #if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
-#  if ACE_SIZEOF_LONG == 8
+#  if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
      typedef off_t ACE_LOFF_T;
 #  elif defined (__sgi) || defined (AIX) || defined (HPUX) \
     || defined (__QNX__)

@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
+
+#include "ace/os_include/os_errno.h"
+
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (CHORUS) && !defined (ACE_PSOS)
 // Don't inline on those platforms because this function contains
@@ -25,4 +29,3 @@ ACE_OS::uname (ACE_utsname *name)
 #endif
 }
 #endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
-
