@@ -111,6 +111,7 @@ CONTROLLED_FILES = \
         BIBLIOGRAPHY \
         COPYING \
         ChangeLog \
+        ChangeLog-99b \
         ChangeLog-99a \
         ChangeLog-98a \
         ChangeLog-98b \
