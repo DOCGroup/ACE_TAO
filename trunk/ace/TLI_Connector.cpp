@@ -63,20 +63,34 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       else
 	{
 	  int one = 1;
-	  if (reuse_addr && new_stream.set_option (SOL_SOCKET, SO_REUSEADDR,
-                                                   &one, sizeof one) == -1)
+#if !defined (ACE_HAS_FORE_ATM_XTI)
+          // Reusing the address causes problems with FORE's API. The
+          // issue may be that t_optmgmt isn't fully supported by
+          // FORE. t_errno is TBADOPT after the t_optmgmt call so
+          // maybe options are configured differently for XTI than for
+          // TLI (at least for FORE's implementation - XTI is supposed
+          // to be a superset of TLI).
+	  if (reuse_addr 
+              && new_stream.set_option (SOL_SOCKET,
+                                        SO_REUSEADDR,
+                                        &one,
+                                        sizeof one) == -1)
 	    result = -1;
 	  else
+#endif /* ACE_HAS_FORE_ATM_XTI */
 	    {
 	      // localaddr->glen = 0;
 	      localaddr->addr.maxlen = local_sap.get_size ();
 	      localaddr->addr.len = local_sap.get_size ();
 	      localaddr->addr.buf = (char *) local_sap.get_addr ();
 
-	      if (ACE_OS::t_bind (new_stream.get_handle (), localaddr, localaddr) == -1)
+	      if (ACE_OS::t_bind (new_stream.get_handle (),
+                                  localaddr,
+                                  localaddr) == -1)
 		result = -1;
 
-	      ACE_OS::t_free ((char *) localaddr, T_BIND);
+	      ACE_OS::t_free ((char *) localaddr,
+                              T_BIND);
 	    }
 	}
 
@@ -141,9 +155,11 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   if (result != -1) 
     {
       new_stream.set_rwflag (rwf);
-#if defined (I_PUSH)
+#if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
       if (new_stream.get_rwflag ())
-	result = ACE_OS::ioctl (new_stream.get_handle (), I_PUSH, "tirdwr");
+	result = ACE_OS::ioctl (new_stream.get_handle (),
+                                I_PUSH,
+                                "tirdwr");
 #endif /* I_PUSH */
     }
   else if (!(errno == EWOULDBLOCK || errno == ETIME))
@@ -166,8 +182,9 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
 			     ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_TLI_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv, 1);
-
+  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (),
+                                             tv,
+                                             1);
   if (h == ACE_INVALID_HANDLE)
     {
       new_stream.close ();

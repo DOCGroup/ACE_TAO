@@ -3499,11 +3499,17 @@ extern int t_errno;
 #     include /**/ <alloca.h>
 #   endif /* ACE_HAS_ALLOCA_H */
 
-#   if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
+#   if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI) || defined (ACE_HAS_FORE_ATM_XTI)
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 extern "C" {
 #     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
-#     if defined (ACE_HAS_TIUSER_H)
+#     if defined (ACE_HAS_FORE_ATM_XTI)
+#       include /**/ <fore_xti/xti_user_types.h>
+#       include /**/ <fore_xti/xti.h>
+#       include /**/ <fore_xti/xti_atm.h>
+#       include /**/ <fore_xti/netatm/atm.h>
+#       include /**/ <fore_xti/ans.h>
+#     elif defined (ACE_HAS_TIUSER_H)
 #       include /**/ <tiuser.h>
 #     else
 #       if defined (ACE_HAS_BROKEN_XTI_MACROS)

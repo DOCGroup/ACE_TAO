@@ -87,6 +87,7 @@ SOCKETS_FILES = \
   SOCK_Stream
 IPC_FILES = \
   Addr \
+  ATM_Addr \
   DEV \
   DEV_Addr \
   DEV_Connector \
