@@ -4,13 +4,9 @@
 //
 // Implementation of the Dynamic Server Skeleton Interface
 
-#include <orb.h>
-
+#include "orb.h"
 #include <initguid.h>
-
-#include "debug.h"
 #include "cdr.h"
-
 #include "svrrqst.h"
 
 // {77420086-F276-11ce-9598-0000C07CA898}
@@ -132,7 +128,7 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
       tc->Release ();
 
       // Then just unmarshal the value.
-      (void) CDR::decoder (tc, value, 0, _incoming, env);
+      (void) _incoming->decode (tc, value, 0, env);
     }
 
   // If any data is left over, it'd be context values ... else error.

@@ -1,7 +1,6 @@
 //     $Id$
 
 #include "orb.h"
-#include "debug.h"
 #include "roa.h"
 #include "boa.h"
 #include "cdr.h"
@@ -579,7 +578,7 @@ request_dispatcher (GIOP::RequestHeader &req,
       CORBA_TypeCode_ptr except_tc = x->type ();
 
       reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
-      (void) CDR::encoder (except_tc, x, 0, reply, env2);
+      (void) reply->encode (except_tc, x, 0, env2);
     }
   else if (svr_req._exception)
     {	// any exception at all
@@ -597,7 +596,7 @@ request_dispatcher (GIOP::RequestHeader &req,
       else
 	reply->put_ulong (GIOP::USER_EXCEPTION);
 
-      (void) CDR::encoder (except_tc, x, 0, reply, env);
+      (void) reply->encode (except_tc, x, 0, env);
     }
   else
     {				// normal reply
@@ -609,7 +608,7 @@ request_dispatcher (GIOP::RequestHeader &req,
 	{
 	  tc = svr_req._retval->type ();
 	  value = svr_req._retval->value ();
-	  (void) CDR::encoder (tc, value, 0, reply, env);
+	  (void) reply->encode (tc, value, 0, env);
 	}
 
       // ... followed by "inout" and "out" parameters, left to right
@@ -624,7 +623,7 @@ request_dispatcher (GIOP::RequestHeader &req,
 	  any = nv->value ();
 	  tc = any->type ();
 	  value = any->value ();
-	  (void) CDR::encoder (tc, value, 0, reply, env);
+	  (void) reply->encode (tc, value, 0, env);
 	}
     }
 }

@@ -16,7 +16,6 @@
 
 #include	"orb.h"
 #include	"stub.h"
-#include	"debug.h"
 #include	"iioporb.h"		// XXX
 
 #include        "params.h"

@@ -248,7 +248,7 @@ public:
 		    void *value, 
 		    CORBA_Environment &env)
       {
-	(void) CDR::encoder (tc, value, 0, &stream, env);
+	(void) stream.encode(tc, value, 0, env);
       }
 
     ReplyStatusType invoke (CORBA_ExceptionList &exceptions,
@@ -258,7 +258,7 @@ public:
 		   void *value,
 		   CORBA_Environment &env)
       {
-	(void) CDR::decoder (tc, value, 0, &stream, env);
+	(void) stream.decode (tc, value, 0, env);
       }
 
     // No CORBA_Context support (deprecated).

@@ -78,9 +78,9 @@ IIOP_ORB::object_to_string (CORBA_Object_ptr obj,
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.put_char (MY_BYTE_SEX);
-      if (CDR::encoder (_tc_CORBA_Object,
+      if (cdr.encode (_tc_CORBA_Object,
 			&obj, 0, 
-			&cdr, env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
+			env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
         return 0;
 
       // Now hexify the encapsulated CDR data into a string, and
@@ -215,9 +215,9 @@ ior_string_to_object (CORBA_String str,
   CORBA_Object_ptr objref;
     
   stream.setup_encapsulation (buffer, len);
-  if (CDR::decoder (_tc_CORBA_Object, 
+  if (stream.decode (_tc_CORBA_Object, 
 		    &objref, 0, 
-		    &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
+		    env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
     objref = 0;
 
   delete [] buffer;

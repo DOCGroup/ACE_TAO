@@ -46,6 +46,7 @@ typedef u_long long ptr_arith_t;
 // boundaries are binary powers and that we're using two's complement
 // arithmetic.
 
+#if 0
 static inline ptr_arith_t
 align_binary (const ptr_arith_t value,
 	      size_t alignment)
@@ -54,6 +55,9 @@ align_binary (const ptr_arith_t value,
 
   return (value + temp) & ~temp;
 }
+#endif
+#define align_binary(ptr, align_sub_1) \
+             ((ptr + (align_sub_1)) & (~(align_sub_1)))
 
 // Efficiently round "ptr" up to an "alignment" boundary, knowing that
 // all such boundaries are binary powers and that we're using two's
@@ -62,11 +66,15 @@ align_binary (const ptr_arith_t value,
 // XXX Returned as "byte pointer" -- CDR module would change to be
 // seen as a "void *".  May want to change this to add XDR cleanly.
 
+#if 0
 static inline u_char *
 ptr_align_binary (const u_char *ptr, 
 		  size_t alignment)
 {
   return (u_char *) align_binary ((ptr_arith_t) ptr, alignment);
 }
+#endif
+#define ptr_align_binary(ptr, alignment) \
+        ((u_char *) align_binary(((ptr_arith_t) (ptr)), ((alignment)-1)))
 
 #endif /* TAO_ALIGN_H */

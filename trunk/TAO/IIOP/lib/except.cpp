@@ -17,7 +17,6 @@
 #include <orb.h>
 
 #include "cdr.h"
-#include "debug.h"
 
 #include <initguid.h>
 
@@ -240,25 +239,25 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
   assert (strlen (full_id) <= sizeof full_id);
 
   if (stream.put_byte (MY_BYTE_SEX) != CORBA_B_TRUE
-      || CDR::encoder (_tc_CORBA_String, 
+      || stream.encode (_tc_CORBA_String, 
 		       &strptr, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || CDR::encoder (_tc_CORBA_String, 
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (_tc_CORBA_String, 
 		       &name, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
       || stream.put_ulong (2L) != CORBA_B_TRUE
-      || CDR::encoder (_tc_CORBA_String, 
+      || stream.encode (_tc_CORBA_String, 
 		       &minor, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || CDR::encoder (_tc_CORBA_TypeCode, 
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (_tc_CORBA_TypeCode, 
 		       &_tc_CORBA_ULong, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || CDR::encoder (_tc_CORBA_String, 
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (_tc_CORBA_String, 
 		       &completion, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || CDR::encoder (_tc_CORBA_TypeCode, 
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (_tc_CORBA_TypeCode, 
 		       &completion_status, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE) {
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE) {
     env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
     return;
   }

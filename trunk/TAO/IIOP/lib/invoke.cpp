@@ -32,10 +32,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include <orb.h>
 
+#include "orb.h"
 #include "cdr.h"
-#include "debug.h"
 #include "giop.h"
 
 class ACE_Synchronous_Cancellation_Required

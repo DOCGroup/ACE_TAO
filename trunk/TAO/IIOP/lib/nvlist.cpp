@@ -8,11 +8,9 @@
 #if !defined (VXWORKS)
 #include	<memory.h>
 #endif
-#include	<orb.h>
 
+#include	"orb.h"
 #include        <initguid.h>
-
-#include	"debug.h"
 
 // COM's IUnknown support
 

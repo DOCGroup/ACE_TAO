@@ -37,318 +37,62 @@
 #include        <limits.h>
 #include        <string.h>
 
-#include        <orb.h>
-
-#include        "debug.h"
+#include        "orb.h"
 #include        "cdr.h"
 
-// ENCODING routines ... pad, store.  Never swap.  Padding uses
-// whatever value is already in the buffer.
-
-CORBA_Boolean
-CDR::put_byte (char c)
+#if !defined(ACE_INLINE)
+inline
+#endif
+void CDR::swap_long(unsigned char *orig, CORBA_Long &target)
 {
-  if (remaining < sizeof (char) && grow (0) == CORBA_B_FALSE)
-    return CORBA_B_FALSE;
+  register unsigned char	*lp = (unsigned char *) &target;
 
-  *next++ = (u_char) c;
-  remaining--;
-  return CORBA_B_TRUE;
+  lp [ 3] = *orig++;
+  lp [ 2] = *orig++;
+  lp [ 1] = *orig++;
+  lp [ 0] = *orig++;
 }
 
-CORBA_Boolean
-CDR::put_short (CORBA_Short s)
+#if !defined(ACE_INLINE)
+inline
+#endif
+void CDR::swap_longlong(unsigned char *orig, CORBA_LongLong &target)
 {
-  register u_char *tmp_next;
-  register u_int temp;
+	register unsigned char	*llp = (unsigned char *) &target;
 
-  // Adjust pointer and count of remaining bytes; maybe
-  // grow the buffer if there's not enough left
-
-  tmp_next = ptr_align_binary (next, SHORT_SIZE);
-  temp = SHORT_SIZE + (tmp_next - next);
-
-  if (temp > remaining) 
-    {
-      if (grow (0) == CORBA_B_FALSE)
-        return CORBA_B_FALSE;
-      tmp_next = next + temp - SHORT_SIZE;
-    }
-
-  remaining -= temp;
-
-  // copy the half word, native byte order
-
-  *(CORBA_Short *) tmp_next = s;
-  next = tmp_next + SHORT_SIZE;
-  return CORBA_B_TRUE;
+	llp [ 7] = *orig++;
+	llp [ 6] = *orig++;
+	llp [ 5] = *orig++;
+	llp [ 4] = *orig++;
+	llp [ 3] = *orig++;
+	llp [ 2] = *orig++;
+	llp [ 1] = *orig++;
+	llp [ 0] = *orig++;
 }
 
-CORBA_Boolean
-CDR::put_long (CORBA_Long l)
+#if !defined(ACE_INLINE)
+inline
+#endif
+void CDR::swap_longdouble(unsigned char *orig, CORBA_LongDouble &target)
 {
-  register u_char *tmp_next;
-  register u_int temp;
+	register unsigned char	*ldp = (unsigned char *) &target;
 
-  // Adjust pointer and count of remaining bytes; maybe
-  // grow the buffer if there's not enough left
-
-  tmp_next = ptr_align_binary (next, LONG_SIZE);
-  temp = LONG_SIZE + (tmp_next - next);
-
-  if (temp > remaining) 
-    {
-      if (grow (0) == CORBA_B_FALSE)
-        return CORBA_B_FALSE;
-      tmp_next = next + temp - LONG_SIZE;
-    }
-
-  remaining -= temp;
-
-  // copy the word, native byte order
-
-  *(CORBA_Long *) tmp_next =  l;
-
-  next = tmp_next + LONG_SIZE;
-  return CORBA_B_TRUE;
-}
-
-CORBA_Boolean
-CDR::put_longlong (const CORBA_LongLong &ll)
-{
-  register u_char *tmp_next;
-  register u_int temp;
-
-  // Adjust pointer and count of remaining bytes; maybe grow the
-  // buffer if there's not enough left
-
-  tmp_next = ptr_align_binary (next, LONGLONG_SIZE);
-  temp = LONGLONG_SIZE + (tmp_next - next);
-
-  if (temp > remaining) 
-    {
-      if (grow (0) == CORBA_B_FALSE)
-        return CORBA_B_FALSE;
-      tmp_next = next + temp - LONGLONG_SIZE;
-    }
-  remaining -= temp;
-
-  // copy the double word in "native" byte order.
-
-  *(CORBA_LongLong *) tmp_next = ll;
-  next = tmp_next + LONGLONG_SIZE;
-  return CORBA_B_TRUE;
-}
-
-CORBA_Boolean
-CDR::put_longdouble (CORBA_LongDouble &ld)
-{
-  register u_char *tmp_next;
-  register u_int temp;
-
-  // Adjust pointer and count of remaining bytes; maybe
-  // grow the buffer if there's not enough left
-
-  tmp_next = ptr_align_binary (next, LONGDOUBLE_SIZE);
-  temp = LONGDOUBLE_SIZE + (tmp_next - next);
-
-  if (temp > remaining) 
-    {
-      if (grow (0) == CORBA_B_FALSE)
-        return CORBA_B_FALSE;
-      tmp_next = next + temp - LONGDOUBLE_SIZE;
-    }
-  remaining -= temp;
-
-  // copy the long double in "native" byte order.
-  *(CORBA_LongDouble *) tmp_next = ld;
-  next = tmp_next + LONGDOUBLE_SIZE;
-  return CORBA_B_TRUE;
-}
-
-// DECODING routines ... adjust pointer, then byteswap as needed.
-
-CORBA_Boolean
-CDR::get_byte (char &c)
-{
-  if (remaining < sizeof (char))
-    return CORBA_B_FALSE;
-
-  c = (char) *next++;
-  remaining--;
-  return CORBA_B_TRUE;
-}
-
-CORBA_Boolean
-CDR::get_short (CORBA_Short &s)
-{
-  register u_char *tmp_next;
-  register u_int temp;
-
-  // Adjust pointer and count of remaining bytes
-
-  tmp_next = ptr_align_binary (next, SHORT_SIZE);
-  temp = SHORT_SIZE + (tmp_next - next);
-
-  if (temp > remaining)
-    return CORBA_B_FALSE;
-  remaining -= temp;
-
-  // decode halfword, swapping as needed
-
-  if (!do_byteswap) 
-    {
-      s = *(CORBA_Short *) tmp_next;
-      next = tmp_next + SHORT_SIZE;
-    } 
-  else 
-    {
-      register u_char   *sp = (u_char *) &s;
-
-      sp [1] = *tmp_next++;
-      sp [0] = *tmp_next++;
-      next = tmp_next;
-    }
-  return CORBA_B_TRUE;
-}
-
-CORBA_Boolean
-CDR::get_long (CORBA_Long &l)
-{
-  register u_char *tmp_next;
-  register u_int temp;
-
-  // Adjust pointer and count of remaining bytes
-
-  tmp_next = ptr_align_binary (next, LONG_SIZE);
-  temp = LONG_SIZE + (tmp_next - next);
-  if (temp > remaining)
-    return CORBA_B_FALSE;
-  remaining -= temp;
-
-  // decode word, swapping as needed
-
-  if (!do_byteswap) 
-    {
-      l =  *(CORBA_Long *) tmp_next;
-      next = tmp_next + LONG_SIZE;
-    } 
-  else 
-    {
-      register u_char *lp = (u_char *) &l;
-
-      // NOTE: environment-specific speedups abound for this kind of
-      // stuff.  This generic code takes advanage of none of them.
-
-      lp [3] = *tmp_next++;
-      lp [2] = *tmp_next++;
-      lp [1] = *tmp_next++;
-      lp [0] = *tmp_next++;
-      next = tmp_next;
-    }
-  return CORBA_B_TRUE;
-}
-
-CORBA_Boolean
-CDR::get_longlong (CORBA_LongLong &ll)
-{
-  register u_char *tmp_next;
-  register u_int temp;
-
-  // Adjust pointer and count of remaining bytes
-
-  tmp_next = ptr_align_binary (next, LONGLONG_SIZE);
-  temp = LONGLONG_SIZE + (tmp_next - next);
-  if (temp > remaining)
-    return CORBA_B_FALSE;
-  remaining -= temp;
-
-  // decode doubleword, swapping as needed
-
-  if (!do_byteswap) 
-    {
-      ll = *(CORBA_LongLong *) tmp_next;
-      next = tmp_next + LONGLONG_SIZE;
-    } 
-  else 
-    {
-      register u_char *llp = (u_char *) &ll;
-
-      // NOTE:  environment-specific speedups abound for this kind
-      // of stuff.  This generic code takes advanage of none of them.
-
-      llp [7] = *tmp_next++;
-      llp [6] = *tmp_next++;
-      llp [5] = *tmp_next++;
-      llp [4] = *tmp_next++;
-      llp [3] = *tmp_next++;
-      llp [2] = *tmp_next++;
-      llp [1] = *tmp_next++;
-      llp [0] = *tmp_next++;
-      next = tmp_next;
-    }
-  return CORBA_B_TRUE;
-}
-
-CORBA_Boolean
-CDR::get_longdouble (CORBA_LongDouble &ld)
-{
-  register u_char *tmp_next;
-  register u_int temp;
-
-  // Adjust pointer and count of remaining bytes
-
-  tmp_next = ptr_align_binary (next, LONGDOUBLE_SIZE);
-  temp = LONGDOUBLE_SIZE + (tmp_next - next);
-  if (temp > remaining)
-    return CORBA_B_FALSE;
-  remaining -= temp;
-
-  // copy the long double, swapping bytes as needed
-
-  if (!do_byteswap) 
-    {
-      ld = *(CORBA_LongDouble *) tmp_next;
-      next = tmp_next + LONGDOUBLE_SIZE;
-    } 
-  else 
-    {
-      register u_char *ldp = (u_char *) &ld;
-
-      // NOTE:  this is a single SPARC V9 instruction
-
-      ldp [15] = *tmp_next++;
-      ldp [14] = *tmp_next++;
-      ldp [13] = *tmp_next++;
-      ldp [12] = *tmp_next++;
-      ldp [11] = *tmp_next++;
-      ldp [10] = *tmp_next++;
-      ldp [ 9] = *tmp_next++;
-      ldp [ 8] = *tmp_next++;
-      ldp [ 7] = *tmp_next++;
-      ldp [ 6] = *tmp_next++;
-      ldp [ 5] = *tmp_next++;
-      ldp [ 4] = *tmp_next++;
-      ldp [ 3] = *tmp_next++;
-      ldp [ 2] = *tmp_next++;
-      ldp [ 1] = *tmp_next++;
-      ldp [ 0] = *tmp_next++;
-      next = tmp_next;
-    }
-  return CORBA_B_TRUE;
-}
-
-CORBA_Boolean
-CDR::skip_string (void)                     // ISO/1 or octet string
-{
-  CORBA_ULong len;
-
-  if (get_ulong (len) == CORBA_B_FALSE || len > remaining)
-    return CORBA_B_FALSE;           // buffer's changed
-
-  next += (u_int) len;
-  remaining -= (u_int) len;
-  return CORBA_B_TRUE;
+	ldp [15] = *orig++;
+	ldp [14] = *orig++;
+	ldp [13] = *orig++;
+	ldp [12] = *orig++;
+	ldp [11] = *orig++;
+	ldp [10] = *orig++;
+	ldp [ 9] = *orig++;
+	ldp [ 8] = *orig++;
+	ldp [ 7] = *orig++;
+	ldp [ 6] = *orig++;
+	ldp [ 5] = *orig++;
+	ldp [ 4] = *orig++;
+	ldp [ 3] = *orig++;
+	ldp [ 2] = *orig++;
+	ldp [ 1] = *orig++;
+	ldp [ 0] = *orig++;
 }
 
 // Grow the CDR buffer, either to a known size (incoming message) or
@@ -438,3 +182,4 @@ CDR::grow (size_t newsize)
     
   return CORBA_B_TRUE;
 }
+

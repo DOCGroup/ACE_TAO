@@ -168,12 +168,12 @@ do_test (int use_XDR,
 	;
 
       if (status)
-	status = CDR::encoder (&TC_opaque, &key, 0, &stream, env)
+	status = stream.encode (&TC_opaque, &key, 0, env)
 	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
       if (status)
-	status = CDR::encoder (_tc_CORBA_String, &opname,
-			       0, &stream, env)
+	status = stream.encode (_tc_CORBA_String, &opname,
+			       0, env)
 	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
       /*
@@ -188,12 +188,12 @@ do_test (int use_XDR,
 	&& stream.put_long (99)
 	&& stream.put_long (-3455);
       if (status)
-	status = CDR::encoder (_tc_CORBA_String, &opname,
-			       0, &stream, env)
+	status = stream.encode (_tc_CORBA_String, &opname,
+			       0, env)
 	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
       // Gratuitous extra "interesting" data
-      status = CDR::encoder (tc, data, 0, &stream, env)
+      status = stream.encode (tc, data, 0, env)
 	== CORBA_TypeCode::TRAVERSE_CONTINUE;
 
 

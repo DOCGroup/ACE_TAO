@@ -65,7 +65,7 @@ static pid_t my_pid;
 //
 static pthread_once_t debug_init = PTHREAD_ONCE_INIT;
 
-#define setup () pthread_once (&debug_init, setup_once)
+#define setup() pthread_once (&debug_init, setup_once)
 
 static void
 setup_once ()
