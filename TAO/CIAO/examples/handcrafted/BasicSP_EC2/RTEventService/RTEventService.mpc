@@ -2,6 +2,7 @@
 
 project(RTEventService_stub): ciao_client {
   after += BasicSP_stub
+  requires += dummy
   sharedname = RTEventService_stub
 
   idlflags += -Wb,stub_export_macro=RTEVENTSERVICE_STUB_Export -Wb,stub_export_include=RTEventService_stub_export.h -Wb,skel_export_macro=RTEVENTSERVICE_SVNT_Export -Wb,skel_export_include=RTEventService_svnt_export.h
@@ -20,6 +21,7 @@ project(RTEventService_stub): ciao_client {
 
 project(RTEventService_svnt) : ciao_servant {
   after += RTEventService_stub BasicSP_stub
+  requires += dummy
   sharedname  = RTEventService_svnt
   libs    += RTEventService_stub BasicSP_stub BasicSP_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
@@ -44,6 +46,7 @@ project(RTEventService_svnt) : ciao_servant {
 
 project(RTEventService_exec) : ciao_component {
   after += RTEventService_svnt
+  requires += dummy
   sharedname = RTEventService_exec
   libs      += RTEventService_stub RTEventService_svnt BasicSP_stub BasicSP_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
