@@ -71,7 +71,7 @@ typedef ACE_Hash_Map_Iterator_Ex<TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KE
 typedef ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>
         CACHE_REV_ITER_IMPL;
 typedef int ATTR;
-typedef ACE_Null_Caching_Strategy_Utility <TYPE, TYPE, CACHE_MAP_IMPL, ATTR>
+typedef ACE_Null_Caching_Strategy_Utility <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, ATTR>
         NULL_UTILITY;
 typedef ACE_Null_Caching_Strategy<TYPE, TYPE, CACHE_MAP_IMPL, ATTR, NULL_UTILITY>
         NULL_CACHING_STRATEGY;
