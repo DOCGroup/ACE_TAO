@@ -1,3 +1,8 @@
+Fri Mar  7 09:58:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * apps/mkcsregdb/Makefile: Fixed the install location so the
+          make succeeds.
+
 Fri Mar  7 08:51:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
@@ -59,9 +64,8 @@ Thu Mar  6 11:41:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Mar  6 10:56:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * ace/Makefile.am:
-
-          Adding codeset files to yet another makefile variant.
+        * ace/Makefile.am: Adding codeset files to yet another makefile
+          variant.
 
 Thu Mar  6 09:58:41 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -108,7 +112,11 @@ Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/ace_lib.dsp:
 
           Added codeset registry files and fixed spelling error in
+<<<<<<< ChangeLog
+	  Makefile.bor.
+=======
           Makefile.bor.
+>>>>>>> 4.4721
 
 Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 

@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 BIN     = mkcsregdb
-INSBIN  = $(ACE_ROOT)/bin/mkcsregdb
+INSBIN  = $(ACE_ROOT)/bin
 
 FILES   = mkcsregdb
 
