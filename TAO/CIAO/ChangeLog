@@ -1,3 +1,9 @@
+Mon May 10 13:42:04 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Domain_Handler.cpp:
+          Removed the trailing #endif as the corresponding #ifndef was
+          removed earlier.
+
 Sun May  9 19:28:56 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Domain_Handler.cpp:
