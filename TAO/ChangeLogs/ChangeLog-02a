@@ -1,3 +1,76 @@
+Tue Dec 25 22:48:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Protocol.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+	  Move the EC_UDP_Sender class to its own file.
+	  Change the class to keep event sets in a single UDP packets.
+
+	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
+	  Change the responsabilities of this class, now it controls how
+	  the events are group.  For example, events of the same priority
+	  should be sent in the same event set.  This also allowed us to
+	  save a lock in the criticial path.
+
+	* orbsvcs/orbsvcs/Event/EC_Group_Scheduling.h:
+	* orbsvcs/orbsvcs/Event/EC_Group_Scheduling.inl:
+	* orbsvcs/orbsvcs/Event/EC_Group_Scheduling.cpp:
+	  Add new scheduling strategy to keep grouped events together. 
+
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+	  Change class to keep event sets together.
+
+	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+	  Change the TAO_EC_Supplier_Filter class to receive already
+	  scheduled events from the scheduling strategy.
+
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
+	  Change the supporting clases to use the new supplier strategy
+	  interface.
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+	* orbsvcs/tests/Event/Basic/BCast.cpp:
+	* orbsvcs/examples/RtEC/MCast/MCast.cpp:
+	  Use the new header file for TAO_EC_UDP_Sender
+
+	* orbsvcs/tests/Makefile:
+	* orbsvcs/tests/Makefile.am:
+	* orbsvcs/tests/Makefile.bor:
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+	* orbsvcs/tests/EC_Basic/EC_Basic.dsp:
+	* orbsvcs/tests/EC_Basic/EC_Basic.dsw:
+	* orbsvcs/tests/EC_Basic/EC_Basic.h:
+	* orbsvcs/tests/EC_Basic/EC_Basic.i:
+	* orbsvcs/tests/EC_Basic/Makefile:
+	* orbsvcs/tests/EC_Basic/Makefile.bor:
+	* orbsvcs/tests/EC_Basic/README:
+	* orbsvcs/tests/EC_Basic/run_test.pl:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsw:
+	* orbsvcs/tests/Event_Latency/Event_Latency.h:
+	* orbsvcs/tests/Event_Latency/Makefile:
+	* orbsvcs/tests/Event_Latency/Makefile.bor:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_tests.sh:
+	  Removed obsolete tests.
+
 Tue Dec 25 22:58:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: Fixed

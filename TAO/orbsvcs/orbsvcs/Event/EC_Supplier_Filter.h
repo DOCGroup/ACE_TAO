@@ -101,8 +101,15 @@ public:
 
   /// The ProxyPushConsumer delegates on this class to actually send
   /// the event.
-  virtual void push (const RtecEventComm::EventSet &event
-                     TAO_ENV_ARG_DECL_NOT_USED) = 0;
+  virtual void push (const RtecEventComm::EventSet &event,
+                     TAO_EC_ProxyPushConsumer *consumer
+                     TAO_ENV_ARG_DECL) = 0;
+
+  /// Events are first scheduled by the TAO_EC_Scheduling_Strategy,
+  /// and then pushed through this class again.
+  virtual void push_scheduled_event (RtecEventComm::EventSet &event,
+                                     const TAO_EC_QOS_Info &event_info
+                                     TAO_ENV_ARG_DECL) = 0;
 
   /// Increment and decrement the reference count, locking must be
   /// provided by the user.

@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   EC_Null_Scheduling.h
+ *  @file   EC_Group_Scheduling.h
  *
  *  $Id$
  *
@@ -12,8 +12,8 @@
  * http://doc.ece.uci.edu/~coryan/EC/index.html
  */
 
-#ifndef TAO_EC_NULL_SCHEDULING_H
-#define TAO_EC_NULL_SCHEDULING_H
+#ifndef TAO_EC_GROUP_SCHEDULING_H
+#define TAO_EC_GROUP_SCHEDULING_H
 #include "ace/pre.h"
 
 #include "EC_Scheduling_Strategy.h"
@@ -23,16 +23,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_EC_Null_Scheduling
+ * @class TAO_EC_Group_Scheduling
  *
- * @brief A scheduling strategy that separates event groups and
- * delivers one event at a time.
+ * @brief A scheduling strategy that preserves event groups.
  */
-class TAO_RTEvent_Export TAO_EC_Null_Scheduling : public TAO_EC_Scheduling_Strategy
+class TAO_RTEvent_Export TAO_EC_Group_Scheduling : public TAO_EC_Scheduling_Strategy
 {
 public:
   /// Constructor.
-  TAO_EC_Null_Scheduling (void);
+  TAO_EC_Group_Scheduling (void);
 
   // Read EC_Scheduling_Strategy.h for more details
   virtual void add_proxy_supplier_dependencies (
@@ -45,15 +44,15 @@ public:
                                TAO_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Null_Scheduling
-                              (const TAO_EC_Null_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Null_Scheduling& operator=
-                              (const TAO_EC_Null_Scheduling&))
+  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Group_Scheduling
+                              (const TAO_EC_Group_Scheduling&))
+  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Group_Scheduling& operator=
+                              (const TAO_EC_Group_Scheduling&))
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Null_Scheduling.i"
+#include "EC_Group_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_EC_NULL_SCHEDULING_H */
+#endif /* TAO_EC_GROUP_SCHEDULING_H */

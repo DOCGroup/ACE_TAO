@@ -10,10 +10,8 @@ DIRS = \
 	Event \
 	EC_Throughput \
 	EC_Multiple \
-	EC_Basic \
 	EC_Mcast \
 	EC_Custom_Marshal \
-	Event_Latency \
         ior_corbaname \
         IOR_MCast \
         LoadBalancing \

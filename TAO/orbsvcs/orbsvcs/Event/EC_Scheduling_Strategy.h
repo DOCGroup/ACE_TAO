@@ -25,6 +25,7 @@
 
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
+class TAO_EC_Supplier_Filter;
 class TAO_EC_QOS_Info;
 
 /**
@@ -50,13 +51,12 @@ public:
       TAO_EC_ProxyPushConsumer *consumer
       TAO_ENV_ARG_DECL) = 0;
 
-  /// Initializes <qos_info> based on the QoS information for
-  /// <consumer> and the event header.
-  virtual void init_event_qos (
-      const RtecEventComm::EventHeader& header,
-      TAO_EC_ProxyPushConsumer *consumer,
-      TAO_EC_QOS_Info& qos_info
-      TAO_ENV_ARG_DECL) = 0;
+  /// Schedule an event set and deliver them to the filter in the
+  /// desired order and grouping.
+  virtual void schedule_event (const RtecEventComm::EventSet &event,
+                               TAO_EC_ProxyPushConsumer *consumer,
+                               TAO_EC_Supplier_Filter *filter
+                               TAO_ENV_ARG_DECL) = 0;
 
 };
 
@@ -66,3 +66,4 @@ public:
 
 #include "ace/post.h"
 #endif /* TAO_EC_SCHEDULING_STRATEGY_H */
+\

@@ -153,46 +153,25 @@ TAO_EC_Per_Supplier_Filter::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event
-                                     TAO_ENV_ARG_DECL)
+TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
+                                  TAO_EC_ProxyPushConsumer *consumer
+                                  TAO_ENV_ARG_DECL)
 {
   TAO_EC_Scheduling_Strategy* scheduling_strategy =
     this->event_channel_->scheduling_strategy ();
-  for (CORBA::ULong j = 0; j < event.length (); ++j)
-    {
-      const RtecEventComm::Event& e = event[j];
-      RtecEventComm::Event* buffer =
-        ACE_const_cast(RtecEventComm::Event*, &e);
-      RtecEventComm::EventSet single_event (1, 1, buffer, 0);
+  scheduling_strategy->schedule_event (event,
+                                       consumer,
+                                       this
+                                       TAO_ENV_ARG_PARAMETER);
+}
 
-      TAO_EC_QOS_Info event_info;
-      {
-        // We need to grab the mutex to check that we are not
-        // disconnected.
-        // @@ This lock could be optimized if we knew that the
-        // scheduling strategy is trivial...
-        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-
-        if (this->consumer_ == 0)
-          return;
-
-        scheduling_strategy->init_event_qos (e.header,
-                                             this->consumer_,
-                                             event_info
-                                              TAO_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-      // We don't use the consumer_ field anymore, just the
-      // collection_, and that one is safe until we reach the
-      // destructor.  However, the caller has to increase the
-      // reference count before calling us, i.e. we won't be destroyed
-      // until push() returns.
-
-      TAO_EC_Filter_Worker worker (single_event, event_info);
-      this->collection_->for_each (&worker TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
+void
+TAO_EC_Per_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &event,
+                                                  const TAO_EC_QOS_Info &event_info
+                                                  TAO_ENV_ARG_DECL)
+{
+  TAO_EC_Filter_Worker worker (event, event_info);
+  this->collection_->for_each (&worker TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::ULong
