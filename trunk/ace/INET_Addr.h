@@ -130,7 +130,8 @@ public:
   u_short get_port_number (void) const;
   // Return the port number, converting it into host byte order.
 
-  int get_host_name (ASYS_TCHAR hostname[], size_t hostnamelen) const;
+  int get_host_name (ASYS_TCHAR hostname[],
+                     size_t hostnamelen) const;
   // Return the character representation of the name of the host,
   // storing it in the <hostname> (which is assumed to be
   // <hostnamelen> bytes long).  This version is reentrant.
@@ -141,7 +142,7 @@ public:
   // area).
 
   const	char *get_host_addr (void) const;
-  // Return the dotted Internet address.
+  // Return the "dotted decimal" Internet address.
 
   ACE_UINT32 get_ip_address (void) const;
   // Return the 4-byte IP address, converting it into host byte

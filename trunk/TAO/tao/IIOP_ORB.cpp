@@ -112,12 +112,14 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
                       1 /* zero terminator */);
       CORBA::String buf = CORBA::string_alloc (buflen);
 
-      ACE_OS::sprintf (buf, "%s%c.%c//%s:%d/%s", iiop_prefix,
+      ACE_OS::sprintf (buf,
+                       "%s%c.%c//%s:%d/%s",
+                       iiop_prefix,
                        digits [iiopobj->profile.iiop_version.major],
                        digits [iiopobj->profile.iiop_version.minor],
-                       iiopobj->profile.host, iiopobj->profile.port,
+                       iiopobj->profile.host,
+                       iiopobj->profile.port,
                        key.in ());
-
       return buf;
     }
 }
