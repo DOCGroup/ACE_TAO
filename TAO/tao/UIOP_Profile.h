@@ -106,11 +106,6 @@ public:
   ~TAO_UIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  int parse (TAO_InputCDR& cdr,
-             CORBA::Boolean& continue_decoding,
-             CORBA::Environment &env);
-  // Initialize this object using the given CDR octet string.
-
   int parse_string (const char *string,
                     CORBA::Environment &env);
   // Initialize this object using the given input string.
@@ -121,6 +116,9 @@ public:
 
   const TAO_opaque& body (void) const;
   // Create UIOP_Profile Object from marshalled data.
+
+  int decode (TAO_InputCDR& cdr);
+  // Initialize this object using the given CDR octet string.
 
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
@@ -180,13 +178,6 @@ public:
   TAO_UIOP_Profile & operator= (const TAO_UIOP_Profile &src);
   // Assignment operator
 
-  virtual CORBA::ULong _incr_refcnt (void);
-  // Increase the reference count by one on this object.
-
-  virtual CORBA::ULong _decr_refcnt (void);
-  // Decrement the object's reference count.  When this count goes to
-  // 0 this object will be deleted.
-
 private:
   int set (const ACE_UNIX_Addr &addr);
   // helper method to set the UNIX_Addr.
@@ -215,12 +206,6 @@ private:
   TAO_UIOP_Client_Connection_Handler *hint_;
   // Pointer to a connection handler which we successfully used
   // already.
-
-  ACE_SYNCH_MUTEX refcount_lock_;
-  // Mutex to protect reference count.
-
-  CORBA::ULong refcount_;
-  // Number of outstanding references to this object.
 
   TAO_MProfile *forward_to_;
   // list of profiles which we should try forwarding on.

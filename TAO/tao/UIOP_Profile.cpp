@@ -28,9 +28,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set (addr);
   int l = ACE_OS::strlen (object_key);
@@ -50,9 +48,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set (addr);
   this->create_body ();
@@ -67,9 +63,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     version_ (version),
     object_key_ (),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set (addr);
   int l = ACE_OS::strlen (object_key);
@@ -90,9 +84,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set (addr);
   this->create_body ();
@@ -106,9 +98,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (rendezvous_point),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 
   if (rendezvous_point)
@@ -130,9 +120,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 
   if (rendezvous_point)
@@ -154,9 +142,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (rendezvous_point),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   ACE_UNUSED_ARG (version);
 
@@ -174,9 +160,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile)
     version_(pfile->version_),
     object_key_(pfile->object_key_),
     object_addr_(pfile->object_addr_),
-    hint_(0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_(0)
 {
 
   ACE_NEW (this->rendezvous_point_,
@@ -193,9 +177,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
     version_(pfile.version_),
     object_key_(pfile.object_key_),
     object_addr_(pfile.object_addr_),
-    hint_(0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_(0)
 {
 
   ACE_NEW (this->rendezvous_point_,
@@ -212,9 +194,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
     version_ (version),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 }
 
@@ -226,9 +206,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   parse_string (string, env);
 }
@@ -240,9 +218,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (void)
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 }
 
@@ -265,93 +241,14 @@ TAO_UIOP_Profile::set (const ACE_UNIX_Addr& addr)
 //               "   rendezvous_point:      <%s>\n",
 //               temp_rendezvous_point,
 //               this->rendezvous_point_));
-              
+
   return 0;  // Success
 }
 
 TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
 {
-  assert (this->refcount_ == 0);
-
   delete [] this->rendezvous_point_;
   this->rendezvous_point_ = 0;
-}
-
-// return codes:
-// -1 -> error
-//  0 -> can't understand this version
-//  1 -> success.
-int
-TAO_UIOP_Profile::parse (TAO_InputCDR& cdr,
-                         CORBA::Boolean &continue_decoding,
-                         CORBA::Environment &env)
-{
-  CORBA::ULong encap_len = cdr.length ();
-
-  if (TAO_debug_level > 0)
-    {
-      char *buf = (char *) cdr.rd_ptr (); // ptr to first buffer
-      ACE_HEX_DUMP ((LM_DEBUG,
-                     (const char*)buf,
-                     encap_len,
-                     "\n"));
-    }
-
-  // Read and verify major, minor versions, ignoring UIOP
-  // profiles whose versions we don't understand.
-  // FIXME:  Version question again,  what do we do about them for this
-  //         protocol?
-
-  if (!(cdr.read_octet (this->version_.major)
-        && this->version_.major == TAO_UIOP_Profile::DEF_UIOP_MAJOR
-        && cdr.read_octet (this->version_.minor)
-        && this->version_.minor <= TAO_UIOP_Profile::DEF_UIOP_MINOR))
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "detected new v%d.%d UIOP profile",
-                this->version_.major,
-                this->version_.minor));
-    return 0;
-  }
-
-  if (this->rendezvous_point_)
-    {
-      delete [] this->rendezvous_point_;
-      this->rendezvous_point_ = 0;
-    }
-
-  // Get rendezvous_point
-  if (cdr.read_string (this->rendezvous_point_) == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
-      return -1;
-    }
-
-  this->object_addr_.set (this->rendezvous_point_);
-
-  // ... and object key.
-
-  if ((cdr >> this->object_key_) == 0)
-    return -1;
-
-  if (cdr.length () != 0 && TAO_debug_level)
-    {
-      // If there is extra data in the profile we are supposed to
-      // ignore it, but print a warning just in case...
-      ACE_DEBUG ((LM_DEBUG,
-                  "%d bytes out of %d left after UIOP profile data\n",
-                  cdr.length (),
-                  encap_len));
-    }
-
-//   ACE_DEBUG ((LM_DEBUG,
-//               "UIOP_Profile --- r point: <%s>\n",
-//               this->rendezvous_point_));
-
-  if (cdr.good_bit ())
-    return 1;
-
-  return -1;
 }
 
 int
@@ -578,41 +475,9 @@ TAO_UIOP_Profile::operator= (const TAO_UIOP_Profile &src)
   return *this;
 }
 
-// Memory managment
-
-CORBA::ULong
-TAO_UIOP_Profile::_incr_refcnt (void)
-{
-  // OK, think I got it.  When this object is created (guard) the
-  // lock is automatically acquired (refcount_lock_).  Then when
-  // we leave this method the destructir for guard is called which
-  // releases the lock!
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
-
-  return this->refcount_++;
-}
-
-CORBA::ULong
-TAO_UIOP_Profile::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  // refcount is 0, so delete us!
-  // delete will call our ~ destructor which in turn deletes stuff.
-  delete this;
-  return 0;
-}
-
 CORBA::String
-TAO_UIOP_Profile::to_string (CORBA::Environment &env)
+TAO_UIOP_Profile::to_string (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
-
   CORBA::String_var key;
   TAO_POA::encode_sequence_to_string (key.inout(),
                                       this->object_key ());
@@ -643,6 +508,81 @@ const char *
 TAO_UIOP_Profile::prefix (void)
 {
   return ::prefix_;
+}
+
+// return codes:
+// -1 -> error
+//  0 -> can't understand this version
+//  1 -> success.
+int
+TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
+{
+  CORBA::ULong encap_len = cdr.length ();
+
+  if (TAO_debug_level > 0)
+    {
+      char *buf = (char *) cdr.rd_ptr (); // ptr to first buffer
+      ACE_HEX_DUMP ((LM_DEBUG,
+                     (const char*)buf,
+                     encap_len,
+                     "\n"));
+    }
+
+  // Read and verify major, minor versions, ignoring UIOP
+  // profiles whose versions we don't understand.
+  // FIXME:  Version question again,  what do we do about them for this
+  //         protocol?
+
+  if (!(cdr.read_octet (this->version_.major)
+        && this->version_.major == TAO_UIOP_Profile::DEF_UIOP_MAJOR
+        && cdr.read_octet (this->version_.minor)
+        && this->version_.minor <= TAO_UIOP_Profile::DEF_UIOP_MINOR))
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "detected new v%d.%d UIOP profile",
+                this->version_.major,
+                this->version_.minor));
+    return 0;
+  }
+
+  if (this->rendezvous_point_)
+    {
+      delete [] this->rendezvous_point_;
+      this->rendezvous_point_ = 0;
+    }
+
+  // Get rendezvous_point
+  if (cdr.read_string (this->rendezvous_point_) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
+      return -1;
+    }
+
+  this->object_addr_.set (this->rendezvous_point_);
+
+  // ... and object key.
+
+  if ((cdr >> this->object_key_) == 0)
+    return -1;
+
+  if (cdr.length () != 0 && TAO_debug_level)
+    {
+      // If there is extra data in the profile we are supposed to
+      // ignore it, but print a warning just in case...
+      ACE_DEBUG ((LM_DEBUG,
+                  "%d bytes out of %d left after UIOP profile data\n",
+                  cdr.length (),
+                  encap_len));
+    }
+
+//   ACE_DEBUG ((LM_DEBUG,
+//               "UIOP_Profile --- r point: <%s>\n",
+//               this->rendezvous_point_));
+
+  if (cdr.good_bit ())
+    return 1;
+
+  return -1;
 }
 
 int

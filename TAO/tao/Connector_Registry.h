@@ -86,6 +86,9 @@ public:
   // Parse a string containing a URL style IOR and return an
   // MProfile.
 
+  TAO_Profile* create_profile (TAO_InputCDR& cdr);
+  // Create a profile based on the contents of <cdr>
+
 private:
   TAO_ConnectorSet connectors_;
   // list of connectors currently open.

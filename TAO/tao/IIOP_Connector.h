@@ -35,33 +35,27 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
   //
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
+  //
 public:
   // = Initialization and termination methods.
   TAO_IIOP_Connector (void);
   // Constructor.
 
+  // = The TAO_Connector methods, please check the documentation on
+  // Pluggable.h
   int open (TAO_Resource_Factory *trf, ACE_Reactor *reactor);
-  //  Initialize object and register with reactor.
-
   int close (void);
-  // Shutdown Connector bridge and concreate Connector.
-
+  int connect (TAO_Profile *profile, TAO_Transport *&transport);
   int preconnect (const char *preconnections);
-  // Initial set of connections to be established.
-
-  int connect (TAO_Profile *profile,
-               TAO_Transport *&transport);
-  // Connect will be called from TAO_GIOP_Invocation::start
+  TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
 protected:
+  // = More TAO_Connector methods, please check the documentation on
+  // Pluggable.h
   virtual int make_profile (const char *endpoint,
                             TAO_Profile *&,
                             CORBA::Environment &ACE_TRY_ENV);
-  // Create a profile with a given endpoint.
-
   virtual int check_prefix (const char *endpoint);
-  // Check that the prefix of the provided endpoint is valid for use
-  // with a given pluggable protocol.
 
 private:
   TAO_IIOP_BASE_CONNECTOR  base_connector_;

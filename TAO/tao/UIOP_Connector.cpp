@@ -36,6 +36,23 @@ TAO_UIOP_Connector::TAO_UIOP_Connector (void)
 }
 
 int
+TAO_UIOP_Connector::open (TAO_Resource_Factory *trf,
+                          ACE_Reactor *reactor)
+{
+  return this->base_connector_.open (reactor,
+                                     &UIOP_Null_Creation_Strategy_,
+                                     &UIOP_Cached_Connect_Strategy_,
+                                     &UIOP_Null_Activation_Strategy_);
+}
+
+int
+TAO_UIOP_Connector::close (void)
+{
+  this->base_connector_.close ();
+  return 0;
+}
+
+int
 TAO_UIOP_Connector::connect (TAO_Profile *profile,
                              TAO_Transport *& transport)
 {
@@ -73,23 +90,6 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
 
   transport = result->transport ();
 
-  return 0;
-}
-
-int
-TAO_UIOP_Connector::open (TAO_Resource_Factory *trf,
-                          ACE_Reactor *reactor)
-{
-  return this->base_connector_.open (reactor,
-                                     &UIOP_Null_Creation_Strategy_,
-                                     &UIOP_Cached_Connect_Strategy_,
-                                     &UIOP_Null_Activation_Strategy_);
-}
-
-int
-TAO_UIOP_Connector::close (void)
-{
-  this->base_connector_.close ();
   return 0;
 }
 
@@ -223,6 +223,22 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
   return successes;
 }
 
+TAO_Profile*
+TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
+{
+  TAO_Profile* pfile;
+  ACE_NEW_RETURN (pfile, TAO_UIOP_Profile, 0);
+  
+  int r = pfile->decode (cdr);
+  if (r == -1)
+    {
+      pfile->_decr_refcnt ();
+      pfile = 0;
+    }
+
+  return pfile;
+}
+
 int
 TAO_UIOP_Connector::make_profile (const char *endpoint,
                                   TAO_Profile *&profile,
@@ -234,7 +250,7 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
   //
   // or:
   //
-  //    //rendezvous_point/object_key 
+  //    //rendezvous_point/object_key
 
   ACE_NEW_RETURN (profile,
                   TAO_UIOP_Profile (endpoint, ACE_TRY_ENV),
