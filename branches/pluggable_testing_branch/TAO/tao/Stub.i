@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // @@ Get rid of profile specific stuff, it is now in it's own class and

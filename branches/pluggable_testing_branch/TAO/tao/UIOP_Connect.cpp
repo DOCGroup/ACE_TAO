@@ -53,6 +53,12 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
   uiop_transport_ = new TAO_UIOP_Server_Transport (this);
 }
 
+TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
+{
+  delete uiop_transport_;
+  uiop_transport_ = 0;
+}
+
 TAO_Transport *
 TAO_UIOP_Server_Connection_Handler::transport (void)
 {
