@@ -1,3 +1,13 @@
+Fri Mar  5 16:56:25 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* bin\tao_other_tests.lst: 
+
+	  Replaced the string 'RTP/UDP' with 'RTP_UDP' where specified as
+	  a command line argument to the AVStreams tests run_test.pl. This
+	  was to ensure that the '/' in the string does not confuse the
+	  script parser. This should fix the run time errors in the
+	  builds.
+
 Fri Mar  5 12:14:56 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/mfc.mpb:
