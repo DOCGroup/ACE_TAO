@@ -188,13 +188,16 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 # define TAO_USES_ROBUST_CONNECTION_MGMT
 #endif /* ! ACE_MVS */
 
-// This deals with the strategies for connection caching. By default
-// it is the Null Strategy. Although it shall be Least Recently Used
-// (LRU) with the default purging percentage of 20% once this feature
-// has been thoroughly tested.
+// @@todo: The connection caching strategy defeinition shoudl probably
+// go.
 #if !defined (TAO_CONNECTION_CACHING_STRATEGY)
 # define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::LRU
 #endif /* TAO_CONNECTION_CACHING_STRATEGY */
+
+#if !defined (TAO_CONNECTION_PURGING_STRATEGY)
+# define TAO_CONNECTION_PURGING_STRATEGY TAO_Resource_Factory::LRU
+#endif /* TAO_CONNECTION_PURGING_STRATEGY */
+
 
 #if !defined (TAO_PURGE_PERCENT)
 # define TAO_PURGE_PERCENT 20

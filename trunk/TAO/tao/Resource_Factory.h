@@ -98,7 +98,7 @@ class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
 {
 public:
 
-  enum Caching_Strategy
+  enum Purging_Strategy
   {
     // Least Recently Used
     LRU,
@@ -169,10 +169,6 @@ public:
    * NON-THREAD-SAFE
    */
   virtual int init_protocol_factories (void);
-
-  /// This accesses the connection caching strategy we use for managing
-  /// purging of unused entries from the connection cache on demand.
-  virtual Caching_Strategy connection_caching_strategy_type (void) const;
 
   /// This denotes the maximum number of connections that can be cached.
   virtual int cache_maximum (void) const;
