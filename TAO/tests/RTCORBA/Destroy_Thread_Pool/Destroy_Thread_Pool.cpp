@@ -40,7 +40,6 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -127,8 +126,8 @@ main (int argc, char *argv[])
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          //rt_orb->destroy_threadpool (id,
-          //ACE_TRY_ENV);
+          rt_orb->destroy_threadpool (id,
+                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           id =
@@ -136,8 +135,8 @@ main (int argc, char *argv[])
                                           ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          //rt_orb->destroy_threadpool (id,
-          //ACE_TRY_ENV);
+          rt_orb->destroy_threadpool (id,
+                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 

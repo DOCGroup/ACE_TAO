@@ -88,7 +88,13 @@ public:
   void open (CORBA::Environment &ACE_TRY_ENV);
 
   /// Finalize the resources.
-  void fini (void);
+  void finalize (void);
+
+  /// Shutdown the reactor.
+  void shutdown_reactor (void);
+
+  /// Wait for threads to exit.
+  void wait (void);
 
   /// Create the static threads - only called once.
   int create_static_threads (void);
@@ -181,7 +187,13 @@ public:
   void open (CORBA::Environment &ACE_TRY_ENV);
 
   /// Finalize the resources.
-  void fini (void);
+  void finalize (void);
+
+  /// Shutdown the reactor.
+  void shutdown_reactor (void);
+
+  /// Wait for threads to exit.
+  void wait (void);
 
   /// Create the static threads - only called once.
   int create_static_threads (void);
@@ -243,7 +255,13 @@ public:
   ~TAO_Thread_Pool_Manager (void);
 
   /// Finalize the resources.
-  void fini (void);
+  void finalize (void);
+
+  /// Shutdown the reactor.
+  void shutdown_reactor (void);
+
+  /// Wait for threads to exit.
+  void wait (void);
 
   /// Create a threadpool without lanes.
   RTCORBA::ThreadpoolId

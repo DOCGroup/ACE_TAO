@@ -11,6 +11,7 @@ ACE_RCSID(tao, Thread_Pool, "$Id$")
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/debug.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Thread_Pool.i"
@@ -52,6 +53,9 @@ TAO_Thread_Pool_Threads::svc (void)
       // No point propagating this exception.  Print it out.
       ACE_ERROR ((LM_ERROR,
                   "orb->run() raised exception for thread %t\n"));
+
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "");
     }
   ACE_ENDTRY;
 
@@ -153,10 +157,22 @@ TAO_Thread_Lane::~TAO_Thread_Lane (void)
 }
 
 void
-TAO_Thread_Lane::fini (void)
+TAO_Thread_Lane::finalize (void)
 {
   // Finalize resources.
   this->resources_.finalize ();
+}
+
+void
+TAO_Thread_Lane::shutdown_reactor (void)
+{
+  this->resources_.shutdown_reactor ();
+}
+
+void
+TAO_Thread_Lane::wait (void)
+{
+  this->threads_.wait ();
 }
 
 int
@@ -364,13 +380,33 @@ TAO_Thread_Pool::~TAO_Thread_Pool (void)
 }
 
 void
-TAO_Thread_Pool::fini (void)
+TAO_Thread_Pool::finalize (void)
 {
   // Finalize all the lanes.
   for (CORBA::ULong i = 0;
        i != this->number_of_lanes_;
        ++i)
-    this->lanes_[i]->fini ();
+    this->lanes_[i]->finalize ();
+}
+
+void
+TAO_Thread_Pool::shutdown_reactor (void)
+{
+  // Finalize all the lanes.
+  for (CORBA::ULong i = 0;
+       i != this->number_of_lanes_;
+       ++i)
+    this->lanes_[i]->shutdown_reactor ();
+}
+
+void
+TAO_Thread_Pool::wait (void)
+{
+  // Finalize all the lanes.
+  for (CORBA::ULong i = 0;
+       i != this->number_of_lanes_;
+       ++i)
+    this->lanes_[i]->wait ();
 }
 
 int
@@ -481,13 +517,33 @@ TAO_Thread_Pool_Manager::~TAO_Thread_Pool_Manager (void)
 }
 
 void
-TAO_Thread_Pool_Manager::fini (void)
+TAO_Thread_Pool_Manager::finalize (void)
 {
   // Finalize all the pools.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
        ++iterator)
-    (*iterator).int_id_->fini ();
+    (*iterator).int_id_->finalize ();
+}
+
+void
+TAO_Thread_Pool_Manager::shutdown_reactor (void)
+{
+  // Finalize all the pools.
+  for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
+       iterator != this->thread_pools_.end ();
+       ++iterator)
+    (*iterator).int_id_->shutdown_reactor ();
+}
+
+void
+TAO_Thread_Pool_Manager::wait (void)
+{
+  // Finalize all the pools.
+  for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
+       iterator != this->thread_pools_.end ();
+       ++iterator)
+    (*iterator).int_id_->wait ();
 }
 
 RTCORBA::ThreadpoolId
@@ -669,6 +725,15 @@ TAO_Thread_Pool_Manager::destroy_threadpool_i (RTCORBA::ThreadpoolId thread_pool
   // If the thread pool is not found in our map.
   if (result != 0)
     ACE_THROW (RTCORBA::RTORB::InvalidThreadpool ());
+
+  // Shutdown reactor.
+  thread_pool->shutdown_reactor ();
+
+  // Wait for the threads.
+  thread_pool->wait ();
+
+  // Finalize resources.
+  thread_pool->finalize ();
 
   // Delete the thread pool.
   delete thread_pool;

@@ -51,6 +51,9 @@ public:
   /// Finalize resources.
   void finalize (void);
 
+  /// Shutdown the reactor.
+  void shutdown_reactor (void);
+
   /// @name Accessors
   // @{
 

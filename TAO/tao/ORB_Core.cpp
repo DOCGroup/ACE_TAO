@@ -1838,9 +1838,8 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
       // Set the shutdown flag
       this->has_shutdown_ = 1;
 
-      // Shutdown all the reactors....
-      this->thread_lane_resources_manager ().shutdown_all_reactors (ACE_TRY_ENV);
-      ACE_CHECK;
+      // Shutdown reactor.
+      this->thread_lane_resources_manager ().shutdown_reactor ();
 
       // Grab the thread manager
       ACE_Thread_Manager *tm = this->thr_mgr ();

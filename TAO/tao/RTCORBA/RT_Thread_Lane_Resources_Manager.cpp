@@ -78,30 +78,18 @@ TAO_RT_Thread_Lane_Resources_Manager::finalize (void)
   // Finalize default resources.
   this->default_lane_resources_->finalize ();
 
-  TAO_Thread_Pool_Manager::THREAD_POOLS &thread_pools =
-    this->tp_manager_->thread_pools ();
+  // Finalize resources managed by the thread-pool manager.
+  this->tp_manager_->finalize ();
+}
 
-  // Go through all the lanes and finalize their resources.
-  for (TAO_Thread_Pool_Manager::THREAD_POOLS::iterator pool_iterator =
-         thread_pools.begin ();
-       pool_iterator != thread_pools.end ();
-       ++pool_iterator)
-    {
-      TAO_Thread_Lane **lanes =
-        (*pool_iterator).int_id_->lanes ();
-      CORBA::ULong number_of_lanes =
-        (*pool_iterator).int_id_->number_of_lanes ();
+void
+TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
+{
+  // Shutdown default reactors.
+  this->default_lane_resources_->shutdown_reactor ();
 
-      for (CORBA::ULong lane = 0;
-           lane != number_of_lanes;
-           ++lane)
-        {
-          TAO_Thread_Lane_Resources &lane_resources =
-            lanes[lane]->resources ();
-
-          lane_resources.finalize ();
-        }
-    }
+  // Shutdown reactors managed by the thread-pool manager.
+  this->tp_manager_->shutdown_reactor ();
 }
 
 TAO_Thread_Lane_Resources &
@@ -127,82 +115,6 @@ TAO_Thread_Lane_Resources &
 TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources (void)
 {
   return *this->default_lane_resources_;
-}
-
-int
-TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactors (TAO_Thread_Lane_Resources &lane_resources,
-                                                         CORBA_Environment &)
-{
-  TAO_Leader_Follower &leader_follower =
-    lane_resources.leader_follower ();
-
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    ace_mon,
-                    leader_follower.lock (),
-                    -1);
-
-  // Wakeup all the threads waiting blocked in the event loop, this
-  // does not guarantee that they will all go away, but reduces the
-  // load on the POA....
-  ACE_Reactor *reactor =
-    leader_follower.reactor ();
-
-  reactor->wakeup_all_threads ();
-
-  // If there are some client threads running we have to wait until
-  // they finish, when the last one does it will shutdown the reactor
-  // for us.  Meanwhile no new requests will be accepted because the
-  // POA will not process them.
-  if (!leader_follower.has_clients ())
-    {
-      // Wake up all waiting threads in the reactor.
-      reactor->end_reactor_event_loop ();
-    }
-
-  return 0;
-}
-
-int
-TAO_RT_Thread_Lane_Resources_Manager::shutdown_all_reactors (CORBA_Environment &ACE_TRY_ENV)
-{
-  // Shutdown default reactors.
-  int result =
-    this->shutdown_reactors (*this->default_lane_resources_,
-                             ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  if (result != 0)
-    return result;
-
-  TAO_Thread_Pool_Manager::THREAD_POOLS &thread_pools =
-    this->tp_manager_->thread_pools ();
-
-  // Shutdown reactors in all the lanes.
-  for (TAO_Thread_Pool_Manager::THREAD_POOLS::iterator pool_iterator =
-         thread_pools.begin ();
-       pool_iterator != thread_pools.end ();
-       ++pool_iterator)
-    {
-      TAO_Thread_Lane **lanes =
-        (*pool_iterator).int_id_->lanes ();
-      CORBA::ULong number_of_lanes =
-        (*pool_iterator).int_id_->number_of_lanes ();
-
-      for (CORBA::ULong lane = 0;
-           lane != number_of_lanes && result == 0;
-           ++lane)
-        {
-          result =
-            this->shutdown_reactors (lanes[lane]->resources (),
-                                     ACE_TRY_ENV);
-          ACE_CHECK_RETURN (-1);
-        }
-    }
-
-  if (result != 0)
-    return result;
-
-  return 0;
 }
 
 TAO_Thread_Pool_Manager &
