@@ -193,7 +193,6 @@ IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 .SUFFIXES: $(IDL_EXT)
 
-ifneq ($(use_flick),1)
 $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
 	@
 
@@ -210,38 +209,6 @@ ifneq ($(tao_dont_use_idl_make_rule),1)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
 
-else
-#### You can redefine the following in your platform_macros.GNU
-
-ifndef FLICK_SRCDIR
-  FLICK_SRCDIR  =       /project/doc/nanbor/mom
-endif
-ifndef FLICK_OBJDIR
-  FLICK_OBJDIR  =       /project/doc/nanbor/dad
-endif
-
-CCFLAGS += -I$(FLICK_OBJDIR)/runtime/headers -I$(FLICK_SRCDIR)/runtime/headers
-
-CORBA_FE=$(FLICK_OBJDIR)/bin/flick-fe-newcorba
-CORBA_PG=$(FLICK_OBJDIR)/bin/flick-c-pfe-corbaxx
-CORBA_BE=$(FLICK_OBJDIR)/bin/flick-c-pbe-iiopxx
-
-ifneq ($(tao_dont_use_idl_make_rule),1)
-$(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl
-	$(CORBA_FE) $< && \
-	$(CORBA_PG) -c -o $*-client.prc $*.aoi && \
-	$(CORBA_BE) $*-client.prc -o $*$(IDL_CLIENT_SRC_EXT) -h $*$(IDL_CLIENT_HDR_EXT) -f $*$(IDL_SERVER_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
-	echo > $*$(IDL_CLIENT_INL_EXT)
-	$(CORBA_FE) $< && \
-	$(CORBA_PG) -s -o $*-server.prc $*.aoi && \
-	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*$(IDL_SERVER_SRC_EXT) -h $*$(IDL_SERVER_HDR_EXT) -F $*$(IDL_CLIENT_HDR_EXT) --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
-	echo > $*$(IDL_SERVER_INL_EXT) && \
-	echo > $*$(IDL_SERVER_THDR_EXT) && \
-	echo > $*$(IDL_SERVER_TINL_EXT) && \
-	echo > $*$(IDL_SERVER_TSRC_EXT)
-endif # tao_dont_use_idl_make_rule
-
-endif # use_flick = 1
 
 # Turn on symbol versioning. The scheme that we follow is to allow
 # applications dependent on libraries, with same version numbers (major,
