@@ -1,3 +1,8 @@
+Mon Oct 11 09:52:40 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* ace/config-qnx-rtp-62x.h:
+	Set ACE_LACKS_CUSERID.
+
 Mon Oct 11 10:14:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
@@ -50,6 +55,7 @@ Mon Oct 10 9:43:03 2004  Martin Corino  <mcorino@remedy.nl>
 
         Added XPG4 multibyte support for DIGITAL_UNIX >= 5.
 
+>>>>>>> 4.7747
 Sat Oct  9 23:08:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/acexml.mpb:
