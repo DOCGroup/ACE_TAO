@@ -177,9 +177,7 @@ CosNaming_Client::init (int argc, char **argv)
       TAO_TRY_ENV.print_exception ("init");
       return -1;
     }
-  TAO_ENDTRY;
-
-  ACE_NOTREACHED (return 0);
+  TAO_ENDTRY_RETURN (0);
 }
 
 int

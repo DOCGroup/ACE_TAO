@@ -198,8 +198,7 @@ Test_ObjRef_Sequence::check_validity (void)
     {
       return 0;
     }
-  TAO_ENDTRY;
-  ACE_NOTREACHED (return 0);
+  TAO_ENDTRY_RETURN (0);
 }
 
 CORBA::Boolean
