@@ -5,7 +5,7 @@ Wed Nov 26 10:33:22 1997    <irfan@TWOSTEP>
 
 	* ace: Added unimplemented copy constructors and assignment
  	  operators to the following classes:
-	  
+
 	  ACE_Map_Manager
 	  ACE_Message_Block
 	  ACE_Data_Block
@@ -15,7 +15,7 @@ Wed Nov 26 10:33:22 1997    <irfan@TWOSTEP>
           ACE_Task_Base
 
 	  Added ACE_UNIMPLEMENTED_FUNC macros to these classes:
-	  
+
 	  ACE_Mem_Map
 	  ACE_Priority_Reactor
 	  ACE_Select_Reactor
@@ -40,16 +40,20 @@ Wed Nov 26 10:33:22 1997    <irfan@TWOSTEP>
 	  ACE_Recursive_Thread_Mutex
 	  ACE_Barrier
 	  ACE_Condition
-	
+
 	  Thanks to Stanley D Leeson <STANLEY.D.LEESON@cdev.com> for these
  	  suggestions.
-	
+
 Sat Dec 20 14:57:30 1997    <nw1@CHA-CHA>
 
 	* All MSVC 5.0 project files: Removed unnecessary library
  	  inclusions.  Most of them are not necessary.
 
 Wed Nov 26 15:49:14 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/IOStream_T.i (recv) affects WIN32 only: fixed typo,
+          ACE_BIT_ENABLED instead of ACE_BIT_ENTABLED IOStream_T.i.
+          Thanks to James CE Johnson <jcej@lads.com> for reporting this.
 
         * include/makeinclude/platform_lynxos.GNU: added information
           on necessary OS patches.
@@ -76,11 +80,11 @@ Tue Nov 25 01:07:39 1997    <irfan@TWOSTEP>
  	  remove_suspended_handler_i): Make sure to preserve DONT_CALL
  	  with normal event entries.
 
-	* ace/Proactor.cpp: 
+	* ace/Proactor.cpp:
 
-	- A flag used to indicate when we are shutting down.  
+	- A flag used to indicate when we are shutting down.
 
-	- Made sure to signal the timer event when we are closing down.  
+	- Made sure to signal the timer event when we are closing down.
 
 	- Thread Manager: don't bother to wait (since the thread may have
  	  already gone). But make sure to close up the descriptor.  This
@@ -98,4 +102,3 @@ Tue Nov 25 01:07:39 1997    <irfan@TWOSTEP>
  	  that the initial data coming from the AcceptEx call is also
  	  dumped to the file.  Thanks to Mark Rabotnikov
  	  (mark@netmanage.co.il) for pointing this out.
-
