@@ -224,14 +224,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::alertable_handle_events (ACE_Tim
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivated (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
   return this->deactivated_;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ void
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivate (int do_stop)
 {
-  ACE_MT (ACE_GUARD (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_));
   this->deactivated_ = do_stop;
   this->wakeup_all_threads ();
 }
