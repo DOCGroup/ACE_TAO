@@ -12,6 +12,7 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_HAS_STRING_CLASS
 #define ACE_LACKS_STRCASECMP
 #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_AUTOMATIC_INIT_FINI

@@ -19,6 +19,7 @@
 // functionality is lost?  Platform supports <sys/procfs.h>
 //#define ACE_HAS_PROC_FS
  
+#define ACE_HAS_STRING_CLASS
 #define ACE_LACKS_IOSTREAM_FX
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_SIGNED_CHAR

@@ -51,6 +51,10 @@ public:
 
 private:
   ACE_Set_Node<T> *current_;
+  // Pointer to the current node in the iteration.
+
+  ACE_Unbounded_Set<T> &set_;
+  // Pointer to the set we're iterating over.
 };
 
 // Forward declaration (use the "Cheshire Cat" approach to information
@@ -71,14 +75,27 @@ friend class ACE_Unbounded_Set_Iterator<T>;
 public:
   // = Initialization and termination methods.
   ACE_Unbounded_Set (void);
+  // Constructor.
+
+  ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
+  // Copy constructor. 
+
+  void operator= (const ACE_Unbounded_Set<T> &);
+  // Assignment operator.
+
   ~ACE_Unbounded_Set (void);
-  
+  // Destructor.
+
   // = Classic unordered set operations.
   int insert (const T &new_item);
   // Insert <new_item> into the set (doesn't allow duplicates).
   // Returns -1 if failures occur, 1 if item is already present, else
   // 0.
   
+  int insert_tail (const T &new_item);
+  // Insert <new_item> into the set at the tail.  Returns -1 if
+  // failures occur else 0.
+
   int remove (const T &item);
   // Remove first occurrence of <item> from the set.  Returns 1 if
   // it removes the item, 0 if it can't find the item, and -1 if a
@@ -87,6 +104,10 @@ public:
   int find (const T &item) const;
   // Return first occurrence of <item> from the set.
   // Returns 0 if can't find, else 1.
+
+  int find (T &item, size_t index) const;
+  // Find the <index>th element in the set.  Returns 0 if the element
+  // isn't in the range <0..size()>, else 1.
   
   size_t size (void) const;
   // Size of the set.
@@ -98,6 +119,12 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
+  void delete_nodes (void);
+  // Delete all the nodes in the Set.
+
+  void copy_nodes (const ACE_Unbounded_Set<T> &);
+  // Copy nodes into this set.
+
   ACE_Set_Node<T> *head_;
    // Head of the linked list of Nodes.
 
@@ -158,8 +185,20 @@ friend class ACE_Fixed_Set_Iterator<T, SIZE>;
 public:
   // = Initialization and termination methods.
   ACE_Fixed_Set (void);
+  // Constructor.
+
+  ACE_Fixed_Set (size_t size);
+  // Constructor.
+
+  ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &);
+  // Copy constructor. 
+
+  void operator = (const ACE_Fixed_Set<T, SIZE> &);
+  // Assignment operator.
+
   ~ACE_Fixed_Set (void);
-  
+  // Destructor.
+
   // = Classic unordered set operations.
   int insert (const T &new_item);
   // Insert <new_item> into the set (doesn't allow duplicates).
@@ -174,6 +213,10 @@ public:
   int find (const T &item) const;
   // Return first occurrence of <item> from the set.
   // Returns 0 if can't find, else 1.
+
+  int find (T &item, size_t index) const;
+  // Find the <index>th element in the set.  Returns 0 if the element
+  // isn't in the range <0..size()>, else 1.
 
   size_t size (void) const;
   // Size of the set.
@@ -260,9 +303,20 @@ public:
 
   // = Initialization and termination methods.
   ACE_Bounded_Set (void);
+  // Constructor.
+
   ACE_Bounded_Set (size_t size);
+  // Constructor.
+
+  ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
+  // Copy constructor. 
+
+  void operator= (const ACE_Bounded_Set<T> &);
+  // Assignment operator.
+
   ~ACE_Bounded_Set (void);
-  
+  // Destructor
+
   // = Classic unordered set operations.
   int insert (const T &new_item);
   // Insert <new_item> into the set (doesn't allow duplicates).
@@ -277,6 +331,10 @@ public:
   int find (const T &item) const;
   // Return first occurrence of <item> from the set.
   // Returns 0 if can't find, else 1.
+
+  int find (T &item, size_t index) const;
+  // Find the <index>th element in the set.  Returns 0 if the element
+  // isn't in the range <0..size()>, else 1.
 
   size_t size (void) const;
   // Size of the set.

@@ -18,7 +18,7 @@
   class myiostream : public iostream
   {
   public:
-          myiostream& operator>>(String & s)
+          myiostream& operator>> (String & s)
           {
                   ...
           }
@@ -28,19 +28,19 @@
 
   int i;
   String s;
-  myiostream foo(...);
+  myiostream foo (...);
 
   foo >> s;
   // OK
-  // invokes myiostream::operator>>(String&) returning myiostream&
+  // invokes myiostream::operator>> (String&) returning myiostream&
 
   foo >> i;
   // OK
-  // invokes iostream::operator>>(int&) returning iostream&
+  // invokes iostream::operator>> (int&) returning iostream&
 
   foo >> i >> s;
   // BAD
-  // invokes iostream::operator>>(int&) then iostream::operator>>(String&)
+  // invokes iostream::operator>> (int&) then iostream::operator>> (String&)
   //
   // What has happened is that the first >> is invoked on the base class and returns
   // a reference to iostream.  The second >> has no idea of the ACE_IOStream and
@@ -52,12 +52,12 @@
   class myiostream : public iostream
   {
   public:
-          myiostream& operator>>(int & i)
+          myiostream& operator>> (int & i)
           {
-                  return((myiostream&)iostream::operator>>(i));
+                  return ((myiostream&)iostream::operator>> (i));
           }
 
-          myiostream& operator>>(String & s)
+          myiostream& operator>> (String & s)
           {
                   ...
           }
@@ -67,41 +67,39 @@
 
   int i;
   String s;
-  myiostream foo(...);
+  myiostream foo (...);
 
   foo >> s;
   // OK
-  // invokes myiostream::operator>>(String&) returning myiostream&
+  // invokes myiostream::operator>> (String&) returning myiostream&
 
   foo >> i;
   // OK
-  // invokes myiostream::operator>>(int&) returning myiostream&
+  // invokes myiostream::operator>> (int&) returning myiostream&
 
 
   foo >> i >> s;
   // OK
-  // Because you provided operator>>(int&) in class myiostream, that
+  // Because you provided operator>> (int&) in class myiostream, that
   // function will be invoked by the first >>.  Since it returns
   // a myiostream&, the second >> will be invoked as desired.  */
 
 
-///////////////////////////////////////////////////////////////////////////
-
-#if ! defined( ACE_IOSTREAM_BUILDING_TEMPLATE )
+#if ! defined (ACE_IOSTREAM_BUILDING_TEMPLATE)
 
 ACE_Time_Value * 
-ACE_Streambuf_T::recv_timeout( ACE_Time_Value * tv )
+ACE_Streambuf_T::recv_timeout (ACE_Time_Value * tv)
 {
-	ACE_Time_Value * rval = recv_timeout_;
-	if( tv )
-	{
-		recv_timeout_value_ = *tv;
-		recv_timeout_ = &recv_timeout_value_;
-	}
-	else
-		recv_timeout_ = NULL;
+  ACE_Time_Value * rval = recv_timeout_;
+  if (tv)
+    {
+      recv_timeout_value_ = *tv;
+      recv_timeout_ = &recv_timeout_value_;
+    }
+  else
+    recv_timeout_ = NULL;
 
-	return rval;
+  return rval;
 }
 
 int
@@ -110,7 +108,7 @@ ACE_Streambuf_T::underflow (void)
   // If input mode is not set, any attempt to read from the stream is
   // a failure.
 
-  if (!(mode_ & ios::in))
+  if (! (mode_ & ios::in))
     return EOF;
 
   // If base () is empty then this is the first time any get/put
@@ -172,7 +170,7 @@ ACE_Streambuf_T::underflow (void)
           //
           setp (0, 0);
 
-          // Like the case where base () is false, we now point base()
+          // Like the case where base () is false, we now point base ()
           // to use our private get buffer.
 
           setb (this->eback_saved_,
@@ -227,7 +225,7 @@ int
 ACE_Streambuf_T::overflow (int c)
 {
   // Check to see if output is allowed at all.
-  if (!(mode_ & ios::out))
+  if (! (mode_ & ios::out))
     return EOF;
 
   // First invokation of a get or put function
@@ -339,26 +337,26 @@ ACE_Streambuf_T::sync (void)
 int
 ACE_Streambuf_T::flushbuf (void)
 {
-  // pptr() is one character beyond the last character put
-  // into the buffer.  pbase() points to the beginning of
-  // the put buffer.  Unless pptr() is greater than pbase()
+  // pptr () is one character beyond the last character put
+  // into the buffer.  pbase () points to the beginning of
+  // the put buffer.  Unless pptr () is greater than pbase ()
   // there is nothing to be sent to the peer.
   //
-  if( pptr() <= pbase() )
+  if (pptr () <= pbase ())
 	return 0;
 
   // 4/12/97 -- JCEJ
   // Kludge!!!
   // If the remote side shuts down the connection, an attempt to
-  // send() to the remote will result in the message 'Broken Pipe'
+  // send () to the remote will result in the message 'Broken Pipe'
   // I think this is an OS message, I've tracked it down to the
   // ACE_OS::write () function.  That's the last one to be called
   // before the message.  I can only test this on Linux though, so
   // I don't know how other systems will react.
   //
-  // To get around this gracefully, I do a PEEK recv() with an
-  // immediate (nearly) timeout.  recv() is much more graceful
-  // on it's failure.  If we get -1 from recv() not due to timeout
+  // To get around this gracefully, I do a PEEK recv () with an
+  // immediate (nearly) timeout.  recv () is much more graceful
+  // on it's failure.  If we get -1 from recv () not due to timeout
   // then we know we're SOL.
   //
   // Q:  Is 'errno' threadsafe?  Should the section below be a
@@ -366,12 +364,12 @@ ACE_Streambuf_T::flushbuf (void)
   //
   //
   // char tbuf[1];
-  // ACE_Time_Value to(0,1);
-  // if( this->recv( tbuf, 1, MSG_PEEK, &to ) == -1 )
+  // ACE_Time_Value to (0,1);
+  // if (this->recv (tbuf, 1, MSG_PEEK, &to) == -1)
   // {
-  // 	if( errno != ETIME )
+  // 	if (errno != ETIME)
   //	{
-  //		perror("OOPS preparing to send to peer");
+  //		perror ("OOPS preparing to send to peer");
   // 		return EOF;
   //	}
   // }
@@ -385,7 +383,7 @@ ACE_Streambuf_T::flushbuf (void)
   // data as there is waiting.  send guarantees that all
   // of the data will be sent or an error will be returned.
   //
-  if( this->send( pbase(), pptr() - pbase() ) == -1 )
+  if (this->send (pbase (), pptr () - pbase ()) == -1)
   {
 	return EOF;
   }
@@ -399,15 +397,15 @@ ACE_Streambuf_T::flushbuf (void)
 }
 
 int 
-ACE_Streambuf_T::get_one_byte ( void )
+ACE_Streambuf_T::get_one_byte (void)
 {
   // The recv function will return immediately if there is no data
   // waiting.  So, we use recv_n to wait for exactly one byte to come
   // from the peer.  Later, we can use recv to see if there is
-  // anything else in the buffer.  (Ok, we could use flags to tell it
+  // anything else in the buffer. (Ok, we could use flags to tell it
   // to block but I like this better.)
 
-  if( this->recv_n( base(), 1, MSG_PEEK, recv_timeout_ ) != 1 )
+  if (this->recv_n (base (), 1, MSG_PEEK, recv_timeout_) != 1)
     return EOF;
 
   return 1;
@@ -421,13 +419,13 @@ ACE_Streambuf_T::fillbuf (void)
   // Invoke recv_n to get exactly one byte from the remote.  This
   // will block until something shows up.
   //
-  if( get_one_byte() == EOF )
+  if (get_one_byte () == EOF)
     return EOF;
 
   // Now, get whatever else may be in the buffer.  This will return if
   // there is nothing in the buffer. 
 
-  int bc = this->recv ( base(), blen(), recv_timeout_ );
+  int bc = this->recv (base (), blen (), recv_timeout_);
 
   // recv will give us -1 if there was a problem.  If there was
   // nothing waiting to be read, it will give us 0.  That isn't an
@@ -438,7 +436,7 @@ ACE_Streambuf_T::fillbuf (void)
 
   // Move the get pointer to reflect the number of bytes we just read.
 
-  setg (base (), base (), base () + bc );
+  setg (base (), base (), base () + bc);
 
   // Return the byte-read-count including the one from <get_one_byte>
   return bc;
@@ -449,32 +447,32 @@ ACE_Streambuf_T::ACE_Streambuf_T (u_int streambuf_size, int io_mode)
     put_mode_ (2),
     mode_ (io_mode),
     streambuf_size_ (streambuf_size),
-    recv_timeout_(NULL)
+    recv_timeout_ (NULL)
 {
-  (void)reset_get_buffer();
-  (void)reset_put_buffer();
+ (void)reset_get_buffer ();
+ (void)reset_put_buffer ();
 }
 
-u_int ACE_Streambuf_T::streambuf_size(void)
+u_int ACE_Streambuf_T::streambuf_size (void)
 {
   return streambuf_size_;
 }
 
-u_int ACE_Streambuf_T::get_waiting(void)
+u_int ACE_Streambuf_T::get_waiting (void)
   // Return the number of bytes not yet gotten.
   //	eback + get_waiting = gptr
 {
 	return this->gptr_saved_ - this->eback_saved_;
 }
 
-u_int ACE_Streambuf_T::get_avail(void)
+u_int ACE_Streambuf_T::get_avail (void)
   // Return the number of bytes in the get area (includes some already gotten);
   //	eback + get_avail = egptr
 {
 	return this->egptr_saved_ - this->eback_saved_;
 }
 
-u_int ACE_Streambuf_T::put_avail(void)
+u_int ACE_Streambuf_T::put_avail (void)
   // Return the number of bytes to be 'put' onto the stream media.
   //	pbase + put_avail = pptr
 {
@@ -482,14 +480,14 @@ u_int ACE_Streambuf_T::put_avail(void)
 }
 
 char *
-ACE_Streambuf_T::reset_get_buffer(char * newBuffer, u_int _streambuf_size, u_int _gptr, u_int _egptr )
+ACE_Streambuf_T::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_int _gptr, u_int _egptr)
 //
 // Typical usage:
 //
-//	u_int  newGptr  = otherStream->get_waiting();
-//	u_int  newEgptr = otherStream->get_avail();
-//	char * newBuf   = otherStream->reset_get_buffer();
-//	char * oldgetbuf = myStream->reset_get_buffer( newBuf, otherStream->streambuf_size(), newGptr, newEgptr );
+//	u_int  newGptr  = otherStream->get_waiting ();
+//	u_int  newEgptr = otherStream->get_avail ();
+//	char * newBuf   = otherStream->reset_get_buffer ();
+//	char * oldgetbuf = myStream->reset_get_buffer (newBuf, otherStream->streambuf_size (), newGptr, newEgptr);
 //
 //	'myStream' now has the get buffer of 'otherStream' and can use it in any way.
 //	'otherStream' now has a new, empty get buffer.
@@ -513,9 +511,9 @@ ACE_Streambuf_T::reset_get_buffer(char * newBuffer, u_int _streambuf_size, u_int
   // the variables below.  Initially, they all point to the beginning
   // of our read-dedicated buffer.
   //
-  if( newBuffer )
+  if (newBuffer)
   {
-	if( streambuf_size_ != _streambuf_size )
+	if (streambuf_size_ != _streambuf_size)
 		return NULL;
 	this->eback_saved_ = newBuffer;
   }
@@ -531,19 +529,19 @@ ACE_Streambuf_T::reset_get_buffer(char * newBuffer, u_int _streambuf_size, u_int
   // invoked on the first get operation.
   setg (0, 0, 0);
 
-  reset_base();
+  reset_base ();
 
   return rval;
 }
 
 char *
-ACE_Streambuf_T::reset_put_buffer(char * newBuffer, u_int _streambuf_size, u_int _pptr )
+ACE_Streambuf_T::reset_put_buffer (char * newBuffer, u_int _streambuf_size, u_int _pptr)
 //
 // Typical usage:
 //
-//	u_int  newPptr = otherStream->put_avail();
-//	char * newBuf  = otherStream->reset_put_buffer();
-//	char * oldputbuf = otherStream->reset_put_buffer( newBuf, otherStream->streambuf_size(), newPptr );
+//	u_int  newPptr = otherStream->put_avail ();
+//	char * newBuf  = otherStream->reset_put_buffer ();
+//	char * oldputbuf = otherStream->reset_put_buffer (newBuf, otherStream->streambuf_size (), newPptr);
 //
 {
   char * rval = this->pbase_saved_;
@@ -561,9 +559,9 @@ ACE_Streambuf_T::reset_put_buffer(char * newBuffer, u_int _streambuf_size, u_int
   // Again to switch quickly between modes, we keep copies of
   // these three pointers.
   //
-  if( newBuffer )
+  if (newBuffer)
   {
-	if( streambuf_size_ != _streambuf_size )
+	if (streambuf_size_ != _streambuf_size)
 		return NULL;
 	this->pbase_saved_ = newBuffer;
   }
@@ -579,13 +577,13 @@ ACE_Streambuf_T::reset_put_buffer(char * newBuffer, u_int _streambuf_size, u_int
   // to any put operator.
   setp (0, 0);
 
-  reset_base();
+  reset_base ();
 
   return rval;
 }
 
 void
-ACE_Streambuf_T::reset_base(void)
+ACE_Streambuf_T::reset_base (void)
 {
   // Until we experience the first get or put operation, we do not
   // know what our current IO mode is.
@@ -619,8 +617,8 @@ ACE_Streambuf_T::~ACE_Streambuf_T (void)
 // streambuf objects, we can be input-only, output-only or both.
 
 template <class STREAM>
-ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, u_int streambuf_size, int io_mode )
-  : ACE_Streambuf_T( streambuf_size, io_mode ), peer_ (peer)
+ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, u_int streambuf_size, int io_mode)
+  : ACE_Streambuf_T (streambuf_size, io_mode), peer_ (peer)
 {
   // A streambuf allows for unbuffered IO where every character is
   // read as requested and written as provided.  To me, this seems
@@ -649,15 +647,15 @@ ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, u_int streambuf_size, int io
 // STREAM.
 
 template <class STREAM>
-ACE_IOStream<STREAM>::ACE_IOStream ( STREAM & stream, u_int streambuf_size )
-  : iostream(streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size)),
-    STREAM(stream)
+ACE_IOStream<STREAM>::ACE_IOStream (STREAM & stream, u_int streambuf_size)
+  : iostream (streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size)),
+    STREAM (stream)
 {
 }
 
 template <class STREAM>
-ACE_IOStream<STREAM>::ACE_IOStream ( u_int streambuf_size )
-  : iostream(streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size))
+ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
+  : iostream (streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size))
 {
 }
 
@@ -680,14 +678,14 @@ ACE_IOStream<STREAM>::close (void)
 }
 
 template <class STREAM> ACE_IOStream<STREAM> &
-ACE_IOStream<STREAM>::operator>>(ACE_Time_Value *& tv )
+ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *& tv)
 {
-	ACE_Time_Value * old_tv = this->streambuf_->recv_timeout(tv);
+	ACE_Time_Value * old_tv = this->streambuf_->recv_timeout (tv);
 	tv = old_tv;
 	return *this;
 }
 
-#if (defined(__GNUC__) && !defined (CHORUS)) || defined(ACE_WIN32)
+#if (ACE_HAS_STRING_CLASS)
 
 // A simple string operator.  The base iostream has 'em for char* but
 // that isn't always the best thing for a String.  If we don't provide
@@ -696,7 +694,7 @@ ACE_IOStream<STREAM>::operator>>(ACE_Time_Value *& tv )
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String & v)
 {
-  if( ipfx0() )
+  if (ipfx0 ())
   {
     char c;
     iostream::operator>> (c);
@@ -705,7 +703,7 @@ ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String & v)
       continue;
   }
 
-  isfx();
+  isfx ();
 
   return *this;
 }
@@ -714,19 +712,17 @@ ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String & v)
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator<< (ACE_IOStream_String & v)
 {
-  if( opfx() )
-  {
+  if (opfx ())
+    {
 #if defined (ACE_WIN32)
-	for( int i = 0 ; i < v.GetLength() ; ++i )
+      for (int i = 0 ; i < v.GetLength () ; ++i)
 #else
-	for( u_int i = 0 ; i < (u_int)v.length() ; ++i )
+	for (u_int i = 0 ; i < (u_int) v.length () ; ++i)
 #endif
-	{
-		this->put( v[i] );
-	}
-  }
+	  this->put (v[i]);
+    }
 
-  osfx();
+  osfx ();
 
   return *this;
 }
@@ -739,38 +735,31 @@ ACE_IOStream<STREAM>::operator<< (ACE_IOStream_String & v)
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator>> (QuotedString & str)
 {
-  if( ipfx0() )
-  {
-	char c;
+  if (ipfx0 ())
+    {
+      char c;
 
-	if( !(*this >> c) ) // eat space up to the first char
-	{
-		// this->set(ios::eofbit|ios::failbit);
-		return *this;
-	}
+      if (! (*this >> c)) // eat space up to the first char
+	// this->set (ios::eofbit|ios::failbit);
+	return *this;
 
-	str = "";	// Initialize the string
+      str = "";	// Initialize the string
 
-	// if we don't have a quote, append until we see space
-	if (c != '"')
-	{
-		for( str = c ; this->get(c) && !isspace(c) ; str += c );
-	}
-	else
-	{
-		for( ; this->get(c) && c != '"' ; str += c )
-		{
-			if (c == '\\')
-			{
-				this->get(c);
-				if (c != '"')
-					str += '\\';
-			}
-		}
-	}
-  }
+      // if we don't have a quote, append until we see space
+      if (c != '"')
+	for (str = c ; this->get (c) && !isspace (c) ; str += c)
+	  continue;
+      else
+	for (; this->get (c) && c != '"' ; str += c)
+	  if (c == '\\')
+	    {
+	      this->get (c);
+	      if (c != '"')
+		str += '\\';
+	    }
+    }
 
-  isfx();
+  isfx ();
 	
   return *this;
 }
@@ -778,27 +767,23 @@ ACE_IOStream<STREAM>::operator>> (QuotedString & str)
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator<< (QuotedString & str)
 {
-  if( opfx() )
+  if (opfx ())
   {
-	this->put('"');
-	for( u_int i = 0 ; i < str.length() ; ++i )
+	this->put ('"');
+	for (u_int i = 0 ; i < str.length () ; ++i)
 	{
-		if( str[i] == '"' )
-			this->put('\\');
-		this->put( str[i] );
+		if (str[i] == '"')
+			this->put ('\\');
+		this->put (str[i]);
 	}
-	this->put('"');
+	this->put ('"');
   }
 
-  osfx();
+  osfx ();
 
   return *this;
 }
 
-
-///////////////////////////////////////////////////////////////////////////
-
-
-#endif /* (__GNUC__ && ! CHORUS) || ACE_WIN32 */
+#endif /* ACE_HAS_STRING_CLASS */
 #endif /* ACE_IOSTREAM_C */
 

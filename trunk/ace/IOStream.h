@@ -83,49 +83,42 @@
 #include "ace/INET_Addr.h"
 #include <iomanip.h>
 
-#if defined (__GNUC__) && !defined (CHORUS)
-#include <String.h>
-typedef String ACE_IOStream_String;
-#endif /* __GNUC__ */
-//
+#if defined (ACE_HAS_STRING_CLASS)
 #if defined (ACE_WIN32)
 typedef CString ACE_IOStream_String;
+#else
+#include <String.h>
+typedef String ACE_IOStream_String;
 #endif /* ACE_WIN32 */
+#endif /* ACE_HAS_STRING_CLASS */
 
-#if defined(__GNUC__) || defined(ACE_WIN32)
+#if defined (ACE_HAS_STRING_CLASS)
 
 class QuotedString : public ACE_IOStream_String
 {
 public:
-	inline QuotedString() {
-		*this = "";
-	}
-	inline QuotedString(const char * c) {
-		*this = ACE_IOStream_String(c);
-	}
-	inline QuotedString(const ACE_IOStream_String& s) {
-		*this = s;
-	}
-	inline QuotedString& operator=(const ACE_IOStream_String& s) {
-		return (QuotedString&) ACE_IOStream_String::operator=(s);
-	}
-	inline QuotedString & operator =(const char  c) { 
-		return (QuotedString&) ACE_IOStream_String::operator=(c); 
-	}
-	inline QuotedString & operator =(const char* c) { 
-		return (QuotedString&) ACE_IOStream_String::operator=(c); 
-	}
-	inline bool operator < (const QuotedString& s) const {
-		return *(ACE_IOStream_String *)this < (ACE_IOStream_String)s;	
-	}
+  inline QuotedString (void) { *this = ""; }
+  inline QuotedString (const char * c) { *this = ACE_IOStream_String (c); }
+  inline QuotedString (const ACE_IOStream_String& s) { *this = s; }
+  inline QuotedString& operator= (const ACE_IOStream_String& s) 
+  {
+    return (QuotedString&) ACE_IOStream_String::operator= (s);
+  }
+  inline QuotedString & operator = (const char  c) {
+    return (QuotedString&) ACE_IOStream_String::operator= (c); 
+  }
+  inline QuotedString & operator = (const char* c) { 
+    return (QuotedString&) ACE_IOStream_String::operator= (c); 
+  }
+  inline bool operator < (const QuotedString& s) const {
+    return * (ACE_IOStream_String *)this < (ACE_IOStream_String)s;	
+  }
 #if defined (ACE_WIN32)
-	inline int length(void) {
-		return this->GetLength();
-	}
-#endif
+  inline int length (void) { return this->GetLength (); }
+#endif /* ACE_WIN32 */
 };
 
-#endif /* __GNUC__ || ACE_WIN32 */
+#endif /* ACE_HAS_STRING_CLASS */
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -517,7 +510,7 @@ public:
   // The only ambituity in the multiple inheritance is the close()
   // function.
 
-#if defined(__GNUC__) || defined(ACE_WIN32)
+#if defined (ACE_HAS_STRING_CLASS)
   virtual ACE_IOStream & operator>>(ACE_IOStream_String & v);
   // A simple string operator.  The base iostream has 'em for char*
   // but that isn't always the best thing for a String.  If we don't
@@ -532,7 +525,7 @@ public:
 
   virtual ACE_IOStream & operator<<(QuotedString &v);
   // The converse of the QuotedString put operator.
-#endif /* __GNUC__ || ACE_WIN32 */
+#endif /* ACE_HAS_STRING_CLASS */
 
   // = Using the macros to provide get/set operators.
 #if !defined (ACE_LACKS_IOSTREAM_SETGET)

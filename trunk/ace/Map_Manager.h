@@ -36,6 +36,10 @@ struct ACE_Map_Entry
   int is_free_;
   // Keeps track whether entry is free or not.
 
+  ~ACE_Map_Entry (void);
+  // We need this destructor to keep some compilers from complaining.
+  // It's just a no-op, however.
+
   void dump (void) const;
   // Dump the state of an object.
 

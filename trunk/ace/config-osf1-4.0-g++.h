@@ -23,6 +23,7 @@
 // support...
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 
+#define ACE_HAS_STRING_CLASS
 // Compiler's template mechanism must see source code (i.e., .C
 // files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE

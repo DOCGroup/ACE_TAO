@@ -47,6 +47,30 @@ ACE_Fixed_Set<T, SIZE>::~ACE_Fixed_Set (void)
 }
 
 template <class T, size_t SIZE>
+ACE_Fixed_Set<T, SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &fs)
+  : cur_size_ (fs.cur_size_)
+{
+  ACE_TRACE ("ACE_Fixed_Set<T>::ACE_Fixed_Set");
+
+  for (size_t i = 0; i < this->cur_size_; i++)
+    this->search_structure_[i] = fs.search_structure_[i];
+}
+
+template <class T, size_t SIZE> void
+ACE_Fixed_Set<T, SIZE>::operator = (const ACE_Fixed_Set<T, SIZE> &fs)
+{
+  ACE_TRACE ("ACE_Fixed_Set<T>::operator =");
+
+  if (this == &fs)
+    return;
+
+  this->cur_size_ = bs.cur_size_;
+
+  for (size_t i = 0; i < this->cur_size_; i++)
+    this->search_structure_[i] = fs.search_structure_[i];
+}
+
+template <class T, size_t SIZE>
 ACE_Fixed_Set<T, SIZE>::ACE_Fixed_Set (void)
   : cur_size_ (0), 
     max_size_ (SIZE)
@@ -65,6 +89,23 @@ ACE_Fixed_Set<T, SIZE>::find (const T &item) const
       if (this->search_structure_[i].item_ == item 
 	  && this->search_structure_[i].is_free_ == 0)
 	return 1;
+    }
+
+  return 0;
+}
+
+template <class T, size_t SIZE> int
+ACE_Fixed_Set<T, SIZE>::find (T &item, size_t index) const
+{
+  ACE_TRACE ("ACE_Fixed_Set<T, SIZE>::find");
+
+  if (index > this->cur_size_
+      || this->search_structure_[index].is_free_ != 0)
+    return 0;
+  else
+    {
+      item = this->search_structure_[i].item_;
+      return 1;
     }
 
   return 0;
@@ -215,6 +256,40 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (void)
 }
 
 template <class T>
+ACE_Bounded_Set<T>::ACE_Bounded_Set (const ACE_Bounded_Set<T> &bs)
+  : cur_size_ (bs.cur_size_),
+    max_size_ (bs.max_size_)
+{
+  ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
+
+  ACE_NEW (this->search_structure_, ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
+
+  for (size_t i = 0; i < this->cur_size_; i++)
+    this->search_structure_[i] = bs.search_structure_[i];
+}
+
+template <class T> void
+ACE_Bounded_Set<T>::operator = (const ACE_Bounded_Set<T> &bs)
+{
+  ACE_TRACE ("ACE_Bounded_Set<T>::operator =");
+
+  if (this == &bs)
+    return;
+  else if (this->max_size_ < bs.cur_size_)
+    {
+      delete [] this->search_structure_;
+      ACE_NEW (this->search_structure_, 
+	       ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
+      this->max_size_ = bs.cur_size_;
+    }
+
+  this->cur_size_ = bs.cur_size_;
+
+  for (size_t i = 0; i < this->cur_size_; i++)
+    this->search_structure_[i] = bs.search_structure_[i];
+}
+
+template <class T>
 ACE_Bounded_Set<T>::ACE_Bounded_Set (size_t size)
   : cur_size_ (0), 
     max_size_ (size)
@@ -235,6 +310,23 @@ ACE_Bounded_Set<T>::find (const T &item) const
       if (this->search_structure_[i].item_ == item 
 	  && this->search_structure_[i].is_free_ == 0)
 	return 1;
+    }
+
+  return 0;
+}
+
+template <class T> int
+ACE_Bounded_Set<T>::find (T &item, size_t index) const
+{
+  ACE_TRACE ("ACE_Bounded_Set<T>::find");
+
+  if (index > this->cur_size_
+      || this->search_structure_[index].is_free_ != 0)
+    return 0;
+  else
+    {
+      item = this->search_structure_[i].item_;
+      return 1;
     }
 
   return 0;
@@ -402,38 +494,135 @@ ACE_Unbounded_Set<T>::dump (void) const
 // ACE_TRACE ("ACE_Unbounded_Set<T>::dump");
 }
 
+template <class T> void
+ACE_Unbounded_Set<T>::copy_nodes (const ACE_Unbounded_Set<T> &us)
+{
+  for (ACE_Set_Node<T> *curr = us.head_->next_;
+       curr != us.head_;
+       curr = curr->next_)
+    this->insert_tail (curr->item_);
+}
+
+template <class T> void
+ACE_Unbounded_Set<T>::delete_nodes (void)
+{
+  ACE_Set_Node<T> *curr = this->head_->next_;
+
+  // Keep looking until we've hit the dummy node.
+
+  while (curr != this->head_)
+    {
+      ACE_Set_Node<T> *temp = curr;
+      curr = curr->next_;
+      delete temp;
+      this->cur_size_--;
+    }
+
+  // Reset the list to be a circular list with just a dummy node.
+  this->head_->next_ = this->head_;
+}
+
 template <class T>
 ACE_Unbounded_Set<T>::~ACE_Unbounded_Set (void)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::~ACE_Unbounded_Set");
-  while (this->head_ != 0)
-    {
-      ACE_Set_Node<T> *temp = this->head_;
-      this->head_ = this->head_->next_;
-      this->cur_size_--;
-      delete temp;
-    }
+
+  this->delete_nodes ();
+
+  // Delete the dummy node.
+  delete this->head_;
+  this->head_ = 0;
 }
 
 template <class T> int
 ACE_Unbounded_Set<T>::find (const T &item) const
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::find");
-  for (ACE_Set_Node<T> *temp = this->head_;
-       temp != 0;
-       temp = temp->next_)
-    if (temp->item_ == item)
-      return 1;
+  // Set <item> into the dummy node.
+  this->head_->item_ = item;
 
-  return 0;    
+  ACE_Set_Node<T> *temp = this->head_->next_;
+
+  // Keep looping until we find the item.
+  while (!(temp->item_ == item))
+    temp = temp->next_;
+
+  // If we found the dummy node then it's not really there, otherwise,
+  // it is there.
+  return temp == this->head_ ? 0 : 1;
+}
+
+template <class T> int
+ACE_Unbounded_Set<T>::find (T &item, size_t index) const
+{
+  ACE_TRACE ("ACE_Unbounded_Set<T>::find");
+
+  ACE_Set_Node<T> *curr = this->head_->next_;
+
+  size_t i;
+
+  for (i = 0; i < this->cur_size_; i++)
+    {
+      if (i == index)
+	break;
+
+      curr = curr->next_;
+    }
+
+  if (i < this->cur_size_)
+    {
+      ACE_ASSERT (curr != this->head_);
+      item = curr->item_;
+      return 1;
+    }
+  else
+    return 0;
 }
 
 template <class T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (void)
-  : head_ (0),
+  : head_ (new ACE_Set_Node<T>),
     cur_size_ (0)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
+  // Make the list circular by pointing it back to itself.
+  this->head_->next_ = this->head_;
+}
+
+template <class T>
+ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
+  : head_ (new ACE_Set_Node<T>),
+    cur_size_ (us.cur_size_)
+{
+  ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
+
+  this->head_->next_ = this->head_;
+  this->copy_nodes (us);
+}
+
+template <class T> void
+ACE_Unbounded_Set<T>::operator = (const ACE_Unbounded_Set<T> &us)
+{
+  ACE_TRACE ("ACE_Unbounded_Set<T>::operator =");
+
+  if (this == &us)
+    return;
+
+  this->delete_nodes ();
+  this->copy_nodes (us);
+}
+
+// Insert the new node at the tail of the list.
+
+template <class T> int
+ACE_Unbounded_Set<T>::insert_tail (const T &item)
+{
+// ACE_TRACE ("ACE_Unbounded_Set<T>::insert");
+  ACE_Set_Node<T> *temp;
+  ACE_NEW_RETURN (temp, ACE_Set_Node<T> (item, this->head_->next_), -1);
+  this->head_->next_ = temp;
+  this->cur_size_++;
+  return 0;
 }
 
 template <class T> int
@@ -441,11 +630,7 @@ ACE_Unbounded_Set<T>::insert (const T &item)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::insert");
   if (this->find (item) == 0)
-    {
-      ACE_NEW_RETURN (this->head_, ACE_Set_Node<T> (item, this->head_), -1);
-      this->cur_size_++;
-      return 0;
-    }
+    return this->insert_tail (item);
   else
     return 1;
 }
@@ -454,29 +639,26 @@ template <class T> int
 ACE_Unbounded_Set<T>::remove (const T &item)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::remove");
-  ACE_Set_Node<T> *prev = 0;
-  ACE_Set_Node<T> *temp;
 
-  for (temp = this->head_;
-       temp != 0;
-       temp = temp->next_)
-    {
-      if (temp->item_ == item)
-	break;
-      prev = temp;
-    }
+  // Insert the item to be founded into the dummy node.
+  this->head_->item_ = item;
 
-  if (temp == 0)
-    return 0;
-  else if (prev == 0) // Deleting the front of the list.
-    this->head_ = this->head_->next_;
+  ACE_Set_Node<T> *curr = this->head_;
+
+  while (!(curr->next_->item_ == item))
+    curr = curr->next_;
+
+  if (curr->next_ == this->head_)
+    return 0; // Item was not found.
   else
-    prev->next_ = temp->next_;
-
-  this->cur_size_--;
-
-  delete temp;
-  return 1;
+    {
+      ACE_Set_Node<T> *temp = curr->next_;
+      // Skip over the node that we're deleting.
+      curr->next_ = temp->next_;
+      this->cur_size_--;
+      delete temp;
+      return 1;
+    }
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Iterator)
@@ -489,7 +671,8 @@ ACE_Unbounded_Set_Iterator<T>::dump (void) const
 
 template <class T>
 ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s)
-    : current_ (s.head_)
+    : current_ (s.head_->next_),
+      set_ (s)
 {
 // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator");
 }
@@ -506,7 +689,7 @@ template <class T> int
 ACE_Unbounded_Set_Iterator<T>::next (T *&item)
 { 
 // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::next");
-  if (this->current_ == 0)
+  if (this->current_ == this->set_.head_)
     return 0;
   else
     {
