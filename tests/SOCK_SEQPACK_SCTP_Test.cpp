@@ -310,7 +310,7 @@ spawn_test(bool ipv6_test)
   }
 #elif defined (ACE_HAS_THREADS)
   if (-1 == ACE_Thread_Manager::instance ()->spawn
-      (Server,
+      (ACE_THR_FUNC (Server),
        ACE_reinterpret_cast(void *, &AcceptorSocket),
        THR_NEW_LWP | THR_DETACHED))
   {
@@ -320,7 +320,7 @@ spawn_test(bool ipv6_test)
   }
 
   if (-1 == ACE_Thread_Manager::instance ()->spawn
-      (Client,
+      (ACE_THR_FUNC (Client),
        ACE_reinterpret_cast(void *, &ServerAddr),
        THR_NEW_LWP | THR_DETACHED))
   {
