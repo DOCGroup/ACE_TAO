@@ -19,6 +19,8 @@
 #include "helper.h"
 #include "except.h"
 
+#include "tao/DynamicInterface/Unknown_User_Exception.h"
+
 ACE_RCSID(Param_Test, except, "$Id$")
 
 // ************************************************************************
