@@ -1,3 +1,12 @@
+Tue Jun 27 09:44:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	* tao/NVList.cpp:
+
+	  Added some missing .in()s when CORBA::Any's type_
+	  member is referenced, since it is now a
+	  TypeCode_var.
+
 Mon Jun 26 23:56:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/SMI_Iterator/Makefile:
