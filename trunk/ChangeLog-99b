@@ -1,6 +1,12 @@
+Mon Dec 27 21:29:25 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Log_Msg_Test.cpp (test_ostream): removed local
+          variable flags, because cxx X6.3/Linux doesn't like
+          it as an int.
+
 Mon Dec 27 19:17:46 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/SOCK.cpp: Added #pragma template instantiations for g++. 
+        * ace/SOCK.cpp: Added #pragma template instantiations for g++.
 
 Mon Dec 27 16:24:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
