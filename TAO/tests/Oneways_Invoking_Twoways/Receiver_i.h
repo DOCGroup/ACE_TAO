@@ -41,11 +41,11 @@ public:
   virtual ~Receiver_i (void);
 
   // = The skeleton methods
-  virtual CORBA::Long receive_call (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::Long receive_call (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Retun the number of calls that every thread would make...
-  virtual CORBA::Long get_call_count (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::Long get_call_count (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -34,13 +34,11 @@ public:
 
   /// Simple two-way operation used to excercise the ORB transport
   /// internals.
-  virtual void invoke_me (CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ())
+  virtual void invoke_me (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment ())
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Set the ORB to be shutdown by the shutdown() method in this

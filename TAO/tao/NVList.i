@@ -247,9 +247,9 @@ CORBA_NVList::CORBA_NVList (void)
 }
 
 ACE_INLINE CORBA::ULong
-CORBA_NVList::count (CORBA_Environment &ACE_TRY_ENV) const
+CORBA_NVList::count (TAO_ENV_SINGLE_ARG_DECL) const
 {
-  (ACE_const_cast(CORBA_NVList*,this))->evaluate (ACE_TRY_ENV);
+  (ACE_const_cast(CORBA_NVList*,this))->evaluate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return this->max_;

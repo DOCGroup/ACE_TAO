@@ -69,7 +69,7 @@ public:
   // Get the CORBA object.
 
   void shutdown (TAO_ENV_SINGLE_ARG_DECL
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_LACKS_SUPPRESS_ENV)
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
   ,    // This is ugly -- destroy_children should come BEFORE the env arg.
 #endif
                  CORBA::Boolean destroy_children = 0);

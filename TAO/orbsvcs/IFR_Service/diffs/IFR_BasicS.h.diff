@@ -45,7 +45,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -435,6 +431,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -78,7 +78,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -886,6 +884,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -111,7 +111,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -1209,6 +1209,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -144,7 +144,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -1668,6 +1670,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -177,7 +177,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -2152,6 +2156,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -210,7 +210,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -2476,6 +2482,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -243,7 +243,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -2774,6 +2782,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -276,7 +276,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -3039,6 +3049,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -309,7 +309,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -3215,6 +3227,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -342,7 +342,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -3416,6 +3430,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -375,7 +375,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -3626,6 +3642,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -408,7 +408,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -3885,6 +3903,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -441,7 +441,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -4169,6 +4189,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -474,7 +474,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -4636,6 +4658,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -507,7 +507,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -4984,6 +5008,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -540,7 +540,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -5447,6 +5473,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -573,7 +573,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -6035,6 +6063,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -606,7 +606,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -6532,6 +6562,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:
@@ -639,7 +639,7 @@
    // as soon as their use is necessary.
    void create_proxy (
 @@ -6964,6 +6996,8 @@
-     CORBA::Environment &ACE_TRY_ENV
+     TAO_ENV_SINGLE_ARG_DECL
    );
    
 +private:

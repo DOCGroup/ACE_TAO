@@ -25,7 +25,7 @@ public:
   Oneway_Receiver (void);
 
   // = The skeleton methods
-  virtual void receive_oneway (CORBA::Environment &ACE_TRY_ENV)
+  virtual void receive_oneway (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -64,9 +64,8 @@ TAO_NAMESPACE  POA_Messaging
     
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
   private:
     T *ptr_;
     PortableServer::POA_var poa_;

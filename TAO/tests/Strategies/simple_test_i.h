@@ -31,10 +31,10 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  CORBA::Boolean print_status (CORBA::Environment&)
+  CORBA::Boolean print_status (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -3091,7 +3091,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
 
 CORBA::Boolean
 TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl
-                          TAO_ENV_ARG_DECL_NOT_USED)
+                          TAO_ENV_ARG_DECL)
 
 {
 //  ACE_UNUSED_ARG (media_ctrl);

@@ -45,7 +45,7 @@ class TAO_Notify_Export TAO_Notify_Event_Dispatch_Command : public TAO_Notify_Co
 
   ~TAO_Notify_Event_Dispatch_Command ();
 
-  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
+  virtual int execute (TAO_ENV_SINGLE_ARG_DECL);
   // Command callback
 
  protected:

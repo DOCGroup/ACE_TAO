@@ -17,14 +17,14 @@ TAO_EstablishTrustPolicy::~TAO_EstablishTrustPolicy (void)
 }
 
 CORBA::PolicyType
-TAO_EstablishTrustPolicy::policy_type (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_EstablishTrustPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Security::SecEstablishTrustPolicy;
 }
 
 CORBA::Policy_ptr
-TAO_EstablishTrustPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+TAO_EstablishTrustPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_EstablishTrustPolicy *policy = 0;
@@ -41,13 +41,13 @@ TAO_EstablishTrustPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_EstablishTrustPolicy::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_EstablishTrustPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::EstablishTrust
-TAO_EstablishTrustPolicy::trust (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_EstablishTrustPolicy::trust (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->trust_;

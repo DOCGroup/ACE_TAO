@@ -91,9 +91,6 @@ private:
   char *ior_;
   // IOR of the obj ref of the Notifier.
   
-  CORBA::Environment env_;
-  // Environment variable.
-
   TAO_Naming_Client naming_services_client_;
   // An instance of the name client used for resolving the factory
   // objects.

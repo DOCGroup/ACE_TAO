@@ -161,13 +161,13 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << "template <class T> ACE_INLINE "
       << "PortableServer::POA_ptr" << be_nl
       << fulltiename
-      << "<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)" << be_nl
+      << "<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "return PortableServer::POA::_duplicate (this->poa_.in ());\n"
       << be_uidt_nl
       << "return this->" << localskelname
-      << "::_default_POA (ACE_TRY_ENV);" << be_uidt_nl
+      << "::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "}\n\n";
 
   if (node->traverse_inheritance_graph (be_visitor_interface_tie_si::method_helper, os) == -1)

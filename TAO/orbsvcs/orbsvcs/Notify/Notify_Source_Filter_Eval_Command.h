@@ -48,7 +48,7 @@ public:
   ~TAO_Notify_Source_Filter_Eval_Command ();
   // Destructor.
 
-  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
+  virtual int execute (TAO_ENV_SINGLE_ARG_DECL);
   // Command callback
 
 protected:

@@ -30,7 +30,7 @@ Time_Client_i::run (const char *name,
   ACE_TRY
     {
       //Make the RMI.
-      CORBA::Long timedate = client->current_time (ACE_TRY_ENV);
+      CORBA::Long timedate = client->current_time (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
       // Print out value
@@ -42,7 +42,7 @@ Time_Client_i::run (const char *name,
                   ascii_timedate));
 
       if (client.shutdown () == 1)
-        client->shutdown (ACE_TRY_ENV);
+        client->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
