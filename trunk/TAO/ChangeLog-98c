@@ -1,5 +1,8 @@
 Tue Feb 24 21:05:08 1998  Nagarajan Surendran  <naga@mambo.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp: Now contains the
+	implementation of Cubit_Server class with a really simple main.
+
 	* tests/Cubit/TAO/IDL_Cubit/server.h (class Cubit_Server): Defined
 	a new Cubit_Server class akin to Cubit_Client.
 
