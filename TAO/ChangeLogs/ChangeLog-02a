@@ -1,3 +1,13 @@
+Fri Feb 25 09:44:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/Latency/dii_client.cpp:
+	  Guarded all pertinent code with
+	  #if !defined (TAO_HAS_MINIMUM_CORBA). If minimum
+	  CORBA is defined, the client code should now just
+	  get and narrow a reference to the server. skip
+	  instantiating the client, and shutdown the server
+	  if that option is selected.
+
 Fri Feb 25 09:34:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
