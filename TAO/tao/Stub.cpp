@@ -485,14 +485,19 @@ private:
 
 CORBA::Policy_ptr
 TAO_Stub::get_policy (CORBA::PolicyType type
-                      ACE_ENV_ARG_DECL_NOT_USED)
+                      ACE_ENV_ARG_DECL)
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
 
   CORBA::Policy_var result;
   if (this->policies_ != 0)
-    result = this->policies_->get_policy (type);
+    {
+      result =
+        this->policies_->get_policy (type
+                                     ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK (CORBA::Policy::_nil ());
+    }
 
   if (CORBA::is_nil (result.in ()))
     result = this->orb_core_->get_policy_including_current (type);
