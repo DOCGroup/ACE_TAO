@@ -1,9 +1,0 @@
-#
-# Makefile for building the TAO tests
-#
-
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
-tests:
-	cd $(ACE_ROOT)\TAO\tests\CDR
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
