@@ -19,6 +19,7 @@
 #include "LF_CH_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
+
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
@@ -29,6 +30,11 @@ class TAO_ORB_Core_TSS_Resources;
 
 #if !defined (TAO_HAS_COLLOCATION)
 class TAO_Transport;
+#endif
+
+#if defined (TAO_CACHE_SERVANT_REF)
+#include "tao/Abstract_Servant_Base.h"
+class TAO_Servant_Base;
 #endif
 
 class ACE_SOCK;
@@ -111,6 +117,11 @@ public:
   /// protocols.  Remote protocols must overwrite implementation.
   virtual int set_dscp_codepoint (CORBA::Boolean set_network_priority);
 
+#if defined (TAO_CACHE_SERVANT_REF)
+  void set_op_signature (TAO_Skeleton &skeleton, TAO_Servant_Base *&servant);
+  void get_op_signature (TAO_Skeleton &operation_ptr, TAO_Servant_Base *&servant);
+#endif
+
 protected:
 
   /// Return our TAO_ORB_Core pointer
@@ -168,7 +179,6 @@ protected:
   virtual void pos_io_hook (int & return_value);
   //@}
 
-
 private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core *orb_core_;
@@ -184,6 +194,12 @@ private:
   /// Internal state lock, needs to be separate from the reference
   /// count / pending upcalls lock because they interleave.
   ACE_Lock * lock_;
+
+#if defined (TAO_CACHE_SERVANT_REF)
+  TAO_Skeleton op_signature_;
+  TAO_Servant_Base *servant_;
+#endif
+
 };
 
 #if defined (__ACE_INLINE__)

@@ -10,7 +10,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
-#include "tao/GIOP_Message_State.h"
+
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+# include "tao/GIOP_Message_State.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Generator_Parser_12.inl"
@@ -34,15 +37,6 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 {
   // First the request id
   msg << opdetails.request_id ();
-
-#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
-  static int counter = 2;
-  static size_t skip_length;
-
-  if (counter)
-    {
-      -- counter;
-#endif
 
   const CORBA::Octet response_flags = opdetails.response_flags ();
 
@@ -99,17 +93,6 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
       && msg.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
     return 0;
 
-#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
-  // Header length of the message
-  skip_length = msg.total_length ();
-    }
-  else
-    {
-      // Skip message to the right location
-      msg.skip_from_start (skip_length);
-    }
-#endif
-
   return 1;
 }
 
@@ -150,15 +133,6 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
 
   // Write the request ID
   output.write_ulong (reply.request_id_);
-
-#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
-  static bool once = true;
-  static size_t skip_length;
-
-  if (once)
-    {
-      once = false;
-#endif
 
   // Write the reply status
   if (reply.reply_status_ ==
@@ -213,16 +187,6 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
         }
     }
 
-#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
-
-  // Header length of the message
-  skip_length = output.total_length ();
-    }
-  else
-    {
-      output.skip_from_start(skip_length);
-    }
-#endif
   return 1;
 }
 
@@ -302,6 +266,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   CORBA::ULong req_id;
+
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 

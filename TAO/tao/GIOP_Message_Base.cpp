@@ -13,10 +13,15 @@
 #include "Codeset_Manager.h"
 #include "SystemException.h"
 
+#if defined (TAO_CACHE_SERVANT_REF)
+# include "tao/Connection_Handler.h"
+#endif /* TAO_CACHE_SERVANT_REF */
+
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
+//#include "ace/High_Res_Timer.h"
 
 ACE_RCSID (tao,
            GIOP_Message_Base,
@@ -842,7 +847,6 @@ int
 TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
                                               TAO_OutputCDR &msg)
 {
-
   // Reset the message type
   msg.reset ();
 
@@ -913,6 +917,12 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       CORBA::Object_var forward_to;
 
+#if defined (TAO_CACHE_SERVANT_REF)
+      static bool once = true;
+      if (once)
+        {
+          once = false;
+#endif
       // Do this before the reply is sent.
       this->orb_core_->request_dispatcher ()->dispatch (
           this->orb_core_,
@@ -921,6 +931,37 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+#if defined (TAO_CACHE_SERVANT_REF)
+        }
+      else
+        {
+          // Connection Handler
+          TAO_Connection_Handler *handler =
+            transport->connection_handler ();
+
+          TAO_Skeleton skel;
+          TAO_Servant_Base *skeleton_ptr;
+
+          handler->get_op_signature (skel, skeleton_ptr);
+
+          // Convert references to void *
+          void *upcall_ptr = 0;
+          skel (request,
+                (void *)skeleton_ptr,
+                upcall_ptr
+                ACE_ENV_ARG_PARAMETER);
+
+          // Check if reply needs to be sent
+          if (!request.sync_with_server ()
+              && request.response_expected ()
+              && !request.deferred_reply ())
+            {
+              request.tao_send_reply ();
+            }
+        }
+#endif
+
+#if defined (TAO_CACHE_SERVANT_REF)
       if (!CORBA::is_nil (forward_to.in ()))
         {
           // We should forward to another object...
@@ -963,7 +1004,9 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
             }
           return result;
         }
+#endif
     }
+
   // Only CORBA exceptions are caught here.
   ACE_CATCHANY
     {

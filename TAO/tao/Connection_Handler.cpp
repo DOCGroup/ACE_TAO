@@ -12,7 +12,12 @@
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
+#include "tao/PortableServer/Servant_Base.h"
 #endif /* __ACE_INLINE__ */
+
+#if defined (TAO_CACHE_SERVANT_REF)
+# include "tao/Abstract_Servant_Base.h"
+#endif
 
 ACE_RCSID (tao,
            Connection_Handler,
@@ -24,6 +29,10 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
     transport_ (0),
 #endif
     tss_resources_ (orb_core->get_tss_resources ())
+#if defined (TAO_CACHE_SERVANT_REF)
+  , op_signature_ (0)
+#endif
+
 {
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
@@ -57,6 +66,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                                            int snd_size,
                                            int rcv_size)
 {
+
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
 
   if (snd_size != 0

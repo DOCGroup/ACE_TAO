@@ -1,8 +1,8 @@
 //$Id$
+
 // -- PortableServer Include --
 #include "Collocated_Object_Proxy_Broker.h"
 #include "Object_Adapter.h"
-
 
 // -- TAO Include --
 #include "tao/Stub.h"

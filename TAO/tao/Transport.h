@@ -223,6 +223,7 @@ namespace TAO
  * http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
  *
  */
+
 class TAO_Export TAO_Transport
 {
 public:
