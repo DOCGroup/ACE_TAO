@@ -24,6 +24,11 @@
 #include "ace/Signal.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 
+#if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
+#  include "ace/Unbounded_Queue.h"
+class ACE_Command_Base;
+#endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
 /**
  * @class ACE_Async_Timer_Queue_Adapter
  *
