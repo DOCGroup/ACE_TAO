@@ -1,3 +1,8 @@
+Thu Jul 22 12:17:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: removed ACE_LACKS_FORK on PowerPC.
+          All of the ACE tests that fork now succeed.
+
 Thu Jul 22 11:54:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/SV_Shared_Memory_Test.cpp (child): added a one

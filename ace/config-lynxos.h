@@ -31,8 +31,6 @@
 # define ACE_HAS_ALLOCA_H
 # define ACE_HAS_PENTIUM
 #elif defined (__powerpc__)
-  // fork ()/exec () don't seem to work well on PPC.
-# define ACE_LACKS_FORK
   // It looks like the default stack size is 15000.
   // ACE's Recursive_Mutex_Test needs more.
 # define ACE_NEEDS_HUGE_THREAD_STACKSIZE 32000
