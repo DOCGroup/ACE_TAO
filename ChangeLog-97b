@@ -1,4 +1,7 @@
-Sat Nov 22 03:59:34 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Sat Nov 22 05:16:36 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* tests/Process_Strategy_Test.cpp (handle_close): Added return
+	  type specifier.  Without it, g++ laments.
 
 	* ace/Acceptor.cpp (activate_svc_handler): Should be if (open (...) ==
 	  -1) then error, not if (open (...) != -1) then error.
