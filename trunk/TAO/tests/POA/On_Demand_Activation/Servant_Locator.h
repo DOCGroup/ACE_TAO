@@ -25,7 +25,7 @@ class MyFooServantLocator : public POA_PortableServer::ServantLocator
   //   This class is used by a POA with USE_SERVANT_MANAGER and
   //   NON_RETAIN policy.
 public:
-  MyFooServantLocator (void);
+  MyFooServantLocator (CORBA::ORB_ptr orb);
   // constructor
 
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
@@ -48,4 +48,6 @@ public:
 private:
   int counter_;
   // Counter for number of invocations of this.
+
+  CORBA::ORB_var orb_;
 };

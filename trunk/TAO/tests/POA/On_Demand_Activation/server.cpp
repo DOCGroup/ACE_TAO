@@ -46,6 +46,7 @@ main (int argc, char **argv)
     }
 
   // Get the POAManager of RootPOA
+
   PortableServer::POAManager_var poa_manager =
     root_poa->the_POAManager (env);
 
@@ -153,7 +154,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  MyFooServantActivator servant_activator_impl;
+  MyFooServantActivator servant_activator_impl (orb.in ());
   PortableServer::ServantActivator_var servant_activator =
     servant_activator_impl._this (env);
 
@@ -188,7 +189,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  MyFooServantLocator servant_locator_impl;
+  MyFooServantLocator servant_locator_impl (orb.in ());
   PortableServer::ServantLocator_var servant_locator =
     servant_locator_impl._this (env);
 

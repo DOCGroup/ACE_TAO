@@ -21,6 +21,8 @@
 class MyFooServantActivator : public POA_PortableServer::ServantActivator
 {
 public:
+  MyFooServantActivator (CORBA::ORB_ptr orb);
+
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr poa,
                                              CORBA::Environment &env);
@@ -36,4 +38,8 @@ public:
                             CORBA::Environment &env);
   // This method is invoked whenever a MyFooServant for a MyFoo object
   // is deactivated.
+
+private:
+  CORBA::ORB_var orb_;
+  // A reference to the ORB.
 };
