@@ -9,7 +9,7 @@
 //    Hash_Map_Manager_Test.cpp
 //
 // = DESCRIPTION
-//      This test illustrates the use of ACE_Hash_Map_Manager to
+//      This test illustrates the use of <ACE_Hash_Map_Manager> to
 //      maintain a hash table using strings. No command line arguments
 //      are needed to run this program.
 //
@@ -28,6 +28,7 @@
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<char *, char *>
 #define HASH_STRING_MAP ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>
 #define HASH_STRING_ITER ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>
+#define HASH_STRING_REVERSE_ITER ACE_Hash_Map_Reverse_Iterator<char *, char *, ACE_Null_Mutex>
 
 #define MAP_STRING char *
 #define ENTRY entry
@@ -90,6 +91,8 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
         ACE_Hash_Map_Manager<Dumb_String, Dumb_String, ACE_Null_Mutex>
 #define HASH_STRING_ITER \
         ACE_Hash_Map_Iterator<Dumb_String, Dumb_String, ACE_Null_Mutex>
+#define HASH_STRING_REVERSE_ITER \
+        ACE_Hash_Map_Reverse_Iterator<Dumb_String, Dumb_String, ACE_Null_Mutex>
 
 #define MAP_STRING Dumb_String
 #define ENTRY ((char *)entry)
@@ -181,12 +184,16 @@ main (int, char *[])
 
     // Let's test the iterator while we are at it.
     {
-      HASH_STRING_ENTRY *i;
+      HASH_STRING_ENTRY *entry;
+      size_t i = 0;
+
       for (HASH_STRING_ITER hash_iter (hash);
-           hash_iter.next (i);
-           hash_iter.advance ())
-        ACE_DEBUG ((LM_DEBUG, "iterating: [%s, %s]\n",
-                    (char *) i->ext_id_, (char *) i->int_id_));
+           hash_iter.next (entry) != 0;
+           hash_iter.advance (), i++)
+        ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
+                    i,
+                    (char *) entry->ext_id_,
+                    (char *) entry->int_id_));
     }
 
     hash.unbind ("goodbye", entry);
@@ -198,14 +205,18 @@ main (int, char *[])
     if (hash.find ("funny", entry) == 0)
       ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "funny", ENTRY));
 
-    // Let's test the iterator again.
+    // Let's test the iterator backwards.
     {
-      HASH_STRING_ENTRY *i;
-      for (HASH_STRING_ITER hash_iter (hash);
-           hash_iter.next (i);
-           hash_iter.advance ())
-        ACE_DEBUG ((LM_DEBUG, "iterating: [%s, %s]\n",
-                    (char *) i->ext_id_, (char *) i->int_id_));
+      HASH_STRING_ENTRY *entry;
+      size_t i = 0;
+
+      for (HASH_STRING_REVERSE_ITER hash_iter (hash);
+           hash_iter.next (entry) != 0;
+           hash_iter.advance (), i++)
+        ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
+                    i,
+                    (char *) entry->ext_id_,
+                    (char *) entry->int_id_));
     }
   }
 
