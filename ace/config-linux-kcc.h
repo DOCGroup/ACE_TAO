@@ -12,6 +12,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (i386)
+# define ACE_SIZEOF_LONG_DOUBLE 12
   // If running an Intel, assume that it's a Pentium so that
   // ACE_OS::gethrtime () can use the RDTSC instruction.  If
   // running a 486 or lower, be sure to comment this out.
@@ -53,7 +54,7 @@
 #define ACE_LACKS_STRRECVFD
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
