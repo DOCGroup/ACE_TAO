@@ -18,11 +18,11 @@ extern "C" char *getwd (char *);
 #endif
 
 #ifndef MAXPATHLEN
-#define MAXPATHLEN	1024
+#define MAXPATHLEN      1024
 #endif
 
 #ifndef BLKDEV_IOSIZE
-#define BLKDEV_IOSIZE	1024
+#define BLKDEV_IOSIZE   1024
 #endif
 
 #ifndef linux
@@ -84,7 +84,7 @@ abspath (char *cwd, char *rel_pathname)
       cwd = cwd_buffer;
     }
   else if (*cwd != '/')
-    abort ();			/* base path must be absolute */
+    abort ();                   /* base path must be absolute */
 
   /* Copy the  pathname (possibly preceeded by the current working
      directory name) into the absolutization buffer.  */
@@ -95,7 +95,7 @@ abspath (char *cwd, char *rel_pathname)
       p = cwd;
       while (*endp++ = *p++)
         continue;
-      *(endp-1) = '/';			/* overwrite null */
+      *(endp-1) = '/';                  /* overwrite null */
     }
   p = rel_pathname;
   while (*endp++ = *p++)
@@ -106,43 +106,43 @@ abspath (char *cwd, char *rel_pathname)
   /* Now make a copy of abs_buffer into abs_buffer, shortening the
      pathname (by taking out slashes and dots) as we go.  */
 
-  *outp++ = *inp++;		/* copy first slash */
+  *outp++ = *inp++;             /* copy first slash */
   for (;;)
     {
       if (!inp[0])
         break;
       else if (inp[0] == '/' && outp[-1] == '/')
-	{
+        {
           inp++;
           continue;
-	}
+        }
       else if (inp[0] == '.' && outp[-1] == '/')
-	{
+        {
           if (!inp[1])
-      	    break;
+            break;
           else if (inp[1] == '/')
-	    {
-      	      inp += 2;
-      	      continue;
-	    }
+            {
+              inp += 2;
+              continue;
+            }
           else if ((inp[1] == '.') && (inp[2] == 0 || inp[2] == '/'))
-	    {
-      	      inp += (inp[2] == '/') ? 3 : 2;
-      	      outp -= 2;
-      	      while (outp >= abs_buffer && *outp != '/')
-      		outp--;
-      	      if (outp < abs_buffer)
-		{
-		  /* Catch cases like /.. where we try to backup to a
-		     point above the absolute root of the logical file
-		     system.  */
+            {
+              inp += (inp[2] == '/') ? 3 : 2;
+              outp -= 2;
+              while (outp >= abs_buffer && *outp != '/')
+                outp--;
+              if (outp < abs_buffer)
+                {
+                  /* Catch cases like /.. where we try to backup to a
+                     point above the absolute root of the logical file
+                     system.  */
 
-      		  fprintf (stderr, "%s: fatal: invalid pathname: %s\n",
-		    pname, rel_pathname);
-      		  exit (1);
-      		}
-      	      *++outp = (char) 0;
-      	      continue;
+                  fprintf (stderr, "%s: fatal: invalid pathname: %s\n",
+                    pname, rel_pathname);
+                  exit (1);
+                }
+              *++outp = (char) 0;
+              continue;
             }
         }
       *outp++ = *inp++;
@@ -200,7 +200,7 @@ fix_mode (int new_mode, char* d_path)
     {
       if (!quiet_flag)
         fprintf (stderr, "%s: warning: can't chmod on output entity %s: %s\n",
-	  pname, d_path, sys_errlist[errno]);
+          pname, d_path, sys_errlist[errno]);
     }
 }
 
@@ -215,7 +215,7 @@ remove_item (char* s_path, char* d_path)
     {
       if (!quiet_flag)
         fprintf (stderr, "%s: error: cannot get status of %s: %s\n",
-	  pname, d_path, sys_errlist[errno]);
+          pname, d_path, sys_errlist[errno]);
       return -1;
     }
 
@@ -242,95 +242,95 @@ remove_item (char* s_path, char* d_path)
     {
       if (!quiet_flag)
         fprintf (stderr, "%s: error: don't have write access to %s: %s\n",
-	  pname, containing_dir, sys_errlist[errno]);
+          pname, containing_dir, sys_errlist[errno]);
       return -1;
     }
 
   switch (dst_stat_buf.st_mode & S_IFMT)
     {
       case  S_IFDIR:
-	if (access (d_path, R_OK) != 0)
-	  {
-	    if (!quiet_flag)
+        if (access (d_path, R_OK) != 0)
+          {
+            if (!quiet_flag)
               fprintf (stderr, "%s: error: don't have read permission for directory %s\n",
-	        pname, d_path);
+                pname, d_path);
             return -1;
-	  }
-	if (access (d_path, X_OK) != 0)
-	  {
-	    if (!quiet_flag)
+          }
+        if (access (d_path, X_OK) != 0)
+          {
+            if (!quiet_flag)
               fprintf (stderr,
                 "%s: error: don't have search permission for directory %s\n",
-	        pname, d_path);
+                pname, d_path);
             return -1;
-	  }
-	if (access (d_path, W_OK) != 0)
-	  {
-	    if (!quiet_flag)
+          }
+        if (access (d_path, W_OK) != 0)
+          {
+            if (!quiet_flag)
               fprintf (stderr,
                 "%s: error: don't have write permission for directory %s\n",
-	        pname, d_path);
+                pname, d_path);
             return -1;
-	  }
-	if ((dirp = opendir (d_path)) == NULL)
-	  {
-	    if (!quiet_flag)
+          }
+        if ((dirp = opendir (d_path)) == NULL)
+          {
+            if (!quiet_flag)
               fprintf (stderr,
                 "%s: error: can't open directory %s for reading: %s\n",
-	        pname, d_path, sys_errlist[errno]);
+                pname, d_path, sys_errlist[errno]);
             return -1;
-	  }
-	for (;;)
-	  {
-	    struct dirent* dir_entry_p;
-	    char* new_s_path;
-	    char* new_d_path;
+          }
+        for (;;)
+          {
+            struct dirent* dir_entry_p;
+            char* new_s_path;
+            char* new_d_path;
 
-	    if ((dir_entry_p = readdir (dirp)) == NULL)
-	      break;
-	    if (!strcmp (dir_entry_p->d_name, "."))
-	      continue;
-	    if (!strcmp (dir_entry_p->d_name, ".."))
-	      continue;
-	    new_s_path = path_concat (s_path, dir_entry_p->d_name);
-	    new_d_path = path_concat (d_path, dir_entry_p->d_name);
-	    if (remove_item (new_s_path, new_d_path))
-	      {
-		closedir (dirp);
-		return -1;
-	      }
-	    free (new_s_path);
-	    free (new_d_path);
-	  }
-	closedir (dirp);
-	if (rmdir (d_path))
-	  {
-	    if (!quiet_flag)
-	      fprintf (stderr, "%s: error: can't delete existing directory %s: %s\n",
-	        pname, d_path, sys_errlist[errno]);
-	    return -1;
-	  }
-	if (!quiet_flag)
-	  fprintf (stderr, "%s: removed directory %s\n",
-	    pname, d_path);
-	break;
+            if ((dir_entry_p = readdir (dirp)) == NULL)
+              break;
+            if (!strcmp (dir_entry_p->d_name, "."))
+              continue;
+            if (!strcmp (dir_entry_p->d_name, ".."))
+              continue;
+            new_s_path = path_concat (s_path, dir_entry_p->d_name);
+            new_d_path = path_concat (d_path, dir_entry_p->d_name);
+            if (remove_item (new_s_path, new_d_path))
+              {
+                closedir (dirp);
+                return -1;
+              }
+            free (new_s_path);
+            free (new_d_path);
+          }
+        closedir (dirp);
+        if (rmdir (d_path))
+          {
+            if (!quiet_flag)
+              fprintf (stderr, "%s: error: can't delete existing directory %s: %s\n",
+                pname, d_path, sys_errlist[errno]);
+            return -1;
+          }
+        if (!quiet_flag)
+          fprintf (stderr, "%s: removed directory %s\n",
+            pname, d_path);
+        break;
 
       /* Note that symbolic links can be treated just like normal files
-	 when the time comes for deleting them.  Unlinking a symbolic link
-	 just deletes the link and *not* the thing it points to.  */
+         when the time comes for deleting them.  Unlinking a symbolic link
+         just deletes the link and *not* the thing it points to.  */
 
       default:
-	if (unlink (d_path))
-	  {
-	    if (!quiet_flag)
+        if (unlink (d_path))
+          {
+            if (!quiet_flag)
               fprintf (stderr, "%s: error: can't delete existing file %s: %s\n",
-	        pname, d_path, sys_errlist[errno]);
+                pname, d_path, sys_errlist[errno]);
             return -1;
-	  }
-	if (!quiet_flag)
-	  fprintf (stderr, "%s: removed file %s\n",
-	    pname, d_path);
-	break;
+          }
+        if (!quiet_flag)
+          fprintf (stderr, "%s: removed file %s\n",
+            pname, d_path);
+        break;
     }
   return 0;
 }
@@ -354,9 +354,9 @@ mk_symbolic_link (const char *s_path,
 
       for (i = 0; i < level-1; i++)
         {
- 	  strcpy (cp, "../");
- 	  cp += 3;
- 	}
+          strcpy (cp, "../");
+          cp += 3;
+        }
       strcpy (cp, s_path);
       result = symlink (new_s_path, d_path);
     }
@@ -401,12 +401,12 @@ copy_file (char *s_path, char *d_path)
   if (lstat (s_path, &src_stat_buf) == -1)
     {
       if (!quiet_flag)
-	{
+        {
           fprintf (stderr, "%s: error: can't get status of %s: %s\n",
-	    pname, s_path, sys_errlist[errno]);
+            pname, s_path, sys_errlist[errno]);
           fprintf (stderr, "%s: input entity %s will be ignored\n",
-	    pname, s_path);
-	}
+            pname, s_path);
+        }
       return;
     }
 
@@ -415,11 +415,11 @@ copy_file (char *s_path, char *d_path)
       if (!quiet_flag)
         {
           fprintf (stderr, "%s: error: can't open input file %s: %s\n",
-	    pname, d_path, sys_errlist[errno]);
-	  fprintf (stderr, "%s: input file %s will be ignored\n",
-	    pname, s_path);
-	}
-	return;
+            pname, d_path, sys_errlist[errno]);
+          fprintf (stderr, "%s: input file %s will be ignored\n",
+            pname, s_path);
+        }
+        return;
     }
 
   if ((output = open (d_path, O_CREAT | O_WRONLY, src_stat_buf.st_mode & 07777)) == -1)
@@ -427,11 +427,11 @@ copy_file (char *s_path, char *d_path)
       if (!quiet_flag)
         {
           fprintf (stderr, "%s: error: can't create output file %s: %s\n",
-	    pname, d_path, sys_errlist[errno]);
-	  fprintf (stderr, "%s: input file %s will be ignored\n",
-	    pname, s_path);
-	}
-	return;
+            pname, d_path, sys_errlist[errno]);
+          fprintf (stderr, "%s: input file %s will be ignored\n",
+            pname, s_path);
+        }
+        return;
     }
 
   for (;;)
@@ -442,14 +442,14 @@ copy_file (char *s_path, char *d_path)
       if ((rlen = read (input, block_buf, BLKDEV_IOSIZE)) == -1)
         {
           if (!quiet_flag)
-	    {
-	      fprintf (stderr, "%s: error: bad read from input file %s: %s\n",
-	        pname, s_path, sys_errlist[errno]);
-	      fprintf (stderr, "%s: input file %s was not fully copied\n",
-	        pname, s_path);
-	    }
-	  break;
-	}
+            {
+              fprintf (stderr, "%s: error: bad read from input file %s: %s\n",
+                pname, s_path, sys_errlist[errno]);
+              fprintf (stderr, "%s: input file %s was not fully copied\n",
+                pname, s_path);
+            }
+          break;
+        }
 
     if (rlen == 0)
       break;
@@ -458,12 +458,12 @@ copy_file (char *s_path, char *d_path)
       {
         if (!quiet_flag)
           {
-	    fprintf (stderr, "%s: error: bad write to output file %s: %s\n",
-	      pname, s_path, sys_errlist[errno]);
-	    fprintf (stderr, "%s: input file %s not fully copied\n",
-	      pname, s_path);
-	  }
-	break;
+            fprintf (stderr, "%s: error: bad write to output file %s: %s\n",
+              pname, s_path, sys_errlist[errno]);
+            fprintf (stderr, "%s: input file %s not fully copied\n",
+              pname, s_path);
+          }
+        break;
       }
     }
 
@@ -484,36 +484,36 @@ symlink_SCCS (char* s_path, char* d_path)
   char symlink_buf[MAXPATHLEN + 1];
   int count;
 
-  if (access (d_path, F_OK))			/* Does d_path exit? */
+  if (access (d_path, F_OK))                    /* Does d_path exit? */
     {
       if (errno != ENOENT)
-	{
-	  if (!quiet_flag)
-	    {
-	      fprintf (stderr, "%s: error: can't check accessability of %s: %s\n",
-	        pname, d_path, sys_errlist[errno]);
-	      fprintf (stderr, "%s: input %s will be ignored\n",
-	        pname, s_path);
-	    }
-	  return;
-	}
+        {
+          if (!quiet_flag)
+            {
+              fprintf (stderr, "%s: error: can't check accessability of %s: %s\n",
+                pname, d_path, sys_errlist[errno]);
+              fprintf (stderr, "%s: input %s will be ignored\n",
+                pname, s_path);
+            }
+          return;
+        }
     }
-  else						/* d_path exists.  What is it? */
+  else                                          /* d_path exists.  What is it? */
     {
       if (lstat (d_path, &dst_stat_buf) == -1)
-	{
-	  if (!quiet_flag)
-	    {
-	      fprintf (stderr, "%s: error: unable to get status of %s: %s\n",
-	        pname, d_path, sys_errlist[errno]);
+        {
+          if (!quiet_flag)
+            {
+              fprintf (stderr, "%s: error: unable to get status of %s: %s\n",
+                pname, d_path, sys_errlist[errno]);
               fprintf (stderr, "%s: input %s will be ignored\n",
-	        pname, s_path);
-	    }
-	  return;
-	}
+                pname, s_path);
+            }
+          return;
+        }
 
-      if (S_ISLNK(dst_stat_buf.st_mode))	/* d_path is a symbolic link */
-	{
+      if (S_ISLNK(dst_stat_buf.st_mode))        /* d_path is a symbolic link */
+        {
           if ((count = readlink (d_path, symlink_buf, MAXPATHLEN)) == -1)
             {
               fprintf (stderr, "%s: error: can't read symlink %s: %s\n",
@@ -524,50 +524,50 @@ symlink_SCCS (char* s_path, char* d_path)
             }
           symlink_buf[count] = '\0';
 
-          if (!strcmp(s_path, symlink_buf))	/* symlink = s_path. Done */
+          if (!strcmp(s_path, symlink_buf))     /* symlink = s_path. Done */
             {
               return;
             }
-          else					/* symlink != s_path */
+          else                                  /* symlink != s_path */
             {
-	      if (force_flag)
+              if (force_flag)
                 {
                   if (remove_item (s_path, d_path) != 0)
-	            return;
+                    return;
                 }
               else
-	        {
-	          if (!quiet_flag)
-		    {
-	              fprintf (stderr, "%s: error: Symbolic link %s already exists \
-			but does not point to %s\n",
-	                pname, d_path, s_path);
-	              fprintf (stderr, "%s: input s %s will be ignored\n",
-	                pname, s_path);
-		    }
+                {
+                  if (!quiet_flag)
+                    {
+                      fprintf (stderr, "%s: error: Symbolic link %s already exists \
+                        but does not point to %s\n",
+                        pname, d_path, s_path);
+                      fprintf (stderr, "%s: input s %s will be ignored\n",
+                        pname, s_path);
+                    }
                   return;
                 }
-	    }
+            }
         }
-      else					/* d_path is NOT a symbolic link */
-	{
+      else                                      /* d_path is NOT a symbolic link */
+        {
           if (force_flag)
-	    {
+            {
               if (remove_item (s_path, d_path))
-	        return;
-	    }
+                return;
+            }
           else
-	    {
-	      if (!quiet_flag)
-		{
-	          fprintf (stderr, "%s: error: output already exists: %s\n",
-	            pname, d_path);
-	          fprintf (stderr, "%s: input %s will be ignored\n",
-	            pname, s_path);
-		}
+            {
+              if (!quiet_flag)
+                {
+                  fprintf (stderr, "%s: error: output already exists: %s\n",
+                    pname, d_path);
+                  fprintf (stderr, "%s: input %s will be ignored\n",
+                    pname, s_path);
+                }
               return;
-	    }
-	}
+            }
+        }
     }
 
   if (symlink (s_path, d_path))
@@ -596,10 +596,10 @@ clone_dir (char* s_path, char* d_path, int level)
           fprintf (stderr,
             "%s: error: don't have read permission for input directory %s\n"
 ,
-	    pname, s_path);
+            pname, s_path);
           fprintf (stderr, "%s: input directory %s will be ignored\n",
-	    pname, s_path);
-	 }
+            pname, s_path);
+         }
         return;
     }
 
@@ -609,10 +609,10 @@ clone_dir (char* s_path, char* d_path, int level)
         {
            fprintf (stderr,
              "%s: error: don't have search permission for input directory %s\n",
-	     pname, s_path);
+             pname, s_path);
            fprintf (stderr, "%s: input directory %s will be ignored\n",
-	     pname, s_path);
-	 }
+             pname, s_path);
+         }
        return;
     }
 
@@ -672,17 +672,17 @@ clone_symbolic_link (char* s_path,char* d_path)
     }
   symlink_buf[count] = '\0';
 
-  if (symlink_buf[0] == '/')		/* symlink is absolute */
+  if (symlink_buf[0] == '/')            /* symlink is absolute */
     {
       if (in_original_tree (symlink_buf))
         {
            if (!quiet_flag)
-	     fprintf (stderr,
-	       "%s: warning: absolute symlink points into source tree %s -> %s\n",
-	       pname, s_path, symlink_buf);
-	}
+             fprintf (stderr,
+               "%s: warning: absolute symlink points into source tree %s -> %s\n",
+               pname, s_path, symlink_buf);
+        }
     }
-  else					/* symlink is relative */
+  else                                  /* symlink is relative */
     {
       char* src_root_relative = path_concat (s_path, symlink_buf);
       int in_orig = in_original_tree (src_root_relative);
@@ -691,10 +691,10 @@ clone_symbolic_link (char* s_path,char* d_path)
       if (!in_orig)
         {
           if (!quiet_flag)
-	    fprintf (stderr,
+            fprintf (stderr,
               "%s: warning: relative symlink points out of source tree %s -> %s\n",
-	      pname, s_path, symlink_buf);
-	}
+              pname, s_path, symlink_buf);
+        }
     }
 
   mk_symbolic_link(symlink_buf, d_path, 0); /* Make an identical symlink.  */
@@ -716,111 +716,111 @@ clone (char* s_path, char* d_path, int sroot_flag, int level)
   if (lstat (s_path, &src_stat_buf) == -1)
     {
       if (!quiet_flag)
-	{
+        {
           fprintf (stderr, "%s: error: can't get status of %s: %s\n",
-	    pname, s_path, sys_errlist[errno]);
+            pname, s_path, sys_errlist[errno]);
           fprintf (stderr, "%s: input entity %s will be ignored\n",
-	    pname, s_path);
-	}
+            pname, s_path);
+        }
       return;
     }
   if (sccs_flag && sroot_flag && S_ISLNK (src_stat_buf.st_mode))
     {
 
       /* If root of the source path is a symbolic link and
-	 SCCS cloning is enabled, clone the target of the link */
+         SCCS cloning is enabled, clone the target of the link */
 
       if (stat(s_path, &src_stat_buf) == -1)
-	{
+        {
           if (!quiet_flag)
-	    {
+            {
               fprintf (stderr, "%s: error: can't get status of %s: %s\n",
-	        pname, s_path, sys_errlist[errno]);
+                pname, s_path, sys_errlist[errno]);
               fprintf (stderr, "%s: input entity %s will be ignored\n",
-	        pname, s_path);
+                pname, s_path);
             }
           return;
-	}
+        }
     }
   if (IS_DIR (src_stat_buf))
     intype = "directory";
   if (access (d_path, 0))
     {
       if (errno != ENOENT)
-	{
-	  if (!quiet_flag)
-	    {
-	      fprintf (stderr, "%s: error: can't check accessability of %s: %s\n",
-	        pname, d_path, sys_errlist[errno]);
-	      fprintf (stderr, "%s: input %s %s will be ignored\n",
-	        pname, intype, s_path);
-	    }
-	  return;
-	}
+        {
+          if (!quiet_flag)
+            {
+              fprintf (stderr, "%s: error: can't check accessability of %s: %s\n",
+                pname, d_path, sys_errlist[errno]);
+              fprintf (stderr, "%s: input %s %s will be ignored\n",
+                pname, intype, s_path);
+            }
+          return;
+        }
     }
   else
     {
       const char* outtype = "file";
 
       if (lstat (d_path, &dst_stat_buf) == -1)
-	{
-	  if (!quiet_flag)
-	    {
-	      fprintf (stderr, "%s: error: unable to get status of %s: %s\n"
+        {
+          if (!quiet_flag)
+            {
+              fprintf (stderr, "%s: error: unable to get status of %s: %s\n"
 ,
-	        pname, d_path, sys_errlist[errno]);
+                pname, d_path, sys_errlist[errno]);
               fprintf (stderr, "%s: input %s %s will be ignored\n",
-	        pname, intype, s_path);
-	    }
-	  return;
-	}
+                pname, intype, s_path);
+            }
+          return;
+        }
       if (IS_DIR (dst_stat_buf))
-	outtype = "directory";
+        outtype = "directory";
       if (IS_DIR (src_stat_buf) && IS_DIR (dst_stat_buf))
-	{
-	  dir_already_exists = -1;
+        {
+          dir_already_exists = -1;
 
-	  /* Have to make sure that we have full access to the output
-	     directory (at least temporarily).  */
+          /* Have to make sure that we have full access to the output
+             directory (at least temporarily).  */
 
-	  chmod (d_path, (dst_stat_buf.st_mode & 07777) | 0700);
-	  if (access (d_path, R_OK | W_OK | X_OK) != 0)
-	    {
-	      if (!quiet_flag)
-		{
-	          fprintf (stderr,
+          chmod (d_path, (dst_stat_buf.st_mode & 07777) | 0700);
+          if (access (d_path, R_OK | W_OK | X_OK) != 0)
+            {
+              if (!quiet_flag)
+                {
+                  fprintf (stderr,
                     "%s: error: too few permissions for existing directory %s\n",
-	            pname, d_path);
-		  fprintf (stderr, "%s: input directory %s will be ignored\n",
-	            pname, s_path);
-		}
+                    pname, d_path);
+                  fprintf (stderr, "%s: input directory %s will be ignored\n",
+                    pname, s_path);
+                }
               return;
-	    }
-	}
+            }
+        }
       else
-	{
+        {
           if (force_flag)
-	    {
+            {
               if (remove_item (s_path, d_path))
-	        return;
-	    }
+                return;
+            }
           else
-	    {
-	      if (!quiet_flag)
-		{
-	          fprintf (stderr, "%s: error: output %s already exists: %s\n",
-	            pname, outtype, d_path);
-	          fprintf (stderr, "%s: input %s %s will be ignored\n",
-	            pname, intype, s_path);
-		}
+            {
+              if (!quiet_flag)
+                {
+                  fprintf (stderr, "%s: error: output %s already exists: %s\n",
+                    pname, outtype, d_path);
+                  fprintf (stderr, "%s: input %s %s will be ignored\n",
+                    pname, intype, s_path);
+                }
               return;
-	    }
-	}
+            }
+        }
     }
 
   switch (src_stat_buf.st_mode & S_IFMT)
     {
-      case  S_IFDIR:				/* Clone a directory */
+      case  S_IFDIR:                            /* Clone a directory */
 
         if (!dir_already_exists)
           {
@@ -830,60 +830,60 @@ clone (char* s_path, char* d_path, int sroot_flag, int level)
             if (mkdir (d_path, 0700))
               {
                 if (!quiet_flag)
-      	          {
+                  {
                     fprintf (stderr, "%s: error: can't create output directory %s: %s\n",
-	              pname, d_path, sys_errlist[errno]);
+                      pname, d_path, sys_errlist[errno]);
                     fprintf (stderr, "%s: input directory %s will be ignored\n",
-	              pname, s_path);
-	          }
+                      pname, s_path);
+                  }
                 return;
-	      }
+              }
             if (verbose_flag)
               fprintf (stderr, "%s: created new output directory: %s\n",
                 pname, d_path);
           }
 
-	clone_dir(s_path, d_path, level);
+        clone_dir(s_path, d_path, level);
 
-	/* By default, output directories which existed before this
-	   program was executed are reset back to their original
-	   permissions (when we are done adding things to them).  For
-	   output directories which are actually created by this program
-	   however, these have their permissions set so that they are
-	   essentially the same as the permissions for their corresponding
-	   input directories, except that the owner is given full
-	   permissions.  */
+        /* By default, output directories which existed before this
+           program was executed are reset back to their original
+           permissions (when we are done adding things to them).  For
+           output directories which are actually created by this program
+           however, these have their permissions set so that they are
+           essentially the same as the permissions for their corresponding
+           input directories, except that the owner is given full
+           permissions.  */
 
-	if (dir_already_exists)
-	  fix_mode (dst_stat_buf.st_mode & 07777, d_path);
-	else
-	  fix_mode ((src_stat_buf.st_mode & 07777) | 0700, d_path);
-	break;
+        if (dir_already_exists)
+          fix_mode (dst_stat_buf.st_mode & 07777, d_path);
+        else
+          fix_mode ((src_stat_buf.st_mode & 07777) | 0700, d_path);
+        break;
 
 #ifndef USG
-      case S_IFLNK:				/* Clone a symbolic link */
+      case S_IFLNK:                             /* Clone a symbolic link */
 
-	if (!sccs_flag)
+        if (!sccs_flag)
           clone_symbolic_link (s_path, d_path);
-	break;
+        break;
 #endif
 
-      default:					/* Clone a normal file */
+      default:                                  /* Clone a normal file */
 
-	if (sccs_flag)
-	  break;
+        if (sccs_flag)
+          break;
 
 #ifndef USG
-	if (symlink_flag)
-	  mk_symbolic_link(s_path, d_path, level);
-	else
+        if (symlink_flag)
+          mk_symbolic_link(s_path, d_path, level);
+        else
 #endif
-	if (copy_flag)
-	  copy_file(s_path, d_path);
-	else
-	  mk_hard_link(s_path, d_path);
+        if (copy_flag)
+          copy_file(s_path, d_path);
+        else
+          mk_hard_link(s_path, d_path);
 
-	break;
+        break;
     } /* switch */
 }
 
@@ -896,67 +896,67 @@ main (int /* argc */, char *argv[])
   for (argn = argv+1; *argn; argn++)
     {
       if (**argn != '-')
-	{
-	  if (!src_path)
-	    src_path = *argn;
-	  else if (!dst_path)
-	    dst_path = *argn;
-	  else
-	    usage ();
-	}
+        {
+          if (!src_path)
+            src_path = *argn;
+          else if (!dst_path)
+            dst_path = *argn;
+          else
+            usage ();
+        }
       else
-	{
+        {
           switch (* ((*argn)+1))
-	    {
+            {
               case 0:
-          	fprintf (stderr, "%s: invalid option: -\n", pname);
-          	errors = -1;
-          	break;
+                fprintf (stderr, "%s: invalid option: -\n", pname);
+                errors = -1;
+                break;
 
-	      case 'q':
-		quiet_flag = -1;
-		break;
+              case 'q':
+                quiet_flag = -1;
+                break;
 
-	      case 'v':
-		verbose_flag = -1;
-		break;
+              case 'v':
+                verbose_flag = -1;
+                break;
 
-	      case 'f':
-		force_flag = -1;
-		break;
+              case 'f':
+                force_flag = -1;
+                break;
 
 #ifndef USG
-	      case 'S':
-		sccs_flag = -1;
+              case 'S':
+                sccs_flag = -1;
 
-		if (copy_flag)
-		  errors++;
-		break;
+                if (copy_flag)
+                  errors++;
+                break;
 #endif
 
 #ifndef USG
-	      case 's':
-		symlink_flag = -1;
-		if (copy_flag)
-		  errors++;
-		break;
+              case 's':
+                symlink_flag = -1;
+                if (copy_flag)
+                  errors++;
+                break;
 #endif
 
-	      case 'c':
-		copy_flag = -1;
+              case 'c':
+                copy_flag = -1;
 #ifndef USG
-		if (symlink_flag)
-		  errors++;
+                if (symlink_flag)
+                  errors++;
 
-		if (sccs_flag)
-		  errors++;
+                if (sccs_flag)
+                  errors++;
 #endif
-		break;
+                break;
 
               default:
-          	fprintf (stderr, "%s: invalid option: -%c\n",
-          		pname, *((*argn)+1));
-          	errors = -1;
+                fprintf (stderr, "%s: invalid option: -%c\n",
+                        pname, *((*argn)+1));
+                errors = -1;
             }
         }
     }
@@ -966,17 +966,17 @@ main (int /* argc */, char *argv[])
   if (symlink_flag && *src_path != '/')
     {
       fprintf (stderr, "%s: error: source root pathname must be absolute when using -s\n",
-	pname);
+        pname);
       exit (1);
     }
 #endif
   if (access (src_path, 0) == -1)
     {
       fprintf (stderr, "%s: error: accessing source root entity %s: %s\n",
-	pname, src_path, sys_errlist[errno]);
+        pname, src_path, sys_errlist[errno]);
       exit (1);
     }
-  umask (0);			/* disable all masking */
+  umask (0);                    /* disable all masking */
   clone (src_path, dst_path, 1, 0);
   return 0;
 }
