@@ -34,6 +34,9 @@ TAO_NS_Object::init (TAO_NS_POA_Helper* poa, TAO_NS_POA_Helper* proxy_poa, TAO_N
   poa_ = poa;
   proxy_poa_ = proxy_poa;
   worker_task_ = worker_task;
+
+  if (this->worker_task_)
+    this->worker_task_->_incr_refcnt ();
 }
 
 CORBA::Object_ptr
@@ -82,6 +85,9 @@ TAO_NS_Object::shutdown_worker_task (void)
     {
       this->worker_task_->shutdown (); // the worker deletes itself when its <close> hook is eventually called.
     }
+
+  if (this->worker_task_)
+    this->worker_task_->_decr_refcnt ();
 }
 
 void
@@ -113,6 +119,9 @@ TAO_NS_Object::worker_task (TAO_NS_Worker_Task* worker_task)
   this->worker_task_ = worker_task;
 
   this->own_worker_task_ = 0;
+
+  if (this->worker_task_)
+    this->worker_task_->_incr_refcnt ();
 }
 
 void
@@ -173,6 +182,8 @@ TAO_NS_Object::apply_reactive_concurrency (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   this->worker_task_own (worker_task);
+
+  this->worker_task_->_decr_refcnt ();
 }
 
 void
@@ -189,6 +200,8 @@ TAO_NS_Object::apply_thread_pool_concurrency (const NotifyExt::ThreadPoolParams&
   ACE_CHECK;
 
   this->worker_task_own (worker_task);
+
+  this->worker_task_->_decr_refcnt ();
 }
 
 void
