@@ -12,7 +12,7 @@ ACE_RCSID (ClientORB,
 namespace FTRT {
   const unsigned FT_TRANSACTION_DEPTH = 30;
   const unsigned FT_FORWARD = 32;
-};
+}
 
 FTRT_ClientORB_Interceptor::
 FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth)

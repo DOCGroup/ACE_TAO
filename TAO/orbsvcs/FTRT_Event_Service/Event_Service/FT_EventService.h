@@ -21,7 +21,7 @@
 namespace POA_RtecScheduler
 {
     class Scheduler;
-};
+}
 
 class FT_EventService : private TAO_FTEC_Become_Primary_Listener
 {
