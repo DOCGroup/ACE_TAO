@@ -46,6 +46,8 @@ while ($line = <fp>)
         if ($line =~/^[-A-Z_a-z0-9.\/\\:]+\([0-9]+\) : / ||
             $line =~/^[-A-Z_a-z0-9.\\:]+\.obj : / ||
             $line =~/^fatal error/ ||
+            $line =~/^Error executing/ ||
+            $line =~/^4NT: / ||
             $line =~/^LINK : /);
 
 }
