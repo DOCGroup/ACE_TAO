@@ -59,7 +59,11 @@
 #include <malloc.h>
 #define ACE_HAS_ALLOCA 1
 
+#define ACE_LACKS_DIRENT_H
+#define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_INTTYPES_H
+#define ACE_LACKS_NETDB_H
+#define ACE_LACKS_NET_IF_H
 #define ACE_LACKS_NETINET_IN_H
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_STROPTS_H

@@ -1,3 +1,20 @@
+Thu May 15 17:01:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+		  Adding #include of ace/os_include/sys/sem.h and
+          ace/os_include/errno.h/
+
+        * ace/config-win32-msvc.h:
+		  Added ACE_LACKS_DIRENT_H, ACE_LACKS_DLFCN_H,
+          ACE_LACKS_NETDB_H, and ACE_LACKS_NET_IF_H defines.
+
+        * ace/os_include/dlfcn.h:
+        * ace/os_include/sys/mman.h:
+          Rearranged ACE_WIN32 #ifdef's.
+
+        * ace/os_include/limits.h:
+          Fixed a typo.
+
 Thu May 15 00:12:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/limits.h:

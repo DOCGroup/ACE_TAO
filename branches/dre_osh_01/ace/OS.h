@@ -40,6 +40,8 @@
 #include "ace/os_include/netdb.h"
 #include "ace/os_include/sys/socket.h"
 #include "ace/os_include/net/if.h"
+#include "ace/os_include/sys/sem.h"
+#include "ace/os_include/errno.h"
 
 #include "ace/Time_Value.h"
 
