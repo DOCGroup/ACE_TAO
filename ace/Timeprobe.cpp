@@ -24,6 +24,17 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
 {
   void *space = this->allocator_->malloc ((sizeof(timeprobe_t)) * this->max_size_);
   this->timeprobes_ = new ((timeprobe_t *) space) timeprobe_t[this->max_size_];
+
+#ifdef VXWORKS
+  if (sysProcNumGet () == 0)
+    {
+      this->current_slot_vme_address_ = (u_int *) 0xDa010000;
+    }
+  else
+    {
+      this->current_slot_vme_address_ = (u_int *) 0xD8010000;
+    }
+#endif  // VXWORKS
 }
 
 template <class ACE_LOCK>
@@ -48,6 +59,14 @@ ACE_Timeprobe<ACE_LOCK>::timeprobe (u_long event)
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
   this->current_size_++;
+
+#if defined (VMETRO_TIME_TEST) && (VXWORKS)
+      
+  // If we are using the VMETRO board to get time samples, then write
+  // to the other boards VME address.
+  *this->current_slot_vme_address_ = event;
+      
+#endif /* VMETRO_TIME_TEST && VXWORKS */
 }
 
 template <class ACE_LOCK> void
