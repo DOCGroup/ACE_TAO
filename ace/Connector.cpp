@@ -217,14 +217,14 @@ ACE_Svc_Tuple<SVC_HANDLER>::cancellation_id (long id)
 }
 
 template <class SVC_HANDLER> long
-ACE_Svc_Tuple<SVC_HANDLER>:: incr_refcount (void)
+ACE_Svc_Tuple<SVC_HANDLER>::incr_refcount (void)
 {
   ACE_TRACE ("ACE_Svc_Tuple<SVC_HANDLER>::incr_refcount");
   return ++this->refcount_;
 }
 
 template <class SVC_HANDLER> long
-ACE_Svc_Tuple<SVC_HANDLER>:: decr_refcount (void)
+ACE_Svc_Tuple<SVC_HANDLER>::decr_refcount (void)
 {
   ACE_TRACE ("ACE_Svc_Tuple<SVC_HANDLER>::decr_refcount");
   if (--this->refcount_ > 0)
