@@ -43,7 +43,7 @@
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
-
+#include "ace/os_include/os_ctype.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:64
