@@ -1,3 +1,16 @@
+Sat Feb  2 07:45:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Process.{h,i,cpp}: When using ACE_Process_Options with the
+	  inherit_environment set to off, i.e., ACE_Process_Options opts
+ 	  (0), ACE_Process::spawn() was improperly setting the environment
+ 	  in the child's process after fork (), before exec ().  Changed
+ 	  ACE_Process::spawn to check for the inherit_environment flag,
+ 	  and to use the execve () call instead of execvp () if
+ 	  inherit_environment is false.  Thanks to James Risinger
+ 	  <jrisinger@SignalSoftCorp.com> for contributing this fix.
+  
+	* ace/Process.{h,i}: Added "const" to the various accessor methods.
+
 Sat Feb  2 00:01:36 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ace/config-sunos5.6.h: 
