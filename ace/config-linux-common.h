@@ -166,6 +166,8 @@
 
 #define ACE_HAS_DIRENT
 
+# define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
