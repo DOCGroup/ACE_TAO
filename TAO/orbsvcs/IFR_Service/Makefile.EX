@@ -20,8 +20,6 @@ VPATH = .
 MAKEFILE=Makefile.EX
 
 FILES = tao_ifr \
-	drv_init_ifr \
-        drv_private_ifr \
         drv_args_ifr \
         drv_preproc_ifr
 

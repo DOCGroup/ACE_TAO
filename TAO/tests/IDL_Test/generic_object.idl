@@ -30,8 +30,8 @@ enum ObjectType
 
 union Selecter switch (ObjectType) 
 {
-case OT_THIS: Object this_object;
-case OT_THAT: Object that_object;
+  case OT_THIS: Object this_object;
+  case OT_THAT: Object that_object;
 };
 
 // Test stub code for generic object parameters.
