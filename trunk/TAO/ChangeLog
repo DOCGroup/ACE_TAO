@@ -1,3 +1,10 @@
+Mon Sep  6 19:45:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          Fixed a bug in the generation of repository ids for implied
+          IDL event consumer interfaces.
+
 Mon Sep  6 00:54:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/LoadBalancer/LoadBalancer.mpc:

@@ -1624,6 +1624,11 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
                               "Consumer",
                               ScopeAsDecl (node->defined_in ()));
 
+  // We're at global scope here so we need to fool the scope stack
+  // for a minute so the correct repo id can be calculated at
+  // interface construction time.
+  idl_global->scopes ().push (node->defined_in ());
+
   if (node->n_inherits () == 0
       || node->inherits ()[0]->node_type () == AST_Decl::NT_valuetype)
     {
@@ -1634,13 +1639,13 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
                                        &parent_local_name);
       UTL_NameList parent_list (&parent_full_name,
                                 0);
-      FE_InterfaceHeader header (0,
+      FE_InterfaceHeader header (consumer_name,
                                  &parent_list,
                                  I_FALSE,
                                  I_FALSE,
                                  I_TRUE);
       ACE_NEW_RETURN (event_consumer,
-                      be_interface (0,
+                      be_interface (header.name (),
                                     header.inherits (),
                                     header.n_inherits (),
                                     header.inherits_flat (),
@@ -1671,13 +1676,13 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
       parent_full_name->nconc (parent_local_name);
       UTL_NameList parent_list (parent_full_name,
                                 0);
-      FE_InterfaceHeader header (0,
+      FE_InterfaceHeader header (consumer_name,
                                  &parent_list,
                                  I_FALSE,
                                  I_FALSE,
                                  I_TRUE);
       ACE_NEW_RETURN (event_consumer,
-                      be_interface (0,
+                      be_interface (header.name (),
                                     header.inherits (),
                                     header.n_inherits (),
                                     header.inherits_flat (),
@@ -1687,6 +1692,9 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
                       -1);
       parent_full_name->destroy ();
     }
+
+  // Back to reality.
+  idl_global->scopes ().pop ();
 
   event_consumer->set_defined_in (s);
   event_consumer->set_imported (node->imported ());
