@@ -143,9 +143,10 @@ Life_Cycle_Service_i::register_factory (const char * name,
 					   const char * location,
 					   const char * description,
 					   CORBA::Object_ptr object,
-					   CORBA::Environment &TAO_IN_ENV_there)
+					   CORBA::Environment &)
       ACE_THROW_SPEC (( CORBA::SystemException))
 {
+
   if (factory_trader_ptr_ == 0)
     {
       ACE_NEW (factory_trader_ptr_, Factory_Trader());
@@ -162,3 +163,6 @@ Life_Cycle_Service_i::register_factory (const char * name,
 	      "     description: %s\n",
 	      name, location, description));
 }
+
+
+
