@@ -26,6 +26,11 @@ PUB_HDRS = \
   Pluggable \
   Transport \
   MProfile \
+  Flushing_Strategy \
+  Block_Flushing_Strategy \
+  Reactive_Flushing_Strategy \
+  Queued_Message \
+  Message_Sent_Callback \
   IIOP_Factory \
   IIOP_Profile \
   IIOP_Transport \
@@ -86,6 +91,10 @@ PLUGGABLE_PROTOCOLS_FILES = \
   Acceptor_Registry \
   Protocol_Factory \
   Acceptor_Filter \
+  Flushing_Strategy \
+  Block_Flushing_Strategy \
+  Reactive_Flushing_Strategy \
+  Queued_Message \
   iiop_endpoints \
   IIOP_Factory \
   IIOP_Lite_Factory \

@@ -91,14 +91,16 @@ TAO_UIOP_Transport::idle (void)
 }
 
 ssize_t
-TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time,
-                          size_t *bytes_transferred)
+TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *max_wait_time)
 {
-  return ACE::send_n (this->handle (),
-                      message_block,
-                      max_wait_time,
-                      bytes_transferred);
+  ssize_t retval = this->service_handler ()->peer ().sendv (iov, iovcnt,
+                                                            max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
+
+  return retval;
 }
 
 ssize_t
