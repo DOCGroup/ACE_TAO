@@ -85,8 +85,9 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   //
   // XXX if type_id is that of CORBA_Object, "yes, we comply" :-)
 
-  if ( ACE_static_cast(const char *, this->_stubobj ()->type_id) != 0
-      && ACE_OS::strcmp ((char *) type_id, (char *) this->_stubobj ()->type_id) == 0)
+  if (this->_stubobj ()->type_id.in () != 0
+      && ACE_OS::strcmp (type_id,
+                         this->_stubobj ()->type_id.in ()) == 0)
     return 1;
 
   CORBA::Boolean _tao_retval = 0;
@@ -468,7 +469,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
     return 0;
 
   // STRING, a type ID hint
-  if ((cdr << stubobj->type_id) == 0)
+  if ((cdr << stubobj->type_id.in ()) == 0)
     return 0;
 
   const TAO_MProfile& mprofile =

@@ -257,7 +257,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                   1 /* `@' character */ +
                   ACE_OS::strlen (this->rendezvous_point ()) +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key));
+                  ACE_OS::strlen (key.in ()));
 
   CORBA::String buf = CORBA::string_alloc (buflen);
 
