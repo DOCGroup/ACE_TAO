@@ -159,7 +159,7 @@ Synch_Thread_Pool_Task::open (void *args)
 {
   ACE_UNUSED_ARG (args);
 
-  if (this->activate () == -1) 
+  if (this->activate (THR_DETACHED | THR_NEW_LWP) == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"),
                       -1);
 
@@ -265,9 +265,9 @@ Thread_Per_Request_Task::open (void *args)
     grp_id = (int *) args;
 
   if (*grp_id == -1)
-    status = *grp_id = this->activate ();
+    status = *grp_id = this->activate (THR_DETACHED | THR_NEW_LWP);
   else
-    status = this->activate (THR_NEW_LWP,1,0,-1,*grp_id,0);
+    status = this->activate (THR_DETACHED | THR_NEW_LWP, 1, 0, -1, *grp_id, 0);
 
   if (*grp_id == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
