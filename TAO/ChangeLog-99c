@@ -1,3 +1,13 @@
+Fri Jul 02 13:26:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* version_test.dsw
+	* orbsvcs/tests/tests.dsw
+
+	  Removed Concurrency tests (since they don't compile currently).
+
+	* tests/NestedUpcall/Simple/client.cpp: Fixed exception handling
+	  typos.
+
 Fri Jul  2 12:39:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/Tags.html:
@@ -21,7 +31,7 @@ Fri Jul  2 12:06:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Typecode_Constants.cpp:
 	* tests/InterOp-Naming/INS_test_client.cpp:
 	* tests/InterOp-Naming/run_test.pl:
-	  The CORBA::ORB::InvalidName exception was broken and crashed the 
+	  The CORBA::ORB::InvalidName exception was broken and crashed the
 	  application if raised. Thanks to Eugene Surovegin
 	  <ebs@glasnet.ru> for pointing out this problem.
 
@@ -74,13 +84,13 @@ Fri Jul  2 11:00:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Jul  2 10:52:05 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp:
 	  Fixed few IRIX warnings thanks to Carlos.
-	
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp (TAO_AV_Child_Process): 
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp (TAO_AV_Child_Process):
 	  Moved the naming service unbind code from ~TAO_AV_Child_Process
 	  to a helper function unbind_names to avoid IRIX errors. Thanks
-	  to Carlos for helping with this. 
+	  to Carlos for helping with this.
 
 Fri Jul  2 09:49:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -119,7 +129,7 @@ Fri Jul  2 09:49:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Removed the return statement from inside some
 	  ACE_CATCHANY blocks and also removed the
 	  ACE_NOTREACHED wrapper from the return statement
-	  following each block. This keep some compilers 
+	  following each block. This keep some compilers
 	  from getting confused, either by reaching the end
 	  of a non-vois function or having the last statement
 	  of the function unreachable.
@@ -127,7 +137,7 @@ Fri Jul  2 09:49:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri Jul  2 09:25:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/append.cpp:
-	  Initialized some variables that were causing Linux/egcs warnings in 
+	  Initialized some variables that were causing Linux/egcs warnings in
 	  TAO_Marshal_Objref::append().
 
 Thu Jul 01 22:31:06 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
