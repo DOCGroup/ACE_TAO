@@ -22,7 +22,7 @@
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (time-date,
+ACE_RCSID (time_date,
            server,
            "$Id$")
 
