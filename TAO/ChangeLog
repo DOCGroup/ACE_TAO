@@ -108,6 +108,9 @@ Thu Jul 18 08:46:16 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Jul 17 23:54:44 2002  Ossama Othman  <ossama@uci.edu>
 
+	Thanks to Carlos for "encouraging" me to document the following
+	changes.  :)
+
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.inl:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
