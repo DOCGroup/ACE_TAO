@@ -25,6 +25,9 @@ Fri Dec 05 13:20:09 1997    David L. Levine  <levine@cs.wustl.edu>
         * ace/config-vxworks5.x-g++.h: restored comment that explains
           ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
 
+        * netsvcs/lib/Makefile: the first line of the Local Target
+          (Server_Logging_Handler.*) override mysteriously disappeared, again.
+
 Fri Dec  5 12:15:49 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp: Made error messages on open failure more
