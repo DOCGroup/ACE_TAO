@@ -118,7 +118,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
       if (waiting_ == 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-		      "last svc_handler closed, shutting down"));
+		      "Last svc_handler closed, shutting down\n"));
 	  ACE_Reactor::instance()->end_event_loop();
 	}
       
@@ -194,6 +194,9 @@ client (void *arg)
 	  writer->svc ();
 
 	  // Close the connection...
+	  writer->peer().close();
+
+	  // And free up the Svc_Handler
 	  writer->destroy ();
 
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
