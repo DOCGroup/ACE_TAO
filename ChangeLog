@@ -1,3 +1,16 @@
+Mon Jun 14 08:28:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* docs/ACE-development-process.html: The link to
+  
+	  http://ace.cs.wustl.edu/bugs/index.cgi
+  
+          should point to
+  
+          http://deuce.doc.wustl.edu/bugzilla/index.cgi
+  
+          Thanks to Patrick Bennett <Patrick.Bennett@inin.com> for
+ 	  reporting this.
+	
 Mon Jun 14 11:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp
