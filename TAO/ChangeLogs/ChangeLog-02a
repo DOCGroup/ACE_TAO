@@ -1,3 +1,8 @@
+Fri Dec 22 01:01:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Restore file
+	  permission setting for temp file.
+
 Thu Dec 21 19:33:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Param_Test/except.cpp:
@@ -229,6 +234,9 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           TAO_ThreadpoolPolicy *threadpool (void);
           TAO_PriorityModelPolicy *priority_model (void);
           TAO_ServerProtocolPolicy *server_protocol (void);
+<<<<<<< ChangeLog
+	  }
+=======
           }
 
         * tao/Policy_Manager.h :
@@ -247,7 +255,26 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           TAO_ServerProtocolPolicy *server_protocol (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
           }
+>>>>>>> 1.2239
 
+<<<<<<< ChangeLog
+	* tao/Policy_Manager.h :
+	* tao/Policy_Manager.i :
+	* tao/Policy_Manager.cpp :
+
+	  Changed the return values of the following functions to return
+	  CORBA::Policy * in all the classes.
+
+	  {
+	  TAO_PriorityModelPolicy *priority_model (void) const;
+	  TAO_ThreadpoolPolicy *threadpool (void) const;
+	  TAO_PrivateConnectionPolicy *private_connection (void) const;
+	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+	  (void) const;
+	  TAO_ServerProtocolPolicy *server_protocol (void) const;
+          TAO_ClientProtocolPolicy *client_protocol (void) const;
+	  }
+=======
           and
           {
           TAO_PrivateConnectionPolicy *private_connection (void) const;
@@ -255,7 +282,42 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
           }
+>>>>>>> 1.2239
 
+<<<<<<< ChangeLog
+	  and
+	  {
+	  TAO_PrivateConnectionPolicy *private_connection (void) const;
+	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+	  (void) const;
+	  TAO_ClientProtocolPolicy *client_protocol (void) const;
+	  }
+
+	  And all these variables are now CORBA::Policy *
+	  {
+	  TAO_PriorityModelPolicy *priority_model_;
+	  TAO_ThreadpoolPolicy *threadpool_;
+	  TAO_PrivateConnectionPolicy *private_connection_;
+	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
+	  TAO_ServerProtocolPolicy *server_protocol_;
+	  TAO_ClientProtocolPolicy *client_protocol_;
+	  }
+
+	  In TAO_Policy_Manager_Impl::copy_from implementation, instead of
+	  calling ACE_NEW_THROW_EX for a new instance of all
+	  classes related to RTCORBA (which are in the #if guard of
+	  TAO_HAS_RT_CORBA==1), invoked the copy function of the
+	  respective classes.
+
+	  In TAO_Policy_Manager_Impl::set_policy_overrides, for the
+	  sections related to RTCORBA, removed unneeded narrows and casts
+	  now that the variables are CORBA::Policy *.
+
+	* tao/Invocation.h:
+	* tao/Invocation.i :
+	* tao/Invocation.cpp :
+
+=======
           And all these variables are now CORBA::Policy *
           {
           TAO_PriorityModelPolicy *priority_model_;
@@ -280,6 +342,7 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
         * tao/Invocation.i :
         * tao/Invocation.cpp :
 
+>>>>>>> 1.2239
           Moved part of add_rt_service_context to
           TAO_RT_Protocols_Hooks::add_rt_service_context_hook and invoked
           the hook instead in
