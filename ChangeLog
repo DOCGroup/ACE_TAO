@@ -1,3 +1,13 @@
+Mon Nov  1 08:37:47 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+        * tests/HTBP/Send_Large_Msg/Send_Recv_Test.mpc:
+        * tests/HTBP/Reactor_Tests/Reactor_Tests.mpc:
+        * tests/HTBP/ping/ping.mpc:
+
+          Removed dependency on htbptest.mpb, as this breaks the automated
+          mpc script.
+
 Mon Nov  1 07:34:03 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/HTBP/htbptest.mpb:
