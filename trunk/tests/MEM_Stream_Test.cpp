@@ -133,7 +133,7 @@ Echo_Handler::handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask mask)
 {
   // Reduce count.
-  *Waiting::instance ()--;
+  (*Waiting::instance ())--;
 
   if (client_strategy != ACE_MEM_IO::Reactive)
     this->reactor ()->remove_handler (this,
@@ -359,7 +359,7 @@ test_concurrent (const ACE_TCHAR *prog,
   if (ACE_Thread_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
                                                 connect_client,
                                                 &sport) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT (%p\n"), ACE_TEXT ("spawn_n()")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
 #else
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
