@@ -77,7 +77,7 @@ class TAO_Export TAO_ORB_Core
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char * const*,
                                          const char *,
-                                         CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                         CORBA_Environment &);
 public:
   // = Initialization and termination methods.
   TAO_ORB_Core (void);
