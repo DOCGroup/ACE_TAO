@@ -37,10 +37,6 @@ $end_work = 301;
 $work_step = 100;
 $run_time = 40;                 # run for $run_time sec.
 
-unlink $daemon_ior;
-unlink $am_ior;
-unlink $cookie;
-
 $test_deploy = 0;
 $no_daemon = 0;
 
@@ -96,85 +92,84 @@ if ($local == 1) {
     }
 }
 
+for ($work = $start_work; $work < $end_work; $work += $work_step)
+{
+
+    unlink $daemon_ior;
+    unlink $am_ior;
+    unlink $cookie;
+
 ## Starting up the CIAO Assembly Manager
-$AM = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Manager",
-                           $assembly_manager_args);
-$AM->Spawn ();
-if (PerlACE::waitforfile_timed ($am_ior, 15) == -1) {
-    print STDERR "ERROR: Could not find assembly ior file <$am_ior>\n";
-    $AM->Kill ();
-    $DS->Kill ();
-    exit 1;
-}
+    $AM = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Manager",
+                               $assembly_manager_args);
+    $AM->Spawn ();
+    if (PerlACE::waitforfile_timed ($am_ior, 15) == -1) {
+        print STDERR "ERROR: Could not find assembly ior file <$am_ior>\n";
+        $AM->Kill ();
+        $DS->Kill ();
+        exit 1;
+    }
 
 ## Now actually deploy the application
-$AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer",
-                           $ad_deploy);
-if ($AD->SpawnWaitKill (60) == -1) {
-    print STDERR "ERROR: Failed to deploy assembly file <$assembly>\n";
-    $AD->Kill ();
-    $AM->Kill ();
-    $DS->Kill ();
-}
+    $AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer",
+                               $ad_deploy);
+    if ($AD->SpawnWaitKill (60) == -1) {
+        print STDERR "ERROR: Failed to deploy assembly file <$assembly>\n";
+        $AD->Kill ();
+        $AM->Kill ();
+        $DS->Kill ();
+    }
 
 ## Make sure the application is up and running
-if (PerlACE::waitforfile_timed ($c75_ior, 15) == -1) {
-    print STDERR "ERROR: Could not find controller ior file <$controller_ior>\n";
-    $AM->Kill ();
-    $DS->Kill ();
-    exit 1;
-}
+    if (PerlACE::waitforfile_timed ($c75_ior, 15) == -1) {
+        print STDERR "ERROR: Could not find controller ior file <$controller_ior>\n";
+        $AM->Kill ();
+        $DS->Kill ();
+        exit 1;
+    }
 
-# Don't start the test
-if ($test_deploy == 0) {
-    for ($work = $start_work; $work < $end_work; $work += $work_step)
-    {
-        printf "Test work: $work\n";
+    printf "Test work: $work\n";
 
 #Start the client to send the trigger message
-        $CL = new PerlACE::Process ("../Controllers/client",
-                                    "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -w $work");
-        $CL->SpawnWaitKill(60);
+    $CL = new PerlACE::Process ("../Controllers/client",
+                                "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -w $work");
+    $CL->SpawnWaitKill(60);
 
 ## Now wait for the test to complete.  Need to figure out a way to
 ## detect this.
-        sleep ($run_time);
+    sleep ($run_time);
 
 #Start the client to send the trigger message
-        $CL = new PerlACE::Process ("../Controllers/client",
-                                    "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -f");
-        $CL->SpawnWaitKill(60);
-    }
-}
-else {
-    print "Test deploying the application -=-=- Not invoking client\n";
-    sleep (1);
-}
-
+    $CL = new PerlACE::Process ("../Controllers/client",
+                                "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -f");
+    $CL->SpawnWaitKill(60);
 ## Now teardown the application
-$AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer",
-                           $ad_teardown);
-if ($AD->SpawnWaitKill (60) == -1) {
-    print STDERR "ERROR: Failed to teardown assembly file <$assembly>\n";
-    $AD->Kill ();
-    $AM->Kill ();
-    $DS->Kill ();
-    exit 1;
-}
+    $AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer",
+                               $ad_teardown);
+    if ($AD->SpawnWaitKill (60) == -1) {
+        print STDERR "ERROR: Failed to teardown assembly file <$assembly>\n";
+        $AD->Kill ();
+        $AM->Kill ();
+        $DS->Kill ();
+        exit 1;
+    }
 
 #$ctrl = $DS->WaitKill (5);
 #$AM->WaitKill(5);
 #$AD->WaitKill(5);
 
-$AM->WaitKill (2);
+    $AM->WaitKill (2);
+
+
+    unlink $cookie;
+    unlink $c25_ior;
+    unlink $c50_ior;
+    unlink $c75_ior;
+    unlink $daemon_ior;
+    unlink $am_ior;
+
+}
+
 $DS->Kill ();
-
-
-unlink $cookie;
-unlink $c25_ior;
-unlink $c50_ior;
-unlink $c75_ior;
-unlink $daemon_ior;
-unlink $am_ior;
 
 exit $status;
