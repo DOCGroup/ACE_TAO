@@ -1,3 +1,16 @@
+Wed May 23 11:53:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+
+          Fixed tao_ifr's handling of forward declared interfaces.
+          The fix also required the addition of code in the IDL
+          compiler to copy some IFR-specific flags in class
+          AST_Interface when a forward declared interface's
+          full-definition node is redefined. Thanks to
+          Philippe Merle <Philippe.Merle@lifl.fr> for discovering
+          this bug in his testing of TAO with CorbaScript.
+
 Wed May 23 11:45:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
