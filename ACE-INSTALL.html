@@ -601,7 +601,14 @@ global.features</a> file.
       and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
 
-      Tornado 2.2/VxWorks 5.5 support IP multicast.  That is not enabled
+      At this moment <a href="http://www.theaceorb.nl">Remedy IT</a> is upgrading 
+      and stabilizing ACE/TAO support for Tornado 2.2/VxWorks 5.5.1.
+      Since the existing support for previous VxWorks version has been unsupported 
+      and broken for some time and most (potential) users seem to have upgraded to 
+      VxWorks 5.5.1 no backporting effort is done. See also <a href="#vxworks">here</a>.
+      </p><p>
+      
+      Tornado 2.2/VxWorks 5.5.1 support IP multicast.  That is not enabled
       by default in ACE for VxWorks, because it depends on your
       kernel configuration.  To enable it, add
       <code>#define ACE_HAS_IP_MULTICAST</code> to your
@@ -622,13 +629,6 @@ global.features</a> file.
             line arguments to argc/argv form.  See <a href="#spa">below</a>
             for details.<p>
 
-        </p></li><li>Unsigned long long support is not available with the g++ that
-            is distributed with Tornado 1.0.1/VxWorks 5.3.1, or with
-            GreenHills 1.8.8.  The documentation says that it is supported
-            by g++, but try using it :-)   Wind River technical support verified
-            that it doesn't work.  ACE provides its own 64-bit unsigned integer
-            type, ACE_hrtime_t, so you don't even have to worry about this
-            problem if you use it.<p>
       </p></li></ol>
 
       Please note that ACE uses one of the spare fields in the Wind
@@ -1771,7 +1771,7 @@ Configuration</A> instructions replacing the following include directives:</P>
 <P><TT>include
 $(ACE_ROOT)/include/makeinclude/platform_win32_interix.GNU</TT></P>
 <P>for your platform_macros.GNU file.</P>
-<P>ACE should build fine with just '<TT>make</TT>', the only other option tried thus far is
+<P>ACE should build fine with just '<TT>make</TT>', the only other option tried thus far is
 '<TT>make static_libs_only=1</TT>' which also works. Any
 other options may not work.</P>
 <P><b>ACE TESTS</B> </P>
@@ -1781,7 +1781,7 @@ change to that directory and run make: </P><code></CODE>
 <p>Once you build all the tests, you can run <code>run_test.pl</CODE> in the <code>tests</CODE> directory to try all the tests: </P>
 <P><TT>% run_test.pl </TT></P>
 <p>If you are using ACE as a shared library, you will need
-to modify your LD_LIBRARY_PATH as explained in <A href="#unix_traditional" ><FONT color=#800080>Traditional ACE/GNU Make Configuration</FONT></A>. </P>
+to modify your LD_LIBRARY_PATH as explained in<A href="#unix_traditional" ><FONT color=#800080>Traditional ACE/GNU Make Configuration</FONT></A>. </P>
 <p></P>
 
 <p></p><hr align="left" width="50%"><p>
@@ -1793,18 +1793,24 @@ applications that use it.  Please see below for more information on
 <a href="#VxWorks/NT">building ACE on NT hosts for VxWorks targets</a>.<p>
 
 A few notes on VxWorks builds (thanks to
-<a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>
-for these notes):</p><p>
+<a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a> and 
+<a href="http://www.theaceorb.nl">Remedy IT</a> for these notes):</p>
+<p>
 </p><ul>
   <li>VxWorks builds are done with a cross compiler, i.e., the compiles
       are done on a workstation creating object modules which are
       downloaded and loaded into the VxWorks target system.<p>
   </p></li><li>C++ object modules must be post-processed by a VxWorks
-      utility called "munch."  ACE includes a perl script called
+      utility called "munch" to set up calls to static constructors and destructors. 
+      ACE integrates the makefile includes/rules files
+      distributed with VxWorks to achieve maximum compatibility and reuse the target 
+      specifications and buildcommands defined by Windriver itself.
+      The original ACE support for VxWorks included a perl script called
       <a href="bin/ace_ld">$ACE_ROOT/bin/ace_ld</a>,
-      which is called from the Makefiles, replacing
-      the traditional <code>ld</code> step.  You must have perl installed
-      to use <code>ace_ld</code>.  If perl is not on your path, you'll
+      which was called from the Makefiles, replacing
+      the traditional <code>ld</code> step. Although this script is currently still 
+      available it is not used anymore.<BR>
+      You must have perl installed to use <code>ace_ld</code>.  If perl is not on your path, you'll
       have to set <code>PERL_PATH</code> to the full path (including
       perl.exe), either in your
       <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
@@ -1828,10 +1834,6 @@ system when building for VxWorks targets.  Please note, however, if
 you use TAO on VxWorks that you will need to set your LD_LIBRARY_PATH
 to find the TAO IDL compiler libraries (installed in the ace
 directory) on the host.</p><p>
-
-With g++, $ACE_ROOT/bin/ace_ld is used to munch object files and
-libraries to set up calls to static constructors and destructors.
-bin/ace_ld requires perl on the host platform.</p><p>
 
 These non-default VxWorks kernel configuration <code>#defines</code>
 are required with ACE:</p><p>
@@ -1921,6 +1923,10 @@ the program name, but will result in a crash.</p>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
 
+<strong>NOTE</strong>: Since VxWorks support is currently being reworked with
+an initial focus on static builds the support for shared builds is momentarily
+broken. This will be remedied(!) as soon as possible.
+
 ACE supports shared libraries for VxWorks, but only with the g++
 compiler.  To build shared libraries instead of the default static
 libraries, added <code>shared_libs=1</code> (<strong>not</strong>
@@ -1975,13 +1981,29 @@ Makefile.  Then, build the kernel using <code>make exe</code>.<p>
 </p><h5><a name="VxWorksTestScript">Using the one-button ACE tests with VxWorks</a>.</h5>
 
 It is possible to generate a script to execute all ACE tests. You can do this by executing
-       </a></p><blockquote><code></code><pre><a name="vxworksscript">       % perl run_test.pl -v > run_test.vxworks
-       </a></pre></blockquote>
+</a></p><blockquote><code></code><pre><a name="vxworksscript">% perl run_test.pl -v -o > run_test.vxworks
+</a></pre></blockquote>
 
-The ACE tests write their output files in a
-directory named <code>log/</code>, below the current
-(<code>tests</code>) directory.  If you don't have NFS included in
-your VxWorks kernel, you can use these steps, provided by
+The ACE tests write their output files in a directory named 
+<code>log/</code>, below the current (<code>tests</code>) directory.<br/>
+</p>
+<p>
+To run the tests from the build directory on an NT host where you crossbuild your
+VxWorks ACE/TAO you can set up the Target Server File System (TSFS) in your Target Server
+configuration. If you f.i. set the root for the TSFS to the root directory of your builddisk
+you can set the default directory for the target by issueing the following command
+from a Host shell: '@cd "/tgtsvr/{path to ACE}/ACE_wrappers/tests"'.
+The '@' addition makes sure this command is executed for the target environment and not the
+local host shell environment.
+If you also issue the command 'cd {path to ACE}/ACE_wrappers/tests' you can execute the
+generated one button testscript like: '&lt; run_test.vxworks'.
+</p>
+<p>
+Running the ACE tests automatically from the ACE autobuild tool using Target Server and Host 
+shell options is also supported.
+</p>
+<p>
+If you don't have NFS included in your VxWorks kernel, you can use these steps, provided by
 <a href="mailto:clarence_m_weaver@md.northgrum.com">Clarence M. Weaver</a>,
 to run the tests and capture their output:</p><p>
 </p><ol>
@@ -2162,7 +2184,7 @@ on Windows NT hosts:
 </p></li></ol>
 
 
-<h4><a name="vxworks"> </a>
+<h4><a name="vxworks"></a>
 <a href="mailto:Jaffar_Shaikh@Mitel.COM">Jaffar Shaikh's</a>
 Notes for Building ACE and TAO for VxWorks on NT host</h4>
 <b></b><p><b>Scenario:</b>  I was building the ACE and TAO for VxWorks
@@ -2244,7 +2266,7 @@ $(ACE_ROOT)/include/makeinclude/platform_vxworks5.5.x.GNU</p>
 <p>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE
 library that supports TAO)</p>
 
-<p> </p>
+<p></p>
 <b><p>Steps to Build</p>
 </b><p>1) Build Ace.dll under NT</p>
 <p>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.dsw And build Ace
@@ -2547,7 +2569,7 @@ libraries.
         support for <code>Fl</code> one should use <code>tao_flresource</code> feature.
         <strong>MS Windows:</strong> The paths to <code>fltkdll</code> and
         <code>OpenGL32</code> libraries, as well as <code>fltk</code> header files
-        should be setup manually for succesfull compilation. Obviosuly,
+        should be setup manually for succesfull compilation. Obviosuly,
         <code>x11</code>switch is ignored for this platform.</li>
     </ul>
 
