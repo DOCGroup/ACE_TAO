@@ -62,101 +62,95 @@ the various ACE components judiciously.
 <P>
 <HR WIDTH="100%">
 <PRE>
-/*
-&nbsp; As before, we need a few ACE objects as well as our Logging_Handler declaration.
-&nbsp;*/
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/Reactor.h"
-#include "handler.h"
 
-/*
-&nbsp; We'll still use the global reactor pointer.&nbsp; There's a snappy way around this
-&nbsp; that shows up in later server tutorials.
-&nbsp;*/
+<font color=red>// $Id$</font>
+
+
+<font color=red>/*
+  As before, we need a few ACE objects as well as our Logging_Handler declaration.
+ */</font>
+<font color=blue>#include</font> "<font color=green>ace/Acceptor.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Acceptor.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/Reactor.h</font>"
+<font color=blue>#include</font> "<font color=green>handler.h</font>"
+
+<font color=red>/*
+  We'll still use the global reactor pointer.  There's a snappy way around this
+  that shows up in later server tutorials.
+ */</font>
 ACE_Reactor * g_reactor;
 
-/*
-&nbsp; This was hinted at in Tutorial 1.&nbsp; Remember the hand-coded acceptor that we
-&nbsp; created there?&nbsp; This template does all of that and more and better.&nbsp; If you
-&nbsp; find yourself creating code that doesn't feel like a part of your application,
-&nbsp; there's a good chance that ACE has a template or framework component to do
-&nbsp; it for you.
-&nbsp;*/
+<font color=red>/*
+  This was hinted at in Tutorial 1.  Remember the hand-coded acceptor that we
+  created there?  This template does all of that and more and better.  If you
+  find yourself creating code that doesn't feel like a part of your application,
+  there's a good chance that ACE has a template or framework component to do
+  it for you.
+ */</font>
 typedef ACE_Acceptor &lt; Logging_Handler, ACE_SOCK_ACCEPTOR > Logging_Acceptor;
 
-/*
-&nbsp; One of the new things will be a signal handler so that we can exit the application
-&nbsp; somewhat cleanly.&nbsp; The 'finished' flag is used instead of the previous infninite
-&nbsp; loop and the 'handler' will set that flag in respose to SIGINT (CTRL-C).
-&nbsp;*/
+<font color=red>/*
+  One of the new things will be a signal handler so that we can exit the application
+  somewhat cleanly.  The 'finished' flag is used instead of the previous infninite
+  loop and the 'handler' will set that flag in respose to SIGINT (CTRL-C).
+ */</font>
 static sig_atomic_t finished = 0;
-extern "C" void handler (int)
+extern "<font color=green>C</font>" void handler (int)
 {
-&nbsp; finished = 1;
+  finished = 1;
 }
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
 int main (int, char **)
 {
-&nbsp; // Create the reactor we'll register our event handler derivatives with.
-&nbsp; g_reactor = new ACE_Reactor;
+  <font color=red>// Create the reactor we'll register our event handler derivatives with.</font>
+  g_reactor = new ACE_Reactor;
 
-&nbsp; // Create the acceptor that will listen for client connetions
-&nbsp; Logging_Acceptor peer_acceptor;
+  <font color=red>// Create the acceptor that will listen for client connetions</font>
+  Logging_Acceptor peer_acceptor;
 
-&nbsp; /*
-&nbsp;&nbsp;&nbsp; Notice how similar this is to the open() call in Tutorial 1.&nbsp; I read
-&nbsp;&nbsp;&nbsp; ahead when I created that one so that it would come out this way...
-&nbsp;&nbsp; */
-&nbsp; if (peer_acceptor.open (ACE_INET_Addr (PORT), g_reactor) == -1)
-&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  <font color=red>/*
+    Notice how similar this is to the open() call in Tutorial 1.  I read
+    ahead when I created that one so that it would come out this way...
+   */</font>
+  if (peer_acceptor.open (ACE_INET_Addr (PORT), g_reactor) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
 
-&nbsp; /*
-&nbsp;&nbsp;&nbsp; Here's the easiest way to respond to signals in your application.&nbsp; Simply
-&nbsp;&nbsp;&nbsp; construct an ACE_Sig_Action object with a "C" function and the signal you
-&nbsp;&nbsp;&nbsp; want to capture.&nbsp; As you might expect, there is also a way to register
-&nbsp;&nbsp;&nbsp; signal handlers with a reactor but we take the easy-out here.
-&nbsp;&nbsp; */
-&nbsp; ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  <font color=red>/*
+    Here's the easiest way to respond to signals in your application.  Simply
+    construct an ACE_Sig_Action object with a "<font color=green>C</font>" function and the signal you
+    want to capture.  As you might expect, there is also a way to register
+    signal handlers with a reactor but we take the easy-out here.
+   */</font>
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
-&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting up server logging daemon\n"));
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) starting up server logging daemon\n</font>"));
 
-&nbsp; // Perform logging service until the signal handler receives SIGINT.
-&nbsp; while (!finished)
-&nbsp;&nbsp;&nbsp; g_reactor->handle_events ();
+  <font color=red>// Perform logging service until the signal handler receives SIGINT.</font>
+  while (!finished)
+    g_reactor->handle_events ();
 
-&nbsp; // Close the acceptor so that no more clients will be taken in.
-&nbsp; peer_acceptor.close();
+  <font color=red>// Close the acceptor so that no more clients will be taken in.</font>
+  peer_acceptor.close();
 
-&nbsp; // Free up the memory allocated for the reactor.
-&nbsp; delete g_reactor;
+  <font color=red>// Free up the memory allocated for the reactor.</font>
+  delete g_reactor;
 
-&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting down server logging daemon\n"));
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) shutting down server logging daemon\n</font>"));
 
-&nbsp; return 0;
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+<font color=blue>#if defined</font> (<font color=purple>ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION</font>)
 template class ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+<font color=blue>#elif defined</font> (<font color=purple>ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA</font>)
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR>
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+<font color=blue>#endif</font> <font color=red>/* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */</font>
 
 </PRE>
-
-
-<P>
-<HR WIDTH="100%">
-<CENTER></CENTER>
-
-<CENTER>[<A HREF="..">Tutorial
-Index</A>] [<A HREF="page01.html">Previous
-Page</A>] [<A HREF="page03.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>

@@ -51,7 +51,7 @@ Indent : #
 	done
 
 Depend : depend
-	perl ../007/fix.Makefile
+	perl ../fix.Makefile
 
 .depend : #
 	touch .depend

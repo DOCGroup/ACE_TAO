@@ -29,66 +29,52 @@ with an object type to instantiate when a new connection arrives.
 
 <P>
 <HR WIDTH="100%">
+<PRE>
 
-<P><FONT FACE="Arial,Helvetica">// $Id$</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>// $Id$</font>
 
-<P><FONT FACE="Arial,Helvetica">#ifndef&nbsp; CLIENT_ACCEPTOR_H</FONT>
-<BR><FONT FACE="Arial,Helvetica">#define CLIENT_ACCEPTOR_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#ifndef</font> <font color=purple>CLIENT_ACCEPTOR_H</font>
+<font color=blue>#define</font> <font color=purple>CLIENT_ACCEPTOR_H</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;The ACE_Acceptor&lt;> template lives
-in the ace/Acceptor.h header file.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;You'll find a very consitent naming
-convention between the ACE objects</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;and the headers where they can be
-found.&nbsp; In general, the ACE object</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;<I>ACE_Foobar</I> will be found
-in <I>ace/Foobar.h</I>.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   The ACE_Acceptor&lt;> template lives in the ace/Acceptor.h header file. You'll
+   find a very consitent naming convention between the ACE objects and the
+   headers where they can be found.  In general, the ACE object ACE_Foobar will
 
-<P><FONT FACE="Arial,Helvetica">#include "ace/Acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;Since we want to work with sockets,
-we'll need a SOCK_Acceptor to allow</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;the clients to connect to us.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "ace/SOCK_Acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+   be found in ace/Foobar.h.
+ */</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;The Client_Handler object we develop
-will be used to handle clients</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;once they're connected.&nbsp; The
-ACE_Acceptor&lt;> template's first parameter</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;requires such an object.&nbsp; In
-some cases, you can get by with just a</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;forward declaration on the class,
-in others you have to have the whole</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;thing.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "client_handler.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#include</font> "<font color=green>ace/Acceptor.h</font>"
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;Parameterize the ACE_Acceptor&lt;>
-such that it will listen for socket</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;connection attempts and create Client_Handler
-objects when they happen.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;In Tutorial 001, we wrote the basic
-acceptor logic on our own before</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;we realized that ACE_Acceptor&lt;>
-was available.&nbsp; You'll get spoiled using</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;the ACE templates because they take
-away a lot of the tedious details!</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">typedef ACE_Acceptor &lt; Client_Handler,
-ACE_SOCK_ACCEPTOR > Client_Acceptor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-<P><FONT FACE="Arial,Helvetica">#endif // CLIENT_ACCEPTOR_H</FONT>
+<font color=red>/*
+   Since we want to work with sockets, we'll need a SOCK_Acceptor to allow the
+   clients to connect to us.
+ */</font>
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Acceptor.h</font>"
 
-<P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial
-Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
+<font color=red>/*
+   The Client_Handler object we develop will be used to handle clients once
+   they're connected.  The ACE_Acceptor&lt;> template's first parameter requires
+   such an object.  In some cases, you can get by with just a forward
+   declaration on the class, in others you have to have the whole thing.
+ */</font>
+<font color=blue>#include</font> "<font color=green>client_handler.h</font>"
 
-</BODY>
-</HTML>
+<font color=red>/*
+   Parameterize the ACE_Acceptor&lt;> such that it will listen for socket
+   connection attempts and create Client_Handler objects when they happen. In
+   Tutorial 001, we wrote the basic acceptor logic on our own before we
+   realized that ACE_Acceptor&lt;> was available.  You'll get spoiled using the
+   ACE templates because they take away a lot of the tedious details!
+ */</font>
+typedef ACE_Acceptor &lt; Client_Handler, ACE_SOCK_ACCEPTOR > Client_Acceptor;
+
+<font color=blue>#endif</font> <font color=red>// CLIENT_ACCEPTOR_H</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
