@@ -239,7 +239,7 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
                       ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
 
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: creating %s\n"), filename));
+      //      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: creating %s\n"), filename));
 
       if (this->hash_.bind (filename, handle) == -1)
         {
@@ -362,7 +362,7 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
               filelock.release ();
           }
         }
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: found %s\n"), filename));
+      //      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: found %s\n"), filename));
     }
 
   return handle;
