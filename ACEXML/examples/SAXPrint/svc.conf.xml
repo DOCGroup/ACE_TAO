@@ -4,7 +4,7 @@
   [
     <!NOTATION goody PUBLIC 'NBC' 'http://hardcoreace.com/'>
     <!NOTATION frodo PUBLIC 'ABC'>
-    <!NOTATION bilbo SYSTEM "C:/ACE-GUIDELINE"
+    <!NOTATION bilbo SYSTEM "C:/ACE-GUIDELINE">
     <!ENTITY ccm 'CCM_App'>
     <!ENTITY pippin PUBLIC 'GOTO' 'http://taozen.com/' NDATA NBC>
     <!ENTITY sam PUBLIC 'SHIRE' 'http://taozen.com/'>

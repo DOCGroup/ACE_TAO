@@ -298,6 +298,10 @@ SOURCE=.\XML_Codecs.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\XML_Macros.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\XML_Types.h
 # End Source File
 # Begin Source File

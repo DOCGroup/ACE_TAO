@@ -62,7 +62,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 
       if (svc_dll.open (active_info->path ()) == -1)
         {
-          ACEXML_THROW (ACEXML_SAXException ("Cannot locate DLL\n"));
+          ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("Cannot locate DLL\n")));
         }
 
       void *(*func) (ACE_Service_Object_Exterminator *) = 0;
@@ -76,7 +76,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 
       if (func == 0)
         {
-          ACEXML_THROW (ACEXML_SAXException ("Cannot locate init function\n"));
+          ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Cannot locate init function\n")));
         }
       symbol = (*func)(&gobbler); // target object created in the loaded DLL.
 
@@ -98,7 +98,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
             }
           else
             {
-              ACEXML_THROW (ACEXML_SAXException ("Expecting Stream type in stream header\n"));
+              ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Expecting Stream type in stream header\n")));
             }
 
           this->stream_svc_type_ =
@@ -130,7 +130,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               if (mt->init (args.argc (), args.argv ()) == -1
                   || this->stream_->push (mt) == -1)
                 {
-                  ACEXML_THROW (ACEXML_SAXException ("Error initializing module"));
+                  ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Error initializing module")));
                 }
 
 
@@ -152,7 +152,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               if (ACE_Service_Config::initialize (stype,
                                                   active_info->init_params ()) == -1)
                 {
-                  ACEXML_THROW (ACEXML_SAXException ("Failed to initialize dynamic service\n"));
+                  ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Failed to initialize dynamic service\n")));
                 }
             }
           this->parsed_info_.reset ();
@@ -288,7 +288,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           (this->stream_info_.name (),
            (const ACE_Service_Type **) &this->stream_svc_type_) == -1)
         {
-          ACEXML_THROW (ACEXML_SAXException ("Cannot find stream\n"));
+          ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Cannot find stream\n")));
         }
       this->stream_ =   this->stream_svc_type_ == 0
         ? 0
@@ -323,7 +323,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 
           if (mt == 0)
             {
-              ACEXML_THROW (ACEXML_SAXException ("Can't locate module\n"));
+              ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Can't locate module\n")));
             }
 
           mt->resume ();
@@ -353,7 +353,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 
           if (mt == 0)
             {
-              ACEXML_THROW (ACEXML_SAXException ("Can't locate module\n"));
+              ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Can't locate module\n")));
             }
 
           mt->suspend ();
@@ -383,7 +383,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 
           if (mt == 0)
             {
-              ACEXML_THROW (ACEXML_SAXException ("Can't locate module\n"));
+              ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Can't locate module\n")));
             }
 
           this->stream_->remove (mt);
@@ -499,7 +499,8 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_D
           }
         else
           {
-            ACEXML_THROW_RETURN (ACEXML_SAXException ("Invalid stream attribute\n"), -1);
+            ACEXML_THROW_RETURN (ACEXML_SAXException (ACE_TEXT ("Invalid stream attribute\n")),
+													  -1);
           }
       }
   return 0;
@@ -517,7 +518,7 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
           }
         else
           {
-            ACEXML_THROW_RETURN (ACEXML_SAXException ("Invalid attribute, expecting 'id'\n"), -1);
+            ACEXML_THROW_RETURN (ACEXML_SAXException (ACE_TEXT ("Invalid attribute, expecting 'id'\n")), -1);
           }
       }
   return 0;
@@ -549,7 +550,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
                 }
               else
                 {
-                  ACEXML_THROW_RETURN (ACEXML_SAXException ("Invalid attribute value, expecting 'active' or 'inactive'\n"), -1);
+                  ACEXML_THROW_RETURN (ACEXML_SAXException (ACE_TEXT ("Invalid attribute value, expecting 'active' or 'inactive'\n")), -1);
                 }
             }
           else if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("type")) == 0)
@@ -568,12 +569,12 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
                 }
               else
                 {
-                  ACEXML_THROW_RETURN (ACEXML_SAXException ("Invalid Service_Object attribute value\n"), -1);
+                  ACEXML_THROW_RETURN (ACEXML_SAXException (ACE_TEXT ("Invalid Service_Object attribute value\n")), -1);
                 }
             }
           else
             {
-              ACEXML_THROW_RETURN(ACEXML_SAXException("Invalid attribute\n"), -1);
+              ACEXML_THROW_RETURN(ACEXML_SAXException(ACE_TEXT ("Invalid attribute\n")), -1);
             }
         }
     }
@@ -604,7 +605,7 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_E
             }
           else
             {
-              ACEXML_THROW_RETURN (ACEXML_SAXException ("Invalid initializer attribute.\n"), -1);
+              ACEXML_THROW_RETURN (ACEXML_SAXException (ACE_TEXT ("Invalid initializer attribute.\n")), -1);
             }
         }
     }
@@ -631,7 +632,7 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist ACEXML_ENV_AR
             }
           else
             {
-              ACEXML_THROW_RETURN (ACEXML_SAXException ("Invalid static attribute.\n"), -1);
+              ACEXML_THROW_RETURN (ACEXML_SAXException (ACE_TEXT ("Invalid static attribute.\n")), -1);
             }
         }
     }
