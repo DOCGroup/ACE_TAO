@@ -56,6 +56,8 @@ namespace CIAO
     : public virtual Components::CCMContext
   {
   public:
+    explicit Context_Impl_Base (void);
+
     Context_Impl_Base (Components::CCMHome_ptr home,
                        Session_Container * c);
 

@@ -16,7 +16,6 @@
 
 #ifndef CIAO_CONTEXT_IMPL_BASE_H
 #define CIAO_CONTEXT_IMPL_BASE_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Objref_VarOut_T.h"
@@ -56,13 +55,14 @@ namespace CIAO
     : public virtual Components::CCMContext
   {
   public:
+    explicit Context_Impl_Base (void);
+
     Context_Impl_Base (Components::CCMHome_ptr home,
                        Session_Container * c);
 
     virtual ~Context_Impl_Base (void);
 
     // Operations from ::Components::CCMContext.
-
     virtual Components::Principal_ptr
     get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));

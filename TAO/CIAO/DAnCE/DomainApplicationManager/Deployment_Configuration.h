@@ -13,8 +13,6 @@
  *  @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 //=============================================================================
-
-
 #ifndef CIAO_DEPLOYMENT_CONFIGURATION_H
 #define CIAO_DEPLOYMENT_CONFIGURATION_H
 #include /**/ "ace/pre.h"

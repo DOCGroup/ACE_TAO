@@ -41,7 +41,7 @@ namespace
   {
     return export_macro_;
   }
-  
+
   CommandLine const&
   cl ()
   {
@@ -1175,8 +1175,7 @@ namespace
          << "::Components::CCMHome_ptr home," << endl
          << "::CIAO::Session_Container *c," << endl
          << t.name () << "_Servant *sv)" << endl
-         << "  : Context_Impl_Base (home, c)," << endl
-         << "    ctx_svnt_base (home, c, sv)" << endl
+         << "  : ctx_svnt_base (home, c, sv)" << endl
          << "{"
          << "}";
 
@@ -1858,12 +1857,12 @@ namespace
 
         os << "CIAO::Port_Activator_T<" << endl
            << "    ";
-        
+
         Traversal::ProviderData::belongs (p, servant_belongs_);
-        
+
         os << "," << endl
            << "    ";
-        
+
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
 
         os << "::CCM_";
@@ -1878,16 +1877,16 @@ namespace
            << "    ";
 
         Traversal::ProviderData::belongs (p, servant_belongs_);
-        
+
         os << "," << endl
            << "    ";
-        
+
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
-        
+
         os << "::CCM_";
-        
+
         Traversal::ProviderData::belongs (p, simple_belongs_);
-        
+
         os << "," << endl
            << "    ::Components::CCMContext," << endl
            << "    " << scope_.name () << "_Servant" << endl
@@ -2250,9 +2249,9 @@ namespace
       Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
     };
-    
+
     struct OperationExistsEmitter;
-    
+
     struct RegisterValueFactoryEmitter : Traversal::ConsumerData,
                                          EmitterBase
     {
@@ -2263,7 +2262,7 @@ namespace
       {
         belongs_.node_traverser (type_name_emitter_);
       }
-      
+
       void factory_gen_off (void)
       {
         gen_factory_ = false;
@@ -2274,22 +2273,22 @@ namespace
       {
         {
           Traversal::ConsumerData consumer;
-          
+
           Traversal::Belongs consumer_belongs;
           consumer.edge_traverser (consumer_belongs);
-          
+
           Traversal::EventType event_type;
           consumer_belongs.node_traverser (event_type);
-         
+
           Traversal::Defines defines;
           event_type.edge_traverser (defines);
-        
+
           OperationExistsEmitter op_emitter (this);
           defines.node_traverser (op_emitter);
-        
+
           consumer.traverse (c);
         }
-      
+
         if (gen_factory_)
         {
           os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
@@ -2317,23 +2316,23 @@ namespace
         : r_ (r)
       {
       }
-      
+
       virtual void
       traverse (SemanticGraph::Operation&)
       {
         r_->factory_gen_off ();
       }
-      
+
       virtual void
       traverse (SemanticGraph::EventTypeFactory&)
       {
         r_->factory_gen_off ();
       }
-      
+
     private:
       RegisterValueFactoryEmitter* r_;
     };
-    
+
     struct PortTablePopulator : Traversal::ProviderData,
                                 Traversal::UserData,
                                 Traversal::PublisherData,
@@ -2436,8 +2435,7 @@ namespace
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : Servant_Impl_Base (c)," << endl
-         << "    comp_svnt_base (exe, c)" << endl
+         << "  : comp_svnt_base (exe, c)" << endl
          << "{"
          << "this->context_ = "
          << "new " << t.name () << "_Context (h, c, this);" << endl;

@@ -6,6 +6,11 @@
 
 namespace CIAO
 {
+  Servant_Impl_Base::Servant_Impl_Base (void)
+  {
+    ACE_ASSERT (0);
+  }
+
   Servant_Impl_Base::Servant_Impl_Base (Session_Container * c)
     : container_ (c)
   {
@@ -132,7 +137,7 @@ namespace CIAO
         ACE_THROW_RETURN (Components::InvalidName (),
                           CORBA::Object::_nil ());
       }
-      
+
     return retval;
   }
 
@@ -152,20 +157,20 @@ namespace CIAO
     CORBA::ULong len = names.length ();
     safe_retval->length (len);
     ::Components::FacetDescription *tmp = 0;
-    
+
     for (CORBA::ULong i = 0; i < len; ++i)
       {
         tmp = this->lookup_facet_description (names[i].in ());
-        
+
         if (tmp == 0)
           {
             ACE_THROW_RETURN (Components::InvalidName (),
                               0);
           }
-          
+
         safe_retval[i] = tmp;
       }
-    
+
     return safe_retval._retn ();
   }
 
@@ -222,7 +227,7 @@ namespace CIAO
 
     return retval._retn ();
   }
-  
+
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::get_consumer (
       const char *sink_name
@@ -245,7 +250,7 @@ namespace CIAO
         ACE_THROW_RETURN (Components::InvalidName (),
                           Components::EventConsumerBase::_nil ());
       }
-      
+
     return retval;
   }
 
@@ -277,20 +282,20 @@ namespace CIAO
     CORBA::ULong len = names.length ();
     safe_retval->length (len);
     ::Components::ConsumerDescription *tmp = 0;
-    
+
     for (CORBA::ULong i = 0; i < len; ++i)
       {
         tmp = this->lookup_consumer_description (names[i].in ());
-        
+
         if (tmp == 0)
           {
             ACE_THROW_RETURN (Components::InvalidName (),
                               0);
           }
-          
+
         safe_retval[i] = tmp;
       }
-    
+
     return safe_retval._retn ();
   }
 
@@ -374,30 +379,30 @@ namespace CIAO
         safe._retn ();
       }
   }
-  
+
   CORBA::Object_ptr
   Servant_Impl_Base::lookup_facet (const char *port_name)
   {
     ::Components::FacetDescription_var fd;
-    
+
     if (this->facet_table_.find (port_name, fd) != 0)
       {
         return CORBA::Object::_nil ();
       }
-      
+
     return CORBA::Object::_duplicate (fd.in ()->facet_ref ());
   }
-  
+
   ::Components::FacetDescription *
   Servant_Impl_Base::lookup_facet_description (const char *port_name)
   {
     ::Components::FacetDescription_var fd;
-    
+
     if (this->facet_table_.find (port_name, fd) != 0)
       {
         return 0;
       }
-      
+
     return fd._retn ();
   }
 
@@ -426,12 +431,12 @@ namespace CIAO
   Servant_Impl_Base::lookup_consumer (const char *port_name)
   {
     ::Components::ConsumerDescription_var cd;
-    
+
     if (this->consumer_table_.find (port_name, cd) != 0)
       {
         return ::Components::EventConsumerBase::_nil ();
       }
-      
+
     return
       ::Components::EventConsumerBase::_duplicate (cd.in ()->consumer ());
   }
@@ -442,12 +447,12 @@ namespace CIAO
     )
   {
     ::Components::ConsumerDescription_var cd;
-    
+
     if (this->consumer_table_.find (port_name, cd) != 0)
       {
         return 0;
       }
-      
+
     return cd._retn ();
   }
 
