@@ -36,7 +36,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(ami),1)
-TAO_IDLFLAGS += GC
+TAO_IDLFLAGS += -GC
 BIN += ami_client ami_server
 endif
 
