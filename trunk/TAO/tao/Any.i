@@ -3,26 +3,29 @@
 
 // Insertion from special types.
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::replace (CORBA::TypeCode_ptr type,
                     const void *value,
-                    CORBA::Environment &TAO_IN_ENV)
+                    CORBA::Environment &ACE_TRY_ENV)
 {
   // Invoke the first form of the replace method and pass the default
   // value (FALSE) for the "any_owns_data" parameter
   this->replace (type,
                  value,
                  0,
-                 TAO_IN_ENV);
+                 ACE_TRY_ENV);
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE 
+CORBA::Boolean
 CORBA_Any::any_owns_data (void) const
 {
   return (this->any_owns_data_ != 0 && this->value_ != 0);
 }
 
-ACE_INLINE ACE_Message_Block*
+ACE_INLINE 
+ACE_Message_Block*
 CORBA_Any::_tao_get_cdr (void) const
 {
   return this->cdr_;
@@ -30,116 +33,231 @@ CORBA_Any::_tao_get_cdr (void) const
 
 // insertion operators
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (CORBA::Short s)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_short,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::Short (s),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Short *ns;
+      ACE_NEW (ns,
+               CORBA::Short (s));
+      this->replace (CORBA::_tc_short,
+                     ns,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (CORBA::UShort s)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_ushort,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::UShort (s),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::UShort *ns;
+      ACE_NEW (ns,
+               CORBA::UShort (s));
+      this->replace (CORBA::_tc_ushort,
+                     ns,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (CORBA::Long l)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_long,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::Long (l),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Long *nl;
+      ACE_NEW (nl,
+               CORBA::Long (l));
+      this->replace (CORBA::_tc_long,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (CORBA::ULong l)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_ulong,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::ULong (l),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ULong *nl;
+      ACE_NEW (nl,
+               CORBA::ULong (l));
+      this->replace (CORBA::_tc_ulong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (CORBA::LongLong l)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_longlong,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::LongLong (l),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::LongLong *nl;
+      ACE_NEW (nl,
+               CORBA::LongLong (l));
+      this->replace (CORBA::_tc_longlong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (CORBA::ULongLong l)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_ulonglong,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::ULongLong (l),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ULongLong *nl;
+      ACE_NEW (nl,
+               CORBA::ULongLong (l));
+      this->replace (CORBA::_tc_ulonglong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (CORBA::Float f)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_float,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::Float (f),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Float *nf;
+      ACE_NEW (nf,
+               CORBA::Float (f));
+      this->replace (CORBA::_tc_float,
+                     nf,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Double d)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_double,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::Double (d),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Double *nd;
+      ACE_NEW (nd,
+               CORBA::Double (d));
+      this->replace (CORBA::_tc_double,
+                     nd,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // insertion of Any - copying
 ACE_INLINE void
 CORBA_Any::operator<<= (const CORBA_Any& a)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_any,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA_Any (a),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA_Any_ptr na;
+      ACE_NEW (na,
+               CORBA::Any (a));
+      this->replace (CORBA::_tc_any,
+                     na,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // insertion of Any - non-copying
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA::Any::operator<<= (CORBA::Any_ptr anyptr)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_any,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 anyptr,
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      this->replace (CORBA::_tc_any,
+                     anyptr,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // implementing the special types
@@ -149,48 +267,96 @@ CORBA_Any::to_object::to_object (CORBA_Object_out obj)
 {
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (from_boolean b)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_boolean,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::Boolean (b.val_),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Boolean *nb;
+      ACE_NEW (nb,
+               CORBA::Boolean (b.val_));
+      this->replace (CORBA::_tc_boolean,
+                     nb,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (from_octet o)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_octet,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?                 
-                 new CORBA::Octet (o.val_),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Octet *no;
+      ACE_NEW (no,
+               CORBA::Octet (o.val_));
+      this->replace (CORBA::_tc_octet,
+                     no,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (from_char c)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_char,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::Char (c.val_),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Char *nc;
+      ACE_NEW (nc,
+               CORBA::Char (c.val_));
+      this->replace (CORBA::_tc_char,
+                     nc,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-ACE_INLINE void
+ACE_INLINE 
+void
 CORBA_Any::operator<<= (from_wchar wc)
 {
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_wchar,
-                 // @@ Jeff, shouldn't we be checking if "new" fails?
-                 new CORBA::WChar (wc.val_),
-                 1,
-                 env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::WChar *nwc;
+      ACE_NEW (nwc,
+               CORBA::WChar (wc.val_));
+      this->replace (CORBA::_tc_wchar,
+                     nwc,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // *************************************************************
@@ -211,9 +377,11 @@ CORBA_Any_var::CORBA_Any_var (CORBA_Any *p)
 
 ACE_INLINE
 CORBA_Any_var::CORBA_Any_var (const CORBA_Any_var& r)
-  // @@ Jeff, shouldn't we be checking if "new" fails?
-  : ptr_ (new CORBA::Any (*r.ptr_))
 {
+  CORBA_Any_ptr nptr;
+  ACE_NEW (nptr,
+           CORBA::Any (*r.ptr_));
+  this->ptr_ = nptr;
 }
 
 ACE_INLINE
