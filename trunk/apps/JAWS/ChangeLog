@@ -1,5 +1,7 @@
 Thu Jul 10 01:53:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* clients/Caching/README: Added to the repository.
+
 	* clients/Caching/http_handler.{h,cpp}: Added some comments to the
 	  code.  Also, moved the code to check to see if the file is in
 	  cache already into the connector, so that a connect is not
