@@ -1,80 +1,66 @@
-#$Id$
 #----------------------------------------------------------------------------
-#       GNU Makefile
+#
+# $Id$
+#
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile
-DEPENDENCY_FILE = .depend.Makefile
-LIB_UNCHECKED   = libTAO_RT_NotifyTests_Filter.a
-SHLIB_UNCHECKED = libTAO_RT_NotifyTests_Filter.$(SOEXT)
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
-endif
+endif # ! TAO_ROOT
 
-IDL_FILES =
-IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
+MAKEFILE = Makefile
+DEPENDENCY_FILE = .depend.Makefile
+LIBNAME  = libTAO_RT_NotifyTests_Filter
+LIB2      = $(LIBNAME).a
+SHLIB2    = $(LIBNAME).$(SOEXT)
 
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 
-FILES = \
+ifeq (RT_Notify,$(findstring RT_Notify,$(TAO_ORBSVCS)))
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+endif # RT_Notify
+
+TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc
+
+ACE_SHLIBS =  -lTAO_RTCORBA -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO $(ACELIB)
+
+LDLIBS =  -lTAO_RTCORBA -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO $(ACELIB)
+
+SRCS = \
   RT_Test_Filter \
   RT_Test_FilterFactory
 
-CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+FILES = $(SRCS)
+DEFS  = $(addsuffix .h,$(FILES))
+LSRC  = $(addsuffix .cpp,$(FILES))
+
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(rt_corba),1)
-ifeq (Notify, $(findstring Notify, $(CURRENT_COMPONENTS)))
-ifeq (Naming, $(findstring Naming, $(CURRENT_COMPONENTS)))
-LIB   = $(LIB_UNCHECKED)
-SHLIB = $(SHLIB_UNCHECKED)
-endif
-endif
-endif # ami
-LSRC   = $(addsuffix .cpp, $(FILES))
-ACELIB = -lACE
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(TAO_ROOT)/taoconfig.mk
-include $(TAO_ROOT)/orbsvcs/tests/Notify/notify_tests.GNU
-
-CPPFLAGS     += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
-ifeq ($(shared_libs),1)
-ifneq ($(SHLIB),)
-CPPFLAGS     += -DTAO_NOTIFY_TEST_BUILD_DLL
-endif
-endif
-ifeq ($(static_libs),1)
-ifneq ($(LIB),)
-CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
-endif
-endif
-
-
-LDFLAGS      += -L$(TAO_ROOT)/tao/PortableServer -L$(TAO_ROOT)/tao/DynamicAny -L$(TAO_ROOT)/tao/IORTable -L$(TAO_ROOT)/orbsvcs/orbsvcs/ETCL -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
-TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc
 
 #----------------------------------------------------------------------------
-#       Local targets
+#       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-ADDITIONAL_IDL_TARGETS =
+LDFLAGS  += -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
-# IDL File Directory: .
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
-idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-all: idl_stubs
-
-.PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
-
-realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
