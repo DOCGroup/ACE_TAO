@@ -1,3 +1,31 @@
+Sun Sep 19 17:22:19 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (create_stub_object):
+
+	  Fixed non-default TAO minor code argument that wasn't using the
+	  CORBA::SystemException::_tao_minor_code() helper method.
+
+	* tao/ORB.cpp:
+
+	  Somehow the entire contents of ORB.i were copied into ORB.cpp
+	  during the CORBA 2.3 updates I made back on Sep 14.  None of the 
+	  compilers complained about this either! In any case, no harm was
+	  done.  I removed the duplicate code.
+
+	  Call TAO_ORB_Core::fini() instead of calling delete on the
+	  TAO_ORB_Core pointer after TAO_ORB_Core::init() returns with an
+	  error in CORBA::ORB_init().  This fixes another "potential"
+	  memory leak.
+
+	* tests/ORB_init/ORB_init.cpp (main):
+
+	  Enhanced test to check for CORBA::OBJECT_NOT_EXIST() exception
+	  if an attempt is made to perform an ORB operation using a
+	  destroyed ORB.
+
+	  Improved error checking, and added some additional debugging
+	  messages.
+
 Sat Sep 18 19:22:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
