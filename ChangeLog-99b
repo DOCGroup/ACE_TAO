@@ -1,16 +1,31 @@
+Wed Dec 29 09:11:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-cxx-common.h: enable ACE_USES_OLD_IOSTREAMS
+          without __USE_STD_IOSTREAM.  Removed ACE_HAS_STRING_CLASS
+          on Linux, because IOStream_Test won't compile with it.
+
+        * include/makeinclude/platform_linux_cxx.GNU: removed
+          -D__USE_STD_IOSTREAM test, because IOStream_Test failed
+          with it.
+
+        * include/makeinclude/platform_linux_cxx.GNU: Removed
+          -use_ld_input because it has no effect on Linux.  Thanks
+          to Ken Block <ptr_corp@ptrsv1.pko.dec.com> for pointing
+          that out.
+
 Tue Dec 28 18:32:02 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/QoS_Session_Impl.cpp: Added a comment for get qos().
-	
-	* examples/QOS/Receiver_QOS_Event_Handler.cpp:
-	* examples/QOS/Receiver_QOS_Event_Handler.h:
-	* examples/QOS/server.cpp:
-	  
-	  Changed the server of the GQoS example to use the newly added
-	  QoS classes of ACE. The program structure has changed to reflect
-	  the abstractness of the ACE QoS API. The final goal is to remove
-	  all the GQoSisms from the applications, even if this means
-	  constraining it by the granularity provided by RAPI.
+        * ace/QoS_Session_Impl.cpp: Added a comment for get qos().
+
+        * examples/QOS/Receiver_QOS_Event_Handler.cpp:
+        * examples/QOS/Receiver_QOS_Event_Handler.h:
+        * examples/QOS/server.cpp:
+
+          Changed the server of the GQoS example to use the newly added
+          QoS classes of ACE. The program structure has changed to reflect
+          the abstractness of the ACE QoS API. The final goal is to remove
+          all the GQoSisms from the applications, even if this means
+          constraining it by the granularity provided by RAPI.
 
 Tue Dec 28 15:50:46 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -14,9 +14,6 @@
 # if defined (linux)
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   define ACE_HAS_CPLUSPLUS_HEADERS
-#   if !defined (__USE_STD_IOSTREAM)
-#     define ACE_HAS_STRING_CLASS
-#   endif /* ! __USE_STD_IOSTREAM */
 # else  /* ! linux */
 #   define ACE_HAS_STRING_CLASS
 #   if (__DECCXX_VER >= 60090010)
@@ -43,6 +40,8 @@
 #     define ACE_LACKS_CHAR_RIGHT_SHIFTS
 #     define ACE_LACKS_IOSTREAM_FX
 #     define ACE_LACKS_UNBUFFERED_STREAMBUF
+#   else  /* ! __USE_STD_IOSTREAM */
+#     define ACE_USES_OLD_IOSTREAMS
 #   endif /* ! __USE_STD_IOSTREAM */
 
 //    9: nested comment not allowed.  (/usr/include/pdsc.h!) (nestcomment)
