@@ -151,6 +151,7 @@ class STDIN_Handler : public ACE_Event_Handler
   //   STDIO, and timeouts using the same mechanisms.
 public:
   STDIN_Handler (void);
+  ~STDIN_Handler (void);
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_timeout (const ACE_Time_Value &, 
 			      const void *arg);
@@ -177,6 +178,21 @@ STDIN_Handler::STDIN_Handler (void)
     ACE_ERROR ((LM_ERROR,
                 "%p\n%a",
                 "schedule_timer",
+                1));
+}
+
+STDIN_Handler::~STDIN_Handler (void)
+{
+  if (ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
+                                               ACE_Thread_Manager::instance ()) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "remove_stdin_handler"));
+  else if (ACE_Reactor::instance ()->cancel_timer
+	   (this) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n%a",
+                "cancel_timer",
                 1));
 }
 
@@ -340,7 +356,7 @@ main (int argc, char *argv[])
 
   // Loop handling signals and I/O events until SIGQUIT occurs.
 
-  while (ACE_Reactor::event_loop_done() == 0)
+  while (ACE_Reactor::event_loop_done () == 0)
     ACE_Reactor::run_event_loop ();
 
   // Deactivate the message queue.
