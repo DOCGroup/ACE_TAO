@@ -1,3 +1,16 @@
+Fri Sep 15 11:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/default_resource.cpp:
+
+	  Moved variable 'curarg' out of the two FOR loops it
+	  was in, to avoid redefinition errors on some compilers.
+
+	* TAO.dsp:
+	* TAO_Static.dsp:
+
+	  Added files Parser_Registry.*, DLL_Parser.*, and
+	  FILE_Parser.* to these projects.
+
 Thu Sep 14 18:17:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/Simple/bank/client.dsp:
