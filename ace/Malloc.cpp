@@ -69,7 +69,7 @@ ACE_Allocator::instance (void)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::get_lock (), 0));
+				*ACE_Static_Object_Lock::instance (), 0));
 
       if (ACE_Allocator::allocator_ == 0)
 	{
@@ -87,7 +87,7 @@ ACE_Allocator::instance (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Allocator::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::get_lock (), 0));
+			    *ACE_Static_Object_Lock::instance (), 0));
   ACE_Allocator *t = ACE_Allocator::allocator_;
 
   // We can't safely delete it since we don't know who created it!
@@ -103,7 +103,7 @@ ACE_Allocator::close_singleton (void)
   ACE_TRACE ("ACE_Allocator::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::get_lock ()));
+		     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Allocator::delete_allocator_)
     {
