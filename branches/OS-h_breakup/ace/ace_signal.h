@@ -176,8 +176,6 @@ typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontex
 #   endif /* __rtems__ */
 # endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
-
-
 # if defined (ACE_LACKS_SIGACTION_T)
 struct sigaction
 {
@@ -186,6 +184,10 @@ struct sigaction
   sigset_t sa_mask;
 };
 # endif /* ACE_LACKS_SIGACTION_T */
+
+# if defined (ACE_LACKS_SIGSET_T)
+typedef u_int sigset_t;
+# endif /* ACE_LACKS_SIGSET_T */
 
 # if !defined (SIGHUP)
 #   define SIGHUP 0
@@ -255,7 +257,6 @@ struct sigaction
 #   endif
 # endif /* SIG_ERR */
 
-
 # if !defined (SIG_BLOCK)
 #   define SIG_BLOCK   1
 # endif /* SIG_BLOCK   */
@@ -267,8 +268,6 @@ struct sigaction
 # if !defined (SIG_SETMASK)
 #   define SIG_SETMASK 3
 # endif /* SIG_SETMASK */
-
-
 
 # if defined (__Lynx__)
     // LynxOS Neutrino sets NSIG to the highest-numbered signal.

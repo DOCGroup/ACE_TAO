@@ -6,6 +6,7 @@
 ACE_RCSID(ace, TLI_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_TLI)
+# include "ace/ACE.h"
 
 // Put the actual definitions of the ACE_TLI_Request and
 // ACE_TLI_Request_Queue classes here to hide them from clients...

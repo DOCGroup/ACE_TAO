@@ -166,10 +166,6 @@ typedef u_long rlim_t;
 typedef int sig_atomic_t;
 # endif /* ACE_LACKS_SIG_ATOMIC_T */
 
-# if defined (ACE_LACKS_SIGSET_T)
-typedef u_int sigset_t;
-# endif /* ACE_LACKS_SIGSET_T */
-
 # if defined (ACE_LACKS_SIZE_T)
 typedef u_int size_t;
 # endif /* ACE_LACKS_SIZE_T */

@@ -5,6 +5,7 @@
 
 #include "ace/Trace.h"
 #include /**/ <stddef.h>
+#include "ace/ace_string.h" // FD_ZERO seems to use memset on sun
 
 // Initialize the bitmask to all 0s and reset the associated fields.
 
