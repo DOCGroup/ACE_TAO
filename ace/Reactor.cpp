@@ -1509,6 +1509,7 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
 	}
       while (number_of_active_handles == -1 && this->handle_error () > 0);
 
+      // @@ Remove?!
       if (number_of_active_handles > 0)
 	{
 #if !defined (ACE_WIN32)
@@ -1780,8 +1781,10 @@ ACE_Reactor::check_handles (void)
 {
   ACE_TRACE ("ACE_Reactor::check_handles");
 
+#if defined (ACE_WIN32)
   ACE_Time_Value time_poll = ACE_Time_Value::zero;
   ACE_Handle_Set rd_mask;
+#endif /* ACE_WIN32 */
 
   ACE_Event_Handler *eh = 0;
   int result = 0;
@@ -1797,6 +1800,7 @@ ACE_Reactor::check_handles (void)
       if (handle == ACE_INVALID_HANDLE)
       	continue;
 
+#if defined (ACE_WIN32)
       rd_mask.set_bit (handle);
 
       if (ACE_OS::select (int (handle) + 1,
@@ -1808,6 +1812,14 @@ ACE_Reactor::check_handles (void)
 				  ACE_Event_Handler::ALL_EVENTS_MASK);
 	}
       rd_mask.clr_bit (handle);
+#else /* !ACE_WIN32 */
+      if (ACE_OS::fstat (handle, 0) == -1)
+        {
+	  result = 1;
+	  this->remove_handler_i (handle,
+				  ACE_Event_Handler::ALL_EVENTS_MASK);
+	}
+#endif /* ACE_WIN32 */
     }
 
   return result;

@@ -19,6 +19,7 @@
 #define ACE_TIMER_QUEUE_T_H
 
 #include "ace/Time_Value.h"
+#include "ace/Signal.h"
 #include "ace/Free_List.h"
 
 // This should be nested within the ACE_Timer_Queue class but some C++
