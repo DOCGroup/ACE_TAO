@@ -25,7 +25,7 @@ Wed Nov  5 01:23:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added #include of Signal.h.
 
         * examples/Reactor/Misc/pingpong.cpp:
-          Null_Mutex.h.
+          Added #include of Null_Mutex.h.
 
         * examples/C++NPv2/Logging_Event_Handler_Ex.cpp:
           Added #include of ace/Timer_Queue.h.
