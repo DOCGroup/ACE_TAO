@@ -1,14 +1,20 @@
+Thu Oct 22 11:01:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp (visit_interface):
+          initialize _tao_obj_ptr to 0 to avoid g++ warnings about possible
+          use before initialization, in generated code.
+
 Thu Oct 22 11:26:34 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/include/fe_private.h: 
+        * TAO_IDL/include/fe_private.h:
 
-	  The hash and the lookup methods now use unsigned int as the type
-	  for the second argument.
+          The hash and the lookup methods now use unsigned int as the type
+          for the second argument.
 
-	* TAO_IDL/fe/fe_lookup.cpp:
+        * TAO_IDL/fe/fe_lookup.cpp:
 
-	  Regenerated the file since the prototype for the hash and lookup
-	  methods had changed.
+          Regenerated the file since the prototype for the hash and lookup
+          methods had changed.
 
 Wed Oct 21 22:34:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -16,21 +22,21 @@ Wed Oct 21 22:34:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Oct 21 22:49:09 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* examples/POA/DSI/server.dsp:
-	* examples/POA/DSI/client.dsp:
-	  Just noticed that these were pointing to the old location
-	  of tao_idl.  Now fixed to look in /bin.
+        * examples/POA/DSI/server.dsp:
+        * examples/POA/DSI/client.dsp:
+          Just noticed that these were pointing to the old location
+          of tao_idl.  Now fixed to look in /bin.
 
 Wed Oct 21 22:29:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (TAO_CodeGen): Fixed the problem with
-	#include'ing the server skeleton header of the another #included
-	idl file. Thanks to Stach (t.stach@inobis.de) for tracking this
-	down. 
+        * TAO_IDL/be/be_codegen.cpp (TAO_CodeGen): Fixed the problem with
+        #include'ing the server skeleton header of the another #included
+        idl file. Thanks to Stach (t.stach@inobis.de) for tracking this
+        down.
 
 Wed Oct 21 15:01:23 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp
           TAO_IDL/be/be_visitor_enum/any_op_cs.cpp
           TAO_IDL/be/be_visitor_exception/any_op_cs.cpp
           TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
@@ -38,19 +44,19 @@ Wed Oct 21 15:01:23 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
           TAO_IDL/be/be_visitor_structure/any_op_cs.cpp
           TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
 
-	  Added an extra "return 0;" after the TAO_ENDTRY; in each >>=
-	  operator. Thanks to David Levine for reporting the compiler
-	  warnings requiring a return statement.
+          Added an extra "return 0;" after the TAO_ENDTRY; in each >>=
+          operator. Thanks to David Levine for reporting the compiler
+          warnings requiring a return statement.
 
 Wed Oct 21 13:09:54 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/README: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/README:
-	  Updated the instructions for running Cubit tests on CHORUS.
-	
+        * performance-tests/Cubit/TAO/MT_Cubit/README:
+        * performance-tests/Cubit/TAO/IDL_Cubit/README:
+          Updated the instructions for running Cubit tests on CHORUS.
+
 Wed Oct 21 12:32:37 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp
           TAO_IDL/be/be_visitor_enum/any_op_cs.cpp
           TAO_IDL/be/be_visitor_exception/any_op_cs.cpp
           TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
@@ -58,12 +64,12 @@ Wed Oct 21 12:32:37 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
           TAO_IDL/be/be_visitor_structure/any_op_cs.cpp
           TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
 
-	  Added the TAO_TRY macros to the generated code for the <<= and
-	  >>= operators. In addition, David Levine had reported warnings
-	  because of the presence of an unnecessary, unreachable return
-	  statement. This has been fixed.
+          Added the TAO_TRY macros to the generated code for the <<= and
+          >>= operators. In addition, David Levine had reported warnings
+          because of the presence of an unnecessary, unreachable return
+          statement. This has been fixed.
 
-	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp
           TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp
           TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp
           TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp
@@ -71,21 +77,21 @@ Wed Oct 21 12:32:37 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
           TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp
           TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
 
-	  For IDL types defining a scope (e.g., structure, intrfaces), we
-	  were generating the inline CDR operators that used the CDR
-	  operators for their children before defining them. This was
-	  resulting in lots of compile errors. We now make sure that the
-	  CDR operators for the children are available before their use in
-	  the parent.
+          For IDL types defining a scope (e.g., structure, intrfaces), we
+          were generating the inline CDR operators that used the CDR
+          operators for their children before defining them. This was
+          resulting in lots of compile errors. We now make sure that the
+          CDR operators for the children are available before their use in
+          the parent.
 
-	* tao/IIOP_Interpreter.cpp (calc_key_union_attributes): There was
-	  an error in the calculation of the padded size of the
-	  discriminant. We were not taking inot account the size of the
-	  Base_Union. Thanks to Kirk Ellett (kellett@mdc.com) for sending
-	  me the bug report and a sample code that illustrated this
-	  problem. His example used a sequence of unions in which one of
-	  the member was double (size 8, alignment 8) that finally
-	  pinpointed this error to me.
+        * tao/IIOP_Interpreter.cpp (calc_key_union_attributes): There was
+          an error in the calculation of the padded size of the
+          discriminant. We were not taking inot account the size of the
+          Base_Union. Thanks to Kirk Ellett (kellett@mdc.com) for sending
+          me the bug report and a sample code that illustrated this
+          problem. His example used a sequence of unions in which one of
+          the member was double (size 8, alignment 8) that finally
+          pinpointed this error to me.
 
 Wed Oct 21 07:22:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -111,7 +117,7 @@ Tue Oct 20 18:04:30 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * docs/releasenotes/trader.html:
         Added a command line argument -TSdumpior to dump the trader's ior
         to a file. Thanks to Sunil Kumar <skumar@sutmyn.com> for
-	noticing this was missing.  
+        noticing this was missing.
 
 Tue Oct 20 11:07:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
