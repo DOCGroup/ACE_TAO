@@ -4,7 +4,7 @@
 # test
 #
 
-NAME = Supplier
+NAME = Structured_Supplier
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 

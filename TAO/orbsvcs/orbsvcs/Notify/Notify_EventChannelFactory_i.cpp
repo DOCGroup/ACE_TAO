@@ -4,6 +4,8 @@
 
 #include "Service.h"
 #include "ace/Dynamic_Service.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/ORB_Core.h"
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL)
@@ -17,6 +19,16 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
     ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
     return notify_factory._retn ();
   }
+
+  TAO_POA *poa = default_POA->_tao_poa_downcast();
+
+  if (poa == 0)
+    return notify_factory._retn ();
+
+  CORBA::ORB_ptr orb = poa->orb_core ().orb () ;
+
+  notify_service->init (orb ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (notify_factory._retn ());
 
   notify_factory = notify_service->create (default_POA ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (notify_factory._retn ());

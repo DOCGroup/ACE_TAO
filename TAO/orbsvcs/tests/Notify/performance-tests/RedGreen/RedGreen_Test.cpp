@@ -687,7 +687,6 @@ RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier (
 //*****************************************************************
 
 Worker::Worker (void)
-  : done_ (0)
 {
 }
 
@@ -700,19 +699,13 @@ Worker::orb (CORBA::ORB_ptr orb)
 void
 Worker::done (void)
 {
-  done_ = 1;
+  this->orb_->shutdown ();
 }
 
 int
 Worker::svc (void)
 {
-  while (!this->done_)
-    {
-      if (this->orb_->work_pending ())
-        {
-          this->orb_->perform_work ();
-        }
-    }
+  this->orb_->run ();
 
   return 0;
 }

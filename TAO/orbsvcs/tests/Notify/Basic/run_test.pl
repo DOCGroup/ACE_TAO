@@ -14,12 +14,6 @@ $notifyior = PerlACE::LocalFile ("notify.ior");
 $namingior = PerlACE::LocalFile ("naming.ior");
 $status = 0;
 
-unlink $notifyior;
-unlink $namingior;
-
-$Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
-                                "-o $namingior");
-
 @tests =
   (
    "AdminProperties",
@@ -33,11 +27,24 @@ $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
    "Updates",
   );
 
-@test_configs =
+@default_test_configs =
   (
-   "notify.mt.conf",
    "notify.reactive.conf",
+   "notify.mt.conf",
    );
+
+if ($#ARGV == -1)
+  {
+    @test_configs = @default_test_configs;
+  }
+else
+  {
+    @test_configs = @ARGV;
+  }
+
+$Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
+                                "-o $namingior");
+unlink $namingior;
 
 $Naming->Spawn ();
 
@@ -55,6 +62,7 @@ for $config (@test_configs)
                                           "-ORBInitRef NameService=file://$namingior " .
                                           "-IORoutput $notifyior " .
                                           "-ORBSvcConf $config");
+    unlink $notifyior;
     $Notification->Spawn ();
     
     if (PerlACE::waitforfile_timed ($notifyior, $startup_timeout) == -1) {
