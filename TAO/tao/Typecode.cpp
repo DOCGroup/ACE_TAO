@@ -2083,7 +2083,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
 
 CORBA::Any_ptr
 CORBA_TypeCode::parameter (const CORBA::Long index,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
