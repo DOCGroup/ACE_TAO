@@ -1,14 +1,14 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if defined (_ACE_HAS_INTER_PROC_MUTEX)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
 ACE_INLINE const ACE_mutex_t &
 ACE_Process_Mutex::lock (void) const
 {
 // ACE_TRACE ("ACE_Process_Mutex::lock");
   return this->lock_.lock ();
 }
-#endif /* _ACE_HAS_INTER_PROC_MUTEX */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 
 // Explicitly destroy the mutex.
 ACE_INLINE int
@@ -28,12 +28,12 @@ ACE_Process_Mutex::acquire (void)
 ACE_INLINE int
 ACE_Process_Mutex::acquire (ACE_Time_Value &tv)
 {
-#if defined (_ACE_HAS_INTER_PROC_MUTEX)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   return this->lock_.acquire (tv);
 #else
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
-#endif  /* _ACE_HAS_INTER_PROC_MUTEX */
+#endif  /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 }
 
 // Conditionally acquire lock (i.e., don't wait on queue).
