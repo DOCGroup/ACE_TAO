@@ -201,7 +201,14 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       timeout = &time_copy;
     }
 
-  return this->ssl_connect (new_stream, timeout);
+  if (this->ssl_connect (new_stream, timeout) == -1)
+    {
+      new_stream.close ();
+      return -1;
+    }
+
+  return 0;
+
 }
 
 int
@@ -251,7 +258,14 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       timeout = &time_copy;
     }
 
-  return this->ssl_connect (new_stream, timeout);
+  if (this->ssl_connect (new_stream, timeout) == -1)
+    {
+      new_stream.close ();
+      return -1;
+    }
+
+  return 0;
+
 }
 
 // Try to complete a non-blocking connection.
@@ -289,7 +303,14 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
       tv = &time_copy;
     }
 
-  return this->ssl_connect (new_stream, tv);
+  if (this->ssl_connect (new_stream, tv) == -1)
+    {
+      new_stream.close ();
+      return -1;
+    }
+
+  return 0;
+
 }
 
 
