@@ -51,7 +51,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "$name.cbx";
+  return $self->get_modified_project_file_name($name, '.cbx');
 }
 
 

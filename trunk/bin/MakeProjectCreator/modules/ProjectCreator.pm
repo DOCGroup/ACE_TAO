@@ -148,11 +148,12 @@ sub new {
   my($hierarchy) = shift;
   my($exclude)   = shift;
   my($makeco)    = shift;
+  my($nmod)      = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, $hierarchy, 'project');
+                                $feature, $hierarchy, $nmod, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'feature_defined'}       = 0;
@@ -163,7 +164,6 @@ sub new {
   $self->{'lexe_template_input'}   = undef;
   $self->{'lib_template_input'}    = undef;
   $self->{'dll_template_input'}    = undef;
-  $self->{'writing_type'}          = 0;
   $self->{'flag_overrides'}        = {};
   $self->{'special_supplied'}      = {};
   $self->{'verbatim'}              = {};
@@ -957,7 +957,7 @@ sub read_template_input {
   my($override)    = 0;
 
   if ($self->exe_target()) {
-    if ($self->{'writing_type'} == 1) {
+    if ($self->get_static() == 1) {
       $tag = 'lexe_template_input';
       if (!defined $self->{$tag}) {
         if (defined $$ti{'lib_exe'}) {
@@ -983,7 +983,7 @@ sub read_template_input {
     }
   }
   else {
-    if ($self->{'writing_type'} == 1) {
+    if ($self->get_static() == 1) {
       $tag = 'lib_template_input';
       if (!defined $self->{$tag}) {
         if (defined $$ti{'lib'}) {
@@ -1123,6 +1123,16 @@ sub generate_default_target_names {
         $self->process_assignment('sharedname', $base);
         $self->process_assignment('staticname', $base);
       }
+    }
+  }
+
+  ## If we are generating only static projects, then we need to
+  ## unset the sharedname, so that we can insure that projects of
+  ## various types only generate static targets.
+  if ($self->get_static() == 1) {
+    my($sharedname) = $self->get_assignment('sharedname');
+    if (defined $sharedname) {
+      $self->process_assignment('sharedname', undef);
     }
   }
 }
@@ -2092,21 +2102,7 @@ sub write_project {
   if ($self->check_features($self->get_assignment('requires'),
                             $self->get_assignment('avoids'))) {
     if ($self->need_to_write_project()) {
-      ## Writing the non-static file so set it to 0
-      if ($self->get_dynamic()) {
-        $self->{'writing_type'} = 0;
-        ($status, $error) = $self->write_output_file($file_name);
-      }
-
-      if ($status &&
-          $self->get_static() && $self->separate_static_project()) {
-        $file_name = $self->transform_file_name(
-                          $self->static_project_file_name());
-
-        ## Writing the static file so set it to 1
-        $self->{'writing_type'} = 1;
-        ($status, $error) = $self->write_output_file($file_name);
-      }
+      ($status, $error) = $self->write_output_file($file_name);
     }
   }
   else {
@@ -2123,12 +2119,6 @@ sub write_project {
 sub get_project_info {
   my($self) = shift;
   return $self->{'project_info'};
-}
-
-
-sub get_writing_type {
-  my($self) = shift;
-  return $self->{'writing_type'};
 }
 
 
@@ -2194,7 +2184,7 @@ sub get_template_input {
   ## This follows along the same logic as read_template_input() by
   ## checking for exe target and then defaulting to a lib target
   if ($self->exe_target()) {
-    if ($self->{'writing_type'} == 1) {
+    if ($self->get_static() == 1) {
       return $self->{'lexe_template_input'};
     }
     else {
@@ -2202,7 +2192,7 @@ sub get_template_input {
     }
   }
 
-  if ($self->{'writing_type'} == 1) {
+  if ($self->get_static() == 1) {
     return $self->{'lib_template_input'};
   }
   else {
@@ -2366,6 +2356,20 @@ sub get_default_element_name {
   return 'FILES';
 }
 
+
+sub get_modified_project_file_name {
+  my($self) = shift;
+  my($name) = shift;
+  my($ext)  = shift;
+  my($nmod) = $self->get_name_modifier();
+
+  if (defined $nmod) {
+    $nmod =~ s/\*/$name/g;
+    $name = $nmod;
+  }
+  return "$name$ext";
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
@@ -2407,12 +2411,7 @@ sub separate_static_project {
 
 sub project_file_name {
   #my($self) = shift;
-  return undef;
-}
-
-
-sub static_project_file_name {
-  #my($self) = shift;
+  #my($name) = shift;
   return undef;
 }
 

@@ -12,11 +12,11 @@ projects for each one found.
 Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
-              [-noreldefs] [-notoplevel] [-static] [-static_only]
+              [-noreldefs] [-notoplevel] [-static]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
-              [-exclude <directories>]
+              [-exclude <directories>] [-name_modifier <pattern>]
               [-type <automake | borland | em3 | ghs | gnuace | make |
                       nmake | va4 | vc6 | vc7 | vc71>]
               [files]
@@ -38,9 +38,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
                        for the specific type as shown above
                        (ex. -ti dll_exe:vc8exe)
        -template       Specifies the template name (with no extension).
-       -static         Specifies that static projects will be generated in
-                       addition to dynamic projects.
-       -static_only    Specifies that only static projects will be generated.
+       -static         Specifies that only static projects will be generated.
+                       By default, only dynamic projects will be generated.
        -recurse        Recurse from the current directory and generate from
                        all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
@@ -48,6 +47,9 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
                        relative path based on the current working directory.
        -make_coexistence If multiple 'make' based project types are
                        generated, they will be named such that they can coexist.
+       -name_modifier  Modify output names.  The pattern passed to this
+                       parameter will have the '*' portion replaced with the
+                       actual output name.  Ex. *_Static
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.
@@ -95,11 +97,22 @@ file should have a .mpd extension and sit in one of the include search
 directories.  NOTE: The -template option overrides the template file for all
 types specified.
 
-The -static option can be used to generate static project files in addition
-to dynamic project files.  This currently only applies to the vc6 type.
+The -static option can be used to generate only static project files.
 
-The -static_only option can be used to avoid generating dynamic project
-files.  This currently only applies to the vc6 type.
+The -static_only option has been replaced by the -static option.  Currently,
+MPC only supports generating dynamic projects or static projects, but not
+both during the same run.  To generate them both you must run MPC twice, once
+with the -static option and once without.  Additionally, the vc6, em3, vc7,
+vc71 and va4 project names will no longer automatically have _Static
+appended to the project name when generating static projects.  This can
+still be achieved by using the -name_modifier option.
+
+The -name_modifier option can be used to modify the generated workspace or
+project name.  The parameter to the -name_modifier option is a pattern where
+an asterisk (*) within the pattern is replaced by the actual workspace or
+project name.  Thus, passing -name_modifier '*_Static' to mwc.pl will result
+in all workspace and project names ending in _Static. (Ex. ACE_Static.dsw,
+ACE_Static.dsp, etc.)
 
 The -noreldefs option says not to generate default relative definitions for
 ACE_ROOT and TAO_ROOT (which would come from environment variables).
@@ -138,11 +151,11 @@ project in the directory from which the script was started.
 Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
-              [-noreldefs] [-notoplevel] [-static] [-static_only]
+              [-noreldefs] [-notoplevel] [-static]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
-              [-exclude <directories>]
+              [-exclude <directories>] [-name_modifier <pattern>]
               [-type <automake | borland | em3 | ghs | gnuace | make |
                       nmake | va4 | vc6 | vc7 | vc71>]
               [files]
@@ -164,9 +177,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
                        for the specific type as shown above
                        (ex. -ti dll_exe:vc8exe)
        -template       Specifies the template name (with no extension).
-       -static         Specifies that static projects will be generated in
-                       addition to dynamic projects.
-       -static_only    Specifies that only static projects will be generated.
+       -static         Specifies that only static projects will be generated.
+                       By default, only dynamic projects will be generated.
        -recurse        Recurse from the current directory and generate from
                        all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
@@ -174,6 +186,9 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
                        relative path based on the current working directory.
        -make_coexistence If multiple 'make' based project types are
                        generated, they will be named such that they can coexist.
+       -name_modifier  Modify output names.  The pattern passed to this
+                       parameter will have the '*' portion replaced with the
+                       actual output name.  Ex. *_Static
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.
