@@ -1,3 +1,8 @@
+Thu Oct 15 21:20:56 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AVStreams.idl: Uncommented the previously
+	commented out code that uses Property.
+
 Thu Oct 15 20:08:36 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : 
