@@ -8,6 +8,8 @@
 #include "ace/Thread_Manager.h"
 #include "Client_Test.h"
 
+ACE_RCSID(Client, Client_Test, "$Id$")
+
 class ACE_Svc_Export Client_Test : public ACE_Service_Object
 {
 public:

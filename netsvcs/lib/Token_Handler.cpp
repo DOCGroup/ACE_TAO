@@ -1,11 +1,11 @@
 // $Id$
 
-// Token_Handler.cpp
-
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/Get_Opt.h"
 #include "Token_Handler.h"
+
+ACE_RCSID(lib, Token_Handler, "$Id$")
 
 int
 ACE_Token_Acceptor::parse_args (int argc, char *argv[])

@@ -1,3 +1,32 @@
+Fri Jul 31 19:55:10 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* netsvcs/clients/Logger/direct_logging.cpp: 
+	* netsvcs/clients/Logger/indirect_logging.cpp: 
+	* netsvcs/clients/Naming/Client/Client_Test.cpp: 
+	* netsvcs/clients/Naming/Client/main.cpp: 
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: 
+	* netsvcs/clients/Naming/Dump_Restore/createfile.cpp: 
+	* netsvcs/clients/Naming/Dump_Restore/main.cpp: 
+	* netsvcs/clients/Tokens/collection/collection.cpp: 
+	* netsvcs/clients/Tokens/collection/rw_locks.cpp: 
+	* netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp: 
+	* netsvcs/clients/Tokens/invariant/invariant.cpp: 
+	* netsvcs/clients/Tokens/manual/manual.cpp: 
+	* netsvcs/clients/Tokens/mutex/test_mutex.cpp: 
+	* netsvcs/clients/Tokens/rw_lock/rw_locks.cpp: 
+	* netsvcs/lib/Base_Optimizer.cpp: 
+	* netsvcs/lib/Client_Logging_Handler.cpp: 
+	* netsvcs/lib/Log_Message_Receiver.cpp: 
+	* netsvcs/lib/Logging_Strategy.cpp: 
+	* netsvcs/lib/Name_Handler.cpp: 
+	* netsvcs/lib/Server_Logging_Handler.cpp: 
+	* netsvcs/lib/Server_Logging_Handler_T.cpp: 
+	* netsvcs/lib/TS_Clerk_Handler.cpp: 
+	* netsvcs/lib/TS_Server_Handler.cpp: 
+	* netsvcs/lib/Token_Handler.cpp: 
+	* netsvcs/servers/main.cpp: 
+	Added ACE_RCSID to these files.
+
 Fri Jul 31 19:15:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.cpp (pwrite and pread): There were many bugs in these two

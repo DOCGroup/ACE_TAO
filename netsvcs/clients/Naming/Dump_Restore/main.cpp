@@ -1,8 +1,11 @@
-// Test the client-side of the ACE Name Server...
 // $Id$
+
+// Test the client-side of the ACE Name Server...
 
 #include "ace/Service_Config.h"
 #include "Dump_Restore.h"
+
+ACE_RCSID(Dump_Restore, main, "$Id$")
 
 int 
 main (int argc, char *argv[])

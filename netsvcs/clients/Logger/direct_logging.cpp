@@ -4,8 +4,9 @@
 // than going through the client logging daemon.
 
 #include "ace/SOCK_Connector.h"
-
 #include "ace/Log_Record.h"
+
+ACE_RCSID(Logger, direct_logging, "$Id$")
 
 static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const char *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;

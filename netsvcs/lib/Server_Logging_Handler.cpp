@@ -1,12 +1,14 @@
 // $Id$
-// Server_Logging_Handler.cpp
 
 #if !defined (ACE_SERVER_LOGGING_HANDLER_C)
 #define ACE_SERVER_LOGGING_HANDLER_C
 
 #define ACE_BUILD_SVC_DLL
+
 #include "ace/Synch.h"
 #include "Server_Logging_Handler.h"
+
+ACE_RCSID(lib, Server_Logging_Handler, "$Id$")
 
 // The following are "Factories" used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the
