@@ -1,3 +1,12 @@
+Mon Sep  8 23:21:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile (LIBS):
+	* examples/RTScheduling/MIF_Scheduler/Makefile (LIBS):
+
+	  Added missing "RTCORBA", "TAO_Svc_Utils" and "TAO_IORTable"
+	  libraries to the list of libraries to link.  They must be
+	  explicitly listed for statically linked builds.
+
 Mon Sep  8 18:56:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
