@@ -1,3 +1,9 @@
+Wed Aug 25 14:58:51 2004  Rich Seibel <seibel_r@ociweb.com>
+
+      * include/makeincludes/platform_linux.GNU:
+        Generalized the way the rt library is searched.  The
+        previous code did not find it on RedHat AS 3.0 for opteron.
+
 Wed Aug 25 14:49:11 2004  Rich Seibel <seibel_r@ociweb.com>
 
         * ace/Basic_Types.h:
