@@ -143,6 +143,9 @@
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
+// Cygwin DLL suffix is .dll
+#define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
+
 #if ACE_MT_SAFE
 // Yes, we do have threads.
 #  define ACE_HAS_THREADS

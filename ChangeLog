@@ -1,3 +1,16 @@
+Tue Jun 17 06:42:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+          Only define ACE_DLL_SUFFIX and ACE_DLL_PREFIX when they are not
+          defined yet. This makes it easy to overrule them in the config
+          files like below.
+
+        * ace/config-cygwin32.h:
+          Set ACE_DLL_SUFFIX to .dll for Cygwin.
+
+        * ace/config-win32-mingw.h:
+          Set ACE_DLL_PREFIX to lib for MinGW.
+
 Tue Jun 17 05:37:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
