@@ -6,7 +6,7 @@
 #include "Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Supplier, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Supplier, "$Id$")
 
 #include "ProxyConsumer.h"
 #include "Proxy.h"

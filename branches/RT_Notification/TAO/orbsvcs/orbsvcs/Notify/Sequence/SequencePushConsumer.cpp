@@ -14,8 +14,9 @@ ACE_RCSID(Notify, TAO_NS_SequencePushConsumer, "$id$")
 #include "../ProxySupplier.h"
 #include "../Worker_Task.h"
 #include "../Consumer.h"
-#include "../Method_Request.h"
+#include "../Method_Request_Event.h"
 #include "../Timer.h"
+#include "../Proxy.h"
 
 TAO_NS_SequencePushConsumer::TAO_NS_SequencePushConsumer (TAO_NS_ProxySupplier* proxy)
   : TAO_NS_Consumer (proxy), pacing_interval_ (ACE_Time_Value::zero), timer_id_ (-1), buffering_strategy_ (0),
@@ -60,7 +61,7 @@ TAO_NS_SequencePushConsumer::release (void)
 void
 TAO_NS_SequencePushConsumer::qos_changed (const TAO_NS_QoSProperties& qos_properties)
 {
-  this->max_batch_size_ = qos_properties.maximum_batch_size ();
+  this->max_batch_size_ = qos_properties.maximum_batch_size ().value ();
 
   if (this->max_batch_size_.is_valid ())
     {// set the max batch size.
@@ -103,9 +104,24 @@ TAO_NS_SequencePushConsumer::cancel_timer (void)
 }
 
 void
-TAO_NS_SequencePushConsumer::push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL_NOT_USED)
+TAO_NS_SequencePushConsumer::push_i (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Event* method_request = new TAO_NS_Method_Request_Event (event);
+  TAO_NS_Event* copy = event->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO_NS_Event_Copy_var copy_var (copy);
+
+  this->push_i (copy_var ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_SequencePushConsumer::push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Method_Request_Event* method_request;
+
+  ACE_NEW_THROW_EX (method_request,
+                    TAO_NS_Method_Request_Event (event),
+                    CORBA::NO_MEMORY ());
 
   int msg_count = this->buffering_strategy_->enqueue (*method_request);
 
@@ -150,7 +166,7 @@ TAO_NS_SequencePushConsumer::handle_timeout (const ACE_Time_Value& /*current_tim
 
   if (deq_count > 0)
     {
-      TAO_NS_Refcountable_Guard ref_guard(*this->proxy ()); // Protect this object from being destroyed in this scope.
+      TAO_NS_Proxy_Guard ref_guard(this->proxy ()); // Protect this object from being destroyed in this scope.
 
       this->push (event_batch);
 

@@ -11,7 +11,7 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID(RT_Notify, TAO_CosNotify_Service, "$Id$")
+ACE_RCSID(Notify, TAO_CosNotify_Service, "$Id$")
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
   : factory_ (0)
@@ -91,7 +91,7 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
 
           properties->asynch_updates (1);
         }
-       else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
         {
           task_per_proxy = 1;
           arg_shifter.consume_arg ();
@@ -170,10 +170,6 @@ TAO_CosNotify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 void
 TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
-  /// first, init the main thread.
-  //this->init_main_thread (orb ACE_ENV_ARG_PARAMETER);
-  //ACE_CHECK;
-
   // Obtain the Root POA
   CORBA::Object_var object  =
     orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -181,89 +177,23 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   if (CORBA::is_nil (object.in ()))
     ACE_ERROR ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the RootPOA.\n"));
+                " (%P|%t) Unable to resolve the RootPOA.\n"));
 
   PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   /// Set the properties
-  TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
+    TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
 
-  properties->orb (orb);
-  properties->default_poa (default_poa.in ());
-  properties->sched_policy (orb->orb_core ()->orb_params ()->sched_policy ());
-  properties->scope_policy (orb->orb_core ()->orb_params ()->scope_policy ());
+    properties->orb (orb);
+    properties->default_poa (default_poa.in ());
 
-  // Init the factory
-  this->init_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    // Init the factory
+    this->init_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
 
-  this->init_builder (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-void
-TAO_CosNotify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
-{
-  ACE_Sched_Params::Policy sched_policy;
-  long thr_sched_policy = orb->orb_core ()->orb_params ()->sched_policy ();
-
-  //long thr_scope_policy = orb->orb_core ()->orb_params ()->scope_policy ();
-
-  if (thr_sched_policy == THR_SCHED_FIFO)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
-
-      sched_policy = ACE_SCHED_FIFO;
-    }
-  else if (thr_sched_policy == THR_SCHED_RR)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
-
-      sched_policy = ACE_SCHED_RR;
-    }
-  else
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
-
-      sched_policy = ACE_SCHED_OTHER;
-    }
-
-  /// Check sched.
-  int min_priority = ACE_Sched_Params::priority_min (sched_policy);
-  int max_priority = ACE_Sched_Params::priority_max (sched_policy);
-
-   if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-                  max_priority, min_priority));
-
-      if (max_priority == min_priority)
-        {
-          ACE_DEBUG ((LM_DEBUG,"Detected max_priority == min_priority\n"));
-        }
-    }
-
-  // Set the main thread to min priority...
-    int priority = min_priority;
-
-    if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy ,
-                                                priority,
-                                                ACE_SCOPE_PROCESS)) != 0)
-      {
-        if (ACE_OS::last_error () == EPERM)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t): user is not superuser, "
-                        "test runs in time-shared class\n"));
-          }
-        else
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t): sched_params failed\n"));
-      }
+    this->init_builder (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
 }
 
 void

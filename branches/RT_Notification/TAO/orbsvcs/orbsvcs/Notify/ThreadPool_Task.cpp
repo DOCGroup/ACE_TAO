@@ -6,9 +6,10 @@
 #include "ThreadPool_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_ThreadPool_Task, "$Id$")
+ACE_RCSID(Notify, TAO_NS_ThreadPool_Task, "$Id$")
 
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 #include "Properties.h"
 #include "Timer_Queue.h"
 
@@ -51,9 +52,11 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
 
+  CORBA::ORB_var orb =
+    TAO_NS_PROPERTIES::instance()->orb ();
+
   flags |=
-    TAO_NS_PROPERTIES::instance()->scope_policy () |
-    TAO_NS_PROPERTIES::instance()->sched_policy ();
+    orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Increment the count on this object by the number of threads using it.
   {
@@ -92,9 +95,9 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
 }
 
 void
-TAO_NS_ThreadPool_Task::exec (TAO_NS_Method_Request& method_request)
+TAO_NS_ThreadPool_Task::execute (TAO_NS_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request& request_copy = *method_request.copy ();
+  TAO_NS_Method_Request& request_copy = *method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (this->buffering_strategy_->enqueue (request_copy) == -1)
     {

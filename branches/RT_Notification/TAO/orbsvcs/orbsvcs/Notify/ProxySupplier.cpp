@@ -8,7 +8,6 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_ProxySupplier, "$Id$")
 
-#include "Method_Request_Dispatch_No_Filtering.h"
 #include "Event_Manager.h"
 #include "AdminProperties.h"
 #include "Consumer.h"
@@ -140,19 +139,35 @@ TAO_NS_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_ProxySupplier::push (const TAO_NS_Event_var &event)
+TAO_NS_ProxySupplier::push (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Dispatch request (event, this);
+  TAO_NS_Method_Request_Dispatch_No_Copy request (event, this, 1);
 
-  this->worker_task ()->exec (request);
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_ProxySupplier::push_no_filtering (const TAO_NS_Event_var &event)
+TAO_NS_ProxySupplier::push (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Dispatch_No_Filtering request (event, this);
+  TAO_NS_Method_Request_Dispatch_No_Copy_Ex request (event, this, 1);
 
-  this->worker_task ()->exec (request);
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_ProxySupplier::push_no_filtering (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Method_Request_Dispatch_No_Copy request (event, this, 0); // No filtering.
+
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_ProxySupplier::push_no_filtering (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Method_Request_Dispatch_No_Copy_Ex request (event, this, 0); // No filtering.
+
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void

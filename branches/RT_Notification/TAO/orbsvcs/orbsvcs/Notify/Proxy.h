@@ -23,6 +23,7 @@
 #include "EventTypeSeq.h"
 #include "FilterAdmin.h"
 #include "Admin.h"
+#include "Refcountable_Guard_T.h"
 
 class TAO_NS_Admin;
 class TAO_NS_Peer;
@@ -55,6 +56,12 @@ public:
 
   /// Obtain the Proxy's subscribed types.
   void subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL);
+
+  /// Check if this event passes the admin and proxy filters.
+  CORBA::Boolean check_filters (const TAO_NS_Event* event
+                                , TAO_NS_FilterAdmin& parent_filter_admin
+                                , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
+                                ACE_ENV_ARG_DECL);
 
   /// Check if this event passes the admin and proxy filters.
   CORBA::Boolean check_filters (const TAO_NS_Event_var &event
@@ -100,6 +107,8 @@ protected:
   /// True if updates have been turned off.
   CORBA::Boolean updates_off_;
 };
+
+typedef TAO_NS_Refcountable_Guard_T<TAO_NS_Proxy> TAO_NS_Proxy_Guard;
 
 #if defined (__ACE_INLINE__)
 #include "Proxy.inl"

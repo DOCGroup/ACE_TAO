@@ -6,7 +6,7 @@
 #include "ETCL_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_ETCL_Filter, "$id$")
+ACE_RCSID(Notify, TAO_NS_ETCL_Filter, "$Id$")
 
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"

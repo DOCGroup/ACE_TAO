@@ -56,7 +56,9 @@ public:
   virtual void release (void);
 
   /// Push <event> to this consumer.
-  void push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
+  virtual void push_i (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+
+  virtual void push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
   virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL);

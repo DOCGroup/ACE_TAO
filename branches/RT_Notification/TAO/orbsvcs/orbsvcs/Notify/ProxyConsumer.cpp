@@ -141,11 +141,3 @@ TAO_NS_ProxyConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
   this->supplier_admin_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-void
-TAO_NS_ProxyConsumer::push (TAO_NS_Event_var &event)
-{
-  TAO_NS_Method_Request_Lookup request (event, this, this->event_manager_->consumer_map ());
-
-  this->worker_task ()->exec (request);
-}

@@ -13,7 +13,7 @@
 #include "Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Event_Map_T, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Event_Map_T, "$Id$")
 
 template <class PROXY, class ACE_LOCK>
 TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::TAO_NS_Event_Map_T (void)

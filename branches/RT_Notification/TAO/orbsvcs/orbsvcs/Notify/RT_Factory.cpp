@@ -26,4 +26,106 @@ TAO_NS_RT_Factory::create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_AR
                     CORBA::NO_MEMORY ());
 }
 
-ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_RT_Factory)
+void
+TAO_NS_RT_Factory:: create (TAO_NS_ProxySupplier_Collection*& collection ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (collection ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_ProxyConsumer_Collection*& collection ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (collection ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_EventChannel_Collection*& collection ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (collection ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_ConsumerAdmin_Collection*& collection ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (collection ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_SupplierAdmin_Collection*& collection ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (collection ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_Proxy_Collection*& collection ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (collection ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_EventChannelFactory*& channel_factory ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (channel_factory ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_EventChannel*& channel ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (channel ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_SupplierAdmin*& admin ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (admin ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_ConsumerAdmin*& admin ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (admin ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_ProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_ProxyPushSupplier*& proxy ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_CosEC_ProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_CosEC_ProxyPushSupplier*& proxy ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_StructuredProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_SequenceProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_RT_Factory:: create (TAO_NS_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL)
+{
+  TAO_NS_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
+}
+
+ACE_FACTORY_DEFINE (TAO_RT_Notify, TAO_NS_RT_Factory)

@@ -6,16 +6,16 @@
 #include "Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Property_Boolean, "$id$")
+ACE_RCSID(Notify, TAO_NS_Property_Boolean, "$Id$")
 
 #include "PropertySeq.h"
 
-TAO_NS_Property_Boolean::TAO_NS_Property_Boolean (const ACE_CString& name)
+TAO_NS_Property_Boolean::TAO_NS_Property_Boolean (const char* name)
   :name_ (name), valid_(0)
 {
 }
 
-TAO_NS_Property_Boolean::TAO_NS_Property_Boolean (const ACE_CString& name, CORBA::Boolean initial)
+TAO_NS_Property_Boolean::TAO_NS_Property_Boolean (const char* name, CORBA::Boolean initial)
   :name_ (name), value_ (initial), valid_ (1)
 {
 }

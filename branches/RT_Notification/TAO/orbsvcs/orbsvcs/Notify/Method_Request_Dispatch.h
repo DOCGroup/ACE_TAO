@@ -21,8 +21,8 @@
 
 #include "Method_Request.h"
 #include "Refcountable.h"
-
-class TAO_NS_ProxySupplier;
+#include "Method_Request_Dispatch_T.h"
+#include "ProxySupplier.h"
 
 /**
  * @class TAO_NS_Method_Request_Dispatch
@@ -30,27 +30,86 @@ class TAO_NS_ProxySupplier;
  * @brief Dispatchs an event to a proxy supplier.
  *
  */
-class TAO_Notify_Export TAO_NS_Method_Request_Dispatch  : public TAO_NS_Method_Request_Event
+
+typedef TAO_NS_Method_Request_Dispatch_T<const TAO_NS_Event_var
+                                         , TAO_NS_ProxySupplier_Guard
+                                         , const TAO_NS_Event_var&
+                                         , TAO_NS_ProxySupplier*>  TAO_NS_Method_Request_Dispatch_Base;
+
+class TAO_Notify_Export TAO_NS_Method_Request_Dispatch : public TAO_NS_Method_Request_Dispatch_Base
+                                                       , public TAO_NS_Method_Request
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Dispatch (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier);
+  TAO_NS_Method_Request_Dispatch (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
 
   /// Destructor
   ~TAO_NS_Method_Request_Dispatch ();
 
-  /// Create a copy of this object.
-  TAO_NS_Method_Request* copy (void);
+  /// Execute the Request
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+};
+
+/*******************************************************************************************************/
+
+/**
+ * @class TAO_NS_Method_Request_Dispatch_No_Copy
+ *
+ * @brief Dispatchs an event to a proxy supplier.
+ *
+ */
+
+typedef TAO_NS_Method_Request_Dispatch_T<const TAO_NS_Event*
+                                         , TAO_NS_ProxySupplier*
+                                         , const TAO_NS_Event*
+                                         , TAO_NS_ProxySupplier*>  TAO_NS_Method_Request_Dispatch_No_Copy_Base;
+
+class TAO_Notify_Export TAO_NS_Method_Request_Dispatch_No_Copy : public TAO_NS_Method_Request_Dispatch_No_Copy_Base
+                                                                 , public TAO_NS_Method_Request_No_Copy
+{
+public:
+  /// Constuctor
+  TAO_NS_Method_Request_Dispatch_No_Copy (const TAO_NS_Event* event, TAO_NS_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
+
+  /// Destructor
+  ~TAO_NS_Method_Request_Dispatch_No_Copy ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
-private:
-  /// Proxy Supplier that we use.
-  TAO_NS_ProxySupplier* proxy_supplier_;
+  /// Create a copy of this object.
+  virtual TAO_NS_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
+};
 
-  /// Guard to automatically inc/decr ref count on the proxy.
-  TAO_NS_Refcountable_Guard refcountable_guard_;
+/*******************************************************************************************************/
+
+/**
+ * @class TAO_NS_Method_Request_Dispatch_No_Copy_Ex
+ *
+ * @brief Dispatchs an event to a proxy supplier.
+ *
+ */
+
+typedef TAO_NS_Method_Request_Dispatch_T<const TAO_NS_Event_var&
+                                         , TAO_NS_ProxySupplier*
+                                         , const TAO_NS_Event_var&
+                                         , TAO_NS_ProxySupplier*>  TAO_NS_Method_Request_Dispatch_No_Copy_Ex_Base;
+
+class TAO_Notify_Export TAO_NS_Method_Request_Dispatch_No_Copy_Ex : public TAO_NS_Method_Request_Dispatch_No_Copy_Ex_Base
+                                                                 , public TAO_NS_Method_Request_No_Copy
+{
+public:
+  /// Constuctor
+  TAO_NS_Method_Request_Dispatch_No_Copy_Ex (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
+
+  /// Destructor
+  ~TAO_NS_Method_Request_Dispatch_No_Copy_Ex ();
+
+  /// Execute the Request
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Create a copy of this object.
+  virtual TAO_NS_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

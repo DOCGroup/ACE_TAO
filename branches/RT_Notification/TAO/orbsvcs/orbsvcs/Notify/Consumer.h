@@ -49,6 +49,9 @@ public:
   virtual TAO_NS_Proxy* proxy (void);
 
   /// Push <event> to this consumer.
+  void push (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+
+  /// Push <event> to this consumer.
   void push (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
@@ -74,6 +77,9 @@ protected:
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
                                    const CosNotification::EventTypeSeq& removed
                                    ACE_ENV_ARG_DECL);
+
+  /// Push Implementation.
+  virtual void push_i (const TAO_NS_Event* event ACE_ENV_ARG_DECL) = 0;
 
   /// Push Implementation.
   virtual void push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL) = 0;

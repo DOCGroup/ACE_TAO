@@ -4,9 +4,6 @@
  *
  *  $Id$
  *
- *
- *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
@@ -41,6 +38,14 @@ class TAO_Notify_Export TAO_NS_FilterAdmin
   // = match operation on all the filters
   /// See if any of the filters match.
   CORBA::Boolean match (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosNotifyFilter::UnsupportedFilterableData
+                     ));
+
+  // = match operation on all the filters
+  /// See if any of the filters match.
+  CORBA::Boolean match (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
@@ -83,6 +88,10 @@ class TAO_Notify_Export TAO_NS_FilterAdmin
   /// Id generator for proxy suppliers
   TAO_NS_ID_Factory filter_ids_;
 };
+
+#if defined (__ACE_INLINE__)
+#include "FilterAdmin.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* NOTIFY_FILTERADMIN_H */

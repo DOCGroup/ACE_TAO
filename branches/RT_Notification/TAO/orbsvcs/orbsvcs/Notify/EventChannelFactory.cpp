@@ -6,7 +6,7 @@
 #include "EventChannelFactory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_EventChannelFactory, "$Id$")
+ACE_RCSID(Notify, TAO_NS_EventChannelFactory, "$Id$")
 
 #include "ace/Dynamic_Service.h"
 #include "Properties.h"
@@ -42,9 +42,6 @@ TAO_NS_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return;
-
-  this->ec_container_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
 
   TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
 

@@ -6,7 +6,7 @@
 #include "Timer_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Timer_Reactor, "$id$")
+ACE_RCSID(Notify, TAO_NS_Timer_Reactor, "$Id$")
 
 #include "ace/Reactor.h"
 #include "tao/ORB_Core.h"

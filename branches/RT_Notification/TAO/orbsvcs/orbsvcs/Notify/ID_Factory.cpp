@@ -6,7 +6,7 @@
 #include "ID_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_ID_Factory, "$Id$")
+ACE_RCSID(Notify, TAO_NS_ID_Factory, "$Id$")
 
 TAO_NS_ID_Factory::TAO_NS_ID_Factory (void)
 {

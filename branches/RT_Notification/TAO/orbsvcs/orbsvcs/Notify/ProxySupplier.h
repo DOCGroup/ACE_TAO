@@ -21,6 +21,7 @@
 
 #include "Event.h"
 #include "Proxy.h"
+#include "Refcountable_Guard_T.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 
 class TAO_NS_Consumer;
@@ -56,10 +57,16 @@ public:
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void push (const TAO_NS_Event_var &event);
+  virtual void push (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+
+  /// Dispatch Event to consumer
+  virtual void push (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer, no filtering
-  virtual void push_no_filtering (const TAO_NS_Event_var &event);
+  virtual void push_no_filtering (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+
+  /// Dispatch Event to consumer, no filtering
+  virtual void push_no_filtering (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Override TAO_NS_Container_T::shutdown  method
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -91,6 +98,8 @@ protected:
   /// The Consumer that we're connect to.
   TAO_NS_Consumer* consumer_;
 };
+
+typedef TAO_NS_Refcountable_Guard_T<TAO_NS_ProxySupplier> TAO_NS_ProxySupplier_Guard;
 
 #if defined (__ACE_INLINE__)
 #include "ProxySupplier.inl"
