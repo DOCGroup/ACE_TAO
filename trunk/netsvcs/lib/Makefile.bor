@@ -12,12 +12,11 @@ OBJFILES = \
 	$(OBJDIR)\Logging_Strategy.obj \
 	$(OBJDIR)\Base_Optimizer.obj
 
-CFLAGS = -I$(ACE_ROOT) $(ACE_CFLAGS)
-CPPDIR = .
-BASE_OBJDIR = .\bor\obj
-BINDIR = $(ACE_ROOT)\bin
-LIBFILES = \
-	$(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+CFLAGS = $(ACE_CFLAGS)
 
-!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
 

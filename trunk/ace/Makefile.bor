@@ -187,9 +187,8 @@ OBJFILES = \
 	$(OBJDIR)\WIN32_Proactor.obj \
 	$(OBJDIR)\XtReactor.obj
 
-CFLAGS = -I.. $(ACE_CFLAGS)
-CPPDIR = .
-BASE_OBJDIR = $(ACE_ROOT)\ace\bor\obj
-BINDIR = $(ACE_ROOT)\bin
-!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+CFLAGS = $(ACE_CFLAGS)
 
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

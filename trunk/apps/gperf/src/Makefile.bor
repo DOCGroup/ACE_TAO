@@ -1,5 +1,6 @@
 
 NAME = gperf
+
 OBJFILES = \
         $(OBJDIR)\Options.obj \
         $(OBJDIR)\Iterator.obj \
@@ -11,6 +12,12 @@ OBJFILES = \
         $(OBJDIR)\Vectors.obj \
         $(OBJDIR)\Version.obj \
         $(OBJDIR)\gperf.obj
-BINDIR=$(ACE_ROOT)\bin
-!include <$(ACE_ROOT)\apps\build.bor>
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
 

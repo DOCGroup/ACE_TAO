@@ -12,8 +12,7 @@ OBJFILES = \
 	$(OBJDIR)\client.obj
 
 CPPDIR = .;.. 
-BINDIR = .\bor\bin
-BASE_OBJDIR = .\bor\obj
+
 IDLDIR = .
 
 !include <$(ACE_ROOT)\include\makeinclude\build_example.bor>

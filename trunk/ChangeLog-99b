@@ -1,3 +1,15 @@
+Mon Jul  5 11:59:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Future.h: Tried rearranging the order in which statics
+	  are defined to workaround a bug with Borland's C++ Builder.
+
+	* Added new Borland Makefiles.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for these.
+	
+	* include/makeinclude: Added several new platform configuration
+	  files for Borland C++ Builder.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for these.
+
 Mon Jul 05 12:14:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i: Wchat_t version of strenvdup should only be available
