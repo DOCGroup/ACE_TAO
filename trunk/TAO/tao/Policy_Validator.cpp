@@ -3,6 +3,7 @@
 #include "Policy_Validator.h"
 #include "Environment.h"
 #include "ORB_Core.h"
+#include "debug.h"
 
 ACE_RCSID(tao, Policy_Validator, "$Id$")
 
