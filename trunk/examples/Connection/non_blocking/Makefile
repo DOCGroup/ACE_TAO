@@ -44,6 +44,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
   COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
+  LIBS   := $(ACELIB) $(LIBS)
 endif
 
 #----------------------------------------------------------------------------
