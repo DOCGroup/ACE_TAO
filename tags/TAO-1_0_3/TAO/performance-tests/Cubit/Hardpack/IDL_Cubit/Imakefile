@@ -1,0 +1,34 @@
+COMMENT @(#) (C) Copyright Lockheed Martin 1996, 1997, 1998 (Unpublished). All rights reserved. Imakefile 1.3 changed 5/22/98 13:34:14
+
+BUILD=/project/doc/pkg/Hardpack/dsi_5.1/SunOS_5.5.1
+PREPRO  = $(BUILD)/bin/idlpp_cc
+
+CCFLAGS += -mt -xildoff 
+
+#if defined(T_SunOS)
+INC=-I$(BUILD)/include -I$(ACE_ROOT) -I/usr/include -I/usr/include/sys
+LIBS=$(BUILD)/Templates.DB/$()*.o -L$(BUILD)/lib -lORB++ -lORB -lES -L$(ACE_ROOT)/ace -lACE
+#else
+INC=-I$(BUILD)/include -I$(ACE_ROOT) -I/usr/include -I/usr/include/sys
+LIBS=-L$(BUILD)/lib -lORB++ -lORB -lES -lIR++ -lACE -L$(ACE_ROOT)/ace
+#endif
+
+
+all:	cubit.hh client server
+
+client:  client.cpp client_i.cpp  cubit_c.cc cubit.hh 
+        $(CCC) $(CCFLAGS) $(INC) -o client \
+	cubit_c.cc client_i.cpp client.cpp \
+	$(LIBS) $(OSLIBS)
+
+server:  server.cpp server_i.cpp cubit_impl.cc cubit_s.cc cubit_c.cc cubit.hh 
+        $(CCC) $(CCFLAGS) $(INC) -o server \
+	server.cpp server_i.cpp cubit_s.cc cubit_c.cc cubit_impl.cc  \
+	$(LIBS) $(OSLIBS)
+
+cubit.hh:      cubit.idl
+        $(PREPRO) cubit.idl
+
+clean:
+        rm -f client server cubit.hh *_s.cc *_c.cc *.o;
+	rm -rf Templates.DB; rm -f *~
