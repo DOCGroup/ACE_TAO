@@ -67,6 +67,11 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 
       ACE_TRY_CHECK;
 
+      if (this->orb_manager_.activate_poa_manager (ACE_TRY_ENV) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
+
+      ACE_TRY_CHECK;
+
       this->argc_ = argc;
       this->argv_ = argv;
 
