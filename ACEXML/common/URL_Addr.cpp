@@ -83,7 +83,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char *s)
   if (s == 0)
     return -1;
 
-  char* http = "http://";
+  const char* http = "http://";
   int http_len = ACE_OS::strlen (http);
 
   // Check validity of URL
