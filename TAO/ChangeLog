@@ -1,3 +1,11 @@
+Wed Mar 31 08:00:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp (svr_worker): 
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp (Worker_Thread): 
+	  Changed the name "barrier" to "thread_barrier" to fix a problem
+ 	  with macro conflicts on certain OS platforms.  Thanks to Levente
+ 	  Torok <tealev@yahoo.com> for reporting this.
+
 Wed Mar 31 09:12:00 2004  David Smith  <dts@prismtechnologies.com>
 
         * orbsvcs/orbsvcs/Makefile:
