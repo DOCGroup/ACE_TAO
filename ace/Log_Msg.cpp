@@ -1312,7 +1312,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 # endif /* ACE_USES_WCHAR */
                   ACE_OS::sprintf (bp, format, va_arg (argp, ACE_TCHAR *));
 #elif defined (ACE_HAS_WCHAR)
+# if defined (HPUX)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+# else
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+# endif /* HPUX */
                   ACE_OS::sprintf (bp, format, va_arg (argp, wchar_t *));
 #endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                   break;
@@ -1326,7 +1330,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 # endif /* ACE_USES_WCHAR */
                   ACE_OS::sprintf (bp, format, va_arg (argp, int));
 #elif defined (ACE_USES_WCHAR)
+# if defined (HPUX)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+# else
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lc"));
+# endif /* HPUX */
                   ACE_OS::sprintf (bp, format, va_arg (argp, wint_t));
 #else /* ACE_WIN32 */
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
