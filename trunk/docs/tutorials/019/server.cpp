@@ -7,6 +7,8 @@
  */
 #include "shmem.h"
 
+#include "ace/Log_Msg.h"
+
 #if defined (ACE_LACKS_SYSV_SHMEM)
 int
 main (int, char *[])

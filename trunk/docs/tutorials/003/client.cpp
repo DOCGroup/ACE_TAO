@@ -2,6 +2,7 @@
 
 /* To establish a socket connection to a server, we'll need an
   ACE_SOCK_Connector.  */
+#include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"
 
 /* Unlike the previous two tutorials, we're going to allow the user to

@@ -5,6 +5,7 @@
    will prevent this server from responding to just any old datagram.
    I'll limit my comments to those pieces of code.  */
 
+#include "ace/Log_Msg.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
