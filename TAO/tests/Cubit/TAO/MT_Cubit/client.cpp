@@ -121,12 +121,8 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
       util_thread.close ();
     }
 
-  // Now activate the high priority client.
-#if defined (VXWORKS)
-  priority = ACE_THR_PRI_FIFO_DEF + 50;
-#else  /* ! VXWORKS */
-  priority = ACE_THR_PRI_FIFO_DEF + 25;
-#endif /* ! VXWORKS */
+  // Now activate the high priority client with default real-time priority
+  priority = ACE_THR_PRI_FIFO_DEF;
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
@@ -150,18 +146,13 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
         ACE_SCOPE_THREAD),
       ACE_SCOPE_THREAD);
 
-  // Drop the priority, so that the priority of clients will increase
-  // with increasing client number.
-  for (j = 0; j < ts.thread_count_; j++)
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
+
+  priority = max_low_client_priority;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d clients with low priority ranging from %d to %d\n",
+              "Creating %d clients with low priority %d\n",
               ts.thread_count_ - 1,
-              priority,
-              max_low_client_priority));
+              priority));
 
   for (i = ts.thread_count_ - 1; i > 0; i--)
     {
@@ -176,8 +167,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 #endif /* VXWORKS */
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Creating client with low priority %d and thread ID %d\n",
-                  priority,
+                  "Creating client with thread ID %d\n",
                   i));
 
       // The first thread starts at the lowest priority of all the low
@@ -190,11 +180,6 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
                     "%p; priority is %d\n",
                     "activate failed",
                     priority));
-
-      // Get the next higher priority.
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_THREAD);
     }
 
   // Wait for all the client threads to be initialized before going
@@ -258,6 +243,42 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
               high_priority_client.get_high_priority_jitter (),
               low_priority_client[0]->get_low_priority_latency (),
               low_priority_client[0]->get_low_priority_jitter ()));
+  // output the latency values to a file, tab separated, to import it
+  // to Excel to calculate jitter, in the mean time we come up with
+  // the sqrt() function.
+  FILE *latency_file_handle = 0;
+  char latency_file[BUFSIZ];
+  char buffer[BUFSIZ];
+
+  ACE_OS::sprintf (latency_file,
+                   "cb__%d.txt",
+                   ts.thread_count_);
+
+  ACE_OS::fprintf(stderr,
+                  "--->Output file for latency data is \"%s\"\n",
+                  latency_file);
+
+  latency_file_handle = ACE_OS::fopen (latency_file, "w");
+
+  // This loop visits each client.  thread_count_ is the number of clients.
+  for (u_int j = 0; j < ts.thread_count_; j ++)
+    {
+      ACE_OS::sprintf(buffer,
+                      "%s #%d",
+                      j==0? "High Priority": "Low Priority",
+                      j);
+      // this loop visits each request latency from a client
+      for (u_int i = 0; i < (j==0? ts.high_priority_loop_count_:ts.loop_count_)/ts.granularity_; i ++)
+        {
+          ACE_OS::sprintf(buffer+strlen(buffer),
+                          "\t%f\n",
+                          ts.global_jitter_array_[j][i]);
+          fputs (buffer, latency_file_handle);
+          buffer[0]=0;
+        }
+    }
+
+  ACE_OS::fclose (latency_file_handle);
 #elif defined (CHORUS)
   ACE_DEBUG ((LM_DEBUG, 
 	      "Test done.\n"
