@@ -5,21 +5,21 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    OS.h
 //
 // = AUTHOR
 //    Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
 //    <stophph@diku.dk>, and a cast of thousands...
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_OS_H)
 #define ACE_OS_H
 
 // This file should be a link to the platform/compiler-specific
-// configuration file (e.g., config-sunos5-sunc++-4.x.h).  
+// configuration file (e.g., config-sunos5-sunc++-4.x.h).
 #include "ace/config.h"
 
 #define ACE_ONE_SECOND_IN_MSECS 1000L
@@ -74,32 +74,32 @@
 
 // Used in many IPC_SAP tests
 #if !defined (ACE_DEFAULT_SERVER_PORT)
-#define ACE_DEFAULT_SERVER_PORT 10002  
+#define ACE_DEFAULT_SERVER_PORT 10002
 #endif /* ACE_DEFAULT_SERVER_PORT */
 
 // Used in Acceptor tests
 #if !defined (ACE_DEFAULT_SERVER_PORT_STR)
-#define ACE_DEFAULT_SERVER_PORT_STR "10002"  
+#define ACE_DEFAULT_SERVER_PORT_STR "10002"
 #endif /* ACE_DEFAULT_SERVER_PORT_STR */
 
 // Used for the Service_Directory test
 #if !defined (ACE_DEFAULT_SERVICE_PORT)
-#define ACE_DEFAULT_SERVICE_PORT 10003 
+#define ACE_DEFAULT_SERVICE_PORT 10003
 #endif /* ACE_DEFAULT_SERVICE_PORT */
 
 // Used for the ACE_Thread_Spawn test
 #if !defined (ACE_DEFAULT_THR_PORT    )
-#define ACE_DEFAULT_THR_PORT 10004 
+#define ACE_DEFAULT_THR_PORT 10004
 #endif /* ACE_DEFAULT_THR_PORT */
 
 // Used for SOCK_Connect::connect() tests
 #if !defined (ACE_DEFAULT_LOCAL_PORT)
-#define ACE_DEFAULT_LOCAL_PORT 10005  
+#define ACE_DEFAULT_LOCAL_PORT 10005
 #endif /* ACE_DEFAULT_LOCAL_PORT */
 
 // Used for Connector tests
 #if !defined (ACE_DEFAULT_LOCAL_PORT_STR)
-#define ACE_DEFAULT_LOCAL_PORT_STR "10005" 
+#define ACE_DEFAULT_LOCAL_PORT_STR "10005"
 #endif /* ACE_DEFAULT_LOCAL_PORT_STR */
 
 // Used for the name server.
@@ -184,7 +184,7 @@
 
 // Default shared memory key
 #if !defined (ACE_DEFAULT_SHM_KEY)
-#define ACE_DEFAULT_SHM_KEY 1234 
+#define ACE_DEFAULT_SHM_KEY 1234
 #endif /* ACE_DEFAULT_SHM_KEY */
 
 // Default segment size used by SYSV shared memory (128 K)
@@ -192,7 +192,7 @@
 #define ACE_DEFAULT_SEGMENT_SIZE 1024 * 128
 #endif /* ACE_DEFAULT_SEGMENT_SIZE */
 
-// Maximum number of SYSV shared memory segments 
+// Maximum number of SYSV shared memory segments
 // (does anyone know how to figure out the right values?!)
 #if !defined (ACE_DEFAULT_MAX_SEGMENTS)
 #define ACE_DEFAULT_MAX_SEGMENTS 6
@@ -299,12 +299,12 @@
 #if !defined (ACE_NON_BLOCKING_BUG_DELAY)
 #define ACE_NON_BLOCKING_BUG_DELAY 35000
 #endif /* ACE_NON_BLOCKING_BUG_DELAY */
-  
+
 #if defined (_DEBUG)
-class ACE_No_Heap_Check 
+class ACE_No_Heap_Check
 {
 public:
-  ACE_No_Heap_Check (void) 
+  ACE_No_Heap_Check (void)
     : old_state (_CrtSetDbgFlag (_CRTDBG_REPORT_FLAG))
   { _CrtSetDbgFlag (old_state & ~_CRTDBG_ALLOC_MEM_DF);}
   ~ACE_No_Heap_Check (void) { _CrtSetDbgFlag (old_state);}
@@ -331,8 +331,8 @@ private:
 // Create a string of a server address with a "host:port" format.
 #define ACE_SERVER_ADDRESS(H,P) H":"P
 
-// A couple useful inline functions for checking whether bits are 
-// enabled or disabled. 
+// A couple useful inline functions for checking whether bits are
+// enabled or disabled.
 
 // Efficiently returns the least power of two >= X...
 #define ACE_POW(X) (((X) == 0)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
@@ -385,7 +385,7 @@ private:
   void CLASS::operator delete (void *ptr) { delete (ptr); }
 #else
 #define ACE_ALLOC_HOOK_DECLARE struct __Ace {} /* Just need a dummy... */
-#define ACE_ALLOC_HOOK_DEFINE(CLASS) 
+#define ACE_ALLOC_HOOK_DEFINE(CLASS)
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (ACE_LACKS_KEY_T)
@@ -432,14 +432,14 @@ typedef int key_t;
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 #define ACE_HAS_INLINED_OSCALLS
 #endif /* !ACE_HAS_INLINED_OSCALLS */
-#else 
+#else
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
 // Default address for shared memory mapped files and SYSV shared memory
 // (defaults to 64 M).
 #if !defined (ACE_DEFAULT_BASE_ADDR)
-#define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024)) 
+#define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
 #endif /* ACE_DEFAULT_BASE_ADDR */
 
 // This fudge factor can be overriden for timers that need it, such as on
@@ -476,7 +476,7 @@ typedef int key_t;
 #      define ACE_SINGLETON_DECLARATION (T)  extern template class T
 #    endif /* !_MSC_VER */
 #  endif /* ACE_BUILD_DLL */
- 
+
 #else /* We're not building a DLL! */
 #  define ACE_Export
 #  define ACE_SINGLETON_DECLARATION (T)
@@ -506,7 +506,7 @@ typedef int key_t;
 #      define ACE_SVC_SINGLETON_DECLARATION (T) extern template class T
 #    endif /* !_MSC_VER */
 #  endif /* ACE_BUILD_DLL || ACE_BUILD_SVC_DLL */
- 
+
 #else /* We're not building a DLL! */
 #  define ACE_Svc_Export
 #  define ACE_SVC_SINGLETON_DECLARATION (T)
@@ -544,9 +544,9 @@ extern "C" pthread_t pthread_self (void);
 
 #if !defined (ACE_HAS_POSIX_TIME)
 // Definition per POSIX.
-typedef struct timespec 
+typedef struct timespec
 {
-  time_t tv_sec; // Seconds 
+  time_t tv_sec; // Seconds
   long tv_nsec; // Nanoseconds
 } timespec_t;
 #elif defined (ACE_HAS_BROKEN_POSIX_TIME)
@@ -619,7 +619,7 @@ public:
 
 #if defined (ACE_WIN32)
   void set (const FILETIME &ft);
-  //  Initializes the <Time_Value> object from a <timespec_t>. 
+  //  Initializes the <Time_Value> object from a <timespec_t>.
 #endif /* ACE_WIN32 */
 
   long msec (void) const;
@@ -629,7 +629,7 @@ public:
   // Converts from milli-seconds format into <Time_Value> format.
 
   operator timespec_t () const;
-  // Returns the value of the object as a <timespec_t>. 
+  // Returns the value of the object as a <timespec_t>.
 
   operator timeval () const;
   // Returns the value of the object as a <timeval>.
@@ -652,7 +652,7 @@ public:
 
   long usec (void) const;
   // Get microseconds.
-  
+
   void usec (long usec);
   // Set microseconds.
 
@@ -665,36 +665,36 @@ public:
   void operator -= (const ACE_Time_Value &tv);
   // Subtract <tv> to this.
 
-  friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1, 
+  friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
   // Adds two ACE_Time_Value objects together, returns the sum.
 
-  friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1, 
+  friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
   // Subtracts two ACE_Time_Value objects, returns the difference.
 
-  friend ACE_Export int operator < (const ACE_Time_Value &tv1, 
+  friend ACE_Export int operator < (const ACE_Time_Value &tv1,
                                     const ACE_Time_Value &tv2);
   // True if tv1 < tv2.
 
-  friend ACE_Export int operator > (const ACE_Time_Value &tv1, 
-                                    const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator > (const ACE_Time_Value &tv1,
+                                    const ACE_Time_Value &tv2);
   // True if tv1 > tv2.
 
-  friend ACE_Export int operator <= (const ACE_Time_Value &tv1, 
+  friend ACE_Export int operator <= (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
   // True if tv1 <= tv2.
 
-  friend ACE_Export int operator >= (const ACE_Time_Value &tv1, 
-                                     const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator >= (const ACE_Time_Value &tv1,
+                                     const ACE_Time_Value &tv2);
   // True if tv1 >= tv2.
 
-  friend ACE_Export int operator == (const ACE_Time_Value &tv1, 
-                                     const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator == (const ACE_Time_Value &tv1,
+                                     const ACE_Time_Value &tv2);
   // True if tv1 == tv2.
 
-  friend ACE_Export int operator != (const ACE_Time_Value &tv1, 
-                                     const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator != (const ACE_Time_Value &tv1,
+                                     const ACE_Time_Value &tv2);
   // True if tv1 != tv2.
 
   void dump (void) const;
@@ -720,7 +720,7 @@ class ACE_Export ACE_Countdown_Time
 public:
   // = Initialization and termination methods.
   ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
-  // Cache the <max_wait_time> and call <start>.  
+  // Cache the <max_wait_time> and call <start>.
 
   ~ACE_Countdown_Time (void);
   // Call <stop>.
@@ -739,7 +739,7 @@ public:
 private:
   ACE_Time_Value *max_wait_time_;
   // Maximum time we were willing to wait.
-  
+
   ACE_Time_Value start_time_;
   // Beginning of the start time.
 
@@ -801,16 +801,16 @@ private:
 #else
 //
 // If the compiler supports 'typename' we cannot use
-// 
+//
 // PEER_CONNECTOR::PEER_ADDR::sap_any
-// 
+//
 // because PEER_CONNECTOR::PEER_ADDR is not considered a type. But:
 //
 // typename PEER_CONNECTOR::PEER_ADDR::sap_any
-// 
+//
 // will not work either, because now we are declaring sap_any a
 // type, further:
-// 
+//
 // (typename PEER_CONNECTOR::PEER_ADDR)::sap_any
 //
 // is considered a casting expression. All I can think of is using a
@@ -818,7 +818,7 @@ private:
 // some platforms. I will try:
 //
 #define ACE_PEER_CONNECTOR_ADDR_ANY ACE_PEER_ADDR_TYPEDEF::sap_any
-#endif /* ACE_HAS_TYPENAME_KEYWORD */ 
+#endif /* ACE_HAS_TYPENAME_KEYWORD */
 
 // Handle ACE_SOCK_*
 #define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor
@@ -984,11 +984,11 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 #endif /* ACE_LACKS_MODE_MASKS */
 
 #if defined (ACE_LACKS_SEMBUF_T)
-struct sembuf 
+struct sembuf
 {
-  u_short sem_num; // semaphore # 
-  short sem_op; // semaphore operation 
-  short sem_flg; // operation flags 
+  u_short sem_num; // semaphore #
+  short sem_op; // semaphore operation
+  short sem_flg; // operation flags
 };
 #endif /* ACE_LACKS_SEMBUF_T */
 
@@ -1025,7 +1025,7 @@ typedef struct iovec ACE_WRITEV_TYPE;
 #else
 typedef const struct iovec ACE_WRITEV_TYPE;
 #endif /* ACE_HAS_BROKEN_WRITEV */
- 
+
 #if defined (ACE_HAS_BROKEN_READV)
 typedef const struct iovec ACE_READV_TYPE;
 #else
@@ -1044,17 +1044,17 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 #define _REENTRANT
 #endif /* _REENTRANT */
 #else
-#define ACE_MT(X) 
+#define ACE_MT(X)
 #endif /* ACE_MT_SAFE */
 
 // These are the various states a thread managed by the
 // <Thread_Manager> can be in.
 enum ACE_Thread_State
 {
-  ACE_THR_IDLE, 
+  ACE_THR_IDLE,
   // Uninitialized.
 
-  ACE_THR_SPAWNED, 
+  ACE_THR_SPAWNED,
   // Created but not yet running.
 
   ACE_THR_RUNNING,
@@ -1100,7 +1100,7 @@ typedef struct
   // Pointer to semaphore handle.  This is allocated by ACE if we are
   // working with an unnamed POSIX semaphore or by the OS if we are
   // working with a named POSIX semaphore.
-  
+
   char *name_;
   // Name of the semaphore (if this is non-NULL then this is a named
   // POSIX semaphore, else its an unnamed POSIX semaphore).
@@ -1337,7 +1337,7 @@ protected:
 
   u_long count_;
   // Count of the semaphore.
-  
+
   u_long waiters_;
   // Number of threads that have called <ACE_OS::sema_wait>.
 };
@@ -1386,7 +1386,7 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
-#  include /**/ <semLib.h>    
+#  include /**/ <semLib.h>
 
 #  include /**/ <hostLib.h>
 #  include /**/ <ioLib.h>
@@ -1398,7 +1398,7 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #  include /**/ <taskLib.h>
 #  include /**/ <taskHookLib.h>
 
-extern "C" 
+extern "C"
 struct sockaddr_un {
   short sun_family;    // AF_UNIX.
   char  sun_path[108]; // path name.
@@ -1441,7 +1441,7 @@ typedef struct
 {
   SEM_ID sema_;
   // Semaphore handle.  This is allocated by VxWorks.
-  
+
   char *name_;
   // Name of the semaphore:  always NULL with VxWorks.
 } ACE_sema_t;
@@ -1458,7 +1458,7 @@ typedef CRITICAL_SECTION ACE_thread_mutex_t;
 typedef struct
 {
   int type_; // Either USYNC_THREAD or USYNC_PROCESS
-  union 
+  union
   {
     HANDLE proc_mutex_;
     CRITICAL_SECTION thr_mutex_;
@@ -1542,21 +1542,21 @@ struct ACE_Export ACE_rwlock_t
 {
 friend class ACE_OS;
 protected:
-  ACE_mutex_t lock_; 
+  ACE_mutex_t lock_;
   // Serialize access to internal state.
- 
+
   ACE_cond_t waiting_readers_;
   // Reader threads waiting to acquire the lock.
- 
+
   int num_waiting_readers_;
   // Number of waiting readers.
- 
+
   ACE_cond_t waiting_writers_;
   // Writer threads waiting to acquire the lock.
- 
+
   int num_waiting_writers_;
   // Number of waiting writers.
- 
+
   int ref_count_;
   // Value is -1 if writer has the lock, else this keeps track of the
   // number of readers holding the lock.
@@ -1691,12 +1691,12 @@ typedef void (*ACE_SignalHandlerV)(int);
 #if defined (ACE_HAS_SIG_C_FUNC)
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
-#elif defined (ACE_HAS_LYNXOS_SIGNALS)     
-typedef void (*ACE_SignalHandler)(...);    
-typedef void (*ACE_SignalHandlerV)(...);   
-#elif defined (ACE_HAS_TANDEM_SIGNALS)     
-typedef void (*ACE_SignalHandler)(...);    
-typedef void (*ACE_SignalHandlerV)(...);   
+#elif defined (ACE_HAS_LYNXOS_SIGNALS)
+typedef void (*ACE_SignalHandler)(...);
+typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_TANDEM_SIGNALS)
+typedef void (*ACE_SignalHandler)(...);
+typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_IRIX_53_SIGNALS)
 typedef void (*ACE_SignalHandler)(...);
 typedef void (*ACE_SignalHandlerV)(...);
@@ -1715,7 +1715,7 @@ typedef void (*ACE_SignalHandlerV)(void);
 typedef void (*ACE_SignalHandlerV)(int);
 #endif  //  m88k        /*  with SVR4_SIGNAL_T */
 #elif defined (ACE_WIN32)
-typedef void (__cdecl *ACE_SignalHandler)(int); 
+typedef void (__cdecl *ACE_SignalHandler)(int);
 typedef void (__cdecl *ACE_SignalHandlerV)(int);
 #elif defined (ACE_HAS_UNIXWARE_SVR4_SIGNAL_T)
 typedef void (*ACE_SignalHandler)(int);
@@ -1724,7 +1724,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #if defined (SIG_PF)
 #define ACE_SignalHandler SIG_PF
 #else
-typedef void (*ACE_SignalHandler)(int); 
+typedef void (*ACE_SignalHandler)(int);
 #endif /* SIG_PF */
 typedef void (*ACE_SignalHandlerV)(...);
 #endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
@@ -1737,7 +1737,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 #if defined (ACE_LACKS_UTSNAME_T)
 #define _SYS_NMLN 257
-struct utsname 
+struct utsname
 {
   char sysname[_SYS_NMLN];
   char nodename[_SYS_NMLN];
@@ -1776,7 +1776,7 @@ struct utsname
 // programs by using distinct types to represent all the different
 // HANDLES in Windows. So for example, STRICT prevents you from
 // mistakenly passing an HPEN to a routine expecting an HBITMAP.
-// Note that we only use this if we 
+// Note that we only use this if we
 #if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
 #if !defined (STRICT)   /* may already be defined */
 #define STRICT
@@ -1945,8 +1945,8 @@ PAGE_NOCACHE  */
 #define ESTALE                  WSAESTALE
 #define EREMOTE                 WSAEREMOTE
 // Grrr! These two are already defined by the horrible 'standard'
-// library.  
-// #define ENAMETOOLONG            WSAENAMETOOLONG 
+// library.
+// #define ENAMETOOLONG            WSAENAMETOOLONG
 // #define ENOTEMPTY               WSAENOTEMPTY
 
 #include /**/ <time.h>
@@ -1999,7 +1999,7 @@ typedef HANDLE ACE_event_t;
 // This is for file descriptors.
 typedef HANDLE ACE_HANDLE;
 
-// For Win32 compatibility. 
+// For Win32 compatibility.
 typedef SOCKET ACE_SOCKET;
 
 #define ACE_INVALID_HANDLE INVALID_HANDLE_VALUE
@@ -2042,7 +2042,7 @@ typedef char TCHAR;
 #if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
 #define __TEXT(STRING) L##STRING
 #else
-#define __TEXT(STRING) STRING 
+#define __TEXT(STRING) STRING
 #endif /* UNICODE && ACE_HAS_UNICODE */
 #endif /* !defined __TEXT */
 
@@ -2127,7 +2127,7 @@ typedef char TCHAR;
 
 // Used for ACE_MMAP_Memory_Pool
 #if !defined (ACE_DEFAULT_BACKING_STORE)
-#define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX" 
+#define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX"
 #endif /* ACE_DEFAULT_BACKING_STORE */
 
 // Used for logging
@@ -2159,7 +2159,7 @@ typedef char TCHAR;
 
 // Wrapper for NT events on UNIX.
 class ACE_Export ACE_event_t
-{  
+{
   friend class ACE_OS;
 protected:
   ACE_mutex_t lock_;
@@ -2180,7 +2180,7 @@ protected:
 
 // Provide compatibility with Windows NT.
 typedef int ACE_HANDLE;
-// For Win32 compatibility. 
+// For Win32 compatibility.
 typedef ACE_HANDLE ACE_SOCKET;
 
 struct ACE_OVERLAPPED
@@ -2227,7 +2227,7 @@ struct ifafilt;
   #include /**/ <sys/socket.h>
 #endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 
-extern "C" 
+extern "C"
 {
 #if defined (VXWORKS)
   struct  hostent {
@@ -2279,7 +2279,7 @@ extern "C"
 extern_C int      getgid          __((void));
 extern_C int      getuid          __((void));
 extern_C char*    getcwd          __((char* buf, size_t size));
-extern_C int      pipe            __((int* fildes)); 
+extern_C int      pipe            __((int* fildes));
 
 // This must come after limits.h is included
 #define MAXPATHLEN _POSIX_PATH_MAX
@@ -2357,7 +2357,7 @@ extern "C" int sigwait (sigset_t *set);
 #if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 extern "C" {
 #endif
-#include /**/ <tiuser.h> 
+#include /**/ <tiuser.h>
 #if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 }
 #endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
@@ -2409,7 +2409,7 @@ extern "C" {
 // Define ACE_TLI headers for systems that don't prototype them....
 extern "C"
 {
-  int t_accept(int fildes, int resfd, struct t_call *call);  
+  int t_accept(int fildes, int resfd, struct t_call *call);
   char *t_alloc(int fildes, int struct_type, int fields);
   int t_bind(int fildes, struct t_bind *req, struct t_bind *ret);
   int t_close(int fildes);
@@ -2467,7 +2467,7 @@ extern "C"
 
 // Fixes a problem with HP/UX.
 #if defined (ACE_HAS_BROKEN_MMAP_H)
-extern "C" 
+extern "C"
 {
 #include /**/ <sys/mman.h>
 }
@@ -2589,11 +2589,11 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif /* MAXNAMELEN */
 
 #if defined (ACE_LACKS_SIGSET)
-typedef unsigned int sigset_t; 
+typedef unsigned int sigset_t;
 #endif /* ACE_LACKS_SIGSET */
 
 #if defined (ACE_LACKS_SIGACTION)
-struct sigaction 
+struct sigaction
 {
   int sa_flags;
   ACE_SignalHandlerV sa_handler;
@@ -2692,7 +2692,7 @@ struct sigaction
 #endif /* SIOCGIFADDR */
 
 #if !defined (IPC_PRIVATE)
-#define IPC_PRIVATE ACE_INVALID_SEM_KEY 
+#define IPC_PRIVATE ACE_INVALID_SEM_KEY
 #endif /* IPC_PRIVATE */
 
 #if !defined (IPC_STAT)
@@ -2840,11 +2840,11 @@ typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
 #endif /* ACE_HAS_STRUCT_NETDB_DATA */
 
 #if !defined (ACE_HAS_SEMUN)
-union semun 
+union semun
 {
-  int val; // value for SETVAL 
-  struct semid_ds *buf; // buffer for IPC_STAT & IPC_SET 
-  u_short *array; // array for GETALL & SETALL 
+  int val; // value for SETVAL
+  struct semid_ds *buf; // buffer for IPC_STAT & IPC_SET
+  u_short *array; // array for GETALL & SETALL
 };
 #endif /* !ACE_HAS_SEMUN */
 
@@ -2992,7 +2992,7 @@ class ACE_Sched_Params;
 #if ! defined (VXWORKS)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
 // appear to support flock ().
-struct flock 
+struct flock
 {
   short l_type;
   short l_whence;
@@ -3006,11 +3006,11 @@ struct flock
 #endif /* ACE_LACKS_FILELOCKS */
 
 #if !defined (ACE_HAS_IP_MULTICAST)
-struct ip_mreq 
+struct ip_mreq
 {
-  struct in_addr imr_multiaddr;  
+  struct in_addr imr_multiaddr;
   // IP multicast address of group
-  struct in_addr imr_interface;  
+  struct in_addr imr_interface;
   // local IP address of interface
 };
 #endif /* ACE_HAS_IP_MULTICAST */
@@ -3024,7 +3024,7 @@ struct strbuf
 };
 #endif /* ACE_HAS_STRBUF_T */
 
-struct ACE_Export ACE_Str_Buf : public strbuf 
+struct ACE_Export ACE_Str_Buf : public strbuf
   // = TITLE
   //     Simple wrapper for STREAM pipes strbuf.
 {
@@ -3081,7 +3081,7 @@ struct ACE_Cleanup_Info
 
   ACE_CLEANUP_FUNC cleanup_hook_;
   // Cleanup hook that gets called back.
-  
+
   void *param_;
   // Parameter passed to the <cleanup_hook_>.
 };
@@ -3101,7 +3101,7 @@ class ACE_Thread_Adapter
   //     extern "C" entry point.  This class also makes it possible to
   //     transparently provide hooks to register a thread with an
   //     <ACE_Thread_Manager>.
-  // 
+  //
   // = DESCRIPTION
   //     This class is used in <ACE_OS::thr_create>.
 {
@@ -3116,7 +3116,7 @@ public:
   // Execute the <user_func_> with the <arg>.
 
   ACE_Thread_Manager *thr_mgr (void);
-  // Accessor for the optional <Thread_Manager>. 
+  // Accessor for the optional <Thread_Manager>.
 
   ACE_THR_C_FUNC entry_point (void);
   // Accessor for the C entry point function to the OS thread creation
@@ -3174,7 +3174,7 @@ class ACE_Export ACE_OS
   //     versions of UNIX and WIN32!  The other components in
   //     ACE are programmed to use only the methods in this class,
   //     which makes it *much* easier to move ACE to a new platform.
-  //     The methods in this class also automatically restart when 
+  //     The methods in this class also automatically restart when
   //     interrupts occur during system calls (assuming that the
   //     <ACE_Log_Msg::restart> flag is enabled).
 {
@@ -3201,7 +3201,7 @@ public:
   static char *getenv (const char *symbol);
   static int getopt (int argc,
                      char *const *argv,
-                     const char *optstring); 
+                     const char *optstring);
   static long sysconf (int);
 
   // = A set of wrappers for condition variables.
@@ -3264,7 +3264,7 @@ public:
   static size_t fread (void *ptr,
                        size_t size,
                        size_t nelems,
-                       FILE *fp); 
+                       FILE *fp);
   static int fstat (ACE_HANDLE,
                     struct stat *);
   static int stat (const char *file,
@@ -3274,7 +3274,7 @@ public:
   static size_t fwrite (const void *ptr,
                         size_t size,
                         size_t nitems,
-                        FILE *fp); 
+                        FILE *fp);
   static char *gets (char *str);
   static void perror (const char *s);
   static int printf (const char *format, ...);
@@ -3285,32 +3285,32 @@ public:
                       ...);
   static int vsprintf (char *buffer,
                        const char *format,
-                       va_list argptr); 
-  
+                       va_list argptr);
+
   // = A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock,
-                         int flags = 0, 
+                         int flags = 0,
                          LPCTSTR name = 0,
                          mode_t perms = 0);
   static int flock_destroy (ACE_OS::ace_flock_t *lock);
   static int flock_rdlock (ACE_OS::ace_flock_t *lock,
-                           short whence = 0, 
+                           short whence = 0,
                            off_t start = 0,
                            off_t len = 0);
   static int flock_tryrdlock (ACE_OS::ace_flock_t *lock,
-                              short whence = 0, 
+                              short whence = 0,
                               off_t start = 0,
                               off_t len = 0);
   static int flock_trywrlock (ACE_OS::ace_flock_t *lock,
-                              short whence = 0, 
+                              short whence = 0,
                               off_t start = 0,
                               off_t len = 0);
   static int flock_unlock (ACE_OS::ace_flock_t *lock,
-                           short whence = 0, 
+                           short whence = 0,
                            off_t start = 0,
                            off_t len = 0);
   static int flock_wrlock (ACE_OS::ace_flock_t *lock,
-                           short whence = 0, 
+                           short whence = 0,
                            off_t start = 0,
                            off_t len = 0);
 
@@ -3351,7 +3351,7 @@ public:
   static u_int alarm (u_int secs);
   static u_int ualarm (u_int usecs,
                        u_int interval = 0);
-  static u_int ualarm (const ACE_Time_Value &tv, 
+  static u_int ualarm (const ACE_Time_Value &tv,
                        const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
   static ACE_hrtime_t gethrtime (void);
 #if defined (ACE_HAS_POWERPC) && defined (ghs)
@@ -3375,7 +3375,7 @@ public:
 #if defined (ACE_HAS_BROKEN_R_ROUTINES)
 #undef ctime_r
 #undef asctime_r
-#undef rand_r   
+#undef rand_r
 #undef getpwnam_r
 #endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
@@ -3438,13 +3438,13 @@ public:
                      int msgflg);
   static int msgrcv (int int_id,
                      void *buf,
-                     size_t len, 
+                     size_t len,
                      long type,
-                     int flags); 
+                     int flags);
   static int msgsnd (int int_id,
                      const void *buf,
                      size_t len,
-                     int flags); 
+                     int flags);
 
   // = A set of wrappers for memory mapped files.
   static int madvise (caddr_t addr,
@@ -3454,7 +3454,7 @@ public:
                      size_t len,
                      int prot,
                      int flags,
-                     ACE_HANDLE handle, 
+                     ACE_HANDLE handle,
                      off_t off = 0,
                      ACE_HANDLE *file_mapping = 0,
                      LPSECURITY_ATTRIBUTES sa = 0);
@@ -3496,7 +3496,7 @@ public:
   static int mutex_unlock (ACE_mutex_t *m);
 
   // = A set of wrappers for mutex locks that only work within a
-  // single process.  
+  // single process.
   static int thread_mutex_init (ACE_thread_mutex_t *m,
                                 int type = USYNC_THREAD,
                                 LPCTSTR name = 0,
@@ -3521,13 +3521,13 @@ public:
   static int getmsg (ACE_HANDLE handle,
                      struct strbuf *ctl,
                      struct strbuf
-                     *data, int *flags); 
+                     *data, int *flags);
   static int getpmsg (ACE_HANDLE handle,
                       struct strbuf *ctl,
                       struct strbuf
                       *data,
                       int *band,
-                      int *flags); 
+                      int *flags);
   static int ioctl (ACE_HANDLE handle,
                     int cmd,
                     void * = 0);
@@ -3543,32 +3543,32 @@ public:
   static int putmsg (ACE_HANDLE handle,
                      const struct strbuf *ctl,
                      const struct strbuf *data,
-                     int flags); 
+                     int flags);
   static int putpmsg (ACE_HANDLE handle,
                       const struct strbuf *ctl,
                       const struct strbuf *data,
                       int band,
-                      int flags); 
+                      int flags);
   static ssize_t read (ACE_HANDLE handle,
                        void *buf,
-                       size_t len); 
+                       size_t len);
   static ssize_t read (ACE_HANDLE handle,
                        void *buf,
                        size_t len,
-                       ACE_OVERLAPPED *); 
+                       ACE_OVERLAPPED *);
   static ssize_t pread (ACE_HANDLE handle,
                         void *buf,
                         size_t nbyte,
                         off_t offset);
   static ssize_t readv (ACE_HANDLE handle,
                         struct iovec *iov,
-                        int iovlen); 
+                        int iovlen);
   static int recvmsg (ACE_HANDLE handle,
                       struct msghdr *msg,
                       int flags);
   static int sendmsg (ACE_HANDLE handle,
                       const struct msghdr *msg,
-                      int flags); 
+                      int flags);
   static ssize_t write (ACE_HANDLE handle,
                         const void *buf,
                         size_t nbyte);
@@ -3598,9 +3598,9 @@ public:
   static int poll (struct pollfd *pollfds,
                    u_long len,
                    ACE_Time_Value *tv = 0);
-  static int poll (struct pollfd *pollfds, 
+  static int poll (struct pollfd *pollfds,
                    u_long len,
-                   const ACE_Time_Value &tv); 
+                   const ACE_Time_Value &tv);
   static int pipe (ACE_HANDLE handles[]);
 
   // = A set of wrappers for directory operations.
@@ -3636,15 +3636,15 @@ public:
 
   // = A set of wrappers for auto-reset and manuaevents.
   static int event_init (ACE_event_t *event,
-                         int manual_reset = 0, 
+                         int manual_reset = 0,
                          int initial_state = 0,
-                         int type = USYNC_THREAD, 
+                         int type = USYNC_THREAD,
                          LPCTSTR name = 0,
                          void *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
   static int event_destroy (ACE_event_t *event);
   static int event_wait (ACE_event_t *event);
-  static int event_timedwait (ACE_event_t *event, 
+  static int event_timedwait (ACE_event_t *event,
                               ACE_Time_Value *timeout);
   static int event_signal (ACE_event_t *event);
   static int event_pulse (ACE_event_t *event);
@@ -3676,7 +3676,7 @@ public:
                      int flags);
   static int semop (int int_id,
                     struct sembuf *sops,
-                    size_t nsops); 
+                    size_t nsops);
 
   // = Thread scheduler interface.
   static int sched_params (const ACE_Sched_Params &);
@@ -3698,7 +3698,7 @@ public:
                    int signum);
   static int sigaction (int signum,
                         const struct sigaction *nsa,
-                        struct sigaction *osa); 
+                        struct sigaction *osa);
   static int sigaddset (sigset_t *s,
                         int signum);
   static int sigdelset (sigset_t *s,
@@ -3709,9 +3709,9 @@ public:
                           int signum);
   static ACE_SignalHandler signal (int signum,
                                    ACE_SignalHandler);
-  static int sigprocmask (int how, 
+  static int sigprocmask (int how,
                           const sigset_t *nsp,
-                          sigset_t *osp); 
+                          sigset_t *osp);
 
   // = A set of wrappers for sockets.
   static ACE_HANDLE accept (ACE_HANDLE handle,
@@ -3722,7 +3722,7 @@ public:
                    int namelen);
   static int connect (ACE_HANDLE handle,
                       struct sockaddr *addr,
-                      int addrlen); 
+                      int addrlen);
   static int closesocket (ACE_HANDLE s);
   static struct passwd *getpwnam (const char *user);
   static struct passwd *getpwnam_r (const char *name,
@@ -3731,11 +3731,11 @@ public:
                                     int buflen);
   static struct hostent *gethostbyaddr (const char *addr,
                                         int length,
-                                        int type); 
+                                        int type);
   static struct hostent *gethostbyname (const char *name);
   static struct hostent *gethostbyaddr_r (const char *addr,
                                           int length,
-                                          int type, 
+                                          int type,
                                           struct hostent *result,
                                           ACE_HOSTENT_DATA buffer,
                                           int *h_errnop);
@@ -3748,17 +3748,17 @@ public:
                           int *addrlen);
   static struct protoent *getprotobyname (const char *name);
   static struct protoent *getprotobyname_r (const char *name,
-                                            struct protoent *result, 
+                                            struct protoent *result,
                                             ACE_PROTOENT_DATA buffer);
   static struct protoent *getprotobynumber (int proto);
   static struct protoent *getprotobynumber_r (int proto,
-                                              struct protoent *result, 
+                                              struct protoent *result,
                                               ACE_PROTOENT_DATA buffer);
   static struct servent *getservbyname (const char *svc,
-                                        const char *proto); 
+                                        const char *proto);
   static struct servent *getservbyname_r (const char *svc,
-                                          const char *proto, 
-                                          struct servent *result, 
+                                          const char *proto,
+                                          struct servent *result,
                                           ACE_SERVENT_DATA buf);
   static int getsockname (ACE_HANDLE handle,
                           struct sockaddr *addr,
@@ -3797,7 +3797,7 @@ public:
                      int addrlen);
   static int setsockopt (ACE_HANDLE handle,
                          int level,
-                         int optname, 
+                         int optname,
                          const char *optval,
                          int optlen);
   static int shutdown (ACE_HANDLE handle,
@@ -3808,7 +3808,7 @@ public:
   static int socketpair (int domain,
                          int type,
                          int protocol,
-                         ACE_HANDLE sv[2]); 
+                         ACE_HANDLE sv[2]);
   static int socket_init (int version_high = 1,
                           int version_low = 1);
   // Initialize WinSock before first use (e.g., when a DLL is first
@@ -3819,8 +3819,8 @@ public:
 
   // = A set of wrappers for regular expressions.
   static char *compile (const char *instring,
-                        char *expbuf, 
-                        char *endbuf); 
+                        char *expbuf,
+                        char *endbuf);
   static int step (const char *str,
                    char *expbuf);
 
@@ -3930,7 +3930,7 @@ public:
                           LPSECURITY_ATTRIBUTES sa = 0);
   static int unlink (const wchar_t *path);
   static ACE_SHLIB_HANDLE dlopen (ACE_WIDE_DL_TYPE filename,
-                                  
+
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static wchar_t *mktemp (wchar_t *t);
   static int mkdir (const wchar_t *path,
@@ -3944,15 +3944,15 @@ public:
   static int t_accept (ACE_HANDLE fildes,
                        int resfd,
                        struct t_call
-                       *call); 
+                       *call);
   static char *t_alloc (ACE_HANDLE fildes,
                         int struct_type,
                         int
-                        fields); 
+                        fields);
   static int t_bind (ACE_HANDLE fildes,
                      struct t_bind *req,
                      struct
-                     t_bind *ret); 
+                     t_bind *ret);
   static int t_close (ACE_HANDLE fildes);
   static int t_connect(int fildes,
                        struct t_call *sndcall,
@@ -3964,7 +3964,7 @@ public:
                         struct t_info *info);
   static int t_getname (ACE_HANDLE fildes,
                         struct netbuf *namep,
-                        int type); 
+                        int type);
   static int t_getstate (ACE_HANDLE fildes);
   static int t_listen (ACE_HANDLE fildes,
                        struct t_call *call);
@@ -3974,23 +3974,23 @@ public:
                      struct t_info *info);
   static int t_optmgmt (ACE_HANDLE fildes,
                         struct t_optmgmt *req,
-                        struct t_optmgmt *ret); 
+                        struct t_optmgmt *ret);
   static int t_rcv (ACE_HANDLE fildes,
                     char *buf,
                     u_int nbytes,
-                    int *flags); 
+                    int *flags);
   static int t_rcvdis (ACE_HANDLE fildes,
                        struct t_discon *discon);
   static int t_rcvrel (ACE_HANDLE fildes);
   static int t_rcvudata (ACE_HANDLE fildes,
                          struct t_unitdata *unitdata,
-                         int *flags); 
+                         int *flags);
   static int t_rcvuderr (ACE_HANDLE fildes,
-                         struct t_uderr *uderr); 
+                         struct t_uderr *uderr);
   static int t_snd (ACE_HANDLE fildes,
                     char *buf,
                     u_int nbytes,
-                    int flags); 
+                    int flags);
   static int t_snddis (ACE_HANDLE fildes,
                        struct t_call *call);
   static int t_sndrel (ACE_HANDLE fildes);
@@ -4002,7 +4002,7 @@ public:
   static int thr_continue (const ACE_Thread_ID &thread);
   static int thr_create (ACE_THR_FUNC,
                          void *args,
-                         long flags, 
+                         long flags,
                          ACE_Thread_ID *,
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack = 0,
@@ -4011,7 +4011,7 @@ public:
                           int &prio,
                           int *policy = 0);
   static int thr_join (ACE_Thread_ID waiter_id,
-                       void **status); 
+                       void **status);
   static int thr_kill (ACE_Thread_ID thr_id,
                        int signum);
   static ACE_Thread_ID thr_self (void);
@@ -4022,15 +4022,15 @@ public:
   static int thr_cancel (ACE_Thread_ID t_id);
 #endif /* 0 */
 
-  // = A set of wrappers for threads 
+  // = A set of wrappers for threads
 
   // These are non-portable since they use ACE_thread_t and
   // ACE_hthread_t and will go away in a future release.
   static int thr_continue (ACE_hthread_t target_thread);
   static int thr_create (ACE_THR_FUNC func,
                          void *args,
-                         long flags, 
-                         ACE_thread_t *thr_id, 
+                         long flags,
+                         ACE_thread_t *thr_id,
                          ACE_hthread_t *t_handle = 0,
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack = 0,
@@ -4050,7 +4050,7 @@ public:
   // THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
   // THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
-  // 
+  //
   // By default, or if <priority> is set to
   // ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
   // the given scheduling policy (specified in <flags}>, e.g.,
@@ -4067,10 +4067,10 @@ public:
   static int thr_getprio (ACE_hthread_t thr_id,
                           int &prio);
   static int thr_join (ACE_hthread_t waiter_id,
-                       void **status); 
+                       void **status);
   static int thr_join (ACE_thread_t waiter_id,
                        ACE_thread_t *thr_id,
-                       void **status); 
+                       void **status);
   static int thr_kill (ACE_thread_t thr_id,
                        int signum);
   static ACE_thread_t thr_self (void);
@@ -4169,7 +4169,7 @@ extern "C" ssize_t recvfrom_timedwait (ACE_HANDLE handle,
                                        struct sockaddr *addr,
                                        int
                                        *addrlen,
-                                       struct timespec *timeout);  
+                                       struct timespec *timeout);
 extern "C" ssize_t recvmsg_timedwait (ACE_HANDLE handle,
                                       struct msghdr *msg,
                                       int flags,
@@ -4187,7 +4187,7 @@ extern "C" ssize_t sendto_timedwait (ACE_HANDLE handle,
                                      int len,
                                      int flags,
                                      const struct sockaddr *addr,
-                                     int addrlen, 
+                                     int addrlen,
                                      struct timespec *timeout);
 extern "C" ssize_t sendmsg_timedwait (ACE_HANDLE handle,
                                       ACE_SENDMSG_TYPE *msg,
@@ -4296,7 +4296,7 @@ private:
 // A useful abstraction for expressions involving operator new since
 // we can change memory allocation error handling policies (e.g.,
 // depending on whether ANSI/ISO exception handling semantics are
-// being used). 
+// being used).
 
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new CONSTRUCTOR; \
@@ -4315,7 +4315,7 @@ private:
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
 
-// Some more useful abstration for expressions involving 
+// Some more useful abstration for expressions involving
 // ACE_Allocator.malloc ().  The difference between these macro with
 // ACE_ALLOCATOR is that we provide construction also.
 #define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
@@ -4384,6 +4384,19 @@ private:
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
 #endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
+#if defined (ACE_HAS_THR_C_FUNC)
+// This is necessary to work around nasty problems with MVS C++.
+extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
+#define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
+#elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
+#define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
+#else
+#define ACE_PTHREAD_CLEANUP_PUSH(A)
+#define ACE_PTHREAD_CLEANUP_POP(A)
+#endif /* ACE_HAS_THR_C_FUNC */
+
 #if !defined (ACE_DEFAULT_MUTEX_A)
 #define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
 #endif /* ACE_DEFAULT_MUTEX_A */
@@ -4415,7 +4428,7 @@ ace_main_i
 #define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_W
 #endif /* ACE_DEFAULT_NAMESPACE_DIR */
 #if !defined (ACE_DEFAULT_LOCALNAME)
-#define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_W 
+#define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_W
 #endif /* ACE_DEFAULT_LOCALNAME */
 #if !defined (ACE_DEFAULT_GLOBALNAME)
 #define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_W
