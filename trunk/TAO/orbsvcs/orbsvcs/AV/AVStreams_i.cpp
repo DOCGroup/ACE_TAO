@@ -2129,7 +2129,7 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep,
       CORBA::Any_var flow_name_any =
         fep->get_property_value ("FlowName", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *flow_name_any >>= flow_name.out ();
+      flow_name_any >>= flow_name.out ();
     }
   ACE_CATCHANY
     {
