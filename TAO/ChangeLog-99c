@@ -1,3 +1,8 @@
+Fri Jun 11 17:08:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/data.h:
+	  Added a 'const' to get rid of SunC++ warnings.
+
 Fri Jun 11 16:20:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/run_test.pl:
