@@ -1,3 +1,9 @@
+Sun Dec 12 13:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/StringSeqC.{h,cpp}:
+        * tao/StringSeqA.cpp:
+          Regenerated
+
 Sun Dec 12 10:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DomainC.{h,cpp,i,inl}:
