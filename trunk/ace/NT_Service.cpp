@@ -548,7 +548,8 @@ void
 ACE_NT_Service::wait_for_service_state (DWORD desired_state,
                                         ACE_Time_Value *wait_time)
 {
-  DWORD last_state, last_check_point;
+  DWORD last_state = 0;
+  DWORD last_check_point = 0;
   int first_time = 1;
   int service_ok;
 
