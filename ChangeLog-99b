@@ -1,3 +1,7 @@
+Mon Apr 12 00:18:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.36 released.
+
 Sun Apr 11 17:06:53 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (run_client): Fixed
