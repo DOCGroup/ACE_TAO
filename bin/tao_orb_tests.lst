@@ -50,6 +50,11 @@ TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
+TAO/tests/RTScheduling/VoidData/run_test.pl: !MINIMUM
+TAO/tests/RTScheduling/Thread_Cancel/run_test.pl: !MINIMUM
+TAO/tests/RTScheduling/DT_Spawn/run_test.pl: !MINIMUM
+TAO/tests/RTScheduling/Current/run_test.pl: !MINIMUM
+TAO/tests/RTScheduling/Scheduling_Interceptor/run_test.pl: !MINIMUM
 TAO/tests/OBV/Any/run_test.pl
 TAO/tests/OBV/Factory/run_test.pl
 TAO/tests/OBV/Forward/run_test.pl
