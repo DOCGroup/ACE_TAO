@@ -78,7 +78,7 @@ public:
                    consumer_event_channel.in(),
                    supplier_scheduler.in(),
                    consumer_scheduler.in(),
-                   "gateway1", "gateway2"
+                   "gateway1", "gateway2a"
                    ACE_ENV_ARG_PARAMETER);
 
       ACE_CHECK;
@@ -258,7 +258,7 @@ main (int argc, char* argv[])
 #else
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
 #endif //ACE_HAS_DSUI
-      ACE_Time_Value ticker (120);
+      ACE_Time_Value ticker (310);
       //orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
       long timer_id = rt.reactor()->schedule_timer(e_limit,0,ticker);
       if (timer_id < 0)
