@@ -1365,6 +1365,10 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 void *
 ACE_Thread_Adapter::invoke (void)
 {
+#if defined (ACE_HAS_TSS_EMULATION)
+  ACE_TSS_Emulation::tss_allocate ();
+#endif /* ACE_HAS_TSS_EMULATION */
+
   // Inherit the logging features if the parent thread has an
   // ACE_Log_Msg instance in thread-specific storage.
   this->inherit_log_msg ();
@@ -1390,10 +1394,14 @@ ACE_Thread_Adapter::invoke (void)
     // exits.
   }
 
-  // If dropped off end, call destructors for thread-specific storage
-  // and exit.
+  // If dropped off end, call destructors for thread-specific storage.
+  // On ACE_WIN32, this will also exit the thread.
   ACE_TSS_Cleanup::instance ()->exit (status);
-  /* NOTREACHED */
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  ACE_TSS_Emulation::tss_deallocate ();
+#endif /* ACE_HAS_TSS_EMULATION */
+
   return status;
 #else
   return (void *) (*func) (arg);  // Call thread entry point.
