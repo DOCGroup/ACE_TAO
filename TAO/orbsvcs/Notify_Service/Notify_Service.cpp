@@ -60,7 +60,7 @@ Notify_Service::startup (int argc, char *argv[],
 
   // Activate the factory
   obj
-    = this->notify_factory_.get_refx (ACE_TRY_ENV);
+    = this->notify_factory_.get_ref (ACE_TRY_ENV);
   ACE_CHECK;
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 

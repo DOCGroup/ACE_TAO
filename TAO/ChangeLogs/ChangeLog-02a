@@ -1,3 +1,29 @@
+Fri Feb 18 10:44:33 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+          While shuting down the Trader will disconnect from its
+          peers. Using a loop like this:
+               for (CORBA::ULong i = count - 1; i > 0; i--)
+          this is obviously busted, if count is 0 then the loop will run
+          for a *long* time, but worse, it crashes when trying to access
+          the sequence.
+
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/run_test.pl:
+          The test was too brittle.  Now the export test creates a file
+        just before going into the event look, the script can use that
+        file to launch the import test only after that.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Fixed a syntax error.  This program is obviously not compiled
+          often enough.
+
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+          Don't use CORBA::Any::dump to dump the contents of an Any, that
+          will let us reduce the size of the TAO library by a couple of
+          bytes.
+
 Fri Feb 18 08:39:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:

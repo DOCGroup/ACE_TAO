@@ -10,8 +10,12 @@ require ACEutils;
 require Process;
 
 $ior = "trading.ior";
+$ready_file = "export_test_ready";
 $sleeptime = 20;
 $status = 0;
+
+unlink $ior;
+unlink $ready_file;
 
 $TS = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
@@ -26,12 +30,16 @@ if (ACE::waitforfile_timed ($ior, $sleeptime) == -1) {
 }
 
 $E = Process::Create ($EXEPREFIX."export_test".$EXE_EXT,
-		      "-ORBInitRef TradingService=file://$ior");
+                      "-ORBInitRef TradingService=file://$ior");
 
-sleep $sleeptime;
+if (ACE::waitforfile_timed ($ready_file, 120) == -1) {
+  print STDERR "ERROR: waiting for the export test to finish\n";
+  $E->Kill (); $E->TimedWait (1);
+  exit 1;
+}
 
 $I = Process::Create ($EXEPREFIX."import_test".$EXE_EXT,
-		      "-ORBInitRef TradingService=file://$ior");
+                      "-ORBInitRef TradingService=file://$ior");
 
 if ($I->TimedWait (60) == -1) {
   $status = 1;
@@ -39,7 +47,7 @@ if ($I->TimedWait (60) == -1) {
   $I->Kill (); $I->TimedWait (1);
 }
 
-$E->Terminate (); 
+$E->Terminate ();
 if ($E->TimedWait (15) == -1) {
   $status =1;
   print STDERR "ERROR: export test timedout\n";
@@ -54,7 +62,6 @@ if ($TS->TimedWait (15) == -1) {
 }
 
 unlink $ior;
+unlink $ready_file;
 
 exit $status;
-
-
