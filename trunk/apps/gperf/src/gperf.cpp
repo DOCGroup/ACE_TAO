@@ -1,6 +1,6 @@
 // $Id$
 
-// Driver program for the Gen_Perf hash function generator 
+// Driver program for the Gen_Perf hash function generator
 
 /* Copyright (C) 1989 Free Software Foundation, Inc.  written by
    Douglas C. Schmidt (schmidt@ics.uci.edu)
@@ -34,7 +34,7 @@ int
 main (int argc, char *argv[])
 {
   struct tm *tm;
-  time_t clock; 
+  time_t clock;
 
   time (&clock);
   tm = localtime (&clock);
@@ -44,7 +44,7 @@ main (int argc, char *argv[])
                   tm->tm_sec);
 
 #if defined (RLIMIT_STACK) && defined (LARGE_STACK_ARRAYS)
-  // Get rid of any avoidable limit on stack size. 
+  // Get rid of any avoidable limit on stack size.
   {
     struct rlimit rlim;
 
@@ -56,14 +56,14 @@ main (int argc, char *argv[])
 #endif /* RLIMIT_STACK && LARGE_STACK_ARRAYS */
 
   // Sets the Options.
-  option (argc, argv);          
+  option (argc, argv);
 
   // Initializes the key word list.
   Gen_Perf table;
 
   // Generates and prints the Gen_Perf hash table.  Don't use exit
   // here, it skips the destructors.
-  int status = table.generate ();     
+  int status = table.generate ();
 
   time (&clock);
   tm = localtime (&clock);
@@ -76,4 +76,14 @@ main (int argc, char *argv[])
   return status;
 }
 
-#endif /* ACE_HAS_GPERF */
+#else  /* ! ACE_HAS_GPERF */
+int
+main (int argc, char *argv[])
+{
+  ACE_ERROR ((LM_ERROR, "gperf is not operational because "
+                        "ACE_HAS_GPERF was not enabled for the build\n"));
+
+  return 0;
+}
+
+#endif /* ! ACE_HAS_GPERF */
