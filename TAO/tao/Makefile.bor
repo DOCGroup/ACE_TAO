@@ -5,11 +5,11 @@
 NAME = TAO
 
 DIRS = \
-        ObjRefTemplate \
-        IORInterceptor \
-        Valuetype \
+   Valuetype \
+   ObjRefTemplate \
+   IORInterceptor \
 	PortableServer \
-        Messaging \
+   Messaging \
 	DynamicAny \
 	DynamicInterface \
 	BiDir_GIOP \
@@ -31,7 +31,7 @@ OBJFILES = \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Queued_Message.obj \
-        $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
+   $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
 	$(OBJDIR)\Base_Transport_Property.obj \
 	$(OBJDIR)\BiDir_Adapter.obj \
 	$(OBJDIR)\Bind_Dispatcher_Guard.obj \
@@ -53,8 +53,8 @@ OBJFILES = \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
-        $(OBJDIR)\Codeset_Manager.obj \
-        $(OBJDIR)\Codeset_Translator_Factory.obj \
+   $(OBJDIR)\Codeset_Manager.obj \
+   $(OBJDIR)\Codeset_Translator_Factory.obj \
 	$(OBJDIR)\Collocation_Resolver.obj \
 	$(OBJDIR)\Connect_Strategy.obj \
 	$(OBJDIR)\Default_Collocation_Resolver.obj \
@@ -96,8 +96,8 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
-        $(OBJDIR)\IOP_CodecC.obj \
-        $(OBJDIR)\IOP_IORC.obj \
+   $(OBJDIR)\IOP_CodecC.obj \
+   $(OBJDIR)\IOP_IORC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
@@ -132,8 +132,8 @@ OBJFILES = \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\MCAST_Parser.obj \
-        $(OBJDIR)\Messaging_PolicyValueC.obj \
-        $(OBJDIR)\Messaging_SyncScopeC.obj \
+   $(OBJDIR)\Messaging_PolicyValueC.obj \
+   $(OBJDIR)\Messaging_SyncScopeC.obj \
 	$(OBJDIR)\Muxed_TMS.obj \
 	$(OBJDIR)\NVList.obj \
 	$(OBJDIR)\ORB.obj \

@@ -13,12 +13,12 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "FileDescription", "IORInterceptor\0"
+            VALUE "FileDescription", "Valuetype\0"
             VALUE "FileVersion", TAO_VERSION "\0"
-            VALUE "InternalName", "TAO_IORInterceptorDLL\0"
+            VALUE "InternalName", "TAO_ValuetypeDLL\0"
             VALUE "LegalCopyright", "\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "TAO_IORInterceptor.DLL\0"
+            VALUE "OriginalFilename", "TAO_Valuetype.DLL\0"
             VALUE "ProductName", "TAO\0"
             VALUE "ProductVersion", TAO_VERSION "\0"
         END
