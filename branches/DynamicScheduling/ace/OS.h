@@ -4047,6 +4047,9 @@ public:
   ACE_hthread_t handle (void);
   void handle (ACE_hthread_t);
 
+  void to_string (char*);
+
+
   // != Comparison operator.
   int operator== (const ACE_Thread_ID &) const;
   int operator!= (const ACE_Thread_ID &) const;
@@ -4523,6 +4526,21 @@ public:
 
   // = A set of wrappers for miscellaneous operations.
   static int atoi (const char *s);
+  
+  // Include if_arp so that getmacaddr can use the
+  // arp structure.
+#   if defined (sun)
+#     include /**/ <net/if_arp.h>
+#   endif
+  
+  struct macaddr_node_t {
+    unsigned char node[6];
+  };
+  
+  /**
+   * Get the first adapter found on the machine.
+   */
+   static int getmacaddress (struct macaddr_node_t *node);
 
 # if defined (ACE_HAS_WCHAR)
   static int atoi (const wchar_t *s);
@@ -7039,5 +7057,7 @@ extern ACE_OS_Export int sys_nerr;
 # include "ace/Thread_Control.h"
 #endif  /* ACE_LEGACY_MODE */
 
+
 #include "ace/post.h"
 #endif  /* ACE_OS_H */
+
