@@ -85,7 +85,7 @@ EMPFILE=empfile.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /Zi /Od /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /YX /c
-# ADD CPP /nologo /G4 /W3 /GR- /Zi /Od /I "..\\" /I "..\STL\\" /D "_UNICODE" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D "UNDER_CE" /D "UNICODE" /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /D ACE_HAS_DLL=1 /c
+# ADD CPP /nologo /G4 /W3 /Zi /Od /I "..\\" /I "..\STL\\" /D "_UNICODE" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D "UNDER_CE" /D "UNICODE" /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /D ACE_HAS_DLL=1 /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
@@ -3202,6 +3202,25 @@ DEP_CPP_BASIC=\
 NODEP_CPP_BASIC=\
 	".\sys_conf.h"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Containers.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
