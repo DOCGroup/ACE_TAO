@@ -544,6 +544,10 @@ protected:
   virtual int suspend_i (ACE_HANDLE handle);
   // Suspend the <Event_Handler> associated with <handle>
 
+  virtual int is_suspended_i (ACE_HANDLE handle);
+  // Check to see if the <Event_Handler> associated with <handle> is
+  // suspended. Returns 0 if not, 1 if so.
+
   virtual int resume_i (ACE_HANDLE handle);
   // Resume the <Event_Handler> associated with <handle>
 
