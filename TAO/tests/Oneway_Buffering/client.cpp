@@ -4,6 +4,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/TAOC.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(Oneway_Buffering, client, "$Id$")
 
