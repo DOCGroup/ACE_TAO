@@ -44,7 +44,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/test_MM.o .shobj/test_MM.so: test_MM.cpp \
+.obj/test_MM.o .shobj/test_MM.: test_MM.cpp \
  $(ACE_ROOT)/ace/Shared_Memory_MM.h \
  $(ACE_ROOT)/ace/Shared_Memory.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -61,7 +61,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Shared_Memory_MM.i
-.obj/test_SV.o .shobj/test_SV.so: test_SV.cpp \
+.obj/test_SV.o .shobj/test_SV.: test_SV.cpp \
  $(ACE_ROOT)/ace/Shared_Memory_SV.h \
  $(ACE_ROOT)/ace/Shared_Memory.h \
  $(ACE_ROOT)/ace/ACE.h \
