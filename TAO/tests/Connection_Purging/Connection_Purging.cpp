@@ -20,6 +20,8 @@
 #include "testS.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+#include "ace/Handle_Gobbler.h"
+#include "ace/Get_Opt.h"
 
 struct arguments
 {
@@ -34,25 +36,42 @@ struct Info
   CORBA::String_var ior;
 };
 
+static size_t keep_handles_available = 10;
 static size_t iterations = 20;
+static size_t remote_calls = 2;
 static Info *info = 0;
 static int debug = 0;
+static int go_to_next_orb = 0;
 
 class test_i : public POA_test
 {
 public:
 
+  test_i (void);
+
   void method (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+
+  size_t counter_;
 };
 
+test_i::test_i (void)
+  : counter_ (0)
+{
+}
+
 void
-test_i::method (CORBA::Environment &ACE_TRY_ENV)
+test_i::method (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  go_to_next_orb = 1;
+
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "test_i::method()\n"));
+                "test_i::method() iteration = %d\n",
+                ++this->counter_));
 }
 
 class Server_Task : public ACE_Task_Base
@@ -75,11 +94,19 @@ Server_Task::Server_Task (Info *info)
 int
 Server_Task::svc (void)
 {
-  for (size_t i = 0;
-       i < iterations;
-       ++i)
+  for (size_t j = 0;
+       j < remote_calls;
+       ++j)
     {
-      this->info_[i].orb->run ();
+      for (size_t i = 0;
+           i < iterations;
+           ++i)
+        {
+          while (!go_to_next_orb)
+            this->info_[i].orb->perform_work ();
+
+          go_to_next_orb = 0;
+        }
     }
 
   return 0;
@@ -89,7 +116,7 @@ static int
 parse_args (int argc,
             char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:d");
+  ACE_Get_Opt get_opts (argc, argv, "i:a:r:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -103,12 +130,22 @@ parse_args (int argc,
         debug = 1;
         break;
 
+      case 'a':
+        keep_handles_available = atoi (get_opts.optarg);
+        break;
+
+      case 'r':
+        remote_calls = atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s \n"
                            "[-i iterations] \n"
                            "[-d (debug)] \n"
+                           "[-a (keep handles available)] \n",
+                           "[-r (remote calls per server)] \n",
                            "\n",
                            argv [0]),
                           -1);
@@ -234,37 +271,48 @@ setup_client_orb (CORBA::ORB_out client_orb,
 void
 invoke_remote_calls (CORBA::ORB_ptr client_orb)
 {
-  for (size_t i = 0;
-       i < iterations;
-       ++i)
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      ACE_TRY
+      for (size_t j = 0;
+           j < remote_calls;
+           ++j)
         {
-          CORBA::Object_var object = client_orb->string_to_object (info[i].ior.in (),
-                                                                   ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          for (size_t i = 0;
+               i < iterations;
+               ++i)
+            {
+              CORBA::Object_var object =
+                client_orb->string_to_object (info[i].ior.in (),
+                                              ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
-          test_var test_object =
-            test::_narrow (object.in (),
-                           ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+              test_var test_object =
+                test::_narrow (object.in (),
+                               ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
-          test_object->method (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+              test_object->method (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+        }
 
+      for (size_t i = 0;
+           i < iterations;
+           ++i)
+        {
           info[i].orb->shutdown (1,
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in running client side");
-          ACE_ASSERT (0);
-        }
-      ACE_ENDTRY;
     }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in running client side");
+      ACE_ASSERT (0);
+    }
+  ACE_ENDTRY;
 }
 
 void
@@ -326,9 +374,8 @@ main (int argc,
   test_i servant;
 
   setup_server_orbs (servant,
-                     argc,
-                     argv);
-
+                     argc_copy,
+                     argv_copy);
 
   for (j = 0;
        j < argc;
@@ -341,9 +388,31 @@ main (int argc,
   result = server_task.activate (THR_BOUND);
   ACE_ASSERT (result == 0);
 
+  // Consume all handles in the process, leaving us
+  // <keep_handles_available> to play with.
+  ACE_Handle_Gobbler handle_gobbler;
+  result = handle_gobbler.consume_handles (keep_handles_available);
+  ACE_ASSERT (result == 0);
+
   invoke_remote_calls (client_orb.in ());
 
   cleanup ();
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+// = Handle Gobbler
+template class ACE_Node<ACE_HANDLE>;
+template class ACE_Unbounded_Set<ACE_HANDLE>;
+template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// = Handle Gobbler
+#pragma instantiate ACE_Node<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

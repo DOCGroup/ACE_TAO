@@ -1,3 +1,22 @@
+Fri Jul 23 17:54:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Acceptor_Impl.cpp (TAO_Accept_Strategy): Added a new accept
+	  strategy that purges old connections when it runs out of
+	  descriptors.
+
+	* tao/IIOP_Acceptor.cpp (open):
+	* tao/UIOP_Acceptor.cpp (open):
+
+	  Changed the acceptors to use the new accept strategy.
+
+	* tests/Connection_Purging/Connection_Purging.cpp:
+
+	  - Added handle gobbling to this test in order to reduce the
+	    number of iterations required to make purging happen.
+
+	  - Added the ability to go back and reinvoke on old servers.
+	    This will check whether the purging did the right thing.
+
 Fri Jul 23 17:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Transport_Mux_Strategy.cpp:

@@ -38,6 +38,7 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
+    accept_strategy_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     unlink_on_close_ (1)
@@ -48,6 +49,7 @@ TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
 {
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
+  delete this->accept_strategy_;
 }
 
 int
@@ -163,6 +165,10 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                   TAO_UIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
 
+  ACE_NEW_RETURN (this->accept_strategy_,
+                  TAO_UIOP_ACCEPT_STRATEGY (this->orb_core_),
+                  -1);
+
   ACE_UNIX_Addr addr;
 
   this->rendezvous_point (addr, rendezvous);
@@ -170,7 +176,7 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   if (this->base_acceptor_.open (addr,
                                  this->orb_core_->reactor (),
                                  this->creation_strategy_,
-                                 0,
+                                 this->accept_strategy_,
                                  this->concurrency_strategy_) == -1)
     {
       // Don't unlink an existing rendezvous point since it may be in
@@ -256,6 +262,7 @@ template class ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
 template class ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>;
 template class TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
 template class TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -267,6 +274,7 @@ template class TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
 #pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>
 #pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
 #pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
