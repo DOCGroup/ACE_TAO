@@ -168,7 +168,7 @@ public:
   /**
    * Construction
    */
-  ACE_Ini_ImpExp(ACE_Configuration&);
+  ACE_Ini_ImpExp (ACE_Configuration&);
     
   /**
    * Destructor
@@ -181,7 +181,7 @@ public:
    * Since the open method relies on this method, this method
    * acts as open if an open has not already occurred.
    */
-  virtual int import_config(const ACE_TCHAR* filename);
+  virtual int import_config (const ACE_TCHAR* filename);
 
   /**
    * This method exports the entire configuration database to <filename>.

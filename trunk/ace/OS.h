@@ -1089,7 +1089,7 @@ ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
 /**
  * @class ACE_Time_Value
  *
- * @brief Operations on "timeval" structures.
+ * @brief Operations on "timeval" structures, which express time in <secs> and <usecs>.
  *
  * This class centralizes all the time related processing in
  * ACE.  These timers are typically used in conjunction with OS
@@ -3474,9 +3474,6 @@ typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 
 // Dynamic loading-related types - used for dlopen and family.
-#   if !defined(RTLD_LAZY)
-#     define RTLD_LAZY 1
-#   endif /* !RTLD_LAZY */
 typedef HINSTANCE ACE_SHLIB_HANDLE;
 #   define ACE_SHLIB_INVALID_HANDLE 0
 #   define ACE_DEFAULT_SHLIB_MODE 0
@@ -3887,9 +3884,6 @@ extern "C" {
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
   typedef void *ACE_SHLIB_HANDLE;
 #   define ACE_SHLIB_INVALID_HANDLE 0
-#     if !defined (RTLD_LAZY)
-#       define RTLD_LAZY 1
-#     endif /* !RTLD_LAZY */
 #   if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
 #   else
@@ -3905,14 +3899,23 @@ extern "C" {
 #   define ACE_SHLIB_INVALID_HANDLE 0
 #   define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
 #   else
-#     if !defined(RTLD_LAZY)
-#       define RTLD_LAZY 1
-#     endif /* !RTLD_LAZY */
   typedef void *ACE_SHLIB_HANDLE;
 #   define ACE_SHLIB_INVALID_HANDLE 0
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
 
 #   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
+
+#if !defined (RTLD_LAZY)
+#define RTLD_LAZY 1
+#endif /* !RTLD_LAZY */
+
+#if !defined (RTLD_NOW)
+#define RTLD_NOW 2
+#endif /* !RTLD_NOW */
+
+#if !defined (RTLD_GLOBAL)
+#define RTLD_GLOBAL 3
+#endif /* !RTLD_GLOBAL */
 
 #   if defined (ACE_HAS_SOCKIO_H)
 #     include /**/ <sys/sockio.h>
