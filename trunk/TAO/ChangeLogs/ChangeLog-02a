@@ -1,3 +1,10 @@
+Mon Apr  9 17:38:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * examples/TypeCode_Creation/TypeCode_Creation.dsp:
+
+          Some settings got lost somehow - I must have goofed up the
+          original checkin.
+
 Mon Apr  9 16:25:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
