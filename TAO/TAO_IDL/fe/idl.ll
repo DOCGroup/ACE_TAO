@@ -72,11 +72,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_private.h"
 #include "y.tab.h"
 
-static char	idl_escape_reader(char *);
-static double	idl_atof(char *);
-static long	idl_atoi(char *, long);
-static void	idl_parse_line_and_file(char *);
-static void	idl_store_pragma(char *);
+static char		idl_escape_reader(char *);
+static double		idl_atof(char *);
+static long		idl_atoi(char *, long);
+static unsigned long	idl_atoui(char *, long);
+static void		idl_parse_line_and_file(char *);
+static void		idl_store_pragma(char *);
 
 #if 0 /* defined (HPUX) */
 // HPUX has yytext typed to unsigned char *. We make sure here that
@@ -196,17 +197,29 @@ oneway		return IDL_ONEWAY;
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
-"-"?[1-9][0-9]*	{
+"-"[1-9][0-9]*	{
 		  yylval.ival = idl_atoi(ace_yytext, 10);
 		  return IDL_INTEGER_LITERAL;
 	        }
-"-"?0[xX][a-fA-F0-9]+ {
+[1-9][0-9]*     {
+		  yylval.uival = idl_atoui(ace_yytext, 10);
+		  return IDL_UINTEGER_LITERAL;
+		}
+"-"0[xX][a-fA-F0-9]+ {
 		  yylval.ival = idl_atoi(ace_yytext, 16);
 		  return IDL_INTEGER_LITERAL;
 	        }
-"-"?0[0-7]*	{
+0[xX][a-fA-F0-9]+    {
+                  yylval.uival = idl_atoui(ace_yytext, 16);
+		  return IDL_UINTEGER_LITERAL;
+		}
+"-"0[0-7]*	{
 		  yylval.ival = idl_atoi(ace_yytext, 8);
 		  return IDL_INTEGER_LITERAL;
+	      	}
+0[0-7]*	        {
+		  yylval.uival = idl_atoui(ace_yytext, 8);
+		  return IDL_UINTEGER_LITERAL;
 	      	}
 
 "\""[^\"]*"\""	{
@@ -419,18 +432,14 @@ idl_store_pragma(char *buf)
 }
 
 /*
- * idl_atoi - Convert a string of digits into an integer according to base b
+ * idl_atoi - Convert a string of digits into a negative integer according to base b
  */
 static long
 idl_atoi(char *s, long b)
 {
 	long	r = 0;
-	long	negative = 0;
+	s++;
 
-	if (*s == '-') {
-	  negative = 1;
-	  s++;
-	}
 	if (b == 8 && *s == '0')
 	  s++;
 	else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
@@ -446,8 +455,31 @@ idl_atoi(char *s, long b)
 	  else
 	    break;
 
-	if (negative)
-	  r *= -1;
+	return -r;
+}
+
+/*
+ * idl_atoui - Convert a string of digits into an unsigned integer according to base b
+ */
+static unsigned long
+idl_atoui(char *s, long b)
+{
+	long	r = 0;
+
+	if (b == 8 && *s == '0')
+	  s++;
+	else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
+	  s += 2;
+
+	for (; *s; s++)
+	  if (*s <= '9' && *s >= '0')
+	    r = (r * b) + (*s - '0');
+	  else if (b > 10 && *s <= 'f' && *s >= 'a')
+	    r = (r * b) + (*s - 'a' + 10);
+	  else if (b > 10 && *s <= 'F' && *s >= 'A')
+	    r = (r * b) + (*s - 'A' + 10);
+	  else
+	    break;
 
 	return r;
 }
