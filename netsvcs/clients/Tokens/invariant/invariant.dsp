@@ -1,25 +1,26 @@
-# Microsoft Developer Studio Project File - Name="NETSVCS Naming Client Test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="NETSVCS Token Invariant Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=NETSVCS Naming Client Test - Win32 Debug
+CFG=NETSVCS Token Invariant Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "main.mak".
+!MESSAGE NMAKE /f "invariant.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "main.mak" CFG="NETSVCS Naming Client Test - Win32 Debug"
+!MESSAGE NMAKE /f "invariant.mak"\
+ CFG="NETSVCS Token Invariant Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "NETSVCS Naming Client Test - Win32 Release" (based on\
+!MESSAGE "NETSVCS Token Invariant Client - Win32 Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "NETSVCS Naming Client Test - Win32 Debug" (based on\
+!MESSAGE "NETSVCS Token Invariant Client - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -29,7 +30,7 @@ CFG=NETSVCS Naming Client Test - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "NETSVCS Naming Client Test - Win32 Release"
+!IF  "$(CFG)" == "NETSVCS Token Invariant Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -43,7 +44,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "WIN32" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -52,9 +53,10 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib Client_Test.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace"
+# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace"
+# SUBTRACT LINK32 /incremental:yes
 
-!ELSEIF  "$(CFG)" == "NETSVCS Naming Client Test - Win32 Debug"
+!ELSEIF  "$(CFG)" == "NETSVCS Token Invariant Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -68,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /D "WIN32" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -77,17 +79,21 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib Client_Testd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace"
+# ADD LINK32 aced.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "NETSVCS Naming Client Test - Win32 Release"
-# Name "NETSVCS Naming Client Test - Win32 Debug"
+# Name "NETSVCS Token Invariant Client - Win32 Release"
+# Name "NETSVCS Token Invariant Client - Win32 Debug"
+# Begin Group "Source"
+
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\main.cpp
+SOURCE=.\invariant.cpp
 # End Source File
+# End Group
 # End Target
 # End Project
