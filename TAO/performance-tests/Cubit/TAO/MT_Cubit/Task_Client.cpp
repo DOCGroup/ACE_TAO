@@ -370,7 +370,6 @@ Client::get_high_priority_jitter (void)
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
 
-      //      ACE_DEBUG ((LM_DEBUG, "high sample: %12.4f\n", *latency)); // ????
       if (stats.sample (ACE_round (*latency)) == -1)
         ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
 
@@ -412,7 +411,7 @@ Client::get_low_priority_jitter (void)
        j < this->ts_->thread_count_;
        j++)
     {
-      ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j])); // ????
+      ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j]));
 
       JITTER_ARRAY_ITERATOR iterator =
         this->ts_->global_jitter_array_ [j]->begin ();
@@ -431,7 +430,6 @@ Client::get_low_priority_jitter (void)
           ++number_of_samples;
           ACE_timer_t difference = *latency - average;
           jitter += difference * difference;
-//          ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
           stats.sample (ACE_round (*latency));
         }
     }
@@ -478,7 +476,6 @@ Client::get_jitter (u_int id)
       ++number_of_samples;
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-      ACE_DEBUG ((LM_DEBUG, "thread %d latency: %12.4f\n", id, *latency)); // ????
       stats.sample (ACE_round (*latency));
     }
 
