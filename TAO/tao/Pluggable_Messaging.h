@@ -21,25 +21,44 @@
 #include "tao/corbafwd.h"
 #include "tao/Pluggable.h"
 
-class TAO_Export TAO_Pluggable_Message_Factory
+class TAO_Message_State_Factory;
+
+typedef enum MessageType
+{
+  // = DESCRIPTION
+  //   Provide an external interface for the users of this pluggable
+  //   messaging framework to denote  existing message types. This has
+  //   an inspiration from GIOP. So if anybody wants to add more message
+  //   types you are welcome but please do not change the numbering
+  //   scheme as this would affect GIOP. 
+  
+  TAO_MESSAGE_REQUEST = 0,                // sent by client.
+  TAO_MESSAGE_REPLY = 1,                  // by server.
+  TAO_MESSAGE_CANCELREQUEST = 2,          // by client.
+  TAO_MESSAGE_LOCATEREQUEST = 3,          // by client.
+  TAO_MESSAGE_LOCATEREPLY = 4,
+  TAO_MESSAGE_CLOSECONNECTION = 5,        
+  TAO_MESSAGE_MESSAGERROR = 6,           // by both.
+  TAO_MESSAGE_FRAGMENT = 7                // by both.
+}TAO_Pluggable_Message_Type;
+
+
+class TAO_Export TAO_Pluggable_Client_Message_Factory
 {
   // = TITLE
-  //   Generic definitions for the new Pluggable Messaging class.
+  //   Generic definitions for the Client side of the  Pluggable
+  //   Messaging class. 
   //
   // = DESCRIPTION
   //   
 
 public:
-  
-  TAO_Pluggable_Message_Factory (void);
+  TAO_Pluggable_Client_Message_Factory (void);
   // Ctor
 
-  virtual ~TAO_Pluggable_Message_Factory (void);
+  virtual ~TAO_Pluggable_Client_Message_Factory (void);
   // Dtor
 
-  /**********************************************************/
-  // Methods related to the messages that would be sent by the client
-  /**********************************************************/
   virtual CORBA::Boolean write_request_header (const IOP::ServiceContextList& svc_ctx,
                                                CORBA::ULong request_id,
                                                CORBA::Octet response_flags,
@@ -63,19 +82,79 @@ public:
                             TAO_Stub *stub = 0) = 0;
   // Send message, returns TRUE if success, else FALSE.
 
-
-
-  /**********************************************************/
-  // Methods related to the messages that would be sent by the server. 
-  /**********************************************************/
-  //virtual CORBA::Boolean start_message (const TAO_GIOP_Version &version,
-  //                                    TAO_GIOP_Message_Factory::Message_Type t,
-  //                                    TAO_OutputCDR &msg);
-  // Build the header for a message of type <t> into stream
-  // <msg>. Other GIOP related protocols that do not use this can
-  // override this. Like GIOP_lite
-
+  virtual CORBA::Boolean start_message (TAO_Pluggable_Message_Type t,
+                                        TAO_OutputCDR &msg) = 0;
+  // Start writing the header for a message in to the stream <msg>
 };
+
+class TAO_Export TAO_Pluggable_Server_Message_Factory
+{
+  // = TITLE
+  //   Generic definitions for the server side of the Pluggable
+  //   Message .factory
+  //
+  // = DESCRIPTION
+  //   
+
+public:
+  
+  TAO_Pluggable_Server_Message_Factory (void);
+  // Ctor
+
+  virtual ~TAO_Pluggable_Server_Message_Factory (void);
+  // Dtor
+
+  //  virtual int send_message (TAO_Transport *transport,
+  //                      TAO_OutputCDR &stream,
+  ///                       ACE_Time_Value *max_wait_time = 0,
+  //TAO_Stub *stub = 0) = 0;
+  // Send message, returns TRUE if success, else FALSE.
+
+  virtual int handle_input (TAO_Transport *transport,
+                            TAO_ORB_Core *orb_core,
+                            TAO_Message_State_Factory &state,
+                            ACE_Time_Value *max_wait_time = 0) = 0;
+  
+};
+
+
+
+class TAO_Export TAO_Message_State_Factory
+{
+  // = TITLE
+  //   Generic definitions for Message States.  
+  //
+  // = DESCRIPTION
+  //   This would represnt the state of the incoming message states.
+  //   As the ORB processes incoming messages it need to keep track of
+  //   how much of the message has been read. if there are any
+  //   fragments following this message etc. This class attempts to
+  //   give a generic interface to all the messaging protocols message
+  //   states so that the Transport layer does not really know with
+  //   whom it is interacting with.
+public:
+  TAO_Message_State_Factory (void);
+  // Ctor
+
+  virtual ~TAO_Message_State_Factory (void);
+  // Dtor
+  
+  virtual void reset (int reset_contents = 1) = 0;
+  // Reset the message header state and prepare it to receive the next
+  // event.
+  
+  virtual CORBA::Boolean  header_received (void) const = 0;
+  // Has the header been received?
+
+  virtual int is_complete (void) = 0;
+  // Check if the current message is complete, adjusting the fragments
+  // if required...
+  
+  
+private:
+  
+};
+
 
 
 #if defined (__ACE_INLINE__)
