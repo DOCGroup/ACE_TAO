@@ -1,0 +1,19 @@
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@atdesk.com>
+ */
+
+module Test
+{
+
+  interface Echo
+  {
+    string echo_operation(in string the_input);
+
+    void shutdown();
+  };
+
+};

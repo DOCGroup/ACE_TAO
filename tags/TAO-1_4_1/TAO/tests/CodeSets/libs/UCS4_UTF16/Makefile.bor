@@ -1,0 +1,8 @@
+#
+# $Id$
+#
+
+MAKEFILES = \
+        CodeSets_Libs_UCS4_UTF16.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

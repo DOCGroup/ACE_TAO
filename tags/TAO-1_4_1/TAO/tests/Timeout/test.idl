@@ -1,0 +1,12 @@
+//
+// $Id$
+//
+
+interface Simple_Server {
+
+  long echo (in long x, in long msecs);
+  // Returns <x>, but sleep for <msecs> milliseconds before returning
+
+  oneway void shutdown ();
+  // Shutdown the ORB
+};
