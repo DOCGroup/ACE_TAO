@@ -1,3 +1,14 @@
+Mon Aug 23 23:27:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Makefile.am (AUTOMAKE_OPTIONS):
+
+	  Removed required Automake version from `Makefile.am'.
+	  `configure.ac' already defines it.
+
+	* configure.ac (AM_INIT_AUTOMAKE):
+
+	  Updated required version of Automake to 1.9.
+
 Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp:
