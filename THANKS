@@ -4,6 +4,7 @@ ACE and TAO have been deeply influenced and improved by the following
 members of my research group at Washington University and at the
 University of California at Irvine.
 
+
 Everett Anderson <eea1@cec.wustl.edu>
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Shawn Atkins <sma1@cs.wustl.edu>
@@ -1388,6 +1389,8 @@ Robert Martin <martin_r@ociweb.com>
 Charles Meidinger <Charles.Meidinger@MSFC.NASA.GOV>
 Petr Tuma <petr.tuma@mff.cuni.cz>
 Greg Burley  <Burley@tabq.com.au>
+Jessie Ragsdale <jragsdale@yottanetworks.com>
+
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
