@@ -6,11 +6,19 @@
 #if !defined (ACE_LACKS_ACE_TOKEN)
 # include "ace/Token_Manager.h"
 #endif /* ! ACE_LACKS_ACE_TOKEN */
-#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
-# include "ace/Naming_Context.h"
-#endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
-#include "ace/Service_Manager.h"
-#include "ace/Service_Config.h"
+#if defined (ACE_LACKS_ACE_SVCCONF)
+#  if !defined (ACE_HAS_WINCE)
+#    include "ace/Proactor.h"
+#  endif /* !ACE_HAS_WINCE */
+#  include "ace/Reactor.h"
+#  include "ace/Thread_Manager.h"
+#else  /* ! ACE_LACKS_ACE_SVCCONF */
+#  if !defined (ACE_HAS_WINCE)  && !defined (ACE_LACKS_ACE_OTHER)
+#    include "ace/Naming_Context.h"
+#  endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
+#  include "ace/Service_Manager.h"
+#  include "ace/Service_Config.h"
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "ace/Containers.h"
@@ -85,6 +93,8 @@ void *ACE_Object_Manager::preallocated_array[
     preallocated_array[ID] = 0;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
+#if !defined (ACE_LACKS_ACE_SVCCONF)
+
 class ACE_Object_Manager_Preallocations
 {
   // = TITLE
@@ -120,6 +130,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
                          ACE_Service_Type::DELETE_THIS |
                            ACE_Service_Type::DELETE_OBJ,
                          0)
+
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
 
   ACE_STATIC_SVC_DEFINE (ACE_Service_Manager_initializer,
@@ -153,6 +164,8 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations (void)
 {
 }
+
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 int
 ACE_Object_Manager::starting_up (void)
@@ -188,10 +201,12 @@ ACE_Object_Manager::init (void)
           // and register with it for chained fini ().
           ACE_OS_Object_Manager::instance ()->next_ = this;
 
+#     if !defined (ACE_LACKS_ACE_SVCCONF)
           // Construct the ACE_Service_Config's signal handler.
           ACE_NEW_RETURN (ace_service_config_sig_handler_,
                      ACE_Sig_Adapter (&ACE_Service_Config::handle_signal), -1);
           ACE_Service_Config::signal_handler (ace_service_config_sig_handler_);
+#     endif /* ! ACE_LACKS_ACE_SVCCONF */
 
           // Allocate the preallocated (hard-coded) object instances.
           ACE_PREALLOCATE_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
@@ -231,9 +246,12 @@ ACE_Object_Manager::init (void)
           ACE_TSS_Emulation::tss_open (ts_storage_);
 #     endif /* ACE_HAS_TSS_EMULATION */
 
+#     if !defined (ACE_LACKS_ACE_SVCCONF)
           ACE_NEW_RETURN (preallocations_,
                           ACE_Object_Manager_Preallocations,
                           -1);
+#     endif /* ! ACE_LACKS_ACE_SVCCONF */
+
           // Open the main thread's ACE_Log_Msg.
           (void) ACE_LOG_MSG;
         }
@@ -253,8 +271,10 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
   : exit_info_ ()
+#if !defined (ACE_LACKS_ACE_SVCCONF)
   , preallocations_ (0)
   , ace_service_config_sig_handler_ (0)
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   , internal_lock_ (new ACE_Recursive_Thread_Mutex)
   , singleton_null_lock_ (0)
@@ -579,14 +599,34 @@ ACE_Object_Manager::fini (void)
 
   if (this == instance_)
     {
+#if !defined (ACE_LACKS_ACE_SVCCONF)
       delete preallocations_;
       preallocations_ = 0;
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
 
       ACE_Trace::stop_tracing ();
+
+#if defined (ACE_LACKS_ACE_SVCCONF)
+
+	  ACE_Reactor::close_singleton ();
+
+#  if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
+      ACE_Proactor::close_singleton ();
+#  endif /* !ACE_HAS_WINCE */
+
+#  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+      ACE_Thread_Manager::close_singleton ();
+#  endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
+
+#else /* ! ACE_LACKS_ACE_SVCCONF */
 
       // Close and possibly delete all service instances in the Service
       // Repository.
       ACE_Service_Config::fini_svcs ();
+
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
+
+
 
       // Close the main thread's TSS, including its Log_Msg instance.
       ACE_OS::cleanup_tss (1 /* main thread */);
@@ -595,9 +635,11 @@ ACE_Object_Manager::fini (void)
       // Note:  Do not access Log Msg after this since it is gone
       //
 
+#if !defined (ACE_LACKS_ACE_SVCCONF)
       // Unlink all services in the Service Repository and close/delete
       // all ACE library services and singletons.
       ACE_Service_Config::close ();
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
 
       // Close the ACE_Allocator.
       ACE_Allocator::close_singleton ();
@@ -644,8 +686,10 @@ ACE_Object_Manager::fini (void)
 #endif /* ACE_HAS_THREADS */
     }
 
+#if !defined (ACE_LACKS_ACE_SVCCONF)
   delete ace_service_config_sig_handler_;
   ace_service_config_sig_handler_ = 0;
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   delete internal_lock_;
