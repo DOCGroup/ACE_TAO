@@ -1,3 +1,9 @@
+Mon May  1 14:32:11 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+	  fixed type mismatch warning.  Thanks to Darrell for reporting
+	  it.
+
 Mon May  1 10:25:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/POA/FindPOA/FindPOA.dsp:
@@ -19,9 +25,9 @@ Mon May  1 10:25:11 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/Smart_Proxies/client.dsp:
         * tests/Smart_Proxies/server.dsp:
 
-          All of these files had some problem with either the release 
+          All of these files had some problem with either the release
           config not being set up correctly or the IDL file compile
-          command not being totally compliant.  
+          command not being totally compliant.
 
 Mon May  1 09:15:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
