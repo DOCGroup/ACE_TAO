@@ -56,7 +56,7 @@ FOO_ClientRequestInterceptor::send_request (
 
 void
 FOO_ClientRequestInterceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr ri
+    PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -64,7 +64,7 @@ FOO_ClientRequestInterceptor::send_poll (
 
 void
 FOO_ClientRequestInterceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
+    PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -72,7 +72,7 @@ FOO_ClientRequestInterceptor::receive_reply (
 
 void
 FOO_ClientRequestInterceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
+    PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
@@ -81,7 +81,7 @@ FOO_ClientRequestInterceptor::receive_exception (
 
 void
 FOO_ClientRequestInterceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr ri
+    PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
