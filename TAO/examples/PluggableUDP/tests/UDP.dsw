@@ -1,6 +1,29 @@
 Microsoft Developer Studio Workspace File, Format Version 6.00
 # WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
 
+###############################################################################
+
+Project: "Simple Performance Client"=.\SimplePerformance\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple Performance Server"=.\SimplePerformance\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
 
 ###############################################################################
 
@@ -16,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "UDP Client"=.\client.dsp - Package Owner=<4>
+Project: "UDP Client"=.\Basic\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -24,17 +47,11 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name UDP Server
-    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "UDP Server"=.\server.dsp - Package Owner=<4>
+Project: "UDP Performance Client"=.\Performance\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -42,9 +59,30 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "UDP Performance Server"=.\Performance\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "UDP Server"=.\Basic\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

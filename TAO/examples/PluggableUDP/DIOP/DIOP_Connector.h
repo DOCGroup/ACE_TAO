@@ -106,16 +106,16 @@ protected:
 
 private:
   // @@ Michael: UDP Addition
-  ACE_Hash_Map_Manager_Ex < ACE_TCHAR *,
+  ACE_Hash_Map_Manager_Ex < ACE_INET_Addr,
                             TAO_DIOP_Connection_Handler *,
-                            ACE_Hash < const char * >,
-                            ACE_Equal_To < const char * >,
+                            ACE_Hash < ACE_INET_Addr >,
+                            ACE_Equal_To < ACE_INET_Addr >,
                             ACE_Null_Mutex > svc_handler_table_;
 
-  typedef ACE_Hash_Map_Iterator_Ex < ACE_TCHAR *,
+  typedef ACE_Hash_Map_Iterator_Ex < ACE_INET_Addr,
                                      TAO_DIOP_Connection_Handler *,
-                                     ACE_Hash < const char * >,
-                                     ACE_Equal_To < const char *>,
+                                     ACE_Hash < ACE_INET_Addr >,
+                                     ACE_Equal_To < ACE_INET_Addr >,
                                      ACE_Null_Mutex > SvcHandlerIterator;
 };
 

@@ -58,7 +58,7 @@ UDP_Client_i::svc (void)
                       "invoked %s %d, going to wait %d ms\n",
                       corba_client_name.in (),
                       i,
-					  delay_));
+          					  delay_));
           ACE_Time_Value tv (0, delay_ * 1000);
           ACE_OS::sleep (tv);  // wait to not flood the server
         }

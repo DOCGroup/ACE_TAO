@@ -3,55 +3,54 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/UDP
+//    TAO/examples/PluggableUDP/tests/Basic
 //
 // = FILENAME
-//    server.cpp
+//    client.cpp
 //
 // = DESCRIPTION
-//    This is the client for the UDP test.
+//    This is the client for the UDP performance test.
 //
 // = AUTHOR
 //    Michael Kircher <Michael.Kircher@mchp.siemens.de>
 //
 // ============================================================================
 
-#include "UDPC.h"
-
-#include "UDP_i.h"
-#include "UDP_Client_i.h"
-
-#include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(AMI, client, "$Id$")
+#include "UDPC.h"
+
+#include "UDP_i.h"
+#include "UDP_PerformanceClient.h"
+
+ACE_RCSID(Performance, client, "$Id$")
 
 const char *ior = "file://test.ior";
-unsigned int msec = 500;
-unsigned int iterations = 500;
+ACE_UINT32 burst_messages = 1000;
+ACE_UINT32 final_delta_micro_seconds = 10;
+
+
+unsigned char performance_test = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:t:i:");
+  ACE_Get_Opt get_opts (argc, argv, "k:t:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'd':
-        TAO_debug_level++;
-        break;
       case 'k':
         ior = get_opts.optarg;
         break;
       case 't':
-        msec = ACE_OS::atoi (get_opts.optarg);
+        burst_messages = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        final_delta_micro_seconds = ACE_OS::atoi (get_opts.optarg);
         break;
       case '?':
       default:
@@ -59,8 +58,8 @@ parse_args (int argc, char *argv[])
                            "usage:  %s "
                            "-d "
                            "-k <ior> "
-                           "-t <timeout in ms> "
-                           "-i <iterations> "
+                           "-t <burst_messages> "
+                           "-i <final_delta_micro_seconds> "
                            "\n",
                            argv [0]),
                           -1);
@@ -75,7 +74,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "PerformanceClient", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -90,13 +89,15 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (udp_var.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil\n",
-                           ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil\n",
+                             ior),
+                            1);
+        }
 
       // Activate POA to handle the call back.
-
+      
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -105,7 +106,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-
+      
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -128,34 +129,34 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
-      UDP_Client_i *client = new UDP_Client_i (orb.in (),
-                                               udp_var.in (),
-                                               udpHandler_var.in (),
-                                               msec,
-                                               iterations);
+      ACE_Task_Base* client = new UDP_PerformanceClient (orb.in (),
+                                                         udp_var.in (),
+                                                         &udp_i,
+                                                         burst_messages,
+                                                         final_delta_micro_seconds);
 
       // let the client run in a separate thread
       client->activate ();
-
+      
       // ORB loop, will be shut down by our client thread
-
-      orb->run (ACE_TRY_ENV);
+      orb->run (ACE_TRY_ENV);  // Fetch responses
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
+      root_poa->destroy (1, // ethernalize objects
                          0, // wait for completion
-                         ACE_TRY_ENV);
+						             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+	    orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // it is save to delete the client, because the client was actually
       // the one calling orb->shutdown () triggering the end of the ORB
       // event loop.
-      delete client;
+	    delete client;
+
     }
   ACE_CATCHANY
     {

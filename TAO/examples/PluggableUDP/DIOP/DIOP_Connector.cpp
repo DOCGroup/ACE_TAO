@@ -41,21 +41,17 @@ TAO_DIOP_Connector::close (void)
 {
   // @@ Michael: UDP Addition ------------------------------------
 
+  // The list of service handlers cleans itself??
+  /*
   SvcHandlerIterator iter (svc_handler_table_);
 
   while (!iter.done ())
     {
-      // @@ Frank
-      /*
-      TAO_DIOP_Connection_Handler *svc_handler = (*iter).int_id_;
-      svc_handler->decrement ();
-      */
-
       // Delete the addr
       delete (*iter).ext_id_;
       iter++;
     }
-
+  */
   // -----------------------------------------------------------------
 
   // @@ Michael: We do not use traditional connection management.
@@ -103,10 +99,7 @@ TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
 
   // @@ Michael -- UDP Additions ----------------------------
 
-  ACE_TCHAR addr_str[BUFSIZ];
-  remote_address.addr_to_string (addr_str,
-                                 sizeof addr_str);
-  if (svc_handler_table_.find (addr_str, svc_handler) == -1)
+  if (svc_handler_table_.find (remote_address, svc_handler) == -1)
     {
       TAO_DIOP_Connection_Handler *svc_handler_i = 0;
       ACE_NEW_RETURN (svc_handler_i,
@@ -120,9 +113,7 @@ TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
 
       svc_handler_i->open (0);
 
-      ACE_TCHAR *addr_str_i = new ACE_TCHAR[BUFSIZ];
-      ACE_OS::memcpy (addr_str_i, addr_str, BUFSIZ);
-      svc_handler_table_.bind (addr_str_i,
+      svc_handler_table_.bind (remote_address,
                                svc_handler_i);
       svc_handler = svc_handler_i;
 
@@ -132,8 +123,6 @@ TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                     ACE_TEXT ("new connection on HANDLE %d\n"),
                     svc_handler->get_handle ()));
    }
-
-  // @@ Frank  svc_handler->increment ();
 
   // ---------------------------------------------------------
 
@@ -253,11 +242,11 @@ template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,
 template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
 template class ACE_Auto_Basic_Array_Ptr<TAO_DIOP_Connection_Handler*>;
 
-template class ACE_Hash_Map_Manager_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_TCHAR *, TAO_DIOP_Connection_Handler *>;
+template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_DIOP_Connection_Handler *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -282,10 +271,10 @@ template class ACE_Hash_Map_Entry<ACE_TCHAR *, TAO_DIOP_Connection_Handler *>;
 #pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_DIOP_Connection_Handler*>
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TCHAR *, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_TCHAR *, TAO_DIOP_Connection_Handler *>;
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < const char * >, ACE_Equal_To < const char * >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_DIOP_Connection_Handler *>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
