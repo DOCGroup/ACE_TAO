@@ -1,5 +1,16 @@
 Tue May 20 01:50:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
+        * tests/Test_Output.dsp:
+          Added a post compile step that deletes any Test_Output*dll's in
+          current directory.  This will be removed once the autobuilds have
+          have a chance to run and clean up the old files.
+
+        * tests/Test_Output.cpp:
+          Fixed a typo, and changed the close_singleton() method to delete
+          the instance_ directly and set it = 0;
+
+Tue May 20 01:50:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
         * ace/config-aix-4.x.h:
         * ace/config-cygwin32-common.h:
         * ace/config-freebsd.h:
