@@ -67,10 +67,10 @@ public:
   // Send <cntl> and <data> via STREAM pipes.
 #endif /* ACE_HAS_STREAM_PIPES */
 
-  ssize_t send (const ACE_IO_Vector_Base iov[], size_t n) const;
+  ssize_t send (const iovec iov[], size_t n) const;
   // Send iovecs via <::writev>.
 
-  ssize_t recv (ACE_IO_Vector_Base iov[], size_t n) const;
+  ssize_t recv (iovec iov[], size_t n) const;
   // Recv iovecs via <::readv>.
 
   ssize_t send (size_t n, ...) const;

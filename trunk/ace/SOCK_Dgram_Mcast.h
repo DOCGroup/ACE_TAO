@@ -82,10 +82,12 @@ public:
   // failure.
 
   // = Data transfer routines.
-  ssize_t send (const void *buf, size_t n, int flags = 0) const;
+  ssize_t send (const void *buf, 
+                size_t n, 
+                int flags = 0) const;
   // Send <n> bytes in <buf>.
 
-  ssize_t send (const ACE_IO_Vector_Base iov[],
+  ssize_t send (const iovec iov[],
 		size_t n,
 		int flags = 0) const;
   // Send <n> <iovecs>.
@@ -115,7 +117,7 @@ private:
 		size_t n, 
 		const ACE_Addr &addr, 
 		int flags = 0) const;
-  ssize_t send (const ACE_IO_Vector_Base iov[], 
+  ssize_t send (const iovec iov[], 
 		size_t n, 
 		const ACE_Addr &addr, 
 		int flags = 0) const;

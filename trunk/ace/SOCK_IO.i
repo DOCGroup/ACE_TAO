@@ -62,33 +62,19 @@ ACE_SOCK_IO::recv (void *buf, size_t n) const
 // Send a vector of n byte messages to the connected socket.
 
 ASYS_INLINE ssize_t  
-ACE_SOCK_IO::send (const ACE_IO_Vector_Base iov[], size_t n) const
+ACE_SOCK_IO::send (const iovec iov[], size_t n) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
-  return ACE_OS::writev (this->get_handle (), iov, n);
-}
-
-ASYS_INLINE ssize_t  
-ACE_SOCK_IO::send (const ACE_IO_Vector iov[], size_t n) const
-{
-  ACE_TRACE ("ACE_SOCK_IO::send");
-  return ACE_OS::writev (this->get_handle (), iov, n);
+  return ACE_OS::sendv (this->get_handle (), iov, n);
 }
 
 // Recv an n byte message from the connected socket.
 
 ASYS_INLINE ssize_t  
-ACE_SOCK_IO::recv (ACE_IO_Vector_Base iov[], size_t n) const
+ACE_SOCK_IO::recv (iovec iov[], size_t n) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
-  return ACE_OS::readv (this->get_handle (), iov, n);
-}
-
-ASYS_INLINE ssize_t  
-ACE_SOCK_IO::recv (ACE_IO_Vector iov[], size_t n) const
-{
-  ACE_TRACE ("ACE_SOCK_IO::recv");
-  return ACE_OS::readv (this->get_handle (), iov, n);
+  return ACE_OS::recvv (this->get_handle (), iov, n);
 }
 
 ASYS_INLINE ssize_t

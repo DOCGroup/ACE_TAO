@@ -62,11 +62,11 @@ ACE_DEV_IO::send (size_t n, ...) const
   ACE_TRACE ("ACE_DEV_IO::send");
   va_list argp;  
   size_t total_tuples = n / 2;
-  ACE_IO_Vector_Base *iovp;
+  iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (ACE_IO_Vector_Base *) alloca (total_tuples * sizeof (ACE_IO_Vector_Base));
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
-  ACE_NEW_RETURN (iovp, ACE_IO_Vector[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
@@ -97,11 +97,11 @@ ACE_DEV_IO::recv (size_t n, ...) const
   ACE_TRACE ("ACE_DEV_IO::recv");
   va_list argp;  
   size_t total_tuples = n / 2;
-  ACE_IO_Vector_Base *iovp;
+  iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (ACE_IO_Vector_Base *) alloca (total_tuples * sizeof (iovec));
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else 
-  ACE_NEW_RETURN (iovp, ACE_IO_Vector_Base[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);

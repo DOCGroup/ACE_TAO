@@ -76,14 +76,14 @@ ACE_SPIPE_Stream::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *band, int *fl
 }
 
 ASYS_INLINE ssize_t
-ACE_SPIPE_Stream::send (const ACE_IO_Vector_Base iov[], size_t n) const
+ACE_SPIPE_Stream::send (const iovec iov[], size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::writev (this->get_handle (), iov, n);
 }
 
 ASYS_INLINE ssize_t
-ACE_SPIPE_Stream::recv (ACE_IO_Vector_Base iov[], size_t n) const
+ACE_SPIPE_Stream::recv (iovec iov[], size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recv");
   return ACE_OS::readv (this->get_handle (), iov, n);

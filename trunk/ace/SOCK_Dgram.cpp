@@ -26,7 +26,7 @@ ACE_SOCK_Dgram::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_Dgram::recv (ACE_IO_Vector_Base *io_vec, 
+ACE_SOCK_Dgram::recv (iovec *io_vec, 
 		      ACE_Addr &addr, 
 		      int flags) const
 {
@@ -121,11 +121,11 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 }
 
 #if defined (ACE_HAS_MSG)
-// Send an ACE_IO_Vector_Base of size N to ADDR as a datagram (connectionless
+// Send an iovec of size N to ADDR as a datagram (connectionless
 // version).
 
 ssize_t
-ACE_SOCK_Dgram::send (const ACE_IO_Vector_Base iov[], 
+ACE_SOCK_Dgram::send (const iovec iov[], 
                       size_t n, 
                       const ACE_Addr &addr, 
                       int flags) const
@@ -133,7 +133,7 @@ ACE_SOCK_Dgram::send (const ACE_IO_Vector_Base iov[],
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   msghdr send_msg;  
 
-  send_msg.msg_iov = (ACE_IO_Vector_Base *) iov;
+  send_msg.msg_iov = (iovec *) iov;
   send_msg.msg_iovlen = n;
 #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
   send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
@@ -154,11 +154,11 @@ ACE_SOCK_Dgram::send (const ACE_IO_Vector_Base iov[],
   return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
 }
 
-// Recv an ACE_IO_Vector_Base of size N to ADDR as a datagram (connectionless
+// Recv an iovec of size N to ADDR as a datagram (connectionless
 // version).
 
 ssize_t
-ACE_SOCK_Dgram::recv (ACE_IO_Vector_Base iov[], 
+ACE_SOCK_Dgram::recv (iovec iov[], 
                       size_t n, 
                       ACE_Addr &addr, 
                       int flags) const
@@ -166,7 +166,7 @@ ACE_SOCK_Dgram::recv (ACE_IO_Vector_Base iov[],
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
   msghdr recv_msg;  
 
-  recv_msg.msg_iov = (ACE_IO_Vector_Base *) iov;
+  recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
 #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
   recv_msg.msg_name = (struct sockaddr *) addr.get_addr ();
@@ -191,11 +191,11 @@ ACE_SOCK_Dgram::recv (ACE_IO_Vector_Base iov[],
 
 #else /* ACE_HAS_MSG */
 
-// Send an ACE_IO_Vector_Base of size N to ADDR as a datagram (connectionless
+// Send an iovec of size N to ADDR as a datagram (connectionless
 // version).
 
 ssize_t
-ACE_SOCK_Dgram::send (const ACE_IO_Vector_Base iov[], 
+ACE_SOCK_Dgram::send (const iovec iov[], 
                       size_t n, 
                       const ACE_Addr &addr, 
                       int flags) const
@@ -239,11 +239,11 @@ ACE_SOCK_Dgram::send (const ACE_IO_Vector_Base iov[],
   return result;
 }
 
-// Recv an ACE_IO_Vector_Base of size N to ADDR as a datagram (connectionless
+// Recv an iovec of size N to ADDR as a datagram (connectionless
 // version).
 
 ssize_t
-ACE_SOCK_Dgram::recv (ACE_IO_Vector_Base iov[], 
+ACE_SOCK_Dgram::recv (iovec iov[], 
                       size_t n, 
                       ACE_Addr &addr, 
                       int flags) const

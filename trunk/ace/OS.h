@@ -2916,11 +2916,34 @@ typedef SOCKET ACE_SOCKET;
 #   define MAXNAMLEN   _MAX_FNAME
 #   define EADDRINUSE WSAEADDRINUSE
 
+// The ordering of the fields in this struct is important.  It has to
+// match those in WSABUF.
 struct iovec
 {
-  char *iov_base; // data to be read/written
   size_t iov_len; // byte count to read/write
+  char *iov_base; // data to be read/written
 };
+
+struct msghdr 
+{
+  sockaddr * msg_name;
+  // optional address
+
+  int msg_namelen;
+  // size of address
+
+  iovec *msg_iov;		
+  /* scatter/gather array */
+
+  int msg_iovlen;		
+  // # elements in msg_iov 
+
+  caddr_t msg_accrights;
+  // access rights sent/received
+
+  int msg_accrightslen;
+};
+
 
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
@@ -4246,24 +4269,6 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
-# if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-typedef WSABUF ACE_IO_Vector_Base;
-# else
-typedef iovec ACE_IO_Vector_Base;
-# endif /* ACE_HAS_WINSOCK2 */
-
-class ACE_Export ACE_IO_Vector : public ACE_IO_Vector_Base
-{
-  // = TITLE
-  //   This little adapter class makes it easier to use writev() and
-  //   readv() portably on Win32 and UNIX.
-public:
-  ssize_t length (void) const;
-  void length (ssize_t new_length);
-  void *buffer (void) const;
-  void buffer (void *new_buffer);
-};
-
 class ACE_Export ACE_OS
 {
   // = TITLE
@@ -4781,11 +4786,17 @@ public:
                          size_t nbyte,
                          off_t offset);
   static ssize_t readv (ACE_HANDLE handle,
-                        ACE_IO_Vector_Base *iov,
+                        iovec *iov,
                         int iovlen);
   static ssize_t writev (ACE_HANDLE handle,
-                         const ACE_IO_Vector_Base *iov,
+                         const iovec *iov,
                          int iovcnt);
+  static ssize_t recvv (ACE_HANDLE handle,
+                        iovec *iov,
+                        int iovlen);
+  static ssize_t sendv (ACE_HANDLE handle,
+                        const iovec *iov,
+                        int iovcnt);
 
   // = A set of wrappers for event demultiplexing and IPC.
   static int select (int width,
@@ -5561,7 +5572,7 @@ extern "C" ssize_t write_timedwait (ACE_HANDLE handle,
                                     size_t n,
                                     struct timespec *timeout);
 extern "C" ssize_t readv_timedwait (ACE_HANDLE handle,
-                                    ACE_IO_Vector_Base *iov,
+                                    iovec *iov,
                                     int iovcnt,
                                     struct timespec* timeout);
 extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,

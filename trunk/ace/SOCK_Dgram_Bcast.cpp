@@ -249,7 +249,8 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
     {
       temp->bcast_addr_.set_port_number (port_number);
 
-      ssize_t bytes_sent = ACE_SOCK_Dgram::send (buf, n, 
+      ssize_t bytes_sent = ACE_SOCK_Dgram::send (buf, 
+                                                 n, 
 						 temp->bcast_addr_, 
 						 flags);
 
@@ -292,9 +293,8 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
   return 0;
 }
 
-// Broadcast an ACE_IO_Vector of size N to ADDR as a datagram (note
-// that addr must be preassigned to the broadcast address of the
-// subnet...).
+// Broadcast an iovec of size N to ADDR as a datagram (note that addr
+// must be preassigned to the broadcast address of the subnet...).
 
 ssize_t
 ACE_SOCK_Dgram_Bcast::send (const iovec iov[], 

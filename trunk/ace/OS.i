@@ -107,46 +107,6 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 # include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
 
-ACE_INLINE ssize_t
-ACE_IO_Vector::length (void) const
-{
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  return this->len;
-#else
-  return this->iov_len;
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void
-ACE_IO_Vector::length (ssize_t new_length)
-{
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  this->len = new_length;
-#else
-  this->iov_len = new_length;
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void *
-ACE_IO_Vector::buffer (void) const
-{
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  return this->buf;
-#else
-  return this->iov_base;
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
-ACE_INLINE void
-ACE_IO_Vector::buffer (void *new_buffer)
-{
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-  this->buf = (char *) new_buffer;
-#else
-  this->iov_base = ACE_static_cast (char *, new_buffer);
-#endif /* ACE_HAS_WINSOCK2 */
-}
-
 // Returns the value of the object as a timeval.
 
 ACE_INLINE
@@ -4692,22 +4652,65 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 {
   // ACE_TRACE ("ACE_OS::recvmsg");
 #if !defined (ACE_LACKS_RECVMSG)
+# if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  DWORD bytes_received = 0;
+
+  int result = ::WSARecvFrom ((SOCKET) handle,
+                              (WSABUF *) msg->msg_iov,
+                              msg->msg_iovlen,
+                              &bytes_received,
+                              (DWORD *) &flags, 
+                              msg->msg_name,   
+                              &msg->msg_namelen,   
+                              0, 
+                              0); 
+ 
+  if (result != 0)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else
+    return (ssize_t) bytes_received;
+# else /* ACE_HAS_WINSOCK2 */
   ACE_SOCKCALL_RETURN (::recvmsg (handle, msg, flags), int, -1);
+# endif /* ACE_HAS_WINSOCK2 */
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (msg);
   ACE_UNUSED_ARG (handle);
 
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_MSG */
+#endif /* ACE_LACKS_RECVMSG */
 }
 
 ACE_INLINE int
-ACE_OS::sendmsg (ACE_HANDLE handle, const struct msghdr *msg, int flags)
+ACE_OS::sendmsg (ACE_HANDLE handle, 
+                 const struct msghdr *msg, 
+                 int flags)
 {
   // ACE_TRACE ("ACE_OS::sendmsg");
 #if !defined (ACE_LACKS_SENDMSG)
-# if defined (ACE_LACKS_POSIX_PROTOTYPES) ||  defined (ACE_PSOS)
+# if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  DWORD bytes_sent = 0;
+  int result = ::WSASendTo ((SOCKET) handle,
+                            (WSABUF *) msg->msg_iov,
+                            msg->msg_iovlen,
+                            &bytes_sent,
+                            flags, 
+                            msg->msg_name,   
+                            msg->msg_namelen,   
+                            0, 
+                            0); 
+ 
+  if (result != 0)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else
+    return (ssize_t) bytes_sent;
+# elif defined (ACE_LACKS_POSIX_PROTOTYPES) ||  defined (ACE_PSOS)
   ACE_SOCKCALL_RETURN (::sendmsg (handle, (struct msghdr *) msg, flags), int, -1);
 # else
   ACE_SOCKCALL_RETURN (::sendmsg (handle, (ACE_SENDMSG_TYPE *) msg, flags), int, -1);
@@ -4718,7 +4721,7 @@ ACE_OS::sendmsg (ACE_HANDLE handle, const struct msghdr *msg, int flags)
   ACE_UNUSED_ARG (handle);
 
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_MSG */
+#endif /* ACE_LACKS_SENDMSG */
 }
 
 ACE_INLINE int
@@ -6306,48 +6309,33 @@ ACE_OS::filesize (ACE_HANDLE handle)
 
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle,
-               ACE_IO_Vector_Base *iov,
+               iovec *iov,
                int iovlen)
 {
   // ACE_TRACE ("ACE_OS::readv");
-# if defined (ACE_PSOS)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (iov);
-  ACE_UNUSED_ARG (iovlen);
-  ACE_NOTSUP_RETURN (-1);
-# else
   ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
-# endif /* defined (ACE_PSOS) */
 }
 
 ACE_INLINE ssize_t
 ACE_OS::writev (ACE_HANDLE handle,
-                const ACE_IO_Vector_Base *iov,
+                const iovec *iov,
                 int iovcnt)
 {
   // ACE_TRACE ("ACE_OS::writev");
-#if defined (ACE_PSOS)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (iov);
-  ACE_UNUSED_ARG (iovcnt);
-  ACE_NOTSUP_RETURN (-1);
-#else
   ACE_OSCALL_RETURN (::writev (handle, (ACE_WRITEV_TYPE *) iov, iovcnt), int, -1);
-#endif /* defined (ACE_PSOS) */
 }
 
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-
 ACE_INLINE ssize_t
-ACE_OS::readv (ACE_HANDLE handle,
-               ACE_IO_Vector_Base *buffers,
+ACE_OS::recvv (ACE_HANDLE handle,
+               iovec *buffers,
                int n)
 {
-  ssize_t bytes_received = 0;
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  DWORD bytes_received = 0;
   int result = ::WSARecv ((SOCKET) handle,
-                          buffers,
+                          (WSABUF *) buffers,
                           n,
-                          (DWORD *) &bytes_received,
+                          &bytes_received,
                           0,
                           0,
                           0);
@@ -6357,19 +6345,23 @@ ACE_OS::readv (ACE_HANDLE handle,
       return -1;
     }
   else
-    return bytes_received;
+    return (ssize_t) bytes_received;
+#else  
+  return ACE_OS::readv (handle, iov, iovcnt);
+#endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE ssize_t
-ACE_OS::writev (ACE_HANDLE handle,
-                const ACE_IO_Vector_Base *buffers,
-                int n)
+ACE_OS::sendv (ACE_HANDLE handle,
+               const iovec *buffers,
+               int n)
 {
-  ssize_t bytes_sent = 0;
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  DWORD bytes_sent = 0;
   int result = ::WSASend ((SOCKET) handle,
                           (WSABUF *) buffers,
                           n,
-                          (DWORD *) &bytes_sent,
+                          &bytes_sent,
                           0,
                           0,
                           0);
@@ -6379,10 +6371,11 @@ ACE_OS::writev (ACE_HANDLE handle,
       return -1;
     }
   else
-    return bytes_sent;
-}
-
+    return (ssize_t) bytes_sent;
+#else
+  return ACE_OS::writev (handle, buffers
 #endif /* ACE_HAS_WINSOCK2 */
+}
 
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds, u_long len, ACE_Time_Value *timeout)
