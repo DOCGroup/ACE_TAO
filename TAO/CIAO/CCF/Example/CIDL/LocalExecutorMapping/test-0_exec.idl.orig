@@ -1,8 +1,0 @@
-#include <Components.idl>
-module M
-{
-  local interface CCM_I : I
-  {
-  };
-};
-
