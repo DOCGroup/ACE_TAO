@@ -558,12 +558,6 @@ TAO_Objref_Out_T<
   CORBA::tao_Policy_life
   >;
 
-template class TAO_Unbounded_Object_Sequence<CORBA::Policy,
-                                             TAO_Objref_Var_T<CORBA::Policy,
-                                                              CORBA::tao_Policy_life>,
-                                             CORBA::tao_Policy_life,
-                                             CORBA::tao_Policy_cast>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate \
     TAO_Objref_Var_T< \
@@ -571,11 +565,6 @@ template class TAO_Unbounded_Object_Sequence<CORBA::Policy,
         CORBA::tao_Policy_life \
       >
 # pragma instantiate TAO_Unbounded_Sequence<CORBA::UShort>
-# pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy,
-TAO_Objref_Var_T<CORBA::Policy,
-                 CORBA::tao_Policy_life>,
-                                                   CORBA::tao_Policy_life,
-                                                   CORBA::tao_Policy_cast>
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Policy, \
