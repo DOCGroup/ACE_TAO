@@ -433,6 +433,8 @@ ACE_Message_Block::init_i (size_t size,
   ACE_TRACE ("ACE_Message_Block::init_i");
   ACE_FUNCTION_TIMEPROBE (ACE_MESSAGE_BLOCK_INIT_I_ENTER);
 
+  this->rd_ptr_ = 0;
+  this->wr_ptr_ = 0;
   this->priority_ = priority;
   this->execution_time_ = execution_time;
   this->deadline_time_ = deadline_time;
