@@ -1467,6 +1467,12 @@ The implementation released in TAO 1.1 consists of the following
             The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Subscribe
             </tt> shows a basic example of how to use subscriptions.
         </li>
+
+        <li>
+            There is on going work to add tests in
+            <tt>$TAO_ROOT/orbsvcs/tests/Notify/
+            </tt>
+        </li>
 </ul>
 
 <h3> Features supported thus far:</h3>
@@ -1501,7 +1507,8 @@ Please note the following:
   <li>
       There are helper classes TAO_Notify_StructuredPushConsumer,
       TAO_Notify_StructuredPushSupplier and TAO_Notify_PushConsumer,
-      TAO_Notify_PushSupplier to write client consumers and suppliers.
+      TAO_Notify_PushSupplier to write client consumers and suppliers
+      in <tt> $TAO_ROOT/orbsvcs/tests/Notify/lib</tt>.
   </li>
 
   <li>
@@ -1528,8 +1535,8 @@ The TODO list runs like this:
 <ul>
 
   <li>
-      Implement the QoS properties, especially the <tt>Reliability</tt>
-      QoS property that requires persistent events.
+      Implement the QoS properties, The <tt>Reliability</tt>
+      QoS property is not going to be implemented. all others will be.
   </li>
 
   <li>
@@ -1580,12 +1587,14 @@ The TODO list runs like this:
   </li>
 
   <li>
-      If possible, implement Pull interfaces.
+      Implement Pull interfaces.
   </li>
 
   <li>
-      If possible, implement event communication via reliable multicast.
+      Support Policies to remove dead or unresponsive consumers and
+      suppliers in the Notification Service.
   </li>
+
 </ul>
 
 <!-- BEGIN: CORBA Security Service Release Notes -->
