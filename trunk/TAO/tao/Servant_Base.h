@@ -18,16 +18,17 @@
 #define SERVANT_BASE_H
 
 class TAO_Export TAO_ServantBase
+{
   // = TITLE
   //   Base class for skeletons and servants.
   //
   // = DESCRIPTION
   //   The POA spec requires that all servants inherit from this
   //   class.
-{
+public:
   friend class TAO_POA;
   friend class CORBA_Object;
-public:
+
   virtual ~TAO_ServantBase (void);
   // destructor
 
@@ -81,10 +82,9 @@ protected:
 };
 
 class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
+{
   // = TITLE
   //   Base class for local skeletons and servants.
-  //
-{
 protected:
   STUB_Object *_create_stub (CORBA_Environment &env);
   // This is an auxiliar method for _this().  Make sure *not* to
@@ -92,16 +92,15 @@ protected:
 };
 
 class TAO_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
+{
   // = TITLE
   //   Base class for DSI.
   //
   // = DESCRIPTION
-
-  //   It is expected that the invoke() and _primary_interface()
+  //   It is expected that the <invoke> and <_primary_interface>
   //   methods will be only invoked by the POA in the context of
   //   serving a CORBA request. Invoking this method in other
   //   circumstances may lead to unpredictable results.
-{
 public:
   virtual void invoke (CORBA::ServerRequest_ptr request,
                        CORBA::Environment &env) = 0;

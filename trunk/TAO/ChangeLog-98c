@@ -1,5 +1,9 @@
 Sat Jun  6 17:35:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* TAO_IDL/be/be_visitor_interface.cpp: Added CORBA::Environment
+ 	  &env to the _default_POA() tie method.  Thanks to David Levine
+ 	  for reporting this.
+
 	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Added a simple-minded
  	  implementation of the log() method.  This can certainly be
  	  improved...
