@@ -1,3 +1,10 @@
+Sun Mar 25 20:18:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp: 
+	  Fixed a warning with KCC builds. The ACE_ASSERTs dissappear in
+	  non-debug builds. Added ACE_UNUSED_ARG to prevent the compiler
+	  from complaining about unused variables.
+
 Sun Mar 25 18:15:39 2001  Angelo Corsaro  <corsaro@danzon.cs.wustl.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl: 
