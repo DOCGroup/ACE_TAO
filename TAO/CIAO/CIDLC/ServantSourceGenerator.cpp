@@ -1050,7 +1050,11 @@ namespace
            << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
            << "}" << endl << endl
            << "this->ciao_emits_" << e.name ()
-           << "_consumer_ = c;" << endl
+           << "_consumer_ = " << endl;
+
+        Traversal::EmitterData::belongs (e, belongs_);
+
+	os << "Consumer::_duplicate (c);" << endl
            << "}" << endl;
 
         Traversal::EmitterData::belongs (e, belongs_);
