@@ -1,3 +1,16 @@
+Sat Nov  4 14:53:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/make_pretty.pl:
+          This is a modified version of Darrell's script to beautify our
+          auto_compile logs.  This version works better with Unix builds
+          and is going to be invoked by bin/auto_compile to generate
+          summary logs.
+
+        * bin/show_log.pl:
+          A CGI script to present all the logs for a particular builds in
+          a single page.  It is a modified version of Darrell's script,
+          but this time it works better on Unix web servers.
+
 Fri Nov  3 17:22:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: Backed of changes given by Russ
