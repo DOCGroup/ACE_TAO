@@ -38,32 +38,32 @@ char Usage[] =
      "          o = octet, S = BinStruct \n";
 
 CORBA::Long trans = 1;          // we are a client - used for debugging purposes
-CORBA::Long buflen = 8 * 1024;	// length of buffer, default 8,192 bytes
-CORBA::Char *buf;		// ptr to dynamic buffer
-CORBA::Long nbuf;	        // number of buffers to send in sinkmode
-CORBA::Short port = TAO_DEFAULT_SERVER_PORT;	// TCP port number
+CORBA::Long buflen = 8 * 1024;  // length of buffer, default 8,192 bytes
+CORBA::Char *buf;               // ptr to dynamic buffer
+CORBA::Long nbuf;               // number of buffers to send in sinkmode
+CORBA::Short port = TAO_DEFAULT_SERVER_PORT;    // TCP port number
 CORBA::Char *host = "localhost";              // ptr to name of host
-CORBA::Long verbose = 0;	// 0=print basic info, 1=print cpu
+CORBA::Long verbose = 0;        // 0=print basic info, 1=print cpu
                                 // rate, proc resource usage.
-CORBA::Char fmt = 'K';		// output
+CORBA::Char fmt = 'K';          // output
                                 // format:k=kilobits,K=kilobytes, m = megabits,
                                 // M = megabytes, g = gigabits, G = gigabytes
 CORBA::String title = 0;        // title of file to gather statistics
 char stats[128];                // gathering the statistics
-unsigned long srcDataSize;	// Total amount of source data
-unsigned long nbytes;		// bytes on net
-unsigned long numCalls;		// # of I/O system calls
-double cput, realt;		// user, real time (seconds)
-unsigned long	dt;             // data type
+unsigned long srcDataSize;      // Total amount of source data
+unsigned long nbytes;           // bytes on net
+unsigned long numCalls;         // # of I/O system calls
+double cput, realt;             // user, real time (seconds)
+unsigned long   dt;             // data type
 char * ior = 0;
 
 // declare variables for various message types
-ttcp_sequence::ShortSeq		*sseq;
-ttcp_sequence::LongSeq		*lseq;
-ttcp_sequence::OctetSeq		*oseq;
-ttcp_sequence::DoubleSeq	*dseq;
-ttcp_sequence::CharSeq		*cseq;
-ttcp_sequence::StructSeq	*Sseq;
+ttcp_sequence::ShortSeq         *sseq;
+ttcp_sequence::LongSeq          *lseq;
+ttcp_sequence::OctetSeq         *oseq;
+ttcp_sequence::DoubleSeq        *dseq;
+ttcp_sequence::CharSeq          *cseq;
+ttcp_sequence::StructSeq        *Sseq;
 
 int
 main (int argc, char *argv[])
@@ -75,7 +75,7 @@ main (int argc, char *argv[])
                                             // server
   CORBA::Object_ptr     objref = CORBA::Object::_nil(); // object reference
   ttcp_sequence_ptr     ttcp_seq = 0;  // obj reference to TTCP object
-  CORBA::Environment	env;       // environment
+  CORBA::Environment    env;       // environment
 
   fstream iorfile;
 
@@ -87,58 +87,58 @@ main (int argc, char *argv[])
   while ((c = get_opt ()) != -1)
     {
       switch (c)
-	{
-	case 'i':
-	  ior = ACE_OS::strdup (get_opt.optarg);
-	  break;
-	case 'L':
-	  title = ACE_OS::strdup (get_opt.optarg);
-	  break;
-	case 'd':
-	  TAO_debug_level = ACE_OS::atoi (get_opt.optarg);
-	  if (TAO_debug_level > 10)
-	    TAO_debug_level = 10;
-	  break;
-	case 'l':
-	  buflen = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'v':
-	  verbose = 1;
-	  break;
-	case 'f':
-	  fmt = *get_opt.optarg;
-	  break;
-	case 'S':       /* total source data to send. */
-	  srcDataSize = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'q':       /* Send sequence of desired data type */
-	  switch(*get_opt.optarg){
-	  case 's':
-	    dt = SEND_SHORT;
-	    break;
-	  case 'l':
-	    dt = SEND_LONG;
-	    break;
-	  case 'd':
-	    dt = SEND_DOUBLE;
-	    break;
-	  case 'c':
-	    dt = SEND_CHAR;
-	    break;
-	  case 'o':
-	    dt = SEND_OCTET;
-	    break;
-	  case 'S':
-	    dt = SEND_STRUCT;
-	    break;
-	  case 'C':
-	    dt = SEND_COMPOSITE;
-	    break;
-	  }
-	  break;
-	default:
+        {
+        case 'i':
+          ior = ACE_OS::strdup (get_opt.optarg);
+          break;
+        case 'L':
+          title = ACE_OS::strdup (get_opt.optarg);
+          break;
+        case 'd':
+          TAO_debug_level = ACE_OS::atoi (get_opt.optarg);
+          if (TAO_debug_level > 10)
+            TAO_debug_level = 10;
+          break;
+        case 'l':
+          buflen = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'v':
+          verbose = 1;
+          break;
+        case 'f':
+          fmt = *get_opt.optarg;
+          break;
+        case 'S':       /* total source data to send. */
+          srcDataSize = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'q':       /* Send sequence of desired data type */
+          switch(*get_opt.optarg){
+          case 's':
+            dt = SEND_SHORT;
+            break;
+          case 'l':
+            dt = SEND_LONG;
+            break;
+          case 'd':
+            dt = SEND_DOUBLE;
+            break;
+          case 'c':
+            dt = SEND_CHAR;
+            break;
+          case 'o':
+            dt = SEND_OCTET;
+            break;
+          case 'S':
+            dt = SEND_STRUCT;
+            break;
+          case 'C':
+            dt = SEND_COMPOSITE;
+            break;
+          }
+          break;
+        default:
           return print_usage ();
-	}
+        }
     }
 
   //
@@ -203,11 +203,11 @@ main (int argc, char *argv[])
               return -1;
             }
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
           /* start recording quantify data from here */
           quantify_clear_data ();
           quantify_start_recording_data ();
-#endif
+#endif /* ACE_HAS_QUANTIFY */
           // send the same buffer nbuf times
           while (nbuf--)
             {
@@ -245,9 +245,9 @@ main (int argc, char *argv[])
                   return -1;
                 }
             }
-#if defined (USE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
           quantify_stop_recording_data();
-#endif
+#endif /* ACE_HAS_QUANTIFY */
           //
           // Stop the timer
           //
