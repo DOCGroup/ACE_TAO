@@ -117,6 +117,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -206,6 +208,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -259,7 +263,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task_T.h \
  $(WRAPPER_ROOT)/ace/Task_T.i \
  $(WRAPPER_ROOT)/ace/Module.i \
- $(WRAPPER_ROOT)/ace/Stream.i test_config.h
+ $(WRAPPER_ROOT)/ace/Stream.i \
+ test_config.h
 .obj/Conn_Test.o .shobj/Conn_Test.so: Conn_Test.cpp \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -319,6 +324,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Handle_Set.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -363,8 +370,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Connector.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.i \
- $(WRAPPER_ROOT)/ace/Connector.i test_config.h \
- Conn_Test.h
+ $(WRAPPER_ROOT)/ace/Connector.i \
+ test_config.h Conn_Test.h
 .obj/Future_Test.o .shobj/Future_Test.so: Future_Test.cpp \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -424,6 +431,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -461,9 +470,10 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Method_Object.h \
  $(WRAPPER_ROOT)/ace/Activation_Queue.h \
  $(WRAPPER_ROOT)/ace/Auto_Ptr.h \
- $(WRAPPER_ROOT)/ace/Auto_Ptr.i test_config.h
+ $(WRAPPER_ROOT)/ace/Auto_Ptr.i \
+ test_config.h
 .obj/Handle_Set_Test.o .shobj/Handle_Set_Test.so: Handle_Set_Test.cpp \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Profile_Timer.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
@@ -475,7 +485,13 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Handle_Set.i test_config.h
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/High_Res_Timer.h \
+ $(WRAPPER_ROOT)/ace/High_Res_Timer.i \
+ $(WRAPPER_ROOT)/ace/Profile_Timer.i \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.i \
+ test_config.h
 .obj/IOStream_Test.o .shobj/IOStream_Test.so: IOStream_Test.cpp \
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -519,6 +535,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -576,7 +594,9 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.i \
- $(WRAPPER_ROOT)/ace/IOStream.h test_config.h
+ $(WRAPPER_ROOT)/ace/IOStream.h \
+ $(WRAPPER_ROOT)/ace/IOStream_T.h \
+ test_config.h
 .obj/MM_Shared_Memory_Test.o .shobj/MM_Shared_Memory_Test.so: MM_Shared_Memory_Test.cpp \
  $(WRAPPER_ROOT)/ace/Shared_Memory_MM.h \
  $(WRAPPER_ROOT)/ace/Shared_Memory.h \
@@ -640,7 +660,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Event_Handler.i \
  $(WRAPPER_ROOT)/ace/Synch_T.i \
  $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Thread.i test_config.h
+ $(WRAPPER_ROOT)/ace/Thread.i \
+ test_config.h
 .obj/Mem_Map_Test.o .shobj/Mem_Map_Test.so: Mem_Map_Test.cpp \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -654,7 +675,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Mem_Map.i test_config.h
+ $(WRAPPER_ROOT)/ace/Mem_Map.i \
+ test_config.h
 .obj/Simple_Message_Block_Test.o .shobj/Simple_Message_Block_Test.so: Simple_Message_Block_Test.cpp \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -753,6 +775,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -785,7 +809,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h \
  $(WRAPPER_ROOT)/ace/Message_Queue.i \
- $(WRAPPER_ROOT)/ace/Task_T.i test_config.h
+ $(WRAPPER_ROOT)/ace/Task_T.i \
+ test_config.h
 .obj/Message_Queue_Test.o .shobj/Message_Queue_Test.so: Message_Queue_Test.cpp \
  $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
@@ -842,6 +867,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -917,6 +944,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1024,6 +1053,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Handle_Set.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1092,7 +1123,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Process.h \
  $(WRAPPER_ROOT)/ace/Process.i \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
- $(WRAPPER_ROOT)/ace/Get_Opt.i test_config.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.i \
+ test_config.h
 .obj/Process_Strategy_Test.o .shobj/Process_Strategy_Test.so: Process_Strategy_Test.cpp \
  $(WRAPPER_ROOT)/ace/Acceptor.h \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
@@ -1136,6 +1168,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1196,7 +1230,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Singleton.h \
- $(WRAPPER_ROOT)/ace/Singleton.i test_config.h
+ $(WRAPPER_ROOT)/ace/Singleton.i \
+ test_config.h
 .obj/Priority_Buffer_Test.o .shobj/Priority_Buffer_Test.so: Priority_Buffer_Test.cpp \
  $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
@@ -1253,6 +1288,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1328,6 +1365,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1379,7 +1418,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task_T.h \
  $(WRAPPER_ROOT)/ace/Task_T.i \
  $(WRAPPER_ROOT)/ace/Sched_Params.h \
- $(WRAPPER_ROOT)/ace/Sched_Params.i test_config.h
+ $(WRAPPER_ROOT)/ace/Sched_Params.i \
+ test_config.h
 .obj/Pipe_Test.o .shobj/Pipe_Test.so: Pipe_Test.cpp \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -1397,7 +1437,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Process.h \
  $(WRAPPER_ROOT)/ace/Process.i \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
- $(WRAPPER_ROOT)/ace/Get_Opt.i test_config.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.i \
+ test_config.h
 .obj/Reactors_Test.o .shobj/Reactors_Test.so: Reactors_Test.cpp \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -1440,6 +1481,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1489,7 +1532,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task.i \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Task_T.i test_config.h
+ $(WRAPPER_ROOT)/ace/Task_T.i \
+ test_config.h
 .obj/Reactor_Exceptions_Test.o .shobj/Reactor_Exceptions_Test.so: Reactor_Exceptions_Test.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -1532,6 +1576,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1579,7 +1625,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ReactorEx.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
- $(WRAPPER_ROOT)/ace/SOCK_Dgram.i test_config.h
+ $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
+ test_config.h
 .obj/Reactor_Notify_Test.o .shobj/Reactor_Notify_Test.so: Reactor_Notify_Test.cpp \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -1622,6 +1669,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1671,7 +1720,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task.i \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Task_T.i test_config.h
+ $(WRAPPER_ROOT)/ace/Task_T.i \
+ test_config.h
 .obj/Reactor_Timer_Test.o .shobj/Reactor_Timer_Test.so: Reactor_Timer_Test.cpp \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
@@ -1699,6 +1749,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Thread.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
@@ -1723,7 +1775,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i test_config.h
+ $(WRAPPER_ROOT)/ace/Reactor.i \
+ test_config.h
 .obj/Reader_Writer_Test.o .shobj/Reader_Writer_Test.so: Reader_Writer_Test.cpp \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -1766,6 +1819,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1813,7 +1868,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ReactorEx.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
- $(WRAPPER_ROOT)/ace/Get_Opt.i test_config.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.i \
+ test_config.h
 .obj/Recursive_Mutex_Test.o .shobj/Recursive_Mutex_Test.so: Recursive_Mutex_Test.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -1856,6 +1912,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1903,7 +1961,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ReactorEx.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
- $(WRAPPER_ROOT)/ace/Get_Opt.i test_config.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.i \
+ test_config.h
 .obj/Service_Config_Test.o .shobj/Service_Config_Test.so: Service_Config_Test.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -1946,6 +2005,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -1993,6 +2054,19 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/ReactorEx.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  test_config.h
+.obj/Sigset_Ops_Test.o .shobj/Sigset_Ops_Test.so: Sigset_Ops_Test.cpp \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ test_config.h
 .obj/SOCK_Test.o .shobj/SOCK_Test.so: SOCK_Test.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
@@ -2001,9 +2075,9 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Thread.i \
@@ -2035,6 +2109,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -2094,9 +2170,9 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Thread.i \
@@ -2141,7 +2217,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/SString.i test_config.h
+ $(WRAPPER_ROOT)/ace/SString.i \
+ test_config.h
 .obj/SV_Shared_Memory_Test.o .shobj/SV_Shared_Memory_Test.so: SV_Shared_Memory_Test.cpp \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -2177,7 +2254,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.i test_config.h
+ $(WRAPPER_ROOT)/ace/Memory_Pool.i \
+ test_config.h
 .obj/Task_Test.o .shobj/Task_Test.so: Task_Test.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -2220,6 +2298,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -2269,7 +2349,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task.i \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Task_T.i test_config.h
+ $(WRAPPER_ROOT)/ace/Task_T.i \
+ test_config.h
 .obj/Thread_Manager_Test.o .shobj/Thread_Manager_Test.so: Thread_Manager_Test.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -2312,6 +2393,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -2418,6 +2501,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -2450,7 +2535,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h \
  $(WRAPPER_ROOT)/ace/Message_Queue.i \
- $(WRAPPER_ROOT)/ace/Task_T.i test_config.h
+ $(WRAPPER_ROOT)/ace/Task_T.i \
+ test_config.h
 .obj/Time_Service_Test.o .shobj/Time_Service_Test.so: Time_Service_Test.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
@@ -2459,10 +2545,11 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Record.i test_config.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ test_config.h \
  $(WRAPPER_ROOT)/ace/Process.h \
  $(WRAPPER_ROOT)/ace/Process.i
 .obj/Time_Value_Test.o .shobj/Time_Value_Test.so: Time_Value_Test.cpp \
@@ -2476,7 +2563,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/ACE.i test_config.h
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ test_config.h
 .obj/Timer_Queue_Test.o .shobj/Timer_Queue_Test.so: Timer_Queue_Test.cpp \
  $(WRAPPER_ROOT)/ace/Profile_Timer.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -2510,6 +2598,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Thread.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Timer_Heap.h \
  $(WRAPPER_ROOT)/ace/Timer_Heap_T.h \
@@ -2517,6 +2607,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Containers.i \
  $(WRAPPER_ROOT)/ace/Timer_Wheel.h \
  $(WRAPPER_ROOT)/ace/Timer_Wheel_T.h \
+ $(WRAPPER_ROOT)/ace/Timer_Hash.h \
+ $(WRAPPER_ROOT)/ace/Timer_Hash_T.h \
  test_config.h
 .obj/Tokens_Test.o .shobj/Tokens_Test.so: Tokens_Test.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -2526,9 +2618,9 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Process.h \
  $(WRAPPER_ROOT)/ace/Process.i \
@@ -2591,6 +2683,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Handle_Set.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -2669,6 +2763,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
@@ -2777,6 +2873,8 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Handle_Set.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
+ $(WRAPPER_ROOT)/ace/Free_List.h \
+ $(WRAPPER_ROOT)/ace/Free_List.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Token.i \
