@@ -2,8 +2,9 @@ Fri Apr 16 07:52:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp: Fixed my previous fix with 
           calibrate being called on Windows NT when a high-res
-          timer of 1 Mhz was being found.  Thanks to Zoran
-          Ivanovic <zorani@pathcom.com> for noticing this.
+          timer of 1 Mhz was being found.  Calibrate should not
+          be called on NT now.  Thanks to Zoran Ivanovic 
+          <zorani@pathcom.com> for noticing this.
 
         * ace/Profile_Timer.cpp: Integrated the patch from Andy
           Marchewka <AndyM@who.net> for returning rusage information
