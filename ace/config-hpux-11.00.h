@@ -196,7 +196,7 @@
 #  if !defined (ACE_POSIX_AIOCB_PROACTOR) && !defined (ACE_POSIX_SIG_PROACTOR)
 #    define ACE_POSIX_AIOCB_PROACTOR
 #  endif /* !ACE_HAS_POSIX_AIOCB_PROACTOR && !ACE_POSIX_SIG_PROACTOR */
-#endif /* ACE_HAS_AIO_CALLS)
+#endif /* ACE_HAS_AIO_CALLS */
 
 ////////////////////////////////////////////////////////////////////////////
 //
