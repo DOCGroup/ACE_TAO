@@ -33,11 +33,18 @@ Sat Jun 26 14:23:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 	Updated the files to reflect the removal of 
 	Shared_Hash_Map_T.{h,cpp} from this directory.
 
-
 Sat Jun 26 13:10:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors,
+	* examples/POA/Default_Servant/File_i.h: Fixed the exception spec
+	  for destroy.  Thanks to David for reporting this.
+
+	* orbsvcs/orbsvcs/Trader: Removed all vestiges of the Locking.h
+	  file, which has been subsumed into other parts of ACE+TAO.
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp,
+	  orbsvcs/orbsvcs/Trader/Constraint_Visitors,
 	  orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp,
+	  orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp,
 	  orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp: Fixed exception
 	  handling to be compliant with the ACE macros.
 
