@@ -179,6 +179,12 @@ be_constant::exprtype_to_string (void)
       return "void";
     case AST_Expression::EV_none:
       return "none";
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_wstring:
+      return NULL;
     }
   return NULL;
 }
