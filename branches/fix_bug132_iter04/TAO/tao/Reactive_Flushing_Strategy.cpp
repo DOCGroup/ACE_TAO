@@ -12,13 +12,13 @@ ACE_RCSID(tao, Reactive_Flushing_Strategy, "$Id$")
 int
 TAO_Reactive_Flushing_Strategy::schedule_output (TAO_Transport *transport)
 {
-  return transport->schedule_output ();
+  return transport->schedule_output_i ();
 }
 
 int
 TAO_Reactive_Flushing_Strategy::cancel_output (TAO_Transport *transport)
 {
-  return transport->cancel_output ();
+  return transport->cancel_output_i ();
 }
 
 int
