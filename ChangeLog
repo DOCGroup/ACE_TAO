@@ -1,3 +1,12 @@
+Thu May 22 10:30:31 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+
+          If an mwc file contained a relative path to an mpc file or
+          directory, these workspace creators would generate invalid
+          workspaces.  This situation is accounted for now.
+
 Thu May 22 15:29:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/TP_Reactor.cpp:
