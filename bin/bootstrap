@@ -58,11 +58,14 @@ done
 # This script must be run from the top-level ACE source directory
 if test -d m4; then
 
+  ##
+  # The beta is now cut on a linux box. These are available in /usr/bin. 
+  #
   # Set the PATH containing the GNU tools
-  if (uname | grep SunOS > /dev/null 2>&1); then
-    PATH=/project/danzon/pkg/gnu/bin:$PATH
-    export PATH
-  fi
+  #if (uname | grep SunOS > /dev/null 2>&1); then
+  #  PATH=/project/danzon/pkg/gnu/bin:$PATH
+  #  export PATH
+  #fi
 
   # Update the NEWS file
   # For now just copy the contents of the `VERSION' file to make automake
