@@ -110,7 +110,7 @@ ACE_ATM_Connector::reset_new_handle (ACE_HANDLE handle)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   // Reset the event association 
   return ::WSAEventSelect ((SOCKET) handle,
-                           NULL,
+                           0,
                            0);    
 #else /* !defined ACE_HAS_WINSOCK2 */
   ACE_UNUSED_ARG (handle);

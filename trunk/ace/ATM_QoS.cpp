@@ -349,7 +349,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   qos_.SendingFlowspec.Latency = -1;	// we don't care too much
   qos_.SendingFlowspec.DelayVariation = -1; // we don't care too much
   // no provider-specific data allowed on ATM
-  qos_.ProviderSpecific.buf=NULL;
+  qos_.ProviderSpecific.buf=0;
   qos_.ProviderSpecific.len=0;
   // unidirectional P2MP; we don't need to setup the Receiving flowspec
 
@@ -501,7 +501,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       boundaddr.addr.maxlen = sizeof(local_addr);
       boundaddr.addr.buf = (char *) &local_addr;
 
-      //if (ACE_OS::t_getprotaddr(fd, &boundaddr, NULL) < 0) {
+      //if (ACE_OS::t_getprotaddr(fd, &boundaddr, 0) < 0) {
       if (ACE_OS::t_getname(fd,
                             &boundaddr.addr,
                             LOCALNAME) < 0)

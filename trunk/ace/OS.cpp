@@ -852,7 +852,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 #if defined (ACE_USES_WCHAR)
 void ACE_OS::checkUnicodeFormat (FILE* fp)
 {
-    if (fp != NULL)
+    if (fp != 0)
     {
         // Due to the ACE_TCHAR definition, all default input files, such as
         // svc.conf, have to be in Unicode format (small endian) on WinCE
@@ -895,7 +895,7 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
     {
 # if defined (ACE_HAS_WINCE)
       FILE *fp = ::_wfdopen (handle, mode);
-      if (fp != NULL)
+      if (fp != 0)
       {
         checkUnicodeFormat(fp);
         return fp;
@@ -914,7 +914,7 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
 #   else
           FILE *fp = ::fdopen (fd, mode);
 #   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
-          if (fp != NULL)
+          if (fp != 0)
           {
 #   if defined (ACE_USES_WCHAR)
             checkUnicodeFormat(fp);
@@ -927,7 +927,7 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
 
       ACE_OS::close (handle);
     }
-  return NULL;
+  return 0;
 }
 #endif /* ACE_WIN32 */
 
@@ -2395,7 +2395,7 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
                                       DWORD flags,
                                       LPDWORD thr_id)
 {
-  return  CreateThread(NULL,
+  return  CreateThread(0,
                        stacksize,
                        (LPTHREAD_START_ROUTINE)__IBMCPP__initThread,
                        new __IBMCPP__thread_params(entry_point, args),
@@ -2408,7 +2408,7 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 
 #elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      CreateThread (NULL, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & CREATE_SUSPENDED, (unsigned long *) THR_ID)
+      CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & CREATE_SUSPENDED, (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)
   // Green Hills compiler gets confused when __stdcall is imbedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
@@ -4604,7 +4604,7 @@ ACE_OS::socket_init (int version_high, int version_low)
           wchar_t fmt[] = ACE_LIB_TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
           ACE_OS::sprintf (buf, fmt, ACE_LIB_TEXT ("WSAStartup"), error);
-          ::MessageBox (NULL, buf, ACE_LIB_TEXT ("WSAStartup failed!"), MB_OK);
+          ::MessageBox (0, buf, ACE_LIB_TEXT ("WSAStartup failed!"), MB_OK);
         }
 #   else
       ACE_OS::fprintf (stderr,
@@ -4635,7 +4635,7 @@ ACE_OS::socket_fini (void)
           wchar_t fmt[] = ACE_LIB_TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
           ACE_OS::sprintf (buf, fmt, ACE_LIB_TEXT ("WSACleanup"), error);
-          ::MessageBox (NULL, buf , ACE_LIB_TEXT ("WSACleanup failed!"), MB_OK);
+          ::MessageBox (0, buf , ACE_LIB_TEXT ("WSACleanup failed!"), MB_OK);
 #   else
           ACE_OS::fprintf (stderr,
                            "ACE_OS::socket_fini; WSACleanup failed, "
@@ -5090,7 +5090,7 @@ ACE_OS::pread (ACE_HANDLE handle,
   // Remember the original file pointer position
   DWORD original_position = ::SetFilePointer (handle,
                                               0,
-                                              NULL,
+                                              0,
                                               FILE_CURRENT);
 
   if (original_position == 0xFFFFFFFF)
@@ -5099,7 +5099,7 @@ ACE_OS::pread (ACE_HANDLE handle,
   // Go to the correct position
   DWORD altered_position = ::SetFilePointer (handle,
                                              offset,
-                                             NULL,
+                                             0,
                                              FILE_BEGIN);
   if (altered_position == 0xFFFFFFFF)
     return -1;
@@ -5143,7 +5143,7 @@ ACE_OS::pread (ACE_HANDLE handle,
                             buf,
                             nbytes,
                             &bytes_read,
-                            NULL);
+                            0);
   if (result == FALSE)
     return -1;
 
@@ -5152,7 +5152,7 @@ ACE_OS::pread (ACE_HANDLE handle,
   // Reset the original file pointer position
   if (::SetFilePointer (handle,
                         original_position,
-                        NULL,
+                        0,
                         FILE_BEGIN) == 0xFFFFFFFF)
     return -1;
 
@@ -5215,7 +5215,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   // Remember the original file pointer position
   DWORD original_position = ::SetFilePointer (handle,
                                               0,
-                                              NULL,
+                                              0,
                                               FILE_CURRENT);
 
   if (original_position == 0xFFFFFFFF)
@@ -5224,7 +5224,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   // Go to the correct position
   DWORD altered_position = ::SetFilePointer (handle,
                                              offset,
-                                             NULL,
+                                             0,
                                              FILE_BEGIN);
   if (altered_position == 0xFFFFFFFF)
     return -1;
@@ -5268,7 +5268,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                              buf,
                              nbytes,
                              &bytes_written,
-                             NULL);
+                             0);
   if (result == FALSE)
     return -1;
 
@@ -5277,7 +5277,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   // Reset the original file pointer position
   if (::SetFilePointer (handle,
                         original_position,
-                        NULL,
+                        0,
                         FILE_BEGIN) == 0xFFFFFFFF)
     return -1;
 
@@ -7080,14 +7080,14 @@ ACE_OS_Object_Manager::print_error_message (u_int line_number,
   ACE_TCHAR *lpMsgBuf = 0;
   ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER |
                    FORMAT_MESSAGE_FROM_SYSTEM,
-                   NULL,
+                   0,
                    ::GetLastError (),
                    MAKELANGID (LANG_NEUTRAL,
                                SUBLANG_DEFAULT),
                    // Default language
                    (ACE_TCHAR *) &lpMsgBuf,
                    0,
-                   NULL);
+                   0);
   ::MessageBox (NULL,
                 lpMsgBuf,
                 ACE_LIB_TEXT ("ACE_OS error"),

@@ -154,7 +154,7 @@ ACE_Handle_Set::operator fd_set *()
   if (this->size_ > 0)
     return (fd_set *) &this->mask_;
   else
-    return (fd_set *) NULL;
+    return (fd_set *) 0;
 }
 
 // Returns a pointer to the underlying fd_set.
@@ -167,7 +167,7 @@ ACE_Handle_Set::fdset (void)
   if (this->size_ > 0)
     return (fd_set *) &this->mask_;
   else
-    return (fd_set *) NULL;
+    return (fd_set *) 0;
 }
 
 ACE_INLINE

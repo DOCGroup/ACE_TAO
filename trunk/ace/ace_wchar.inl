@@ -34,10 +34,10 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
                                    0,
                                    wstr,
                                    -1,
-                                   NULL,
                                    0,
-                                   NULL,
-                                   NULL);
+                                   0,
+                                   0,
+                                   0);
 # elif defined (ACE_LACKS_WCSLEN)
   const wchar_t *wtemp = wstr;
   while (wtemp != 0)
@@ -51,7 +51,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
   char *str = new char[len];
 
 # if defined (ACE_WIN32)
-  ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, str, len, NULL, NULL);
+  ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, str, len, 0, 0);
 # elif defined (VXWORKS)
   ::wcstombs (str, wstr, len);
 # else /* ACE_WIN32 */
@@ -90,7 +90,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
     return 0;
 
 # if defined (ACE_WIN32)
-  int len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, NULL, 0);
+  int len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, 0, 0);
 # else /* ACE_WIN32 */
   int len = strlen (str) + 1;
 # endif /* ACE_WIN32 */

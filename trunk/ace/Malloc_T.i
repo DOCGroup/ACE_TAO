@@ -29,7 +29,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
 {
   // Check if size requested fits within pre-determined size.
   if (nbytes > sizeof (T))
-    return NULL;
+    return 0;
 
   // addr() call is really not absolutely necessary because of the way
   // ACE_Cached_Mem_Pool_Node's internal structure arranged.
@@ -42,7 +42,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
 {
   // Check if size requested fits within pre-determined size.
   if (nbytes > sizeof (T))
-    return NULL;
+    return 0;
 
   // addr() call is really not absolutely necessary because of the way
   // ACE_Cached_Mem_Pool_Node's internal structure arranged.

@@ -107,7 +107,7 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
             ACE_reinterpret_cast (ACE_Message_Block *,
               ::msgQCreate (max_messages_,
                             max_message_length_,
-                            MSG_Q_FIFO))) == NULL ? -1 : 0;
+                            MSG_Q_FIFO))) == 0 ? -1 : 0;
 }
 
 // Clean up the queue if we have not already done so!
@@ -300,10 +300,10 @@ ACE_Message_Queue_NT::open (size_t max_threads)
   ACE_TRACE ("ACE_Message_Queue_NT::open");
   this->max_cthrs_ = max_threads;
   this->completion_port_ = ::CreateIoCompletionPort (ACE_INVALID_HANDLE,
-                                                     NULL,
+                                                     0,
                                                      ACE_Message_Queue_Base::WAS_ACTIVE,
                                                      max_threads);
-  return (this->completion_port_ == NULL ? -1 : 0);
+  return (this->completion_port_ == 0 ? -1 : 0);
 }
 
 int
@@ -426,7 +426,7 @@ ACE_Message_Queue_NT::deactivate (void)
         ::PostQueuedCompletionStatus (this->completion_port_,
                                       0,
                                       this->state_,
-                                      NULL);
+                                      0);
     }
   return previous_state;
 }
@@ -460,7 +460,7 @@ ACE_Message_Queue_NT::pulse (void)
         ::PostQueuedCompletionStatus (this->completion_port_,
                                       0,
                                       this->state_,
-                                      NULL);
+                                      0);
     }
   return previous_state;
 }

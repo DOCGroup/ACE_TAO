@@ -536,15 +536,15 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
       if (ACE_TEXT_RegCreateKeyEx (base_key,
                                    sub_section,
                                    0,
-                                   NULL,
+                                   0,
                                    REG_OPTION_NON_VOLATILE,
                                    KEY_ALL_ACCESS,
-                                   NULL,
+                                   0,
                                    &result_key,
 #if defined (__MINGW32__)
                                    (PDWORD) 0
 #else
-                                   NULL
+                                   0
 #endif /* __MINGW32__ */
                                    ) != ERROR_SUCCESS)
         return -3;
@@ -589,10 +589,10 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                     0,
                                     name_buffer,
                                     &buffer_size,
-                                    NULL,
-                                    NULL,
-                                    NULL,
-                                    NULL) == ERROR_SUCCESS)
+                                    0,
+                                    0,
+                                    0,
+                                    0) == ERROR_SUCCESS)
         {
           remove_section (section, name_buffer, 1);
           buffer_size = ACE_DEFAULT_BUFSIZE;
@@ -620,10 +620,10 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                  0,
                                  name_buffer,
                                  &buffer_size,
-                                 NULL,
-                                 NULL,
-                                 NULL,
-                                 NULL) == ERROR_SUCCESS)
+                                 0,
+                                 0,
+                                 0,
+                                 0) == ERROR_SUCCESS)
         return -2;
     }
   else if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
@@ -651,10 +651,10 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
                                   Index,
                                   name_buffer,
                                   &buffer_size,
-                                  NULL,
+                                  0,
                                   &value_type,
-                                  NULL,
-                                  NULL);
+                                  0,
+                                  0);
   if (rc == ERROR_NO_MORE_ITEMS)
     return 1;
   else if (rc != ERROR_SUCCESS)
@@ -695,10 +695,10 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
                                   Index,
                                   name_buffer,
                                   &buffer_size,
-                                  NULL,
-                                  NULL,
-                                  NULL,
-                                  NULL);
+                                  0,
+                                  0,
+                                  0,
+                                  0);
   if (rc == ERROR_NO_MORE_ITEMS)
     return 1;
   else if (rc != ERROR_MORE_DATA && rc != ERROR_SUCCESS)
@@ -796,7 +796,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
   DWORD type;
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
-                                NULL,
+                                0,
                                 &type,
                                 (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
@@ -814,7 +814,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
 
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
-                                NULL,
+                                0,
                                 &type,
                                 (BYTE *) buffer.get (),
                                 &buffer_length) != ERROR_SUCCESS)
@@ -842,7 +842,7 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
   DWORD type;
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
-                                NULL,
+                                0,
                                 &type,
                                 (BYTE *) &value,
                                 &length) != ERROR_SUCCESS)
@@ -872,7 +872,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   DWORD type;
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
-                                NULL,
+                                0,
                                 &type,
                                 (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
@@ -887,7 +887,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
-                                NULL,
+                                0,
                                 &type,
                                 (BYTE *) data,
                                 &buffer_length) != ERROR_SUCCESS)
@@ -916,9 +916,9 @@ ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key
   DWORD type;
   int result=ACE_TEXT_RegQueryValueEx (base_key,
                                        name,
-                                       NULL,
+                                       0,
                                        &type,
-                                       NULL,
+                                       0,
                                        &buffer_length);
   if (result != ERROR_SUCCESS)
     return -1;
@@ -980,9 +980,9 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   HKEY result = 0;
   // Make a copy of hKey
 #if defined (ACE_HAS_WINCE)
-  if (::RegOpenKeyEx (hKey, NULL, 0, 0, &result) != ERROR_SUCCESS)
+  if (::RegOpenKeyEx (hKey, 0, 0, 0, &result) != ERROR_SUCCESS)
 #else
-  if (::RegOpenKey (hKey, NULL, &result) != ERROR_SUCCESS)
+  if (::RegOpenKey (hKey, 0, &result) != ERROR_SUCCESS)
 #endif  // ACE_HAS_WINCE
     return 0;
 
@@ -1020,15 +1020,15 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
           if (!create || ACE_TEXT_RegCreateKeyEx (result,
                                                   temp,
                                                   0,
-                                                  NULL,
+                                                  0,
                                                   0,
                                                   KEY_ALL_ACCESS,
-                                                  NULL,
+                                                  0,
                                                   &subkey,
 #if defined (__MINGW32__)
                                                   (PDWORD) 0
 #else
-                                                  NULL
+                                                  0
 #endif /* __MINGW32__ */
                                                   ) != ERROR_SUCCESS)
             {
