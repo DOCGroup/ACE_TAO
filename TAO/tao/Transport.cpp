@@ -1398,7 +1398,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
       if (TAO_debug_level > 3)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO(%P|%t) - Transport[%d]::process_queue_head, "
+                      "TAO (%P|%t) - Transport[%d]::process_queue_head, "
                       "the size of the queue is [%d]\n",
                       this->id (),
                       this->incoming_message_queue_.queue_length()));

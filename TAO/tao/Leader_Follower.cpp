@@ -200,10 +200,9 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Leader_Follower::wait_for_event,"
-                      " (follower) on Transport <%d>, cond <%x>\n",
-                      transport->id (),
-                      follower.get ()));
+                      "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
+                      " (follower), cond <%x>\n",
+                      transport->id (), follower.get ()));
 
         // Bound the follower and the LF_Event, this is important to
         // get a signal when the event terminates
@@ -246,9 +245,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                   {
                     if (TAO_debug_level >= 5)
                       ACE_DEBUG ((LM_DEBUG,
-                                  "TAO (%P|%t) - Leader_Follower::wait_for_event, "
-                                  " (follower) on <%d>"
-                                  " [no timer, cond failed]\n",
+                                  "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, "
+                                  " (follower) [no timer, cond failed]\n",
                                   transport->id ()));
 
                     // @@ Michael: What is our error handling in this case?
@@ -266,9 +264,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                   {
                     if (TAO_debug_level >= 5)
                       ACE_DEBUG ((LM_DEBUG,
-                                  "TAO (%P|%t) - Leader_Follower::wait,"
-                                  " (follower) on <%x> "
-                                  " [has timer, follower failed]\n",
+                                  "TAO (%P|%t) - Leader_Follower[%d]::wait, "
+                                  "(follower) [has timer, follower failed]\n",
                                   transport->id ()));
 
                     // We have timedout.. So set the state in the
@@ -296,8 +293,9 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                             && TAO_debug_level > 0)
                           {
                             ACE_ERROR ((LM_ERROR,
-                                        "TAO (%P|%t) - Leader_Follower::wait_for_event,"
-                                        " elect_new_leader failed\n"));
+                                        "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, "
+                                        "elect_new_leader failed\n",
+                                        transport->id ()));
                           }
                       }
 
@@ -317,8 +315,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Leader_Follower::wait_for_event,"
-                      " done (follower) on <%d>, successful %d\n",
+                      "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
+                      " done (follower), successful %d\n",
                       transport->id (),
                       event->successful ()));
 
@@ -363,8 +361,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
       if (TAO_debug_level >= 5)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Leader_Follower::wait_for_event,"
-                    " (leader) enter reactor event loop on <%d>\n",
+                    "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
+                    " (leader) enter reactor event loop\n",
                     transport->id ()));
 
       // If we got our event, no need to run the event loop any
@@ -389,8 +387,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
       if (TAO_debug_level >= 5)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Leader_Follower::wait_for_event,"
-                    " (leader) exit reactor event loop on <%d>\n",
+                    "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
+                    " (leader) exit reactor event loop\n",
                     transport->id ()));
     }
   }
@@ -409,14 +407,16 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
   if (this->elect_new_leader () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) - Leader_Follower::wait_for_event,"
-                       " failed to elect new leader\n"),
+                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
+                       " failed to elect new leader\n",
+                       transport->id()),
                       -1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) - Leader_Follower::wait_for_event,"
-                       " handle_events failed\n"),
+                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
+                       " handle_events failed\n",
+                       transport->id()),
                       -1);
 
   // Return an error if there was a problem receiving the reply...

@@ -156,8 +156,9 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                 ACE_LIB_TEXT ("making a new connection\n")));
+                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                 "to <%s:%d>\n",
+                 iiop_endpoint->host(), iiop_endpoint->port()));
 
 
    // Get the max_wait_time
@@ -209,21 +210,19 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
        if (TAO_debug_level)
          {
            ACE_DEBUG ((LM_ERROR,
-                       ACE_LIB_TEXT ("(%P|%t) %s:%u, connection to ")
-                       ACE_LIB_TEXT ("%s:%d failed (%p)\n"),
-                       ACE_TEXT_CHAR_TO_TCHAR(__FILE__),
-                       __LINE__,
-                       ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()),
-                       iiop_endpoint->port (),
-                       ACE_LIB_TEXT ("errno")));
+                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                       "connection to <%s:%d> failed (%p)\n",
+                       iiop_endpoint->host (), iiop_endpoint->port (),
+                       "errno"));
          }
        return -1;
      }
 
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                 ACE_LIB_TEXT ("new connection on HANDLE %d\n"),
+                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                 "new connection to <%s:%d> on Transport[%d]\n",
+                 iiop_endpoint->host (), iiop_endpoint->port (),
                  svc_handler->peer ().get_handle ()));
 
    TAO_Transport *base_transport =
@@ -237,8 +236,8 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
    if (retval != 0 && TAO_debug_level > 0)
      {
        ACE_DEBUG ((LM_DEBUG,
-                   ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                   ACE_LIB_TEXT ("could not add the new connection to Cache \n")));
+                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                   "could not add the new connection to cache\n"));
      }
 
    // If the wait strategy wants us to be registered with the reactor
@@ -248,8 +247,8 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
    if (retval != 0 && TAO_debug_level > 0)
      {
        ACE_DEBUG ((LM_DEBUG,
-                   ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
-                   ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
+                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                   "could not register the new connection in the reactor\n"));
      }
 
    // Handover the transport pointer to the Invocation class.

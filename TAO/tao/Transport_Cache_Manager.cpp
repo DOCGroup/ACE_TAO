@@ -82,10 +82,12 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
 {
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("TAO_Transport_Cache_Manager")
-                  ACE_TEXT ("::bind_i (0x%x, 0x%x)\n"),
-                  ext_id.property (), int_id.transport ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                  "0x%x -> 0x%x Transport[%d]\n",
+                  ext_id.property (),
+                  int_id.transport (),
+                  int_id.transport ()->id ()));
     }
 
   // Get the entry too
@@ -113,9 +115,9 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
       if (TAO_debug_level > 4 && retval != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::bind_i")
-                      ACE_TEXT (" unable to bind in the first attempt \n")
-                      ACE_TEXT (" So trying with a new index\n")));
+                      "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                      "unable to bind in the first attempt. "
+                      "Trying with a new index\n"));
         }
 
 
@@ -133,8 +135,8 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
   if (TAO_debug_level > 5 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::bind_i")
-                  ACE_TEXT (" unable to bind \n")));
+                  "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                  "unable to bind\n"));
     }
 
   return retval;
@@ -228,8 +230,11 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P |%t) index in find <%d>\n"),
-                              entry->ext_id_.index ()));
+                              "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
+                              "index in find <%d> (Transport[%d])\n",
+                              entry->ext_id_.index (),
+                              value.transport ()->id ()
+                              ));
                 }
               return 0;
             }
@@ -243,8 +248,8 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
   if (TAO_debug_level > 4 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::find_i")
-                  ACE_TEXT (" unable to locate a free connection\n")));
+                  "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
+                  "unable to locate a free connection\n"));
     }
 
   return retval;
@@ -282,8 +287,8 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
   else if (TAO_debug_level > 0 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::make_idle_i:\n")
-                  ACE_TEXT ("(%P|%t)     unable to locate the entry to make it idle\n")));
+                  "TAO (%P|%t) - Transport_Cache_Manager::make_idle_i, "
+                  "unable to locate the entry to make it idle\n"));
     }
 
   return retval;
@@ -462,10 +467,10 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
-                                ACE_TEXT ("TAO_Transport_Cache_Manager")
-                                ACE_TEXT ("::fill_set_i - %d %d\n"),
-                                current_size, cache_maximum));
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport_Cache_Manager::fill_set_i, "
+                      "current_size = %d, cache_maximum = %d\n",
+                      current_size, cache_maximum));
         }
 
       if (current_size >= cache_maximum)
@@ -495,10 +500,10 @@ TAO_Transport_Cache_Manager::close_entries(DESCRIPTOR_SET& sorted_set,
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
-                            ACE_TEXT ("Purging %d of %d cache entries\n"),
-                            amount,
-                            sorted_size));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport_Cache_Manager::close_entries, "
+                  "purging %d of %d cache entries\n",
+                  amount, sorted_size));
     }
 
   int count = 0;
@@ -509,10 +514,11 @@ TAO_Transport_Cache_Manager::close_entries(DESCRIPTOR_SET& sorted_set,
           TAO_Transport* transport = sorted_set[i]->int_id_.transport ();
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
-                                    ACE_TEXT ("Idle transport found in ")
-                                    ACE_TEXT ("cache: 0x%x\n"),
-                                    transport));
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport_Cache_Manager::close_entries, "
+                          "found idle transport in cache: "
+                          "0x%x Transport[%d]\n",
+                          transport, transport->id() ));
             }
 
           // We need to save the cache_map_entry before we
@@ -546,8 +552,11 @@ TAO_Transport_Cache_Manager::wait_for_connection (TAO_Cache_ExtId &extid)
       ++this->no_waiting_threads_;
 
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Going to wait for connections.. \n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport_Cache_Manager::wait_for_connection, "
+                      "entering wait loop\n"));
+        }
 
       int ready_togo = 0;
 
@@ -557,6 +566,13 @@ TAO_Transport_Cache_Manager::wait_for_connection (TAO_Cache_ExtId &extid)
 
           // Check whether we are waiting for this connection
           ready_togo = this->is_wakeup_useful (extid);
+        }
+
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport_Cache_Manager::wait_for_connection, "
+                      "left wait loop\n"));
         }
 
       // We are not waiting anymore
