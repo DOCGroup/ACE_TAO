@@ -347,6 +347,12 @@ extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
 #endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
+ACE_INLINE long
+ACE_cond_t::waiters (void) const
+{
+  return this->waiters_;
+}
+
 ACE_INLINE int 
 ACE_OS::chdir (const char *path)
 {

@@ -953,8 +953,10 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #if !defined (ACE_HAS_POSIX_SEM)
 // This is used to implement semaphores for POSIX pthreads, but
 // without POSIX semaphores.  It is different than the POSIX sem_t.
-struct ACE_sema_t
+class ACE_sema_t
 {
+friend class ACE_OS;
+private:
   ACE_mutex_t lock_;
   // Serialize access to internal state.
 
@@ -1064,7 +1066,7 @@ typedef HANDLE ACE_sema_t;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 
 #if defined (ACE_LACKS_COND_T)
-struct ACE_cond_t
+class ACE_cond_t
   // = TITLE
   //     This structure is used to implement condition variables on
   //     VxWorks and Win32.
@@ -1073,6 +1075,12 @@ struct ACE_cond_t
   //     At the current time, this stuff only works for threads
   //     within the same process.
 {
+  friend class ACE_OS;
+public:
+  long waiters (void) const;
+  // Returns the number of waiters.
+
+private:
   long waiters_;
   // Number of waiting threads.
 
@@ -1111,6 +1119,8 @@ struct ACE_rwlock_t
   //     At the current time, this stuff only works for threads
   //     within the same process.
 {
+friend class ACE_rwlock_t;
+private:
   ACE_mutex_t lock_; 
   // Serialize access to internal state.
  
@@ -1613,8 +1623,10 @@ typedef char TCHAR;
 #define ACE_DEV_NULL "/dev/null"
 
 // Wrapper for NT events on UNIX.
-struct ACE_event_t
+class ACE_event_t
 {  
+  friend class ACE_OS;
+private:
   ACE_mutex_t lock_;
   // Protect critical section.
 
