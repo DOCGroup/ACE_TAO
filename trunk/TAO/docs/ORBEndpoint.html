@@ -174,7 +174,7 @@
     <P>
       where <CODE>1234</CODE> is the TCP port the endpoint will be
       opened on.  In this case, an endpoint will be opened on the
-      network interface associated with the hostname <CODE>foo1</CODE>
+      network interface associated with the hostname <CODE>foo2</CODE>
       on port <CODE>1234</CODE>.
     <P>
       Port <I>names</I> are also accepted.  For example, suppose a
@@ -190,7 +190,7 @@
     </BLOCKQUOTE>
     <P>
       Port numbers range from <CODE>0</CODE> (causes port to be chosen
-      by operating system) to <CODE>65335</CODE>.  Port numbers less
+      by operating system) to <CODE>65355</CODE>.  Port numbers less
       than <CODE>1024</CODE> on UNIX systems are considered
       privileged, and require super-user privileges to access them.
       Also be aware that some ports may already be in use by other
@@ -210,8 +210,7 @@
       interface detected by TAO.  The port for each opened endpoint
       will be chosen automatically.  The chosen port will be the same
       for all endpoints.  Each endpoint will be represented in
-      generated IOR as a separate profile, or as an alternate address
-      within a single IOR profile (once IIOP 1.2 is supported).
+      generated IOR as a separate profile.
     <P>
       Note that network interface detection only work on platforms
       that support this feature.  If network interface detection isn't
@@ -328,6 +327,7 @@
       <LI><CODE>-ORBEndpoint iiop://1.1@:1234</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.1@,1.0@:1234,1.1@</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.1@foo:2020/portspan=30</CODE>
+      <LI><CODE>-ORBEndpoint iiop://foo:2020 -ORBEndpoint iiop://foo:10020 </CODE> </CODE>
     </UL>
 
     <hr>

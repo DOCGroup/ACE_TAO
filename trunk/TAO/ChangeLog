@@ -1,3 +1,11 @@
+Wed Aug 11 14:54:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/ORBEndpoint.html:
+
+	  Improved documentation with additional examples and fixed a few
+	  typos. Thanks to Jules Colding <jules at tdcadsl dot dk> for
+	  motivating this.
+
 Wed Aug 11 09:36:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	 * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
@@ -73,8 +81,9 @@ Wed Aug 11 09:36:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	 * tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
 	 * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
 	 * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
-	  Changed to inherit from minimum_corba instead of providing avoids
-	  statements to eliminate duplicate entries in list.
+
+	   Changed to inherit from minimum_corba instead of providing
+	   avoids statements to eliminate duplicate entries in list. 
 
 Wed Aug 11 13:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
