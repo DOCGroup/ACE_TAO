@@ -21,7 +21,7 @@
 // Forward declarations
 namespace IOP
 {
-  class ServiceContext;
+  struct ServiceContext;
 }
 
 namespace CSI
@@ -39,10 +39,10 @@ namespace TAO
 
     /// Extract CSI::SASContextBody from given IOP::ServiceContext.
     /**
-     * @return Success == 1, Failure == 0.
+     * @return Success == true, Failure == false.
      */
-    int extract_sas_service_context (const IOP::ServiceContext & sc,
-                                     CSI::SASContextBody & sas_context);
+    bool extract_sas_service_context (const IOP::ServiceContext & sc,
+                                      CSI::SASContextBody & sas_context);
   }
 }
 
