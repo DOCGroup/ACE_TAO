@@ -59,7 +59,7 @@ project(Service Config DLL) : acelib {
   }
 }
 
-project(ACE INIT Test) : acetest {
+project(ACE Init Test) : acetest {
   Source_Files {
     ACE_Init_Test.cpp
   }
@@ -1055,7 +1055,7 @@ project(Reactor Registration Test) : acetest {
   }
 }
 
-project(UUID Test) : acetest {
+project(UUIDTest) : acetest {
   exename = UUIDTest
   Source_Files {
     UUIDTest.cpp
