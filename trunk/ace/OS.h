@@ -295,16 +295,6 @@
 // A simple free list which doen't allocate/deallocate elements.
 #define ACE_PURE_FREE_LIST 2
 
-// This is used to indicate that a platform doesn't support a
-// particular feature.
-#if defined ACE_HAS_VERBOSE_NOTSUP
-  // Print a console message with the file and line number of the
-  // unsupported function.
-# define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, "ACE_NOTSUP: %s, line %d\n", __FILE__, __LINE__); return FAILVALUE; } while (0)
-#else /* ! ACE_HAS_VERBOSE_NOTSUP */
-# define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
-#endif /* ! ACE_HAS_VERBOSE_NOTSUP */
-
 #if defined (ACE_NDEBUG)
 #define ACE_DB(X)
 #else
@@ -1519,6 +1509,27 @@ struct cancel_state
 
 #if defined (ACE_HAS_WINCE)
 #include /**/ <types.h>
+
+typedef DWORD  nlink_t;
+
+// CE's add-on for c-style fstat/stat functionalities.
+// This struct is by no mean complete compared to
+// what you usually find in UNIX platforms.
+// Only members that have direct conversion using Win32's
+// BY_HANDLE_FILE_INFORMATION are defined so that users
+// can discover non-supported members at compile time.
+// Time values are of type ACE_Time_Value for easy comparison.
+
+struct stat {
+  //  mode_t   st_mode;              /* UNIX styled file attribute */
+  //  nlink_t  st_nlink;             /* number of hard links */
+  ACE_Time_Value st_atime;       /* time of last access */
+  ACE_Time_Value st_mtime;       /* time of last data modification */
+  off_t    st_size;              /* file size, in bytes */
+  //  u_long   st_blksize;           /* optimal blocksize for I/O */
+  //  u_long   st_flags;             /* user defined flags for file */
+};
+
 #else /* ! ACE_HAS_WINCE */
 #if defined (ACE_LACKS_SYS_TYPES_H)
   typedef unsigned char u_char;
@@ -2335,31 +2346,6 @@ typedef void (*ACE_SignalHandlerV)(...);
 #else
 #define ACE_STREAMBUF_SIZE 1024
 #endif /* BUFSIZ */
-
-#if defined (ACE_HAS_WINCE)
-#define _SYS_NMLN 257
-struct utsname
-{
-  TCHAR sysname[_SYS_NMLN];
-  TCHAR nodename[_SYS_NMLN];
-  TCHAR release[_SYS_NMLN];
-  TCHAR version[_SYS_NMLN];
-  TCHAR machine[_SYS_NMLN];
-};
-#elif defined (ACE_LACKS_UTSNAME_T)
-#define _SYS_NMLN 257
-struct utsname
-{
-  char sysname[_SYS_NMLN];
-  char nodename[_SYS_NMLN];
-  char release[_SYS_NMLN];
-  char version[_SYS_NMLN];
-  char machine[_SYS_NMLN];
-};
-#else
-#include /**/ <sys/utsname.h>
-#endif /* ACE_LACKS_UTSNAME_T */
-
 
 #if defined (ACE_WIN32)
 // Turn off warnings for /W4
@@ -3190,6 +3176,20 @@ typedef short ACE_pri_t;
 
 #endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
+#if defined (ACE_LACKS_UTSNAME_T)
+#define _SYS_NMLN 257
+struct utsname
+{
+  TCHAR sysname[_SYS_NMLN];
+  TCHAR nodename[_SYS_NMLN];
+  TCHAR release[_SYS_NMLN];
+  TCHAR version[_SYS_NMLN];
+  TCHAR machine[_SYS_NMLN];
+};
+#else
+#include /**/ <sys/utsname.h>
+#endif /* ACE_LACKS_UTSNAME_T */
+
 // Increase the range of "address families".  Please note that this
 // must appear _after_ the include of sys/socket.h, for the AF_FILE
 // definition on Linux/glibc2.
@@ -3925,42 +3925,51 @@ public:
                     int cmd,
                     int val = 0);
   static int fdetach (const char *file);
+
+#if !defined (ACE_HAS_WINCE)
+  // CE doesn't support these char version functions.
+  // However, we should provide UNICODE version of them.
+  static FILE *fopen (const char *filename,
+                      const char *mode);
   static FILE *fdopen (ACE_HANDLE handle,
                        const char *mode);
   static char *fgets (char *buf,
                       int size,
                       FILE *fp);
-  static int fflush (FILE *fp);
-  static FILE *fopen (const char *filename,
-                      const char *mode);
+  static int stat (const char *file,
+                   struct stat *);
   static int fprintf (FILE *fp,
                       const char *format,
                       ...);
-  static size_t fread (void *ptr,
-                       size_t size,
-                       size_t nelems,
-                       FILE *fp);
-  static int fstat (ACE_HANDLE,
-                    struct stat *);
-  static int stat (const char *file,
-                   struct stat *);
-  static int ftruncate (ACE_HANDLE,
-                        off_t);
-  static size_t fwrite (const void *ptr,
-                        size_t size,
-                        size_t nitems,
-                        FILE *fp);
-  static char *gets (char *str);
-  static void perror (const char *s);
-  static int printf (const char *format, ...);
-  static int puts (const char *s);
-  static void rewind (FILE *fp);
   static int sprintf (char *buf,
                       const char *format,
                       ...);
   static int vsprintf (char *buffer,
                        const char *format,
                        va_list argptr);
+  static void perror (const char *s);
+
+  // CE doesn't support these function at all. (And it doesn't
+  // mean anything to provide these interfaces at all.)
+  static int printf (const char *format, ...);
+  static char *gets (char *str);
+  static int puts (const char *s);
+#endif /* ! ACE_HAS_WINCE */
+
+  static int fflush (FILE *fp);
+  static size_t fread (void *ptr,
+                       size_t size,
+                       size_t nelems,
+                       FILE *fp);
+  static int fstat (ACE_HANDLE,
+                    struct stat *);
+  static int ftruncate (ACE_HANDLE,
+                        off_t);
+  static size_t fwrite (const void *ptr,
+                        size_t size,
+                        size_t nitems,
+                        FILE *fp);
+  static void rewind (FILE *fp);
 
   // = A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock,
@@ -4611,6 +4620,16 @@ public:
                       const char *format,
                       ...);
 #endif /* 0 */
+  // the following three are newly added for CE.
+  // but they can also be use on Win32.
+//   static char *fgets (wchar_t *buf,
+//                       int size,
+//                       FILE *fp);
+  static int fprintf (FILE *fp,
+                      const wchar_t *format,
+                      ...);
+  static void perror (const wchar_t *s);
+
   static int vsprintf (wchar_t *buffer,
                        const wchar_t *format,
                        va_list argptr);
@@ -4619,6 +4638,8 @@ public:
                      int amode);
   static FILE *fopen (const wchar_t *filename,
                       const wchar_t *mode);
+  static FILE *fdopen (ACE_HANDLE handle,
+                       const wchar_t *mode);
   static int stat (const wchar_t *file,
                    struct stat *);
   static wchar_t *getenv (const wchar_t *symbol);
@@ -5180,6 +5201,16 @@ int \
 ace_main_i
 #endif   /* ACE_PSOSIM */
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+// This is used to indicate that a platform doesn't support a
+// particular feature.
+#if defined ACE_HAS_VERBOSE_NOTSUP
+  // Print a console message with the file and line number of the
+  // unsupported function.
+# define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, __TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
+#else /* ! ACE_HAS_VERBOSE_NOTSUP */
+# define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
+#endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
 #if defined (UNICODE)
 
