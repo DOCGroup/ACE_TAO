@@ -58,7 +58,8 @@ enum Option_Type
   ADA          = 040000000,     // Generate Ada code.
   MUTE         = 0100000000,    // Dont print the warnings.
   SKIPCLASS    = 0200000000,    // Skip the class definition part in the output while in C++ mode.
-  SKIPSTRINGH  = 0400000000     // Skip including the header file string.h.
+  SKIPSTRINGH  = 0400000000,    // Skip including the header file string.h.
+  BINARYSEARCH = 01000000000    // Generate code for Binary Search.
 };
 
 // Define some useful constants (these don't really belong here, but
