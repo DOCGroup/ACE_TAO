@@ -193,7 +193,7 @@ TAO_Server_Connection_Handler::svc (void)
 // <response_required> to zero if the request is for a oneway or
 // non-zero if for a two-way and <output> to any necessary response
 // (including errors).  In case of errors, -1 is returned and
-// additional information carried in <env>.
+// additional information carried in <TAO_IN_ENV>.
 // The request ID is needed by handle_input. It is passed back
 // as reference.
 
@@ -202,21 +202,19 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                                                TAO_OutputCDR &output,
                                                CORBA::Boolean &response_required,
                                                CORBA::ULong &request_id,
-                                               CORBA::Environment &env)
+                                               CORBA::Environment &TAO_IN_ENV)
 {
   // This will extract the request header, set <response_required> as
   // appropriate.
   IIOP_ServerRequest request (input,
                               output,
                               this->orb_core_,
-                              env);
+                              TAO_IN_ENV);
+  TAO_CHECK_RETURN (-1);
 
   // The request_id_ field in request will be 0 if something went
   // wrong before it got a chance to read it out.
   request_id = request.request_id ();
-
-  if (env.exception ())
-    return -1;
 
   response_required = request.response_expected ();
 
@@ -236,12 +234,10 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                                                   request,
                                                   0,
                                                   this->orb_core_,
-                                                  env);
-
+                                                  TAO_IN_ENV);
   // Need to check for any errors present in <env> and set the return
   // code appropriately.
-  if (env.exception () != 0)
-    return -1;
+  TAO_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -256,7 +256,7 @@ CORBA_UnknownUserException::_raise (void)
 
 void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-					    CORBA::Environment &env)
+					    CORBA::Environment &TAO_IN_ENV)
 {
   // Create the TypeCode for the CORBA_UnknownUserException
   TAO_OutputCDR stream;
@@ -269,18 +269,18 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
   if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != 1
       || stream.encode (CORBA::_tc_string,
 			&interface_id, 0,
-			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string,
 			&name, 0,
-			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.write_ulong (1L) != 1
       || stream.encode (CORBA::_tc_string,
 			&field_name, 0,
-			env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_TypeCode,
 			&CORBA::_tc_any, 0,
-			env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW_ENV (CORBA_INITIALIZE (CORBA::COMPLETED_NO), env);
+			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
 
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
@@ -294,7 +294,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                        const char *name,
                                        char *buffer,
                                        size_t buflen,
-                                       CORBA::Environment &env)
+                                       CORBA::Environment &TAO_IN_ENV)
 {
   // This function must only be called ONCE, and with a global lock
   // held!  The <CORBA::ORB_init> method is responsible for ensuring
@@ -327,24 +327,24 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != 1
       || stream.encode (CORBA::_tc_string,
                        &strptr, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string,
                        &name, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.write_ulong (2L) != 1
       || stream.encode (CORBA::_tc_string,
                        &minor, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_TypeCode,
                        &CORBA::_tc_ulong, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string,
                        &completed, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_TypeCode,
                        &TC_completion_status, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW_ENV (CORBA_INITIALIZE (CORBA::COMPLETED_NO), env);
+                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
   // hope to avoid that during initialization).  Now build and return
@@ -588,12 +588,12 @@ CORBA_ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 
 CORBA::TypeCode_ptr
 CORBA_ExceptionList::item (CORBA::ULong index,
-                           CORBA::Environment &env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   CORBA::TypeCode_ptr *tc;
-  env.clear ();
+  TAO_IN_ENV.clear ();
   if (this->tc_list_.get (tc, index) == -1)
-    TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
+    TAO_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
   else
     {
       return CORBA::TypeCode::_duplicate (*tc);

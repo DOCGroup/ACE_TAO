@@ -69,17 +69,17 @@ CORBA_Object::_create_request (const CORBA::Char *operation,
                                CORBA::NamedValue_ptr result,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
-                               CORBA::Environment &env)
+                               CORBA::Environment &TAO_IN_ENV)
 {
-  env.clear ();
+  TAO_IN_ENV.clear ();
   request = new CORBA::Request (this, operation, arg_list, result, req_flags);
 }
 
 ACE_INLINE CORBA::Request_ptr
 CORBA_Object::_request (const CORBA::Char *operation,
-                        CORBA::Environment &env)
+                        CORBA::Environment &TAO_IN_ENV)
 {
-  env.clear ();
+  TAO_IN_ENV.clear ();
   return new CORBA::Request (this, operation);
 }
 

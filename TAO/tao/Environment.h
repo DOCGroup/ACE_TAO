@@ -66,7 +66,7 @@ public:
   CORBA_Environment (const CORBA_Environment &env);
   // Copy constructor
 
-  CORBA_Environment &operator=(const CORBA_Environment& env);
+  CORBA_Environment &operator=(const CORBA_Environment &env);
   // Assingment
 
   ~CORBA_Environment (void);

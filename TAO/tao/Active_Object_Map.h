@@ -9,7 +9,7 @@
 //    Active_Object_Map.h
 //
 // = AUTHOR
-//    Aniruddha Gokhale 
+//    Aniruddha Gokhale
 //    Irfan Pyarali
 //    Carlos O'Ryan
 //
@@ -32,7 +32,7 @@ public:
   // Object id
 
   CORBA::ULong generation_;
-  // Generation count 
+  // Generation count
 
   PortableServer::Servant servant_;
   // Servant pointer
@@ -132,7 +132,7 @@ public:
   // if <servant> is found.
 
   PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                              CORBA::Environment &env);
+                                              CORBA::Environment &TAO_IN_ENV);
   // Create an object id
 
   virtual CORBA::ULong system_id_size (void) const;
@@ -224,7 +224,7 @@ public:
   virtual int bind (const PortableServer::ObjectId &id,
                     PortableServer::Servant servant) = 0;
   virtual int unbind (const PortableServer::ObjectId &id,
-                      PortableServer::Servant &servant) = 0;  
+                      PortableServer::Servant &servant) = 0;
   virtual int find (const PortableServer::ObjectId &id,
                     PortableServer::Servant &servant) = 0;
   virtual int find (const PortableServer::ObjectId &id);
@@ -232,7 +232,7 @@ public:
   virtual int find (const PortableServer::Servant servant,
                     PortableServer::ObjectId &id);
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &env) = 0;
+                                                      CORBA::Environment &TAO_IN_ENV) = 0;
   virtual CORBA::ULong system_id_size (void) const = 0;
   virtual int is_free (const TAO_Active_Object_Map_Entry &item) const = 0;
 };
@@ -300,14 +300,14 @@ public:
 protected:
 
   // = Typedef for the hash map
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::Servant, 
-                                  PortableServer::ObjectId, 
+  typedef ACE_Hash_Map_Manager_Ex<PortableServer::Servant,
+                                  PortableServer::ObjectId,
                                   TAO_Servant_Hash,
                                   ACE_Equal_To<PortableServer::Servant>,
                                   ACE_Null_Mutex>
           REVERSE_MAP;
 
-  REVERSE_MAP map_;  
+  REVERSE_MAP map_;
   // Hash map instance
 };
 
@@ -360,7 +360,7 @@ class TAO_Export TAO_Dynamic_Hash_Active_Object_Map : public TAO_Active_Object_M
 {
   // = TITLE
   //
-  //   Lookup strategy based on dynamic hashing. 
+  //   Lookup strategy based on dynamic hashing.
   //
   // = DESCRIPTION
   //
@@ -387,12 +387,12 @@ public:
   virtual int unbind (const PortableServer::ObjectId &id,
                       PortableServer::Servant &servant);
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &env);
+                                                      CORBA::Environment &TAO_IN_ENV);
   virtual CORBA::ULong system_id_size (void) const;
   virtual int is_free (const TAO_Active_Object_Map_Entry &item) const;
 
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId, 
-                                  PortableServer::Servant, 
+  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                                  PortableServer::Servant,
                                   TAO_ObjectId_Hash,
                                   ACE_Equal_To<PortableServer::ObjectId>,
                                   ACE_Null_Mutex>
@@ -486,7 +486,7 @@ public:
   virtual int unbind (const PortableServer::ObjectId &id,
                       PortableServer::Servant &servant);
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &env);
+                                                      CORBA::Environment &TAO_IN_ENV);
   virtual CORBA::ULong system_id_size (void) const;
   virtual int is_free (const TAO_Active_Object_Map_Entry &item) const;
   virtual TAO_Active_Object_Map_Iterator_Impl *begin () const;
@@ -549,7 +549,7 @@ public:
                       PortableServer::Servant &servant);
   virtual CORBA::ULong system_id_size (void) const;
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &env);
+                                                      CORBA::Environment &TAO_IN_ENV);
 
 protected:
 
