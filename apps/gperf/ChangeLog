@@ -1,3 +1,12 @@
+Thu Jun 19 14:52:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/test-1.exp:
+        * tests/test-2.exp:
+        * tests/test-3.exp:
+        * tests/test-4.exp:
+        * tests/test-5.exp:
+          Added (int) casts to expected results to match the new output.
+
 Tue Jun 17 11:38:36 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* src/Key_List.cpp (output_lookup_array): 
