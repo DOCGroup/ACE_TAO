@@ -456,10 +456,10 @@ namespace CORBA
     virtual bool tao_marshal (TAO_OutputCDR & cdr) const = 0;
 
     /// Increase the reference count on this @c TypeCode.
-    virtual bool tao_add_ref (void) = 0;
+    virtual bool tao_duplicate (void) = 0;
 
     /// Decrease the reference count on this object.
-    virtual bool tao_remove_ref (void) = 0;
+    virtual bool tao_release (void) = 0;
 
   protected:
 

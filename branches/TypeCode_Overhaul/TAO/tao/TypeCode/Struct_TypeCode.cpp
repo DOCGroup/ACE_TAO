@@ -39,7 +39,7 @@ TAO::TypeCode::Struct<StringType,
   for (Field<STRING_TYPE> const * i = begin; i != end; ++i)
     {
       Field<STRING_TYPE> const & field = *i;
-      
+
       if (!(cdr << field.get_name ())
           || !(cdr << *(field.type)))
         return false;
@@ -52,7 +52,7 @@ template <typename StringType, class FieldArrayType, class RefCountPolicy>
 void
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
-                      RefCountPolicy>::tao_add_ref (void)
+                      RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref (void);
 }
@@ -61,7 +61,7 @@ template <typename StringType, class FieldArrayType, class RefCountPolicy>
 void
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
-                      RefCountPolicy>::tao_remove_ref (void)
+                      RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref (void);
 }

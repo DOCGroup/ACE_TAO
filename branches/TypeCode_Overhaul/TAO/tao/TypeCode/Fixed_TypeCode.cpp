@@ -25,14 +25,14 @@ TAO::TypeCode::Fixed<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::Fixed<RefCountPolicy>::tao_add_ref (void)
+TAO::TypeCode::Fixed<RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref (void);
 }
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::Fixed<RefCountPolicy>::tao_remove_ref (void)
+TAO::TypeCode::Fixed<RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref (void);
 }
