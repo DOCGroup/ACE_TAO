@@ -103,8 +103,7 @@ namespace TAO_Notify
     virtual ~Topology_Object ();
 
     /// Init this object with data from <rhs>.
-    /// Intentionally hides TAO_NotifyObject::init
-    void init (Topology_Parent * topology_parent);
+    virtual void init (Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
 
     /// \brief Create a child of the appropriate type and return it.
     ///

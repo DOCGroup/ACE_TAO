@@ -47,8 +47,8 @@ public:
   /// Destructor
   ~TAO_Notify_ProxyConsumer ();
 
-  /// Init
-  void init (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL);
+  /// init: overrides Topology_Object method
+  virtual void init (Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
 
   /// Connect
   void connect (TAO_Notify_Supplier* supplier ACE_ENV_ARG_DECL)
