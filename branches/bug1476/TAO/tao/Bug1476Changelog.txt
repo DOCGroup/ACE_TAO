@@ -1,3 +1,27 @@
+Tue Aug  3 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          An overview of the changes in the pluggable transport interface
+          which has to be done in all pluggable transports:
+          * Connection_Handler::open(), instead of setting just the id of the
+            transport, call transport::post_open() with the id, this will set
+            the id, mark the transport as connected, register the transport with
+            the reactor and in case there is data in the outgoing queue it
+            will also schedule the transport for output.
+          * Connection_Handler::close(), check the implementation of this
+            method, it should in most cases sufficient to just call
+            this->close_handler().
+          * Connector::make_connection(), check using the profile transport
+            resolver whether to make a blocked connect or non blocked. A non
+            blocked is done when making oneways with sync_none policy applied.
+            In case the connect returns -1 and errno == EWOULDBLOCK use the
+            base method wait_for_connection_completion to wait for the
+            connection to be established. Don't register here anymore the
+            transport with the reactor, this is already done in your derived
+            Connection_Handler::open() by calling the post_open()
+          * Connector::cancel_svc_handler, a new method that must be
+            implemented by each pluggable protocol to cancel the connection
+            handler from the connector.
+
 Tue Aug  3 09:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Remove_Invocation.cpp:
