@@ -2,6 +2,9 @@ Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added os-patches/ to distribution.
 
+        * os-patches/linux-patches.html: added RedHat 5.1 success
+          report from Chanaka Liyanaarachchi <chanakal@ittc.ukans.edu>.
+
 Mon Jun 15 23:07:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.12 released.
