@@ -115,6 +115,11 @@ private:
   /// you should not delete the svc_handler until the stack unwinds
   /// from the nested upcalls.
   long pending_upcalls_;
+
+  /// Flag that we will be passing to the event handler to indicate
+  /// whether the handle will be resumed by the method or not.
+  int resume_flag_;
+
 };
 
 

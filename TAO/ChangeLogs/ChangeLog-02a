@@ -1,3 +1,26 @@
+Fri Jul 20 12:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.h:
+	* tao/IIOP_Connection_Handler.cpp: Removed the resumption of the
+	  handler in the  handle_output () call. Looks like we dont win
+	  anything by resuming the handler at this level. We need to get
+	  back to this after 1.2 if it is required.  
+
+	* tao/Connection_Handler.h: Removed some of the #defines
+	* tao/orbconf.h: Moved the #defines here from
+	  Connection_handler.h. 
+
+	* tao/Strategies/DIOP_Connection_Handler.h:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Replicated
+	  IIOP changes to these protocols.
+
+
 Fri Jul 20 09:25:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
  
         * tests/ior_corbaloc/run_test.pl:

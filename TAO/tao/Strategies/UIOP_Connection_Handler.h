@@ -109,6 +109,9 @@ public:
   /// Overload for resuming handlers..
   virtual int resume_handler (void);
 
+  /// Use peer() to drain the outgoing message queue
+  virtual int handle_output (ACE_HANDLE);
+
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
@@ -132,6 +135,10 @@ private:
 
   /// TCP configuration for this connection.
   TAO_UIOP_Properties *uiop_properties_;
+
+  /// Flag that we will be passing to the event handler to indicate
+  /// whether the handle will be resumed by the method or not.
+  int resume_flag_;
 };
 
 
