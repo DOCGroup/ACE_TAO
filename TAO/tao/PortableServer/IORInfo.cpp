@@ -87,22 +87,27 @@ TAO_IORInfo::manager_id ( TAO_ENV_SINGLE_ARG_DECL)
 {
   /// This method is used to provide a handle to the manager of the
   /// adapter.
-  return this->poa_->get_manager_id (TAO_ENV_SINGLE_ARG_PARAMETER);
-
+  PortableInterceptor::AdapterManagerId manager_id =
+    this->poa_->get_manager_id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
+
+  return manager_id;
 }
 
 PortableInterceptor::AdapterState
 TAO_IORInfo::state (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_->get_adapter_state (TAO_ENV_SINGLE_ARG_PARAMETER);
+  PortableInterceptor::AdapterState state =
+    this->poa_->get_adapter_state (TAO_ENV_SINGLE_ARG_PARAMETER);
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
+
+  return state;
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
@@ -116,11 +121,17 @@ TAO_IORInfo::adapter_template (TAO_ENV_SINGLE_ARG_DECL)
      never changes in its life.
   */
 
-  this->poa_->get_adapter_template ();
+  PortableInterceptor::ObjectReferenceTemplate *adapter_template =
+    this->poa_->get_adapter_template ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  if (adapter_template == 0)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                              CORBA::COMPLETED_NO),
+                        0);
+    }
+
+  return adapter_template;
 }
 
 PortableInterceptor::ObjectReferenceFactory *
@@ -133,24 +144,29 @@ TAO_IORInfo::current_factory (TAO_ENV_SINGLE_ARG_DECL)
      be changed. The value of the current_factory can be changed only
      during the call to components_established method.
   */
-  return this->poa_->get_obj_ref_factory ();
+    PortableInterceptor::ObjectReferenceFactory *adapter_factory =
+      this->poa_->get_obj_ref_factory ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+    if (adapter_factory == 0)
+      {
+        ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                                CORBA::COMPLETED_NO),
+                          0);
+      }
+    
+    return adapter_factory;
 }
 
 void
-TAO_IORInfo::
-current_factory (PortableInterceptor::ObjectReferenceFactory * current_factory
-                 TAO_ENV_ARG_DECL)
+TAO_IORInfo::current_factory (PortableInterceptor::ObjectReferenceFactory * current_factory
+                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->poa_->set_obj_ref_factory (current_factory
                                    TAO_ENV_ARG_PARAMETER);
 
-  return;
-
   ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                    CORBA::COMPLETED_NO));
+
+  return;
 }
