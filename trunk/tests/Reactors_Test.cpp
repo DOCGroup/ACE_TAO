@@ -197,7 +197,7 @@ main (int argc, char *argv[])
 
   ACE_Service_Config::thr_mgr ()->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, "Ending %s test at %u\n", argv[0], ACE_OS::time (0)));
+  ACE_END_TEST;
   return 0;
 }
 
