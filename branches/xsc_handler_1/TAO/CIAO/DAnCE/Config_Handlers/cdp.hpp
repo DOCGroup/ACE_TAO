@@ -1,4 +1,5 @@
 // $Id$
+#include "Config_Handlers_Export.h"
 #ifndef CDP_HPP
 #define CDP_HPP
 
@@ -14,8 +15,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include <XMLSchema/Types.hpp>
 
 #include "ccd.hpp"
 
@@ -23,7 +23,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class DeploymentPlan : public ::XSCRT::Type
+    class Config_Handlers_Export DeploymentPlan : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -163,7 +163,7 @@ namespace CIAO
   }
 }
 
-#include <XSCRT/Traversal.hpp>
+#include <XMLSchema/Traversal.hpp>
 
 namespace CIAO
 {
@@ -171,7 +171,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct DeploymentPlan : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::DeploymentPlan >
+      struct Config_Handlers_Export DeploymentPlan : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::DeploymentPlan >
       {
         virtual void
         traverse (Type&);
@@ -375,7 +375,7 @@ namespace CIAO
   }
 }
 
-#include <XSCRT/Writer.hpp>
+#include <XMLSchema/Writer.hpp>
 
 namespace CIAO
 {
@@ -383,7 +383,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct DeploymentPlan : Traversal::DeploymentPlan, 
+      struct Config_Handlers_Export DeploymentPlan : Traversal::DeploymentPlan, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::DeploymentPlan Type;
