@@ -1,6 +1,6 @@
 Thu May 13 19:33:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * orbsvcs/examples/CosEC/Factory/Makefile: don't build
+        * orbsvcs/examples/CosEC/Factory/Makefile: don't built
           if either CosEvent or Naming weren't built.
 
 Thu May 13 18:18:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
