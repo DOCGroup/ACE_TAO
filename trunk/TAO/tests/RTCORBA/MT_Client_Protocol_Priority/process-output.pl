@@ -131,11 +131,11 @@ elsif ($iiop_requests != $shmiop_requests)
         ."number of iterations\n";
     print "IIOP Request: "; 
     print $iiop_requests;
-    print "\n"
+    print "\n";
 
     print "IIOP Request: "; 
     print $iiop_requests;
-    print "\n"
+    print "\n";
     ++$errors;
 }
 elsif (($priority1 != $priority2 
