@@ -1,3 +1,22 @@
+Sun Jan 30 18:52:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+          Added a timeout to the startup code so if the startup
+          server does not respond within the timeout, then kill
+          it and return an exception.  The timeout period can
+          be controlled by the -t option.
+
+          Also replaced the ACE_Process code with the ACE_Process_Manager.
+          This should automatically clean up the child processes 
+          when they exit.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Prints out more information when a CannotActivate exception
+          occurs.  
+
 Sat Jan 29 12:57:53 2000  bala  <bala@cs.wustl.edu>
 
         * TAO version 1.0.13 released.

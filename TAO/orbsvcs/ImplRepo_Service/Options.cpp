@@ -7,7 +7,8 @@
 Options::Options ()
 : debug_ (1),
   ior_output_file_ (0),
-  config_(0)
+  config_ (0),
+  startup_timeout_ (5)
 {
   // Nothing
 }
@@ -20,7 +21,7 @@ Options::~Options ()
 int
 Options::parse_args (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:o:p:r");
+  ACE_Get_Opt get_opts (argc, argv, "d:o:p:rt:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,6 +57,9 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
         }
         break;
 #endif
+      case 't': // Set timeout value
+        this->startup_timeout_ = ACE_Time_Value (ACE_OS::atoi (get_opts.optarg));
+        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -64,6 +68,7 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
                            " [-o] <ior_output_file>"
                            " [-r]"
                            " [-p] <persistence_file>"
+                           " [-t] <timeout in seconds>"
                            "\n",
                            argv [0]),
                           1);
@@ -97,8 +102,15 @@ Options::output_file (void) const
   return this->ior_output_file_;
 }
 
-ACE_Configuration* 
-Options::config()
+const ACE_Time_Value &
+Options::startup_timeout (void) const
+{
+  return this->startup_timeout_;
+}
+
+
+ACE_Configuration * 
+Options::config () const
 {
   return this->config_;
 }
