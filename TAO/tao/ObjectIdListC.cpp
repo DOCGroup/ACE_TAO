@@ -25,15 +25,6 @@
 
 #include "ObjectIdListC.h"
 #include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -55,14 +46,15 @@ static const CORBA::Long _oc_CORBA_ORB_ObjectId[] =
   ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x434f5242), 
   ACE_NTOHL (0x412f4f52), 
-  ACE_NTOHL (0x422f4f62), 
+  ACE_NTOHL (0x425f4f62), 
   ACE_NTOHL (0x6a656374), 
   ACE_NTOHL (0x49643a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB/ObjectId:1.0
-    9,
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB_ObjectId:1.0
+    13,
+  ACE_NTOHL (0x4f52425f), 
   ACE_NTOHL (0x4f626a65), 
   ACE_NTOHL (0x63744964), 
-  ACE_NTOHL (0x0),  // name = ObjectId
+  ACE_NTOHL (0x0),  // name = ORB_ObjectId
     CORBA::tk_string, 
   0U, // string length
 };
@@ -84,29 +76,15 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-#if !defined (_CORBA_ORB_OBJECTIDLIST_CS_)
-#define _CORBA_ORB_OBJECTIDLIST_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:249
-
-// *************************************************************
-// CORBA::ORB_ObjectIdList
-// *************************************************************
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
 CORBA::ORB_ObjectIdList::ORB_ObjectIdList (void)
 {}
 
 CORBA::ORB_ObjectIdList::ORB_ObjectIdList (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_String_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_String_Sequence
+    (max)
 {}
 
 CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
@@ -115,35 +93,51 @@ CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
     char * *buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_String_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_String_Sequence
+    (max, length, buffer, release)
 {}
 
 CORBA::ORB_ObjectIdList::ORB_ObjectIdList (const ORB_ObjectIdList &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_String_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_String_Sequence
+    (seq)
 {}
 
-CORBA::ORB_ObjectIdList::~ORB_ObjectIdList (void) // dtor
+CORBA::ORB_ObjectIdList::~ORB_ObjectIdList (void)
 {}
 
 
 
-#endif /* end #if !defined */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_MngSeq_Var_T<
+      CORBA::ORB_ObjectIdList,
+      TAO_SeqElem_String_Manager
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      CORBA::ORB_ObjectIdList,
+      CORBA::ORB_ObjectIdList_var,
+      TAO_SeqElem_String_Manager
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_MngSeq_Var_T< \
+      CORBA::ORB_ObjectIdList, \
+      TAO_SeqElem_String_Manager \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      CORBA::ORB_ObjectIdList, \
+      CORBA::ORB_ObjectIdList_var, \
+      TAO_SeqElem_String_Manager \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -157,21 +151,22 @@ static const CORBA::Long _oc_CORBA_ORB_ObjectIdList[] =
   ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x434f5242), 
   ACE_NTOHL (0x412f4f52), 
-  ACE_NTOHL (0x422f4f62), 
+  ACE_NTOHL (0x425f4f62), 
   ACE_NTOHL (0x6a656374), 
   ACE_NTOHL (0x49644c69), 
   ACE_NTOHL (0x73743a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB/ObjectIdList:1.0
-    13,
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB_ObjectIdList:1.0
+    17,
+  ACE_NTOHL (0x4f52425f), 
   ACE_NTOHL (0x4f626a65), 
   ACE_NTOHL (0x63744964), 
   ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x0),  // name = ObjectIdList
+  ACE_NTOHL (0x0),  // name = ORB_ObjectIdList
     CORBA::tk_sequence, // typecode kind
-  84, // encapsulation length
+  88, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_alias, // typecode kind for typedefs
-    68, // encapsulation length
+    72, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       35,
       ACE_NTOHL (0x49444c3a), 
@@ -179,14 +174,15 @@ static const CORBA::Long _oc_CORBA_ORB_ObjectIdList[] =
       ACE_NTOHL (0x6f72672f), 
       ACE_NTOHL (0x434f5242), 
       ACE_NTOHL (0x412f4f52), 
-      ACE_NTOHL (0x422f4f62), 
+      ACE_NTOHL (0x425f4f62), 
       ACE_NTOHL (0x6a656374), 
       ACE_NTOHL (0x49643a31), 
-      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB/ObjectId:1.0
-            9,
+      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB_ObjectId:1.0
+            13,
+      ACE_NTOHL (0x4f52425f), 
       ACE_NTOHL (0x4f626a65), 
       ACE_NTOHL (0x63744964), 
-      ACE_NTOHL (0x0),  // name = ObjectId
+      ACE_NTOHL (0x0),  // name = ORB_ObjectId
             CORBA::tk_string, 
       0U, // string length
 
@@ -212,7 +208,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

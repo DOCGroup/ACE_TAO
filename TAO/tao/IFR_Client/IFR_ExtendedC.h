@@ -27,16 +27,12 @@
 
 #include "ace/pre.h"
 
-#include "tao/corba.h"
+#include "IFR_BasicC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "ifr_client_export.h"
-
-#include "IFR_BasicC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -68,90 +64,53 @@ TAO_NAMESPACE  CORBA
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_FIXEDDEF___PTR_CH_)
-#define _CORBA_FIXEDDEF___PTR_CH_
+#if !defined (_CORBA_FIXEDDEF__ODDS_N_ENDS_CH_)
+#define _CORBA_FIXEDDEF__ODDS_N_ENDS_CH_
   
   class FixedDef;
   typedef FixedDef *FixedDef_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_FIXEDDEF___VAR_CH_)
-#define _CORBA_FIXEDDEF___VAR_CH_
+  struct tao_FixedDef_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        FixedDef,
+        tao_FixedDef_life
+      >
+    FixedDef_var;
   
-  class TAO_IFR_Client_Export FixedDef_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        FixedDef,
+        tao_FixedDef_life
+      >
+    FixedDef_out;
+  
+  struct TAO_IFR_Client_Export tao_FixedDef_life
   {
-  public:
-    FixedDef_var (void); // default constructor
-    FixedDef_var (FixedDef_ptr p) : ptr_ (p) {} 
-    FixedDef_var (const FixedDef_var &); // copy constructor
-    ~FixedDef_var (void); // destructor
-    
-    FixedDef_var &operator= (FixedDef_ptr);
-    FixedDef_var &operator= (const FixedDef_var &);
-    FixedDef_ptr operator-> (void) const;
-    
-    operator const FixedDef_ptr &() const;
-    operator FixedDef_ptr &();
-    // in, inout, out, _retn 
-    FixedDef_ptr in (void) const;
-    FixedDef_ptr &inout (void);
-    FixedDef_ptr &out (void);
-    FixedDef_ptr _retn (void);
-    FixedDef_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static FixedDef_ptr tao_duplicate (FixedDef_ptr);
     static void tao_release (FixedDef_ptr);
     static FixedDef_ptr tao_nil (void);
-    static FixedDef_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        FixedDef_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    FixedDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    FixedDef_var (const TAO_Base_var &rhs);
-    FixedDef_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_FIXEDDEF___OUT_CH_)
-#define _CORBA_FIXEDDEF___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IFR_Client_Export FixedDef_out
+  struct TAO_IFR_Client_Export tao_FixedDef_cast
   {
-  public:
-    FixedDef_out (FixedDef_ptr &);
-    FixedDef_out (FixedDef_var &);
-    FixedDef_out (const FixedDef_out &);
-    FixedDef_out &operator= (const FixedDef_out &);
-    FixedDef_out &operator= (const FixedDef_var &);
-    FixedDef_out &operator= (FixedDef_ptr);
-    operator FixedDef_ptr &();
-    FixedDef_ptr &ptr (void);
-    FixedDef_ptr operator-> (void);
-  
-  private:
-    FixedDef_ptr &ptr_;
+    static FixedDef_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_FIXEDDEF_CH_)
 #define _CORBA_FIXEDDEF_CH_
@@ -232,7 +191,7 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -483,9 +442,25 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FixedDef;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class ValueMember_var;
+  struct ValueMember;
+  
+  typedef
+    TAO_Var_Var_T<
+        ValueMember
+      >
+    ValueMember_var;
+  
+  typedef
+    TAO_Out_T<
+        ValueMember,
+        ValueMember_var
+      >
+    ValueMember_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_IFR_Client_Export ValueMember
   {
@@ -502,234 +477,52 @@ TAO_NAMESPACE  CORBA
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_IFR_Client_Export ValueMember_var
-  {
-  public:
-    ValueMember_var (void);
-    ValueMember_var (ValueMember *);
-    ValueMember_var (const ValueMember_var &);
-    ~ValueMember_var (void);
-    
-    ValueMember_var &operator= (ValueMember *);
-    ValueMember_var &operator= (const ValueMember_var &);
-    ValueMember *operator-> (void);
-    const ValueMember *operator-> (void) const;
-    
-    operator const ValueMember &() const;
-    operator ValueMember &();
-    operator ValueMember &() const;
-    
-    // Variable-size types only.
-    operator ValueMember *&();
-    
-    // in, inout, out, _retn 
-    const ValueMember &in (void) const;
-    ValueMember &inout (void);
-    ValueMember *&out (void);
-    ValueMember *_retn (void);
-    ValueMember *ptr (void) const;
-  
-  private:
-    ValueMember *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_IFR_Client_Export ValueMember_out
-  {
-  public:
-    ValueMember_out (ValueMember *&);
-    ValueMember_out (ValueMember_var &);
-    ValueMember_out (const ValueMember_out &);
-    ValueMember_out &operator= (const ValueMember_out &);
-    ValueMember_out &operator= (ValueMember *);
-    operator ValueMember *&();
-    ValueMember *&ptr (void);
-    ValueMember *operator-> (void);
-    
-  private:
-    ValueMember *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ValueMember_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueMember;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_VALUEMEMBERSEQ_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_VALUEMEMBERSEQ_CH_
-  
-  class TAO_IFR_Client_Export _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (void);
-    _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (CORBA::ULong maximum); 
-    _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        ValueMember *data,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (
-        const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs
-      );
-    _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &operator= (
-        const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs
-      );
-    virtual ~_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (void);
-    
-    // = Accessors.
-    ValueMember &operator[] (CORBA::ULong i);
-    const ValueMember &operator[] (CORBA::ULong i) const;
-    
-    // = Static operations.
-    static ValueMember *allocbuf (CORBA::ULong size);
-    static void freebuf (ValueMember *buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    ValueMember *get_buffer (CORBA::Boolean orphan = 0);
-    const ValueMember *get_buffer (void) const;
-    void replace (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        ValueMember *data,
-        CORBA::Boolean release
-      );
-  };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_VALUEMEMBERSEQ_CH_)
-#define _CORBA_VALUEMEMBERSEQ_CH_
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
   class ValueMemberSeq;
-  class ValueMemberSeq_var;
   
-  // *************************************************************
-  // CORBA::ValueMemberSeq
-  // *************************************************************
+  typedef
+    TAO_VarSeq_Var_T<
+        ValueMemberSeq,
+        ValueMember
+      >
+    ValueMemberSeq_var;
   
-  class TAO_IFR_Client_Export ValueMemberSeq : public 
+  typedef
+    TAO_Seq_Out_T<
+        ValueMemberSeq,
+        ValueMemberSeq_var,
+        ValueMember
+      >
+    ValueMemberSeq_out;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<ValueMember>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class TAO_IFR_Client_Export ValueMemberSeq
+    : public
+        TAO_Unbounded_Sequence<
+            ValueMember
+          >
   {
   public:
     ValueMemberSeq (void);
     ValueMemberSeq (CORBA::ULong max);
     ValueMemberSeq (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        ValueMember *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        ValueMember* buffer, 
         CORBA::Boolean release = 0
       );
     ValueMemberSeq (const ValueMemberSeq &);
     ~ValueMemberSeq (void);
     
-    static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void *);
     
     typedef ValueMemberSeq_var _var_type;
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEMEMBERSEQ___VAR_CH_)
-#define _CORBA_VALUEMEMBERSEQ___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class CORBA::ValueMemberSeq_var
-  // *************************************************************
-  
-  class TAO_IFR_Client_Export ValueMemberSeq_var
-  {
-  public:
-    ValueMemberSeq_var (void);
-    ValueMemberSeq_var (ValueMemberSeq *);
-    ValueMemberSeq_var (const ValueMemberSeq_var &);
-    ~ValueMemberSeq_var (void);
-    
-    ValueMemberSeq_var &operator= (ValueMemberSeq *);
-    ValueMemberSeq_var &operator= (const ValueMemberSeq_var &);
-    ValueMemberSeq *operator-> (void);
-    const ValueMemberSeq *operator-> (void) const;
-    
-    operator const ValueMemberSeq &() const;
-    operator ValueMemberSeq &();
-    operator ValueMemberSeq &() const;
-    
-    // Variable-size base types only.
-    operator ValueMemberSeq *&();
-    
-    ValueMember & operator[] (CORBA::ULong index);
-    const ValueMember & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
-    const ValueMemberSeq &in (void) const;
-    ValueMemberSeq &inout (void);
-    ValueMemberSeq *&out (void);
-    ValueMemberSeq *_retn (void);
-    ValueMemberSeq *ptr (void) const;
-  
-  private:
-    ValueMemberSeq *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEMEMBERSEQ___OUT_CH_)
-#define _CORBA_VALUEMEMBERSEQ___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_IFR_Client_Export ValueMemberSeq_out
-  {
-  public:
-    ValueMemberSeq_out (ValueMemberSeq *&);
-    ValueMemberSeq_out (ValueMemberSeq_var &);
-    ValueMemberSeq_out (const ValueMemberSeq_out &);
-    ValueMemberSeq_out &operator= (const ValueMemberSeq_out &);
-    ValueMemberSeq_out &operator= (ValueMemberSeq *);
-    operator ValueMemberSeq *&();
-    ValueMemberSeq *&ptr (void);
-    ValueMemberSeq *operator-> (void);
-    ValueMember & operator[] (CORBA::ULong index);
-  
-  private:
-    ValueMemberSeq *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ValueMemberSeq_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -737,90 +530,53 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueMemberSeq;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_VALUEMEMBERDEF___PTR_CH_)
-#define _CORBA_VALUEMEMBERDEF___PTR_CH_
+#if !defined (_CORBA_VALUEMEMBERDEF__ODDS_N_ENDS_CH_)
+#define _CORBA_VALUEMEMBERDEF__ODDS_N_ENDS_CH_
   
   class ValueMemberDef;
   typedef ValueMemberDef *ValueMemberDef_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEMEMBERDEF___VAR_CH_)
-#define _CORBA_VALUEMEMBERDEF___VAR_CH_
+  struct tao_ValueMemberDef_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ValueMemberDef,
+        tao_ValueMemberDef_life
+      >
+    ValueMemberDef_var;
   
-  class TAO_IFR_Client_Export ValueMemberDef_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ValueMemberDef,
+        tao_ValueMemberDef_life
+      >
+    ValueMemberDef_out;
+  
+  struct TAO_IFR_Client_Export tao_ValueMemberDef_life
   {
-  public:
-    ValueMemberDef_var (void); // default constructor
-    ValueMemberDef_var (ValueMemberDef_ptr p) : ptr_ (p) {} 
-    ValueMemberDef_var (const ValueMemberDef_var &); // copy constructor
-    ~ValueMemberDef_var (void); // destructor
-    
-    ValueMemberDef_var &operator= (ValueMemberDef_ptr);
-    ValueMemberDef_var &operator= (const ValueMemberDef_var &);
-    ValueMemberDef_ptr operator-> (void) const;
-    
-    operator const ValueMemberDef_ptr &() const;
-    operator ValueMemberDef_ptr &();
-    // in, inout, out, _retn 
-    ValueMemberDef_ptr in (void) const;
-    ValueMemberDef_ptr &inout (void);
-    ValueMemberDef_ptr &out (void);
-    ValueMemberDef_ptr _retn (void);
-    ValueMemberDef_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ValueMemberDef_ptr tao_duplicate (ValueMemberDef_ptr);
     static void tao_release (ValueMemberDef_ptr);
     static ValueMemberDef_ptr tao_nil (void);
-    static ValueMemberDef_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ValueMemberDef_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ValueMemberDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ValueMemberDef_var (const TAO_Base_var &rhs);
-    ValueMemberDef_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEMEMBERDEF___OUT_CH_)
-#define _CORBA_VALUEMEMBERDEF___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IFR_Client_Export ValueMemberDef_out
+  struct TAO_IFR_Client_Export tao_ValueMemberDef_cast
   {
-  public:
-    ValueMemberDef_out (ValueMemberDef_ptr &);
-    ValueMemberDef_out (ValueMemberDef_var &);
-    ValueMemberDef_out (const ValueMemberDef_out &);
-    ValueMemberDef_out &operator= (const ValueMemberDef_out &);
-    ValueMemberDef_out &operator= (const ValueMemberDef_var &);
-    ValueMemberDef_out &operator= (ValueMemberDef_ptr);
-    operator ValueMemberDef_ptr &();
-    ValueMemberDef_ptr &ptr (void);
-    ValueMemberDef_ptr operator-> (void);
-  
-  private:
-    ValueMemberDef_ptr &ptr_;
+    static ValueMemberDef_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_VALUEMEMBERDEF_CH_)
 #define _CORBA_VALUEMEMBERDEF_CH_
@@ -911,7 +667,7 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1184,90 +940,53 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueMemberDef;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_VALUEDEF___PTR_CH_)
-#define _CORBA_VALUEDEF___PTR_CH_
+#if !defined (_CORBA_VALUEDEF__ODDS_N_ENDS_CH_)
+#define _CORBA_VALUEDEF__ODDS_N_ENDS_CH_
   
   class ValueDef;
   typedef ValueDef *ValueDef_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEDEF___VAR_CH_)
-#define _CORBA_VALUEDEF___VAR_CH_
+  struct tao_ValueDef_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ValueDef,
+        tao_ValueDef_life
+      >
+    ValueDef_var;
   
-  class TAO_IFR_Client_Export ValueDef_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ValueDef,
+        tao_ValueDef_life
+      >
+    ValueDef_out;
+  
+  struct TAO_IFR_Client_Export tao_ValueDef_life
   {
-  public:
-    ValueDef_var (void); // default constructor
-    ValueDef_var (ValueDef_ptr p) : ptr_ (p) {} 
-    ValueDef_var (const ValueDef_var &); // copy constructor
-    ~ValueDef_var (void); // destructor
-    
-    ValueDef_var &operator= (ValueDef_ptr);
-    ValueDef_var &operator= (const ValueDef_var &);
-    ValueDef_ptr operator-> (void) const;
-    
-    operator const ValueDef_ptr &() const;
-    operator ValueDef_ptr &();
-    // in, inout, out, _retn 
-    ValueDef_ptr in (void) const;
-    ValueDef_ptr &inout (void);
-    ValueDef_ptr &out (void);
-    ValueDef_ptr _retn (void);
-    ValueDef_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ValueDef_ptr tao_duplicate (ValueDef_ptr);
     static void tao_release (ValueDef_ptr);
     static ValueDef_ptr tao_nil (void);
-    static ValueDef_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ValueDef_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ValueDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ValueDef_var (const TAO_Base_var &rhs);
-    ValueDef_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEDEF___OUT_CH_)
-#define _CORBA_VALUEDEF___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IFR_Client_Export ValueDef_out
+  struct TAO_IFR_Client_Export tao_ValueDef_cast
   {
-  public:
-    ValueDef_out (ValueDef_ptr &);
-    ValueDef_out (ValueDef_var &);
-    ValueDef_out (const ValueDef_out &);
-    ValueDef_out &operator= (const ValueDef_out &);
-    ValueDef_out &operator= (const ValueDef_var &);
-    ValueDef_out &operator= (ValueDef_ptr);
-    operator ValueDef_ptr &();
-    ValueDef_ptr &ptr (void);
-    ValueDef_ptr operator-> (void);
-  
-  private:
-    ValueDef_ptr &ptr_;
+    static ValueDef_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_VALUEDEF_CH_)
 #define _CORBA_VALUEDEF_CH_
@@ -1466,9 +1185,25 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
     
-    class FullValueDescription_var;
+    struct FullValueDescription;
+    
+    typedef
+      TAO_Var_Var_T<
+          FullValueDescription
+        >
+      FullValueDescription_var;
+    
+    typedef
+      TAO_Out_T<
+          FullValueDescription,
+          FullValueDescription_var
+        >
+      FullValueDescription_out;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
     
     struct TAO_IFR_Client_Export FullValueDescription
     {
@@ -1490,61 +1225,6 @@ TAO_NAMESPACE  CORBA
       CORBA::Boolean is_truncatable;
       TAO_String_Manager base_value;
       CORBA::TypeCode_var type;
-    };
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-    
-    class TAO_IFR_Client_Export FullValueDescription_var
-    {
-    public:
-      FullValueDescription_var (void);
-      FullValueDescription_var (FullValueDescription *);
-      FullValueDescription_var (const FullValueDescription_var &);
-      ~FullValueDescription_var (void);
-      
-      FullValueDescription_var &operator= (FullValueDescription *);
-      FullValueDescription_var &operator= (const FullValueDescription_var &);
-      FullValueDescription *operator-> (void);
-      const FullValueDescription *operator-> (void) const;
-      
-      operator const FullValueDescription &() const;
-      operator FullValueDescription &();
-      operator FullValueDescription &() const;
-      
-      // Variable-size types only.
-      operator FullValueDescription *&();
-      
-      // in, inout, out, _retn 
-      const FullValueDescription &in (void) const;
-      FullValueDescription &inout (void);
-      FullValueDescription *&out (void);
-      FullValueDescription *_retn (void);
-      FullValueDescription *ptr (void) const;
-    
-    private:
-      FullValueDescription *ptr_;
-    };
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-    
-    class TAO_IFR_Client_Export FullValueDescription_out
-    {
-    public:
-      FullValueDescription_out (FullValueDescription *&);
-      FullValueDescription_out (FullValueDescription_var &);
-      FullValueDescription_out (const FullValueDescription_out &);
-      FullValueDescription_out &operator= (const FullValueDescription_out &);
-      FullValueDescription_out &operator= (FullValueDescription *);
-      operator FullValueDescription *&();
-      FullValueDescription *&ptr (void);
-      FullValueDescription *operator-> (void);
-      
-    private:
-      FullValueDescription *&ptr_;
-      // Assignment from T_var not allowed.
-      void operator= (const FullValueDescription_var &);
     };
     
     // TAO_IDL - Generated from
@@ -1611,7 +1291,7 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2244,9 +1924,25 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueDef;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class ValueDescription_var;
+  struct ValueDescription;
+  
+  typedef
+    TAO_Var_Var_T<
+        ValueDescription
+      >
+    ValueDescription_var;
+  
+  typedef
+    TAO_Out_T<
+        ValueDescription,
+        ValueDescription_var
+      >
+    ValueDescription_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_IFR_Client_Export ValueDescription
   {
@@ -2266,150 +1962,58 @@ TAO_NAMESPACE  CORBA
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_IFR_Client_Export ValueDescription_var
-  {
-  public:
-    ValueDescription_var (void);
-    ValueDescription_var (ValueDescription *);
-    ValueDescription_var (const ValueDescription_var &);
-    ~ValueDescription_var (void);
-    
-    ValueDescription_var &operator= (ValueDescription *);
-    ValueDescription_var &operator= (const ValueDescription_var &);
-    ValueDescription *operator-> (void);
-    const ValueDescription *operator-> (void) const;
-    
-    operator const ValueDescription &() const;
-    operator ValueDescription &();
-    operator ValueDescription &() const;
-    
-    // Variable-size types only.
-    operator ValueDescription *&();
-    
-    // in, inout, out, _retn 
-    const ValueDescription &in (void) const;
-    ValueDescription &inout (void);
-    ValueDescription *&out (void);
-    ValueDescription *_retn (void);
-    ValueDescription *ptr (void) const;
-  
-  private:
-    ValueDescription *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_IFR_Client_Export ValueDescription_out
-  {
-  public:
-    ValueDescription_out (ValueDescription *&);
-    ValueDescription_out (ValueDescription_var &);
-    ValueDescription_out (const ValueDescription_out &);
-    ValueDescription_out &operator= (const ValueDescription_out &);
-    ValueDescription_out &operator= (ValueDescription *);
-    operator ValueDescription *&();
-    ValueDescription *&ptr (void);
-    ValueDescription *operator-> (void);
-    
-  private:
-    ValueDescription *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ValueDescription_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueDescription;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_EXTVALUEDEF___PTR_CH_)
-#define _CORBA_EXTVALUEDEF___PTR_CH_
+#if !defined (_CORBA_EXTVALUEDEF__ODDS_N_ENDS_CH_)
+#define _CORBA_EXTVALUEDEF__ODDS_N_ENDS_CH_
   
   class ExtValueDef;
   typedef ExtValueDef *ExtValueDef_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXTVALUEDEF___VAR_CH_)
-#define _CORBA_EXTVALUEDEF___VAR_CH_
+  struct tao_ExtValueDef_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ExtValueDef,
+        tao_ExtValueDef_life
+      >
+    ExtValueDef_var;
   
-  class TAO_IFR_Client_Export ExtValueDef_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ExtValueDef,
+        tao_ExtValueDef_life
+      >
+    ExtValueDef_out;
+  
+  struct TAO_IFR_Client_Export tao_ExtValueDef_life
   {
-  public:
-    ExtValueDef_var (void); // default constructor
-    ExtValueDef_var (ExtValueDef_ptr p) : ptr_ (p) {} 
-    ExtValueDef_var (const ExtValueDef_var &); // copy constructor
-    ~ExtValueDef_var (void); // destructor
-    
-    ExtValueDef_var &operator= (ExtValueDef_ptr);
-    ExtValueDef_var &operator= (const ExtValueDef_var &);
-    ExtValueDef_ptr operator-> (void) const;
-    
-    operator const ExtValueDef_ptr &() const;
-    operator ExtValueDef_ptr &();
-    // in, inout, out, _retn 
-    ExtValueDef_ptr in (void) const;
-    ExtValueDef_ptr &inout (void);
-    ExtValueDef_ptr &out (void);
-    ExtValueDef_ptr _retn (void);
-    ExtValueDef_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ExtValueDef_ptr tao_duplicate (ExtValueDef_ptr);
     static void tao_release (ExtValueDef_ptr);
     static ExtValueDef_ptr tao_nil (void);
-    static ExtValueDef_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ExtValueDef_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ExtValueDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ExtValueDef_var (const TAO_Base_var &rhs);
-    ExtValueDef_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXTVALUEDEF___OUT_CH_)
-#define _CORBA_EXTVALUEDEF___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IFR_Client_Export ExtValueDef_out
+  struct TAO_IFR_Client_Export tao_ExtValueDef_cast
   {
-  public:
-    ExtValueDef_out (ExtValueDef_ptr &);
-    ExtValueDef_out (ExtValueDef_var &);
-    ExtValueDef_out (const ExtValueDef_out &);
-    ExtValueDef_out &operator= (const ExtValueDef_out &);
-    ExtValueDef_out &operator= (const ExtValueDef_var &);
-    ExtValueDef_out &operator= (ExtValueDef_ptr);
-    operator ExtValueDef_ptr &();
-    ExtValueDef_ptr &ptr (void);
-    ExtValueDef_ptr operator-> (void);
-  
-  private:
-    ExtValueDef_ptr &ptr_;
+    static ExtValueDef_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_EXTVALUEDEF_CH_)
 #define _CORBA_EXTVALUEDEF_CH_
@@ -2469,9 +2073,25 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
     
-    class ExtFullValueDescription_var;
+    struct ExtFullValueDescription;
+    
+    typedef
+      TAO_Var_Var_T<
+          ExtFullValueDescription
+        >
+      ExtFullValueDescription_var;
+    
+    typedef
+      TAO_Out_T<
+          ExtFullValueDescription,
+          ExtFullValueDescription_var
+        >
+      ExtFullValueDescription_out;
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
     
     struct TAO_IFR_Client_Export ExtFullValueDescription
     {
@@ -2493,61 +2113,6 @@ TAO_NAMESPACE  CORBA
       CORBA::Boolean is_truncatable;
       TAO_String_Manager base_value;
       CORBA::TypeCode_var type;
-    };
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-    
-    class TAO_IFR_Client_Export ExtFullValueDescription_var
-    {
-    public:
-      ExtFullValueDescription_var (void);
-      ExtFullValueDescription_var (ExtFullValueDescription *);
-      ExtFullValueDescription_var (const ExtFullValueDescription_var &);
-      ~ExtFullValueDescription_var (void);
-      
-      ExtFullValueDescription_var &operator= (ExtFullValueDescription *);
-      ExtFullValueDescription_var &operator= (const ExtFullValueDescription_var &);
-      ExtFullValueDescription *operator-> (void);
-      const ExtFullValueDescription *operator-> (void) const;
-      
-      operator const ExtFullValueDescription &() const;
-      operator ExtFullValueDescription &();
-      operator ExtFullValueDescription &() const;
-      
-      // Variable-size types only.
-      operator ExtFullValueDescription *&();
-      
-      // in, inout, out, _retn 
-      const ExtFullValueDescription &in (void) const;
-      ExtFullValueDescription &inout (void);
-      ExtFullValueDescription *&out (void);
-      ExtFullValueDescription *_retn (void);
-      ExtFullValueDescription *ptr (void) const;
-    
-    private:
-      ExtFullValueDescription *ptr_;
-    };
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-    
-    class TAO_IFR_Client_Export ExtFullValueDescription_out
-    {
-    public:
-      ExtFullValueDescription_out (ExtFullValueDescription *&);
-      ExtFullValueDescription_out (ExtFullValueDescription_var &);
-      ExtFullValueDescription_out (const ExtFullValueDescription_out &);
-      ExtFullValueDescription_out &operator= (const ExtFullValueDescription_out &);
-      ExtFullValueDescription_out &operator= (ExtFullValueDescription *);
-      operator ExtFullValueDescription *&();
-      ExtFullValueDescription *&ptr (void);
-      ExtFullValueDescription *operator-> (void);
-      
-    private:
-      ExtFullValueDescription *&ptr_;
-      // Assignment from T_var not allowed.
-      void operator= (const ExtFullValueDescription_var &);
     };
     
     // TAO_IDL - Generated from
@@ -2583,7 +2148,7 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2846,90 +2411,53 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExtValueDef;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_VALUEBOXDEF___PTR_CH_)
-#define _CORBA_VALUEBOXDEF___PTR_CH_
+#if !defined (_CORBA_VALUEBOXDEF__ODDS_N_ENDS_CH_)
+#define _CORBA_VALUEBOXDEF__ODDS_N_ENDS_CH_
   
   class ValueBoxDef;
   typedef ValueBoxDef *ValueBoxDef_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEBOXDEF___VAR_CH_)
-#define _CORBA_VALUEBOXDEF___VAR_CH_
+  struct tao_ValueBoxDef_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ValueBoxDef,
+        tao_ValueBoxDef_life
+      >
+    ValueBoxDef_var;
   
-  class TAO_IFR_Client_Export ValueBoxDef_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ValueBoxDef,
+        tao_ValueBoxDef_life
+      >
+    ValueBoxDef_out;
+  
+  struct TAO_IFR_Client_Export tao_ValueBoxDef_life
   {
-  public:
-    ValueBoxDef_var (void); // default constructor
-    ValueBoxDef_var (ValueBoxDef_ptr p) : ptr_ (p) {} 
-    ValueBoxDef_var (const ValueBoxDef_var &); // copy constructor
-    ~ValueBoxDef_var (void); // destructor
-    
-    ValueBoxDef_var &operator= (ValueBoxDef_ptr);
-    ValueBoxDef_var &operator= (const ValueBoxDef_var &);
-    ValueBoxDef_ptr operator-> (void) const;
-    
-    operator const ValueBoxDef_ptr &() const;
-    operator ValueBoxDef_ptr &();
-    // in, inout, out, _retn 
-    ValueBoxDef_ptr in (void) const;
-    ValueBoxDef_ptr &inout (void);
-    ValueBoxDef_ptr &out (void);
-    ValueBoxDef_ptr _retn (void);
-    ValueBoxDef_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ValueBoxDef_ptr tao_duplicate (ValueBoxDef_ptr);
     static void tao_release (ValueBoxDef_ptr);
     static ValueBoxDef_ptr tao_nil (void);
-    static ValueBoxDef_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ValueBoxDef_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ValueBoxDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ValueBoxDef_var (const TAO_Base_var &rhs);
-    ValueBoxDef_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_VALUEBOXDEF___OUT_CH_)
-#define _CORBA_VALUEBOXDEF___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IFR_Client_Export ValueBoxDef_out
+  struct TAO_IFR_Client_Export tao_ValueBoxDef_cast
   {
-  public:
-    ValueBoxDef_out (ValueBoxDef_ptr &);
-    ValueBoxDef_out (ValueBoxDef_var &);
-    ValueBoxDef_out (const ValueBoxDef_out &);
-    ValueBoxDef_out &operator= (const ValueBoxDef_out &);
-    ValueBoxDef_out &operator= (const ValueBoxDef_var &);
-    ValueBoxDef_out &operator= (ValueBoxDef_ptr);
-    operator ValueBoxDef_ptr &();
-    ValueBoxDef_ptr &ptr (void);
-    ValueBoxDef_ptr operator-> (void);
-  
-  private:
-    ValueBoxDef_ptr &ptr_;
+    static ValueBoxDef_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_VALUEBOXDEF_CH_)
 #define _CORBA_VALUEBOXDEF_CH_
@@ -2989,7 +2517,7 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -3391,7 +2919,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ValueBox
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "IFR_ExtendedC.i"
@@ -3407,5 +2935,4 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ValueBox
 
 #include "ace/post.h"
 #endif /* ifndef */
-
 

@@ -26,7 +26,7 @@
 #define _TAO_IDL_ORIG_POLLABLEC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "Exception.h"
 
 #if (TAO_HAS_AMI_POLLER == 1)
 
@@ -34,8 +34,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
-#include "Exception.h"
 #include "Object.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -68,174 +66,75 @@ TAO_NAMESPACE  CORBA
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/interface_fwd_ch.cpp:53
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+
+#if !defined (_CORBA_POLLABLESET__ODDS_N_ENDS_CH_)
+#define _CORBA_POLLABLESET__ODDS_N_ENDS_CH_
   
   class PollableSet;
-
-#if !defined (_CORBA_POLLABLESET___PTR_CH_)
-#define _CORBA_POLLABLESET___PTR_CH_
-  
   typedef PollableSet *PollableSet_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLLABLESET___VAR_CH_)
-#define _CORBA_POLLABLESET___VAR_CH_
+  struct tao_PollableSet_life;
+  typedef TAO_Objref_Var_T<PollableSet, tao_PollableSet_life> PollableSet_var;
+  typedef TAO_Objref_Out_T<PollableSet, tao_PollableSet_life> PollableSet_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_Export PollableSet_var : public TAO_Base_var
+  struct TAO_Export tao_PollableSet_life
   {
-  public:
-    PollableSet_var (void); // default constructor
-    PollableSet_var (PollableSet_ptr p) : ptr_ (p) {} 
-    PollableSet_var (const PollableSet_var &); // copy constructor
-    ~PollableSet_var (void); // destructor
-    
-    PollableSet_var &operator= (PollableSet_ptr);
-    PollableSet_var &operator= (const PollableSet_var &);
-    PollableSet_ptr operator-> (void) const;
-    
-    operator const PollableSet_ptr &() const;
-    operator PollableSet_ptr &();
-    // in, inout, out, _retn 
-    PollableSet_ptr in (void) const;
-    PollableSet_ptr &inout (void);
-    PollableSet_ptr &out (void);
-    PollableSet_ptr _retn (void);
-    PollableSet_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static PollableSet_ptr tao_duplicate (PollableSet_ptr);
     static void tao_release (PollableSet_ptr);
     static PollableSet_ptr tao_nil (void);
-    static PollableSet_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        PollableSet_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    PollableSet_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PollableSet_var (const TAO_Base_var &rhs);
-    PollableSet_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLLABLESET___OUT_CH_)
-#define _CORBA_POLLABLESET___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Export PollableSet_out
+  struct TAO_Export tao_PollableSet_cast
   {
-  public:
-    PollableSet_out (PollableSet_ptr &);
-    PollableSet_out (PollableSet_var &);
-    PollableSet_out (const PollableSet_out &);
-    PollableSet_out &operator= (const PollableSet_out &);
-    PollableSet_out &operator= (const PollableSet_var &);
-    PollableSet_out &operator= (PollableSet_ptr);
-    operator PollableSet_ptr &();
-    PollableSet_ptr &ptr (void);
-    PollableSet_ptr operator-> (void);
-  
-  private:
-    PollableSet_ptr &ptr_;
+    static PollableSet_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_POLLABLE___PTR_CH_)
-#define _CORBA_POLLABLE___PTR_CH_
+#if !defined (_CORBA_POLLABLE__ODDS_N_ENDS_CH_)
+#define _CORBA_POLLABLE__ODDS_N_ENDS_CH_
   
   class Pollable;
   typedef Pollable *Pollable_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLLABLE___VAR_CH_)
-#define _CORBA_POLLABLE___VAR_CH_
+  struct tao_Pollable_life;
+  typedef TAO_Objref_Var_T<Pollable, tao_Pollable_life> Pollable_var;
+  typedef TAO_Objref_Out_T<Pollable, tao_Pollable_life> Pollable_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_Export Pollable_var : public TAO_Base_var
+  struct TAO_Export tao_Pollable_life
   {
-  public:
-    Pollable_var (void); // default constructor
-    Pollable_var (Pollable_ptr p) : ptr_ (p) {} 
-    Pollable_var (const Pollable_var &); // copy constructor
-    ~Pollable_var (void); // destructor
-    
-    Pollable_var &operator= (Pollable_ptr);
-    Pollable_var &operator= (const Pollable_var &);
-    Pollable_ptr operator-> (void) const;
-    
-    operator const Pollable_ptr &() const;
-    operator Pollable_ptr &();
-    // in, inout, out, _retn 
-    Pollable_ptr in (void) const;
-    Pollable_ptr &inout (void);
-    Pollable_ptr &out (void);
-    Pollable_ptr _retn (void);
-    Pollable_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static Pollable_ptr tao_duplicate (Pollable_ptr);
     static void tao_release (Pollable_ptr);
     static Pollable_ptr tao_nil (void);
-    static Pollable_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        Pollable_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    Pollable_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    Pollable_var (const TAO_Base_var &rhs);
-    Pollable_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLLABLE___OUT_CH_)
-#define _CORBA_POLLABLE___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Export Pollable_out
+  struct TAO_Export tao_Pollable_cast
   {
-  public:
-    Pollable_out (Pollable_ptr &);
-    Pollable_out (Pollable_var &);
-    Pollable_out (const Pollable_out &);
-    Pollable_out &operator= (const Pollable_out &);
-    Pollable_out &operator= (const Pollable_var &);
-    Pollable_out &operator= (Pollable_ptr);
-    operator Pollable_ptr &();
-    Pollable_ptr &ptr (void);
-    Pollable_ptr operator-> (void);
-  
-  private:
-    Pollable_ptr &ptr_;
+    static Pollable_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLLABLE_CH_)
 #define _CORBA_POLLABLE_CH_
@@ -290,7 +189,7 @@ TAO_NAMESPACE  CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -300,7 +199,7 @@ TAO_NAMESPACE  CORBA
   protected:
     Pollable (void);
     virtual ~Pollable (void);
-    
+  
   private:
     Pollable (const Pollable &);
     void operator= (const Pollable &);
@@ -309,90 +208,41 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_DIIPOLLABLE___PTR_CH_)
-#define _CORBA_DIIPOLLABLE___PTR_CH_
+#if !defined (_CORBA_DIIPOLLABLE__ODDS_N_ENDS_CH_)
+#define _CORBA_DIIPOLLABLE__ODDS_N_ENDS_CH_
   
   class DIIPollable;
   typedef DIIPollable *DIIPollable_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_DIIPOLLABLE___VAR_CH_)
-#define _CORBA_DIIPOLLABLE___VAR_CH_
+  struct tao_DIIPollable_life;
+  typedef TAO_Objref_Var_T<DIIPollable, tao_DIIPollable_life> DIIPollable_var;
+  typedef TAO_Objref_Out_T<DIIPollable, tao_DIIPollable_life> DIIPollable_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_Export DIIPollable_var : public TAO_Base_var
+  struct TAO_Export tao_DIIPollable_life
   {
-  public:
-    DIIPollable_var (void); // default constructor
-    DIIPollable_var (DIIPollable_ptr p) : ptr_ (p) {} 
-    DIIPollable_var (const DIIPollable_var &); // copy constructor
-    ~DIIPollable_var (void); // destructor
-    
-    DIIPollable_var &operator= (DIIPollable_ptr);
-    DIIPollable_var &operator= (const DIIPollable_var &);
-    DIIPollable_ptr operator-> (void) const;
-    
-    operator const DIIPollable_ptr &() const;
-    operator DIIPollable_ptr &();
-    // in, inout, out, _retn 
-    DIIPollable_ptr in (void) const;
-    DIIPollable_ptr &inout (void);
-    DIIPollable_ptr &out (void);
-    DIIPollable_ptr _retn (void);
-    DIIPollable_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static DIIPollable_ptr tao_duplicate (DIIPollable_ptr);
     static void tao_release (DIIPollable_ptr);
     static DIIPollable_ptr tao_nil (void);
-    static DIIPollable_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        DIIPollable_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    DIIPollable_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    DIIPollable_var (const TAO_Base_var &rhs);
-    DIIPollable_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_DIIPOLLABLE___OUT_CH_)
-#define _CORBA_DIIPOLLABLE___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Export DIIPollable_out
+  struct TAO_Export tao_DIIPollable_cast
   {
-  public:
-    DIIPollable_out (DIIPollable_ptr &);
-    DIIPollable_out (DIIPollable_var &);
-    DIIPollable_out (const DIIPollable_out &);
-    DIIPollable_out &operator= (const DIIPollable_out &);
-    DIIPollable_out &operator= (const DIIPollable_var &);
-    DIIPollable_out &operator= (DIIPollable_ptr);
-    operator DIIPollable_ptr &();
-    DIIPollable_ptr &ptr (void);
-    DIIPollable_ptr operator-> (void);
-  
-  private:
-    DIIPollable_ptr &ptr_;
+    static DIIPollable_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_DIIPOLLABLE_CH_)
 #define _CORBA_DIIPOLLABLE_CH_
@@ -426,7 +276,7 @@ TAO_NAMESPACE  CORBA
     
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -436,7 +286,7 @@ TAO_NAMESPACE  CORBA
   protected:
     DIIPollable (void);
     virtual ~DIIPollable (void);
-    
+  
   private:
     DIIPollable (const DIIPollable &);
     void operator= (const DIIPollable &);
@@ -445,90 +295,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
-
-#if !defined (_CORBA_POLLABLESET___PTR_CH_)
-#define _CORBA_POLLABLESET___PTR_CH_
-  
-  class PollableSet;
-  typedef PollableSet *PollableSet_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLLABLESET___VAR_CH_)
-#define _CORBA_POLLABLESET___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_Export PollableSet_var : public TAO_Base_var
-  {
-  public:
-    PollableSet_var (void); // default constructor
-    PollableSet_var (PollableSet_ptr p) : ptr_ (p) {} 
-    PollableSet_var (const PollableSet_var &); // copy constructor
-    ~PollableSet_var (void); // destructor
-    
-    PollableSet_var &operator= (PollableSet_ptr);
-    PollableSet_var &operator= (const PollableSet_var &);
-    PollableSet_ptr operator-> (void) const;
-    
-    operator const PollableSet_ptr &() const;
-    operator PollableSet_ptr &();
-    // in, inout, out, _retn 
-    PollableSet_ptr in (void) const;
-    PollableSet_ptr &inout (void);
-    PollableSet_ptr &out (void);
-    PollableSet_ptr _retn (void);
-    PollableSet_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static PollableSet_ptr tao_duplicate (PollableSet_ptr);
-    static void tao_release (PollableSet_ptr);
-    static PollableSet_ptr tao_nil (void);
-    static PollableSet_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
-      );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    PollableSet_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PollableSet_var (const TAO_Base_var &rhs);
-    PollableSet_var &operator= (const TAO_Base_var &rhs);
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLLABLESET___OUT_CH_)
-#define _CORBA_POLLABLESET___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Export PollableSet_out
-  {
-  public:
-    PollableSet_out (PollableSet_ptr &);
-    PollableSet_out (PollableSet_var &);
-    PollableSet_out (const PollableSet_out &);
-    PollableSet_out &operator= (const PollableSet_out &);
-    PollableSet_out &operator= (const PollableSet_var &);
-    PollableSet_out &operator= (PollableSet_ptr);
-    operator PollableSet_ptr &();
-    PollableSet_ptr &ptr (void);
-    PollableSet_ptr operator-> (void);
-  
-  private:
-    PollableSet_ptr &ptr_;
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLLABLESET_CH_)
 #define _CORBA_POLLABLESET_CH_
@@ -695,7 +462,7 @@ TAO_NAMESPACE  CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -705,10 +472,6 @@ TAO_NAMESPACE  CORBA
   protected:
     PollableSet (void);
     virtual ~PollableSet (void);
-    
-    friend class _TAO_PollableSet_Remote_Proxy_Impl;
-    friend class _TAO_PollableSet_ThruPOA_Proxy_Impl;
-    friend class _TAO_PollableSet_Direct_Proxy_Impl;
   
   private:
     PollableSet (const PollableSet &);
@@ -734,7 +497,7 @@ TAO_NAMESPACE_CLOSE // module CORBA
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "PollableC.i"

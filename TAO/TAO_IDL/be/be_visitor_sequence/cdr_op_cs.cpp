@@ -1,7 +1,3 @@
-//
-// $Id$
-//
-
 // ============================================================================
 //
 // = LIBRARY
@@ -19,8 +15,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           cdr_op_cs, 
+ACE_RCSID (be_visitor_sequence,
+           cdr_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -77,7 +73,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
-      int status = 
+      int status =
           this->gen_anonymous_base_type (
               bt,
               TAO_CodeGen::TAO_ROOT_CDR_OP_CS
@@ -121,7 +117,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl;
 
   // First encode the sequence length.
-  *os << "CORBA::ULong _tao_seq_len = _tao_sequence.length ();" 
+  *os << "CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
       << be_nl << be_nl;
   *os << "if (strm << _tao_seq_len)" << be_idt_nl
       << "{" << be_idt_nl;
@@ -299,6 +295,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_object:
+    case AST_PredefinedType::PT_value:
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
       return this->visit_node (node);
@@ -306,7 +303,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cdr_op_cs::"
                          "visit_predefined_type - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     default:
       break;
@@ -526,7 +523,7 @@ be_visitor_sequence_cdr_op_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cdr_op_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -676,7 +673,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                         << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
                   }
 
-                *os << str->max_size ()->ev ()->u.ulval << "));" 
+                *os << str->max_size ()->ev ()->u.ulval << "));"
                     << be_uidt_nl;
               }
           }
@@ -685,7 +682,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
         case AST_Decl::NT_interface_fwd:
         case AST_Decl::NT_valuetype:
         case AST_Decl::NT_valuetype_fwd:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());" 
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
               << be_uidt_nl;
 
           break;
@@ -693,7 +690,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           {
             // We need to separately handle this case of pseudo objects
             // because they have a _var type.
-            be_predefined_type *pt = 
+            be_predefined_type *pt =
               be_predefined_type::narrow_from_decl (bt);
 
             if (!pt)
@@ -708,21 +705,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             AST_PredefinedType::PredefinedType pdt = pt->pt ();
 
             if (pdt == AST_PredefinedType::PT_pseudo
-                || pdt == AST_PredefinedType::PT_object)
+                || pdt == AST_PredefinedType::PT_object
+                || pdt == AST_PredefinedType::PT_value)
               {
                 *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
                     << be_uidt_nl;
               }
             else
               {
-                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" 
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);"
                     << be_uidt_nl;
               }
           }
 
           break;
         default:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);" 
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);"
               << be_uidt_nl;
 
           break;
@@ -804,10 +802,17 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
           else
             {
-              *os << "tao_" << bt->flat_name () << "_marshal ("
+              AST_Decl *parent = ScopeAsDecl (bt->defined_in ());
+
+              if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+                {
+                  *os << parent->name () << "::";
+                }
+
+              *os << "tao_" << bt->local_name () << "_life::tao_marshal ("
                   << "_tao_sequence[i].in (), strm);" << be_uidt;
             }
-          
+
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
@@ -818,7 +823,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           break;
         case AST_Decl::NT_pre_defined:
           {
-            be_predefined_type *pt = 
+            be_predefined_type *pt =
               be_predefined_type::narrow_from_decl (bt);
 
             if (!pt)
@@ -833,7 +838,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             AST_PredefinedType::PredefinedType pdt = pt->pt ();
 
             if (pdt == AST_PredefinedType::PT_pseudo
-                || pdt == AST_PredefinedType::PT_object)
+                || pdt == AST_PredefinedType::PT_object
+                || pdt == AST_PredefinedType::PT_value)
               {
                 *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ());";
               }

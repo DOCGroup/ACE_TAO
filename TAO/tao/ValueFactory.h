@@ -21,10 +21,24 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Pseudo_Value_VarOut_T.h"
+
 #include "ace/Synch_T.h"
 
 namespace CORBA
 {
+  class ValueFactoryBase;
+
+  TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueFactoryBase *);
+  TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueFactoryBase *);
+
+  typedef TAO_Pseudo_Value_Var_T<ValueFactoryBase> ValueFactoryBase_var;
+
+  typedef TAO_Pseudo_Value_Out_T<ValueFactoryBase, ValueFactoryBase_var> 
+    ValueFactoryBase_out;
+
+  typedef ValueFactoryBase_var ValueFactory_var;
+
   class TAO_Export ValueFactoryBase
   {
   public:
@@ -48,35 +62,6 @@ namespace CORBA
     CORBA::ULong _tao_reference_count_;
     TAO_SYNCH_MUTEX _tao_reference_count_lock_;
   }; // CORBA_ValueFactoryBase
-
-  /**
-   * @class ValueFactoryBase_var
-   *
-   * @brief _var class for ValueFactoryBase
-   */
-  class TAO_Export ValueFactoryBase_var
-  {
-  public:
-    ValueFactoryBase_var (void);
-    ValueFactoryBase_var (CORBA::ValueFactoryBase *);
-    ValueFactoryBase_var (const ValueFactoryBase_var &);
-    ~ValueFactoryBase_var (void);
-
-    ValueFactoryBase_var &operator= (CORBA::ValueFactoryBase *);
-    ValueFactoryBase_var &operator= (const ValueFactoryBase_var &);
-    CORBA::ValueFactoryBase *operator-> (void) const;
-
-    /// in, inout, out, _retn
-    CORBA::ValueFactoryBase *in (void) const;
-    CORBA::ValueFactoryBase *&inout (void);
-    CORBA::ValueFactoryBase *&out (void);
-    CORBA::ValueFactoryBase *_retn (void);
-    CORBA::ValueFactoryBase *ptr (void) const;
-
-  private:
-    CORBA::ValueFactoryBase *ptr_;
-  };
-
 }  // End CORBA namespace
 
 // Use this macro for writing code that is independend from

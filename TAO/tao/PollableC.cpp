@@ -37,8 +37,6 @@
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-
-
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -53,7 +51,7 @@
 int CORBA::Pollable::_tao_class_id = 0;
 
 CORBA::Pollable_ptr
-tao_CORBA_Pollable_duplicate (
+CORBA::tao_Pollable_life::tao_duplicate (
     CORBA::Pollable_ptr p
   )
 {
@@ -61,7 +59,7 @@ tao_CORBA_Pollable_duplicate (
 }
 
 void
-tao_CORBA_Pollable_release (
+CORBA::tao_Pollable_life::tao_release (
     CORBA::Pollable_ptr p
   )
 {
@@ -69,15 +67,24 @@ tao_CORBA_Pollable_release (
 }
 
 CORBA::Pollable_ptr
-tao_CORBA_Pollable_nil (
+CORBA::tao_Pollable_life::tao_nil (
     void
   )
 {
   return CORBA::Pollable::_nil ();
 }
 
+CORBA::Boolean
+CORBA::tao_Pollable_life::tao_marshal (
+    CORBA::Pollable_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 CORBA::Pollable_ptr
-tao_CORBA_Pollable_narrow (
+CORBA::tao_Pollable_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -86,7 +93,7 @@ tao_CORBA_Pollable_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_Pollable_upcast (
+CORBA::tao_Pollable_cast::tao_upcast (
     void *src
   )
 {
@@ -95,205 +102,32 @@ tao_CORBA_Pollable_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_Pollable_marshal (
-    CORBA::Pollable_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// CORBA::Pollable_var
-// *************************************************************
-
-CORBA::Pollable_var::Pollable_var (void)
-  : ptr_ (Pollable::_nil ())
-{}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-CORBA::Pollable_var::Pollable_var (const ::CORBA::Pollable_var &p)
-  : TAO_Base_var (),
-    ptr_ (Pollable::_duplicate (p.ptr ()))
-{}
-
-CORBA::Pollable_var::~Pollable_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA::Pollable_var &
-CORBA::Pollable_var::operator= (Pollable_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::Pollable_var &
-CORBA::Pollable_var::operator= (const ::CORBA::Pollable_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::Pollable::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-CORBA::Pollable_var::operator const ::CORBA::Pollable_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-CORBA::Pollable_var::operator ::CORBA::Pollable_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::Pollable_ptr &
-CORBA::Pollable_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::Pollable_ptr &
-CORBA::Pollable_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::Pollable::_nil ();
-  return this->ptr_;
-}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA::Pollable_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::Pollable::_nil ();
-  return val;
-}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_var::tao_duplicate (Pollable_ptr p)
-{
-  return ::CORBA::Pollable::_duplicate (p);
-}
-
-void
-CORBA::Pollable_var::tao_release (Pollable_ptr p)
-{
-  CORBA::release (p);
-}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_var::tao_nil (void)
-{
-  return ::CORBA::Pollable::_nil ();
-}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::CORBA::Pollable::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::Pollable_var::tao_upcast (void *src)
-{
-  Pollable **tmp =
-    ACE_static_cast (Pollable **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// CORBA::Pollable_out
-// *************************************************************
-
-CORBA::Pollable_out::Pollable_out (Pollable_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA::Pollable::_nil ();
-}
-
-CORBA::Pollable_out::Pollable_out (Pollable_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::Pollable::_nil ();
-}
-
-CORBA::Pollable_out::Pollable_out (const ::CORBA::Pollable_out &p)
-  : ptr_ (ACE_const_cast (Pollable_out &, p).ptr_)
-{}
-
-::CORBA::Pollable_out &
-CORBA::Pollable_out::operator= (const ::CORBA::Pollable_out &p)
-{
-  this->ptr_ = ACE_const_cast (Pollable_out&, p).ptr_;
-  return *this;
-}
-
-CORBA::Pollable_out &
-CORBA::Pollable_out::operator= (const ::CORBA::Pollable_var &p)
-{
-  this->ptr_ = ::CORBA::Pollable::_duplicate (p.ptr ());
-  return *this;
-}
-
-CORBA::Pollable_out &
-CORBA::Pollable_out::operator= (Pollable_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::Pollable_out::operator ::CORBA::Pollable_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::CORBA::Pollable_ptr &
-CORBA::Pollable_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::Pollable_ptr
-CORBA::Pollable_out::operator-> (void)
-{
-  return this->ptr_;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        CORBA::Pollable,
+        CORBA::tao_Pollable_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        CORBA::Pollable,
+        CORBA::tao_Pollable_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::Pollable, \
+        CORBA::tao_Pollable_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::Pollable, \
+        CORBA::tao_Pollable_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 CORBA::Pollable::Pollable (void)
 {}
@@ -380,13 +214,19 @@ const char* CORBA::Pollable::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/Pollable:1.0";
 }
 
+CORBA::Boolean
+CORBA::Pollable::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int CORBA::DIIPollable::_tao_class_id = 0;
 
 CORBA::DIIPollable_ptr
-tao_CORBA_DIIPollable_duplicate (
+CORBA::tao_DIIPollable_life::tao_duplicate (
     CORBA::DIIPollable_ptr p
   )
 {
@@ -394,7 +234,7 @@ tao_CORBA_DIIPollable_duplicate (
 }
 
 void
-tao_CORBA_DIIPollable_release (
+CORBA::tao_DIIPollable_life::tao_release (
     CORBA::DIIPollable_ptr p
   )
 {
@@ -402,15 +242,24 @@ tao_CORBA_DIIPollable_release (
 }
 
 CORBA::DIIPollable_ptr
-tao_CORBA_DIIPollable_nil (
+CORBA::tao_DIIPollable_life::tao_nil (
     void
   )
 {
   return CORBA::DIIPollable::_nil ();
 }
 
+CORBA::Boolean
+CORBA::tao_DIIPollable_life::tao_marshal (
+    CORBA::DIIPollable_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 CORBA::DIIPollable_ptr
-tao_CORBA_DIIPollable_narrow (
+CORBA::tao_DIIPollable_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -419,7 +268,7 @@ tao_CORBA_DIIPollable_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_DIIPollable_upcast (
+CORBA::tao_DIIPollable_cast::tao_upcast (
     void *src
   )
 {
@@ -428,205 +277,32 @@ tao_CORBA_DIIPollable_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_DIIPollable_marshal (
-    CORBA::DIIPollable_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// CORBA::DIIPollable_var
-// *************************************************************
-
-CORBA::DIIPollable_var::DIIPollable_var (void)
-  : ptr_ (DIIPollable::_nil ())
-{}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-CORBA::DIIPollable_var::DIIPollable_var (const ::CORBA::DIIPollable_var &p)
-  : TAO_Base_var (),
-    ptr_ (DIIPollable::_duplicate (p.ptr ()))
-{}
-
-CORBA::DIIPollable_var::~DIIPollable_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA::DIIPollable_var &
-CORBA::DIIPollable_var::operator= (DIIPollable_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::DIIPollable_var &
-CORBA::DIIPollable_var::operator= (const ::CORBA::DIIPollable_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::DIIPollable::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-CORBA::DIIPollable_var::operator const ::CORBA::DIIPollable_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-CORBA::DIIPollable_var::operator ::CORBA::DIIPollable_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::DIIPollable_ptr &
-CORBA::DIIPollable_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::DIIPollable_ptr &
-CORBA::DIIPollable_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::DIIPollable::_nil ();
-  return this->ptr_;
-}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA::DIIPollable_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::DIIPollable::_nil ();
-  return val;
-}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_var::tao_duplicate (DIIPollable_ptr p)
-{
-  return ::CORBA::DIIPollable::_duplicate (p);
-}
-
-void
-CORBA::DIIPollable_var::tao_release (DIIPollable_ptr p)
-{
-  CORBA::release (p);
-}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_var::tao_nil (void)
-{
-  return ::CORBA::DIIPollable::_nil ();
-}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::CORBA::DIIPollable::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::DIIPollable_var::tao_upcast (void *src)
-{
-  DIIPollable **tmp =
-    ACE_static_cast (DIIPollable **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// CORBA::DIIPollable_out
-// *************************************************************
-
-CORBA::DIIPollable_out::DIIPollable_out (DIIPollable_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA::DIIPollable::_nil ();
-}
-
-CORBA::DIIPollable_out::DIIPollable_out (DIIPollable_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::DIIPollable::_nil ();
-}
-
-CORBA::DIIPollable_out::DIIPollable_out (const ::CORBA::DIIPollable_out &p)
-  : ptr_ (ACE_const_cast (DIIPollable_out &, p).ptr_)
-{}
-
-::CORBA::DIIPollable_out &
-CORBA::DIIPollable_out::operator= (const ::CORBA::DIIPollable_out &p)
-{
-  this->ptr_ = ACE_const_cast (DIIPollable_out&, p).ptr_;
-  return *this;
-}
-
-CORBA::DIIPollable_out &
-CORBA::DIIPollable_out::operator= (const ::CORBA::DIIPollable_var &p)
-{
-  this->ptr_ = ::CORBA::DIIPollable::_duplicate (p.ptr ());
-  return *this;
-}
-
-CORBA::DIIPollable_out &
-CORBA::DIIPollable_out::operator= (DIIPollable_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::DIIPollable_out::operator ::CORBA::DIIPollable_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::CORBA::DIIPollable_ptr &
-CORBA::DIIPollable_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::DIIPollable_ptr
-CORBA::DIIPollable_out::operator-> (void)
-{
-  return this->ptr_;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        CORBA::DIIPollable,
+        CORBA::tao_DIIPollable_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        CORBA::DIIPollable,
+        CORBA::tao_DIIPollable_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::DIIPollable, \
+        CORBA::tao_DIIPollable_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::DIIPollable, \
+        CORBA::tao_DIIPollable_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 CORBA::DIIPollable::DIIPollable (void)
 {}
@@ -727,13 +403,19 @@ const char* CORBA::DIIPollable::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/DIIPollable:1.0";
 }
 
+CORBA::Boolean
+CORBA::DIIPollable::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int CORBA::PollableSet::_tao_class_id = 0;
 
 CORBA::PollableSet_ptr
-tao_CORBA_PollableSet_duplicate (
+CORBA::tao_PollableSet_life::tao_duplicate (
     CORBA::PollableSet_ptr p
   )
 {
@@ -741,7 +423,7 @@ tao_CORBA_PollableSet_duplicate (
 }
 
 void
-tao_CORBA_PollableSet_release (
+CORBA::tao_PollableSet_life::tao_release (
     CORBA::PollableSet_ptr p
   )
 {
@@ -749,15 +431,24 @@ tao_CORBA_PollableSet_release (
 }
 
 CORBA::PollableSet_ptr
-tao_CORBA_PollableSet_nil (
+CORBA::tao_PollableSet_life::tao_nil (
     void
   )
 {
   return CORBA::PollableSet::_nil ();
 }
 
+CORBA::Boolean
+CORBA::tao_PollableSet_life::tao_marshal (
+    CORBA::PollableSet_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 CORBA::PollableSet_ptr
-tao_CORBA_PollableSet_narrow (
+CORBA::tao_PollableSet_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -766,7 +457,7 @@ tao_CORBA_PollableSet_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_PollableSet_upcast (
+CORBA::tao_PollableSet_cast::tao_upcast (
     void *src
   )
 {
@@ -775,205 +466,32 @@ tao_CORBA_PollableSet_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_PollableSet_marshal (
-    CORBA::PollableSet_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// CORBA::PollableSet_var
-// *************************************************************
-
-CORBA::PollableSet_var::PollableSet_var (void)
-  : ptr_ (PollableSet::_nil ())
-{}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-CORBA::PollableSet_var::PollableSet_var (const ::CORBA::PollableSet_var &p)
-  : TAO_Base_var (),
-    ptr_ (PollableSet::_duplicate (p.ptr ()))
-{}
-
-CORBA::PollableSet_var::~PollableSet_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA::PollableSet_var &
-CORBA::PollableSet_var::operator= (PollableSet_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::PollableSet_var &
-CORBA::PollableSet_var::operator= (const ::CORBA::PollableSet_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::PollableSet::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-CORBA::PollableSet_var::operator const ::CORBA::PollableSet_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-CORBA::PollableSet_var::operator ::CORBA::PollableSet_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::PollableSet_ptr &
-CORBA::PollableSet_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::PollableSet_ptr &
-CORBA::PollableSet_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::PollableSet::_nil ();
-  return this->ptr_;
-}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA::PollableSet_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::PollableSet::_nil ();
-  return val;
-}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_var::tao_duplicate (PollableSet_ptr p)
-{
-  return ::CORBA::PollableSet::_duplicate (p);
-}
-
-void
-CORBA::PollableSet_var::tao_release (PollableSet_ptr p)
-{
-  CORBA::release (p);
-}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_var::tao_nil (void)
-{
-  return ::CORBA::PollableSet::_nil ();
-}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::CORBA::PollableSet::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::PollableSet_var::tao_upcast (void *src)
-{
-  PollableSet **tmp =
-    ACE_static_cast (PollableSet **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// CORBA::PollableSet_out
-// *************************************************************
-
-CORBA::PollableSet_out::PollableSet_out (PollableSet_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA::PollableSet::_nil ();
-}
-
-CORBA::PollableSet_out::PollableSet_out (PollableSet_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::PollableSet::_nil ();
-}
-
-CORBA::PollableSet_out::PollableSet_out (const ::CORBA::PollableSet_out &p)
-  : ptr_ (ACE_const_cast (PollableSet_out &, p).ptr_)
-{}
-
-::CORBA::PollableSet_out &
-CORBA::PollableSet_out::operator= (const ::CORBA::PollableSet_out &p)
-{
-  this->ptr_ = ACE_const_cast (PollableSet_out&, p).ptr_;
-  return *this;
-}
-
-CORBA::PollableSet_out &
-CORBA::PollableSet_out::operator= (const ::CORBA::PollableSet_var &p)
-{
-  this->ptr_ = ::CORBA::PollableSet::_duplicate (p.ptr ());
-  return *this;
-}
-
-CORBA::PollableSet_out &
-CORBA::PollableSet_out::operator= (PollableSet_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::PollableSet_out::operator ::CORBA::PollableSet_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::CORBA::PollableSet_ptr &
-CORBA::PollableSet_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::PollableSet_ptr
-CORBA::PollableSet_out::operator-> (void)
-{
-  return this->ptr_;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        CORBA::PollableSet,
+        CORBA::tao_PollableSet_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        CORBA::PollableSet,
+        CORBA::tao_PollableSet_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::PollableSet, \
+        CORBA::tao_PollableSet_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::PollableSet, \
+        CORBA::tao_PollableSet_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 CORBA::PollableSet::PollableSet (void)
 {}
@@ -1060,6 +578,12 @@ const char* CORBA::PollableSet::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/PollableSet:1.0";
 }
 
+CORBA::Boolean
+CORBA::PollableSet::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
@@ -1086,7 +610,7 @@ CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA::Polla
 CORBA::PollableSet::NoPossiblePollable&
 CORBA::PollableSet::NoPossiblePollable::operator= (const ::CORBA::PollableSet::NoPossiblePollable &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -1171,7 +695,7 @@ CORBA::PollableSet::UnknownPollable::UnknownPollable (const ::CORBA::PollableSet
 CORBA::PollableSet::UnknownPollable&
 CORBA::PollableSet::UnknownPollable::operator= (const ::CORBA::PollableSet::UnknownPollable &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -1228,7 +752,7 @@ void CORBA::PollableSet::UnknownPollable::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-#endif /* TAO_HAS_AMI_POLLER == 1 */
 
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
 

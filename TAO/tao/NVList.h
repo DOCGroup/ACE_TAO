@@ -30,6 +30,10 @@ class TAO_InputCDR;
 
 namespace CORBA
 {
+  class NamedValue;
+  typedef TAO_Pseudo_Var_T<NamedValue> NamedValue_var;
+  typedef TAO_Pseudo_Out_T<NamedValue, NamedValue_var> NamedValue_out;
+
   /**
    * @class NamedValue
    *
@@ -51,7 +55,7 @@ namespace CORBA
 
   public:
     /// optional name
-    const char *name (void) const;
+    const char * name (void) const;
 
     /// return the value
     CORBA::Any_ptr value (void) const;
@@ -60,18 +64,16 @@ namespace CORBA
     CORBA::Flags flags (void) const;
 
     // The pseudo object static methods..
-    static NamedValue* _duplicate (NamedValue*);
-    static NamedValue* _nil (void);
+    static NamedValue * _duplicate (NamedValue *);
+    static NamedValue * _nil (void);
 
     // = Reference counting.
     CORBA::ULong _incr_refcnt (void);
     CORBA::ULong _decr_refcnt (void);
 
     // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef NamedValue_ptr _ptr_type;
     typedef NamedValue_var _var_type;
-#endif /* __GNUC__ */
 
   protected:
 
@@ -103,69 +105,14 @@ namespace CORBA
     CORBA::Flags flags_;
 
     /// optional IDL name of the parameter
-    char *name_;
-  };
-
-  /**
-   * @class NamedValue_var
-   *
-   * @brief The T_var class for NamedValue
-   *
-   * As any other pseudo object NamedValue must have a T_var class,
-   * the interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_Export NamedValue_var
-  {
-  public:
-
-    NamedValue_var (void); // default constructor
-    NamedValue_var (NamedValue_ptr);
-    NamedValue_var (const NamedValue_var &); // copy constructor
-    ~NamedValue_var (void); // destructor
-
-    NamedValue_var &operator= (NamedValue_ptr);
-    NamedValue_var &operator= (const NamedValue_var &);
-    NamedValue_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const NamedValue_ptr &() const;
-    operator NamedValue_ptr &();
-    NamedValue_ptr in (void) const;
-    NamedValue_ptr &inout (void);
-    NamedValue_ptr &out (void);
-    NamedValue_ptr _retn (void);
-    NamedValue_ptr ptr (void) const;
-
-  private:
-    NamedValue_ptr ptr_;
-  };
-
-  /**
-   * @class NamedValue_out
-   *
-   * @brief The T_out class for NamedValue
-   *
-   * As any other pseudo object NamedValue must have a T_out class,
-   * the interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_Export NamedValue_out
-  {
-  public:
-    NamedValue_out (NamedValue_ptr &);
-    NamedValue_out (NamedValue_var &);
-    NamedValue_out (NamedValue_out &);
-    NamedValue_out &operator= (NamedValue_out &);
-    NamedValue_out &operator= (const NamedValue_var &);
-    NamedValue_out &operator= (NamedValue_ptr);
-    operator NamedValue_ptr &();
-    NamedValue_ptr &ptr (void);
-    NamedValue_ptr operator-> (void);
-
-  private:
-    NamedValue_ptr &ptr_;
+    char * name_;
   };
 
   // ****************************************************************
+
+  class NVList;
+  typedef TAO_Pseudo_Var_T<NVList> NVList_var;
+  typedef TAO_Pseudo_Out_T<NVList, NVList_var> NVList_out;
 
   /**
    * @class NVList
@@ -231,8 +178,8 @@ namespace CORBA
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     // The pseudo object static methods..
-    static NVList* _duplicate (NVList*);
-    static NVList* _nil (void);
+    static NVList * _duplicate (NVList *);
+    static NVList * _nil (void);
 
     // = Reference counting.
     CORBA::ULong _incr_refcnt (void);
@@ -246,20 +193,20 @@ namespace CORBA
      * The <flag> is used to check which parameters (IN, OUT and/or
      * INOUT) are to be extracted
      */
-    void _tao_incoming_cdr (TAO_InputCDR &cdr,
+    void _tao_incoming_cdr (TAO_InputCDR & cdr,
                             int flag,
-                            int &lazy_evaluation
+                            int & lazy_evaluation
                             ACE_ENV_ARG_DECL);
 
     /// Encode the NVList into the CDR stream. <flag> masks the type of
     /// arguments (IN, OUT or INOUT) that are to be marshaled.
-    void _tao_encode (TAO_OutputCDR &cdr,
-                      TAO_ORB_Core *orb_core,
+    void _tao_encode (TAO_OutputCDR & cdr,
+                      TAO_ORB_Core * orb_core,
                       int flag
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Decode the NVList arguments from the <cdr> stream.
-    void _tao_decode (TAO_InputCDR &cdr,
+    void _tao_decode (TAO_InputCDR & cdr,
                       int flag
                       ACE_ENV_ARG_DECL);
 
@@ -278,10 +225,8 @@ namespace CORBA
     CORBA::Boolean _lazy_has_arguments (void) const;
 
     // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef NVList_ptr _ptr_type;
     typedef NVList_var _var_type;
-#endif /* __GNUC__ */
 
   protected:
 
@@ -324,73 +269,13 @@ namespace CORBA
      * store the CDR buffer and perform lazy evaluation to compute the
      * Anys.
      */
-    TAO_InputCDR *incoming_;
+    TAO_InputCDR * incoming_;
 
     /// The flags used to check which parameters are actually extracted
     /// from the <incoming_> buffer
     int incoming_flag_;
   };
-
-  /**
-   * @class NVList_var
-   *
-   * @brief The T_var class for NVList
-   *
-   * As any other pseudo object NVList must have a T_var class,
-   * the interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_Export NVList_var
-  {
-  public:
-    NVList_var (void);
-    NVList_var (NVList_ptr);
-    NVList_var (const NVList_var &);
-    ~NVList_var (void);
-
-    NVList_var &operator= (NVList_ptr);
-    NVList_var &operator= (const NVList_var &);
-    NVList_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const NVList_ptr &() const;
-    operator NVList_ptr &();
-    NVList_ptr in (void) const;
-    NVList_ptr &inout (void);
-    NVList_ptr &out (void);
-    NVList_ptr _retn (void);
-    NVList_ptr ptr (void) const;
-
-  private:
-    NVList_ptr ptr_;
-   };
-
-  /**
-   * @class NVList_out
-   *
-   * @brief The T_out class for NVList
-   *
-   * As any other pseudo object NVList must have a T_out class,
-   * the interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_Export NVList_out
-  {
-  public:
-    NVList_out (NVList_ptr &);
-    NVList_out (NVList_var &);
-    NVList_out (NVList_out &);
-    NVList_out &operator= (NVList_out &);
-    NVList_out &operator= (const NVList_var &);
-    NVList_out &operator= (NVList_ptr);
-    operator NVList_ptr &();
-    NVList_ptr &ptr (void);
-    NVList_ptr operator-> (void);
-
-  private:
-    NVList_ptr &ptr_;
-   };
 }
-
-// ****************************************************************
 
 #if defined (__ACE_INLINE__)
 # include "tao/NVList.i"

@@ -18,9 +18,10 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           any_op_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           any_op_cs,
            "$Id$")
+
 
 // ***************************************************************************
 // Valuetype visitor for generating Any operator declarations in the client
@@ -41,7 +42,7 @@ be_visitor_valuetype_any_op_cs::~be_visitor_valuetype_any_op_cs (void)
 int
 be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 {
-  if (node->cli_stub_any_op_gen () 
+  if (node->cli_stub_any_op_gen ()
       || node->imported ()
       || node->is_local ())
     {
@@ -104,13 +105,13 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "template class TAO_Valuetype_Manager<"
       << node->full_name () << ", "
       << node->full_name () << "_var>;" << be_nl
-      << "template class TAO::Any_Impl_T<" << node->full_name () 
+      << "template class TAO::Any_Impl_T<" << node->full_name ()
       << ">;" << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
       << "#  pragma instantiate TAO_Valuetype_Manager<"
       << node->full_name () << ", "
       << node->full_name () << "_var>" << be_nl
-      << "#  pragma instantiate TAO::Any_Impl_T<" << node->full_name () 
+      << "#  pragma instantiate TAO::Any_Impl_T<" << node->full_name ()
       << ">" << be_uidt_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 

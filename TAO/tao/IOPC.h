@@ -24,7 +24,6 @@
 
 #ifndef _TAO_IDL_ORIG_IOPC_H_
 #define _TAO_IDL_ORIG_IOPC_H_
-
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -33,10 +32,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "TAO_Export.h"
 #include "IOP_IORC.h"
 #include "IOP_CodecC.h"
+#include "Any_T.h"
+#include "VarOut_T.h"
+
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -64,15 +65,7 @@
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
 
-#ifndef __ACE_INLINE__
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:64
-
-#endif /* __ACE_INLINE__ */
-
-// TAO_IDL - Generated from
-// be/be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "IOPC.i"
@@ -88,4 +81,3 @@
 
 #include "ace/post.h"
 #endif /* ifndef */
-

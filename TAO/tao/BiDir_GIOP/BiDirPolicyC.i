@@ -26,12 +26,5 @@
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY___CI_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 

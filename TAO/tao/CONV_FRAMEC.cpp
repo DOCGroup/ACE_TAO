@@ -23,7 +23,7 @@
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
 
-#include "tao/CONV_FRAMEC.h"
+#include "CONV_FRAMEC.h"
 #include "tao/Any_T.h"
 
 #if defined (__BORLANDC__)
@@ -161,7 +161,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void CONV_FRAME::CodeSetComponent::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -170,84 +170,16 @@ void CONV_FRAME::CodeSetComponent::_tao_any_destructor (void *_tao_void_pointer)
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CS_)
-#define __TAO_UNBOUNDED_SEQUENCE_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CS_
-
-void
-CONV_FRAME::CodeSetComponent::_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId::_allocate_buffer (CORBA::ULong length)
-{
-  CORBA::ULong* tmp = 0;
-  tmp = _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId::allocbuf (length);
-  
-  if (this->buffer_ != 0)
-    {
-      CORBA::ULong *old =
-        ACE_reinterpret_cast (CORBA::ULong *, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          tmp[i] = old[i];
-        }
-      
-      if (this->release_)
-        {
-          _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId::freebuf (old);
-        }
-    }
-  
-  this->buffer_ = tmp;
-}
-
-void
-CONV_FRAME::CodeSetComponent::_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId::_deallocate_buffer (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    {
-      return;
-    }
-  
-  CORBA::ULong *tmp =
-    ACE_reinterpret_cast (CORBA::ULong *, this->buffer_);
-  _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId::freebuf (tmp);
-  this->buffer_ = 0;
-} 
-
-CONV_FRAME::CodeSetComponent::_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId::~_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId (void)
-{
-  this->_deallocate_buffer ();
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CS_)
-#define _CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId
-// *************************************************************
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
 CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (void)
 {}
 
 CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::ULong>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_Sequence<
+        CONV_FRAME::CodeSetId
+      >
+    (max)
 {}
 
 CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (
@@ -256,30 +188,20 @@ CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (
     CORBA::ULong *buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::ULong>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_Sequence<
+        CONV_FRAME::CodeSetId
+      >
+    (max, length, buffer, release)
 {}
 
 CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (const _tao_seq_CodeSetId &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::ULong>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_Sequence<
+        CONV_FRAME::CodeSetId
+      >
+    (seq)
 {}
 
-CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::~_tao_seq_CodeSetId (void) // dtor
+CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::~_tao_seq_CodeSetId (void)
 {}
 
 void CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_any_destructor (void *_tao_void_pointer)
@@ -288,7 +210,36 @@ void CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_any_destructor (void
   delete tmp;
 }
 
-#endif /* end #if !defined */
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Var_Var_T<
+      CodeSetComponent
+    >;
+
+template class
+  TAO_Out_T<
+      CodeSetComponent,
+      CodeSetComponent_var
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Var_Var_T< \
+      CodeSetComponent \
+    >
+
+# pragma instantiate \
+  TAO_Out_T< \
+      CodeSetComponent, \
+      CodeSetComponent_var \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -411,13 +362,44 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (void *_tao_void_pointer)
 {
   CodeSetComponentInfo *tmp = ACE_static_cast (CodeSetComponentInfo*, _tao_void_pointer);
   delete tmp;
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Var_Var_T<
+      CodeSetComponentInfo
+    >;
+
+template class
+  TAO_Out_T<
+      CodeSetComponentInfo,
+      CodeSetComponentInfo_var
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Var_Var_T< \
+      CodeSetComponentInfo \
+    >
+
+# pragma instantiate \
+  TAO_Out_T< \
+      CodeSetComponentInfo, \
+      CodeSetComponentInfo_var \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -494,13 +476,32 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void CONV_FRAME::CodeSetContext::_tao_any_destructor (void *_tao_void_pointer)
 {
   CodeSetContext *tmp = ACE_static_cast (CodeSetContext*, _tao_void_pointer);
   delete tmp;
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Fixed_Var_T<
+      CodeSetContext
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Fixed_Var_T< \
+      CodeSetContext \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
@@ -698,7 +699,7 @@ CORBA::Boolean operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 #if !defined _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_CPP_
 #define _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_CPP_

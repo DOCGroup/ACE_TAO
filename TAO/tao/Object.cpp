@@ -107,6 +107,34 @@ if (!this->is_evaluated_) \
       CORBA::Object::tao_object_initialize (this); \
   }
 
+CORBA::Object_ptr
+CORBA::Object::_unchecked_narrow (CORBA::Object_ptr obj
+                                  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  if (CORBA::is_nil (obj))
+    {
+      return CORBA::Object::_nil ();
+    }
+
+  if (obj->is_local_)
+    {
+    return
+      ACE_reinterpret_cast (
+          CORBA::Object_ptr,
+          obj->_tao_QueryInterface (
+                   ACE_reinterpret_cast (
+                       ptr_arith_t,
+                       &CORBA::Object::_tao_class_id
+                     )
+                 )
+        );
+    }
+  else
+    {
+      return CORBA::Object::_duplicate (obj);
+    }
+}
+
 void
 CORBA::Object::_add_ref (void)
 {
@@ -949,9 +977,13 @@ TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_functio
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Object_Manager<CORBA::Object, CORBA::Object_var>;
+template class TAO_Pseudo_Var_T<CORBA::Object>;
+template class TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Manager<CORBA::Object, CORBA::Object_var>
+#pragma instantiate TAO_Pseudo_Var_T<CORBA::Object>
+#pragma instantiate TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

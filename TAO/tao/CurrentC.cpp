@@ -40,7 +40,7 @@
 int CORBA::Current::_tao_class_id = 0;
 
 CORBA::Current_ptr
-tao_CORBA_Current_duplicate (
+CORBA::tao_Current_life::tao_duplicate (
     CORBA::Current_ptr p
   )
 {
@@ -48,7 +48,7 @@ tao_CORBA_Current_duplicate (
 }
 
 void
-tao_CORBA_Current_release (
+CORBA::tao_Current_life::tao_release (
     CORBA::Current_ptr p
   )
 {
@@ -56,15 +56,24 @@ tao_CORBA_Current_release (
 }
 
 CORBA::Current_ptr
-tao_CORBA_Current_nil (
+CORBA::tao_Current_life::tao_nil (
     void
   )
 {
   return CORBA::Current::_nil ();
 }
 
+CORBA::Boolean
+CORBA::tao_Current_life::tao_marshal (
+    CORBA::Current_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 CORBA::Current_ptr
-tao_CORBA_Current_narrow (
+CORBA::tao_Current_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -73,7 +82,7 @@ tao_CORBA_Current_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_Current_upcast (
+CORBA::tao_Current_cast::tao_upcast (
     void *src
   )
 {
@@ -82,205 +91,32 @@ tao_CORBA_Current_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_Current_marshal (
-    CORBA::Current_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        CORBA::Current,
+        CORBA::tao_Current_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        CORBA::Current,
+        CORBA::tao_Current_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::Current, \
+        CORBA::tao_Current_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::Current, \
+        CORBA::tao_Current_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// CORBA::Current_var
-// *************************************************************
-
-CORBA::Current_var::Current_var (void)
-  : ptr_ (Current::_nil ())
-{}
-
-::CORBA::Current_ptr
-CORBA::Current_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-CORBA::Current_var::Current_var (const ::CORBA::Current_var &p)
-  : TAO_Base_var (),
-    ptr_ (Current::_duplicate (p.ptr ()))
-{}
-
-CORBA::Current_var::~Current_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA::Current_var &
-CORBA::Current_var::operator= (Current_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::Current_var &
-CORBA::Current_var::operator= (const ::CORBA::Current_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::Current::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-CORBA::Current_var::operator const ::CORBA::Current_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-CORBA::Current_var::operator ::CORBA::Current_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::CORBA::Current_ptr
-CORBA::Current_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::Current_ptr
-CORBA::Current_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::Current_ptr &
-CORBA::Current_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::Current_ptr &
-CORBA::Current_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::Current::_nil ();
-  return this->ptr_;
-}
-
-::CORBA::Current_ptr
-CORBA::Current_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA::Current_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::Current::_nil ();
-  return val;
-}
-
-::CORBA::Current_ptr
-CORBA::Current_var::tao_duplicate (Current_ptr p)
-{
-  return ::CORBA::Current::_duplicate (p);
-}
-
-void
-CORBA::Current_var::tao_release (Current_ptr p)
-{
-  CORBA::release (p);
-}
-
-::CORBA::Current_ptr
-CORBA::Current_var::tao_nil (void)
-{
-  return ::CORBA::Current::_nil ();
-}
-
-::CORBA::Current_ptr
-CORBA::Current_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::CORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::Current_var::tao_upcast (void *src)
-{
-  Current **tmp =
-    ACE_static_cast (Current **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// CORBA::Current_out
-// *************************************************************
-
-CORBA::Current_out::Current_out (Current_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA::Current::_nil ();
-}
-
-CORBA::Current_out::Current_out (Current_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::Current::_nil ();
-}
-
-CORBA::Current_out::Current_out (const ::CORBA::Current_out &p)
-  : ptr_ (ACE_const_cast (Current_out &, p).ptr_)
-{}
-
-::CORBA::Current_out &
-CORBA::Current_out::operator= (const ::CORBA::Current_out &p)
-{
-  this->ptr_ = ACE_const_cast (Current_out&, p).ptr_;
-  return *this;
-}
-
-CORBA::Current_out &
-CORBA::Current_out::operator= (const ::CORBA::Current_var &p)
-{
-  this->ptr_ = ::CORBA::Current::_duplicate (p.ptr ());
-  return *this;
-}
-
-CORBA::Current_out &
-CORBA::Current_out::operator= (Current_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::Current_out::operator ::CORBA::Current_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::CORBA::Current_ptr &
-CORBA::Current_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::Current_ptr
-CORBA::Current_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 CORBA::Current::Current (void)
 {}
@@ -288,7 +124,7 @@ CORBA::Current::Current (void)
 CORBA::Current::~Current (void)
 {}
 
-void 
+void
 CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *tmp = ACE_static_cast (Current *, _tao_void_pointer);
@@ -304,7 +140,7 @@ CORBA::Current::_narrow (
   return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::Current_ptr 
+CORBA::Current_ptr
 CORBA::Current::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -314,7 +150,7 @@ CORBA::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           Current_ptr,
@@ -334,14 +170,14 @@ CORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *CORBA::Current::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::CORBA, Current)::_tao_class_id)
@@ -360,18 +196,24 @@ void *CORBA::Current::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* CORBA::Current::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Current:1.0";
+}
+
+CORBA::Boolean
+CORBA::Current::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -381,16 +223,16 @@ static const CORBA::Long _oc_CORBA_Current[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4375), 
-  ACE_NTOHL (0x7272656e), 
-  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4375),
+  ACE_NTOHL (0x7272656e),
+  ACE_NTOHL (0x743a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/Current:1.0
     8,
-  ACE_NTOHL (0x43757272), 
+  ACE_NTOHL (0x43757272),
   ACE_NTOHL (0x656e7400),  // name = Current
   };
 
@@ -464,4 +306,3 @@ operator>>= (
 # pragma instantiate TAO_Object_Manager<CORBA::Current, CORBA::Current_var>
 # pragma instantiate TAO::Any_Impl_T<CORBA::Current>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

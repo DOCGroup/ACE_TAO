@@ -26,11 +26,13 @@
 #define _TAO_IDL_ORIG_IORTABLEC_H_
 
 #include "ace/pre.h"
+
 #include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 #include "iortable_export.h"
 
@@ -64,85 +66,47 @@ TAO_NAMESPACE  IORTable
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/interface_fwd_ch.cpp:53
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+
+#if !defined (_IORTABLE_LOCATOR__ODDS_N_ENDS_CH_)
+#define _IORTABLE_LOCATOR__ODDS_N_ENDS_CH_
   
   class Locator;
-
-#if !defined (_IORTABLE_LOCATOR___PTR_CH_)
-#define _IORTABLE_LOCATOR___PTR_CH_
-  
   typedef Locator *Locator_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_IORTABLE_LOCATOR___VAR_CH_)
-#define _IORTABLE_LOCATOR___VAR_CH_
+  struct tao_Locator_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        Locator,
+        tao_Locator_life
+      >
+    Locator_var;
   
-  class TAO_IORTable_Export Locator_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        Locator,
+        tao_Locator_life
+      >
+    Locator_out;
+  
+  struct TAO_IORTable_Export tao_Locator_life
   {
-  public:
-    Locator_var (void); // default constructor
-    Locator_var (Locator_ptr p) : ptr_ (p) {} 
-    Locator_var (const Locator_var &); // copy constructor
-    ~Locator_var (void); // destructor
-    
-    Locator_var &operator= (Locator_ptr);
-    Locator_var &operator= (const Locator_var &);
-    Locator_ptr operator-> (void) const;
-    
-    operator const Locator_ptr &() const;
-    operator Locator_ptr &();
-    // in, inout, out, _retn 
-    Locator_ptr in (void) const;
-    Locator_ptr &inout (void);
-    Locator_ptr &out (void);
-    Locator_ptr _retn (void);
-    Locator_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static Locator_ptr tao_duplicate (Locator_ptr);
     static void tao_release (Locator_ptr);
     static Locator_ptr tao_nil (void);
-    static Locator_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        Locator_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    Locator_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    Locator_var (const TAO_Base_var &rhs);
-    Locator_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_IORTABLE_LOCATOR___OUT_CH_)
-#define _IORTABLE_LOCATOR___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IORTable_Export Locator_out
+  struct TAO_IORTable_Export tao_Locator_cast
   {
-  public:
-    Locator_out (Locator_ptr &);
-    Locator_out (Locator_var &);
-    Locator_out (const Locator_out &);
-    Locator_out &operator= (const Locator_out &);
-    Locator_out &operator= (const Locator_var &);
-    Locator_out &operator= (Locator_ptr);
-    operator Locator_ptr &();
-    Locator_ptr &ptr (void);
-    Locator_ptr operator-> (void);
-  
-  private:
-    Locator_ptr &ptr_;
+    static Locator_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
@@ -226,90 +190,53 @@ TAO_NAMESPACE  IORTable
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_IORTABLE_TABLE___PTR_CH_)
-#define _IORTABLE_TABLE___PTR_CH_
+#if !defined (_IORTABLE_TABLE__ODDS_N_ENDS_CH_)
+#define _IORTABLE_TABLE__ODDS_N_ENDS_CH_
   
   class Table;
   typedef Table *Table_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_IORTABLE_TABLE___VAR_CH_)
-#define _IORTABLE_TABLE___VAR_CH_
+  struct tao_Table_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        Table,
+        tao_Table_life
+      >
+    Table_var;
   
-  class TAO_IORTable_Export Table_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        Table,
+        tao_Table_life
+      >
+    Table_out;
+  
+  struct TAO_IORTable_Export tao_Table_life
   {
-  public:
-    Table_var (void); // default constructor
-    Table_var (Table_ptr p) : ptr_ (p) {} 
-    Table_var (const Table_var &); // copy constructor
-    ~Table_var (void); // destructor
-    
-    Table_var &operator= (Table_ptr);
-    Table_var &operator= (const Table_var &);
-    Table_ptr operator-> (void) const;
-    
-    operator const Table_ptr &() const;
-    operator Table_ptr &();
-    // in, inout, out, _retn 
-    Table_ptr in (void) const;
-    Table_ptr &inout (void);
-    Table_ptr &out (void);
-    Table_ptr _retn (void);
-    Table_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static Table_ptr tao_duplicate (Table_ptr);
     static void tao_release (Table_ptr);
     static Table_ptr tao_nil (void);
-    static Table_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        Table_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    Table_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    Table_var (const TAO_Base_var &rhs);
-    Table_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_IORTABLE_TABLE___OUT_CH_)
-#define _IORTABLE_TABLE___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IORTable_Export Table_out
+  struct TAO_IORTable_Export tao_Table_cast
   {
-  public:
-    Table_out (Table_ptr &);
-    Table_out (Table_var &);
-    Table_out (const Table_out &);
-    Table_out &operator= (const Table_out &);
-    Table_out &operator= (const Table_var &);
-    Table_out &operator= (Table_ptr);
-    operator Table_ptr &();
-    Table_ptr &ptr (void);
-    Table_ptr operator-> (void);
-  
-  private:
-    Table_ptr &ptr_;
+    static Table_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IORTABLE_TABLE_CH_)
 #define _IORTABLE_TABLE_CH_
@@ -391,7 +318,7 @@ TAO_NAMESPACE  IORTable
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -401,10 +328,6 @@ TAO_NAMESPACE  IORTable
   protected:
     Table (void);
     virtual ~Table (void);
-    
-    friend class _TAO_Table_Remote_Proxy_Impl;
-    friend class _TAO_Table_ThruPOA_Proxy_Impl;
-    friend class _TAO_Table_Direct_Proxy_Impl;
   
   private:
     Table (const Table &);
@@ -414,90 +337,7 @@ TAO_NAMESPACE  IORTable
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
-
-#if !defined (_IORTABLE_LOCATOR___PTR_CH_)
-#define _IORTABLE_LOCATOR___PTR_CH_
-  
-  class Locator;
-  typedef Locator *Locator_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_IORTABLE_LOCATOR___VAR_CH_)
-#define _IORTABLE_LOCATOR___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_IORTable_Export Locator_var : public TAO_Base_var
-  {
-  public:
-    Locator_var (void); // default constructor
-    Locator_var (Locator_ptr p) : ptr_ (p) {} 
-    Locator_var (const Locator_var &); // copy constructor
-    ~Locator_var (void); // destructor
-    
-    Locator_var &operator= (Locator_ptr);
-    Locator_var &operator= (const Locator_var &);
-    Locator_ptr operator-> (void) const;
-    
-    operator const Locator_ptr &() const;
-    operator Locator_ptr &();
-    // in, inout, out, _retn 
-    Locator_ptr in (void) const;
-    Locator_ptr &inout (void);
-    Locator_ptr &out (void);
-    Locator_ptr _retn (void);
-    Locator_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static Locator_ptr tao_duplicate (Locator_ptr);
-    static void tao_release (Locator_ptr);
-    static Locator_ptr tao_nil (void);
-    static Locator_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
-      );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    Locator_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    Locator_var (const TAO_Base_var &rhs);
-    Locator_var &operator= (const TAO_Base_var &rhs);
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_IORTABLE_LOCATOR___OUT_CH_)
-#define _IORTABLE_LOCATOR___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IORTable_Export Locator_out
-  {
-  public:
-    Locator_out (Locator_ptr &);
-    Locator_out (Locator_var &);
-    Locator_out (const Locator_out &);
-    Locator_out &operator= (const Locator_out &);
-    Locator_out &operator= (const Locator_var &);
-    Locator_out &operator= (Locator_ptr);
-    operator Locator_ptr &();
-    Locator_ptr &ptr (void);
-    Locator_ptr operator-> (void);
-  
-  private:
-    Locator_ptr &ptr_;
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IORTABLE_LOCATOR_CH_)
 #define _IORTABLE_LOCATOR_CH_
@@ -543,7 +383,7 @@ TAO_NAMESPACE  IORTable
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -553,10 +393,6 @@ TAO_NAMESPACE  IORTable
   protected:
     Locator (void);
     virtual ~Locator (void);
-    
-    friend class _TAO_Locator_Remote_Proxy_Impl;
-    friend class _TAO_Locator_ThruPOA_Proxy_Impl;
-    friend class _TAO_Locator_Direct_Proxy_Impl;
   
   private:
     Locator (const Locator &);
@@ -594,7 +430,7 @@ TAO_IORTable_Export CORBA::Boolean operator>> (TAO_InputCDR &, IORTable::NotFoun
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "IORTableC.i"

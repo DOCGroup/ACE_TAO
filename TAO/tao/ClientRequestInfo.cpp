@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 #include "ClientRequestInfo.h"
 #include "ClientRequestInfo_i.h"
 

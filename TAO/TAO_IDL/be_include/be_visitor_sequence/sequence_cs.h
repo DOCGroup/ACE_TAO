@@ -44,29 +44,15 @@ public:
   virtual int visit_sequence (be_sequence *node);
   // visit sequence node
 
-  virtual int gen_unbounded_sequence (be_sequence *node);
-  // generate a instance of the unbounded sequence
+  int gen_varout_tmplinst (be_sequence *node,
+                           be_type *bt);
+  // Generate explicit template instantiations for our _var
+  // and _out classes.
 
-  virtual int gen_bounded_sequence (be_sequence *node);
-  // generate a instance of the bounded sequence
-
-  virtual int gen_unbounded_obj_sequence (be_sequence *node);
-  // generate a instance of the unbounded object sequence
-
-  virtual int gen_bounded_obj_sequence (be_sequence *node);
-  // generate a instance of the bounded object sequence
-
-  virtual int gen_bounded_str_sequence (be_sequence *node);
-  // generate a instance of the bounded string sequence
-
-  virtual int gen_bounded_wstr_sequence (be_sequence *node);
-  // generate a instance of the bounded wstring sequence
-
-  virtual int instantiate_sequence (be_sequence *node);
-  // determine which sequence to instantiate
-
-  virtual int gen_base_sequence_class (be_sequence *node);
-  // generate the base sequence class
+  void gen_managed_type_tmplinst (be_sequence *node,
+                                  be_type *bt);
+  // Generate explicit instantiation for our element type, if
+  // it is a managed type and if Any operator generation is suppressed.
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_SEQUENCE_CS_H_ */

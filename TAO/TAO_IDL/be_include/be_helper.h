@@ -150,8 +150,8 @@ public:
   int gen_ifdef_AHETI (void);
   // generate the ACE_HAS_EXPLICIT... ifdef
 
-  int gen_else_AHETI (void);
-  // generate the ACE_HAS_EXPLICIT... else
+  int gen_elif_AHETI (void);
+  // generate the ACE_HAS_EXPLICIT... elif
 
   int gen_endif_AHETI (void);
   // generate the ACE_HAS_EXPLICIT... endif

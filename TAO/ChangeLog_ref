@@ -1,0 +1,694 @@
+Fri Apr 11 14:41:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Merged with the main trunk and compiled the core ORB and the IDL
+	  compiler on Linux GCC32. Moved the stuff to a new branch by name
+	  refactor_statge_1.  Added the following files from the branch
+	  into the new branch. 
+
+	* tao/Pseudo_Value_VarOut_T.cpp:
+	* tao/Pseudo_Value_VarOut_T.h:
+	* tao/Pseudo_Value_VarOut_T.inl:
+	* tao/Array_VarOut_T.cpp:
+	* tao/Array_VarOut_T.h:
+	* tao/Array_VarOut_T.inl:
+	* tao/Objref_VarOut_T.cpp:
+	* tao/Objref_VarOut_T.h:
+	* tao/Objref_VarOut_T.inl:
+	* tao/Pseudo_Value_Varout_T.cpp:
+	* tao/Pseudo_Value_Varout_T.h:
+	* tao/Pseudo_Value_Varout_T.inl:
+	* tao/Pseudo_VarOut_T.cpp:
+	* tao/Pseudo_VarOut_T.h:
+	* tao/Pseudo_VarOut_T.inl:
+	* tao/Seq_VarOut_T.cpp:
+	* tao/Seq_VarOut_T.h:
+	* tao/Seq_VarOut_T.inl:
+	* tao/Value_VarOut_T.cpp:
+	* tao/Value_VarOut_T.h:
+	* tao/Value_VarOut_T.inl:
+	* tao/VarOut_T.cpp:
+	* tao/VarOut_T.h:
+	* tao/VarOut_T.inl: New files in to this new branch.
+
+Tue Apr  1 000:37:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_type.h:
+
+	  Moved managed type template class generation from the Any
+	  operator pass (which might be skipped if Any operator generation
+	  is suppressed, or generated needlessly if the type is not used
+	  in a sequence) to the sequence visitor.
+
+        * tao/Sequence_T.cpp:
+
+	  Fixed code in TAO_Abstract_Manager that doesn't work with
+	  forward declared abstract interfaces.
+
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+
+	  Regenerated hand-crafted DynamicAny.pidl files and changed comment
+	  at the top of the .pidl file to show added options to the IDL
+	  compiler command line to suppress Any operator and Typecode
+	  generation. Although these types contain a Typecode, they do
+	  not need Typecodes or Any operators of their own.
+
+Mon Mar 31 22:31:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * tao/Sequence_T.cpp:
+
+          Fixed some bugs with sequence template code generation.
+
+Mon Mar 31 18:05:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Services.i:
+
+          Removed these files. They were supposed to be removed from the
+          main trunk but there was a glitch during a branch merge and
+          ther were still around, and obviously got carried over to
+          this branch.
+
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
+
+          Turned on RTTI for the hand-crafted files.
+
+Sun Mar 30 21:13:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * tao/CurrentC.h:
+        * tao/DomainC.h:
+        * tao/IOPC.h:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.h:
+        * tao/PollableC.h:
+        * tao/PortableInterceptorC.h:
+        * tao/TAOC.h:
+        * tao/corbafwd.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.i:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/DynamicAny/DynamicAnyC.i:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_Basic.pidl:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_Extended.pidl:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.i:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORC.i:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/IORTable/IORTableC.i:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/MessagingC.i:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_No_ImplC.i:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_RT_PolicyC.i:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.i:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+        * tao/Messaging/TAO_ExtC.i:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/Default_ORTC.i:
+        * tao/PortableServer/ImR_ActivatorC.cpp:
+        * tao/PortableServer/ImR_ActivatorC.h:
+        * tao/PortableServer/ImR_ActivatorC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBAC.i:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RTPortableServerC.i:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+
+          Regenerated all hand-crafted files and made fixes to 
+          code generation.
+
+Sun Mar 30 12:32:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.inl:
+        * tao/ORB.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+
+          Fixed typos and cut and paste errors.
+
+Sun Mar 30 02:50:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * TAO_IDL/include/ast_type.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMEC.i:
+        * tao/ClientRequestInfo.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/DynamicC.i:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOPC.i:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Messaging_PolicyValueC.i:
+        * tao/Messaging_SyncScopeC.cpp:
+        * tao/Messaging_SyncScopeC.h:
+        * tao/Messaging_SyncScopeC.i:
+        * tao/ORB.h:
+        * tao/ObjectIdListC.cpp:
+        * tao/ObjectIdListC.h:
+        * tao/ObjectIdListC.i:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/ObjectReferenceTemplateC.i:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.i:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Policy_ForwardC.i:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/Seq_VarOut_T.cpp:
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.inl:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.h:
+        * tao/ServicesC.i:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/StringSeqC.i:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
+        * tao/corbafwd.h:
+
+          Changed sequence generation to create a class that inherits
+          from the template class instead of just a typedef. Also 
+          regenerated hand-crafted files in the TAO library.
+
+Fri Mar 28 19:12:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CONV_FRAMEC.cpp:
+        * CONV_FRAMEC.h:
+        * CONV_FRAMEC.i:
+        * CurrentC.cpp:
+        * CurrentC.h:
+        * CurrentC.i:
+        * DomainC.cpp:
+        * DomainC.h:
+        * DomainC.i:
+        * DynamicC.cpp:
+        * DynamicC.h:
+        * DynamicC.i:
+        * GIOPC.cpp:
+        * GIOPC.h:
+        * GIOPC.i:
+        * IIOPC.cpp:
+        * IIOPC.h:
+        * IIOPC.i:
+
+ 	  Regenerated some hand-crafted files.
+
+        * corbafwd.h:
+
+	  Removed some forward _var and _out declarations.
+	  Since these are now typedefs, they can't be forward
+	  declared.
+
+        * Seq_VarOut_T.inl:
+
+	  Fixed a typo.
+
+        * GIOP.pidl:
+        * IOP.pidl:
+
+	  Modified these to use CORBA::OctetSeq instead of
+	  regenerating each time.
+
+Fri Mar 28 17:09:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * AbstractBase.cpp:
+        * Environment.cpp:
+        * LocalObject.cpp:
+        * NVList.cpp:
+        * ORB.cpp:
+        * ORB.h:
+        * ORB.i:
+        * Object.cpp:
+        * Principal.cpp:
+        * Pseudo_VarOut_T.h:
+        * TAO.dsp:
+        * Typecode.cpp:
+        * ValueBase.cpp:
+        * ValueFactory.cpp:
+        * corbafwd.h:
+        * DynamicInterface/Context.cpp:
+        * DynamicInterface/Context.h:
+        * DynamicInterface/Context.inl:
+        * DynamicInterface/ExceptionList.h:
+        * DynamicInterface/ExceptionList.inl:
+        * DynamicInterface/Request.cpp:
+        * DynamicInterface/Request.h:
+        * DynamicInterface/Request.inl:
+        * DynamicInterface/Server_Request.cpp:
+        * DynamicInterface/Server_Request.h:
+
+	  Templatized _var and _out classes in
+	  DynamicInterface, added conditional explicit
+	  template instantiations, and updated project
+	  settings.
+
+Fri Mar 28 000:58:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AbstractBase.h:
+        * tao/AbstractBase.inl:
+        * tao/Environment.h:
+        * tao/Environment.i:
+        * tao/LocalObject.h:
+        * tao/LocalObject.i:
+        * tao/NVList.h:
+        * tao/NVList.i:
+        * tao/Principal.cpp:
+        * tao/Principal.h:
+        * tao/Principal.i:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/ValueFactory.h:
+        * tao/ValueFactory.i:
+        * tao/corbafwd.h:
+
+	  Converted the _var and _out classes of most of
+	  the CORBA pseudo objects to the new template
+	  format.
+
+        * tao/Pseudo_Value_Varout_T.cpp:
+        * tao/Pseudo_Value_Varout_T.h:
+        * tao/Pseudo_Value_Varout_T.inl:
+
+	  New template classes to typedef _var and _out
+	  implementations for ValueBase and ValueFactoryBase.
+
+Thu Mar 27 18:55:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence.cpp:
+        * tao/Sequence.h:
+
+          Cosmetic changes.
+
+        * tao/TAO.dsp:
+
+          Added newly created inline files to the project.
+
+Thu Mar 27 03:00:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * tao/Adapter.cpp:
+        * tao/Adapter.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Objref_VarOut_T.h:
+        * tao/Sequence.cpp:
+        * tao/Sequence.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/TAO.dsp:
+        * tao/Typecode.h:
+        * tao/Typecode.i:
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/Value_VarOut_T.h:
+        * tao/corba.h:
+        * tao/corbafwd.h:
+
+	  Finished templatizing of _var, _out and sequence
+	  classes, in TAO and in code generation.
+
+        * tao/Pseudo_VarOut_T.cpp:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
+
+	  New files for the _var and _out classes for
+	  CORBA::Object and CORBA::TypeCode.
+
+        * tao/Objref_VarOut_T.inl:
+        * tao/Value_VarOut_T.inl:
+
+	  New files, empty so far.
+
+Wed Mar 26 18:23:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_structure_fwd.cpp:
+        * TAO_IDL/be/be_visitor_union_fwd.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure_fwd/structure_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_fwd/union_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_structure.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+          More changes toward code generation for _var, _out and sequence
+          template typedef, and conditional explicit template instantiation.
+
+Wed Mar 26 01:06:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+  	  Added code generation for sequences of abstract
+	  interfaces.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+
+	  Uninlined a few methods that were too long.
+
+        * tao/Transport.cpp:
+
+	  Cut out an ELSE block to get this to work with
+	  changes Phil Mesnier <mesnier_p@ociweb.com> has
+	  made to ACE - his corresponding TAO changes are
+	  blocked by the branch. This file will get in 
+	  sync again when the branch is merged.
+
+Tue Mar 25 21:44:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.h:
+
+          Finished re-parametrizing the template sequence classes.
+
+Mon Mar 24 20:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+          Changed call to AbstractBase constructor in initialization
+          list of abstract interfafce to use ACE_NESTED_CLASS,
+          similarly to non-abstract interfaces.
+
+Sun Mar 23 23:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/VarOut_T.cpp:
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+	  New files adding to the support of template-based
+	  _var and _out classes.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/TAO.dsp:
+        * tao/corba.h:
+        * TAO_IDLast/ast_type.cpp:
+        * TAO_IDLbe/be_interface.cpp:
+        * TAO_IDLbe/be_type.cpp:
+        * TAO_IDLbe/be_visitor_array/array_ch.cpp:
+        * TAO_IDLbe/be_visitor_array/array_ci.cpp:
+        * TAO_IDLbe/be_visitor_array/array_cs.cpp:
+        * TAO_IDLbe/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDLbe/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDLbe/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDLbe/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDLbe_include/be_interface.h:
+        * TAO_IDLbe_include/be_type.h:
+        * TAO_IDLbe_include/be_visitor_array/array_ch.h:
+        * TAO_IDLbe_include/be_visitor_array/array_ci.h:
+        * TAO_IDLinclude/ast_type.h:
+
+	  Other changes to support template _var and _out 
+	  classes.
+
+Sat Mar 22 18:34:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/ObjectReferenceTemplateC.i:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+
+	  Changes to switch to template instantiation for valuetypes
+	  and sequences of valuetypes.
+
+Fri Mar 21 02:33:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/TAO.dsp:
+        * tao/corba.h:
+
+	  Modified code generation for sequences of object references,
+	  added conditional explicit template instantiation, template
+	  valuetype _var and _out class generation.
+
+        * tao/Value_VarOut_T.cpp:
+        * tao/Value_VarOut_T.h:
+
+	  New files for the valuetype _var and _out classes.
+
+Wed Mar 19 18:40:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_argument.cpp:
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+
+	  Changed code generation to use the generated struct helpers
+	  for interfaces, and removed much of the code generation for
+	  sequences, since they will eventually all be typedefs.
+
+Wed Mar 19 09:38:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_type.h:
+
+	  Changes to code generation for sequences, _var and _out classes.
+	  This is just a start, lots more to come.
+
+Tue Mar 18 21:42:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Policy_ForwardC.i:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/corba.h:
+
+	  Interim hacks to avoid build errors. All the
+	  hand-crafted files will eventually be regenerated.
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Seq_VarOut_T.cpp:
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.inl:
+
+	  New files, a start on templatizing all the
+	  _var and _out classes.
+

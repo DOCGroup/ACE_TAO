@@ -254,15 +254,26 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
       if (bt_is_defined)
         {
-          *os << "OBJECT_FIELD (" << bt->name () << "::";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << bt->name () << "::";
         }
       else
         {
-          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
-      *os << "_duplicate (u.u_." << ub->local_name ()
-          << "_->ptr ()))" << be_uidt_nl
+      *os << "_duplicate (" << be_idt << be_idt_nl
+          << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
   else
@@ -273,15 +284,27 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
       if (bt_is_defined)
         {
-          *os << "OBJECT_FIELD (" << bt->name () << "::";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << bt->name () << "::";
         }
       else
         {
-          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
-      *os << "_duplicate (u.u_." << ub->local_name ()
-          << "_->ptr ()))," << be_nl
+      *os << "_duplicate (" << be_idt << be_idt_nl
+          << "u.u_." << ub->local_name ()
+          << "_->ptr ()" << be_uidt_nl 
+          << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
@@ -344,15 +367,26 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
       if (bt_is_defined)
         {
-          *os << "OBJECT_FIELD (" << bt->name () << "::";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << bt->name () << "::";
         }
       else
         {
-          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
-      *os << "_duplicate (u.u_." << ub->local_name ()
-          << "_->ptr ()))" << be_uidt_nl
+      *os << "_duplicate (" << be_idt << be_idt_nl
+          << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
   else
@@ -363,15 +397,27 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
       if (bt_is_defined)
         {
-          *os << "OBJECT_FIELD (" << bt->name () << "::";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << bt->name () << "::";
         }
       else
         {
-          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
-      *os << "_duplicate (u.u_." << ub->local_name ()
-          << "_->ptr ()))," << be_nl
+      *os << "_duplicate (" << be_idt << be_idt_nl
+          << "u.u_." << ub->local_name ()
+          << "_->ptr ()" << be_uidt_nl 
+          << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }

@@ -44,6 +44,9 @@ public:
 
   ~be_component (void);
 
+  virtual void redefine (AST_Interface *from);
+  // Catch BE-specific members before delegating to the base class.
+
   // Cleanup function.
   virtual void destroy (void);
 

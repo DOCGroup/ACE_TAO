@@ -85,15 +85,26 @@ be_visitor_args_post_invoke_cs::visit_interface (be_interface *node)
     {
     case AST_Argument::dir_INOUT:
       {
+        *os << be_nl;
+
         // Assign the narrowed obj reference.
         if (node->is_defined ())
           {
-            *os << "CORBA::release (" << arg->local_name () << ");" << be_nl;
+            *os << "CORBA::release (" << arg->local_name () << ");";
           }
         else
           {
-            *os << "tao_" << node->flat_name () << "_release ("
-                << arg->local_name () << ");" << be_nl;
+            AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+            if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+              {
+                *os << parent->name () << "::";
+              }
+
+            *os << "tao_" << node->local_name () << "_life::tao_release ("
+                << be_idt << be_idt_nl
+                << arg->local_name () << be_uidt_nl
+                << ");" << be_uidt;
           }
       }
       break;

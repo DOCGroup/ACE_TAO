@@ -28,6 +28,7 @@
 #include "ace/pre.h"
 #include "tao/CDR.h"
 #include "tao/Sequence.h"
+#include "tao/VarOut_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -64,7 +65,7 @@ TAO_NAMESPACE  CONV_FRAME
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::ULong CodeSetId;
   typedef CORBA::ULong_out CodeSetId_out;
@@ -75,9 +76,25 @@ TAO_NAMESPACE  CONV_FRAME
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetId;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class CodeSetComponent_var;
+  struct CodeSetComponent;
+  
+  typedef
+    TAO_Var_Var_T<
+        CodeSetComponent
+      >
+    CodeSetComponent_var;
+  
+  typedef
+    TAO_Out_T<
+        CodeSetComponent,
+        CodeSetComponent_var
+      >
+    CodeSetComponent_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_Export CodeSetComponent
   {
@@ -87,101 +104,31 @@ TAO_NAMESPACE  CONV_FRAME
     CONV_FRAME::CodeSetId native_code_set;
     
     
-    // TAO_IDL - Generated from 
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ch.cpp:65
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CH_)
-#define __TAO_UNBOUNDED_SEQUENCE_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CH_
-    
-    class TAO_Export _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId
-      : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId (void);
-      _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId (CORBA::ULong maximum); 
-      _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId (
-          CORBA::ULong maximum,
-          CORBA::ULong length,
-          CORBA::ULong *data,
-          CORBA::Boolean release = 0
-        );
-      _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId (
-          const _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId &rhs
-        );
-      _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId &operator= (
-          const _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId &rhs
-        );
-      virtual ~_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId (void);
-      
-      // = Accessors.
-      CORBA::ULong &operator[] (CORBA::ULong i);
-      const CORBA::ULong &operator[] (CORBA::ULong i) const;
-      
-      // = Static operations.
-      static CORBA::ULong *allocbuf (CORBA::ULong size);
-      static void freebuf (CORBA::ULong *buffer);
-      
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      CORBA::ULong *get_buffer (CORBA::Boolean orphan = 0);
-      const CORBA::ULong *get_buffer (void) const;
-      void replace (
-          CORBA::ULong max,
-          CORBA::ULong length,
-          CORBA::ULong *data,
-          CORBA::Boolean release
-        );
-    };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CH_)
-#define _CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CH_
-    
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
     
-    class _tao_seq_CodeSetId;
-    
-    // *************************************************************
-    // CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId
-    // *************************************************************
-    
-    class TAO_Export _tao_seq_CodeSetId : public 
-    
-    // TAO_IDL - Generated from 
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<CORBA::ULong>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+    class TAO_Export _tao_seq_CodeSetId
+      : public
+          TAO_Unbounded_Sequence<
+              CONV_FRAME::CodeSetId
+            >
     {
     public:
       _tao_seq_CodeSetId (void);
       _tao_seq_CodeSetId (CORBA::ULong max);
       _tao_seq_CodeSetId (
-          CORBA::ULong max, 
-          CORBA::ULong length, 
+          CORBA::ULong max,
+          CORBA::ULong length,
           CORBA::ULong *buffer, 
           CORBA::Boolean release = 0
         );
       _tao_seq_CodeSetId (const _tao_seq_CodeSetId &);
       ~_tao_seq_CodeSetId (void);
       
-      static void _tao_any_destructor (void*);
+      static void _tao_any_destructor (void *);
       
       
     };
-
-#endif /* end #if !defined */
     
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
@@ -191,69 +138,30 @@ TAO_NAMESPACE  CONV_FRAME
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_Export CodeSetComponent_var
-  {
-  public:
-    CodeSetComponent_var (void);
-    CodeSetComponent_var (CodeSetComponent *);
-    CodeSetComponent_var (const CodeSetComponent_var &);
-    ~CodeSetComponent_var (void);
-    
-    CodeSetComponent_var &operator= (CodeSetComponent *);
-    CodeSetComponent_var &operator= (const CodeSetComponent_var &);
-    CodeSetComponent *operator-> (void);
-    const CodeSetComponent *operator-> (void) const;
-    
-    operator const CodeSetComponent &() const;
-    operator CodeSetComponent &();
-    operator CodeSetComponent &() const;
-    
-    // Variable-size types only.
-    operator CodeSetComponent *&();
-    
-    // in, inout, out, _retn 
-    const CodeSetComponent &in (void) const;
-    CodeSetComponent &inout (void);
-    CodeSetComponent *&out (void);
-    CodeSetComponent *_retn (void);
-    CodeSetComponent *ptr (void) const;
-  
-  private:
-    CodeSetComponent *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_Export CodeSetComponent_out
-  {
-  public:
-    CodeSetComponent_out (CodeSetComponent *&);
-    CodeSetComponent_out (CodeSetComponent_var &);
-    CodeSetComponent_out (const CodeSetComponent_out &);
-    CodeSetComponent_out &operator= (const CodeSetComponent_out &);
-    CodeSetComponent_out &operator= (CodeSetComponent *);
-    operator CodeSetComponent *&();
-    CodeSetComponent *&ptr (void);
-    CodeSetComponent *operator-> (void);
-    
-  private:
-    CodeSetComponent *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const CodeSetComponent_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponent;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class CodeSetComponentInfo_var;
+  struct CodeSetComponentInfo;
+  
+  typedef
+    TAO_Var_Var_T<
+        CodeSetComponentInfo
+      >
+    CodeSetComponentInfo_var;
+  
+  typedef
+    TAO_Out_T<
+        CodeSetComponentInfo,
+        CodeSetComponentInfo_var
+      >
+    CodeSetComponentInfo_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_Export CodeSetComponentInfo
   {
@@ -265,69 +173,27 @@ TAO_NAMESPACE  CONV_FRAME
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_Export CodeSetComponentInfo_var
-  {
-  public:
-    CodeSetComponentInfo_var (void);
-    CodeSetComponentInfo_var (CodeSetComponentInfo *);
-    CodeSetComponentInfo_var (const CodeSetComponentInfo_var &);
-    ~CodeSetComponentInfo_var (void);
-    
-    CodeSetComponentInfo_var &operator= (CodeSetComponentInfo *);
-    CodeSetComponentInfo_var &operator= (const CodeSetComponentInfo_var &);
-    CodeSetComponentInfo *operator-> (void);
-    const CodeSetComponentInfo *operator-> (void) const;
-    
-    operator const CodeSetComponentInfo &() const;
-    operator CodeSetComponentInfo &();
-    operator CodeSetComponentInfo &() const;
-    
-    // Variable-size types only.
-    operator CodeSetComponentInfo *&();
-    
-    // in, inout, out, _retn 
-    const CodeSetComponentInfo &in (void) const;
-    CodeSetComponentInfo &inout (void);
-    CodeSetComponentInfo *&out (void);
-    CodeSetComponentInfo *_retn (void);
-    CodeSetComponentInfo *ptr (void) const;
-  
-  private:
-    CodeSetComponentInfo *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:445
-  
-  class TAO_Export CodeSetComponentInfo_out
-  {
-  public:
-    CodeSetComponentInfo_out (CodeSetComponentInfo *&);
-    CodeSetComponentInfo_out (CodeSetComponentInfo_var &);
-    CodeSetComponentInfo_out (const CodeSetComponentInfo_out &);
-    CodeSetComponentInfo_out &operator= (const CodeSetComponentInfo_out &);
-    CodeSetComponentInfo_out &operator= (CodeSetComponentInfo *);
-    operator CodeSetComponentInfo *&();
-    CodeSetComponentInfo *&ptr (void);
-    CodeSetComponentInfo *operator-> (void);
-    
-  private:
-    CodeSetComponentInfo *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const CodeSetComponentInfo_var &);
-  };
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponentInfo;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class CodeSetContext_var;
+  struct CodeSetContext;
+  
+  typedef
+    TAO_Fixed_Var_T<
+        CodeSetContext
+      >
+    CodeSetContext_var;
+  
+  typedef
+    CodeSetContext &
+    CodeSetContext_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_Export CodeSetContext
   {
@@ -337,48 +203,6 @@ TAO_NAMESPACE  CONV_FRAME
     CONV_FRAME::CodeSetId char_data;
     CONV_FRAME::CodeSetId wchar_data;
   };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_Export CodeSetContext_var
-  {
-  public:
-    CodeSetContext_var (void);
-    CodeSetContext_var (CodeSetContext *);
-    CodeSetContext_var (const CodeSetContext_var &);
-    // Fixed-size types only.
-    CodeSetContext_var (const CodeSetContext &);
-    ~CodeSetContext_var (void);
-    
-    CodeSetContext_var &operator= (CodeSetContext *);
-    CodeSetContext_var &operator= (const CodeSetContext_var &);
-    
-    // Fixed-size types only.
-    CodeSetContext_var &operator= (const CodeSetContext &);
-    
-    CodeSetContext *operator-> (void);
-    const CodeSetContext *operator-> (void) const;
-    
-    operator const CodeSetContext &() const;
-    operator CodeSetContext &();
-    operator CodeSetContext &() const;
-    
-    // in, inout, out, _retn 
-    const CodeSetContext &in (void) const;
-    CodeSetContext &inout (void);
-    CodeSetContext &out (void);
-    CodeSetContext _retn (void);
-    CodeSetContext *ptr (void) const;
-  
-  private:
-    CodeSetContext *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:105
-  
-  typedef CodeSetContext &CodeSetContext_out;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -461,7 +285,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetContext
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "CONV_FRAMEC.i"

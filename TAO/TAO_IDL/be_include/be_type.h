@@ -25,6 +25,8 @@
 #include "be_decl.h"
 #include "ast_type.h"
 
+#include "ace/SString.h"
+
 class TAO_OutStream;
 
 class be_type : public virtual AST_Type,
@@ -41,29 +43,6 @@ public:
   virtual ~be_type (void);
   // Destructor.
 
-  virtual int gen_var_defn (char *interface_local_name = 0);
-  // Generate the _var class definition.
-  // generate the var definition. If <interface_name> is not 0, generate
-  // the var defn for that name. Otherwise, do it for the interface you
-  // are visiting (this).
-
-  virtual int gen_var_impl (char *interface_local_name = 0,
-                            char *interface_full_name = 0);
-  // Generate the implementation for the _var class.
-  // If any one of the argument is 0, then use the name in <this>,
-  // otherwise use the name given. Just making the class more useful.
-
-  virtual int gen_out_defn (char *interface_name = 0);
-  // Generate the out class definition. If <interface_name> is not 0,
-  // generate the out defn for that name. Otherwise, do it for the
-  // interface you are visiting (this).
-
-  virtual int gen_out_impl (char *interface_local_name = 0,
-                            char *interface_full_name = 0);
-  // Generate the out class implementation.
-  // If any one of the argument is 0, then use the name giin this
-  // node, else use the arguments.
-
   UTL_ScopedName *tc_name (void);
   // Return the typecode name. When both, the prefix and the suffix
   // are non null, it computes and returns a tc name. Else, it also
@@ -74,6 +53,19 @@ public:
                                            const char *prefix = 0);
   // Type name of a node used when generating declarations for smart
   // proxies.
+
+  const char *fwd_helper_name (void) const;
+  // Accessor to the member.
+
+  void gen_common_varout (TAO_OutStream *os);
+  // Generate _var and _out typedefs for structs and unions.
+
+  void gen_common_tmplinst (TAO_OutStream *os);
+  // Generate explicit template instantiations for the above.
+
+  idl_bool seen_in_sequence (void) const;
+  void seen_in_sequence (idl_bool val);
+  // Accessors for the member.
 
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Typedefs are tricky to handle, in many points their mapping
@@ -97,6 +89,15 @@ protected:
 
   UTL_ScopedName *tc_name_;
   // Typecode name.
+
+  ACE_CString fwd_helper_name_;
+  // Used by interfaces, valuetypes and arrays to name helper structs.
+
+  idl_bool common_varout_gen_;
+  // Have we generated our _var and _out class typedefs yet?
+
+  idl_bool seen_in_sequence_;
+  // Has this type been used as a sequence element?
 };
 
 #endif // end of if !defined

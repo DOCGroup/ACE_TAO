@@ -15,309 +15,32 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// *************************************************************
-// Inline operations for class TAO::ObjectKey
-// *************************************************************
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/cdr_op_ci.cpp:84
 
-ACE_INLINE
-TAO::ObjectKey::ObjectKey (void)
-{
-}
+#if !defined _TAO_CDR_OP_TAO_ObjectKey_I_
+#define _TAO_CDR_OP_TAO_ObjectKey_I_
 
-ACE_INLINE
-TAO::ObjectKey::ObjectKey (CORBA::ULong max)
-  :  TAO_Unbounded_Sequence<CORBA::Octet> (max)
-{
-}
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const TAO::ObjectKey &
+  );
 
-ACE_INLINE
-TAO::ObjectKey::ObjectKey (CORBA::ULong max,
-                           CORBA::ULong length,
-                           CORBA::Octet *data,
-                           CORBA::Boolean release)
-  :  TAO_Unbounded_Sequence<CORBA::Octet> (max, length, data, release)
-{
-}
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    TAO::ObjectKey &
+  );
 
-ACE_INLINE
-TAO::ObjectKey::ObjectKey (const TAO::ObjectKey &rhs)
-  :  TAO_Unbounded_Sequence<CORBA::Octet> (rhs)
-{
-}
-
-ACE_INLINE TAO::ObjectKey &
-TAO::ObjectKey::operator= (const TAO::ObjectKey &rhs)
-{
-  if (this == &rhs)
-    {
-        return *this;
-    }
-
-  TAO_Unbounded_Sequence<CORBA::Octet>::operator= (rhs);
-  return *this;
-}
-
-#if !defined (_TAO_OBJECTKEY_CI_)
-#define _TAO_OBJECTKEY_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class TAO::ObjectKey_var
-// *************************************************************
-
-ACE_INLINE
-TAO::ObjectKey_var::ObjectKey_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-TAO::ObjectKey_var::ObjectKey_var (ObjectKey *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-TAO::ObjectKey_var::ObjectKey_var (const ::TAO::ObjectKey_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::TAO::ObjectKey (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-// Fixed-size base types only.
-ACE_INLINE
-TAO::ObjectKey_var::ObjectKey_var (const ::TAO::ObjectKey &p)
-{
-  ACE_NEW (this->ptr_, ::TAO::ObjectKey (p));
-}
-
-ACE_INLINE
-TAO::ObjectKey_var::~ObjectKey_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-TAO::ObjectKey_var &
-TAO::ObjectKey_var::operator= (ObjectKey *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::TAO::ObjectKey_var &
-TAO::ObjectKey_var::operator= (const ::TAO::ObjectKey_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          ObjectKey *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              ObjectKey (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              ObjectKey *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-// Fixed-size types only.
-ACE_INLINE
-::TAO::ObjectKey_var &
-TAO::ObjectKey_var::operator= (const ::TAO::ObjectKey &p)
-{
-  if (this->ptr_ != &p)
-    {
-      delete this->ptr_;
-      ACE_NEW_RETURN (this->ptr_, ::TAO::ObjectKey (p), *this);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::TAO::ObjectKey *
-TAO::ObjectKey_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::TAO::ObjectKey *
-TAO::ObjectKey_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO::ObjectKey_var::operator const ::TAO::ObjectKey &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-TAO::ObjectKey_var::operator ::TAO::ObjectKey &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-TAO::ObjectKey_var::operator ::TAO::ObjectKey &() const // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-CORBA::Octet &
-TAO::ObjectKey_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const CORBA::Octet &
-TAO::ObjectKey_var::operator[] (CORBA::ULong index) const
-{
-  return ACE_const_cast (const CORBA::Octet &, this->ptr_->operator[] (index));
-}
-
-ACE_INLINE
-const ::TAO::ObjectKey &
-TAO::ObjectKey_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::TAO::ObjectKey &
-TAO::ObjectKey_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::TAO::ObjectKey *&
-TAO::ObjectKey_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::TAO::ObjectKey *
-TAO::ObjectKey_var::_retn (void)
-{
-  ::TAO::ObjectKey *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::TAO::ObjectKey *
-TAO::ObjectKey_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class TAO::ObjectKey_out
-// *************************************************************
-
-ACE_INLINE
-TAO::ObjectKey_out::ObjectKey_out (ObjectKey *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-TAO::ObjectKey_out::ObjectKey_out (ObjectKey_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-TAO::ObjectKey_out::ObjectKey_out (const ::TAO::ObjectKey_out &p)
-  : ptr_ (ACE_const_cast (ObjectKey_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::TAO::ObjectKey_out &
-TAO::ObjectKey_out::operator= (const ::TAO::ObjectKey_out &p)
-{
-  this->ptr_ = ACE_const_cast (ObjectKey_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::TAO::ObjectKey_out &
-TAO::ObjectKey_out::operator= (ObjectKey *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-TAO::ObjectKey_out::operator ::TAO::ObjectKey *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::TAO::ObjectKey *&
-TAO::ObjectKey_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::TAO::ObjectKey *
-TAO::ObjectKey_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA::Octet &
-TAO::ObjectKey_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
+#endif /* _TAO_CDR_OP_TAO_ObjectKey_I_ */
 

@@ -1,8 +1,3 @@
-//
-// $Id$
-
-//
-
 // ============================================================================
 //
 // = LIBRARY
@@ -22,7 +17,6 @@
 ACE_RCSID (be_visitor_interface,
            interface_cs,
            "$Id$")
-
 
 // ************************************************************
 // Interface visitor for client stubs
@@ -60,83 +54,85 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Initialize the static narrrowing helper variable.
-  *os << "int " << node->full_name () << "::_tao_class_id = 0;"
-      << be_nl << be_nl;
+  *os << be_nl << be_nl
+      << "int " << node->full_name () << "::_tao_class_id = 0;";
 
-  // Global functions to allow non-defined forward declared interfaces
-  // access to some methods in the full definition.
-  *os << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_duplicate (" << be_idt << be_idt_nl
+  // Helper functions generated in case this interface was
+  // forward declared in some other IDL file and not defined there.
+  *os << be_nl << be_nl
+      << node->full_name () << "_ptr" << be_nl
+      << node->fwd_helper_name () << "_life::"
+      << "tao_duplicate (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << node->full_name ()
       << "::_duplicate (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
-  *os << "void" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_release (" << be_idt << be_idt_nl
+  *os << be_nl << be_nl
+      << "void" << be_nl
+      << node->fwd_helper_name () << "_life::"
+      << "tao_release (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "CORBA::release (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
-  *os << node->full_name () <<  "_ptr" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_nil (" << be_idt << be_idt_nl
+  *os << be_nl << be_nl
+      << node->full_name () <<  "_ptr" << be_nl
+      << node->fwd_helper_name () << "_life::"
+      << "tao_nil (" << be_idt << be_idt_nl
       << "void" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << node->full_name ()
       << "::_nil ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_narrow (" << be_idt << be_idt_nl;
-
-  if (node->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase *p" << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::Object *p" << be_nl;
-    }
-
-  *os << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->full_name ()
-      << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
-      << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  if (node->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase *" << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::Object *" << be_nl;
-    }
-
-  *os << "tao_" << node->flat_name ()
-      << "_upcast (" << be_idt << be_idt_nl
-      << "void *src" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << node->full_name () << " **tmp =" << be_idt_nl
-      << "ACE_static_cast (" << node->full_name ()
-      << " **, src);" << be_uidt_nl
-      << "return *tmp;" << be_uidt_nl
       << "}";
+
+  *os << be_nl << be_nl
+      << "CORBA::Boolean" << be_nl
+      << node->fwd_helper_name () << "_life::"
+      << "tao_marshal (" << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR &cdr" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (cdr);" << be_uidt_nl
+      << "}";
+
+  if (! node->is_abstract ())
+    {
+      *os << be_nl << be_nl
+          << node->full_name () << "_ptr" << be_nl
+          << node->fwd_helper_name () << "_cast::"
+          << "tao_narrow (" << be_idt << be_idt_nl
+          << "CORBA::Object *p" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "return " << node->full_name ()
+          << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
+          << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "CORBA::Object *" << be_nl
+          << node->fwd_helper_name () << "_cast::"
+          << "tao_upcast (" << be_idt << be_idt_nl
+          << "void *src" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << node->full_name () << " **tmp =" << be_idt_nl
+          << "ACE_static_cast (" << node->full_name ()
+          << " **, src);" << be_uidt_nl
+          << "return *tmp;" << be_uidt_nl
+          << "}";
+    }
 
   if (node->has_mixed_parentage ())
     {
@@ -146,9 +142,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "CORBA::AbstractBase_ptr abs = p;" << be_nl
           << "CORBA::release (abs);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
 
-      *os << "CORBA::Boolean" << be_nl
+      *os << be_nl << be_nl
+          << "CORBA::Boolean" << be_nl
           << "CORBA::is_nil (" << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::Object_ptr obj = p;" << be_nl
@@ -156,35 +153,30 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  *os << be_nl << be_nl
-      << "CORBA::Boolean" << be_nl
-      << "tao_" << node->flat_name () << "_marshal (" << be_idt << be_idt_nl
-      << node->name () << "_ptr p," << be_nl
-      << "TAO_OutputCDR &strm" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return p->marshal (strm);" << be_uidt_nl
-      << "}";
-
-  // Generate the _var class.
-  if (node->gen_var_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for _var failed\n"),
-                        -1);
-    }
-
-  // Generate the _out class.
-  if (node->gen_out_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for _out failed\n"),
-                        -1);
-    }
+  *os << be_nl
+      << "\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
+      << "template class" << be_idt_nl
+      << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
+      << node->name () << "," << be_nl
+      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << ">;" << be_uidt << be_uidt_nl
+      << "template class" << be_idt_nl
+      << "TAO_Objref_Out_T<" << be_idt << be_idt_nl
+      << node->name () << "," << be_nl
+      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << ">;" << be_uidt << be_uidt << be_uidt_nl
+      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
+      << "# pragma instantiate \\" << be_idt << be_idt_nl
+      << "TAO_Objref_Var_T< \\" << be_idt << be_idt_nl
+      << node->name () << ", \\" << be_nl
+      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
+      << "# pragma instantiate \\" << be_idt << be_idt_nl
+      << "TAO_Objref_Out_T< \\" << be_idt << be_idt_nl
+      << node->name () << ", \\" << be_nl
+      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
+      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
   be_visitor_context ctx = (*this->ctx_);
 

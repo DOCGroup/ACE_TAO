@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_array, 
-           any_op_cs, 
+ACE_RCSID (be_visitor_array,
+           any_op_cs,
            "$Id$")
 
 
@@ -50,7 +50,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -62,7 +62,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
       << node->name () << "_slice," << be_nl
       << node->name () << "_forany" << be_uidt_nl
-      << ">::insert (" 
+      << ">::insert ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
@@ -109,9 +109,9 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << node->name () << "_forany" << be_uidt_nl
       << ">;" << be_uidt << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
-      << node->name () << "_slice," << be_nl
-      << node->name () << "_forany" << be_uidt_nl
+      << "# pragma instantiate TAO::Any_Array_Impl_T< \\" << be_idt << be_idt_nl
+      << node->name () << "_slice, \\" << be_nl
+      << node->name () << "_forany \\" << be_uidt_nl
       << ">" << be_uidt_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 

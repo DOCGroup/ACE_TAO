@@ -528,16 +528,6 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOP_CodecC.cpp
-# ADD CPP /GR
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOP_IORC.cpp
-# ADD CPP /GR
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOPC.cpp
 # ADD CPP /GR
 # End Source File
@@ -1037,6 +1027,10 @@ SOURCE=.\arg_shifter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Array_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
@@ -1385,14 +1379,6 @@ SOURCE=.\Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOP_CodecC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOP_IORC.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOPC.h
 # End Source File
 # Begin Source File
@@ -1545,6 +1531,10 @@ SOURCE=.\ObjectReferenceTemplateC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Objref_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
@@ -1657,6 +1647,14 @@ SOURCE=.\Protocols_Hooks.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pseudo_Value_VarOut_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pseudo_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Queued_Message.h
 # End Source File
 # Begin Source File
@@ -1694,6 +1692,10 @@ SOURCE=.\Resource_Factory.h
 # Begin Source File
 
 SOURCE=.\Resume_Handle.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Seq_VarOut_T.h
 # End Source File
 # Begin Source File
 
@@ -1845,6 +1847,10 @@ SOURCE=.\TypeCodeFactory_Adapter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Value_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ValueBase.h
 # End Source File
 # Begin Source File
@@ -1858,6 +1864,10 @@ SOURCE=.\ValueFactory_Map.h
 # Begin Source File
 
 SOURCE=.\varbase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\VarOut_T.h
 # End Source File
 # Begin Source File
 
@@ -1906,6 +1916,10 @@ SOURCE=.\any.i
 # Begin Source File
 
 SOURCE=.\Any_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Array_VarOut_T.inl
 # End Source File
 # Begin Source File
 
@@ -2145,14 +2159,6 @@ SOURCE=.\Invocation_Endpoint_Selectors.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOP_CodecC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOP_IORC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
@@ -2253,6 +2259,10 @@ SOURCE=.\ObjectReferenceTemplateC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Objref_VarOut_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.i
 # End Source File
 # Begin Source File
@@ -2333,6 +2343,10 @@ SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pseudo_VarOut_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Queued_Message.inl
 # End Source File
 # Begin Source File
@@ -2342,6 +2356,10 @@ SOURCE=.\Reply_Dispatcher.i
 # Begin Source File
 
 SOURCE=.\Resume_Handle.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Seq_VarOut_T.inl
 # End Source File
 # Begin Source File
 
@@ -2445,6 +2463,10 @@ SOURCE=.\typecode.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Value_VarOut_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ValueBase.i
 # End Source File
 # Begin Source File
@@ -2454,6 +2476,10 @@ SOURCE=.\ValueFactory.i
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\VarOut_T.inl
 # End Source File
 # End Group
 # Begin Group "Resource files"
@@ -2474,12 +2500,47 @@ SOURCE=.\Any_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Array_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Codeset_Translator_Factory_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
+SOURCE=.\Objref_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pseudo_Value_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pseudo_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Seq_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sequence_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Value_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\VarOut_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group

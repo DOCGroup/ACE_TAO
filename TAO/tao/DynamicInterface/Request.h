@@ -164,11 +164,9 @@ namespace CORBA
     /// Accessor for the input stream containing the exception.
     ACE_CString &raw_user_exception (void);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     // Useful for template programming.
     typedef CORBA::Request_ptr _ptr_type;
     typedef CORBA::Request_var _var_type;
-#endif /* __GNUC__ */
 
   private:
     friend class ::TAO_Dynamic_Adapter_Impl;
@@ -244,152 +242,6 @@ namespace CORBA
     ACE_CString raw_user_exception_;
 
   };
-
-  /**
-   * @class Request_var
-   *
-   * @brief The T_var class for Request.
-   *
-   * As any other pseudo object Request must have a T_var class, the
-   * interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_DynamicInterface_Export Request_var
-  {
-  public:
-    Request_var (void);
-    Request_var (Request_ptr);
-    Request_var (const Request_var &);
-    ~Request_var (void);
-
-    Request_var &operator= (Request_ptr);
-    Request_var &operator= (const Request_var &);
-    Request_ptr operator-> (void) const;
-
-    operator const Request_ptr &() const;
-    operator Request_ptr &();
-
-    // in, inout, out, _retn.
-    Request_ptr in (void) const;
-    Request_ptr &inout (void);
-    Request_ptr &out (void);
-    Request_ptr _retn (void);
-    Request_ptr ptr (void) const;
-
-  private:
-    Request_ptr ptr_;
-  };
-
-  /**
-   * @class Request_out
-   *
-   * @brief The T_out class for Request
-   *
-   * As any other pseudo object Request must have a T_out class, the
-   * interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_DynamicInterface_Export Request_out
-  {
-  public:
-    Request_out (Request_ptr &);
-    Request_out (Request_var &);
-    Request_out (Request_out &);
-    Request_out &operator= (Request_out &);
-    Request_out &operator= (const Request_var &);
-    Request_out &operator= (Request_ptr);
-    operator Request_ptr &();
-    Request_ptr &ptr (void);
-    Request_ptr operator-> (void);
-
-  private:
-    Request_ptr &ptr_;
-  };
-
-  // Make sure you instantiate this in Request.cpp
-  class TAO_DynamicInterface_Export ORB_RequestSeq
-    : public TAO_Unbounded_Pseudo_Sequence<CORBA::Request, CORBA::Request_var>
-  {
-  public:
-    // Helpful with template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef ORB_RequestSeq_var _var_type;
-#endif /* __GNUC__ */
-
-    // Implement the same constructors provided by the template here,
-    // check Sequence_T.h for ideas.
-    // Simply delegate on the template for the implementation...
-
-    /// Default constructor.
-    ORB_RequestSeq (void);
-
-    /// Constructor with a "hint" for the maximum capacity.
-    ORB_RequestSeq (CORBA::ULong max);
-
-    /// Constructor with a given buffer.
-    ORB_RequestSeq (CORBA::ULong maximum,
-                    CORBA::ULong length,
-                    CORBA::Request* * data,
-                    CORBA::Boolean release=0);
-
-    /// Copy ctor, deep copies.
-    ORB_RequestSeq (const ORB_RequestSeq &);
-
-  };
-
-  class TAO_DynamicInterface_Export ORB_RequestSeq_var
-  {
-  public:
-    /// Default constructor.
-    ORB_RequestSeq_var (void);
-
-    ORB_RequestSeq_var (ORB_RequestSeq *);
-
-    /// Copy constructor.
-    ORB_RequestSeq_var (const ORB_RequestSeq_var &);
-
-    /// Destructor.
-    ~ORB_RequestSeq_var (void);
-
-    ORB_RequestSeq_var &operator= (ORB_RequestSeq *);
-    ORB_RequestSeq_var &operator= (const ORB_RequestSeq_var &);
-    ORB_RequestSeq *operator-> (void);
-    const ORB_RequestSeq *operator-> (void) const;
-
-    operator const ORB_RequestSeq &() const;
-    operator ORB_RequestSeq &();
-    operator ORB_RequestSeq &() const;
-    CORBA::Octet &operator[] (CORBA::ULong slot);
-
-    // in, inout, out, _retn.
-    const ORB_RequestSeq &in (void) const;
-    ORB_RequestSeq &inout (void);
-    ORB_RequestSeq *&out (void);
-    ORB_RequestSeq *_retn (void);
-    ORB_RequestSeq *ptr (void) const;
-
-  private:
-    ORB_RequestSeq *ptr_;
-  };
-
-  class TAO_DynamicInterface_Export ORB_RequestSeq_out
-  {
-  public:
-    ORB_RequestSeq_out (ORB_RequestSeq *&);
-    ORB_RequestSeq_out (ORB_RequestSeq_var &);
-    ORB_RequestSeq_out (ORB_RequestSeq_out &);
-    ORB_RequestSeq_out &operator= (ORB_RequestSeq_out &);
-    ORB_RequestSeq_out &operator= (ORB_RequestSeq *);
-    operator ORB_RequestSeq *&();
-    ORB_RequestSeq *&ptr (void);
-    ORB_RequestSeq *operator-> (void);
-    CORBA::Octet &operator[] (CORBA::ULong slot);
-
-  private:
-    ORB_RequestSeq *&ptr_;
-
-    /// Assignment from T_var not allowed.
-    void operator= (const ORB_RequestSeq_var &);
-  };
-
 } // End CORBA namespace.
 
 #if defined (__ACE_INLINE__)
