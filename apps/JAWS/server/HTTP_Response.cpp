@@ -131,8 +131,8 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 void
 HTTP_Response::normal_response (void)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s, version %s\n",
-              request_.method (), request_.uri (),
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s [%s], version %s\n",
+              request_.method (), request_.uri (), request_.path (),
               (request_.version () ? request_.version () : "HTTP/0.9")));
 
   switch (this->request_.type ())
@@ -140,7 +140,7 @@ HTTP_Response::normal_response (void)
     case HTTP_Request::GET :
 
       this->build_headers ();
-      this->io_.transmit_file (this->request_.uri (), 
+      this->io_.transmit_file (this->request_.path (), 
                                this->HTTP_HEADER
                                ? this->HTTP_HEADER
                                : "",
@@ -169,7 +169,7 @@ HTTP_Response::normal_response (void)
       break;
 
     case HTTP_Request::PUT :
-      this->io_.receive_file (this->request_.uri (),
+      this->io_.receive_file (this->request_.path (),
                               this->request_.data (),
                               this->request_.data_length (),
                               this->request_.content_length ());

@@ -62,9 +62,6 @@ protected:
   // unsuccessful completions, the handler will end up in this state
   // (method).
   
-  virtual void invalid_request (int result);
-  // Invalid request.
-
   virtual void request_too_long (void);
   // Request too long.
 

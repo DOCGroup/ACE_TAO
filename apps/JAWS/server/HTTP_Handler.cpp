@@ -7,6 +7,7 @@
 #include "JAWS/server/HTTP_Handler.h"
 #include "JAWS/server/HTTP_Helpers.h"
 #include "JAWS/server/IO.h"
+#include "JAWS/server/JAWS_File.h"
 
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 			    HTTP_Handler_Factory &factory)
@@ -106,11 +107,29 @@ HTTP_Handler::receive_file_error (int result)
               request_.uri ()));
 
   char buffer[BUFSIZ];
+
+  int status_code;
+  switch (result)
+    {
+    case JAWS_File::ACCESS_FAILED:
+    case JAWS_File::WRITE_FAILED:
+    case JAWS_File::OPEN_FAILED:
+      status_code = HTTP_Status_Code::STATUS_NOT_FOUND;
+      break;
+    case JAWS_File::COPY_FAILED:
+    case JAWS_File::STAT_FAILED:
+    case JAWS_File::MEMMAP_FAILED:
+      status_code = HTTP_Status_Code::STATUS_FORBIDDEN;
+      break;
+    default:
+      status_code = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
+      break;
+    }
   int buflen =
     ACE_OS::sprintf (buffer, 
                      "%s %d %s",
                      this->request_.version (),
-                     result,
+                     status_code,
                      "Failed");  
 
   this->io_.send_confirmation_message (buffer, buflen);
@@ -143,7 +162,24 @@ HTTP_Handler::transmit_file_error (int result)
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in transmitting file\n",
               request_.uri ()));
 
-  this->response_.error_response (result, "error in transmitting file");
+  int status_code;
+  switch (result)
+    {
+    case JAWS_File::ACCESS_FAILED:
+    case JAWS_File::WRITE_FAILED:
+    case JAWS_File::OPEN_FAILED:
+      status_code = HTTP_Status_Code::STATUS_NOT_FOUND;
+      break;
+    case JAWS_File::COPY_FAILED:
+    case JAWS_File::STAT_FAILED:
+    case JAWS_File::MEMMAP_FAILED:
+      status_code = HTTP_Status_Code::STATUS_FORBIDDEN;
+      break;
+    default:
+      status_code = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
+      break;
+    }
+  this->response_.error_response (status_code, "error in transmitting file");
 }
 
 void 
@@ -180,13 +216,6 @@ HTTP_Handler::request_too_long (void)
   this->response_.
     error_response (HTTP_Status_Code::STATUS_BAD_REQUEST,
                     "request too long");
-}
-
-void 
-HTTP_Handler::invalid_request (int error)
-{
-  ACE_DEBUG ((LM_DEBUG, " (%t) invalid request\n"));
-  this->response_.error_response (error, "invalid request");
 }
 
 void 
