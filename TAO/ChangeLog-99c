@@ -1,3 +1,11 @@
+Wed Jul 21 16:59:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_decl.cpp:
+	  Added initialization of be_decl::has_constructor_ in the constructor.
+	  Must have neglected to check this file in with my original fix,
+	  and it broke IDL_Cubit. Thanks to David Levine for reporting the
+	  error so I could catch my oversight.
+
 Wed Jul 21 16:06:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
