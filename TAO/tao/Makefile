@@ -281,7 +281,7 @@ ORB_CORE_FILES += \
   Dynamic_Adapter
 
 INTERFACE_REPO_FILES += \
-  IFR_Client_Adapter
+  IFR_Client_Adapter \
   IFR_TypeCodes
 
 endif # minimum_corba
