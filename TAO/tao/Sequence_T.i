@@ -60,12 +60,13 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
     }
   else // if (orphan == 1)
     {
+      result = ACE_reinterpret_cast (T*,
+	                             this->buffer_);
+
       if (this->release_ != 0)
         {
           // We set the state back to default and relinquish
           // ownership.
-          result = ACE_reinterpret_cast (T*,
-	                                 this->buffer_);
           this->maximum_ = 0;
           this->length_ = 0;
           this->buffer_ = 0;
