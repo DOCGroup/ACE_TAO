@@ -62,8 +62,7 @@ realclean: clean
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Crashed_Callback.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -266,8 +265,7 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Service.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -470,8 +468,7 @@ realclean: clean
 
 .obj/Crashed_Callback.o .obj/Crashed_Callback.so .shobj/Crashed_Callback.o .shobj/Crashed_Callback.so: Crashed_Callback.cpp Crashed_Callback.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -671,8 +668,7 @@ realclean: clean
 
 .obj/Service.o .obj/Service.so .shobj/Service.o .shobj/Service.so: Service.cpp Service.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1144,6 +1140,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \

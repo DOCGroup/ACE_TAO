@@ -230,8 +230,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Module.cpp \
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
-  testC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  testC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -1142,6 +1141,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \

@@ -882,7 +882,84 @@ realclean: clean
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(ACE_ROOT)/ace/Arg_Shifter.h
+  $(ACE_ROOT)/ace/Arg_Shifter.h \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
+  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+  $(TAO_ROOT)/tao/default_resource.h \
+  $(TAO_ROOT)/tao/Resource_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(TAO_ROOT)/tao/Pluggable.h \
+  $(TAO_ROOT)/tao/Pluggable.i \
+  $(TAO_ROOT)/tao/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(TAO_ROOT)/tao/default_resource.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/Policy_Manager.h \
+  $(TAO_ROOT)/tao/Policy_Set.h \
+  $(TAO_ROOT)/tao/Policy_Set.i \
+  $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Policy_Manager.i \
+  $(TAO_ROOT)/tao/params.h \
+  $(TAO_ROOT)/tao/params.i \
+  $(TAO_ROOT)/tao/Adapter.h \
+  $(TAO_ROOT)/tao/Adapter.i \
+  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  $(TAO_ROOT)/tao/Parser_Registry.h \
+  $(TAO_ROOT)/tao/Parser_Registry.i \
+  $(TAO_ROOT)/tao/Service_Callbacks.h \
+  $(TAO_ROOT)/tao/Service_Callbacks.i \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+  $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(TAO_ROOT)/tao/Interceptor_List.h \
+  $(TAO_ROOT)/tao/Interceptor_List.inl \
+  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(TAO_ROOT)/tao/ORB_Core.i \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Policy_Tester.h RT_Properties.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
@@ -1081,6 +1158,83 @@ realclean: clean
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
   $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
-  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i
+  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
+  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+  $(TAO_ROOT)/tao/default_resource.h \
+  $(TAO_ROOT)/tao/Resource_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(TAO_ROOT)/tao/Pluggable.h \
+  $(TAO_ROOT)/tao/Pluggable.i \
+  $(TAO_ROOT)/tao/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(TAO_ROOT)/tao/default_resource.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/Policy_Manager.h \
+  $(TAO_ROOT)/tao/Policy_Set.h \
+  $(TAO_ROOT)/tao/Policy_Set.i \
+  $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Policy_Manager.i \
+  $(TAO_ROOT)/tao/params.h \
+  $(TAO_ROOT)/tao/params.i \
+  $(TAO_ROOT)/tao/Adapter.h \
+  $(TAO_ROOT)/tao/Adapter.i \
+  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  $(TAO_ROOT)/tao/Parser_Registry.h \
+  $(TAO_ROOT)/tao/Parser_Registry.i \
+  $(TAO_ROOT)/tao/Service_Callbacks.h \
+  $(TAO_ROOT)/tao/Service_Callbacks.i \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+  $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(TAO_ROOT)/tao/Interceptor_List.h \
+  $(TAO_ROOT)/tao/Interceptor_List.inl \
+  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(TAO_ROOT)/tao/ORB_Core.i \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -369,6 +369,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -734,6 +736,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1110,6 +1114,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1462,6 +1468,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1822,6 +1830,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \

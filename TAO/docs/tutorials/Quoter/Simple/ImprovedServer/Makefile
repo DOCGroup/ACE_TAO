@@ -47,7 +47,8 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h ../../idl/QuoterS.h \
-  ../../idl/QuoterC.h $(TAO_ROOT)/tao/corba.h \
+  ../../idl/QuoterC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \

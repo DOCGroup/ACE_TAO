@@ -253,7 +253,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i PP_TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  PP_TestC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
@@ -342,6 +343,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -545,7 +548,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i PP_TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  PP_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -830,8 +834,9 @@ realclean: clean
   $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
-  $(TAO_ROOT)/tao/ORB.i PP_Test_i.h PP_TestS.h \
-  PP_TestC.h $(TAO_ROOT)/tao/corba.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  PP_Test_i.h PP_TestS.h PP_TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -882,7 +887,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i PP_TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  PP_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
@@ -1034,8 +1040,9 @@ realclean: clean
   $(TAO_ROOT)/tao/Services.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
-  $(TAO_ROOT)/tao/ORB.i PP_Test_i.h PP_TestS.h \
-  PP_TestC.h $(TAO_ROOT)/tao/corba.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  PP_Test_i.h PP_TestS.h PP_TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -1086,7 +1093,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i PP_TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  PP_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
@@ -1285,8 +1293,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i PP_TestC.h \
-  PP_TestC.i $(TAO_ROOT)/tao/Timeprobe.h \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  PP_TestC.h PP_TestC.i \
+  $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h \
   $(TAO_ROOT)/tao/TAO_Internal.h \
   $(TAO_ROOT)/tao/debug.h \
@@ -1480,11 +1489,13 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i PP_TestC.h \
-  PP_TestC.i $(TAO_ROOT)/tao/Timeprobe.h \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  PP_TestC.h PP_TestC.i \
+  $(TAO_ROOT)/tao/Timeprobe.h \
   $(ACE_ROOT)/ace/Timeprobe.h
 
-.obj/PP_Test_i.o .obj/PP_Test_i.so .shobj/PP_Test_i.o .shobj/PP_Test_i.so: PP_Test_i.cpp $(TAO_ROOT)/tao/corba.h \
+.obj/PP_Test_i.o .obj/PP_Test_i.so .shobj/PP_Test_i.o .shobj/PP_Test_i.so: PP_Test_i.cpp \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -1670,8 +1681,8 @@ realclean: clean
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Timeprobe.h \
-  $(ACE_ROOT)/ace/Timeprobe.h PP_Test_i.h PP_TestS.h \
-  PP_TestC.h PP_TestC.i \
+  $(ACE_ROOT)/ace/Timeprobe.h \
+  PP_Test_i.h PP_TestS.h PP_TestC.h PP_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \

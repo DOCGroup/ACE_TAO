@@ -250,7 +250,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i callbackC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  callbackC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -264,45 +265,20 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   callbackS_T.h callbackS_T.i callbackS_T.cpp callbackS.i \
   $(ACE_ROOT)/ace/Sample_History.h \
-  $(ACE_ROOT)/ace/Sample_History.inl Callback_i.inl \
+  $(ACE_ROOT)/ace/Sample_History.inl \
+  Callback_i.inl \
   $(TAO_ROOT)/tao/Messaging.h \
-  $(ACE_ROOT)/ace/High_Res_Timer.h \
-  $(ACE_ROOT)/ace/High_Res_Timer.i \
-  $(ACE_ROOT)/ace/Get_Opt.h \
-  $(ACE_ROOT)/ace/Get_Opt.i \
-  $(ACE_ROOT)/ace/Basic_Stats.h \
-  $(ACE_ROOT)/ace/Basic_Stats.inl \
-  $(ACE_ROOT)/ace/Stats.h \
-  $(ACE_ROOT)/ace/Stats.i \
-  $(ACE_ROOT)/ace/Sched_Params.h \
-  $(ACE_ROOT)/ace/Sched_Params.i \
-  $(ACE_ROOT)/ace/Task.h \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
+  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+  $(TAO_ROOT)/tao/default_resource.h \
+  $(TAO_ROOT)/tao/Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Thread_Manager.h \
-  $(ACE_ROOT)/ace/Containers.h \
-  $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Containers_T.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i \
-  $(ACE_ROOT)/ace/Task_T.h \
-  $(ACE_ROOT)/ace/Message_Queue.h \
-  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.i \
-  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
-  $(ACE_ROOT)/ace/Strategies.h \
-  $(ACE_ROOT)/ace/Strategies_T.h \
+  $(TAO_ROOT)/tao/Pluggable.h \
+  $(TAO_ROOT)/tao/Pluggable.i \
+  $(TAO_ROOT)/tao/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
@@ -318,17 +294,79 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Synch_Options.h \
-  $(ACE_ROOT)/ace/Synch_Options.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(TAO_ROOT)/tao/default_resource.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/Policy_Manager.h \
+  $(TAO_ROOT)/tao/Policy_Set.h \
+  $(TAO_ROOT)/tao/Policy_Set.i \
+  $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Policy_Manager.i \
+  $(TAO_ROOT)/tao/params.h \
+  $(TAO_ROOT)/tao/params.i \
+  $(TAO_ROOT)/tao/Adapter.h \
+  $(TAO_ROOT)/tao/Adapter.i \
+  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  $(TAO_ROOT)/tao/Parser_Registry.h \
+  $(TAO_ROOT)/tao/Parser_Registry.i \
+  $(TAO_ROOT)/tao/Service_Callbacks.h \
+  $(TAO_ROOT)/tao/Service_Callbacks.i \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+  $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(TAO_ROOT)/tao/Interceptor_List.h \
+  $(TAO_ROOT)/tao/Interceptor_List.inl \
+  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(TAO_ROOT)/tao/ORB_Core.i \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.i \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
+  $(ACE_ROOT)/ace/High_Res_Timer.i \
+  $(ACE_ROOT)/ace/Get_Opt.h \
+  $(ACE_ROOT)/ace/Get_Opt.i \
+  $(ACE_ROOT)/ace/Basic_Stats.h \
+  $(ACE_ROOT)/ace/Basic_Stats.inl \
+  $(ACE_ROOT)/ace/Stats.h \
+  $(ACE_ROOT)/ace/Stats.i \
+  $(ACE_ROOT)/ace/Sched_Params.h \
+  $(ACE_ROOT)/ace/Sched_Params.i \
+  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Message_Queue.h \
+  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+  $(ACE_ROOT)/ace/Message_Queue_T.h \
+  $(ACE_ROOT)/ace/Message_Queue_T.i \
+  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Strategies.h \
+  $(ACE_ROOT)/ace/Strategies_T.h \
+  $(ACE_ROOT)/ace/Synch_Options.h \
+  $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Strategies_T.i \
   $(ACE_ROOT)/ace/Strategies_T.cpp \
   $(ACE_ROOT)/ace/Service_Repository.h \
@@ -534,7 +572,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i callbackC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  callbackC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -548,6 +587,83 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   callbackS_T.h callbackS_T.i callbackS_T.cpp callbackS.i Server_i.inl \
   $(TAO_ROOT)/tao/Messaging.h \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
+  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+  $(TAO_ROOT)/tao/default_resource.h \
+  $(TAO_ROOT)/tao/Resource_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(TAO_ROOT)/tao/Pluggable.h \
+  $(TAO_ROOT)/tao/Pluggable.i \
+  $(TAO_ROOT)/tao/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(TAO_ROOT)/tao/default_resource.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
+  $(TAO_ROOT)/tao/Policy_Manager.h \
+  $(TAO_ROOT)/tao/Policy_Set.h \
+  $(TAO_ROOT)/tao/Policy_Set.i \
+  $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Policy_Manager.i \
+  $(TAO_ROOT)/tao/params.h \
+  $(TAO_ROOT)/tao/params.i \
+  $(TAO_ROOT)/tao/Adapter.h \
+  $(TAO_ROOT)/tao/Adapter.i \
+  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  $(TAO_ROOT)/tao/Parser_Registry.h \
+  $(TAO_ROOT)/tao/Parser_Registry.i \
+  $(TAO_ROOT)/tao/Service_Callbacks.h \
+  $(TAO_ROOT)/tao/Service_Callbacks.i \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
+  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+  $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(TAO_ROOT)/tao/Interceptor_List.h \
+  $(TAO_ROOT)/tao/Interceptor_List.inl \
+  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(TAO_ROOT)/tao/ORB_Core.i \
+  $(TAO_ROOT)/tao/Strategies/advanced_resource.i \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/Sched_Params.h \
@@ -738,7 +854,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i callbackC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  callbackC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -937,7 +1054,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i callbackC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  callbackC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -951,7 +1069,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   callbackS_T.h callbackS_T.i callbackS_T.cpp callbackS.i \
   $(ACE_ROOT)/ace/Sample_History.h \
-  $(ACE_ROOT)/ace/Sample_History.inl Callback_i.inl
+  $(ACE_ROOT)/ace/Sample_History.inl \
+  Callback_i.inl
 
 .obj/callbackC.o .obj/callbackC.so .shobj/callbackC.o .shobj/callbackC.so: callbackC.cpp callbackC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -1138,7 +1257,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i callbackC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  callbackC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
@@ -1227,6 +1347,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1430,7 +1552,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i callbackC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  callbackC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
