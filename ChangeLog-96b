@@ -1,3 +1,16 @@
+Fri Nov 22 08:02:39 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace.{mdp,mak}: Changed ace.mak so that it links with the
+ 	  non-debug version of Microsoft's multithreaded dll when compiled
+ 	  with the release option
+
+Wed Nov 20 10:32:52 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests: Mutex_Test.cpp Priority_Buffer_Test.cpp
+	  Reader_Writer_Test.cpp Thread_Pool_Test.cpp were changed
+	  slightly to remove some compile time warnings. 
+
+=======
 Thu Nov 21 10:37:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config: Changed the implementation of the
