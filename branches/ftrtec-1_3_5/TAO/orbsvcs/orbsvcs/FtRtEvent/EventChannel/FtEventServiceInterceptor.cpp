@@ -226,6 +226,11 @@ FtEventServiceInterceptor::receive_request_service_contexts (
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(block1);
 
+    ACE_OS::snprintf(msg_buf, 512, " Client_Id = %d, retension_id = %d " 
+                   , ft_request_service_context.client_id.in()
+                   , ft_request_service_context.retention_id);
+    time_logger.set_message(msg_buf);
+
     bool is_new_request = request_table_.is_new_request(
       ft_request_service_context.client_id.in(),
       ft_request_service_context.retention_id);
@@ -265,9 +270,6 @@ FtEventServiceInterceptor::receive_request_service_contexts (
     Request_Context_Repository().set_sequence_number(ri, sequence_no
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(block1);
-    ACE_OS::snprintf(msg_buf, 512, " Client_Id = %d, seq_no = %d " 
-                   ,ft_request_service_context.client_id.in(), sequence_no);
-    time_logger.set_message(msg_buf);
 
   }
   ACE_CATCH  (CORBA::BAD_PARAM, ex)   {
