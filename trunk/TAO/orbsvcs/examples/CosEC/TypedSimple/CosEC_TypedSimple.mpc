@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Consumer) : event, orbsvcsexe, portableserver {
+project(*Consumer) : event_skel, orbsvcsexe, portableserver, naming {
   requires += ec_typed_events
   source_files {
     Consumer.cpp
@@ -9,7 +9,7 @@ project(*Consumer) : event, orbsvcsexe, portableserver {
   }
 }
 
-project(*Supplier) : event, orbsvcsexe, portableserver {
+project(*Supplier) : event_skel, orbsvcsexe, portableserver, naming {
   requires += ec_typed_events
   after    += CosEC_TypedSimple_Consumer
   idl_files {
