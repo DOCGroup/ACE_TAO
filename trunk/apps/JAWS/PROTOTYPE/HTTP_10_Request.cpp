@@ -54,6 +54,12 @@ JAWS_HTTP_10_Request::path (void) const
 }
 
 void
+JAWS_HTTP_10_Request::set_status (int s)
+{
+  HTTP_Request::set_status (s);
+}
+
+void
 JAWS_HTTP_10_Request::path (const char *uri_string)
 {
   char const *file_name = uri_string;
