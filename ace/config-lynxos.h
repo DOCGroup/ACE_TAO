@@ -48,7 +48,7 @@
 #elif defined (__powerpc__)
   // It looks like the default stack size is 15000.
   // ACE's Recursive_Mutex_Test needs more.
-# define ACE_NEEDS_HUGE_THREAD_STACKSIZE 32000
+# define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
   // This doesn't work on LynxOS 3.0.0, because it resets the TimeBaseRegister.
   // # define ACE_HAS_POWERPC_TIMER
 #endif /* __x86__ || __powerpc__ */

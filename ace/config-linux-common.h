@@ -30,13 +30,17 @@
 // First the machine specific part
 
 #if defined (__alpha)
-  // This is necessary on Alphas with glib 2.0.7-13.
+  // This is necessary on Alphas with glibc 2.0.7-13.
 # define ACE_POLL_IS_BROKEN
 #elif defined (__powerpc__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
-#endif /* ! __alpha  &&  ! __powerpc__ */
+#elif defined (__ia64)
+# if !defined (ACE_DEFAULT_BASE_ADDR)
+#   define ACE_DEFAULT_BASE_ADDR ((char *) 0x8000000000000000)
+# endif /* ! ACE_DEFAULT_BASE_ADDR */
+#endif /* ! __alpha  &&  ! __powerpc__  && ! __ia64 */
 
 // Then glibc/libc5 specific parts
 
@@ -154,11 +158,7 @@
 #define ACE_LACKS_WCSNICMP
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
-# if defined (__ia64)
-#  define ACE_DEFAULT_BASE_ADDR ((char *) 0x0000000080000000)
-# else /* ! __ia64 */
-# define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
-# endif /* __ia64 */
+#  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
 
 // Compiler/platform supports alloca().
@@ -258,13 +258,13 @@
 #if defined (__ia64)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
-# define ACE_UINT64_FORMAT_SPECIFIER "%lu"
-# define ACE_SSIZE_T_FORMAT_SPECIFIER "%ld"
-# define ACE_SIZE_T_FORMAT_SPECIFIER "%lu"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
+# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
 #endif /* __ia64 */
 
 #if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
+# define ACE_TIMER_SKEW CLK_TCK
 #endif /* ACE_TIMER_SKEW */
 
 // Turns off the tracing feature.
