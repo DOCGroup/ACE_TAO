@@ -30,16 +30,16 @@ int
 Fill_ACE_QoS::fill_simplex_receiver_qos (ACE_QoS &ace_qos,
                                          const ACE_CString &recv_flow_name)
 {
-  ACE_Flow_Spec *recv_flow_spec = new ACE_Flow_Spec ();
+  ACE_Flow_Spec *recv_flow_spec = 0;
 
-   if (this->map ().find (recv_flow_name, recv_flow_spec) != 0)
-     ACE_ERROR_RETURN ((LM_DEBUG,
-                        "Unable to find a FlowSpec with name %s",
-                        recv_flow_name.c_str ()),
-                       -1);
-   ace_qos.receiving_flowspec (*recv_flow_spec);
-   ace_qos.sending_flowspec (*(this->default_traffic_));
-   ace_qos.provider_specific (Fill_ACE_QoS::iov_);
+  if (this->map ().find (recv_flow_name, recv_flow_spec) != 0)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "Unable to find a FlowSpec with name %s",
+                       recv_flow_name.c_str ()),
+                      -1);
+  ace_qos.receiving_flowspec (*recv_flow_spec);
+  ace_qos.sending_flowspec (*(this->default_traffic_));
+  ace_qos.provider_specific (Fill_ACE_QoS::iov_);
 
   return 0;
 }
@@ -64,7 +64,7 @@ Fill_ACE_QoS::fill_simplex_sender_qos (ACE_QoS &ace_qos,
   return 0;
 }
 
-int 
+int
 Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
                                const ACE_CString &recv_flow_name,
                                const ACE_CString &send_flow_name)
@@ -77,13 +77,13 @@ Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
                        "Unable to find a FlowSpec with name %s",
                        recv_flow_name.c_str ()),
                       -1);
-  
+
   if (this->map ().find (send_flow_name, send_flow_spec) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Unable to find a FlowSpec with name %s",
                        send_flow_name.c_str ()),
                       -1);
-  
+
   ace_qos.receiving_flowspec (*recv_flow_spec);
   ace_qos.sending_flowspec (*send_flow_spec);
   ace_qos.provider_specific (Fill_ACE_QoS::iov_);
@@ -91,7 +91,7 @@ Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
   return 0;
 }
 
-Fill_ACE_QoS::FLOW_SPEC_HASH_MAP
+Fill_ACE_QoS::FLOW_SPEC_HASH_MAP&
 Fill_ACE_QoS::map (void)
 {
   return this->flow_spec_map_;
@@ -112,5 +112,3 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Flow_Spec *, ACE_H
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Thread_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-

@@ -1,3 +1,16 @@
+Sat Mar  3 19:07:31 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* ace/QoS/QoS_Session_Impl.cpp:
+	* ace/QoS/QoS_Session_Impl.i:
+	* examples/QOS/Fill_ACE_QoS.cpp:
+	* examples/QOS/Fill_ACE_QoS.h:
+	* examples/QOS/Makefile:
+	* examples/QOS/QoS_Util.cpp:
+	* examples/QOS/Receiver_QoS_Event_Handler.cpp:
+	* examples/QOS/Sender_QoS_Event_Handler.cpp:
+	  Fixed various compile warnings when compiling with rapi=1 on
+	  Redhat Linux 6.2
+
 Sat Mar  3 16:47:53 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
@@ -79,7 +92,7 @@ Sat Mar  3 16:47:53 2001  Darrell Brunsch <brunsch@uci.edu>
         * docs/ACE-subsets.html:
         * docs/tutorials/new-tutorials.html:
 
-          Changed references to 
+          Changed references to
           http://www.cs.wustl.edu/~schmidt/ACE_wrappers/* to
           relative paths instead (Fixes the last of the fuzz errors).
 
