@@ -266,7 +266,6 @@ interface Param_Test
                             inout Big_Union u2,
                             out Big_Union u3);
 
-#if 0
   // multidimensional arrays (fixed). The following will give rise to a 3
   // dimensional array. The following will define a 3-dimensional array of size
   // DIM1 X DIM2 X DIM3
@@ -276,7 +275,7 @@ interface Param_Test
   Multdim_Array test_multdim_array (in Multdim_Array m1,
                                     inout Multdim_Array m2,
                                     out Multdim_Array m3);
-#endif
+
 
   // sequence of typecodes
   //  typedef sequence<TypeCode> TypeCodeSeq;

@@ -782,6 +782,20 @@ Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
   return ret._retn ();
 }
 
+Param_Test::Multdim_Array_slice *
+Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
+                                  Param_Test::Multdim_Array a2,
+                                  Param_Test::Multdim_Array_out a3,
+                                  CORBA::Environment &)
+{  
+  Param_Test::Multdim_Array_slice *ret;
+
+  Param_Test::Multdim_Array_copy (a2, a1);
+  Param_Test::Multdim_Array_copy (a3, a1);
+  ret = Param_Test::Multdim_Array_dup (a1);
+  return ret;
+}
+
 void
 Param_Test_i::shutdown (CORBA::Environment &)
 {
