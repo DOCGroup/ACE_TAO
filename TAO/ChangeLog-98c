@@ -1,3 +1,14 @@
+Sat Aug 15 12:00:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/varout.h: 
+	* tao/varout.i: 
+	  Fixed some cast-away-const problems in the new
+	  TAO_Object_Field_T class.
+
+	* orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: 
+	  Typecodes use a TAO_Unbounded_Pseudo_Sequence, not a
+	  TAO_Unbounded_Object_Sequence.
+
 Sat Aug 15 08:19:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/deep_free.cpp (deep_free),
