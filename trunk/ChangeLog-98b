@@ -1,3 +1,14 @@
+Tue Jun 23 06:40:35 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Map_Manager/test_hash_map_manager.cpp (main):
+          replaced use of cerr with and ACE_ERROR_RETURN.  Thanks
+          to Philippe Klein <Philippe_Klein@vocaltec.com> for reporting
+          this.
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+          added #include of ace/streams.h.  Thanks to Philippe Klein
+          <Philippe_Klein@vocaltec.com> for reporting this.
+
 Mon Jun 22 09:25:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/XtReactor.cpp:
