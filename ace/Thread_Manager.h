@@ -56,10 +56,10 @@
 
 
 // This is the synchronization mechanism used to prevent a thread
-// descriptor from getting removed from the Thread_Manager before it gets
+// descriptor gets removed from the Thread_Manager before it gets
 // stash into it.  If you want to disable this feature (and risk of
-// corrupting the freelist,) you have to define the lock as ACE_Null_Mutex.
-// Usually, if you are sure that your threads will run for an
+// corrupting the freelist,) you define the lock as ACE_Null_Mutex.
+// Usually, if you can be sure that your threads will run for an
 // extended period of time, you can safely disable the lock.
 
 #if !defined (ACE_DEFAULT_THREAD_MANAGER_LOCK)
@@ -69,6 +69,79 @@
 // Forward declarations.
 class ACE_Task_Base;
 class ACE_Thread_Manager;
+class ACE_Thread_Descriptor;
+
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+class ACE_At_Thread_Exit
+{
+  // = TITLE
+  // Contains a method to be applied when a thread is terminated.
+  friend class ACE_Thread_Descriptor;
+  friend class ACE_Thread_Manager;
+public:
+  // Default constructor
+  ACE_At_Thread_Exit(void);
+
+  // The destructor
+  virtual ~ACE_At_Thread_Exit(void);
+
+  // At_Thread_Exit has the ownership?
+  int is_owner() const;
+
+  // Set the ownership of the At_Thread_Exit
+  int is_owner(int owner);
+
+  // This At_Thread_Exit was applied?
+  int was_applied() const;
+
+  // Set applied state of At_Thread_Exit
+  int was_applied(int applied);
+
+protected:
+  ACE_At_Thread_Exit* next_;
+  // The next At_Thread_Exit hook in the list.
+
+  // Do the apply if necessary
+  void do_apply();
+
+  virtual void apply() = 0;
+  // The apply method.
+
+  ACE_Thread_Descriptor* td_;
+  // The Thread_Descriptor where this at is registered.
+
+  int was_applied_;
+  // The at was applied?
+
+  int is_owner_;
+  // The at has the ownership of this?
+};
+
+class ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
+{
+public:
+   // Constructor
+   ACE_At_Thread_Exit_Func(void* object,
+                           ACE_CLEANUP_FUNC func,
+                           void* param = 0);
+
+  virtual ~ACE_At_Thread_Exit_Func (void);
+
+protected:
+   void* object_;
+   // The object to be cleanup
+
+   ACE_CLEANUP_FUNC func_;
+   // The cleanup func
+
+   void* param_;
+   // A param if required
+
+   // The apply method
+   void apply();
+};
+
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
 class ACE_Thread_Descriptor_Base
 {
@@ -111,7 +184,9 @@ class ACE_Export ACE_Thread_Descriptor : public ACE_Thread_Descriptor_Base
   // = TITLE
   //   Information for controlling threads that run under the control
   //   of the <Thread_Manager>.
-
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  friend class ACE_At_Thread_Exit;
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   friend class ACE_Thread_Manager;
   friend class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
   friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
@@ -138,6 +213,22 @@ public:
 
   void dump (void) const;
   // Dump the state of an object.
+
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  void log_msg_cleanup(ACE_Log_Msg* log_msg);
+  // This cleanup function must be called only for ACE_TSS_cleanup.
+  // The ACE_TSS_cleanup delegate Log_Msg instance destruction when
+  // Log_Msg cleanup is called before terminate.
+
+  int at_exit (ACE_At_Thread_Exit* cleanup);
+  // Register an At_Thread_Exit hook and the ownership is acquire by
+  // Thread_Descriptor, this is the usual case when the AT is dynamically
+  // allocated.
+
+  int at_exit (ACE_At_Thread_Exit& cleanup);
+  // Register an At_Thread_Exit hook and the ownership is retained for the
+  // caller. Normally used when the at_exit hook is created in stack.
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   int at_exit (void *object,
                ACE_CLEANUP_FUNC cleanup_hook,
@@ -174,6 +265,29 @@ public:
   // of g++ couldn't grok this code without it.
 
 private:
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  void at_pop(int apply = 1);
+  // Pop an At_Thread_Exit from at thread termination list, apply the at
+  // if apply is true.
+
+  void at_push(ACE_At_Thread_Exit* cleanup, int is_owner = 0);
+  // Push an At_Thread_Exit to at thread termination list and set the
+  // ownership of at.
+
+  void do_at_exit();
+  // Run the AT_Thread_Exit hooks.
+
+  void terminate();
+  // terminate realize the cleanup process to thread termination
+
+  ACE_Log_Msg* log_msg_;
+  // Thread_Descriptor is the ownership of ACE_Log_Msg if log_msg_!=0
+  // This can occur because ACE_TSS_cleanup was executed before terminate.
+
+  ACE_At_Thread_Exit* at_exit_list_;
+  // The AT_Thread_Exit list
+#endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+
   int grp_id_;
   // Group ID.
 
@@ -187,13 +301,24 @@ private:
 
   ACE_Task_Base *task_;
   // Pointer to an <ACE_Task_Base> or NULL if there's no
-  // <ACE_Task_Base>;
+  // <ACE_Task_Base>.
+
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  ACE_Thread_Manager* tm_;
+  // Pointer to an <ACE_Thread_Manager> or NULL if there's no
+  // <ACE_Thread_Manager>.
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   ACE_DEFAULT_THREAD_MANAGER_LOCK *sync_;
   // Registration lock to prevent premature removal of thread descriptor.
 
   int registered_;
   // Keep track of registration status.
+
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  int terminated_;
+  // Keep track of termination status.
+#endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   ACE_Thread_Descriptor *next_;
   ACE_Thread_Descriptor *prev_;
@@ -224,18 +349,21 @@ class ACE_Export ACE_Thread_Manager
   //    The default behavior of thread manager is to wait on
   //    all threads under it's management when it gets destructed.
   //    Therefore, remember to remove a thread from thread manager if
-  //    you don't want it to wait for the thread.  There are also
-  //    functions to disable this default wait-on-exit behavior.
+  //    you don't want it to wait for the thread. There are also
+  //    function to disable this default wait-on-exit behavior.
   //    However, if your program depends on turning this off to run
   //    correctly, you are probably doing something wrong.  Rule of
   //    thumb, use ACE_Thread to manage your daemon threads.
   //
-  //    Notice that if there're threads that live beyond the scope of main (),
+  //    Notice that if there're threads live beyond the scope of main (),
   //    you are sure to have resource leaks in your program.  Remember
   //    to wait on threads before exiting main() if that could happen
   //    in your programs.
 public:
   friend class ACE_Thread_Control;
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  friend class ACE_Thread_Descriptor;
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
 #if !defined (__GNUG__)
   typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
@@ -485,6 +613,17 @@ public:
   // = Set/get group ids for a particular task.
   int set_grp (ACE_Task_Base *task, int grp_id);
   int get_grp (ACE_Task_Base *task, int &grp_id);
+
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  int at_exit (ACE_At_Thread_Exit* cleanup);
+  // Register an At_Thread_Exit hook and the ownership is acquire by
+  // Thread_Descriptor, this is the usual case when the AT is dynamically
+  // allocated.
+
+  int at_exit (ACE_At_Thread_Exit& cleanup);
+  // Register an At_Thread_Exit hook and the ownership is retained for the
+  // caller. Normally used when the at_exit hook is created in stack.
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
   int at_exit (void *object,
                ACE_CLEANUP_FUNC cleanup_hook,
