@@ -1,3 +1,24 @@
+Thu Nov  8 13:57:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply):
+	  Fixed a leak. The leak was occuring because of a unreleased
+	  datablock. 
+
+	  The Reply Dispatchers are created by the invocation object on
+	  the stack for every invocation. Once the invocation is done,
+	  destructor takes care of deleting the datablock into which the
+	  incoming reply was copied, if it was created on the heap. There
+	  was a subtle assumption made. That is, we assumed that the
+	  object is created and destroyed for every invocation. Under
+	  special conditions like the ones in BUGID 1029, the invocation
+	  object reuses the same object across multiple invocations.  This
+	  leads to a memory leak as the old datablocks are not
+	  deleted. This fixes BUGID 1029.   
+
+	* orbsvcs/orbsvcs/FaultTolerance.bor: Added the new files.
+
 Wed Nov  7 13:20:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
